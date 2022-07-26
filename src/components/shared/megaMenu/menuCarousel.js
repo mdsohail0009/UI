@@ -11,10 +11,8 @@ class MenuCarousel extends Component {
         }
     }
     depositCrypto = () => {
-        console.log(this.state);
     }
     showCardDrawer = () => {
-        console.log(this.state);
     }
     render() {
         const { Title, Paragraph } = Typography;

@@ -33,10 +33,10 @@ class AuditLogs extends Component {
       message: "",
       searchObj: {
         timeSpan: "Last 1 Day",
-        userId: this.props.userProfile?.userId,
+        userId: this.props.userProfile?.id,
         feature: "All Features",
-        admin: "user",
-        user: "user",
+       // admin: "user",
+       // user: "user",
         fromdate: '',
         todate: '',
       },
@@ -58,14 +58,11 @@ class AuditLogs extends Component {
     apicalls.trackEvent({ "Type": 'User', "Action": 'Audit logs page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Audit Logs', "Remarks": 'Audit logs page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Audit Logs' });
   }
   gridColumns = [
-    { field: "date", title: apicalls.convertLocalLang('Date'), filter: true, isShowTime: true, filterType: "date", width: 250 },
-    { field: "feature", title: apicalls.convertLocalLang('Features'), filter: true, width: 250 },
-    { field: "featurePath", title: apicalls.convertLocalLang('Feature_Path'), filter: true, width: 250 },
-    { field: "action", title: apicalls.convertLocalLang('Action'), width: 250, filter: true },
-    { field: "countryName", title: apicalls.convertLocalLang('Country'), width: 250, filter: true },
-    { field: "ipAddress", title: apicalls.convertLocalLang('ipAddress'), width: 250, filter: true },
-    { field: "remarks", title: apicalls.convertLocalLang('remarks'), filter: true, width: 500 },
-    { field: "", title: "", width: 60, customCell: (props) => (<td><Tooltip title="View More"><div className="icon md info c-pointer" onClick={() => this.showMoreAuditLogs(props)}></div></Tooltip></td>) },
+    { field: "date", title: apicalls.convertLocalLang('Date'), filter: true, isShowTime: true, filterType: "date", width: 360 },
+    { field: "feature", title: apicalls.convertLocalLang('Features'), filter: true, width: 360 },
+    { field: "action", title: apicalls.convertLocalLang('Action'), width: 360, filter: true },
+    { field: "description", title: "Description", filter: true, width: 620 },
+    // { field: "", title: "", width: 100, customCell: (props) => (<td><Tooltip title="View More"><div className="icon md info c-pointer" onClick={() => this.showMoreAuditLogs(props)}></div></Tooltip></td>) },
   ]
   showMoreAuditLogs = (e) => {
     this.fetchAuditLoginfo(e.dataItem.id, e);

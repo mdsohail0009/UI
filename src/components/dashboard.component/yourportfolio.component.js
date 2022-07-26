@@ -70,17 +70,17 @@ class YourPortfolio extends Component {
         return (
           <div className="portfolio-list">
            
-            <div  className="portfolio-title mb-16">
+           <div  className="portfolio-title mb-16">
            <div className='portfolio-data' >
             <Translate
               content="your_portfolio"
               component={Title}
               className="fs-24 text-white mb-0 fw-600 mr-8"
             />
-            <Currency defaultValue={totalCryptoValue} prefix={""} suffixText={"BTC"} className={`text-white-30 fs-16 m-0 ${totalCryptoValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '18px' }} />
+            <Currency prefix={"$"} defaultValue={totalCryptoValue}  className={`text-white-30 fs-16 m-0 ${totalCryptoValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '18px' }} />
             </div>
               <div>
-              <Link to="/cockpitCharts" className="dbchart-link fs-14 fw-500" >
+              <Link to="/cockpitCharts" className="dbchart-link fs-14 fw-500">
                 <Translate content="cockpit" />
                 <span className="icon sm right-angle ml-4" />
               </Link></div>

@@ -10,7 +10,6 @@ class DepositFiat extends Component {
         buyToggle: 'From Fiat'
     }
     handleDepositToggle = e => {
-        console.log(this.state);
     }
 
     render() {

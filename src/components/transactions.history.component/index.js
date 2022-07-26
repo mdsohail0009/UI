@@ -1,19 +1,13 @@
 import React, { Component } from "react";
 import {
 	Drawer,
-	Tabs,
-	Collapse,
 	Typography,
-	Tooltip,
-	Modal,
 	Button,
 	Row, Col, Select, Form
 } from "antd";
-import HistoryGridComponent from "./HistoryGridComponent";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
-import Info from "../shared/info";
 import List from "../grid.component";
 import {getTransactionSearch } from './api';
 const { Option } = Select;
@@ -47,7 +41,7 @@ componentDidMount() {
     { field: "fromWalletCode", title: "From Wallet Code", filter: true, width: 180, },
     { field: "fromValue", title: "From Value", width: 150, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
     { field: "toWalletCode", title: "To Wallet Code", filter: true, width: 150 },
-    { field: "toValue", title: "To Value", width: 150, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
+    { field: "toValue", title: "To Value", width: 150, filter: true, footerCell: true, dataType: 'number', filterType: "numeric"},
     { field: "fromValueBefore", title: "From Before Value", width: 180, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
     { field: "fromValueAfter", title: "From After Value", width: 180, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
     { field: "toValueBefore", title: "To Before Value", width: 180, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
@@ -141,7 +135,7 @@ componentDidMount() {
                 </Form.Item>
               </Col>
               <Col xs={24} sm={24} md={7} lg={7} xl={7}  className="px-8 transaction_resp">
-                <Form.Item name="docType" className="input-label mb-0" label="Doc Type">
+                <Form.Item name="docType" className="input-label mb-0" label="Transaction">
                   <Select
                     defaultValue="All"
                     className="cust-input w-100 bgwhite"
@@ -170,11 +164,9 @@ componentDidMount() {
         </div>
         <List
          url={gridUrl} additionalParams={searchObj} ref={this.gridRef}
-         key={gridUrl}
          columns={this.gridColumns}
          showExcelExport ={true}
          excelFileName = {'Transactions'}
-         
         />
 				</Drawer>
 			   </>

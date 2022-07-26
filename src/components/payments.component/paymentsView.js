@@ -10,7 +10,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children?.slice(0, children.length - suffixCount).trim();
     const suffix = children?.slice(-suffixCount).trim();
     return (
-        <Text className="mb-0 fs-14 docname c-pointer d-block file-label fs-12 text-yellow fw-400"
+        <Text className="mb-0 fs-14 docnames c-pointer d-block file-label fs-12 text-yellow fw-400"
             style={{ maxWidth: '100% !important' }} ellipsis={{ suffix }}>
             {start}
         </Text>
@@ -23,7 +23,8 @@ class PaymentsView extends Component {
             paymentsData: [],
             currency:'USD',
             loading: false,
-            amount:0
+            amount:0,
+            isloading:false,
         }
         this.useDivRef = React.createRef();
     }
@@ -48,36 +49,40 @@ class PaymentsView extends Component {
         }
     }
     moreInfoPopover = async (id) => {
-        this.setState({ ...this.state, tooltipLoad: true });
+        this.setState({...this.state,isloading:true});
         let response = await getBankData(id);
         if (response.ok) {
-            this.setState({
-                ...this.state, moreBankInfo: response.data, visible: true, tooltipLoad: false
-            });
+          this.setState({
+            ...this.state,
+            moreBankInfo: response.data,
+            visible: true,
+            isloading:true
+          });
         } else {
-            this.setState({ ...this.state, visible: false, tooltipLoad: false });
+          this.setState({ ...this.state, visible: false, isloading: false });
         }
+      };
+     handleVisibleChange = () => {
+    this.setState({ ...this.state, visible: false });
+    if(this.state.visible== false){
+      this.setState({ ...this.state, isloading: false });
     }
-    handleVisibleChange = () => {
-        this.setState({ ...this.state, visible: false });
+  };
+  popOverContent = () => {
+    const { moreBankInfo, tooltipLoad,isloading } = this.state;
+    if (!isloading) {
+      return <Spin />;
+    } else {
+      return (
+        <div className="more-popover">
+          <Text className="lbl">Bank Label</Text>
+          <Text className="val">{moreBankInfo?.bankLabel}</Text>
+          <Text className="lbl">BIC/SWIFT/Routing Number</Text>
+          <Text className="val">{moreBankInfo?.routingNumber}</Text>
+        </div>
+      );
     }
-    popOverContent = () => {
-        const { moreBankInfo, tooltipLoad } = this.state;
-        if (tooltipLoad) {
-            return <Spin />
-        } else {
-            return (<div className='more-popover'>
-                <Text className='lbl'>Address Label</Text>
-                <Text className='val'>{moreBankInfo?.favouriteName}</Text>
-                <Text className='lbl'>Bank Address</Text>
-                <Text className='val'>{moreBankInfo?.bankAddress}</Text>
-                <Text className='lbl'>BIC/SWIFT/Routing Number</Text>
-                <Text className='val'>{moreBankInfo?.routingNumber}</Text>
-                <Text className='lbl'>Recipient Address</Text>
-                <Text className='val'>{moreBankInfo?.beneficiaryAccountAddress}</Text>
-            </div>)
-        }
-    }
+  };
     filePreview = async (file) => {
         let res = await getFileURL({ url: file.path });
         if (res.ok) {
@@ -103,12 +108,12 @@ class PaymentsView extends Component {
              <div ref={this.useDivRef}></div>
                 <div className="main-container">
                     <Title className="basicinfo mb-16"><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
-                    <div className="box basic-info responsive_table">
-                        <table className='pay-grid view'>
+                    <div className="box basic-info responsive_table bg-none">
+                        <table className='pay-grid view mb-view'>
                             <thead>
                                 <tr>
-                                <th className="doc-def">Name</th>
-                                    <th className="doc-def" style={{width: "300px"}}>Bank Name</th>
+                                <th className="doc-def">Favorite Name</th>
+                                    <th className="doc-def" style={{width: "410px"}}>Bank Name</th>
                                     <th>Bank Account Number/IBAN</th>
                                     <th>State</th>
                                     <th>Amount</th>
@@ -119,32 +124,42 @@ class PaymentsView extends Component {
                                     return (
                                         <>
                                           {paymentsData.length > 0? <> <tr key={idx}>
-                                          <td className="doc-def">{item?.beneficiaryAccountName}</td>
-                                                <td className="doc-def">
-                                                    <div className='d-flex align-center justify-content'>
-                                                   <span>
-                                                   <Tooltip title= {item.bankname}>
-                                          <span className='pay-docs'>{item.bankname}</span>
-                                        </Tooltip>
-                                                            <Text
-                                                                size="small"
-                                                                className="file-label doc-def ml-8"
-                                                            >
-                                                                {this.addressTypeNames(item.addressType)}
-                                                            </Text>
-                                              </span>
-                                                            <Popover
-                                                                    className='more-popover'
-                                                                    content={this.popOverContent}
-                                                                    trigger="click"
-                                                                    visible={item.visible}
-                                                                    placement='top'
-                                                                    onVisibleChange={() => this.handleVisibleChange()}
-                                                                >
-                                                                    <span className='icon md info c-pointer' onClick={() => this.moreInfoPopover(item.addressId)} />
-                                                                </Popover>
-                                                                </div>
-                                                </td>
+                                          <td className="doc-def" >{item?.beneficiaryAccountName}</td>
+                                                <td className="doc-def" style={{ width: '350px' }}>
+                                      <div className="d-flex align-center justify-content" style={{ width: '350px' }}>
+                                        <span>
+                                          <Tooltip title={item.bankname}>
+                                            <span className='pay-docs'>{item.bankname}</span>
+                                          </Tooltip>
+                                          <Text
+                                            size="small"
+                                            className="file-label doc-def ml-8"
+                                          >
+                                            {this.addressTypeNames(item.addressType)}{" "}
+                                          </Text>
+
+                                        </span>
+                                        <Popover
+                                          className="more-popover"
+                                          content={this.popOverContent}
+                                          trigger="click"
+                                          visible={item.visible}
+                                          placement="top"
+                                          onVisibleChange={() =>
+                                            this.handleVisibleChange()
+                                          }
+                                        >
+                                          <span
+                                            className="icon md info c-pointer ml-4"
+                                            onClick={() =>
+                                              this.moreInfoPopover(
+                                                item.addressId,
+                                              )
+                                            }
+                                          />
+                                        </Popover>
+                                      </div>
+                                    </td>
                                                 <td>{item.accountnumber}</td>
                                                 <td>{item.state}</td>
                                                 <td>
@@ -158,7 +173,7 @@ class PaymentsView extends Component {
                                                     {item.documents?.details.map((file) =>
                                                    <>
                                                    {file.documentName !== null && (
-                                                     <div className='docdetails' onClick={() => this.filePreview(file)}>
+                                                     <div className='docdetails'  style={{width:"80px"}} onClick={() => this.filePreview(file)}>
                                                      <Tooltip title={file.documentName}>
                                                      <EllipsisMiddle  suffixCount={4}>
                                                        {file.documentName}
@@ -176,7 +191,7 @@ class PaymentsView extends Component {
                                 })}
 
                                 {loading && <tr>
-                                    <td colSpan='4' className='text-center p-16'><Spin size='default' /></td></tr>}
+                                    <td colSpan='6' className='text-center p-16'><Spin size='default' /></td></tr>}
                             </tbody>
 
                             <tfoot>
@@ -203,6 +218,7 @@ class PaymentsView extends Component {
                                 }
                             </tfoot>
                         </table>
+                        </div>
                         {!loading &&
                         <div className="text-right mt-36">
                         {paymentsData?.length > 0 &&
@@ -215,7 +231,7 @@ class PaymentsView extends Component {
                             </Button>
                                 }
                         </div>}
-                    </div>
+                   
                 </div>
                 <Modal
             className="documentmodal-width"
@@ -225,7 +241,7 @@ class PaymentsView extends Component {
             visible={this.state.previewModal}
             closeIcon={<Tooltip title="Close"><span className="icon md close-white c-pointer" onClick={this.docPreviewClose} /></Tooltip>}
             footer={<>
-              <Button  onClick={this.docPreviewClose} className="pop-btn px-36"
+              <Button  onClick={this.docPreviewClose} className="text-center text-white-30 pop-cancel fw-400 mr-36"
                          style={{ margin: "0 8px" }}>Close</Button>
               <Button  className="pop-btn px-36"
                          style={{ margin: "0 8px" }}onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>

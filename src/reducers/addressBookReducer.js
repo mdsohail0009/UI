@@ -12,7 +12,7 @@ const FETCH_ADDRESS_CRYPTO = 'fetchAddressCrypto';
 const CLEAR_CRYPTO_VALUES = 'clearCryptoValues';
 const ADDRESS_TAB_UPDATE = "addressTabUpdate";
 const WITHDRAW_FIAT_UPDATE = "withdrawfiatUpdate";
-
+const SELECTED_TAB = "selectedTab"
 const handleFetch = (payload) => {
     return { type: HANDLE_FETCH, payload }
 }
@@ -70,6 +70,12 @@ const fetchUsersIdUpdate = (payload) => {
         payload
     }
 }
+const selectedTab = (payload) => {
+    return {
+        type: SELECTED_TAB,
+        payload
+    }
+}
 const fetchAddressCrypto = (payload) => {
     return {
         type: FETCH_ADDRESS_CRYPTO,
@@ -77,14 +83,14 @@ const fetchAddressCrypto = (payload) => {
     }
 }
 const addressTabUpdate = (payload) => {
-  
+
     return {
         type: ADDRESS_TAB_UPDATE,
         payload
     }
 }
 const withdrawfiatUpdate = (payload) => {
-  
+
     return {
         type: WITHDRAW_FIAT_UPDATE,
         payload
@@ -125,16 +131,18 @@ const fetchGetAddress = (member_id, type) => {
 }
 
 let initialState = {
-    addressTab:false,
-    withdrawTab:false,
+    addressTab: false,
+    withdrawTab: false,
     selectedCoin: {},
     favouriteAddress: [],
     coinWallet: null,
     selectedRowData: null,
     exchangeValues: {},
     cryptoValues: null,
+    cryptoTab: true,
     getAddress: { loading: false, data: [] },
     stepcode: "step1",
+    step: "step2",
     stepTitles: {
         cryptoaddressbook: "cryptoAddress",
         selectcrypto: "cryptoAddress",
@@ -166,20 +174,22 @@ const AddressBookReducer = (state = initialState, action) => {
             return state;
         case FETCH_USERSID_UPDATE:
             return { ...state, selectedRowData: action.payload }
+        case SELECTED_TAB:
+            return { ...state, cryptoTab: action.payload }
         case FETCH_ADDRESS_CRYPTO:
             return { ...state, cryptoValues: action.payload };
         case CLEAR_CRYPTO_VALUES:
             return { ...state, cryptoValues: null };
         case CLEAR_VALUES:
             return { ...state, selectedRowData: null };
-            case ADDRESS_TAB_UPDATE:
-                return { ...state, addressTab: action.payload  }
-                case WITHDRAW_FIAT_UPDATE:
-                    return { ...state, withdrawTab: action.payload  }
+        case ADDRESS_TAB_UPDATE:
+            return { ...state, addressTab: action.payload }
+        case WITHDRAW_FIAT_UPDATE:
+            return { ...state, withdrawTab: action.payload }
         default:
             return state;
     }
 
 }
 export default AddressBookReducer;
-export { setAddressStep, clearStep, setAddressCoin, handleFavouritAddress, fetchSelectedCoinDetails, setExchangeValue, rejectCoin, fetchUsersIdUpdate, fetchGetAddress, clearValues, fetchAddressCrypto, clearCryptoValues,addressTabUpdate,withdrawfiatUpdate }
+export { setAddressStep, clearStep, setAddressCoin, handleFavouritAddress, fetchSelectedCoinDetails, setExchangeValue, rejectCoin, selectedTab, fetchUsersIdUpdate, fetchGetAddress, clearValues, fetchAddressCrypto, clearCryptoValues, addressTabUpdate, withdrawfiatUpdate }

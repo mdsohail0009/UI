@@ -186,18 +186,7 @@ class FaitDeposit extends Component {
         this.props.changeStep('step2');
         this.props.dispatch(setsavefiatobject(createObj));
 
-        // 
-        // let Obj = await savedepositFiat(createObj);
-        // if (Obj.ok === true) {
-        //   //const { selectedDepFiatData } = this.props.depositInfo;
-        //   this.setState({
-        //     buyDrawer: false,
-        //     BankDetails: [], BankInfo: null, depObj: { currency: null, BankName: null, Amount: null },
-        //     faitdeposit: false,
-        //     tabValue: 1, Loader: false, isTermsAgreed: false, showSuccessMsg: true,
-
-        //   });
-        // }
+      
       });
     // }
   }
@@ -237,7 +226,7 @@ class FaitDeposit extends Component {
             {!this.state.Loader && <Form layout="vertical" initialValues={{ ...depObj }} ref={this.formRef} onFinish={(values) => this.ConfirmDeposit(values)}><div className="suisfiat-container auto-scroll"><div ref={this.myRef}></div>
               {this.state?.errorMessage !== null && this.state?.errorMessage !== '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="info" message="" description={this.state?.errorMessage} closable />}
               {!this.state.showSuccessMsg && <Translate
-                className="mb-0 text-white-30 fs-14 fw-200"
+                className="mb-0 text-white-30 fs-14 fw-200 mt-16"
                 content="desposite_text"
                 component={Paragraph}
               />}
@@ -258,7 +247,7 @@ class FaitDeposit extends Component {
                         </Option>
                       )}
                     </Select></div></Form.Item>}
-                {this.state.BankInfo === null && depObj.currency !== null && this.state.BankDetails?.length === 1 && <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="bank_msg" /></Text>}
+                {this.state.BankInfo === null && depObj.currency !== null && this.state.BankDetails?.length === 0 && <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="bank_msg" /></Text>}
                 {this.state.BankDetails?.length > 1 && depObj.currency !== null && <Form.Item><Translate
                   className="input-label"
                   content="BankName"
@@ -371,7 +360,7 @@ class FaitDeposit extends Component {
                         content="reference"
                         component={Text}
                       />
-                      <Paragraph className="mb-0 fw-600 text-white-30 walletadrs">
+                      <Paragraph className="mb-0 fw-600 text-white-30 walletadrs mb-copy">
                         {BankInfo.depReferenceNo}
                         <CopyToClipboard text={BankInfo.depReferenceNo}>
                           <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 custom-display"   ></Text>

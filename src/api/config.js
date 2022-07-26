@@ -18,5 +18,7 @@ export const ApiControllers = {
     documents: "Documents/",
     dashboard: "Dashboard/",
     massPayment: "MassPayment/",
-    common: "Common/"
+    common: "Common/",
+    earn: "Earn/",
+    partner:"Partner/"
 }

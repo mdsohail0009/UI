@@ -32,8 +32,12 @@ const LocalCryptoSwapper = (props, ref) => {
     const fetchConvertionValue = async ({ inputvalue, locCurrency, isSwap }) => {
         const coin = selectedCoin || sellData?.selectedCoin?.data?.coin;
         setConvertionLoad(true);
-        const _isSwap = (isSwap||isSwaped)
+        const _isSwap = (isSwap || isSwaped);
+        if (props.onConvertion) {
+            props.onConvertion(true);
+        }
         const response = await convertCurrencyDuplicate({ from: coin, to: locCurrency || localCurrency || "USD", value: (inputvalue || 0), isCrypto: !_isSwap, memId: props.memberId, screenName: props.screenName });
+      
         if (response.ok) {
             const { data: value, config: { url } } = response;
             const _obj = url.split("CryptoFiatConverter")[1].split("/");
@@ -44,11 +48,17 @@ const LocalCryptoSwapper = (props, ref) => {
                 if (!_isSwap) {
                     setCryptoValue(value || 0);
                 } else { setLocalValue(value || 0) }
-                onChange({ cryptoValue: _isSwap ? inputvalue : value, localValue: _isSwap ? value : inputvalue, isSwaped:_isSwap, isInputChange });
+                onChange({ cryptoValue: _isSwap ? inputvalue : value, localValue: _isSwap ? value : inputvalue, isSwaped: _isSwap, isInputChange });
                 setConvertionLoad(false);
+                if (props.onConvertion) {
+                    props.onConvertion(false);
+                }
             }
         } else {
             setConvertionLoad(false);
+            if (props.onConvertion) {
+                props.onConvertion(false);
+            }
         }
 
 
@@ -56,7 +66,7 @@ const LocalCryptoSwapper = (props, ref) => {
     return <div className="p-relative">
         <div className="enter-val-container common-withdraow withdraw-crypto">
             <Text className="fs-30 fw-400 text-white-30 text-yellow mr-4">{!isSwaped ? localCurrency : cryptoCurrency}</Text>
-            <NumberFormat id="amtInput" className="fw-400 text-white-30 text-center enter-val p-0" maxLength={25} customInput={Input} thousandSeparator={true} prefix={isSwaped ? "" : symbols[localCurrency]}
+            <NumberFormat id="amtInput" className="fw-400 text-white-30 text-center enter-val enter-vel-field p-0" maxLength={25} customInput={Input} thousandSeparator={true} prefix={isSwaped ? "" : symbols[localCurrency]}
                 decimalScale={isSwaped ? 8 : 2}
                 autoComplete="off"
                 placeholder="0.00"

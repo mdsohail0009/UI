@@ -9,6 +9,7 @@ import { warning } from '../../utils/messages'
 import List from "../grid.component";
 import BeneficiaryDrawer from './beneficiaryDrawer';
 import NewFiatAddress from '../addressbook.component/addFiatAddressbook';
+import AddressCommonCom from "../addressbook.component/addressCommonCom";
 import { setHeaderTab } from "../../reducers/buysellReducer"
 const { Title, Text, Paragraph } = Typography;
 
@@ -63,16 +64,16 @@ const Payments = (props) => {
       )
     },
     {
-      field: "createdDate", title: 'Date', filter: true, filterType: "date",width: 300,
+      field: "createdDate", title: 'Date', filter: true, filterType: "date",width: 200,
       customCell: (prop) => (
         <td><div className="gridLink" onClick={() => paymentsView(prop)}>
           <Moment format="DD/MM/YYYY">{moment(new Date(prop.dataItem.createdDate), "DD/MM/YYYY")}</Moment></div></td>)
     },
-    { field: "currency", title: 'Currency', filter: true,width: 300, },
-    { field: "totalAmount", title: 'Total Amount', filter: true, width: 300, },
-    { field: "approvedAmount", title: 'Approved Amount', filter: true, width: 300, },
-    { field: "count", title: 'Count', filter: true, width: 300, },
-    { field: "state", title: 'State', filter: true, width: 300, },
+    { field: "currency", title: 'Currency', filter: true,width: 200, },
+    { field: "totalAmount", title: 'Total Amount', filter: true, width: 200, },
+    { field: "approvedAmount", title: 'Approved Amount', filter: true, width: 237, },
+    { field: "count", title: 'Count', filter: true, width: 150, },
+    { field: "state", title: 'State', filter: true, width: 200, },
   ];
   const handleInputChange = (prop) => {
     setErrorWarning(null);
@@ -100,6 +101,7 @@ const Payments = (props) => {
   }
 
   const showNewBenificiary = () => {
+    debugger
     setCheckRadio(true);
     setBeneficiaryDetails(true);
   }
@@ -205,7 +207,7 @@ const Payments = (props) => {
           className=" side-drawer w-50p"
           size="large"
         >
-          <NewFiatAddress checkThirdParty={checkRadio} onCancel={() => closeBuyDrawer()} props={props} />
+          <AddressCommonCom checkThirdParty={checkRadio} onCancel={() => closeBuyDrawer()} props={props} />
         </Drawer>
       </div>
     </>

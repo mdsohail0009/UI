@@ -16,6 +16,7 @@ import {
 import apiCalls from "../../api/apiCalls";
 import { publishBalanceRfresh } from "../../utils/pubsub";
 import { Link } from "react-router-dom";
+import NumberFormat from "react-number-format";
 class WithdrawSummary extends Component {
 	state = {
 		onTermsChange: false,
@@ -76,7 +77,8 @@ class WithdrawSummary extends Component {
 		isEmailVerification: false,
 		isPhoneVerification: false,
 		isAuthenticatorVerification: false,
-		btnLoading: false
+		btnLoading: false,
+		agreeRed:true,
 	};
 
 	useDivRef = React.createRef();
@@ -193,18 +195,18 @@ class WithdrawSummary extends Component {
 		);
 		if (response.ok) {
 			this.setState({ ...this.state, verifyData: response.data });
-			if (!(response.data.isEmailVerification || response.data.isPhoneVerification || response.data.twoFactorEnabled)) {
+			if (!(response.data.isEmailVerification || response.data.isPhoneVerification || response.data.twoFactorEnabled || response.data.isLiveVerification)) {
 				this.setState({
 					...this.state,
 					errorMsg:
-						"Without Verifications you can't withdraw.Please select withdraw verifications from security section"
+						"Without verifications you can't withdraw. Please select withdraw verifications from security section"
 				});
 			}
 		} else {
 			this.setState({
 				...this.state,
 				errorMsg:
-					"Without Verifications you can't withdraw.Please select withdraw verifications from security section",
+					"Without verifications you can't withdraw. Please select withdraw verifications from security section",
 			});
 		}
 	};
@@ -275,6 +277,7 @@ class WithdrawSummary extends Component {
 	};
 
 	getEmailVerification = async () => {
+		this.setState({...this.state,emailVerifyLoading:true})
 		let response = await apiCalls.verifyEmail(
 			this.props.userProfile.id,
 			this.state.emailCodeVal
@@ -282,6 +285,7 @@ class WithdrawSummary extends Component {
 		if (response.ok) {
 			this.setState({
 				...this.state,
+				emailVerifyLoading:false,
 				EmailCode: response.data,
 				verifyEmail: true,
 				verifyEmailOtp: true,
@@ -311,6 +315,7 @@ class WithdrawSummary extends Component {
 	};
 
 	getOtpVerification = async () => {
+		this.setState({...this.state,phoneVerifyLoading:true})
 		let response = await apiCalls.getVerification(
 			this.props.userProfile.id,
 			this.state.otpCode
@@ -318,6 +323,7 @@ class WithdrawSummary extends Component {
 		if (response.ok) {
 			this.setState({
 				...this.state,
+				phoneVerifyLoading:false,
 				OtpVerification: response.data,
 				verifyPhone: true,
 				verifyTextotp: true,
@@ -347,7 +353,7 @@ class WithdrawSummary extends Component {
 	handleOtp = (val) => {
 		this.setState({
 			...this.state,
-			otp: val.code,
+			otp: val,
 			verifyOtpText: "verifyOtpBtn",
 			tooltipVisible: false,
 			buttonText: "",
@@ -365,6 +371,7 @@ class WithdrawSummary extends Component {
 	};
 
 	getAuthenticator = async () => {
+		this.setState({...this.state,faLoading:true})
 		let response = await apiCalls.getAuthenticator(
 			this.state.authCode,
 			this.props.userProfile.userId
@@ -372,6 +379,7 @@ class WithdrawSummary extends Component {
 		if (response.ok) {
 			this.setState({
 				...this.state,
+				faLoading:false,
 				authenticator: response.data,
 				verifyAuth: true,
 				verifyAuthCode: true,
@@ -382,7 +390,7 @@ class WithdrawSummary extends Component {
 		} else if (response.data == null) {
 			this.setState({
 				...this.state,
-				errorMsg: "Please enter authenticator verification code",
+				errorMsg: "Please enter authenticator code",
 			});
 		} else {
 			this.useDivRef.current.scrollIntoView(0, 0);
@@ -396,7 +404,20 @@ class WithdrawSummary extends Component {
 		}
 	};
 	handleChange = (e) => {
-		this.setState({ ...this.state, otpCode: e.target.value });
+		if(e){
+			this.handleOtp(e)
+			this.setState({
+						...this.state,
+						otpCode: e,buttonText: "",
+						tooltipVisible: false,
+						verifyOtpText: "verifyOtpBtn",})
+		}else{
+			this.setState({
+				buttonText: "resendotp",
+				tooltipVisible: false,
+				verifyOtpText: null,
+			});
+		}
 	};
 	handleAuthenticator = (e) => {
 		this.setState({ ...this.state, authCode: e.target.value });
@@ -409,12 +430,20 @@ class WithdrawSummary extends Component {
 			this.setState({
 				...this.state,
 				errorMsg: apiCalls.convertLocalLang("agree_termsofservice"),
+				agreeRed:false,
 			});
 			this.useDivRef.current.scrollIntoView(0, 0);
 		}
+		else if (!(this.state.verifyData.isEmailVerification || this.state.verifyData.isPhoneVerification || this.state.verifyData.twoFactorEnabled || this.state.verifyData.isLiveVerification)) {
+			this.setState({
+				...this.state,
+				errorMsg:
+					"Without verifications you can't withdraw. Please select withdraw verifications from security section"
+			});
+		}
 		else {
 
-			this.setState({ ...this.state, btnLoading: true })
+			this.setState({ ...this.state, btnLoading: true,agreeRed:true })
 
 			if (this.state.verifyData.isPhoneVerified) {
 				if (!this.state.isPhoneVerification) {
@@ -457,7 +486,7 @@ class WithdrawSummary extends Component {
 			// 			"Without Verifications you can't withdraw. Please select withdraw verifications from security section", btnLoading: false
 			// 	});
 			// }
-			if (this.props.userProfile.isBusiness) {
+			if (this.props.userProfile.isBusiness||!this.state.verifyData?.isLiveVerification) {
 				let saveObj = this.props.sendReceive.withdrawCryptoObj;
 				let trackAuditLogData = this.props.trackAuditLogData;
 				trackAuditLogData.Action = "Save";
@@ -480,12 +509,19 @@ class WithdrawSummary extends Component {
 						errorMsg: this.isErrorDispaly(withdrawal), btnLoading: false
 					});
 				}
-			} else {
+			}
+			else if(this.state.verifyData?.isLiveVerification){
 				this.props.dispatch(
 					setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
 				);
 				this.props.changeStep("withdraw_crypto_liveness");
 			}
+			//  else {
+			// 	this.props.dispatch(
+			// 		setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
+			// 	);
+			// 	this.props.changeStep("withdraw_crypto_liveness");
+			// }
 			// this.setState({ 
 			// 	...this.state,
 			// 	errorMsg:
@@ -516,7 +552,7 @@ class WithdrawSummary extends Component {
 
 	render() {
 		const { Paragraph, Text } = Typography;
-		const { seconds, disable, textDisable, seconds2 } = this.state;
+		const { seconds, disable, textDisable, seconds2,agreeRed } = this.state;
 		const link = <this.LinkValue content="terms_service" />;
 
 		const btnList = {
@@ -618,7 +654,7 @@ class WithdrawSummary extends Component {
 							<Currency
 								defaultValue={this.state.usdAmount}
 								prefix={""}
-								decimalPlaces={8}
+								decimalPlaces={2}
 								type={"text"}
 								suffixText={"USD"}
 							/>
@@ -714,32 +750,21 @@ class WithdrawSummary extends Component {
 									rules={[{ required: true, message: "Is required" }]}
 								>
 									<div className="p-relative d-flex align-center">
-										<Input
-											type="text"
+									
+										<NumberFormat
+											customInput={Input}
+											thousandSeparator={false}
+											prefix={""}
+											decimalScale={0}
+											allowNegative={false}
+											allowLeadingZeros={true}
 											className="cust-input custom-add-select mb-0"
 											placeholder={"Enter code"}
 											maxLength={6}
-											disabled={this.state.inputDisable}
-											onKeyDown={(event) => {
-												if (
-													event.currentTarget.value.length >= 6 &&
-													!(event.key == "Backspace" || event.key == "Delete")
-												) {
-													event.preventDefault();
-												} else if (/^\d+$/.test(event.key)) {
-													this.handleOtp(event.currentTarget.value);
-												} else if (
-													event.key == "Backspace" ||
-													event.key == "Delete"
-												) {
-												}
-												else {
-													event.preventDefault();
-												}
-											}}
-											style={{ width: "100%" }}
-											onChange={(e) => this.handleChange(e, "code")}
-										/>
+									style={{ width: "100%"  }}
+									onValueChange={(e) => this.handleChange(e.value)}
+									disabled={this.state.inputDisable}
+								/>
 										<div className="new-add c-pointer get-code text-yellow hy-align">
 											{!this.state.verifyTextotp && (
 												<Button
@@ -923,7 +948,7 @@ class WithdrawSummary extends Component {
 								required
 							>
 								<span className="d-flex">
-									<Checkbox className="ant-custumcheck" />
+								<Checkbox className={`ant-custumcheck ${!agreeRed ? "check-red":" "}`} />
 									<span className="withdraw-check"></span>
 									<Translate
 										content="agree_to_suissebase"
