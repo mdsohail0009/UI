@@ -175,14 +175,13 @@ const AddressCommonCom = (props) => {
   }
 
   const validateAddressType = (_, value) => {
-    debugger
     if (value) {
       let address = value.trim();
       let coinType = bankDetailForm.getFieldValue("walletCode");
       if (coinType) {
         const validAddress = WAValidator.validate(address, coinType, "both");
         
-        if (!validAddress ,!address) {
+        if (!validAddress) {
           return Promise.reject(
             "Address is not Valid, please enter a valid address according to the coin selected"
           );
