@@ -26,9 +26,6 @@ class CoinView extends React.Component {
     coin:"",
     loading:false
 }
-   
-   
-
     componentDidMount() {
         window.scrollTo(0, 0)
         this.loadCoinDetailData();
@@ -37,7 +34,9 @@ class CoinView extends React.Component {
             this.loadCoinDetailData();
         })
     } 
-
+componentWillUnmount(){
+    this.refreshSubscribe.unsubscribe();
+}
     coinViewTrack = () => {
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Coin page view', "Username": this.props.userProfileInfo?.userName, "customerId": this.props.userProfileInfo?.id, "Feature": 'Cockpit', "Remarks": 'Coin page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Cockpit' });
     }
