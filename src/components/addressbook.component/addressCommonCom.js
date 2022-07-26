@@ -1050,10 +1050,7 @@ const AddressCommonCom = (props) => {
                           {
                             required: true,
                             message: 'Is required',
-                          },
-                          {
                             whitespace: true,
-                            message: 'Is required',
                           },
                           {
                             validator: validateContentRule,
@@ -1098,19 +1095,15 @@ const AddressCommonCom = (props) => {
                         required
 
                         rules={[
-                          {
-                            required: true,
-                            message: 'Is required',
-                          },
-                          {
-                            whitespace: true,
-                            message: 'Is required',
-                          },
+                          // {
+                          //   required: true,
+                          //   //message: 'Is required',
+                          //   whitespace: true,
+                          // },
                           {
                             validator: validateAddressType,
                           },
                         ]}
-                        
                         >
                         <Input
                           className="cust-input mb-0"
