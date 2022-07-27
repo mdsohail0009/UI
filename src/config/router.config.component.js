@@ -1,7 +1,9 @@
-import { Switch, Route as ReactRoute } from 'react-router-dom';
+import { Switch, Route as ReactRoute, withRouter } from 'react-router-dom';
 import React, { Component } from 'react';
 import Route from '../authentication/protected.route';
 import SignInSilent from '../authentication/signinSilent';
+import { connect } from 'react-redux';
+import { KEY_URL_MAP } from '../components/shared/permissions/config';
 const Dashboard = React.lazy(() => import('../components/dashboard.component'));
 const CallbackPage = React.lazy(() => import('../authentication/callback.component'));
 const Login = React.lazy(() => import('../authentication/login.component'));
@@ -25,7 +27,21 @@ const AddressFiatView = React.lazy(() => import("../components/addressbook.compo
 const AddressCryptoView = React.lazy(() => import("../components/addressbook.component/addressCryptoView"))
 const RewardCard = React.lazy(() => import("../components/cards.component"));
 const RewardCardStatus = React.lazy(() => import("../components/cards.component/thankyou"));
+const AccessDenied = React.lazy(() => import("../components/shared/permissions/access.denied"));
+
 class RouteConfig extends Component {
+  componentDidMount(){
+    this.unlisten = this.props.history.listen((location)=>{
+debugger
+      if(!this.props.menuItems.featurePermissions?.[KEY_URL_MAP[location.pathname]]){
+        this.props.history.push("/accessdenied");
+      }
+
+    })
+  }
+  componentWillUnmount(){
+    this.unlisten();
+  }
   render() {
     return <Switch>
       <React.Suspense fallback={<div className="loader">Loading...</div>}>
@@ -48,6 +64,7 @@ class RouteConfig extends Component {
         <ReactRoute path="/silent_redirect" component={SignInSilent} />
         <ReactRoute path='/cockpitCharts' component={DashboardCharts} />
         <ReactRoute path='/cards' component={RewardCard} />
+        <ReactRoute path='/accessdenied' component={AccessDenied} />
         <ReactRoute
           path="/payments"
           render={({ match: { url } }) => (
@@ -66,5 +83,8 @@ class RouteConfig extends Component {
   }
 
 }
+const connectStateToProps = ({menuItems})=>{
+  return {menuItems}
+}
 
-export default RouteConfig;
+export default withRouter(connect(connectStateToProps)(RouteConfig));

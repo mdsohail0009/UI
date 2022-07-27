@@ -30,7 +30,7 @@ const setData = (payload) => {
 const fetchFeatures = (app_id, customer_id) => {
 
     return async dispatch => {
-        dispatch(getData({ data: [], error: null, loading: true , key: "features"}));
+        dispatch(getData({ data: [], error: null, loading: true, key: "features" }));
         const response = await getFeatures(app_id, customer_id);
         if (response.ok) {
             dispatch(setData({ data: response.data, error: null, key: "features", loading: false }));
@@ -44,10 +44,10 @@ const fetchFeatures = (app_id, customer_id) => {
 const fetchFeaturePermissions = (feature_id) => {
 
     return async dispatch => {
-        dispatch(getData({ data: [], error: null, loading: true,key:"featurePermissions" }));
-        const response = await getFeaturePermissions({feature_id});
+        dispatch(getData({ data: [], error: null, loading: true, key: "featurePermissions" }));
+        const response = await getFeaturePermissions({ feature_id });
         if (response.ok) {
-            dispatch(setData({ data: response.data, error: null, key: "featurePermissions", loading: false }));
+            dispatch(setData({ [response.data?.key]: response.data, error: null, key: "featurePermissions", loading: false }));
         } else {
             setData({ data: null, loading: false, error: response.data?.message || response.data || response.originalError.message, key: "featurePermissions" });
         }
@@ -82,4 +82,4 @@ const featuresReducer = (state = initialState, action) => {
 }
 
 export default featuresReducer;
-export {fetchFeatures,fetchFeaturePermissions};
+export { fetchFeatures, fetchFeaturePermissions };

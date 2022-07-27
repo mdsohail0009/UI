@@ -51,7 +51,7 @@ import {
     setWithdrawfiatenaable
 } from "../../../reducers/sendreceiveReducer";
 import { getmemeberInfo } from "../../../reducers/configReduser";
-import { fetchFeatures } from "../../../reducers/feturesReducer";
+import { fetchFeaturePermissions, fetchFeatures } from "../../../reducers/feturesReducer";
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
 counterpart.registerTranslations("my", my);
@@ -166,7 +166,7 @@ class HeaderPermissionMenu extends Component {
         }
 
     }
-    onMenuItemClick = (menuKey, menuItem) => {
+    onMenuItemClick = async (menuKey, menuItem) => {
         if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled) {
             if (menuItem.url === "modal") {
                 if (menuItem.dispatchStep) {
@@ -190,6 +190,8 @@ class HeaderPermissionMenu extends Component {
 
 
                 }
+                if (!this.props.menuItems.featurePermissions[menuItem.key])
+                    this.props.dispatch(fetchFeaturePermissions(menuItem.featureId || menuItem.id));
                 this.setState({ ...this.state, drawerMenu: { ...this.drawerMenu, [menuKey]: true } });
             } else if (menuItem.url) {
                 this.props.history.push(menuItem.url);
