@@ -175,14 +175,13 @@ const AddressCommonCom = (props) => {
   }
 
   const validateAddressType = (_, value) => {
-    debugger
     if (value) {
       let address = value.trim();
       let coinType = bankDetailForm.getFieldValue("walletCode");
       if (coinType) {
         const validAddress = WAValidator.validate(address, coinType, "both");
         
-        if (!validAddress ,!address) {
+        if (!validAddress) {
           return Promise.reject(
             "Address is not Valid, please enter a valid address according to the coin selected"
           );
@@ -1051,10 +1050,7 @@ const AddressCommonCom = (props) => {
                           {
                             required: true,
                             message: 'Is required',
-                          },
-                          {
                             whitespace: true,
-                            message: 'Is required',
                           },
                           {
                             validator: validateContentRule,
@@ -1099,19 +1095,15 @@ const AddressCommonCom = (props) => {
                         required
 
                         rules={[
-                          {
-                            required: true,
-                            message: 'Is required',
-                          },
-                          {
-                            whitespace: true,
-                            message: 'Is required',
-                          },
+                          // {
+                          //   required: true,
+                          //   //message: 'Is required',
+                          //   whitespace: true,
+                          // },
                           {
                             validator: validateAddressType,
                           },
                         ]}
-                        
                         >
                         <Input
                           className="cust-input mb-0"
