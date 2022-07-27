@@ -198,7 +198,7 @@ class HeaderPermissionMenu extends Component {
         ]
     }
     componentDidMount() {
-        this.props.dispatch(fetchFeatures(this.props.userConfig.appId || "5960CF10-017C-4E54-8F96-0E47EC4BC4A4", this.props.userConfig.id));
+        this.props.dispatch(fetchFeatures(this.props.userConfig.appId || "178A3680-3B6F-44AD-9EF2-69EA040C16CC", this.props.userConfig.id));
     }
     userProfile() {
         this.props.history.push("/userprofile");
