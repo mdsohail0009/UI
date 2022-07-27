@@ -61,8 +61,8 @@ const fetchFeaturePermissions = (feature_id) => {
 
 
 let initialState = {
-    features: { loading: false, data: [], error: null },
-    featurePermissions: { loading: false, data: [], error: null }
+    features: { loading: true, data: [], error: null },
+    featurePermissions: { loading: true, data: [], error: null }
 
 }
 
