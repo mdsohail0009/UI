@@ -58,7 +58,7 @@ import Wallets from "../components/wallets.component.js";
 import apiCalls from "../api/apiCalls";
 import { setNotificationCount } from "../reducers/dashboardReducer";
 import { getmemeberInfo } from "../reducers/configReduser";
-
+import HeaderPermissionMenu, { MobileMenu } from '../components/shared/permissions/header.menu'
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
 counterpart.registerTranslations("my", my);
@@ -82,7 +82,7 @@ class Header extends Component {
       this.props.userConfig ? this.props.userConfig.language : "en"
     );
   }
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.props.dispatch(setHeaderTab(""));
   }
   securityMenu = (
@@ -310,7 +310,7 @@ class Header extends Component {
       this.props.dispatch(setStep("step1"));
       this.setState({
         buyDrawer: true,
-        Visibleprofilemenu: false, collapsed: true,isShowSider: false
+        Visibleprofilemenu: false, collapsed: true, isShowSider: false
       });
     } else {
       const isKyc = !this.props.userConfig.isKYC;
@@ -321,7 +321,7 @@ class Header extends Component {
       }
       this.setState({
         ...this.state,
-        Visibleprofilemenu: false, collapsed: false,isShowSider: false
+        Visibleprofilemenu: false, collapsed: false, isShowSider: false
       });
     }
   };
@@ -330,7 +330,7 @@ class Header extends Component {
       this.props.dispatch(sendSetStep("step1"));
       this.setState({
         sendDrawer: true,
-        Visibleprofilemenu: false,collapsed:true, isShowSider:false
+        Visibleprofilemenu: false, collapsed: true, isShowSider: false
       });
     } else {
       const isKyc = !this.props.userConfig.isKYC;
@@ -341,7 +341,7 @@ class Header extends Component {
       }
       this.setState({
         ...this.state,
-        Visibleprofilemenu: false,collapsed:true, isShowSider:false
+        Visibleprofilemenu: false, collapsed: true, isShowSider: false
       });
     }
   };
@@ -411,7 +411,7 @@ class Header extends Component {
       this.props.dispatch(setWithdrawfiatenaable(false));
       this.setState({
         buyFiatDrawer: true,
-        Visibleprofilemenu: false, isShowSider:false, collapsed:true
+        Visibleprofilemenu: false, isShowSider: false, collapsed: true
       });
     } else {
       const isKyc = !this.props.userConfig.isKYC;
@@ -422,7 +422,7 @@ class Header extends Component {
       }
       this.setState({
         ...this.state,
-        Visibleprofilemenu: false,isShowSider:false, collapsed:true
+        Visibleprofilemenu: false, isShowSider: false, collapsed: true
       });
     }
     this.props.dispatch(setdepositCurrency(null));
@@ -431,7 +431,7 @@ class Header extends Component {
   showWalletsDrawer = () => {
     this.setState({
       ...this.state,
-      walletsDrawer: true, collapsed: true,isShowSider: false
+      walletsDrawer: true, collapsed: true, isShowSider: false
     });
   };
 
@@ -466,7 +466,7 @@ class Header extends Component {
       auditlogsDrawer: false,
       Visibleprofilemenu: false,
       isShowSider: false,
-      transforDrawer:false
+      transforDrawer: false
     });
   };
   enableDisable2fa = (status) => {
@@ -549,7 +549,7 @@ class Header extends Component {
   routeToCockpit = () => {
     this.props.dispatch(setHeaderTab(''));
     this.props.userConfig.isKYC ? this.props.history.push("/cockpit") : this.props.history.push("/notkyc")
-    this.setState({...this.state,collapsed:true, isShowSider: false})
+    this.setState({ ...this.state, collapsed: true, isShowSider: false })
   }
   showToggle = () => {
     this.setState({ ...this.state, collapsed: !this.state.collapsed, isShowSider: true })
@@ -729,8 +729,8 @@ class Header extends Component {
             <div className="login-user">
               <ul className="header-logo pl-0">
                 <li className="visible-mobile pr-24 p-relative" onClick={this.showToggle}>
-                {this.state.collapsed ?
-                     <span className="icon lg hamburg " />:<span className="icon md close-white " /> }
+                  {this.state.collapsed ?
+                    <span className="icon lg hamburg " /> : <span className="icon md close-white " />}
                 </li>
                 <li className="mobile-logo ">
                   {
@@ -826,238 +826,13 @@ class Header extends Component {
                 </Dropdown>
               </Menu>
             </div>
-            <Menu
-              theme="light"
-              mode="horizontal"
-              className="header-right mobile-headerview"
-              selectedKeys={[this.props.buySell?.headerTab]}
-              onSelect={(key) => {
-                this.props.dispatch(setHeaderTab(key.key));
-              }}
-            >
-              {this.props.userConfig.isBusiness && process.env.REACT_APP_ISSHOWCARDS == "true" && <Translate
-                content="cards"
-                component={Menu.Item}
-                key="8"
-                onClick={this.newCard}
-                className="list-item"
-                disabled={true}
-              />
-              }
-              <Translate
-                content="menu_payments"
-                component={Menu.Item}
-                key="2"
-                onClick={this.showPayments}
-                className="list-item"
-              />
-              <Translate
-                content="menu_wallets"
-                component={Menu.Item}
-                key="3"
-                onClick={this.showWalletsDrawer}
-                className="list-item"
-              />
-              <Translate
-                content="menu_buy_sell"
-                component={Menu.Item}
-                key="4"
-                onClick={this.showBuyDrawer}
-                className="list-item"
-              />
-              {/* <Translate
-                content="menu_swap"
-                component={Menu.Item}
-                key="4"
-                onClick={this.showSwapDrawer}
-                className="list-item"
-              /> */}
-                <Translate
-                content="menu_tranfor"
-                component={Menu.Item}
-                key="5"
-                onClick={this.showTrasforDrawer}
-                className="list-item"
-              />
-              <Dropdown
-                onClick={() =>
-                  this.setState({ ...this.state, Visibleprofilemenu: false })
-                }
-                overlay={depostWithdrawMenu}
-                trigger={["click"]}
-                placement="bottomCenter"
-                arrow
-                overlayClassName="secureDropdown depwith-drpdown"
-                getPopupContainer={() => document.getElementById("area")}
-              >
-                <Translate
-                  content="menu_send_receive"
-                  component={Menu.Item}
-                  key="6"
-                  className="mr-16"
-                />
-              </Dropdown>
-
-              <Translate
-                content="menu_transactions_history"
-                component={Menu.Item}
-                key="7"
-                onClick={this.showTransactionHistoryDrawer}
-                className="list-item"
-              />
-              {/* {this.props.userConfig.isBusiness &&<Translate
-                content="cards"
-                component={Menu.Item}
-                key="8"
-                onClick={this.showCards}
-                className="list-item"
-              />} */}
-              <Menu.Item
-                key="9"
-                className="notification-conunt"
-                onClick={this.showNotificationsDrawer}
-              >
-                <span
-                  className="icon md bell ml-4 p-relative"
-                  onClick={() => this.readNotification()}
-                >
-                  {this.props.dashboard?.notificationCount != null &&
-                    this.props.dashboard?.notificationCount != 0 && (
-                      <span>{this.props.dashboard?.notificationCount}</span>
-                    )}
-                </span>
-              </Menu.Item>
-
-              <Dropdown
-                onVisibleChange={() =>
-                  this.setState({
-                    ...this.state,
-                    Visibleprofilemenu: !this.state.Visibleprofilemenu
-                  })
-                }
-                visible={this.state.Visibleprofilemenu}
-                onClick={() =>
-                  this.setState({ ...this.state, Visibleprofilemenu: true })
-                }
-                overlay={userProfileMenu}
-                placement="topRight"
-                arrow
-                overlayClassName="secureDropdown"
-                getPopupContainer={() => document.getElementById("area")}
-              >
-                <Menu.Item key="10" className="ml-16">
-                  {this.props.userConfig?.imageURL != null && (
-                    <img
-                      src={
-                        this.props.userConfig?.imageURL
-                          ? this.props.userConfig?.imageURL
-                          : DefaultUser
-                      }
-                      className="user-profile"
-                      alt={"image"}
-                    />
-                  )}
-                  {this.props.userConfig?.imageURL === null && (
-                    <img
-                      src={
-                        this.props.userConfig?.imageURL
-                          ? this.props.userConfig?.imageURL
-                          : DefaultUser
-                      }
-                      className="user-profile"
-                      alt={"image"}
-                    />
-                  )}
-                </Menu.Item>
-              </Dropdown>
-            </Menu>
+            <HeaderPermissionMenu />
             {this.state.isShowSider && <Sider trigger={null}
               collapsible
               collapsed={this.state.collapsed}
               collapsedWidth={0}
               className={` ${this.state.collapsed ? '' : "sideropen"}`}>
-              <Menu
-                theme="light"
-                mode="vertical"
-                className="header-right"
-                selectedKeys={[this.props.buySell?.headerTab]}
-                onSelect={(key) => {
-                  this.props.dispatch(setHeaderTab(key.key));
-                }}
-              >
-                <Translate
-                  content="header_title"
-                  onClick={this.routeToCockpit}
-                  component={Menu.Item}
-                  className="list-item"
-                />
-                  {this.props.userConfig.isBusiness && process.env.REACT_APP_ISSHOWCARDS == "true" && <Translate
-                content="cards"
-                component={Menu.Item}
-                key="8"
-                onClick={this.newCard}
-                className="list-item"
-                disabled={true}
-              />
-              }
-                <Translate
-                  content="menu_payments"
-                  component={Menu.Item}
-                  key="2"
-                  onClick={this.showPayments}
-                  className="list-item"
-                />
-                <Translate
-                  content="menu_wallets"
-                  component={Menu.Item}
-                  key="3"
-                  onClick={this.showWalletsDrawer}
-                  className="list-item"
-                />
-                <Translate
-                  content="menu_buy_sell"
-                  component={Menu.Item}
-                  key="4"
-                  onClick={this.showBuyDrawer}
-                  className="list-item"
-                />
-                   <Translate
-                content="menu_tranfor"
-                component={Menu.Item}
-                key="5"
-                onClick={this.showTrasforDrawer}
-                className="list-item"
-                 />
-                 <Translate
-                  content="menu_send_receive"
-                  component={Menu.Item}
-                  key="6"
-                  className="mr-16 list-item" />
-                <Menu>
-                  <ul className="pl-0 drpdwn-list">
-                    <li onClick={this.showSendDrawer}>
-                      <Link>
-                        <Translate content="tab_crypto" conmponent={Text} />{" "}
-                        <span className="icon md rarrow-white" />
-                      </Link>
-                    </li>
-                    <li onClick={this.showBuyFiatDrawer}>
-                      <Link>
-                        <Translate content="tab_fiat" conmponent={Text} />{" "}
-                        <span className="icon md rarrow-white" />
-                      </Link>
-                    </li>
-                  </ul>
-                </Menu>
-
-                <Translate
-                  content="menu_transactions_history"
-                  component={Menu.Item}
-                  key="7"
-                  onClick={this.showTransactionHistoryDrawer}
-                  className="list-item"
-                />
-              </Menu>
+             <MobileMenu/>
             </Sider>}
           </menuHeader>
         </Layout>
@@ -1535,56 +1310,7 @@ class Header extends Component {
             </div>
           </Carousel>
         </Modal>
-        <Wallets
-          showDrawer={this.state.walletsDrawer}
-          onClose={() => this.closeDrawer()}
-        />
-        <BuySell
-          showDrawer={this.state.buyDrawer}
-          onClose={() => this.closeDrawer()}
-        />
-        <SendReceive
-          showDrawer={this.state.sendDrawer}
-          onClose={() => this.closeDrawer()}
-        />
-        <SwapCrypto
-          swapRef={(cd) => (this.child = cd)}
-          showDrawer={this.state.swapDrawer}
-          onClose={() => this.closeDrawer()}
-        />
-        <Transfor
-          swapRef={(cd) => (this.child = cd)}
-          showDrawer={this.state.transforDrawer}
-          onClose={() => this.closeDrawer()}
-        />
-        <MassPayment
-          showDrawer={this.state.buyFiatDrawer}
-          onClose={() => this.closeDrawer()}
-        />
-        {this.state.transactionDrawer && (
-          <TransactionsHistory
-            showDrawer={this.state.transactionDrawer}
-            onClose={() => {
-              this.closeDrawer(this.props.dispatch(setHeaderTab(" ")));
-              if (this.child1) {
-                this.child1.setKy();
-              }
-            }}
-            thref={(cd) => (this.child1 = cd)}
-          />
-        )}
-        {this.state.notificationsDrawer && (
-          <Notifications
-            showDrawer={this.state.notificationsDrawer}
-            onClose={() => this.closeDrawer()}
-          />
-        )}
-        {this.state.auditlogsDrawer && (
-          <AuditLogs
-            showDrawer={this.state.auditlogsDrawer}
-            onClose={() => this.closeDrawer()}
-          />
-        )}
+    
         <Drawer
           title={[
             <div className="side-drawer-header">

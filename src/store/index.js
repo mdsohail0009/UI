@@ -18,6 +18,7 @@ import AddressBookReducer from '../reducers/addressBookReducer';
 import payementsReducer from '../reducers/paymentsReducer';
 import cardsReducer from '../components/cards.component/cardsReducer';
 import TransforReducer from '../reducers/tranfor.Reducer';
+import featuresReducer from '../reducers/feturesReducer';
 
 const persistConfig = {
     key: "root",
@@ -40,6 +41,7 @@ const rootReducer = combineReducers({
     paymentsStore: payementsReducer,
     cardsStore:cardsReducer,
     TransforStore: TransforReducer,
+    menuItems:featuresReducer
 
 })
 const reducer = persistReducer(persistConfig, rootReducer)
