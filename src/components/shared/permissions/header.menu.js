@@ -52,6 +52,9 @@ import {
 } from "../../../reducers/sendreceiveReducer";
 import { getmemeberInfo } from "../../../reducers/configReduser";
 import { fetchFeaturePermissions, fetchFeatures } from "../../../reducers/feturesReducer";
+import { readNotification as readNotifications } from "../../../notifications/api";
+import apicalls from "../../../api/apiCalls";
+import { setNotificationCount } from "../../../reducers/dashboardReducer";
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
 counterpart.registerTranslations("my", my);
@@ -65,8 +68,55 @@ const LinkValue = (props) => {
     );
 };
 
-const { Title, Paragraph, Text } = Typography;
+const { Paragraph, Text } = Typography;
+const { Sider } = Layout;
+class MobileHeaderMenu extends Component {
+    render() {
+        const { onMenuItemClick, features: { data = [], error, loading } } = this.props;
+        return <> <Menu
+            theme="light"
+            mode="vertical"
+            className="header-right"
+            selectedKeys={[this.props.buySell?.headerTab]}
+            onSelect={(key) => {
+                this.props.dispatch(setHeaderTab(key.key));
+            }}
+        >
 
+            <Translate
+                content="header_title"
+                onClick={() => this.props.history.push("/cockpit")}
+                component={Menu.Item}
+                className="list-item"
+            />
+            {data.map((item, indx) => item.menuitemType === "dropdown" ?
+                <><Translate
+                    content={item.content}
+                    component={Menu.Item}
+                    key={indx}
+                    className="mr-16"
+                /><Menu>
+                        <ul className="pl-0 drpdwn-list">
+                            {item?.subMenu?.map((subItem) => <li onClick={() => onMenuItemClick(subItem.key, subItem)}>
+                                <Link>
+                                    <Translate content={subItem.content} conmponent={Text} />{" "}
+                                    <span className="icon md rarrow-white" />
+                                </Link>
+                            </li>)}
+
+                        </ul>
+                    </Menu></>
+                : <Translate
+                    content={item.content}
+                    component={Menu.Item}
+                    key={indx}
+                    onClick={() => onMenuItemClick(item.key, item)}
+                    className="list-item"
+                />)}
+        </Menu>
+        </>
+    }
+}
 class HeaderPermissionMenu extends Component {
 
     state = {
@@ -148,7 +198,7 @@ class HeaderPermissionMenu extends Component {
         ]
     }
     componentDidMount() {
-        this.props.dispatch(fetchFeatures(this.props.userConfig.appId || "5960CF10-017C-4E54-8F96-0E47EC4BC4A4", this.props.userConfig.id));
+        this.props.dispatch(fetchFeatures(this.props.userConfig.appId || "178A3680-3B6F-44AD-9EF2-69EA040C16CC", this.props.userConfig.id));
     }
     userProfile() {
         this.props.history.push("/userprofile");
@@ -206,7 +256,32 @@ class HeaderPermissionMenu extends Component {
         }
     }
     closeDrawer = (key) => {
+        if (this.child) this.child.clearValues();
+        let obj = {};
+        this.props.fromObjSwap(obj);
+        this.props.receiveObjSwap(obj);
+        this.props.updateSwapdataobj({
+            fromCoin: null,
+            receiveCoin: null,
+            price: null,
+            fromValue: null,
+            receiveValue: null,
+            errorMessage: null
+        });
+        this.props.clearSwapfullData();
         this.setState({ ...this.state, drawerMenu: { ...this.drawerMenu, [key]: false } });
+    }
+    readNotification() {
+        let isRead = apicalls.encryptValue("true", this.props.userConfig?.sk);
+        readNotifications(this.props.userConfig.id).then(() => {
+            this.props.dispatch(setNotificationCount(0));
+        });
+    }
+    showCards = () => {
+        window.open(
+            process.env.REACT_APP_CARDS_URL,
+            "_blank"
+        )
     }
     render() {
         const link = <LinkValue content="medium" />;
@@ -321,108 +396,117 @@ class HeaderPermissionMenu extends Component {
             </Menu>
         );
         const { features: { data, error, loading } } = this.props.menuItems;
-        return <>    <Menu
-            theme="light"
-            mode="horizontal"
-            className="header-right mobile-headerview"
-            selectedKeys={[this.props.buySell?.headerTab]}
-            onSelect={(key) => {
-                this.props.dispatch(setHeaderTab(key.key));
-            }}
-        >
-            {data.map((item, indx) => item.menuitemType === "dropdown" ? <Dropdown
-                onClick={() =>
-                    this.setState({ ...this.state, visbleProfileMenu: false })
-                }
-                overlay={<Menu>
-                    <ul className="pl-0 drpdwn-list">
-                        {item?.subMenu?.map((subItem) => <li onClick={() => this.onMenuItemClick(subItem.key, subItem)}>
-                            <Link>
-                                <Translate content={subItem.content} conmponent={Text} />{" "}
-                                <span className="icon md rarrow-white" />
-                            </Link>
-                        </li>)}
+        const { collapsed, isShowSider } = this.props;
 
-                    </ul>
-                </Menu>}
-                trigger={["click"]}
-                placement="bottomCenter"
-                arrow
-                overlayClassName="secureDropdown depwith-drpdown"
-                getPopupContainer={() => document.getElementById("area")}
+        return <>
+            <Menu
+                theme="light"
+                mode="horizontal"
+                className="header-right mobile-headerview"
+                selectedKeys={[this.props.buySell?.headerTab]}
+                onSelect={(key) => {
+                    this.props.dispatch(setHeaderTab(key.key));
+                }}
             >
-                <Translate
+                {data.map((item, indx) => item.menuitemType === "dropdown" ? <Dropdown
+                    onClick={() =>
+                        this.setState({ ...this.state, visbleProfileMenu: false })
+                    }
+                    overlay={<Menu>
+                        <ul className="pl-0 drpdwn-list">
+                            {item?.subMenu?.map((subItem) => <li onClick={() => this.onMenuItemClick(subItem.key, subItem)}>
+                                <Link>
+                                    <Translate content={subItem.content} conmponent={Text} />{" "}
+                                    <span className="icon md rarrow-white" />
+                                </Link>
+                            </li>)}
+
+                        </ul>
+                    </Menu>}
+                    trigger={["click"]}
+                    placement="bottomCenter"
+                    arrow
+                    overlayClassName="secureDropdown depwith-drpdown"
+                    getPopupContainer={() => document.getElementById("area")}
+                >
+                    <Translate
+                        content={item.content}
+                        component={Menu.Item}
+                        key={indx}
+                        className="mr-16"
+                    />
+                </Dropdown> : <Translate
                     content={item.content}
                     component={Menu.Item}
                     key={indx}
-                    className="mr-16"
-                />
-            </Dropdown> : <Translate
-                content={item.content}
-                component={Menu.Item}
-                key={indx}
-                onClick={() => this.onMenuItemClick(item.key, item)}
-                className="list-item"
-            />)}
-            <Menu.Item
-                key="9"
-                className="notification-conunt"
-                onClick={this.showNotificationsDrawer}
-            >
-                <span
-                    className="icon md bell ml-4 p-relative"
-                    onClick={() => this.readNotification()}
+                    onClick={() => this.onMenuItemClick(item.key, item)}
+                    className="list-item"
+                />)}
+                <Menu.Item
+                    key="9"
+                    className="notification-conunt"
+                    onClick={() => this.onMenuItemClick("notifications", { url: "modal", key: "notifications" })}
                 >
-                    {this.props.dashboard?.notificationCount != null &&
-                        this.props.dashboard?.notificationCount != 0 && (
-                            <span>{this.props.dashboard?.notificationCount}</span>
-                        )}
-                </span>
-            </Menu.Item>
-            <Dropdown
-                onVisibleChange={() =>
-                    this.setState({
-                        ...this.state,
-                        visbleProfileMenu: !this.state.visbleProfileMenu
-                    })
-                }
-                visible={this.state.visbleProfileMenu}
-                onClick={() =>
-                    this.setState({ ...this.state, visbleProfileMenu: true })
-                }
-                overlay={userProfileMenu}
-                placement="topRight"
-                arrow
-                overlayClassName="secureDropdown"
-                getPopupContainer={() => document.getElementById("area")}
-            >
-                <Menu.Item key="10" className="ml-16">
-                    {this.props.userConfig?.imageURL != null && (
-                        <img
-                            src={
-                                this.props.userConfig?.imageURL
-                                    ? this.props.userConfig?.imageURL
-                                    : DefaultUser
-                            }
-                            className="user-profile"
-                            alt={"image"}
-                        />
-                    )}
-                    {this.props.userConfig?.imageURL === null && (
-                        <img
-                            src={
-                                this.props.userConfig?.imageURL
-                                    ? this.props.userConfig?.imageURL
-                                    : DefaultUser
-                            }
-                            className="user-profile"
-                            alt={"image"}
-                        />
-                    )}
+                    <span
+                        className="icon md bell ml-4 p-relative"
+                        onClick={() => this.readNotification()}
+                    >
+                        {this.props.dashboard?.notificationCount != null &&
+                            this.props.dashboard?.notificationCount != 0 && (
+                                <span>{this.props.dashboard?.notificationCount}</span>
+                            )}
+                    </span>
                 </Menu.Item>
-            </Dropdown>
-        </Menu>
-
+                <Dropdown
+                    onVisibleChange={() =>
+                        this.setState({
+                            ...this.state,
+                            visbleProfileMenu: !this.state.visbleProfileMenu
+                        })
+                    }
+                    visible={this.state.visbleProfileMenu}
+                    onClick={() =>
+                        this.setState({ ...this.state, visbleProfileMenu: true })
+                    }
+                    overlay={userProfileMenu}
+                    placement="topRight"
+                    arrow
+                    overlayClassName="secureDropdown"
+                    getPopupContainer={() => document.getElementById("area")}
+                >
+                    <Menu.Item key="10" className="ml-16">
+                        {this.props.userConfig?.imageURL != null && (
+                            <img
+                                src={
+                                    this.props.userConfig?.imageURL
+                                        ? this.props.userConfig?.imageURL
+                                        : DefaultUser
+                                }
+                                className="user-profile"
+                                alt={"image"}
+                            />
+                        )}
+                        {this.props.userConfig?.imageURL === null && (
+                            <img
+                                src={
+                                    this.props.userConfig?.imageURL
+                                        ? this.props.userConfig?.imageURL
+                                        : DefaultUser
+                                }
+                                className="user-profile"
+                                alt={"image"}
+                            />
+                        )}
+                    </Menu.Item>
+                </Dropdown>
+            </Menu>
+            {isShowSider && <Sider trigger={null}
+                collapsible
+                collapsed={collapsed}
+                collapsedWidth={0}
+                className={` ${collapsed ? '' : "sideropen"}`}>
+                <MobileHeaderMenu onMenuItemClick={this.onMenuItemClick} features={this.props.menuItems} />
+            </Sider>}
             <Wallets
                 showDrawer={this.state.drawerMenu.wallets}
                 onClose={() => this.closeDrawer("wallets")}
@@ -462,7 +546,7 @@ class HeaderPermissionMenu extends Component {
                     thref={(cd) => (this.child1 = cd)}
                 />
             )}
-            {this.state.notificationsDrawer && (
+            {this.state.drawerMenu.notifications && (
                 <Notifications
                     showDrawer={this.state.drawerMenu.notifications}
                     onClose={() => this.closeDrawer("notifications")}
@@ -547,276 +631,5 @@ const connectDispatchToProps = dispatch => {
         dispatch
     }
 }
-class MobileHeaderMenu extends Component {
 
-    state = {
-        visbleProfileMenu: false,
-        drawerMenu: {
-            buySell: false,
-            balances: false,
-            transactions: false,
-            depositWithdraw: false,
-            transfer: false,
-            sendReceive: false,
-            buyFiat: false,
-            wallets: false,
-            payments: false,
-            auditLogs: false,
-            notifications: false,
-            swap: false,
-            changePassword: false
-
-        },
-        menuItems: [
-            {
-                label: "Cards",
-                key: "cards",
-                url: "/cards",
-                content: "cards"
-            }, ,
-            {
-                label: "Bill Payments",
-                key: "billpayments",
-                url: "/payments",
-                content: "menu_payments"
-            },
-            {
-                label: "Wallets",
-                key: "wallets",
-                url: "modal",
-                content: "menu_wallets"
-            },
-            {
-                label: "Buy / Sell",
-                key: "buySell",
-                url: "modal",
-                content: "menu_buy_sell",
-                dispatchStep: "step1",
-            },
-            {
-                label: "Transfer",
-                key: "transfer",
-                url: "modal",
-                content: "menu_tranfor",
-                dispatchStep: "tranforcoin"
-            },
-            {
-                label: "Deposit / Withdraw",
-                key: "depositWithdraw",
-                menuitemType: 'dropdown',
-                content: "menu_send_receive",
-                subMenu: [{
-                    label: "Crypto",
-                    key: "sendReceive",
-                    url: "modal",
-                    content: "tab_crypto"
-                }, {
-                    label: "Fiat",
-                    key: "buyFiat",
-                    url: "modal",
-                    content: "tab_fiat"
-                }]
-
-            },
-            {
-                label: "Transactions",
-                key: "transactions",
-                content: "menu_transactions_history",
-                url: "modal",
-
-            }
-        ]
-    }
-    componentDidMount() {
-
-    }
-    userProfile() {
-        this.props.history.push("/userprofile");
-
-        if (this.props.oidc.user.profile?.sub) {
-            this.props.getmemeberInfoa(this.props.oidc.user.profile.sub);
-        }
-    }
-    showDocRequestError() {
-        if (!this.props.twoFA?.isEnabled) {
-            this.props.history.push("/enabletwofactor");
-        }
-        else if (this.props?.userConfig?.isDocsRequested) {
-            this.props.history.push("/docnotices");
-        }
-
-    }
-    onMenuItemClick = (menuKey, menuItem) => {
-        if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled) {
-            if (menuItem.url === "modal") {
-                if (menuItem.dispatchStep) {
-                    switch (menuKey) {
-                        case "buySell":
-                            this.props.dispatch(setStep(menuItem.dispatchStep));
-                            break;
-                        case "transfer":
-                            this.props.dispatch(transforSetStep(menuItem.dispatchStep));
-                            break;
-                        case "sendReceive":
-                            this.props.dispatch(sendSetStep("step1"));
-                            break;
-                        case "buyFiat":
-                            this.props.dispatch(byFiatSetStep("step1"));
-                            this.props.dispatch(setWithdrawfiatenaable(false));
-                            break;
-                        default:
-                            break;
-                    }
-
-
-                }
-                this.setState({ ...this.state, drawerMenu: { ...this.drawerMenu, [menuKey]: true } });
-            } else if (menuItem.url) {
-                this.props.history.push(menuItem.url);
-            }
-        } else {
-            const isKyc = !this.props.userConfig.isKYC;
-            if (isKyc) {
-                this.props.history.push("/notkyc");
-            } else {
-                this.showDocRequestError();
-            }
-        }
-    }
-    closeDrawer = (key) => {
-        this.setState({ ...this.state, drawerMenu: { ...this.drawerMenu, [key]: false } });
-    }
-    render() {
-        const { features: { data, error, loading } } = this.props.menuItems;
-        return <> <Menu
-            theme="light"
-            mode="vertical"
-            className="header-right"
-            selectedKeys={[this.props.buySell?.headerTab]}
-            onSelect={(key) => {
-                this.props.dispatch(setHeaderTab(key.key));
-            }}
-        >
-
-            <Translate
-                content="header_title"
-                onClick={this.routeToCockpit}
-                component={Menu.Item}
-                className="list-item"
-            />
-            {data.map((item, indx) => item.menuitemType === "dropdown" ?
-                <><Translate
-                    content={item.content}
-                    component={Menu.Item}
-                    key={indx}
-                    className="mr-16"
-                /><Menu>
-                        <ul className="pl-0 drpdwn-list">
-                            {item?.subMenu?.map((subItem) => <li onClick={() => this.onMenuItemClick(subItem.key, subItem)}>
-                                <Link>
-                                    <Translate content={subItem.content} conmponent={Text} />{" "}
-                                    <span className="icon md rarrow-white" />
-                                </Link>
-                            </li>)}
-
-                        </ul>
-                    </Menu></>
-                : <Translate
-                    content={item.content}
-                    component={Menu.Item}
-                    key={indx}
-                    onClick={() => this.onMenuItemClick(item.key, item)}
-                    className="list-item"
-                />)}
-        </Menu>
-
-            <Wallets
-                showDrawer={this.state.drawerMenu.wallets}
-                onClose={() => this.closeDrawer("wallets")}
-            />
-            <BuySell
-                showDrawer={this.state.drawerMenu.buySell}
-                onClose={() => this.closeDrawer("buySell")}
-            />
-            <SendReceive
-                showDrawer={this.state.drawerMenu.sendReceive}
-                onClose={() => this.closeDrawer("sendReceive")}
-            />
-            <SwapCrypto
-                swapRef={(cd) => (this.child = cd)}
-                showDrawer={this.state.drawerMenu.swap}
-                onClose={() => this.closeDrawer("swap")}
-            />
-            <Transfor
-                swapRef={(cd) => (this.child = cd)}
-                showDrawer={this.state.drawerMenu.transfer}
-                onClose={() => this.closeDrawer("transfer")}
-            />
-            <MassPayment
-                showDrawer={this.state.drawerMenu.buyFiat}
-                onClose={() => this.closeDrawer("buyFiat")}
-            />
-            {this.state.drawerMenu.transactions && (
-                <TransactionsHistory
-                    showDrawer={this.state.drawerMenu.transactions}
-                    onClose={() => {
-                        this.props.dispatch(setHeaderTab(" "))
-                        this.closeDrawer("transactions");
-                        if (this.child1) {
-                            this.child1.setKy();
-                        }
-                    }}
-                    thref={(cd) => (this.child1 = cd)}
-                />
-            )}
-            {this.state.notificationsDrawer && (
-                <Notifications
-                    showDrawer={this.state.drawerMenu.notifications}
-                    onClose={() => this.closeDrawer("notifications")}
-                />
-            )}
-            {this.state.drawerMenu.auditLogs && (
-                <AuditLogs
-                    showDrawer={this.state.drawerMenu.auditLogs}
-                    onClose={() => this.closeDrawer("auditLogs")}
-                />
-            )}
-            <Drawer
-                title={[
-                    <div className="side-drawer-header">
-                        <span
-                            onClick={() =>
-                                this.closeDrawer("changePassword")
-                            }
-                            className="icon md close-white c-pointer"
-                        />
-                        <div className="text-center fs-14">
-                            <Translate
-                                className="mb-0 text-white-30 fw-600 text-upper"
-                                content="change_pass_word"
-                                component={Paragraph}
-                            />
-                        </div>
-                    </div>
-                ]}
-                placement="right"
-                closable={true}
-                visible={this.state.drawerMenu.changePassword}
-                closeIcon={null}
-                onClose={() =>
-                    this.closeDrawer("changePassword")
-                }
-                className="side-drawer"
-            >
-                <Changepassword
-                    onSubmit={() => {
-                        this.closeDrawer("changePassword")
-                    }}
-                />
-            </Drawer>
-        </>
-    }
-}
-const MobileMenu = withRouter(connect(connectStateToProps, connectDispatchToProps)(MobileHeaderMenu));
 export default withRouter(connect(connectStateToProps, connectDispatchToProps)(HeaderPermissionMenu));
-export { MobileMenu }

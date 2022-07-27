@@ -1,8 +1,9 @@
-const KEY_URL_MAP={
-    "/payments":"payments",
-    "/cards":"cards",
-    "/addressbook":"addressbook",
-    "/documents":"documents",
-    "/cockpit":"cockpit"
+const KEY_URL_MAP = {
+    "/payments": "payments",
+    "/cards": "cards",
+    "/addressbook": "addressbook",
+    "/documents": "documents",
+    "/cockpit": "cockpit",
+    "/": "cockpit"
 }
-export{KEY_URL_MAP}
+export { KEY_URL_MAP }
