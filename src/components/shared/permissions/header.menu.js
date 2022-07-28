@@ -159,6 +159,8 @@ class HeaderPermissionMenu extends Component {
     }
     onMenuItemClick = async (menuKey, menuItem) => {
         if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled) {
+            if (!this.props.menuItems.featurePermissions[menuItem.key])
+                this.props.dispatch(fetchFeaturePermissions(menuItem.featureId || menuItem.id, this.props.userConfig.id));
             if (menuItem.path === "/modal") {
                 if (menuItem.dispatchStep) {
                     switch (menuKey) {
@@ -179,8 +181,6 @@ class HeaderPermissionMenu extends Component {
                             break;
                     }
                 }
-                if (!this.props.menuItems.featurePermissions[menuItem.key])
-                    this.props.dispatch(fetchFeaturePermissions(menuItem.featureId || menuItem.id,this.props.userConfig.id));
                 this.setState({ ...this.state, drawerMenu: { ...this.drawerMenu, [menuKey]: true } });
             } else if (menuItem.path) {
                 this.props.history.push(menuItem.path);

@@ -33,6 +33,7 @@ const fetchFeatures = (app_id, customer_id) => {
 
 }
 const fetchFeaturePermissions = (feature_id,customer_id) => {
+    debugger
     return async (dispatch) => {
         dispatch(getData({ data: [], error: null, loading: true, key: "featurePermissions" }));
         const response = await getFeaturePermissions({ feature_id,customer_id });
@@ -53,10 +54,10 @@ const initialState = {
 const featuresReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_DATA:
-            state = { ...state, [action.payload.key]: { ...action.payload } };
+            state = { ...state, [action.payload.key]: {...state[action.payload.key], ...action.payload } };
             return state;
         case SET_DATA:
-            state = { ...state, [action.payload.key]: { ...action.payload } };
+            state = { ...state, [action.payload.key]: {...state[action.payload.key], ...action.payload } };
             return state;
         default:
             return state;
