@@ -72,7 +72,7 @@ const { Paragraph, Text } = Typography;
 const { Sider } = Layout;
 class MobileHeaderMenu extends Component {
     render() {
-        const { onMenuItemClick, features: { data = [], error, loading } } = this.props;
+        const { onMenuItemClick, features:{features:{data,error,loading}} } = this.props;
         return <> <Menu
             theme="light"
             mode="vertical"
@@ -89,7 +89,7 @@ class MobileHeaderMenu extends Component {
                 component={Menu.Item}
                 className="list-item"
             />
-            {data.map((item, indx) => item.menuitemType === "dropdown" ?
+            {data?.map((item, indx) => item.menuitemType === "dropdown" ?
                 <><Translate
                     content={item.content}
                     component={Menu.Item}
@@ -218,7 +218,7 @@ class HeaderPermissionMenu extends Component {
     }
     onMenuItemClick = async (menuKey, menuItem) => {
         if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled) {
-            if (menuItem.url === "modal") {
+            if (menuItem.path === "/modal") {
                 if (menuItem.dispatchStep) {
                     switch (menuKey) {
                         case "buySell":
@@ -243,8 +243,8 @@ class HeaderPermissionMenu extends Component {
                 if (!this.props.menuItems.featurePermissions[menuItem.key])
                     this.props.dispatch(fetchFeaturePermissions(menuItem.featureId || menuItem.id));
                 this.setState({ ...this.state, drawerMenu: { ...this.drawerMenu, [menuKey]: true } });
-            } else if (menuItem.url) {
-                this.props.history.push(menuItem.url);
+            } else if (menuItem.path) {
+                this.props.history.push(menuItem.path);
             }
         } else {
             const isKyc = !this.props.userConfig.isKYC;
