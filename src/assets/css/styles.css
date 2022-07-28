@@ -1323,3 +1323,4 @@ input[type=number]::-webkit-outer-spin-button {
 .secureDropdown .ant-menu-root{top:27px !important}
 .secureDropdown .ant-menu-root{min-width: 180px;max-width: 180px;}
 .secureDropdown .ant-menu-title-content{line-height: 23px;}
+.ant-result-title, .ant-result-subtitle{color: var(--textWhite);}
