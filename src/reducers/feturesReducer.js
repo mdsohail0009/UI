@@ -29,10 +29,10 @@ const fetchFeatures = (app_id, customer_id) => {
     }
 
 }
-const fetchFeaturePermissions = (feature_id) => {
+const fetchFeaturePermissions = (feature_id,customer_id) => {
     return async (dispatch) => {
         dispatch(getData({ data: [], error: null, loading: true, key: "featurePermissions" }));
-        const response = await getFeaturePermissions({ feature_id });
+        const response = await getFeaturePermissions({ feature_id,customer_id });
         if (response.ok) {
             dispatch(setData({ [response.data?.key]: response.data, error: null, key: "featurePermissions", loading: false }));
         } else {

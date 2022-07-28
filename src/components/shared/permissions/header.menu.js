@@ -55,6 +55,7 @@ import { fetchFeaturePermissions, fetchFeatures } from "../../../reducers/feture
 import { readNotification as readNotifications } from "../../../notifications/api";
 import apicalls from "../../../api/apiCalls";
 import { setNotificationCount } from "../../../reducers/dashboardReducer";
+import { userManager } from "../../../authentication";
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
 counterpart.registerTranslations("my", my);
@@ -72,7 +73,7 @@ const { Paragraph, Text } = Typography;
 const { Sider } = Layout;
 class MobileHeaderMenu extends Component {
     render() {
-        const { onMenuItemClick, features:{features:{data,error,loading}} } = this.props;
+        const { onMenuItemClick, features: { features: { data, error, loading } } } = this.props;
         return <> <Menu
             theme="light"
             mode="vertical"
@@ -137,65 +138,6 @@ class HeaderPermissionMenu extends Component {
             changePassword: false
 
         },
-        menuItems: [
-            {
-                label: "Cards",
-                key: "cards",
-                url: "/cards",
-                content: "cards"
-            }, ,
-            {
-                label: "Bill Payments",
-                key: "billpayments",
-                url: "/payments",
-                content: "menu_payments"
-            },
-            {
-                label: "Wallets",
-                key: "wallets",
-                url: "modal",
-                content: "menu_wallets"
-            },
-            {
-                label: "Buy / Sell",
-                key: "buySell",
-                url: "modal",
-                content: "menu_buy_sell",
-                dispatchStep: "step1",
-            },
-            {
-                label: "Transfer",
-                key: "transfer",
-                url: "modal",
-                content: "menu_tranfor",
-                dispatchStep: "tranforcoin"
-            },
-            {
-                label: "Deposit / Withdraw",
-                key: "depositWithdraw",
-                menuitemType: 'dropdown',
-                content: "menu_send_receive",
-                subMenu: [{
-                    label: "Crypto",
-                    key: "sendReceive",
-                    url: "modal",
-                    content: "tab_crypto"
-                }, {
-                    label: "Fiat",
-                    key: "buyFiat",
-                    url: "modal",
-                    content: "tab_fiat"
-                }]
-
-            },
-            {
-                label: "Transactions",
-                key: "transactions",
-                content: "menu_transactions_history",
-                url: "modal",
-
-            }
-        ]
     }
     componentDidMount() {
         this.props.dispatch(fetchFeatures(this.props.userConfig.appId || "178A3680-3B6F-44AD-9EF2-69EA040C16CC", this.props.userConfig.id));
@@ -214,7 +156,6 @@ class HeaderPermissionMenu extends Component {
         else if (this.props?.userConfig?.isDocsRequested) {
             this.props.history.push("/docnotices");
         }
-
     }
     onMenuItemClick = async (menuKey, menuItem) => {
         if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled) {
@@ -237,11 +178,9 @@ class HeaderPermissionMenu extends Component {
                         default:
                             break;
                     }
-
-
                 }
                 if (!this.props.menuItems.featurePermissions[menuItem.key])
-                    this.props.dispatch(fetchFeaturePermissions(menuItem.featureId || menuItem.id));
+                    this.props.dispatch(fetchFeaturePermissions(menuItem.featureId || menuItem.id,this.props.userConfig.id));
                 this.setState({ ...this.state, drawerMenu: { ...this.drawerMenu, [menuKey]: true } });
             } else if (menuItem.path) {
                 this.props.history.push(menuItem.path);
@@ -282,6 +221,23 @@ class HeaderPermissionMenu extends Component {
             process.env.REACT_APP_CARDS_URL,
             "_blank"
         )
+    }
+    clearEvents = () => {
+        window.$zoho?.salesiq?.chat.complete();
+        window.$zoho?.salesiq?.reset();
+        // this.props.dispatch(clearUserInfo());
+        userManager.signoutRedirect();
+        apicalls.trackEvent({
+            Type: "User",
+            Action: "User Logged out",
+            Username: null,
+            customerId: null,
+            Feature: "Logout",
+            Remarks: "User Logged out",
+            Duration: 1,
+            Url: window.location.href,
+            FullFeatureName: "Logout"
+        });
     }
     render() {
         const link = <LinkValue content="medium" />;
@@ -383,13 +339,11 @@ class HeaderPermissionMenu extends Component {
                             </Link>
                         </li>
                         <li onClick={() => this.clearEvents()}>
-                            <Link>
-                                <Translate
-                                    content="logout"
-                                    className="text-white-30"
-                                    component={Text}
-                                />
-                            </Link>
+                            <Translate
+                                content="logout"
+                                className="text-white-30"
+                                component={Text}
+                            />
                         </li>
                     </ul>
                 </div>
