@@ -225,7 +225,6 @@ class HeaderPermissionMenu extends Component {
     clearEvents = () => {
         window.$zoho?.salesiq?.chat.complete();
         window.$zoho?.salesiq?.reset();
-        // this.props.dispatch(clearUserInfo());
         userManager.signoutRedirect();
         apicalls.trackEvent({
             Type: "User",
@@ -240,7 +239,6 @@ class HeaderPermissionMenu extends Component {
         });
     }
     render() {
-        const link = <LinkValue content="medium" />;
         const userProfileMenu = (
             <Menu>
                 <div className="profile-dropdown">
@@ -459,7 +457,7 @@ class HeaderPermissionMenu extends Component {
                 collapsed={collapsed}
                 collapsedWidth={0}
                 className={` ${collapsed ? '' : "sideropen"}`}>
-                <MobileHeaderMenu onMenuItemClick={this.onMenuItemClick} features={this.props.menuItems} />
+                <MobileHeaderMenu onMenuItemClick={this.onMenuItemClick} features={this.props.menuItems} dispatch={this.props.dispatch} />
             </Sider>}
             <Wallets
                 showDrawer={this.state.drawerMenu.wallets}

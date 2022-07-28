@@ -1,4 +1,5 @@
 import { getFeaturePermissions, getFeatures } from "../components/shared/permissions/api";
+import { store } from "../store";
 const SET_DATA = "setData";
 const GET_DATA = "getData";
 const UPDATE_PERMISSIONS = "updatePermissions";
@@ -19,12 +20,14 @@ const fetchFeatures = (app_id, customer_id) => {
     return async (dispatch) => {
         dispatch(getData({ data: [], error: null, loading: true, key: "features" }));
         const response = await getFeatures(app_id, customer_id);
-        debugger
         if (response.ok) {
             dispatch(setData({ data: response.data, error: null, key: "features", loading: false }));
+            const _cockpit = response.data.find(item=>(item.key==="cockpit"||item.path==="/cockpit"));
+            const _userConfig = store.getState().userConfig.userProfileInfo;
+            dispatch(fetchFeaturePermissions(_cockpit.id,_userConfig.id))
         } else {
             dispatch(setData({ data: null, loading: false, error: response.data?.message || response.data || response.originalError.message, key: "features" }));
-        }
+        };
 
     }
 
@@ -34,7 +37,7 @@ const fetchFeaturePermissions = (feature_id,customer_id) => {
         dispatch(getData({ data: [], error: null, loading: true, key: "featurePermissions" }));
         const response = await getFeaturePermissions({ feature_id,customer_id });
         if (response.ok) {
-            dispatch(setData({ [response.data?.key]: response.data, error: null, key: "featurePermissions", loading: false }));
+            dispatch(setData({ [response.data?.key||response.data?.screenName]: response.data, error: null, key: "featurePermissions", loading: false }));
         } else {
             dispatch(setData({ data: null, loading: false, error: response.data?.message || response.data || response.originalError.message, key: "featurePermissions" }));
         }

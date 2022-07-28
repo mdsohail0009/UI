@@ -23,7 +23,7 @@ class ActionsToolbar extends Component {
 }
 const connectStateToProps = ({ menuItems }) => {
     return {
-        permissions: menuItems.featurePermissions
+        permissions: menuItems.featurePermissions.actions
     }
 }
 export default connect(connectStateToProps)(ActionsToolbar);
