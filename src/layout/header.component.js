@@ -123,21 +123,6 @@ class Header extends Component {
     this.setState({ ...this.state, collapsed: !this.state.collapsed, isShowSider: true })
   }
   render() {
-    const menu = (
-      <Menu
-        items={[
-          {
-            label: <a href="https://www.antgroup.com">1st menu item</a>,
-            key: '0',
-          },
-          {
-            label: <a href="https://www.aliyun.com">2nd menu item</a>,
-            key: '1',
-          },
-          
-        ]}
-      />
-    );
     const userProfileMenu = (
       <Menu>
         <div className="profile-dropdown">
@@ -259,9 +244,23 @@ class Header extends Component {
                     <span className="icon lg hamburg " /> : <span className="icon md close-white " />}
                 </li>
                 <li className="toggle-space">
-                <Dropdown overlay={menu} trigger={['click']}>
-                    <a onClick={e => e.preventDefault()}><span className="icon lg app-menu"></span></a>
-                </Dropdown>
+                  <Dropdown overlay={(
+                    <div className="secureDropdown">
+            <Menu className="drpdwn-list">
+              <Menu.Item key="0" className="mb-0 mt-0">
+                   <a className="text-white-30">Exchange</a> 
+              </Menu.Item>
+              <Menu.Item key="1" className="mb-0 mt-0">
+                    <a className="text-white-30"> Partner</a> 
+              </Menu.Item>
+              <Menu.Item key="2" className="mb-0 mt-0">
+                    <a className="text-white-30"> Bank</a> 
+              </Menu.Item>
+            </Menu></div>
+          )}
+           trigger={['click']}>
+                      <a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="icon lg app-menu"></span></a>
+                  </Dropdown>
                 </li>
                 <li className="mobile-logo">
                   {
