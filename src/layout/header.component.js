@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {
+import { 
   Layout,
   Menu,
   Typography,
@@ -123,6 +123,21 @@ class Header extends Component {
     this.setState({ ...this.state, collapsed: !this.state.collapsed, isShowSider: true })
   }
   render() {
+    const menu = (
+      <Menu
+        items={[
+          {
+            label: <a href="https://www.antgroup.com">1st menu item</a>,
+            key: '0',
+          },
+          {
+            label: <a href="https://www.aliyun.com">2nd menu item</a>,
+            key: '1',
+          },
+          
+        ]}
+      />
+    );
     const userProfileMenu = (
       <Menu>
         <div className="profile-dropdown">
@@ -243,12 +258,17 @@ class Header extends Component {
                   {this.state.collapsed ?
                     <span className="icon lg hamburg " /> : <span className="icon md close-white " />}
                 </li>
-                <li className="mobile-logo ">
+                <li className="toggle-space">
+                <Dropdown overlay={menu} trigger={['click']}>
+                    <a onClick={e => e.preventDefault()}><span className="icon lg app-menu"></span></a>
+                </Dropdown>
+                </li>
+                <li className="mobile-logo">
                   {
                     <img
                       src={logoWhite}
                       alt="logo"
-                      className="tlv-logo dark c-pointer"
+                      className="tlv-logo dark c-pointer p-relative ml-12"
                       onClick={this.routeToHome}
                     />
                   }
@@ -256,7 +276,7 @@ class Header extends Component {
                     <img
                       src={logoColor}
                       alt="logo"
-                      className="tlv-logo light c-pointer"
+                      className="tlv-logo light c-pointer p-relative ml-12"
                       onClick={this.routeToHome}
                     />
                   }
