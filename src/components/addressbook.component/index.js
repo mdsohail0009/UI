@@ -22,6 +22,7 @@ import apiCalls from "../../api/apiCalls";
 import Info from "../shared/info";
 import { DownloadOutlined } from '@ant-design/icons';
 import Loader from "../../Shared/loader";
+import ActionsToolbar from "../toolbar.component/actions.toolbar";
 
 const { Paragraph, Text } = Typography;
 
@@ -683,7 +684,7 @@ class AddressBook extends Component {
 								className="buysell-toggle mx-0"
 							/>
 						</Radio.Group>
-						<ul
+						{/* <ul
 							className="address-icons"
 							style={{
 								listStyle: "none",
@@ -712,7 +713,8 @@ class AddressBook extends Component {
 									<Link className="icon md status mr-0"></Link>
 								</Tooltip>
 							</li>
-						</ul>
+						</ul> */}
+						<ActionsToolbar featureKey="addressBook"/>
 					</div>
 					{this.state.errorWorning && (
 						<div className="custom-alert">

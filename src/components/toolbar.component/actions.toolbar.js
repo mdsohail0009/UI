@@ -1,29 +1,40 @@
 import { Spin, Tooltip } from 'antd';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { fetchFeaturePermissions } from '../../reducers/feturesReducer';
 
 class ActionsToolbar extends Component {
+    state = {
+
+    }
+    permissionsInterval;
+    componentDidMount() {
+        const feature = this.props.menuItems?.features?.data?.find(item => item.path == ("/" + this.props.featureKey));
+        this.props.dispatch(fetchFeaturePermissions(feature.id, this.props.userConfig?.id));
+    }
+    loadPermission = () => {
+
+    }
     render() {
-        const { key, onActionClick, permissions } = this.props;
+        const { featureKey, onActionClick, menuItems,screenName } = this.props;
 
         return (
             <>
-            {permissions?.loading&&<Spin/>}
+                {menuItems?.featurePermissions?.loading && <Spin />}
                 <div>
-                    <ul className="admin-actions mb-0">
-                        {/* <li><span class="icon md add-icon"></span></li>
-                        <li><span class="icon md edit-icon"></span></li>
-                        <li><span class="icon md buy"></span></li> */}
-                        {permissions[key]?.map(action => <li onClick={() => onActionClick(action.permissionName)}><span class={action.iconName}></span></li>)}
+                    <ul className="admin-actions mb-0 address-icons">
+                        {menuItems?.featurePermissions[featureKey]?.actions?.map(action => <li onClick={() => onActionClick(action.permissionName)}><span class={action.iconName}></span></li>)}
                     </ul>
                 </div>
             </>
         );
     }
 }
-const connectStateToProps = ({ menuItems }) => {
+const connectStateToProps = ({ menuItems, userConfig }) => {
     return {
-        permissions: menuItems.featurePermissions.actions
+        menuItems,
+        userConfig: userConfig.userProfileInfo
     }
 }
-export default connect(connectStateToProps)(ActionsToolbar);
+const connectDispatchToProps = dispatch => { return { dispatch } }
+export default connect(connectStateToProps, connectDispatchToProps)(ActionsToolbar);
