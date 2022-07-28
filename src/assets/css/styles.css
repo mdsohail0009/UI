@@ -1321,5 +1321,5 @@ input[type=number]::-webkit-outer-spin-button {
 .secureDropdown .ant-menu-root {background-color: var(--bgGloom);border-radius: 10px;min-width: 300px;max-width: 300px;padding: 6px 0;color: var(--textWhite);position: absolute;
     max-height: calc(100vh - 75px); overflow-y: auto;border: 0;}
 .secureDropdown .ant-menu-root{top:27px !important}
-.secureDropdown .ant-menu-root{min-width: 150px;max-width: 150px;}
+.secureDropdown .ant-menu-root{min-width: 180px;max-width: 180px;}
 .secureDropdown .ant-menu-title-content{line-height: 23px;}
