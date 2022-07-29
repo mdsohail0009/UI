@@ -27,9 +27,10 @@ const fetchFeatures = (app_id, customer_id) => {
                     item.subMenu = menu.filter(menuItem => menuItem.parentId === item.id);
                 }
             }
-            menu = menu.filter(item => !item.isTab);
+            debugger
+            const _cockpit = menu.find(item => (item.key == "cockpit"||item.path == "/cockpit"));
+            menu = menu.filter(item => (!item.isTab && !["/addressBook", "/cockpit", "/balances"].includes(item.path)));
             dispatch(setData({ data: menu, error: null, key: "features", loading: false }));
-            const _cockpit = menu.find(item => (item.key === "cockpit" || item.path === "/cockpit"));
             const _userConfig = store.getState().userConfig.userProfileInfo;
             dispatch(fetchFeaturePermissions(_cockpit.id, _userConfig.id))
         } else {
