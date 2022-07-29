@@ -21,10 +21,17 @@ const fetchFeatures = (app_id, customer_id) => {
         dispatch(getData({ data: [], error: null, loading: true, key: "features" }));
         const response = await getFeatures(app_id, customer_id);
         if (response.ok) {
-            dispatch(setData({ data: response.data, error: null, key: "features", loading: false }));
-            const _cockpit = response.data.find(item=>(item.key==="cockpit"||item.path==="/cockpit"));
+            let menu = [...response.data];
+            for (let item of menu) {
+                if (item.menuitemType === "dropdown") {
+                    item.subMenu = menu.filter(menuItem => menuItem.parentId === item.id);
+                }
+            }
+            menu = menu.filter(item => !item.isTab);
+            dispatch(setData({ data: menu, error: null, key: "features", loading: false }));
+            const _cockpit = menu.find(item => (item.key === "cockpit" || item.path === "/cockpit"));
             const _userConfig = store.getState().userConfig.userProfileInfo;
-            dispatch(fetchFeaturePermissions(_cockpit.id,_userConfig.id))
+            dispatch(fetchFeaturePermissions(_cockpit.id, _userConfig.id))
         } else {
             dispatch(setData({ data: null, loading: false, error: response.data?.message || response.data || response.originalError.message, key: "features" }));
         };
@@ -32,13 +39,12 @@ const fetchFeatures = (app_id, customer_id) => {
     }
 
 }
-const fetchFeaturePermissions = (feature_id,customer_id) => {
-    debugger
+const fetchFeaturePermissions = (feature_id, customer_id) => {
     return async (dispatch) => {
         dispatch(getData({ data: [], error: null, loading: true, key: "featurePermissions" }));
-        const response = await getFeaturePermissions({ feature_id,customer_id });
+        const response = await getFeaturePermissions({ feature_id, customer_id });
         if (response.ok) {
-            dispatch(setData({ [response.data?.key||response.data?.screenName]: response.data, error: null, key: "featurePermissions", loading: false }));
+            dispatch(setData({ [response.data?.key || response.data?.screenName]: response.data, error: null, key: "featurePermissions", loading: false }));
         } else {
             dispatch(setData({ data: null, loading: false, error: response.data?.message || response.data || response.originalError.message, key: "featurePermissions" }));
         }
@@ -54,10 +60,10 @@ const initialState = {
 const featuresReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_DATA:
-            state = { ...state, [action.payload.key]: {...state[action.payload.key], ...action.payload } };
+            state = { ...state, [action.payload.key]: { ...state[action.payload.key], ...action.payload } };
             return state;
         case SET_DATA:
-            state = { ...state, [action.payload.key]: {...state[action.payload.key], ...action.payload } };
+            state = { ...state, [action.payload.key]: { ...state[action.payload.key], ...action.payload } };
             return state;
         default:
             return state;

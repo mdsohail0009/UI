@@ -59,16 +59,6 @@ import { userManager } from "../../../authentication";
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
 counterpart.registerTranslations("my", my);
-const LinkValue = (props) => {
-    return (
-        <Translate
-            className="text-yellow fw-700 fs-16 d-inlineblock"
-            content={props.content}
-            component={Link}
-        />
-    );
-};
-
 const { Paragraph, Text } = Typography;
 const { Sider } = Layout;
 class MobileHeaderMenu extends Component {
