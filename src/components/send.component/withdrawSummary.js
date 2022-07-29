@@ -145,7 +145,7 @@ class WithdrawSummary extends Component {
 			Type: "User",
 			Action: "Withdraw Crypto summary page view",
 			Username: this.props.userProfile.userName,
-			MemeberId: this.props.userProfile.id,
+			customerId: this.props.userProfile.id,
 			Feature: "Withdraw Crypto",
 			Remarks: "Withdraw Crypto summary page view",
 			Duration: 1,
@@ -168,7 +168,7 @@ class WithdrawSummary extends Component {
 			this.props.sendReceive.withdrawCryptoObj;
 		let _obj = { ...this.props.sendReceive.withdrawCryptoObj };
 		const response = await handleNewExchangeAPI({
-			memberId: this.props?.userProfile?.id,
+			customerId: this.props?.userProfile?.id,
 			amount: totalValue,
 			address: toWalletAddress,
 			coin: walletCode,
@@ -300,7 +300,7 @@ class WithdrawSummary extends Component {
 		} else if (response.data == null) {
 			this.setState({
 				...this.state,
-				errorMsg: "Please enter email verification code",
+				errorMsg: "Please enter email verification code",emailVerifyLoading:false
 			});
 		} else {
 			this.setState({ ...this.state, inValidData: true });
@@ -338,6 +338,7 @@ class WithdrawSummary extends Component {
 				...this.state,
 				errorMsg: "Please enter phone verification code",
 				invalidData: true,
+				phoneVerifyLoading:false
 			});
 		} else {
 			this.useDivRef.current.scrollIntoView(0, 0);
@@ -390,7 +391,7 @@ class WithdrawSummary extends Component {
 		} else if (response.data == null) {
 			this.setState({
 				...this.state,
-				errorMsg: "Please enter authenticator code",
+				errorMsg: "Please enter authenticator code",faLoading:false
 			});
 		} else {
 			this.useDivRef.current.scrollIntoView(0, 0);
@@ -420,7 +421,7 @@ class WithdrawSummary extends Component {
 		}
 	};
 	handleAuthenticator = (e) => {
-		this.setState({ ...this.state, authCode: e.target.value });
+		this.setState({ ...this.state, authCode: e.target.value,faLoading:false });
 	};
 	handleEmailChange = (e) => {
 		this.setState({ ...this.state, emailCodeVal: e.target.value });

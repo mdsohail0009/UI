@@ -3,11 +3,11 @@ import { ApiControllers } from './config'
 
 export const changePassword = (obj) => {
 
-    return apiClient.put(ApiControllers.accounts + "ChangePassword", obj);
+    return apiClient.put(ApiControllers.customers + "ChangePassword", obj);
 }
-export const withdrawRecepientNamecheck = (memberid, name) => {
+export const withdrawRecepientNamecheck = (customerId, name) => {
 
-    return apiClient.get(ApiControllers.depositWithdraw + "FavouriteNameCheck?memberId=" + memberid + "&name=" + name);
+    return apiClient.get(ApiControllers.depositWithdraw + "FavouriteNameCheck?customerId=" + customerId + "&name=" + name);
 }
 export const getCountryStateLu = () => {
 
@@ -22,17 +22,17 @@ export const withdrawSave = (obj) => {
     return apiClient.post(ApiControllers.withdraw + "Withdraw/Fiat", obj);
 }
 export const ProfileImageSave = (obj) => {
-    return apiClient.put(ApiControllers.accounts + "Avatar", obj);
+    return apiClient.put(ApiControllers.customers + "Avatar", obj);
 }
 export const getSettingsLuData = () => {
-    return apiClient.get(ApiControllers.accounts + "Settings");
+    return apiClient.get(ApiControllers.customers + "Settings");
 }
 export const saveSettingsData = (obj) => {
-    return apiClient.post(ApiControllers.accounts + "Settings", obj);
+    return apiClient.post(ApiControllers.customers + "Settings", obj);
 }
 
-export const getAccountHolder=(accountId,type)=>{
-    return apiClient.get(ApiControllers.addressbook + `WithdrawPayeeLu/${accountId}/${type}`);
+export const getAccountHolder=(customerId,type)=>{
+    return apiClient.get(ApiControllers.addressbook + `WithdrawPayeeLu/${customerId}/${type}`);
 }
 
 export const getAccountWallet=(AccountId)=>{

@@ -101,6 +101,7 @@ class PaymentDetails extends Component {
     }
   };
   getPayments = async () => {
+    debugger
     this.setState({ ...this.state, loading: true });
     if (this.props.match.params.id === "00000000-0000-0000-0000-000000000000") {
       let response = await getPaymentsData(
@@ -161,7 +162,7 @@ class PaymentDetails extends Component {
     let obj = Object.assign({});
     obj.id = this.props.userConfig.id;
     obj.currency = this.state.currency;
-    obj.memberId = this.props.userConfig.id;
+    obj.CustomerId = this.props.userConfig.id;
     obj.createdBy = this.props.userConfig.userName;
     obj.modifiedBy = "";
     obj.paymentsDetails = objData;
@@ -691,7 +692,7 @@ class PaymentDetails extends Component {
                                           <>
 
                                             {file.documentName !== null && (
-                                              <div className='docdetails' onClick={() => this.docPreview(file)}>
+                                              <div className='docdetails'style={{ width: "80px" }} onClick={() => this.docPreview(file)}>
                                                 <Tooltip title={file.documentName}>
                                                   <EllipsisMiddle suffixCount={4}>
                                                     {file.documentName}
@@ -728,14 +729,16 @@ class PaymentDetails extends Component {
                     <tfoot>
                       <tr>
                         {(this.props.match.params.id ===
-                          "00000000-0000-0000-0000-000000000000" || this.props.match.params.state === "Submitted" || this.props.match.params.state === "Pending") && <>
+                          "00000000-0000-0000-0000-000000000000" || this.props.match.params.state === "Submitted" || this.props.match.params.state === "Pending"|| this.props.match.params.state == "Approved"|| this.props.match.params.state == "Cancelled") && <>
                             <td></td>
                             {/* <td></td> */}
                           </>
                         }
-                        {this.props.match.params.id !==
-                          "00000000-0000-0000-0000-000000000000" && <td></td>}
+                        {(this.props.match.params.id !== "00000000-0000-0000-0000-000000000000"|| this.props.match.params.state == "Approved"|| this.props.match.params.state == "Cancelled") && <>
                         <td></td>
+                        </> }
+                        <td></td>
+                      
                         <td>
                           <span className="text-white fs-24 ml-8"> Total:</span>
                         </td>
@@ -811,7 +814,7 @@ class PaymentDetails extends Component {
         </Modal>
         <Modal title="Delete Payment"
           destroyOnClose={true}
-          closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.docPreviewClose} /></Tooltip>}
+          closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.handleCancel} /></Tooltip>}
           // closable={false}
           // closeIcon={false}
           visible={this.state.modal}

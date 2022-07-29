@@ -10,14 +10,14 @@ export function newGUID() {
         return v.toString(16);
     });
 }
-export function getDocObj(memId, path, docName,size, id, detailId) {
+export function getDocObj(customerId, path, docName,size, id, detailId) {
     return {
         "id": id || newGUID(),
         "transactionId": null,
         "adminId": "00000000-0000-0000-0000-000000000000",
         "date": null,
         "type": null,
-        "memberId": memId,
+        "customerId": customerId,
         "caseTitle": null,
         "caseState": null,
         "remarks": null,

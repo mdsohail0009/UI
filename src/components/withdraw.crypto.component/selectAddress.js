@@ -19,14 +19,14 @@ class SelectAddress extends Component {
     }
     trackevent = () => {
         apicalls.trackEvent({
-            "Type": 'User', "Action": 'Withdraw Crypto Address page view  ', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Withdraw Crypto', "Remarks": "Withdraw Crypto Address page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto'
+            "Type": 'User', "Action": 'Withdraw Crypto Address page view  ', "Username": this.props.userProfile.userName, "customerId": this.props.userProfile.id, "Feature": 'Withdraw Crypto', "Remarks": "Withdraw Crypto Address page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto'
         });
     }
     getAddressLu = async () => {
         this.setState({ ...this.state, loading: true })
-        let membershipId = this.props.userProfile.id;
+        let customerId = this.props.userProfile.id;
         let coin_code = this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coin;
-        let recAddress = await favouriteFiatAddress(membershipId, 'crypto', coin_code)
+        let recAddress = await favouriteFiatAddress(customerId, 'crypto', coin_code)
         if (recAddress.ok) {
             this.setState({ ...this.state, addressLu: recAddress.data, loading: false, filterObj: recAddress.data });
         }

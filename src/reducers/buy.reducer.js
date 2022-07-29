@@ -73,10 +73,10 @@ const fetchCoins = (type) => {
 
     }
 }
-const fetchSelectedCoinDetails = (coin, member_id) => {
+const fetchSelectedCoinDetails = (coin, customer_id) => {
     return async (dispatch) => {
         dispatch(handleFetch({ key: "selectedCoin", loading: true, data: null }));
-        const response = await getSelectedCoinDetails(coin, member_id);
+        const response = await getSelectedCoinDetails(coin, customer_id);
         if (response.ok) {
             dispatch(handleFetch({ key: "selectedCoin", loading: false, data: response.data }));
         } else {
@@ -84,10 +84,10 @@ const fetchSelectedCoinDetails = (coin, member_id) => {
         }
     }
 }
-const fetchMemberFiat = (member_id) => {
+const fetchMemberFiat = (customer_id) => {
     return async (dispatch) => {
         dispatch(handleFetch({ key: "memberFiat", loading: true, data: [] }));
-        const response = await getMemberfiat(member_id);
+        const response = await getMemberfiat(customer_id);
         if (response.ok) {
             dispatch(handleFetch({ key: "memberFiat", loading: false, data: response.data }));
         } else {
@@ -95,10 +95,10 @@ const fetchMemberFiat = (member_id) => {
         }
     }
 }
-const fetchPreview = ({ coin, wallet, amount, memberId }) => {
+const fetchPreview = ({ coin, wallet, amount, customer_id }) => {
     return async (dispatch) => {
         dispatch(handleFetch({ key: "previewDetails", loading: true, data: null }));
-        const response = await getPreview({ coin, currency: wallet.currencyCode, amount, memberId });
+        const response = await getPreview({ coin, currency: wallet.currencyCode, amount, customer_id });
         if (response.ok) {
             dispatch(handleFetch({ key: "previewDetails", loading: false, data: response.data }));
         } else {
@@ -106,10 +106,10 @@ const fetchPreview = ({ coin, wallet, amount, memberId }) => {
         }
     }
 }
-const getMemberCoins = (memberId) => {
+const getMemberCoins = (customer_id) => {
     return dispatch => {
         dispatch(fetchMemberCoins());
-        getportfolio(memberId).then(
+        getportfolio(customer_id).then(
             (response) => {
                 if (response.ok) {
                     dispatch(fetchMemberCoinsSuccess(response.data, 'MemberCoins'));
@@ -121,7 +121,7 @@ const getMemberCoins = (memberId) => {
                 dispatch(fetchMemberCoinsRejected(error));
             },
         );
-        getMemberfiat(memberId).then(
+        getMemberfiat(customer_id).then(
             (response) => {
                 if (response.ok) {
                     dispatch(fetchMemberCoinsSuccess(response.data, 'MemberFiat'));

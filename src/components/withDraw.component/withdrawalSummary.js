@@ -183,7 +183,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 			Type: "User",
 			Action: "Withdraw Fiat summary page view",
 			Username: userConfig?.userName,
-			MemeberId: userConfig?.id,
+			customerId: userConfig?.id,
 			Feature: "Withdraw Fiat",
 			Remarks: "Withdraw Fiat summary page view",
 			Duration: 1,
@@ -357,12 +357,14 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 			setVerifyEmailOtp(false);
 			useOtpRef.current.scrollIntoView(0, 0);
 			setMsg("Please enter email verification code");
+			setEmailVerifyLoading(false)
 		} else {
 			setEmail(false);
 			setEmailDisable(false);
 			setMsg(apiCalls.convertLocalLang("email_invalid_code"));
 			useOtpRef.current.scrollIntoView(0, 0);
 			setIsEmailVerification(false);
+			setEmailVerifyLoading(false)
 		}
 	};
 	const antIcon = (
@@ -435,6 +437,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 		} else if (response.data == null) {
 			useOtpRef.current.scrollIntoView(0, 0);
 			setMsg("Please enter phone verification code");
+			setPhoneVerifyLoading(false)
 		} else {
 			useOtpRef.current.scrollIntoView(0, 0);
 			setVerifyPhone(false);
@@ -442,6 +445,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 			setInputDisable(false);
 			setMsg(apiCalls.convertLocalLang("phone_invalid_code"));
 			setIsPhoneVerification(false);
+			setPhoneVerifyLoading(false)
 		}
 	};
 	const handleChange = (e) => {
@@ -477,16 +481,19 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 		} else if (response.data == null) {
 			useOtpRef.current.scrollIntoView(0, 0);
 			setMsg("Please enter authenticator code");
+			setAuthLoading(false)
 		} else {
 			setVerifyAuth(false);
 			setAuthDisable(false);
 			useOtpRef.current.scrollIntoView(0, 0);
 			setMsg(apiCalls.convertLocalLang("twofa_invalid_code"));
 			setIsAuthenticatorVerification(false);
+			setAuthLoading(false)
 		}
 	};
 	const handleAuthenticator = (e) => {
 		setAuthCode(e.target.value);
+		setAuthLoading(false)
 	};
 
 	return (

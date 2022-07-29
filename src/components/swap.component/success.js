@@ -10,7 +10,7 @@ import apiCalls from '../../api/apiCalls';
 class SuccessMessage extends Component {
     componentDidMount() {
         apiCalls.trackEvent({
-            "Type": 'User', "Action": ' Swap success page view', "Username": this.props.userProfile?.userName, "MemeberId": this.props.userProfile?.userId, "Feature": 'Swap', "Remarks": 'Swap success page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Swap'
+            "Type": 'User', "Action": ' Swap success page view', "Username": this.props.userProfile?.userName, "customerId": this.props.userProfile?.userId, "Feature": 'Swap', "Remarks": 'Swap success page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Swap'
         });
     }
     render() {
@@ -44,11 +44,11 @@ const connectStateToProps = ({ swapStore, userConfig }) => {
 }
 const connectDispatchToProps = dispatch => {
     return {
-        fetchMemberCoins: (member_id) => {
-            dispatch(getMemberCoins(member_id))
+        fetchMemberCoins: (customer_id) => {
+            dispatch(getMemberCoins(customer_id))
         },
-        clearSwapfullData: (member_id) => {
-            dispatch(clearSwapData(member_id))
+        clearSwapfullData: (customer_id) => {
+            dispatch(clearSwapData(customer_id))
         },
         dispatch
     }

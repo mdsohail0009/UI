@@ -491,7 +491,7 @@ class Header extends Component {
       Type: "User",
       Action: "User Logged out",
       Username: null,
-      MemeberId: null,
+      customerId: null,
       Feature: "Logout",
       Remarks: "User Logged out",
       Duration: 1,
@@ -1650,8 +1650,8 @@ const connectDispatchToProps = (dispatch) => {
     updateSwapdataobj: (obj) => {
       dispatch(updateSwapdata(obj));
     },
-    clearSwapfullData: (member_id) => {
-      dispatch(clearSwapData(member_id));
+    clearSwapfullData: (customerid) => {
+      dispatch(clearSwapData(customerid));
     },
     getmemeberInfoa: (useremail) => {
       dispatch(getmemeberInfo(useremail));

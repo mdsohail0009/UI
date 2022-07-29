@@ -5,7 +5,7 @@ import { getAddress, getFileURL,getFavData ,getViewData,} from "./api";
 import { connect } from "react-redux";
 import FilePreviewer from "react-file-previewer";
 import { bytesToSize } from "../../utils/service";
-
+import { addressTabUpdate,setAddressStep,selectedTab} from "../../reducers/addressBookReducer";
 const { Title, Text } = Typography;
 const EllipsisMiddle = ({ suffixCount, children }) => {
 	const start = children?.slice(0, children.length - suffixCount).trim();
@@ -41,6 +41,8 @@ const AddressFiatView = (props) => {
 	};
 	const backToAddressBook = () => {
 		props?.history?.push("/userprofile/?key=5");
+		props?.dispatch(addressTabUpdate(true));
+		
 	};
 
 	const docPreview = async (file) => {
@@ -262,7 +264,7 @@ const AddressFiatView = (props) => {
 															width: "100%"
 														}}>
 														<Row gutter={[16, 16]} key={idx}>
-														<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+														<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 																<Text className="fw-300 text-white-50 fs-12">
 																	Bank Label
 																</Text>
@@ -274,7 +276,7 @@ const AddressFiatView = (props) => {
 																		: item.label}
 																</Title>
 															</Col>
-															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+															<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 																<Text className="fw-300 text-white-50 fs-12">
 																	Currency
 																</Text>
@@ -286,7 +288,7 @@ const AddressFiatView = (props) => {
 																		: item.walletCode}
 																</Title>
 															</Col>
-															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+															<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 																<Text className="fw-300 text-white-50 fs-12">
 																	Bank Type
 																</Text>
@@ -298,7 +300,7 @@ const AddressFiatView = (props) => {
 																		: item.bankType}
 																</Title>
 															</Col>
-															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+															<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 																<Text className="fw-300 text-white-50 fs-12">
 																	Bank Account Number/IBAN
 																</Text>
@@ -310,7 +312,7 @@ const AddressFiatView = (props) => {
 																		: item.accountNumber}
 																</Title>
 															</Col>
-															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+															<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 																<Text className="fw-300 text-white-50 fs-12">
 																BIC/SWIFT/Routing Number
 																</Text>
@@ -322,7 +324,7 @@ const AddressFiatView = (props) => {
 																		: item.swiftRouteBICNumber}
 																</Title>
 															</Col>
-															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+															<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 																<Text className="fw-300 text-white-50 fs-12">
 																	Bank Name
 																</Text>
@@ -334,7 +336,7 @@ const AddressFiatView = (props) => {
 																		: item.bankName}
 																</Title>
 															</Col>
-															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+															<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 																<Text className="fw-300 text-white-50 fs-12">
 																	Country
 																</Text>
@@ -346,7 +348,7 @@ const AddressFiatView = (props) => {
 																		: item.payeeAccountCountry}
 																</Title>
 															</Col>
-															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+															<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 																<Text className="fw-300 text-white-50 fs-12">
 																	State
 																</Text>
@@ -358,7 +360,7 @@ const AddressFiatView = (props) => {
 																		: item.payeeAccountState}
 															</Title>
 														</Col>
-														<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+														<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
 																City
 															</Text>
@@ -370,7 +372,7 @@ const AddressFiatView = (props) => {
 																		: item.payeeAccountCity}
 															</Title>
 														</Col>
-														<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+														<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
 																Postal Code
 															</Text>
@@ -383,7 +385,7 @@ const AddressFiatView = (props) => {
 															</Title>
 														</Col>
 														
-														<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+														<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
 																Address State
 															</Text>
@@ -467,5 +469,13 @@ const connectStateToProps = ({
 		addressBookReducer,
 	};
 };
-
-export default connect(connectStateToProps)(AddressFiatView);
+const connectDispatchToProps = (dispatch) => {
+	return {
+	  changeStep: (stepcode) => {
+		dispatch(setAddressStep(stepcode));
+	  },
+	  
+	  dispatch,
+	};
+  }
+export default connect(connectStateToProps, connectDispatchToProps)(AddressFiatView);

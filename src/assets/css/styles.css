@@ -821,6 +821,8 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .crypto-percent .percent{font-size: 20px;margin-left: 6px;}
 }
 @media (max-width: 767px){
+    .box.mb-flex{display: flex !important;}
+    .mb-right{float: right;}
     /* .icon.md.downangle{background-position: -344px 0;}
     .mb-togglespace .ant-collapse-item.ant-collapse-item-active .downangle{background-position: -322px 0;} */
     .mb-togglespace .ant-collapse-item.ant-collapse-item-active .downangle, .mb-togglespace .ant-collapse-header .icon.downangle{width: 32px !important;}
