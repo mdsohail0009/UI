@@ -26,19 +26,23 @@ const BeneficiaryDetails = React.lazy(() => import("../components/payments.compo
 const AddressFiatView = React.lazy(() => import("../components/addressbook.component/addressFiatView"))
 const AddressCryptoView = React.lazy(() => import("../components/addressbook.component/addressCryptoView"))
 const RewardCard = React.lazy(() => import("../components/cards.component"));
-const RewardCardStatus = React.lazy(() => import("../components/cards.component/thankyou"));
 const AccessDenied = React.lazy(() => import("../components/shared/permissions/access.denied"));
 
 class RouteConfig extends Component {
-  componentDidMount(){
-    this.unlisten = this.props.history.listen((location)=>{
-      debugger
-      if(!this.props.menuItems.featurePermissions?.[KEY_URL_MAP[location.pathname]]&&location.pathname!="/userprofile"&&location.pathname!="/accessdenied"){
-        this.props.history.push("/accessdenied");
+  componentDidMount() {
+    this.unlisten = this.props.history.listen((location) => {
+      if (this.props.menuItems.featurePermissions?.[KEY_URL_MAP[location.pathname]] && location.pathname != "/userprofile" && location.pathname != "/accessdenied") {
+        let _permissions = {};
+        for (let action of (this.props.menuItems.featurePermissions?.[KEY_URL_MAP[location.pathname]]?.actions || [])) {
+          _permissions[action.permissionName] = action.values;
+        }
+        if (!_permissions.View) {
+          this.props.history.push("/accessdenied");
+        }
       }
     });
   }
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.unlisten();
   }
   render() {
@@ -82,8 +86,8 @@ class RouteConfig extends Component {
   }
 
 }
-const connectStateToProps = ({menuItems})=>{
-  return {menuItems}
+const connectStateToProps = ({ menuItems }) => {
+  return { menuItems }
 }
 
 export default withRouter(connect(connectStateToProps)(RouteConfig));

@@ -27,7 +27,6 @@ const fetchFeatures = (app_id, customer_id) => {
                     item.subMenu = menu.filter(menuItem => menuItem.parentId === item.id);
                 }
             }
-            debugger
             const _cockpit = menu.find(item => (item.key == "cockpit"||item.path == "/cockpit"));
             menu = menu.filter(item => (!item.isTab && !["/addressBook", "/cockpit", "/balances"].includes(item.path)));
             dispatch(setData({ data: menu, error: null, key: "features", loading: false }));
