@@ -6,6 +6,7 @@ import Loader from "../../Shared/loader";
 import SuisseBtn from "../shared/butons";
 import Currency from "../shared/number.formate";
 import apicalls from "../../api/apiCalls";
+import { connect } from 'react-redux';
 const LinkValue = (props) => {
 	return (
 		<Translate
@@ -22,6 +23,23 @@ const LinkValue = (props) => {
 	);
 };
 class Summary extends Component {
+	state = {
+        permissions: {}
+    };
+	componentDidMount() {
+		this.permissionsInterval = setInterval(this.loadPermissions, 200);
+	}
+	loadPermissions = () => {
+		debugger
+		if (this.props.buySellPermissions) {
+			clearInterval(this.permissionsInterval);
+			let _permissions = {};
+			for (let action of this.props.buySellPermissions?.actions) {
+				_permissions[action.permissionName] = action.values;
+			}
+			this.setState({ ...this.state, permissions: _permissions });
+		}
+	}
 	render() {
 		if (this.props?.loading) {
 			return <Loader />;
@@ -50,7 +68,7 @@ class Summary extends Component {
 			onErrorClose,
 			onCheked,
 		} = this.props;
-
+		
 		return (
 			<>
 				{!error?.valid && (
@@ -171,6 +189,7 @@ class Summary extends Component {
 							component={Text}
 						/>
 					</div>
+					{(this.state.permissions.Buy || this.state.permissions.Sell) &&
 					<div className="d-flex p-16 mb-36 agree-check">
 						<label
 						>
@@ -197,7 +216,8 @@ class Summary extends Component {
 							
 							<Translate content="refund_cancellation" component="Text" />
 						</Paragraph>
-					</div>
+					</div>}
+					{(this.state.permissions.Buy || this.state.permissions.Sell) &&
 					<SuisseBtn
 						className={"pop-btn"}
 						onRefresh={() => this.props.onRefresh()}
@@ -205,7 +225,7 @@ class Summary extends Component {
 						loading={isButtonLoad}
 						autoDisable={true}
 						onClick={() => this.props.onClick()}
-					/>
+					/>}
 					<div className="text-center mt-16">
 						<Translate
 							content="cancel"
@@ -221,4 +241,8 @@ class Summary extends Component {
 		);
 	}
 }
-export default Summary;
+const connectStateToProps = ({ menuItems }) => {
+    return { buySellPermissions: menuItems?.featurePermissions["buy/sell"] }
+}
+export default connect(connectStateToProps, )(Summary);
+
