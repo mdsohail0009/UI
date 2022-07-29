@@ -32,6 +32,7 @@ const AccessDenied = React.lazy(() => import("../components/shared/permissions/a
 class RouteConfig extends Component {
   componentDidMount(){
     this.unlisten = this.props.history.listen((location)=>{
+      debugger
       if(!this.props.menuItems.featurePermissions?.[KEY_URL_MAP[location.pathname]]&&location.pathname!="/userprofile"&&location.pathname!="/accessdenied"){
         this.props.history.push("/accessdenied");
       }
