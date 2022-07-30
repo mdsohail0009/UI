@@ -362,9 +362,10 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 			setEmail(false);
 			setEmailDisable(false);
 			setMsg(apiCalls.convertLocalLang("email_invalid_code"));
+			setEmailVerifyLoading(false)
 			useOtpRef.current.scrollIntoView(0, 0);
 			setIsEmailVerification(false);
-			setEmailVerifyLoading(false)
+			
 		}
 	};
 	const antIcon = (
@@ -444,8 +445,8 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 			setVerifyTextOtp(false);
 			setInputDisable(false);
 			setMsg(apiCalls.convertLocalLang("phone_invalid_code"));
-			setIsPhoneVerification(false);
 			setPhoneVerifyLoading(false)
+			setIsPhoneVerification(false);
 		}
 	};
 	const handleChange = (e) => {
@@ -487,8 +488,10 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 			setAuthDisable(false);
 			useOtpRef.current.scrollIntoView(0, 0);
 			setMsg(apiCalls.convertLocalLang("twofa_invalid_code"));
-			setIsAuthenticatorVerification(false);
 			setAuthLoading(false)
+			setIsAuthenticatorVerification(false);
+
+			
 		}
 	};
 	const handleAuthenticator = (e) => {

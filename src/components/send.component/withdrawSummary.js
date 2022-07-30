@@ -307,6 +307,7 @@ class WithdrawSummary extends Component {
 			this.setState({
 				...this.state,
 				errorMsg: apiCalls.convertLocalLang("email_invalid_code"),
+				emailVerifyLoading:false,
 				invalidData: true,
 				verifyEmail: false,
 				inputEmailDisable: false,
@@ -345,6 +346,7 @@ class WithdrawSummary extends Component {
 			this.setState({
 				...this.state,
 				errorMsg: apiCalls.convertLocalLang("phone_invalid_code"),
+				phoneVerifyLoading:false,
 				verifyPhone: false,
 				inputDisable: false,
 				inValidData: true,
@@ -398,6 +400,7 @@ class WithdrawSummary extends Component {
 			this.setState({
 				...this.state,
 				errorMsg: apiCalls.convertLocalLang("twofa_invalid_code"),
+				faLoading:false,
 				verifyAuth: false,
 				inputAuthDisable: false,
 				inValidData: true,
