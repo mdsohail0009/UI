@@ -223,8 +223,8 @@ class WithdrawSummary extends Component {
 				inputDisable: false,
 				disable: true,
 				errorMsg: null,
-				verificationText:
-					apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber,
+				// verificationText:
+				// 	apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber,
 			});
 			this.startTimer();
 
@@ -545,8 +545,8 @@ class WithdrawSummary extends Component {
 	};
 
 	fullNumber = this.props.userProfile?.phoneNumber;
-	last4Digits = this.fullNumber.slice(-4);
-	maskedNumber = this.last4Digits.padStart(this.fullNumber.length, "*");
+	// last4Digits = this.fullNumber.slice(-4);
+	// maskedNumber = this.last4Digits.padStart(this.fullNumber.length, "*");
 
 	address = this.props.sendReceive.withdrawCryptoObj?.toWalletAddress;
 	firstAddress = this.address.slice(0, 4);

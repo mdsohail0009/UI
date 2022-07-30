@@ -290,8 +290,8 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 		}
 	  };
 	const fullNumber = userConfig.phoneNumber;
-	const last4Digits = fullNumber.slice(-4);
-	const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
+	// const last4Digits = fullNumber?.slice(-4);
+	// const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
 
 	const getVerifyData = async () => {
 		let response = await apiCalls.getVerificationFields(userConfig.id);
@@ -395,9 +395,9 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 			setButtonText("sentVerify");
 			setInputDisable(false);
 			setDisable(true);
-			setVerificationText(
-				apiCalls.convertLocalLang("digit_code") + " " + maskedNumber
-			);
+			// setVerificationText(
+			// 	apiCalls.convertLocalLang("digit_code") + " " + maskedNumber
+			// );
 			startTimer();
 			cleartime=setTimeout(() => {
 			setButtonText("resendotp");
