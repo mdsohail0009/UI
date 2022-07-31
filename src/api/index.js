@@ -1,6 +1,6 @@
-import { create } from 'apisauce';
+import { create, } from 'apisauce';
 import { store } from '../store';
-import CryptoJS from 'crypto-js'
+import CryptoJS from 'crypto-js';
 
 const ipRegistry = create({
     baseURL: 'https://api4.ipregistry.co'
@@ -45,5 +45,12 @@ apiClient.axiosInstance.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${user.access_token}`
     if (userProfileInfo?.id) config.headers.AuthInformation = userProfileInfo?.id ? _encrypt(`{CustomerId:"${userProfileInfo?.id}"}`, userProfileInfo.sk) : ''
     return config;
+});
+apiClient.axiosInstance.interceptors.response.use((response)=>{
+    return response;
+},(err)=>{
+    if(err.status==="401"){
+    }
+    return err;
 })
 export { apiClient, coinGekoClient, identityClient, uploadClient, ipRegistry, sumsub }

@@ -28,7 +28,7 @@ const fetchFeatures = (app_id, customer_id) => {
                 }
             }
             const _cockpit = menu.find(item => (item.key == "cockpit"||item.path == "/cockpit"));
-            menu = menu.filter(item => (!item.isTab && !["/addressBook", "/cockpit", "/balances"].includes(item.path)));
+            menu = menu.filter(item => (!item.isTab && ![ "/cockpit", "/balances"].includes(item.path)));
             dispatch(setData({ data: menu, error: null, key: "features", loading: false }));
             const _userConfig = store.getState().userConfig.userProfileInfo;
             dispatch(fetchFeaturePermissions(_cockpit.id, _userConfig.id))
