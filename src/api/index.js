@@ -1,6 +1,7 @@
 import { create, } from 'apisauce';
 import { store } from '../store';
 import CryptoJS from 'crypto-js';
+import { useHistory } from 'react-router-dom';
 
 const ipRegistry = create({
     baseURL: 'https://api4.ipregistry.co'
@@ -46,11 +47,13 @@ apiClient.axiosInstance.interceptors.request.use((config) => {
     if (userProfileInfo?.id) config.headers.AuthInformation = userProfileInfo?.id ? _encrypt(`{CustomerId:"${userProfileInfo?.id}"}`, userProfileInfo.sk) : ''
     return config;
 });
-apiClient.axiosInstance.interceptors.response.use((response)=>{
+apiClient.axiosInstance.interceptors.response.use((response) => {
     return response;
-},(err)=>{
-    if(err.status==="401"){
-    }
-    return err;
+}, (err) => {
+    const navigate = useHistory();
+    navigate.push("/accessdenied");
+    if (err.status === "401") {
+    } else
+        return err;
 })
 export { apiClient, coinGekoClient, identityClient, uploadClient, ipRegistry, sumsub }

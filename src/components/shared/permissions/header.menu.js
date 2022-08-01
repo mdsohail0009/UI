@@ -97,7 +97,7 @@ class MobileHeaderMenu extends Component {
 
                         </ul>
                     </Menu></>
-                : <Translate
+                : item.path !== "/addressBook" && <Translate
                     content={item.content}
                     component={Menu.Item}
                     key={indx}
@@ -377,7 +377,7 @@ class HeaderPermissionMenu extends Component {
                         key={indx}
                         className="mr-16"
                     />
-                </Dropdown> : <Translate
+                </Dropdown> :item.path !== "/addressBook" && <Translate
                     content={item.content}
                     component={Menu.Item}
                     key={indx}
