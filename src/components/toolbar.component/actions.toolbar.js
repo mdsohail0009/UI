@@ -10,7 +10,7 @@ class ActionsToolbar extends Component {
                 {menuItems?.featurePermissions?.loading && <Spin />}
                 {!menuItems?.featurePermissions?.loading && <div>
                     <ul className="admin-actions mb-0 address-icons">
-                        {menuItems?.featurePermissions[KEY_URL_MAP[featureKey]]?.actions?.map(action => !["View", "view"].includes(action.permissionName) && <Tooltip title={action.toolTip}><li onClick={() => onActionClick(action.permissionName)}><span className={`icon md ${action.icon}-icon`}></span></li></Tooltip>)}
+                        {menuItems?.featurePermissions[KEY_URL_MAP[featureKey]]?.actions?.map(action => <>{(!["View", "view"].includes(action.permissionName) && (action.values)) && <Tooltip title={action.toolTip}><li onClick={() => onActionClick(action.permissionName)}><span className={`icon md ${action.icon}-icon`}></span></li></Tooltip>}</>)}
                     </ul>
                 </div>}
             </>

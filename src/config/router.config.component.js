@@ -4,7 +4,6 @@ import Route from '../authentication/protected.route';
 import SignInSilent from '../authentication/signinSilent';
 import { connect } from 'react-redux';
 import { KEY_URL_MAP } from '../components/shared/permissions/config';
-import PermissionWrapper from '../components/shared/permissions/permission.wrapper';
 const Dashboard = React.lazy(() => import('../components/dashboard.component'));
 const CallbackPage = React.lazy(() => import('../authentication/callback.component'));
 const Login = React.lazy(() => import('../authentication/login.component'));
@@ -31,9 +30,15 @@ const AccessDenied = React.lazy(() => import("../components/shared/permissions/a
 
 class RouteConfig extends Component {
   componentDidMount() {
-    if (this.props.menuItems.featurePermissions?.[KEY_URL_MAP[window.location.pathname]] && window.location.pathname != "/userprofile" && window.location.pathname != "/accessdenied") {
+    this.checkPermissions(window.location.pathname||"/cockpit");
+    this.props.history.listen((location)=>{
+      this.checkPermissions(location.pathname)
+    })
+  }
+  checkPermissions(pathname){
+    if (this.props.menuItems.featurePermissions?.[KEY_URL_MAP[pathname]] && pathname != "/userprofile" && pathname != "/accessdenied") {
       let _permissions = {};
-      for (let action of (this.props.menuItems.featurePermissions?.[KEY_URL_MAP[window.location.pathname]]?.actions || [])) {
+      for (let action of (this.props.menuItems.featurePermissions?.[KEY_URL_MAP[pathname]]?.actions || [])) {
         _permissions[action.permissionName] = action.values;
       }
       if (!_permissions.View && !_permissions.view) {
@@ -62,13 +67,13 @@ class RouteConfig extends Component {
         <Route path='/coindetails/:coinName' component={CoinDetails} />
         <ReactRoute path="/silent_redirect" component={SignInSilent} />
         <ReactRoute path='/cockpitCharts' component={DashboardCharts} />
-        <PermissionWrapper path='/cards' component={RewardCard} isRoute={true} />
+        <Route path='/cards' component={RewardCard} isRoute={true} />
         <ReactRoute path='/accessdenied' component={AccessDenied} />
         <ReactRoute
           path="/payments"
           render={({ match: { url } }) => (
             <>
-              <PermissionWrapper path={`${url}`} component={Payments} exact isRoute={true} />
+              <Route path={`${url}`} component={Payments} exact isRoute={true} />
               <Route path={`${url}/:id/add`} component={PaymentDetails} />
               <Route path={`${url}/:id/:type/:state/edit`} component={PaymentDetails} />
               <Route path={`${url}/:id/view`} component={paymentsView} />
