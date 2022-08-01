@@ -79,7 +79,7 @@ class WithdrawSummary extends Component {
 		isAuthenticatorVerification: false,
 		btnLoading: false,
 		agreeRed: true,
-		permissions: "",
+		permissions: {},
 	};
 
 	useDivRef = React.createRef();
@@ -88,9 +88,10 @@ class WithdrawSummary extends Component {
 		this.props.dispatch(setSubTitle(""));
 		this.handleNewExchangeRate();
 		this.getVerifyData();
+		this.loadPermissions();
 	}
 	loadPermissions = () => {
-		if (this.props.withdrawCryptoPermissions) {
+   if (this.props.withdrawCryptoPermissions) {
 			clearInterval(this.permissionsInterval);
 			let _permissions = {};
 			for (let action of this.props.withdrawCryptoPermissions?.actions) {
@@ -737,12 +738,12 @@ class WithdrawSummary extends Component {
 							autoComplete="off"
 							form={this.form}
 							onFinish={this.saveWithdrwal}>
-							{this.state.verifyData.isPhoneVerified == true && (
+							{this.state.permissions?.view && this.state.verifyData.isPhoneVerified == true && (
 								<Text className="fs-14 mb-8 text-white d-block fw-200">
 									Phone verification code *
 								</Text>
 							)}
-							{this.state.verifyData.isPhoneVerified == true && (
+							{this.state.permissions?.view && this.state.verifyData.isPhoneVerified == true && (
 								<Form.Item
 									name="code"
 									className="input-label otp-verify"
@@ -810,12 +811,12 @@ class WithdrawSummary extends Component {
 									</div>
 								</Form.Item>
 							)}
-							{this.state.verifyData.isEmailVerification == true && (
+							{this.state.permissions?.view && this.state.verifyData.isEmailVerification == true && (
 								<Text className="fs-14 mb-8 text-white d-block fw-200">
 									Email verification code *
 								</Text>
 							)}
-							{this.state.verifyData.isEmailVerification == true && (
+							{this.state.permissions?.view && this.state.verifyData.isEmailVerification == true && (
 								<Form.Item
 									name="emailCode"
 									className="input-label otp-verify"
@@ -884,12 +885,12 @@ class WithdrawSummary extends Component {
 									</div>
 								</Form.Item>
 							)}
-							{this.state.verifyData.twoFactorEnabled == true && (
+							{this.state.permissions?.view && this.state.verifyData.twoFactorEnabled == true && (
 								<Text className="fs-14 mb-8 text-white d-block fw-200">
 									Authenticator Code *
 								</Text>
 							)}
-							{this.state.verifyData.twoFactorEnabled == true && (
+							{this.state.permissions?.view && this.state.verifyData.twoFactorEnabled == true && (
 								<Form.Item
 									name="authenticator"
 									className="input-label otp-verify"
@@ -958,7 +959,7 @@ class WithdrawSummary extends Component {
 								valuePropName="checked"
 								required
 							>
-								{this.state.permissions?.View && <span className="d-flex">
+								{this.state.permissions?.view && <span className="d-flex">
 									<Checkbox className={`ant-custumcheck ${!agreeRed ? "check-red" : " "}`} />
 									<span className="withdraw-check"></span>
 									<Translate
@@ -970,7 +971,7 @@ class WithdrawSummary extends Component {
 									/>
 								</span>}
 							</Form.Item>
-							{this.state.permissions?.View && <Button size="large" block className="pop-btn" htmlType="submit" loading={this.state.btnLoading}>
+							{this.state.permissions?.view && <Button size="large" block className="pop-btn" htmlType="submit" loading={this.state.btnLoading}>
 								<Translate content="with_draw" component={Text} />
 							</Button>}
 
