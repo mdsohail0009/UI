@@ -29,14 +29,6 @@ const RewardCard = React.lazy(() => import("../components/cards.component"));
 const AccessDenied = React.lazy(() => import("../components/shared/permissions/access.denied"));
 
 class RouteConfig extends Component {
-  componentDidMount() {
-    this.unlisten = this.props.history.listen((location) => {
-
-    });
-  }
-  componentWillUnmount() {
-    this.unlisten();
-  }
   render() {
     if ((this.props.menuItems.featurePermissions?.loading)) {
       return <div className="loader">Loading...</div>
