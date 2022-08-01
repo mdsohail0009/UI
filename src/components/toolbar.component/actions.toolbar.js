@@ -16,14 +16,14 @@ class ActionsToolbar extends Component {
 
     }
     render() {
-        const { featureKey, onActionClick, menuItems,screenName } = this.props;
+        const { featureKey, onActionClick, menuItems, screenName } = this.props;
 
         return (
             <>
                 {menuItems?.featurePermissions?.loading && <Spin />}
                 <div>
                     <ul className="admin-actions mb-0 address-icons">
-                        {menuItems?.featurePermissions[featureKey]?.actions?.map(action => <li onClick={() => onActionClick(action.permissionName)}><span className={`icon ${action.icon}-icon`}></span></li>)}
+                        {menuItems?.featurePermissions[featureKey]?.actions?.map(action => !["View", "view"].includes(action.permissionName) && <li onClick={() => onActionClick(action.permissionName)}><span className={`icon ${action.icon}-icon`}></span></li>)}
                     </ul>
                 </div>
             </>
