@@ -113,7 +113,7 @@ class UserProfile extends Component {
                         {this.state.activeTab == 3 && <Settings />}
                     </TabPane>
                     <TabPane tab={<span><span className="icon lg addressbook-icon mr-16" /><Translate content="address_book" component={Tabs.TabPane.tab} /></span>} key="5">
-                        {this.state.activeTab == 5 && <PermissionWrapper component={AddressBook} activeFiat={this.state.activeWithdrawFiat} pathname="/addressBook" />}
+                        {this.state.activeTab == 5 && <AddressBook activeFiat={this.state.activeWithdrawFiat} />}
                     </TabPane>
                     <TabPane tab={<span><span className="icon lg cases-icon mr-16" />
                     <Translate content="case" className="f-16  mt-16" /></span>} key="6" >

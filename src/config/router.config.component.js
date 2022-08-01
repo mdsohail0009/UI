@@ -4,6 +4,7 @@ import Route from '../authentication/protected.route';
 import SignInSilent from '../authentication/signinSilent';
 import { connect } from 'react-redux';
 import { KEY_URL_MAP } from '../components/shared/permissions/config';
+import PermissionWrapper from '../components/shared/permissions/permission.wrapper';
 const Dashboard = React.lazy(() => import('../components/dashboard.component'));
 const CallbackPage = React.lazy(() => import('../authentication/callback.component'));
 const Login = React.lazy(() => import('../authentication/login.component'));
@@ -61,13 +62,13 @@ class RouteConfig extends Component {
         <Route path='/coindetails/:coinName' component={CoinDetails} />
         <ReactRoute path="/silent_redirect" component={SignInSilent} />
         <ReactRoute path='/cockpitCharts' component={DashboardCharts} />
-        <ReactRoute path='/cards' component={RewardCard} />
+        <PermissionWrapper path='/cards' component={RewardCard} isRoute={true} />
         <ReactRoute path='/accessdenied' component={AccessDenied} />
         <ReactRoute
           path="/payments"
           render={({ match: { url } }) => (
             <>
-              <Route path={`${url}`} component={Payments} exact />
+              <PermissionWrapper path={`${url}`} component={Payments} exact isRoute={true} />
               <Route path={`${url}/:id/add`} component={PaymentDetails} />
               <Route path={`${url}/:id/:type/:state/edit`} component={PaymentDetails} />
               <Route path={`${url}/:id/view`} component={paymentsView} />

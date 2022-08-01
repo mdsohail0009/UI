@@ -23,6 +23,8 @@ import Info from "../shared/info";
 import { DownloadOutlined } from '@ant-design/icons';
 import Loader from "../../Shared/loader";
 import ActionsToolbar from "../toolbar.component/actions.toolbar";
+import { fetchFeaturePermissions } from "../../reducers/feturesReducer";
+import { getFeatureId } from "../shared/permissions/permissionService";
 
 const { Paragraph, Text } = Typography;
 
@@ -58,7 +60,7 @@ class AddressBook extends Component {
 		};
 		this.gridFiatRef = React.createRef();
 		this.gridCryptoRef = React.createRef();
-		
+		this.props.dispatch(fetchFeaturePermissions(getFeatureId("/addressBook"),this.props.userConfig.id))
 	}
 	componentDidMount() {
 		if (!this.state.cryptoFiat) {
@@ -725,7 +727,7 @@ class AddressBook extends Component {
 								</Tooltip>
 							</li>
 						</ul> */}
-						<ActionsToolbar featureKey="addressBook"   onActionClick={(key) => this.onActionClick(key)}/>
+						<ActionsToolbar featureKey="/addressBook" onActionClick={(key) => this.onActionClick(key)}/>
 					</div>
 					{this.state.errorWorning && (
 						<div className="custom-alert">
@@ -920,6 +922,7 @@ const connectDispatchToProps = (dispatch) => {
 		changeStep: (stepcode) => {
 			dispatch(setAddressStep(stepcode));
 		},
+		dispatch
 	};
 };
 export default connect(
