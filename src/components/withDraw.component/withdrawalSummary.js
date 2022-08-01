@@ -146,7 +146,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 		loadPermessions();
 	}, []);
 	const loadPermessions = () => {
-		if (withdrawFiatPermissions) {
+  if (withdrawFiatPermissions) {
 			   let _permissions = {};
 				 for (let action of withdrawFiatPermissions?.actions) {
 					 _permissions[action.permissionName] = action.values;
@@ -614,12 +614,12 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 						onFinish={saveWithdrwal}
 						
 						autoComplete="off">
-						{permissions?.View && verifyData.isPhoneVerified == true && (
+						{permissions?.view && verifyData.isPhoneVerified == true && (
 							<Text className="fs-14 mb-8 text-white d-block fw-200">
 								Phone verification code *
 							</Text>
 						)}
-						{permissions?.View && verifyData.isPhoneVerified == true && (
+						{permissions?.view && verifyData.isPhoneVerified == true && (
 							<Form.Item
 								name="code"
 								className="input-label otp-verify"
@@ -692,12 +692,12 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 									</div>
 							</Form.Item>
 						)}
-						{permissions?.View && verifyData.isEmailVerification === true && (
+						{permissions?.view && verifyData.isEmailVerification === true && (
 							<Text className="fs-14 mb-8 text-white d-block fw-200">
 								Email verification code *
 							</Text>
 						)}
-						{permissions?.View && verifyData.isEmailVerification === true && (
+						{permissions?.view && verifyData.isEmailVerification === true && (
 							<Form.Item
 								name="emailCode"
 								className="input-label otp-verify"
@@ -767,12 +767,12 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 									</div>
 							</Form.Item>
 						)}
-						{permissions?.View && verifyData.twoFactorEnabled == true && (
+						{permissions?.view && verifyData.twoFactorEnabled == true && (
 							<Text className="fs-14 mb-8 text-white d-block fw-200">
 								Authenticator Code *
 							</Text>
 						)}
-						{permissions?.View && verifyData.twoFactorEnabled == true && (
+						{permissions?.view && verifyData.twoFactorEnabled == true && (
 							<Form.Item
 								name="authenticator"
 								className="input-label otp-verify "
@@ -833,7 +833,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 									</div>
 							</Form.Item>
 						)}
-					{permissions?.View &&	<Button
+					{permissions?.view &&	<Button
 							size="large"
 							block
 							className="pop-btn"
