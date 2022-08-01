@@ -173,12 +173,12 @@ class HeaderPermissionMenu extends Component {
             this.props.history.push(menuItem.path);
         }
     }
-    chekPermissions=(menuKey,menuItem,data)=>{
+    chekPermissions = (menuKey, menuItem, data) => {
         const viewPer = data?.actions.find(item => item.permissionName.toLowerCase() === "view");
-        if(!viewPer.values){
+        if (!viewPer.values) {
             this.props.history.push("/accessdenied");
-        }else{
-            this.navigate(menuKey,menuItem);
+        } else {
+            this.navigate(menuKey, menuItem);
         }
     }
     onMenuItemClick = async (menuKey, menuItem) => {
@@ -186,11 +186,11 @@ class HeaderPermissionMenu extends Component {
             if (!this.props.menuItems.featurePermissions[menuItem.key]) {
                 this.props.dispatch(fetchFeaturePermissions(menuItem.featureId || menuItem.id, this.props.userConfig.id, (data) => {
                     if (data.ok) {
-                       this.chekPermissions(menuKey,menuItem,data?.data)
+                        this.chekPermissions(menuKey, menuItem, data?.data)
                     }
                 }));
             } else {
-                this.chekPermissions(menuKey,menuItem,this.props.menuItems.featurePermissions[menuItem.key]);
+                this.chekPermissions(menuKey, menuItem, this.props.menuItems.featurePermissions[menuItem.key]);
             }
 
         } else {
