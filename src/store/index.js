@@ -23,7 +23,7 @@ import featuresReducer from '../reducers/feturesReducer';
 const persistConfig = {
     key: "root",
     storage,
-    whitelist: ["oidc", "userConfig", "dashboard"]
+    whitelist: ["oidc", "userConfig", "dashboard","menuItems"]
 }
 const rootReducer = combineReducers({
     oidc: authReducer,

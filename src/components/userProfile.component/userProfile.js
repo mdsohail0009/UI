@@ -12,8 +12,6 @@ import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import {addressTabUpdate} from '../../reducers/addressBookReducer'
 import { setHeaderTab } from "../../reducers/buysellReducer"
-import PermissionWrapper from '../shared/permissions/permission.wrapper';
-
 const { TabPane } = Tabs;
 class UserProfile extends Component {
     constructor(props) {
