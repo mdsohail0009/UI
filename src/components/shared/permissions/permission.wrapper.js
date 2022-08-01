@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import React from 'react';
-import { Route, withRouter } from "react-router-dom";
+import { Redirect, Route, withRouter } from "react-router-dom";
 import AccessDenied from "./access.denied";
 import { KEY_URL_MAP } from "./config";
 class PermissionWrapper extends React.Component {
@@ -9,12 +9,11 @@ class PermissionWrapper extends React.Component {
         return view?.values || false;
     }
     render() {
-        const { featurePermissions, component: Component } = this.props;
+        const { component: Component } = this.props;
 
         return <>
-
+            {!this.getView && <Redirect to={"/accessdenied"} />}
             {this.getView && <Route component={Component} {...this.props} />}
-
         </>
 
     }
