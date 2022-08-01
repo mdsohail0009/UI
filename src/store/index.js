@@ -42,7 +42,6 @@ const rootReducer = combineReducers({
     cardsStore:cardsReducer,
     TransforStore: TransforReducer,
     menuItems:featuresReducer
-
 })
 const reducer = persistReducer(persistConfig, rootReducer)
 let store = createStore(
