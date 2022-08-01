@@ -78,7 +78,8 @@ class WithdrawSummary extends Component {
 		isPhoneVerification: false,
 		isAuthenticatorVerification: false,
 		btnLoading: false,
-		agreeRed:true,
+		agreeRed: true,
+		permissions: "",
 	};
 
 	useDivRef = React.createRef();
@@ -87,8 +88,16 @@ class WithdrawSummary extends Component {
 		this.props.dispatch(setSubTitle(""));
 		this.handleNewExchangeRate();
 		this.getVerifyData();
-
-
+	}
+	loadPermissions = () => {
+		if (this.props.withdrawCryptoPermissions) {
+			clearInterval(this.permissionsInterval);
+			let _permissions = {};
+			for (let action of this.props.withdrawCryptoPermissions?.actions) {
+				_permissions[action.permissionName] = action.values;
+			}
+			this.setState({ ...this.state, permissions: _permissions });
+		}
 	}
 
 
@@ -277,7 +286,7 @@ class WithdrawSummary extends Component {
 	};
 
 	getEmailVerification = async () => {
-		this.setState({...this.state,emailVerifyLoading:true})
+		this.setState({ ...this.state, emailVerifyLoading: true })
 		let response = await apiCalls.verifyEmail(
 			this.props.userProfile.id,
 			this.state.emailCodeVal
@@ -285,7 +294,7 @@ class WithdrawSummary extends Component {
 		if (response.ok) {
 			this.setState({
 				...this.state,
-				emailVerifyLoading:false,
+				emailVerifyLoading: false,
 				EmailCode: response.data,
 				verifyEmail: true,
 				verifyEmailOtp: true,
@@ -300,7 +309,7 @@ class WithdrawSummary extends Component {
 		} else if (response.data == null) {
 			this.setState({
 				...this.state,
-				errorMsg: "Please enter email verification code",emailVerifyLoading:false
+				errorMsg: "Please enter email verification code", emailVerifyLoading: false
 			});
 		} else {
 			this.setState({ ...this.state, inValidData: true });
@@ -315,7 +324,7 @@ class WithdrawSummary extends Component {
 	};
 
 	getOtpVerification = async () => {
-		this.setState({...this.state,phoneVerifyLoading:true})
+		this.setState({ ...this.state, phoneVerifyLoading: true })
 		let response = await apiCalls.getVerification(
 			this.props.userProfile.id,
 			this.state.otpCode
@@ -323,7 +332,7 @@ class WithdrawSummary extends Component {
 		if (response.ok) {
 			this.setState({
 				...this.state,
-				phoneVerifyLoading:false,
+				phoneVerifyLoading: false,
 				OtpVerification: response.data,
 				verifyPhone: true,
 				verifyTextotp: true,
@@ -338,7 +347,7 @@ class WithdrawSummary extends Component {
 				...this.state,
 				errorMsg: "Please enter phone verification code",
 				invalidData: true,
-				phoneVerifyLoading:false
+				phoneVerifyLoading: false
 			});
 		} else {
 			this.useDivRef.current.scrollIntoView(0, 0);
@@ -372,7 +381,7 @@ class WithdrawSummary extends Component {
 	};
 
 	getAuthenticator = async () => {
-		this.setState({...this.state,faLoading:true})
+		this.setState({ ...this.state, faLoading: true })
 		let response = await apiCalls.getAuthenticator(
 			this.state.authCode,
 			this.props.userProfile.userId
@@ -380,7 +389,7 @@ class WithdrawSummary extends Component {
 		if (response.ok) {
 			this.setState({
 				...this.state,
-				faLoading:false,
+				faLoading: false,
 				authenticator: response.data,
 				verifyAuth: true,
 				verifyAuthCode: true,
@@ -391,7 +400,7 @@ class WithdrawSummary extends Component {
 		} else if (response.data == null) {
 			this.setState({
 				...this.state,
-				errorMsg: "Please enter authenticator code",faLoading:false
+				errorMsg: "Please enter authenticator code", faLoading: false
 			});
 		} else {
 			this.useDivRef.current.scrollIntoView(0, 0);
@@ -405,14 +414,15 @@ class WithdrawSummary extends Component {
 		}
 	};
 	handleChange = (e) => {
-		if(e){
+		if (e) {
 			this.handleOtp(e)
 			this.setState({
-						...this.state,
-						otpCode: e,buttonText: "",
-						tooltipVisible: false,
-						verifyOtpText: "verifyOtpBtn",})
-		}else{
+				...this.state,
+				otpCode: e, buttonText: "",
+				tooltipVisible: false,
+				verifyOtpText: "verifyOtpBtn",
+			})
+		} else {
 			this.setState({
 				buttonText: "resendotp",
 				tooltipVisible: false,
@@ -421,7 +431,7 @@ class WithdrawSummary extends Component {
 		}
 	};
 	handleAuthenticator = (e) => {
-		this.setState({ ...this.state, authCode: e.target.value,faLoading:false });
+		this.setState({ ...this.state, authCode: e.target.value, faLoading: false });
 	};
 	handleEmailChange = (e) => {
 		this.setState({ ...this.state, emailCodeVal: e.target.value });
@@ -431,7 +441,7 @@ class WithdrawSummary extends Component {
 			this.setState({
 				...this.state,
 				errorMsg: apiCalls.convertLocalLang("agree_termsofservice"),
-				agreeRed:false,
+				agreeRed: false,
 			});
 			this.useDivRef.current.scrollIntoView(0, 0);
 		}
@@ -444,7 +454,7 @@ class WithdrawSummary extends Component {
 		}
 		else {
 
-			this.setState({ ...this.state, btnLoading: true,agreeRed:true })
+			this.setState({ ...this.state, btnLoading: true, agreeRed: true })
 
 			if (this.state.verifyData.isPhoneVerified) {
 				if (!this.state.isPhoneVerification) {
@@ -487,7 +497,7 @@ class WithdrawSummary extends Component {
 			// 			"Without Verifications you can't withdraw. Please select withdraw verifications from security section", btnLoading: false
 			// 	});
 			// }
-			if (this.props.userProfile.isBusiness||!this.state.verifyData?.isLiveVerification) {
+			if (this.props.userProfile.isBusiness || !this.state.verifyData?.isLiveVerification) {
 				let saveObj = this.props.sendReceive.withdrawCryptoObj;
 				let trackAuditLogData = this.props.trackAuditLogData;
 				trackAuditLogData.Action = "Save";
@@ -511,7 +521,7 @@ class WithdrawSummary extends Component {
 					});
 				}
 			}
-			else if(this.state.verifyData?.isLiveVerification){
+			else if (this.state.verifyData?.isLiveVerification) {
 				this.props.dispatch(
 					setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
 				);
@@ -542,18 +552,18 @@ class WithdrawSummary extends Component {
 	};
 
 	fullNumber = this.props.userProfile?.phoneNumber;
-	last4Digits = this.fullNumber.slice(-4);
-	maskedNumber = this.last4Digits.padStart(this.fullNumber.length, "*");
+	last4Digits = this.fullNumber?.slice(-4);
+	maskedNumber = this.last4Digits?.padStart(this.fullNumber.length, "*");
 
 	address = this.props.sendReceive.withdrawCryptoObj?.toWalletAddress;
-	firstAddress = this.address.slice(0, 4);
-	lastAddress = this.address.slice(-4);
+	firstAddress = this.address?.slice(0, 4);
+	lastAddress = this.address?.slice(-4);
 
 
 
 	render() {
 		const { Paragraph, Text } = Typography;
-		const { seconds, disable, textDisable, seconds2,agreeRed } = this.state;
+		const { seconds, disable, textDisable, seconds2, agreeRed } = this.state;
 		const link = <this.LinkValue content="terms_service" />;
 
 		const btnList = {
@@ -751,7 +761,7 @@ class WithdrawSummary extends Component {
 									rules={[{ required: true, message: "Is required" }]}
 								>
 									<div className="p-relative d-flex align-center">
-									
+
 										<NumberFormat
 											customInput={Input}
 											thousandSeparator={false}
@@ -762,10 +772,10 @@ class WithdrawSummary extends Component {
 											className="cust-input custom-add-select mb-0"
 											placeholder={"Enter code"}
 											maxLength={6}
-									style={{ width: "100%"  }}
-									onValueChange={(e) => this.handleChange(e.value)}
-									disabled={this.state.inputDisable}
-								/>
+											style={{ width: "100%" }}
+											onValueChange={(e) => this.handleChange(e.value)}
+											disabled={this.state.inputDisable}
+										/>
 										<div className="new-add c-pointer get-code text-yellow hy-align">
 											{!this.state.verifyTextotp && (
 												<Button
@@ -948,8 +958,8 @@ class WithdrawSummary extends Component {
 								valuePropName="checked"
 								required
 							>
-								<span className="d-flex">
-								<Checkbox className={`ant-custumcheck ${!agreeRed ? "check-red":" "}`} />
+								{this.state.permissions?.View && <span className="d-flex">
+									<Checkbox className={`ant-custumcheck ${!agreeRed ? "check-red" : " "}`} />
 									<span className="withdraw-check"></span>
 									<Translate
 										content="agree_to_suissebase"
@@ -958,12 +968,11 @@ class WithdrawSummary extends Component {
 										className="fs-14 text-white-30 ml-16 mb-4"
 										style={{ flex: 1 }}
 									/>
-								</span>
+								</span>}
 							</Form.Item>
-
-							<Button size="large" block className="pop-btn" htmlType="submit" loading={this.state.btnLoading}>
+							{this.state.permissions?.View && <Button size="large" block className="pop-btn" htmlType="submit" loading={this.state.btnLoading}>
 								<Translate content="with_draw" component={Text} />
-							</Button>
+							</Button>}
 
 						</Form>
 						<div className="text-center mt-16">
@@ -983,11 +992,12 @@ class WithdrawSummary extends Component {
 	}
 }
 
-const connectStateToProps = ({ sendReceive, userConfig }) => {
+const connectStateToProps = ({ sendReceive, userConfig, menuItems }) => {
 	return {
 		sendReceive,
 		userProfile: userConfig.userProfileInfo,
 		trackAuditLogData: userConfig.trackAuditLogData,
+		withdrawCryptoPermissions: menuItems?.featurePermissions.crypto
 	};
 };
 const connectDispatchToProps = (dispatch) => {
