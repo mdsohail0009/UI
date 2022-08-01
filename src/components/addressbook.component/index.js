@@ -45,7 +45,7 @@ class AddressBook extends Component {
 			selectedModal: "",
 			errorWorning: null,
 			isDownloading: false,
-
+			permissions:{},
 			obj: {
 				id: [],
 				tableName: "Common.PayeeAccounts",
@@ -63,30 +63,47 @@ class AddressBook extends Component {
 		this.props.dispatch(fetchFeaturePermissions(getFeatureId("/addressBook"),this.props.userConfig.id))
 	}
 	componentDidMount() {
-		if (!this.state.cryptoFiat) {
-			apiCalls.trackEvent({
-				Type: "User",
-				Action: "Withdraw Crypto Address book grid view",
-				Username: this.props.userProfileInfo?.userName,
-				customerId: this.props.userProfileInfo?.id,
-				Feature: "Address Book",
-				Remarks: "Withdraw Crypto Address book grid view",
-				Duration: 1,
-				Url: window.location.href,
-				FullFeatureName: "Address Book",
-			});
-		} else {
-			apiCalls.trackEvent({
-				Type: "User",
-				Action: "Withdraw Fiat Address book add view",
-				Username: this.props.userProfileInfo?.userName,
-				customerId: this.props.userProfileInfo?.id,
-				Feature: "Address Book",
-				Remarks: "Withdraw Fiat Address book add view",
-				Duration: 1,
-				Url: window.location.href,
-				FullFeatureName: "Address Book",
-			});
+		this.permissionsInterval = setInterval(this.loadPermissions, 200);
+			if (!this.state.cryptoFiat) {
+				apiCalls.trackEvent({
+					Type: "User",
+					Action: "Withdraw Crypto Address book grid view",
+					Username: this.props.userProfileInfo?.userName,
+					customerId: this.props.userProfileInfo?.id,
+					Feature: "Address Book",
+					Remarks: "Withdraw Crypto Address book grid view",
+					Duration: 1,
+					Url: window.location.href,
+					FullFeatureName: "Address Book",
+				});
+			} else {
+				apiCalls.trackEvent({
+					Type: "User",
+					Action: "Withdraw Fiat Address book add view",
+					Username: this.props.userProfileInfo?.userName,
+					customerId: this.props.userProfileInfo?.id,
+					Feature: "Address Book",
+					Remarks: "Withdraw Fiat Address book add view",
+					Duration: 1,
+					Url: window.location.href,
+					FullFeatureName: "Address Book",
+				});
+			}
+
+		
+	}
+
+	loadPermissions = () => {
+		if (this.props.addressBookPermissions) {
+			clearInterval(this.permissionsInterval);
+			let _permissions = {};
+			for (let action of this.props.addressBookPermissions?.actions) {
+				_permissions[action.permissionName] = action.values;
+			}
+			this.setState({ ...this.state, permissions: _permissions });
+			if(!this.state.permissions?.view&&!this.state.permissions?.View) {
+				this.props.history.push("/accessdenied");
+			}
 		}
 	}
 
@@ -388,7 +405,6 @@ class AddressBook extends Component {
 		}
 	};
 	handleSatatuSave = async () => {
-		debugger
 		this.setState({ ...this.state, isLoading: true, btnDisabled: true });
 		let statusObj = this.state.obj;
 		statusObj.id.push(this.state.selectedObj.payeeAccountId);
@@ -655,9 +671,9 @@ class AddressBook extends Component {
 
 	onActionClick = (key) => {
 		const actions = {
-		  Add: "addAddressBook",
-		  Edit: "editAddressBook",
-		  Disable:"statusUpdate"
+		  add: "addAddressBook",
+		  edit: "editAddressBook",
+		  disable:"statusUpdate"
 		};
 		this[actions[key]]();
 	  };
@@ -894,12 +910,13 @@ class AddressBook extends Component {
 		);
 	}
 }
-const connectStateToProps = ({ addressBookReducer, userConfig, oidc }) => {
+const connectStateToProps = ({ addressBookReducer, userConfig, oidc, menuItems, }) => {
 	return {
 		addressBookReducer,
 		userConfig: userConfig.userProfileInfo,
 		oidc,
 		trackLogs: userConfig.trackAuditLogData,
+		addressBookPermissions: menuItems?.featurePermissions.addressBook,
 	};
 };
 const connectDispatchToProps = (dispatch) => {
