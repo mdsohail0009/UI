@@ -337,12 +337,7 @@ class AddressBook extends Component {
 			this.setState({ ...this.state, isDownloading: false, selectedDeclaration: null });
 		}
 	}
-	addressFiatView = ({ dataItem }) => {
-		this.props.history.push(`/addressFiatView/${dataItem.id}`);
-	};
-	addressCryptoView = ({ dataItem }) => {
-		this.props.history.push(`/addressCryptoView/${dataItem.id}`);
-	};
+	
 	handleInputChange = (prop, e) => {
 		
 		this.setState({ ...this.state, errorWorning: null });
@@ -485,6 +480,12 @@ class AddressBook extends Component {
 			});
 			this.props.clearFormValues();
 		}
+	};
+	addressFiatView = ({ dataItem }) => {
+		this.props.history.push(`/addressFiatView/${dataItem.id}`);
+	};
+	addressCryptoView = ({ dataItem }) => {
+		this.props.history.push(`/addressCryptoView/${dataItem.id}`);
 	};
 	editAddressBook = () => {
 		this.setState({...this.state, errorWorning: null,selection: [] });
@@ -649,6 +650,16 @@ class AddressBook extends Component {
 		};
 		return stepcodes[config[this.props.addressBookReducer.stepcode]];
 	};
+
+	onActionClick = (key) => {
+		const actions = {
+		  Add: "addAddressBook",
+		  Edit: "editAddressBook",
+		  Disable:"statusUpdate"
+		};
+		this[actions[key]]();
+	  };
+
 	render() {
 		const { cryptoFiat, gridUrlCrypto, gridUrlFiat, customerId, btnDisabled } =
 			this.state;
@@ -714,7 +725,7 @@ class AddressBook extends Component {
 								</Tooltip>
 							</li>
 						</ul> */}
-						<ActionsToolbar featureKey="addressBook"/>
+						<ActionsToolbar featureKey="addressBook"   onActionClick={(key) => this.onActionClick(key)}/>
 					</div>
 					{this.state.errorWorning && (
 						<div className="custom-alert">
