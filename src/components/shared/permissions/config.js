@@ -1,7 +1,7 @@
 const KEY_URL_MAP = {
     "/payments": "billPayments",
     "/cards": "cards",
-    "/addressbook": "addressbook",
+    "/addressBook": "addressBook",
     "/documents": "documents",
     "/cockpit": "cockpit",
     "/": "cockpit"
