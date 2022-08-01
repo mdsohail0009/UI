@@ -16,14 +16,14 @@ const setData = (payload) => {
         payload
     }
 }
-const clearPermissions=()=>{
-    return{
-        type:CLEAR_PERMISSIONS,
+const clearPermissions = () => {
+    return {
+        type: CLEAR_PERMISSIONS,
     }
 }
-const updatePermissions=(payload)=>{
+const updatePermissions = (payload) => {
     return {
-        type:UPDATE_PERMISSIONS,
+        type: UPDATE_PERMISSIONS,
         payload
     }
 }
@@ -38,8 +38,8 @@ const fetchFeatures = (app_id, customer_id) => {
                     item.subMenu = menu.filter(menuItem => menuItem.parentId === item.id);
                 }
             }
-            const _cockpit = menu.find(item => (item.key == "cockpit"||item.path == "/cockpit"));
-            menu = menu.filter(item => (!item.isTab && ![ "/cockpit", "/balances"].includes(item.path)));
+            const _cockpit = menu.find(item => (item.key == "cockpit" || item.path == "/cockpit"));
+            menu = menu.filter(item => (!item.isTab && !["/cockpit", "/balances"].includes(item.path)));
             dispatch(setData({ data: menu, error: null, key: "features", loading: false }));
             const _userConfig = store.getState().userConfig.userProfileInfo;
             dispatch(fetchFeaturePermissions(_cockpit.id, _userConfig.id))
@@ -50,7 +50,7 @@ const fetchFeatures = (app_id, customer_id) => {
     }
 
 }
-const fetchFeaturePermissions = (feature_id, customer_id) => {
+const fetchFeaturePermissions = (feature_id, customer_id, callback) => {
     return async (dispatch) => {
         dispatch(getData({ data: [], error: null, loading: true, key: "featurePermissions" }));
         const response = await getFeaturePermissions({ feature_id, customer_id });
@@ -59,7 +59,8 @@ const fetchFeaturePermissions = (feature_id, customer_id) => {
         } else {
             dispatch(setData({ data: null, loading: false, error: response.data?.message || response.data || response.originalError.message, key: "featurePermissions" }));
         }
-
+        if (callback)
+            callback(response);
     }
 
 }
@@ -76,13 +77,13 @@ const featuresReducer = (state = initialState, action) => {
         case SET_DATA:
             state = { ...state, [action.payload.key]: { ...state[action.payload.key], ...action.payload } };
             return state;
-            case CLEAR_PERMISSIONS:
-                state={...state,featurePermissions:{ data: [], error: null, loading: true }};
-                return state;
+        case CLEAR_PERMISSIONS:
+            state = { ...state, featurePermissions: { data: [], error: null, loading: true } };
+            return state;
         default:
             return state;
     }
 }
 
 export default featuresReducer;
-export { fetchFeatures, fetchFeaturePermissions,clearPermissions,updatePermissions };
+export { fetchFeatures, fetchFeaturePermissions, clearPermissions, updatePermissions };

@@ -147,34 +147,52 @@ class HeaderPermissionMenu extends Component {
             this.props.history.push("/docnotices");
         }
     }
+    navigate = (menuKey, menuItem) => {
+        if (menuItem.path === "/modal") {
+            if (menuItem.dispatchStep) {
+                switch (menuKey) {
+                    case "buySell":
+                        this.props.dispatch(setStep(menuItem.dispatchStep));
+                        break;
+                    case "transfer":
+                        this.props.dispatch(transforSetStep(menuItem.dispatchStep));
+                        break;
+                    case "sendReceive":
+                        this.props.dispatch(sendSetStep("step1"));
+                        break;
+                    case "buyFiat":
+                        this.props.dispatch(byFiatSetStep("step1"));
+                        this.props.dispatch(setWithdrawfiatenaable(false));
+                        break;
+                    default:
+                        break;
+                }
+            }
+            this.setState({ ...this.state, drawerMenu: { ...this.drawerMenu, [menuKey]: true } });
+        } else if (menuItem.path) {
+            this.props.history.push(menuItem.path);
+        }
+    }
+    chekPermissions=(menuKey,menuItem,data)=>{
+        const viewPer = data?.actions.find(item => item.permissionName.toLowerCase() === "view");
+        if(!viewPer.values){
+            this.props.history.push("/accessdenied");
+        }else{
+            this.navigate(menuKey,menuItem);
+        }
+    }
     onMenuItemClick = async (menuKey, menuItem) => {
         if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled) {
-            if (!this.props.menuItems.featurePermissions[menuItem.key])
-                this.props.dispatch(fetchFeaturePermissions(menuItem.featureId || menuItem.id, this.props.userConfig.id));
-            if (menuItem.path === "/modal") {
-                if (menuItem.dispatchStep) {
-                    switch (menuKey) {
-                        case "buySell":
-                            this.props.dispatch(setStep(menuItem.dispatchStep));
-                            break;
-                        case "transfer":
-                            this.props.dispatch(transforSetStep(menuItem.dispatchStep));
-                            break;
-                        case "sendReceive":
-                            this.props.dispatch(sendSetStep("step1"));
-                            break;
-                        case "buyFiat":
-                            this.props.dispatch(byFiatSetStep("step1"));
-                            this.props.dispatch(setWithdrawfiatenaable(false));
-                            break;
-                        default:
-                            break;
+            if (!this.props.menuItems.featurePermissions[menuItem.key]) {
+                this.props.dispatch(fetchFeaturePermissions(menuItem.featureId || menuItem.id, this.props.userConfig.id, (data) => {
+                    if (data.ok) {
+                       this.chekPermissions(menuKey,menuItem,data?.data)
                     }
-                }
-                this.setState({ ...this.state, drawerMenu: { ...this.drawerMenu, [menuKey]: true } });
-            } else if (menuItem.path) {
-                this.props.history.push(menuItem.path);
+                }));
+            } else {
+                this.chekPermissions(menuKey,menuItem,this.props.menuItems.featurePermissions[menuItem.key]);
             }
+
         } else {
             const isKyc = !this.props.userConfig.isKYC;
             if (isKyc) {
@@ -377,7 +395,7 @@ class HeaderPermissionMenu extends Component {
                         key={indx}
                         className="mr-16"
                     />
-                </Dropdown> :item.path !== "/addressBook" && <Translate
+                </Dropdown> : item.path !== "/addressBook" && <Translate
                     content={item.content}
                     component={Menu.Item}
                     key={indx}
