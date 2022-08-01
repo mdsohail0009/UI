@@ -29,18 +29,18 @@ const RewardCard = React.lazy(() => import("../components/cards.component"));
 const AccessDenied = React.lazy(() => import("../components/shared/permissions/access.denied"));
 
 class RouteConfig extends Component {
-  render() {
-    if ((this.props.menuItems.featurePermissions?.loading)) {
-      return <div className="loader">Loading...</div>
-    } else if (this.props.menuItems.featurePermissions?.[KEY_URL_MAP[window.location.pathname]] && window.location.pathname != "/userprofile" && window. location.pathname != "/accessdenied") {
+  componentDidMount() {
+    if (this.props.menuItems.featurePermissions?.[KEY_URL_MAP[window.location.pathname]] && window.location.pathname != "/userprofile" && window.location.pathname != "/accessdenied") {
       let _permissions = {};
       for (let action of (this.props.menuItems.featurePermissions?.[KEY_URL_MAP[window.location.pathname]]?.actions || [])) {
         _permissions[action.permissionName] = action.values;
       }
-      if (!_permissions.View&&!_permissions.view) {
+      if (!_permissions.View && !_permissions.view) {
         this.props.history.push("/accessdenied");
       }
     }
+  }
+  render() {
     return <Switch>
       <React.Suspense fallback={<div className="loader">Loading...</div>}>
         <Route path="/cockpit" component={Dashboard} />

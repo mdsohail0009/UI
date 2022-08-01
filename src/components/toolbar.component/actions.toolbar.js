@@ -23,7 +23,7 @@ class ActionsToolbar extends Component {
                 {menuItems?.featurePermissions?.loading && <Spin />}
                 <div>
                     <ul className="admin-actions mb-0 address-icons">
-                        {menuItems?.featurePermissions[featureKey]?.actions?.map(action => <li onClick={() => onActionClick(action.permissionName)}><span class={action.iconName}></span></li>)}
+                        {menuItems?.featurePermissions[featureKey]?.actions?.map(action => <li onClick={() => onActionClick(action.permissionName)}><span className={`icon ${action.icon}-icon`}></span></li>)}
                     </ul>
                 </div>
             </>
