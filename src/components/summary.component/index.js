@@ -192,7 +192,7 @@ class Summary extends Component {
 							component={Text}
 						/>
 					</div>
-					{(this.state.permissions.Buy || this.state.permissions.Sell) &&
+					{(permissions) &&
 					<div className="d-flex p-16 mb-36 agree-check">
 						<label
 						>
