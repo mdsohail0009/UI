@@ -42,10 +42,7 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj,transferPermiss
 
 
    const loadPermissions = () => {
-		debugger
 		if (transferPermissions) {
-           let data= transferPermissions?.actions
-			
 			let _permissions = {};
 			for (let action of transferPermissions?.actions) {
 				_permissions[action.permissionName] = action.values;
@@ -134,7 +131,6 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj,transferPermiss
         if(values.transferAmount.indexOf('.')==0){
             values.transferAmount = '0'+values.transferAmount
         }
-        // console.log(values)
         // const res = saveTransfor(values);
         // if(res.ok){
         //     onClose()
@@ -285,7 +281,7 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj,transferPermiss
                     </Form.Item>
                 </Col>
                 <Form.Item className="mb-0 mt-16">
-                  {permission.Transfer&& <Button
+                  {permission?.Transfer&& <Button
                       htmlType="submit"
                       size="large"
                       block
