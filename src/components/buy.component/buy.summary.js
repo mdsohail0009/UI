@@ -20,11 +20,13 @@ class BuySummary extends Component {
       isTermsAgreed: false,
       buyTerms: false,
       agreeRed:true,
+      permissions:{}
     };
   }
 
   componentDidMount() {
     this.EventTrack();
+    this.permissionsInterval = setInterval(this.loadPermissions, 200);
   }
   EventTrack = () => {
     apicalls.trackEvent({
@@ -136,6 +138,17 @@ class BuySummary extends Component {
       return "Something went wrong please try again!";
     }
   };
+  loadPermissions = () => {
+		debugger
+		if (this.props.buySellPermissions) {
+			clearInterval(this.permissionsInterval);
+			let _permissions = {};
+			for (let action of this.props.buySellPermissions?.actions) {
+				_permissions[action.permissionName] = action.values;
+			}
+			this.setState({ ...this.state, permissions: _permissions });
+		}
+	}
   render() {
     {
       this.state.error !== null && (
@@ -158,6 +171,8 @@ class BuySummary extends Component {
       this.props.sellData?.previewDetails?.data;
     return (
       <Summary
+
+      permissions={this.state.permissions?.Buy}
         loading={
           this.props.sellData?.previewDetails?.loading ||
           !this.props.sellData?.previewDetails?.data
@@ -196,8 +211,11 @@ class BuySummary extends Component {
     );
   }
 }
-const connectStateToProps = ({ buySell, buyInfo, userConfig }) => {
-    return { buySell, sellData: buyInfo, customer: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData }
+
+
+
+const connectStateToProps = ({ buySell, buyInfo, userConfig,menuItems }) => {
+    return { buySell, sellData: buyInfo, customer: userConfig.userProfileInfo, buySellPermissions: menuItems?.featurePermissions["buy/sell"], trackAuditLogData: userConfig.trackAuditLogData }
 }
 const connectDispatchToProps = dispatch => {
     return {

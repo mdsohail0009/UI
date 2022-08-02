@@ -23,9 +23,11 @@ const LinkValue = (props) => {
 	);
 };
 class Summary extends Component {
+	
 	state = {
-        permissions: {}
-    };
+		permissions: {}
+	};
+	
 	componentDidMount() {
 		this.permissionsInterval = setInterval(this.loadPermissions, 200);
 	}
@@ -58,6 +60,7 @@ class Summary extends Component {
 			feeAmount,
 			feeCurrency,
 			okBtnTitle,
+			permissions,
 			showEstimatedTotal = true,
 			showConvert = false,
 			convertValue,
@@ -217,7 +220,7 @@ class Summary extends Component {
 							<Translate content="refund_cancellation" component="Text" />
 						</Paragraph>
 					</div>}
-					{(this.state.permissions.Buy || this.state.permissions.Sell) &&
+					{(permissions ) &&
 					<SuisseBtn
 						className={"pop-btn"}
 						onRefresh={() => this.props.onRefresh()}
@@ -226,6 +229,8 @@ class Summary extends Component {
 						autoDisable={true}
 						onClick={() => this.props.onClick()}
 					/>}
+
+
 					<div className="text-center mt-16">
 						<Translate
 							content="cancel"
