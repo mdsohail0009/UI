@@ -285,7 +285,7 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj,transferPermiss
                     </Form.Item>
                 </Col>
                 <Form.Item className="mb-0 mt-16">
-                  {!permission.Transfor&& <Button
+                  {permission.Transfer&& <Button
                       htmlType="submit"
                       size="large"
                       block
