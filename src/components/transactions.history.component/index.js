@@ -180,7 +180,7 @@ componentDidMount() {
         <List
          url={gridUrl} additionalParams={searchObj} ref={this.gridRef}
          columns={this.gridColumns}
-         showExcelExport ={this.state.permissions&&true}
+         showExcelExport ={this.state.permissions?.ExcelExport}
          excelFileName = {'Transactions'}
         />
 				</Drawer>

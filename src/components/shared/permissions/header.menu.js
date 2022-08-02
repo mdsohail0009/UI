@@ -51,7 +51,7 @@ import {
     setWithdrawfiatenaable
 } from "../../../reducers/sendreceiveReducer";
 import { getmemeberInfo } from "../../../reducers/configReduser";
-import { fetchFeaturePermissions, fetchFeatures } from "../../../reducers/feturesReducer";
+import { clearPermissions, fetchFeaturePermissions, fetchFeatures } from "../../../reducers/feturesReducer";
 import { readNotification as readNotifications } from "../../../notifications/api";
 import apicalls from "../../../api/apiCalls";
 import { setNotificationCount } from "../../../reducers/dashboardReducer";
@@ -231,6 +231,7 @@ class HeaderPermissionMenu extends Component {
         )
     }
     clearEvents = () => {
+        this.props.dispatch(clearPermissions());
         window.$zoho?.salesiq?.chat.complete();
         window.$zoho?.salesiq?.reset();
         userManager.signoutRedirect();
