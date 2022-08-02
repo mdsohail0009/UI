@@ -368,7 +368,7 @@ class HeaderPermissionMenu extends Component {
                     this.props.dispatch(setHeaderTab(key.key));
                 }}
             >
-                {data.map((item, indx) => item.menuitemType === "dropdown" ? <Dropdown
+                {data?.map((item, indx) => item.menuitemType === "dropdown" ? <Dropdown
                     onClick={() =>
                         this.setState({ ...this.state, visbleProfileMenu: false })
                     }
