@@ -175,7 +175,7 @@ class HeaderPermissionMenu extends Component {
     }
     chekPermissions = (menuKey, menuItem, data) => {
         const viewPer = data?.actions.find(item => item.permissionName.toLowerCase() === "view");
-        if (!viewPer.values) {
+        if (!viewPer?.values) {
             this.props.history.push("/accessdenied");
         } else {
             this.navigate(menuKey, menuItem);

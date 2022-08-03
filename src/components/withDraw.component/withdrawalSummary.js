@@ -74,7 +74,7 @@ const WithdrawalFiatSummary = ({
 	const [authDisable, setAuthDisable] = useState(false);
 	const [isAuthenticatorVerification, setIsAuthenticatorVerification] =useState(false);
     const [isLoading,setIsLoading]=useState(false);
-	const[permissions,setPermessions] = useState();
+	const[permissions,setPermessions] = useState({});
 const [authenticatorCodeVerificationStage,setauthenticatorCodeVerificationStage]=useState('Verify')
 const [phoneCodeVerificationStage,setPhoneCodeVerificationStage]=useState('getPhoneCode')
 const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getEmailCode')
@@ -145,15 +145,16 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 		getVerifyData();
 		loadPermessions();
 	}, []);
+
 	const loadPermessions = () => {
-  if (withdrawFiatPermissions) {
-			   let _permissions = {};
-				 for (let action of withdrawFiatPermissions?.actions) {
-					 _permissions[action.permissionName] = action.values;
-				 }
-				 setPermessions(_permissions)
-			 }
-		 }
+		if (withdrawFiatPermissions) {
+			let _permissions = {};
+			for (let action of withdrawFiatPermissions?.actions) {
+				_permissions[action.permissionName] = action.values;
+			}
+			setPermessions(_permissions)
+		}
+	}
 	let cleartime;
 	let timeInterval;
 	let count = 30;
@@ -612,12 +613,12 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 						onFinish={saveWithdrwal}
 						
 						autoComplete="off">
-						{permissions?.view && verifyData.isPhoneVerified == true && (
+						{permissions?.withdraw  && verifyData.isPhoneVerified == true && (
 							<Text className="fs-14 mb-8 text-white d-block fw-200">
 								Phone verification code *
 							</Text>
 						)}
-						{permissions?.view && verifyData.isPhoneVerified == true && (
+						{permissions?.withdraw  && verifyData.isPhoneVerified == true && (
 							<Form.Item
 								name="code"
 								className="input-label otp-verify"
@@ -690,12 +691,12 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 									</div>
 							</Form.Item>
 						)}
-						{permissions?.view && verifyData.isEmailVerification === true && (
+						{permissions?.withdraw  && verifyData.isEmailVerification === true && (
 							<Text className="fs-14 mb-8 text-white d-block fw-200">
 								Email verification code *
 							</Text>
 						)}
-						{permissions?.view && verifyData.isEmailVerification === true && (
+						{permissions?.withdraw  && verifyData.isEmailVerification === true && (
 							<Form.Item
 								name="emailCode"
 								className="input-label otp-verify"
@@ -765,12 +766,12 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 									</div>
 							</Form.Item>
 						)}
-						{permissions?.view && verifyData.twoFactorEnabled == true && (
+						{permissions?.withdraw  && verifyData.twoFactorEnabled == true && (
 							<Text className="fs-14 mb-8 text-white d-block fw-200">
 								Authenticator Code *
 							</Text>
 						)}
-						{permissions?.view && verifyData.twoFactorEnabled == true && (
+						{permissions?.withdraw  && verifyData.twoFactorEnabled == true && (
 							<Form.Item
 								name="authenticator"
 								className="input-label otp-verify "
@@ -831,7 +832,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 									</div>
 							</Form.Item>
 						)}
-					{permissions?.view &&	<Button
+					{permissions?.withdraw  &&	<Button
 							size="large"
 							block
 							className="pop-btn"
@@ -852,7 +853,7 @@ const connectStateToProps = ({ userConfig, sendReceive,menuItems }) => {
 		userConfig: userConfig.userProfileInfo,
 		sendReceive,
 		trackAuditLogData: userConfig.trackAuditLogData,
-		withdrawFiatPermissions: menuItems?.featurePermissions.fiat
+		withdrawFiatPermissions: menuItems?.featurePermissions?.fiat
 	};
 };
 const connectDispatchToProps = (dispatch) => {
