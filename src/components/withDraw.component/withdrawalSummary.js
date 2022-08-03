@@ -273,8 +273,6 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 		Obj.info = JSON.stringify(trackAuditLogData);
 
 		let withdrawal = await withdrawSave(Obj);
-
-	
 		setIsLoading(false);
 		if (withdrawal.ok) {
 			setDisableSave(false);
