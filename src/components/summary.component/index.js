@@ -7,6 +7,7 @@ import SuisseBtn from "../shared/butons";
 import Currency from "../shared/number.formate";
 import apicalls from "../../api/apiCalls";
 import { connect } from 'react-redux';
+import { setCurrentAction } from "../../reducers/actionsReducer";
 const LinkValue = (props) => {
 	return (
 		<Translate
@@ -32,7 +33,6 @@ class Summary extends Component {
 		this.permissionsInterval = setInterval(this.loadPermissions, 200);
 	}
 	loadPermissions = () => {
-		debugger
 		if (this.props.buySellPermissions) {
 			clearInterval(this.permissionsInterval);
 			let _permissions = {};
@@ -249,5 +249,13 @@ class Summary extends Component {
 const connectStateToProps = ({ menuItems }) => {
     return { buySellPermissions: menuItems?.featurePermissions["buy/sell"] }
 }
-export default connect(connectStateToProps, )(Summary);
+const connectDispatchToProps = dispatch => {
+	return {
+	  setAction: (val) => {
+		dispatch(setCurrentAction(val))
+	  },
+	  dispatch
+	}
+  }
+export default connect(connectStateToProps, connectDispatchToProps )(Summary);
 

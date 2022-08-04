@@ -7,6 +7,7 @@ import apiCalls from '../../api/apiCalls'
 import NumberFormat from 'react-number-format';
 import {setStepcode,setTransforObj} from '../../reducers/tranfor.Reducer'
 import Currency from '../shared/number.formate';
+import { setCurrentAction } from '../../reducers/actionsReducer';
 const { Option } = Select;
 
 const  TranforCoins = ({userProfile,onClose,dispatch,transforObj,transferPermissions}) =>{
@@ -304,6 +305,9 @@ const connectStateToProps = ({ userConfig,TransforStore,menuItems }) => {
 }
 const connectDispatchToProps = dispatch => {
     return {
+        setAction: (val) => {
+            dispatch(setCurrentAction(val))
+          },
         dispatch
     }
 }

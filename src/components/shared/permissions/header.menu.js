@@ -51,11 +51,13 @@ import {
     setWithdrawfiatenaable
 } from "../../../reducers/sendreceiveReducer";
 import { getmemeberInfo } from "../../../reducers/configReduser";
-import { clearPermissions, fetchFeaturePermissions, fetchFeatures } from "../../../reducers/feturesReducer";
+import { clearPermissions, fetchFeaturePermissions, fetchFeatures, setSelectedFeatureMenu, updatePermissions } from "../../../reducers/feturesReducer";
 import { readNotification as readNotifications } from "../../../notifications/api";
 import apicalls from "../../../api/apiCalls";
 import { setNotificationCount } from "../../../reducers/dashboardReducer";
 import { userManager } from "../../../authentication";
+import { setCurrentAction } from "../../../reducers/actionsReducer";
+import { KEY_URL_MAP } from "./config";
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
 counterpart.registerTranslations("my", my);
@@ -140,6 +142,7 @@ class HeaderPermissionMenu extends Component {
         }
     }
     showDocRequestError() {
+        debugger
         if (!this.props.twoFA?.isEnabled) {
             this.props.history.push("/enabletwofactor");
         }
@@ -174,10 +177,11 @@ class HeaderPermissionMenu extends Component {
         }
     }
     chekPermissions = (menuKey, menuItem, data) => {
-        const viewPer = data?.actions.find(item => item.permissionName.toLowerCase() === "view");
+        const viewPer = data?.actions.find(item => item.permissionName.toLowerCase() === "view"); 
         if (!viewPer?.values) {
             this.props.history.push("/accessdenied");
         } else {
+            this.props.dispatch(setSelectedFeatureMenu(menuItem.id))
             this.navigate(menuKey, menuItem);
         }
     }
@@ -187,6 +191,7 @@ class HeaderPermissionMenu extends Component {
                 this.props.dispatch(fetchFeaturePermissions(menuItem.featureId || menuItem.id, this.props.userConfig.id, (data) => {
                     if (data.ok) {
                         this.chekPermissions(menuKey, menuItem, data?.data)
+
                     }
                 }));
             } else {
@@ -203,6 +208,9 @@ class HeaderPermissionMenu extends Component {
         }
     }
     closeDrawer = (key) => {
+        if(this.props.menuItems?.featurePermissions?.[KEY_URL_MAP[window.location.pathname]]?.featureId){
+            this.props.dispatch(setSelectedFeatureMenu(this.props.menuItems?.featurePermissions?.[KEY_URL_MAP[window.location.pathname]]?.featureId));
+        }
         if (this.child) this.child.clearValues();
         let obj = {};
         this.props.fromObjSwap(obj);
@@ -589,6 +597,9 @@ const connectDispatchToProps = dispatch => {
         getmemeberInfoa: (useremail) => {
             dispatch(getmemeberInfo(useremail));
         },
+        setAction: (val) => {
+			dispatch(setCurrentAction(val))
+		  },
         dispatch
     }
 }

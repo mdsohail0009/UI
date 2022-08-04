@@ -16,6 +16,7 @@ import {
 } from "../../reducers/sendreceiveReducer";
 import { LoadingOutlined } from "@ant-design/icons";
 import NumberFormat from "react-number-format";
+import { setCurrentAction } from "../../reducers/actionsReducer";
 const WithdrawalFiatSummary = ({
 	sendReceive,
 	userConfig,
@@ -861,6 +862,9 @@ const connectDispatchToProps = (dispatch) => {
 		changeStep: (stepcode) => {
 			dispatch(setStep(stepcode));
 		},
+		setAction: (val) => {
+            dispatch(setCurrentAction(val))
+          },
 		dispatch,
 	};
 };

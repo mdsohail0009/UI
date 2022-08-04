@@ -1,8 +1,10 @@
 import { Spin, Tooltip } from 'antd';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { setCurrentAction } from '../../reducers/actionsReducer';
 import { KEY_URL_MAP } from '../shared/permissions/config';
 class ActionsToolbar extends Component {
+    
     render() {
         const { featureKey, onActionClick, menuItems, screenName } = this.props;
         return (
@@ -23,5 +25,12 @@ const connectStateToProps = ({ menuItems, userConfig }) => {
         userConfig: userConfig.userProfileInfo
     }
 }
-const connectDispatchToProps = dispatch => { return { dispatch } }
+const connectDispatchToProps = dispatch => {
+     return {
+        setAction: (val) => {
+            dispatch(setCurrentAction(val))
+          },
+        dispatch 
+    } 
+}
 export default connect(connectStateToProps, connectDispatchToProps)(ActionsToolbar);

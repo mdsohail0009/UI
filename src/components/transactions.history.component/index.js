@@ -10,6 +10,7 @@ import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
 import List from "../grid.component";
 import {getTransactionSearch } from './api';
+import { setCurrentAction } from "../../reducers/actionsReducer";
 const { Option } = Select;
 class TransactionsHistory extends Component {
   constructor(props) {
@@ -192,4 +193,12 @@ componentDidMount() {
 const connectStateToProps = ({ userConfig,menuItems }) => {
 	return { customer: userConfig.userProfileInfo,transactionsPermissions: menuItems?.featurePermissions.transactions };
 };
-export default connect(connectStateToProps)(TransactionsHistory);
+const connectDispatchToProps = dispatch => {
+  return {
+     setAction: (val) => {
+         dispatch(setCurrentAction(val))
+       },
+     dispatch 
+ } 
+}
+export default connect(connectStateToProps,connectDispatchToProps)(TransactionsHistory);

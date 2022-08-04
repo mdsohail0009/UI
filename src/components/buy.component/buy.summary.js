@@ -9,6 +9,7 @@ import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboa
 import { appInsights } from "../../Shared/appinsights";
 import apicalls from '../../api/apiCalls';
 import {Alert} from 'antd'
+import { setCurrentAction } from '../../reducers/actionsReducer';
 
 class BuySummary extends Component {
   constructor(props) {
@@ -230,6 +231,9 @@ const connectDispatchToProps = dispatch => {
         },
         fetchMarketCoinDataValue: () => {
             dispatch(fetchMarketCoinData(true))
+        },
+        setAction: (val) => {
+          dispatch(setCurrentAction(val))
         },
         dispatch
     }

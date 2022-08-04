@@ -23,8 +23,9 @@ import Info from "../shared/info";
 import { DownloadOutlined } from '@ant-design/icons';
 import Loader from "../../Shared/loader";
 import ActionsToolbar from "../toolbar.component/actions.toolbar";
-import { fetchFeaturePermissions } from "../../reducers/feturesReducer";
+import { fetchFeaturePermissions, setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 import { getFeatureId } from "../shared/permissions/permissionService";
+import {setCurrentAction} from '../../reducers/actionsReducer'
 
 const { Paragraph, Text } = Typography;
 
@@ -61,6 +62,7 @@ class AddressBook extends Component {
 		this.gridFiatRef = React.createRef();
 		this.gridCryptoRef = React.createRef();
 		this.props.dispatch(fetchFeaturePermissions(getFeatureId("/addressBook"),this.props.userConfig.id))
+		this.props.dispatch(setSelectedFeatureMenu(getFeatureId("/addressBook"),this.props.userConfig.id));
 	}
 	componentDidMount() {
 		this.permissionsInterval = setInterval(this.loadPermissions, 200);
@@ -95,6 +97,7 @@ class AddressBook extends Component {
 
 	loadPermissions = () => {
 		if (this.props.addressBookPermissions) {
+			this.props.dispatch(setSelectedFeatureMenu(this.props.addressBookPermissions?.featureId));
 			clearInterval(this.permissionsInterval);
 			let _permissions = {};
 			for (let action of this.props.addressBookPermissions?.actions) {
@@ -939,6 +942,9 @@ const connectDispatchToProps = (dispatch) => {
 		changeStep: (stepcode) => {
 			dispatch(setAddressStep(stepcode));
 		},
+		setAction: (val) => {
+			dispatch(setCurrentAction(val))
+		  },
 		dispatch
 	};
 };

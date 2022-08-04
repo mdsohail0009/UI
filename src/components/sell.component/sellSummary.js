@@ -8,6 +8,7 @@ import { appInsights } from "../../Shared/appinsights";
 import {Alert} from 'antd'
 import { setSellFinalRes } from '../../reducers/sellReducer'
 import apicalls from '../../api/apiCalls';
+import { setCurrentAction } from '../../reducers/actionsReducer';
 
 
 class SellSummary extends Component {
@@ -156,6 +157,9 @@ const connectDispatchToProps = dispatch => {
         sellResData: (data) => {
             dispatch(setSellFinalRes(data))
         },
+        setAction: (val) => {
+			dispatch(setCurrentAction(val))
+		  },
 
     }
 }

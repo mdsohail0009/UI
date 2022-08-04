@@ -17,6 +17,7 @@ import apiCalls from "../../api/apiCalls";
 import { publishBalanceRfresh } from "../../utils/pubsub";
 import { Link } from "react-router-dom";
 import NumberFormat from "react-number-format";
+import { setCurrentAction } from "../../reducers/actionsReducer";
 class WithdrawSummary extends Component {
 	state = {
 		onTermsChange: false,
@@ -1009,6 +1010,9 @@ const connectDispatchToProps = (dispatch) => {
 		changeStep: (stepcode) => {
 			dispatch(setStep(stepcode));
 		},
+		setAction: (val) => {
+			dispatch(setCurrentAction(val))
+		  },
 
 		dispatch,
 	};

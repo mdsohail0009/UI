@@ -4,6 +4,7 @@ const SET_DATA = "setData";
 const GET_DATA = "getData";
 const UPDATE_PERMISSIONS = "updatePermissions";
 const CLEAR_PERMISSIONS = "clearPermissions";
+const SET_SELECTED_FEATUREID = "setSelectedFeatureMenu";
 const getData = (payload) => {
     return {
         type: GET_DATA,
@@ -27,6 +28,12 @@ const updatePermissions = (payload) => {
         payload
     }
 }
+const setSelectedFeatureMenu = (payload) => {
+    return {
+        type: SET_SELECTED_FEATUREID,
+        payload
+    }
+}
 const fetchFeatures = (app_id, customer_id) => {
     return async (dispatch) => {
         dispatch(getData({ data: [], error: null, loading: true, key: "features" }));
@@ -41,6 +48,7 @@ const fetchFeatures = (app_id, customer_id) => {
             const _cockpit = menu.find(item => (item.key == "cockpit" || item.path == "/cockpit"));
             menu = menu.filter(item => (!item.isTab && !["/cockpit", "/balances"].includes(item.path)));
             dispatch(setData({ data: menu, error: null, key: "features", loading: false }));
+            // dispatch(setSelectedFeatureMenu(menuItem.id))
             const _userConfig = store.getState().userConfig.userProfileInfo;
             dispatch(fetchFeaturePermissions(_cockpit.id, _userConfig.id))
         } else {
@@ -66,19 +74,24 @@ const fetchFeaturePermissions = (feature_id, customer_id, callback) => {
 }
 const initialState = {
     features: { loading: true, data: [], error: null },
-    featurePermissions: { loading: true, data: [], error: null }
+    featurePermissions: { loading: true, data: [], error: null,selectedScreenFeatureId: null  }
 
 }
 const featuresReducer = (state = initialState, action) => {
+
     switch (action.type) {
+
         case GET_DATA:
             state = { ...state, [action.payload.key]: { ...state[action.payload.key], ...action.payload } };
             return state;
         case SET_DATA:
             state = { ...state, [action.payload.key]: { ...state[action.payload.key], ...action.payload } };
             return state;
+        case SET_SELECTED_FEATUREID:
+            state = { ...state, featurePermissions: { ...state.featurePermissions, selectedScreenFeatureId: action.payload,  } };
+            return state;
         case CLEAR_PERMISSIONS:
-            state = { ...state, featurePermissions: { data: [], error: null, loading: true } };
+            state = { ...state, featurePermissions: { data: [], error: null, loading: true,selectedScreenFeatureId: null } };
             return state;
         default:
             return state;
@@ -86,4 +99,4 @@ const featuresReducer = (state = initialState, action) => {
 }
 
 export default featuresReducer;
-export { fetchFeatures, fetchFeaturePermissions, clearPermissions, updatePermissions };
+export { fetchFeatures, fetchFeaturePermissions, clearPermissions, updatePermissions, setSelectedFeatureMenu };
