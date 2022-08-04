@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, Button, Typography, Empty, Image } from 'antd';
+import { List, Button, Typography, Empty, Image,Dropdown, Menu, Space } from 'antd';
 import Translate from 'react-translate-component';
 import BuySell from '../buy.component';
 import ConnectStateProps from '../../utils/state.connect';
@@ -62,6 +62,18 @@ class YourPortfolio extends Component {
             buyDrawer: false,
         })
     }
+    menuBar = (
+      <Menu>
+          <ul className="pl-0 drpdwn-list">
+              <li >
+                  <Link>Withdraw </Link>
+              </li>
+              <li >
+                  <Link>Deposit </Link>
+              </li>
+          </ul>
+      </Menu>
+  )
     render() {
         const { Title, Text } = Typography;
         const { cryptoPortFolios } = this.props.dashboard
@@ -116,6 +128,19 @@ class YourPortfolio extends Component {
                         className="custom-btn sec ml-16"
                         onClick={() => this.showBuyDrawer(item, "sell")}
                       />
+                      
+                      <Dropdown overlay={this.menuBar} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
+                        <a onClick={e => e.preventDefault()}>
+                          <Space>
+                          <span class="icon md menu-bar ml-4 p-relative"></span>
+                          {/* <DownOutlined /> */}
+                        </Space>
+                      </a>
+                    </Dropdown>
+                     {/* <span class="icon md bell ml-4 p-relative"></span> */}
+                     {/* <Dropdown overlay={this.depostWithdrawMenu} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
+                     <span class="icon md bell ml-4 p-relative"></span>
+                    </Dropdown> */}
                     </div>
                   }
                 >
