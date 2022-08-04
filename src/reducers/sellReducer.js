@@ -25,10 +25,10 @@ const updateCoinDetailValue = (payload) => {
 const updatesellsaveObject = (payload) => {
     return { type: UPDATE_SELLSAVEOBJECT, payload }
 }
-const getMemberCoins = (memberId) => {
+const getMemberCoins = (customer_id) => {
     return async dispatch => {
         dispatch(handleApiFetch({ key: "memberCoins", loading: true, data: [] }));
-        const response = await api.sellMemberCrypto(memberId);
+        const response = await api.sellMemberCrypto(customer_id);
         if (response.ok) {
             dispatch(handleApiFetch({ data: response.data, loading: false, key: 'memberCoins' }));
         } else {

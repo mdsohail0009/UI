@@ -15,7 +15,7 @@ class SellToggle extends Component {
         loading: false,
     }
     componentDidMount() {
-        this.props.fetchMemberCoins(this.props.member?.id)
+        this.props.fetchMemberCoins(this.props.customer?.id)
     }
     handleBuySellToggle = e => {
         this.setState({
@@ -24,7 +24,7 @@ class SellToggle extends Component {
     };
     setCoinDetailData = async (coin) => {
         this.setState({ ...this.state, loading: true });
-        let res = await getSelectedCoinDetails(coin.coin, this.props.member?.id);
+        let res = await getSelectedCoinDetails(coin.coin, this.props.customer?.id);
         if (res.ok) {
             this.props.setSelectedCoin(res.data); this.props.changeStep('step10');
         }
@@ -59,15 +59,15 @@ class SellToggle extends Component {
     }
 }
 const connectStateToProps = ({ buySell, sellInfo, userConfig }) => {
-    return { buySell, sellData: sellInfo, member: userConfig.userProfileInfo }
+    return { buySell, sellData: sellInfo, customer: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
         },
-        fetchMemberCoins: (memberId) => {
-            dispatch(getMemberCoins(memberId))
+        fetchMemberCoins: (customer_id) => {
+            dispatch(getMemberCoins(customer_id))
         },
         setSelectedCoin: (coinWallet) => {
             dispatch(setCoin(coinWallet));

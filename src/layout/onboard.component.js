@@ -8,9 +8,9 @@ class OnBoarding extends Component {
     isGetOnboardingStatus: false,
   };
   componentDidMount() {
-    this.getMemberDetails()
+    this.getCustomerDetails()
   }
-  getMemberDetails = async () => {
+  getCustomerDetails = async () => {
     if (this.props.user && this.props.user.profile) {
      await this.props.trackauditlogs()
       this.props.getmemeberInfoa(this.props.user.profile.sub);

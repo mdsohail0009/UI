@@ -39,12 +39,12 @@ class SelectCrypto extends Component {
         this.EventTrack()
     }
     EventTrack = () => {
-        apicalls.trackEvent({ "Type": 'User', "Action": 'Buy coin page view', "Username": this.props.userProfileInfo.userName, "MemeberId": this.props.userProfileInfo.id, "Feature": 'Buy', "Remarks": 'Buy Crypto coin selection view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy Crypto' });
+        apicalls.trackEvent({ "Type": 'User', "Action": 'Buy coin page view', "Username": this.props.userProfileInfo.userName, "customerId": this.props.userProfileInfo.id, "Feature": 'Buy', "Remarks": 'Buy Crypto coin selection view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy Crypto' });
     }
     fetchConvertionValue = async () => {
         const { coin } = this.props.buyInfo?.selectedCoin?.data;
         const { isSwaped, cryptoValue, localValue } = this.state.swapValues;
-        const value = await convertCurrency({ from: coin, to: "USD", value: isSwaped ? cryptoValue : localValue, isCrypto: !isSwaped, memId: this.props.userProfileInfo.id, screenName: "buy" })
+        const value = await convertCurrency({ from: coin, to: "USD", value: isSwaped ? cryptoValue : localValue, isCrypto: !isSwaped, customer_id: this.props.userProfileInfo.id, screenName: "buy" })
 
         this.setState({ ...this.state, disableConfirm: false, swapValues: { ...this.state.swapValues, [isSwaped ? "localValue" : "cryptoValue"]: value } })
     }
@@ -67,7 +67,7 @@ class SelectCrypto extends Component {
             to: this.state.selectedWallet?.currencyCode || "USD",
             value: (isSwaped ? cryptoValue : localValue) || 0,
             isCrypto: !isSwaped,
-            memId: this.props.userProfileInfo?.id,
+            customer_id: this.props.userProfileInfo?.id,
             screenName: "buy"
         });
         if (response.ok) {
@@ -139,7 +139,7 @@ class SelectCrypto extends Component {
                         cryptoAmt={cryptoValue}
                         localCurrency={this.state.selectedWallet?.currencyCode || "USD"}
                         cryptoCurrency={coin}
-                        onChange={(obj) => this.onValueChange(obj)} memberId={this.props.userProfileInfo?.id}
+                        onChange={(obj) => this.onValueChange(obj)} customerId={this.props.userProfileInfo?.id}
                         screenName='buy'
                         isSwaped={isSwaped}
                         onCurrencySwap={() => {
@@ -168,8 +168,8 @@ const connectDispatchToProps = dispatch => {
         setStep: (stepcode) => {
             dispatch(changeStep(stepcode))
         },
-        preview: (wallet, coin, amount, isCrypto, memberId) => {
-            dispatch(fetchPreview({ coin, wallet, amount, isCrypto, memberId }))
+        preview: (wallet, coin, amount, isCrypto, customer_id) => {
+            dispatch(fetchPreview({ coin, wallet, amount, isCrypto, customer_id }))
         },
         setWallet: (wallet) => {
             dispatch(setWallet(wallet))

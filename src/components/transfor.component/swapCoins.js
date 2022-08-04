@@ -113,7 +113,7 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj}) =>{
         }
         let selectedWallet =  currencyLu.filter((type)=>type.walletCode == values.walletCode)
         values.memberWalletId = selectedWallet[0].walletId;
-        values.membershipId = userProfile.id;
+        values.customerId = userProfile.id;
         values.transferAmount = selectedwalletType=='Fiat'?( values.transferAmount.slice(0,(values.transferAmount.indexOf('.')>-1?(values.transferAmount.indexOf('.')+3):values.transferAmount.length)) ):values.transferAmount;
         if(values.transferAmount.indexOf('.')==0){
             values.transferAmount = '0'+values.transferAmount

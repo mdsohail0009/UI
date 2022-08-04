@@ -129,7 +129,7 @@ const FaitWithdrawal = ({
       Type: "User",
       Action: "Withdraw Fiat page view",
       Username: userConfig.userName,
-      MemeberId: userConfig.id,
+      customerId: userConfig.id,
       Feature: "Withdraw Fiat",
       Remarks: "	Withdraw Fiat page view",
       Duration: 1,
@@ -286,7 +286,7 @@ const FaitWithdrawal = ({
       }
       setLoading(false);
       setErrorMsg(null);
-      values["membershipId"] = userConfig.id;
+      values["customerId"] = userConfig.id;
       values["memberWalletId"] = accountDetails[0].id;
       values["beneficiaryAccountName"] = userConfig.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig.lastName;
       values["favouriteName"] =
@@ -385,8 +385,6 @@ const FaitWithdrawal = ({
     setAccountHolder(response.data)
   }
   const handleAccountChange = (e) => {
-    debugger
-
     setErrorMsg(null);
     setAgreeRed(true);
     form.setFieldsValue({ currencyCode: null, favouriteName: null })
@@ -446,7 +444,6 @@ const FaitWithdrawal = ({
     }
   }
   const handleDetails = (e) => {
-
     setSelectRequired(true)
     let data = bankDetails.filter((item) => item.lable == e)
     setDetails(data)

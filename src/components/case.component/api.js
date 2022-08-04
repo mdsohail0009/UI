@@ -34,19 +34,19 @@ const saveDocReply = (obj) => {
 const approveDoc = (obj) => {
   return clientApi.post(ApiControllers.documents + `Actions/Status`, obj);
 };
-const getDashboardNotices = (id) => {
+const getDashboardNotices = (customer_id) => {
   return clientApi.get(
-    ApiControllers.accounts + `Dashboard/Notifications/${id}`
+    ApiControllers.customers + `Dashboard/Notifications/${customer_id}`
   );
 };
 const getFileURL = (obj) => {
-  return clientApi.post(ApiControllers.accounts + `FetchFile`, obj);
+  return clientApi.post(ApiControllers.customers + `FetchFile`, obj);
 };
 const getCase = (id) => {
-  return clientApi.get(ApiControllers.accounts + `Cases/${id}`);
+  return clientApi.get(ApiControllers.customers + `Cases/${id}`);
 };
 const getCaseLu = (name) => {
-  return clientApi.get(ApiControllers.accounts + `AdminUsers/${name}`)
+  return clientApi.get(ApiControllers.customers + `AdminUsers/${name}`)
 }
 export {
   sendRequest, uuidv4, getDocDetails, getDocumentReplies, saveDocReply, approveDoc, getDashboardNotices,

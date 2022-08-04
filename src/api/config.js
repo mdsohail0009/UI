@@ -11,7 +11,7 @@ export const ApiControllers = {
     admin: "Admin/",
     buy: "Buy/",
     sell: "Sell/",
-    accounts: "Accounts/",
+    customers: "Customer/",
     markets: "Markets/",
     wallets: "Wallets/",
     notifications: "Notifications/",

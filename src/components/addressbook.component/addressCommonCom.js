@@ -8,7 +8,7 @@ import { setStep, setHeaderTab } from "../../reducers/buysellReducer";
 import Translate from "react-translate-component";
 import { connect } from "react-redux";
 import {
-  favouriteNameCheck, getPayeeLu, getFavData, saveAddressBook, getBankDetails,
+  getPayeeLu, getFavData, saveAddressBook, getBankDetails,
   getBankDetailLu, uuidv4, getCoinList, emailCheck
 } from "./api";
 import { getCountryStateLu } from "../../api/apiServer";
@@ -104,6 +104,7 @@ const AddressCommonCom = (props) => {
     if (window?.location?.pathname.includes('payments')) {
       setBilPay("Fiat");
     }
+    
     if (selectParty === true) {
       form.setFieldsValue({
         addressType: "3r dparty",
@@ -179,6 +180,7 @@ const AddressCommonCom = (props) => {
       let coinType = bankDetailForm.getFieldValue("walletCode");
       if (coinType) {
         const validAddress = WAValidator.validate(address, coinType, "both");
+        
         if (!validAddress) {
           return Promise.reject(
             "Address is not Valid, please enter a valid address according to the coin selected"
@@ -263,17 +265,17 @@ const AddressCommonCom = (props) => {
    
   }
 
-  const bankDetailsLu = async (id, membershipId) => {
+  const bankDetailsLu = async (id, customerId) => {
     // setIsLoading(true)
-    // let response = await getBankDetailLu(id, membershipId)
+    // let response = await getBankDetailLu(id, customerId)
     // if (response.ok) {
     //   let obj = response.data;
     //   setBankDetail(obj)
     // }
     // setIsLoading(false)
   }
-  const getFavs = async (id, membershipId) => {
-    let response = await getFavData(id, membershipId)
+  const getFavs = async (id, customerId) => {
+    let response = await getFavData(id, customerId)
     form.resetFields()
     if (response.ok) {
       let obj = response.data;
@@ -324,13 +326,13 @@ const AddressCommonCom = (props) => {
   };
 
   const saveModalwithdrawal = (values) => {
- 
+    debugger
     let obj = {
       id: uuidv4(),
       payeeId: uuidv4(),
       label: values.label,
       currencyType: withdraeTab,
-      walletAddress: values.walletAddress,
+      walletAddress: (props?.addressBookReducer?.cryptoTab == true && !bilPay) ? values.walletAddress.trim(): values.walletAddress,
       walletCode: values.walletCode,
       accountNumber: values.accountNumber || values.IBAN,
       bankType: values.bankType || "Bank Account",
@@ -348,7 +350,7 @@ const AddressCommonCom = (props) => {
       isWhitelisting: true,
       isAgree: true,
       status: 1,
-      createddate: "2022-06-22T10:09:41.487Z",
+      createddate:new Date(),
       userCreated: props?.userConfig.firstName + props?.userConfig.lastName,
       modifiedBy: null,
       remarks: null,
@@ -408,12 +410,11 @@ const AddressCommonCom = (props) => {
   }
 
   const savewithdrawal = async (values) => {
-    
     setIsLoading(false);
     setErrorMsg(null);
     setBtnDisabled(true);
     const type = withdraeTab;
-    values["membershipId"] = props?.userConfig?.id;
+    values["customerId"] = props?.userConfig?.id;
     if (!selectParty) {
       values["beneficiaryAccountName"] = props?.userConfig.isBusiness
         ? props?.userConfig.businessName
@@ -427,12 +428,12 @@ const AddressCommonCom = (props) => {
       ? favouriteDetails.id
       : Id;
     let namecheck = values.favouriteName;
-    let responsecheck = await favouriteNameCheck(
-      props?.userConfig?.id,
-      namecheck,
-      withdraeTab,
-      favaddrId
-    );
+    // let responsecheck = await favouriteNameCheck(
+    //   props?.userConfig?.id,
+    //   namecheck,
+    //   withdraeTab,
+    //   favaddrId
+    // );
     if (!values.isAgree) {
       setBtnDisabled(false);
       useDivRef.current.scrollIntoView();
@@ -758,7 +759,7 @@ const AddressCommonCom = (props) => {
                       {
                         validator(_, value) {
                           if (emailExist) {
-                            return Promise.reject("Email already exist");
+                            return Promise.reject("Phone number already exist");
                           } else if (value && !(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(value))) {
                             return Promise.reject("Invalid phone number");
                           }
@@ -1050,10 +1051,7 @@ const AddressCommonCom = (props) => {
                           {
                             required: true,
                             message: 'Is required',
-                          },
-                          {
                             whitespace: true,
-                            message: 'Is required',
                           },
                           {
                             validator: validateContentRule,
@@ -1098,13 +1096,20 @@ const AddressCommonCom = (props) => {
                         required
 
                         rules={[
+                          // {
+                          //   required: true,
+                          //   //message: 'Is required',
+                          //   whitespace: true,
+                          // },
                           {
                             validator: validateAddressType,
                           },
-                        ]}>
+                        ]}
+                        >
                         <Input
                           className="cust-input mb-0"
                           maxLength="100"
+                          
                           placeholder={apiCalls.convertLocalLang("address")}
                         />
                       </Form.Item>
@@ -1226,18 +1231,21 @@ const AddressCommonCom = (props) => {
 
                             label="IBAN"
                             required
+                           
                             rules={[
+                              { required: true, message: "Is required" },
                               {
-                                required: true,
-                                message: "Is required"
+                                validator(_, value) {
+                                  if (emailExist) {
+                                    return Promise.reject("Invalid  IBAN Number");
+                                  } else if (value && !(/^[A-Za-z0-9]+$/.test(value))) {
+                                    return Promise.reject("Invalid  IBAN Number");
+                                  }
+                                  else {
+                                    return Promise.resolve();
+                                  }
+                                },
                               },
-                              {
-                                whitespace: true,
-                                message: apiCalls.convertLocalLang('is_required')
-                              },
-                              {
-                                validator: validateContentRule
-                              }
                             ]}
                             onBlur={(e) => handleIban(e.target.value)}
 
@@ -1254,34 +1262,30 @@ const AddressCommonCom = (props) => {
                               name="accountNumber"
                               label="Bank Account Number"
                               required
+                             
                               rules={[
+                                { required: true, message: "Is required" },
                                 {
-                                  required: true,
-                                  message: "Invalid  Bank Account Number"
+                                  validator(_, value) {
+                                    if (emailExist) {
+                                      return Promise.reject("Invalid  Bank Account Number");
+                                    } else if (value && !(/^[A-Za-z0-9]+$/.test(value))) {
+                                      return Promise.reject("Invalid  Bank Account Number");
+                                    }
+                                    else {
+                                      return Promise.resolve();
+                                    }
+                                  },
                                 },
-                                {
-                                  pattern: /^[A-Za-z0-9]+$/,
-                                  message: "Invalid  Bank Account Number",
-                                },
-                                {
-                                  whitespace: true,
-                                  message: apiCalls.convertLocalLang('is_required')
-                                },
-                                {
-                                  validator: validateContentRule
-                                }
                               ]}
 
                             >
-                              <NumberFormat
-                                className="cust-input value-field"
-                                customInput={Input}
-                                prefix={""}
-                                maxLength="500"
-                                placeholder="Bank Account Number"
-                                allowNegative={false}
-
-                              />
+                            
+                              <Input
+                              className="cust-input "
+                              placeholder="Bank Account Number"
+                              maxLength="500"
+                            />
                             </Form.Item>
                           </Col>}
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -1290,22 +1294,21 @@ const AddressCommonCom = (props) => {
                             name="swiftCode"
                             label="BIC/SWIFT/Routing Number"
                             required
+                         
                             rules={[
+                              { required: true, message: "Is required" },
                               {
-                                required: true,
-                                message: "Is required"
+                                validator(_, value) {
+                                  if (emailExist) {
+                                    return Promise.reject("Invalid BIC/SWIFT/Routing number");
+                                  } else if (value && !(/^[A-Za-z0-9]+$/.test(value))) {
+                                    return Promise.reject("Invalid BIC/SWIFT/Routing number");
+                                  }
+                                  else {
+                                    return Promise.resolve();
+                                  }
+                                },
                               },
-                              {
-                                pattern: /^[A-Za-z0-9]+$/,
-                                message: "Invalid BIC/SWIFT/Routing number",
-                              },
-                              {
-                                whitespace: true,
-                                message: apiCalls.convertLocalLang('is_required')
-                              },
-                              {
-                                validator: validateContentRule
-                              }
                             ]}
                           >
 
@@ -1362,7 +1365,6 @@ const AddressCommonCom = (props) => {
 
                             <Select
                               showSearch
-
                               placeholder="Select Country"
                               className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
                               dropdownClassName="select-drpdwn"

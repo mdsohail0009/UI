@@ -22,7 +22,7 @@ const WithdrawalSuccess = ({ changeStep, dispatch, userProfileInfo, sendReceive,
     }
    
     const successTrack = () => {
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fiat success page view', "Username": userProfileInfo?.userName, "MemeberId": userProfileInfo?.id, "Feature": 'Withdraw Fiat', "Remarks": 'Withdraw Fiat success page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' });
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fiat success page view', "Username": userProfileInfo?.userName, "customerId": userProfileInfo?.id, "Feature": 'Withdraw Fiat', "Remarks": 'Withdraw Fiat success page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' });
     }
     return (
         <>

@@ -88,11 +88,19 @@ class Referral extends Component {
             showIcon
           />
         )}
-        
+
         <Spin spinning={this.state.isLoading}>
           <div className="box basic-info">
-            <div className="box contact-info coin-bal" style={{padding:"0 24px"}}>
-              <Text className="basicinfo mb-0" style={{ marginLeft: '-22px' }}>My Referral</Text>
+            <div
+              className="box mb-flex contact-info coin-bal"
+              style={{ padding: "0 24px" }}
+            >
+              {/* <Text className="basicinfo mb-0" style={{ marginLeft: '-22px' }}>My Referral</Text> */}
+              	<Translate
+						content="referr"
+						component={Text}
+						className="basicinfo"
+					/>
               {/* <ul class="m-0 pl-0">
 						
 							<li className="fs-20 text-yellow c-pointer" onClick={()=>window.open(process.env.REACT_APP_PARTNER_UI_URL, "_blank")}>
@@ -103,7 +111,7 @@ class Referral extends Component {
                 htmlType="submit"
                 size="large"
                 className="pop-btn"
-                style={{marginRight:'-20px'}}
+                style={{ marginRight: "-20px" }}
                 onClick={() =>
                   window.open(process.env.REACT_APP_PARTNER_UI_URL, "_blank")
                 }
@@ -134,7 +142,7 @@ class Referral extends Component {
               <div className="mb-0 fw-600 text-white-30 walletadrs mb-copy">
                 {this.state.referaldata?.referrallink || "---"}
               </div>
-              <div className="mb-0 fw-600 text-white-30 walletadrs mb-copy" >
+              <div className="mb-0 fw-600 text-white-30 walletadrs mb-copy">
                 <CopyToClipboard
                   text={this.state.referaldata?.referrallink || "---"}
                 >
@@ -164,18 +172,18 @@ class Referral extends Component {
               </div>
             </div>
 
-            <Dropdown overlay={this.shareMenu}>
+            <Dropdown overlay={this.shareMenu} trigger={['click']}>
               <Button
                 style={{ borderRadius: 25, height: 50 }}
                 className="mt-36 text-upper share-btn fw-600 fs-14"
                 block
+                onClick={e => e.preventDefault()}
               >
                 Share
               </Button>
             </Dropdown>
           </div>
         </Spin>
-        
       </>
     );
 	}
