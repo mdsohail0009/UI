@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { List, Button, Typography, Empty, Image,Dropdown, Menu, Space } from 'antd';
 import Translate from 'react-translate-component';
 import BuySell from '../buy.component';
+import SendReceive from '../send.component'
 import ConnectStateProps from '../../utils/state.connect';
-import { fetchYourPortfoliodata } from '../../reducers/dashboardReducer';
+import { fetchYourPortfoliodata,fetchMarketCoinData,fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import Currency from '../shared/number.formate';
 import { fetchSelectedCoinDetails, setExchangeValue, setCoin } from '../../reducers/buyReducer';
 import { setStep } from '../../reducers/buysellReducer';
@@ -11,16 +13,30 @@ import { updateCoinDetail } from '../../reducers/sellReducer'
 import { convertCurrency } from '../buy.component/buySellService';
 import { withRouter, Link } from 'react-router-dom';
 import apiCalls from '../../api/apiCalls';
-
+import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle, setWithdrawfiatenaable, setWithdrawfiat,setWalletAddress } from "../../reducers/sendreceiveReducer";
+import { getcoinDetails } from './api'
+import {createCryptoDeposit} from "../deposit.component/api"
 class YourPortfolio extends Component {
     state = {
         loading: true,
         initLoading: true,
-        portfolioData: [], buyDrawer: false
+        portfolioData: [], buyDrawer: false, coinData: null,sendDrawer: false,
     }
     componentDidMount() {
         this.loadCryptos();
+        this.loadCoinDetailData();
     }
+    loadCoinDetailData = async () => {
+      this.setState({ ...this.state, loading: true})
+      this.props.dispatch(fetchMarketCoinData(false))
+      const response = await getcoinDetails(this.props.match.params?.coinName,this.props.userProfile?.id);
+      if (response.ok) {
+          this.setState({ ...this.state, coinData: response.data },
+              //  () => {this.coinChartData(1); }
+          )
+      }
+      this.setState({ ...this.state, loading: false})
+  }
     loadCryptos = () => {
         if (this.props.userProfile) {
             this.props.dispatch(fetchYourPortfoliodata(this.props.userProfile.id));
@@ -57,20 +73,96 @@ class YourPortfolio extends Component {
             buyDrawer: true
         })
     }
+    showSendReceiveDrawer = async(e, value) => {
+      debugger
+      let selectedObj = { ...value };
+      selectedObj.coin = selectedObj.symbol.toUpperCase();
+      selectedObj.coinBalance = selectedObj.avilableBalance
+      selectedObj.coinFullName = selectedObj.name
+      selectedObj.oneCoinValue = selectedObj.current_price;
+      selectedObj.id = selectedObj.memberWalletId;
+      selectedObj.withdrawMinValue = selectedObj.swapMinValue
+      this.props.dispatch(fetchWithDrawWallets({ customerId: this.props?.userProfile?.id }));
+      this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
+      this.props.dispatch(setSubTitle(apiCalls.convertLocalLang("selectCurrencyinWallet")));
+      let coin = value.symbol.toUpperCase();
+      if (!this.props?.userProfile?.isKYC) {
+          this.props.history.push("/notkyc");
+          return;
+      }
+      if(!this.props?.twoFA?.isEnabled){
+          this.props.history.push("/enabletwofactor");
+          return;
+      }
+      if (this.props?.userProfile?.isDocsRequested) {
+          this.props.history.push("/docnotices");
+          return;
+      }
+      if (!this.props?.userProfile?.isKYC) {
+          this.props.history.push("/notkyc");
+          return;
+      }
+      const isDocsRequested = this.props.userProfile.isDocsRequested;
+      if (isDocsRequested) {
+          this.showDocsError();
+          return;
+      }
+      if (e == 2) {
+          this.props.dispatch(setWithdrawfiatenaable(true))
+          this.props.dispatch(setWithdrawfiat({ walletCode: coin }))
+          this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
+          this.props.changeStep('withdraw_crypto_selected');
+        //   this.setState({
+        //     ...this.state,
+        //     sendDrawer: true
+        // })
+      } else {
+          this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
+          this.props.dispatch(setSubTitle(`${selectedObj.coinBalance ? selectedObj.coinBalance : '0'} ${selectedObj.coin}` + " " + apiCalls.convertLocalLang('available')));
+          this.props.dispatch(setStep("step7"));
+          this.props.dispatch(setSubTitle(` ${coin}` + " " + "balance" +" "+ ":" +" "+ `${selectedObj.coinBalance ? selectedObj.coinBalance : '0'}`+`${" "}`+`${coin}`
+            ));
+             const response = await createCryptoDeposit({ customerId: this.props.userProfile?.id, walletCode: coin });
+             if (response.ok) {
+
+                this.props.dispatch(setWalletAddress(response.data));
+
+                this.props.dispatch(fetchDashboardcalls(this.props.userProfile?.id));
+
+             }
+
+          this.setState({
+              ...this.state,
+              sendDrawer: true
+          })
+      }
+      this.setState({
+          valNum: e
+      }, () => {
+          this.setState({
+              ...this.state,
+              sendDrawer: true,
+              selctedVal: coin
+          })
+
+      })
+  }
     closeDrawer = () => {
-        this.setState({
-            buyDrawer: false,
-        })
-    }
+      this.setState({
+          buyDrawer: false,
+          sendDrawer: false
+      })
+  }
     menuBar = (
       <Menu>
           <ul className="pl-0 drpdwn-list">
               <li >
-                  <Link>Withdraw </Link>
+                  <Link onClick={() => this.showSendReceiveDrawer(1, this.state.coinData)} value={1} className="c-pointer"><div></div>Deposit</Link>
               </li>
               <li >
-                  <Link>Deposit </Link>
+                  <Link onClick={() => this.showSendReceiveDrawer(2, this.state.coinData)} value={2} className="c-pointer"><div></div>Withdraw</Link>
               </li>
+              
           </ul>
       </Menu>
   )
@@ -78,7 +170,7 @@ class YourPortfolio extends Component {
         const { Title, Text } = Typography;
         const { cryptoPortFolios } = this.props.dashboard
         const { totalCryptoValue, totalFiatValue } = this.props.dashboard.portFolio.data;
-
+        const { coinData } = this.state;
         return (
           <div className="portfolio-list">
            
@@ -193,9 +285,23 @@ class YourPortfolio extends Component {
               showDrawer={this.state.buyDrawer}
               onClose={() => this.closeDrawer()}
             />
+            <SendReceive showDrawer={this.state.sendDrawer} onClose={() => this.closeDrawer()} />
           </div>
         );
     }
 }
 
-export default ConnectStateProps(withRouter(YourPortfolio));
+const connectStateToProps = ({ sendReceive, userConfig, dashboard }) => {
+  return { sendReceive, userProfile: userConfig.userProfileInfo, dashboard,twoFA:userConfig.twoFA }
+}
+const connectDispatchToProps = dispatch => {
+  return {
+      changeStep: (stepcode) => {
+          dispatch(setStep(stepcode))
+      },
+      dispatch
+  }
+}
+
+export default connect(connectStateToProps, connectDispatchToProps)(withRouter(YourPortfolio));
+//export default ConnectStateProps(withRouter(YourPortfolio));
