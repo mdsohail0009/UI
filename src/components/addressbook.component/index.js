@@ -746,7 +746,9 @@ class AddressBook extends Component {
 								</Tooltip>
 							</li>
 						</ul> */}
-						<ActionsToolbar featureKey="/addressBook" onActionClick={(key) => this.onActionClick(key)}/>
+						<span className="mb-right">
+						<ActionsToolbar  featureKey="/addressBook" onActionClick={(key) => this.onActionClick(key)}/>
+						</span>
 					</div>
 					{this.state.errorWorning && (
 						<div className="custom-alert">

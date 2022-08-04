@@ -407,7 +407,7 @@ class HeaderPermissionMenu extends Component {
                 </Dropdown> : item.path !== "/addressBook" && <Translate
                     content={item.content}
                     component={Menu.Item}
-                    key={indx}
+                    key={item.key}
                     onClick={() => this.onMenuItemClick(item.key, item)}
                     className="list-item"
                 />)}

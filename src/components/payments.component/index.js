@@ -147,9 +147,9 @@ const Payments = (props) => {
               Edit Bill Payment
             </Button>
           </div> */}
-
+          <span className="mb-right">
           <ActionsToolbar featureKey="/payments" onActionClick={(key) => onActionClick(key)}/>
-
+          </span>
           {/* <div className="cust-btns visible-mobile mb-16" style={{float:'right'}}>
             <ul
               className="address-icons"
