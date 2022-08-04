@@ -205,6 +205,7 @@ componentWillUnmount(){
                                 <li onClick={() => this.showBuyDrawer(coinData, "buy")} className="c-pointer"><div><span className="icon md buy" /></div>BUY</li>
                                 <li onClick={() => this.showBuyDrawer(coinData, "sell")} className="c-pointer"><div><span className="icon md sell" /></div>SELL</li>
                                 <li onClick={() => this.showSendReceiveDrawer(2, coinData)} value={2} className="c-pointer"><div><span className="icon md withdraw" /></div>WITHDRAW</li>
+                                <li className="c-pointer"><div><span className="icon md deposit" /></div>DEPOSIT</li>
                             </ul>
                         </> : <div className="text-center"><Spin className="text-center"/></div>}
                     </div>
