@@ -74,18 +74,15 @@ class YourPortfolio extends Component {
         })
     }
     showSendReceiveDrawer = async(e, value) => {
-      debugger
       let selectedObj = { ...value };
-      selectedObj.coin = selectedObj.symbol.toUpperCase();
-      selectedObj.coinBalance = selectedObj.avilableBalance
-      selectedObj.coinFullName = selectedObj.name
-      selectedObj.oneCoinValue = selectedObj.current_price;
-      selectedObj.id = selectedObj.memberWalletId;
+      selectedObj.coin = selectedObj.coin?.toUpperCase();
+      selectedObj.coinFullName = selectedObj.coinFullName
+      selectedObj.id = selectedObj.id;
       selectedObj.withdrawMinValue = selectedObj.swapMinValue
       this.props.dispatch(fetchWithDrawWallets({ customerId: this.props?.userProfile?.id }));
       this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
       this.props.dispatch(setSubTitle(apiCalls.convertLocalLang("selectCurrencyinWallet")));
-      let coin = value.symbol.toUpperCase();
+      let coin = value.coin?.toUpperCase();
       if (!this.props?.userProfile?.isKYC) {
           this.props.history.push("/notkyc");
           return;
@@ -118,17 +115,14 @@ class YourPortfolio extends Component {
         // })
       } else {
           this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
-          this.props.dispatch(setSubTitle(`${selectedObj.coinBalance ? selectedObj.coinBalance : '0'} ${selectedObj.coin}` + " " + apiCalls.convertLocalLang('available')));
+         // this.props.dispatch(setSubTitle(`${selectedObj.coinBalance ? selectedObj.coinBalance : '0'} ${selectedObj.coin}` + " " + apiCalls.convertLocalLang('available')));
           this.props.dispatch(setStep("step7"));
           this.props.dispatch(setSubTitle(` ${coin}` + " " + "balance" +" "+ ":" +" "+ `${selectedObj.coinBalance ? selectedObj.coinBalance : '0'}`+`${" "}`+`${coin}`
             ));
              const response = await createCryptoDeposit({ customerId: this.props.userProfile?.id, walletCode: coin });
              if (response.ok) {
-
                 this.props.dispatch(setWalletAddress(response.data));
-
-                this.props.dispatch(fetchDashboardcalls(this.props.userProfile?.id));
-
+               // this.props.dispatch(fetchDashboardcalls(this.props.userProfile?.id));
              }
 
           this.setState({
@@ -153,14 +147,14 @@ class YourPortfolio extends Component {
           sendDrawer: false
       })
   }
-    menuBar = (
+     menuBar = (item) => (
       <Menu>
           <ul className="pl-0 drpdwn-list">
               <li >
-                  <Link onClick={() => this.showSendReceiveDrawer(1, this.state.coinData)} value={1} className="c-pointer"><div></div>Deposit</Link>
+                  <Link onClick={() =>  this.showSendReceiveDrawer(1, item)} value={1} className="c-pointer"><div></div>Deposit</Link>
               </li>
               <li >
-                  <Link onClick={() => this.showSendReceiveDrawer(2, this.state.coinData)} value={2} className="c-pointer"><div></div>Withdraw</Link>
+                  <Link onClick={() => this.showSendReceiveDrawer(2, item)} value={2} className="c-pointer"><div></div>Withdraw</Link>
               </li>
               
           </ul>
@@ -221,7 +215,7 @@ class YourPortfolio extends Component {
                         onClick={() => this.showBuyDrawer(item, "sell")}
                       />
                       
-                      <Dropdown overlay={this.menuBar} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
+                      <Dropdown overlay={this.menuBar(item)} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
                         <a onClick={e => e.preventDefault()}>
                           <Space>
                           <span class="icon md menu-bar ml-4 p-relative"></span>
