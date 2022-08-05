@@ -635,10 +635,10 @@ class Header extends Component {
                 </Panel>
               </Collapse>
             </li> */}
-            <li
+            <li 
             // onClick={() => window.open('https://pyrros.instance.kyc-chain.com#/auth/signup/6120197cdc204d9ddb882e4d', '_blank')}
             >
-              <Popover placement="left" content={<><div onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/6120197cdc204d9ddb882e4d")}>
+              <Popover placement="left" content={<><div className="iban-hov" onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/6120197cdc204d9ddb882e4d")}>
                 <Link>
                   <Translate
                     content="personal_account"
@@ -646,7 +646,7 @@ class Header extends Component {
                     className="text-white-30" key="1"
                   />
                 </Link><span className="icon c-pointer md rarrow-white ml-12" /></div>
-                <div onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/611b3ed20414885a6fc64fa7")}>
+                <div className="iban-hov" onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/611b3ed20414885a6fc64fa7")}>
                   <Link>
                     <Translate
                       content="business_account"
