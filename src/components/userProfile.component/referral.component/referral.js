@@ -127,7 +127,7 @@ class Referral extends Component {
               <div className="mb-0 fw-600 text-white-30 walletadrs">
                 <CopyToClipboard
                   text={this.state.referaldata?.referralCode || "---"}
-                >
+                  options={{ format: 'text/plain' }}>
                   <Text
                     copyable
                     className="fs-20 text-white-30 custom-display"
@@ -145,7 +145,7 @@ class Referral extends Component {
               <div className="mb-0 fw-600 text-white-30 walletadrs mb-copy">
                 <CopyToClipboard
                   text={this.state.referaldata?.referrallink || "---"}
-                >
+                  options={{ format: 'text/plain' }}>
                   <Text
                     copyable
                     className="fs-20 text-white-30 custom-display"
@@ -163,7 +163,7 @@ class Referral extends Component {
               <div className="mb-0 fw-600 text-white-30 walletadrs mb-copy">
                 <CopyToClipboard
                   text={this.state.referaldata?.referralBusinesslink || "---"}
-                >
+                  options={{ format: 'text/plain' }}>
                   <Text
                     copyable
                     className="fs-20 text-white-30 custom-display"
