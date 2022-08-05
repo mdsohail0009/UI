@@ -268,7 +268,7 @@ const AddressFiatView = (props) => {
 																<Text className="fw-300 text-white-50 fs-12">
 																	Bank Label
 																</Text>
-																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+																<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
 																	
 																	{item.label === " " ||
 																		item.label === null
@@ -280,7 +280,7 @@ const AddressFiatView = (props) => {
 																<Text className="fw-300 text-white-50 fs-12">
 																	Currency
 																</Text>
-																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+																<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
 																	
 																	{item.walletCode === " " ||
 																		item.walletCode === null
@@ -292,7 +292,7 @@ const AddressFiatView = (props) => {
 																<Text className="fw-300 text-white-50 fs-12">
 																	Bank Type
 																</Text>
-																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+																<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
 																	
 																	{item.bankType === " " ||
 																		item.bankType === null
@@ -304,7 +304,7 @@ const AddressFiatView = (props) => {
 																<Text className="fw-300 text-white-50 fs-12">
 																	Bank Account Number/IBAN
 																</Text>
-																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+																<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
 																	
 																	{item.accountNumber === " " ||
 																		item.accountNumber === null
@@ -316,7 +316,7 @@ const AddressFiatView = (props) => {
 																<Text className="fw-300 text-white-50 fs-12">
 																BIC/SWIFT/Routing Number
 																</Text>
-																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+																<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
 																	
 																	{item.swiftRouteBICNumber === " " ||
 																		item.swiftRouteBICNumber === null
@@ -328,7 +328,7 @@ const AddressFiatView = (props) => {
 																<Text className="fw-300 text-white-50 fs-12">
 																	Bank Name
 																</Text>
-																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+																<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
 																	
 																	{item.bankName === " " ||
 																		item.bankName === null
@@ -340,7 +340,7 @@ const AddressFiatView = (props) => {
 																<Text className="fw-300 text-white-50 fs-12">
 																	Country
 																</Text>
-																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+																<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
 																	
 																	{item.payeeAccountCountry === " " ||
 																		item.payeeAccountCountry === null
@@ -352,7 +352,7 @@ const AddressFiatView = (props) => {
 																<Text className="fw-300 text-white-50 fs-12">
 																	State
 																</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
 																
 																{item.payeeAccountState === "" || item.payeeAccountState === " " ||
 																		item.payeeAccountState === null
@@ -364,7 +364,7 @@ const AddressFiatView = (props) => {
 															<Text className="fw-300 text-white-50 fs-12">
 																City
 															</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
 																
 																{item.payeeAccountCity === " " ||
 																		item.payeeAccountCity === null
@@ -376,7 +376,7 @@ const AddressFiatView = (props) => {
 															<Text className="fw-300 text-white-50 fs-12">
 																Postal Code
 															</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
 																
 																{item.payeeAccountPostalCode === "" || item.payeeAccountPostalCode === " "||
 																		item.payeeAccountPostalCode === null
@@ -389,7 +389,7 @@ const AddressFiatView = (props) => {
 															<Text className="fw-300 text-white-50 fs-12">
 																Address State
 															</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
 															{item.addressState === " " ||
 																		item.addressState === null
 																		? "-"
