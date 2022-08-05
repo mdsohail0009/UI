@@ -75,7 +75,7 @@ class QRScan extends Component {
                 <div className="crypto-address">
                     <Translate className="mb-0 fw-400 text-secondary" content="address" component={Text} />
                     <div className="mb-0 fw-600 text-white-30 walletadrs mb-copy">{this.props?.sendReceive?.depositWallet?.walletAddress}
-                        <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.walletAddress}>
+                        <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.walletAddress}  options={{ format: 'text/plain' }}>
                             <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 custom-display"></Text>
                         </CopyToClipboard>
                     </div>
@@ -84,7 +84,7 @@ class QRScan extends Component {
                 {this.props?.sendReceive?.depositWallet?.tag && <div className="crypto-address mt-36">
                     <Translate className="mb-0 fw-400 text-secondary" content="tag" component={Text} />
                     <div className="mb-0 fs-14 fw-500 text-white-30">{this.props?.sendReceive?.depositWallet?.tag}
-                        <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.tag}>
+                        <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.tag} options={{ format: 'text/plain' }}>
                             <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 custom-display"></Text>
                         </CopyToClipboard></div>
                 </div>}
