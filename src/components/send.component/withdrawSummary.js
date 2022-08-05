@@ -223,8 +223,8 @@ class WithdrawSummary extends Component {
 				inputDisable: false,
 				disable: true,
 				errorMsg: null,
-				// verificationText:
-				// 	apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber,
+				verificationText:
+					apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber,
 			});
 			this.startTimer();
 
@@ -307,7 +307,6 @@ class WithdrawSummary extends Component {
 			this.setState({
 				...this.state,
 				errorMsg: apiCalls.convertLocalLang("email_invalid_code"),
-				emailVerifyLoading:false,
 				invalidData: true,
 				verifyEmail: false,
 				inputEmailDisable: false,
@@ -346,7 +345,6 @@ class WithdrawSummary extends Component {
 			this.setState({
 				...this.state,
 				errorMsg: apiCalls.convertLocalLang("phone_invalid_code"),
-				phoneVerifyLoading:false,
 				verifyPhone: false,
 				inputDisable: false,
 				inValidData: true,
@@ -400,7 +398,6 @@ class WithdrawSummary extends Component {
 			this.setState({
 				...this.state,
 				errorMsg: apiCalls.convertLocalLang("twofa_invalid_code"),
-				faLoading:false,
 				verifyAuth: false,
 				inputAuthDisable: false,
 				inValidData: true,
@@ -545,8 +542,8 @@ class WithdrawSummary extends Component {
 	};
 
 	fullNumber = this.props.userProfile?.phoneNumber;
-	// last4Digits = this.fullNumber.slice(-4);
-	// maskedNumber = this.last4Digits.padStart(this.fullNumber.length, "*");
+	last4Digits = this.fullNumber.slice(-4);
+	maskedNumber = this.last4Digits.padStart(this.fullNumber.length, "*");
 
 	address = this.props.sendReceive.withdrawCryptoObj?.toWalletAddress;
 	firstAddress = this.address.slice(0, 4);
