@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Typography, Button, Form, Spin, Input, Alert, Tooltip } from "antd";
 import Currency from "../shared/number.formate";
@@ -273,7 +272,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 			userConfig?.sk
 		);
 		Obj.info = JSON.stringify(trackAuditLogData);
-
+debugger
 		let withdrawal = await withdrawSave(Obj);
 		setIsLoading(false);
 		if (withdrawal.ok) {

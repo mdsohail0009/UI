@@ -309,6 +309,7 @@ export default {
 	dep_with_assets: "Crypto Deposit / Withdraw",
 	links: "%(link)s",
 	remarks: "Remarks",
+	customer_remarks:"Customer Remarks",
 	Country: "Country",
 	state: "State",
 	city:"city",

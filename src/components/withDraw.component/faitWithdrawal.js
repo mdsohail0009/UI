@@ -28,6 +28,7 @@ import {
   favouriteFiatAddress,
   detailsAddress
 } from "../addressbook.component/api";
+import { validateContentRule } from "../../utils/custom.validator";
 import {
   setWithdrawfiat,
   rejectWithdrawfiat,
@@ -301,6 +302,7 @@ const FaitWithdrawal = ({
       values["routingNumber"] = bankDetails[0].swiftRouteBICNumber || bankDetails[0].routingNumber;
       values["WalletCode"] = accountDetails[0].currencyCode;
       values["CustomerRemarks"]=values.CustomerRemarks;
+      debugger
       const response = await handleFiatConfirm(values);
       if (response.ok) {
         setBtnDisabled(false);
@@ -658,24 +660,18 @@ const FaitWithdrawal = ({
                       <Form.Item
                         className="custom-forminput custom-label  mb-24 min-max-btn"
                         name="CustomerRemarks"
-                        required
-                        rules={[
-                          {
-                            validator: validateAddressType
-                          }
-                        ]}
-
                         label={
                           <>
                             <Translate className="input-label ml-0 mb-0"
-                              content="remarks" component={Form.label} />
+                              content="customer_remarks" component={Form.label} />
 
                           </>
                         }
                       >
                       <Input
                       className="cust-input"
-                      placeholder="Remarks"
+                      placeholder="Customer Remarks"
+                      maxLength={200}
                     />
 
                       </Form.Item>
