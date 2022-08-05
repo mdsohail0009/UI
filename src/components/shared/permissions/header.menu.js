@@ -142,7 +142,6 @@ class HeaderPermissionMenu extends Component {
         }
     }
     showDocRequestError() {
-        debugger
         if (!this.props.twoFA?.isEnabled) {
             this.props.history.push("/enabletwofactor");
         }
@@ -177,7 +176,7 @@ class HeaderPermissionMenu extends Component {
         }
     }
     chekPermissions = (menuKey, menuItem, data) => {
-        const viewPer = data?.actions.find(item => item.permissionName.toLowerCase() === "view"); 
+        const viewPer = data?.actions.find(item => item.permissionName.toLowerCase() === "view");
         if (!viewPer?.values) {
             this.props.history.push("/accessdenied");
         } else {
@@ -186,29 +185,33 @@ class HeaderPermissionMenu extends Component {
         }
     }
     onMenuItemClick = async (menuKey, menuItem) => {
-        if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled) {
-            if (!this.props.menuItems.featurePermissions[menuItem.key]) {
-                this.props.dispatch(fetchFeaturePermissions(menuItem.featureId || menuItem.id, this.props.userConfig.id, (data) => {
-                    if (data.ok) {
-                        this.chekPermissions(menuKey, menuItem, data?.data)
+        const perIgnoreLst = ["notifications", "auditLogs"]
+        if (perIgnoreLst.includes(menuKey)) { this.navigate(menuKey, menuItem) }
+        else {
+            if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled) {
+                if (!this.props.menuItems.featurePermissions[menuItem.key]) {
+                    this.props.dispatch(fetchFeaturePermissions(menuItem.featureId || menuItem.id, this.props.userConfig.id, (data) => {
+                        if (data.ok) {
+                            this.chekPermissions(menuKey, menuItem, data?.data)
 
-                    }
-                }));
-            } else {
-                this.chekPermissions(menuKey, menuItem, this.props.menuItems.featurePermissions[menuItem.key]);
-            }
+                        }
+                    }));
+                } else {
+                    this.chekPermissions(menuKey, menuItem, this.props.menuItems.featurePermissions[menuItem.key]);
+                }
 
-        } else {
-            const isKyc = !this.props.userConfig.isKYC;
-            if (isKyc) {
-                this.props.history.push("/notkyc");
             } else {
-                this.showDocRequestError();
+                const isKyc = !this.props.userConfig.isKYC;
+                if (isKyc) {
+                    this.props.history.push("/notkyc");
+                } else {
+                    this.showDocRequestError();
+                }
             }
         }
     }
     closeDrawer = (key) => {
-        if(this.props.menuItems?.featurePermissions?.[KEY_URL_MAP[window.location.pathname]]?.featureId){
+        if (this.props.menuItems?.featurePermissions?.[KEY_URL_MAP[window.location.pathname]]?.featureId) {
             this.props.dispatch(setSelectedFeatureMenu(this.props.menuItems?.featurePermissions?.[KEY_URL_MAP[window.location.pathname]]?.featureId));
         }
         if (this.child) this.child.clearValues();
@@ -323,7 +326,7 @@ class HeaderPermissionMenu extends Component {
                             </Popover>
                         </li>
                         <li
-                            onClick={() => this.onMenuItemClick("auditLogs", { key: "auditLogs", url: "modal" })}
+                            onClick={() => this.onMenuItemClick("auditLogs", { key: "auditLogs", path: "/modal" })}
                         >
                             <Link>
                                 <Translate
@@ -414,7 +417,7 @@ class HeaderPermissionMenu extends Component {
                 <Menu.Item
                     key="9"
                     className="notification-conunt"
-                    onClick={() => this.onMenuItemClick("notifications", { url: "modal", key: "notifications" })}
+                    onClick={() => this.onMenuItemClick("notifications", { path: "/modal", key: "notifications" })}
                 >
                     <span
                         className="icon md bell ml-4 p-relative"
@@ -476,6 +479,19 @@ class HeaderPermissionMenu extends Component {
                 className={` ${collapsed ? '' : "sideropen"}`}>
                 <MobileHeaderMenu onMenuItemClick={this.onMenuItemClick} features={this.props.menuItems} dispatch={this.props.dispatch} />
             </Sider>}
+            {this.state.drawerMenu.notifications && (
+                <Notifications
+                    showDrawer={this.state.drawerMenu.notifications}
+                    onClose={() => this.closeDrawer("notifications")}
+                />
+            )}
+            {this.state.drawerMenu.auditLogs && (
+                <AuditLogs
+                    showDrawer={this.state.drawerMenu.auditLogs}
+                    onClose={() => this.closeDrawer("auditLogs")}
+                />
+            )}
+
             <Wallets
                 showDrawer={this.state.drawerMenu.wallets}
                 onClose={() => this.closeDrawer("wallets")}
@@ -515,18 +531,7 @@ class HeaderPermissionMenu extends Component {
                     thref={(cd) => (this.child1 = cd)}
                 />
             )}
-            {this.state.drawerMenu.notifications && (
-                <Notifications
-                    showDrawer={this.state.drawerMenu.notifications}
-                    onClose={() => this.closeDrawer("notifications")}
-                />
-            )}
-            {this.state.drawerMenu.auditLogs && (
-                <AuditLogs
-                    showDrawer={this.state.drawerMenu.auditLogs}
-                    onClose={() => this.closeDrawer("auditLogs")}
-                />
-            )}
+
             <Drawer
                 title={[
                     <div className="side-drawer-header">
@@ -598,8 +603,8 @@ const connectDispatchToProps = dispatch => {
             dispatch(getmemeberInfo(useremail));
         },
         setAction: (val) => {
-			dispatch(setCurrentAction(val))
-		  },
+            dispatch(setCurrentAction(val))
+        },
         dispatch
     }
 }
