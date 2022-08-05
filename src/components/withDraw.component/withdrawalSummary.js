@@ -290,8 +290,8 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 		}
 	  };
 	const fullNumber = userConfig.phoneNumber;
-	// const last4Digits = fullNumber?.slice(-4);
-	// const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
+	const last4Digits = fullNumber.slice(-4);
+	const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
 
 	const getVerifyData = async () => {
 		let response = await apiCalls.getVerificationFields(userConfig.id);
@@ -362,10 +362,9 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 			setEmail(false);
 			setEmailDisable(false);
 			setMsg(apiCalls.convertLocalLang("email_invalid_code"));
-			setEmailVerifyLoading(false)
 			useOtpRef.current.scrollIntoView(0, 0);
 			setIsEmailVerification(false);
-			
+			setEmailVerifyLoading(false)
 		}
 	};
 	const antIcon = (
@@ -395,9 +394,9 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 			setButtonText("sentVerify");
 			setInputDisable(false);
 			setDisable(true);
-			// setVerificationText(
-			// 	apiCalls.convertLocalLang("digit_code") + " " + maskedNumber
-			// );
+			setVerificationText(
+				apiCalls.convertLocalLang("digit_code") + " " + maskedNumber
+			);
 			startTimer();
 			cleartime=setTimeout(() => {
 			setButtonText("resendotp");
@@ -445,8 +444,8 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 			setVerifyTextOtp(false);
 			setInputDisable(false);
 			setMsg(apiCalls.convertLocalLang("phone_invalid_code"));
-			setPhoneVerifyLoading(false)
 			setIsPhoneVerification(false);
+			setPhoneVerifyLoading(false)
 		}
 	};
 	const handleChange = (e) => {
@@ -488,10 +487,8 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 			setAuthDisable(false);
 			useOtpRef.current.scrollIntoView(0, 0);
 			setMsg(apiCalls.convertLocalLang("twofa_invalid_code"));
-			setAuthLoading(false)
 			setIsAuthenticatorVerification(false);
-
-			
+			setAuthLoading(false)
 		}
 	};
 	const handleAuthenticator = (e) => {
