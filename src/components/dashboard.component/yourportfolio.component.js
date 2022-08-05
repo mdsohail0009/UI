@@ -150,11 +150,11 @@ class YourPortfolio extends Component {
      menuBar = (item) => (
       <Menu>
           <ul className="pl-0 drpdwn-list">
-              <li >
-                  <Link onClick={() =>  this.showSendReceiveDrawer(1, item)} value={1} className="c-pointer"><div></div>Deposit</Link>
+              <li  onClick={() =>  this.showSendReceiveDrawer(1, item)}>
+                  <Link value={1} className="c-pointer">Deposit</Link>
               </li>
-              <li >
-                  <Link onClick={() => this.showSendReceiveDrawer(2, item)} value={2} className="c-pointer"><div></div>Withdraw</Link>
+              <li onClick={() => this.showSendReceiveDrawer(2, item)}>
+                  <Link  value={2} className="c-pointer">Withdraw</Link>
               </li>
               
           </ul>
