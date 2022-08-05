@@ -145,7 +145,7 @@ const AddressCryptoView = (props) => {
 																<Text className="fw-300 text-white-50 fs-12">
 																	Address Label
 																</Text>
-																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+																<Title level={5} className="m-0 mb-8 l-height-normal text-white-50 text-white-50"  >
 																	{item.label === " " ||
 																		item.label === null
 																		? "-"
@@ -156,7 +156,7 @@ const AddressCryptoView = (props) => {
 																<Text className="fw-300 text-white-50 fs-12">
 																	Coin
 																</Text>
-																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+																<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"  >
 																	{item.walletCode === " " ||
 																		item.walletCode === null
 																		? "-"
@@ -167,7 +167,7 @@ const AddressCryptoView = (props) => {
 																<Text className="fw-300 text-white-50 fs-12">
 																	 Address 
 																</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"  >
 																{item.walletAddress === " " ||
 																		item.walletAddress === null
 																		? "-"
@@ -178,7 +178,7 @@ const AddressCryptoView = (props) => {
 																<Text className="fw-300 text-white-50 fs-12">
 																	 Address State
 																</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"  >
 																{item.addressState === " " ||
 																		item.addressState === null
 																		? "-"
