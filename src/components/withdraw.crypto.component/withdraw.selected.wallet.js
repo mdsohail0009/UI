@@ -275,6 +275,11 @@ this.setState({...this.state,customerRemarks:data})
                             className="custom-forminput custom-label mb-0"
                             name="CustomerRemarks"
                             label="Customer Remarks"
+                            rules={[
+                                {
+                                  validator: validateContentRule
+                                }
+                              ]}
                         >
                             <Input
                                 className="cust-input"

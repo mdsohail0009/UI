@@ -660,6 +660,11 @@ const FaitWithdrawal = ({
                       <Form.Item
                         className="custom-forminput custom-label  mb-24 min-max-btn"
                         name="CustomerRemarks"
+                        rules={[
+                          {
+                            validator: validateContentRule
+                          }
+                        ]}
                         label={
                           <>
                             <Translate className="input-label ml-0 mb-0"
