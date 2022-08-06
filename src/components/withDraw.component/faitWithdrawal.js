@@ -391,7 +391,7 @@ const FaitWithdrawal = ({
   const handleAccountChange = (e) => {
     setErrorMsg(null);
     setAgreeRed(true);
-    form.setFieldsValue({ currencyCode: null, favouriteName: null })
+    form.setFieldsValue({ currencyCode: null, favouriteName: null,CustomerRemarks:null  })
     setDetails(null);
     setAccountDetails({});
     setAddressShow(null);
@@ -416,7 +416,7 @@ const FaitWithdrawal = ({
   const handleAccountWallet = (e) => {
     setErrorMsg(null);
     setAgreeRed(true);
-    form.setFieldsValue({ favouriteName: null, totalValue: null })
+    form.setFieldsValue({ favouriteName: null, totalValue: null,CustomerRemarks:null })
     setAccountDetails({});
     setDetails(null);
     let data = accountCurrency.filter((item) => item.currencyCode == e)
@@ -451,7 +451,7 @@ const FaitWithdrawal = ({
     setSelectRequired(true)
     let data = bankDetails.filter((item) => item.lable == e)
     setDetails(data)
-    form.setFieldsValue({ totalValue: "" });
+    form.setFieldsValue({ totalValue: "",CustomerRemarks:null });
   }
 
   const renderModalContent = () => {
