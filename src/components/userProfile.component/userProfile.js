@@ -51,10 +51,7 @@ class UserProfile extends Component {
     }
 
     render() {
-  
         const { tabPosition } = this.state;
-      
-         
         return (<>
 
             <div className="main-container hidden-mobile">
@@ -89,7 +86,6 @@ class UserProfile extends Component {
                     <Translate content="notification" className="f-16  mt-16" /></span>} key="8" >
                         {this.state.activeTab == 8 && <NotificationScreen />}
                         </TabPane>
-
                 </Tabs>
             </div>
             <div className="main-container visible-mobile">
