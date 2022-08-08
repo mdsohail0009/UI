@@ -11,10 +11,11 @@ import { setStep } from '../../reducers/buysellReducer';
 import { updateCoinDetail } from '../../reducers/sellReducer'
 import { convertCurrency } from '../buy.component/buySellService';
 import apiCalls from '../../api/apiCalls';
-import { fetchMarketCoinData } from '../../reducers/dashboardReducer'
-import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle, setWithdrawfiatenaable, setWithdrawfiat } from "../../reducers/sendreceiveReducer";
+import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboardReducer'
+import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle, setWithdrawfiatenaable, setWithdrawfiat, setWalletAddress } from "../../reducers/sendreceiveReducer";
 import NumberFormat from "react-number-format";
 import { coinSubject } from '../../utils/pubsub';
+import { createCryptoDeposit } from '../deposit.component/api';
 class CoinView extends React.Component {
     refreshSubscribe;
    state = {
@@ -99,8 +100,7 @@ componentWillUnmount(){
             buyDrawer: true
         })
     }
-    showSendReceiveDrawer = (e, value) => {
-        debugger
+    showSendReceiveDrawer = async (e, value) => {
         let selectedObj = { ...value };
         selectedObj.coin = selectedObj.symbol.toUpperCase();
         selectedObj.coinBalance = selectedObj.avilableBalance
@@ -143,7 +143,13 @@ componentWillUnmount(){
             this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
             this.props.dispatch(setSubTitle(`${selectedObj.coinBalance ? selectedObj.coinBalance : '0'} ${selectedObj.coin}` + " " + apiCalls.convertLocalLang('available')));
             this.props.dispatch(setStep("step7"));
-
+            this.props.dispatch(setSubTitle(` ${coin}` + " " + "balance" +" "+ ":" +" "+ `${selectedObj.coinBalance ? selectedObj.coinBalance : '0'}`+`${" "}`+`${coin}`
+            ));
+             const response = await createCryptoDeposit({ customerId: this.props.userProfile?.id, walletCode: coin });
+             if (response.ok) {
+                this.props.dispatch(setWalletAddress(response.data));
+                this.props.dispatch(fetchDashboardcalls(this.props.userProfile?.id));
+             }
             this.setState({
                 ...this.state,
                 sendDrawer: true
@@ -204,6 +210,7 @@ componentWillUnmount(){
                             <ul className="m-0 pl-0">
                                 <li onClick={() => this.showBuyDrawer(coinData, "buy")} className="c-pointer"><div><span className="icon md buy" /></div>BUY</li>
                                 <li onClick={() => this.showBuyDrawer(coinData, "sell")} className="c-pointer"><div><span className="icon md sell" /></div>SELL</li>
+                                <li onClick={() => this.showSendReceiveDrawer(1, coinData)} value={1} className="c-pointer"><div><span className="icon md deposit" /></div>DEPOSIT</li>
                                 <li onClick={() => this.showSendReceiveDrawer(2, coinData)} value={2} className="c-pointer"><div><span className="icon md withdraw" /></div>WITHDRAW</li>
                             </ul>
                         </> : <div className="text-center"><Spin className="text-center"/></div>}

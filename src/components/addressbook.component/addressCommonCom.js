@@ -608,11 +608,11 @@ const AddressCommonCom = (props) => {
                       title={
                         <ul className=" p-0" style={{ listStyleType: "none" }}>
                           <li className=" mb-4">
-                            <span className=" text-yellow">1st Party </span>:
+                            <span className="textpure-yellow">1st Party </span>:
                             Funds will be deposited to your own bank account.
                           </li>
                           <li className=" mb-4">
-                            <span className=" text-yellow">3rd Party </span>:
+                            <span className="textpure-yellow">3rd Party </span>:
                             Funds will be deposited to other beneficiary bank
                             account.
                           </li>
