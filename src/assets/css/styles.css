@@ -45,7 +45,7 @@ body, h1, h2, h3, h4, h5, h6, a, p div{font-family: 'SF Pro Text', sans-serif !i
 .btn-back:hover{background-color: var(--bgDarkYellow);color: var(--bgDark);font-weight: 500;}
 .login-user, .side-drawer .side-drawer-header, .side-drawer-full .side-drawer-header, .wire-trans, .crypto-card-bottom{display: flex;justify-content: space-between;align-items: center;}
 .header-logo{list-style: none;display: inline-flex;padding-right: 0 !important;align-items: center;margin-bottom: 0;}
-.tlv-logo{height: 45px;}
+.tlv-logo{height: 45px;padding-left: 24px;}
 .header-logo li:first-child::after{content: '';position: absolute;width: 1px;height: 27px;right: 0;top: 16px;background-color: var(--bgWhiteSpin);}
 .tlv-header .list-item.ant-menu-item .ant-menu-title-content{padding:6px 12px;}
 .tlv-header .list-item.ant-menu-item-selected .ant-menu-title-content, .tlv-header .list-item.ant-menu-item-active .ant-menu-title-content{
@@ -196,6 +196,8 @@ border-radius: 5px;}
 .icon.lg.edit-icon{background-position:-336px -70px;}
 .icon.md.email{background-position:-127px -70px;}
 .icon.lg.add-icon{background-position:-397px -70px;}
+.icon.lg.app-menu{background-position:-235px -130px;}
+.icon.md.status-icon{background-position:-637px -134px;}
 .icon.xl.image{background-position:-47px -241px;}
 .icon.xl.file{background-position:-87px -241px;}
 .icon.xxxl.doc-upload{background-position:1px -398px;}
@@ -824,7 +826,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
 }
 @media (max-width: 767px){
     .box.mb-flex{display: flex !important;}
-    .mb-right{float: right;}
+    .mb-right{float: right;margin-bottom: 12px !important;}
     /* .icon.md.downangle{background-position: -344px 0;}
     .mb-togglespace .ant-collapse-item.ant-collapse-item-active .downangle{background-position: -322px 0;} */
     .mb-togglespace .ant-collapse-item.ant-collapse-item-active .downangle, .mb-togglespace .ant-collapse-header .icon.downangle{width: 32px !important;}
@@ -1316,5 +1318,15 @@ input[type=number]::-webkit-outer-spin-button {
 .bill-payment .pay-docs{width:100px;}
 .enter-val.enter-vel-field{width:100%}
 .k-animation-container.k-animation-container-relative.k-animation-container-shown{z-index: 9999;}
+.admin-actions{display: flex;padding: 0;list-style: none;margin-bottom: 12px;}
+.admin-actions li{margin-right: 16px;}
+.admin-actions li:last-child{margin-right: 0;}
+.toggle-space{position: relative;}
+.toggle-space::before{content: '';position: absolute;width: 1px;height: 27px;right: -17px;background-color: #cecece; margin-left: 10px;}
+.secureDropdown .ant-menu-root {background-color: var(--bgGloom);border-radius: 10px;min-width: 300px;max-width: 300px;padding: 6px 0;color: var(--textWhite);position: absolute;
+    max-height: calc(100vh - 75px); overflow-y: auto;border: 0;}
+.secureDropdown .ant-menu-root{top:27px !important}
+.secureDropdown .ant-menu-root{min-width: 180px;max-width: 180px;}
+.secureDropdown .ant-menu-title-content{line-height: 23px;}
 .ant-result-title, .ant-result-subtitle{color: var(--textWhite);}
 .ant-select-item .ant-select-option-active, .ant-select-item-option-content, .ant-select-selection-item{color: var(--textWhite);}
