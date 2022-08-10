@@ -7,10 +7,9 @@ import Loader from '../../Shared/loader';
 import { connect } from 'react-redux';
 import { dashboardTransactionSub } from '../../utils/pubsub';
 import TransactionsHistory from "../transactions.history.component";
-import { setHeaderTab } from '../../reducers/buysellReducer';
+
 class Portfolio extends Component {
     chart;
-
     constructor (props) {
         super(props);
         this.state = {
@@ -80,6 +79,22 @@ class Portfolio extends Component {
         }
     }
     transactionDrawer =() => {
+        if (!this.props?.userProfileInfo?.isKYC) {
+            this.props.history?.push("/notkyc");
+            return;
+        }
+        if(!this.props?.twoFA?.isEnabled){
+            this.props.history?.push("/enabletwofactor");
+            return;
+        }
+        if (this.props?.userProfileInfo?.isDocsRequested) {
+            this.props.history?.push("/docnotices");
+            return;
+        }
+        if (!this.props?.userProfileInfo?.isKYC) {
+            this.props.history?.push("/notkyc");
+            return;
+        }
         this.setState({ ...this.state, transactions: true});
     }
     closeDrawer = () => {
@@ -91,10 +106,9 @@ class Portfolio extends Component {
         const { gridUrl, loading } = this.state;
         return (
             <div className="mb-24">
-                <div  className="portfolio-title mb-14">
-                    <Translate content="menu_transactions_history" className="basicinfo" />
                 <div>
-                    <div>
+                    <Translate content="menu_transactions_history" className="basicinfo" />
+                    <span>
                        <Translate
                         content="search"
                         component={Button}
@@ -102,7 +116,7 @@ class Portfolio extends Component {
                         className="dbchart-link fs-14 fw-500"
                         onClick={()=> this.transactionDrawer()}
                       />
-                       </div> 
+                       </span> 
                        <TransactionsHistory
                         showDrawer={this.state.transactions}
                         onClose={() => {
@@ -110,7 +124,7 @@ class Portfolio extends Component {
                         }}
                     />
                        </div>
-                    </div>
+                   
                     <div className="mt-16">
 
                         <div className="box basic-info responsive_table bg-none ">
@@ -179,10 +193,11 @@ class Portfolio extends Component {
         );
     }
 }
+
+const connectStateToProps = ({ userConfig }) => {
+    return { userProfileInfo: userConfig.userProfileInfo, twoFA:userConfig.twoFA }
+}
 const connectDispatchToProps = dispath => {
     return { dispath }
-}
-const connectStateToProps = ({ userConfig }) => {
-    return { userProfileInfo: userConfig.userProfileInfo }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(Portfolio);
