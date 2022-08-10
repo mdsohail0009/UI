@@ -1333,3 +1333,7 @@ input[type=number]::-webkit-outer-spin-button {
 .ant-image-img{width: 70%; margin-right: 0;}
 .with-min{position: absolute;top: 52px;right: 63px;font-size: 18px;color: var(--bgWhite);}
 .with-max{position: absolute;top: 52px;right: 21px;font-size: 18px;color: var(--bgWhite);}
+.crypto-list-custom li {
+    color: #fff;
+}
+.custom-crypto-btns .cutom-bnt{background-color: transparent;border-radius: 6px;}

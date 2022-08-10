@@ -69,13 +69,18 @@ class QRScan extends Component {
         }
         return (
             <div>
+                <div className="text-center f-12 text-white custom-crypto-btns">
+                    <Button className="mr-16 cutom-bnt text-white-30">TRC20</Button>
+                    <Button className="mr-16 cutom-bnt text-white-30">ERC20</Button>
+                    <Button className="mr-16 cutom-bnt text-white-30">-----</Button>
+                </div>
                 <div className="scanner-img">
                     <QRCodeComponent value={this.props?.sendReceive?.depositWallet?.walletAddress} size={150} />
                 </div>
                 <div className="crypto-address">
                     <Translate className="mb-0 fw-400 text-secondary" content="address" component={Text} />
                     <div className="mb-0 fw-600 text-white-30 walletadrs mb-copy">{this.props?.sendReceive?.depositWallet?.walletAddress}
-                        <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.walletAddress}  options={{ format: 'text/plain' }}>
+                        <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.walletAddress} options={{ format: 'text/plain' }}>
                             <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 custom-display"></Text>
                         </CopyToClipboard>
                     </div>
@@ -88,12 +93,12 @@ class QRScan extends Component {
                             <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 custom-display"></Text>
                         </CopyToClipboard></div>
                 </div>}
-            <Paragraph>
-                <ul className="text-white">
-            <li><Translate className=" f-12 text-white fw-200 mt-16"  content="address_hint_text" component={Paragraph} /></li>
-            <li><Translate className="f-12 text-white fw-200 mt-16" content="address_hint_text_1" component={Paragraph} /></li>
-             <li><Paragraph className=" f-12 text-yellow fw-200 mt-16">Note: {this.props?.sendReceive?.depositWallet?.note} </Paragraph></li>
-                </ul>
+                <Paragraph>
+                    <ul className="text-white">
+                        <li><Translate className=" f-12 text-white fw-200 mt-16" content="address_hint_text" component={Paragraph} /></li>
+                        <li><Translate className="f-12 text-white fw-200 mt-16" content="address_hint_text_1" component={Paragraph} /></li>
+                        <li><Paragraph className=" f-12 text-yellow fw-200 mt-16">Note: {this.props?.sendReceive?.depositWallet?.note} </Paragraph></li>
+                    </ul>
                 </Paragraph>
                 <Dropdown overlay={this.shareMenu}>
                     {/* <Button className="pop-btn mt-36" block>Share</Button> */}
