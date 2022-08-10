@@ -171,6 +171,7 @@ const getCurrencyLookup = async () => {
                   dropdownClassName="select-drpdwn"
                   bordered={false}
                   showArrow={true}
+
                 >
                   {currencylu?.map((item, idx) => (
                     <Option
@@ -192,7 +193,7 @@ const getCurrencyLookup = async () => {
                   ))}
                 </Select>
           <span className="mb-right">
-          <ActionsToolbar featureKey={`/payments/${props.walletCode}`} onActionClick={(key) => onActionClick(key)}/>
+          <ActionsToolbar featureKey="/payments" onActionClick={(key) => onActionClick(key)}/>
           </span>
           {/* <div className="cust-btns visible-mobile mb-16" style={{float:'right'}}>
             <ul
