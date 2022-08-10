@@ -82,7 +82,8 @@ class MobileHeaderMenu extends Component {
                 component={Menu.Item}
                 className="list-item"
             />
-            {data?.map((item, indx) => item.menuitemType === "dropdown" ?
+            {data?.map((item, indx) => <>
+            {item.label === "Send/Receive"  || item.label === "Trade"&&
                 <><Translate
                     content={item.content}
                     component={Menu.Item}
@@ -98,14 +99,17 @@ class MobileHeaderMenu extends Component {
                             </li>)}
 
                         </ul>
-                    </Menu></>
-                : item.path !== "/addressBook" && <Translate
+                    </Menu></>}
+                {/* : item.path !== "/addressBook" && 
+                <Translate
                     content={item.content}
                     component={Menu.Item}
                     key={indx}
                     onClick={() => onMenuItemClick(item.key, item)}
                     className="list-item"
-                />)}
+        />*/}
+        </>
+                )}
         </Menu>
         </>
     }
@@ -380,7 +384,8 @@ class HeaderPermissionMenu extends Component {
                     this.props.dispatch(setHeaderTab(key.key));
                 }}
             >
-                {data?.map((item, indx) => item.menuitemType === "dropdown" ? <Dropdown
+                {data?.map((item, indx) => <>{(item.label === "Send/Receive"  || item.label === "Trade") && 
+                <Dropdown
                     onClick={() =>
                         this.setState({ ...this.state, visbleProfileMenu: false })
                     }
@@ -407,13 +412,17 @@ class HeaderPermissionMenu extends Component {
                         key={indx}
                         className="mr-16"
                     />
-                </Dropdown> : item.path !== "/addressBook" && <Translate
+                </Dropdown> 
+    }
+                {/*: item.path !== "/addressBook" && <Translate
                     content={item.content}
                     component={Menu.Item}
                     key={item.key}
                     onClick={() => this.onMenuItemClick(item.key, item)}
                     className="list-item"
-                />)}
+                    />*/}
+                    
+                    </>)}
                 <Menu.Item
                     key="9"
                     className="notification-conunt"
@@ -471,6 +480,7 @@ class HeaderPermissionMenu extends Component {
                         )}
                     </Menu.Item>
                 </Dropdown>
+                
             </Menu>
             {isShowSider && <Sider trigger={null}
                 collapsible
