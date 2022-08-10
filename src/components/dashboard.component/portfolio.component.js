@@ -79,20 +79,20 @@ class Portfolio extends Component {
         }
     }
     transactionDrawer =() => {
-        if (!this.props?.userProfile?.isKYC) {
-            this.props.history.push("/notkyc");
+        if (!this.props?.userProfileInfo?.isKYC) {
+            this.props.history?.push("/notkyc");
             return;
         }
         if(!this.props?.twoFA?.isEnabled){
-            this.props.history.push("/enabletwofactor");
+            this.props.history?.push("/enabletwofactor");
             return;
         }
-        if (this.props?.userProfile?.isDocsRequested) {
-            this.props.history.push("/docnotices");
+        if (this.props?.userProfileInfo?.isDocsRequested) {
+            this.props.history?.push("/docnotices");
             return;
         }
-        if (!this.props?.userProfile?.isKYC) {
-            this.props.history.push("/notkyc");
+        if (!this.props?.userProfileInfo?.isKYC) {
+            this.props.history?.push("/notkyc");
             return;
         }
         this.setState({ ...this.state, transactions: true});
@@ -193,10 +193,11 @@ class Portfolio extends Component {
         );
     }
 }
+
+const connectStateToProps = ({ userConfig }) => {
+    return { userProfileInfo: userConfig.userProfileInfo, twoFA:userConfig.twoFA }
+}
 const connectDispatchToProps = dispath => {
     return { dispath }
-}
-const connectStateToProps = ({ userConfig }) => {
-    return { userProfileInfo: userConfig.userProfileInfo }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(Portfolio);
