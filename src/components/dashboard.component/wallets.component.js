@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Typography, List, Button, Image } from 'antd';
+import { Typography, List, Button, Image,Dropdown,Space,Menu } from 'antd';
 import Translate from 'react-translate-component';
 import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
 import { fetchMemberWalletsData, fetchPortfolioData } from '../../reducers/dashboardReducer';
 import ConnectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
 import MassPayment from '../buyfiat.component'
-import { withRouter } from 'react-router-dom';
+import { withRouter,Link } from 'react-router-dom';
 import { setWithdrawfiatenaable, setWithdrawfiat, setStep } from '../../reducers/sendreceiveReducer'
 import { setdepositCurrency, getCurrencieswithBankDetails } from '../../reducers/depositReducer'
 const { Title, Paragraph } = Typography;
@@ -64,6 +64,19 @@ class Wallets extends Component {
 
         })
     }
+    menuBar = (item) => (
+        <Menu>
+            <ul className="pl-0 drpdwn-list">
+                <li  onClick={() =>  this.showSendReceiveDrawer(3, item)}>
+                    <Link value={3} className="c-pointer">Bill Payments</Link>
+                </li>
+                <li onClick={() => this.showSendReceiveDrawer(4, item)}>
+                    <Link  value={4} className="c-pointer">Transactions</Link>
+                </li>
+                
+            </ul>
+        </Menu>
+    )
     closeDrawer = () => {
         this.setState({
             buyFiatDrawer: false
@@ -98,6 +111,16 @@ class Wallets extends Component {
                                 <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
                                 <Translate content="withdraw" onClick={() => this.showSendReceiveDrawer(2, item.walletCode)} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} />
                             </div>
+                            <Dropdown 
+                            overlay={this.menuBar(item)}
+                             trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
+                        <a onClick={e => e.preventDefault()}>
+                          <Space>
+                          <span class="icon md menu-bar ml-4 p-relative"></span>
+                          {/* <DownOutlined /> */}
+                        </Space>
+                      </a>
+                    </Dropdown>
                         </List.Item>}
                 />
                 <SuissebaseFiat showDrawer={this.state.sendReceiveDrawer} valNum={this.state.valNum} onClose={() => this.closeDrawer()} />
