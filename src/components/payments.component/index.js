@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, Button, Drawer, Select ,Tooltip, Alert, Spin } from 'antd';
+import { Typography, Button, Drawer, Select ,message, Alert, Spin } from 'antd';
 import {Link} from 'react-router-dom';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
@@ -13,8 +13,9 @@ import { setHeaderTab } from "../../reducers/buysellReducer"
 import ActionsToolbar from "../toolbar.component/actions.toolbar";
 import { fetchFeaturePermissions } from "../../reducers/feturesReducer";
 import { getFeatureId } from "../shared/permissions/permissionService";
+import { getCurrencyLu} from './api'
 const { Title, Text, Paragraph } = Typography;
-
+const { Option } = Select;
 const Payments = (props) => {
 
   const gridRef = React.createRef();
@@ -26,6 +27,7 @@ const Payments = (props) => {
   const [selectedObj, setSelectedObj] = useState()
   const [setSelectData, setSetSelectData] = useState({})
   const [errorWarning,setErrorWarning]=useState(null)
+  const [ currencylu,setCurrencylu]=useState([]);
   const paymentsView = (prop) => {
     props.history.push(`/payments/${prop.dataItem.id}/view`)
   };
@@ -38,8 +40,9 @@ const Payments = (props) => {
 
   };
   useEffect(() => {
-    props.dispatch(fetchFeaturePermissions(getFeatureId("/payments"), props.userConfig.id))
-    if (props?.match?.path === '/payments') {
+    getCurrencyLookup();
+    props.dispatch(fetchFeaturePermissions(getFeatureId(`/payments/${props.walletCode}`), props.userConfig.id))
+    if (props?.match?.path === `/payments/${props.walletCode}`) {
       let key = "1"
       props.dispatch(setHeaderTab(key));
     }
@@ -104,13 +107,25 @@ const Payments = (props) => {
   }
 
   const showNewBenificiary = () => {
-    debugger
     setCheckRadio(true);
     setBeneficiaryDetails(true);
   }
   const closeBuyDrawer = () => {
     setBeneficiaryDetails(false);
   }
+const getCurrencyLookup = async () => {
+    let response = await getCurrencyLu(props.userConfig?.id);
+    if (response.ok) {
+      let obj={currencyCode:"All"}
+      let walletList=[];
+      walletList.push(obj);
+      walletList=[...walletList,...response.data]
+      setCurrencylu(walletList)
+    } else {
+      message.destroy();
+      setErrorWarning(response.data)
+    }
+  };
   const onActionClick = (key) => {
     const actions = {
       add: showNewBenificiary,
@@ -147,6 +162,36 @@ const Payments = (props) => {
               Edit Bill Payment
             </Button>
           </div> */}
+          <Select
+                  className="cust-input cust-disable"
+                  placeholder="Select Currency"
+                  // onChange={(e) => handleCurrencyChange(e)}
+                  defaultValue={"All"}
+                  style={{ width: 280 }}
+                  dropdownClassName="select-drpdwn"
+                  bordered={false}
+                  showArrow={true}
+
+                >
+                  {currencylu?.map((item, idx) => (
+                    <Option
+                      key={idx}
+                      className="fw-400"
+                      value={item.currencyCode}
+                    >
+                      {" "}
+                      {item.currencyCode}
+                      {/* {
+                        <NumberFormat
+                          value={item.avilable}
+                          displayType={"text"}
+                          thousandSeparator={true}
+                          renderText={(value) => <span> Balance: {value}</span>}
+                        />
+                      } */}
+                    </Option>
+                  ))}
+                </Select>
           <span className="mb-right">
           <ActionsToolbar featureKey="/payments" onActionClick={(key) => onActionClick(key)}/>
           </span>
