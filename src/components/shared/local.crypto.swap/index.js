@@ -93,6 +93,16 @@ const LocalCryptoSwapper = (props, ref) => {
                 autoFocus
                 allowNegative={false}
             />
+            <div class="minmax ">
+                <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn with-min">
+                <span>Min</span>
+                </button>
+            <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn with-max">
+                <span>Max</span>
+                </button>
+                </div>
+            {/* <div className='with-min'>Min</div>
+            <div className='with-max'>Max</div> */}
         </div>
         {showConvertion && <><NumberFormat value={isSwaped ? localvalue : cryptovalue} displayType={'text'} thousandSeparator={true} prefix={isSwaped ? symbols[localCurrency] : ""} renderText={(value, props) => <div {...props} className="fs-14 text-white-30 text-center d-block mb-36">{value} {isSwaped ? localCurrency : cryptoCurrency} {isConvertionLoad && <Spin size="small" />}</div>
         } />

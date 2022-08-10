@@ -36,16 +36,16 @@ class QRScan extends Component {
     get shareMenu() {
         return <Menu className="share-adrs">
             <Menu.Item>
-                <WhatsappShareButton te url={process.env.REACT_APP_WEB_URL} title={this.walletAddress} >
+                <WhatsappShareButton te url={process.env.REACT_APP_WEB_URL} title={`Hello, I would like to share my ${this.props?.sendReceive?.depositWallet?.walletCode} address for deposit ${this.walletAddress}.Note:(Please make sure you are using the correct protocal otherwise you are risking of loosing the funds).I am using Suissebase. Thank you.`} >
                     <WhatsappIcon size={32} round={true} />
                 </WhatsappShareButton>
             </Menu.Item>
             <Menu.Item>
-                <EmailShareButton url={process.env.REACT_APP_WEB_URL} subject={"Wallet Address"} body={this.walletAddress} separator={";"} >
+                <EmailShareButton url={process.env.REACT_APP_WEB_URL} subject={"Wallet Address"} body={`Hello, I would like to share my ${this.props?.sendReceive?.depositWallet?.walletCode} address for deposit ${this.walletAddress}.Note:(Please make sure you are using the correct protocal otherwise you are risking of loosing the funds).I am using Suissebase. Thank you.`}  >
                     <EmailIcon size={32} round={true} />
                 </EmailShareButton>
             </Menu.Item>
-            <Menu.Item>
+            {/* <Menu.Item>
                 <TwitterShareButton url={process.env.REACT_APP_WEB_URL} title={this.walletAddress} >
                     <TwitterIcon size={32} round={true} />
                 </TwitterShareButton>
@@ -59,7 +59,7 @@ class QRScan extends Component {
                 <TelegramShareButton url={process.env.REACT_APP_WEB_URL} title={this.walletAddress} >
                     <TelegramIcon size={32} round={true} />
                 </TelegramShareButton>
-            </Menu.Item>
+            </Menu.Item> */}
         </Menu>
     }
     render() {
@@ -69,13 +69,18 @@ class QRScan extends Component {
         }
         return (
             <div>
+                <div className="text-center f-12 text-white custom-crypto-btns">
+                    <Button className="mr-16 cutom-bnt text-white-30">TRC20</Button>
+                    <Button className="mr-16 cutom-bnt text-white-30">ERC20</Button>
+                    <Button className="mr-16 cutom-bnt text-white-30">-----</Button>
+                </div>
                 <div className="scanner-img">
                     <QRCodeComponent value={this.props?.sendReceive?.depositWallet?.walletAddress} size={150} />
                 </div>
                 <div className="crypto-address">
                     <Translate className="mb-0 fw-400 text-secondary" content="address" component={Text} />
                     <div className="mb-0 fw-600 text-white-30 walletadrs mb-copy">{this.props?.sendReceive?.depositWallet?.walletAddress}
-                        <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.walletAddress}  options={{ format: 'text/plain' }}>
+                        <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.walletAddress} options={{ format: 'text/plain' }}>
                             <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 custom-display"></Text>
                         </CopyToClipboard>
                     </div>
@@ -88,9 +93,13 @@ class QRScan extends Component {
                             <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 custom-display"></Text>
                         </CopyToClipboard></div>
                 </div>}
-                <Translate className="text-center f-12 text-white  mt-16" style={{fontWeight:"bolder"}}  content="address_hint_text" component={Paragraph} />
-                <Translate className="text-center f-12 text-white fw-200 mt-16" content="address_hint_text_1" component={Paragraph} />
-                <Paragraph className="text-center f-16 text-yellow fw-400 mt-16 mb-0">Note: {this.props?.sendReceive?.depositWallet?.note}</Paragraph>
+                <Paragraph>
+                    <ul className="text-white">
+                        <li><Translate className=" f-12 text-white fw-200 mt-16" content="address_hint_text" component={Paragraph} /></li>
+                        <li><Translate className="f-12 text-white fw-200 mt-16" content="address_hint_text_1" component={Paragraph} /></li>
+                        <li><Paragraph className=" f-12 text-yellow fw-200 mt-16">Note: {this.props?.sendReceive?.depositWallet?.note} </Paragraph></li>
+                    </ul>
+                </Paragraph>
                 <Dropdown overlay={this.shareMenu}>
                     {/* <Button className="pop-btn mt-36" block>Share</Button> */}
                     <Button

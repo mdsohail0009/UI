@@ -7,6 +7,7 @@ import ConnectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
 import MassPayment from '../buyfiat.component'
 import { withRouter,Link } from 'react-router-dom';
+import TransactionsHistory from "../transactions.history.component";
 import { setWithdrawfiatenaable, setWithdrawfiat, setStep } from '../../reducers/sendreceiveReducer'
 import { setdepositCurrency, getCurrencieswithBankDetails } from '../../reducers/depositReducer'
 const { Title, Paragraph } = Typography;
@@ -17,7 +18,9 @@ class Wallets extends Component {
         valNum: 1,
         wallets: [], loading: true,
         buyFiatDrawer: false,
-        selctedVal: ''
+        selctedVal: '',
+        transactions: false,
+        selectedWallet: ''
     }
     componentDidMount() {
         this.fetchWallets();
@@ -54,6 +57,8 @@ class Wallets extends Component {
             this.props.dispatch(setdepositCurrency(value))
         }else if(e===3){
             this.props.history.push(`/payments/${value.walletCode}`)
+        }else {
+            this.props.history.push(`/internalTransfer`)
         }
         this.setState({
             valNum: e
@@ -66,22 +71,28 @@ class Wallets extends Component {
 
         })
     }
+    showTransactionDrawer =(item) => {
+        this.setState({...this.state, transactions: true, selectedWallet: item?.walletCode});
+    }
     menuBar = (item) => (
         <Menu>
             <ul className="pl-0 drpdwn-list">
                 <li  onClick={() =>  this.showSendReceiveDrawer(3, item)}>
                     <Link value={3} className="c-pointer">Bill Payments</Link>
                 </li>
-                <li onClick={() => this.showSendReceiveDrawer(4, item)}>
+                <li onClick={() => this.showTransactionDrawer(item)}>
                     <Link  value={4} className="c-pointer">Transactions</Link>
                 </li>
-                
+                <li onClick={() => this.showSendReceiveDrawer(5,item)}>
+                    <Link  value={5} className="c-pointer">Internal Transfer</Link>
+                </li>
             </ul>
         </Menu>
     )
     closeDrawer = () => {
         this.setState({
-            buyFiatDrawer: false
+            buyFiatDrawer: false,
+            transactions: false
         })
     }
     render() {
@@ -127,6 +138,12 @@ class Wallets extends Component {
                 />
                 <SuissebaseFiat showDrawer={this.state.sendReceiveDrawer} valNum={this.state.valNum} onClose={() => this.closeDrawer()} />
                 {this.state.buyFiatDrawer && <MassPayment showDrawer={this.state.buyFiatDrawer} tabData={{ tabVal: this.state.valNum, walletCode: this.state.selctedVal }} onClose={() => this.closeDrawer()} />}
+                {this.state.transactions && <TransactionsHistory
+                    showDrawer={this.state.transactions} selectWallet={this.state.selectedWallet}
+                    onClose={() => {
+                        this.closeDrawer();
+                    }}
+                />}
             </>
         );
     }

@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
-import { Typography, Radio, message, Spin } from 'antd';
+import { Typography, Radio, message, Spin,Button } from 'antd';
 import Translate from 'react-translate-component';
 import { getData } from './api';
 import NumberFormat from 'react-number-format';
 import Loader from '../../Shared/loader';
 import { connect } from 'react-redux';
 import { dashboardTransactionSub } from '../../utils/pubsub';
+import TransactionsHistory from "../transactions.history.component";
+import { setHeaderTab } from '../../reducers/buysellReducer';
 class Portfolio extends Component {
     chart;
 
     constructor (props) {
         super(props);
         this.state = {
-
+            transactions: false,
             alert: false,
             errorMessage: "",
             allDocs: false,
@@ -77,13 +79,38 @@ class Portfolio extends Component {
           );
         }
     }
+    transactionDrawer =() => {
+        this.setState({ ...this.state, transactions: true});
+    }
+    closeDrawer = () => {
+        this.setState({transactions: false});
+    }
     render() {
         const { Title } = Typography;
 
         const { gridUrl, loading } = this.state;
         return (
             <div className="mb-24">
+                <div  className="portfolio-title mb-14">
                     <Translate content="menu_transactions_history" className="basicinfo" />
+                <div>
+                    <div>
+                       <Translate
+                        content="search"
+                        component={Button}
+                        type="primary"
+                        className="dbchart-link fs-14 fw-500"
+                        onClick={()=> this.transactionDrawer()}
+                      />
+                       </div> 
+                       <TransactionsHistory
+                        showDrawer={this.state.transactions}
+                        onClose={() => {
+                            this.closeDrawer();
+                        }}
+                    />
+                       </div>
+                    </div>
                     <div className="mt-16">
 
                         <div className="box basic-info responsive_table bg-none ">
