@@ -2,7 +2,7 @@ import React from "react"
 
 const InternalTransfer = () => {
 
-    return <>Comming soon</>
+    return <>Coming soon</>
 
 }
 export default InternalTransfer;
