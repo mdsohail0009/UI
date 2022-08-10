@@ -27,7 +27,7 @@ class TransactionsHistory extends Component {
         type: "All",
         docType: "All",
         customerId: this.props.customer?.id,
-        currency: "All"
+        currency: this.props?.selectWallet || "All"
       },
       tranObj: {},
       gridUrl: process.env.REACT_APP_GRID_API + `Transaction/Customers`,
@@ -39,6 +39,7 @@ componentDidMount() {
     this.TransactionSearch();
     this.transactionCurrency();
     this.permissionsInterval = setInterval(this.loadPermissions, 200);
+    this.setState({...this.state, searchObj: {...this.state.searchObj, currency: this.props?.selectWallet || "All"}})
   }
 
   loadPermissions = () => {
@@ -166,9 +167,9 @@ componentDidMount() {
                 </Form.Item>
               </Col>
               <Col xs={24} sm={24} md={7} lg={7} xl={6} className="px-8 transaction_resp">
-                <Form.Item name="Wallet" className="input-label mb-0" label="Wallet">
+                <Form.Item  className="input-label mb-0" label="Wallet">
                   <Select
-                    defaultValue="All"
+                    value = {this.state.searchObj.currency}
                     className="cust-input w-100 bgwhite"
                     dropdownClassName="select-drpdwn"
                     showSearch

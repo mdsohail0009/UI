@@ -19,7 +19,8 @@ class Wallets extends Component {
         wallets: [], loading: true,
         buyFiatDrawer: false,
         selctedVal: '',
-        transactions: false
+        transactions: false,
+        selectedWallet: ''
     }
     componentDidMount() {
         this.fetchWallets();
@@ -69,7 +70,7 @@ class Wallets extends Component {
         })
     }
     showTransactionDrawer =(item) => {
-        this.setState({...this.state, transactions: true});
+        this.setState({...this.state, transactions: true, selectedWallet: item?.walletCode});
     }
     menuBar = (item) => (
         <Menu>
@@ -78,15 +79,6 @@ class Wallets extends Component {
                     <Link value={3} className="c-pointer">Bill Payments</Link>
                 </li>
                 <li onClick={() => this.showTransactionDrawer(item)}>
-                <TransactionsHistory
-                        showDrawer={this.state.transactions}
-                        onClose={() => {
-                           
-                            //this.closeDrawer("transactions");
-                            //this.state.transactions = false
-                        }}
-                       // thref={(cd) => (this.child1 = cd)}
-                    />
                     <Link  value={4} className="c-pointer">Transactions</Link>
                 </li>
                 
@@ -95,7 +87,8 @@ class Wallets extends Component {
     )
     closeDrawer = () => {
         this.setState({
-            buyFiatDrawer: false
+            buyFiatDrawer: false,
+            transactions: false
         })
     }
     render() {
@@ -141,6 +134,12 @@ class Wallets extends Component {
                 />
                 <SuissebaseFiat showDrawer={this.state.sendReceiveDrawer} valNum={this.state.valNum} onClose={() => this.closeDrawer()} />
                 {this.state.buyFiatDrawer && <MassPayment showDrawer={this.state.buyFiatDrawer} tabData={{ tabVal: this.state.valNum, walletCode: this.state.selctedVal }} onClose={() => this.closeDrawer()} />}
+                {this.state.transactions && <TransactionsHistory
+                    showDrawer={this.state.transactions} selectWallet={this.state.selectedWallet}
+                    onClose={() => {
+                        this.closeDrawer();
+                    }}
+                />}
             </>
         );
     }
