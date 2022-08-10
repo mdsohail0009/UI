@@ -821,7 +821,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
 }
 @media (min-width: 576px){
     .fiat-total{display: flex;justify-content: space-between;text-align: center;}
-    .crypto-percent{font-size: 26px;line-height: normal;}
+    .crypto-percent{font-size: 40px;line-height: normal;}
     .crypto-percent .percent{font-size: 20px;margin-left: 6px;}
 }
 @media (max-width: 767px){
@@ -1074,7 +1074,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .round-pills .ant-radio-button-wrapper,.default-radio .ant-radio-button-wrapper{min-width: 120px;}
     .round-pills .ant-radio-button-wrapper{min-width: 136px;}
     .dep-withdraw{max-height: calc(100vh - 260px);}
-    .crypto-card .ant-card-body{padding: 16px 24px;height: 90px;}
+    .crypto-card .ant-card-body{padding: 16px 24px;height: 110px;}
     .crypto-percent{font-size: 26px;line-height: normal;}
     .coin{transform: scale(1);}
     .round-pills{ margin-bottom: 30px; margin-top: 6px;}
@@ -1333,3 +1333,7 @@ input[type=number]::-webkit-outer-spin-button {
 .ant-image-img{width: 70%; margin-right: 0;}
 .with-min{position: absolute;top: 52px;right: 63px;font-size: 18px;color: var(--bgWhite);}
 .with-max{position: absolute;top: 52px;right: 21px;font-size: 18px;color: var(--bgWhite);}
+.crypto-list-custom li {
+    color: #fff;
+}
+.custom-crypto-btns .cutom-bnt{background-color: transparent;border-radius: 6px;}
