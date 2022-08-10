@@ -18,11 +18,13 @@ import AddressBookReducer from '../reducers/addressBookReducer';
 import payementsReducer from '../reducers/paymentsReducer';
 import cardsReducer from '../components/cards.component/cardsReducer';
 import TransforReducer from '../reducers/tranfor.Reducer';
+import featuresReducer from '../reducers/feturesReducer';
+import currentActionReducer from '../reducers/actionsReducer';
 
 const persistConfig = {
     key: "root",
     storage,
-    whitelist: ["oidc", "userConfig", "dashboard"]
+    whitelist: ["oidc", "userConfig", "dashboard","menuItems","currentAction","permissions"]
 }
 const rootReducer = combineReducers({
     oidc: authReducer,
@@ -40,7 +42,9 @@ const rootReducer = combineReducers({
     paymentsStore: payementsReducer,
     cardsStore:cardsReducer,
     TransforStore: TransforReducer,
-
+    menuItems:featuresReducer,
+    //permissions:featuresReducer,
+    currentAction:currentActionReducer,
 })
 const reducer = persistReducer(persistConfig, rootReducer)
 let store = createStore(

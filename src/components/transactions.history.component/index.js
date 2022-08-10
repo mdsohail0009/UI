@@ -10,6 +10,7 @@ import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
 import List from "../grid.component";
 import {getTransactionSearch } from './api';
+import { setCurrentAction } from "../../reducers/actionsReducer";
 const { Option } = Select;
 class TransactionsHistory extends Component {
   constructor(props) {
@@ -19,6 +20,7 @@ class TransactionsHistory extends Component {
       customerData: [],
       typeData: [],
       doctypeData: [],
+      permissions:{},
       value: "",
       searchObj: {
         type: "All",
@@ -33,7 +35,20 @@ class TransactionsHistory extends Component {
 
 componentDidMount() {
     this.TransactionSearch();
+    this.permissionsInterval = setInterval(this.loadPermissions, 200);
   }
+
+  loadPermissions = () => {
+		debugger
+		if (this.props.transactionsPermissions) {
+			clearInterval(this.permissionsInterval);
+			let _permissions = {};
+			for (let action of this.props.transactionsPermissions?.actions) {
+				_permissions[action.permissionName] = action.values;
+			}
+			this.setState({ ...this.state, permissions: _permissions });
+		}
+	}
   gridColumns = [
     {field: "date", title: "Date", filter: true, isShowTime: true, filterType: "date", locked: true, width: 210,
 },
@@ -166,7 +181,7 @@ componentDidMount() {
         <List
          url={gridUrl} additionalParams={searchObj} ref={this.gridRef}
          columns={this.gridColumns}
-         showExcelExport ={true}
+         showExcelExport ={this.state.permissions?.ExcelExport}
          excelFileName = {'Transactions'}
         />
 				</Drawer>
@@ -175,7 +190,15 @@ componentDidMount() {
     );
   }
 }
-const connectStateToProps = ({ userConfig }) => {
-	return { customer: userConfig.userProfileInfo };
+const connectStateToProps = ({ userConfig,menuItems }) => {
+	return { customer: userConfig.userProfileInfo,transactionsPermissions: menuItems?.featurePermissions.transactions };
 };
-export default connect(connectStateToProps)(TransactionsHistory);
+const connectDispatchToProps = dispatch => {
+  return {
+     setAction: (val) => {
+         dispatch(setCurrentAction(val))
+       },
+     dispatch 
+ } 
+}
+export default connect(connectStateToProps,connectDispatchToProps)(TransactionsHistory);

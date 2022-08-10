@@ -7,8 +7,7 @@ import Currency from '../shared/number.formate';
 import LocalCryptoSwap from '../shared/local.crypto.swap';
 import SuccessMsg from './success';
 import apicalls from '../../api/apiCalls';
-import { validateContent } from '../../utils/custom.validator';
-
+import { validateContent,validateContentRule } from '../../utils/custom.validator';
 class CryptoWithDrawWallet extends Component {
     eleRef = React.createRef();
     myRef = React.createRef();
@@ -22,7 +21,8 @@ class CryptoWithDrawWallet extends Component {
         showModal: false,
         confirmationStep: "step1",
         isWithdrawSuccess: false,
-        amountPercentageType: "min"
+        amountPercentageType: "min",
+        customerRemarks:null
     }
     componentDidMount() {
         if (this.props.sendReceive.withdrawCryptoObj) {
@@ -83,7 +83,7 @@ class CryptoWithDrawWallet extends Component {
         }
     }
     handlePreview = () => {
-
+        debugger
         const amt = parseFloat(this.state.CryptoAmnt);
         const { withdrawMaxValue, withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null });
@@ -116,7 +116,12 @@ class CryptoWithDrawWallet extends Component {
             this.withDraw();
         }
     }
+    handleRemarkChange=(event)=>{debugger
+let data =event.target.value;
+this.setState({...this.state,customerRemarks:data})
+    }
     withDraw = async () => {
+        debugger
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null, loading: true, isWithdrawSuccess: false });
         let obj = {
@@ -128,11 +133,12 @@ class CryptoWithDrawWallet extends Component {
             "description": "",
             "totalValue": this.state.CryptoAmnt,
             "tag": "",
-            "amounttype": this.state.amountPercentageType
+            "amounttype": this.state.amountPercentageType,
+            "CustomerRemarks":this.state.customerRemarks
         }
         //this.props.dispatch(setSubTitle(apicalls.convertLocalLang('withdrawSummary')));
-        this.props.dispatch(setWithdrawcrypto(obj))
-        this.props.changeStep('withdraw_crpto_summary');
+            this.props.dispatch(setWithdrawcrypto(obj))
+            this.props.changeStep('withdraw_crpto_summary'); 
     }
     renderModalContent = () => {
         if (!this.props?.sendReceive?.cryptoWithdraw?.selectedWallet) { return null }
@@ -264,6 +270,23 @@ class CryptoWithDrawWallet extends Component {
                                     </div>
                                 </Tooltip>
                             </div>
+                        </Form.Item>
+                        <Form.Item
+                            className="custom-forminput custom-label mb-0"
+                            name="CustomerRemarks"
+                            label="Customer Remarks"
+                            rules={[
+                                {
+                                  validator: validateContentRule
+                                }
+                              ]}
+                        >
+                            <Input
+                                className="cust-input"
+                                onChange={(event) => this.handleRemarkChange(event)}
+                                maxLength={200}
+                                placeholder="Customer Remarks"
+                            />
                         </Form.Item>
                     </Form>
                     <Translate content="Confirm_crypto" loading={this.state.loading} component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.handlePreview()} target="#top" />

@@ -20,5 +20,6 @@ export const ApiControllers = {
     massPayment: "MassPayment/",
     common: "Common/",
     earn: "Earn/",
-    partner:"Partner/"
+    partner:"Partner/",
+    security:"Security/"
 }

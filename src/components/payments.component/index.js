@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, Button, Drawer, Select ,Tooltip, Alert } from 'antd';
+import { Typography, Button, Drawer, Select ,Tooltip, Alert, Spin } from 'antd';
 import {Link} from 'react-router-dom';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
@@ -8,14 +8,17 @@ import moment from 'moment';
 import { warning } from '../../utils/messages'
 import List from "../grid.component";
 import BeneficiaryDrawer from './beneficiaryDrawer';
-import NewFiatAddress from '../addressbook.component/addFiatAddressbook';
 import AddressCommonCom from "../addressbook.component/addressCommonCom";
 import { setHeaderTab } from "../../reducers/buysellReducer"
+import ActionsToolbar from "../toolbar.component/actions.toolbar";
+import { fetchFeaturePermissions } from "../../reducers/feturesReducer";
+import { getFeatureId } from "../shared/permissions/permissionService";
 const { Title, Text, Paragraph } = Typography;
 
 const Payments = (props) => {
 
   const gridRef = React.createRef();
+  
   const [beneficiaryDrawer, setBeneficiaryDrawer] = useState(false);
   const [beneficiaryDetails, setBeneficiaryDetails] = useState(false);
   const [checkRadio, setCheckRadio] = useState(false);
@@ -35,7 +38,7 @@ const Payments = (props) => {
 
   };
   useEffect(() => {
-
+    props.dispatch(fetchFeaturePermissions(getFeatureId("/payments"), props.userConfig.id))
     if (props?.match?.path === '/payments') {
       let key = "1"
       props.dispatch(setHeaderTab(key));
@@ -108,12 +111,20 @@ const Payments = (props) => {
   const closeBuyDrawer = () => {
     setBeneficiaryDetails(false);
   }
+  const onActionClick = (key) => {
+    const actions = {
+      add: showNewBenificiary,
+      "Add Payee": addPayment,
+      edit: paymentsEdit,
+    };
+  actions[key]();
+  };
   return (
     <>
       <div className="main-container">
         <div className='bill_payment mb-16'>
           <Title className="basicinfo mb-0"><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
-          <div className="cust-btns mb-d-none">
+          {/* <div className="cust-btns mb-d-none">
             <Button
               className="pop-btn px-24"
               style={{ margin: "0 8px", height: 40 }}
@@ -135,8 +146,11 @@ const Payments = (props) => {
             >
               Edit Bill Payment
             </Button>
-          </div>
-          <div className="cust-btns visible-mobile mb-16" style={{float:'right'}}>
+          </div> */}
+          <span className="mb-right">
+          <ActionsToolbar featureKey="/payments" onActionClick={(key) => onActionClick(key)}/>
+          </span>
+          {/* <div className="cust-btns visible-mobile mb-16" style={{float:'right'}}>
             <ul
               className="address-icons"
               style={{
@@ -167,7 +181,7 @@ const Payments = (props) => {
                 </Tooltip>
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
         {errorWarning !== null && (
             <Alert

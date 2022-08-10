@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Typography, Button, Form, Spin, Input, Alert, Tooltip } from "antd";
 import Currency from "../shared/number.formate";
@@ -16,12 +15,14 @@ import {
 } from "../../reducers/sendreceiveReducer";
 import { LoadingOutlined } from "@ant-design/icons";
 import NumberFormat from "react-number-format";
+import { setCurrentAction } from "../../reducers/actionsReducer";
 const WithdrawalFiatSummary = ({
 	sendReceive,
 	userConfig,
 	changeStep,
 	dispatch,
 	trackAuditLogData,
+	withdrawFiatPermissions
 }) => {
 	const { Text } = Typography;
 	const [isLoding, setIsLoding] = useState(false);
@@ -73,6 +74,7 @@ const WithdrawalFiatSummary = ({
 	const [authDisable, setAuthDisable] = useState(false);
 	const [isAuthenticatorVerification, setIsAuthenticatorVerification] =useState(false);
     const [isLoading,setIsLoading]=useState(false);
+	const[permissions,setPermessions] = useState({});
 const [authenticatorCodeVerificationStage,setauthenticatorCodeVerificationStage]=useState('Verify')
 const [phoneCodeVerificationStage,setPhoneCodeVerificationStage]=useState('getPhoneCode')
 const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getEmailCode')
@@ -141,7 +143,18 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 	useEffect(() => {
 		withdrawSummayTrack();
 		getVerifyData();
+		loadPermessions();
 	}, []);
+
+	const loadPermessions = () => {
+		if (withdrawFiatPermissions) {
+			let _permissions = {};
+			for (let action of withdrawFiatPermissions?.actions) {
+				_permissions[action.permissionName] = action.values;
+			}
+			setPermessions(_permissions)
+		}
+	}
 	let cleartime;
 	let timeInterval;
 	let count = 30;
@@ -259,10 +272,8 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 			userConfig?.sk
 		);
 		Obj.info = JSON.stringify(trackAuditLogData);
-
+debugger
 		let withdrawal = await withdrawSave(Obj);
-
-	
 		setIsLoading(false);
 		if (withdrawal.ok) {
 			setDisableSave(false);
@@ -290,8 +301,8 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 		}
 	  };
 	const fullNumber = userConfig.phoneNumber;
-	const last4Digits = fullNumber.slice(-4);
-	const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
+	// const last4Digits = fullNumber?.slice(-4);
+	// const maskedNumber = last4Digits?.padStart(fullNumber.length, "*");
 
 	const getVerifyData = async () => {
 		let response = await apiCalls.getVerificationFields(userConfig.id);
@@ -394,9 +405,9 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 			setButtonText("sentVerify");
 			setInputDisable(false);
 			setDisable(true);
-			setVerificationText(
-				apiCalls.convertLocalLang("digit_code") + " " + maskedNumber
-			);
+			// setVerificationText(
+			// 	apiCalls.convertLocalLang("digit_code") + " " + maskedNumber
+			// );
 			startTimer();
 			cleartime=setTimeout(() => {
 			setButtonText("resendotp");
@@ -602,12 +613,12 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 						onFinish={saveWithdrwal}
 						
 						autoComplete="off">
-						{verifyData.isPhoneVerified == true && (
+						{permissions?.withdraw  && verifyData.isPhoneVerified == true && (
 							<Text className="fs-14 mb-8 text-white d-block fw-200">
 								Phone verification code *
 							</Text>
 						)}
-						{verifyData.isPhoneVerified == true && (
+						{permissions?.withdraw  && verifyData.isPhoneVerified == true && (
 							<Form.Item
 								name="code"
 								className="input-label otp-verify"
@@ -680,12 +691,12 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 									</div>
 							</Form.Item>
 						)}
-						{verifyData.isEmailVerification === true && (
+						{permissions?.withdraw  && verifyData.isEmailVerification === true && (
 							<Text className="fs-14 mb-8 text-white d-block fw-200">
 								Email verification code *
 							</Text>
 						)}
-						{verifyData.isEmailVerification === true && (
+						{permissions?.withdraw  && verifyData.isEmailVerification === true && (
 							<Form.Item
 								name="emailCode"
 								className="input-label otp-verify"
@@ -755,12 +766,12 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 									</div>
 							</Form.Item>
 						)}
-						{verifyData.twoFactorEnabled == true && (
+						{permissions?.withdraw  && verifyData.twoFactorEnabled == true && (
 							<Text className="fs-14 mb-8 text-white d-block fw-200">
 								Authenticator Code *
 							</Text>
 						)}
-						{verifyData.twoFactorEnabled == true && (
+						{permissions?.withdraw  && verifyData.twoFactorEnabled == true && (
 							<Form.Item
 								name="authenticator"
 								className="input-label otp-verify "
@@ -821,7 +832,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 									</div>
 							</Form.Item>
 						)}
-						<Button
+					{permissions?.withdraw  &&	<Button
 							size="large"
 							block
 							className="pop-btn"
@@ -829,7 +840,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 							htmlType="submit">
 								{isLoading && <Spin indicator={antIcon} />}
 							<Translate content="with_draw" component={Text} />
-						</Button>
+						</Button>}
 					</Form>
 				</>
 			)}
@@ -837,11 +848,12 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 	);
 };
 
-const connectStateToProps = ({ userConfig, sendReceive }) => {
+const connectStateToProps = ({ userConfig, sendReceive,menuItems }) => {
 	return {
 		userConfig: userConfig.userProfileInfo,
 		sendReceive,
 		trackAuditLogData: userConfig.trackAuditLogData,
+		withdrawFiatPermissions: menuItems?.featurePermissions?.fiat
 	};
 };
 const connectDispatchToProps = (dispatch) => {
@@ -849,6 +861,9 @@ const connectDispatchToProps = (dispatch) => {
 		changeStep: (stepcode) => {
 			dispatch(setStep(stepcode));
 		},
+		setAction: (val) => {
+            dispatch(setCurrentAction(val))
+          },
 		dispatch,
 	};
 };
