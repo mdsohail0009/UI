@@ -313,6 +313,7 @@ const AddressCommonCom = (props) => {
     }
   }
   const isErrorDispaly = (objValue) => {
+    debugger
     if (objValue.data && typeof objValue.data === "string") {
       return objValue.data;
     } else if (
@@ -326,7 +327,6 @@ const AddressCommonCom = (props) => {
   };
 
   const saveModalwithdrawal = (values) => {
-    debugger
     let obj = {
       id: uuidv4(),
       payeeId: uuidv4(),
@@ -485,7 +485,7 @@ const AddressCommonCom = (props) => {
         props?.dispatch(setHeaderTab(""));
         props?.props?.history?.push("/userprofile");
       } else {
-        setErrorMsg(isErrorDispaly(response));
+       setErrorMsg(isErrorDispaly(response));
         setIsLoading(false);
         setBtnDisabled(false);
         useDivRef.current.scrollIntoView();

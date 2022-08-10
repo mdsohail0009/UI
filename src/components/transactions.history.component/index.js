@@ -9,7 +9,8 @@ import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
 import List from "../grid.component";
-import {getTransactionSearch } from './api';
+import {getTransactionSearch, getTransactionCurrency } from './api';
+import { setCurrentAction } from "../../reducers/actionsReducer";
 const { Option } = Select;
 class TransactionsHistory extends Component {
   constructor(props) {
@@ -19,11 +20,14 @@ class TransactionsHistory extends Component {
       customerData: [],
       typeData: [],
       doctypeData: [],
+      currenyData: [],
+      permissions:{},
       value: "",
       searchObj: {
         type: "All",
         docType: "All",
-        customerId: this.props.customer?.id
+        customerId: this.props.customer?.id,
+        currency: this.props?.selectWallet || "All"
       },
       tranObj: {},
       gridUrl: process.env.REACT_APP_GRID_API + `Transaction/Customers`,
@@ -33,7 +37,22 @@ class TransactionsHistory extends Component {
 
 componentDidMount() {
     this.TransactionSearch();
+    this.transactionCurrency();
+    this.permissionsInterval = setInterval(this.loadPermissions, 200);
+    this.setState({...this.state, searchObj: {...this.state.searchObj, currency: this.props?.selectWallet || "All"}})
   }
+
+  loadPermissions = () => {
+		debugger
+		if (this.props.transactionsPermissions) {
+			clearInterval(this.permissionsInterval);
+			let _permissions = {};
+			for (let action of this.props.transactionsPermissions?.actions) {
+				_permissions[action.permissionName] = action.values;
+			}
+			this.setState({ ...this.state, permissions: _permissions });
+		}
+	}
   gridColumns = [
     {field: "date", title: "Date", filter: true, isShowTime: true, filterType: "date", locked: true, width: 210,
 },
@@ -55,6 +74,15 @@ componentDidMount() {
       this.setState({
         typeData: response.data.types,
         doctypeData: response.data.docTypes,
+      });
+    }
+  };
+  transactionCurrency = async () => {
+    let response = await getTransactionCurrency();
+    if (response.ok) {
+      this.setState({
+        currenyData: response.data,
+      
       });
     }
   };
@@ -91,12 +119,15 @@ componentDidMount() {
 	
 	render() {
 		const { Title } = Typography;
-		const { customerData, typeData, doctypeData, gridUrl, searchObj } = this.state;
+		const { customerData, typeData, doctypeData, currenyData, gridUrl, searchObj } = this.state;
 		const options1 = typeData.map((d) => (
 		  <Option key={d.value} value={d.name}>{d.name}</Option>
 		));
 		const options2 = doctypeData.map((d) => (
 		  <Option key={d.value} value={d.name}>{d.name}</Option>
+		));
+    const options3 = currenyData?.map((d) => (
+		  <Option key={d.id} value={d.code}>{d.code}</Option>
 		));
 		return (
 			<>
@@ -121,7 +152,7 @@ componentDidMount() {
           >
             <Row >
              
-              <Col xs={24} sm={24} md={7} lg={7} xl={7} className="px-8 transaction_resp">
+              <Col xs={24} sm={24} md={7} lg={7} xl={6} className="px-8 transaction_resp">
                 <Form.Item name="type" className="input-label mb-0" label="Type">
                   <Select
                     defaultValue="All"
@@ -135,7 +166,21 @@ componentDidMount() {
                   </Select>
                 </Form.Item>
               </Col>
-              <Col xs={24} sm={24} md={7} lg={7} xl={7}  className="px-8 transaction_resp">
+              <Col xs={24} sm={24} md={7} lg={7} xl={6} className="px-8 transaction_resp">
+                <Form.Item  className="input-label mb-0" label="Wallet">
+                  <Select
+                    value = {this.state.searchObj.currency}
+                    className="cust-input w-100 bgwhite"
+                    dropdownClassName="select-drpdwn"
+                    showSearch
+                    onChange={(e) => this.handleChange(e, "currency")}
+                    placeholder="Select Wallet"
+                  >
+                    {options3}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col xs={24} sm={24} md={7} lg={7} xl={6}  className="px-8 transaction_resp">
                 <Form.Item name="docType" className="input-label mb-0" label="Transaction">
                   <Select
                     defaultValue="All"
@@ -166,7 +211,7 @@ componentDidMount() {
         <List
          url={gridUrl} additionalParams={searchObj} ref={this.gridRef}
          columns={this.gridColumns}
-         showExcelExport ={true}
+         showExcelExport ={this.state.permissions?.ExcelExport}
          excelFileName = {'Transactions'}
         />
 				</Drawer>
@@ -175,7 +220,15 @@ componentDidMount() {
     );
   }
 }
-const connectStateToProps = ({ userConfig }) => {
-	return { customer: userConfig.userProfileInfo };
+const connectStateToProps = ({ userConfig,menuItems }) => {
+	return { customer: userConfig.userProfileInfo,transactionsPermissions: menuItems?.featurePermissions.transactions };
 };
-export default connect(connectStateToProps)(TransactionsHistory);
+const connectDispatchToProps = dispatch => {
+  return {
+     setAction: (val) => {
+         dispatch(setCurrentAction(val))
+       },
+     dispatch 
+ } 
+}
+export default connect(connectStateToProps,connectDispatchToProps)(TransactionsHistory);

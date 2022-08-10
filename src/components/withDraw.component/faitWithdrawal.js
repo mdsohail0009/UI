@@ -28,6 +28,7 @@ import {
   favouriteFiatAddress,
   detailsAddress
 } from "../addressbook.component/api";
+import { validateContentRule } from "../../utils/custom.validator";
 import {
   setWithdrawfiat,
   rejectWithdrawfiat,
@@ -286,6 +287,7 @@ const FaitWithdrawal = ({
       }
       setLoading(false);
       setErrorMsg(null);
+      debugger
       values["customerId"] = userConfig.id;
       values["memberWalletId"] = accountDetails[0].id;
       values["beneficiaryAccountName"] = userConfig.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig.lastName;
@@ -298,7 +300,9 @@ const FaitWithdrawal = ({
       values["state"] = bankDetails[0].state;
       values["zipcode"] = bankDetails[0].zipcode;
       values["routingNumber"] = bankDetails[0].swiftRouteBICNumber || bankDetails[0].routingNumber;
-      values["WalletCode"] = accountDetails[0].currencyCode
+      values["WalletCode"] = accountDetails[0].currencyCode;
+      values["CustomerRemarks"]=values.CustomerRemarks;
+      debugger
       const response = await handleFiatConfirm(values);
       if (response.ok) {
         setBtnDisabled(false);
@@ -387,7 +391,7 @@ const FaitWithdrawal = ({
   const handleAccountChange = (e) => {
     setErrorMsg(null);
     setAgreeRed(true);
-    form.setFieldsValue({ currencyCode: null, favouriteName: null })
+    form.setFieldsValue({ currencyCode: null, favouriteName: null,CustomerRemarks:null  })
     setDetails(null);
     setAccountDetails({});
     setAddressShow(null);
@@ -412,7 +416,7 @@ const FaitWithdrawal = ({
   const handleAccountWallet = (e) => {
     setErrorMsg(null);
     setAgreeRed(true);
-    form.setFieldsValue({ favouriteName: null, totalValue: null })
+    form.setFieldsValue({ favouriteName: null, totalValue: null,CustomerRemarks:null })
     setAccountDetails({});
     setDetails(null);
     let data = accountCurrency.filter((item) => item.currencyCode == e)
@@ -447,7 +451,7 @@ const FaitWithdrawal = ({
     setSelectRequired(true)
     let data = bankDetails.filter((item) => item.lable == e)
     setDetails(data)
-    form.setFieldsValue({ totalValue: "" });
+    form.setFieldsValue({ totalValue: "",CustomerRemarks:null });
   }
 
   const renderModalContent = () => {
@@ -653,7 +657,29 @@ const FaitWithdrawal = ({
                         component={Text}
                         with={{ value: details[0].swiftRouteBICNumber }}
                       />
+                      <Form.Item
+                        className="custom-forminput custom-label  mb-24 min-max-btn"
+                        name="CustomerRemarks"
+                        rules={[
+                          {
+                            validator: validateContentRule
+                          }
+                        ]}
+                        label={
+                          <>
+                            <Translate className="input-label ml-0 mb-0"
+                              content="customer_remarks" component={Form.label} />
 
+                          </>
+                        }
+                      >
+                      <Input
+                      className="cust-input"
+                      placeholder="Customer Remarks"
+                      maxLength={200}
+                    />
+
+                      </Form.Item>
 
                       <Form.Item
                         className="custom-forminput mb-36 agree"

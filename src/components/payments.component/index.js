@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, Button, Drawer, Select ,Tooltip, Alert } from 'antd';
+import { Typography, Button, Drawer, Select ,message, Alert, Spin } from 'antd';
 import {Link} from 'react-router-dom';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
@@ -8,14 +8,17 @@ import moment from 'moment';
 import { warning } from '../../utils/messages'
 import List from "../grid.component";
 import BeneficiaryDrawer from './beneficiaryDrawer';
-import NewFiatAddress from '../addressbook.component/addFiatAddressbook';
 import AddressCommonCom from "../addressbook.component/addressCommonCom";
 import { setHeaderTab } from "../../reducers/buysellReducer"
+import ActionsToolbar from "../toolbar.component/actions.toolbar";
+import { fetchFeaturePermissions } from "../../reducers/feturesReducer";
+import { getFeatureId } from "../shared/permissions/permissionService";
+import { getCurrencyLu} from './api'
 const { Title, Text, Paragraph } = Typography;
-
+const { Option } = Select;
 const Payments = (props) => {
-
   const gridRef = React.createRef();
+  
   const [beneficiaryDrawer, setBeneficiaryDrawer] = useState(false);
   const [beneficiaryDetails, setBeneficiaryDetails] = useState(false);
   const [checkRadio, setCheckRadio] = useState(false);
@@ -23,6 +26,8 @@ const Payments = (props) => {
   const [selectedObj, setSelectedObj] = useState()
   const [setSelectData, setSetSelectData] = useState({})
   const [errorWarning,setErrorWarning]=useState(null)
+  const [ currencylu,setCurrencylu]=useState([]);
+  const [walletType,setWalletType]=useState(props.match.params.code);
   const paymentsView = (prop) => {
     props.history.push(`/payments/${prop.dataItem.id}/view`)
   };
@@ -35,13 +40,17 @@ const Payments = (props) => {
 
   };
   useEffect(() => {
-
-    if (props?.match?.path === '/payments') {
+    getCurrencyLookup();
+    props.dispatch(fetchFeaturePermissions(getFeatureId(`/payments/${props.walletCode}`), props.userConfig.id))
+    if (props?.match?.path === `/payments/${props.walletCode}`) {
       let key = "1"
       props.dispatch(setHeaderTab(key));
     }
 
   }, [])
+  useEffect(()=>{
+    gridRef.current.refreshGrid();
+  },[walletType])
   const gridColumns = [
     {
       field: "",
@@ -101,19 +110,44 @@ const Payments = (props) => {
   }
 
   const showNewBenificiary = () => {
-    debugger
     setCheckRadio(true);
     setBeneficiaryDetails(true);
   }
   const closeBuyDrawer = () => {
     setBeneficiaryDetails(false);
   }
+const getCurrencyLookup = async () => {
+    let response = await getCurrencyLu(props.userConfig?.id);
+    if (response.ok) {
+      let obj={currencyCode:"All"}
+      let walletList=[];
+      walletList.push(obj);
+      walletList=[...walletList,...response.data]
+      setCurrencylu(walletList)
+    } else {
+      message.destroy();
+      setErrorWarning(response.data)
+    }
+  };
+  const handleCurrencyChange=(value)=>{
+    const searchVal = `${value ? value : "All"}`;
+    setWalletType(searchVal)
+    
+  }
+  const onActionClick = (key) => {
+    const actions = {
+      add: showNewBenificiary,
+      "Add Payee": addPayment,
+      edit: paymentsEdit,
+    };
+  actions[key]();
+  };
   return (
     <>
       <div className="main-container">
         <div className='bill_payment mb-16'>
           <Title className="basicinfo mb-0"><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
-          <div className="cust-btns mb-d-none">
+          {/* <div className="cust-btns mb-d-none">
             <Button
               className="pop-btn px-24"
               style={{ margin: "0 8px", height: 40 }}
@@ -135,8 +169,33 @@ const Payments = (props) => {
             >
               Edit Bill Payment
             </Button>
-          </div>
-          <div className="cust-btns visible-mobile mb-16" style={{float:'right'}}>
+          </div> */}
+          <Select
+                  className="cust-input cust-disable"
+                  placeholder="Select Currency"
+                  onChange={(e) => handleCurrencyChange(e)}
+                  // defaultValue={"All"}
+                  style={{ width: 280 }}
+                  dropdownClassName="select-drpdwn"
+                  bordered={false}
+                  showArrow={true}
+                  value={walletType}
+                >
+                  {currencylu?.map((item, idx) => (
+                    <Option
+                      key={idx}
+                      className="fw-400"
+                      value={item.currencyCode}
+                    >
+                      {" "}
+                      {item.currencyCode}
+                    </Option>
+                  ))}
+                </Select>
+          <span className="mb-right">
+          <ActionsToolbar featureKey="/payments" onActionClick={(key) => onActionClick(key)}/>
+          </span>
+          {/* <div className="cust-btns visible-mobile mb-16" style={{float:'right'}}>
             <ul
               className="address-icons"
               style={{
@@ -167,7 +226,7 @@ const Payments = (props) => {
                 </Tooltip>
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
         {errorWarning !== null && (
             <Alert
@@ -181,9 +240,10 @@ const Payments = (props) => {
         <div className="box basic-info text-white" style={{clear:'both'}}>
           <List
             showActionBar={false}
-            ref={gridRef}
             url={process.env.REACT_APP_GRID_API + `MassPayments/UserPayments/${props.userConfig?.id}`}
+                       additionalParams={{type:walletType}}
             columns={gridColumns}
+            ref={gridRef}
           />
         </div>
         <BeneficiaryDrawer

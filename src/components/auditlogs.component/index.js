@@ -49,7 +49,7 @@ class AuditLogs extends Component {
   }
   componentDidMount = async () => {
     this.auditlogsTrack();
-    setTimeout(() => this.gridRef.current.refreshGrid(), 200);
+    setTimeout(() => this.gridRef?.current?.refreshGrid(), 200);
 
 
     this.TransactionFeatureSearch(this.props.userProfile?.userName);
