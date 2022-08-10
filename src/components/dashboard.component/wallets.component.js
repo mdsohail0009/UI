@@ -7,6 +7,7 @@ import ConnectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
 import MassPayment from '../buyfiat.component'
 import { withRouter,Link } from 'react-router-dom';
+import TransactionsHistory from "../transactions.history.component";
 import { setWithdrawfiatenaable, setWithdrawfiat, setStep } from '../../reducers/sendreceiveReducer'
 import { setdepositCurrency, getCurrencieswithBankDetails } from '../../reducers/depositReducer'
 const { Title, Paragraph } = Typography;
@@ -17,7 +18,8 @@ class Wallets extends Component {
         valNum: 1,
         wallets: [], loading: true,
         buyFiatDrawer: false,
-        selctedVal: ''
+        selctedVal: '',
+        transactions: false
     }
     componentDidMount() {
         this.fetchWallets();
@@ -66,13 +68,25 @@ class Wallets extends Component {
 
         })
     }
+    showTransactionDrawer =(item) => {
+        this.setState({...this.state, transactions: true});
+    }
     menuBar = (item) => (
         <Menu>
             <ul className="pl-0 drpdwn-list">
                 <li  onClick={() =>  this.showSendReceiveDrawer(3, item)}>
                     <Link value={3} className="c-pointer">Bill Payments</Link>
                 </li>
-                <li onClick={() => this.showSendReceiveDrawer(4, item)}>
+                <li onClick={() => this.showTransactionDrawer(item)}>
+                <TransactionsHistory
+                        showDrawer={this.state.transactions}
+                        onClose={() => {
+                           
+                            //this.closeDrawer("transactions");
+                            //this.state.transactions = false
+                        }}
+                       // thref={(cd) => (this.child1 = cd)}
+                    />
                     <Link  value={4} className="c-pointer">Transactions</Link>
                 </li>
                 

@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
 import List from "../grid.component";
-import {getTransactionSearch } from './api';
+import {getTransactionSearch, getTransactionCurrency } from './api';
 import { setCurrentAction } from "../../reducers/actionsReducer";
 const { Option } = Select;
 class TransactionsHistory extends Component {
@@ -20,12 +20,14 @@ class TransactionsHistory extends Component {
       customerData: [],
       typeData: [],
       doctypeData: [],
+      currenyData: [],
       permissions:{},
       value: "",
       searchObj: {
         type: "All",
         docType: "All",
-        customerId: this.props.customer?.id
+        customerId: this.props.customer?.id,
+        currency: "All"
       },
       tranObj: {},
       gridUrl: process.env.REACT_APP_GRID_API + `Transaction/Customers`,
@@ -35,6 +37,7 @@ class TransactionsHistory extends Component {
 
 componentDidMount() {
     this.TransactionSearch();
+    this.transactionCurrency();
     this.permissionsInterval = setInterval(this.loadPermissions, 200);
   }
 
@@ -73,6 +76,15 @@ componentDidMount() {
       });
     }
   };
+  transactionCurrency = async () => {
+    let response = await getTransactionCurrency();
+    if (response.ok) {
+      this.setState({
+        currenyData: response.data,
+      
+      });
+    }
+  };
   handleChange = (value, prop) => {
     debugger
     var val = "";
@@ -106,12 +118,15 @@ componentDidMount() {
 	
 	render() {
 		const { Title } = Typography;
-		const { customerData, typeData, doctypeData, gridUrl, searchObj } = this.state;
+		const { customerData, typeData, doctypeData, currenyData, gridUrl, searchObj } = this.state;
 		const options1 = typeData.map((d) => (
 		  <Option key={d.value} value={d.name}>{d.name}</Option>
 		));
 		const options2 = doctypeData.map((d) => (
 		  <Option key={d.value} value={d.name}>{d.name}</Option>
+		));
+    const options3 = currenyData?.map((d) => (
+		  <Option key={d.id} value={d.code}>{d.code}</Option>
 		));
 		return (
 			<>
@@ -136,7 +151,7 @@ componentDidMount() {
           >
             <Row >
              
-              <Col xs={24} sm={24} md={7} lg={7} xl={7} className="px-8 transaction_resp">
+              <Col xs={24} sm={24} md={7} lg={7} xl={6} className="px-8 transaction_resp">
                 <Form.Item name="type" className="input-label mb-0" label="Type">
                   <Select
                     defaultValue="All"
@@ -150,7 +165,21 @@ componentDidMount() {
                   </Select>
                 </Form.Item>
               </Col>
-              <Col xs={24} sm={24} md={7} lg={7} xl={7}  className="px-8 transaction_resp">
+              <Col xs={24} sm={24} md={7} lg={7} xl={6} className="px-8 transaction_resp">
+                <Form.Item name="Wallet" className="input-label mb-0" label="Wallet">
+                  <Select
+                    defaultValue="All"
+                    className="cust-input w-100 bgwhite"
+                    dropdownClassName="select-drpdwn"
+                    showSearch
+                    onChange={(e) => this.handleChange(e, "currency")}
+                    placeholder="Select Wallet"
+                  >
+                    {options3}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col xs={24} sm={24} md={7} lg={7} xl={6}  className="px-8 transaction_resp">
                 <Form.Item name="docType" className="input-label mb-0" label="Transaction">
                   <Select
                     defaultValue="All"
