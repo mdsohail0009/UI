@@ -27,7 +27,7 @@ const AddressFiatView = React.lazy(() => import("../components/addressbook.compo
 const AddressCryptoView = React.lazy(() => import("../components/addressbook.component/addressCryptoView"))
 const RewardCard = React.lazy(() => import("../components/cards.component"));
 const AccessDenied = React.lazy(() => import("../components/shared/permissions/access.denied"));
-
+const InternalTransfer=React.lazy(()=>import("../components/internalTransfer.component/internalTransfer"))
 class RouteConfig extends Component {
   componentDidMount() {
     this.checkPermissions(window.location.pathname||"/cockpit");
@@ -81,6 +81,7 @@ class RouteConfig extends Component {
             </>
           )}
         />
+        <ReactRoute path="/internalTransfer" component={InternalTransfer} exact/>
         <ReactRoute path="/" component={Dashboard} exact />
       </React.Suspense>
     </Switch>

@@ -57,6 +57,8 @@ class Wallets extends Component {
             this.props.dispatch(setdepositCurrency(value))
         }else if(e===3){
             this.props.history.push(`/payments/${value.walletCode}`)
+        }else {
+            this.props.history.push(`/internalTransfer`)
         }
         this.setState({
             valNum: e
@@ -81,7 +83,9 @@ class Wallets extends Component {
                 <li onClick={() => this.showTransactionDrawer(item)}>
                     <Link  value={4} className="c-pointer">Transactions</Link>
                 </li>
-                
+                <li onClick={() => this.showSendReceiveDrawer(5,item)}>
+                    <Link  value={5} className="c-pointer">Internal Transfer</Link>
+                </li>
             </ul>
         </Menu>
     )
