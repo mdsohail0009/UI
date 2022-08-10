@@ -221,17 +221,24 @@ this.setState({...this.state,customerRemarks:data})
                     description={this.state.error} onClose={() => this.setState({ ...this.state, error: null })} showIcon />}
 
                     <Card className="crypto-card select mb-36" bordered={false}>
-                        <span className="d-flex align-center">
-                            <Image preview={false} src={selectedWallet.impageWhitePath}/>
-                            <Text className="fs-24 text-purewhite ml-8">{selectedWallet?.coinFullName}</Text>
-                        </span>
-                        <div className="crypto-details">
-                            <Text className="crypto-percent fw-700">{selectedWallet?.percentage}<sup className="percent fw-700">%</sup></Text>
-                            <div className="crypto-amount">
+                        
+                        <div className="crypto-details d-flex">
+                        <div>
+                            <span className="d-flex align-center">
+                                <Image preview={false} src={selectedWallet.impageWhitePath}/>
+                                
+                                <Text className="crypto-percent">{selectedWallet?.percentage}<sup className="percent fw-700">%</sup></Text>
+                            </span>
+                            <Text className="fs-24 text-purewhite ml-4">{selectedWallet?.coinFullName}</Text>
+                            
+                        </div>
+                        <div>
+                            
+                            <div className="crypto-amount" >
                                 <Currency defaultValue={selectedWallet?.coinBalance} prefix={""} type={"text"} suffixText={selectedWallet?.coin} />
                                 <Currency defaultValue={selectedWallet?.coinValueinNativeCurrency} prefix={"$"} type={"text"} />
                             </div>
-                        </div>
+                        </div></div>
                     </Card>
                     <LocalCryptoSwap ref={this.eleRef} showConvertion={false}
                         isSwap={this.state.isSwap}

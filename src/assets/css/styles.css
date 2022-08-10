@@ -821,7 +821,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
 }
 @media (min-width: 576px){
     .fiat-total{display: flex;justify-content: space-between;text-align: center;}
-    .crypto-percent{font-size: 40px;line-height: normal;}
+    .crypto-percent{font-size: 26px;line-height: normal;}
     .crypto-percent .percent{font-size: 20px;margin-left: 6px;}
 }
 @media (max-width: 767px){
@@ -837,7 +837,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     /* .crypto-address .custom-display{margin-top: 20px;} */
     .ant-dropdown-placement-topRight > .ant-dropdown-arrow{top: -5px !important;}
     .ant-dropdown-show-arrow.ant-dropdown-placement-topRight{top: 71px !important;}
-    .crypto-card .ant-card-body{height: 175px;}
+    .crypto-card .ant-card-body{height: 70px;}
     .mid-menu{margin: 0 -16px;padding: 0 16px; background-color: var(--bgWhite);}
     .header-logo{padding-left: 0  !important;}
     .mobile-none{display: none}
@@ -970,7 +970,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
 }
 @media (min-width: 768px){
     .tlv-header{height: 96px !important;border-radius: 0 !important;}
-    .crypto-card .ant-card-body{padding: 33px;height: 200px;}
+    .crypto-card .ant-card-body{padding: 16px;height: 88px;}
     .tlv-header{height: 100px;align-items: center; justify-content: space-between;padding: 15px 16px 15px !important;border-radius: 0 0 30px 30px;}
     .markets-panel{margin-right: 16px;}
     .megamenu-label{margin-top: 0px;font-size: 33px !important;}
@@ -1074,8 +1074,8 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .round-pills .ant-radio-button-wrapper,.default-radio .ant-radio-button-wrapper{min-width: 120px;}
     .round-pills .ant-radio-button-wrapper{min-width: 136px;}
     .dep-withdraw{max-height: calc(100vh - 260px);}
-    .crypto-card .ant-card-body{padding: 33px;height: 231px;}
-    .crypto-percent{font-size: 60px;line-height: normal;}
+    .crypto-card .ant-card-body{padding: 16px 24px;height: 90px;}
+    .crypto-percent{font-size: 26px;line-height: normal;}
     .coin{transform: scale(1);}
     .round-pills{ margin-bottom: 30px; margin-top: 6px;}
     .drawer-title{font-size: 34px !important;}
@@ -1330,3 +1330,6 @@ input[type=number]::-webkit-outer-spin-button {
 .secureDropdown .ant-menu-title-content{line-height: 23px;}
 .ant-result-title, .ant-result-subtitle{color: var(--textWhite);}
 .ant-select-item .ant-select-option-active, .ant-select-item-option-content, .ant-select-selection-item{color: var(--textWhite);}
+.ant-image-img{width: 65%; margin-right: 0;}
+.with-min{position: absolute;top: 52px;right: 46px;}
+.with-max{position: absolute;top: 52px;right: 0;}

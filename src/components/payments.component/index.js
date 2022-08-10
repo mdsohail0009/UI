@@ -17,7 +17,6 @@ import { getCurrencyLu} from './api'
 const { Title, Text, Paragraph } = Typography;
 const { Option } = Select;
 const Payments = (props) => {
-
   const gridRef = React.createRef();
   
   const [beneficiaryDrawer, setBeneficiaryDrawer] = useState(false);
@@ -28,6 +27,7 @@ const Payments = (props) => {
   const [setSelectData, setSetSelectData] = useState({})
   const [errorWarning,setErrorWarning]=useState(null)
   const [ currencylu,setCurrencylu]=useState([]);
+  const [walletType,setWalletType]=useState(props.match.params.code);
   const paymentsView = (prop) => {
     props.history.push(`/payments/${prop.dataItem.id}/view`)
   };
@@ -48,6 +48,9 @@ const Payments = (props) => {
     }
 
   }, [])
+  useEffect(()=>{
+    gridRef.current.refreshGrid();
+  },[walletType])
   const gridColumns = [
     {
       field: "",
@@ -126,6 +129,11 @@ const getCurrencyLookup = async () => {
       setErrorWarning(response.data)
     }
   };
+  const handleCurrencyChange=(value)=>{
+    const searchVal = `${value ? value : "All"}`;
+    setWalletType(searchVal)
+    
+  }
   const onActionClick = (key) => {
     const actions = {
       add: showNewBenificiary,
@@ -165,13 +173,13 @@ const getCurrencyLookup = async () => {
           <Select
                   className="cust-input cust-disable"
                   placeholder="Select Currency"
-                  // onChange={(e) => handleCurrencyChange(e)}
-                  defaultValue={"All"}
+                  onChange={(e) => handleCurrencyChange(e)}
+                  // defaultValue={"All"}
                   style={{ width: 280 }}
                   dropdownClassName="select-drpdwn"
                   bordered={false}
                   showArrow={true}
-
+                  value={walletType}
                 >
                   {currencylu?.map((item, idx) => (
                     <Option
@@ -181,14 +189,6 @@ const getCurrencyLookup = async () => {
                     >
                       {" "}
                       {item.currencyCode}
-                      {/* {
-                        <NumberFormat
-                          value={item.avilable}
-                          displayType={"text"}
-                          thousandSeparator={true}
-                          renderText={(value) => <span> Balance: {value}</span>}
-                        />
-                      } */}
                     </Option>
                   ))}
                 </Select>
@@ -240,9 +240,10 @@ const getCurrencyLookup = async () => {
         <div className="box basic-info text-white" style={{clear:'both'}}>
           <List
             showActionBar={false}
-            ref={gridRef}
             url={process.env.REACT_APP_GRID_API + `MassPayments/UserPayments/${props.userConfig?.id}`}
+                       additionalParams={{type:walletType}}
             columns={gridColumns}
+            ref={gridRef}
           />
         </div>
         <BeneficiaryDrawer

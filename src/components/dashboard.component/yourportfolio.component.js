@@ -14,13 +14,15 @@ import { convertCurrency } from '../buy.component/buySellService';
 import { withRouter, Link } from 'react-router-dom';
 import apiCalls from '../../api/apiCalls';
 import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle, setWithdrawfiatenaable, setWithdrawfiat,setWalletAddress } from "../../reducers/sendreceiveReducer";
-import { getcoinDetails } from './api'
-import {createCryptoDeposit} from "../deposit.component/api"
+import { getcoinDetails } from './api';
+import {createCryptoDeposit} from "../deposit.component/api";
+import TransactionsHistory from "../transactions.history.component";
 class YourPortfolio extends Component {
     state = {
         loading: true,
         initLoading: true,
         portfolioData: [], buyDrawer: false, coinData: null,sendDrawer: false,
+        selectedWallet: ''
     }
     componentDidMount() {
         this.loadCryptos();
@@ -144,9 +146,13 @@ class YourPortfolio extends Component {
     closeDrawer = () => {
       this.setState({
           buyDrawer: false,
-          sendDrawer: false
+          sendDrawer: false,
+          transactions: false
       })
   }
+  showTransactionDrawer =(item) => {
+    this.setState({...this.state, transactions: true, selectedWallet: item?.coin});
+}
      menuBar = (item) => (
       <Menu>
           <ul className="pl-0 drpdwn-list">
@@ -156,6 +162,15 @@ class YourPortfolio extends Component {
               <li onClick={() => this.showSendReceiveDrawer(2, item)}>
                   <Link  value={2} className="c-pointer">Withdraw</Link>
               </li>
+              <li onClick={() => this.showTransactionDrawer(item)}>
+                {/* <TransactionsHistory
+                        showDrawer={this.state.transactions}
+                        onClose={() => {
+                            this.closeDrawer();
+                        }}
+                    /> */}
+                    <Link  value={4} className="c-pointer">Transactions</Link>
+                </li>
               
           </ul>
       </Menu>
@@ -280,6 +295,13 @@ class YourPortfolio extends Component {
               onClose={() => this.closeDrawer()}
             />
             <SendReceive showDrawer={this.state.sendDrawer} onClose={() => this.closeDrawer()} />
+            {this.state.transactions && <TransactionsHistory
+              showDrawer={this.state.transactions}
+              selectWallet={this.state.selectedWallet}
+              onClose={() => {
+                this.closeDrawer();
+              }}
+            />}
           </div>
         );
     }
