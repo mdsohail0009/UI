@@ -83,8 +83,7 @@ class Portfolio extends Component {
         this.setState({ ...this.state, transactions: true});
     }
     closeDrawer = () => {
-        this.props.dispatch(setHeaderTab(" "))
-        this.setState({ ...this.state, transactions: false});
+        this.setState({transactions: false});
     }
     render() {
         const { Title } = Typography;
@@ -95,15 +94,6 @@ class Portfolio extends Component {
                 <div  className="portfolio-title mb-14">
                     <Translate content="menu_transactions_history" className="basicinfo" />
                 <div>
-                       <TransactionsHistory
-                        showDrawer={this.state.transactions}
-                        onClose={() => {
-                           
-                            //this.closeDrawer("transactions");
-                            //this.state.transactions = false
-                        }}
-                       // thref={(cd) => (this.child1 = cd)}
-                    />
                     <div>
                        <Translate
                         content="search"
@@ -113,6 +103,12 @@ class Portfolio extends Component {
                         onClick={()=> this.transactionDrawer()}
                       />
                        </div> 
+                       <TransactionsHistory
+                        showDrawer={this.state.transactions}
+                        onClose={() => {
+                            this.closeDrawer();
+                        }}
+                    />
                        </div>
                     </div>
                     <div className="mt-16">
