@@ -540,7 +540,7 @@ const FaitWithdrawal = ({
                         }
                       >
                         <Select
-                          className="cust-input mb-0 custom-search"
+                          className="cust-input mb-0 custom-search ss"
                           dropdownClassName="select-drpdwn"
                           onChange={(e) => handleDetails(e)}
                           placeholder="Select Address Book"
