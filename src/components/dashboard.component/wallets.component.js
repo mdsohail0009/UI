@@ -49,9 +49,11 @@ class Wallets extends Component {
         if (e === 2) {
             this.props.dispatch(setWithdrawfiatenaable(true))
             this.props.dispatch(setWithdrawfiat({ walletCode: value }))
-        } else {
+        } else if(e===1) {
             this.props.dispatch(setWithdrawfiatenaable(false))
             this.props.dispatch(setdepositCurrency(value))
+        }else if(e===3){
+            this.props.history.push(`/payments/${value.walletCode}`)
         }
         this.setState({
             valNum: e

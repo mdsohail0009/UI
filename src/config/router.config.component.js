@@ -73,7 +73,7 @@ class RouteConfig extends Component {
           path="/payments"
           render={({ match: { url } }) => (
             <>
-              <Route path={`${url}`} component={Payments} exact isRoute={true} />
+              <Route path={`${url}/:code`} component={Payments} exact isRoute={true} />
               <Route path={`${url}/:id/add`} component={PaymentDetails} />
               <Route path={`${url}/:id/:type/:state/edit`} component={PaymentDetails} />
               <Route path={`${url}/:id/view`} component={paymentsView} />
