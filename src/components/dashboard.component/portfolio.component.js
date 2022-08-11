@@ -120,7 +120,9 @@ class Portfolio extends Component {
                        </span>  */}
                     <Button
                         onClick={() => this.transactionDrawer()}
-                        className="dbchart-link fs-14 fw-500">
+                        className="pop-btn dbchart-link fs-14 fw-500"
+                        style={{  height: 40,marginTop:"35px" }}
+                        >
                             Search
                         <span className="icon sm search-angle ml-8"></span>
                     </Button>
