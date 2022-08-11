@@ -38,8 +38,9 @@ class QRScan extends Component {
         });
     }
     getNetworkObj = async () => {
+        debugger
         const response = await getNetworkLu(this.props.wallet);
-        console.log("HHHHHHHHH", response)
+        console.log(response.data)
         if (response.ok) {
             this.setState({ netWorkData: response.data });
         } else {
