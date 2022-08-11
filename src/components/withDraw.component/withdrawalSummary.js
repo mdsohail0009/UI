@@ -208,7 +208,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 	const saveWithdrwal = async (values) => {
 		if (!(verifyData.isEmailVerification || verifyData.isPhoneVerified || verifyData.twoFactorEnabled || verifyData.isLiveVerification)) {
 			setMsg(
-				"Without verifications you can't withdraw. Please select withdraw verifications from security section"
+				"Without verifications you can't send. Please select send verifications from security section"
 			);
 			return;
 		}
@@ -310,12 +310,12 @@ debugger
 			setVerifyData(response.data);
 			if (!(response.data.isEmailVerification || response.data.isPhoneVerification || response.data.twoFactorEnabled || response.data.isLiveVerification)) {
 				setMsg(
-					"Without verifications you can't withdraw. Please select withdraw verifications from security section"
+					"Without verifications you can't send. Please select send verifications from security section"
 				);
 			}
 		} else {
 			setMsg(
-				"Without verifications you can't withdraw. Please select withdraw verifications from security section"
+				"Without verifications you can't send. Please select send verifications from security section"
 			);
 		}
 	};

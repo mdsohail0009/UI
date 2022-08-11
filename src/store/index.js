@@ -43,7 +43,6 @@ const rootReducer = combineReducers({
     cardsStore:cardsReducer,
     TransforStore: TransforReducer,
     menuItems:featuresReducer,
-    //permissions:featuresReducer,
     currentAction:currentActionReducer,
 })
 const reducer = persistReducer(persistConfig, rootReducer)
