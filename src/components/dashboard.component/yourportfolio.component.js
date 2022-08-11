@@ -75,7 +75,10 @@ class YourPortfolio extends Component {
             buyDrawer: true
         })
     }
-   
+    showInternalTransfer=()=>{
+      this.props.history.push(`/internalTransfer`)
+    }
+  
     showSendReceiveDrawer = async(e, value) => {
       let selectedObj = { ...value };
       selectedObj.coin = selectedObj.coin?.toUpperCase();
@@ -173,9 +176,9 @@ class YourPortfolio extends Component {
      menuBar = (item) => (
       <Menu>
           <ul className="pl-0 drpdwn-list">
-              <li  onClick={() =>  this.showSendReceiveDrawer(1, item)}>
+              {/* <li  onClick={() =>  this.showSendReceiveDrawer(1, item)}>
                   <Link value={1} className="c-pointer">Receive</Link>
-              </li>
+              </li> */}
               <li onClick={() => this.showSendReceiveDrawer(2, item)}>
                   <Link  value={2} className="c-pointer">Send</Link>
               </li>
@@ -188,6 +191,9 @@ class YourPortfolio extends Component {
                     /> */}
                     <Link  value={4} className="c-pointer">Transactions</Link>
                 </li>
+                <li onClick={() => this.showInternalTransfer(item)}>
+                  <Link  value={5} className="c-pointer">Internal Transfer</Link>
+              </li>
               
           </ul>
       </Menu>
@@ -240,11 +246,17 @@ class YourPortfolio extends Component {
                         onClick={() => this.showBuyDrawer(item, "buy")}
                         className="custom-btn prime"
                       />
-                      <Translate
+                      {/* <Translate
                         content="sell"
                         component={Button}
                         className="custom-btn sec ml-16"
                         onClick={() => this.showBuyDrawer(item, "sell")}
+                      /> */}
+                        <Translate
+                        content="deposit"
+                        component={Button}
+                        className="custom-btn sec ml-16"
+                        onClick={() =>  this.showSendReceiveDrawer(1, item)}
                       />
                       
                       <Dropdown overlay={this.menuBar(item)} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >

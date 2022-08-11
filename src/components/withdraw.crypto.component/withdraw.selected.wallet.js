@@ -8,6 +8,16 @@ import LocalCryptoSwap from '../shared/local.crypto.swap';
 import SuccessMsg from './success';
 import apicalls from '../../api/apiCalls';
 import { validateContent,validateContentRule } from '../../utils/custom.validator';
+import {setAddressStep,rejectCoin,fetchUsersIdUpdate,selectedTab,clearValues,clearCryptoValues,
+} from "../../reducers/addressBookReducer";
+import AddressCommonCom from "../addressbook.component/addressCommonCom";
+import SelectCrypto from "../addressbook.component/selectCrypto";
+import { processSteps as config } from "../addressbook.component/config";
+
+
+const { Paragraph, Text } = Typography;
+
+
 class CryptoWithDrawWallet extends Component {
     eleRef = React.createRef();
     myRef = React.createRef();
@@ -35,6 +45,51 @@ class CryptoWithDrawWallet extends Component {
         this.props.dispatch(setSubTitle(apicalls.convertLocalLang('wallet_address')));
         this.trackevent();
     }
+    closeBuyDrawer = (obj) => {
+        let showCrypto = false, showFiat = false;
+        if (obj) {
+            if (obj.isCrypto)
+                showCrypto = !obj?.close;
+            else
+                showFiat = !obj?.close;
+        };
+        this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat });
+        
+    };
+    renderContent = () => {
+        const stepcodes = {
+            cryptoaddressbook: (<>
+                <AddressCommonCom onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1}/>
+                </>
+            ),
+            selectcrypto: <SelectCrypto />,
+        };
+        return stepcodes[config[this.props.addressBookReducer.stepcode]];
+    };
+    renderIcon = () => {
+        const stepcodes = {
+            cryptoaddressbook: (
+                <span
+                onClick={() => this.closeBuyDrawer()}
+                    className="icon md close-white c-pointer"
+                />
+            ),
+            selectcrypto: <span />,
+        };
+        return stepcodes[config[this.props.addressBookReducer.stepcode]];
+    };
+    renderTitle = () => {
+        const titles = {
+            cryptoaddressbook: <span />,
+            selectcrypto: (
+                <span
+                    onClick={this.backStep}
+                    className="icon md lftarw-white c-pointer"
+                />
+            ),
+        };
+        return titles[config[this.props.addressBookReducer.stepcode]];
+    };
     trackevent = () => {
         apicalls.trackEvent({
             "Type": 'User', "Action": 'Withdraw Crypto Selected page view', "Username": this.props.userProfile.userName, "customerId": this.props.userProfile.id, "Feature": 'Withdraw Crypto', "Remarks": "Withdraw Crypto Selected page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto'
@@ -44,7 +99,27 @@ class CryptoWithDrawWallet extends Component {
         this.setState({ ...this.state, isWithdrawSuccess: false });
     }
 
-    selectCrypto = () => {
+    // selectCrypto = () => {
+    //     const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
+    //     this.props.dispatch(setSubTitle(apicalls.convertLocalLang('select_address')));
+    //     let obj = {
+    //         "customerId": this.props.userProfile.id,
+    //         "customerWalletId": id,
+    //         "walletCode": coin,
+    //         "toWalletAddress": this.state.walletAddress,
+    //         "reference": "",
+    //         "description": "",
+    //         "totalValue": this.state.CryptoAmnt,
+    //         "tag": "",
+    //         'amounttype': this.state.amountPercentageType
+    //     }
+    //     this.props.dispatch(setWithdrawcrypto(obj))
+    //     this.setState({ ...this.state, loading: true })
+    //     this.props.changeStep('step8');
+
+    // }
+    selectCrypto = (type) => {
+        debugger
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.props.dispatch(setSubTitle(apicalls.convertLocalLang('select_address')));
         let obj = {
@@ -60,9 +135,20 @@ class CryptoWithDrawWallet extends Component {
         }
         this.props.dispatch(setWithdrawcrypto(obj))
         this.setState({ ...this.state, loading: true })
-        this.props.changeStep('step8');
+        if(type=="ADDRESS"){
+            this.props.changeStep('step8');
+        }else{
+            this.setState({
+                ...this.state, visible: true, errorWorning: null
+                // , selection: [],
+                // isCheck: false,
+            });
+        }
+        
 
-    }
+
+
+   }
 
     // clickMinamnt(type) {
     //     let usdamnt; let cryptoamnt;
@@ -121,7 +207,6 @@ let data =event.target.value;
 this.setState({...this.state,customerRemarks:data})
     }
     withDraw = async () => {
-        debugger
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null, loading: true, isWithdrawSuccess: false });
         let obj = {
@@ -321,6 +406,9 @@ const connectStateToProps = ({ sendReceive, userConfig }) => {
 }
 const connectDispatchToProps = dispatch => {
     return {
+        changeStep: (stepcode) => {
+            dispatch(setAddressStep(stepcode))
+        },
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
         },
