@@ -88,7 +88,7 @@ class QRScan extends Component {
             return <Loader />
         }
         const {netWorkData, isnetworktrigger}=this.state;
-        if(!netWorkData && !isnetworktrigger && this.props?.sendReceive?.depositWallet){
+        if(netWorkData.length<1 && !isnetworktrigger && this.props?.sendReceive?.depositWallet){
             this.getNetworkObj()
         }
         return (

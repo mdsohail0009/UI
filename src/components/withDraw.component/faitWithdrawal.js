@@ -8,7 +8,7 @@ import {
   Alert,
   Tooltip,
   Select,
-  Checkbox,
+  Checkbox,Drawer
 } from "antd";
 import { Link } from "react-router-dom";
 import { setStep } from "../../reducers/buysellReducer";
@@ -40,7 +40,7 @@ import WithdrawalLive from "./withdrawLive";
 import apicalls from "../../api/apiCalls";
 import { handleFiatConfirm } from "../send.component/api";
 import Loader from '../../Shared/loader';
-
+import AddressCommonCom from '../addressbook.component/addressCommonCom'
 const LinkValue = (props) => {
   return (
     <Translate
@@ -57,7 +57,7 @@ const LinkValue = (props) => {
   );
 };
 const { Option } = Select;
-const FaitWithdrawal = ({
+const FaitWithdrawal = ({props,
   member,
   selectedWalletCode,
   buyInfo,
@@ -89,6 +89,9 @@ const FaitWithdrawal = ({
   const [bankDetails, setBankDetails] = useState([])
   const [details, setDetails] = useState([])
   const [selectRequired, setSelectRequired] = useState(null)
+  const [beneficiaryDetails, setBeneficiaryDetails] = useState(false);
+  const [checkRadio, setCheckRadio] = useState(false);
+
   const [addressObj, setAddressObj] = useState({
     bankName: null,
     accountNumber: null,
@@ -124,7 +127,14 @@ const FaitWithdrawal = ({
     getAccountdetails()
 
   }, []);
-
+  const showNewBenificiary = () => {
+    setCheckRadio(true);
+    setBeneficiaryDetails(true);
+  }
+  const closeBuyDrawer = () => {
+    setBeneficiaryDetails(false);
+  }
+ 
   const fiatWithdrawTrack = () => {
     apicalls.trackEvent({
       Type: "User",
@@ -553,10 +563,15 @@ const FaitWithdrawal = ({
                           ))}
                         </Select>
                         <Tooltip placement="top" title="Send to new Wallet" style={{ flexGrow: 1 }}>
-                            <div className="new-add c-pointer" onClick={() => this.selectCrypto()}>
-                              <span className="icon md diag-arrow d-block c-pointer"></span>
-                            </div>
-                        </Tooltip>
+                                    <div className="new-add c-pointer" style={{borderRadius:'0'}} onClick={() => showNewBenificiary()}>
+                                        <span className="icon md diag-arrow d-block c-pointer"></span>
+                                    </div>
+                                </Tooltip>
+                                {/* <Tooltip placement="top" title={<span>{apicalls.convertLocalLang('SelectAddress')}</span>} style={{ flexGrow: 1 }}>
+                                    <div className="new-add c-pointer"onClick={() => showNewBenificiary("ADDRESS")}>
+                                        <span className="icon md diag-arrow d-block c-pointer"></span>
+                                    </div>
+                                </Tooltip> */}
                         </div>
                       </Form.Item>
 
@@ -870,6 +885,24 @@ const FaitWithdrawal = ({
       >
         {renderModalContent()}
       </Modal>
+      <Drawer
+          destroyOnClose={true}
+          title={[<div className="side-drawer-header">
+            <span />
+            <div className="text-center fs-16">
+              <Paragraph className="mb-0 text-white-30 fw-600 text-upper"><Translate content="AddFiatAddress" component={Paragraph} className="mb-0 text-white-30 fw-600 text-upper" /></Paragraph>
+            </div>
+            <span onClick={closeBuyDrawer} className="icon md close-white c-pointer" />
+          </div>]}
+          placement="right"
+          closable={true}
+          visible={beneficiaryDetails}
+          closeIcon={null}
+          className=" side-drawer w-50p"
+          size="large"
+        >
+          <AddressCommonCom checkThirdParty={checkRadio} onCancel={() => closeBuyDrawer()} props={props} />
+        </Drawer>
     </>
   );
 };
