@@ -269,7 +269,7 @@ this.setState({...this.state,customerRemarks:data})
                                 <Input className="cust-input custom-add-select mb-0" placeholder={apicalls.convertLocalLang('enter_address')} value={this.state.walletAddress}
 
                                    disabled={true} onChange={({ currentTarget: { value } }) => { this.setState({ ...this.state, walletAddress: value }); this.props.clearAddress(null) }}
-                                    maxLength="250" />
+                                    maxLength="250" /> 
                                 <Tooltip placement="top" title="Send to new Wallet" style={{ flexGrow: 1 }}>
                                     <div className="new-add c-pointer" style={{borderRadius:'0'}} onClick={() => this.selectCrypto()}>
                                         <span className="icon md diag-arrow d-block c-pointer"></span>

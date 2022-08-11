@@ -539,7 +539,8 @@ const FaitWithdrawal = ({
                           />
                         }
                       >
-                        <Select
+                        <div className="p-relative d-flex align-center">
+                        <Select style={{borderRadius:'30px 0 0 30px'}}
                           className="cust-input mb-0 custom-search"
                           dropdownClassName="select-drpdwn"
                           onChange={(e) => handleDetails(e)}
@@ -551,6 +552,12 @@ const FaitWithdrawal = ({
                             </Option>
                           ))}
                         </Select>
+                        <Tooltip placement="top" title="Send to new Wallet" style={{ flexGrow: 1 }}>
+                            <div className="new-add c-pointer" onClick={() => this.selectCrypto()}>
+                              <span className="icon md diag-arrow d-block c-pointer"></span>
+                            </div>
+                        </Tooltip>
+                        </div>
                       </Form.Item>
 
                     </div>}
