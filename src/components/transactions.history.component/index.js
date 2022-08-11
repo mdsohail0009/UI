@@ -3,7 +3,7 @@ import {
 	Drawer,
 	Typography,
 	Button,
-	Row, Col, Select, Form
+	Row, Col, Select, Form,Spin
 } from "antd";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
@@ -11,6 +11,9 @@ import apiCalls from "../../api/apiCalls";
 import List from "../grid.component";
 import {getTransactionSearch, getTransactionCurrency } from './api';
 import { setCurrentAction } from "../../reducers/actionsReducer";
+import {getFeaturePermissionsByKey} from '../shared/permissions/permissionService';
+import { withRouter } from "react-router-dom";
+
 const { Option } = Select;
 class TransactionsHistory extends Component {
   constructor(props) {
@@ -30,16 +33,22 @@ class TransactionsHistory extends Component {
         currency: this.props?.selectWallet || "All"
       },
       tranObj: {},
+      loader: true,
       gridUrl: process.env.REACT_APP_GRID_API + `Transaction/Customers`,
     };
     this.gridRef = React.createRef();
   }
 
 componentDidMount() {
-    this.TransactionSearch();
-    this.transactionCurrency();
-    this.permissionsInterval = setInterval(this.loadPermissions, 200);
-    this.setState({...this.state, searchObj: {...this.state.searchObj, currency: this.props?.selectWallet || "All"}})
+  getFeaturePermissionsByKey('transactions',this.loadInfo)
+    
+  }
+
+ loadInfo = () =>{
+  this.permissionsInterval = setInterval(this.loadPermissions, 200);
+  this.TransactionSearch();
+  this.transactionCurrency();
+    //this.setState({...this.state, searchObj: {...this.state.searchObj, currency: this.props?.selectWallet || "All"}})
   }
 
   loadPermissions = () => {
@@ -49,8 +58,11 @@ componentDidMount() {
 			for (let action of this.props.transactionsPermissions?.actions) {
 				_permissions[action.permissionName] = action.values;
 			}
-			this.setState({ ...this.state, permissions: _permissions });
-		}
+			this.setState({ ...this.state, permissions: _permissions, searchObj: {...this.state.searchObj, currency: this.props?.selectWallet || "All"} });
+      if(!this.state.permissions?.view) {
+				this.props.history.push("/accessdenied");
+			}
+    }
 	}
   gridColumns = [
     {field: "date", title: "Date", filter: true, filterType: "date", locked: true, width: 210,
@@ -94,7 +106,6 @@ componentDidMount() {
     }
   };
   handleChange = (value, prop) => {
-    debugger
     var val = "";
     let { customerData, searchObj } = this.state;
     if (prop == "customerId") {
@@ -140,6 +151,9 @@ componentDidMount() {
     const options3 = currenyData?.map((d) => (
 		  <Option key={d.code} value={d.code}>{d.code}</Option>
 		));
+    // if(this.state.loader){
+    //   return <Spin loading={true}></Spin>
+    // }else{
 		return (
 			<>
 				 <Drawer
@@ -230,6 +244,7 @@ componentDidMount() {
 			   </>
 			   
     );
+   // }
   }
 }
 const connectStateToProps = ({ userConfig,menuItems }) => {
@@ -243,4 +258,4 @@ const connectDispatchToProps = dispatch => {
      dispatch 
  } 
 }
-export default connect(connectStateToProps,connectDispatchToProps)(TransactionsHistory);
+export default connect(connectStateToProps,connectDispatchToProps)(withRouter(TransactionsHistory));
