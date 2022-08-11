@@ -149,7 +149,7 @@ const getCurrencyLookup = async () => {
   actions[key]();
   };
   if(loading){
-    return <Spin loading={true}></Spin>
+    return <div className='custom-spin text-center mt-16'><Spin loading={true}></Spin></div>
   }else{
   return (
     <>
