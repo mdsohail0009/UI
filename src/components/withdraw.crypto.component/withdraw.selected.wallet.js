@@ -224,9 +224,8 @@ this.setState({...this.state,customerRemarks:data})
                         
                         <div className="crypto-details d-flex">
                         <div>
-                            <span className="d-flex align-center">
-                                <Image preview={false} src={selectedWallet.impageWhitePath}/>
-                                
+                            <span className="d-flex align-center mb-4">
+                                <Image preview={false} src={selectedWallet.impageWhitePath}/>                                
                                 <Text className="crypto-percent">{selectedWallet?.percentage}<sup className="percent fw-700">%</sup></Text>
                             </span>
                             <Text className="fs-24 text-purewhite ml-4">{selectedWallet?.coinFullName}</Text>
@@ -271,6 +270,11 @@ this.setState({...this.state,customerRemarks:data})
 
                                    disabled={true} onChange={({ currentTarget: { value } }) => { this.setState({ ...this.state, walletAddress: value }); this.props.clearAddress(null) }}
                                     maxLength="250" />
+                                <Tooltip placement="top" title="Send to new Wallet" style={{ flexGrow: 1 }}>
+                                    <div className="new-add c-pointer" style={{borderRadius:'0'}} onClick={() => this.selectCrypto()}>
+                                        <span className="icon md diag-arrow d-block c-pointer"></span>
+                                    </div>
+                                </Tooltip>
                                 <Tooltip placement="top" title={<span>{apicalls.convertLocalLang('SelectAddress')}</span>} style={{ flexGrow: 1 }}>
                                     <div className="new-add c-pointer" onClick={() => this.selectCrypto()}>
                                         <span className="icon md diag-arrow d-block c-pointer"></span>
