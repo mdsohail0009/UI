@@ -108,7 +108,7 @@ class Portfolio extends Component {
             <div className="mb-24">
                 <div>
                     <Translate content="menu_transactions_history" className="basicinfo" />
-                    <span>
+                    {/* <span>
                        <Translate
                         content="search"
                         component={Button}
@@ -116,13 +116,22 @@ class Portfolio extends Component {
                         className="dbchart-link fs-14 fw-500"
                         onClick={()=> this.transactionDrawer()}
                       />
-                       </span> 
+                       <span className="icon sm search-angle ml-4" />
+                       </span>  */}
+                    <Button
+                        onClick={() => this.transactionDrawer()}
+                        className="dbchart-link fs-14 fw-500">
+                            Search
+                        <span className="icon sm search-angle ml-8"></span>
+                    </Button>
+                       {this.state.transactions &&
                        <TransactionsHistory
                         showDrawer={this.state.transactions}
                         onClose={() => {
                             this.closeDrawer();
                         }}
                     />
+                       }
                        </div>
                    
                     <div className="mt-16">
