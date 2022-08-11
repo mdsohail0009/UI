@@ -84,7 +84,7 @@ border-radius: 5px;}
 .secureDropdown .ant-dropdown-menu{background-color: var(--bgGloom); border-radius: 10px; min-width: 300px; max-width: 300px; padding: 24px 0;}
 .secureDropdown .ant-dropdown-arrow{border-color: var(--bgGloom) !important;}
 .drpdwn-list{list-style: none;}
-.drpdwn-list li{font-size: 14px; padding: 0 30px; transition: 0.3s ease;cursor: pointer;}
+.drpdwn-list li{font-size: 14px; padding: 0 22px; transition: 0.3s ease;cursor: pointer;}
 .drpdwn-list li:hover{background-color: var(--bgDarkGrey);}
 .drpdwn-list li a{color: var(--textWhite);display: flex; align-items: center; padding: 10px 0 10px 10px;border-top: 1px solid var(--bgDarkGrey);}
 .dropdown-flex-top{display: flex;justify-content: space-between;align-items: center;}
@@ -1338,3 +1338,7 @@ input[type=number]::-webkit-outer-spin-button {
     color: #fff;
 }
 .custom-crypto-btns .cutom-bnt{background-color: transparent;border-radius: 6px;}
+.ss{display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 478px;}
