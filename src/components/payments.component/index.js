@@ -49,7 +49,7 @@ const Payments = (props) => {
       let key = "1"
       props.dispatch(setHeaderTab(key));
     }
-    setLoading(false)
+    setLoading(true)
   }
   useEffect(() => {
     getFeaturePermissionsByKey('billpayments',loadInfo)
@@ -149,7 +149,7 @@ const getCurrencyLookup = async () => {
   actions[key]();
   };
   if(loading){
-    return <Spin loading={true}></Spin>
+    return <div className='custom-spin text-center mt-16'><Spin loading={true}></Spin></div>
   }else{
   return (
     <>
