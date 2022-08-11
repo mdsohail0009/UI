@@ -58,7 +58,7 @@ class PaymentDetails extends Component {
     this.useDivRef = React.createRef();
   }
   backToPayments = () => {
-    this.props.history.push(`/payments/${this.state.currency}`);
+    this.props.history.push(`/payments/${"All"}`);
   };
   componentDidMount() {
     this.getCurrencyLookup();
@@ -183,7 +183,7 @@ class PaymentDetails extends Component {
               className: "custom-msg",
               duration: 3,
             });
-            this.props.history.push(`/payments/${this.state.currency}`);
+            this.props.history.push(`/payments/${"All"}`);
           } else {
             message.destroy();
             this.setState({ ...this.state, btnDisabled: false, loading: false, errorWarning: null, errorMessage: this.isErrorDispaly(response) })
@@ -209,7 +209,7 @@ class PaymentDetails extends Component {
               className: "custom-msg",
               duration: 3,
             });
-            this.props.history.push(`/payments/${this.state.currency}`);
+            this.props.history.push(`/payments/${"All"}`);
           } else {
             message.destroy();
             this.setState({ ...this.state, btnDisabled: false, loading: false, errorWarning: null, errorMessage: this.isErrorDispaly(response) });
