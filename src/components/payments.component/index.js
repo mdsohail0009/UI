@@ -49,7 +49,7 @@ const Payments = (props) => {
       let key = "1"
       props.dispatch(setHeaderTab(key));
     }
-    setLoading(true)
+    setLoading(false)
   }
   useEffect(() => {
     getFeaturePermissionsByKey('billpayments',loadInfo)
