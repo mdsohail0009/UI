@@ -240,7 +240,7 @@ class YourPortfolio extends Component {
                   extra={
                     <div className='crypto-btns'>
                       <Translate
-                        content="buy"
+                        content="menu_buy_sell"
                         component={Button}
                         type="primary"
                         onClick={() => this.showBuyDrawer(item, "buy")}
