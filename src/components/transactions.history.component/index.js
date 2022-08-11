@@ -83,8 +83,12 @@ componentDidMount() {
   transactionCurrency = async () => {
     let response = await getTransactionCurrency();
     if (response.ok) {
+      let obj={code:"All"}
+      let walletList=[];
+      walletList.push(obj);
+      walletList=[...walletList,...response.data]
       this.setState({
-        currenyData: response.data,
+        currenyData: walletList || response.data,
       
       });
     }
@@ -99,6 +103,10 @@ componentDidMount() {
     }
     searchObj[prop] = prop == "customerId" ? val : value;
     this.setState({ ...this.state, searchObj });
+    if(prop == "currency") {
+      const searchVal = `${value ? value : "All"}`;
+      this.setState({...this.state, searchObj: {...this.state.searchObj, currency: searchVal || "All"}})
+    }
   };
   handleSearch = (values) => {
     let { searchObj } = this.state;
@@ -130,7 +138,7 @@ componentDidMount() {
 		  <Option key={d.value} value={d.name}>{d.name}</Option>
 		));
     const options3 = currenyData?.map((d) => (
-		  <Option key={d.id} value={d.code}>{d.code}</Option>
+		  <Option key={d.code} value={d.code}>{d.code}</Option>
 		));
 		return (
 			<>
@@ -173,6 +181,7 @@ componentDidMount() {
                 <Form.Item  className="input-label mb-0" label="Wallet">
                   <Select
                     value = {this.state.searchObj.currency}
+                   // defaultValue={this.state.searchObj.currency}
                     className="cust-input w-100 bgwhite"
                     dropdownClassName="select-drpdwn"
                     showSearch

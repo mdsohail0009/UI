@@ -41,8 +41,8 @@ const Payments = (props) => {
   };
   useEffect(() => {
     getCurrencyLookup();
-    props.dispatch(fetchFeaturePermissions(getFeatureId(`/payments/${props.walletCode}`), props.userConfig.id))
-    if (props?.match?.path === `/payments/${props.walletCode}`) {
+    props.dispatch(fetchFeaturePermissions(getFeatureId(`/payments`), props.userConfig.id))
+    if (props?.match?.path === `/payments`) {
       let key = "1"
       props.dispatch(setHeaderTab(key));
     }

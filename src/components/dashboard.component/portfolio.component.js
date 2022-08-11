@@ -5,6 +5,7 @@ import { getData } from './api';
 import NumberFormat from 'react-number-format';
 import Loader from '../../Shared/loader';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { dashboardTransactionSub } from '../../utils/pubsub';
 import TransactionsHistory from "../transactions.history.component";
 
@@ -211,4 +212,4 @@ const connectStateToProps = ({ userConfig }) => {
 const connectDispatchToProps = dispath => {
     return { dispath }
 }
-export default connect(connectStateToProps, connectDispatchToProps)(Portfolio);
+export default connect(connectStateToProps, connectDispatchToProps)(withRouter(Portfolio));
