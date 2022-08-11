@@ -7,6 +7,7 @@ import QRCodeComponent from '../qr.code.component';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Loader from '../../Shared/loader';
 import apicalls from '../../api/apiCalls';
+import { getNetworkLu } from './api';
 import {
     EmailShareButton, EmailIcon,
     FacebookShareButton, FacebookIcon,
@@ -15,7 +16,13 @@ import {
     WhatsappShareButton, WhatsappIcon
 } from "react-share";
 class QRScan extends Component {
-    state = {}
+    constructor(props) {
+        super(props);
+        this.state = {
+            error: '',
+            netWorkData: []
+        }
+    }
     success = () => {
         message.success('Address was copied!');
     };
@@ -30,6 +37,16 @@ class QRScan extends Component {
             "Type": 'User', "Action": 'Deposit Crypto Scan page view', "Username": this.props.userProfile.userName, "customerId": this.props.userProfile.id, "Feature": 'Deposit Crypto', "Remarks": "Deposit Crypto Scan page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Crypto'
         });
     }
+    getNetworkObj = async () => {
+        const response = await getNetworkLu(this.props.wallet);
+        console.log("HHHHHHHHH", response)
+        if (response.ok) {
+            this.setState({ netWorkData: response.data });
+        } else {
+            this.setState({ error: response.data });
+        }
+    }
+
     get walletAddress() {
         return this.props?.sendReceive?.depositWallet?.walletAddress
     }
@@ -70,7 +87,7 @@ class QRScan extends Component {
         return (
             <div>
                 <div className="text-center f-12 text-white custom-crypto-btns">
-                    <Button className="mr-16 cutom-bnt text-white-30">TRC20</Button>
+                    <Button className="mr-16 cutom-bnt text-white-30" onClick={this.getNetworkObj}>TRC20</Button>
                     <Button className="mr-16 cutom-bnt text-white-30">ERC20</Button>
                     <Button className="mr-16 cutom-bnt text-white-30">-----</Button>
                 </div>
