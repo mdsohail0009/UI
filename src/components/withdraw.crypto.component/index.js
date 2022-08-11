@@ -29,7 +29,7 @@ const WithdrawCrypto = ({ dispatch, userProfile, sendReceive }) => {
                 
                 <div className="crypto-details d-flex">
                     <div>
-                    <span className="d-flex align-center">
+                    <span className="d-flex align-center mb-4">
                     <Image preview={false} src={wallet.impageWhitePath}/>
                     <div className="crypto-percent">{wallet.percentage}<sup className="percent">%</sup></div>
                     

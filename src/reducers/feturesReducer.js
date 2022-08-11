@@ -52,7 +52,7 @@ const fetchFeatures = (app_id, customer_id) => {
                 dispatch(setSelectedFeatureMenu(_cockpit.id))
             }
             const _userConfig = store.getState().userConfig.userProfileInfo;
-            dispatch(fetchFeaturePermissions(_cockpit.id, _userConfig.id))
+            dispatch(fetchFeaturePermissions(_cockpit?.id, _userConfig?.id))
         } else {
             dispatch(setData({ data: null, loading: false, error: response.data?.message || response.data || response.originalError.message, key: "features" }));
         };

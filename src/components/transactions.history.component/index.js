@@ -43,7 +43,6 @@ componentDidMount() {
   }
 
   loadPermissions = () => {
-		debugger
 		if (this.props.transactionsPermissions) {
 			clearInterval(this.permissionsInterval);
 			let _permissions = {};
@@ -54,18 +53,22 @@ componentDidMount() {
 		}
 	}
   gridColumns = [
-    {field: "date", title: "Date", filter: true, isShowTime: true, filterType: "date", locked: true, width: 210,
+    {field: "date", title: "Date", filter: true, filterType: "date", locked: true, width: 210,
 },
-    { field: "docType", title: "Transaction", filter: true, width: 120, },
-    { field: "fromWalletCode", title: "From Wallet Code", filter: true, width: 180, },
-    { field: "fromValue", title: "From Value", width: 150, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
-    { field: "toWalletCode", title: "To Wallet Code", filter: true, width: 150 },
-    { field: "toValue", title: "To Value", width: 150, filter: true, footerCell: true, dataType: 'number', filterType: "numeric"},
-    { field: "fromValueBefore", title: "From Before Value", width: 180, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
-    { field: "fromValueAfter", title: "From After Value", width: 180, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
-    { field: "toValueBefore", title: "To Before Value", width: 180, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
-    { field: "toValueAfter", title: "To After Value", width: 150, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
-    { field: "status", title: "State", filter: true, width: 150 },
+    { field: "docType", title: "Transaction", filter: true,  },
+    { field: "wallet", title: "Wallet", filter: true,  },
+    { field: "debit", title: "Debit",  filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
+    { field: "credit", title: "Credit", filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
+    { field: "state", title: "State", filter: true,  },
+    // { field: "fromWalletCode", title: "From Wallet Code", filter: true, width: 180, },
+    // { field: "fromValue", title: "From Value", width: 150, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
+    // { field: "toWalletCode", title: "To Wallet Code", filter: true, width: 150 },
+    // { field: "toValue", title: "To Value", width: 150, filter: true, footerCell: true, dataType: 'number', filterType: "numeric"},
+    // { field: "fromValueBefore", title: "From Before Value", width: 180, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
+    // { field: "fromValueAfter", title: "From After Value", width: 180, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
+    // { field: "toValueBefore", title: "To Before Value", width: 180, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
+    // { field: "toValueAfter", title: "To After Value", width: 150, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
+   
 
   ]
   TransactionSearch = async () => {
@@ -170,6 +173,7 @@ componentDidMount() {
                 <Form.Item  className="input-label mb-0" label="Wallet">
                   <Select
                     value = {this.state.searchObj.currency}
+                   // defaultValue={this.state.searchObj.currency}
                     className="cust-input w-100 bgwhite"
                     dropdownClassName="select-drpdwn"
                     showSearch

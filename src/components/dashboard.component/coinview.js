@@ -210,8 +210,8 @@ componentWillUnmount(){
                             <ul className="m-0 pl-0">
                                 <li onClick={() => this.showBuyDrawer(coinData, "buy")} className="c-pointer"><div><span className="icon md buy" /></div>BUY</li>
                                 <li onClick={() => this.showBuyDrawer(coinData, "sell")} className="c-pointer"><div><span className="icon md sell" /></div>SELL</li>
-                                <li onClick={() => this.showSendReceiveDrawer(1, coinData)} value={1} className="c-pointer"><div><span className="icon md deposit" /></div>DEPOSIT</li>
-                                <li onClick={() => this.showSendReceiveDrawer(2, coinData)} value={2} className="c-pointer"><div><span className="icon md withdraw" /></div>WITHDRAW</li>
+                                <li onClick={() => this.showSendReceiveDrawer(1, coinData)} value={1} className="c-pointer"><div><span className="icon md deposit" /></div>RECEIVE</li>
+                                <li onClick={() => this.showSendReceiveDrawer(2, coinData)} value={2} className="c-pointer"><div><span className="icon md withdraw" /></div>SEND</li>
                             </ul>
                         </> : <div className="text-center"><Spin className="text-center"/></div>}
                     </div>

@@ -75,6 +75,7 @@ class YourPortfolio extends Component {
             buyDrawer: true
         })
     }
+   
     showSendReceiveDrawer = async(e, value) => {
       let selectedObj = { ...value };
       selectedObj.coin = selectedObj.coin?.toUpperCase();
@@ -151,16 +152,32 @@ class YourPortfolio extends Component {
       })
   }
   showTransactionDrawer =(item) => {
+    if (!this.props?.userProfile?.isKYC) {
+      this.props.history.push("/notkyc");
+      return;
+  }
+  if(!this.props?.twoFA?.isEnabled){
+      this.props.history.push("/enabletwofactor");
+      return;
+  }
+  if (this.props?.userProfile?.isDocsRequested) {
+      this.props.history.push("/docnotices");
+      return;
+  }
+  if (!this.props?.userProfile?.isKYC) {
+      this.props.history.push("/notkyc");
+      return;
+  }
     this.setState({...this.state, transactions: true, selectedWallet: item?.coin});
 }
      menuBar = (item) => (
       <Menu>
           <ul className="pl-0 drpdwn-list">
               <li  onClick={() =>  this.showSendReceiveDrawer(1, item)}>
-                  <Link value={1} className="c-pointer">Deposit</Link>
+                  <Link value={1} className="c-pointer">Receive</Link>
               </li>
               <li onClick={() => this.showSendReceiveDrawer(2, item)}>
-                  <Link  value={2} className="c-pointer">Withdraw</Link>
+                  <Link  value={2} className="c-pointer">Send</Link>
               </li>
               <li onClick={() => this.showTransactionDrawer(item)}>
                 {/* <TransactionsHistory

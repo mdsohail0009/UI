@@ -64,24 +64,24 @@ class CryptoWithDrawWallet extends Component {
 
     }
 
-    clickMinamnt(type) {
-        let usdamnt; let cryptoamnt;
-        let obj = Object.assign({}, this.props.sendReceive?.cryptoWithdraw?.selectedWallet)
-        if (type === 'half') {
-            usdamnt = (obj.coinValueinNativeCurrency / 2).toString();;
-            cryptoamnt = (obj.coinBalance / 2)
-            this.setState({ ...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt, amountPercentageType: 'half' });
-            this.eleRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
-        } else if (type === 'all') {
-            usdamnt = obj.coinValueinNativeCurrency ? obj.coinValueinNativeCurrency : 0;
-            cryptoamnt = obj.coinBalance ? obj.coinBalance : 0;
-            this.setState({ ...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt, amountPercentageType: 'all' });
-            this.eleRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
-        } else {
-            this.setState({ ...this.state, CryptoAmnt: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, amountPercentageType: 'min' });
-            this.eleRef.current.changeInfo({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 });
-        }
-    }
+    // clickMinamnt(type) {
+    //     let usdamnt; let cryptoamnt;
+    //     let obj = Object.assign({}, this.props.sendReceive?.cryptoWithdraw?.selectedWallet)
+    //     if (type === 'half') {
+    //         usdamnt = (obj.coinValueinNativeCurrency / 2).toString();;
+    //         cryptoamnt = (obj.coinBalance / 2)
+    //         this.setState({ ...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt, amountPercentageType: 'half' });
+    //         this.eleRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
+    //     } else if (type === 'all') {
+    //         usdamnt = obj.coinValueinNativeCurrency ? obj.coinValueinNativeCurrency : 0;
+    //         cryptoamnt = obj.coinBalance ? obj.coinBalance : 0;
+    //         this.setState({ ...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt, amountPercentageType: 'all' });
+    //         this.eleRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
+    //     } else {
+    //         this.setState({ ...this.state, CryptoAmnt: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, amountPercentageType: 'min' });
+    //         this.eleRef.current.changeInfo({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 });
+    //     }
+    // }
     handlePreview = () => {
         debugger
         const amt = parseFloat(this.state.CryptoAmnt);
@@ -224,9 +224,8 @@ this.setState({...this.state,customerRemarks:data})
                         
                         <div className="crypto-details d-flex">
                         <div>
-                            <span className="d-flex align-center">
-                                <Image preview={false} src={selectedWallet.impageWhitePath}/>
-                                
+                            <span className="d-flex align-center mb-4">
+                                <Image preview={false} src={selectedWallet.impageWhitePath}/>                                
                                 <Text className="crypto-percent">{selectedWallet?.percentage}<sup className="percent fw-700">%</sup></Text>
                             </span>
                             <Text className="fs-24 text-purewhite ml-4">{selectedWallet?.coinFullName}</Text>
@@ -251,13 +250,13 @@ this.setState({...this.state,customerRemarks:data})
                             this.setState({...this.state,loading:val})
                         }}
                         onChange={({ localValue, cryptoValue, isSwaped, isInputChange }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped, amountPercentageType: isInputChange ? this.state.amountPercentageType : "" }) }} customerId={this.props.userProfile.id} screenName='withdrawcrypto' />
-                    <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills" onChange={({ target: { value } }) => {
+                    {/* <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills" onChange={({ target: { value } }) => {
                         this.clickMinamnt(value)
                     }}>
                         <Translate value="min" content="min" component={Radio.Button} />
                         <Translate value="half" content="half" component={Radio.Button} />
                         <Translate value="all" content="all" component={Radio.Button} />
-                    </Radio.Group>
+                    </Radio.Group> */}
 
                     <Form>
                         <Form.Item
@@ -271,6 +270,11 @@ this.setState({...this.state,customerRemarks:data})
 
                                    disabled={true} onChange={({ currentTarget: { value } }) => { this.setState({ ...this.state, walletAddress: value }); this.props.clearAddress(null) }}
                                     maxLength="250" />
+                                <Tooltip placement="top" title="Send to new Wallet" style={{ flexGrow: 1 }}>
+                                    <div className="new-add c-pointer" style={{borderRadius:'0'}} onClick={() => this.selectCrypto()}>
+                                        <span className="icon md diag-arrow d-block c-pointer"></span>
+                                    </div>
+                                </Tooltip>
                                 <Tooltip placement="top" title={<span>{apicalls.convertLocalLang('SelectAddress')}</span>} style={{ flexGrow: 1 }}>
                                     <div className="new-add c-pointer" onClick={() => this.selectCrypto()}>
                                         <span className="icon md diag-arrow d-block c-pointer"></span>

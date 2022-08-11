@@ -108,7 +108,6 @@ class BuySummary extends Component {
           },
         });
       } else {
-        debugger;
 
         this.setState({
           ...this.state,
@@ -140,7 +139,6 @@ class BuySummary extends Component {
     }
   };
   loadPermissions = () => {
-		debugger
 		if (this.props.buySellPermissions) {
 			clearInterval(this.permissionsInterval);
 			let _permissions = {};
