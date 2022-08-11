@@ -822,7 +822,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
 }
 @media (min-width: 576px){
     .fiat-total{display: flex;justify-content: space-between;text-align: center;}
-    .crypto-percent{font-size: 40px;line-height: normal;}
+    .crypto-percent{font-size: 26px;line-height: normal;}
     .crypto-percent .percent{font-size: 20px;margin-left: 6px;}
 }
 @media (max-width: 767px){
@@ -886,7 +886,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .customaudit-select{margin-bottom: 16px;}
     .footer-links{text-align: center;}
     .enter-val-container input{font-size: 16px !important;padding: 0px 5px !important;}
-    .enter-val-container.ss input{width: 70%;}
+    .enter-val-container.swap-com input{width: 70%;}
     .ant-tabs > .ant-tabs-nav .ant-tabs-nav-more{display: none;}
     .ant-popover-inner-content div:hover{padding: 8px 22px !important;display: flex;align-items: center;}
     .tlv-logo{height:40px;}
@@ -971,7 +971,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
 }
 @media (min-width: 768px){
     .tlv-header{height: 96px !important;border-radius: 0 !important;}
-    .crypto-card .ant-card-body{padding: 16px;height: 88px;}
+    .crypto-card .ant-card-body{padding: 16px 24px;height: 88px;}
     .tlv-header{height: 100px;align-items: center; justify-content: space-between;padding: 15px 16px 15px !important;border-radius: 0 0 30px 30px;}
     .markets-panel{margin-right: 16px;}
     .megamenu-label{margin-top: 0px;font-size: 33px !important;}
@@ -1338,7 +1338,8 @@ input[type=number]::-webkit-outer-spin-button {
     color: #fff;
 }
 .custom-crypto-btns .cutom-bnt{background-color: transparent;border-radius: 6px;}
-.ss{display: flex;
+.intertrans{display: flex;
     justify-content: center;
     align-items: center;
     height: 478px;}
+.crypto-card .ant-card-body{width: 100%;}

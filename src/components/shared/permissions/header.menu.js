@@ -82,8 +82,7 @@ class MobileHeaderMenu extends Component {
                 component={Menu.Item}
                 className="list-item"
             />
-            {data?.map((item, indx) => <>
-            {item.label === "Send/Receive"  || item.label === "Trade"&&
+            {data?.map((item, indx) => item.menuitemType === "dropdown" ?
                 <><Translate
                     content={item.content}
                     component={Menu.Item}
@@ -99,17 +98,14 @@ class MobileHeaderMenu extends Component {
                             </li>)}
 
                         </ul>
-                    </Menu></>}
-                {/* : item.path !== "/addressBook" && 
-                <Translate
+                    </Menu></>
+                : item.key === "trade" && <Translate
                     content={item.content}
                     component={Menu.Item}
                     key={indx}
                     onClick={() => onMenuItemClick(item.key, item)}
                     className="list-item"
-        />*/}
-        </>
-                )}
+                />)}
         </Menu>
         </>
     }
@@ -119,13 +115,13 @@ class HeaderPermissionMenu extends Component {
     state = {
         visbleProfileMenu: false,
         drawerMenu: {
-            buySell: false,
+            trade: false,
             balances: false,
             transactions: false,
             depositWithdraw: false,
             transfer: false,
-            sendReceive: false,
-            buyFiat: false,
+            sendreceive: false,
+            sendreceivefiat: false,
             wallets: false,
             payments: false,
             auditLogs: false,
@@ -157,7 +153,7 @@ class HeaderPermissionMenu extends Component {
         if (menuItem.path === "/modal") {
             if (menuItem.dispatchStep) {
                 switch (menuKey) {
-                    case "buySell":
+                    case "trade":
                         this.props.dispatch(setStep(menuItem.dispatchStep));
                         break;
                     case "transfer":
@@ -166,15 +162,18 @@ class HeaderPermissionMenu extends Component {
                     case "sendReceive":
                         this.props.dispatch(sendSetStep("step1"));
                         break;
-                    case "buyFiat":
+                    case "sendreceivefiat":
                         this.props.dispatch(byFiatSetStep("step1"));
                         this.props.dispatch(setWithdrawfiatenaable(false));
+                        break;
+                    case "sendreceivecrypto":
+                        this.props.dispatch(sendSetStep("step1"));
                         break;
                     default:
                         break;
                 }
             }
-            this.setState({ ...this.state, drawerMenu: { ...this.drawerMenu, [menuKey]: true } });
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true } });
         } else if (menuItem.path) {
             this.props.history.push(menuItem.path);
         }
@@ -189,7 +188,7 @@ class HeaderPermissionMenu extends Component {
         }
     }
     onMenuItemClick = async (menuKey, menuItem) => {
-        const perIgnoreLst = ["notifications", "auditLogs", "transactions"]
+        const perIgnoreLst = ["notifications", "auditLogs"]
         if (perIgnoreLst.includes(menuKey)) { this.navigate(menuKey, menuItem) }
         else {
             if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled) {
@@ -231,7 +230,7 @@ class HeaderPermissionMenu extends Component {
             errorMessage: null
         });
         this.props.clearSwapfullData();
-        this.setState({ ...this.state, drawerMenu: { ...this.drawerMenu, [key]: false } });
+        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [key]: false } });
     }
     readNotification() {
         let isRead = apicalls.encryptValue("true", this.props.userConfig?.sk);
@@ -300,18 +299,6 @@ class HeaderPermissionMenu extends Component {
                         onClick={() => this.userProfile()}
                     />
                     <ul className="pl-0 drpdwn-list">
-                    <li
-                            onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/modal" })}
-                        >
-                            <Link>
-                                <Translate
-                                    content="menu_transactions_history"
-                                    component={Text}
-                                    className="text-white-30"
-                                />
-                                <span className="icon md rarrow-white" />
-                            </Link>
-                        </li>
                         <li
                         >
                             <Popover placement="left" content={<><div onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/6120197cdc204d9ddb882e4d")}>
@@ -396,8 +383,7 @@ class HeaderPermissionMenu extends Component {
                     this.props.dispatch(setHeaderTab(key.key));
                 }}
             >
-                {data?.map((item, indx) => <>{(item.label === "Send/Receive"  || item.label === "Trade") && 
-                <Dropdown
+                {data?.map((item, indx) => item.menuitemType === "dropdown" ? <Dropdown
                     onClick={() =>
                         this.setState({ ...this.state, visbleProfileMenu: false })
                     }
@@ -424,17 +410,13 @@ class HeaderPermissionMenu extends Component {
                         key={indx}
                         className="mr-16"
                     />
-                </Dropdown> 
-    }
-                {/*: item.path !== "/addressBook" && <Translate
+                </Dropdown> : item.key === "trade" && <Translate
                     content={item.content}
                     component={Menu.Item}
                     key={item.key}
                     onClick={() => this.onMenuItemClick(item.key, item)}
                     className="list-item"
-                    />*/}
-                    
-                    </>)}
+                />)}
                 <Menu.Item
                     key="9"
                     className="notification-conunt"
@@ -492,7 +474,6 @@ class HeaderPermissionMenu extends Component {
                         )}
                     </Menu.Item>
                 </Dropdown>
-                
             </Menu>
             {isShowSider && <Sider trigger={null}
                 collapsible
@@ -519,12 +500,12 @@ class HeaderPermissionMenu extends Component {
                 onClose={() => this.closeDrawer("wallets")}
             />
             <BuySell
-                showDrawer={this.state.drawerMenu.buySell}
-                onClose={() => this.closeDrawer("buySell")}
+                showDrawer={this.state.drawerMenu.trade}
+                onClose={() => this.closeDrawer("trade")}
             />
             <SendReceive
-                showDrawer={this.state.drawerMenu.sendReceive}
-                onClose={() => this.closeDrawer("sendReceive")}
+                showDrawer={this.state.drawerMenu.sendreceivecrypto}
+                onClose={() => this.closeDrawer("sendreceivecrypto")}
             />
             <SwapCrypto
                 swapRef={(cd) => (this.child = cd)}
@@ -537,8 +518,8 @@ class HeaderPermissionMenu extends Component {
                 onClose={() => this.closeDrawer("transfer")}
             />
             <MassPayment
-                showDrawer={this.state.drawerMenu.buyFiat}
-                onClose={() => this.closeDrawer("buyFiat")}
+                showDrawer={this.state.drawerMenu.sendreceivefiat}
+                onClose={() => this.closeDrawer("sendreceivefiat")}
             />
             {this.state.drawerMenu.transactions && (
                 <TransactionsHistory

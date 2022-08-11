@@ -176,18 +176,22 @@ class SelectSellCrypto extends Component {
         return (
             <>
                 <div ref={this.myRef}>  {this.state?.errorMessage !== null && this.state?.errorMessage !== '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="error" message={apicalls.convertLocalLang('sellCrypto')} description={this.state?.errorMessage} />}
-                    {coinDetailData && <Card className="crypto-card select mb-36" bordered={false}>
-                        <span className="d-flex align-center">
-                            <Image preview={false} src={coinDetailData.impageWhitePath}/>
-                            <Text className="fs-24 textc-white crypto-name ml-8">{coinDetailData.coinFullName}</Text>
-                        </span>
+                    {coinDetailData && <Card className="crypto-card select mb-36 d-flex" bordered={false}>
+                        <div className='d-flex justify-content'>
+                        <div>
+                            <span className="d-flex align-center mb-4">
+                                <Image preview={false} src={coinDetailData.impageWhitePath}/>
+                                <Text className="crypto-percent textc-white">{coinDetailData.percentage}<sup className="percent textc-white">%</sup></Text>
+                            </span>
+                            <Text className="fs-24 textc-white crypto-name ml-4">{coinDetailData.coinFullName}</Text>
+                        </div>
                         <div className="crypto-details">
-                            <Text className="crypto-percent textc-white fw-700">{coinDetailData.percentage}<sup className="percent textc-white fw-700">%</sup></Text>
+                            
                             <div className="fs-16 textc-white fw-200 crypto-amount">
                                 <Currency prefix={""} defaultValue={coinDetailData.coinBalance} suffixText={coinDetailData.coin} />
                                 <Currency prefix={"$ "} defaultValue={coinDetailData.coinValueinNativeCurrency} suffixText="" />
                             </div>
-                        </div>
+                        </div></div>
                     </Card>}
                     <LocalCryptoSwapperCmp
                         cryptoAmt={this.state.CryptoAmnt}
