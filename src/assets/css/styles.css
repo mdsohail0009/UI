@@ -169,7 +169,7 @@ border-radius: 5px;}
 .icon.sm.rightthemearrow{background-position: -149px -4px;}
 .icon.sm.add{background-position:-32px -40px;}
 .icon.sm.right-angle{background-position:-510px -6px;}
-.icon.sm.search-angle{background-position:-564px -7px;}
+.icon.sm.search-angle{background-position:-561px -8px;}
 .icon.md.diag-arrow{background-position:-111px -36px;}
 .icon.md.leftarrow{background-position:-376px -1px}
 .icon.md.rarrow-white{background-position:-217px -1px;}
@@ -1331,7 +1331,7 @@ input[type=number]::-webkit-outer-spin-button {
 .secureDropdown .ant-menu-title-content{line-height: 23px;}
 .ant-result-title, .ant-result-subtitle{color: var(--textWhite);}
 .ant-select-item .ant-select-option-active, .ant-select-item-option-content, .ant-select-selection-item{color: var(--textWhite);}
-.ant-image-img{width: 70%; margin-right: 0;}
+.crypto-card .ant-image-img{width: 70%; margin-right: 0;}
 .with-min{position: absolute;top: 52px;right: 46px;color: var(--bgWhite);}
 .with-max{position: absolute;top: 52px;right: 0;color: var(--bgWhite);}
 .crypto-list-custom li {
