@@ -19,6 +19,6 @@ const updateSecurity = (obj) => {
     return apiClient.put(ApiControllers.master + "UpdateSecurity", obj);
 };
 const getNetworkLu = (wallet) => {
-    return apiClient.get(ApiControllers.common + "NetWorkLU", wallet);
+    return apiClient.get(ApiControllers.common + `NetWorkLU/${wallet}`);
 }
 export { getCryptoWithDrawWallets, withDrawCrypto, getWithdrawmemberCrypto, handleNewExchangeAPI, handleFiatConfirm, updateSecurity, getNetworkLu }

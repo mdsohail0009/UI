@@ -20,7 +20,8 @@ class QRScan extends Component {
         super(props);
         this.state = {
             error: '',
-            netWorkData: []
+            netWorkData: [],
+            isnetworktrigger:false
         }
     }
     success = () => {
@@ -28,6 +29,7 @@ class QRScan extends Component {
     };
     componentDidMount() {
         this.trackevent();
+        
     }
     componentWillUnmount() {
         this.props.dispatch(setWalletAddress(null))
@@ -38,7 +40,8 @@ class QRScan extends Component {
         });
     }
     getNetworkObj = async () => {
-        const response = await getNetworkLu(this.props.wallet);
+        this.setState({isnetworktrigger:true});
+        const response = await getNetworkLu(this.props?.sendReceive?.depositWallet?.walletCode);
         console.log("HHHHHHHHH", response)
         if (response.ok) {
             this.setState({ netWorkData: response.data });
@@ -84,12 +87,18 @@ class QRScan extends Component {
         if (!this.props?.sendReceive?.depositWallet?.walletAddress) {
             return <Loader />
         }
+        const {netWorkData, isnetworktrigger}=this.state;
+        if(!netWorkData && !isnetworktrigger && this.props?.sendReceive?.depositWallet){
+            this.getNetworkObj()
+        }
         return (
             <div>
                 <div className="text-center f-12 text-white custom-crypto-btns">
-                    <Button className="mr-16 cutom-bnt text-white-30" onClick={this.getNetworkObj}>TRC20</Button>
-                    <Button className="mr-16 cutom-bnt text-white-30">ERC20</Button>
-                    <Button className="mr-16 cutom-bnt text-white-30">-----</Button>
+                    {netWorkData&& netWorkData.map((network)=>{
+                        return <>
+                        <Button className="mr-16 cutom-bnt text-white-30">{network.code}</Button>
+                        </>
+                    })}
                 </div>
                 <div className="scanner-img">
                     <QRCodeComponent value={this.props?.sendReceive?.depositWallet?.walletAddress} size={150} />
