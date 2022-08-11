@@ -101,7 +101,6 @@ class PaymentDetails extends Component {
     }
   };
   getPayments = async () => {
-    debugger
     this.setState({ ...this.state, loading: true });
     if (this.props.match.params.id === "00000000-0000-0000-0000-000000000000") {
       let response = await getPaymentsData(
