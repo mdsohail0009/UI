@@ -169,7 +169,7 @@ border-radius: 5px;}
 .icon.sm.rightthemearrow{background-position: -149px -4px;}
 .icon.sm.add{background-position:-32px -40px;}
 .icon.sm.right-angle{background-position:-510px -6px;}
-.icon.sm.search-angle{background-position:-561px -8px;}
+.icon.sm.search-angle{background-position:-561px -8px; margin-top: -3px}
 .icon.md.diag-arrow{background-position:-111px -36px;}
 .icon.md.leftarrow{background-position:-376px -1px}
 .icon.md.rarrow-white{background-position:-217px -1px;}
@@ -1343,3 +1343,5 @@ input[type=number]::-webkit-outer-spin-button {
     align-items: center;
     height: 478px;}
 .crypto-card .ant-card-body{width: 100%;}
+.custom-spin .ant-spin-dot-spin{width: 2rem;height: 2rem;}
+.custom-spin .ant-spin-dot-spin i{width: 16px;height: 16px;}

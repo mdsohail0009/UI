@@ -142,14 +142,14 @@ const getCurrencyLookup = async () => {
   }
   const onActionClick = (key) => {
     const actions = {
-      add: showNewBenificiary,
-      "Add Payee": addPayment,
+     "Add Payee": showNewBenificiary,
+      add: addPayment,
       edit: paymentsEdit,
     };
   actions[key]();
   };
   if(loading){
-    return <Spin loading={true}></Spin>
+    return <div className='custom-spin text-center mt-36'><Spin loading={true}></Spin></div>
   }else{
   return (
     <>
@@ -202,7 +202,7 @@ const getCurrencyLookup = async () => {
                   ))}
                 </Select>
           <span className="mb-right">
-          <ActionsToolbar featureKey="/payments" onActionClick={(key) => onActionClick(key)}/>
+          <ActionsToolbar featureKey="billpayments" onActionClick={(key) => onActionClick(key)}/>
           </span>
           {/* <div className="cust-btns visible-mobile mb-16" style={{float:'right'}}>
             <ul
