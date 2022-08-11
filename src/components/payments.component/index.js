@@ -14,6 +14,8 @@ import ActionsToolbar from "../toolbar.component/actions.toolbar";
 import { fetchFeaturePermissions } from "../../reducers/feturesReducer";
 import { getFeatureId } from "../shared/permissions/permissionService";
 import { getCurrencyLu} from './api'
+import {getFeaturePermissionsByKey} from '../shared/permissions/permissionService'
+
 const { Title, Text, Paragraph } = Typography;
 const { Option } = Select;
 const Payments = (props) => {
@@ -28,6 +30,7 @@ const Payments = (props) => {
   const [errorWarning,setErrorWarning]=useState(null)
   const [ currencylu,setCurrencylu]=useState([]);
   const [walletType,setWalletType]=useState(props.match.params.code);
+  const [loading,setLoading] = useState(true)
   const paymentsView = (prop) => {
     props.history.push(`/payments/${prop.dataItem.id}/view`)
   };
@@ -39,17 +42,20 @@ const Payments = (props) => {
     }
 
   };
-  useEffect(() => {
+  const loadInfo = () =>{
     getCurrencyLookup();
     props.dispatch(fetchFeaturePermissions(getFeatureId(`/payments`), props.userConfig.id))
     if (props?.match?.path === `/payments`) {
       let key = "1"
       props.dispatch(setHeaderTab(key));
     }
-
+    setLoading(false)
+  }
+  useEffect(() => {
+    getFeaturePermissionsByKey('billpayments',loadInfo)
   }, [])
   useEffect(()=>{
-    gridRef.current.refreshGrid();
+    gridRef.current?.refreshGrid();
   },[walletType])
   const gridColumns = [
     {
@@ -142,6 +148,9 @@ const getCurrencyLookup = async () => {
     };
   actions[key]();
   };
+  if(loading){
+    return <Spin loading={true}></Spin>
+  }else{
   return (
     <>
       <div className="main-container">
@@ -272,6 +281,7 @@ const getCurrencyLookup = async () => {
       </div>
     </>
   )
+        }
 }
 
 
