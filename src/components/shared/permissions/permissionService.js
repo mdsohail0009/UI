@@ -1,6 +1,5 @@
 import { fetchFeaturePermissions } from "../../../reducers/feturesReducer";
 import { store } from "../../../store"
-import { KEY_URL_MAP } from "./config";
 
 const getFeatureId = (path) => {
     const { menuItems: { features } } = store.getState();
@@ -15,7 +14,7 @@ const getFeatureWithKeyId = (key) => {
 const getFeaturePermissionsByKey = (key,callback) => {
     const {userConfig:{userProfileInfo},menuItems:{featurePermissions}}=store.getState();
     const fid = getFeatureWithKeyId(key);
-    if(featurePermissions[KEY_URL_MAP[key]]){
+    if(featurePermissions[key]){
         callback();
     }else{
         store.dispatch(fetchFeaturePermissions(fid,userProfileInfo.id,callback));

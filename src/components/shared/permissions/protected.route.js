@@ -2,12 +2,10 @@ import { Route } from "react-router-dom"
 import { fetchFeaturePermissions } from "../../../reducers/feturesReducer";
 import { store } from "../../../store"
 import AccessDenied from "./access.denied";
-import { KEY_URL_MAP } from "./config";
-
 const ProtectedRoute = ({ component: Component, ...rest }) => {
     const { menuItems: { features, featurePermissions }, userConfig: { userProfileInfo } } = store.getState();
     return <Route {...rest} render={(props) => {
-        if (featurePermissions[KEY_URL_MAP][props.path]) {
+        if (featurePermissions[rest.key]) {
 
         } else {
             const featureId = features.data?.find(feature => feature.key === rest.key)?.id;
