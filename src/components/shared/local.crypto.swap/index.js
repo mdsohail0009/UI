@@ -1,8 +1,10 @@
 import { Input, Spin } from 'antd';
 import Text from 'antd/lib/typography/Text';
-import React, { forwardRef, useImperativeHandle, useState } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { convertCurrencyDuplicate } from '../../buy.component/buySellService';
+import { handleSendFetch, setStep, setSubTitle, setWithdrawcrypto, setAddress } from '../../../reducers/sendreceiveReducer';
 import NumberFormat from 'react-number-format';
+import { connect } from 'react-redux';
 const LocalCryptoSwapper = (props, ref) => {
     const { localAmt = 0, cryptoAmt = 0, localCurrency = "USD", cryptoCurrency, onChange, sellData, showSwap = true, selectedCoin = null, showConvertion = true } = props;
     const [isSwaped, setSwapped] = useState(props.isSwap || false);
@@ -15,6 +17,7 @@ const LocalCryptoSwapper = (props, ref) => {
         "USD": "$",
         "GBP": "£"
     });
+
     useImperativeHandle(ref, () => ({
         changeInfo(info) {
             setInputChange(true);
@@ -63,24 +66,20 @@ const LocalCryptoSwapper = (props, ref) => {
 
 
     }
-   const  clickAmt=(type)=> {
-        let usdamnt; let cryptoamnt;
-        let obj = Object.assign({}, this.props.sendReceive?.cryptoWithdraw?.selectedWallet)
-        if (type === 'half') {
-            usdamnt = (obj.coinValueinNativeCurrency / 2).toString();;
-            cryptoamnt = (obj.coinBalance / 2)
-            this.setState({ ...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt, amountPercentageType: 'half' });
-            this.eleRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
-        } else if (type === 'all') {
-            usdamnt = obj.coinValueinNativeCurrency ? obj.coinValueinNativeCurrency : 0;
-            cryptoamnt = obj.coinBalance ? obj.coinBalance : 0;
-            this.setState({ ...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt, amountPercentageType: 'all' });
-            this.eleRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
-        } else {
-            this.setState({ ...this.state, CryptoAmnt: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, amountPercentageType: 'min' });
-            this.eleRef.current.changeInfo({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 });
-        }
-    }
+//    const  clickAmt=(type)=> {
+//     debugger
+//         let usdamnt; let cryptoamnt;
+//         let obj = Object.assign({}, this.props.sendReceive?.cryptoWithdraw?.selectedWallet)
+//       //if (type === 'all') {
+//         //     usdamnt = obj.coinValueinNativeCurrency ? obj.coinValueinNativeCurrency : 0;
+//         //     cryptoamnt = obj.coinBalance ? obj.coinBalance : 0;
+//         //     this.setState({ ...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt, amountPercentageType: 'all' });
+//         //     this.eleRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
+//         // } else {
+//         //     this.setState({ ...this.state, CryptoAmnt: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, amountPercentageType: 'min' });
+//         //     this.eleRef.current.changeInfo({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 });
+//         // }
+//     }
     return <div className="p-relative">
         <div className="enter-val-container common-withdraow withdraw-crypto">
             <Text className="fs-30 fw-400 text-white-30 text-yellow mr-4">{!isSwaped ? localCurrency : cryptoCurrency}</Text>
@@ -112,11 +111,11 @@ const LocalCryptoSwapper = (props, ref) => {
                 allowNegative={false}
             />
             <div class="minmax ">
-                <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn with-min" onChange={()=>clickAmt("min")}>
-                <span >Min</span>
+                <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn with-min" onClick={() => props.clickAmt("min")}>
+                    <span >Min</span>
                 </button>
-            <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn with-max" onChange={()=>clickAmt("max")}>
-                <span>Max</span>
+                <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn with-max" onClick={() => props.clickAmt("all")}>
+                    <span>Max</span>
                 </button>
                 </div>
             {/* <div className='with-min'>Min</div>
@@ -133,4 +132,22 @@ const LocalCryptoSwapper = (props, ref) => {
     </div>
 
 }
-export default forwardRef(LocalCryptoSwapper);
+const connectStateToProps = ({ sendReceive, userConfig, addressBookReducer }) => {
+    return {addressBookReducer, sendReceive, userProfile: userConfig.userProfileInfo }
+}
+const connectDispatchToProps = dispatch => {
+    return {
+        // changeStep: (stepcode) => {
+        //     dispatch(setAddressStep(stepcode))
+        // },
+        changeStep: (stepcode) => {
+            dispatch(setStep(stepcode))
+        },
+        clearAddress: (stepcode) => {
+            dispatch(setAddress(stepcode))
+        },
+        dispatch
+    }
+}
+//export default connect(connectStateToProps, connectDispatchToProps)(LocalCryptoSwapper);
+ export default forwardRef(LocalCryptoSwapper);
