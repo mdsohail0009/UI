@@ -63,6 +63,24 @@ const LocalCryptoSwapper = (props, ref) => {
 
 
     }
+   const  clickAmt=(type)=> {
+        let usdamnt; let cryptoamnt;
+        let obj = Object.assign({}, this.props.sendReceive?.cryptoWithdraw?.selectedWallet)
+        if (type === 'half') {
+            usdamnt = (obj.coinValueinNativeCurrency / 2).toString();;
+            cryptoamnt = (obj.coinBalance / 2)
+            this.setState({ ...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt, amountPercentageType: 'half' });
+            this.eleRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
+        } else if (type === 'all') {
+            usdamnt = obj.coinValueinNativeCurrency ? obj.coinValueinNativeCurrency : 0;
+            cryptoamnt = obj.coinBalance ? obj.coinBalance : 0;
+            this.setState({ ...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt, amountPercentageType: 'all' });
+            this.eleRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
+        } else {
+            this.setState({ ...this.state, CryptoAmnt: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, amountPercentageType: 'min' });
+            this.eleRef.current.changeInfo({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 });
+        }
+    }
     return <div className="p-relative">
         <div className="enter-val-container common-withdraow withdraw-crypto">
             <Text className="fs-30 fw-400 text-white-30 text-yellow mr-4">{!isSwaped ? localCurrency : cryptoCurrency}</Text>
@@ -94,10 +112,10 @@ const LocalCryptoSwapper = (props, ref) => {
                 allowNegative={false}
             />
             <div class="minmax ">
-                <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn with-min">
-                <span>Min</span>
+                <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn with-min" onChange={()=>clickAmt("min")}>
+                <span >Min</span>
                 </button>
-            <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn with-max">
+            <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn with-max" onChange={()=>clickAmt("max")}>
                 <span>Max</span>
                 </button>
                 </div>
