@@ -65,7 +65,7 @@ const fetchFeaturePermissions = (feature_id, customer_id, callback) => {
         dispatch(getData({ data: [], error: null, loading: true, key: "featurePermissions" }));
         const response = await getFeaturePermissions({ feature_id, customer_id });
         if (response.ok) {
-            dispatch(setData({ [response.data?.key || response.data?.screenName]: response.data, error: null, key: "featurePermissions", loading: false }));
+            dispatch(setData({ [response.data?.key]: response.data, error: null, key: "featurePermissions", loading: false }));
         } else {
             dispatch(setData({ data: null, loading: false, error: response.data?.message || response.data || response.originalError.message, key: "featurePermissions" }));
         }

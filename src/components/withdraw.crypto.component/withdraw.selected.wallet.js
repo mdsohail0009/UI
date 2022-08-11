@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
-import { Typography, Button, Card, Input, Radio, Alert, Row, Col, Form, Modal, Tooltip,Image } from 'antd';
+import { Typography, Button,Drawer, Card, Input, Radio, Alert, Row, Col, Form, Modal, Tooltip,Image } from 'antd';
 import { handleSendFetch, setStep, setSubTitle, setWithdrawcrypto, setAddress } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
+import {
+	setAddressStep
+} from "../../reducers/addressBookReducer";
 import Translate from 'react-translate-component';
 import Currency from '../shared/number.formate';
 import LocalCryptoSwap from '../shared/local.crypto.swap';
 import SuccessMsg from './success';
 import apicalls from '../../api/apiCalls';
 import { validateContent,validateContentRule } from '../../utils/custom.validator';
+import { processSteps as config } from "../addressbook.component/config";
+import AddressCommonCom from "../addressbook.component/addressCommonCom";
+import SelectCrypto from "../addressbook.component/selectCrypto";
+import apiCalls from "../../api/apiCalls";
+
+const { Paragraph, Text } = Typography;
+
 class CryptoWithDrawWallet extends Component {
     eleRef = React.createRef();
     myRef = React.createRef();
@@ -22,19 +32,24 @@ class CryptoWithDrawWallet extends Component {
         confirmationStep: "step1",
         isWithdrawSuccess: false,
         amountPercentageType: "min",
-        customerRemarks:null
+        customerRemarks:null,
+        fiatDrawer: false,
+        visible: false,
+        cryptoFiat: false,
     }
-    componentDidMount() {
-        if (this.props.sendReceive.withdrawCryptoObj) {
-            this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.withdrawCryptoObj?.totalValue, localValue: 0 })
-            this.setState({ ...this.state, walletAddress: this.props.sendReceive.withdrawCryptoObj.toWalletAddress, amountPercentageType: this.props.sendReceive.withdrawCryptoObj.amounttype });
-        } else {
-            this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 })
+   
+        componentDidMount() {
+            debugger
+            if (this.props.sendReceive.withdrawCryptoObj) {
+                this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.withdrawCryptoObj?.totalValue, localValue: 0 })
+                this.setState({ ...this.state, walletAddress: this.props.sendReceive.withdrawCryptoObj.toWalletAddress, amountPercentageType: this.props.sendReceive.withdrawCryptoObj.amounttype });
+            } else {
+                this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 })
+            }
+            this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 2 }))
+            this.props.dispatch(setSubTitle(apicalls.convertLocalLang('wallet_address')));
+            this.trackevent();
         }
-        this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 2 }))
-        this.props.dispatch(setSubTitle(apicalls.convertLocalLang('wallet_address')));
-        this.trackevent();
-    }
     trackevent = () => {
         apicalls.trackEvent({
             "Type": 'User', "Action": 'Withdraw Crypto Selected page view', "Username": this.props.userProfile.userName, "customerId": this.props.userProfile.id, "Feature": 'Withdraw Crypto', "Remarks": "Withdraw Crypto Selected page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto'
@@ -43,8 +58,55 @@ class CryptoWithDrawWallet extends Component {
     componentWillUnmount() {
         this.setState({ ...this.state, isWithdrawSuccess: false });
     }
-
-    selectCrypto = () => {
+    closeBuyDrawer = (obj) => {
+		let showCrypto = false, showFiat = false;
+		if (obj) {
+			if (obj.isCrypto)
+				showCrypto = !obj?.close;
+			else
+				showFiat = !obj?.close;
+		};
+		this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat });
+		
+	};
+    renderContent = () => {
+		const stepcodes = {
+			cryptoaddressbook: (<>
+				 {/* <NewAddressBook onCancel={() => this.closeBuyDrawer()} /> */}
+				<AddressCommonCom onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1}/>
+				</>
+			),
+			selectcrypto: <SelectCrypto />,
+		};
+		return stepcodes[config[this.props.addressBookReducer.stepcode]];
+	};
+    renderIcon = () => {
+		const stepcodes = {
+			cryptoaddressbook: (
+				<span
+				onClick={() => this.closeBuyDrawer()}
+					className="icon md close-white c-pointer"
+				/>
+			),
+			selectcrypto: <span />,
+		};
+		return stepcodes[config[this.props.addressBookReducer.stepcode]];
+	};
+    
+    renderTitle = () => {
+		const titles = {
+			cryptoaddressbook: <span />,
+			selectcrypto: (
+				<span
+					onClick={this.backStep}
+					className="icon md lftarw-white c-pointer"
+				/>
+			),
+		};
+		return titles[config[this.props.addressBookReducer.stepcode]];
+	};
+    selectCrypto = (type) => {
+        debugger
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.props.dispatch(setSubTitle(apicalls.convertLocalLang('select_address')));
         let obj = {
@@ -60,28 +122,33 @@ class CryptoWithDrawWallet extends Component {
         }
         this.props.dispatch(setWithdrawcrypto(obj))
         this.setState({ ...this.state, loading: true })
-        this.props.changeStep('step8');
+        if(type=="ADDRESS"){
+            this.props.changeStep('step8');
+        }else{
+            this.setState({
+                ...this.state, visible: true, errorWorning: null
+                // , selection: [],
+                // isCheck: false,
+            });
+        }
+        
 
     }
 
-    // clickMinamnt(type) {
-    //     let usdamnt; let cryptoamnt;
-    //     let obj = Object.assign({}, this.props.sendReceive?.cryptoWithdraw?.selectedWallet)
-    //     if (type === 'half') {
-    //         usdamnt = (obj.coinValueinNativeCurrency / 2).toString();;
-    //         cryptoamnt = (obj.coinBalance / 2)
-    //         this.setState({ ...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt, amountPercentageType: 'half' });
-    //         this.eleRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
-    //     } else if (type === 'all') {
-    //         usdamnt = obj.coinValueinNativeCurrency ? obj.coinValueinNativeCurrency : 0;
-    //         cryptoamnt = obj.coinBalance ? obj.coinBalance : 0;
-    //         this.setState({ ...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt, amountPercentageType: 'all' });
-    //         this.eleRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
-    //     } else {
-    //         this.setState({ ...this.state, CryptoAmnt: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, amountPercentageType: 'min' });
-    //         this.eleRef.current.changeInfo({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 });
-    //     }
-    // }
+    clickMinamnt(type) {
+        debugger
+        let usdamnt; let cryptoamnt;
+        let obj = Object.assign({}, this.props.sendReceive?.cryptoWithdraw?.selectedWallet)
+        if (type === 'all') {
+            usdamnt = obj.coinValueinNativeCurrency ? obj.coinValueinNativeCurrency : 0;
+            cryptoamnt = obj.coinBalance ? obj.coinBalance : 0;
+            this.setState({ ...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt, amountPercentageType: 'all' });
+            this.eleRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
+        } else {
+            this.setState({ ...this.state, CryptoAmnt: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, amountPercentageType: 'min' });
+            this.eleRef.current.changeInfo({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 });
+        }
+    }
     handlePreview = () => {
         debugger
         const amt = parseFloat(this.state.CryptoAmnt);
@@ -246,17 +313,12 @@ this.setState({...this.state,customerRemarks:data})
                         cryptoCurrency={selectedWallet?.coin}
                         localCurrency={"USD"}
                         selectedCoin={selectedWallet?.coin}
+                       clickAmt={this.clickMinamnt}
                         onConvertion={(val)=>{
                             this.setState({...this.state,loading:val})
                         }}
                         onChange={({ localValue, cryptoValue, isSwaped, isInputChange }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped, amountPercentageType: isInputChange ? this.state.amountPercentageType : "" }) }} customerId={this.props.userProfile.id} screenName='withdrawcrypto' />
-                    {/* <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills" onChange={({ target: { value } }) => {
-                        this.clickMinamnt(value)
-                    }}>
-                        <Translate value="min" content="min" component={Radio.Button} />
-                        <Translate value="half" content="half" component={Radio.Button} />
-                        <Translate value="all" content="all" component={Radio.Button} />
-                    </Radio.Group> */}
+                    
 
                     <Form>
                         <Form.Item
@@ -269,14 +331,14 @@ this.setState({...this.state,customerRemarks:data})
                                 <Input className="cust-input custom-add-select mb-0" placeholder={apicalls.convertLocalLang('enter_address')} value={this.state.walletAddress}
 
                                    disabled={true} onChange={({ currentTarget: { value } }) => { this.setState({ ...this.state, walletAddress: value }); this.props.clearAddress(null) }}
-                                    maxLength="250" />
+                                    maxLength="250" /> 
                                 <Tooltip placement="top" title="Send to new Wallet" style={{ flexGrow: 1 }}>
                                     <div className="new-add c-pointer" style={{borderRadius:'0'}} onClick={() => this.selectCrypto()}>
                                         <span className="icon md diag-arrow d-block c-pointer"></span>
                                     </div>
                                 </Tooltip>
                                 <Tooltip placement="top" title={<span>{apicalls.convertLocalLang('SelectAddress')}</span>} style={{ flexGrow: 1 }}>
-                                    <div className="new-add c-pointer" onClick={() => this.selectCrypto()}>
+                                    <div className="new-add c-pointer"onClick={() => this.selectCrypto("ADDRESS")}>
                                         <span className="icon md diag-arrow d-block c-pointer"></span>
                                     </div>
                                 </Tooltip>
@@ -311,16 +373,54 @@ this.setState({...this.state,customerRemarks:data})
                     ]} visible={this.state.showModal}>
                         {this.renderModalContent()}
                     </Modal>
+                    <Drawer
+					destroyOnClose={true}
+					title={[
+						<div className="side-drawer-header">
+							{this.renderTitle()}
+							<div className="text-center fs-16">
+								<Translate
+									className="text-white-30 fw-600 text-upper mb-4"
+									content={
+										this.props.addressBookReducer.stepTitles[
+											config[this.props.addressBookReducer.stepcode]
+										]
+									}
+									component={Paragraph}
+								/>
+								<Translate
+									className="text-white-50 mb-0 fw-300 fs-14 swap-subtitlte"
+									content={
+										this.props.addressBookReducer.stepSubTitles[
+											config[this.props.addressBookReducer.stepcode]
+										]
+									}
+									component={Paragraph}
+								/>
+							</div>
+							{this.renderIcon()}
+						</div>,
+					]}
+					placement="right"
+					closable={true}
+					visible={this.state.visible}
+					closeIcon={null}
+					className="side-drawer w-50p">
+					{this.renderContent()}
+				</Drawer>
                 </div>
             </div>
         )
     }
 }
-const connectStateToProps = ({ sendReceive, userConfig }) => {
-    return { sendReceive, userProfile: userConfig.userProfileInfo }
+const connectStateToProps = ({ sendReceive, userConfig, addressBookReducer }) => {
+    return {addressBookReducer, sendReceive, userProfile: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {
+        changeStep: (stepcode) => {
+            dispatch(setAddressStep(stepcode))
+        },
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
         },
