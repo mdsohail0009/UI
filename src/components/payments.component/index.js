@@ -142,14 +142,14 @@ const getCurrencyLookup = async () => {
   }
   const onActionClick = (key) => {
     const actions = {
-      add: showNewBenificiary,
-      "Add Payee": addPayment,
+     "Add Payee": showNewBenificiary,
+      add: addPayment,
       edit: paymentsEdit,
     };
   actions[key]();
   };
   if(loading){
-    return <div className='custom-spin text-center mt-16'><Spin loading={true}></Spin></div>
+    return <div className='custom-spin text-center mt-36'><Spin loading={true}></Spin></div>
   }else{
   return (
     <>
