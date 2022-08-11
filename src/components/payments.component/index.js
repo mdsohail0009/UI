@@ -202,7 +202,7 @@ const getCurrencyLookup = async () => {
                   ))}
                 </Select>
           <span className="mb-right">
-          <ActionsToolbar featureKey="/payments" onActionClick={(key) => onActionClick(key)}/>
+          <ActionsToolbar featureKey="billpayments" onActionClick={(key) => onActionClick(key)}/>
           </span>
           {/* <div className="cust-btns visible-mobile mb-16" style={{float:'right'}}>
             <ul
