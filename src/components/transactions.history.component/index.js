@@ -173,6 +173,7 @@ componentDidMount() {
                 <Form.Item  className="input-label mb-0" label="Wallet">
                   <Select
                     value = {this.state.searchObj.currency}
+                   // defaultValue={this.state.searchObj.currency}
                     className="cust-input w-100 bgwhite"
                     dropdownClassName="select-drpdwn"
                     showSearch
