@@ -1331,7 +1331,7 @@ input[type=number]::-webkit-outer-spin-button {
 .secureDropdown .ant-menu-title-content{line-height: 23px;}
 .ant-result-title, .ant-result-subtitle{color: var(--textWhite);}
 .ant-select-item .ant-select-option-active, .ant-select-item-option-content, .ant-select-selection-item{color: var(--textWhite);}
-.ant-image-img{width: 70%; margin-right: 0;}
+.crypto-card .ant-image-img{width: 70%; margin-right: 0;}
 .with-min{position: absolute;top: 52px;right: 46px;color: var(--bgWhite);}
 .with-max{position: absolute;top: 52px;right: 0;color: var(--bgWhite);}
 .crypto-list-custom li {
