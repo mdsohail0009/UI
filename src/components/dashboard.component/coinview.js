@@ -107,7 +107,7 @@ componentWillUnmount(){
         selectedObj.coinFullName = selectedObj.name
         selectedObj.oneCoinValue = selectedObj.current_price;
         selectedObj.id = selectedObj.memberWalletId;
-        selectedObj.withdrawMinValue = selectedObj.swapMinValue
+        selectedObj.withdrawMinValue = selectedObj.withDrawMinValue
         this.props.dispatch(fetchWithDrawWallets({ customerId: this.props?.userProfile?.id }));
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
         this.props.dispatch(setSubTitle(apiCalls.convertLocalLang("selectCurrencyinWallet")));
