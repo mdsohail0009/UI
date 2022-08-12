@@ -625,33 +625,14 @@ const FaitWithdrawal = ({ props,
                         ]}
 
                         label={
-                          <div>
-                            <div className="ss">
-                              <Translate className="input-label ml-0 mb-0"
-                                content="amount" component={Form.label} />
-                              <div className="minmax custom-minmax">
-                                <Translate
-                                  type="text"
-                                  size="small"
-                                  className="min-btn"
-                                  content="min"
-                                  component={Button}
-                                  onClick={() => clickMinamnt("min")}
-                                />
-                                <Translate
-                                  type="text"
-                                  size="small"
-                                  className="min-btn"
-                                  content="all"
-                                  component={Button}
-                                  onClick={() => clickMinamnt("max")}
-                                />
-                              </div>
-                            </div>
-                          </div>
+
+                            <Translate className="input-label ml-0 mb-0"
+                              content="amount" component={Form.label}  />
+                            
+                         
                         }
                       >
-
+                         
                         <NumberFormat
                           className="cust-input mb-0"
                           customInput={Input}
@@ -667,6 +648,25 @@ const FaitWithdrawal = ({ props,
                           }}
                           value={addressObj.Amount} />
                       </Form.Item>
+                     
+                      <div className="minmax custom-minmax">
+                              <Translate
+                                type="text"
+                                size="small"
+                                className="min-btn"
+                                content="min"
+                                component={Button}
+                                onClick={() => clickMinamnt("min")}
+                              />
+                              <Translate
+                                type="text"
+                                size="small"
+                                className="min-btn"
+                                content="all"
+                                component={Button}
+                                onClick={() => clickMinamnt("max")}
+                              />
+                            </div>
 
                       <Translate
                         className="fw-200 text-white-50 fs-14"
