@@ -16,6 +16,7 @@ import { processSteps as config } from "../addressbook.component/config";
 import AddressCommonCom from "../addressbook.component/addressCommonCom";
 import SelectCrypto from "../addressbook.component/selectCrypto";
 import apiCalls from "../../api/apiCalls";
+import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
 
 const { Paragraph, Text } = Typography;
 
@@ -40,11 +41,25 @@ class CryptoWithDrawWallet extends Component {
         fiatDrawer: false,
         visible: false,
         cryptoFiat: false,
+        isVerificationMethodsChecked: true,
         propsData:{}
     }
 }
-        componentDidMount() {
-            debugger
+    async checkVerification() {
+        const verfResponse = await apiCalls.getVerificationFields(this.props.userProfile.id);
+        let minVerifications = 0;
+        if (verfResponse.ok) {
+            for (let verifMethod in verfResponse.data) {
+                if (["isEmailVerification", "isPhoneVerified", "twoFactorEnabled", "isLiveVerification"].includes(verifMethod) && verfResponse.data[verifMethod] == true) {
+                    minVerifications = minVerifications + 1;
+                }
+            }
+        }
+        return minVerifications >= 2;
+    }
+    async componentDidMount() {
+    const isVerified = await this.checkVerification();
+    if (isVerified) {
             if (this.props.sendReceive.withdrawCryptoObj) {
                 this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.withdrawCryptoObj?.totalValue, localValue: 0 })
                 this.setState({ ...this.state, walletAddress: this.props.sendReceive.withdrawCryptoObj.toWalletAddress, amountPercentageType: this.props.sendReceive.withdrawCryptoObj.amounttype });
@@ -53,6 +68,10 @@ class CryptoWithDrawWallet extends Component {
             }
             this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 2 }))
             this.props.dispatch(setSubTitle(apicalls.convertLocalLang('wallet_address')));
+        }
+        else {
+            this.setState({ ...this.state, isVerificationMethodsChecked: isVerified });
+        }
             this.trackevent();
         }
     trackevent = () => {
@@ -111,7 +130,6 @@ class CryptoWithDrawWallet extends Component {
 		return titles[config[this.props.addressBookReducer.stepcode]];
 	};
     selectCrypto = (type) => {
-        debugger
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.props.dispatch(setSubTitle(apicalls.convertLocalLang('select_address')));
         let obj = {
@@ -141,7 +159,6 @@ class CryptoWithDrawWallet extends Component {
     }
    
     clickMinamnt(type) {
-        debugger
         let usdamnt; let cryptoamnt;
         let obj = Object.assign({}, this.props.sendReceive?.cryptoWithdraw?.selectedWallet)
         if (type === 'all') {
@@ -155,7 +172,6 @@ class CryptoWithDrawWallet extends Component {
         }
     }
     handlePreview = () => {
-        debugger
         const amt = parseFloat(this.state.CryptoAmnt);
         const { withdrawMaxValue, withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null });
@@ -188,12 +204,11 @@ class CryptoWithDrawWallet extends Component {
             this.withDraw();
         }
     }
-    handleRemarkChange=(event)=>{debugger
-let data =event.target.value;
-this.setState({...this.state,customerRemarks:data})
+    handleRemarkChange = (event) => {
+        let data = event.target.value;
+        this.setState({ ...this.state, customerRemarks: data })
     }
     withDraw = async () => {
-        debugger
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null, loading: true, isWithdrawSuccess: false });
         let obj = {
@@ -286,6 +301,18 @@ this.setState({...this.state,customerRemarks:data})
         const { cryptoWithdraw: { selectedWallet } } = this.props.sendReceive;
         if (this.state.isWithdrawSuccess) {
             return <SuccessMsg onBackCLick={() => this.props.changeStep("step1")} />
+        }
+        if (!this.state.isVerificationMethodsChecked) {
+            return <Alert
+                message="Verification method alert !"
+                description={<Text>Without verifications you can't send. Please select send verifications from <a onClick={() => {
+                    this.props.onDrawerClose();
+                    this.props.history.push("/userprofile?key=2")
+                }}>security section</a></Text>}
+                type="warning"
+                showIcon
+                closable
+            />
         }
         return (
             <div ref={this.myRef}>
@@ -443,4 +470,4 @@ const connectDispatchToProps = dispatch => {
         dispatch
     }
 }
-export default connect(connectStateToProps, connectDispatchToProps)(CryptoWithDrawWallet);
+export default connect(connectStateToProps, connectDispatchToProps)(withRouter(CryptoWithDrawWallet));
