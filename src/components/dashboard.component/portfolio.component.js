@@ -80,22 +80,6 @@ class Portfolio extends Component {
         }
     }
     transactionDrawer =() => {
-        if (!this.props?.userProfileInfo?.isKYC) {
-            this.props.history?.push("/notkyc");
-            return;
-        }
-        if(!this.props?.twoFA?.isEnabled){
-            this.props.history?.push("/enabletwofactor");
-            return;
-        }
-        if (this.props?.userProfileInfo?.isDocsRequested) {
-            this.props.history?.push("/docnotices");
-            return;
-        }
-        if (!this.props?.userProfileInfo?.isKYC) {
-            this.props.history?.push("/notkyc");
-            return;
-        }
         this.setState({ ...this.state, transactions: true});
     }
     closeDrawer = () => {
