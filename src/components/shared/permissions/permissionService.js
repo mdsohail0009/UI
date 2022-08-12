@@ -7,8 +7,8 @@ const getFeatureId = (path) => {
     return feature?.id;
 }
 const getFeatureWithKeyId = (key) => {
-    const { menuItems: { features } } = store.getState();
-    const feature = features?.data?.find(item => item.key == key);
+    const { menuItems: { features:{originalData} } } = store.getState();
+    const feature = originalData?.find(item => item.key == key);
     return feature?.id;
 }
 const getFeaturePermissionsByKey = (key,callback) => {

@@ -47,7 +47,7 @@ const fetchFeatures = (app_id, customer_id) => {
             }
             const _cockpit = menu.find(item => (item.key == "cockpit" || item.path == "/cockpit"));
             menu = menu.filter(item => (!item.isTab && !["/cockpit", "/balances"].includes(item.path)));
-            dispatch(setData({ data: menu, error: null, key: "features", loading: false }));
+            dispatch(setData({ data: menu, error: null, key: "features", loading: false,originalData:response.data }));
             if (_cockpit && window.location.pathname?.includes('cockpit')) {
                 dispatch(setSelectedFeatureMenu(_cockpit.id))
             }
