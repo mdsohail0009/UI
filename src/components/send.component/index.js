@@ -29,7 +29,7 @@ class SendReceive extends Component {
         this.props.dispatch(setWithdrawcrypto(null))
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 1 }));
         this.props.dispatch(setAddress(null))
-        
+
 
     }
     componentWillUnmount() {
@@ -42,7 +42,7 @@ class SendReceive extends Component {
     renderContent = () => {
         const stepcodes = {
             depositecrypto: <DepositeCrypto activeTab={this.props.valNum} />,
-            withdraw: <CryptoWithDrawWallet />,
+            withdraw: <CryptoWithDrawWallet onDrawerClose={this.closeDrawer} />,
             scanner: <ScanQR />,
             withdrawaddress: <WithdrawAddress />,
             verifyidentity: <VerifyIDentity />,

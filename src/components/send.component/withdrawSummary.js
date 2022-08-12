@@ -88,11 +88,10 @@ class WithdrawSummary extends Component {
 		this.trackEvent();
 		this.props.dispatch(setSubTitle(""));
 		this.handleNewExchangeRate();
-		this.getVerifyData();
 		this.permissionsInterval = setInterval(this.loadPermissions, 200);
 	}
 	loadPermissions = () => {
-   if (this.props.withdrawCryptoPermissions) {
+		if (this.props.withdrawCryptoPermissions) {
 			clearInterval(this.permissionsInterval);
 			let _permissions = {};
 			for (let action of this.props.withdrawCryptoPermissions?.actions) {
@@ -199,28 +198,6 @@ class WithdrawSummary extends Component {
 			this.setState({ ...this.state, loading: false });
 		}
 	};
-
-	getVerifyData = async () => {
-		let response = await apiCalls.getVerificationFields(
-			this.props.userProfile.id
-		);
-		if (response.ok) {
-			this.setState({ ...this.state, verifyData: response.data });
-			if (!(response.data.isEmailVerification || response.data.isPhoneVerification || response.data.twoFactorEnabled || response.data.isLiveVerification)) {
-				this.setState({
-					...this.state,
-					errorMsg:
-						"Without verifications you can't send. Please select send verifications from security section"
-				});
-			}
-		} else {
-			this.setState({
-				...this.state,
-				errorMsg:
-					"Without verifications you can't send. Please select send verifications from security section",
-			});
-		}
-	};
 	getOTP = async (val) => {
 		let response = await apiCalls.getCode(
 			this.props.userProfile.id,
@@ -318,7 +295,7 @@ class WithdrawSummary extends Component {
 			this.setState({
 				...this.state,
 				errorMsg: apiCalls.convertLocalLang("email_invalid_code"),
-				emailVerifyLoading:false,
+				emailVerifyLoading: false,
 				invalidData: true,
 				verifyEmail: false,
 				inputEmailDisable: false,
@@ -357,7 +334,7 @@ class WithdrawSummary extends Component {
 			this.setState({
 				...this.state,
 				errorMsg: apiCalls.convertLocalLang("phone_invalid_code"),
-				phoneVerifyLoading:false,
+				phoneVerifyLoading: false,
 				verifyPhone: false,
 				inputDisable: false,
 				inValidData: true,
@@ -411,7 +388,7 @@ class WithdrawSummary extends Component {
 			this.setState({
 				...this.state,
 				errorMsg: apiCalls.convertLocalLang("twofa_invalid_code"),
-				faLoading:false,
+				faLoading: false,
 				verifyAuth: false,
 				inputAuthDisable: false,
 				inValidData: true,
@@ -742,12 +719,12 @@ class WithdrawSummary extends Component {
 							autoComplete="off"
 							form={this.form}
 							onFinish={this.saveWithdrwal}>
-							{this.state.permissions?.withdraw  && this.state.verifyData.isPhoneVerified == true && (
+							{this.state.permissions?.withdraw && this.state.verifyData.isPhoneVerified == true && (
 								<Text className="fs-14 mb-8 text-white d-block fw-200">
 									Phone verification code *
 								</Text>
 							)}
-							{this.state.permissions?.withdraw  && this.state.verifyData.isPhoneVerified == true && (
+							{this.state.permissions?.withdraw && this.state.verifyData.isPhoneVerified == true && (
 								<Form.Item
 									name="code"
 									className="input-label otp-verify"
@@ -815,12 +792,12 @@ class WithdrawSummary extends Component {
 									</div>
 								</Form.Item>
 							)}
-							{this.state.permissions?.withdraw  && this.state.verifyData.isEmailVerification == true && (
+							{this.state.permissions?.withdraw && this.state.verifyData.isEmailVerification == true && (
 								<Text className="fs-14 mb-8 text-white d-block fw-200">
 									Email verification code *
 								</Text>
 							)}
-							{this.state.permissions?.withdraw  && this.state.verifyData.isEmailVerification == true && (
+							{this.state.permissions?.withdraw && this.state.verifyData.isEmailVerification == true && (
 								<Form.Item
 									name="emailCode"
 									className="input-label otp-verify"
@@ -889,12 +866,12 @@ class WithdrawSummary extends Component {
 									</div>
 								</Form.Item>
 							)}
-							{this.state.permissions?.withdraw  && this.state.verifyData.twoFactorEnabled == true && (
+							{this.state.permissions?.withdraw && this.state.verifyData.twoFactorEnabled == true && (
 								<Text className="fs-14 mb-8 text-white d-block fw-200">
 									Authenticator Code *
 								</Text>
 							)}
-							{this.state.permissions?.withdraw  && this.state.verifyData.twoFactorEnabled == true && (
+							{this.state.permissions?.withdraw && this.state.verifyData.twoFactorEnabled == true && (
 								<Form.Item
 									name="authenticator"
 									className="input-label otp-verify"
@@ -963,7 +940,7 @@ class WithdrawSummary extends Component {
 								valuePropName="checked"
 								required
 							>
-								{this.state.permissions?.withdraw  && <span className="d-flex">
+								{this.state.permissions?.withdraw && <span className="d-flex">
 									<Checkbox className={`ant-custumcheck ${!agreeRed ? "check-red" : " "}`} />
 									<span className="withdraw-check"></span>
 									<Translate
@@ -975,7 +952,7 @@ class WithdrawSummary extends Component {
 									/>
 								</span>}
 							</Form.Item>
-							{this.state.permissions?.withdraw  && <Button size="large" block className="pop-btn" htmlType="submit" loading={this.state.btnLoading}>
+							{this.state.permissions?.withdraw && <Button size="large" block className="pop-btn" htmlType="submit" loading={this.state.btnLoading}>
 								<Translate content="with_draw" component={Text} />
 							</Button>}
 
@@ -1012,7 +989,7 @@ const connectDispatchToProps = (dispatch) => {
 		},
 		setAction: (val) => {
 			dispatch(setCurrentAction(val))
-		  },
+		},
 
 		dispatch,
 	};
