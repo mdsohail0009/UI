@@ -103,8 +103,9 @@ class QRScan extends Component {
                 <div className="scanner-img">
                     <QRCodeComponent value={this.props?.sendReceive?.depositWallet?.walletAddress} size={150} />
                 </div>
-                <div className="crypto-address">
-                    <Translate className="mb-0 fw-400 text-secondary" content="address" component={Text} />
+                <div className="crypto-address text-white">
+                    <Translate className="mb-0 fw-400 text-secondary" content="address" component={Text} />{" "}({this.props?.sendReceive?.depositWallet?.network})
+
                     <div className="mb-0 fw-600 text-white-30 walletadrs mb-copy">{this.props?.sendReceive?.depositWallet?.walletAddress}
                         <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.walletAddress} options={{ format: 'text/plain' }}>
                             <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 custom-display"></Text>
