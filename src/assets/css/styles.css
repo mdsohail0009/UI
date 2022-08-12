@@ -203,6 +203,7 @@ border-radius: 5px;}
 .icon.xl.file{background-position:-87px -241px;}
 .icon.xxxl.doc-upload{background-position:1px -398px;}
 .icon.lg.beneficiary-icon {background-position: -207px -130px;}
+.icon.md.address-book-icon{background-position: -581px -3px;}
 .header-right li{padding: 0 !important;margin: 0 6px; font-size: 16px; color: var(--textWhite30) !important;}
 .header-dropdown{font-size: 24px; color: var(--textBlack) !important;}
 .mid-menu{display: flex; align-items: center;}
