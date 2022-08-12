@@ -18,23 +18,23 @@ export const convertCurrencyDuplicate = async ({ from, to, value, isCrypto, cust
     }
 }
 export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, maxPurchase, eurInUsd, gbpInUsd }) => {
-  
+
     const validate = {
         message: null,
         valid: true
     };
-    const maxPurchaseAmt = 100000;
-    const maxAmtMessage = "$100,000"
+    const maxPurchaseAmt = 100;
+    const maxAmtMessage = "$100k"
     const currencyMaxPurchase = {
         GBP: gbpInUsd * localValue,
         EUR: localValue * eurInUsd,
-        USD:localValue
+        USD: localValue
     }
-    if (localValue === "" ) {
+    if (localValue === "") {
         validate.message = apicalls.convertLocalLang('enter_wallet')
         validate.valid = false;
     }
-    else if(localValue === "0" || cryptValue == "0"){
+    else if (localValue === "0" || cryptValue == "0") {
         validate.message = apicalls.convertLocalLang('amount_greater_zero')
         validate.valid = false;
     }
@@ -49,14 +49,14 @@ export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, m
     else {
         if (cryptValue < minPurchase) {
             validate.valid = false;
-            validate.message = apicalls.convertLocalLang('purchase_min') + " " + minPurchase
+            validate.message = apicalls.convertLocalLang('purchase_min') + " " + minPurchase + " " + "please contact support for more details"
         } else if (cryptValue > maxPurchase) {
             validate.valid = false;
             validate.message = apicalls.convertLocalLang('purchase_max') + " " + maxPurchase
         }
         else if (currencyMaxPurchase[wallet?.currencyCode] > maxPurchaseAmt) {
             validate.valid = false;
-            validate.message = apicalls.convertLocalLang('purchase_max') + " " + maxAmtMessage
+            validate.message = apicalls.convertLocalLang('purchase_max') + " " + maxAmtMessage + " " + "please contact support for more details"
         }
     }
     return validate;

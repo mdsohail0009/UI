@@ -95,7 +95,7 @@ class PaymentsView extends Component {
         return this.state.previewPath;
     }
     backToPayments = () => {
-        this.props.history.push('/payments')
+        this.props.history.push(`/payments/${this.state.currency}`)
     }
     docPreviewClose = () => {
         this.setState({ ...this.state, previewModal: false, previewPath: null })

@@ -8,7 +8,7 @@ import {
   Alert,
   Tooltip,
   Select,
-  Checkbox,
+  Checkbox, Drawer
 } from "antd";
 import { Link } from "react-router-dom";
 import { setStep } from "../../reducers/buysellReducer";
@@ -28,6 +28,7 @@ import {
   favouriteFiatAddress,
   detailsAddress
 } from "../addressbook.component/api";
+import { validateContentRule } from "../../utils/custom.validator";
 import {
   setWithdrawfiat,
   rejectWithdrawfiat,
@@ -39,7 +40,7 @@ import WithdrawalLive from "./withdrawLive";
 import apicalls from "../../api/apiCalls";
 import { handleFiatConfirm } from "../send.component/api";
 import Loader from '../../Shared/loader';
-
+import AddressCommonCom from '../addressbook.component/addressCommonCom'
 const LinkValue = (props) => {
   return (
     <Translate
@@ -56,7 +57,7 @@ const LinkValue = (props) => {
   );
 };
 const { Option } = Select;
-const FaitWithdrawal = ({
+const FaitWithdrawal = ({ props,
   member,
   selectedWalletCode,
   buyInfo,
@@ -88,6 +89,9 @@ const FaitWithdrawal = ({
   const [bankDetails, setBankDetails] = useState([])
   const [details, setDetails] = useState([])
   const [selectRequired, setSelectRequired] = useState(null)
+  const [beneficiaryDetails, setBeneficiaryDetails] = useState(false);
+  const [checkRadio, setCheckRadio] = useState(false);
+
   const [addressObj, setAddressObj] = useState({
     bankName: null,
     accountNumber: null,
@@ -100,20 +104,43 @@ const FaitWithdrawal = ({
   });
   const [addressInfo, setAddressInfo] = useState(null);
   const [agreeRed, setAgreeRed] = useState(true)
-  useEffect(() => {
-    if (buyInfo.memberFiat?.data && selectedWalletCode) {
-      handleWalletSelection(selectedWalletCode);
-    } else if (buyInfo.memberFiat?.data && sendReceive.withdrawFiatObj) {
-      handleWalletSelection(sendReceive.withdrawFiatObj.walletCode);
-      if (sendReceive.withdrawFiatObj.country) {
-        getStateLu(sendReceive.withdrawFiatObj.country);
+  const [isVerificationMethodsChecked, setIsVerificationMethodsChecked] = useState(true);
+
+  const checkVerification = async () => {
+    const verfResponse = await apicalls.getVerificationFields(userConfig.id);
+    let minVerifications = 0;
+    if (verfResponse.ok) {
+      for (let verifMethod in verfResponse.data) {
+        if (["isEmailVerification", "isPhoneVerified", "twoFactorEnabled", "isLiveVerification"].includes(verifMethod) && verfResponse.data[verifMethod] === true) {
+          minVerifications = minVerifications + 1;
+        }
       }
-      let selectObj = sendReceive.withdrawFiatObj;
-      form.setFieldsValue(selectObj);
+    }
+    return minVerifications >= 2;
+  }
+  const initialize = async () => {
+    const isVerified = await checkVerification();
+    if (isVerified) {
+      if (buyInfo.memberFiat?.data && selectedWalletCode) {
+        handleWalletSelection(selectedWalletCode);
+      } else if (buyInfo.memberFiat?.data && sendReceive.withdrawFiatObj) {
+        handleWalletSelection(sendReceive.withdrawFiatObj.walletCode);
+        if (sendReceive.withdrawFiatObj.country) {
+          getStateLu(sendReceive.withdrawFiatObj.country);
+        }
+        let selectObj = sendReceive.withdrawFiatObj;
+        form.setFieldsValue(selectObj);
+      }
+    }
+    else {
+      setIsVerificationMethodsChecked(isVerified)
     }
     if (sendReceive?.wFTotalValue) {
       form.setFieldsValue({ totalValue: sendReceive?.wFTotalValue });
     }
+  }
+  useEffect(() => {
+    initialize();
   }, [buyInfo.memberFiat?.data]);
 
   useEffect(() => {
@@ -123,6 +150,13 @@ const FaitWithdrawal = ({
     getAccountdetails()
 
   }, []);
+  const showNewBenificiary = () => {
+    setCheckRadio(true);
+    setBeneficiaryDetails(true);
+  }
+  const closeBuyDrawer = () => {
+    setBeneficiaryDetails(false);
+  }
 
   const fiatWithdrawTrack = () => {
     apicalls.trackEvent({
@@ -298,7 +332,8 @@ const FaitWithdrawal = ({
       values["state"] = bankDetails[0].state;
       values["zipcode"] = bankDetails[0].zipcode;
       values["routingNumber"] = bankDetails[0].swiftRouteBICNumber || bankDetails[0].routingNumber;
-      values["WalletCode"] = accountDetails[0].currencyCode
+      values["WalletCode"] = accountDetails[0].currencyCode;
+      values["CustomerRemarks"] = values.CustomerRemarks;
       const response = await handleFiatConfirm(values);
       if (response.ok) {
         setBtnDisabled(false);
@@ -387,7 +422,7 @@ const FaitWithdrawal = ({
   const handleAccountChange = (e) => {
     setErrorMsg(null);
     setAgreeRed(true);
-    form.setFieldsValue({ currencyCode: null, favouriteName: null })
+    form.setFieldsValue({ currencyCode: null, favouriteName: null, CustomerRemarks: null })
     setDetails(null);
     setAccountDetails({});
     setAddressShow(null);
@@ -399,7 +434,7 @@ const FaitWithdrawal = ({
       form.setFieldsValue({ currencyCode: " " })
       // setBankDetails(null)
       setAccountDetails(null)
-    
+
     }
   }
   const AccountWallet = async (AccountId) => {
@@ -412,7 +447,7 @@ const FaitWithdrawal = ({
   const handleAccountWallet = (e) => {
     setErrorMsg(null);
     setAgreeRed(true);
-    form.setFieldsValue({ favouriteName: null, totalValue: null })
+    form.setFieldsValue({ favouriteName: null, totalValue: null, CustomerRemarks: null })
     setAccountDetails({});
     setDetails(null);
     let data = accountCurrency.filter((item) => item.currencyCode == e)
@@ -447,9 +482,8 @@ const FaitWithdrawal = ({
     setSelectRequired(true)
     let data = bankDetails.filter((item) => item.lable == e)
     setDetails(data)
-    form.setFieldsValue({ totalValue: "" });
+    form.setFieldsValue({ totalValue: "", CustomerRemarks: null });
   }
-
   const renderModalContent = () => {
     const _types = {
       step1: (
@@ -467,7 +501,19 @@ const FaitWithdrawal = ({
                 type="error"
               />
             )}
-            <Form
+            {!isVerificationMethodsChecked &&
+              <Alert
+                message="Verification method alert !"
+                description={<Text>Without verifications you can't send. Please select send verifications from <a onClick={() => {
+                  props.onDrawerClose();
+                  props.history.push("/userprofile?key=2")
+                }}>security section</a></Text>}
+                type="warning"
+                showIcon
+                closable
+              />
+            }
+            {isVerificationMethodsChecked && <Form
               form={form}
               onFinish={savewithdrawal}
               initialValues={addressObj}
@@ -512,7 +558,7 @@ const FaitWithdrawal = ({
                 >
                   {accountCurrency?.map((item, idx) => (
                     <Option key={idx} value={item.currencyCode}>
-                      {item.currencyCode} Balance: {{"USD":"$",EUR:"€"}[item?.currencyCode]}<NumberFormat thousandSeparator="," value={item.avilable} displayType="text" />
+                      {item.currencyCode} Balance: {{ "USD": "$", EUR: "€" }[item?.currencyCode]}<NumberFormat thousandSeparator="," value={item.avilable} displayType="text" />
                     </Option>
                   ))}
                 </Select>
@@ -535,18 +581,30 @@ const FaitWithdrawal = ({
                           />
                         }
                       >
-                        <Select
-                          className="cust-input mb-0 custom-search"
-                          dropdownClassName="select-drpdwn"
-                          onChange={(e) => handleDetails(e)}
-                          placeholder="Select Address Book"
-                        >
-                          {bankDetails?.map((item, idx) => (
-                            <Option key={idx} value={item.lable}>
-                              {item.lable}
-                            </Option>
-                          ))}
-                        </Select>
+                        <div className="p-relative d-flex align-center">
+                          <Select style={{ borderRadius: '30px 30px 30px 30px' }}
+                            className="cust-input mb-0 custom-search"
+                            dropdownClassName="select-drpdwn"
+                            onChange={(e) => handleDetails(e)}
+                            placeholder="Select Address Book"
+                          >
+                            {bankDetails?.map((item, idx) => (
+                              <Option key={idx} value={item.lable}>
+                                {item.lable}
+                              </Option>
+                            ))}
+                          </Select>
+                          {/* <Tooltip placement="top" title="Send to new wallet" style={{ flexGrow: 1 }}>
+                                    <div className="new-add c-pointer" onClick={() => showNewBenificiary()}>
+                                        <span className="icon md diag-arrow d-block c-pointer"></span>
+                                    </div>
+                                </Tooltip> */}
+                          {/* <Tooltip placement="top" title={<span>{apicalls.convertLocalLang('SelectAddress')}</span>} style={{ flexGrow: 1 }}>
+                                    <div className="new-add c-pointer"onClick={() => showNewBenificiary("ADDRESS")}>
+                                        <span className="icon md diag-arrow d-block c-pointer"></span>
+                                    </div>
+                                </Tooltip> */}
+                        </div>
                       </Form.Item>
 
                     </div>}
@@ -566,28 +624,30 @@ const FaitWithdrawal = ({
                         ]}
 
                         label={
-                          <>
-                            <Translate className="input-label ml-0 mb-0"
-                              content="amount" component={Form.label} />
-                            <div className="minmax">
-                              <Translate
-                                type="text"
-                                size="small"
-                                className="min-btn"
-                                content="min"
-                                component={Button}
-                                onClick={() => clickMinamnt("min")}
-                              />
-                              <Translate
-                                type="text"
-                                size="small"
-                                className="min-btn"
-                                content="all"
-                                component={Button}
-                                onClick={() => clickMinamnt("max")}
-                              />
+                          <div>
+                            <div className="ss">
+                              <Translate className="input-label ml-0 mb-0"
+                                content="amount" component={Form.label} />
+                              <div className="minmax custom-minmax">
+                                <Translate
+                                  type="text"
+                                  size="small"
+                                  className="min-btn"
+                                  content="min"
+                                  component={Button}
+                                  onClick={() => clickMinamnt("min")}
+                                />
+                                <Translate
+                                  type="text"
+                                  size="small"
+                                  className="min-btn"
+                                  content="all"
+                                  component={Button}
+                                  onClick={() => clickMinamnt("max")}
+                                />
+                              </div>
                             </div>
-                          </>
+                          </div>
                         }
                       >
 
@@ -653,7 +713,29 @@ const FaitWithdrawal = ({
                         component={Text}
                         with={{ value: details[0].swiftRouteBICNumber }}
                       />
+                      <Form.Item
+                        className="custom-forminput custom-label  mb-24 min-max-btn"
+                        name="CustomerRemarks"
+                        rules={[
+                          {
+                            validator: validateContentRule
+                          }
+                        ]}
+                        label={
+                          <>
+                            <Translate className="input-label ml-0 mb-0"
+                              content="customer_remarks" component={Form.label} />
 
+                          </>
+                        }
+                      >
+                        <Input
+                          className="cust-input"
+                          placeholder="Customer Remarks"
+                          maxLength={200}
+                        />
+
+                      </Form.Item>
 
                       <Form.Item
                         className="custom-forminput mb-36 agree"
@@ -693,7 +775,7 @@ const FaitWithdrawal = ({
                       </Form.Item>
                     </div>}
                 </>}
-            </Form>
+            </Form>}
           </div>
         </>
       ),
@@ -837,6 +919,24 @@ const FaitWithdrawal = ({
       >
         {renderModalContent()}
       </Modal>
+      <Drawer
+        destroyOnClose={true}
+        title={[<div className="side-drawer-header">
+          <span />
+          <div className="text-center fs-16">
+            <Paragraph className="mb-0 text-white-30 fw-600 text-upper"><Translate content="AddFiatAddress" component={Paragraph} className="mb-0 text-white-30 fw-600 text-upper" /></Paragraph>
+          </div>
+          <span onClick={closeBuyDrawer} className="icon md close-white c-pointer" />
+        </div>]}
+        placement="right"
+        closable={true}
+        visible={beneficiaryDetails}
+        closeIcon={null}
+        className=" side-drawer w-50p"
+        size="large"
+      >
+        <AddressCommonCom checkThirdParty={checkRadio} onCancel={() => closeBuyDrawer()} props={props} />
+      </Drawer>
     </>
   );
 };

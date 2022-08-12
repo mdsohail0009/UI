@@ -225,6 +225,7 @@ class ProfileInfo extends Component {
                 <div></div>
               </div>
             </li>
+            {this.props.userConfig.isBusiness !==true&&<>
             <li className="profileinfo">
               <div className="profile-block ">
                 <label className="mb-0 profile-label">
@@ -269,7 +270,7 @@ class ProfileInfo extends Component {
                 </p>
                 <div></div>
               </div>
-            </li>
+            </li></>}
             <li className="profileinfo">
               <div className="profile-block">
                 <label className="mb-0 profile-label">

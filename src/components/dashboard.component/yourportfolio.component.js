@@ -14,13 +14,15 @@ import { convertCurrency } from '../buy.component/buySellService';
 import { withRouter, Link } from 'react-router-dom';
 import apiCalls from '../../api/apiCalls';
 import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle, setWithdrawfiatenaable, setWithdrawfiat,setWalletAddress } from "../../reducers/sendreceiveReducer";
-import { getcoinDetails } from './api'
-import {createCryptoDeposit} from "../deposit.component/api"
+import { getcoinDetails } from './api';
+import {createCryptoDeposit} from "../deposit.component/api";
+import TransactionsHistory from "../transactions.history.component";
 class YourPortfolio extends Component {
     state = {
         loading: true,
         initLoading: true,
         portfolioData: [], buyDrawer: false, coinData: null,sendDrawer: false,
+        selectedWallet: ''
     }
     componentDidMount() {
         this.loadCryptos();
@@ -73,12 +75,16 @@ class YourPortfolio extends Component {
             buyDrawer: true
         })
     }
+    showInternalTransfer=()=>{
+      this.props.history.push(`/internalTransfer`)
+    }
+  
     showSendReceiveDrawer = async(e, value) => {
       let selectedObj = { ...value };
       selectedObj.coin = selectedObj.coin?.toUpperCase();
       selectedObj.coinFullName = selectedObj.coinFullName
       selectedObj.id = selectedObj.id;
-      selectedObj.withdrawMinValue = selectedObj.swapMinValue
+      selectedObj.withdrawMinValue = selectedObj.withdrawMinValue
       this.props.dispatch(fetchWithDrawWallets({ customerId: this.props?.userProfile?.id }));
       this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
       this.props.dispatch(setSubTitle(apiCalls.convertLocalLang("selectCurrencyinWallet")));
@@ -144,17 +150,33 @@ class YourPortfolio extends Component {
     closeDrawer = () => {
       this.setState({
           buyDrawer: false,
-          sendDrawer: false
+          sendDrawer: false,
+          transactions: false
       })
   }
+  showTransactionDrawer =(item) => {
+    this.setState({...this.state, transactions: true, selectedWallet: item?.coin});
+}
      menuBar = (item) => (
       <Menu>
           <ul className="pl-0 drpdwn-list">
-              <li  onClick={() =>  this.showSendReceiveDrawer(1, item)}>
-                  <Link value={1} className="c-pointer">Deposit</Link>
-              </li>
+              {/* <li  onClick={() =>  this.showSendReceiveDrawer(1, item)}>
+                  <Link value={1} className="c-pointer">Receive</Link>
+              </li> */}
               <li onClick={() => this.showSendReceiveDrawer(2, item)}>
-                  <Link  value={2} className="c-pointer">Withdraw</Link>
+                  <Link  value={2} className="c-pointer">
+                  <Translate content="withdraw" />
+                  </Link>
+              </li>
+              <li onClick={() => this.showTransactionDrawer(item)}>
+                    <Link  value={4} className="c-pointer">
+                    <Translate content="menu_transactions_history" />
+                    </Link>
+                </li>
+                <li onClick={() => this.showInternalTransfer(item)}>
+                  <Link  value={5} className="c-pointer">
+                  <Translate content="menu_internal_transfer" />
+                  </Link>
               </li>
               
           </ul>
@@ -202,17 +224,23 @@ class YourPortfolio extends Component {
                   extra={
                     <div className='crypto-btns'>
                       <Translate
-                        content="buy"
+                        content="menu_buy_sell"
                         component={Button}
                         type="primary"
                         onClick={() => this.showBuyDrawer(item, "buy")}
                         className="custom-btn prime"
                       />
-                      <Translate
+                      {/* <Translate
                         content="sell"
                         component={Button}
                         className="custom-btn sec ml-16"
                         onClick={() => this.showBuyDrawer(item, "sell")}
+                      /> */}
+                        <Translate
+                        content="deposit"
+                        component={Button}
+                        className="custom-btn sec ml-16"
+                        onClick={() =>  this.showSendReceiveDrawer(1, item)}
                       />
                       
                       <Dropdown overlay={this.menuBar(item)} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
@@ -280,6 +308,13 @@ class YourPortfolio extends Component {
               onClose={() => this.closeDrawer()}
             />
             <SendReceive showDrawer={this.state.sendDrawer} onClose={() => this.closeDrawer()} />
+            {this.state.transactions && <TransactionsHistory
+              showDrawer={this.state.transactions}
+              selectWallet={this.state.selectedWallet}
+              onClose={() => {
+                this.closeDrawer();
+              }}
+            />}
           </div>
         );
     }

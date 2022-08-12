@@ -1,7 +1,9 @@
-import { Switch, Route as ReactRoute } from 'react-router-dom';
+import { Switch, Route as ReactRoute, withRouter } from 'react-router-dom';
 import React, { Component } from 'react';
 import Route from '../authentication/protected.route';
 import SignInSilent from '../authentication/signinSilent';
+import { connect } from 'react-redux';
+import { KEY_URL_MAP } from '../components/shared/permissions/config';
 const Dashboard = React.lazy(() => import('../components/dashboard.component'));
 const CallbackPage = React.lazy(() => import('../authentication/callback.component'));
 const Login = React.lazy(() => import('../authentication/login.component'));
@@ -24,8 +26,27 @@ const BeneficiaryDetails = React.lazy(() => import("../components/payments.compo
 const AddressFiatView = React.lazy(() => import("../components/addressbook.component/addressFiatView"))
 const AddressCryptoView = React.lazy(() => import("../components/addressbook.component/addressCryptoView"))
 const RewardCard = React.lazy(() => import("../components/cards.component"));
-const RewardCardStatus = React.lazy(() => import("../components/cards.component/thankyou"));
+const AccessDenied = React.lazy(() => import("../components/shared/permissions/access.denied"));
+const InternalTransfer = React.lazy(() => import("../components/internalTransfer.component/internalTransfer"))
 class RouteConfig extends Component {
+  // componentDidMount() {
+  //   this.checkPermissions(window.location.pathname || "/cockpit");
+  //   this.props.history.listen((location) => {
+  //     this.checkPermissions(location.pathname)
+  //   })
+  // }
+  checkPermissions(pathname) {
+    pathname = pathname.includes("/payments/") ? "/payments" : pathname;  // temporary fix perminent fix will be in next sprint --subbareddy
+    if (this.props.menuItems.featurePermissions?.[KEY_URL_MAP[pathname]] && pathname != "/userprofile" && pathname != "/accessdenied") {
+      let _permissions = {};
+      for (let action of (this.props.menuItems.featurePermissions?.[KEY_URL_MAP[pathname]]?.actions || [])) {
+        _permissions[action.permissionName] = action.values;
+      }
+      if (!_permissions.View && !_permissions.view) {
+        this.props.history.push("/accessdenied");
+      }
+    }
+  }
   render() {
     return <Switch>
       <React.Suspense fallback={<div className="loader">Loading...</div>}>
@@ -47,12 +68,13 @@ class RouteConfig extends Component {
         <Route path='/coindetails/:coinName' component={CoinDetails} />
         <ReactRoute path="/silent_redirect" component={SignInSilent} />
         <ReactRoute path='/cockpitCharts' component={DashboardCharts} />
-        <ReactRoute path='/cards' component={RewardCard} />
+        <Route path='/cards' component={RewardCard} isRoute={true} />
+        <ReactRoute path='/accessdenied' component={AccessDenied} />
         <ReactRoute
           path="/payments"
           render={({ match: { url } }) => (
             <>
-              <Route path={`${url}`} component={Payments} exact />
+              <Route path={`${url}/:code`} component={Payments} exact isRoute={true} />
               <Route path={`${url}/:id/add`} component={PaymentDetails} />
               <Route path={`${url}/:id/:type/:state/edit`} component={PaymentDetails} />
               <Route path={`${url}/:id/view`} component={paymentsView} />
@@ -60,11 +82,15 @@ class RouteConfig extends Component {
             </>
           )}
         />
+        <ReactRoute path="/internaltransfer" component={InternalTransfer} exact />
         <ReactRoute path="/" component={Dashboard} exact />
       </React.Suspense>
     </Switch>
   }
 
 }
+const connectStateToProps = ({ menuItems }) => {
+  return { menuItems }
+}
 
-export default RouteConfig;
+export default withRouter(connect(connectStateToProps)(RouteConfig));
