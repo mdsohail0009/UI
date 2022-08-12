@@ -82,7 +82,7 @@ class RouteConfig extends Component {
             </>
           )}
         />
-        <ReactRoute path="/internalTransfer" component={InternalTransfer} exact />
+        <ReactRoute path="/internaltransfer" component={InternalTransfer} exact />
         <ReactRoute path="/" component={Dashboard} exact />
       </React.Suspense>
     </Switch>
