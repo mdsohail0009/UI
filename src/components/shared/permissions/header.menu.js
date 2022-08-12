@@ -193,7 +193,7 @@ class HeaderPermissionMenu extends Component {
         if (perIgnoreLst.includes(menuKey)) { this.navigate(menuKey, menuItem) }
         else {
             const ignoreKycLst = ["transactions"];
-            if ((this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled)|| ignoreKycLst.includes(menuItem.key)) {
+            if ((this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled) || ignoreKycLst.includes(menuItem.key)) {
                 if (!this.props.menuItems.featurePermissions[menuItem.key]) {
                     getFeaturePermissionsByKey(menuItem.key, (data) => {
                         if (data.ok) {
@@ -301,18 +301,18 @@ class HeaderPermissionMenu extends Component {
                     />
                     <ul className="pl-0 drpdwn-list">
                         <li
-                              onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/modal" })}
-                              >
-                                  <Link>
-                                      <Translate
-                                          content="menu_transactions_history"
-                                          component={Text}
-                                          className="text-white-30"
-                                      />
-                                      <span className="icon md rarrow-white" />
-                                  </Link>
-                              </li>
-                              <li
+                            onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/modal" })}
+                        >
+                            <Link>
+                                <Translate
+                                    content="menu_transactions_history"
+                                    component={Text}
+                                    className="text-white-30"
+                                />
+                                <span className="icon md rarrow-white" />
+                            </Link>
+                        </li>
+                        <li
                         >
                             <Popover placement="left" content={<><div onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/6120197cdc204d9ddb882e4d")}>
                                 <Link>
