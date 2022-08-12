@@ -29,12 +29,12 @@ const RewardCard = React.lazy(() => import("../components/cards.component"));
 const AccessDenied = React.lazy(() => import("../components/shared/permissions/access.denied"));
 const InternalTransfer = React.lazy(() => import("../components/internalTransfer.component/internalTransfer"))
 class RouteConfig extends Component {
-  componentDidMount() {
-    this.checkPermissions(window.location.pathname || "/cockpit");
-    this.props.history.listen((location) => {
-      this.checkPermissions(location.pathname)
-    })
-  }
+  // componentDidMount() {
+  //   this.checkPermissions(window.location.pathname || "/cockpit");
+  //   this.props.history.listen((location) => {
+  //     this.checkPermissions(location.pathname)
+  //   })
+  // }
   checkPermissions(pathname) {
     pathname = pathname.includes("/payments/") ? "/payments" : pathname;  // temporary fix perminent fix will be in next sprint --subbareddy
     if (this.props.menuItems.featurePermissions?.[KEY_URL_MAP[pathname]] && pathname != "/userprofile" && pathname != "/accessdenied") {

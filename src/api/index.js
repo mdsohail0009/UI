@@ -51,13 +51,13 @@ apiClient.axiosInstance.interceptors.request.use((config) => {
         }", FeatureId:"${menuItems?.featurePermissions?.selectedScreenFeatureId}"}`, userProfileInfo.sk) : ''
     return config;
 });
-apiClient.axiosInstance.interceptors.response.use((response) => {
-    return response;
-}, (err) => {
-    if (err.status === "401") {
-        const navigate = useHistory();
-        navigate.push("/accessdenied");
-    } else{ return err;}
-       
-})
+// apiClient.axiosInstance.interceptors.response.use((response) => {
+//     return response;
+// }, (err) => {
+//     if (err.status === "401") {
+//         const navigate = useHistory();
+//         navigate.push("/accessdenied");
+//     } else{ return err;}
+
+// })
 export { apiClient, coinGekoClient, identityClient, uploadClient, ipRegistry, sumsub }

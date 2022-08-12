@@ -45,8 +45,8 @@ async function start(id) {
         const { userConfig: { userProfileInfo } } = store.getState();
         store.dispatch(fetchDashboardcalls(userProfileInfo?.id));
     });
-    connection.on("SendRoleUpdatedMessage",()=>{
-        store.dispatch(clearPermissions());
+    connection.on("SendRoleUpdatedMessage", () => {
+        //  store.dispatch(clearPermissions());
     });
 }
 
