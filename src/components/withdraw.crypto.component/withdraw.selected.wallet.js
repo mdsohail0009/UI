@@ -21,7 +21,10 @@ const { Paragraph, Text } = Typography;
 class CryptoWithDrawWallet extends Component {
     eleRef = React.createRef();
     myRef = React.createRef();
-    state = {
+    constructor(props){
+        super(props);
+   
+    this.state = {
         CryptoAmnt: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue,
         USDAmnt: "",
         isSwap: true,
@@ -36,8 +39,9 @@ class CryptoWithDrawWallet extends Component {
         fiatDrawer: false,
         visible: false,
         cryptoFiat: false,
+        propsData:{}
     }
-   
+}
         componentDidMount() {
             debugger
             if (this.props.sendReceive.withdrawCryptoObj) {
@@ -134,7 +138,7 @@ class CryptoWithDrawWallet extends Component {
         
 
     }
-
+   
     clickMinamnt(type) {
         debugger
         let usdamnt; let cryptoamnt;
@@ -313,12 +317,20 @@ this.setState({...this.state,customerRemarks:data})
                         cryptoCurrency={selectedWallet?.coin}
                         localCurrency={"USD"}
                         selectedCoin={selectedWallet?.coin}
-                       clickAmt={this.clickMinamnt}
+                        // clickAmt={this.clickMinamnt}
+                       // parentCallback = {this.clickMinamnt}
                         onConvertion={(val)=>{
                             this.setState({...this.state,loading:val})
                         }}
                         onChange={({ localValue, cryptoValue, isSwaped, isInputChange }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped, amountPercentageType: isInputChange ? this.state.amountPercentageType : "" }) }} customerId={this.props.userProfile.id} screenName='withdrawcrypto' />
-                    
+                    <div class="minmax ">
+                        <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn with-min" onClick={() => this.clickMinamnt("min")}>
+                            <span >Min</span>
+                        </button>
+                        <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn with-max" onClick={() => this.clickMinamnt("all")}>
+                            <span>Max</span>
+                        </button>
+                    </div>
 
                     <Form>
                         <Form.Item
