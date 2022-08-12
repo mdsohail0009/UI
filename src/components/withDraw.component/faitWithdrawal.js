@@ -10,7 +10,7 @@ import {
   Select,
   Checkbox, Drawer
 } from "antd";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { setStep } from "../../reducers/buysellReducer";
 import Translate from "react-translate-component";
 import { connect } from "react-redux";
@@ -65,7 +65,9 @@ const FaitWithdrawal = ({ props,
   dispatch,
   sendReceive,
   changeStep,
-  trackAuditLogData
+  trackAuditLogData,
+  onDrawerClose,
+  history
 }) => {
   const [form] = Form.useForm();
   const [selectedWallet, setSelectedWallet] = useState(null);
@@ -506,8 +508,8 @@ const FaitWithdrawal = ({ props,
               <Alert
                 message="Verification method alert !"
                 description={<Text>Without verifications you can't send. Please select send verifications from <a onClick={() => {
-                  props.onDrawerClose();
-                  props.history.push("/userprofile?key=2")
+                  onDrawerClose();
+                  history.push("/userprofile?key=2")
                 }}>security section</a></Text>}
                 type="warning"
                 showIcon
@@ -970,4 +972,4 @@ const connectDispatchToProps = (dispatch) => {
 export default connect(
   connectStateToProps,
   connectDispatchToProps
-)(FaitWithdrawal);
+)(withRouter(FaitWithdrawal));
