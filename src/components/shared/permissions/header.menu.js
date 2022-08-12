@@ -198,7 +198,6 @@ class HeaderPermissionMenu extends Component {
                     getFeaturePermissionsByKey(menuItem.key, (data) => {
                         if (data.ok) {
                             this.chekPermissions(menuKey, menuItem, data?.data)
-
                         }
                     });
                 } else {
