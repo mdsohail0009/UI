@@ -101,7 +101,6 @@ componentWillUnmount(){
         })
     }
     showSendReceiveDrawer = async (e, value) => {
-        debugger
         let selectedObj = { ...value };
         selectedObj.coin = selectedObj.symbol.toUpperCase();
         selectedObj.coinBalance = selectedObj.avilableBalance
