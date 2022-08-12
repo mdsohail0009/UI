@@ -45,6 +45,11 @@ const getmemeberInfo = (userid) => {
                 res.data.twofactorVerified = twofa;
                 dispatch(userInfo(res.data));
                 dispatch(setNotificationCount(res.data?.unReadCount))
+                apiCalls.twofactor(res.data.id).then(tofares => {
+                    if (tofares.ok) {
+                        dispatch(updatetwofactor({ loading: false, isEnabled: tofares.data }));
+                    }
+                });
             }
         });
     }
