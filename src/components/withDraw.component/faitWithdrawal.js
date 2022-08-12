@@ -104,7 +104,24 @@ const FaitWithdrawal = ({props,
   });
   const [addressInfo, setAddressInfo] = useState(null);
   const [agreeRed, setAgreeRed] = useState(true)
+  const [isVerificationMethodsChecked,setIsVerificationMethodsChecked]=useState(true);
+
+  const checkVerification=  async()=> {
+    debugger
+    const verfResponse = await apicalls.getVerificationFields(userConfig.id);
+    let minVerifications = 0;
+    if (verfResponse.ok) {
+        for (let verifMethod in verfResponse.data) {
+            if (["isEmailVerification", "isPhoneVerified", "twoFactorEnabled", "isLiveVerification"].includes(verifMethod) && verfResponse.data[verifMethod] === true) {
+                minVerifications = minVerifications + 1;
+            }
+        }
+    }
+    return minVerifications >= 2;
+}
   useEffect(() => {
+    const isVerified =  checkVerification();
+        if (isVerified) {
     if (buyInfo.memberFiat?.data && selectedWalletCode) {
       handleWalletSelection(selectedWalletCode);
     } else if (buyInfo.memberFiat?.data && sendReceive.withdrawFiatObj) {
@@ -115,6 +132,10 @@ const FaitWithdrawal = ({props,
       let selectObj = sendReceive.withdrawFiatObj;
       form.setFieldsValue(selectObj);
     }
+  }
+    else {
+      setIsVerificationMethodsChecked(isVerified)
+  }
     if (sendReceive?.wFTotalValue) {
       form.setFieldsValue({ totalValue: sendReceive?.wFTotalValue });
     }
@@ -461,7 +482,6 @@ const FaitWithdrawal = ({props,
     setDetails(data)
     form.setFieldsValue({ totalValue: "",CustomerRemarks:null });
   }
-
   const renderModalContent = () => {
     const _types = {
       step1: (
@@ -479,6 +499,18 @@ const FaitWithdrawal = ({props,
                 type="error"
               />
             )}
+              {!isVerificationMethodsChecked &&
+             <Alert
+                message="Verification method alert !"
+                description={<Text>Without verifications you can't send. Please select send verifications from <a onClick={() => {
+                    props.onDrawerClose();
+                    props.history.push("/userprofile?key=2")
+                }}>security section</a></Text>}
+                type="warning"
+                showIcon
+                closable
+            />
+        }
             <Form
               form={form}
               onFinish={savewithdrawal}
@@ -593,8 +625,8 @@ const FaitWithdrawal = ({props,
                           <div>
                             <div className="ss">
                             <Translate className="input-label ml-0 mb-0"
-                              content="amount" component={Form.label} />
-                            {/* <div className="minmax">
+                              content="amount" component={Form.label}  />
+                            <div className="minmax custom-minmax">
                               <Translate
                                 type="text"
                                 size="small"
@@ -611,7 +643,7 @@ const FaitWithdrawal = ({props,
                                 component={Button}
                                 onClick={() => clickMinamnt("max")}
                               />
-                            </div> */}
+                            </div>
                             </div>
                           </div>
                         }
