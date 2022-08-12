@@ -35,7 +35,7 @@ class SelectSellCrypto extends Component {
         apicalls.trackEvent({ "Type": 'User', "Action": 'Sell coin page View', "Feature": 'Sell', "Remarks": "Sell Crypto coin selection view", "FullFeatureName": 'Sell Crypto', "userName": this.props.customer?.userName, id: this.props.customer?.id });
     }
     fetchdefaultMinAmntValues = async () => {
-        this.setState({ ...this.state, CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue });
+        this.setState({ ...this.state, CryptoAmnt: this.props.sellData.coinDetailData?.withdrawMinValue });
     }
     setAmount = async ({ currentTarget }, fn, fnRes) => {
         this.setState({ ...this.state, [fn]: currentTarget.value })
@@ -56,14 +56,14 @@ class SelectSellCrypto extends Component {
             cryptoamnt = obj.coinBalance ? obj.coinBalance : 0;
             this.setState({ ...this.state, USDAmnt: "0", CryptoAmnt: cryptoamnt, minmaxTab: type, isSwap: true, });
         } else {
-            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: "0", isSwap: true, minmaxTab: type });
+            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.withdrawMinValue, USDAmnt: "0", isSwap: true, minmaxTab: type });
         }
     }
     previewSellData() {
        
         this.setState({ ...this.state, errorMessage: '' })
         let obj = Object.assign({}, this.state.sellSaveData);
-        let { sellMinValue, gbpInUsd, eurInUsd } = this.props.sellData.coinDetailData;
+        let { withdrawMinValue, gbpInUsd, eurInUsd } = this.props.sellData.coinDetailData;
         const maxUSDT = 100000;
         const purchaseCurrencyMaxAmt = {
             GBP: this.state.USDAmnt * gbpInUsd,
@@ -94,9 +94,9 @@ class SelectSellCrypto extends Component {
             this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('available_balance_less') })
             this.myRef.current.scrollIntoView();
             return;
-        } else if (parseFloat(this.state.CryptoAmnt) < sellMinValue) {
+        } else if (parseFloat(this.state.CryptoAmnt) < withdrawMinValue) {
             this.myRef.current.scrollIntoView();
-            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_minvalue') + sellMinValue })
+            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_minvalue') + withdrawMinValue })
             return;
         }
         else if (purchaseCurrencyMaxAmt[obj.toWalletCode] > maxUSDT) {
