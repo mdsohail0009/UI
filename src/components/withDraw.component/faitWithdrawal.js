@@ -560,11 +560,11 @@ const FaitWithdrawal = ({props,
                             </Option>
                           ))}
                         </Select>
-                        {/* <Tooltip placement="top" title="Send to new Wallet" style={{ flexGrow: 1 }}>
+                        <Tooltip placement="top" title="Send to new wallet" style={{ flexGrow: 1 }}>
                                     <div className="new-add c-pointer" onClick={() => showNewBenificiary()}>
                                         <span className="icon md diag-arrow d-block c-pointer"></span>
                                     </div>
-                                </Tooltip> */}
+                                </Tooltip>
                                 {/* <Tooltip placement="top" title={<span>{apicalls.convertLocalLang('SelectAddress')}</span>} style={{ flexGrow: 1 }}>
                                     <div className="new-add c-pointer"onClick={() => showNewBenificiary("ADDRESS")}>
                                         <span className="icon md diag-arrow d-block c-pointer"></span>

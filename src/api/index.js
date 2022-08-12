@@ -44,8 +44,6 @@ const _encrypt = (msg, key) => {
 apiClient.axiosInstance.interceptors.request.use((config) => {
     const { oidc: { user }, userConfig: { userProfileInfo }, currentAction: { action },
         menuItems } = store.getState()
-    console.log("ApiIndex", config.url, `{CustomerId:"${userProfileInfo?.id}", Action:"${action || "view"
-        }", FeatureId:"${menuItems?.featurePermissions?.selectedScreenFeatureId}"}`);
     config.headers.Authorization = `Bearer ${user.access_token}`
     if (userProfileInfo?.id) config.headers.AuthInformation = userProfileInfo?.id ? _encrypt(`{CustomerId:"${userProfileInfo?.id}", Action:"${action || "view"
         }", FeatureId:"${menuItems?.featurePermissions?.selectedScreenFeatureId}"}`, userProfileInfo.sk) : ''

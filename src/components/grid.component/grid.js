@@ -199,8 +199,6 @@ export function withState(WrappedGrid) {
             } else {
                 queryStr = '?' + queryStr
             }
-            console.log("ApiIndex",this.props.url,`{CustomerId:"${userProfileInfo?.id}", Action:"${action || "view"
-        }", FeatureId:"${menuItems?.featurePermissions?.selectedScreenFeatureId}"}`);
             const base_url = this.props.url;
             const init = { method: 'GET', accept: 'application/json', headers: { "Authorization": `Bearer ${user.access_token}`,
             "AuthInformation": userProfileInfo?.id ? this._encrypt(`{CustomerId:"${userProfileInfo?.id}", Action:"${action || "view"
