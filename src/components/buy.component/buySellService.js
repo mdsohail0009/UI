@@ -23,7 +23,7 @@ export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, m
         message: null,
         valid: true
     };
-    const maxPurchaseAmt = 100;
+    const maxPurchaseAmt = 100000;
     const maxAmtMessage = "$100k"
     const currencyMaxPurchase = {
         GBP: gbpInUsd * localValue,
