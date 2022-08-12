@@ -155,22 +155,6 @@ class YourPortfolio extends Component {
       })
   }
   showTransactionDrawer =(item) => {
-    if (!this.props?.userProfile?.isKYC) {
-      this.props.history.push("/notkyc");
-      return;
-  }
-  if(!this.props?.twoFA?.isEnabled){
-      this.props.history.push("/enabletwofactor");
-      return;
-  }
-  if (this.props?.userProfile?.isDocsRequested) {
-      this.props.history.push("/docnotices");
-      return;
-  }
-  if (!this.props?.userProfile?.isKYC) {
-      this.props.history.push("/notkyc");
-      return;
-  }
     this.setState({...this.state, transactions: true, selectedWallet: item?.coin});
 }
      menuBar = (item) => (
