@@ -105,7 +105,7 @@ const FaitWithdrawal = ({ props,
   const [addressInfo, setAddressInfo] = useState(null);
   const [agreeRed, setAgreeRed] = useState(true)
   const [isVerificationMethodsChecked, setIsVerificationMethodsChecked] = useState(true);
-
+  const [isVerificationLoading, setVerificationLoading] = useState(true);
   const checkVerification = async () => {
     const verfResponse = await apicalls.getVerificationFields(userConfig.id);
     let minVerifications = 0;
@@ -116,6 +116,7 @@ const FaitWithdrawal = ({ props,
         }
       }
     }
+    setVerificationLoading(false);
     return minVerifications >= 2;
   }
   const initialize = async () => {
@@ -490,7 +491,7 @@ const FaitWithdrawal = ({ props,
         <>
           <div className="suisfiat-height auto-scroll" style={{ marginTop: "10px" }}>
             <div ref={useDivRef}></div>
-
+            {isVerificationLoading && <Loader />}
             {errorMsg !== null && (
               <Alert
                 className="mb-12"
@@ -513,7 +514,7 @@ const FaitWithdrawal = ({ props,
                 closable
               />
             }
-            {isVerificationMethodsChecked && <Form
+            {isVerificationMethodsChecked && !isVerificationLoading && <Form
               form={form}
               onFinish={savewithdrawal}
               initialValues={addressObj}
