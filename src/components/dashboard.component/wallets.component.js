@@ -58,7 +58,7 @@ class Wallets extends Component {
         }else if(e===3){
             this.props.history.push(`/payments/${value.walletCode}`)
         }else {
-            this.props.history.push(`/internalTransfer`)
+            this.props.history.push(`/internaltransfer`)
         }
         this.setState({
             valNum: e
