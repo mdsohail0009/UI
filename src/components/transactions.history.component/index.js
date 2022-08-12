@@ -13,6 +13,7 @@ import {getTransactionSearch, getTransactionCurrency } from './api';
 import { setCurrentAction } from "../../reducers/actionsReducer";
 import {getFeaturePermissionsByKey} from '../shared/permissions/permissionService';
 import { withRouter } from "react-router-dom";
+import { setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 
 const { Option } = Select;
 class TransactionsHistory extends Component {
@@ -36,6 +37,7 @@ class TransactionsHistory extends Component {
       loader: true,
       gridUrl: process.env.REACT_APP_GRID_API + `Transaction/Customers`,
     };
+    this.props.dispatch(setSelectedFeatureMenu(this.props.transactionsPermissions?.featureId));
     this.gridRef = React.createRef();
   }
 
@@ -53,12 +55,15 @@ componentDidMount() {
 
   loadPermissions = () => {
 		if (this.props.transactionsPermissions) {
+      this.props.dispatch(setSelectedFeatureMenu(this.props.transactionsPermissions?.featureId));
 			clearInterval(this.permissionsInterval);
 			let _permissions = {};
 			for (let action of this.props.transactionsPermissions?.actions) {
 				_permissions[action.permissionName] = action.values;
 			}
-			this.setState({ ...this.state, permissions: _permissions, searchObj: {...this.state.searchObj, currency: this.props?.selectWallet || "All"} });
+			this.setState({ ...this.state, permissions: _permissions, searchObj: {...this.state.searchObj, currency: this.props?.selectWallet || "All"} },
+      () => { this.gridRef.current?.refreshGrid(); }
+      );
       if(!this.state.permissions?.view) {
 				this.props.history.push("/accessdenied");
 			}
@@ -122,7 +127,7 @@ componentDidMount() {
   handleSearch = (values) => {
     let { searchObj } = this.state;
     this.setState({ ...this.state, searchObj },
-       () => { this.gridRef.current.refreshGrid(); }
+       () => { this.gridRef.current?.refreshGrid(); }
       );
     apiCalls.trackEvent({
       Type: "Admin",
