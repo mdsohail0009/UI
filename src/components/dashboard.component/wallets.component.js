@@ -78,13 +78,19 @@ class Wallets extends Component {
         <Menu>
             <ul className="pl-0 drpdwn-list">
                 <li  onClick={() =>  this.showSendReceiveDrawer(3, item)}>
-                    <Link value={3} className="c-pointer">Bill Payments</Link>
+                    <Link value={3} className="c-pointer">
+                    <Translate content="menu_payments" />
+                    </Link>
                 </li>
                 <li onClick={() => this.showTransactionDrawer(item)}>
-                    <Link  value={4} className="c-pointer">Transactions</Link>
+                    <Link  value={4} className="c-pointer">
+                    <Translate content="menu_transactions_history" />
+                    </Link>
                 </li>
                 <li onClick={() => this.showSendReceiveDrawer(5,item)}>
-                    <Link  value={5} className="c-pointer">Internal Transfer</Link>
+                    <Link  value={5} className="c-pointer">
+                    <Translate content="menu_internal_transfer" />
+                    </Link>
                 </li>
             </ul>
         </Menu>

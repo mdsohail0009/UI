@@ -108,7 +108,7 @@ class Portfolio extends Component {
                         className="pop-btn dbchart-link fs-14 fw-500"
                         style={{  height: 40,marginTop:"35px" }}
                         >
-                            Search
+                           <Translate content="search" />
                         <span className="icon sm search-angle ml-8"></span>
                     </Button>
                        {this.state.transactions &&

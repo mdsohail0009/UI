@@ -121,6 +121,7 @@ export default {
 	menu_send_receive:"Send/Receive",
 	menu_mass_pay: "Mass Payments",
 	menu_payments: "Bill Payments",
+	menu_internal_transfer: "Internal Transfer",
 	security: "Security",
 	current_balance: "Current Balance",
 	min: "Min",
