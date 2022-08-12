@@ -164,19 +164,19 @@ class YourPortfolio extends Component {
                   <Link value={1} className="c-pointer">Receive</Link>
               </li> */}
               <li onClick={() => this.showSendReceiveDrawer(2, item)}>
-                  <Link  value={2} className="c-pointer">Send</Link>
+                  <Link  value={2} className="c-pointer">
+                  <Translate content="withdraw" />
+                  </Link>
               </li>
               <li onClick={() => this.showTransactionDrawer(item)}>
-                {/* <TransactionsHistory
-                        showDrawer={this.state.transactions}
-                        onClose={() => {
-                            this.closeDrawer();
-                        }}
-                    /> */}
-                    <Link  value={4} className="c-pointer">Transactions</Link>
+                    <Link  value={4} className="c-pointer">
+                    <Translate content="menu_transactions_history" />
+                    </Link>
                 </li>
                 <li onClick={() => this.showInternalTransfer(item)}>
-                  <Link  value={5} className="c-pointer">Internal Transfer</Link>
+                  <Link  value={5} className="c-pointer">
+                  <Translate content="menu_internal_transfer" />
+                  </Link>
               </li>
               
           </ul>
