@@ -54,7 +54,6 @@ class CryptoWithDrawWallet extends Component {
     async componentDidMount() {
         const isVerified = await this.checkVerification();
         if (isVerified) {
-            debugger
             if (this.props.sendReceive.withdrawCryptoObj) {
                 this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.withdrawCryptoObj?.totalValue, localValue: 0 })
                 this.setState({ ...this.state, walletAddress: this.props.sendReceive.withdrawCryptoObj.toWalletAddress, amountPercentageType: this.props.sendReceive.withdrawCryptoObj.amounttype });
@@ -125,7 +124,6 @@ class CryptoWithDrawWallet extends Component {
         return titles[config[this.props.addressBookReducer.stepcode]];
     };
     selectCrypto = (type) => {
-        debugger
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.props.dispatch(setSubTitle(apicalls.convertLocalLang('select_address')));
         let obj = {
@@ -167,7 +165,6 @@ class CryptoWithDrawWallet extends Component {
         }
     }
     handlePreview = () => {
-        debugger
         const amt = parseFloat(this.state.CryptoAmnt);
         const { withdrawMaxValue, withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null });
