@@ -344,7 +344,7 @@ this.setState({...this.state,customerRemarks:data})
 
                                    disabled={true} onChange={({ currentTarget: { value } }) => { this.setState({ ...this.state, walletAddress: value }); this.props.clearAddress(null) }}
                                     maxLength="250" /> 
-                                <Tooltip placement="top" title="Create New Address" style={{ flexGrow: 1 }}>
+                                <Tooltip placement="top" title="Send to new wallet" style={{ flexGrow: 1 }}>
                                     <div className="new-add c-pointer" style={{borderRadius:'0'}} onClick={() => this.selectCrypto()}>
                                         <span className="icon md diag-arrow d-block c-pointer"></span>
                                     </div>
