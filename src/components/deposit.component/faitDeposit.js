@@ -220,7 +220,7 @@ class FaitDeposit extends Component {
           <Translate content="withdraw" component={Radio.Button} value={2} />
         </Radio.Group></div>}
         {faitdeposit ?
-          <SellToggle onDrawerClose={this.props.closeDrawer}/>
+          <SellToggle onDrawerClose={this.props.oncloseClick}/>
           : <> {this.state.Loader && <Loader />}
 
             {!this.state.Loader && <Form layout="vertical" initialValues={{ ...depObj }} ref={this.formRef} onFinish={(values) => this.ConfirmDeposit(values)}><div className="suisfiat-container auto-scroll"><div ref={this.myRef}></div>

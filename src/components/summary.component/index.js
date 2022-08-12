@@ -247,7 +247,7 @@ class Summary extends Component {
 	}
 }
 const connectStateToProps = ({ menuItems }) => {
-    return { buySellPermissions: menuItems?.featurePermissions["buy/sell"] }
+    return { buySellPermissions: menuItems?.featurePermissions["trade"] }
 }
 const connectDispatchToProps = dispatch => {
 	return {
