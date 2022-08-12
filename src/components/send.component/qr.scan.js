@@ -121,10 +121,10 @@ class QRScan extends Component {
                         </CopyToClipboard></div>
                 </div>}
                 <Paragraph>
-                    <ul className="text-white">
-                        <li><Translate className=" f-12 text-white fw-200 mt-16" content="address_hint_text" component={Paragraph} /></li>
-                        <li><Translate className="f-12 text-white fw-200 mt-16" content="address_hint_text_1" component={Paragraph} /></li>
-                        <li><Paragraph className=" f-12 text-yellow fw-200 mt-16">Note: {this.props?.sendReceive?.depositWallet?.note} </Paragraph></li>
+                    <ul className="text-white mt-24">
+                        <li className="list-dot"><Translate className=" f-12 text-white fw-200 mt-16" content="address_hint_text" component={Text} /></li>
+                        <li className="list-dot"><Translate className="f-12 text-white fw-200 mt-16" content="address_hint_text_1" component={Text} /></li>
+                        <li className="list-dot"><Text className=" f-12 text-yellow fw-200 mt-16">Note: {this.props?.sendReceive?.depositWallet?.note} </Text></li>
                     </ul>
                 </Paragraph>
                 <Dropdown overlay={this.shareMenu}>

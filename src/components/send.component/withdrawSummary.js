@@ -89,6 +89,7 @@ class WithdrawSummary extends Component {
 		this.props.dispatch(setSubTitle(""));
 		this.handleNewExchangeRate();
 		this.permissionsInterval = setInterval(this.loadPermissions, 200);
+		this.getVerifyData();
 	}
 	loadPermissions = () => {
 		if (this.props.withdrawCryptoPermissions) {
@@ -196,6 +197,27 @@ class WithdrawSummary extends Component {
 			});
 		} else {
 			this.setState({ ...this.state, loading: false });
+		}
+	};
+	getVerifyData = async () => {
+		let response = await apiCalls.getVerificationFields(
+			this.props.userProfile.id
+		);
+		if (response.ok) {
+			this.setState({ ...this.state, verifyData: response.data });
+			if (!(response.data.isEmailVerification || response.data.isPhoneVerification || response.data.twoFactorEnabled || response.data.isLiveVerification)) {
+				this.setState({
+					...this.state,
+					errorMsg:
+						"Without verifications you can't send. Please select send verifications from security section"
+				});
+			}
+		} else {
+			this.setState({
+				...this.state,
+				errorMsg:
+					"Without verifications you can't send. Please select send verifications from security section",
+			});
 		}
 	};
 	getOTP = async (val) => {
@@ -792,6 +814,7 @@ class WithdrawSummary extends Component {
 									</div>
 								</Form.Item>
 							)}
+							{this.state.verifyData.isPhoneVerified}
 							{this.state.permissions?.withdraw && this.state.verifyData.isEmailVerification == true && (
 								<Text className="fs-14 mb-8 text-white d-block fw-200">
 									Email verification code *

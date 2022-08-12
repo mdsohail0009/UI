@@ -273,7 +273,6 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 			userConfig?.sk
 		);
 		Obj.info = JSON.stringify(trackAuditLogData);
-debugger
 		let withdrawal = await withdrawSave(Obj);
 		setIsLoading(false);
 		if (withdrawal.ok) {
@@ -398,7 +397,6 @@ debugger
 	};
 
 	const getOTP = async (val) => {
-		debugger
 		let response = await apiCalls.getCode(userConfig.id, types);
 		if (response.ok) {
 			setMsg(null);
@@ -431,7 +429,6 @@ debugger
 
 
 	const getOtpVerification = async () => {
-		debugger
 		setValidData(true);
 		setPhoneVerifyLoading(true)
 		let response = await apiCalls.getVerification(userConfig.id, otpCode);
