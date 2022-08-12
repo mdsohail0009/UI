@@ -3,7 +3,7 @@ import {
 	Drawer,
 	Typography,
 	Button,
-	Row, Col, Select, Form,Spin
+	Row, Col, Select, Form
 } from "antd";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
@@ -11,7 +11,7 @@ import apiCalls from "../../api/apiCalls";
 import List from "../grid.component";
 import {getTransactionSearch, getTransactionCurrency } from './api';
 import { setCurrentAction } from "../../reducers/actionsReducer";
-import {getFeaturePermissionsByKey, getFeatureWithKeyId} from '../shared/permissions/permissionService';
+import {getFeaturePermissionsByKey} from '../shared/permissions/permissionService';
 import { withRouter } from "react-router-dom";
 import { setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 
@@ -37,7 +37,6 @@ class TransactionsHistory extends Component {
       loader: true,
       gridUrl: process.env.REACT_APP_GRID_API + `Transaction/Customers`,
     };
-    //this.props.dispatch(setSelectedFeatureMenu(getFeatureWithKeyId('transactions')));
     this.props.dispatch(setSelectedFeatureMenu(this.props.transactionsPermissions?.featureId || this.props.customer?.id));
     this.gridRef = React.createRef();
   }
@@ -62,9 +61,9 @@ componentDidMount() {
 			for (let action of this.props.transactionsPermissions?.actions) {
 				_permissions[action.permissionName] = action.values;
 			}
-			this.setState({ ...this.state, permissions: _permissions, searchObj: {...this.state.searchObj, currency: this.props?.selectWallet || "All"} },
-      () => { this.gridRef.current?.refreshGrid(); }
-      );
+			this.setState({ ...this.state, permissions: _permissions, searchObj: {...this.state.searchObj, currency: this.props?.selectWallet || "All"} });
+      // () => { this.gridRef.current?.refreshGrid(); }
+      //);
       if(!this.state.permissions?.view) {
 				this.props.history.push("/accessdenied");
 			}
@@ -157,9 +156,6 @@ componentDidMount() {
     const options3 = currenyData?.map((d) => (
 		  <Option key={d.code} value={d.code}>{d.code}</Option>
 		));
-    // if(this.state.loader){
-    //   return <Spin loading={true}></Spin>
-    // }else{
 		return (
 			<>
 				 <Drawer
@@ -250,7 +246,6 @@ componentDidMount() {
 			   </>
 			   
     );
-   // }
   }
 }
 const connectStateToProps = ({ userConfig,menuItems }) => {
