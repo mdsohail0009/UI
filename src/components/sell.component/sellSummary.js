@@ -8,6 +8,7 @@ import { appInsights } from "../../Shared/appinsights";
 import {Alert} from 'antd'
 import { setSellFinalRes } from '../../reducers/sellReducer'
 import apicalls from '../../api/apiCalls';
+import { setCurrentAction } from '../../reducers/actionsReducer';
 
 
 class SellSummary extends Component {
@@ -17,11 +18,13 @@ class SellSummary extends Component {
           isLoading: false,
            disableConfirm: false,
             isTermsAgree: false,
+            permissions:{},
              error: { valid: true, message: null,agreeRed:true } }
     componentDidMount() {
         this.fetchPreviewData()
         setTimeout(() => this.setState({ ...this.state, disableConfirm: true }), 12000)
         this.EventTrack();
+        this.permissionsInterval = setInterval(this.loadPermissions, 200);
     }
     EventTrack = () => {
         apicalls.trackEvent({
@@ -91,7 +94,17 @@ class SellSummary extends Component {
           return "Something went wrong please try again!";
         }
       };
-    
+      loadPermissions = () => {
+		debugger
+		if (this.props.buySellPermissions) {
+			clearInterval(this.permissionsInterval);
+			let _permissions = {};
+			for (let action of this.props.buySellPermissions?.actions) {
+				_permissions[action.permissionName] = action.values;
+			}
+			this.setState({ ...this.state, permissions: _permissions });
+		}
+	}
     render() {
         const { sellpreviewData } = this.state;
         const { amount, amountNativeCurrency, oneCoinValue, coin, currency } = sellpreviewData;
@@ -107,6 +120,7 @@ class SellSummary extends Component {
         )}
       
         return <Summary
+        permissions={this.state.permissions?.Sell}
          loading={this.state.loader}
             coin={coin}
             oneCoinValue={oneCoinValue}
@@ -126,8 +140,8 @@ class SellSummary extends Component {
     }
 }
 
-const connectStateToProps = ({ buySell, sellInfo, userConfig }) => {
-    return { buySell, sellData: sellInfo, customer: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData }
+const connectStateToProps = ({ buySell, sellInfo, userConfig,menuItems }) => {
+    return { buySell, sellData: sellInfo, customer: userConfig.userProfileInfo,buySellPermissions: menuItems?.featurePermissions["trade"], trackAuditLogData: userConfig.trackAuditLogData }
 }
 const connectDispatchToProps = dispatch => {
     return {
@@ -143,6 +157,9 @@ const connectDispatchToProps = dispatch => {
         sellResData: (data) => {
             dispatch(setSellFinalRes(data))
         },
+        setAction: (val) => {
+			dispatch(setCurrentAction(val))
+		  },
 
     }
 }

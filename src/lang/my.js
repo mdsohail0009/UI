@@ -116,6 +116,7 @@ export default {
 	menu_send_receive: "Deposito / Pengeluaran",
 	menu_mass_pay: "Pembayaran Massa",
 	menu_payments: "Pembayaran",
+	menu_internal_transfer: "Famindrana anatiny",
 	security: "Keselamatan",
 	current_balance: "Baki terkini",
 	min: "Min",

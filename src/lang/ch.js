@@ -114,6 +114,7 @@ export default {
 	menu_send_receive: "存款/取款",
 	menu_mass_pay: "批量付款",
 	menu_payments: "付款",
+	menu_internal_transfer: "内部转账",
 	security: "安全",
 	current_balance: "当前余额",
 	min: "最小",

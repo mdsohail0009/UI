@@ -11,7 +11,7 @@ const getCryptos = () => {
 	return apiClient.get(ApiControllers.buySell + "Coins");
 };
 const getMember = (customerid) => {
-	return apiClient.get(ApiControllers.customers + customerid);
+	return apiClient.get(ApiControllers.customers + `${customerid}/App/Exchange`);
 };
 const sumsubacesstoken = (userid, flow) => {
 return apiClient.get(

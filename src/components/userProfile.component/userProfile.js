@@ -12,7 +12,6 @@ import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import {addressTabUpdate} from '../../reducers/addressBookReducer'
 import { setHeaderTab } from "../../reducers/buysellReducer"
-
 const { TabPane } = Tabs;
 class UserProfile extends Component {
     constructor(props) {
@@ -52,10 +51,7 @@ class UserProfile extends Component {
     }
 
     render() {
-  
         const { tabPosition } = this.state;
-      
-         
         return (<>
 
             <div className="main-container hidden-mobile">
@@ -86,11 +82,10 @@ class UserProfile extends Component {
                     <Translate content="referr" className="f-16  mt-16" /></span>} key="7" >
                         {this.state.activeTab == 7 && <Referral />}
                     </TabPane>
-                    {/* <TabPane tab={<span><span className="icon lg notification-icon mr-16" />  //notifications hide
+                    {/* <TabPane tab={<span><span className="icon lg notification-icon mr-16" />
                     <Translate content="notification" className="f-16  mt-16" /></span>} key="8" >
                         {this.state.activeTab == 8 && <NotificationScreen />}
                         </TabPane> */}
-
                 </Tabs>
             </div>
             <div className="main-container visible-mobile">
@@ -112,7 +107,7 @@ class UserProfile extends Component {
                         {this.state.activeTab == 3 && <Settings />}
                     </TabPane>
                     <TabPane tab={<span><span className="icon lg addressbook-icon mr-16" /><Translate content="address_book" component={Tabs.TabPane.tab} /></span>} key="5">
-                        {this.state.activeTab == 5 && <AddressBook activeFiat = {this.state.activeWithdrawFiat} />}
+                        {this.state.activeTab == 5 && <AddressBook activeFiat={this.state.activeWithdrawFiat} />}
                     </TabPane>
                     <TabPane tab={<span><span className="icon lg cases-icon mr-16" />
                     <Translate content="case" className="f-16  mt-16" /></span>} key="6" >

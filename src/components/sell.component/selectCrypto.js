@@ -35,7 +35,7 @@ class SelectSellCrypto extends Component {
         apicalls.trackEvent({ "Type": 'User', "Action": 'Sell coin page View', "Feature": 'Sell', "Remarks": "Sell Crypto coin selection view", "FullFeatureName": 'Sell Crypto', "userName": this.props.customer?.userName, id: this.props.customer?.id });
     }
     fetchdefaultMinAmntValues = async () => {
-        this.setState({ ...this.state, CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue });
+        this.setState({ ...this.state, CryptoAmnt: this.props.sellData.coinDetailData?.withdrawMinValue });
     }
     setAmount = async ({ currentTarget }, fn, fnRes) => {
         this.setState({ ...this.state, [fn]: currentTarget.value })
@@ -56,14 +56,14 @@ class SelectSellCrypto extends Component {
             cryptoamnt = obj.coinBalance ? obj.coinBalance : 0;
             this.setState({ ...this.state, USDAmnt: "0", CryptoAmnt: cryptoamnt, minmaxTab: type, isSwap: true, });
         } else {
-            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: "0", isSwap: true, minmaxTab: type });
+            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.withdrawMinValue, USDAmnt: "0", isSwap: true, minmaxTab: type });
         }
     }
     previewSellData() {
        
         this.setState({ ...this.state, errorMessage: '' })
         let obj = Object.assign({}, this.state.sellSaveData);
-        let { sellMinValue, gbpInUsd, eurInUsd } = this.props.sellData.coinDetailData;
+        let { withdrawMinValue, gbpInUsd, eurInUsd } = this.props.sellData.coinDetailData;
         const maxUSDT = 100000;
         const purchaseCurrencyMaxAmt = {
             GBP: this.state.USDAmnt * gbpInUsd,
@@ -94,9 +94,9 @@ class SelectSellCrypto extends Component {
             this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('available_balance_less') })
             this.myRef.current.scrollIntoView();
             return;
-        } else if (parseFloat(this.state.CryptoAmnt) < sellMinValue) {
+        } else if (parseFloat(this.state.CryptoAmnt) < withdrawMinValue) {
             this.myRef.current.scrollIntoView();
-            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_minvalue') + sellMinValue })
+            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_minvalue') + withdrawMinValue })
             return;
         }
         else if (purchaseCurrencyMaxAmt[obj.toWalletCode] > maxUSDT) {
@@ -176,18 +176,22 @@ class SelectSellCrypto extends Component {
         return (
             <>
                 <div ref={this.myRef}>  {this.state?.errorMessage !== null && this.state?.errorMessage !== '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="error" message={apicalls.convertLocalLang('sellCrypto')} description={this.state?.errorMessage} />}
-                    {coinDetailData && <Card className="crypto-card select mb-36" bordered={false}>
-                        <span className="d-flex align-center">
-                            <Image preview={false} src={coinDetailData.impageWhitePath}/>
-                            <Text className="fs-24 textc-white crypto-name ml-8">{coinDetailData.coinFullName}</Text>
-                        </span>
+                    {coinDetailData && <Card className="crypto-card select mb-36 d-flex" bordered={false}>
+                        <div className='d-flex justify-content'>
+                        <div>
+                            <span className="d-flex align-center mb-4">
+                                <Image preview={false} src={coinDetailData.impageWhitePath}/>
+                                <Text className="crypto-percent textc-white">{coinDetailData.percentage}<sup className="percent textc-white">%</sup></Text>
+                            </span>
+                            <Text className="fs-24 textc-white crypto-name ml-4">{coinDetailData.coinFullName}</Text>
+                        </div>
                         <div className="crypto-details">
-                            <Text className="crypto-percent textc-white fw-700">{coinDetailData.percentage}<sup className="percent textc-white fw-700">%</sup></Text>
+                            
                             <div className="fs-16 textc-white fw-200 crypto-amount">
                                 <Currency prefix={""} defaultValue={coinDetailData.coinBalance} suffixText={coinDetailData.coin} />
                                 <Currency prefix={"$ "} defaultValue={coinDetailData.coinValueinNativeCurrency} suffixText="" />
                             </div>
-                        </div>
+                        </div></div>
                     </Card>}
                     <LocalCryptoSwapperCmp
                         cryptoAmt={this.state.CryptoAmnt}

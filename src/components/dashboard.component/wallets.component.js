@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { Typography, List, Button, Image } from 'antd';
+import { Typography, List, Button, Image,Dropdown,Space,Menu } from 'antd';
 import Translate from 'react-translate-component';
 import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
 import { fetchMemberWalletsData, fetchPortfolioData } from '../../reducers/dashboardReducer';
 import ConnectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
 import MassPayment from '../buyfiat.component'
-import { withRouter } from 'react-router-dom';
+import { withRouter,Link } from 'react-router-dom';
+import TransactionsHistory from "../transactions.history.component";
 import { setWithdrawfiatenaable, setWithdrawfiat, setStep } from '../../reducers/sendreceiveReducer'
 import { setdepositCurrency, getCurrencieswithBankDetails } from '../../reducers/depositReducer'
 const { Title, Paragraph } = Typography;
@@ -17,7 +18,9 @@ class Wallets extends Component {
         valNum: 1,
         wallets: [], loading: true,
         buyFiatDrawer: false,
-        selctedVal: ''
+        selctedVal: '',
+        transactions: false,
+        selectedWallet: ''
     }
     componentDidMount() {
         this.fetchWallets();
@@ -49,9 +52,13 @@ class Wallets extends Component {
         if (e === 2) {
             this.props.dispatch(setWithdrawfiatenaable(true))
             this.props.dispatch(setWithdrawfiat({ walletCode: value }))
-        } else {
+        } else if(e===1) {
             this.props.dispatch(setWithdrawfiatenaable(false))
             this.props.dispatch(setdepositCurrency(value))
+        }else if(e===3){
+            this.props.history.push(`/payments/${value.walletCode}`)
+        }else {
+            this.props.history.push(`/internaltransfer`)
         }
         this.setState({
             valNum: e
@@ -64,9 +71,34 @@ class Wallets extends Component {
 
         })
     }
+    showTransactionDrawer =(item) => {
+        this.setState({...this.state, transactions: true, selectedWallet: item?.walletCode});
+    }
+    menuBar = (item) => (
+        <Menu>
+            <ul className="pl-0 drpdwn-list">
+                <li  onClick={() =>  this.showSendReceiveDrawer(3, item)}>
+                    <Link value={3} className="c-pointer">
+                    <Translate content="menu_payments" />
+                    </Link>
+                </li>
+                <li onClick={() => this.showTransactionDrawer(item)}>
+                    <Link  value={4} className="c-pointer">
+                    <Translate content="menu_transactions_history" />
+                    </Link>
+                </li>
+                <li onClick={() => this.showSendReceiveDrawer(5,item)}>
+                    <Link  value={5} className="c-pointer">
+                    <Translate content="menu_internal_transfer" />
+                    </Link>
+                </li>
+            </ul>
+        </Menu>
+    )
     closeDrawer = () => {
         this.setState({
-            buyFiatDrawer: false
+            buyFiatDrawer: false,
+            transactions: false
         })
     }
     render() {
@@ -98,10 +130,26 @@ class Wallets extends Component {
                                 <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
                                 <Translate content="withdraw" onClick={() => this.showSendReceiveDrawer(2, item.walletCode)} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} />
                             </div>
+                            <Dropdown 
+                            overlay={this.menuBar(item)}
+                             trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
+                        <a onClick={e => e.preventDefault()}>
+                          <Space>
+                          <span class="icon md menu-bar ml-4 p-relative"></span>
+                          {/* <DownOutlined /> */}
+                        </Space>
+                      </a>
+                    </Dropdown>
                         </List.Item>}
                 />
                 <SuissebaseFiat showDrawer={this.state.sendReceiveDrawer} valNum={this.state.valNum} onClose={() => this.closeDrawer()} />
                 {this.state.buyFiatDrawer && <MassPayment showDrawer={this.state.buyFiatDrawer} tabData={{ tabVal: this.state.valNum, walletCode: this.state.selctedVal }} onClose={() => this.closeDrawer()} />}
+                {this.state.transactions && <TransactionsHistory
+                    showDrawer={this.state.transactions} selectWallet={this.state.selectedWallet}
+                    onClose={() => {
+                        this.closeDrawer();
+                    }}
+                />}
             </>
         );
     }

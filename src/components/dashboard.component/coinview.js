@@ -34,7 +34,7 @@ class CoinView extends React.Component {
 
             this.loadCoinDetailData();
         })
-    } 
+    }
 componentWillUnmount(){
     this.refreshSubscribe.unsubscribe();
 }
@@ -52,7 +52,7 @@ componentWillUnmount(){
         }
         this.setState({ ...this.state, loading: false})
     }
-   
+
     coinChartData = async (days) => {
         if (this.state.coinData) {
             const response = await getCoinChatData(this.state.coinData.id, 'usd', days);
@@ -81,7 +81,7 @@ componentWillUnmount(){
             this.props.history.push("/docnotices");
             return;
         }
-       
+
         if (key === "buy") {
             this.props.dispatch(fetchSelectedCoinDetails(selectedObj.coin, this.props.userProfile?.id));
             this.props.dispatch(setCoin({ ...selectedObj, toWalletCode: selectedObj.coin, toWalletId: selectedObj.id, toWalletName: selectedObj.coinFullName }));
@@ -107,7 +107,7 @@ componentWillUnmount(){
         selectedObj.coinFullName = selectedObj.name
         selectedObj.oneCoinValue = selectedObj.current_price;
         selectedObj.id = selectedObj.memberWalletId;
-        selectedObj.withdrawMinValue = selectedObj.swapMinValue
+        selectedObj.withdrawMinValue = selectedObj.withDrawMinValue
         this.props.dispatch(fetchWithDrawWallets({ customerId: this.props?.userProfile?.id }));
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
         this.props.dispatch(setSubTitle(apiCalls.convertLocalLang("selectCurrencyinWallet")));
@@ -173,7 +173,7 @@ componentWillUnmount(){
             sendDrawer: false
         })
     }
-   
+
     render() {
         const { Paragraph, Text, Title } = Typography
         const { coinData } = this.state;
@@ -208,10 +208,10 @@ componentWillUnmount(){
                             </div>
                         </div>
                             <ul className="m-0 pl-0">
-                                <li onClick={() => this.showBuyDrawer(coinData, "buy")} className="c-pointer"><div><span className="icon md buy" /></div>BUY</li>
-                                <li onClick={() => this.showBuyDrawer(coinData, "sell")} className="c-pointer"><div><span className="icon md sell" /></div>SELL</li>
-                                <li onClick={() => this.showSendReceiveDrawer(1, coinData)} value={1} className="c-pointer"><div><span className="icon md deposit" /></div>DEPOSIT</li>
-                                <li onClick={() => this.showSendReceiveDrawer(2, coinData)} value={2} className="c-pointer"><div><span className="icon md withdraw" /></div>WITHDRAW</li>
+                                <li onClick={() => this.showBuyDrawer(coinData, "buy")} className="c-pointer"><div><span className="icon md buy" /></div>TRADE</li>
+                                {/* <li onClick={() => this.showBuyDrawer(coinData, "sell")} className="c-pointer"><div><span className="icon md sell" /></div>SELL</li> */}
+                                <li onClick={() => this.showSendReceiveDrawer(1, coinData)} value={1} className="c-pointer"><div><span className="icon md deposit" /></div>RECEIVE</li>
+                                <li onClick={() => this.showSendReceiveDrawer(2, coinData)} value={2} className="c-pointer"><div><span className="icon md withdraw" /></div>SEND</li>
                             </ul>
                         </> : <div className="text-center"><Spin className="text-center"/></div>}
                     </div>

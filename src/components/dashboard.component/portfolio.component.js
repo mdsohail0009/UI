@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
-import { Typography, Radio, message, Spin } from 'antd';
+import { Typography, Radio, message, Spin,Button } from 'antd';
 import Translate from 'react-translate-component';
 import { getData } from './api';
 import NumberFormat from 'react-number-format';
 import Loader from '../../Shared/loader';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { dashboardTransactionSub } from '../../utils/pubsub';
+import TransactionsHistory from "../transactions.history.component";
+
 class Portfolio extends Component {
     chart;
-
     constructor (props) {
         super(props);
         this.state = {
-
+            transactions: false,
             alert: false,
             errorMessage: "",
             allDocs: false,
@@ -77,13 +79,48 @@ class Portfolio extends Component {
           );
         }
     }
+    transactionDrawer =() => {
+        this.setState({ ...this.state, transactions: true});
+    }
+    closeDrawer = () => {
+        this.setState({transactions: false});
+    }
     render() {
         const { Title } = Typography;
 
         const { gridUrl, loading } = this.state;
         return (
             <div className="mb-24">
+                <div>
                     <Translate content="menu_transactions_history" className="basicinfo" />
+                    {/* <span>
+                       <Translate
+                        content="search"
+                        component={Button}
+                        type="primary"
+                        className="dbchart-link fs-14 fw-500"
+                        onClick={()=> this.transactionDrawer()}
+                      />
+                       <span className="icon sm search-angle ml-4" />
+                       </span>  */}
+                    <Button
+                        onClick={() => this.transactionDrawer()}
+                        className="pop-btn dbchart-link fs-14 fw-500"
+                        style={{  height: 40,marginTop:"35px" }}
+                        >
+                           <Translate content="search" />
+                        <span className="icon sm search-angle ml-8"></span>
+                    </Button>
+                       {this.state.transactions &&
+                       <TransactionsHistory
+                        showDrawer={this.state.transactions}
+                        onClose={() => {
+                            this.closeDrawer();
+                        }}
+                    />
+                       }
+                       </div>
+                   
                     <div className="mt-16">
 
                         <div className="box basic-info responsive_table bg-none ">
@@ -152,10 +189,11 @@ class Portfolio extends Component {
         );
     }
 }
+
+const connectStateToProps = ({ userConfig }) => {
+    return { userProfileInfo: userConfig.userProfileInfo, twoFA:userConfig.twoFA }
+}
 const connectDispatchToProps = dispath => {
     return { dispath }
 }
-const connectStateToProps = ({ userConfig }) => {
-    return { userProfileInfo: userConfig.userProfileInfo }
-}
-export default connect(connectStateToProps, connectDispatchToProps)(Portfolio);
+export default connect(connectStateToProps, connectDispatchToProps)(withRouter(Portfolio));

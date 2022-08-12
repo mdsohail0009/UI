@@ -295,7 +295,7 @@ const AddressCommonCom = (props) => {
   const handleCountry = (e) => {
     let code = e;
     form.setFieldsValue({ "state": null });
-    let states = country?.filter((item) => item.name === code);
+    let states = country?.filter((item) => item.name?.toLowerCase() === code.toLowerCase());
     setState(states[0]?.stateLookUp);
   }
   const handleState = (e) => {
@@ -308,11 +308,12 @@ const AddressCommonCom = (props) => {
     if (response.ok) {
       setCountry(response.data);
       let state = form.getFieldValue("country");
-      let states = response.data?.filter((item) => item.name === state);
+      let states = response.data?.filter((item) => item.name?.toLowerCase() === state.toLowerCase());
       setState(states[0]?.stateLookUp);
     }
   }
   const isErrorDispaly = (objValue) => {
+    debugger
     if (objValue.data && typeof objValue.data === "string") {
       return objValue.data;
     } else if (
@@ -326,7 +327,6 @@ const AddressCommonCom = (props) => {
   };
 
   const saveModalwithdrawal = (values) => {
-    debugger
     let obj = {
       id: uuidv4(),
       payeeId: uuidv4(),
@@ -485,7 +485,7 @@ const AddressCommonCom = (props) => {
         props?.dispatch(setHeaderTab(""));
         props?.props?.history?.push("/userprofile");
       } else {
-        setErrorMsg(isErrorDispaly(response));
+       setErrorMsg(isErrorDispaly(response));
         setIsLoading(false);
         setBtnDisabled(false);
         useDivRef.current.scrollIntoView();
@@ -539,7 +539,7 @@ const AddressCommonCom = (props) => {
   const handleCountryChange = (code, countryValues) => {
     bankDetailForm.setFieldsValue({ "payeeAccountState": null });
     let Country = countryValues ? countryValues : country;
-    let states = Country?.filter((item) => item.name === code);
+    let states = Country?.filter((item) => item.name?.toLowerCase() === code?.toLowerCase());
     setNewStates(states[0]?.stateLookUp);
   }
   // const handleCountry = (code,countryValues) => {

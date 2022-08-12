@@ -33,6 +33,8 @@ class Layout extends Component {
             return <OnBoarding />
         }else if( this.props.userProfile && this.props.userProfile?.role==='Admin'){
             return <>{this.redirect()}</>
+        }else if(this.props.twoFA?.loading){
+            return <div className="loader">Loading .....</div>
         }else{
         return <>
             <AntLayout>

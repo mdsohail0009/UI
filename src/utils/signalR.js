@@ -2,6 +2,7 @@ import * as SignalR from '@microsoft/signalr';
 import { notification } from 'antd';
 import { updateDocRequest } from '../reducers/configReduser';
 import { fetchDashboardcalls, setNotificationCount } from '../reducers/dashboardReducer';
+import { clearPermissions } from '../reducers/feturesReducer';
 import { store } from '../store';
 function openNotification(message, title) {
     const args = {
@@ -43,6 +44,9 @@ async function start(id) {
     connection.on("UpdateWallet", (e) => {
         const { userConfig: { userProfileInfo } } = store.getState();
         store.dispatch(fetchDashboardcalls(userProfileInfo?.id));
+    });
+    connection.on("SendRoleUpdatedMessage", () => {
+        //  store.dispatch(clearPermissions());
     });
 }
 

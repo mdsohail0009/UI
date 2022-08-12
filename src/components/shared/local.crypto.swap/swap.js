@@ -10,7 +10,7 @@ const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "U
     });
     return (
       <div className="p-relative">
-        <div className="enter-val-container ss">
+        <div className="enter-val-container swap-com">
           <Text className="fs-30 fw-400 text-white-30 text-yellow mr-4">
             {!isSwaped ? localCurrency : cryptoCurrency}
           </Text>
