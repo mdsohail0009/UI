@@ -66,20 +66,7 @@ const LocalCryptoSwapper = (props, ref) => {
 
 
     }
-//    const  clickAmt=(type)=> {
-//     debugger
-//         let usdamnt; let cryptoamnt;
-//         let obj = Object.assign({}, this.props.sendReceive?.cryptoWithdraw?.selectedWallet)
-//       //if (type === 'all') {
-//         //     usdamnt = obj.coinValueinNativeCurrency ? obj.coinValueinNativeCurrency : 0;
-//         //     cryptoamnt = obj.coinBalance ? obj.coinBalance : 0;
-//         //     this.setState({ ...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt, amountPercentageType: 'all' });
-//         //     this.eleRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
-//         // } else {
-//         //     this.setState({ ...this.state, CryptoAmnt: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, amountPercentageType: 'min' });
-//         //     this.eleRef.current.changeInfo({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 });
-//         // }
-//     }
+
     return <div className="p-relative">
         <div className="enter-val-container common-withdraow withdraw-crypto">
             <Text className="fs-30 fw-400 text-white-30 text-yellow mr-4">{!isSwaped ? localCurrency : cryptoCurrency}</Text>
@@ -110,14 +97,7 @@ const LocalCryptoSwapper = (props, ref) => {
                 autoFocus
                 allowNegative={false}
             />
-            <div class="minmax ">
-                <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn with-min" onClick={() => props.clickAmt("min")}>
-                    <span >Min</span>
-                </button>
-                <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn with-max" onClick={() => props.clickAmt("all")}>
-                    <span>Max</span>
-                </button>
-                </div>
+        
             {/* <div className='with-min'>Min</div>
             <div className='with-max'>Max</div> */}
         </div>
