@@ -563,7 +563,7 @@ const FaitWithdrawal = ({props,
                           ))}
                         </Select>
                         <Tooltip placement="top" title="Send to new Wallet" style={{ flexGrow: 1 }}>
-                                    <div className="new-add c-pointer" style={{borderRadius:'0'}} onClick={() => showNewBenificiary()}>
+                                    <div className="new-add c-pointer" onClick={() => showNewBenificiary()}>
                                         <span className="icon md diag-arrow d-block c-pointer"></span>
                                     </div>
                                 </Tooltip>
@@ -592,7 +592,8 @@ const FaitWithdrawal = ({props,
                         ]}
 
                         label={
-                          <>
+                          <div>
+                            <div className="ss">
                             <Translate className="input-label ml-0 mb-0"
                               content="amount" component={Form.label} />
                             <div className="minmax">
@@ -613,7 +614,8 @@ const FaitWithdrawal = ({props,
                                 onClick={() => clickMinamnt("max")}
                               />
                             </div>
-                          </>
+                            </div>
+                          </div>
                         }
                       >
 
