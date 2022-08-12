@@ -622,11 +622,29 @@ const FaitWithdrawal = ({props,
                         ]}
 
                         label={
-                          <div>
-                            <div className="ss">
+                          <div className="ss">
                             <Translate className="input-label ml-0 mb-0"
-                              content="amount" component={Form.label}  />
-                            <div className="minmax custom-minmax">
+                              content="amount"  required component={Form.label}  />
+                            </div>
+                        }
+                      >
+                         
+                        <NumberFormat
+                          className="cust-input mb-0"
+                          customInput={Input}
+                          thousandSeparator={true}
+                          prefix={""}
+                          placeholder="0.00"
+                          decimalScale={2}
+                          allowNegative={false}
+                          maxlength={13}
+                          onValueChange={({ value }) => {
+                            addressObj.Amount = value;
+                            form.setFieldsValue({ ...addressObj })
+                          }}
+                          value={addressObj.Amount} />
+                      </Form.Item>
+                      <div className="minmax custom-minmax">
                               <Translate
                                 type="text"
                                 size="small"
@@ -644,26 +662,6 @@ const FaitWithdrawal = ({props,
                                 onClick={() => clickMinamnt("max")}
                               />
                             </div>
-                            </div>
-                          </div>
-                        }
-                      >
-
-                        <NumberFormat
-                          className="cust-input mb-0"
-                          customInput={Input}
-                          thousandSeparator={true}
-                          prefix={""}
-                          placeholder="0.00"
-                          decimalScale={2}
-                          allowNegative={false}
-                          maxlength={13}
-                          onValueChange={({ value }) => {
-                            addressObj.Amount = value;
-                            form.setFieldsValue({ ...addressObj })
-                          }}
-                          value={addressObj.Amount} />
-                      </Form.Item>
 
                       <Translate
                         className="fw-200 text-white-50 fs-14"

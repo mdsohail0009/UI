@@ -1048,6 +1048,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .header-logo li:first-child::after{content: '';position: absolute;width: 1px;height: 27px;right: 0;top: 10px;background-color: var(--bgWhiteSpin);} 
     .common-withdraow.withdraw-crypto{margin-right: 0px;}
     .common-withdraow.withdraw-crypto input[type=text]{font-size: 22px !important;}
+   
 }
 @media (min-width: 1200px){
     .custom-font{font-size:28px !important;}
@@ -1098,6 +1099,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .crypto-address .walletadrs{font-size: 14px; margin-top: 6px;}
     .addbook-height{max-height: calc(100vh - 112px);}
     .pop-btn-46{height:46px;}
+    .minmax.custom-minmax{position: relative;right:-332px !important;top:-11px;width:100px;}
 }
 
 @media (min-width: 1500){
@@ -1358,3 +1360,4 @@ input[type=number]::-webkit-outer-spin-button {
 .custom-spin .ant-spin-dot-spin i{width: 16px;height: 16px;}
 .ant-dropdown.secureDropdown{z-index: 995;}
 .list-dot{list-style: initial;margin-bottom: 4px !important;}
+.minmax.custom-minmax{position: relative;right:-250px;top:-105px;width:100px;}
