@@ -625,30 +625,11 @@ const FaitWithdrawal = ({ props,
                         ]}
 
                         label={
-                          <div>
-                            <div className="ss">
+
                             <Translate className="input-label ml-0 mb-0"
                               content="amount" component={Form.label}  />
-                            <div className="minmax custom-minmax">
-                              <Translate
-                                type="text"
-                                size="small"
-                                className="min-btn"
-                                content="min"
-                                component={Button}
-                                onClick={() => clickMinamnt("min")}
-                              />
-                              <Translate
-                                type="text"
-                                size="small"
-                                className="min-btn"
-                                content="all"
-                                component={Button}
-                                onClick={() => clickMinamnt("max")}
-                              />
-                            </div>
-                            </div>
-                          </div>
+                            
+                         
                         }
                       >
                          
@@ -667,6 +648,7 @@ const FaitWithdrawal = ({ props,
                           }}
                           value={addressObj.Amount} />
                       </Form.Item>
+                     
                       <div className="minmax custom-minmax">
                               <Translate
                                 type="text"
