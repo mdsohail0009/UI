@@ -211,8 +211,8 @@ class WithdrawSummary extends Component {
 				inputDisable: false,
 				disable: true,
 				errorMsg: null,
-				// verificationText:
-				// 	apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber,
+				verificationText:
+					apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber,
 			});
 			this.startTimer();
 
@@ -533,9 +533,9 @@ class WithdrawSummary extends Component {
 		}
 	};
 
-	fullNumber = this.props.userProfile?.phoneNumber;
-	// last4Digits = this.fullNumber?.slice(-4);
-	// maskedNumber = this.last4Digits?.padStart(this.fullNumber.length, "*");
+	fullNumber = this.props.oidc?.phone_number;
+	last4Digits = this.fullNumber?.slice(-4);
+	maskedNumber = this.last4Digits?.padStart(this.fullNumber.length, "*");
 
 	address = this.props.sendReceive.withdrawCryptoObj?.toWalletAddress;
 	firstAddress = this.address?.slice(0, 4);
@@ -974,12 +974,13 @@ class WithdrawSummary extends Component {
 	}
 }
 
-const connectStateToProps = ({ sendReceive, userConfig, menuItems }) => {
+const connectStateToProps = ({ sendReceive, userConfig, menuItems,oidc }) => {
 	return {
 		sendReceive,
 		userProfile: userConfig.userProfileInfo,
 		trackAuditLogData: userConfig.trackAuditLogData,
-		withdrawCryptoPermissions: menuItems?.featurePermissions?.crypto
+		withdrawCryptoPermissions: menuItems?.featurePermissions?.sendreceivecrypto,
+		oidc:oidc.user?.profile
 	};
 };
 const connectDispatchToProps = (dispatch) => {

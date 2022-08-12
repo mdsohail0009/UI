@@ -184,7 +184,7 @@ componentDidMount() {
             <Row >
              
               <Col xs={24} sm={24} md={7} lg={7} xl={6} className="px-8 transaction_resp">
-                <Form.Item name="type" className="input-label mb-0" label="Type">
+                <Form.Item name="type" className="input-label mb-0" label="Type" colon={false}>
                   <Select
                     defaultValue="All"
                     className="cust-input w-100 bgwhite"
@@ -198,7 +198,7 @@ componentDidMount() {
                 </Form.Item>
               </Col>
               <Col xs={24} sm={24} md={7} lg={7} xl={6} className="px-8 transaction_resp">
-                <Form.Item  className="input-label mb-0" label="Wallet">
+                <Form.Item  className="input-label mb-0" label="Wallet" colon={false}>
                   <Select
                     value = {this.state.searchObj.currency}
                    // defaultValue={this.state.searchObj.currency}
@@ -213,7 +213,7 @@ componentDidMount() {
                 </Form.Item>
               </Col>
               <Col xs={24} sm={24} md={7} lg={7} xl={6}  className="px-8 transaction_resp">
-                <Form.Item name="docType" className="input-label mb-0" label="Transaction">
+                <Form.Item name="docType" className="input-label mb-0" label="Transaction" colon={false}>
                   <Select
                     defaultValue="All"
                     className="cust-input w-100 bgwhite"

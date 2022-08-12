@@ -550,7 +550,7 @@ const FaitWithdrawal = ({props,
                         }
                       >
                         <div className="p-relative d-flex align-center">
-                        <Select style={{borderRadius:'30px 0 0 30px'}}
+                        <Select style={{borderRadius:'30px 30px 30px 30px'}}
                           className="cust-input mb-0 custom-search"
                           dropdownClassName="select-drpdwn"
                           onChange={(e) => handleDetails(e)}
@@ -562,11 +562,11 @@ const FaitWithdrawal = ({props,
                             </Option>
                           ))}
                         </Select>
-                        <Tooltip placement="top" title="Send to new Wallet" style={{ flexGrow: 1 }}>
+                        {/* <Tooltip placement="top" title="Send to new Wallet" style={{ flexGrow: 1 }}>
                                     <div className="new-add c-pointer" onClick={() => showNewBenificiary()}>
                                         <span className="icon md diag-arrow d-block c-pointer"></span>
                                     </div>
-                                </Tooltip>
+                                </Tooltip> */}
                                 {/* <Tooltip placement="top" title={<span>{apicalls.convertLocalLang('SelectAddress')}</span>} style={{ flexGrow: 1 }}>
                                     <div className="new-add c-pointer"onClick={() => showNewBenificiary("ADDRESS")}>
                                         <span className="icon md diag-arrow d-block c-pointer"></span>

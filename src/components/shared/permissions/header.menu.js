@@ -58,6 +58,7 @@ import { setNotificationCount } from "../../../reducers/dashboardReducer";
 import { userManager } from "../../../authentication";
 import { setCurrentAction } from "../../../reducers/actionsReducer";
 import { KEY_URL_MAP } from "./config";
+import { getFeaturePermissionsByKey } from "./permissionService";
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
 counterpart.registerTranslations("my", my);
@@ -194,12 +195,12 @@ class HeaderPermissionMenu extends Component {
             const ignoreKycLst = ["transactions"];
             if ((this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled)|| ignoreKycLst.includes(menuItem.key)) {
                 if (!this.props.menuItems.featurePermissions[menuItem.key]) {
-                    this.props.dispatch(fetchFeaturePermissions(menuItem.featureId || menuItem.id, this.props.userConfig.id, (data) => {
+                    getFeaturePermissionsByKey(menuItem.key, (data) => {
                         if (data.ok) {
                             this.chekPermissions(menuKey, menuItem, data?.data)
 
                         }
-                    }));
+                    });
                 } else {
                     this.chekPermissions(menuKey, menuItem, this.props.menuItems.featurePermissions[menuItem.key]);
                 }
