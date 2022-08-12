@@ -243,7 +243,7 @@ class Header extends Component {
                   {this.state.collapsed ?
                     <span className="icon lg hamburg " /> : <span className="icon md close-white " />}
                 </li>
-                <li className="toggle-space">
+                {/* <li className="toggle-space">
                   <Dropdown overlay={(
                     <div className="secureDropdown">
             <Menu className="drpdwn-list">
@@ -261,7 +261,7 @@ class Header extends Component {
            trigger={['click']}>
                       <a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="icon lg app-menu"></span></a>
                   </Dropdown>
-                </li>
+                </li> */}
                 <li className="mobile-logo">
                   {
                     <img
