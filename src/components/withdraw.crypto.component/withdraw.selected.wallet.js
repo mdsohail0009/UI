@@ -310,7 +310,7 @@ class CryptoWithDrawWallet extends Component {
         }
         if (!this.state.isVerificationMethodsChecked) {
             return <Alert
-                message="Verification method alert !"
+                message="Verification alert !"
                 description={<Text>Without verifications you can't send. Please select send verifications from <a onClick={() => {
                     this.props.onDrawerClose();
                     this.props.history.push("/userprofile?key=2")
