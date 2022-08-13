@@ -316,7 +316,26 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
           component={Title}
           className="basicinfo mb-0"
         />
-        <Paragraph className="basic-decs">Please select <Text className="text-yellow fw-700">at least 2 </Text> of the Send verification options below.</Paragraph>
+        <Paragraph className="basic-decs">
+        <Translate
+          content="Please_select"
+          component={Text}
+          className="text-white"
+        /> {" "}
+        {/* <Text className="text-yellow fw-700">  */}
+         <Translate
+          content="at_least_2"
+          component={Text}
+          className="text-yellow fw-700"
+        /> {" "}
+        {/* {" "}at least 2 </Text> */}
+        <Translate
+          content="verification_options"
+          component={Text}
+          className="text-white"
+        /> {" "}
+         {/* of the Send verification options below. */}
+         </Paragraph>
        
         <Form>
           <Row gutter={[16, 16]}>

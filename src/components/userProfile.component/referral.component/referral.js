@@ -116,11 +116,11 @@ class Referral extends Component {
                   window.open(process.env.REACT_APP_PARTNER_UI_URL, "_blank")
                 }
               >
-                Go to Partner
+                <Translate content="Go_to_Partner" />
               </Button>
             </div>
             <div className="crypto-address mt-12">
-              <Text className="mb-0 fw-400 text-secondary">Referral code</Text>
+            <Translate content="Referral_code" className="mb-0 fw-400 text-secondary" component={Text} />
               <div className="mb-0 fw-600 text-white-30 walletadrs">
                 {this.state.referaldata?.referralCode || "---"}
               </div>
@@ -136,9 +136,7 @@ class Referral extends Component {
               </div>
             </div>
             <div className="crypto-address mt-12">
-              <Text className="mb-0 fw-400 text-secondary">
-                Personal referral link
-              </Text>
+            <Translate content="Personal_referral_link" className="mb-0 fw-400 text-secondary" component={Text} />
               <div className="mb-0 fw-600 text-white-30 walletadrs mb-copy">
                 {this.state.referaldata?.referrallink || "---"}
               </div>
@@ -154,9 +152,7 @@ class Referral extends Component {
               </div>
             </div>
             <div className="crypto-address mt-12">
-              <Text className="mb-0 fw-400 text-secondary">
-                Business referral link
-              </Text>
+            <Translate content="Business referral link" className="mb-0 fw-400 text-secondary" component={Text} />
               <div className="mb-0 fw-600 text-white-30 walletadrs mb-copy">
                 {this.state.referaldata?.referralBusinesslink || "---"}
               </div>
@@ -179,7 +175,7 @@ class Referral extends Component {
                 block
                 onClick={e => e.preventDefault()}
               >
-                Share
+               <Translate content="share" />
               </Button>
             </Dropdown>
           </div>

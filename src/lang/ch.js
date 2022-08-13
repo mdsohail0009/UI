@@ -539,5 +539,15 @@ export default {
 	return_to_transfor: "Back to Transfor",
 	referr: "我的推薦人",
 	transforsucessText1: "Your order has been placed successfully,",
-	case:"案例"
+	case:"案例",
+	Please_select:"请选择",
+	at_least_2:"至少 2",
+	verification_options:"下面的發送驗證選項。",
+	Case_Number:"案件編號",
+	Case_Title:"案例名稱",
+	Case_State:"案例狀態",
+	Go_to_Partner:"前往合作夥伴",
+	Referral_code:"推薦代碼",
+	Personal_referral_link:"個人推薦鏈接",
+	Business_referral_link:"業務推薦鏈接",
 };
