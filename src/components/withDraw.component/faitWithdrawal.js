@@ -506,7 +506,7 @@ const FaitWithdrawal = ({ props,
             )}
             {!isVerificationMethodsChecked &&
               <Alert
-                message="Verification method alert !"
+                message="Verification alert !"
                 description={<Text>Without verifications you can't send. Please select send verifications from <a onClick={() => {
                   onDrawerClose();
                   history.push("/userprofile?key=2")
