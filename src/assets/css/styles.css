@@ -1344,13 +1344,7 @@ input[type=number]::-webkit-outer-spin-button {
 .crypto-list-custom li {
     color: #fff;
 }
-.custom-crypto-btns .cutom-bnt{background-color: transparent;border-radius: 6px;}
-.custom-crypto-btns .ant-btn:hover,
-.ant-btn:focus,
-.ant-btn:active {
-    border-color: #ccc !important;
-    outline: none !important;
-}
+.custom-crypto-btns .custom-bnt{background-color: transparent;border-radius: 6px;border:1px solid #ccc;padding:8px 10px;}
 .intertrans{display: flex;
     justify-content: center;
     align-items: center;
