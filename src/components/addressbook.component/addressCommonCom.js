@@ -192,7 +192,7 @@ const AddressCommonCom = (props) => {
         return Promise.reject("Please select a coin first");
       }
     } else {
-      return Promise.reject("is required");
+      return Promise.reject(apiCalls.convertLocalLang('is_required'));
     }
   };
   const handleCancel = () => {
@@ -603,7 +603,12 @@ const AddressCommonCom = (props) => {
                 name="addressType"
                 label={
                   <div>
-                    Address Type{" "}
+                  
+                    <Translate
+                content="address_type"
+                component={Text}
+                className="text-white"
+              />{" "}
                     <Tooltip
                       title={
                         <ul className=" p-0" style={{ listStyleType: "none" }}>
@@ -643,14 +648,24 @@ const AddressCommonCom = (props) => {
                     className="text-white"
                     disabled={isEdit}
                   >
-                    1st Party
+                  
+                    <Translate
+                content="first_party"
+                component={Text}
+                className="text-white"
+              />
                   </Radio>
                   <Radio
                     value={"3rdparty"}
                     className="text-white"
                     disabled={isEdit}
                   >
-                    3rd Party
+                  
+                    <Translate
+                content="third_party"
+                component={Text}
+                className="text-white"
+              />
                   </Radio>
                 </Radio.Group>
               </Form.Item>
@@ -672,7 +687,7 @@ const AddressCommonCom = (props) => {
                     rules={[
                       {
                         required: true,
-                        message: "Is required"
+                        message: apiCalls.convertLocalLang('is_required')
                       },
                       {
                         whitespace: true,
@@ -686,7 +701,8 @@ const AddressCommonCom = (props) => {
                     <AutoComplete
                       onChange={(e) => handleChange(e)}
                       maxLength={20} className="cust-input"
-                      placeholder="Favorite Name"
+                      placeholder= {apiCalls.convertLocalLang("favorite_name")}
+                     
                     >
                       {PayeeLu?.map((item, indx) => (
                         <Option key={indx} value={item.name}>
@@ -705,7 +721,7 @@ const AddressCommonCom = (props) => {
                     rules={[
                       {
                         required: true,
-                        message: "Is required"
+                        message: apiCalls.convertLocalLang('is_required')
                       },
                       {
                         whitespace: true,
@@ -722,18 +738,18 @@ const AddressCommonCom = (props) => {
                   >
                     <Input
                       className="cust-input"
-                      placeholder="Name"
+                      placeholder={apiCalls.convertLocalLang('Fait_Name')}
                     />
                   </Form.Item>
                 </Col>
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                   <Form.Item
                     name="email"
-                    label="Email"
+                    label={apiCalls.convertLocalLang('email')}
                     className="custom-forminput custom-label mb-0"
                     type='email'
                     rules={[
-                      { required: true, message: "Is required" },
+                      { required: true, message: apiCalls.convertLocalLang('is_required') },
                       {
                         validator(_, value) {
                           if (emailExist) {
@@ -747,7 +763,7 @@ const AddressCommonCom = (props) => {
                         },
                       },
                     ]}>
-                    <Input placeholder="Email" className="cust-input" maxLength={100} />
+                    <Input placeholder={apiCalls.convertLocalLang('email')} className="cust-input" maxLength={100} />
                   </Form.Item>
                 </Col>
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -755,7 +771,7 @@ const AddressCommonCom = (props) => {
                     className="custom-forminput custom-label mb-0"
                     name="phoneNumber"
                     rules={[
-                      { required: true, message: "Is required" },
+                      { required: true, message: apiCalls.convertLocalLang('is_required') },
                       {
                         validator(_, value) {
                           if (emailExist) {
@@ -776,7 +792,7 @@ const AddressCommonCom = (props) => {
                     <Input
                       className="cust-input"
                       maxLength="20"
-                      placeholder="Phone Number"
+                      placeholder={apiCalls.convertLocalLang('Phone_No')}
                       allowNegative={false}
                     />
 
@@ -791,7 +807,7 @@ const AddressCommonCom = (props) => {
                       rules={[
                         {
                           required: true,
-                          message: "Is required"
+                          message: apiCalls.convertLocalLang('is_required')
                         },
                         {
                           whitespace: true,
@@ -812,7 +828,7 @@ const AddressCommonCom = (props) => {
                         maxLength={100}
                       ></TextArea> */}
                        <TextArea
-                        placeholder="Address Line1"
+                        placeholder={apiCalls.convertLocalLang('Address_Line1')}
                         className="cust-input cust-text-area "
                         autoSize={{ minRows: 2, maxRows: 2 }}
                         maxLength={100}
@@ -828,7 +844,7 @@ const AddressCommonCom = (props) => {
                       rules={[
                         {
                           required: true,
-                          message: "Is required"
+                          message: apiCalls.convertLocalLang('is_required')
                         },
                         {
                           whitespace: true,
@@ -843,7 +859,7 @@ const AddressCommonCom = (props) => {
                       }
                     >
                       <TextArea
-                        placeholder="Address Line2"
+                        placeholder={apiCalls.convertLocalLang('Address_Line2')}
                         className="cust-input cust-text-area "
                         autoSize={{ minRows: 2, maxRows: 2 }}
                         maxLength={100}
@@ -859,7 +875,7 @@ const AddressCommonCom = (props) => {
                       rules={[
                         {
                           required: true,
-                          message: "Is required"
+                          message: apiCalls.convertLocalLang('is_required')
                         },
                         {
                           whitespace: true,
@@ -874,7 +890,7 @@ const AddressCommonCom = (props) => {
 
                       <Select
                         showSearch
-                        placeholder="Country"
+                        placeholder={apiCalls.convertLocalLang('select_country')}
                         className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
                         dropdownClassName="select-drpdwn"
                         onChange={(e) => handleCountry(e)}
@@ -897,7 +913,7 @@ const AddressCommonCom = (props) => {
                       rules={[
                         {
                           required: true,
-                          message: "Is required"
+                          message: apiCalls.convertLocalLang('is_required')
                         },
                         {
                           whitespace: true,
@@ -907,11 +923,11 @@ const AddressCommonCom = (props) => {
                           validator: validateContentRule
                         }
                       ]}
-                      label={<Translate content="State" component={Form.label} />}
+                      label={<Translate content="state" component={Form.label} />}
                     >
                       <Select
                         showSearch
-                        placeholder="Select State"
+                        placeholder={apiCalls.convertLocalLang('select_state')}
                         className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
                         dropdownClassName="select-drpdwn"
                         onChange={(e) => handleState(e)}
@@ -935,7 +951,7 @@ const AddressCommonCom = (props) => {
                       rules={[
                         {
                           required: true,
-                          message: "Is required"
+                          message: apiCalls.convertLocalLang('is_required')
                         },
                         {
                           whitespace: true,
@@ -945,12 +961,12 @@ const AddressCommonCom = (props) => {
                           validator: validateContentRule
                         }
                       ]}
-                      label={<Translate content="City" component={Form.label} />}
+                      label={<Translate content="city" component={Form.label} />}
                     >
                       <Input
                         className="cust-input"
                         maxLength="20"
-                        placeholder="City"
+                        placeholder={apiCalls.convertLocalLang('city')}
                       />
                     </Form.Item>
                   </Col>}
@@ -963,7 +979,7 @@ const AddressCommonCom = (props) => {
                       rules={[
                         {
                           required: true,
-                          message: "Is required"
+                          message: apiCalls.convertLocalLang('is_required')
                         },
                         {
                           whitespace: true,
@@ -981,7 +997,7 @@ const AddressCommonCom = (props) => {
                       <Input
                         className="cust-input"
                         maxLength="10"
-                        placeholder="Postal Code"
+                        placeholder={apiCalls.convertLocalLang('Post_code')}
                       />
 
                     </Form.Item>
@@ -1004,7 +1020,11 @@ const AddressCommonCom = (props) => {
                     style={{ height: "40px" }}
                     className="pop-btn mb-36 mt-24"
                   >
-                    {props?.cryptoTab == 2 ? "Add bank details" : (withdraeTab == "Fiat" ? "Add bank details" : "ADD CRYPTO ADDRESS")}
+                    <Translate
+                    content={props?.cryptoTab == 2 ? "cryptoAddress" : "bankAddress"}
+                    component={Text}
+                   
+                  />
                     <span className="icon md add-icon-black ml-8"></span>
                   </Button>
 
@@ -1013,7 +1033,7 @@ const AddressCommonCom = (props) => {
 
 
                 <Modal
-                  title={(props?.cryptoTab == 1) ? "ADD CRYPTO ADDRESS" : "ADD BANK DETAILS"}
+                  title={apiCalls.convertLocalLang((props?.cryptoTab == 1) ? "cryptoAddress" : "bankAddress")}
                   visible={isModalVisible}
                   onOk={handleOk}
                   width={800}
@@ -1050,7 +1070,7 @@ const AddressCommonCom = (props) => {
                         rules={[
                           {
                             required: true,
-                            message: 'Is required',
+                            message: apiCalls.convertLocalLang('is_required'),
                             whitespace: true,
                           },
                           {
@@ -1060,7 +1080,7 @@ const AddressCommonCom = (props) => {
                         <Input
                           className="cust-input mb-0"
                           maxLength="20"
-                          placeholder='Address Label'
+                          placeholder={apiCalls.convertLocalLang('AddressLabel')}
                         />
                       </Form.Item>
                       <Form.Item
@@ -1137,17 +1157,17 @@ const AddressCommonCom = (props) => {
                       initialValues={cryptoAddress}
                     >
                       <Row gutter={[16, 16]}>
-
+                      
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                           <Form.Item
                             className="custom-forminput custom-label mb-0"
                             name="label"
-                            label="Bank Label"
+                            label={apiCalls.convertLocalLang('bank_label')}
                             required
                             rules={[
                               {
                                 required: true,
-                                message: "Is required"
+                                message: apiCalls.convertLocalLang('is_required')
                               },
                               {
                                 whitespace: true,
@@ -1160,7 +1180,7 @@ const AddressCommonCom = (props) => {
                           >
                             <Input
                               className="cust-input  "
-                              placeholder="Bank Label"
+                              placeholder={apiCalls.convertLocalLang('bank_label')}
                             />
 
                           </Form.Item>
@@ -1170,12 +1190,12 @@ const AddressCommonCom = (props) => {
                           <Form.Item
                             className="custom-forminput custom-label mb-0"
                             name="walletCode"
-                            label="Currency"
+                            label={apiCalls.convertLocalLang('currency')}
                             required
                             rules={[
                               {
                                 required: true,
-                                message: "Is required"
+                                message: apiCalls.convertLocalLang('is_required')
                               },
                               {
                                 whitespace: true,
@@ -1201,13 +1221,14 @@ const AddressCommonCom = (props) => {
                             className="custom-forminput custom-label mb-0"
                             name="bankType"
                             required
-                            rules={[{ required: false, message: 'Is required' }, {
+                            rules={[{ required: false, message: apiCalls.convertLocalLang('is_required') }, {
                               whitespace: true,
                             },
                             {
                               validator: validateContentRule
                             },]}
-                            label="Bank Type"
+                            
+                            label={apiCalls.convertLocalLang('bank_type')}
                           >
 
                             <Select
@@ -1215,7 +1236,7 @@ const AddressCommonCom = (props) => {
                               dropdownClassName="select-drpdwn"
                               defaultValue="BankAccount"
                               onChange={(e) => handleBankChange(e)}
-                              placeholder="Select Type"
+                              placeholder={apiCalls.convertLocalLang('select_type')}
                               bordered={false}
                             >
                               <Option value="BankAccount">Bank Account</Option>
@@ -1228,12 +1249,12 @@ const AddressCommonCom = (props) => {
                           <Form.Item
                             className="custom-forminput custom-label mb-0"
                             name="IBAN"
-
-                            label="IBAN"
+                            
+                            label={apiCalls.convertLocalLang('Bank_account_iban')}
                             required
                            
                             rules={[
-                              { required: true, message: "Is required" },
+                              { required: true, message: apiCalls.convertLocalLang('is_required') },
                               {
                                 validator(_, value) {
                                   if (emailExist) {
@@ -1252,7 +1273,7 @@ const AddressCommonCom = (props) => {
                           >
                             <Input
                               className="cust-input"
-                              placeholder="IBAN"
+                              placeholder={apiCalls.convertLocalLang('Bank_account_iban')}
                             />
                           </Form.Item>
                         </Col> :
@@ -1260,11 +1281,11 @@ const AddressCommonCom = (props) => {
                             <Form.Item
                               className="custom-forminput custom-label mb-0"
                               name="accountNumber"
-                              label="Bank Account Number"
+                              label={apiCalls.convertLocalLang('Bank_account')}
                               required
                              
                               rules={[
-                                { required: true, message: "Is required" },
+                                { required: true, message: apiCalls.convertLocalLang('is_required')},
                                 {
                                   validator(_, value) {
                                     if (emailExist) {
@@ -1283,7 +1304,7 @@ const AddressCommonCom = (props) => {
                             
                               <Input
                               className="cust-input "
-                              placeholder="Bank Account Number"
+                              placeholder={apiCalls.convertLocalLang('Bank_account')}
                               maxLength="500"
                             />
                             </Form.Item>
@@ -1292,11 +1313,10 @@ const AddressCommonCom = (props) => {
                           <Form.Item
                             className="custom-forminput custom-label mb-0"
                             name="swiftCode"
-                            label="BIC/SWIFT/Routing Number"
+                            label={apiCalls.convertLocalLang('BIC_SWIFT_routing_number')}
                             required
-                         
                             rules={[
-                              { required: true, message: "Is required" },
+                              { required: true, message: apiCalls.convertLocalLang('is_required') },
                               {
                                 validator(_, value) {
                                   if (emailExist) {
@@ -1314,22 +1334,22 @@ const AddressCommonCom = (props) => {
 
                             <Input
                               className="cust-input "
-                              placeholder="Swift Code"
+                              placeholder={apiCalls.convertLocalLang('swift_code')}
                               maxLength="500"
                             />
                           </Form.Item>
                         </Col>
-
+                     
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                           <Form.Item
                             className="custom-forminput custom-label mb-0"
                             name="bankName"
-                            label="Bank Name"
+                            label={apiCalls.convertLocalLang('Bank_name')}
                             required
                             rules={[
                               {
                                 required: true,
-                                message: "Is required"
+                                message: apiCalls.convertLocalLang('is_required')
                               },
                               {
                                 whitespace: true,
@@ -1342,7 +1362,7 @@ const AddressCommonCom = (props) => {
                           >
                             <Input
                               className="cust-input"
-                              placeholder="Bank Name"
+                              placeholder={apiCalls.convertLocalLang('Bank_name')}
                               maxLength="500"
                             />
                           </Form.Item>
@@ -1354,7 +1374,7 @@ const AddressCommonCom = (props) => {
                             className="custom-forminput custom-label mb-0"
                             name="payeeAccountCountry"
                             required
-                            rules={[{ required: true, message: 'Is required' }, {
+                            rules={[{ required: true, message: apiCalls.convertLocalLang('is_required') }, {
                               whitespace: true,
                             },
                             {
@@ -1365,7 +1385,7 @@ const AddressCommonCom = (props) => {
 
                             <Select
                               showSearch
-                              placeholder="Select Country"
+                              placeholder={apiCalls.convertLocalLang('select_country')}
                               className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
                               dropdownClassName="select-drpdwn"
                               onChange={(e) => handleCountryChange(e)}
@@ -1387,7 +1407,7 @@ const AddressCommonCom = (props) => {
                             rules={[
                               {
                                 required: true,
-                                message: "Is required"
+                                message: apiCalls.convertLocalLang('is_required')
                               },
                               {
                                 whitespace: true,
@@ -1397,11 +1417,11 @@ const AddressCommonCom = (props) => {
                                 validator: validateContentRule
                               }
                             ]}
-                            label={<Translate content="State" component={Form.label} />}
+                            label={<Translate content="state" component={Form.label} />}
                           >
                             <Select
                               showSearch
-                              placeholder="Select State"
+                              placeholder={apiCalls.convertLocalLang('select_state')}
                               className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
                               dropdownClassName="select-drpdwn"
                               onChange={(e) => handleStateChange(e)}
@@ -1424,7 +1444,7 @@ const AddressCommonCom = (props) => {
                             rules={[
                               {
                                 required: true,
-                                message: "Is required"
+                                message: apiCalls.convertLocalLang('is_required')
                               },
                               {
                                 whitespace: true,
@@ -1434,12 +1454,12 @@ const AddressCommonCom = (props) => {
                                 validator: validateContentRule
                               }
                             ]}
-                            label={<Translate content="City" component={Form.label} />}
+                            label={<Translate content="city" component={Form.label} />}
                           >
                             <Input
                               className="cust-input"
                               maxLength="20"
-                              placeholder="City"
+                              placeholder={apiCalls.convertLocalLang('city')}
                             />
                           </Form.Item>
                         </Col>
@@ -1451,7 +1471,7 @@ const AddressCommonCom = (props) => {
                             rules={[
                               {
                                 required: true,
-                                message: "Is required"
+                                message: apiCalls.convertLocalLang('is_required')
                               },
                               {
                                 whitespace: true,
@@ -1468,7 +1488,7 @@ const AddressCommonCom = (props) => {
                             <Input
                               className="cust-input"
                               maxLength="20"
-                              placeholder="Postal Code"
+                              placeholder={apiCalls.convertLocalLang('Post_code')}
                             />
                           </Form.Item>
 
@@ -1479,7 +1499,8 @@ const AddressCommonCom = (props) => {
                           className="pop-btn px-36"
                           style={{ margin: "0 8px" }}
                           onClick={() => handleCancel()}>
-                          Cancel
+                          {apiCalls.convertLocalLang('cancel')}
+                          
                         </Button>
                         <Button
                           htmlType="submit"
@@ -1624,8 +1645,14 @@ const AddressCommonCom = (props) => {
 
                   />
                 </div>
+                
                 {!props?.addressBookReducer?.selectedRowData?.isWhitelisted && <div className="whitelist-note">
-                  <Alert type="warning" description={`Note : Declaration form will be sent to ${props?.userConfig?.email || favouriteDetails?.email}. Please sign using link received in email to whitelist your address`} showIcon closable={false} />
+                  <Alert type="warning" description={`${apiCalls.convertLocalLang("note")} : 
+                  ${apiCalls.convertLocalLang("declaration")} 
+                  ${props?.userConfig?.email || favouriteDetails?.email}. 
+                  ${apiCalls.convertLocalLang("whitelist_note")} `
+                } 
+                  showIcon closable={false} />
                 </div>}
               </div>
 

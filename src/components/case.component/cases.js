@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import List from '../grid.component'
 import { withRouter } from 'react-router';
 import Translate from 'react-translate-component';
+import apiCalls from "../../api/apiCalls";
 import Moment from 'react-moment';
 class Cases extends Component {
     constructor(props) {
@@ -19,7 +20,8 @@ class Cases extends Component {
     columnGrid = [
         {
             field: "createdDate",
-            title: "Date",
+            // title: "Date",
+            title: apiCalls.convertLocalLang("Date"),
             width: 125,
             filter: true,
             filterType: "date",
@@ -33,9 +35,9 @@ class Cases extends Component {
               </td>
             )
           },
-        {field: "caseNumber",title: "Case Number",filter: true, width: 200,},
-		{field: "customerCaseTitle",title: "Title",filter: true,width: 450},
-		{field: "state",title: "State",filter: true,width: 200,},
+        {field: "caseNumber",title: apiCalls.convertLocalLang("Case_Number"),filter: true, width: 200,},
+		{field: "customerCaseTitle",title: apiCalls.convertLocalLang("title"),filter: true,width: 450},
+		{field: "state",title:apiCalls.convertLocalLang("state"),filter: true,width: 200,},
 	];
      viewCase = ({dataItem}) => {
 		this.props.history.push("/cases?id=" + dataItem.id);
