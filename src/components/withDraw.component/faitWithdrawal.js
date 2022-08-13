@@ -615,9 +615,8 @@ const FaitWithdrawal = ({ props,
 
                   {details?.length > 0 &&
                     <div className="fiatdep-info">
-                   
                       <Form.Item
-                        className="custom-forminput custom-label  mb-24 "
+                        className="custom-forminput custom-label p-relative  mb-24 "
                         name="totalValue"
                         required
                         rules={[
@@ -634,9 +633,9 @@ const FaitWithdrawal = ({ props,
                           </div>
                         }
                       >
-                        <div className="p-relative">
+                       
                         <NumberFormat
-                          className="cust-input mb-0"
+                          className="cust-input mb-0 "
                           customInput={Input}
                           thousandSeparator={true}
                           prefix={""}
@@ -649,29 +648,16 @@ const FaitWithdrawal = ({ props,
                             form.setFieldsValue({ ...addressObj })
                           }}
                           value={addressObj.Amount} />
-                            </div>
-                            <div className="minmax custom-minmax">
-                            <Translate
-                              type="text"
-                              size="small"
-                              className="min-btn"
-                              content="min"
-                              component={Button}
-                              onClick={() => clickMinamnt("min")}
-                            />
-                            <Translate
-                              type="text"
-                              size="small"
-                              className="min-btn"
-                              content="all"
-                              component={Button}
-                              onClick={() => clickMinamnt("max")}
-                            />
-                          </div>
-                      </Form.Item>
-                    
-                     
-                          
+                      </Form.Item> 
+
+                      <div class="minmax custom-minmax">
+                        <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn with-min" onClick={() => clickMinamnt("min")}>
+                            <span >Min</span>
+                        </button>
+                        <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn with-max" onClick={() => clickMinamnt("max")}>
+                            <span>Max</span>
+                        </button>
+                      </div>
                       <Translate
                         className="fw-200 text-white-50 fs-14"
                         content="Bank_name"
