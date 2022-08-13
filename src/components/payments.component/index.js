@@ -15,6 +15,7 @@ import { fetchFeaturePermissions } from "../../reducers/feturesReducer";
 import { getFeatureId } from "../shared/permissions/permissionService";
 import { getCurrencyLu} from './api'
 import {getFeaturePermissionsByKey} from '../shared/permissions/permissionService'
+import apicalls from '../../api/apiCalls';
 
 const { Title, Text, Paragraph } = Typography;
 const { Option } = Select;
@@ -79,12 +80,12 @@ const Payments = (props) => {
       )
     },
     {
-      field: "createdDate", title: 'Date', filter: true, filterType: "date",width: 200,
+      field: "createdDate", title: apicalls.convertLocalLang("Date"), filter: true, filterType: "date",width: 200,
       customCell: (prop) => (
         <td><div className="gridLink" onClick={() => paymentsView(prop)}>
           <Moment format="DD/MM/YYYY">{moment(new Date(prop.dataItem.createdDate), "DD/MM/YYYY")}</Moment></div></td>)
     },
-    { field: "currency", title: 'Currency', filter: true,width: 200, },
+    { field: "currency", title: apicalls.convertLocalLang("currency"), filter: true,width: 200, },
     { field: "totalAmount", title: 'Total Amount', filter: true, width: 200, },
     { field: "approvedAmount", title: 'Approved Amount', filter: true, width: 237, },
     { field: "count", title: 'Count', filter: true, width: 150, },

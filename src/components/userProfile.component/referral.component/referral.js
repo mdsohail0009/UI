@@ -152,7 +152,7 @@ class Referral extends Component {
               </div>
             </div>
             <div className="crypto-address mt-12">
-            <Translate content="Business referral link" className="mb-0 fw-400 text-secondary" component={Text} />
+            <Translate content="Business_referral_link" className="mb-0 fw-400 text-secondary" component={Text} />
               <div className="mb-0 fw-600 text-white-30 walletadrs mb-copy">
                 {this.state.referaldata?.referralBusinesslink || "---"}
               </div>
