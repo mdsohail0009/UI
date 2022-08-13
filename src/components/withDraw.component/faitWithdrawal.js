@@ -570,7 +570,7 @@ const FaitWithdrawal = ({ props,
                 : <>
 
                   {addressShow == null && bankDetails.length > 1 &&
-                    <div style={{ position: "relative" }}>
+                    <div >
 
                       <Form.Item
                         className="custom-forminput custom-label mb-24"
@@ -613,9 +613,9 @@ const FaitWithdrawal = ({ props,
 
                   {details?.length > 0 &&
                     <div className="fiatdep-info">
-
+                   
                       <Form.Item
-                        className="custom-forminput custom-label  mb-24 min-max-btn"
+                        className="custom-forminput custom-label  mb-24 "
                         name="totalValue"
                         required
                         rules={[
@@ -625,14 +625,14 @@ const FaitWithdrawal = ({ props,
                         ]}
 
                         label={
-
+                         
+                          <div>
                             <Translate className="input-label ml-0 mb-0"
                               content="amount" component={Form.label}  />
-                            
-                         
+                          </div>
                         }
                       >
-                         
+                        <div className="p-relative">
                         <NumberFormat
                           className="cust-input mb-0"
                           customInput={Input}
@@ -647,27 +647,29 @@ const FaitWithdrawal = ({ props,
                             form.setFieldsValue({ ...addressObj })
                           }}
                           value={addressObj.Amount} />
-                      </Form.Item>
-                     
-                      <div className="minmax custom-minmax">
-                              <Translate
-                                type="text"
-                                size="small"
-                                className="min-btn"
-                                content="min"
-                                component={Button}
-                                onClick={() => clickMinamnt("min")}
-                              />
-                              <Translate
-                                type="text"
-                                size="small"
-                                className="min-btn"
-                                content="all"
-                                component={Button}
-                                onClick={() => clickMinamnt("max")}
-                              />
                             </div>
-
+                            <div className="minmax custom-minmax">
+                            <Translate
+                              type="text"
+                              size="small"
+                              className="min-btn"
+                              content="min"
+                              component={Button}
+                              onClick={() => clickMinamnt("min")}
+                            />
+                            <Translate
+                              type="text"
+                              size="small"
+                              className="min-btn"
+                              content="all"
+                              component={Button}
+                              onClick={() => clickMinamnt("max")}
+                            />
+                          </div>
+                      </Form.Item>
+                    
+                     
+                          
                       <Translate
                         className="fw-200 text-white-50 fs-14"
                         content="Bank_name"

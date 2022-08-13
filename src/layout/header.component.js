@@ -220,15 +220,27 @@ class Header extends Component {
                 <span className="icon md rarrow-white" />
               </Link>
             </li>
-            <li onClick={() => this.clearEvents()}>
-              <Link>
+            <li>
+              
                 <Translate
                   content="logout"
                   className="text-white-30"
-                  component={Text}
+                  component={Link}
                 />
+             
+            </li>      
+            <li
+              onClick={() => this.showAuditLogsDrawer()}
+            >
+              <Link>
+                <Translate
+                  content="AuditLogs"
+                  component={Text}
+                  className="text-white-30"
+                />
+                <span className="icon md rarrow-white" />
               </Link>
-            </li>
+            </li>       
           </ul>
         </div>
       </Menu>
