@@ -41,7 +41,8 @@ const getSelectedCoinDetails = (coin_code, customerId) => {
 	);
 };
 const activeInactive = (obj) => {
-	return apiClient.put(ApiControllers.master + "useractiveinactive", obj);
+	//return apiClient.put(ApiControllers.master + "useractiveinactive", obj);
+	return apiClient.put(ApiControllers.master + "addressBookuseractiveinactive", obj);
 };
 const getAddress = (addreddId) => {
 	return apiClient.get(
@@ -81,8 +82,15 @@ const getFavData = (payeeId,customerId) => {
 
     );
 };
-const saveAddressBook = (obj) => {
-	return apiClient.post(ApiControllers.addressbook + `payee`, obj);
+const saveAddressBook = (obj,bilPay) => {
+	debugger
+	if(bilPay==="Fiat"){
+		return apiClient.post(ApiControllers.addressbook + `BillPaymentPayee`, obj);
+	}else{
+		return apiClient.post(ApiControllers.addressbook + `payee`, obj);
+	}
+	// return apiClient.post(ApiControllers.addressbook + `payee`, obj);
+	// https://devapi.suissebase.io/api/v1/addressbook/payee
 };
 const getNewAddress = (payeeId) => {
 	return apiClient.get(
