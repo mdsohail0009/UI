@@ -66,26 +66,6 @@ const LocalCryptoSwapper = (props, ref) => {
 
 
     }
-//    const  clickAmt=(type)=> {
-//     debugger
-//         let usdamnt; let cryptoamnt;
-//         let obj = Object.assign({}, this.props.sendReceive?.cryptoWithdraw?.selectedWallet)
-//       //if (type === 'all') {
-//         //     usdamnt = obj.coinValueinNativeCurrency ? obj.coinValueinNativeCurrency : 0;
-//         //     cryptoamnt = obj.coinBalance ? obj.coinBalance : 0;
-//         //     this.setState({ ...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt, amountPercentageType: 'all' });
-//         //     this.eleRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
-//         // } else {
-//         //     this.setState({ ...this.state, CryptoAmnt: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, amountPercentageType: 'min' });
-//         //     this.eleRef.current.changeInfo({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 });
-//         // }
-//     }
-
-const onTrigger = (event) => {
-    debugger
-    props.parentCallback(event);
-    event.preventDefault();
-}
 
     return <div className="p-relative">
         <div className="enter-val-container common-withdraow withdraw-crypto">
@@ -117,14 +97,9 @@ const onTrigger = (event) => {
                 autoFocus
                 allowNegative={false}
             />
-            {/* <div class="minmax ">
-                <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn with-min" onClick={() =>onTrigger("min")}>
-                    <span >Min</span>
-                </button>
-                <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn with-max" onClick={() =>onTrigger("all")}>
-                    <span>Max</span>
-                </button>
-                </div> */}
+        
+            {/* <div className='with-min'>Min</div>
+            <div className='with-max'>Max</div> */}
         </div>
         {showConvertion && <><NumberFormat value={isSwaped ? localvalue : cryptovalue} displayType={'text'} thousandSeparator={true} prefix={isSwaped ? symbols[localCurrency] : ""} renderText={(value, props) => <div {...props} className="fs-14 text-white-30 text-center d-block mb-36">{value} {isSwaped ? localCurrency : cryptoCurrency} {isConvertionLoad && <Spin size="small" />}</div>
         } />
@@ -137,22 +112,22 @@ const onTrigger = (event) => {
     </div>
 
 }
-// const connectStateToProps = ({ sendReceive, userConfig, addressBookReducer }) => {
-//     return {addressBookReducer, sendReceive, userProfile: userConfig.userProfileInfo }
-// }
-// const connectDispatchToProps = dispatch => {
-//     return {
-//         // changeStep: (stepcode) => {
-//         //     dispatch(setAddressStep(stepcode))
-//         // },
-//         changeStep: (stepcode) => {
-//             dispatch(setStep(stepcode))
-//         },
-//         clearAddress: (stepcode) => {
-//             dispatch(setAddress(stepcode))
-//         },
-//         dispatch
-//     }
-// }
+const connectStateToProps = ({ sendReceive, userConfig, addressBookReducer }) => {
+    return {addressBookReducer, sendReceive, userProfile: userConfig.userProfileInfo }
+}
+const connectDispatchToProps = dispatch => {
+    return {
+        // changeStep: (stepcode) => {
+        //     dispatch(setAddressStep(stepcode))
+        // },
+        changeStep: (stepcode) => {
+            dispatch(setStep(stepcode))
+        },
+        clearAddress: (stepcode) => {
+            dispatch(setAddress(stepcode))
+        },
+        dispatch
+    }
+}
 //export default connect(connectStateToProps, connectDispatchToProps)(LocalCryptoSwapper);
  export default forwardRef(LocalCryptoSwapper);
