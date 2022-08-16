@@ -47,6 +47,7 @@ async function start(id) {
     });
     connection.on("SendRoleUpdatedMessage", () => {
           store.dispatch(clearPermissions());
+          localStorage.removeItem("persist:root");
     });
 }
 
