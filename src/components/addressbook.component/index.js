@@ -921,7 +921,7 @@ const connectStateToProps = ({ addressBookReducer, userConfig, oidc, menuItems, 
 		userConfig: userConfig.userProfileInfo,
 		oidc,
 		trackLogs: userConfig.trackAuditLogData,
-		addressBookPermissions: menuItems?.featurePermissions.addressBook,
+		addressBookPermissions: menuItems?.featurePermissions.addressbook,
 	};
 };
 const connectDispatchToProps = (dispatch) => {
