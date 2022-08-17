@@ -23,7 +23,6 @@ export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, m
         message: null,
         valid: true
     };
-    debugger
     const maxPurchaseAmt = 100000;
     const maxAmtMessage = "$100k"
     // const currencyMaxPurchase = {
