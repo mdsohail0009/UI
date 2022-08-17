@@ -40,7 +40,7 @@ const AddressCryptoView = (props) => {
 		setIsLoading(false)
 	};
 	const backToAddressBook = () => {
-		props?.history?.push("/userprofile/?key=5");
+		props?.history?.push("/userprofile/5");
 		props?.dispatch(addressTabUpdate(false))
 	};
 

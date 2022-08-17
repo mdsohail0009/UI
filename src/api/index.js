@@ -52,10 +52,11 @@ apiClient.axiosInstance.interceptors.request.use((config) => {
 // apiClient.axiosInstance.interceptors.response.use((response) => {
 //     return response;
 // }, (err) => {
+//     console.log(err);
 //     if (err.status === "401") {
 //         const navigate = useHistory();
 //         navigate.push("/accessdenied");
-//     } else{ return err;}
+//     } else { return err; }
 
-// })
+// });
 export { apiClient, coinGekoClient, identityClient, uploadClient, ipRegistry, sumsub }

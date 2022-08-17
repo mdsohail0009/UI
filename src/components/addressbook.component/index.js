@@ -461,12 +461,14 @@ class AddressBook extends Component {
 				selection: [],
 				isCheck: false,
 				btnDisabled: false,
+				errorWorning: response.data,
 				obj: {
 					id: [],
 					tableName: "Common.PayeeAccounts",
 					modifiedBy: "",
 					status: [],
 				},
+				
 			});
 		}
 	};
@@ -926,7 +928,7 @@ const connectStateToProps = ({ addressBookReducer, userConfig, oidc, menuItems, 
 		userConfig: userConfig.userProfileInfo,
 		oidc,
 		trackLogs: userConfig.trackAuditLogData,
-		addressBookPermissions: menuItems?.featurePermissions.addressBook,
+		addressBookPermissions: menuItems?.featurePermissions.addressbook,
 	};
 };
 const connectDispatchToProps = (dispatch) => {
