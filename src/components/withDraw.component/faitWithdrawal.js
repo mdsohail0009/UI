@@ -512,7 +512,7 @@ const FaitWithdrawal = ({ props,
                   history.push("/userprofile?key=2")
                 }}>security section</a></Text>}
                 type="warning"
-                showIcon
+                // showIcon
                 closable
               />
             }
@@ -649,7 +649,6 @@ const FaitWithdrawal = ({ props,
                           }}
                           value={addressObj.Amount} />
                       </Form.Item> 
-
                       <div class="minmax custom-minmax">
                         <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn with-min" onClick={() => clickMinamnt("min")}>
                             <span >Min</span>
