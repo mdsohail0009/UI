@@ -512,8 +512,8 @@ const FaitWithdrawal = ({ props,
                   history.push("/userprofile?key=2")
                 }}>security section</a></Text>}
                 type="warning"
-                // showIcon
-                closable
+                showIcon
+                closable={false}
               />
             }
             {isVerificationMethodsChecked && !isVerificationLoading && <Form
