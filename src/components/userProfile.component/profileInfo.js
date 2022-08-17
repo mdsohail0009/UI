@@ -176,7 +176,11 @@ class ProfileInfo extends Component {
           )}
         </div>
         <div className="box contact-info coin-bal">
-          <Text className="basicinfo mb-0">Account Reference Confirmation/Letter</Text>
+          <Translate
+                    content="account_text"
+                    component={Text}
+                    className="basicinfo mb-0"
+                  />
           <ul class="m-0 pl-0">
             {this.state.fileLoader ? <Spin size="Large" style={{ padding: 10 }} /> : <li>
               <Tooltip title="Download">

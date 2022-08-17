@@ -373,11 +373,13 @@ class HeaderPermissionMenu extends Component {
                             </Link>
                         </li>
                         <li onClick={() => this.clearEvents()}>
+                            <Link>
                             <Translate
                                 content="logout"
                                 className="text-white-30"
                                 component={Text}
                             />
+                            </Link>
                         </li>
                     </ul>
                 </div>
