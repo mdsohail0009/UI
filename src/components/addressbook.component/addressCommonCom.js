@@ -332,7 +332,7 @@ const AddressCommonCom = (props) => {
       payeeId: uuidv4(),
       label: values.label,
       currencyType: withdraeTab,
-      walletAddress: (props?.addressBookReducer?.cryptoTab == true && !bilPay) ? values.walletAddress.trim(): values.walletAddress,
+      walletAddress: (props?.addressBookReducer?.cryptoTab == true && !bilPay) ? values.walletAddress: values.walletAddress,
       walletCode: values.walletCode,
       accountNumber: values.accountNumber || values.IBAN,
       bankType: values.bankType || "Bank Account",
@@ -461,7 +461,7 @@ const AddressCommonCom = (props) => {
       saveObj.payeeAccountModels = bankmodalData
       if (withdraeTab === "Crypto")
         saveObj.documents = cryptoAddress?.documents;
-      let response = await saveAddressBook(saveObj);
+      let response = await saveAddressBook(saveObj,bilPay);
       setAgreeRed(true);
       if (response.ok) {
         setBtnDisabled(false);
@@ -961,12 +961,12 @@ const AddressCommonCom = (props) => {
                           validator: validateContentRule
                         }
                       ]}
-                      label={<Translate content="city" component={Form.label} />}
+                      label={<Translate content="City" component={Form.label} />}
                     >
                       <Input
                         className="cust-input"
                         maxLength="20"
-                        placeholder={apiCalls.convertLocalLang('city')}
+                        placeholder={apiCalls.convertLocalLang('City')}
                       />
                     </Form.Item>
                   </Col>}
@@ -1021,7 +1021,8 @@ const AddressCommonCom = (props) => {
                     className="pop-btn mb-36 mt-24"
                   >
                     <Translate
-                    content={props?.cryptoTab == 2 ? "cryptoAddress" : "bankAddress"}
+                    content={props?.cryptoTab == 2 ? "bankAddress" : (withdraeTab == "Fiat" ? "bankAddress" : "cryptoAddress")}
+                   // content={props?.cryptoTab == 2 ? "cryptoAddress" : "bankAddress"}
                     component={Text}
                    
                   />
@@ -1454,12 +1455,12 @@ const AddressCommonCom = (props) => {
                                 validator: validateContentRule
                               }
                             ]}
-                            label={<Translate content="city" component={Form.label} />}
+                            label={<Translate content="City" component={Form.label} />}
                           >
                             <Input
                               className="cust-input"
                               maxLength="20"
-                              placeholder={apiCalls.convertLocalLang('city')}
+                              placeholder={apiCalls.convertLocalLang('City')}
                             />
                           </Form.Item>
                         </Col>

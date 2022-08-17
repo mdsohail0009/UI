@@ -316,7 +316,7 @@ export default {
 	customer_remarks:"Customer Remarks",
 	Country: "Country",
 	state: "State",
-	city:"city",
+	City:"city",
 	zipcode: "Zip code",
 	userName: "User Name",
 	manage_account: "Manage your Account",
