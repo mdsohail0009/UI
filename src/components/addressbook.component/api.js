@@ -81,8 +81,13 @@ const getFavData = (payeeId,customerId) => {
 
     );
 };
-const saveAddressBook = (obj) => {
-	return apiClient.post(ApiControllers.addressbook + `payee`, obj);
+const saveAddressBook = (obj,bilPay) => {
+	if(bilPay==="Fiat"){
+		return apiClient.post(ApiControllers.addressbook + `BillPaymentPayee`, obj);
+	}else{
+		return apiClient.post(ApiControllers.addressbook + `payee`, obj);
+	}
+	
 };
 const getNewAddress = (payeeId) => {
 	return apiClient.get(

@@ -332,7 +332,7 @@ const AddressCommonCom = (props) => {
       payeeId: uuidv4(),
       label: values.label,
       currencyType: withdraeTab,
-      walletAddress: (props?.addressBookReducer?.cryptoTab == true && !bilPay) ? values.walletAddress.trim(): values.walletAddress,
+      walletAddress: (props?.addressBookReducer?.cryptoTab == true && !bilPay) ? values.walletAddress: values.walletAddress,
       walletCode: values.walletCode,
       accountNumber: values.accountNumber || values.IBAN,
       bankType: values.bankType || "Bank Account",
@@ -461,7 +461,7 @@ const AddressCommonCom = (props) => {
       saveObj.payeeAccountModels = bankmodalData
       if (withdraeTab === "Crypto")
         saveObj.documents = cryptoAddress?.documents;
-      let response = await saveAddressBook(saveObj);
+      let response = await saveAddressBook(saveObj,bilPay);
       setAgreeRed(true);
       if (response.ok) {
         setBtnDisabled(false);
