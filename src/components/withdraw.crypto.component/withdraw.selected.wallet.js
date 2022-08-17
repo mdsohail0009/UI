@@ -316,8 +316,8 @@ class CryptoWithDrawWallet extends Component {
                     this.props.history.push("/userprofile?key=2")
                 }}>security section</a></Text>}
                 type="warning"
-                // showIcon
-                closable
+                showIcon
+                closable={false}
             />
         }
         return (
