@@ -295,7 +295,7 @@ const AddressCommonCom = (props) => {
   const handleCountry = (e) => {
     let code = e;
     form.setFieldsValue({ "state": null });
-    let states = country?.filter((item) => item.name?.toLowerCase() === code.toLowerCase());
+    let states = country?.filter((item) => item.name?.toLowerCase() === code?.toLowerCase());
     setState(states[0]?.stateLookUp);
   }
   const handleState = (e) => {
@@ -308,7 +308,7 @@ const AddressCommonCom = (props) => {
     if (response.ok) {
       setCountry(response.data);
       let state = form.getFieldValue("country");
-      let states = response.data?.filter((item) => item.name?.toLowerCase() === state.toLowerCase());
+      let states = response.data?.filter((item) => item.name?.toLowerCase() === state?.toLowerCase());
       setState(states[0]?.stateLookUp);
     }
   }
@@ -327,12 +327,13 @@ const AddressCommonCom = (props) => {
   };
 
   const saveModalwithdrawal = (values) => {
+    debugger
     let obj = {
       id: uuidv4(),
       payeeId: uuidv4(),
       label: values.label,
       currencyType: withdraeTab,
-      walletAddress: (props?.addressBookReducer?.cryptoTab == true && !bilPay) ? values.walletAddress.trim(): values.walletAddress,
+      walletAddress: (props?.addressBookReducer?.cryptoTab == true && !bilPay) ? values.walletAddress: values.walletAddress,
       walletCode: values.walletCode,
       accountNumber: values.accountNumber || values.IBAN,
       bankType: values.bankType || "Bank Account",
@@ -460,8 +461,9 @@ const AddressCommonCom = (props) => {
       let saveObj = Object.assign({}, values);
       saveObj.payeeAccountModels = bankmodalData
       if (withdraeTab === "Crypto")
+      debugger
         saveObj.documents = cryptoAddress?.documents;
-      let response = await saveAddressBook(saveObj);
+      let response = await saveAddressBook(saveObj,bilPay);
       setAgreeRed(true);
       if (response.ok) {
         setBtnDisabled(false);
