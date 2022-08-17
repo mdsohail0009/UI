@@ -58,7 +58,7 @@ class RouteConfig extends Component {
         <ReactRoute path="/sumsub" component={SumSub} />
         <ReactRoute path="/notkyc" component={NotKyc} />
         <ReactRoute path="/onboading" component={OnBoarding} />
-        <ReactRoute path="/userprofile/:key?" component={UserProfile} />
+        <ReactRoute path="/userprofile/:key?/:type?" component={UserProfile} />
         <ReactRoute path='/documents' component={RequestedDocs} />
         <ReactRoute path='/cases' component={CaseDocs} />
         <ReactRoute path='/docnotices' component={DocNotices} />
