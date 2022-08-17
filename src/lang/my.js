@@ -603,4 +603,7 @@ export default {
 	activate:"buhayin",
 	No:"hindi",
 	address_type: "Uri ng Address",
+	Myself_By_OwnBusiness:"Myself By OwnBusiness",
+	SomeOne_Else:"SomeOne Else",
+	Business:"Business",
 };

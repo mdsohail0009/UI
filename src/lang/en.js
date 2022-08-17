@@ -632,4 +632,7 @@ export default {
 	activate:"activate",
 	No:"No",
 	bankAddress:"Add Bank Address",
+	Myself_By_OwnBusiness:"Myself By OwnBusiness",
+	SomeOne_Else:"SomeOne Else",
+	Business:"Business",
 };

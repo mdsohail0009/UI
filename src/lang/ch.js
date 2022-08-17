@@ -581,4 +581,7 @@ export default {
 	activate:"啟用",
 	No:"不",
 	note: "筆記",
+	Myself_By_OwnBusiness:"Myself By OwnBusiness",
+	SomeOne_Else:"SomeOne Else",
+	Business:"Business",
 };
