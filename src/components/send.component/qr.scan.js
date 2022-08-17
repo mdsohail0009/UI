@@ -93,10 +93,10 @@ class QRScan extends Component {
         }
         return (
             <div>
-                <div className="text-center f-12 text-white custom-crypto-btns">
-                    {netWorkData&& netWorkData.map((network)=>{
+               <div className="text-center f-12 mt-16 text-white custom-crypto-btns">
+                    {netWorkData && netWorkData.map((network) => {
                         return <>
-                        <Button className="mr-16 cutom-bnt text-white-30">{network.code}</Button>
+                            <span className="mr-16 custom-bnt text-white-30 ">{network.code}</span>
                         </>
                     })}
                 </div>

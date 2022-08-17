@@ -1344,13 +1344,7 @@ input[type=number]::-webkit-outer-spin-button {
 .crypto-list-custom li {
     color: #fff;
 }
-.custom-crypto-btns .cutom-bnt{background-color: transparent;border-radius: 6px;}
-.custom-crypto-btns .ant-btn:hover,
-.ant-btn:focus,
-.ant-btn:active {
-    border-color: #ccc !important;
-    outline: none !important;
-}
+.custom-crypto-btns .custom-bnt{background-color: transparent;border-radius: 6px;border:1px solid #ccc;padding:8px 10px;}
 .intertrans{display: flex;
     justify-content: center;
     align-items: center;
@@ -1360,4 +1354,5 @@ input[type=number]::-webkit-outer-spin-button {
 .custom-spin .ant-spin-dot-spin i{width: 16px;height: 16px;}
 .ant-dropdown.secureDropdown{z-index: 995;}
 .list-dot{list-style: initial;margin-bottom: 4px !important;}
-.minmax.custom-minmax{position: relative;right:-250px;top:-105px;width:100px;}
+.minmax.custom-minmax{position: relative;right:13px;top:-70px;text-align: right;}
+.new-add .ant-btn:hover, .ant-btn:focus, .ant-btn:active{border-color: transparent !important;outline: none !important;}
