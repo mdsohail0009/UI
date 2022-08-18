@@ -193,7 +193,7 @@ class YourPortfolio extends Component {
         return (
           <div className="portfolio-list">
            
-           <div  className="portfolio-title mb-18">
+           <div  className="portfolio-title mb-8">
            <div className='portfolio-data' >
             <Translate
               content="your_portfolio"
@@ -283,7 +283,7 @@ class YourPortfolio extends Component {
                     title={
                       <div className="mr-16">
                         <div style={{ display: "flex", alignItems: "center" }}>
-                          <Text className="fs-18 fw-400 text-upper text-white">
+                          <Text className="fs-16 fw-600 text-upper text-white">
                             {item.coin}
                           </Text>
                           <Text className="fs-14 px-8 text-secondary">|</Text>

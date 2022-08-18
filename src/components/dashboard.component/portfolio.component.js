@@ -91,7 +91,7 @@ class Portfolio extends Component {
         const { gridUrl, loading } = this.state;
         return (
             <div className="mb-16">
-                <div>
+                <div className='mb-12'>
                     <Translate content="menu_transactions_history" className="basicinfo" />
                     {/* <span>
                        <Translate
@@ -129,14 +129,14 @@ class Portfolio extends Component {
                     <div>
 
                         <div className="box basic-info responsive_table bg-none mb-0 ">
-                            <table className='pay-grid view mb-view'>
+                            <table className='pay-grid view mb-view'  style={{width: "100%"}}>
                                 <thead>
                                     <tr>
-                                        <th>Date</th>
-                                        <th>Type</th>
-                                        <th>Wallet</th>
-                                        <th>Value</th>
-                                        <th>State</th>
+                                        <th style={{width: "18%"}}>Date</th>
+                                        <th style={{width: "35%"}}>Type</th>
+                                        <th style={{width: "15%"}}>Wallet</th>
+                                        <th style={{width: "15%"}}>Value</th>
+                                        <th style={{width: "15%"}}>State</th>
                                     </tr>
                                 </thead>
                                 {loading ? (
