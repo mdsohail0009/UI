@@ -64,7 +64,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .ant-carousel .slick-dots li.slick-active{width: 30px;}
 .tlv-header{background-color: var(--bgGrey) !important;position: fixed; z-index: 16; width: 100%;}
 .tlv-header ul{background-color: transparent; border-bottom: 0;}
-.tlv-header ul li{font-weight: 300;}
+.tlv-header ul li{font-weight: 500;}
 .tlv-header .main-menu li{border-radius: 5px;}
 .tlv-header .main-menu li.ant-menu-item-selected, .tlv-header .main-menu li:hover{background-color: var(--primary) !important; color: var(--textWhite) !important;}
 .tlv-header li::after, .tlv-header li:hover:after{border: none !important;}

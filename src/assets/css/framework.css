@@ -147,10 +147,6 @@
     .visible-xs{visibility: visible;}
     .hidden-xs{visibility: hidden;}
 }
-@media (min-width: 576px){
-    .fs-36{font-size: 32px !important;}
-    .fs-24{font-size: 24px !important;}
-}
 @media (min-width: 320px){
     .fs-24{font-size: 18px !important;}
     .fs-18{font-size: 16px !important;}
@@ -163,6 +159,10 @@
     .my-36{margin-top: 24px !important;margin-bottom: 24px !important;}
     .mb-36{margin-bottom: 24px !important;}
 }
-
+@media (min-width: 576px){
+    .fs-36{font-size: 32px !important;}
+    .fs-24{font-size: 24px !important;}
+    .fs-20{font-size: 20px !important;}
+}
 
 
