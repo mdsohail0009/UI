@@ -63,9 +63,9 @@ class Home extends Component {
                     </div>)}
                 </Carousel> : ""}
 
-                <Row justify="center mt-36">
+                <Row justify="center mt-16">
                     {this.state.permissions?.Balances && <Col xs={24} md={12} xl={10}>
-                        <div className="markets-panel mb-36">
+                        <div className="markets-panel mb-16">
                             <Wallets />
                         </div>
                         <div className="markets-panel">

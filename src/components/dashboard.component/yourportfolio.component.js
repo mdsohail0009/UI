@@ -190,7 +190,7 @@ class YourPortfolio extends Component {
         return (
           <div className="portfolio-list">
            
-           <div  className="portfolio-title mb-16">
+           <div  className="portfolio-title mb-18">
            <div className='portfolio-data' >
             <Translate
               content="your_portfolio"
@@ -276,7 +276,7 @@ class YourPortfolio extends Component {
                           <Text className="fs-18 fw-400 text-upper text-white">
                             {item.coin}
                           </Text>
-                          <Text className="fs-14 px-16 text-secondary">|</Text>
+                          <Text className="fs-14 px-8 text-secondary">|</Text>
                           <Currency
                             defaultValue={item.coinValueinNativeCurrency}
                             type={"text"}

@@ -103,20 +103,19 @@ class Portfolio extends Component {
                       />
                        <span className="icon sm search-angle ml-4" />
                        </span>  */}
-                    {/* <Button
+                    <Button
                         onClick={() => this.transactionDrawer()}
                         className="pop-btn dbchart-link fs-14 fw-500"
-                        style={{  height: 40,marginTop:"35px" }}
                         >
                            <Translate content="search" />
                         <span className="icon sm search-angle ml-8"></span>
-                    </Button> */}
-                     <div onClick={() => this.transactionDrawer()} className="dbchart-link fs-14 fw-500 c-pointer">
-                        {/* <Link to="/cockpitCharts" > */}
+                    </Button>
+                     {/* <div onClick={() => this.transactionDrawer()} className="dbchart-link fs-14 fw-500 c-pointer">
+                       
                         <Translate content="search" />
                         <span className="icon sm search-angle ml-4" />
-                        {/* </Link> */}
-                    </div>
+                      
+                    </div> */}
                        {this.state.transactions &&
                        <TransactionsHistory
                         showDrawer={this.state.transactions}
