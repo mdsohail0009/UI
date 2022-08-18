@@ -44,6 +44,9 @@ class YourPortfolio extends Component {
             this.props.dispatch(fetchYourPortfoliodata(this.props.userProfile.id));
         }
     }
+    cockpitCharts=()=>{
+      this.props.history.push("/cockpitCharts");
+    }
     showBuyDrawer = (item, key) => {
         if (!this.props?.userProfile?.isKYC) {
             this.props.history.push("/notkyc");
