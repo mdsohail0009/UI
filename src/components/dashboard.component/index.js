@@ -65,7 +65,7 @@ class Home extends Component {
 
                 <Row justify="center mt-16">
                     {this.state.permissions?.Balances && <Col xs={24} md={12} xl={10}>
-                        <div className="markets-panel mb-16">
+                        <div className="markets-panel mb-16 markets-line">
                             <Wallets />
                         </div>
                         <div className="markets-panel">

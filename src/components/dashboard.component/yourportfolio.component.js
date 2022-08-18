@@ -299,7 +299,7 @@ class YourPortfolio extends Component {
                         </div>
                         <Currency
                           defaultValue={item.coinBalance}
-                          className="text-white fs-20 text-left"
+                          className="text-white fs-18 text-left"
                           type={"text"}
                           prefix={""}
                         />
