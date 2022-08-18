@@ -636,19 +636,24 @@ const AddressCommonCom = (props) => {
                         setAddressOptions({ ...addressOptions, addressType: value.target.value })
                       }}
                     >
-                      <Radio.Button value="myself">{props.userConfig?.isBusiness ? "Own Business" : "My Self"}</Radio.Button>
+                     <Radio.Button value="myself">{props.userConfig?.isBusiness ? "Own Business" : "My Self"}</Radio.Button>
                       <Radio.Button value="someoneelse">SomeOne Else</Radio.Button>
                       <Radio.Button value="business">Business</Radio.Button>
 
                       {/* <Tabs tabPosition="top" className="user-list user-tablist">
-                  <TabPane tab={<span>
+                        <TabPane tab={<div>
                        
-                        <Translate content="ProfileInfo"  /></span>} key="1">
+                        <text>{props.userConfig?.isBusiness ? "Own Business" : "My Self"}</text></div>} key="1">
                         
                     </TabPane>
-                    <TabPane tab={<span>
-                        <Translate content="security" className="f-16  mt-16" />
-                    </span>} key="2">
+                    <TabPane tab={<div>
+                      <text>SomeOne Else</text>
+                        </div>} key="2">
+                      
+                    </TabPane>
+                    <TabPane tab={<div>
+                      <text>Business</text>
+                        </div>} key="3">
                       
                     </TabPane>
                   </Tabs> */}
@@ -681,7 +686,7 @@ const AddressCommonCom = (props) => {
                 </Row>
               </Form.Item>
             </>}
-              {addressOptions.addressType === "myself" && props.cryptoTab == 2 && <Alert type="info" message={favouriteDetails.fullName} description={<><Text>Phone : {props.userConfig?.phoneNo}</Text><Text> Email : {props.userConfig?.email}</Text></>} />}
+              {addressOptions.addressType === "myself" && props.cryptoTab == 2 && <Alert type="info" message={favouriteDetails.fullName} description={<><Text Paragraph><strong>Phone :</strong> {props.userConfig?.phoneNo}</Text><br></br><Text Paragraph><strong> Email :</strong> {props.userConfig?.email}</Text></>} />}
               {addressOptions.addressType !== "myself" && <React.Fragment>
                 <Translate
                   content="Beneficiary_Details"
@@ -865,7 +870,7 @@ const AddressCommonCom = (props) => {
                       ></TextArea> */}
                         <TextArea
                           placeholder={apiCalls.convertLocalLang("Address_Line1")}
-                          className="cust-input cust-text-area "
+                          className="cust-input cust-text-area address-book-cust"
                           autoSize={{ minRows: 1, maxRows: 2 }}
                           maxLength={100}
                         ></TextArea>
@@ -900,7 +905,7 @@ const AddressCommonCom = (props) => {
                       >
                         <TextArea
                           placeholder={apiCalls.convertLocalLang("Address_Line2")}
-                          className="cust-input cust-text-area "
+                          className="cust-input cust-text-area address-book-cust"
                           autoSize={{ minRows: 1, maxRows: 1 }}
                           maxLength={100}
                         ></TextArea>
@@ -1067,20 +1072,28 @@ const AddressCommonCom = (props) => {
                     </Button>
                   </Col>
                   <Drawer
-                    title={apiCalls.convertLocalLang("bankAddress")}
+                    title={apiCalls.convertLocalLang("bankAddressDetails")}
                     visible={isModalVisible}
                     onOk={handleOk}
-                    width={800}
+                    width={864}
                     destroyOnClose={true}
-                    closeIcon={
-                      <Tooltip title="Close">
-                        <span
-                          className="icon md close-white c-pointer"
-                          onClick={() => handleCancel()}
-                        />
-                      </Tooltip>
-                    }
-                    className="side-drawer w-50p"
+                //     closeIcon={
+                //   <Tooltip title="Close">
+                //     <span
+                //       className="icon md close-white c-pointer"
+                //       onClick={() => handleDeleteCancel()}
+                //     />
+                //   </Tooltip>
+                // }
+                closeIcon={
+                  <Tooltip title="Close">
+                    <span
+                      className="icon md close-white c-pointer"
+                      onClick={() => handleDeleteCancel()}
+                    />
+                  </Tooltip>
+                }
+                    className="side-drawer custom-drawer-width"
                   >
 
                     {(props?.cryptoTab == 2 || withdraeTab == "Fiat") && (
@@ -1456,7 +1469,7 @@ const AddressCommonCom = (props) => {
                             </Form.Item>
                           </Col>
                         </Row>
-                        <div style={{ marginLeft: "447px", marginTop: "40px" }}>
+                        <div className="text-right mt-12">
                           <Button
                             className="pop-btn px-36"
                             style={{ margin: "0 8px" }}
@@ -1467,7 +1480,7 @@ const AddressCommonCom = (props) => {
                           <Button
                             htmlType="submit"
                             size="large"
-                            className="pop-btn mb-36"
+                            className="pop-btn px-36"
                             loading={btnDisabled}
                             style={{ minWidth: 150 }}
                           >
@@ -1523,7 +1536,7 @@ const AddressCommonCom = (props) => {
                   </Col>
                 </Row>
               </Form>}
-              {props?.cryptoTab !== 2 && <div className="box basic-info">
+              {props?.cryptoTab !== 2 && <div className="mt-36">
                 <div className="d-flex align-center justify-content">
                   <div>
                     <Text className="mb-16 fs-14 text-aqua fw-500 text-upper" Paragraph>BENEFICIARY ADDRESS DETAILS</Text>
@@ -1533,7 +1546,7 @@ const AddressCommonCom = (props) => {
                     <span class="icon md c-pointer delete-icon mr-12"></span>
                   </div>
                 </div>
-                <table className="custom-table pay-grid view mb-view mt-16">
+                <table className="custom-table pay-grid view mb-view mt-16 address-book-table">
                   <thead>
                     <tr>
                       <th style={{ width: 50 }}></th>
@@ -1543,7 +1556,7 @@ const AddressCommonCom = (props) => {
                   </thead>
                   <tbody>
                     <tr>
-                      <td>
+                      <td className="text-center">
                         <label className="text-center custom-checkbox c-pointer">
                           <input
                             id={""}
@@ -1573,7 +1586,7 @@ const AddressCommonCom = (props) => {
                       </td>
                     </tr>
                     <tr>
-                      <td>
+                      <td className="text-center">
                         <label className="text-center custom-checkbox c-pointer">
                           <input
                             id={""}

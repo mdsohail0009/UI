@@ -1064,6 +1064,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .portfolio-list .ant-list-split .ant-list-item{display: flex;}
     .portfolio-list .ant-list-split ul li .custom-btn{min-width: 90px;}
     .coin-details.right{min-height: 705px;}
+    .side-drawer.custom-drawer-width .ant-drawer-content-wrapper{width:865px !important;}
 }
 @media (min-width: 1400px){
     .custom-font{font-size:30px !important;}
@@ -1100,6 +1101,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .addbook-height{max-height: calc(100vh - 112px);}
     .pop-btn-46{height:46px;}
     .minmax.custom-minmax{position: relative;right:-332px !important;top:-11px;width:100px;}
+    .side-drawer.custom-drawer-width .ant-drawer-content-wrapper{width: 1094px !important;}
 }
 
 @media (min-width: 1500){
@@ -1358,3 +1360,13 @@ input[type=number]::-webkit-outer-spin-button {
 .new-add .ant-btn:hover, .ant-btn:focus, .ant-btn:active{border-color: transparent !important;outline: none !important;}
 .custom-radio-btn.buysell-toggle{background-color: transparent;}
 .custom-table.pay-grid.view .ant-table-tbody > tr.ant-table-placeholder:hover > td{background-color: transparent;}
+.address-book-table .pay-grid tbody td{padding: 4px 8px 4px 8px;}
+.side-drawer.custom-drawer-width .ant-drawer-title{color: #fff;}
+.custom-radio-btn .ant-radio-button-wrapper{border: 1px solid #FFDB1A;border-radius: 5px; margin-left: 5px;margin-right: 5px;width: 160px;height: 86px;display: inline-flex;align-items: center;}
+.custom-radio-btn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{border: transparent;}
+.custom-radio-btn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active{border: transparent;}
+.custom-radio-btn .ant-radio-button-wrapper-checked:not([class*=' ant-radio-button-wrapper-disabled']).ant-radio-button-wrapper:first-child{border: transparent;}
+.custom-radio-btn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):first-child{border: transparent;}
+.custom-radio-btn .ant-radio-button-wrapper span{margin:auto;}
+.custom-radio-btn .ant-radio-button-wrapper-checked{border:transparent;}
+.cust-input.cust-text-area.address-book-cust{padding:20px 16px 15px 16px!important;}

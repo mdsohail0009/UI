@@ -637,5 +637,7 @@ export default {
 	Myself_By_OwnBusiness:"Myself By OwnBusiness",
 	SomeOne_Else:"SomeOne Else",
 	Business:"Business",
-	transfer_type:"Transfer Type"
+	transfer_type:"Transfer Type",
+	bankAddressDetails:"Add Bank Details"
+
 };
