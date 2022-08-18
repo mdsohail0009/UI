@@ -5,7 +5,7 @@ import { getData } from './api';
 import NumberFormat from 'react-number-format';
 import Loader from '../../Shared/loader';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { dashboardTransactionSub } from '../../utils/pubsub';
 import TransactionsHistory from "../transactions.history.component";
 
@@ -103,14 +103,20 @@ class Portfolio extends Component {
                       />
                        <span className="icon sm search-angle ml-4" />
                        </span>  */}
-                    <Button
+                    {/* <Button
                         onClick={() => this.transactionDrawer()}
                         className="pop-btn dbchart-link fs-14 fw-500"
                         style={{  height: 40,marginTop:"35px" }}
                         >
                            <Translate content="search" />
                         <span className="icon sm search-angle ml-8"></span>
-                    </Button>
+                    </Button> */}
+                     <div onClick={() => this.transactionDrawer()} className="dbchart-link fs-14 fw-500 c-pointer">
+                        {/* <Link to="/cockpitCharts" > */}
+                        <Translate content="search" />
+                        <span className="icon sm search-angle ml-4" />
+                        {/* </Link> */}
+                    </div>
                        {this.state.transactions &&
                        <TransactionsHistory
                         showDrawer={this.state.transactions}
