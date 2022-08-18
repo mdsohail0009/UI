@@ -166,9 +166,9 @@ class YourPortfolio extends Component {
               {/* <li  onClick={() =>  this.showSendReceiveDrawer(1, item)}>
                   <Link value={1} className="c-pointer">Receive</Link>
               </li> */}
-              <li onClick={() => this.showSendReceiveDrawer(2, item)}>
+              <li onClick={() => this.showBuyDrawer(item, "buy")}>
                   <Link  value={2} className="c-pointer">
-                  <Translate content="withdraw" />
+                  <Translate content="menu_buy_sell" />
                   </Link>
               </li>
               <li onClick={() => this.showTransactionDrawer(item)}>
@@ -233,13 +233,7 @@ class YourPortfolio extends Component {
                   className=""
                   extra={
                     <div className='crypto-btns'>
-                      <Translate
-                        content="menu_buy_sell"
-                        component={Button}
-                        type="primary"
-                        onClick={() => this.showBuyDrawer(item, "buy")}
-                        className="custom-btn prime"
-                      />
+                      
                       {/* <Translate
                         content="sell"
                         component={Button}
@@ -249,8 +243,15 @@ class YourPortfolio extends Component {
                         <Translate
                         content="deposit"
                         component={Button}
-                        className="custom-btn sec ml-16"
+                        className="custom-btn prime text-white mr-16"
                         onClick={() =>  this.showSendReceiveDrawer(1, item)}
+                      />
+                      <Translate
+                        content="withdraw"
+                        component={Button}
+                        type="primary"
+                        onClick={() => this.showSendReceiveDrawer(2, item)}
+                        className="custom-btn sec"
                       />
                       
                       <Dropdown overlay={this.menuBar(item)} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
