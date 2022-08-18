@@ -285,7 +285,7 @@ export default {
 	Fee: "Fee",
 	Amount_to_pay: "Amount to pay",
 	place_an_order: "place an order",
-	Routing_number: "ACH / Routing Number",
+	Routing_number: "ABN Routing Number",
 	Choose_a_unique_pass_word_to_protect_your_account:
 		"Choose a unique password to protect your account.",
 	Save_btn_text: "Save",

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   Form, Typography, Input, Button, Alert, Spin, message, Select, Checkbox, Tooltip, Upload, Modal,
-  Radio, Row, Col, AutoComplete, Dropdown, Menu, Space, Cascader, InputNumber, Image, Tabs, Table
+  Radio, Row, Col, AutoComplete, Dropdown, Menu, Space, Cascader, InputNumber, Image, Tabs, Table, Drawer
 } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { setStep, setHeaderTab } from "../../reducers/buysellReducer";
@@ -623,32 +623,7 @@ const AddressCommonCom = (props) => {
             > {props?.cryptoTab == 2 && <>
               <Form.Item
                 name="addressType"
-                label={
-                  <div>
-                    <Translate
-                      content="address_type"
-                      component={Text}
-                      className="text-white"
-                    />{" "}
-                    <Tooltip
-                      title={
-                        <ul className=" p-0" style={{ listStyleType: "none" }}>
-                          <li className=" mb-4">
-                            <span className="textpure-yellow">1st Party </span>:
-                            Funds will be deposited to your own bank account.
-                          </li>
-                          <li className=" mb-4">
-                            <span className="textpure-yellow">3rd Party </span>:
-                            Funds will be deposited to other beneficiary bank
-                            account.
-                          </li>
-                        </ul>
-                      }
-                    >
-                      <div className="icon md info c-pointer"></div>
-                    </Tooltip>
-                  </div>
-                }
+
                 className="custom-label text-center"
               >
                 <Row gutter={[16, 16]}>
@@ -661,7 +636,7 @@ const AddressCommonCom = (props) => {
                         setAddressOptions({ ...addressOptions, addressType: value.target.value })
                       }}
                     >
-                      <Radio.Button value="myself">{props.userConfig?.isBusiness?"Own Business":"My Self"}</Radio.Button>
+                      <Radio.Button value="myself">{props.userConfig?.isBusiness ? "Own Business" : "My Self"}</Radio.Button>
                       <Radio.Button value="someoneelse">SomeOne Else</Radio.Button>
                       <Radio.Button value="business">Business</Radio.Button>
 
@@ -979,20 +954,6 @@ const AddressCommonCom = (props) => {
                       <Form.Item
                         className="custom-forminput custom-label mb-0"
                         name="state"
-                        // required
-                        // rules={[
-                        //   {
-                        //     required: true,
-                        //     message: apiCalls.convertLocalLang("is_required"),
-                        //   },
-                        //   {
-                        //     whitespace: true,
-                        //     message: apiCalls.convertLocalLang("is_required"),
-                        //   },
-                        //   {
-                        //     validator: validateContentRule,
-                        //   },
-                        // ]}
                         label={
                           <Translate content="state" component={Form.label} />
                         }
@@ -1105,11 +1066,7 @@ const AddressCommonCom = (props) => {
                       <span className="icon md add-icon-black ml-8"></span>
                     </Button>
                   </Col>
-                  {/* <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="text-right">
-                 
-                </Col> */}
-
-                  <Modal
+                  <Drawer
                     title={apiCalls.convertLocalLang("bankAddress")}
                     visible={isModalVisible}
                     onOk={handleOk}
@@ -1123,7 +1080,7 @@ const AddressCommonCom = (props) => {
                         />
                       </Tooltip>
                     }
-                    footer={<div className="text-right mt-24"></div>}
+                    className="side-drawer w-50p"
                   >
 
                     {(props?.cryptoTab == 2 || withdraeTab == "Fiat") && (
@@ -1134,11 +1091,14 @@ const AddressCommonCom = (props) => {
                         initialValues={cryptoAddress}
                       >
                         <Row gutter={[16, 16]}>
-                          {/* <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                         
+                          <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
                               className="custom-forminput custom-label mb-0"
-                              name="label"
-                              label={apiCalls.convertLocalLang("bank_label")}
+                              name="swiftCode"
+                              label={apiCalls.convertLocalLang(
+                                addressOptions.transferType === "sepa" ? "bicnumber" : "swiftcode"
+                              )}
                               required
                               rules={[
                                 {
@@ -1147,29 +1107,41 @@ const AddressCommonCom = (props) => {
                                     apiCalls.convertLocalLang("is_required"),
                                 },
                                 {
-                                  whitespace: true,
-                                  message:
-                                    apiCalls.convertLocalLang("is_required"),
-                                },
-                                {
-                                  validator: validateContentRule,
+                                  validator(_, value) {
+                                    if (emailExist) {
+                                      return Promise.reject(
+                                        "Invalid BIC/SWIFT/Routing number"
+                                      );
+                                    } else if (
+                                      value &&
+                                      !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                      return Promise.reject(
+                                        "Invalid BIC/SWIFT/Routing number"
+                                      );
+                                    } else {
+                                      return Promise.resolve();
+                                    }
+                                  },
                                 },
                               ]}
                             >
                               <Input
-                                className="cust-input  "
+                                className="cust-input "
                                 placeholder={apiCalls.convertLocalLang(
-                                  "bank_label"
+                                  addressOptions.transferType === "sepa" ? "bicnumber" : "swiftcode"
                                 )}
+                                maxLength="500"
                               />
                             </Form.Item>
-                          </Col> */}
-
-                          {/* <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                          </Col>
+                          {addressOptions.transferType === "swift" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
                               className="custom-forminput custom-label mb-0"
-                              name="walletCode"
-                              label={apiCalls.convertLocalLang("currency")}
+                              name="routingNumber"
+                              label={apiCalls.convertLocalLang(
+                                "Routing_number"
+                              )}
                               required
                               rules={[
                                 {
@@ -1178,64 +1150,34 @@ const AddressCommonCom = (props) => {
                                     apiCalls.convertLocalLang("is_required"),
                                 },
                                 {
-                                  whitespace: true,
-                                  message:
-                                    apiCalls.convertLocalLang("is_required"),
-                                },
-                                {
-                                  validator: validateContentRule,
+                                  validator(_, value) {
+                                    if (emailExist) {
+                                      return Promise.reject(
+                                        "Invalid ACH/Routing number"
+                                      );
+                                    } else if (
+                                      value &&
+                                      !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                      return Promise.reject(
+                                        "Invalid ACH/Routing number"
+                                      );
+                                    } else {
+                                      return Promise.resolve();
+                                    }
+                                  },
                                 },
                               ]}
                             >
-                              <Select
-                                className="cust-input  "
-                                dropdownClassName="select-drpdwn"
+                              <Input
+                                className="cust-input "
                                 placeholder={apiCalls.convertLocalLang(
-                                  "currency"
+                                  "Routing_number"
                                 )}
-                              >
-                                <Option value="USD">USD</Option>
-                                <Option value="EUR">EUR</Option>
-                              </Select>
+                                maxLength="500"
+                              />
                             </Form.Item>
-                          </Col> */}
-                          {/* {addressOptions.addressType == "myself" &&
-                            <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                              <Form.Item
-                                className="custom-forminput custom-label mb-0"
-                                name="bankType"
-                                required
-                                rules={[
-                                  {
-                                    required: false,
-                                    message:
-                                      apiCalls.convertLocalLang("is_required"),
-                                  },
-                                  {
-                                    whitespace: true,
-                                  },
-                                  {
-                                    validator: validateContentRule,
-                                  },
-                                ]}
-                                label={apiCalls.convertLocalLang("bank_type")}
-                              >
-                                <Select
-                                  className="cust-input mb-0 custom-search"
-                                  dropdownClassName="select-drpdwn"
-                                  defaultValue="BankAccount"
-                                  onChange={(e) => handleBankChange(e)}
-                                  placeholder={apiCalls.convertLocalLang(
-                                    "select_type"
-                                  )}
-                                  bordered={false}
-                                >
-                                  <Option value="BankAccount">Bank Account</Option>
-                                  <Option value="IBAN">IBAN</Option>
-                                </Select>
-                              </Form.Item>
-
-                            </Col>} */}
+                          </Col>}
                           {bankChange == "IBAN" || addressOptions.transferType == "sepa" ? (
                             <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                               <Form.Item
@@ -1323,92 +1265,6 @@ const AddressCommonCom = (props) => {
                               </Form.Item>
                             </Col>
                           )}
-                          <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item
-                              className="custom-forminput custom-label mb-0"
-                              name="swiftCode"
-                              label={apiCalls.convertLocalLang(
-                                addressOptions.transferType === "sepa" ? "bicnumber" : "swiftcode"
-                              )}
-                              required
-                              rules={[
-                                {
-                                  required: true,
-                                  message:
-                                    apiCalls.convertLocalLang("is_required"),
-                                },
-                                {
-                                  validator(_, value) {
-                                    if (emailExist) {
-                                      return Promise.reject(
-                                        "Invalid BIC/SWIFT/Routing number"
-                                      );
-                                    } else if (
-                                      value &&
-                                      !/^[A-Za-z0-9]+$/.test(value)
-                                    ) {
-                                      return Promise.reject(
-                                        "Invalid BIC/SWIFT/Routing number"
-                                      );
-                                    } else {
-                                      return Promise.resolve();
-                                    }
-                                  },
-                                },
-                              ]}
-                            >
-                              <Input
-                                className="cust-input "
-                                placeholder={apiCalls.convertLocalLang(
-                                  addressOptions.transferType === "sepa" ? "bicnumber" : "swiftcode"
-                                )}
-                                maxLength="500"
-                              />
-                            </Form.Item>
-                          </Col>
-                          {addressOptions.transferType==="swift"&&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item
-                              className="custom-forminput custom-label mb-0"
-                              name="routingNumber"
-                              label={apiCalls.convertLocalLang(
-                                "Routing_number"
-                              )}
-                              required
-                              rules={[
-                                {
-                                  required: true,
-                                  message:
-                                    apiCalls.convertLocalLang("is_required"),
-                                },
-                                {
-                                  validator(_, value) {
-                                    if (emailExist) {
-                                      return Promise.reject(
-                                        "Invalid ACH/Routing number"
-                                      );
-                                    } else if (
-                                      value &&
-                                      !/^[A-Za-z0-9]+$/.test(value)
-                                    ) {
-                                      return Promise.reject(
-                                        "Invalid ACH/Routing number"
-                                      );
-                                    } else {
-                                      return Promise.resolve();
-                                    }
-                                  },
-                                },
-                              ]}
-                            >
-                              <Input
-                                className="cust-input "
-                                placeholder={apiCalls.convertLocalLang(
-                                  "Routing_number"
-                                )}
-                                maxLength="500"
-                              />
-                            </Form.Item>
-                          </Col>}
                           <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
                               className="custom-forminput custom-label mb-0"
@@ -1621,7 +1477,7 @@ const AddressCommonCom = (props) => {
                         </div>
                       </Form>
                     )}
-                  </Modal>
+                  </Drawer>
                 </Row>}
               {props.cryptoTab !== 2 && <Form>
 
