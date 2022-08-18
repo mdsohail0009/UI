@@ -63,7 +63,7 @@ const MarketCap = ({ member }) => {
 
     return <>
         <div>
-            <div className="full-screenable-node" style={{ overflow: "hidden", height: "100%", background: "daryGrey"
+            <div className="full-screenable-node " style={{ overflow: "hidden", height: "100%", background: "daryGrey"
 }}>
                 <div className="d-flex justify-content mt-16">
                     <div>

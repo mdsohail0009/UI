@@ -200,10 +200,17 @@ class YourPortfolio extends Component {
             <Currency prefix={"$"} defaultValue={totalCryptoValue}  className={`text-white-30 fs-16 m-0 ${totalCryptoValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '18px' }} />
             </div>
               <div>
-              <Link to="/cockpitCharts" className="dbchart-link fs-14 fw-500">
+              {/* <Link to="/cockpitCharts" className="dbchart-link fs-14 fw-500">
                 <Translate content="cockpit" />
                 <span className="icon sm right-angle ml-4" />
-              </Link></div>
+              </Link> */}
+
+              <Button className="pop-btn dbchart-link fs-14 fw-500" onClick={() => this.cockpitCharts()} >
+                  <Translate content="cockpit" />
+                  <span className="icon sm right-angle ml-4" />
+              </Button>
+                    
+              </div>
             </div>
             <List
               className="mobile-list"

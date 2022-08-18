@@ -1359,3 +1359,4 @@ input[type=number]::-webkit-outer-spin-button {
 .markets-panel .custom-table .ant-table-body::-webkit-scrollbar-thumb{background-color: #899097 !important;}
 .pay-grid .ant-table-thead th.ant-table-column-has-sorters:hover{background: var(--bgDarkGrey);}
 .pay-grid .ant-table-cell-scrollbar{box-shadow: none;}
+.pay-grid .ant-table-body{height: 500px;}

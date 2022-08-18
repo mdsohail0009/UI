@@ -79,7 +79,7 @@ class Home extends Component {
                             crypto_usd="0.00 BTC"
                             crypto_stock="0.0%" />}
                         {this.state.permissions.Notices && <Notices />}
-                        {this.state.permissions.Markets && <div className="markets-panel">
+                        {this.state.permissions.Markets && <div className="markets-panel mr-0">
                             <MarketCap />
                         </div>}
                     </Col>
