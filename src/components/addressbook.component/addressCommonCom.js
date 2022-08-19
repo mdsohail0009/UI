@@ -624,7 +624,7 @@ const AddressCommonCom = (props) => {
               <Form.Item
                 name="addressType"
 
-                className="custom-label text-center"
+                className="custom-label text-center mb-0"
               >
                 <Row gutter={[16, 16]}>
                   <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -686,7 +686,42 @@ const AddressCommonCom = (props) => {
                 </Row>
               </Form.Item>
             </>}
-              {addressOptions.addressType === "myself" && props.cryptoTab == 2 && <Alert type="info" message={favouriteDetails.fullName} description={<><Text Paragraph><strong>Phone :</strong> {props.userConfig?.phoneNo}</Text><br></br><Text Paragraph><strong> Email :</strong> {props.userConfig?.email}</Text></>} />}
+              {addressOptions.addressType === "myself" && props.cryptoTab == 2 }
+              {/* //  <Alert type="info" message={favouriteDetails.fullName} 
+              //  description={<><Text Paragraph><strong>Phone :</strong> {props.userConfig?.phoneNo}</Text>
+              //  <br></br><Text Paragraph><strong> Email :</strong> {props.userConfig?.email}</Text></>}
+              //   />   */}
+             
+              <div className="box basic-info alert-info-custom">
+                
+              <Row>
+                <Col xs={24} md={24} lg={24} xl={8} xxl={8} className="mb-16">
+                <label className="fs-14 fw-400 ">
+                <strong>Name</strong>
+                </label>
+                <div><Text className="fs-14 fw-400 text-purewhite">{favouriteDetails.fullName}</Text></div>
+                 
+                </Col>
+                <Col xs={24} md={24} lg={24} xl={7} xxl={7} className="mb-16">
+                <label className="fs-14 fw-400 ">
+                <strong>Phone</strong>
+                </label>
+                <div><Text className="fs-14 fw-400 text-purewhite">{props.userConfig?.phoneNo}</Text></div>
+                </Col>
+                <Col xs={24} md={24} lg={24} xl={9} xxl={9} className="mb-16">
+                <label className="fs-14 fw-400">
+                <strong> Email</strong>
+                </label>
+                <div><Text className="fs-14 fw-400 text-purewhite">{props.userConfig?.email}</Text></div>
+                </Col>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                <label className="fs-14 fw-400 ">
+                <strong> Address</strong>
+                </label>
+                <div><Text className="fs-14 fw-400 text-purewhite">{props.userConfig?.email}</Text></div>
+                </Col>
+              </Row>
+             </div>
               {addressOptions.addressType !== "myself" && <React.Fragment>
                 <Translate
                   content="Beneficiary_Details"

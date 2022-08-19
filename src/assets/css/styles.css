@@ -1362,7 +1362,7 @@ input[type=number]::-webkit-outer-spin-button {
 .custom-table.pay-grid.view .ant-table-tbody > tr.ant-table-placeholder:hover > td{background-color: transparent;}
 .address-book-table .pay-grid tbody td{padding: 4px 8px 4px 8px;}
 .side-drawer.custom-drawer-width .ant-drawer-title{color: #fff;}
-.custom-radio-btn .ant-radio-button-wrapper{border: 1px solid #FFDB1A;border-radius: 5px; margin-left: 5px;margin-right: 5px;width: 160px;height: 86px;display: inline-flex;align-items: center;}
+.custom-radio-btn .ant-radio-button-wrapper{background: transparent;background-image: none;border-radius: 5px; margin-left: 5px;border: 1px solid #9b9bab;margin-right: 5px;color: var(--textWhite);width: 160px;height: 56px;display: inline-flex;align-items: center;}
 .custom-radio-btn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{border: transparent;}
 .custom-radio-btn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active{border: transparent;}
 .custom-radio-btn .ant-radio-button-wrapper-checked:not([class*=' ant-radio-button-wrapper-disabled']).ant-radio-button-wrapper:first-child{border: transparent;}
@@ -1370,3 +1370,7 @@ input[type=number]::-webkit-outer-spin-button {
 .custom-radio-btn .ant-radio-button-wrapper span{margin:auto;}
 .custom-radio-btn .ant-radio-button-wrapper-checked{border:transparent;}
 .cust-input.cust-text-area.address-book-cust{padding:20px 16px 15px 16px!important;}
+.custom-radio-btn.buysell-toggle.crypto-toggle .ant-radio-button-checked{background-image: linear-gradient(99.09deg, var(--btnGrad1), var(--btnGrad2));}
+.custom-radio-btn.buysell-toggle .ant-radio-button-wrapper-checked{color: #fff !important;;}
+.box.basic-info.alert-info-custom{background-color:#313C46;border-radius: 15px;}
+.box.basic-info.alert-info-custom{color: var(--textPureWhite);}
