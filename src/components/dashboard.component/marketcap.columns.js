@@ -3,11 +3,11 @@ import apiCalls from '../../api/apiCalls';
 
 const infoColumns = [
     { dataIndex: "image", render: (val, data) => <img style={{ height: 20, width: 20 }} src={val} alt={'coin'} />, width: 40 },
-    { title: apiCalls.convertLocalLang('coin'), dataIndex: "symbol", render: (text, data) => <span className="fs-18 fw-500 text-upper text-white mb-0 mt-12 market-coinname">{text.toUpperCase()}</span>, sorter: (a, b) => ('' + a.symbol).localeCompare(b.symbol), },
+    { title: apiCalls.convertLocalLang('coin'), dataIndex: "symbol", render: (text, data) => <span className="text-upper text-white mb-0 mt-12 market-coinname">{text.toUpperCase()}</span>, sorter: (a, b) => ('' + a.symbol).localeCompare(b.symbol), },
     {
-        title: apiCalls.convertLocalLang('price'), dataIndex: "current_price", render: (val) => <Currency defaultValue={val} type={"text"} className="fs-16 fw-400 text-upper text-white" />, sorter: (a, b) => a.current_price - b.current_price
+        title: apiCalls.convertLocalLang('price'), dataIndex: "current_price", render: (val) => <Currency defaultValue={val} type={"text"} className="fs-14 fw-400 text-upper text-white" />, sorter: (a, b) => a.current_price - b.current_price
     },
-    { title: apiCalls.convertLocalLang('last_24hrs'), dataIndex: "price_change_percentage_24h", sorter: (a, b) => a.price_change_percentage_24h - b.price_change_percentage_24h, render: val => <><div className="coin-typo"> <div className={val < 0 ? 'text-red' : 'text-green'}>{parseFloat(val).toFixed(1)}%<span>{val < 0 ? <span className="icon md lose ml-8" /> : <span className="icon md gain ml-8" />}</span></div></div></> },
+    { title: apiCalls.convertLocalLang('last_24hrs'), dataIndex: "price_change_percentage_24h", sorter: (a, b) => a.price_change_percentage_24h - b.price_change_percentage_24h, render: val => <><div className="coin-typo fs-14"> <div className={val < 0 ? 'text-red' : 'text-green'}>{parseFloat(val).toFixed(1)}%<span>{val < 0 ? <span className="icon md lose ml-8" /> : <span className="icon md gain ml-8" />}</span></div></div></> },
 
 ];
 

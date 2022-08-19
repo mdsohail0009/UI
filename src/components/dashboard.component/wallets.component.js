@@ -82,11 +82,11 @@ class Wallets extends Component {
                     <Translate content="menu_payments" />
                     </Link>
                 </li>
-                <li onClick={() => this.showTransactionDrawer(item)}>
+                {/* <li onClick={() => this.showTransactionDrawer(item)}>
                     <Link  value={4} className="c-pointer">
                     <Translate content="menu_transactions_history" />
                     </Link>
-                </li>
+                </li> */}
                 <li onClick={() => this.showSendReceiveDrawer(5,item)}>
                     <Link  value={5} className="c-pointer">
                     <Translate content="menu_internal_transfer" />
@@ -107,12 +107,12 @@ class Wallets extends Component {
 
         return (
             <>
-                <Translate content="suissebase_title" component={Title} className="fs-24 fw-600 mb-0 text-white px-4" />
-                <div style={{ display: "flex",alignItems:"baseline" }}>
+                <Translate content="suissebase_title" component={Title} className="fs-24 fw-600 text-white px-4 mb-16 mt-4" />
+                {/* <div style={{ display: "flex",alignItems:"baseline" }}>
 
                 <Translate content="suissebase_subtitle" component={Paragraph} className="text-white-30 fs-16 mb-16 px-4" />
                 <Currency defaultValue={totalFiatValue} className={`fs-24 m-0 fw-600 ${totalFiatValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '54px' }} />
-                </div>
+                </div> */}
                 <List
                     itemLayout="horizontal"
                     dataSource={wallets.data}

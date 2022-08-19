@@ -14,6 +14,7 @@ import Loader from '../../Shared/loader';
 import success from '../../assets/images/success.png';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import apicalls from '../../api/apiCalls';
+import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 
 const LinkValue = (props) => {
   return (
@@ -56,7 +57,7 @@ class FaitDeposit extends Component {
         this.handlFiatDep(this.props.depositInfo?.depositCurrency, this.props.depositInfo?.currenciesWithBankInfo)
       }
     }
-
+    getFeaturePermissionsByKeyName(`sendreceivefiat`);
   }
   clearfiatValues = () => {
     this.props.fetchCurrencyWithBankDetails()

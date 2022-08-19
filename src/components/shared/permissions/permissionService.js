@@ -20,4 +20,11 @@ const getFeaturePermissionsByKey = (key,callback) => {
         store.dispatch(fetchFeaturePermissions(fid,userProfileInfo.id,callback));
     }
 }
-export { getFeatureId, getFeatureWithKeyId,getFeaturePermissionsByKey };
+const getFeaturePermissionsByKeyName = (key) => {
+    const {userConfig:{userProfileInfo},menuItems:{featurePermissions}}=store.getState();
+    const fid = getFeatureWithKeyId(key);
+    if(!featurePermissions[key]){
+        store.dispatch(fetchFeaturePermissions(fid,userProfileInfo.id));
+    }
+}
+export { getFeatureId, getFeatureWithKeyId,getFeaturePermissionsByKey, getFeaturePermissionsByKeyName };
