@@ -3,7 +3,7 @@ export default {
 	user_type: "%(lable)s",
 	Portfolio_title: "加密投资组合",
 	your_portfolio: "您的投資組合",
-	suissebase_title: "瑞士基地",
+	suissebase_title: "瑞士基地 公平 钱包",
 	suissebase_subtitle: "菲亚特秤",
 	markets_title: "市场",
 	markets_subtitle: "将您的加密货币交易成任何货币",
