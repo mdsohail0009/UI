@@ -18,7 +18,7 @@ import SellSummary from '../sell.component/sellSummary';
 import SelectSellCrypto from '../sell.component/selectCrypto'
 import SuccessMsg from '../shared/success';
 import SellSuccessMsg from '../sell.component/successMsg';
-import { getFeaturePermissionsByKeyName } from '../../shared/permissions/permissionService'
+import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 
 const { Paragraph } = Typography
 class BuySell extends Component {
