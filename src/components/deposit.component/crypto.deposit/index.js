@@ -8,9 +8,11 @@ import CryptoList from "../../shared/cryptolist"
 import { createCryptoDeposit } from "../api";
 import apicalls from "../../../api/apiCalls";
 import { fetchDashboardcalls } from "../../../reducers/dashboardReducer";
+import { getFeaturePermissionsByKeyName } from '../../shared/permissions/permissionService'
+
 const { Title, Paragraph } = Typography;
 const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {
-    useEffect(() => { fetchMemberCoins(); }, []);
+    useEffect(() => { fetchMemberCoins(); getFeaturePermissionsByKeyName(`sendreceivecrypto`)}, []);
     const fetchMemberCoins = () => {
         dispatch(getMemberCoins(userProfile.id));
     }

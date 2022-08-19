@@ -6,11 +6,13 @@ import ConnectStateProps from "../../utils/state.connect";
 import Currency from '../shared/number.formate';
 import Loader from '../../Shared/loader';
 import apicalls from "../../api/apiCalls";
+import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 
 const { Paragraph, Text } = Typography;
 const WithdrawCrypto = ({ dispatch, userProfile, sendReceive }) => {
     useEffect(() => {
         loadData();
+        getFeaturePermissionsByKeyName(`sendreceivecrypto`)
     }, []);// eslint-disable-line react-hooks/exhaustive-deps
     const loadData = () => {
         dispatch(fetchWithDrawWallets({ customerId: userProfile?.id }));
