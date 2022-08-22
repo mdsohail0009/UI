@@ -100,7 +100,7 @@ const MarketCap = ({ member }) => {
                     <div className="full-screenable-node" style={{ overflow: "hidden", height: "100%", background: "daryGrey" }}>
                         <div style={{ marginBottom: '8px', textAlign: 'right' }}>
                             <Search value={searchVal} placeholder={apiCalls.convertLocalLang('search_currency')} addonAfter={<span className="icon md search-white" />} onChange={(value) => onSearch(value, true)} size="middle" bordered={false} className="mt-8 mb-8 dark-search" />
-                            <Table locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }} sortDirections={["ascend", "descend"]} pagination={false} columns={detailInfoColumns} style={{ backgroundColor: 'var(--bgGrey)' }} scroll={{ y: '100vh' }} dataSource={fullViewData} loading={fullViewLoading} />
+                            <Table className='' locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }} sortDirections={["ascend", "descend"]} pagination={false} columns={detailInfoColumns} style={{ backgroundColor: 'var(--bgGrey)' }} scroll={{ y: '100vh' }} dataSource={fullViewData} loading={fullViewLoading} />
                         </div>
                     </div>
                 </div>

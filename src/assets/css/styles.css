@@ -521,7 +521,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .side-drawer-full .ant-pagination-disabled .ant-pagination-item-link, .side-drawer-full .ant-pagination-disabled:hover .ant-pagination-item-link, .side-drawer-full .ant-pagination-disabled:focus-visible .ant-pagination-item-link{color: rgb(255 251 251 / 25%);background-color: transparent;}
 .side-drawer-full .ant-pagination-item-active{border-color: #ffffff !important;background: transparent;}
 .side-drawer-full .ant-pagination-item-active a, .ant-table-column-sorter-up.active, .ant-table-column-sorter-down.active{color: #ffdb1a !important;}
-.side-drawer-full .ant-table-column-title{text-transform: uppercase;}
+.side-drawer-full .ant-table-column-title{text-transform: uppercase;font-size: 16px;font-weight: 500;}
 /* .custom-table .ant-table-column-title{color: var(--textWhite);z-index: 0;}
 .custom-table .ant-table-body,.custom-table .ant-table-thead > tr > th{background: var(--bgDarkGrey);}
 .custom-table .ant-table-row.ant-table-row-level-0:hover td, td.ant-table-column-sort{background: transparent;} */
@@ -922,7 +922,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .basicinfo{font-size: 20px !important;}
     .user-list{padding-left: 0;display: block !important;}
     .mobile-list .ant-list-item{display: block; border-bottom: 1px solid  var(--borderLight) !important;}
-    .mobile-list .custom-btn, .crypto_btns .custom-btn{min-width: calc(50% - 8px);}
+    .mobile-list .custom-btn, .crypto_btns .custom-btn{min-width: calc(50% - 22px);}
     .mobile-list .custom-btn:first-child{margin-left: 0 !important;}
     .mobile-list .crypto-btns{display: flex;padding-top: 16px;}
     .coin-typo{font-size: 12px !important;}
@@ -1361,4 +1361,6 @@ input[type=number]::-webkit-outer-spin-button {
 .markets-panel .custom-table .ant-table-body::-webkit-scrollbar-thumb{background-color: #899097 !important;}
 .pay-grid .ant-table-thead th.ant-table-column-has-sorters:hover{background: var(--bgDarkGrey);}
 .pay-grid .ant-table-cell-scrollbar{box-shadow: none;}
-.pay-grid .ant-table-body{height: 500px;}
+.pay-grid .ant-table-body{height: 450px;}
+td.ant-table-column-sort, .ant-table-placeholder{background: transparent;}
+.ant-table-thead th.ant-table-column-sort{background: var(--bgDarkGrey);}
