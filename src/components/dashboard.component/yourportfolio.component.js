@@ -64,7 +64,7 @@ class YourPortfolio extends Component {
         if (key === "buy") {
             this.props.dispatch(fetchSelectedCoinDetails(item.coin, this.props.userProfile?.id));
             this.props.dispatch(setCoin({ ...item, toWalletCode: item.coin, toWalletId: item.id, toWalletName: item.coinFullName }));
-            convertCurrency({ from: item.coin, to: "USD", value: 1, isCrypto: false, memId: this.props.userProfile?.id, screenName: null }).then(val => {
+            convertCurrency({ from: item.coin, to: "USD", value: 1, isCrypto: false, customer_id: this.props.userProfile?.id, screenName: null }).then(val => {
                 this.props.dispatch(setExchangeValue({ key: item.coin, value: val }));
             });
             this.props.dispatch(setStep("step2"));
