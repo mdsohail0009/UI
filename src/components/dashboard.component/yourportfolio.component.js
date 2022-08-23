@@ -243,7 +243,7 @@ class YourPortfolio extends Component {
                         <Translate
                         content="deposit"
                         component={Button}
-                        className="custom-btn prime text-white mr-16"
+                        className="custom-btn prime text-purewhite mr-16"
                         onClick={() =>  this.showSendReceiveDrawer(1, item)}
                       />
                       <Translate

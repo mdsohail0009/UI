@@ -13,8 +13,8 @@ const infoColumns = [
 
 const detailInfoColumns = [
     { title: "", dataIndex: "image", render: val => <img style={{ height: 20, width: 20 }} src={val} alt={'coin'} />, width: 80 },
-    { title: "", dataIndex: "name", width: 160, render: text => <span className="fs-18 fw-500 text-upper text-white mb-0">{text}</span> },
-    { title: apiCalls.convertLocalLang('coin'), dataIndex: "symbol", width: 120, render: text => <span className="fs-18 fw-500 text-upper text-white mb-0">{text.toUpperCase()}</span>, sorter: (a, b) => ('' + a.symbol).localeCompare(b.symbol), },
+    { title: "", dataIndex: "name", width: 160, render: text => <span className="fs-14 fw-400 text-upper text-white mb-0">{text}</span> },
+    { title: apiCalls.convertLocalLang('coin'), dataIndex: "symbol", width: 120, render: text => <span className="fs-14 fw-400 text-upper text-white mb-0">{text.toUpperCase()}</span>, sorter: (a, b) => ('' + a.symbol).localeCompare(b.symbol), },
     { title: apiCalls.convertLocalLang('price'), dataIndex: "current_price", width: 140, render: (val) => <Currency className="fs-14 fw-500 text-upper text-white mb-0" defaultValue={val} type={"text"} />, sorter: (a, b) => a.current_price - b.current_price, },
     { title: apiCalls.convertLocalLang('last_24hrs'), dataIndex: "price_change_percentage_24h", width: 160, sorter: (a, b) => a.price_change_percentage_24h - b.price_change_percentage_24h, render: val => <><div className="coin-typo"> <div className={val < 0 ? 'text-red' : 'text-green'}>{parseFloat(val).toFixed(1)}%<span>{val < 0 ? <span className="icon md lose ml-16" /> : <span className="icon md gain ml-12" />}</span></div></div></> },
     { title: apiCalls.convertLocalLang('mkt_Cap'), dataIndex: "market_cap", width: 160, render: val => <Currency className="fs-14 fw-400 text-upper text-white mb-0" defaultValue={val} type={"text"} />, sorter: (a, b) => a.market_cap - b.market_cap, },
