@@ -277,7 +277,7 @@ class FaitDeposit extends Component {
                       component={Text}
                     />
                     <Translate
-                      className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                      className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24"
                       content="signature_bank"
                       component={Text}
                       with={{ value: BankInfo.accountName }} />
@@ -287,7 +287,7 @@ class FaitDeposit extends Component {
                       component={Text}
                     />
                     <Translate
-                      className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                      className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24"
                       content="signature_bank"
                       component={Text}
                       with={{ value: BankInfo.accountAddress }} />
@@ -298,10 +298,10 @@ class FaitDeposit extends Component {
                     {BankInfo.currencyCode == "USD" &&   <Text className="text-white-30 fs-14">Beneficiary Account No. </Text> }
                     {BankInfo.currencyCode == "EUR" &&   <Text className="text-white-30 fs-14">Beneficiary IBAN No. </Text> }
                     <CopyToClipboard text={BankInfo.accountNumber} options={{ format: 'text/plain' }}>
-                    <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="mb-0 fs-14 text-yellow fw-500" >{BankInfo.accountNumber}</Text>
+                    <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="mb-0 fs-20 text-yellow fw-500" >{BankInfo.accountNumber}</Text>
                      </CopyToClipboard>
                     {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <Translate
-                      className="mt-36 fs-14 text-white fw-500 text-upper"
+                      className="mt-36 fs-20 text-white fw-500 text-upper"
                       content="for_Domestic_wires"
                       component={Paragraph}
                     />}
@@ -312,7 +312,7 @@ class FaitDeposit extends Component {
                     />}
                     {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <CopyToClipboard text={BankInfo.routingNumber} options={{ format: 'text/plain' }}><Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 d-block">{BankInfo.routingNumber}</Text></CopyToClipboard>}
                     <Translate
-                      className="mt-24 fs-14 text-white fw-500 text-upper"
+                      className="mt-24 fs-20 text-white fw-500 text-upper"
                       content="for_international_wires"
                       component={Paragraph}
                     />
