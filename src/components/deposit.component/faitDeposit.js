@@ -297,7 +297,7 @@ class FaitDeposit extends Component {
                     {BankInfo.currencyCode == "USD" &&   <Text className="text-white-30 fs-14">Beneficiary Account No. </Text> }
                     {BankInfo.currencyCode == "EUR" &&   <Text className="text-white-30 fs-14">Beneficiary IBAN No. </Text> }
                     <CopyToClipboard text={BankInfo.accountNumber} options={{ format: 'text/plain' }}>
-                    <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="mb-0 fs-20 text-yellow fw-500" >{BankInfo.accountNumber}</Text>
+                    <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="mb-0 fs-18 fw-400 text-yellow fw-500" >{BankInfo.accountNumber}</Text>
                      </CopyToClipboard>
                     {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <Translate
                       className="mt-36 fs-20 text-white fw-500 text-upper"
@@ -322,7 +322,7 @@ class FaitDeposit extends Component {
                     />
                      <CopyToClipboard text={BankInfo.networkCode} options={{ format: 'text/plain' }}>
                     <Translate copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }}
-                      className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                      className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24"
                       content="SIGNU"
                       component={Text}
                       with={{ value: BankInfo.networkCode }}
@@ -334,7 +334,7 @@ class FaitDeposit extends Component {
                       component={Text}
                     />
                     <Translate
-                      className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                      className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24"
                       content="signature_bank"
                       component={Text}
                       with={{ value: BankInfo.bankName }} />
@@ -344,7 +344,7 @@ class FaitDeposit extends Component {
                       component={Text}
                     />
                     <Translate
-                      className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                      className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24"
                       content="signature_bank"
                       component={Text}
                       with={{ value: BankInfo.bankAddress }} />
@@ -355,7 +355,7 @@ class FaitDeposit extends Component {
                       component={Text}
                     />}
                     {BankInfo.referenceNo != null && BankInfo.referenceNo != '' &&
-                    <Text className="fs-20 text-white-30 l-height-normal d-block mb-24">{BankInfo.referenceNo}</Text>}
+                    <Text className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24">{BankInfo.referenceNo}</Text>}
                     
                     {BankInfo.depReferenceNo !== '' && <div className="crypto-address mb-36 mx-0">
                       <Translate
@@ -363,7 +363,7 @@ class FaitDeposit extends Component {
                         content="reference"
                         component={Text}
                       />
-                      <Paragraph className="mb-0 fw-600 text-white-30 walletadrs mb-copy">
+                      <Paragraph className="mb-0 fs-18 fw-500 text-white-30 walletadrs mb-copy">
                         {BankInfo.depReferenceNo}
                         <CopyToClipboard text={BankInfo.depReferenceNo} options={{ format: 'text/plain' }}>
                           <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 custom-display"   ></Text>
