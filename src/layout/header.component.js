@@ -160,6 +160,18 @@ class Header extends Component {
             onClick={() => this.userProfile()}
           />
           <ul className="pl-0 drpdwn-list">
+          <li
+                            onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/modal" })}
+                        >
+                            <Link>
+                                <Translate
+                                    content="menu_transactions_history"
+                                    component={Text}
+                                    className="text-white-30"
+                                />
+                                <span className="icon md rarrow-white" />
+                            </Link>
+                        </li>
             <li
             >
               <Popover placement="left" content={<><div className="iban-hov" onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/6120197cdc204d9ddb882e4d")}>
@@ -229,7 +241,7 @@ class Header extends Component {
                 />
              
             </li>      
-            <li
+            {/* <li
               onClick={() => this.showAuditLogsDrawer()}
             >
               <Link>
@@ -240,7 +252,7 @@ class Header extends Component {
                 />
                 <span className="icon md rarrow-white" />
               </Link>
-            </li>       
+            </li>        */}
           </ul>
         </div>
       </Menu>
