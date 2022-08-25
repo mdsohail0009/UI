@@ -228,7 +228,7 @@ class TransactionsHistory extends Component {
                 <Col xs={24} sm={24} md={3} lg={3} xl={3} className="transaction_resp">
                   <Button
                     className="pop-btn"
-                    style={{ height: 40, marginTop: "36px", marginLeft: "12px" }}
+                    style={{ height: 36, marginTop: "36px", marginLeft: "12px" }}
                     htmlType="submit"
                     onClick={this.handleSearch}
                   >

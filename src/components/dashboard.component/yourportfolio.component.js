@@ -168,12 +168,12 @@ class YourPortfolio extends Component {
               </li> */}
               <li onClick={() => this.showBuyDrawer(item, "buy")}>
                   <Link  value={2} className="c-pointer">
-                  <Translate content="menu_buy_sell" />
+                  <Translate content="buy" />
                   </Link>
               </li>
-              <li onClick={() => this.showTransactionDrawer(item)}>
+              <li onClick={() => this.showBuyDrawer(item, "sell")}>
                     <Link  value={4} className="c-pointer">
-                    <Translate content="menu_transactions_history" />
+                    <Translate content="sell" />
                     </Link>
                 </li>
                 <li onClick={() => this.showInternalTransfer(item)}>
@@ -208,7 +208,7 @@ class YourPortfolio extends Component {
                 <span className="icon sm right-angle ml-4" />
               </Link> */}
 
-              <Button className="pop-btn dbchart-link fs-14 fw-500" onClick={() => this.cockpitCharts()} >
+              <Button className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
                   <Translate content="cockpit" />
                   <span className="icon sm right-angle ml-4" />
               </Button>
