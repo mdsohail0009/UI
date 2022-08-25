@@ -942,6 +942,41 @@ const AddressCommonCom = (props) => {
                     </Col>
                   )}
                   {withdraeTab === "Fiat" && (
+                    <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                      <Form.Item
+                        className="custom-forminput custom-label mb-0"
+                        name="line2"
+                        // required
+                        // rules={[
+                        //   {
+                        //     required: true,
+                        //     message: apiCalls.convertLocalLang("is_required"),
+                        //   },
+                        //   {
+                        //     whitespace: true,
+                        //     message: apiCalls.convertLocalLang("is_required"),
+                        //   },
+                        //   {
+                        //     validator: validateContentRule,
+                        //   },
+                        // ]}
+                        label={
+                          <Translate
+                            content="Address_Line3"
+                            component={Form.label}
+                          />
+                        }
+                      >
+                        <TextArea
+                          placeholder={apiCalls.convertLocalLang("Address_Line3")}
+                          className="cust-input cust-text-area address-book-cust"
+                          autoSize={{ minRows: 1, maxRows: 1 }}
+                          maxLength={100}
+                        ></TextArea>
+                      </Form.Item>
+                    </Col>
+                  )}
+                  {withdraeTab === "Fiat" && (
                     <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                       <Form.Item
                         className="custom-forminput custom-label mb-0"
@@ -1102,8 +1137,6 @@ const AddressCommonCom = (props) => {
                   </Col>
 
                 </Row>}
-
-              <AddressDocumnet />
               {props?.cryptoTab != 2 && <CryptoAdress />}
 
               {bankmodalData?.map((item, indx) => {

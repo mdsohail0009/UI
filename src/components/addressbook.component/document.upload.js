@@ -19,8 +19,8 @@ class AddressDocumnet extends Component {
             <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="text-left">
                 <div className='mb-24'>
                     <Paragraph
-                        className="mb-16 fs-14 text-white fw-500 text-upper"
-                    >Please provide your identity proof</Paragraph>
+                        className="mb-16 fs-14 text-white fw-500"
+                    >{this.props.title}</Paragraph>
                     <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                         className="upload mt-16"
                         multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
