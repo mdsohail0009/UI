@@ -253,6 +253,30 @@ class BankDetails extends Component {
                         ></TextArea>
                     </Form.Item>
                 </Col>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-forminput custom-label mb-0"
+                        name="line3"
+                        rules={[
+                            {
+                                validator: validateContentRule,
+                            }
+                        ]}
+                        label={
+                            <Translate
+                                content="Address_Line3"
+                                component={Form.label}
+                            />
+                        }
+                    >
+                        <TextArea
+                            placeholder={apicalls.convertLocalLang("Address_Line3")}
+                            className="cust-input cust-text-area address-book-cust"
+                            autoSize={{ minRows: 1, maxRows: 2 }}
+                            maxLength={100}
+                        ></TextArea>
+                    </Form.Item>
+                </Col>
             </>
         }
         return _templates[transferType]
