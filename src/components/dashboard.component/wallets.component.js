@@ -130,7 +130,7 @@ class Wallets extends Component {
                             />
                             <div className="crypto-btns">
                             <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
-                                <Translate content="withdraw" onClick={() => { this.setState({ ...this.setState, showFuntransfer: true }) }} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} />
+                                <Translate content="withdraw" onClick={() => { this.setState({ ...this.setState, showFuntransfer: true,selectedCurrency:item.walletCode }) }} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} />
                                 {/* <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
                                 <Translate content="withdraw" onClick={() => this.showSendReceiveDrawer(2, item.walletCode)} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} /> */}
                             </div>
@@ -166,7 +166,7 @@ class Wallets extends Component {
                     className="side-drawer w-50p"
                     visible={this.state.showFuntransfer}
                 >
-                    <OnthegoFundTransfer />
+                    <OnthegoFundTransfer selectedCurrency={this.state.selectedCurrency} />
                 </Drawer>
             </>
         );
