@@ -6,6 +6,8 @@ import oops from '../../assets/images/oops.png'
 import FiatAddress from "../addressbook.component/fiat.address";
 import BankDetails from "../addressbook.component/bank.details";
 import alertIcon from '../../assets/images/pending.png';
+import success from '../../assets/images/success.png';
+import Translate from "react-translate-component";
 import { Link } from 'react-router-dom';
 const { Paragraph, Text,Title } = Typography;
 const { Search } = Input;
