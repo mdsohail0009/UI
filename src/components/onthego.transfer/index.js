@@ -319,7 +319,7 @@ class OnthegoFundTransfer extends Component {
                         style={{ minWidth: 150 }}
                         onClick={()=>this.chnageStep("reviewdetails")}
                     >
-                        <Translate content="Save_btn_text" />
+                        <Translate content="Save_btn_text"/>
                     </Button>
                 </div>
             </>,
