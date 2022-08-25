@@ -37,7 +37,7 @@ const Payments = (props) => {
   };
   const paymentsEdit = () => {
     if (selection.length == 0) {
-      setErrorWarning("Please select the one record");
+      setErrorWarning("Please select the record");
     } else {
       props.history.push(`/payments/${selectedObj}/${setSelectData.currency}/${setSelectData.state}/edit`)
     }
@@ -155,8 +155,9 @@ const getCurrencyLookup = async () => {
   return (
     <>
       <div className="main-container">
-        <div className='bill_payment mb-16'>
-          <Title className="basicinfo mb-0"><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
+        <div className='bill_payment mb-16'> 
+          
+          <Title className="basicinfo mb-0"><span onClick={() => props.history?.push("/cockpit")} className='icon md c-pointer back mr-8'></span><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
           {/* <div className="cust-btns mb-d-none">
             <Button
               className="pop-btn px-24"
