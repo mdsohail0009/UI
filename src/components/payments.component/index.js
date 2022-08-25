@@ -45,13 +45,24 @@ const Payments = (props) => {
   };
   const loadInfo = () =>{
     getCurrencyLookup();
-    props.dispatch(fetchFeaturePermissions(getFeatureId(`/payments`), props.userConfig.id))
+    // props.dispatch(fetchFeaturePermissions(getFeatureId(`/payments`), props.userConfig.id))
     if (props?.match?.path === `/payments`) {
       let key = "1"
       props.dispatch(setHeaderTab(key));
     }
+    
     setLoading(false)
   }
+  useEffect(() => {
+    if(props.billpaymentsPermission){
+      let viewPermission = props.billpaymentsPermission.actions.filter((item)=>item.permissionName == 'view')[0];
+      if(!viewPermission.values){
+        props.history.push('/accessdenied')
+      }
+    }else{
+      getFeaturePermissionsByKey('billpayments',loadInfo)
+    }
+  }, [props.billpaymentsPermission])
   useEffect(() => {
     getFeaturePermissionsByKey('billpayments',loadInfo)
   }, [])
@@ -287,8 +298,8 @@ const getCurrencyLookup = async () => {
 }
 
 
-const connectStateToProps = ({ userConfig }) => {
-  return { userConfig: userConfig.userProfileInfo };
+const connectStateToProps = ({ userConfig,menuItems }) => {
+  return { userConfig: userConfig.userProfileInfo,billpaymentsPermission:menuItems?.featurePermissions?.billpayments };
 };
 
 const connectDispatchToProps = dispatch => {
