@@ -285,7 +285,7 @@ export default {
 	Fee: "Fee",
 	Amount_to_pay: "Amount to pay",
 	place_an_order: "place an order",
-	Routing_number: "ABN Routing Number",
+	Routing_number: "ABA Routing Number",
 	Choose_a_unique_pass_word_to_protect_your_account:
 		"Choose a unique password to protect your account.",
 	Save_btn_text: "Save",
@@ -585,7 +585,7 @@ export default {
 	agree_to_signup: "By clicking Sign Up, I here by acknowledge that I agree to Suissebase's %(link)s Agreement and I've read the Privacy Policy",
 	terms_Use: "Terms of Use",
 	whitelist:"Declaration form",
-	favorite_name: "Favorite Name",
+	favorite_name: "Save payee name as",
 	Fait_Name:"Name",
 	buisiness_name:"Business Name",
 	email:"Email",

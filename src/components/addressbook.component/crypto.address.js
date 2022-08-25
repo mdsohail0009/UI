@@ -1,6 +1,12 @@
-import React from "react"
+import React from "react";
+import { Form, Input, Row, Col, Select, Typography,AutoComplete } from 'antd';
+import apiCalls from "../../api/apiCalls";
+import { validateContentRule } from "../../utils/custom.validator";
+import Translate from "react-translate-component";
 
-const CryptoAdress = () => {
+const { Option } = Select;
+const { Text } = Typography;
+const CryptoAdress = ({PayeeLu=[]}) => {
     return <React.Fragment>
         <Form>
             <Row gutter={[16, 16]}>
@@ -30,7 +36,9 @@ const CryptoAdress = () => {
                         ]}
                     >
                         <AutoComplete
-                            onChange={(e) => handleChange(e)}
+                            onChange={(e) => {
+                                // handleChange(e)
+                            }}
                             maxLength={20}
                             className="cust-input"
                             placeholder={apiCalls.convertLocalLang("favorite_name")}
