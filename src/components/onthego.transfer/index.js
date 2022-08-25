@@ -7,6 +7,7 @@ import FiatAddress from "../addressbook.component/fiat.address";
 import BankDetails from "../addressbook.component/bank.details";
 import alertIcon from '../../assets/images/pending.png';
 import success from '../../assets/images/success.png'
+import Translate from "react-translate-component";
 
 const { Paragraph, Text, Title } = Typography;
 const { Search } = Input;
@@ -256,7 +257,26 @@ class OnthegoFundTransfer extends Component {
                 <FiatAddress onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} />
                 <Paragraph className="mb-16 fs-14 fw-500 text-white  mt-16">Bank Details</Paragraph>
                 <Divider />
-                <BankDetails transferType={this.state.addressOptions?.transferType} onSubmit={() => this.chnageStep("reviewdetails")} />
+                <BankDetails transferType={this.state.addressOptions?.transferType} />
+                {this.state.addressOptions.addressType !== "myself" && <AddressDocumnet title={"Please upload supporting documents for transaction "} />}
+                <div className="text-right mt-12">
+                    <Button
+                        className="pop-btn px-36"
+                        style={{ margin: "0 8px" }}
+                        onClick={()=>{}}
+                    >
+                        {apicalls.convertLocalLang("cancel")}
+                    </Button>
+                    <Button
+                        htmlType="button"
+                        size="large"
+                        className="pop-btn px-36"
+                        style={{ minWidth: 150 }}
+                        onClick={()=>this.chnageStep("reviewdetails")}
+                    >
+                        <Translate content="Save_btn_text" />
+                    </Button>
+                </div>
             </>,
             declaration: <div className="text-center">
                 <Image width={80} preview={false} src={alertIcon} />

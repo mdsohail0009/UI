@@ -92,7 +92,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, PayeeLu = [], emailExis
                 component={Paragraph}
                 className="mb-16 fs-14 text-white fw-500"
             />
-            <Divider/>
+            <Divider />
             <Row gutter={[16, 16]}>
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
@@ -274,10 +274,10 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, PayeeLu = [], emailExis
                         className="custom-forminput custom-label mb-0"
                         name="line2"
                         rules={[
-                         
-                          {
-                            validator: validateContentRule,
-                          }
+
+                            {
+                                validator: validateContentRule,
+                            }
                         ]}
                         label={
                             <Translate
@@ -329,7 +329,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, PayeeLu = [], emailExis
                             },
                         ]}
                         label={
-                           "Reason for transfer"
+                            "Reason for transfer"
                         }
                     >
                         <TextArea
@@ -464,8 +464,6 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, PayeeLu = [], emailExis
                 </Col>
 
             </Row>
-            <br/>
-            <AddressDocumnet title={"Please upload supporting documents for transaction "} />
         </React.Fragment>}
 
     </Form>
