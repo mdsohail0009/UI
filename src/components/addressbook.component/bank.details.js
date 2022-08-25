@@ -484,11 +484,12 @@ class BankDetails extends Component {
                     {apicalls.convertLocalLang("cancel")}
                 </Button>
                 <Button
-                    htmlType="submit"
+                    htmlType="button"
                     size="large"
                     className="pop-btn px-36"
                     // loading={btnDisabled}
                     style={{ minWidth: 150 }}
+                    onClick={onSubmit}
                 >
                     {isLoading && <Spin indicator={antIcon} />}{" "}
                     <Translate content="Save_btn_text" />

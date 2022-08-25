@@ -1,21 +1,28 @@
 import React, { Component } from "react";
-import { Input, Row, Col, Form, Button, Typography, List, Divider,Image } from 'antd';
+import { Input, Row, Col, Form, Button, Typography, List, Divider, Image } from 'antd';
 import apicalls from "../../api/apiCalls";
 import AddressDocumnet from "../addressbook.component/document.upload";
 import oops from '../../assets/images/oops.png'
 import FiatAddress from "../addressbook.component/fiat.address";
 import BankDetails from "../addressbook.component/bank.details";
-import alertIcon from '../../assets/images/pending.png'
-const { Paragraph, Text,Title } = Typography;
+import alertIcon from '../../assets/images/pending.png';
+import success from '../../assets/images/success.png'
+
+const { Paragraph, Text, Title } = Typography;
 const { Search } = Input;
 class OnthegoFundTransfer extends Component {
     state = {
         step: "enteramount",
+        //filterObj:[],
         filterObj: [{ accountHolderName: "SubbaRedy", lable: "Payee 100", address: "100032498902", type: "First_Party" }, { accountHolderName: "John Martin", lable: "Payee 100", address: "100032498902", type: "Third_Party" }],
-        addressOptions: { addressType: "myself", transferType: "sepa" }
+        addressOptions: { addressType: "myself", transferType: "sepa" },
+        isNewTransfer: false
     }
     chnageStep = (step) => {
         this.setState({ ...this.state, step });
+        if (step === 'newtransfer') {
+            this.setState({ ...this.state, step, isNewTransfer: true });
+        }
     }
     renderStep = (step) => {
         const { filterObj } = this.state;
@@ -72,7 +79,7 @@ class OnthegoFundTransfer extends Component {
                                 size="large"
                                 className="pop-btn mb-36"
                                 style={{ minWidth: 300 }}
-                                onClick={() => this.chnageStep("addressselection")}
+                                onClick={() => { this.setState({ ...this.state, isNewTransfer: false }, () => this.chnageStep("addressselection")) }}
                             >
                                 Addressbook
                             </Button>
@@ -231,7 +238,7 @@ class OnthegoFundTransfer extends Component {
                                 <Form.Item className="mb-0 mt-16">
                                     <Button
                                         htmlType="button"
-                                        onClick={()=>this.chnageStep("declaration")}
+                                        onClick={() => this.chnageStep(this.state.isNewTransfer ? "declaration" : "successpage")}
                                         size="large"
                                         block
                                         className="pop-btn px-24"
@@ -249,13 +256,20 @@ class OnthegoFundTransfer extends Component {
                 <FiatAddress onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} />
                 <Paragraph className="mb-16 fs-14 fw-500 text-white  mt-16">Bank Details</Paragraph>
                 <Divider />
-                <BankDetails transferType={this.state.addressOptions?.transferType} />
+                <BankDetails transferType={this.state.addressOptions?.transferType} onSubmit={() => this.chnageStep("reviewdetails")} />
             </>,
             declaration: <div className="text-center">
                 <Image width={80} preview={false} src={alertIcon} />
                 <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully</Title>
                 <Text className="text-white-30">{`Declaration form has been sent to ${"have123@yopmail.com"}. 
                        Please sign using link received in email to whitelist your address`}</Text>
+                {/*<div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBOARD</Button> */}
+            </div>,
+            successpage: <div className="text-center">
+                <Image width={80} preview={false} src={success} />
+                <Title level={2} className="text-white-30 my-16 mb-0">Your transaction has been processed successfully</Title>
+                {/* <Text className="text-white-30">{`Declaration form has been sent to ${"have123@yopmail.com"}. 
+                   Please sign using link received in email to whitelist your address`}</Text> */}
                 {/*<div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBOARD</Button> */}
             </div>
         }
