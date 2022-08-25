@@ -1374,3 +1374,11 @@ input[type=number]::-webkit-outer-spin-button {
 .custom-radio-btn.buysell-toggle .ant-radio-button-wrapper-checked{color: #fff !important;;}
 .box.basic-info.alert-info-custom{background-color:var(--bgGloom) !important;border-radius: 15px;color: var(--textPureWhite);border-color: var(--borderGrey) !important;}
 .ant-btn.ant-btn-block.profile-btn:focus, .ant-btn.ant-btn-block.profile-btn:active{border: 1px solid #ED4B9E !important;}
+.fund-transfer-input .ant-input-group-addon:first-child{border-right: 1px solid #d9d9d9;}
+.fund-transfer-input .ant-input-group-addon{background-color: transparent;border: transparent;padding: 0 26px;}
+.fund-transfer-input .ant-input-group .ant-input{border:transparent;}
+.fund-transfer-input .ant-input:focus, .ant-input-focused{box-shadow:none;}
+.fund-transfer-input .ant-input-group-addon{color:#fff;}
+.fund-circle{width: 50px;height: 50px;height: 50px;border-radius: 50%;text-align: center;padding: 15px;background-color: var(--bgDarkGrey);}
+.small-text-align small{font-weight: 400; vertical-align: super;}
+.fund-border{border-bottom: 1px solid #313c46;margin-top: 10px;}

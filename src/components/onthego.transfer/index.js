@@ -5,9 +5,11 @@ import AddressDocumnet from "../addressbook.component/document.upload";
 import oops from '../../assets/images/oops.png'
 import FiatAddress from "../addressbook.component/fiat.address";
 import BankDetails from "../addressbook.component/bank.details";
-import alertIcon from '../../assets/images/pending.png'
+import alertIcon from '../../assets/images/pending.png';
+import { Link } from 'react-router-dom';
 const { Paragraph, Text,Title } = Typography;
 const { Search } = Input;
+
 class OnthegoFundTransfer extends Component {
     state = {
         step: "enteramount",
@@ -27,7 +29,7 @@ class OnthegoFundTransfer extends Component {
                 <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item
-                            className="custom-forminput custom-label mb-0"
+                            className="custom-forminput custom-label mb-0 fund-transfer-input"
                             name="amount"
                             label={"Enter amount"}
                             required
@@ -43,9 +45,9 @@ class OnthegoFundTransfer extends Component {
                                 className="cust-input "
                                 placeholder={"Enter amount"}
                                 maxLength="500"
+                                addonBefore={"USD"}
                             />
                         </Form.Item>
-
                     </Col>
                 </Row>
                 <Row gutter={[16, 16]}>
@@ -81,23 +83,52 @@ class OnthegoFundTransfer extends Component {
                 </Row>
             </Form>,
             addressselection: <React.Fragment>
-                <div className="text-center fs-16">
-                    <Paragraph
-                        className='text-white'>Who are you sending it to?</Paragraph>
+                <div className="">
+                    <text Paragraph
+                        className='text-white fs-24 fw-600 mb-0 text-white px-4'>Who are you sending it to?</text>
                 </div>
                 <Search placeholder={apicalls.convertLocalLang('searchAddress')}
                     addonAfter={<span className="icon md search-white" />} onChange={({ currentTarget }) => { this.handleSearch(currentTarget.value) }} size="middle" bordered={false} className="my-16" />
                 {(filterObj.length > 0) && <>
+                    <Title className="fs-24 fw-600 text-white px-4 mb-24">Address Book</Title>
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                         {filterObj?.map((item, idx) =>
                             <li onClick={() => this.chnageStep(item.type === "Third_Party" ? "reasonfortransfer" : "reviewdetails")} key={idx}
                                 className={item.lable === this.props.sendReceive?.addressObj?.lable ? "select" : " "}
-                            > <p className="fs-16 mb-0 "> <span className=" text-white-50 fs-12 fw-100 xxl-fs-16"> Account Holder:</span><span className=" text-white-50 fs-10 fw-500 xxl-fs"> {item.accountHolderName}</span></p>
+                            >
+                                 <p className="fs-16 mb-0 "> <span className=" text-white-50 fs-12 fw-100 xxl-fs-16"> Account Holder:</span><span className=" text-white-50 fs-10 fw-500 xxl-fs"> {item.accountHolderName}</span></p>
                                 <p className="fs-16 mb-0 "> <span className=" text-white-50 fs-12 fw-100 xxl-fs-16"> Label:</span><span className=" text-white-50 fs-10 fw-500 xxl-fs"> {item.lable}</span></p>
                                 <p className="fs-16 mb-0 "> <span className=" text-white-50 fs-12 fw-100 xxl-fs-16"> Address: </span> <span className=" text-white-50 fs-10 fw-500 xxl-fs"> {item.address}</span></p>
                             </li>
                         )}
-                    </ul> </>}
+                    </ul> 
+                    </>}
+                    <Row className="fund-border">
+                        <Col xs={2} md={2} lg={2} xl={3} xxl={3} className="mb-16"><div class="fund-circle text-white">P</div></Col>
+                    <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="mb-16 small-text-align">
+                      <label className="fs-16 fw-400 text-purewhite">
+                        <strong>Payee100 <small>1st party</small></strong>
+                      </label>
+                      <div><Text className="fs-14 fw-400 text-purewhite">USD acc ending in 4544</Text></div>
+
+                    </Col>
+                     <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-16">
+                     <span class="icon md rarrow-white"></span>
+                    </Col>
+                    </Row>
+                    <Row className="fund-border">
+                        <Col xs={2} md={2} lg={2} xl={3} xxl={3} className="mb-16"><div class="fund-circle text-white">P</div></Col>
+                    <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="mb-16 small-text-align">
+                      <label className="fs-16 fw-400 text-purewhite">
+                        <strong>Payee100 <small>1st party</small></strong>
+                      </label>
+                      <div><Text className="fs-14 fw-400 text-purewhite">USD acc ending in 4544</Text></div>
+
+                    </Col>
+                     <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-16">
+                     <span class="icon md rarrow-white"></span>
+                    </Col>
+                    </Row>
                 {(!filterObj.length > 0) && <div className="success-pop text-center" style={{ marginTop: '20px' }}>
                     <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
                     <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
@@ -164,66 +195,83 @@ class OnthegoFundTransfer extends Component {
                     ref={this.formRef}
                     onFinish={this.transferDetials}
                     autoComplete="off">
-                    <Row gutter={24} className=" text-white mb-24">
-                        <Text className="case-val mb-24">Transfer details</Text>
+                       <div className="text-center"> <text Paragraph
+                        className='text-white fs-24 fw-600 mb-16 px-4 '>Review Details Of Transfer</text></div>
+                    <Row gutter={24}>
+                    <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+                        <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
+                        <Text className="mb-8 fs-14 text-white fw-500 text-upper mt-16">Transfer details</Text>
+                        
+                        <div><Link >Edit
+                        </Link>
+                        </div>
+                        </div>
+                        </Col>
                         {"  "}
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div>
-                                <span className='case-val'>You send exactly</span>
-                                <span className='case-val ml-36'>1000 USD</span>
+                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
+                            <Title className="mb-4 fs-10 text-white fw-400 text-upper mt-16">You send exactly</Title>
+                            <Title className="mb-4 fs-10 text-white fw-500 text-upper mt-16  text-right">1000 USD</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div>
-                                <span className='case-val'>Total fees</span>
-                                <span className='case-val ml-36'>5.45 USD</span>
+                        <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
+                        <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Total fees</Title>
+                        <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">5.45 USD</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div>
-                                <span className='case-val'>Total we will convert</span>
-                                <span className='case-val ml-36'>994.55 USD</span>
+                        <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
+                            <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Total we will convert</Title>
+                            <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">994.55 USD</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div>
-                                <span className='case-val'>Recipient gets</span>
-                                <span className='case-val ml-36'>900 EUR</span>
+                        <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
+                        <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Recipient gets</Title>
+                        <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">900 EUR</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div>
-                                <span className='case-val'>Description</span>
-                                <span className='case-val ml-36'>Bike</span>
+                        <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
+                        <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Description</Title>
+                        <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">Bike</Title>
                             </div>
                         </Col>
                     </Row>
-                    <br />
-                    <Row gutter={24} className=" text-white">
-                        <Text className="case-val mb-24">Recipient details</Text>
-                        {"  "}
+
+                    <Row gutter={24} className=" text-white mt-36">
+                    <Col xs={24} sm={24} md={24} lg={24} xxl={24} >
+                        <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
+                        <Text className="mb-8 fs-14 text-white fw-500 text-upper mt-16">Recipient details</Text>
+                        
+                        <div><Link >Change
+                        </Link>
+                        </div>
+                        </div>
+                        </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div>
-                                <span className='case-val'>Name</span>
-                                <span className='case-val ml-36'>Min Blue Black</span>
+                        <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
+                        <Title className="mb-4 fs-10 text-white fw-400 text-upper mt-16">Name</Title>
+                        <Title className="mb-4 fs-10 text-white fw-500 text-upper mt-16  text-right">Min Blue Black</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div>
-                                <span className='case-val'>Email</span>
-                                <span className='case-val ml-36'>coco@yopmail.com</span>
+                        <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
+                        <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Email</Title>
+                        <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">coco@yopmail.com</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div>
-                                <span className='case-val'>IBAN </span>
-                                <span className='case-val ml-36'>LT1234567890</span>
+                        <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
+                            <Title className="mb-4 fs-10 text-white fw-400 text-upper ">IBAN </Title>
+                            <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">LT1234567890</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div>
-                                <span className='case-val'>Bank Code (BIC/SWIFT) </span>
-                                <span className='case-val ml-36'>TG5T57XXX</span>
+                        <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
+                        <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Bank Code (BIC/SWIFT) </Title>
+                        <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">TG5T57XXX</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>

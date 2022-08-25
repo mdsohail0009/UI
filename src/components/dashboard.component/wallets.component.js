@@ -158,8 +158,8 @@ class Wallets extends Component {
                     destroyOnClose={true}
                     title={[<div className="side-drawer-header">
                         {/* {this.renderTitle()} */}
-                        <div className="text-center fs-16 fw-500">
-                            <Paragraph className='text-white'>Fund Transfer</Paragraph>
+                        <div className="">
+                            <Title className="basicinfo">Fund Transfer</Title>
                         </div>
                         <span onClick={() => this.setState({ ...this.state, showFuntransfer: false })} className="icon md close-white c-pointer" />
                     </div>]}
