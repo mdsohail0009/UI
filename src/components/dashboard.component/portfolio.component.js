@@ -91,7 +91,7 @@ class Portfolio extends Component {
         const { gridUrl, loading } = this.state;
         return (
             <div className="mb-16">
-                <div className='mb-12'>
+                <div className='mb-12 mt-4'>
                     <Translate content="menu_transactions_history" className="basicinfo" />
                     {/* <span>
                        <Translate
