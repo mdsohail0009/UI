@@ -14,13 +14,12 @@ const CryptoTransfer = (props) => {
     const savewithdrawalCryptoDetails=()=>{
         debugger
         props.changeStep('withdraw_crypto_selected');
+        props.parentCallback(false);
     }
     return (
         <Form
             form={form}
              onFinish={savewithdrawalCryptoDetails}
-            // autoComplete="off"
-            // initialValues={cryptoAddress}
         >
            
             <Row gutter={[16, 16]}>

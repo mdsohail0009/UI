@@ -4,12 +4,9 @@ import { favouriteFiatAddress } from '../addressbook.component/api';
 import { setAddress, setStep, setWithdrawcrypto } from '../../reducers/sendreceiveReducer';
 import oops from '../../assets/images/oops.png'
 import Loader from '../../Shared/loader';
-import Translate from 'react-translate-component';
-import { processSteps as config } from "../addressbook.component/config";
+
 import { connect } from 'react-redux';
 import apicalls from '../../api/apiCalls';
-import AddressCommonCom from "../addressbook.component/addressCommonCom";
-import SelectCrypto from "../addressbook.component/selectCrypto";
 import { setAddressStep} from "../../reducers/addressBookReducer";
 import CryptoTransfer from '../onthego.transfer/crypto.transfer';
 const { Paragraph, Text } = Typography;

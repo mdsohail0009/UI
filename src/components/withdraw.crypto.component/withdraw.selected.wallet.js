@@ -253,6 +253,11 @@ class CryptoWithDrawWallet extends Component {
         }
 
     }
+
+    handleModalClose=(childData)=>{
+        this.setState({ ...this.state, showFuntransfer: childData })
+    }
+
     render() {
         const { Text } = Typography;
         const { cryptoWithdraw: { selectedWallet } } = this.props.sendReceive;
@@ -329,7 +334,6 @@ class CryptoWithDrawWallet extends Component {
                         >
                             <div className="p-relative d-flex align-center">
                                 <Input className="cust-input  mb-0" placeholder={apicalls.convertLocalLang('enter_address')} value={this.state.walletAddress}
-
                                     disabled={true} onChange={({ currentTarget: { value } }) => { this.setState({ ...this.state, walletAddress: value }); this.props.clearAddress(null) }}
                                     maxLength="250" />
                                 
@@ -386,7 +390,7 @@ class CryptoWithDrawWallet extends Component {
                     className="side-drawer w-50p"
                     visible={this.state.showFuntransfer}
                 >
-                     <CryptoTransfer/>
+                     <CryptoTransfer parentCallback = {this.handleModalClose}/>
                 </Drawer>
             </div>
         )
