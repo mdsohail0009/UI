@@ -32,7 +32,7 @@ const Notices = () => {
         return <Loader />
     }
     if (error.hasError) {
-        return <Alert type="error" message="Alert" description= {error.message || "Something went wrong please try again!"} showIcon />
+        return <Alert type="error" message="Alert" description={error.message || "Something went wrong please try again!"} showIcon />
     }
     return <Carousel autoplay className="mb-16">
         {notices.map((notice, indx) => <div key={indx} className="p-28 carousel-card">
