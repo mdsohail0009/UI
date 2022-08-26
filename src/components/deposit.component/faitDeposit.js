@@ -117,6 +117,19 @@ class FaitDeposit extends Component {
       }
     }
   }
+  isErrorDispaly = (objValue) => {
+    debugger
+    if (objValue.data && typeof objValue.data === "string") {
+      return objValue.data;
+    } else if (
+      objValue.originalError &&
+      typeof objValue.originalError.message === "string"
+    ) {
+      return objValue.originalError.message;
+    } else {
+      return "Something went wrong please try again!";
+    }
+  };
   handlFiatDep = async (e, currencyLu) => {
     let { depObj } = this.state;
     depObj.currency = e;
@@ -125,21 +138,26 @@ class FaitDeposit extends Component {
     for (var k in currencyLu) {
       if (currencyLu[k].walletCode === e) {
         if (currencyLu[k].bankDetailModel?.length === 1) {
+          debugger
           this.setState({ ...this.state, Loader: true })
           let reqdepositObj = await requestDepositFiat(currencyLu[k].bankDetailModel[0].bankId, this.props.member?.id);
           if (reqdepositObj.ok === true) {
             this.setState({
               ...this.state, fiatDepEur: e === "EUR", BankInfo: reqdepositObj.data, BankDetails: [], depObj: depObj, Loader: false, isTermsAgreed: false
             });
+          }else{
+            this.setState({
+              ...this.state,  Loader: false,errorMessage:this.isErrorDispaly(reqdepositObj)
+            });
           }
         } else {
           this.setState({
-            ...this.state, fiatDepEur: e === "EUR", BankDetails: currencyLu[k].bankDetailModel, BankInfo: null, depObj: depObj, isTermsAgreed: false
+            ...this.state, fiatDepEur: e === "EUR", BankDetails: currencyLu[k].bankDetailModel, BankInfo: null, depObj: depObj, isTermsAgreed: false, Loader: false,
           });
         }
       }
     }
-    this.formRef.current.setFieldsValue({ ...depObj })
+    this.formRef.current?.setFieldsValue({ ...depObj })
   }
   handlebankName = async (e) => {
     let { depObj } = this.state;
@@ -153,6 +171,8 @@ class FaitDeposit extends Component {
           this.setState({
             ...this.state, fiatDepEur: e === "EUR", BankInfo: reqdepositObj.data, depObj: depObj, bankLoader: false, isTermsAgreed: false
           });
+        }else{
+          this.setState({ ...this.state, bankLoader: false })
         }
       }
     }
@@ -225,7 +245,7 @@ class FaitDeposit extends Component {
           : <> {this.state.Loader && <Loader />}
 
             {!this.state.Loader && <Form layout="vertical" initialValues={{ ...depObj }} ref={this.formRef} onFinish={(values) => this.ConfirmDeposit(values)}><div className="suisfiat-container auto-scroll"><div ref={this.myRef}></div>
-              {this.state?.errorMessage !== null && this.state?.errorMessage !== '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="info" message="" description={this.state?.errorMessage} closable />}
+              {this.state?.errorMessage !== null && this.state?.errorMessage !== '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="error" message="" description={this.state?.errorMessage} closable />}
               {!this.state.showSuccessMsg && <Translate
                 className="mb-0 text-white-30 fs-14 fw-200 mt-16"
                 content="desposite_text"
