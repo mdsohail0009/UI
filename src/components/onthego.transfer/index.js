@@ -16,7 +16,7 @@ class OnthegoFundTransfer extends Component {
     state = {
         step: "enteramount",
         // filterObj:[],
-        filterObj: [{ accountHolderName: "SubbaRedy", lable: "Payee 100", address: "100032498902", type: "1st Party" }, { accountHolderName: "John Martin", lable: "Payee 100", address: "100032498902", type: "3rd Party" }],
+        filterObj: [{ lable: "Payee 100", address: "100032498902", type: "1st Party" }, { lable: "Payee 100", address: "100032498902", type: "3rd Party" }],
         addressOptions: { addressType: "myself", transferType: "sepa" },
         isNewTransfer: false
     }
@@ -100,7 +100,7 @@ class OnthegoFundTransfer extends Component {
                     <Title className="fs-24 fw-600 text-white px-4 mb-24">Address Book</Title>
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                         {filterObj?.map((item, idx) =>
-                            <Row className="fund-border c-pointer" onClick={() => this.chnageStep(item.type === "Third_Party" ? "reasonfortransfer" : "reviewdetails")}>
+                            <Row className="fund-border c-pointer" onClick={() => this.chnageStep(item.type === "3rd Party" ? "reasonfortransfer" : "reviewdetails")}>
                                 <Col xs={2} md={2} lg={2} xl={3} xxl={3} className="mb-16"><div class="fund-circle text-white">P</div></Col>
                                 <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="mb-16 small-text-align">
                                     <label className="fs-16 fw-400 text-purewhite">
