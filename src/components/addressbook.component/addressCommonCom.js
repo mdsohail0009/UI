@@ -605,7 +605,7 @@ const AddressCommonCom = (props) => {
               onFinish={savewithdrawal}
               autoComplete="off"
               initialValues={cryptoAddress}
-            > {props?.cryptoTab == 2 && <>
+            > {(props?.cryptoTab == 2 || withdraeTab == "Fiat")&& <>
               <Form.Item
                 name="addressType"
 
@@ -1108,7 +1108,7 @@ const AddressCommonCom = (props) => {
                   )}
                 </Row>
               </React.Fragment>}
-              {props?.cryptoTab == 2 && (addressOptions.addressType == "myself" ||
+              {(props?.cryptoTab == 2 || withdraeTab == "Fiat") && (addressOptions.addressType == "myself" ||
                 addressOptions.addressType == "someoneelse" || addressOptions.addressType == "buissiness") &&
                 <Row gutter={[16, 16]}>
                   <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -1128,7 +1128,7 @@ const AddressCommonCom = (props) => {
                     >
                       <Translate
                         content={
-                          props?.cryptoTab == 2 && "bankAddress"
+                          (props?.cryptoTab == 2 || withdraeTab == "Fiat") && "bankAddress"
                         }
                         component={Text}
                       />
@@ -1137,7 +1137,7 @@ const AddressCommonCom = (props) => {
                   </Col>
 
                 </Row>}
-              {props?.cryptoTab != 2 && <CryptoAdress />}
+              {(props?.cryptoTab ==1) && <CryptoAdress />}
 
               {bankmodalData?.map((item, indx) => {
                 if (item.recordStatus !== "Deleted") {
@@ -1155,7 +1155,7 @@ const AddressCommonCom = (props) => {
                           borderRadius: "20px",
                         }}
                       >
-                        {props?.cryptoTab == 2 || withdraeTab == "Fiat" ? (
+                        {(props?.cryptoTab == 2 || withdraeTab == "Fiat") ? (
                           <Col
                             className="mb-0"
                             xs={20}
