@@ -56,7 +56,7 @@ export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, m
         }
         else if (parseFloat(localValue) > maxPurchaseAmt) {
             validate.valid = false;
-            validate.message = apicalls.convertLocalLang('purchase_max') + " " + maxAmtMessage + ". " + "Please contact support for more details."
+            validate.message = apicalls.convertLocalLang('purchase_max') + " " + maxAmtMessage + ". " + "Please contact support for higher amounts."
         }
     }
     return validate;

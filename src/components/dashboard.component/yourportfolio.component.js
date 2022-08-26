@@ -64,7 +64,7 @@ class YourPortfolio extends Component {
         if (key === "buy") {
             this.props.dispatch(fetchSelectedCoinDetails(item.coin, this.props.userProfile?.id));
             this.props.dispatch(setCoin({ ...item, toWalletCode: item.coin, toWalletId: item.id, toWalletName: item.coinFullName }));
-            convertCurrency({ from: item.coin, to: "USD", value: 1, isCrypto: false, memId: this.props.userProfile?.id, screenName: null }).then(val => {
+            convertCurrency({ from: item.coin, to: "USD", value: 1, isCrypto: false, customer_id: this.props.userProfile?.id, screenName: null }).then(val => {
                 this.props.dispatch(setExchangeValue({ key: item.coin, value: val }));
             });
             this.props.dispatch(setStep("step2"));
@@ -168,12 +168,12 @@ class YourPortfolio extends Component {
               </li> */}
               <li onClick={() => this.showBuyDrawer(item, "buy")}>
                   <Link  value={2} className="c-pointer">
-                  <Translate content="menu_buy_sell" />
+                  <Translate content="buy" />
                   </Link>
               </li>
-              <li onClick={() => this.showTransactionDrawer(item)}>
+              <li onClick={() => this.showBuyDrawer(item, "sell")}>
                     <Link  value={4} className="c-pointer">
-                    <Translate content="menu_transactions_history" />
+                    <Translate content="sell" />
                     </Link>
                 </li>
                 <li onClick={() => this.showInternalTransfer(item)}>
@@ -208,7 +208,7 @@ class YourPortfolio extends Component {
                 <span className="icon sm right-angle ml-4" />
               </Link> */}
 
-              <Button className="pop-btn dbchart-link fs-14 fw-500" onClick={() => this.cockpitCharts()} >
+              <Button className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
                   <Translate content="cockpit" />
                   <span className="icon sm right-angle ml-4" />
               </Button>
@@ -243,7 +243,7 @@ class YourPortfolio extends Component {
                         <Translate
                         content="deposit"
                         component={Button}
-                        className="custom-btn prime text-white mr-16"
+                        className="custom-btn prime text-purewhite mr-16"
                         onClick={() =>  this.showSendReceiveDrawer(1, item)}
                       />
                       <Translate
@@ -291,7 +291,7 @@ class YourPortfolio extends Component {
                           <Currency
                             defaultValue={item.coinValueinNativeCurrency}
                             type={"text"}
-                            className={`fs-14 ${
+                            className={`lg-fontsize ${
                               item.coinValueinNativeCurrency > 0
                                 ? "text-green"
                                 : "text-red"

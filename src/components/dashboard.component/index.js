@@ -9,6 +9,7 @@ import Wallets from '../dashboard.component/wallets.component';
 import YourPortfolio from '../dashboard.component/yourportfolio.component';
 import apiCalls from '../../api/apiCalls';
 import Notices from './notices';
+import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 
 class Home extends Component {
     state = {
@@ -20,6 +21,7 @@ class Home extends Component {
     };
     permissionsInterval;
     componentDidMount() {
+        getFeaturePermissionsByKeyName(`cockpit`)
         this.getNotices();
         this.dashboardTrack();
         this.permissionsInterval = setInterval(this.loadPermissions, 200);
@@ -32,6 +34,9 @@ class Home extends Component {
                 _permissions[action.permissionName] = action.values;
             }
             this.setState({ ...this.state, permissions: _permissions });
+            if(_permissions.view!=true){
+                this.props.history.push(`/accessdenied`)
+            }
         }
     }
     dashboardTrack = () => {

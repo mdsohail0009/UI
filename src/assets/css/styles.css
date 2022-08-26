@@ -192,6 +192,7 @@ border-radius: 5px;}
 .icon.md.calendar{background-position:-481px -36px;}
 .icon.md.status{background-position:-365px -69px}
 .icon.md.add-icon{background-position:-397px -70px;}
+.icon.md.back{background-position:-377px -1px;}
 .icon.md.add-icon-black{background-position:-533px -2px;}
 .icon.md.edit-icon{background-position:-336px -70px;}
 .icon.lg.edit-icon{background-position:-336px -70px;}
@@ -521,7 +522,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .side-drawer-full .ant-pagination-disabled .ant-pagination-item-link, .side-drawer-full .ant-pagination-disabled:hover .ant-pagination-item-link, .side-drawer-full .ant-pagination-disabled:focus-visible .ant-pagination-item-link{color: rgb(255 251 251 / 25%);background-color: transparent;}
 .side-drawer-full .ant-pagination-item-active{border-color: #ffffff !important;background: transparent;}
 .side-drawer-full .ant-pagination-item-active a, .ant-table-column-sorter-up.active, .ant-table-column-sorter-down.active{color: #ffdb1a !important;}
-.side-drawer-full .ant-table-column-title{text-transform: uppercase;}
+.side-drawer-full .ant-table-column-title{text-transform: capitalize;font-size: 16px;font-weight: 500;}
 /* .custom-table .ant-table-column-title{color: var(--textWhite);z-index: 0;}
 .custom-table .ant-table-body,.custom-table .ant-table-thead > tr > th{background: var(--bgDarkGrey);}
 .custom-table .ant-table-row.ant-table-row-level-0:hover td, td.ant-table-column-sort{background: transparent;} */
@@ -760,7 +761,8 @@ font-size: 12px;font-weight: 500;height: 20px;}
 .pay-grid thead th:last-child{width: 500px;}
 .pay-grid tbody td{padding: 8px; color: var(--textWhite30);font-weight: 400;font-size: 14px ;border: 1px solid rgba(0,0,0,.08);}
 .pay-grid tbody tr:nth-child(even){background-color: rgba(0,0,0,.04);}
-.pay-grid tbody tr:hover{background-color: var(--bgDarkGrey);}
+/* .pay-grid tbody tr:hover{background-color: var(--bgDarkGrey);} */
+.ant-table-placeholder:hover{background: transparentc;}
 .ant-popover-inner{background-color: var(--bgGloom); border-radius: 10px;}
 .more-popover .lbl{font-size: 12px; color: var(--textWhite50);font-weight: 100;}
 .more-popover .val{font-size: 14px; color: var(--textWhite30);display: block;margin-bottom: 16px; line-height: normal;}
@@ -922,7 +924,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .basicinfo{font-size: 20px !important;}
     .user-list{padding-left: 0;display: block !important;}
     .mobile-list .ant-list-item{display: block; border-bottom: 1px solid  var(--borderLight) !important;}
-    .mobile-list .custom-btn, .crypto_btns .custom-btn{min-width: calc(50% - 8px);}
+    .mobile-list .custom-btn, .crypto_btns .custom-btn{min-width: calc(50% - 22px);}
     .mobile-list .custom-btn:first-child{margin-left: 0 !important;}
     .mobile-list .crypto-btns{display: flex;padding-top: 16px;}
     .coin-typo{font-size: 12px !important;}
@@ -1058,7 +1060,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .mega-menu{max-width: 1140px;  padding: 29px 0px 24px 60px;}
     .side-drawer .ant-drawer-content-wrapper{width: 420px !important;}
     .side-drawer .ant-drawer-body{padding: 0 20px 20px 20px;}
-    .portfolio-list .mobile-list{height: 1087px;max-height: 1087px; overflow: auto;padding-right: 10px}
+    .portfolio-list .mobile-list{height: 1087px;max-height: 1087px; overflow: auto;}
     .markets-panel .custom-table .ant-table-body{height: 900px !important;}
     .crypto-address .walletadrs{font-size: 12px;}
     .trade-legends{display: flex; justify-content: space-between;}
@@ -1066,6 +1068,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .portfolio-list .ant-list-split .ant-list-item{display: flex;}
     .portfolio-list .ant-list-split ul li .custom-btn{min-width: 90px;}
     .coin-details.right{min-height: 705px;}
+    .lg-fontsize{font-size: 12px !important;}
 }
 @media (min-width: 1400px){
     .custom-font{font-size:30px !important;}
@@ -1102,6 +1105,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .addbook-height{max-height: calc(100vh - 112px);}
     .pop-btn-46{height:46px;}
     .minmax.custom-minmax{position: relative;right:-332px !important;top:-11px;width:100px;}
+    .lg-fontsize{font-size: 14px !important;}
 }
 
 @media (min-width: 1500){
@@ -1361,4 +1365,6 @@ input[type=number]::-webkit-outer-spin-button {
 .markets-panel .custom-table .ant-table-body::-webkit-scrollbar-thumb{background-color: #899097 !important;}
 .pay-grid .ant-table-thead th.ant-table-column-has-sorters:hover{background: var(--bgDarkGrey);}
 .pay-grid .ant-table-cell-scrollbar{box-shadow: none;}
-.pay-grid .ant-table-body{height: 500px;}
+.pay-grid .ant-table-body{height: 450px;}
+td.ant-table-column-sort{background: transparent;}
+.ant-table-thead th.ant-table-column-sort{background: var(--bgDarkGrey);}

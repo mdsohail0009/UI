@@ -285,13 +285,8 @@ const FaitWithdrawal = ({ props,
       setAgreeRed(false);
     } else {
       setAgreeRed(true);
-      if (
-        parseFloat(
-          typeof values.totalValue === "string"
-            ? values.totalValue.replace(/,/g, "")
-            : values.totalValue
-        ) > parseFloat(selectedWallet?.avilable)
-      ) {
+      let totalamountVal = (typeof values.totalValue === "string")? values.totalValue.replace(/,/g, ""): values.totalValue
+      if (parseFloat(totalamountVal) > parseFloat(selectedWallet?.avilable)) {
         useDivRef.current.scrollIntoView();
         setBtnDisabled(false)
         setLoading(false);
