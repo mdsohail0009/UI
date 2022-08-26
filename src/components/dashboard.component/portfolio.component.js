@@ -128,7 +128,7 @@ class Portfolio extends Component {
                    
                     <div>
 
-                        <div className="box dash-info basic-info responsive_table bg-none mb-0 ">
+                        <div className="box dash-info basic-info responsive_table bg-none">
                             <table className='pay-grid view mb-view'  style={{width: "100%"}}>
                                 <thead>
                                     <tr>
