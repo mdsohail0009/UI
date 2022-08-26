@@ -383,7 +383,7 @@ class CryptoWithDrawWallet extends Component {
                     destroyOnClose={true}
                     title={[<div className="side-drawer-header">
                         <div className="text-center fs-16 fw-500">
-                            <Paragraph className='text-white'>Fund Transfer</Paragraph>
+                            <Paragraph className='text-white fs-24 fw-500' >Address Type</Paragraph>
                         </div>
                         <span onClick={() => this.setState({ ...this.state, showFuntransfer: false })} className="icon md close-white c-pointer" />
                     </div>]}

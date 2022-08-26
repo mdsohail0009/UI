@@ -1,14 +1,16 @@
 import React from 'react'
 import {
-    Form, Typography, Input, Button, Alert, Spin, message, Select, Checkbox, Tooltip, Upload, Modal,
+    Form, Typography, Input, Button,Alert, Spin, message, Select, Checkbox, Tooltip, Upload, Modal,
     Radio, Row, Col, AutoComplete, Dropdown, Menu, Space, Cascader, InputNumber, Image, Tabs, Table, Drawer
 } from "antd";
+
 import apiCalls from "../../api/apiCalls";
 import { validateContentRule } from "../../utils/custom.validator";
 import { setAddress, setStep, setWithdrawcrypto } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import Translate from "react-translate-component";
 const { Option } = Select;
+const { Paragraph, Text } = Typography;
 const CryptoTransfer = (props) => {
     const [form] = Form.useForm();
     const savewithdrawalCryptoDetails=()=>{
@@ -23,6 +25,12 @@ const CryptoTransfer = (props) => {
         >
            
             <Row gutter={[16, 16]}>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <span className="icon md info c-pointer"></span>{" "}
+                    <Radio style={{color:"white",marginLeft:"20px"}} > To my own account</Radio>
+                    <Radio style={{color:"white"}}> others </Radio>
+                </Col>
+                  <Row gutter={[16, 16]}>
             <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                       className="custom-forminput custom-label mb-0"
@@ -127,6 +135,11 @@ const CryptoTransfer = (props) => {
                       />
                     </Form.Item>
                   </Col>
+                  </Row>
+                <div className="text-center fs-16 fw-500">
+                    <Paragraph className='text-white fs-24 fw-500' >Add Crypto Address</Paragraph>
+                </div>
+                <Row gutter={[16, 16]}>
                   <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                       className="custom-forminput custom-label mb-0"
@@ -215,7 +228,7 @@ const CryptoTransfer = (props) => {
                       />
                     </Form.Item>
                   </Col>
-
+                  </Row>
             </Row>
             <Form.Item className="text-center">
                 <Button
