@@ -291,7 +291,7 @@ class YourPortfolio extends Component {
                           <Currency
                             defaultValue={item.coinValueinNativeCurrency}
                             type={"text"}
-                            className={`fs-14 ${
+                            className={`lg-fontsize ${
                               item.coinValueinNativeCurrency > 0
                                 ? "text-green"
                                 : "text-red"

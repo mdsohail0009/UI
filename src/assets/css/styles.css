@@ -1068,6 +1068,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .portfolio-list .ant-list-split .ant-list-item{display: flex;}
     .portfolio-list .ant-list-split ul li .custom-btn{min-width: 90px;}
     .coin-details.right{min-height: 705px;}
+    .lg-fontsize{font-size: 12px !important;}
 }
 @media (min-width: 1400px){
     .custom-font{font-size:30px !important;}
@@ -1104,6 +1105,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .addbook-height{max-height: calc(100vh - 112px);}
     .pop-btn-46{height:46px;}
     .minmax.custom-minmax{position: relative;right:-332px !important;top:-11px;width:100px;}
+    .lg-fontsize{font-size: 14px !important;}
 }
 
 @media (min-width: 1500){
