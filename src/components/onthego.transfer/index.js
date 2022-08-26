@@ -15,8 +15,8 @@ const { Search } = Input;
 class OnthegoFundTransfer extends Component {
     state = {
         step: "enteramount",
-        filterObj:[],
-        //filterObj: [{ accountHolderName: "SubbaRedy", lable: "Payee 100", address: "100032498902", type: "First_Party" }, { accountHolderName: "John Martin", lable: "Payee 100", address: "100032498902", type: "Third_Party" }],
+        // filterObj:[],
+        filterObj: [{ accountHolderName: "SubbaRedy", lable: "Payee 100", address: "100032498902", type: "1st Party" }, { accountHolderName: "John Martin", lable: "Payee 100", address: "100032498902", type: "3rd Party" }],
         addressOptions: { addressType: "myself", transferType: "sepa" },
         isNewTransfer: false
     }

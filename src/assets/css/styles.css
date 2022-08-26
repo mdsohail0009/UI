@@ -1380,5 +1380,5 @@ input[type=number]::-webkit-outer-spin-button {
 .fund-transfer-input .ant-input:focus, .ant-input-focused{box-shadow:none;}
 .fund-transfer-input .ant-input-group-addon{color:#fff;}
 .fund-circle{width: 50px;height: 50px;height: 50px;border-radius: 50%;text-align: center;padding: 15px;background-color: var(--bgDarkGrey);}
-.small-text-align small{font-weight: 400; vertical-align: super;}
+.small-text-align small{font-weight: 400; vertical-align: super;background-color: var(--bgDarkGrey);padding: 2px 6px;color: #fff;border-radius: 10px;}
 .fund-border{border-bottom: 1px solid #313c46;margin-top: 10px;}
