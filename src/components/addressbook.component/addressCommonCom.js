@@ -963,12 +963,12 @@ const AddressCommonCom = (props) => {
                           validator: validateContentRule
                         }
                       ]}
-                      label={<Translate content="city" component={Form.label} />}
+                      label={<Translate content="City" component={Form.label} />}
                     >
                       <Input
                         className="cust-input"
                         maxLength="20"
-                        placeholder={apiCalls.convertLocalLang('city')}
+                        placeholder={apiCalls.convertLocalLang('City')}
                       />
                     </Form.Item>
                   </Col>}
@@ -1023,7 +1023,8 @@ const AddressCommonCom = (props) => {
                     className="pop-btn mb-36 mt-24"
                   >
                     <Translate
-                    content={props?.cryptoTab == 2 ? "cryptoAddress" : "bankAddress"}
+                    content={props?.cryptoTab == 2 ? "bankAddress" : (withdraeTab == "Fiat" ? "bankAddress" : "cryptoAddress")}
+                   // content={props?.cryptoTab == 2 ? "cryptoAddress" : "bankAddress"}
                     component={Text}
                    
                   />
@@ -1456,12 +1457,12 @@ const AddressCommonCom = (props) => {
                                 validator: validateContentRule
                               }
                             ]}
-                            label={<Translate content="city" component={Form.label} />}
+                            label={<Translate content="City" component={Form.label} />}
                           >
                             <Input
                               className="cust-input"
                               maxLength="20"
-                              placeholder={apiCalls.convertLocalLang('city')}
+                              placeholder={apiCalls.convertLocalLang('City')}
                             />
                           </Form.Item>
                         </Col>

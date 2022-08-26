@@ -23,13 +23,13 @@ export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, m
         message: null,
         valid: true
     };
-    const maxPurchaseAmt = 100;
+    const maxPurchaseAmt = 100000;
     const maxAmtMessage = "$100k"
-    const currencyMaxPurchase = {
-        GBP: gbpInUsd * localValue,
-        EUR: localValue * eurInUsd,
-        USD: localValue
-    }
+    // const currencyMaxPurchase = {
+    //     GBP: gbpInUsd * parseFloat(localValue),
+    //     EUR: parseFloat(localValue) * eurInUsd,
+    //     USD: parseFloat(localValue)
+    // }
     if (localValue === "") {
         validate.message = apicalls.convertLocalLang('enter_wallet')
         validate.valid = false;
@@ -54,9 +54,9 @@ export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, m
             validate.valid = false;
             validate.message = apicalls.convertLocalLang('purchase_max') + " " + maxPurchase
         }
-        else if (currencyMaxPurchase[wallet?.currencyCode] > maxPurchaseAmt) {
+        else if (parseFloat(localValue) > maxPurchaseAmt) {
             validate.valid = false;
-            validate.message = apicalls.convertLocalLang('purchase_max') + " " + maxAmtMessage + ". " + "Please contact support for more details."
+            validate.message = apicalls.convertLocalLang('purchase_max') + " " + maxAmtMessage + ". " + "Please contact support for higher amounts."
         }
     }
     return validate;

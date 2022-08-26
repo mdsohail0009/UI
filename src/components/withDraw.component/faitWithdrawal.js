@@ -285,13 +285,8 @@ const FaitWithdrawal = ({ props,
       setAgreeRed(false);
     } else {
       setAgreeRed(true);
-      if (
-        parseFloat(
-          typeof values.totalValue === "string"
-            ? values.totalValue.replace(/,/g, "")
-            : values.totalValue
-        ) > parseFloat(selectedWallet?.avilable)
-      ) {
+      let totalamountVal = (typeof values.totalValue === "string")? values.totalValue.replace(/,/g, ""): values.totalValue
+      if (parseFloat(totalamountVal) > parseFloat(selectedWallet?.avilable)) {
         useDivRef.current.scrollIntoView();
         setBtnDisabled(false)
         setLoading(false);
@@ -323,6 +318,7 @@ const FaitWithdrawal = ({ props,
       }
       setLoading(false);
       setErrorMsg(null);
+      debugger
       values["customerId"] = userConfig.id;
       values["memberWalletId"] = accountDetails[0].id;
       values["beneficiaryAccountName"] = userConfig.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig.lastName;
@@ -337,6 +333,7 @@ const FaitWithdrawal = ({ props,
       values["routingNumber"] = bankDetails[0].swiftRouteBICNumber || bankDetails[0].routingNumber;
       values["WalletCode"] = accountDetails[0].currencyCode;
       values["CustomerRemarks"] = values.CustomerRemarks;
+      values["Createdby"] =userConfig.userName;
       const response = await handleFiatConfirm(values);
       if (response.ok) {
         setBtnDisabled(false);
@@ -512,8 +509,8 @@ const FaitWithdrawal = ({ props,
                   history.push("/userprofile/2")
                 }}>security section</a></Text>}
                 type="warning"
-                // showIcon
-                closable
+                showIcon
+                closable={false}
               />
             }
             {isVerificationMethodsChecked && !isVerificationLoading && <Form

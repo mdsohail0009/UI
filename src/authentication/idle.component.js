@@ -3,13 +3,17 @@ import { Button,Modal } from 'antd';
 import App from '../components/app.component/App';
 import { userManager } from './index';
 import IdleTimer from 'react-idle-timer';
-import ConnectStateProps from '../utils/state.connect';
+import { updateAccessdenied } from '../reducers/feturesReducer';
+import { connect } from 'react-redux';
+import swwicon from '../assets/images/oops.png'
+
 class IdleCmp extends Component {
     _count = 15;
     timeInterval;
     state = {
         counter: 15,
-        showIdleModal: false
+        showIdleModal: false,
+        showRefreshPage: false,
     }
     handleOnIdle = () => {
         this.setState({ ...this.state, showIdleModal: true });
@@ -28,7 +32,11 @@ class IdleCmp extends Component {
     }
 
     render() {
-        const { showIdleModal, counter } = this.state;
+        const { showIdleModal, counter, showRefreshPage } = this.state;
+        if(this.props.menuItems?.accessDenied){
+            this.props.dispatch(updateAccessdenied(false))
+            this.setState({ ...this.state, showRefreshPage: true });
+          }
         return (
             <div>
                 <IdleTimer
@@ -54,9 +62,29 @@ class IdleCmp extends Component {
                     ]} >
                     <h4 className="text-white fs-16 fw-400">You're session will be logged out in {counter}</h4>
                 </Modal>
+                <Modal
+                    title="Oops !" visible={showRefreshPage}
+                    closable={false}
+                    closeIcon={false}
+                    footer={[
+                        <>
+                            
+                            <Button className="primary-btn pop-btn"
+                                style={{ width: 100, height: 50 }}
+                                onClick={() => {window.location.reload() }}>Refresh</Button>
+                        </>
+                    ]} >
+                        <div className='text-center'>
+                        <img src={swwicon} alt={"error"} />
+                    <h4 className="text-white fs-16 fw-400">Something went wrong please refresh the page.</h4>
+                    </div>
+                </Modal>
             </div >
         )
     }
 }
+const mapStateToProps = ({menuItems }) => {
+    return { menuItems }
+}
 
-export default ConnectStateProps(IdleCmp);
+export default connect(mapStateToProps)(IdleCmp);

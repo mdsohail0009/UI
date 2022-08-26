@@ -3,7 +3,7 @@ export default {
 	user_type: "%(lable)s",
 	Portfolio_title: "Portfolio Crypto",
 	your_portfolio: "Portfolio anda",
-	suissebase_title: "Pangkalan Suissebase",
+	suissebase_title: "Suissebase Fiat Wallet",
 	suissebase_subtitle: "Timbangan Fiat",
 	markets_title: "Pasaran",
 	markets_subtitle: "Mana-mana mata wang dengan Berdagang Serie Anda",

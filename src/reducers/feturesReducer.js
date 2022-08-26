@@ -5,6 +5,7 @@ const GET_DATA = "getData";
 const UPDATE_PERMISSIONS = "updatePermissions";
 const CLEAR_PERMISSIONS = "clearPermissions";
 const SET_SELECTED_FEATUREID = "setSelectedFeatureMenu";
+const UPDATE_ACCESSDENIED = "updateAccessdenied";
 const getData = (payload) => {
     return {
         type: GET_DATA,
@@ -31,6 +32,12 @@ const updatePermissions = (payload) => {
 const setSelectedFeatureMenu = (payload) => {
     return {
         type: SET_SELECTED_FEATUREID,
+        payload
+    }
+}
+const updateAccessdenied = (payload) => {
+    return {
+        type: UPDATE_ACCESSDENIED,
         payload
     }
 }
@@ -76,8 +83,8 @@ const fetchFeaturePermissions = (feature_id, customer_id, callback) => {
 }
 const initialState = {
     features: { loading: true, data: [], error: null },
-    featurePermissions: { loading: true, data: [], error: null,selectedScreenFeatureId: null  }
-
+    featurePermissions: { loading: true, data: [], error: null,selectedScreenFeatureId: null  },
+    accessDenied:false
 }
 const featuresReducer = (state = initialState, action) => {
 
@@ -92,6 +99,9 @@ const featuresReducer = (state = initialState, action) => {
         case SET_SELECTED_FEATUREID:
             state = { ...state, featurePermissions: { ...state.featurePermissions, selectedScreenFeatureId: action.payload,  } };
             return state;
+        case UPDATE_ACCESSDENIED:
+            state = { ...state, accessDenied:action.payload  };
+            return state;
         case CLEAR_PERMISSIONS:
             state = { ...state, featurePermissions: { data: [], error: null, loading: true,selectedScreenFeatureId: null } };
             return state;
@@ -101,4 +111,4 @@ const featuresReducer = (state = initialState, action) => {
 }
 
 export default featuresReducer;
-export { fetchFeatures, fetchFeaturePermissions, clearPermissions, updatePermissions, setSelectedFeatureMenu };
+export { fetchFeatures, fetchFeaturePermissions, clearPermissions, updatePermissions, setSelectedFeatureMenu, updateAccessdenied };
