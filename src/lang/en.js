@@ -632,4 +632,7 @@ export default {
 	activate:"activate",
 	No:"No",
 	bankAddress:"Add Bank Address",
+	send_fund: "Send Funds",
+	receive_fund:"Receive Funds",
+	createnow:"Create Now",
 };
