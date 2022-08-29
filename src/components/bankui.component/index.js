@@ -19,6 +19,7 @@ class BankWallets extends Component {
         this.getCustomerAccountBalance(); 
     }
     getCustomerAccountBalance = async ()=>{
+        debugger
         let response  = await apicalls.getCustomerBankDetails(this.props.userProfile.id)
         if(response.ok){
          this.setState({...this.state,customerData:response.data})
@@ -41,34 +42,7 @@ class BankWallets extends Component {
       ];
 
 
-      showTransactionDrawer =(item) => {
-        this.setState({...this.state, transactions: true, selectedWallet: item?.coin});
-    }
-         menuBar = (item) => (
-          <Menu>
-              <ul className="pl-0 drpdwn-list">
-                  {/* <li  onClick={() =>  this.showSendReceiveDrawer(1, item)}>
-                      <Link value={1} className="c-pointer">Receive</Link>
-                  </li> */}
-                  <li onClick={() => this.showBuyDrawer(item, "buy")}>
-                      <Link  value={2} className="c-pointer">
-                      <Translate content="buy" />
-                      </Link>
-                  </li>
-                  <li onClick={() => this.showBuyDrawer(item, "sell")}>
-                        <Link  value={4} className="c-pointer">
-                        <Translate content="sell" />
-                        </Link>
-                    </li>
-                    <li onClick={() => this.showInternalTransfer(item)}>
-                      <Link  value={5} className="c-pointer">
-                      <Translate content="menu_internal_transfer" />
-                      </Link>
-                  </li>
-                  
-              </ul>
-          </Menu>
-      )
+     
 
     render() {
       const { Title, Text } = Typography;
@@ -145,13 +119,14 @@ class BankWallets extends Component {
                     renderItem={item =>
                         <List.Item className="py-10 px-0">
                             <List.Item.Meta
-                               avatar={<Avatar src="https://suissebase.blob.core.windows.net/assets/usd.svg" />}
+                               avatar={<Image preview={false} src={item.imagePath} />}
                                title={<div className="fs-16 fw-600 text-upper text-white-30 l-height-normal">{item.currency}</div>}
                                description={<Currency className="fs-16 text-white-30 m-0" defaultValue={item.availableBalance} 
                                prefix={(item?.currency == "USD" ? "$" : null) ||  (item?.currency == "EUR" ? "€" : null)} 
                                decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />}
                             
                                />
+                               {item.isAccountExist ?(
                               <div className="crypto-btns mt-8">
                                   <Translate content="transfer_funds"  component={Button} type="primary" className="custom-btn prime" 
                                 //    onClick={() =>
@@ -161,12 +136,29 @@ class BankWallets extends Component {
                                     window.open(`http://localhost:3001/transfer/${item.currency}`)
                                   }
                                   />
-                                  <Translate content="receive_funds"  component={Button} type="primary" className="custom-btn sec ml-16"  /> 
-                                  <Translate content="suisse_wallets"  component={Button} type="primary" className="custom-btn sec ml-16"  />
+                                  <Translate content="receive_funds"  component={Button} type="primary" className="custom-btn sec ml-16"  
+                                //    onClick={() =>
+                                //     window.open(process.env.REACT_APP_BANK_UI_URL, "_blank")
+                                //   }
+                                  /> 
+                                  <Translate content="suisse_wallets"  component={Button} type="primary" className="custom-btn sec ml-16" 
+                                    // onClick={() =>
+                                    //     window.open(process.env.REACT_APP_BANK_UI_URL, "_blank")
+                                    //   }
+                                   onClick={() =>
+                                       window.open("http://localhost:3001/dashboard")
+                                     } />
                               </div> 
+                            ) :(
                               <div className="crypto-btns mt-8">
-                              <Translate content="createnow" type="primary" component={Button} className="custom-btn prime"  />  
-                              </div> 
+                              <Translate content="createnow" type="primary" component={Button} className="custom-btn prime" 
+                            //    onClick={() =>
+                            //     window.open(process.env.REACT_APP_BANK_UI_URL, "_blank")
+                            //   }
+                              onClick={() =>
+                               window.open("http://localhost:3001/createAccount")
+                             }/>  
+                              </div> )}
                   </List.Item>} 
 
                    
