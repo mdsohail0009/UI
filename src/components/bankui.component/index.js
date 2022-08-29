@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Typography, List, Button, Image,Dropdown,Space,Menu,Avatar,Empty } from 'antd';
 import ConnectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
-import apiCalls from '../../api/apiCalls';
+
 import Translate from 'react-translate-component';
 
 import { withRouter,Link } from 'react-router-dom';
@@ -27,19 +27,6 @@ class BankWallets extends Component {
         }
     }
     
-     data = [
-        {
-          title: 'USD',
-          isAccountExit:true,
-          balance:'0',
-         
-        },
-        {
-          title: 'EUR',
-          isAccountExit:true,
-          balance:'1',
-        }
-      ];
 
       menuBar = (item) => (
         <Menu>
@@ -77,64 +64,7 @@ class BankWallets extends Component {
            <Title className="fs-24 fw-600 mb-16 text-white px-4">
               Personal Bank Accounts
             </Title>
-           
-            {/* <List
-              itemLayout="horizontal"
-              dataSource={this.state.customerData}
-              renderItem={item => (
-                <List.Item actions={[
-                   
-                  <Button className={`pop-btn  px-8  c-pointer fw-500 text-captz ${item.isAccountExist ?"showButton" :  "d-none"}` } style={{height : '30px'}}
-                  onClick={() =>
-                    window.open(process.env.REACT_APP_BANK_UI_URL, "_blank")
-                  }
-                  onClick={() =>
-                    window.open(`http://localhost:3001/transfer/${item.currency}`)
-                  }
-                  >
-                  Send Funds
-                  </Button>,
-                   <Button className={`pop-btn  px-8  c-pointer fw-500 text-captz ${item.isAccountExist ?"showButton" :  "d-none"}` }  style={{height : '30px'}}
-                   onClick={() =>
-                     window.open(process.env.REACT_APP_BANK_UI_URL, "_blank")
-                   }
-                   
-                   >
-                   Receive Funds
-                   </Button>,
-                   <Button className={`pop-btn  px-8  c-pointer fw-500 text-captz ${item.isAccountExist ?"showButton" :  "d-none"}` } style={{height : '30px'}}
-                   onClick={() =>
-                     window.open(process.env.REACT_APP_BANK_UI_URL, "_blank")
-                   }
-                onClick={() =>
-                    window.open("http://localhost:3001/dashboard")
-                  }
-                   >
-                   wallet
-                   </Button>,
-                   <Button className={`pop-btn px-16  c-pointer text-captz ${item.isAccountExist == false ?"createbuttonShow" : "d-none" }` } style={{height : '50px'}}
-                   onClick={() =>
-                     window.open(process.env.REACT_APP_BANK_UI_URL, "_blank")
-                   }
-                   onClick={() =>
-                    window.open("http://localhost:3001/createAccount")
-                  }
-                   >
-                  Create Now
-                   </Button>,
-                ]} >
-                  
-                  <List.Item.Meta
-                                 avatar={<Avatar src="https://suissebase.blob.core.windows.net/assets/usd.svg" />}
-                                title={<div className="fs-16 fw-600 text-upper text-white-30 l-height-normal">{item.currency}</div>}
-                                description={<Currency className="fs-16 text-white-30 m-0" defaultValue={item.availableBalance} 
-                                prefix={(item?.currency == "USD" ? "$" : null) ||  (item?.currency == "EUR" ? "€" : null)} 
-                                decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />}
-                            />
-    
-                </List.Item>
-              )}
-            /> */}
+          
                                     
                   <List
                     itemLayout="horizontal"
@@ -165,6 +95,9 @@ class BankWallets extends Component {
                                 //    onClick={() =>
                                 //     window.open(process.env.REACT_APP_BANK_UI_URL, "_blank")
                                 //   }
+                                // onClick={() =>
+                                //     window.open(`http://localhost:3001/addView`)
+                                //   }
                                   /> 
                                   
                             <Dropdown 
@@ -187,7 +120,7 @@ class BankWallets extends Component {
                             //     window.open(process.env.REACT_APP_BANK_UI_URL, "_blank")
                             //   }
                               onClick={() =>
-                               window.open("http://localhost:3001/createAccount")
+                               window.open(`http://localhost:3001/createAccount/${item.currency}`)
                              }/>  
                               </div> )}
                   </List.Item>} 
