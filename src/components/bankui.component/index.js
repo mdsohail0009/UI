@@ -142,13 +142,14 @@ class BankWallets extends Component {
                     dataSource={this.state.customerData}
                     bordered={false}
                     className="mobile-list custom-fund-buttons mb-36"
-                    loading={wallets.loading}
                     renderItem={item =>
                         <List.Item className="py-10 px-0">
                             <List.Item.Meta
-                                avatar={<Image preview={false} src={item.imagePath} />}
-                                title={<div className="fs-16 fw-600 text-upper text-white-30 l-height-normal">{item.walletCode}</div>}
-                                description={<Currency className="fs-16 text-white-30 m-0" defaultValue={item.amount} prefix={(item?.walletCode == "USD" ? "$" : null) || (item?.walletCode == "GBP" ? "£" : null) || (item?.walletCode == "EUR" ? "€" : null)} decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />}
+                               avatar={<Avatar src="https://suissebase.blob.core.windows.net/assets/usd.svg" />}
+                               title={<div className="fs-16 fw-600 text-upper text-white-30 l-height-normal">{item.currency}</div>}
+                               description={<Currency className="fs-16 text-white-30 m-0" defaultValue={item.availableBalance} 
+                               prefix={(item?.currency == "USD" ? "$" : null) ||  (item?.currency == "EUR" ? "€" : null)} 
+                               decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />}
                             
                                />
                               <div className="crypto-btns mt-8">
