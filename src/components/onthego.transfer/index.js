@@ -17,7 +17,7 @@ class OnthegoFundTransfer extends Component {
         step: "enteramount",
         // filterObj:[],
         filterObj: [{ lable: "Payee 100", address: "100032498902", type: "1st Party" }, { lable: "Payee 100", address: "100032498902", type: "3rd Party" }],
-        addressOptions: { addressType: "myself", transferType: "sepa" },
+        addressOptions: { addressType: "myself", transferType:this.props.selectedCurrency==="EUR"? "sepa":"domestic" },
         isNewTransfer: false
     }
     chnageStep = (step) => {
@@ -56,6 +56,28 @@ class OnthegoFundTransfer extends Component {
                             />
                         </Form.Item>
                     </Col>
+                    <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Form.Item
+                            className="custom-forminput custom-label mb-0"
+                            name="description"
+                            label={"Description"}
+                            required
+                            rules={[
+                                {
+                                    required: true,
+                                    message:
+                                        apicalls.convertLocalLang("is_required"),
+                                }
+                            ]}
+                        >
+                            <Input.TextArea
+                                className="cust-input"
+                                placeholder={"Description"}
+                                maxLength="500"
+                            />
+                        </Form.Item>
+
+                    </Col>
                 </Row>
                 <Row gutter={[16, 16]}>
 
@@ -69,7 +91,7 @@ class OnthegoFundTransfer extends Component {
                                 style={{ minWidth: 300 }}
                                 onClick={() => this.chnageStep("newtransfer")}
                             >
-                                New Address
+                                New Transfer
                             </Button>
                         </Form.Item>
                     </Col>
@@ -189,9 +211,9 @@ class OnthegoFundTransfer extends Component {
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Text className="mb-8 fs-14 text-white fw-500 text-upper mt-16">Transfer details</Text>
 
-                                <div><Link >Edit
+                                {/* <div><Link >Edit
                                 </Link>
-                                </div>
+                                </div> */}
                             </div>
                         </Col>
                         {"  "}
@@ -232,9 +254,9 @@ class OnthegoFundTransfer extends Component {
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Text className="mb-8 fs-14 text-white fw-500 text-upper mt-16">Recipient details</Text>
 
-                                <div><Link >Change
+                                {/* <div><Link >Change
                                 </Link>
-                                </div>
+                                </div> */}
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
@@ -272,7 +294,7 @@ class OnthegoFundTransfer extends Component {
                                         className="pop-btn px-24"
 
                                     >
-                                        Continue Verification
+                                        Continue to Verification
                                     </Button>
                                 </Form.Item>
                             </div>
@@ -281,11 +303,11 @@ class OnthegoFundTransfer extends Component {
                 </Form>
             </React.Fragment>,
             newtransfer: <>
-                <FiatAddress onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} />
+                <FiatAddress currency={this.props.selectedCurrency} onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} />
                 <Paragraph className="mb-16 fs-14 fw-500 text-white  mt-16">Bank Details</Paragraph>
                 <Divider />
                 <BankDetails transferType={this.state.addressOptions?.transferType} />
-                {this.state.addressOptions.addressType !== "myself" && <AddressDocumnet title={"Please upload supporting documents for transaction "} />}
+                {(this.state.addressOptions.addressType !== "myself"||this.state.addressOptions.transferType==="international")&&(this.state.addressOptions.transferType!=="domestic") && <AddressDocumnet title={"please upload supporting documents for transaction "} />}
                 <div className="text-right mt-12">
                     <Button
                         className="pop-btn px-36"

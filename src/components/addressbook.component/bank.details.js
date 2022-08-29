@@ -22,6 +22,7 @@ class BankDetails extends Component {
         isLoading: false
     }
     renderAddress = (transferType) => {
+        transferType = ["domestic","international"].includes(transferType)?"swift":transferType;
         const _templates = {
             sepa: <>
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -69,7 +70,7 @@ class BankDetails extends Component {
                         </Select>
                     </Form.Item>
                 </Col>
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                {/* <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
                         name="payeeAccountState"
@@ -114,7 +115,7 @@ class BankDetails extends Component {
                             ))}
                         </Select>
                     </Form.Item>
-                </Col>
+                </Col> */}
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
@@ -336,93 +337,7 @@ class BankDetails extends Component {
                         />
                     </Form.Item>
                 </Col>}
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item
-                        className="custom-forminput custom-label mb-0"
-                        name="swiftCode"
-                        label={apicalls.convertLocalLang(
-                            transferType === "sepa" ? "bicnumber" : "swiftcode"
-                        )}
-                        required
-                        rules={[
-                            {
-                                required: true,
-                                message:
-                                    apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                validator(_, value) {
-                                    if (emailExist) {
-                                        return Promise.reject(
-                                            "Invalid BIC/SWIFT/Routing number"
-                                        );
-                                    } else if (
-                                        value &&
-                                        !/^[A-Za-z0-9]+$/.test(value)
-                                    ) {
-                                        return Promise.reject(
-                                            "Invalid BIC/SWIFT/Routing number"
-                                        );
-                                    } else {
-                                        return Promise.resolve();
-                                    }
-                                },
-                            },
-                        ]}
-                    >
-                        <Input
-                            className="cust-input "
-                            placeholder={apicalls.convertLocalLang(
-                                transferType === "sepa" ? "bicnumber" : "swiftcode"
-                            )}
-                            maxLength="500"
-                        />
-                    </Form.Item>
-                </Col>
-                {transferType === "swift" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item
-                        className="custom-forminput custom-label mb-0"
-                        name="routingNumber"
-                        label={apicalls.convertLocalLang(
-                            "Routing_number"
-                        )}
-                        required
-                        rules={[
-                            {
-                                required: true,
-                                message:
-                                    apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                validator(_, value) {
-                                    if (emailExist) {
-                                        return Promise.reject(
-                                            "Invalid ACH/Routing number"
-                                        );
-                                    } else if (
-                                        value &&
-                                        !/^[A-Za-z0-9]+$/.test(value)
-                                    ) {
-                                        return Promise.reject(
-                                            "Invalid ACH/Routing number"
-                                        );
-                                    } else {
-                                        return Promise.resolve();
-                                    }
-                                },
-                            },
-                        ]}
-                    >
-                        <Input
-                            className="cust-input "
-                            placeholder={apicalls.convertLocalLang(
-                                "Routing_number"
-                            )}
-                            maxLength="500"
-                        />
-                    </Form.Item>
-                </Col>}
-                {transferType == "swift" && (
+                {(transferType == "domestic" || transferType == "international") && (
                     <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
                             className="custom-forminput custom-label mb-0"
@@ -465,6 +380,94 @@ class BankDetails extends Component {
                         </Form.Item>
                     </Col>
                 )}
+                {transferType == "international" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                    <Form.Item
+                        className="custom-forminput custom-label mb-0"
+                        name="swiftCode"
+                        label={apicalls.convertLocalLang(
+                            transferType === "sepa" ? "bicnumber" : "swiftcode"
+                        )}
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message:
+                                    apicalls.convertLocalLang("is_required"),
+                            },
+                            {
+                                validator(_, value) {
+                                    if (emailExist) {
+                                        return Promise.reject(
+                                            "Invalid BIC/SWIFT/Routing number"
+                                        );
+                                    } else if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid BIC/SWIFT/Routing number"
+                                        );
+                                    } else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            },
+                        ]}
+                    >
+                        <Input
+                            className="cust-input "
+                            placeholder={apicalls.convertLocalLang(
+                                transferType === "sepa" ? "bicnumber" : "swiftcode"
+                            )}
+                            maxLength="500"
+                        />
+                    </Form.Item>
+                </Col>}
+
+                {transferType === "domestic" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                    <Form.Item
+                        className="custom-forminput custom-label mb-0"
+                        name="routingNumber"
+                        label={apicalls.convertLocalLang(
+                            "Routing_number"
+                        )}
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message:
+                                    apicalls.convertLocalLang("is_required"),
+                            },
+                            {
+                                validator(_, value) {
+                                    if (emailExist) {
+                                        return Promise.reject(
+                                            "Invalid ACH/Routing number"
+                                        );
+                                    } else if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid ACH/Routing number"
+                                        );
+                                    } else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            },
+                        ]}
+                    >
+                        <Input
+                            className="cust-input "
+                            placeholder={apicalls.convertLocalLang(
+                                "Routing_number"
+                            )}
+                            maxLength="500"
+                        />
+                    </Form.Item>
+                </Col>}
+
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
@@ -496,7 +499,35 @@ class BankDetails extends Component {
                         />
                     </Form.Item>
                 </Col>
-
+               {transferType==="sepa"&& <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                    <Form.Item
+                        className="custom-forminput custom-label mb-0"
+                        name="branch"
+                        label={"Branch"}
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message:
+                                    apicalls.convertLocalLang("is_required"),
+                            },
+                            {
+                                whitespace: true,
+                                message:
+                                    apicalls.convertLocalLang("is_required"),
+                            },
+                            {
+                                validator: validateContentRule,
+                            },
+                        ]}
+                    >
+                        <Input
+                            className="cust-input"
+                            placeholder={"Branch"}
+                            maxLength="500"
+                        />
+                    </Form.Item>
+                </Col>}
                 {this.renderAddress(transferType)}
             </Row>
         </Form>
