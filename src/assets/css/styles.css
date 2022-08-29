@@ -1370,4 +1370,4 @@ input[type=number]::-webkit-outer-spin-button {
 td.ant-table-column-sort{background: transparent;}
 .ant-table-thead th.ant-table-column-sort{background: var(--bgDarkGrey);}
 .markets-panel .ant-list-split .ant-list-item, .portfolio-list .ant-list-split .ant-list-item{padding-top:10px;padding-bottom:10px;padding-left:0;padding-right: 0;}
-.mobile-list.custom-fund-buttons .ant-list-item{display: block;}
+/* .mobile-list.custom-fund-buttons .ant-list-item{display: block;} */

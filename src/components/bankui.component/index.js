@@ -41,7 +41,32 @@ class BankWallets extends Component {
         }
       ];
 
+      menuBar = (item) => (
+        <Menu>
+              <ul className="pl-0 drpdwn-list">
+                  {/* <li  onClick={() =>  this.showSendReceiveDrawer(1, item)}>
+                      <Link value={1} className="c-pointer">Receive</Link>
+                  </li> */}
+                  <li  onClick={() => window.open("http://localhost:3001/dashboard")}>
+                  <Link  value={5} className="c-pointer">
+                      <Translate content="Wallet" />
+                      </Link>
+                  </li>
+                  {/* <li onClick={() => this.showBuyDrawer(item, "sell")}>
+                        <Link  value={4} className="c-pointer">
+                        <Translate content="Receive" />
+                        </Link>
+                    </li> */}
+                    {/* <li onClick={() => this.showInternalTransfer(item)}>
+                      <Link  value={5} className="c-pointer">
+                      <Translate content="menu_internal_transfer" />
+                      </Link>
+                  </li> */}
+                  
+              </ul>
+          </Menu>
 
+    )
      
 
     render() {
@@ -141,14 +166,27 @@ class BankWallets extends Component {
                                 //     window.open(process.env.REACT_APP_BANK_UI_URL, "_blank")
                                 //   }
                                   /> 
-                                  <Translate content="suisse_wallets"  component={Button} type="primary" className="custom-btn sec ml-16" 
-                                    // onClick={() =>
-                                    //     window.open(process.env.REACT_APP_BANK_UI_URL, "_blank")
-                                    //   }
+                                  {/* <Translate content="suisse_wallets"  component={Button} type="primary" className="custom-btn sec ml-16" 
+                                    onClick={() =>
+                                        window.open(process.env.REACT_APP_BANK_UI_URL, "_blank")
+                                      }
                                    onClick={() =>
                                        window.open("http://localhost:3001/dashboard")
-                                     } />
-                              </div> 
+                                     } /> */}
+
+                            <Dropdown 
+                            overlay={this.menuBar(item)}
+                             trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
+                                <a onClick={e => e.preventDefault()}>
+                              <Space>
+                                <span class="icon md menu-bar ml-4 p-relative"></span>
+                          {/* <DownOutlined /> */}
+                              </Space>
+                            </a>
+                          </Dropdown>
+                              </div>
+                              
+                              
                             ) :(
                               <div className="crypto-btns mt-8">
                               <Translate content="createnow" type="primary" component={Button} className="custom-btn prime" 

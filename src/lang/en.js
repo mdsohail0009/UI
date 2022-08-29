@@ -632,10 +632,10 @@ export default {
 	activate:"activate",
 	No:"No",
 	bankAddress:"Add Bank Address",
-	send_fund: "Send Funds",
-	receive_fund:"Receive Funds",
+	send_fund: "Send",
+	receive_fund:"Receive",
 	createnow:"Create Now",
-	transfer_funds:'Transfer Funds',
-	receive_funds:'Receive Funds',
-	suisse_wallets:'Wallets'
+	transfer_funds:'Transfer',
+	receive_funds:'Receive',
+	suisse_wallets:'Wallets',
 };
