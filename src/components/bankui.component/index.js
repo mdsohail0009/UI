@@ -27,7 +27,13 @@ class BankWallets extends Component {
         }
     }
     
-
+    createAccount= (e)=>{
+        if(this.props.userProfile.isBusiness){
+            window.open(`http://localhost:3001/businessCreateAccount/${e}`)
+        }else{
+            window.open(`http://localhost:3001/createAccount/${e}`)
+        }
+    }
       menuBar = (item) => (
         <Menu>
               <ul className="pl-0 drpdwn-list">
@@ -119,9 +125,10 @@ class BankWallets extends Component {
                             //    onClick={() =>
                             //     window.open(process.env.REACT_APP_BANK_UI_URL, "_blank")
                             //   }
-                              onClick={() =>
-                               window.open(`http://localhost:3001/createAccount/${item.currency}`)
-                             }/>  
+                            
+                              onClick={()=>this.createAccount(item.currency)}
+                             />  
+                            
                               </div> )}
                   </List.Item>} 
 
