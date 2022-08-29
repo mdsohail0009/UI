@@ -151,7 +151,7 @@ class BankWallets extends Component {
                                decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />}
                             
                                />
-                               {!item.isAccountExist ?(
+                               {item.isAccountExist ?(
                               <div className="crypto-btns mt-8">
                                   <Translate content="transfer_funds"  component={Button} type="primary" className="custom-btn prime" 
                                 //    onClick={() =>
