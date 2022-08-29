@@ -5,6 +5,7 @@ import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
 import { validateContentRule } from "../../utils/custom.validator";
 import AddressDocumnet from "./document.upload";
+import ConnectStateProps from "../../utils/state.connect";
 
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
@@ -40,7 +41,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, PayeeLu = [], emailExis
 
                         }}
                     >
-                        <Radio.Button value="myself">{props.userConfig?.isBusiness ? "Own Business" : "My Self"}</Radio.Button>
+                        <Radio.Button value="myself">{props.userProfile?.isBusiness ? "Own Business" : "My Self"}</Radio.Button>
                         <Radio.Button value="someoneelse">Someone Else</Radio.Button>
                         <Radio.Button value="business">Business</Radio.Button>
                     </Radio.Group>
@@ -144,7 +145,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, PayeeLu = [], emailExis
                     </Form.Item>
                 </Col>
                 <React.Fragment id="name">
-                    {addressOptions.addressType === "business" ? <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                    {(addressOptions.addressType === "business"||(props.userProfile.isBusiness&&addressOptions.addressType==="myself")) ? <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
                             className="custom-forminput custom-label mb-0"
                             name="fullName"
@@ -567,4 +568,4 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, PayeeLu = [], emailExis
     </Form>
 }
 
-export default FiatAddress;
+export default ConnectStateProps(FiatAddress);

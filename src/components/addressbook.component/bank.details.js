@@ -380,7 +380,7 @@ class BankDetails extends Component {
                         </Form.Item>
                     </Col>
                 )}
-                {transferType == "international" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                {(transferType == "international"||transferType==="sepa") && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
                         name="swiftCode"
