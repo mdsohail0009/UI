@@ -19,7 +19,6 @@ class BankWallets extends Component {
         this.getCustomerAccountBalance(); 
     }
     getCustomerAccountBalance = async ()=>{
-        // debugger
         let response  = await apicalls.getCustomerBankDetails(this.props.userProfile.id)
         if(response.ok){
          this.setState({...this.state,customerData:response.data})
@@ -140,7 +139,7 @@ class BankWallets extends Component {
                                     
                   <List
                     itemLayout="horizontal"
-                    dataSource={wallets.data}
+                    dataSource={this.state.customerData}
                     bordered={false}
                     className="mobile-list custom-fund-buttons mb-36"
                     loading={wallets.loading}
@@ -153,9 +152,16 @@ class BankWallets extends Component {
                             
                                />
                               <div className="crypto-btns mt-8">
-                                  <Translate content="send_fund"  component={Button} type="primary" className="custom-btn prime" />
-                                  <Translate content="receive_fund"  component={Button} type="primary" className="custom-btn sec ml-16"  /> 
-                                  <Translate content="receive_fund"  component={Button} type="primary" className="custom-btn sec ml-16"  />
+                                  <Translate content="transfer_funds"  component={Button} type="primary" className="custom-btn prime" 
+                                //    onClick={() =>
+                                //     window.open(process.env.REACT_APP_BANK_UI_URL, "_blank")
+                                //   }
+                                  onClick={() =>
+                                    window.open(`http://localhost:3001/transfer/${item.currency}`)
+                                  }
+                                  />
+                                  <Translate content="receive_funds"  component={Button} type="primary" className="custom-btn sec ml-16"  /> 
+                                  <Translate content="suisse_wallets"  component={Button} type="primary" className="custom-btn sec ml-16"  />
                               </div> 
                               <div className="crypto-btns mt-8">
                               <Translate content="createnow" type="primary" component={Button} className="custom-btn prime"  />  

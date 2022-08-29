@@ -21,6 +21,9 @@ const coinGekoClient = create({
 const uploadClient = create({
     baseURL: process.env.REACT_APP_UPLOAD_API
 })
+const bankClient = create({
+    baseURL: process.env.REACT_APP_BANKAPI_END_POINT
+})
 const _encrypt = (msg, key) => {
 
     msg = typeof (msg) == 'object' ? JSON.stringify(msg) : msg;
@@ -59,4 +62,4 @@ apiClient.axiosInstance.interceptors.request.use((config) => {
 //     } else { return err; }
 
 // });
-export { apiClient, coinGekoClient, identityClient, uploadClient, ipRegistry, sumsub }
+export { apiClient, coinGekoClient, identityClient, uploadClient, ipRegistry, sumsub,bankClient }

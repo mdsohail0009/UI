@@ -1,4 +1,4 @@
-import { apiClient, ipRegistry } from "./";
+import { apiClient, ipRegistry,bankClient } from "./";
 import { ApiControllers } from "./config";
 import counterpart from "counterpart";
 import { store } from "../store";
@@ -159,6 +159,12 @@ const getInfoVal = (id, type) => {
 const getReferalDetails = (customerId) =>{
 	return apiClient.get(ApiControllers.partner + `getReferralDetails/customer/${customerId}`);
 }
+const getCustomerBankDetails = (customerId)=>{
+	return bankClient.get(ApiControllers.bank + `GetAccountBalanceByCustomerId/${customerId}`);
+}
+const getBank = (customerId) => {
+	return bankClient.get(ApiControllers.bank + `IsAccountExist/${customerId}`);
+ }
 
 let apicalls = {
 	getportfolio,
@@ -190,6 +196,6 @@ let apicalls = {
 	getVerificationFields,
 	twofactor,
 	getInfoVal,
-	getReferalDetails
+	getReferalDetails,getCustomerBankDetails,getBank
 };
 export default apicalls;
