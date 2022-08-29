@@ -71,8 +71,8 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, PayeeLu = [], emailExis
                             }
                         }}
                     >
-                        <Radio.Button value="domestic">Domestic USD Transfer</Radio.Button>
-                        <Radio.Button value="international">International USD Swift</Radio.Button>
+                        <Radio.Button value="domestic" className="span-text">Domestic USD Transfer</Radio.Button>
+                        <Radio.Button value="international" className="span-text">International USD Swift</Radio.Button>
                     </Radio.Group>
                 </Col>
             </Row>
