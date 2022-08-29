@@ -581,4 +581,7 @@ export default {
 	activate:"啟用",
 	No:"不",
 	note: "筆記",
+	transfer_funds:'發送',
+	receive_funds:'收到',
+	suisse_wallets:'錢包',
 };

@@ -635,7 +635,7 @@ export default {
 	send_fund: "Send",
 	receive_fund:"Receive",
 	createnow:"Create Now",
-	transfer_funds:'Transfer',
+	transfer_funds:'Send',
 	receive_funds:'Receive',
 	suisse_wallets:'Wallets',
 };

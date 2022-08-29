@@ -151,7 +151,7 @@ class BankWallets extends Component {
                                decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />}
                             
                                />
-                               {item.isAccountExist ?(
+                               {!item.isAccountExist ?(
                               <div className="crypto-btns mt-8">
                                   <Translate content="transfer_funds"  component={Button} type="primary" className="custom-btn prime" 
                                 //    onClick={() =>
@@ -166,21 +166,14 @@ class BankWallets extends Component {
                                 //     window.open(process.env.REACT_APP_BANK_UI_URL, "_blank")
                                 //   }
                                   /> 
-                                  {/* <Translate content="suisse_wallets"  component={Button} type="primary" className="custom-btn sec ml-16" 
-                                    onClick={() =>
-                                        window.open(process.env.REACT_APP_BANK_UI_URL, "_blank")
-                                      }
-                                   onClick={() =>
-                                       window.open("http://localhost:3001/dashboard")
-                                     } /> */}
-
+                                  
                             <Dropdown 
                             overlay={this.menuBar(item)}
                              trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
                                 <a onClick={e => e.preventDefault()}>
                               <Space>
                                 <span class="icon md menu-bar ml-4 p-relative"></span>
-                          {/* <DownOutlined /> */}
+                     
                               </Space>
                             </a>
                           </Dropdown>
