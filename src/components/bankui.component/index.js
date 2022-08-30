@@ -101,9 +101,9 @@ class BankWallets extends Component {
                                 //    onClick={() =>
                                 //     window.open(process.env.REACT_APP_BANK_UI_URL, "_blank")
                                 //   }
-                                // onClick={() =>
-                                //     window.open(`http://localhost:3001/addView`)
-                                //   }
+                                onClick={() =>
+                                    window.open(`http://localhost:3001/addView/${item.id}/${item.currency}`)
+                                  }
                                   /> 
                                   
                             <Dropdown 
