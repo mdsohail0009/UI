@@ -605,7 +605,7 @@ const AddressCommonCom = (props) => {
               onFinish={savewithdrawal}
               autoComplete="off"
               initialValues={cryptoAddress}
-            > {(props?.cryptoTab == 2 || withdraeTab == "Fiat")&& <>
+            > {(props?.cryptoTab == 2 || withdraeTab == "Fiat") && <>
               <Form.Item
                 name="addressType"
 
@@ -1137,7 +1137,7 @@ const AddressCommonCom = (props) => {
                   </Col>
 
                 </Row>}
-              {(props?.cryptoTab ==1) && <CryptoAdress />}
+              {(props?.cryptoTab == 1) && <CryptoAdress />}
 
               {bankmodalData?.map((item, indx) => {
                 if (item.recordStatus !== "Deleted") {

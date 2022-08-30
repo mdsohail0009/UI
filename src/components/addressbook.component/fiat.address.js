@@ -12,7 +12,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 const FiatAddress = ({ onSubmit, onAddressOptionsChange, PayeeLu = [], emailExist = false, countries = [], states = [], fiatAddress, ...props }) => {
     const [form] = useForm();
-    const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType:props.currency==="EUR"? "sepa":"domestic" });
+    const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType: props.currency === "EUR" ? "sepa" : "domestic" });
     const [isCCSP, setCCSP] = useState(false);
     return <Form
         form={form}
@@ -64,7 +64,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, PayeeLu = [], emailExis
                         onChange={(value) => {
                             setAddressOptions({ ...addressOptions, transferType: value.target.value })
                             onAddressOptionsChange({ ...addressOptions, transferType: value.target.value });
-                            if (value.target.value === "international"&&addressOptions.addressType!=="business") {
+                            if (value.target.value === "international" && addressOptions.addressType !== "business") {
                                 setCCSP(true);
                             } else {
                                 setCCSP(false);
@@ -145,7 +145,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, PayeeLu = [], emailExis
                     </Form.Item>
                 </Col>
                 <React.Fragment id="name">
-                    {(addressOptions.addressType === "business"||(props.userProfile.isBusiness&&addressOptions.addressType==="myself")) ? <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                    {(addressOptions.addressType === "business" || (props.userProfile.isBusiness)) ? <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
                             className="custom-forminput custom-label mb-0"
                             name="fullName"
@@ -169,7 +169,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, PayeeLu = [], emailExis
                         >
                             <Input
                                 className="cust-input"
-                                placeholder={apiCalls.convertLocalLang("Fait_Name")}
+                                placeholder={apiCalls.convertLocalLang("buisiness_name")}
                             />
                         </Form.Item>
                     </Col> : <> <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -258,7 +258,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, PayeeLu = [], emailExis
                         </Col>
                     </>}
                 </React.Fragment>
-                {addressOptions.addressType !== "myself"&&addressOptions.transferType=="sepa" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                {addressOptions.addressType !== "myself" && addressOptions.transferType == "sepa" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
                         name="reasonForTransfer"

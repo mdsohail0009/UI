@@ -587,7 +587,7 @@ export default {
 	whitelist: "Declaration form",
 	favorite_name: "Save payee name as",
 	Fait_Name: "Name",
-	buisiness_name: "Business Name",
+	buisiness_name: "Beneficiary Name",
 	email: "Email",
 	Phone_No: "Phone Number",
 	Address_Line1: "Address Line1",

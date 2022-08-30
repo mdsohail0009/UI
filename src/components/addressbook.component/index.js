@@ -26,6 +26,7 @@ import ActionsToolbar from "../toolbar.component/actions.toolbar";
 import { fetchFeaturePermissions, setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 import { getFeatureId } from "../shared/permissions/permissionService";
 import {setCurrentAction} from '../../reducers/actionsReducer'
+import AddressBookV2 from "../addressbook.v2/fiat.address";
 
 const { Paragraph, Text } = Typography;
 
@@ -644,7 +645,8 @@ class AddressBook extends Component {
 		const stepcodes = {
 			cryptoaddressbook: (<>
 				 {/* <NewAddressBook onCancel={() => this.closeBuyDrawer()} /> */}
-				<AddressCommonCom onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1}/>
+				{/* <AddressCommonCom onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1}/> */}
+				<AddressBookV2 type="addressbook" />
 				</>
 			),
 			selectcrypto: <SelectCrypto />,
