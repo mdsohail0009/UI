@@ -583,5 +583,5 @@ export default {
 	note: "筆記",
 	transfer_funds:'發送',
 	receive_funds:'收到',
-	suisse_wallets:'錢包',
+	suisse_wallets:'轉移到數字錢包',
 };

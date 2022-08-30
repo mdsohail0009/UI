@@ -605,5 +605,5 @@ export default {
 	address_type: "Uri ng Address",
 	transfer_funds:'Ipadala',
 	receive_funds:'Tumanggap',
-	suisse_wallets:'Mga pitaka',
+	suisse_wallets:'Ilipat sa digital Wallets',
 };

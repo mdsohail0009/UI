@@ -42,7 +42,7 @@ class BankWallets extends Component {
                   </li> */}
                   <li  onClick={() => window.open("http://localhost:3001/dashboard")}>
                   <Link  value={5} className="c-pointer">
-                      <Translate content="Wallet" />
+                      <Translate content="suisse_wallets" />
                       </Link>
                   </li>
                   {/* <li onClick={() => this.showBuyDrawer(item, "sell")}>
@@ -87,7 +87,7 @@ class BankWallets extends Component {
                                decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />}
                             
                                />
-                               {item.isAccountExist ?(
+                               {!item.isAccountExist ?(
                               <div className="crypto-btns mt-8">
                                   <Translate content="transfer_funds"  component={Button} type="primary" className="custom-btn prime" 
                                 //    onClick={() =>
