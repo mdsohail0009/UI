@@ -5,14 +5,13 @@ import Translate from "react-translate-component";
 import ConnectStateProps from "../../utils/state.connect";
 import apiCalls from "../../api/apiCalls";
 import { validateContentRule } from "../../utils/custom.validator";
-
+import BankDetails from '../addressbook.component/bank.details';
 
 const { Option } = Select;
 const { Text, Paragraph } = Typography;
 const { TextArea } = Input
 class RecipientAddress extends Component {
     render() {
-        const { } = this.props
         return <React.Fragment>
 
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -43,7 +42,7 @@ class RecipientAddress extends Component {
                     <TextArea
                         placeholder={apiCalls.convertLocalLang("Address_Line1")}
                         className="cust-input cust-text-area address-book-cust"
-                        autoSize={{ minRows: 1, maxRows: 2 }}
+                        autoSize={{ minRows: 1, maxRows: 1 }}
                         maxLength={100}
                     ></TextArea>
                 </Form.Item>
@@ -92,7 +91,7 @@ class RecipientAddress extends Component {
                     <TextArea
                         placeholder={apiCalls.convertLocalLang("Address_Line3")}
                         className="cust-input cust-text-area address-book-cust"
-                        autoSize={{ minRows: 1, maxRows: 2 }}
+                        autoSize={{ minRows: 1, maxRows: 1 }}
                         maxLength={100}
                     ></TextArea>
                 </Form.Item>
@@ -198,7 +197,7 @@ class RecipientDetails extends Component {
                     />
                 </Form.Item>
             </Col>
-            <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+            {/* <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
                     name="email"
                     label={apiCalls.convertLocalLang("email")}
@@ -271,9 +270,12 @@ class RecipientDetails extends Component {
                         allowNegative={false}
                     />
                 </Form.Item>
-            </Col>
+            </Col> */}
             <RecipientAddress />
+            <BankDetails transferType={this.props.transferType} />
         </React.Fragment>
     }
 }
 export default ConnectStateProps(RecipientDetails);
+
+export {RecipientAddress}

@@ -35,14 +35,14 @@ class AddressDocumnet extends Component {
                             PNG, JPG,JPEG and PDF files are allowed
                         </p>
                     </Dragger>
-                    <div className="docfile">
+                    {/* <div className="docfile">
                         <span className={`icon xl file mr-16`} />
                         <div className="docdetails c-pointer">
                             <EllipsisMiddle suffixCount={6}>Identity card</EllipsisMiddle>
                             <span className="fs-12 text-secondary">25 KB</span>
                         </div>
                         <span className="icon md close c-pointer" />
-                    </div>
+                    </div> */}
                 </div>
             </Col>
         </Row>

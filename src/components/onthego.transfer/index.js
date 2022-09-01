@@ -10,6 +10,7 @@ import success from '../../assets/images/success.png';
 import Translate from "react-translate-component";
 import { Link } from 'react-router-dom';
 import SomeoneComponent from "../onthego.transfer/someone.component"
+import WithdrawSummary from "../send.component/withdrawSummary";
 const { Paragraph, Text, Title } = Typography;
 const { Search } = Input;
 
@@ -220,8 +221,8 @@ class OnthegoFundTransfer extends Component {
                         {"  "}
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper mt-16">You send exactly</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper mt-16  text-right">1000 USD</Title>
+                                <Title className="mb-4 fs-10 text-white fw-400 text-upper mt-16">How much you will receive</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper mt-16  text-right">994.55 USD</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
@@ -230,24 +231,24 @@ class OnthegoFundTransfer extends Component {
                                 <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">5.45 USD</Title>
                             </div>
                         </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+                        {/* <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Total we will convert</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">994.55 USD</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right"></Title>
                             </div>
-                        </Col>
+                        </Col> */}
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Recipient gets</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">900 EUR</Title>
+                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Withdrawal amount</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">1000 USD</Title>
                             </div>
                         </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+                        {/* <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Description</Title>
                                 <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">Bike</Title>
                             </div>
-                        </Col>
+                        </Col> */}
                     </Row>
 
                     <Row gutter={24} className=" text-white mt-36">
@@ -262,14 +263,14 @@ class OnthegoFundTransfer extends Component {
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper mt-16">Name</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper mt-16  text-right">Min Blue Black</Title>
+                                <Title className="mb-4 fs-10 text-white fw-400 text-upper mt-16">Save Whitelist name as</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper mt-16  text-right">MBB</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Email</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">coco@yopmail.com</Title>
+                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Beneficiary Name</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">Min Blue Black</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
@@ -280,9 +281,18 @@ class OnthegoFundTransfer extends Component {
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Bank Code (BIC/SWIFT) </Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">TG5T57XXX</Title>
+                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Reason for transfer </Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">Payment</Title>
                             </div>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
+                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Bank Name </Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">XXXX</Title>
+                            </div>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="text-center mt-36 create-account">
@@ -304,7 +314,29 @@ class OnthegoFundTransfer extends Component {
                 </Form>
             </React.Fragment>,
             newtransfer: <>
-                <SomeoneComponent currency='EUR'/>
+                <FiatAddress currency={this.props.selectedCurrency} onContinue={()=>this.chnageStep("reviewdetails")} onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} />
+                {/* <Paragraph className="mb-16 fs-14 fw-500 text-white  mt-16">Bank Details</Paragraph> */}
+                {/* <Divider />
+                <BankDetails transferType={this.state.addressOptions?.transferType} />
+                {(this.state.addressOptions.addressType !== "myself"||this.state.addressOptions.transferType==="international")&&(this.state.addressOptions.transferType!=="domestic") && <AddressDocumnet title={"please upload supporting documents for transaction "} />}
+                <div className="text-right mt-12">
+                    <Button
+                        className="pop-btn px-36"
+                        style={{ margin: "0 8px" }}
+                        onClick={() => { }}
+                    >
+                        {apicalls.convertLocalLang("cancel")}
+                    </Button>
+                    <Button
+                        htmlType="button"
+                        size="large"
+                        className="pop-btn px-36"
+                        style={{ minWidth: 150 }}
+                        onClick={() => this.chnageStep("reviewdetails")}
+                    >
+                        <Translate content="Save_btn_text" />
+                    </Button>
+                </div> */}
             </>,
             declaration: <div className="text-center">
                 <Image width={80} preview={false} src={alertIcon} />

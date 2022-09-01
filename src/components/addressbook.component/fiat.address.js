@@ -6,12 +6,13 @@ import apiCalls from "../../api/apiCalls";
 import { validateContentRule } from "../../utils/custom.validator";
 import AddressDocumnet from "./document.upload";
 import ConnectStateProps from "../../utils/state.connect";
+import OthersBusiness from "../onthego.transfer/others.business/others.business.component";
 import SomeoneComponent from "../onthego.transfer/someone.component"
 
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
-const FiatAddress = ({ onSubmit, onAddressOptionsChange, PayeeLu = [], emailExist = false, countries = [], states = [], fiatAddress, ...props }) => {
+const FiatAddress = ({ onSubmit, onAddressOptionsChange,onContinue, PayeeLu = [], emailExist = false, countries = [], states = [], fiatAddress, ...props }) => {
     const [form] = useForm();
     const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType: props.currency === "EUR" ? "sepa" : "domestic" });
     const [isCCSP, setCCSP] = useState(false);
@@ -98,7 +99,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, PayeeLu = [], emailExis
             </Row>
         </div>} */}
         {/* {addressOptions.addressType !== "myself" &&  */}
-        <React.Fragment>
+        {addressOptions.addressType !== "business" && <React.Fragment>
             <Translate
                 content="Beneficiary_Details"
                 component={Paragraph}
@@ -564,7 +565,8 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, PayeeLu = [], emailExis
                     </Col></>}
 
             </Row>
-        </React.Fragment>
+        </React.Fragment>}
+        {addressOptions.addressType === "business" && <OthersBusiness onContinue={()=>onContinue()} />}
         {/* } */}
 
     </Form>
