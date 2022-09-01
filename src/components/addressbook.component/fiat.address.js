@@ -51,7 +51,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange,onContinue, PayeeLu = []
             </Row>
 
         </Form.Item>
-        {props.currency === "USD" && <Form.Item>
+        {/* {props.currency === "USD" && <Form.Item>
             <Translate
                 content="transfer_type"
                 component={Text}
@@ -78,7 +78,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange,onContinue, PayeeLu = []
                     </Radio.Group>
                 </Col>
             </Row>
-        </Form.Item>}
+        </Form.Item>} */}
         {/* {addressOptions.addressType === "myself" && <div className="box basic-info alert-info-custom">
 
             <Row>
@@ -99,7 +99,9 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange,onContinue, PayeeLu = []
             </Row>
         </div>} */}
         {/* {addressOptions.addressType !== "myself" &&  */}
-        {addressOptions.addressType !== "business" && <React.Fragment>
+
+        {addressOptions.addressType === "someoneelse" && <SomeoneComponent currency={props.currency} />}
+        {(addressOptions.addressType !== "business" && addressOptions.addressType !=="someoneelse") && <React.Fragment>
             <Translate
                 content="Beneficiary_Details"
                 component={Paragraph}

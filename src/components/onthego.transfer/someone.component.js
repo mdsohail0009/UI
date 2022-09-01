@@ -16,7 +16,7 @@ const { Search } = Input;
 
 const SomeoneComponent=({ onSubmit, onAddressOptionsChange, PayeeLu = [], emailExist = false, countries = [], states = [], fiatAddress, ...props })=>{
     const [form] = useForm();
-    const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType: props.currency === "EUR" ? "sepa" : "domestic" });
+    const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType: props.currency === "EUR" ? "sepa" : "swift", domesticType:'domestic' });
     const [isCCSP, setCCSP] = useState(false);
     
         return (<React.Fragment>
@@ -32,10 +32,10 @@ const SomeoneComponent=({ onSubmit, onAddressOptionsChange, PayeeLu = [], emailE
 
                             <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                                 <Radio.Group
-                                    defaultValue={addressOptions.transferType}
+                                    defaultValue={addressOptions.domesticType}
                                     className="mb-16 custom-radio-btn buysell-toggle crypto-toggle"
                                     onChange={(value) => {
-                                        setAddressOptions({ ...addressOptions, transferType: value.target.value })
+                                        setAddressOptions({ ...addressOptions, domesticType: value.target.value })
                                         // onAddressOptionsChange({ ...addressOptions, transferType: value.target.value });
                                         if (value.target.value === "international" && addressOptions.addressType !== "business") {
                                             setCCSP(true);
@@ -202,7 +202,7 @@ const SomeoneComponent=({ onSubmit, onAddressOptionsChange, PayeeLu = [], emailE
                     </>
                     {/* <Divider /> */}
                     <Paragraph className="mb-16 fs-14 fw-500 text-white  mt-16">Bank Details</Paragraph>
-                    <BankDetails transferType={addressOptions?.transferType} />
+                    <BankDetails domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} />
                     <AddressDocumnet title={"please upload supporting documents for transaction "} />
                     <div className="text-right mt-12">
                         <Button
