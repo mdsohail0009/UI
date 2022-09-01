@@ -503,18 +503,13 @@ class BankDetails extends Component {
         const { addressType, transferType, onSubmit, bankDetails = {}, emailExist = false, onCancel } = this.props;
         const { countries, states, isLoading } = this.state;
         
-        return <Form
-            form={this.bankDetailForm}
-            onFinish={() => { }}
-            autoComplete="off"
-            initialValues={bankDetails}
-        >
+        return <>
             {console.log(this.props.domesticType)}
             {console.log(this.props.transferType)}
             <Row gutter={[16, 16]} className={'pb-16'}>
                 {this.renderAddress(transferType)}
             </Row>
-        </Form>
+            </>
 
     }
 }

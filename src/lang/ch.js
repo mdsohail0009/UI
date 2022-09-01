@@ -591,4 +591,6 @@ export default {
 	accountnumber:"帳號",
 	bankaddressline1:"Alamat Bank 1",
 	bankaddressline2:"Alamat Bank 2",
+	saveWhitelistnameas:'Save Whitelist Name As',
+	continue:'Continue'
 };

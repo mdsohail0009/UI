@@ -16,6 +16,9 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange,onContinue, PayeeLu = []
     const [form] = useForm();
     const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType: props.currency === "EUR" ? "sepa" : "domestic" });
     const [isCCSP, setCCSP] = useState(false);
+
+
+
     return <Form
         form={form}
         onFinish={onSubmit}
@@ -100,7 +103,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange,onContinue, PayeeLu = []
         </div>} */}
         {/* {addressOptions.addressType !== "myself" &&  */}
 
-        {addressOptions.addressType === "someoneelse" && <SomeoneComponent currency={props.currency} />}
+        {addressOptions.addressType === "someoneelse" && <SomeoneComponent form={form} currency={props.currency} onContinue={()=>onContinue()} {...props}/>}
         {(addressOptions.addressType !== "business" && addressOptions.addressType !=="someoneelse") && <React.Fragment>
             <Translate
                 content="Beneficiary_Details"

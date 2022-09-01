@@ -650,5 +650,7 @@ export default {
 	bankaddressline1:"Bank Address 1",
 	bankaddressline2:"Bank Address 2",
 	reasiontotransfor:'Reasion of Transfor',
-	relationtobenificiary:'Relationship to Banificiary'
+	relationtobenificiary:'Relationship to Banificiary',
+	saveWhitelistnameas:'Save Whitelist Name As',
+	continue:'Continue'
 };
