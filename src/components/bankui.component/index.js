@@ -4,7 +4,7 @@ import ConnectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
 
 import Translate from 'react-translate-component';
-
+import Loader from '../../Shared/loader';
 import { withRouter,Link } from 'react-router-dom';
 
 import apicalls from "../../api/apiCalls"
@@ -14,16 +14,19 @@ class BankWallets extends Component {
     state = {
         customerData : [],
         getbankInfo : false,
+        isLoading:false,
     }
     componentDidMount() {
         this.getCustomerAccountBalance(); 
     }
     getCustomerAccountBalance = async ()=>{
-        debugger
+      this.setState({...this.state,isLoading:true})
         let response  = await apicalls.getCustomerBankDetails(this.props.userProfile.id)
         if(response.ok){
-         this.setState({...this.state,customerData:response.data})
+         this.setState({...this.state,customerData:response.data ,isLoading:false})
          console.log(response.data)
+        }else{
+          this.setState({...this.state,isLoading:false})
         }
     }
     
@@ -70,7 +73,7 @@ class BankWallets extends Component {
            <Title className="fs-24 fw-600 mb-16 text-white px-4">
               Personal Bank Accounts
             </Title>
-          
+             {this.state.isLoading ? (<Loader/>) : (
                                     
                   <List
                     itemLayout="horizontal"
@@ -137,7 +140,7 @@ class BankWallets extends Component {
                 >
                
                   </List>
-
+              )}
             </>
         );
     }
