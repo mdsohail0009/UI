@@ -568,7 +568,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange,onContinue, PayeeLu = []
 
             </Row>
         </React.Fragment>}
-        {addressOptions.addressType === "business" && <OthersBusiness onContinue={()=>onContinue()} />}
+        {addressOptions.addressType === "business" && <OthersBusiness isUSDTransfer={addressOptions.transferType==="USD"} onContinue={()=>onContinue()} />}
         {/* } */}
 
     </Form>
