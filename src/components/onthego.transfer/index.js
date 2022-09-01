@@ -9,7 +9,7 @@ import alertIcon from '../../assets/images/pending.png';
 import success from '../../assets/images/success.png';
 import Translate from "react-translate-component";
 import { Link } from 'react-router-dom';
-import WithdrawSummary from "../send.component/withdrawSummary";
+import SomeoneComponent from "../onthego.transfer/someone.component"
 const { Paragraph, Text, Title } = Typography;
 const { Search } = Input;
 
@@ -291,7 +291,6 @@ class OnthegoFundTransfer extends Component {
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="text-center mt-36 create-account">

@@ -8,6 +8,7 @@ import AddressDocumnet from "./document.upload";
 import ConnectStateProps from "../../utils/state.connect";
 import OthersBusiness from "../onthego.transfer/others.business/others.business.component";
 import MyselfNewTransfer from '../onthego.transfer/Myself'
+import SomeoneComponent from "../onthego.transfer/someone.component"
 
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
@@ -51,7 +52,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange,onContinue, PayeeLu = []
             </Row>
 
         </Form.Item>
-        {props.currency === "USD" && <Form.Item>
+        {/* {props.currency === "USD" && <Form.Item>
             <Translate
                 content="transfer_type"
                 component={Text}
@@ -78,7 +79,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange,onContinue, PayeeLu = []
                     </Radio.Group>
                 </Col>
             </Row>
-        </Form.Item>}
+        </Form.Item>} */}
         {/* {addressOptions.addressType === "myself" && <div className="box basic-info alert-info-custom">
 
             <Row>
@@ -99,7 +100,9 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange,onContinue, PayeeLu = []
             </Row>
         </div>} */}
         {/* {addressOptions.addressType !== "myself" &&  */}
-        {addressOptions.addressType !== "business" &&addressOptions.addressType !== "myself" &&  <React.Fragment>
+
+        {addressOptions.addressType === "someoneelse" && <SomeoneComponent currency={props.currency} />}
+        {(addressOptions.addressType !== "business" && addressOptions.addressType !=="someoneelse") && <React.Fragment>
             <Translate
                 content="Beneficiary_Details"
                 component={Paragraph}
@@ -174,7 +177,8 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange,onContinue, PayeeLu = []
                                 placeholder={apiCalls.convertLocalLang("buisiness_name")}
                             />
                         </Form.Item>
-                    </Col> : <> <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                    </Col> : <>
+                     <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
                             className="custom-forminput custom-label mb-0"
                             name="firstName"
@@ -565,8 +569,8 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange,onContinue, PayeeLu = []
 
             </Row>
         </React.Fragment>}
-        {addressOptions.addressType === "business" && <OthersBusiness onContinue={()=>onContinue()} />}
         {addressOptions.addressType === "myself" &&<MyselfNewTransfer currency={props.currency} transferType={addressOptions.transferType}></MyselfNewTransfer>}
+        {addressOptions.addressType === "business" && <OthersBusiness isUSDTransfer={props.currency==="USD"?true:false} onContinue={()=>onContinue()} />}
         {/* } */}
 
     </Form>
