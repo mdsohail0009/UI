@@ -4,6 +4,7 @@ import apiCalls from "../../../api/apiCalls";
 import { validateContentRule } from "../../../utils/custom.validator";
 import AddressDocumnet from "../../addressbook.component/document.upload";
 import { RecipientAddress } from "../../addressbook.v2/recipient.details";
+import BusinessTransfer from "./transfer";
 const { Option } = Select;
 const { Paragraph, Text } = Typography;
 const { TextArea } = Input;
@@ -16,9 +17,9 @@ class OthersBusiness extends Component {
         this.form = React.createRef();
     }
     render() {
-        const { isBusiness } = this.props;
+        const { isUSDTransfer } = this.props;
         const { payeeLu } = this.state;
-        return <>
+        return isUSDTransfer?<>
             <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16 text-center">SEPA Transfer</Paragraph>
             <Form initialValues={{}}
                 className="custom-label  mb-0"
@@ -259,7 +260,7 @@ class OthersBusiness extends Component {
                     </Col>
                 </Row>
             </div>
-        </>;
+        </>:<BusinessTransfer/>;
     }
 }
 export default OthersBusiness;
