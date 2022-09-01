@@ -289,7 +289,9 @@ class HeaderPermissionMenu extends Component {
                         />
                     )}
                     <p className="mb-15 ml-8 profile-value" style={{ flexGrow: 12 }}>
-                        {this.props.userConfig.firstName} {this.props.userConfig.lastName}
+                    {this.props.userConfig.isBusiness?this.props.userConfig.businessName:
+                    <>{this.props.userConfig.firstName}{this.props.userConfig.lastName}</> }
+                        {/* {this.props.userConfig.firstName} {this.props.userConfig.lastName} */}
                     </p>
                     <Translate
                         content="manage_account"
@@ -373,13 +375,11 @@ class HeaderPermissionMenu extends Component {
                             </Link>
                         </li>
                         <li onClick={() => this.clearEvents()}>
-                            <Link>
                             <Translate
                                 content="logout"
                                 className="text-white-30"
                                 component={Text}
                             />
-                            </Link>
                         </li>
                     </ul>
                 </div>

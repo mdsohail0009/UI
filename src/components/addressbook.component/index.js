@@ -26,7 +26,6 @@ import ActionsToolbar from "../toolbar.component/actions.toolbar";
 import { fetchFeaturePermissions, setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 import { getFeatureId } from "../shared/permissions/permissionService";
 import {setCurrentAction} from '../../reducers/actionsReducer'
-import AddressBookV2 from "../addressbook.v2/fiat.address";
 
 const { Paragraph, Text } = Typography;
 
@@ -134,9 +133,8 @@ class AddressBook extends Component {
 			),
 		},
 		{
-			
 			field: "favouriteName",
-			title: apiCalls.convertLocalLang("favorite_name"),
+			title: "Favorite Name",
 			filter: true,
 			width: 300,
 			customCell: (props) => (
@@ -151,10 +149,8 @@ class AddressBook extends Component {
 			),
 		},
 		{
-			
 			field: "addressLable",
-			title: apiCalls.convertLocalLang("bank_label"),
-			filter: true,
+			title: "Bank Label",
 			filter: true,
 			width: 230,
 		},
@@ -243,7 +239,7 @@ class AddressBook extends Component {
 		},
 		{
 			field: "favouriteName",
-			title: apiCalls.convertLocalLang("favorite_name"),
+			title: "Favorite Name",
 			filter: true,
 			width: 300,
 			customCell: (props) => (
@@ -258,9 +254,8 @@ class AddressBook extends Component {
 			),
 		},
 		{
-			
 			field: "addressLable",
-			title: apiCalls.convertLocalLang("AddressLabel"),
+			title: "Address Label",
 			filter: true,
 			width: 230,
 		},
@@ -462,12 +457,14 @@ class AddressBook extends Component {
 				selection: [],
 				isCheck: false,
 				btnDisabled: false,
+				errorWorning: response.data,
 				obj: {
 					id: [],
 					tableName: "Common.PayeeAccounts",
 					modifiedBy: "",
 					status: [],
 				},
+				
 			});
 		}
 	};
@@ -645,8 +642,7 @@ class AddressBook extends Component {
 		const stepcodes = {
 			cryptoaddressbook: (<>
 				 {/* <NewAddressBook onCancel={() => this.closeBuyDrawer()} /> */}
-				{/* <AddressCommonCom onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1}/> */}
-				<AddressBookV2 type="addressbook" />
+				<AddressCommonCom onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1}/>
 				</>
 			),
 			selectcrypto: <SelectCrypto />,
@@ -699,11 +695,9 @@ class AddressBook extends Component {
 						component={Text}
 						className="basicinfo"
 					/>
-					<Translate
-						content="addressbook_note"
-						component={Text}
-						className="fs-14 text-yellow fw-400 mb-36 d-block"
-					/>
+					<Text className="fs-14 text-yellow fw-400 mb-36 d-block">
+						(Note : Whitelisting of Crypto Address and Bank Account is required, Please add below.)
+					</Text>
 					<div className="display-flex mb-16">
 						<Radio.Group
 							defaultValue={this.props?.activeFiat ? 2 : 1}
@@ -856,8 +850,8 @@ class AddressBook extends Component {
 				<Modal
 					title={
 						this.state.selectedObj.status === "Active"
-							? apiCalls.convertLocalLang("confirm_deactivate")
-							: apiCalls.convertLocalLang("confirm_activate")
+							? "CONFIRM DEACTIVATE"
+							: "CONFIRM ACTIVATE"
 					}
 					visible={this.state.modal}
 					closeIcon={
@@ -881,15 +875,15 @@ class AddressBook extends Component {
 								onClick={this.handleSatatuSave}
 								style={{ width: 120, height: 50 }}
 								loading={btnDisabled}>
-								{apiCalls.convertLocalLang("Yes")}
+								Yes
 							</Button>
 						</>
 					}>
 					<p className="fs-16 mb-0">
-					{apiCalls.convertLocalLang("really_want")}{" "}
+						Do you really want to{" "}
 						{this.state.selectedObj.status === "Active"
-							? apiCalls.convertLocalLang("deactivate")
-							: apiCalls.convertLocalLang("activate")}
+							? "deactivate?"
+							: "activate?"}
 					</p>
 				</Modal>
 				<Modal
@@ -928,7 +922,7 @@ const connectStateToProps = ({ addressBookReducer, userConfig, oidc, menuItems, 
 		userConfig: userConfig.userProfileInfo,
 		oidc,
 		trackLogs: userConfig.trackAuditLogData,
-		addressBookPermissions: menuItems?.featurePermissions.addressBook,
+		addressBookPermissions: menuItems?.featurePermissions.addressbook,
 	};
 };
 const connectDispatchToProps = (dispatch) => {

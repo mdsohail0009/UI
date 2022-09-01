@@ -491,7 +491,7 @@ const FaitWithdrawal = ({ props,
     const _types = {
       step1: (
         <>
-          <div className="suisfiat-height suissefait-custome-alert auto-scroll" style={{ marginTop: "10px" }}>
+          <div className="suisfiat-height auto-scroll" style={{ marginTop: "10px" }}>
             <div ref={useDivRef}></div>
             {isVerificationLoading && <Loader />}
             {errorMsg !== null && (
@@ -506,14 +506,14 @@ const FaitWithdrawal = ({ props,
             )}
             {!isVerificationMethodsChecked &&
               <Alert
-                message="Verification alert !"
+                message="Verification method alert !"
                 description={<Text>Without verifications you can't send. Please select send verifications from <a onClick={() => {
                   onDrawerClose();
-                  history.push("/userprofile?key=2")
+                  history.push("/userprofile/2")
                 }}>security section</a></Text>}
                 type="warning"
                 showIcon
-                closable={false}
+                closable
               />
             }
             {isVerificationMethodsChecked && !isVerificationLoading && <Form
@@ -572,7 +572,7 @@ const FaitWithdrawal = ({ props,
                 : <>
 
                   {addressShow == null && bankDetails.length > 1 &&
-                    <div >
+                    <div style={{ position: "relative" }}>
 
                       <Form.Item
                         className="custom-forminput custom-label mb-24"
@@ -615,8 +615,9 @@ const FaitWithdrawal = ({ props,
 
                   {details?.length > 0 &&
                     <div className="fiatdep-info">
+
                       <Form.Item
-                        className="custom-forminput custom-label p-relative  mb-24 "
+                        className="custom-forminput custom-label  mb-24 min-max-btn"
                         name="totalValue"
                         required
                         rules={[
@@ -626,16 +627,16 @@ const FaitWithdrawal = ({ props,
                         ]}
 
                         label={
-                         
-                          <div>
+
                             <Translate className="input-label ml-0 mb-0"
                               content="amount" component={Form.label}  />
-                          </div>
+                            
+                         
                         }
                       >
-                       
+                         
                         <NumberFormat
-                          className="cust-input mb-0 "
+                          className="cust-input mb-0"
                           customInput={Input}
                           thousandSeparator={true}
                           prefix={""}
@@ -648,15 +649,27 @@ const FaitWithdrawal = ({ props,
                             form.setFieldsValue({ ...addressObj })
                           }}
                           value={addressObj.Amount} />
-                      </Form.Item> 
-                      <div class="minmax custom-minmax">
-                        <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn with-min" onClick={() => clickMinamnt("min")}>
-                            <span >Min</span>
-                        </button>
-                        <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn with-max" onClick={() => clickMinamnt("max")}>
-                            <span>Max</span>
-                        </button>
-                      </div>
+                      </Form.Item>
+                     
+                      <div className="minmax custom-minmax">
+                              <Translate
+                                type="text"
+                                size="small"
+                                className="min-btn"
+                                content="min"
+                                component={Button}
+                                onClick={() => clickMinamnt("min")}
+                              />
+                              <Translate
+                                type="text"
+                                size="small"
+                                className="min-btn"
+                                content="all"
+                                component={Button}
+                                onClick={() => clickMinamnt("max")}
+                              />
+                            </div>
+
                       <Translate
                         className="fw-200 text-white-50 fs-14"
                         content="Bank_name"
@@ -851,6 +864,7 @@ const FaitWithdrawal = ({ props,
         Obj.beneficiaryAccountName,
         userConfig?.sk
       );
+      Obj.createdby= userConfig.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig.lastName;
       Obj.info = JSON.stringify(trackAuditLogData);
       let withdrawal = await withdrawSave(Obj);
       if (withdrawal.ok) {

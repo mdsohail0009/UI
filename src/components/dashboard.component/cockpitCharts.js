@@ -144,7 +144,7 @@ class CockpitCharts extends Component {
 							)}
 						</Col>
 
-                    {this.state.kpis?.yesterdayPNL != 0 && 
+                    {/* {this.state.kpis?.yesterdayPNL != 0 && 
                     <Col xs={24} sm={24} md={12} lg={12} xl={6} xxl={6}>
 							{this.state.kpis ? (
 
@@ -203,7 +203,7 @@ class CockpitCharts extends Component {
 								</div>
 	                        )}
 
-                    </Col>}
+                    </Col>} */}
 
                 </Row>
                  {/* } */}
