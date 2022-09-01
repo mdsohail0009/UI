@@ -1362,7 +1362,7 @@ input[type=number]::-webkit-outer-spin-button {
 .custom-table.pay-grid.view .ant-table-tbody > tr.ant-table-placeholder:hover > td{background-color: transparent;}
 .address-book-table .pay-grid tbody td{padding: 4px 8px 4px 8px;}
 .side-drawer.custom-drawer-width .ant-drawer-title{color: #fff;}
-.custom-radio-btn .ant-radio-button-wrapper{background: transparent;background-image: none;border-radius: 5px; margin-left: 5px;border: 1px solid #9b9bab;margin-right: 5px;color: var(--textWhite);width: 160px;height: 56px;display: inline-flex;align-items: center;}
+.custom-radio-btn .ant-radio-button-wrapper{background: transparent;background-image: none;border-radius: 5px; margin-left: 5px;border: 1px solid #9b9bab;margin-right: 5px;color: var(--textWhite);width: auto;height: auto;display: inline-flex;align-items: center;}
 .custom-radio-btn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{border: transparent;}
 .custom-radio-btn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active{border: transparent;}
 .custom-radio-btn .ant-radio-button-wrapper-checked:not([class*=' ant-radio-button-wrapper-disabled']).ant-radio-button-wrapper:first-child{border: transparent;}

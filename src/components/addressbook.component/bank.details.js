@@ -70,52 +70,6 @@ class BankDetails extends Component {
                         </Select>
                     </Form.Item>
                 </Col>
-                {/* <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item
-                        className="custom-forminput custom-label mb-0"
-                        name="payeeAccountState"
-                        required
-                        rules={[
-                            {
-                                required: true,
-                                message:
-                                    apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                whitespace: true,
-                                message:
-                                    apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                validator: validateContentRule,
-                            },
-                        ]}
-                        label={
-                            <Translate
-                                content="state"
-                                component={Form.label}
-                            />
-                        }
-                    >
-                        <Select
-                            showSearch
-                            placeholder={apicalls.convertLocalLang(
-                                "select_state"
-                            )}
-                            className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
-                            dropdownClassName="select-drpdwn"
-                            onChange={(e) => {//handleStateChange(e)
-                            }}
-                            bordered={false}
-                        >
-                            {this.state.states?.map((item, indx) => (
-                                <Option key={indx} value={item.name}>
-                                    {item.name}
-                                </Option>
-                            ))}
-                        </Select>
-                    </Form.Item>
-                </Col> */}
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
@@ -188,7 +142,7 @@ class BankDetails extends Component {
                 </Col>
             </>,
             swift: <>
-                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
                         name="line1"
@@ -208,13 +162,13 @@ class BankDetails extends Component {
                         ]}
                         label={
                             <Translate
-                                content="Address_Line1"
+                                content="bankaddressline1"
                                 component={Form.label}
                             />
                         }
                     >
                         <TextArea
-                            placeholder={apicalls.convertLocalLang("Address_Line1")}
+                            placeholder={apicalls.convertLocalLang("bankaddressline1")}
                             className="cust-input cust-text-area address-book-cust"
                             autoSize={{ minRows: 1, maxRows: 2 }}
                             maxLength={100}
@@ -241,41 +195,85 @@ class BankDetails extends Component {
                         ]}
                         label={
                             <Translate
-                                content="Address_Line2"
+                                content="bankaddressline2"
                                 component={Form.label}
                             />
                         }
                     >
                         <TextArea
-                            placeholder={apicalls.convertLocalLang("Address_Line2")}
+                            placeholder={apicalls.convertLocalLang("bankaddressline2")}
                             className="cust-input cust-text-area address-book-cust"
                             autoSize={{ minRows: 1, maxRows: 2 }}
                             maxLength={100}
                         ></TextArea>
                     </Form.Item>
                 </Col>
-                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
-                        name="line3"
+                        name="line2"
+                        required
                         rules={[
                             {
+                                required: true,
+                                message: apicalls.convertLocalLang("is_required"),
+                            },
+                            {
+                                whitespace: true,
+                                message: apicalls.convertLocalLang("is_required"),
+                            },
+                            {
                                 validator: validateContentRule,
-                            }
+                            },
                         ]}
                         label={
                             <Translate
-                                content="Address_Line3"
+                                content="reasiontotransfor"
                                 component={Form.label}
                             />
                         }
                     >
-                        <TextArea
-                            placeholder={apicalls.convertLocalLang("Address_Line3")}
-                            className="cust-input cust-text-area address-book-cust"
-                            autoSize={{ minRows: 1, maxRows: 2 }}
-                            maxLength={100}
-                        ></TextArea>
+                        <Input
+                                className="cust-input"
+                                placeholder={apicalls.convertLocalLang(
+                                    "reasiontotransfor"
+                                )}
+                                maxLength="500"
+                            />
+                    </Form.Item>
+                </Col>
+                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                    <Form.Item
+                        className="custom-forminput custom-label mb-0"
+                        name="line2"
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message: apicalls.convertLocalLang("is_required"),
+                            },
+                            {
+                                whitespace: true,
+                                message: apicalls.convertLocalLang("is_required"),
+                            },
+                            {
+                                validator: validateContentRule,
+                            },
+                        ]}
+                        label={
+                            <Translate
+                                content="relationtobenificiary"
+                                component={Form.label}
+                            />
+                        }
+                    >
+                        <Input
+                                className="cust-input"
+                                placeholder={apicalls.convertLocalLang(
+                                    "reasiontotransfor"
+                                )}
+                                maxLength="500"
+                            />
                     </Form.Item>
                 </Col>
             </>
@@ -342,7 +340,7 @@ class BankDetails extends Component {
                         <Form.Item
                             className="custom-forminput custom-label mb-0"
                             name="accountNumber"
-                            label={apicalls.convertLocalLang("Bank_account")}
+                            label={apicalls.convertLocalLang("accountnumber")}
                             required
                             rules={[
                                 {
@@ -373,7 +371,7 @@ class BankDetails extends Component {
                             <Input
                                 className="cust-input"
                                 placeholder={apicalls.convertLocalLang(
-                                    "Bank_account"
+                                    "accountnumber"
                                 )}
                                 maxLength="500"
                             />
@@ -385,7 +383,7 @@ class BankDetails extends Component {
                         className="custom-forminput custom-label mb-0"
                         name="swiftCode"
                         label={apicalls.convertLocalLang(
-                            transferType === "sepa" ? "bicnumber" : "swiftcode"
+                            transferType === "sepa" ? "bicnumber" : "swifbictcode"
                         )}
                         required
                         rules={[
@@ -417,7 +415,7 @@ class BankDetails extends Component {
                         <Input
                             className="cust-input "
                             placeholder={apicalls.convertLocalLang(
-                                transferType === "sepa" ? "bicnumber" : "swiftcode"
+                                transferType === "sepa" ? "bicnumber" : "swifbictcode"
                             )}
                             maxLength="500"
                         />

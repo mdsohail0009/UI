@@ -9,6 +9,7 @@ import alertIcon from '../../assets/images/pending.png';
 import success from '../../assets/images/success.png';
 import Translate from "react-translate-component";
 import { Link } from 'react-router-dom';
+import SomeoneComponent from "../onthego.transfer/someone.component"
 const { Paragraph, Text, Title } = Typography;
 const { Search } = Input;
 
