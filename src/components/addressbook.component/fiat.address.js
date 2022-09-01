@@ -6,6 +6,7 @@ import apiCalls from "../../api/apiCalls";
 import { validateContentRule } from "../../utils/custom.validator";
 import AddressDocumnet from "./document.upload";
 import ConnectStateProps from "../../utils/state.connect";
+import SomeoneComponent from "../onthego.transfer/someone.component"
 
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
@@ -172,7 +173,8 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, PayeeLu = [], emailExis
                                 placeholder={apiCalls.convertLocalLang("buisiness_name")}
                             />
                         </Form.Item>
-                    </Col> : <> <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                    </Col> : <>
+                     <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
                             className="custom-forminput custom-label mb-0"
                             name="firstName"

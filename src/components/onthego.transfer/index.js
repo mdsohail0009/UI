@@ -9,6 +9,7 @@ import alertIcon from '../../assets/images/pending.png';
 import success from '../../assets/images/success.png';
 import Translate from "react-translate-component";
 import { Link } from 'react-router-dom';
+import SomeoneComponent from "../onthego.transfer/someone.component"
 const { Paragraph, Text, Title } = Typography;
 const { Search } = Input;
 
@@ -303,29 +304,7 @@ class OnthegoFundTransfer extends Component {
                 </Form>
             </React.Fragment>,
             newtransfer: <>
-                <FiatAddress currency={this.props.selectedCurrency} onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} />
-                <Paragraph className="mb-16 fs-14 fw-500 text-white  mt-16">Bank Details</Paragraph>
-                <Divider />
-                <BankDetails transferType={this.state.addressOptions?.transferType} />
-                {(this.state.addressOptions.addressType !== "myself"||this.state.addressOptions.transferType==="international")&&(this.state.addressOptions.transferType!=="domestic") && <AddressDocumnet title={"please upload supporting documents for transaction "} />}
-                <div className="text-right mt-12">
-                    <Button
-                        className="pop-btn px-36"
-                        style={{ margin: "0 8px" }}
-                        onClick={() => { }}
-                    >
-                        {apicalls.convertLocalLang("cancel")}
-                    </Button>
-                    <Button
-                        htmlType="button"
-                        size="large"
-                        className="pop-btn px-36"
-                        style={{ minWidth: 150 }}
-                        onClick={() => this.chnageStep("reviewdetails")}
-                    >
-                        <Translate content="Save_btn_text" />
-                    </Button>
-                </div>
+                <SomeoneComponent currency='EUR'/>
             </>,
             declaration: <div className="text-center">
                 <Image width={80} preview={false} src={alertIcon} />
