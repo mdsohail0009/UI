@@ -63,7 +63,7 @@ class AddressBookV2 extends Component {
                             <Radio.Button value="swift">SWIFT</Radio.Button>
                         </Radio.Group>
                     </Col>
-                    <RecipientDetails />
+                    <RecipientDetails transferType={this.state.transferType} />
                 </Row>
             </Form.Item>
         </Form>
