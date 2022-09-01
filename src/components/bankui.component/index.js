@@ -130,6 +130,9 @@ class BankWallets extends Component {
                             //   }
                             
                               onClick={()=>this.createAccount(item.currency)}
+                              // onClick={() =>
+                              //   window.open(`http://localhost:3001/createAccount/${item.currency}`)
+                              // }
                              />  
                             
                               </div> )}
