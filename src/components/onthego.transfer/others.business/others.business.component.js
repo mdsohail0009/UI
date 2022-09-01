@@ -260,7 +260,7 @@ class OthersBusiness extends Component {
                     </Col>
                 </Row>
             </div>
-        </>:<BusinessTransfer/>;
+        </>:<BusinessTransfer onContinue={()=>this.props.onContinue()} />;
     }
 }
 export default OthersBusiness;
