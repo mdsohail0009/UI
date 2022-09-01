@@ -22,7 +22,6 @@ class BankDetails extends Component {
         isLoading: false
     }
     renderAddress = (transferType) => {
-        // transferType = ["domestic","international"].includes(transferType)?"swift":transferType;
         const _templates = {
             sepa: <>
             <>
@@ -71,93 +70,7 @@ class BankDetails extends Component {
                         />
                     </Form.Item>
                 </Col>
-                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item
-                        className="custom-forminput custom-label mb-0"
-                        name="swiftCode"
-                        label={apicalls.convertLocalLang(
-                            "swifbictcode"
-                        )}
-                        required
-                        rules={[
-                            {
-                                required: true,
-                                message:
-                                    apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                validator(_, value) {
-                                    if (this.state.emailExist) {
-                                        return Promise.reject(
-                                            "Invalid BIC/SWIFT/Routing number"
-                                        );
-                                    } else if (
-                                        value &&
-                                        !/^[A-Za-z0-9]+$/.test(value)
-                                    ) {
-                                        return Promise.reject(
-                                            "Invalid BIC/SWIFT/Routing number"
-                                        );
-                                    } else {
-                                        return Promise.resolve();
-                                    }
-                                },
-                            },
-                        ]}
-                    >
-                        <Input
-                            className="cust-input "
-                            placeholder={apicalls.convertLocalLang(
-                                "swifbictcode"
-                            )}
-                            maxLength="500"
-                        />
-                    </Form.Item>
-                </Col>
-
-                {this.props.domesticType === "domestic" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item
-                        className="custom-forminput custom-label mb-0"
-                        name="routingNumber"
-                        label={apicalls.convertLocalLang(
-                            "Routing_number"
-                        )}
-                        required
-                        rules={[
-                            {
-                                required: true,
-                                message:
-                                    apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                validator(_, value) {
-                                    if (this.state.emailExist) {
-                                        return Promise.reject(
-                                            "Invalid ACH/Routing number"
-                                        );
-                                    } else if (
-                                        value &&
-                                        !/^[A-Za-z0-9]+$/.test(value)
-                                    ) {
-                                        return Promise.reject(
-                                            "Invalid ACH/Routing number"
-                                        );
-                                    } else {
-                                        return Promise.resolve();
-                                    }
-                                },
-                            },
-                        ]}
-                    >
-                        <Input
-                            className="cust-input "
-                            placeholder={apicalls.convertLocalLang(
-                                "Routing_number"
-                            )}
-                            maxLength="500"
-                        />
-                    </Form.Item>
-                </Col>}
+                 
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
@@ -330,6 +243,93 @@ class BankDetails extends Component {
                         />
                     </Form.Item>
                 </Col>
+                {this.props.domesticType === "international" &&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                    <Form.Item
+                        className="custom-forminput custom-label mb-0"
+                        name="swiftCode"
+                        label={apicalls.convertLocalLang(
+                            "swifbictcode"
+                        )}
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message:
+                                    apicalls.convertLocalLang("is_required"),
+                            },
+                            {
+                                validator(_, value) {
+                                    if (this.state.emailExist) {
+                                        return Promise.reject(
+                                            "Invalid BIC/SWIFT/Routing number"
+                                        );
+                                    } else if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid BIC/SWIFT/Routing number"
+                                        );
+                                    } else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            },
+                        ]}
+                    >
+                        <Input
+                            className="cust-input "
+                            placeholder={apicalls.convertLocalLang(
+                                "swifbictcode"
+                            )}
+                            maxLength="500"
+                        />
+                    </Form.Item>
+                </Col>}
+
+                {this.props.domesticType === "domestic" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                    <Form.Item
+                        className="custom-forminput custom-label mb-0"
+                        name="routingNumber"
+                        label={apicalls.convertLocalLang(
+                            "Routing_number"
+                        )}
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message:
+                                    apicalls.convertLocalLang("is_required"),
+                            },
+                            {
+                                validator(_, value) {
+                                    if (this.state.emailExist) {
+                                        return Promise.reject(
+                                            "Invalid ACH/Routing number"
+                                        );
+                                    } else if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid ACH/Routing number"
+                                        );
+                                    } else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            },
+                        ]}
+                    >
+                        <Input
+                            className="cust-input "
+                            placeholder={apicalls.convertLocalLang(
+                                "Routing_number"
+                            )}
+                            maxLength="500"
+                        />
+                    </Form.Item>
+                </Col>}
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
@@ -502,12 +502,15 @@ class BankDetails extends Component {
     render() {
         const { addressType, transferType, onSubmit, bankDetails = {}, emailExist = false, onCancel } = this.props;
         const { countries, states, isLoading } = this.state;
+        
         return <Form
             form={this.bankDetailForm}
             onFinish={() => { }}
             autoComplete="off"
             initialValues={bankDetails}
         >
+            {console.log(this.props.domesticType)}
+            {console.log(this.props.transferType)}
             <Row gutter={[16, 16]} className={'pb-16'}>
                 {this.renderAddress(transferType)}
             </Row>
