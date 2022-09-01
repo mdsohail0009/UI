@@ -7,6 +7,7 @@ import { validateContentRule } from "../../utils/custom.validator";
 import AddressDocumnet from "./document.upload";
 import ConnectStateProps from "../../utils/state.connect";
 import OthersBusiness from "../onthego.transfer/others.business/others.business.component";
+import MyselfNewTransfer from '../onthego.transfer/Myself'
 import SomeoneComponent from "../onthego.transfer/someone.component"
 
 const { Text, Paragraph } = Typography;
@@ -571,6 +572,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange,onContinue, PayeeLu = []
 
             </Row>
         </React.Fragment>}
+        {addressOptions.addressType === "myself" &&<MyselfNewTransfer currency={props.currency} transferType={addressOptions.transferType}></MyselfNewTransfer>}
         {addressOptions.addressType === "business" && <OthersBusiness isUSDTransfer={props.currency==="USD"?true:false} onContinue={()=>onContinue()} />}
         {/* } */}
 
