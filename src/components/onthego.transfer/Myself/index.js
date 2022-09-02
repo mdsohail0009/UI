@@ -1,6 +1,6 @@
-import { Divider } from "antd";
-import React, { Component, useEffect, useState } from "react";
-import { Form, Radio, Row, Col, Typography, Select, AutoComplete, Input,Tabs } from 'antd'
+
+import React, {  useState } from "react";
+import { Form,  Row, Col, Typography, Select, AutoComplete, Input,Tabs,Button } from 'antd'
 import Translate from "react-translate-component";
 import ConnectStateProps from "../../../utils/state.connect";
 import apiCalls from "../../../api/apiCalls"
@@ -8,14 +8,11 @@ import { validateContentRule } from "../../../utils/custom.validator";
 
 
 const { Option } = Select;
-const { Text, Paragraph } = Typography;
-const { TextArea } = Input
-const MyselfNewTransfer =({currency,transferType,...props})=> {
+const { Text } = Typography;
+const MyselfNewTransfer =({currency,...props})=> {
     const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType:currency === "EUR" ? "sepa" : "swift", domesticType:'domestic',tabType:'domestic' });
    const [payeeLu]=useState([])
-   useEffect(() => {
-   console.log(currency,transferType)
-}, []);
+   
         return <React.Fragment>
             {currency === "USD" && <>
                 <Row gutter={[16, 16]}>
@@ -265,7 +262,17 @@ const MyselfNewTransfer =({currency,transferType,...props})=> {
 
                     </Col></Row>
                 </div>}
-
+                <div className="text-right mt-12">
+                        <Button
+                            htmlType="button"
+                            size="large"
+                            className="pop-btn px-36"
+                            style={{ minWidth: 150 }}
+                            onClick={() => props.onContinue("reviewdetails")}
+                        >
+                            <Translate content="continue" />
+                        </Button>
+                    </div>
         </React.Fragment>
     
 }
