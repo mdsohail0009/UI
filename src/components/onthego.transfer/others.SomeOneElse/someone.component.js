@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import { Input, Row, Col, Form, Button, Typography, Radio, Tabs, Image } from 'antd';
-import apicalls from "../../api/apiCalls";
-import AddressDocumnet from "../addressbook.component/document.upload";
-import oops from '../../assets/images/oops.png'
-import FiatAddress from "../addressbook.component/fiat.address";
-import BankDetails from "../addressbook.component/bank.details";
-import { validateContentRule } from "../../utils/custom.validator";
-import success from '../../assets/images/success.png';
+import apicalls from "../../../api/apiCalls";
+import AddressDocumnet from "../../addressbook.component/document.upload";
+import FiatAddress from "../../addressbook.component/fiat.address";
+import PayeeBankDetails from "./bankdetails.component";
+import { validateContentRule } from "../../../utils/custom.validator";
 import Translate from "react-translate-component";
 import { Link } from 'react-router-dom';
 import { useForm } from "antd/lib/form/Form";
-import apiCalls from "../../api/apiCalls";
+import apiCalls from "../../../api/apiCalls";
 const { Paragraph, Text, Title } = Typography;
 const { Search } = Input;
 
@@ -32,7 +30,7 @@ const SomeoneComponent=(props)=>{
                             </Col>
                         </Row>
                     </>}
-
+                    {props.currency=='EUR'&&<h2 style={{fontSize:18,textAlign:'center',color:"white"}}>SEPA transfer</h2>}
                     <Row gutter={[16, 16]} className={'pb-16'}>
                             <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item
@@ -215,7 +213,7 @@ const SomeoneComponent=(props)=>{
                     </>
                     {/* <Divider /> */}
                     <Paragraph className="mb-16 fs-14 fw-500 text-white  mt-16">Bank Details</Paragraph>
-                    <BankDetails domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} />
+                    <PayeeBankDetails domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} />
                     <AddressDocumnet title={"please upload supporting documents for transaction "} />
                     <div className="text-right mt-12">
                         {/* <Button

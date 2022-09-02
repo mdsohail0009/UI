@@ -8,7 +8,7 @@ import AddressDocumnet from "./document.upload";
 import ConnectStateProps from "../../utils/state.connect";
 import OthersBusiness from "../onthego.transfer/others.business/others.business.component";
 import MyselfNewTransfer from '../onthego.transfer/Myself'
-import SomeoneComponent from "../onthego.transfer/someone.component"
+import SomeoneComponent from "../onthego.transfer/others.SomeOneElse/someone.component"
 
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
