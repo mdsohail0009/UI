@@ -1,6 +1,6 @@
 import { Divider } from "antd";
 import React, { Component, useEffect, useState } from "react";
-import { Form, Radio, Row, Col, Typography, Select, AutoComplete, Input } from 'antd'
+import { Form, Radio, Row, Col, Typography, Select, AutoComplete, Input,Tabs } from 'antd'
 import Translate from "react-translate-component";
 import ConnectStateProps from "../../../utils/state.connect";
 import apiCalls from "../../../api/apiCalls"
@@ -10,13 +10,25 @@ import { validateContentRule } from "../../../utils/custom.validator";
 const { Option } = Select;
 const { Text, Paragraph } = Typography;
 const { TextArea } = Input
-const MyselfNewTransfer =({currency,transferType})=> {
+const MyselfNewTransfer =({currency,transferType,...props})=> {
+    const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType:currency === "EUR" ? "sepa" : "swift", domesticType:'domestic',tabType:'domestic' });
    const [payeeLu]=useState([])
    useEffect(() => {
    console.log(currency,transferType)
 }, []);
         return <React.Fragment>
-            {currency=='EUR'&&<strong style={{fontSize:18,textAlign:'center'}}>SEPA Transfer</strong>}
+            {currency === "USD" && <>
+                <Row gutter={[16, 16]}>
+                    <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
+                        <Tabs style={{ color: '#fff' }} onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey,tabType:activekey }); props.form.resetFields() }}>
+                            <Tabs.TabPane tab="Domestic USD Transfer" className="text-white" key={"domestic"}></Tabs.TabPane>
+                            <Tabs.TabPane tab="International USD Swift" className="text-white" key={"international"}></Tabs.TabPane>
+                        </Tabs>
+                    </Col>
+                </Row>
+            </>}
+
+            {currency=='EUR'&&<strong style={{fontSize:18,textAlign:'center',color:"white"}}>SEPA Transfer</strong>}
             <Row><Col xs={24} md={12} lg={12} xl={12} xxl={12} id="favoriteName">
                 <Form.Item
                     className="custom-forminput custom-label mb-0"
@@ -72,7 +84,7 @@ const MyselfNewTransfer =({currency,transferType})=> {
                     />
                 </Form.Item>
             </Col>}</Row>
-            <strong style={{fontSize:18}}>Recipient's Details</strong>
+            <strong style={{fontSize:16,color:"white"}}>Recipient's Details</strong>
             <Row>
             <div className="box basic-info alert-info-custom mt-16">
                 <Row><Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
@@ -112,7 +124,7 @@ const MyselfNewTransfer =({currency,transferType})=> {
                     </Col>
                    </Row>
                 </div> </Row>
-            <strong style={{fontSize:18}}>Bank Details</strong>
+            <strong style={{fontSize:16,color:"white"}}>Bank Details</strong>
             <Row>
             {currency=='USD'&&<> <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
@@ -137,7 +149,7 @@ const MyselfNewTransfer =({currency,transferType})=> {
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
                         name="BIC"
-                        label={currency=='USD'&&transferType=='international'?'Swift / BIC code':'ABA Routing Code'}
+                        label={currency=='USD'&&addressOptions.tabType=='international'?'Swift / BIC code':'ABA Routing Code'}
                         required
                         rules={[
                             {
@@ -147,7 +159,7 @@ const MyselfNewTransfer =({currency,transferType})=> {
                         ]}>
                         <Input
                             className="cust-input"
-                            placeholder={currency=='USD'&&transferType=='international'?'Swift / BIC code':'ABA Routing Code'}
+                            placeholder={currency=='USD'&&addressOptions.tabType=='international'?'Swift / BIC code':'ABA Routing Code'}
                         />
                     </Form.Item>
                 </Col>
