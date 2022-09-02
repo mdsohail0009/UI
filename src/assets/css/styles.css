@@ -1381,5 +1381,17 @@ input[type=number]::-webkit-outer-spin-button {
 .fund-transfer-input .ant-input-group-addon{color:#fff;}
 .fund-circle{width: 50px;height: 50px;height: 50px;border-radius: 50%;text-align: center;padding: 15px;background-color: var(--bgDarkGrey);}
 .small-text-align small{font-weight: 400; vertical-align: super;background-color: var(--bgDarkGrey);padding: 2px 6px;color: #fff;border-radius: 10px;}
-.fund-border{border-bottom: 1px solid #313c46;margin-top: 10px;}
+.fund-border{margin-top: 10px;}
 .custom-radio-btn .ant-radio-button-wrapper.span-text span{line-height: 15px;margin: initial;}
+.cust-fund{width: 88%;}
+.cust-divide{margin: 0px !important; height: 5px; background-color: var(--bgDarkGrey);}
+.create-new{text-decoration: underline !important;}
+cust-address{margin-bottom: 0px !important;}
+.search-input .ant-input-wrapper.ant-input-group .ant-input{background-color: var(--bgWhite) !important; border-radius: 0px !important; height:34px !important; border-color: transparent !important; color: var(--bgBlack) !important;}
+.search-input .ant-input-wrapper .ant-input-group-addon{background-color: var(--bgWhite) !important; border-radius: 0px !important; height:33px !important;}
+.search-input .ant-input-wrapper.ant-input-group .ant-input:hover{border-color: transparent !important;}
+.search-input .ant-input-wrapper.ant-input-group .ant-input:focus{box-shadow: none !important;}
+.search-input .ant-input-wrapper .ant-input-group-addon .ant-input-search-button:focus,.search-input .ant-input-wrapper .ant-input-group-addon .ant-input-search-button:hover{z-index: 0 !important;}
+.search-input .anticon.anticon-search{padding-right: 30px; }
+.usr-add .ant-select-arrow{color: var(--bgGrey); }
+.usr-add{position: relative; right: 32px; bottom: 6.7px;}

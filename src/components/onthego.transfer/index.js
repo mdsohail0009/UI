@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Input, Row, Col, Form, Button, Typography, List, Divider, Image } from 'antd';
+import { Input, Row, Col, Form, Button, Typography, List, Divider, Image, Select  } from 'antd';
 import apicalls from "../../api/apiCalls";
 import AddressDocumnet from "../addressbook.component/document.upload";
 import oops from '../../assets/images/oops.png'
@@ -113,21 +113,36 @@ class OnthegoFundTransfer extends Component {
                 </Row>
             </Form>,
             addressselection: <React.Fragment>
-                <div className="">
+                <div className="mb-16 text-center">
                     <text Paragraph
-                        className='text-white fs-24 fw-600 mb-0 text-white px-4'>Who are you sending it to?</text>
+                        className='text-white fs-30 fw-600  text-white px-4 '>Who are you sending money to?</text>
                 </div>
-                <Search placeholder={"Search payee"}
-                    addonAfter={<span className="icon md search-white" />} onChange={({ currentTarget }) => { this.handleSearch(currentTarget.value) }} size="middle" bordered={false} className="my-16" />
+                <div className="d-flex cust-fund ml-24">
+                <label className="text-white">Search for Payeee</label>
+                <Search
+                    placeholder=""
+                    className="search-input"
+                    style={{
+                        width: 515,
+                    }}
+                      autoComplete
+                     
+                    /><Select className='text-black usr-add'>
+                  </Select>
+                    {/* <span> <DownOutlined /></span> */}
+                </div>
                 {(filterObj.length > 0) && <>
-                    <Title className="fs-24 fw-600 text-white px-4 mb-24">Address Book</Title>
+                    <Title className="fs-24 fw-600 text-white mt-24">Address Book</Title>
+                    <Divider className="cust-divide" />
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                         {filterObj?.map((item, idx) =>
                             <Row className="fund-border c-pointer" onClick={() => this.chnageStep(item.type === "3rd Party" ? "reasonfortransfer" : "reviewdetails")}>
                                 <Col xs={2} md={2} lg={2} xl={3} xxl={3} className="mb-16"><div class="fund-circle text-white">P</div></Col>
                                 <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="mb-16 small-text-align">
                                     <label className="fs-16 fw-400 text-purewhite">
-                                        <strong>Payee100 <small>{item.type}</small></strong>
+                                        <strong>Payee100
+                                            {/* <small>{item.type}</small> */}
+                                            </strong>
                                     </label>
                                     <div><Text className="fs-14 fw-400 text-purewhite">USD acc ending in 4544</Text></div>
 
@@ -136,6 +151,35 @@ class OnthegoFundTransfer extends Component {
                                     <span class="icon md rarrow-white"></span>
                                 </Col>
                             </Row>
+                            
+                            
+                        )}
+                         {/* <Title className="fs-16 fw-600 text-white text-center cust-address">If address not found,<a className="create-new">Create New Transfer</a></Title> */}
+                    </ul>
+                    
+                    <Title className="fs-24 fw-600 text-white">Past Recipients</Title>
+                    <Divider className="cust-divide" />
+                    <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
+                        {filterObj?.map((item, idx) =>
+                            <Row className="fund-border c-pointer" onClick={() => this.chnageStep(item.type === "3rd Party" ? "reasonfortransfer" : "reviewdetails")}>
+                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className="mb-16"><div class="fund-circle text-white">P</div></Col>
+                                <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="mb-16 small-text-align">
+                                    <label className="fs-16 fw-400 text-purewhite">
+                                        <strong>Payee100 
+                                            {/* <small>{item.type}</small> */}
+                                            </strong>
+                                    </label>
+                                    <div><Text className="fs-14 fw-400 text-purewhite">USD acc ending in 4544</Text></div>
+
+                                </Col>
+                                <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
+                                    <span class="icon md rarrow-white"></span>
+                                </Col> 
+                                
+
+                                
+                            </Row>
+                           
                         )}
                     </ul>
                 </>}
