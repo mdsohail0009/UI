@@ -9,8 +9,9 @@ class Currency extends Component {
 
 
     render() {
-        const { type, defaultValue, prefixText, suffixText, onChange, prefix = "$", className, bordered = false, inputCustomStyle, autoFocus = false, } = this.props;
+        const { type, defaultValue, prefixText, suffixText, onChange, prefix = "$", suffix, className, bordered = false, inputCustomStyle, autoFocus = false, } = this.props;
         return <>{type === "input" ? <NumberFormat className={className} customInput={Input} thousandSeparator={true} prefix={prefix}
+        suffix={suffix}
             placeholder="0.00"
             bordered={bordered}
             style={inputCustomStyle}
@@ -26,6 +27,7 @@ class Currency extends Component {
             displayType={'text'}
             thousandSeparator={true}
             prefix={prefix}
+            suffix={suffix}
             renderText={(value, props) => <div {...props}>{prefixText ? prefixText : ""} {value} {suffixText ? suffixText : ""}</div>} />}</>
     }
 }
