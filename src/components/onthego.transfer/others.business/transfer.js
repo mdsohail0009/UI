@@ -9,7 +9,6 @@ import DomesticTransfer from "./domestic.transfer";
 import InternationalTransfer from "./international.transfer";
 const { Option } = Select;
 const { Paragraph } = Typography;
-const { TextArea } = Input;
 class BusinessTransfer extends Component {
     state = { payeeLu: [] }
     render() {
