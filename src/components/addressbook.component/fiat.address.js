@@ -47,7 +47,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange,onContinue, PayeeLu = []
 
                         }}
                     >
-                        <Radio.Button value="myself">{props.userProfile?.isBusiness ? "Own Business" : "My Self"}</Radio.Button>
+                        <Radio.Button value="myself">{props.userProfile?.isBusiness ? "My Company" : "My Self"}</Radio.Button>
                         <Radio.Button value="someoneelse">Someone Else</Radio.Button>
                         <Radio.Button value="business">Business</Radio.Button>
                     </Radio.Group>
@@ -572,7 +572,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange,onContinue, PayeeLu = []
 
             </Row>
         </React.Fragment>}
-        {addressOptions.addressType === "myself" &&<MyselfNewTransfer currency={props.currency}  onContinue={()=>onContinue()} {...props}></MyselfNewTransfer>}
+        {addressOptions.addressType === "myself" &&<MyselfNewTransfer currency={props.currency}  onContinue={()=>onContinue()} {...props} accountType={props.userProfile?.isBusiness}></MyselfNewTransfer>}
         {addressOptions.addressType === "business" && <OthersBusiness isUSDTransfer={props.currency==="USD"?true:false} onContinue={()=>onContinue()} />}
         {/* } */}
 

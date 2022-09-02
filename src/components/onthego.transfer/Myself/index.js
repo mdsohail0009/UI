@@ -9,7 +9,7 @@ import { validateContentRule } from "../../../utils/custom.validator";
 
 const { Option } = Select;
 const { Text } = Typography;
-const MyselfNewTransfer =({currency,...props})=> {
+const MyselfNewTransfer =({currency,accountType,...props})=> {
     const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType:currency === "EUR" ? "sepa" : "swift", domesticType:'domestic',tabType:'domestic' });
    const [payeeLu]=useState([])
    
@@ -25,7 +25,7 @@ const MyselfNewTransfer =({currency,...props})=> {
                 </Row>
             </>}
 
-            {currency=='EUR'&&<h2 style={{fontSize:18,textAlign:'center',color:"white"}}>SEPA Transfer</h2>}
+            {currency=='EUR'&&<h2 style={{fontSize:18,textAlign:'center',color:"white"}}>SEPA transfer</h2>}
             <Row gutter={[16, 16]}><Col xs={24} md={12} lg={12} xl={12} xxl={12} id="favoriteName">
                 <Form.Item
                     className="custom-forminput custom-label mb-0"
@@ -62,7 +62,7 @@ const MyselfNewTransfer =({currency,...props})=> {
                     </AutoComplete>
                 </Form.Item>
             </Col>
-            {currency=='EUR'&&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+            {currency=='EUR'&&!accountType&&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
                     className="custom-forminput custom-label mb-0"
                     name="IBAN"
@@ -81,10 +81,11 @@ const MyselfNewTransfer =({currency,...props})=> {
                     />
                 </Form.Item>
             </Col>}</Row>
-            <h2 style={{fontSize:16,color:"white"}}>Recipient's Details</h2>
+            {accountType?<h2 style={{fontSize:16,color:"white"}}>Recipient's bank details</h2>:<h2 style={{fontSize:16,color:"white"}}>Recipient's details</h2>}
             
             <div className="box basic-info alert-info-custom mt-16">
-                <Row><Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                <Row>
+                    {!accountType&&<><Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                         <label className="fs-14 fw-400 ">
                             <strong>First Name</strong>
                         </label>
@@ -97,7 +98,14 @@ const MyselfNewTransfer =({currency,...props})=> {
                         </label>
                         <div><Text className="fs-14 fw-400 text-purewhite">XS</Text></div>
 
-                    </Col>
+                    </Col></>}
+                    {accountType&&<Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                        <label className="fs-14 fw-400 ">
+                            <strong>Beneficiary Name</strong>
+                        </label>
+                        <div><Text className="fs-14 fw-400 text-purewhite">XXX</Text></div>
+
+                    </Col>}
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                         <label className="fs-14 fw-400 ">
                             <strong>Address Line 1</strong>
@@ -119,9 +127,29 @@ const MyselfNewTransfer =({currency,...props})=> {
                         <div><Text className="fs-14 fw-400 text-purewhite">XXX</Text></div>
 
                     </Col>
+                   
                    </Row>
                 </div> 
-            <h2 style={{fontSize:16,color:"white"}}>Bank Details</h2>
+                {currency == 'EUR' && accountType && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                            className="custom-forminput custom-label mb-0"
+                            name="IBAN"
+                            required
+                            rules={[
+                                {
+                                    required: true,
+                                    message: apiCalls.convertLocalLang("is_required"),
+                                }
+                            ]}
+                            label='IBAN'
+                        >
+                            <Input
+                                className="cust-input"
+                                placeholder='IBAN'
+                            />
+                        </Form.Item>
+                    </Col>}
+            <h2 style={{fontSize:16,color:"white"}}>Bank details</h2>
             <Row gutter={[16, 16]}>
             {currency=='USD'&&<> <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
