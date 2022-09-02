@@ -20,7 +20,7 @@ const MyselfNewTransfer =({currency,transferType,...props})=> {
             {currency === "USD" && <>
                 <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
-                        <Tabs style={{ color: '#fff' }} onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey,tabType:activekey }); props.form.resetFields() }}>
+                        <Tabs style={{ color: '#fff' }} onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey,tabType:activekey }); }}>
                             <Tabs.TabPane tab="Domestic USD Transfer" className="text-white" key={"domestic"}></Tabs.TabPane>
                             <Tabs.TabPane tab="International USD Swift" className="text-white" key={"international"}></Tabs.TabPane>
                         </Tabs>
@@ -28,8 +28,8 @@ const MyselfNewTransfer =({currency,transferType,...props})=> {
                 </Row>
             </>}
 
-            {currency=='EUR'&&<strong style={{fontSize:18,textAlign:'center',color:"white"}}>SEPA Transfer</strong>}
-            <Row><Col xs={24} md={12} lg={12} xl={12} xxl={12} id="favoriteName">
+            {currency=='EUR'&&<h2 style={{fontSize:18,textAlign:'center',color:"white"}}>SEPA Transfer</h2>}
+            <Row gutter={[16, 16]}><Col xs={24} md={12} lg={12} xl={12} xxl={12} id="favoriteName">
                 <Form.Item
                     className="custom-forminput custom-label mb-0"
                     name="favouriteName"
@@ -84,8 +84,8 @@ const MyselfNewTransfer =({currency,transferType,...props})=> {
                     />
                 </Form.Item>
             </Col>}</Row>
-            <strong style={{fontSize:16,color:"white"}}>Recipient's Details</strong>
-            <Row>
+            <h2 style={{fontSize:16,color:"white"}}>Recipient's Details</h2>
+            
             <div className="box basic-info alert-info-custom mt-16">
                 <Row><Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                         <label className="fs-14 fw-400 ">
@@ -98,7 +98,7 @@ const MyselfNewTransfer =({currency,transferType,...props})=> {
                         <label className="fs-14 fw-400 ">
                             <strong>Last Name</strong>
                         </label>
-                        <div><Text className="fs-14 fw-400 text-purewhite">XXX</Text></div>
+                        <div><Text className="fs-14 fw-400 text-purewhite">XS</Text></div>
 
                     </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
@@ -123,9 +123,9 @@ const MyselfNewTransfer =({currency,transferType,...props})=> {
 
                     </Col>
                    </Row>
-                </div> </Row>
-            <strong style={{fontSize:16,color:"white"}}>Bank Details</strong>
-            <Row>
+                </div> 
+            <h2 style={{fontSize:16,color:"white"}}>Bank Details</h2>
+            <Row gutter={[16, 16]}>
             {currency=='USD'&&<> <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
@@ -213,6 +213,7 @@ const MyselfNewTransfer =({currency,transferType,...props})=> {
                         />
                     </Form.Item>
                 </Col></>}
+                </Row>
                 {currency=='EUR'&& <div className="box basic-info alert-info-custom mt-16">
                 <Row><Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                         <label className="fs-14 fw-400 ">
@@ -264,7 +265,6 @@ const MyselfNewTransfer =({currency,transferType,...props})=> {
 
                     </Col></Row>
                 </div>}
-                </Row>
 
         </React.Fragment>
     
