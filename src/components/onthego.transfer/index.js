@@ -8,7 +8,7 @@ import alertIcon from '../../assets/images/pending.png';
 import success from '../../assets/images/success.png';
 import Verification from "./verification.component/verification";
 import NumberFormat from "react-number-format";
-const {Text, Title } = Typography;
+const { Text, Title } = Typography;
 
 class OnthegoFundTransfer extends Component {
     enteramtForm = React.createRef();
@@ -19,16 +19,17 @@ class OnthegoFundTransfer extends Component {
         addressOptions: { addressType: "myself", transferType: this.props.selectedCurrency === "EUR" ? "sepa" : "domestic" },
         isNewTransfer: false,
         amount: "",
-        onTheGoObj : {amount:'',description:''}
+        onTheGoObj: { amount: '', description: '' },
+        reviewDetails: {}
     }
-    chnageStep = (step,values) => {
+    chnageStep = (step, values) => {
         this.setState({ ...this.state, step });
         if (step === 'newtransfer') {
-            this.setState({ ...this.state, step, isNewTransfer: true,onTheGoObj:values});
+            this.setState({ ...this.state, step, isNewTransfer: true, onTheGoObj: values });
         }
     }
-    amountnext = (values) =>{
-        this.chnageStep("newtransfer",values)
+    amountnext = (values) => {
+        this.chnageStep("newtransfer", values)
     }
     renderStep = (step) => {
         const { filterObj } = this.state;
@@ -37,7 +38,7 @@ class OnthegoFundTransfer extends Component {
                 autoComplete="off"
                 initialValues={{ amount: "" }}
                 ref={this.enteramtForm}
-                onFinish = {this.amountnext}
+                onFinish={this.amountnext}
             >
                 <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -104,7 +105,7 @@ class OnthegoFundTransfer extends Component {
                                 size="large"
                                 className="pop-btn mb-36"
                                 style={{ minWidth: 300 }}
-                                //onClick={() => this.chnageStep("newtransfer")}
+                            //onClick={() => this.chnageStep("newtransfer")}
                             >
                                 New Transfer
                             </Button>
@@ -390,7 +391,13 @@ class OnthegoFundTransfer extends Component {
                 </Form>
             </React.Fragment>,
             newtransfer: <>
-                <FiatAddress currency={this.props.selectedCurrency} onContinue={()=>this.chnageStep("reviewdetails")} onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} />
+                <FiatAddress currency={this.props.selectedCurrency} onContinue={(obj) => {
+                    this.setState({...this.state,reviewDetails:obj},()=>{
+                        this.chnageStep("reviewdetails")
+                    })
+                }
+                }
+                    onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} />
             </>,
             declaration: <div className="text-center">
                 <Image width={80} preview={false} src={alertIcon} />
