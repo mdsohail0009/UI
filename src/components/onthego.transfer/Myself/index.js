@@ -9,11 +9,11 @@ import { connect } from "react-redux";
 
 const { Option } = Select;
 const { Text } = Typography;
-const MyselfNewTransfer = ({ currency, isBusiness, ...props }) => {
+const MyselfNewTransfer = ({ currency, isBusiness,amount, ...props }) => {
     const [form] = Form.useForm();
     const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType: currency === "EUR" ? "sepa" : "swift", domesticType: 'domestic', tabType: 'domestic' });
     const [bankDetails, setbankDetails] = useState({})
-    const [saveTransferObj,setsaveTransferObj]= useState({"id":"00000000-0000-0000-0000-000000000000","customerId":props.userConfig.id,"favouriteName":"","firstName":"","lastName":"","beneficiaryName":"","line1":"","line2":"","line3":"","transferType":"","addressType":"","isAgree":true,"info":"","isBankContact":true,"relation":"","reasonOfTransfer":"","amount":0,"payeeAccountModels":[{"id":"00000000-0000-0000-0000-000000000000","line1":"","line2":"","city":"","state":"","country":"","postalCode":"","currencyType":"","walletCode":"","accountNumber":"","swiftRouteBICNumber":"","bankName":"","userCreated":props?.userConfig.firstName + props?.userConfig.lastName,"iban":"","bic":"","bankBranch":"","abaRoutingCode":"","documents":null}]})
+    const [saveTransferObj]= useState({"id":"00000000-0000-0000-0000-000000000000","customerId":props.userConfig.id,"favouriteName":"","firstName":"","lastName":"","beneficiaryName":"","line1":"","line2":"","line3":"","transferType":"","addressType":"","isAgree":true,"info":"","isBankContact":true,"relation":"","reasonOfTransfer":"","amount":amount,"payeeAccountModels":[{"id":"00000000-0000-0000-0000-000000000000","line1":"","line2":"","city":"","state":"","country":"","postalCode":"","currencyType":"","walletCode":"","accountNumber":"","swiftRouteBICNumber":"","bankName":"","userCreated":props?.userConfig.firstName + props?.userConfig.lastName,"iban":"","bic":"","bankBranch":"","abaRoutingCode":"","documents":null}]})
     const [createTransfer]=useState({"favouriteName":"","accountNumber":"","swiftRouteBICNumber":"","bankName":"","iban":"","abaRoutingCode":"","line1":"","line2":""})
     const [recipientDetails,setRecipientDetails]=useState({})
     const [transfertypes]=useState({domestic:'Domestic',international:'International'})
@@ -50,7 +50,7 @@ const MyselfNewTransfer = ({ currency, isBusiness, ...props }) => {
         saveObj.line2=recipientDetails.line2;
         saveObj.line3=recipientDetails.line3;
         saveObj.addressType=isBusiness?'OwnBusiness':'MySelf';
-        saveObj.transferType=transfertypes[addressOptions.tabType];
+        saveObj.transferType=currency=='EUR'?'Sepa':transfertypes[addressOptions.tabType];
         saveObj.payeeAccountModels[0].currencyType='fiat';
         saveObj.payeeAccountModels[0].walletCode=currency;
         const response = await apiCalls.saveTransferData(saveObj);
@@ -307,7 +307,7 @@ const MyselfNewTransfer = ({ currency, isBusiness, ...props }) => {
                 </Col></>}
         </Row>
         {currency == 'EUR' && <div className="box basic-info alert-info-custom mt-16">
-            {bankDetails.bankName!=''&&bankDetails.bankName!=null&&<Row>
+            {bankDetails&&bankDetails.bankName!=''&&bankDetails.bankName!=null&&<Row>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                 <label className="fs-14 fw-400 ">
                     <strong>Bank Name</strong>
