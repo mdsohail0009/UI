@@ -252,7 +252,7 @@ export default {
 	Bank_address1: "Bank Address",
 	Bank_address2: "Bank Address Line 2",
 	Bank_address3: "Bank Address Line 3",
-	Beneficiary_Details: "Beneficiary Details",
+	Beneficiary_Details: "Recipient's Details",
 	Bank_Details: "Bank Details",
 	Recipient_full_name: "Recipient Full Name",
 	Recipient_address1: "Recipient Address",
@@ -285,7 +285,7 @@ export default {
 	Fee: "Fee",
 	Amount_to_pay: "Amount to pay",
 	place_an_order: "place an order",
-	Routing_number: "ABA Routing Number",
+	Routing_number: "ABA Routing Code",
 	Choose_a_unique_pass_word_to_protect_your_account:
 		"Choose a unique password to protect your account.",
 	Save_btn_text: "Save",
@@ -641,5 +641,16 @@ export default {
 	transfer_type: "Transfer Type",
 	bankAddressDetails: "Add Bank Details",
 	first_name: "First Name",
-	last_name: "Last Name"
+	last_name: "Last Name",
+	addressline1:"Address Line 1",
+	addressline2:"Address Line 2",
+	addressline3:"Address Line 3",
+	swifbictcode: "Swift/ BIC Code",
+	accountnumber:"Account Number",
+	bankaddressline1:"Bank Address 1",
+	bankaddressline2:"Bank Address 2",
+	reasiontotransfor:'Reasion of Transfor',
+	relationtobenificiary:'Relationship to Banificiary',
+	saveWhitelistnameas:'Save Whitelist Name As',
+	continue:'Continue'
 };

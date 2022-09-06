@@ -159,7 +159,19 @@ const getInfoVal = (id, type) => {
 const getReferalDetails = (customerId) =>{
 	return apiClient.get(ApiControllers.partner + `getReferralDetails/customer/${customerId}`);
 }
-
+const getPayeeLu = (customerId,currency) => {
+    return apiClient.get(
+        ApiControllers.addressbook + `PayeeLu/${customerId}/${currency}`
+    );
+};
+const saveTransferData=(obj)=>{
+	return apiClient.post(ApiControllers.addressbook+'payee',obj)
+}
+const getRecipientData=(customerId,type)=>{
+	return apiClient.get(
+        ApiControllers.addressbook + `payee/Withdraw/Favourite/00000000-0000-0000-0000-000000000000/${customerId}/${type}`
+    );
+}
 let apicalls = {
 	getportfolio,
 	getCryptos,
@@ -190,6 +202,6 @@ let apicalls = {
 	getVerificationFields,
 	twofactor,
 	getInfoVal,
-	getReferalDetails
+	getReferalDetails,getPayeeLu,saveTransferData,getRecipientData
 };
 export default apicalls;

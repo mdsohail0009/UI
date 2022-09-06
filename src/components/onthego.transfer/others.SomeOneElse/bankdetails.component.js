@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Row, Col, Form, Input, Typography, Button, Spin } from 'antd';
-import apicalls from "../../api/apiCalls";
-import { validateContentRule } from "../../utils/custom.validator";
+import apicalls from "../../../api/apiCalls";
+import { validateContentRule } from "../../../utils/custom.validator";
 import Translate from "react-translate-component";
 import { LoadingOutlined } from "@ant-design/icons";
 
@@ -13,13 +13,31 @@ const antIcon = (
         spin
     />
 );
-class BankDetails extends Component {
+class PayeeBankDetails extends Component {
     state = {
         emailExist: false,
         bankDetailForm: React.createRef(),
         countries: [],
         states: [],
-        isLoading: false
+        isLoading: false,
+        iBanDetals:null,
+        IbanLoader:false,
+        isValidIban:false
+    }
+
+    handleIban = async(ibannumber) =>{
+        this.setState({...this.state,iBanDetals:null,IbanLoader:true,isValidIban:false})
+        const ibanget = await apicalls.getIBANData(ibannumber)
+        if(ibanget.ok){
+            if(ibanget.data && (ibanget.data?.routingNumber || ibanget.data?.bankName)){
+                const bankdetails = {bankName:ibanget.data.bankName, bic:ibanget.data.bankName, bankBranch:ibanget.data.branch, country:ibanget.data.country, state:ibanget.data.state, city:ibanget.data.city, postalCode:ibanget.data.zipCode, line1:ibanget.data.bankAddress}
+                this.setState({...this.state,iBanDetals:bankdetails,IbanLoader:false, isValidIban:true})
+                this.props.getIbandata(bankdetails);
+            }else{
+                this.setState({...this.state,IbanLoader:false, isValidIban:false})
+                this.props.getIbandata(null);
+            }
+        }
     }
     renderAddress = (transferType) => {
         const _templates = {
@@ -28,30 +46,18 @@ class BankDetails extends Component {
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
-                        name="IBAN"
+                        name={["payeeAccountModels","iban"]}
                         label={apicalls.convertLocalLang(
                             "Bank_account_iban"
                         )}
                         required
                         rules={[
                             {
-                                required: true,
-                                message:
-                                    apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                validator(_, value) {
-                                    if (this.state.emailExist) {
-                                        return Promise.reject(
-                                            "Invalid  IBAN Number"
-                                        );
-                                    } else if (
-                                        value &&
-                                        !/^[A-Za-z0-9]+$/.test(value)
-                                    ) {
-                                        return Promise.reject(
-                                            "Invalid  IBAN Number"
-                                        );
+                                validator: (_, value) => {
+                                    if (!value) {
+                                        return Promise.reject(apicalls.convertLocalLang("is_required"));
+                                    } else if (!this.state.isValidIban) {
+                                        return Promise.reject("Invalid Iban");
                                     } else {
                                         return Promise.resolve();
                                     }
@@ -59,7 +65,7 @@ class BankDetails extends Component {
                             },
                         ]}
                         onBlur={(e) => {
-                            //handleIban(e.target.value)
+                            this.handleIban(e.target.value)
                         }}
                     >
                         <Input
@@ -74,7 +80,7 @@ class BankDetails extends Component {
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
-                        name="line2"
+                        name={'reasonOfTransfer'}
                         required
                         rules={[
                             {
@@ -108,7 +114,7 @@ class BankDetails extends Component {
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
-                        name="line2"
+                        name={"relation"}
                         required
                         rules={[
                             {
@@ -140,72 +146,67 @@ class BankDetails extends Component {
                     </Form.Item>
                 </Col>
                 </>
-                <div className="box basic-info alert-info-custom mt-16">
-                <Row>
-                    <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 ">
-                            <strong>Bank Name</strong>
-                        </label>
-                        <div><Text className="fs-14 fw-400 text-purewhite">Barcslays Bank UK PLC</Text></div>
+                <Spin spinning={this.state.IbanLoader}>
+                    {this.state.isValidIban && <div className="box basic-info alert-info-custom mt-16">
+                        <Row>
+                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                                <label className="fs-14 fw-400 ">
+                                    <strong>Bank Name</strong>
+                                </label>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals.bankName||'---'}</Text></div>
 
-                    </Col>
-                    <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 ">
-                            <strong>BIC</strong>
-                        </label>
-                        <div><Text className="fs-14 fw-400 text-purewhite">BUKBGB22</Text></div>
+                            </Col>
+                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                                <label className="fs-14 fw-400 ">
+                                    <strong>BIC</strong>
+                                </label>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals.bic||'---'}</Text></div>
 
-                    </Col>
-                    <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 ">
-                            <strong>Branch</strong>
-                        </label>
-                        <div><Text className="fs-14 fw-400 text-purewhite">CHELTENHAM</Text></div>
+                            </Col>
+                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                                <label className="fs-14 fw-400 ">
+                                    <strong>Branch</strong>
+                                </label>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals.bankBranch||'---'}</Text></div>
 
-                    </Col>
-                    <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 ">
-                            <strong>Branch</strong>
-                        </label>
-                        <div><Text className="fs-14 fw-400 text-purewhite">CHELTENHAM</Text></div>
+                            </Col>
+                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                                <label className="fs-14 fw-400 ">
+                                    <strong>Country</strong>
+                                </label>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals.country||'---'}</Text></div>
 
-                    </Col>
-                    <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 ">
-                            <strong>Country</strong>
-                        </label>
-                        <div><Text className="fs-14 fw-400 text-purewhite">United Kingdom (GB)</Text></div>
+                            </Col>
+                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                                <label className="fs-14 fw-400 ">
+                                    <strong>State</strong>
+                                </label>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals.state||'---'}</Text></div>
 
-                    </Col>
-                    <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 ">
-                            <strong>State</strong>
-                        </label>
-                        <div><Text className="fs-14 fw-400 text-purewhite">XXXX</Text></div>
+                            </Col>
+                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                                <label className="fs-14 fw-400 ">
+                                    <strong>City</strong>
+                                </label>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals.city||'---'}</Text></div>
 
-                    </Col>
-                    <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 ">
-                            <strong>City</strong>
-                        </label>
-                        <div><Text className="fs-14 fw-400 text-purewhite">Leicester</Text></div>
+                            </Col>
+                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                                <label className="fs-14 fw-400 ">
+                                    <strong>Zip</strong>
+                                </label>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals.postalCode||'---'}</Text></div>
 
-                    </Col>
-                    <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 ">
-                            <strong>Zip</strong>
-                        </label>
-                        <div><Text className="fs-14 fw-400 text-purewhite">LE87 2BB</Text></div>
-
-                    </Col>
-                </Row>
-            </div>
+                            </Col>
+                        </Row>
+                    </div>}
+                </Spin>
             </>,
             swift: <>
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
-                        name="accountNumber"
+                        name={["payeeAccountModels","accountNumber"]}
                         label={apicalls.convertLocalLang("accountnumber")}
                         required
                         rules={[
@@ -246,7 +247,7 @@ class BankDetails extends Component {
                 {this.props.domesticType === "international" &&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
-                        name="swiftCode"
+                        name={["payeeAccountModels","swiftRouteBICNumber"]}
                         label={apicalls.convertLocalLang(
                             "swifbictcode"
                         )}
@@ -290,7 +291,7 @@ class BankDetails extends Component {
                 {this.props.domesticType === "domestic" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
-                        name="routingNumber"
+                        name={["payeeAccountModels","abaRoutingCode"]}
                         label={apicalls.convertLocalLang(
                             "Routing_number"
                         )}
@@ -333,7 +334,7 @@ class BankDetails extends Component {
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
-                        name="bankName"
+                        name={["payeeAccountModels","bankName"]}
                         label={apicalls.convertLocalLang("Bank_name")}
                         required
                         rules={[
@@ -364,7 +365,7 @@ class BankDetails extends Component {
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
-                        name="line1"
+                        name={["payeeAccountModels","line1"]}
                         required
                         rules={[
                             {
@@ -397,7 +398,7 @@ class BankDetails extends Component {
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
-                        name="line2"
+                        name={["payeeAccountModels","line1"]}
                         required
                         rules={[
                             {
@@ -430,7 +431,7 @@ class BankDetails extends Component {
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
-                        name="line2"
+                        name={"reasonOfTransfer"}
                         required
                         rules={[
                             {
@@ -464,7 +465,7 @@ class BankDetails extends Component {
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
-                        name="line2"
+                        name={"relation"}
                         required
                         rules={[
                             {
@@ -513,4 +514,4 @@ class BankDetails extends Component {
 
     }
 }
-export default BankDetails;
+export default PayeeBankDetails;

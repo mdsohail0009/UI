@@ -6,15 +6,22 @@ import apiCalls from "../../api/apiCalls";
 import { validateContentRule } from "../../utils/custom.validator";
 import AddressDocumnet from "./document.upload";
 import ConnectStateProps from "../../utils/state.connect";
+import OthersBusiness from "../onthego.transfer/others.business/others.business.component";
+import MyselfNewTransfer from '../onthego.transfer/Myself'
+import SomeoneComponent from "../onthego.transfer/others.SomeOneElse/someone.component"
 
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
-const FiatAddress = ({ onSubmit, onAddressOptionsChange, PayeeLu = [], emailExist = false, countries = [], states = [], fiatAddress, ...props }) => {
+const FiatAddress = ({ onSubmit, onAddressOptionsChange, onContinue, PayeeLu = [], emailExist = false, countries = [], states = [], fiatAddress, ...props }) => {
     const [form] = useForm();
     const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType: props.currency === "EUR" ? "sepa" : "domestic" });
     const [isCCSP, setCCSP] = useState(false);
-    return <Form
+
+
+
+    return <>
+     <Form
         form={form}
         onFinish={onSubmit}
         autoComplete="off"
@@ -41,7 +48,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, PayeeLu = [], emailExis
 
                         }}
                     >
-                        <Radio.Button value="myself">{props.userProfile?.isBusiness ? "Own Business" : "My Self"}</Radio.Button>
+                        <Radio.Button value="myself">{props.userProfile?.isBusiness ? "My Company" : "My Self"}</Radio.Button>
                         <Radio.Button value="someoneelse">Someone Else</Radio.Button>
                         <Radio.Button value="business">Business</Radio.Button>
                     </Radio.Group>
@@ -49,59 +56,14 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, PayeeLu = [], emailExis
             </Row>
 
         </Form.Item>
-        {props.currency === "USD" && <Form.Item>
-            <Translate
-                content="transfer_type"
-                component={Text}
-                className="text-white"
-            />
-            <Row gutter={[16, 16]}>
+        
 
-                <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
-                    <Radio.Group
-                        defaultValue={addressOptions.transferType}
-                        className="mb-16 custom-radio-btn buysell-toggle crypto-toggle"
-                        onChange={(value) => {
-                            setAddressOptions({ ...addressOptions, transferType: value.target.value })
-                            onAddressOptionsChange({ ...addressOptions, transferType: value.target.value });
-                            if (value.target.value === "international" && addressOptions.addressType !== "business") {
-                                setCCSP(true);
-                            } else {
-                                setCCSP(false);
-                            }
-                        }}
-                    >
-                        <Radio.Button value="domestic" className="span-text">Domestic USD Transfer</Radio.Button>
-                        <Radio.Button value="international" className="span-text">International USD Swift</Radio.Button>
-                    </Radio.Group>
-                </Col>
-            </Row>
-        </Form.Item>}
-        {/* {addressOptions.addressType === "myself" && <div className="box basic-info alert-info-custom">
-
-            <Row>
-                <Col xs={24} md={24} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 ">
-                        <strong>Name</strong>
-                    </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">{"john"}</Text></div>
-
-                </Col>
-                <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
-                    <label className="fs-14 fw-400 ">
-                        <strong> Address</strong>
-                        <div><Text className="fs-14 fw-400 text-purewhite">Pl 19,FL 102,Rukmini nilayam,SP Nagar,JNTU,Hyderabad, Telangana - 500085</Text></div>
-                    </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">{props.userConfig?.email}</Text></div>
-                </Col>
-            </Row>
-        </div>} */}
-        {/* {addressOptions.addressType !== "myself" &&  */}
-        <React.Fragment>
-            <Translate
+        
+        {(addressOptions.addressType !== "business" && addressOptions.addressType !== "someoneelse" && addressOptions.addressType !== "myself") && <React.Fragment>
+            <Translate style={{ fontSize: 18 }}
                 content="Beneficiary_Details"
                 component={Paragraph}
-                className="mb-16 fs-14 text-white fw-500"
+                className="mb-16 text-white fw-500 mt-16"
             />
             <Divider />
             <Row gutter={[16, 16]}>
@@ -172,34 +134,35 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, PayeeLu = [], emailExis
                                 placeholder={apiCalls.convertLocalLang("buisiness_name")}
                             />
                         </Form.Item>
-                    </Col> : <> <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            className="custom-forminput custom-label mb-0"
-                            name="firstName"
-                            required
-                            rules={[
-                                {
-                                    required: true,
-                                    message: apiCalls.convertLocalLang("is_required"),
-                                },
-                                {
-                                    whitespace: true,
-                                    message: apiCalls.convertLocalLang("is_required"),
-                                },
-                                {
-                                    validator: validateContentRule,
-                                },
-                            ]}
-                            label={
-                                <Translate content={"first_name"} component={Form.label} />
-                            }
-                        >
-                            <Input
-                                className="cust-input"
-                                placeholder={apiCalls.convertLocalLang("first_name")}
-                            />
-                        </Form.Item>
-                    </Col>
+                    </Col> : <>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
+                                name="firstName"
+                                required
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        whitespace: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        validator: validateContentRule,
+                                    },
+                                ]}
+                                label={
+                                    <Translate content={"first_name"} component={Form.label} />
+                                }
+                            >
+                                <Input
+                                    className="cust-input"
+                                    placeholder={apiCalls.convertLocalLang("first_name")}
+                                />
+                            </Form.Item>
+                        </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
@@ -562,10 +525,15 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, PayeeLu = [], emailExis
                     </Col></>}
 
             </Row>
-        </React.Fragment>
+        </React.Fragment>}
+
         {/* } */}
 
     </Form>
+        {addressOptions.addressType === "myself" && <MyselfNewTransfer currency={props.currency} onContinue={() => onContinue()} {...props} isBusiness={props.userProfile?.isBusiness}></MyselfNewTransfer>}
+        {addressOptions.addressType === "business" && <OthersBusiness isUSDTransfer={props.currency === "USD" ? true : false} onContinue={() => onContinue()} amount={props.amount} />}
+        {addressOptions.addressType === "someoneelse" && <SomeoneComponent addressType={addressOptions.addressType} currency={props.currency} onContinue={() => onContinue()} />}
+    </>
 }
 
 export default ConnectStateProps(FiatAddress);
