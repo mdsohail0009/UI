@@ -243,7 +243,7 @@ class TransactionsHistory extends Component {
             url={gridUrl} additionalParams={searchObj} ref={this.gridRef}
             columns={this.gridColumns}
             showExcelExport={this.state.permissions?.ExcelExport}
-            excelFileName={'Transactions'}
+            excelFileName={'All Transactions'}
           />
         </Drawer>
       </>
