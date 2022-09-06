@@ -1,7 +1,8 @@
 import { Component } from "react";
-import { Row, Col, Typography, Upload } from 'antd';
+import { Row, Col, Typography, Upload, Form } from 'antd';
 import Loader from "../../Shared/loader";
 import { document } from "../onthego.transfer/api";
+import apiCalls from "../../api/apiCalls";
 
 const { Dragger } = Upload;
 const { Paragraph, Text, Title } = Typography;
@@ -45,28 +46,40 @@ class AddressDocumnet extends Component {
                     <Paragraph
                         className="mb-16 fs-14 text-white fw-500"
                     >{this.props.title}</Paragraph>
-                    <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
-                        className="upload mt-16"
-                        multiple={true} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
-                        showUploadList={false}
-                        beforeUpload={(props) => { }}
-                        onChange={({ fileList, file }) => {
-                            this.setState({ ...this.state, filesList: fileList });
-                            if (file.status === "done") {
-                                let { documents } = this.state;
-                                documents?.details?.push(this.docDetail(file));
-                                this.props?.onDocumentsChange(documents);
+                    <Form.Item name={"files"} required rules={[{
+                        validator:(_,value)=>{
+                            if(this.state.filesList.length==0){
+                                return Promise.reject(apiCalls.convertLocalLang("is_required"))
+                            }else{
+                                return Promise.resolve();
                             }
-                        }}
-                    >
-                        <p className="ant-upload-drag-icon">
-                            <span className="icon xxxl doc-upload" />
-                        </p>
-                        <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
-                        <p className="ant-upload-hint text-secondary fs-12">
-                            PNG, JPG,JPEG and PDF files are allowed
-                        </p>
-                    </Dragger>
+                        },
+                       
+                    }
+                    ]}>
+                        <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
+                            className="upload mt-16"
+                            multiple={true} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
+                            showUploadList={false}
+                            beforeUpload={(props) => { }}
+                            onChange={({ fileList, file }) => {
+                                this.setState({ ...this.state, filesList: fileList });
+                                if (file.status === "done") {
+                                    let { documents } = this.state;
+                                    documents?.details?.push(this.docDetail(file));
+                                    this.props?.onDocumentsChange(documents);
+                                }
+                            }}
+                        >
+                            <p className="ant-upload-drag-icon">
+                                <span className="icon xxxl doc-upload" />
+                            </p>
+                            <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
+                            <p className="ant-upload-hint text-secondary fs-12">
+                                PNG, JPG,JPEG and PDF files are allowed
+                            </p>
+                        </Dragger>
+                    </Form.Item>
                     {this.state?.filesList?.map((file, indx) => <div className="docfile">
                         {file.status === "uploading" && <Loader />}
                         {file.status === "done" && <>
