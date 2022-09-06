@@ -62,7 +62,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,amount, ...props }) => {
         const response = await apiCalls.saveTransferData(saveObj);
         if (response.ok) {
             setBtnLoading(false);
-           props.onContinue()
+           props.onContinue(response.data)
         }else{seterrorMessage(isErrorDispaly(response));
 		setBtnLoading(false);
         }
