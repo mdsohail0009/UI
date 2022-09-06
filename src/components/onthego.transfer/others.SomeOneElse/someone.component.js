@@ -23,7 +23,7 @@ const SomeoneComponent=(props)=>{
                     {props.currency === "USD" && <>
                         <Row gutter={[16, 16]}>
                             <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
-                                <Tabs style={{color:'#fff'}} onChange={(activekey)=>{setAddressOptions({ ...addressOptions, domesticType: activekey });props.form.resetFields()}}>
+                                <Tabs style={{color:'#fff'}} className="cust-tabs-fait" onChange={(activekey)=>{setAddressOptions({ ...addressOptions, domesticType: activekey });props.form.resetFields()}}>
                                     <Tabs.TabPane tab="Domestic USD Transfer" className="text-white" key={"domestic"}></Tabs.TabPane>
                                     <Tabs.TabPane tab="International USD Swift" className="text-white" key={"international"}></Tabs.TabPane>
                                 </Tabs>
@@ -32,7 +32,7 @@ const SomeoneComponent=(props)=>{
                     </>}
                     {props.currency=='EUR'&&<h2 style={{fontSize:18,textAlign:'center',color:"white"}}>SEPA transfer</h2>}
                     <Row gutter={[16, 16]} className={'pb-16'}>
-                            <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                                 <Form.Item
                                     className="custom-forminput custom-label mb-0"
                                     name="firstName"
@@ -62,10 +62,10 @@ const SomeoneComponent=(props)=>{
                             </Col>
                             
                         </Row>
-                    <Translate
+                    <Translate style={{ fontSize: 18}}
                         content="Beneficiary_Details"
                         component={Paragraph}
-                        className="mb-16 fs-14 text-white fw-500"
+                        className="mb-8  text-white fw-500 mt-16"
                     />
                     <>
                         <Row gutter={[16, 16]}>
@@ -212,7 +212,7 @@ const SomeoneComponent=(props)=>{
                         </Row>
                     </>
                     {/* <Divider /> */}
-                    <Paragraph className="mb-16 fs-14 fw-500 text-white  mt-16">Bank Details</Paragraph>
+                    <Paragraph className="mb-8 fw-500 text-white  mt-16" style={{ fontSize: 18}}>Bank Details</Paragraph>
                     <PayeeBankDetails domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} />
                     <AddressDocumnet title={"please upload supporting documents for transaction "} />
                     <div className="text-right mt-12">

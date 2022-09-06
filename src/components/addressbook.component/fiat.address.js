@@ -106,10 +106,10 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange,onContinue, PayeeLu = []
 
         {addressOptions.addressType === "someoneelse" && <SomeoneComponent form={form} currency={props.currency} onContinue={()=>onContinue()} {...props}/>}
         {(addressOptions.addressType !== "business" && addressOptions.addressType !=="someoneelse"&& addressOptions.addressType !=="myself") && <React.Fragment>
-            <Translate
+            <Translate style={{ fontSize: 18}}
                 content="Beneficiary_Details"
                 component={Paragraph}
-                className="mb-16 fs-14 text-white fw-500"
+                className="mb-16 text-white fw-500 mt-16"
             />
             <Divider />
             <Row gutter={[16, 16]}>
