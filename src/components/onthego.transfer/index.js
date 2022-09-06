@@ -378,28 +378,6 @@ class OnthegoFundTransfer extends Component {
             </React.Fragment>,
             newtransfer: <>
                 <FiatAddress currency={this.props.selectedCurrency} onContinue={()=>this.chnageStep("reviewdetails")} onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} />
-                {/* <Paragraph className="mb-16 fs-14 fw-500 text-white  mt-16">Bank Details</Paragraph> */}
-                {/* <Divider />
-                <BankDetails transferType={this.state.addressOptions?.transferType} />
-                {(this.state.addressOptions.addressType !== "myself"||this.state.addressOptions.transferType==="international")&&(this.state.addressOptions.transferType!=="domestic") && <AddressDocumnet title={"please upload supporting documents for transaction "} />}
-                <div className="text-right mt-12">
-                    <Button
-                        className="pop-btn px-36"
-                        style={{ margin: "0 8px" }}
-                        onClick={() => { }}
-                    >
-                        {apicalls.convertLocalLang("cancel")}
-                    </Button>
-                    <Button
-                        htmlType="button"
-                        size="large"
-                        className="pop-btn px-36"
-                        style={{ minWidth: 150 }}
-                        onClick={() => this.chnageStep("reviewdetails")}
-                    >
-                        <Translate content="Save_btn_text" />
-                    </Button>
-                </div> */}
             </>,
             declaration: <div className="text-center">
                 <Image width={80} preview={false} src={alertIcon} />
