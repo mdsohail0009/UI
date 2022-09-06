@@ -32,7 +32,7 @@ class OnthegoFundTransfer extends Component {
         const steps = {
             enteramount: <Form
                 autoComplete="off"
-                initialValues={{}}
+                initialValues={{amount:""}}
             >
                 <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -87,7 +87,7 @@ class OnthegoFundTransfer extends Component {
                         <br />
                         <Form.Item className="text-center">
                             <Button
-                                htmlType="button"
+                                htmlType="submit"
                                 size="large"
                                 className="pop-btn mb-36"
                                 style={{ minWidth: 300 }}
