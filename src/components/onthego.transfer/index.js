@@ -1,25 +1,24 @@
 import React, { Component } from "react";
-import { Input, Row, Col, Form, Button, Typography, List, Divider, Image, Select  } from 'antd';
+import { Input, Row, Col, Form, Button, Typography, List, Divider, Image, Select } from 'antd';
 import apicalls from "../../api/apiCalls";
 import AddressDocumnet from "../addressbook.component/document.upload";
 import oops from '../../assets/images/oops.png'
 import FiatAddress from "../addressbook.component/fiat.address";
-import BankDetails from "../addressbook.component/bank.details";
 import alertIcon from '../../assets/images/pending.png';
 import success from '../../assets/images/success.png';
-import Translate from "react-translate-component";
-import { Link } from 'react-router-dom';
 import Verification from "./verification.component/verification";
-const { Paragraph, Text, Title } = Typography;
-const { Search } = Input;
+import NumberFormat from "react-number-format";
+const {Text, Title } = Typography;
 
 class OnthegoFundTransfer extends Component {
+    enteramtForm = React.createRef();
     state = {
         step: "enteramount",
         // filterObj:[],
         filterObj: [{ lable: "Payee 100", address: "100032498902", type: "1st Party" }, { lable: "Payee 100", address: "100032498902", type: "3rd Party" }],
-        addressOptions: { addressType: "myself", transferType:this.props.selectedCurrency==="EUR"? "sepa":"domestic" },
-        isNewTransfer: false
+        addressOptions: { addressType: "myself", transferType: this.props.selectedCurrency === "EUR" ? "sepa" : "domestic" },
+        isNewTransfer: false,
+        amount: ""
     }
     chnageStep = (step) => {
         this.setState({ ...this.state, step });
@@ -32,7 +31,9 @@ class OnthegoFundTransfer extends Component {
         const steps = {
             enteramount: <Form
                 autoComplete="off"
-                initialValues={{amount:""}}
+                initialValues={{ amount: "" }}
+                ref={this.enteramtForm}
+                onFinish={() => this.chnageStep("newtransfer")}
             >
                 <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -49,11 +50,19 @@ class OnthegoFundTransfer extends Component {
                                 }
                             ]}
                         >
-                            <Input
-                                className="cust-input "
+                            <NumberFormat
+                                customInput={Input}
+                                className="cust-input custom-add-select "
                                 placeholder={"Enter amount"}
-                                maxLength="500"
+                                maxLength="20"
+                                decimalScale={8}
+                                displayType="input"
+                                allowNegative={false}
+                                thousandSeparator={","}
                                 addonBefore={this.props.selectedCurrency}
+                                onValueChange={() => {
+                                    this.setState({ ...this.state, amount: this.enteramtForm.current.getFieldsValue().amount })
+                                }}
                             />
                         </Form.Item>
                     </Col>
@@ -91,7 +100,6 @@ class OnthegoFundTransfer extends Component {
                                 size="large"
                                 className="pop-btn mb-36"
                                 style={{ minWidth: 300 }}
-                                onClick={() => this.chnageStep("newtransfer")}
                             >
                                 New Transfer
                             </Button>
@@ -129,27 +137,27 @@ class OnthegoFundTransfer extends Component {
                       autoComplete
                      
                     /> */}
-                    {/* <Select className='text-black usr-add'> */}
-                  {/* </Select> */}
-                    {/* <span> <DownOutlined /></span> */}
+                {/* <Select className='text-black usr-add'> */}
+                {/* </Select> */}
+                {/* <span> <DownOutlined /></span> */}
                 {/* </div> */}
-                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>                         
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 
-                            <Form.Item
-                                    className="custom-forminput custom-label mb-0 text-white-30 custom-placeholder"
-                                    name="lastName"
-                                    required
-                                    label={"Search for Payeee"}
-                                >     
-                                {/* <Search placeholder="Search" 
+                    <Form.Item
+                        className="custom-forminput custom-label mb-0 text-white-30 custom-placeholder"
+                        name="lastName"
+                        required
+                        label={"Search for Payeee"}
+                    >
+                        {/* <Search placeholder="Search" 
                                 addonAfter={<span className="icon md search-white" />}  size="middle" bordered={false} className="mt-24 mb-8 cust-input cust-select mb-0 text-white-30" />               */}
                         <Select placeholder="Select Language" bordered={false}
                             className="cust-input cust-select mb-0 text-white-30"
                             dropdownClassName="select-drpdwn"
                             addonAfter={<span className="icon md search-white" />}
-                           >
+                        >
                         </Select></Form.Item>
-                        </Col>
+                </Col>
 
                 {(filterObj.length > 0) && <>
                     <Title className="fs-24 fw-600 text-white mt-24">Address Book</Title>
@@ -162,7 +170,7 @@ class OnthegoFundTransfer extends Component {
                                     <label className="fs-16 fw-400 text-purewhite">
                                         <strong>Payee100
                                             {/* <small>{item.type}</small> */}
-                                            </strong>
+                                        </strong>
                                     </label>
                                     <div><Text className="fs-14 fw-400 text-purewhite">USD acc ending in 4544</Text></div>
 
@@ -171,12 +179,12 @@ class OnthegoFundTransfer extends Component {
                                     <span class="icon md rarrow-white"></span>
                                 </Col>
                             </Row>
-                            
-                            
+
+
                         )}
-                         {/* <Title className="fs-16 fw-600 text-white text-center cust-address">If address not found,<a className="create-new">Create New Transfer</a></Title> */}
+                        {/* <Title className="fs-16 fw-600 text-white text-center cust-address">If address not found,<a className="create-new">Create New Transfer</a></Title> */}
                     </ul>
-                    
+
                     <Title className="fs-24 fw-600 text-white">Past Recipients</Title>
                     <Divider className="cust-divide" />
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
@@ -185,21 +193,21 @@ class OnthegoFundTransfer extends Component {
                                 <Col xs={2} md={2} lg={2} xl={3} xxl={3} className="mb-16"><div class="fund-circle text-white">P</div></Col>
                                 <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="mb-16 small-text-align">
                                     <label className="fs-16 fw-400 text-purewhite">
-                                        <strong>Payee100 
+                                        <strong>Payee100
                                             {/* <small>{item.type}</small> */}
-                                            </strong>
+                                        </strong>
                                     </label>
                                     <div><Text className="fs-14 fw-400 text-purewhite">USD acc ending in 4544</Text></div>
 
                                 </Col>
                                 <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white"></span>
-                                </Col> 
-                                
+                                </Col>
 
-                                
+
+
                             </Row>
-                           
+
                         )}
                     </ul>
                 </>}
@@ -377,7 +385,7 @@ class OnthegoFundTransfer extends Component {
                 </Form>
             </React.Fragment>,
             newtransfer: <>
-                <FiatAddress currency={this.props.selectedCurrency} onContinue={()=>this.chnageStep("reviewdetails")} onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} />
+                <FiatAddress currency={this.props.selectedCurrency} onContinue={() => this.chnageStep("reviewdetails")} onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} amount={this.state.amount} />
                 {/* <Paragraph className="mb-16 fs-14 fw-500 text-white  mt-16">Bank Details</Paragraph> */}
                 {/* <Divider />
                 <BankDetails transferType={this.state.addressOptions?.transferType} />
