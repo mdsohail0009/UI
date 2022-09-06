@@ -819,7 +819,9 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .ant-popover-inner{padding: 8px 9px;}
     .ant-popover-inner-content .rarrow-white{margin-left: 0px!important;}
     .ant-popover-inner-content div, .ant-popover-inner{padding: 8px 8px !important;}
-   
+    .tlv-header .sideropen {background: var(--bgGloom) !important;}
+    .tlv-header .mobile-logo {padding-left: 0px;}
+    /* .enter-val-container.swap-com input{width: 65%;} */
 }
 @media (min-width : 414px) {
     .footer-links a{margin-right: 16px;}
@@ -891,7 +893,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .customaudit-select{margin-bottom: 16px;}
     .footer-links{text-align: center;}
     .enter-val-container input{font-size: 16px !important;padding: 0px 5px !important;}
-    .enter-val-container.swap-com input{width: 70%;}
+    .enter-val-container.swap-com input{width: 65%;}
     .ant-tabs > .ant-tabs-nav .ant-tabs-nav-more{display: none;}
     .ant-popover-inner-content div:hover{padding: 8px 22px !important;display: flex;align-items: center;}
     .tlv-logo{height:40px;}
