@@ -4,15 +4,11 @@ import apicalls from "../../api/apiCalls";
 import AddressDocumnet from "../addressbook.component/document.upload";
 import oops from '../../assets/images/oops.png'
 import FiatAddress from "../addressbook.component/fiat.address";
-import BankDetails from "../addressbook.component/bank.details";
 import alertIcon from '../../assets/images/pending.png';
 import success from '../../assets/images/success.png';
-import Translate from "react-translate-component";
-import { Link } from 'react-router-dom';
 import Verification from "./verification.component/verification";
 import NumberFormat from "react-number-format";
-const { Paragraph, Text, Title } = Typography;
-const { Search } = Input;
+const {Text, Title } = Typography;
 
 class OnthegoFundTransfer extends Component {
     enteramtForm = React.createRef();
