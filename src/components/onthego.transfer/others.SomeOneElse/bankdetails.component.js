@@ -20,19 +20,22 @@ class PayeeBankDetails extends Component {
         countries: [],
         states: [],
         isLoading: false,
-        iBankDetals:null,
+        iBanDetals:null,
         IbanLoader:false,
         isValidIban:false
     }
 
     handleIban = async(ibannumber) =>{
-        this.setState({...this.state,iBankDetals:null,IbanLoader:true,isValidIban:false})
+        this.setState({...this.state,iBanDetals:null,IbanLoader:true,isValidIban:false})
         const ibanget = await apicalls.getIBANData(ibannumber)
         if(ibanget.ok){
-            if(ibanget.data.routingNumber || ibanget.data.bankName){
-                this.setState({...this.state,iBankDetals:ibanget.data,IbanLoader:false, isValidIban:true})
+            if(ibanget.data && (ibanget.data?.routingNumber || ibanget.data?.bankName)){
+                const bankdetails = {bankName:ibanget.data.bankName, bic:ibanget.data.bankName, bankBranch:ibanget.data.branch, country:ibanget.data.country, state:ibanget.data.state, city:ibanget.data.city, postalCode:ibanget.data.zipCode, line1:ibanget.data.bankAddress}
+                this.setState({...this.state,iBanDetals:bankdetails,IbanLoader:false, isValidIban:true})
+                this.props.getIbandata(bankdetails);
             }else{
                 this.setState({...this.state,IbanLoader:false, isValidIban:false})
+                this.props.getIbandata(null);
             }
         }
     }
@@ -50,19 +53,16 @@ class PayeeBankDetails extends Component {
                         required
                         rules={[
                             {
-                                required: true,
-                                message:
-                                    apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                validator: ()=>{
-                                  if (!this.state.isValidIban) {
-                                    return Promise.reject("Invalid Iban");
-                                  } else {
-                                    return Promise.resolve();
-                                  }
+                                validator: (_, value) => {
+                                    if (!value) {
+                                        return Promise.reject(apicalls.convertLocalLang("is_required"));
+                                    } else if (!this.state.isValidIban) {
+                                        return Promise.reject("Invalid Iban");
+                                    } else {
+                                        return Promise.resolve();
+                                    }
                                 },
-                              },
+                            },
                         ]}
                         onBlur={(e) => {
                             this.handleIban(e.target.value)
@@ -153,56 +153,49 @@ class PayeeBankDetails extends Component {
                                 <label className="fs-14 fw-400 ">
                                     <strong>Bank Name</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-purewhite">Barcslays Bank UK PLC</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals.bankName||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                                 <label className="fs-14 fw-400 ">
                                     <strong>BIC</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-purewhite">BUKBGB22</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals.bic||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                                 <label className="fs-14 fw-400 ">
                                     <strong>Branch</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-purewhite">CHELTENHAM</Text></div>
-
-                            </Col>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 ">
-                                    <strong>Branch</strong>
-                                </label>
-                                <div><Text className="fs-14 fw-400 text-purewhite">CHELTENHAM</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals.bankBranch||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                                 <label className="fs-14 fw-400 ">
                                     <strong>Country</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-purewhite">United Kingdom (GB)</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals.country||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                                 <label className="fs-14 fw-400 ">
                                     <strong>State</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-purewhite">XXXX</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals.state||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                                 <label className="fs-14 fw-400 ">
                                     <strong>City</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-purewhite">Leicester</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals.city||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                                 <label className="fs-14 fw-400 ">
                                     <strong>Zip</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-purewhite">LE87 2BB</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals.postalCode||'---'}</Text></div>
 
                             </Col>
                         </Row>

@@ -37,7 +37,6 @@ class OthersBusiness extends Component {
         } else {
             this.setState({ ...this.state, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, details: {} });
         }
-
     }
     handleIbanChange = async ({ target: { value } }) => {
         this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true });

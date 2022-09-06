@@ -20,7 +20,8 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, onContinue, PayeeLu = [
 
 
 
-    return <> <Form
+    return <>
+     <Form
         form={form}
         onFinish={onSubmit}
         autoComplete="off"
@@ -55,56 +56,9 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, onContinue, PayeeLu = [
             </Row>
 
         </Form.Item>
-        {/* {props.currency === "USD" && <Form.Item>
-            <Translate
-                content="transfer_type"
-                component={Text}
-                className="text-white"
-            />
-            <Row gutter={[16, 16]}>
+        
 
-                <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
-                    <Radio.Group
-                        defaultValue={addressOptions.transferType}
-                        className="mb-16 custom-radio-btn buysell-toggle crypto-toggle"
-                        onChange={(value) => {
-                            setAddressOptions({ ...addressOptions, transferType: value.target.value })
-                            onAddressOptionsChange({ ...addressOptions, transferType: value.target.value });
-                            if (value.target.value === "international" && addressOptions.addressType !== "business") {
-                                setCCSP(true);
-                            } else {
-                                setCCSP(false);
-                            }
-                        }}
-                    >
-                        <Radio.Button value="domestic" className="span-text">Domestic USD Transfer</Radio.Button>
-                        <Radio.Button value="international" className="span-text">International USD Swift</Radio.Button>
-                    </Radio.Group>
-                </Col>
-            </Row>
-        </Form.Item>} */}
-        {/* {addressOptions.addressType === "myself" && <div className="box basic-info alert-info-custom">
-
-            <Row>
-                <Col xs={24} md={24} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 ">
-                        <strong>Name</strong>
-                    </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">{"john"}</Text></div>
-
-                </Col>
-                <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
-                    <label className="fs-14 fw-400 ">
-                        <strong> Address</strong>
-                        <div><Text className="fs-14 fw-400 text-purewhite">Pl 19,FL 102,Rukmini nilayam,SP Nagar,JNTU,Hyderabad, Telangana - 500085</Text></div>
-                    </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">{props.userConfig?.email}</Text></div>
-                </Col>
-            </Row>
-        </div>} */}
-        {/* {addressOptions.addressType !== "myself" &&  */}
-
-        {addressOptions.addressType === "someoneelse" && <SomeoneComponent form={form} currency={props.currency} onContinue={() => onContinue()} {...props} />}
+        
         {(addressOptions.addressType !== "business" && addressOptions.addressType !== "someoneelse" && addressOptions.addressType !== "myself") && <React.Fragment>
             <Translate style={{ fontSize: 18 }}
                 content="Beneficiary_Details"
@@ -578,6 +532,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, onContinue, PayeeLu = [
     </Form>
         {addressOptions.addressType === "myself" && <MyselfNewTransfer currency={props.currency} onContinue={() => onContinue()} {...props} accountType={props.userProfile?.isBusiness}></MyselfNewTransfer>}
         {addressOptions.addressType === "business" && <OthersBusiness isUSDTransfer={props.currency === "USD" ? true : false} onContinue={() => onContinue()} amount={props.amount} />}
+        {addressOptions.addressType === "someoneelse" && <SomeoneComponent addressType={addressOptions.addressType} currency={props.currency} onContinue={() => onContinue()} />}
     </>
 }
 
