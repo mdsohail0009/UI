@@ -18,7 +18,6 @@ const SomeoneComponent = (props) => {
     const [form]=Form.useForm();
     useEffect(() => {
         getpayeeCreate();
-        form.setFieldsValue({ addressType: 'someoneelse', transferType: props.currency === "USD" ? 'sepa' : 'domestic' })
     }, [])
     const getpayeeCreate = async() =>{
         const createPayeeData = await createPayee(props.userProfile.id,'',addressOptions.addressType);
@@ -30,13 +29,17 @@ const SomeoneComponent = (props) => {
         // values.payeeAccountModels[0] = {...createPayeeObj.payeeAccountModels,...bankdetails}
         let obj = {...createPayeeObj,...values};
         obj.payeeAccountModels = [payeeAccountObj()];
-        obj.payeeAccountModels[0] = {...obj.payeeAccountModels[0],...bankdetails};
+        obj.payeeAccountModels[0] = {...obj.payeeAccountModels[0],...bankdetails,...values.payeeAccountModels};
         obj.payeeAccountModels[0].currencyType = props.currency;
         obj['customerId'] = props.userProfile.id;
         obj['amount'] = props.onTheGoObj.amount;
+        obj['transferType'] = props.currency === "USD" ? addressOptions.domesticType:'sepa' ;
+        obj['addressType'] = addressOptions.addressType ;
+        // console.log(obj)
         let payeesave = await savePayee(obj)
         if(payeesave.ok){
-            console.log(payeesave.data)
+            // console.log(payeesave.data)
+            props.onContinue(payeesave.data)
         }
         
     }
