@@ -29,7 +29,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,amount, ...props }) => {
         if (response.ok) {
             setRecipientDetails(response.data);setLoader(false)
         }else{
-            seterrorMessage(isErrorDispaly(response));
+            seterrorMessage(isErrorDispaly(response));setLoader(false)
         }
     }
     const saveTransfer = async(values) => {
@@ -97,7 +97,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,amount, ...props }) => {
        <> {currency === "USD" && <>
             <Row gutter={[16, 16]}>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
-                    <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey }); }}>
+                    <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });form.resetFields() }}>
                         <Tabs.TabPane tab="Domestic USD Transfer" className="text-white"  key={"domestic"}></Tabs.TabPane>
                         <Tabs.TabPane tab="International USD Swift" className="text-white" key={"international"}></Tabs.TabPane>
                     </Tabs>
