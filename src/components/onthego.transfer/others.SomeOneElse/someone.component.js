@@ -15,6 +15,7 @@ const SomeoneComponent = (props) => {
     const [addressOptions, setAddressOptions] = useState({ addressType: "someoneelse", transferType: props.currency === "EUR" ? "sepa" : "swift", domesticType: 'domestic' });
     const [bankdetails, setBankdetails] = useState(null);
     const [createPayeeObj, setCreatePayeeObj] = useState(null);
+    const [documents, setDocuments] = useState(null);
     const [form]=Form.useForm();
     useEffect(() => {
         getpayeeCreate();
@@ -30,7 +31,8 @@ const SomeoneComponent = (props) => {
         let obj = {...createPayeeObj,...values};
         obj.payeeAccountModels = [payeeAccountObj()];
         obj.payeeAccountModels[0] = {...obj.payeeAccountModels[0],...bankdetails,...values.payeeAccountModels};
-        obj.payeeAccountModels[0].currencyType = props.currency;
+        obj.payeeAccountModels[0].currencyType = "Fiat";
+        // obj.payeeAccountModels[0].documents = documents;
         obj['customerId'] = props.userProfile.id;
         obj['amount'] = props.onTheGoObj.amount;
         obj['transferType'] = props.currency === "USD" ? addressOptions.domesticType:'sepa' ;
@@ -251,7 +253,9 @@ const SomeoneComponent = (props) => {
                 {/* <Divider /> */}
                 <Paragraph className="mb-8 fw-500 text-white  mt-16" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                 <PayeeBankDetails form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />
-                <AddressDocumnet title={"please upload supporting documents for transaction "} />
+                <AddressDocumnet documents={documents || null} onDocumentsChange={(docs) => {
+                        setDocuments(docs)
+                    }}/>
                 <div className="text-right mt-12">
                     {/* <Button
                             className="pop-btn px-36"
