@@ -18,13 +18,17 @@ class OnthegoFundTransfer extends Component {
         filterObj: [{ lable: "Payee 100", address: "100032498902", type: "1st Party" }, { lable: "Payee 100", address: "100032498902", type: "3rd Party" }],
         addressOptions: { addressType: "myself", transferType: this.props.selectedCurrency === "EUR" ? "sepa" : "domestic" },
         isNewTransfer: false,
-        amount: ""
+        amount: "",
+        onTheGoObj : {amount:'',description:''}
     }
-    chnageStep = (step) => {
+    chnageStep = (step,values) => {
         this.setState({ ...this.state, step });
         if (step === 'newtransfer') {
-            this.setState({ ...this.state, step, isNewTransfer: true });
+            this.setState({ ...this.state, step, isNewTransfer: true,onTheGoObj:values});
         }
+    }
+    amountnext = (values) =>{
+        this.chnageStep("newtransfer",values)
     }
     renderStep = (step) => {
         const { filterObj } = this.state;
@@ -33,7 +37,7 @@ class OnthegoFundTransfer extends Component {
                 autoComplete="off"
                 initialValues={{ amount: "" }}
                 ref={this.enteramtForm}
-                onFinish={() => this.chnageStep("newtransfer")}
+                onFinish = {this.amountnext}
             >
                 <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -100,6 +104,7 @@ class OnthegoFundTransfer extends Component {
                                 size="large"
                                 className="pop-btn mb-36"
                                 style={{ minWidth: 300 }}
+                                //onClick={() => this.chnageStep("newtransfer")}
                             >
                                 New Transfer
                             </Button>
@@ -385,29 +390,7 @@ class OnthegoFundTransfer extends Component {
                 </Form>
             </React.Fragment>,
             newtransfer: <>
-                <FiatAddress currency={this.props.selectedCurrency} onContinue={() => this.chnageStep("reviewdetails")} onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} amount={this.state.amount} />
-                {/* <Paragraph className="mb-16 fs-14 fw-500 text-white  mt-16">Bank Details</Paragraph> */}
-                {/* <Divider />
-                <BankDetails transferType={this.state.addressOptions?.transferType} />
-                {(this.state.addressOptions.addressType !== "myself"||this.state.addressOptions.transferType==="international")&&(this.state.addressOptions.transferType!=="domestic") && <AddressDocumnet title={"please upload supporting documents for transaction "} />}
-                <div className="text-right mt-12">
-                    <Button
-                        className="pop-btn px-36"
-                        style={{ margin: "0 8px" }}
-                        onClick={() => { }}
-                    >
-                        {apicalls.convertLocalLang("cancel")}
-                    </Button>
-                    <Button
-                        htmlType="button"
-                        size="large"
-                        className="pop-btn px-36"
-                        style={{ minWidth: 150 }}
-                        onClick={() => this.chnageStep("reviewdetails")}
-                    >
-                        <Translate content="Save_btn_text" />
-                    </Button>
-                </div> */}
+                <FiatAddress currency={this.props.selectedCurrency} onContinue={()=>this.chnageStep("reviewdetails")} onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} />
             </>,
             declaration: <div className="text-center">
                 <Image width={80} preview={false} src={alertIcon} />
