@@ -1060,7 +1060,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .side-drawer .ant-drawer-content-wrapper{width: 420px !important;}
     .side-drawer .ant-drawer-content-wrapper .ant-drawer-content{background-color: #515a64;}
     .side-drawer .ant-drawer-body{padding: 0 20px 20px 20px;}
-    .portfolio-list .mobile-list{height: 1087px;max-height: 1087px; overflow: auto;padding-right: 10px}
+    .portfolio-list .mobile-list{max-height: 1087px; overflow: auto;padding-right: 10px}
     .markets-panel .custom-table .ant-table-body{height: 900px !important;}
     .crypto-address .walletadrs{font-size: 12px;}
     .trade-legends{display: flex; justify-content: space-between;}
