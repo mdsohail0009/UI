@@ -25,7 +25,7 @@ class OthersBusiness extends Component {
     }
     loadDetails = async () => {
         this.setState({ ...this.state, errorMessage: null, isLoading: true });
-        const response = await createPayee(this.props.userProfile.id, "");
+        const response = await createPayee(this.props.userProfile.id, "", "business");
         if (response.ok) {
             let data = response.data;
             if (!data?.payeeAccountModels) {
@@ -48,12 +48,6 @@ class OthersBusiness extends Component {
             this.setState({ ...this.state, ibanDetailsLoading: false, errorMessage: response.data || response.data?.message || response.originalError?.message });
         }
     }
-    setPayeeModal = (values) => {
-
-    }
-    setMasterObj = (values) => {
-
-    }
     submitPayee = async (values) => {
         let { details, ibanDetails } = this.state;
         let _obj = { ...details, ...values };
@@ -71,6 +65,7 @@ class OthersBusiness extends Component {
         _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
         _obj.addressType = "Business";
         _obj.transferType = "sepa";
+        _obj.amount=this.props.amount;
         const response = await savePayee(_obj);
         if (response.ok) {
             this.setState({ ...this.state, errorMessage: null, isLoading: false });
@@ -81,7 +76,7 @@ class OthersBusiness extends Component {
     }
     render() {
         const { isUSDTransfer } = this.props;
-        if (isUSDTransfer) { return <BusinessTransfer onContinue={() => this.props.onContinue()} /> }
+        if (isUSDTransfer) { return <BusinessTransfer amount={this.props?.amount} onContinue={() => this.props.onContinue()} /> }
         else {
             if (this.state.isLoading) { return <Loader /> }
             return <>

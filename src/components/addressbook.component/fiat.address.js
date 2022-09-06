@@ -577,7 +577,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, onContinue, PayeeLu = [
 
     </Form>
         {addressOptions.addressType === "myself" && <MyselfNewTransfer currency={props.currency} onContinue={() => onContinue()} {...props} accountType={props.userProfile?.isBusiness}></MyselfNewTransfer>}
-        {addressOptions.addressType === "business" && <OthersBusiness isUSDTransfer={props.currency === "USD" ? true : false} onContinue={() => onContinue()} />}
+        {addressOptions.addressType === "business" && <OthersBusiness isUSDTransfer={props.currency === "USD" ? true : false} onContinue={() => onContinue()} amount={props.amount} />}
     </>
 }
 

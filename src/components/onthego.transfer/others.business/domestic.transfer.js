@@ -9,7 +9,7 @@ class DomesticTransfer extends Component {
             <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
                     className="custom-forminput custom-label mb-0"
-                    name="iban"
+                    name="accountNumber"
                     label={"Account Number"}
                     required
                     rules={[
@@ -36,7 +36,7 @@ class DomesticTransfer extends Component {
             <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
                     className="custom-forminput custom-label mb-0"
-                    name="relationshiptoBeneficiary"
+                    name="abaRoutingCode"
                     label={"ABA Routing Code"}
                     required
                     rules={[
@@ -63,7 +63,7 @@ class DomesticTransfer extends Component {
             <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
                     className="custom-forminput custom-label mb-0"
-                    name="relationshiptoBeneficiary"
+                    name="bankName"
                     label={"Bank Name"}
                     required
                     rules={[
@@ -90,7 +90,7 @@ class DomesticTransfer extends Component {
             <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
                     className="custom-forminput custom-label mb-0"
-                    name="relationshiptoBeneficiary"
+                    name="relation"
                     label={"Relationship to beneficiary"}
                     required
                     rules={[
@@ -168,7 +168,7 @@ class DomesticTransfer extends Component {
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                     className="custom-forminput custom-label mb-0"
-                    name="reasonforTransfer"
+                    name="reasonOfTransfer"
                     required
                     rules={[
                         {
