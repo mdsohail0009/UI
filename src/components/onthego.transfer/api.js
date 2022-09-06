@@ -2,7 +2,6 @@ import { apiClient, uploadClient } from "../../api";
 import { ApiControllers } from "../../api/config";
 
 const fetchIBANDetails = (iban) => {
-
     return apiClient.get(ApiControllers.master + `GetIBANAccountDetails?ibanNumber=${iban}`)
 }
 const createPayee = (account_id, addr_book_id) => {
@@ -56,4 +55,7 @@ const document = () => {
 const uploadFile = (file) => {
     return uploadClient.post("UploadFile", file);
 }
-export { fetchIBANDetails, createPayee, payeeAccountObj, uploadFile,document };
+const savePayee = (obj)=>{
+    return apiClient.post(ApiControllers.addressbook+`payee`,obj);
+}
+export { fetchIBANDetails, createPayee, payeeAccountObj, uploadFile,document,savePayee };
