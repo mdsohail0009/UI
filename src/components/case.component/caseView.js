@@ -25,7 +25,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
     const suffix = children.slice(-suffixCount).trim();
     return (
-        <Text className="mb-0 fs-14 docname c-pointer d-block"
+        <Text className="mb-0 fs-14 docnames c-pointer d-block"
             style={{ maxWidth: '100%' }} ellipsis={{ suffix }}>
             {start}
         </Text>
