@@ -104,9 +104,9 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, onContinue, PayeeLu = [
         </div>} */}
         {/* {addressOptions.addressType !== "myself" &&  */}
 
-        {addressOptions.addressType === "someoneelse" && <SomeoneComponent form={form} currency={props.currency} onContinue={()=>onContinue()} {...props}/>}
-        {(addressOptions.addressType !== "business" && addressOptions.addressType !=="someoneelse"&& addressOptions.addressType !=="myself") && <React.Fragment>
-            <Translate style={{ fontSize: 18}}
+        {addressOptions.addressType === "someoneelse" && <SomeoneComponent form={form} currency={props.currency} onContinue={() => onContinue()} {...props} />}
+        {(addressOptions.addressType !== "business" && addressOptions.addressType !== "someoneelse" && addressOptions.addressType !== "myself") && <React.Fragment>
+            <Translate style={{ fontSize: 18 }}
                 content="Beneficiary_Details"
                 component={Paragraph}
                 className="mb-16 text-white fw-500 mt-16"
