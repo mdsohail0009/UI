@@ -6,7 +6,7 @@ const getCryptoWithDrawWallets = ({ customerId }) => {
 const withDrawCrypto = (obj) => {
     return apiClient.post(ApiControllers.withdraw + `Withdraw/Crypto`, obj)
 }
-const getWithdrawmemberCrypto = ({customerId }) => {
+const getWithdrawmemberCrypto = ({ customerId }) => {
     return apiClient.get(ApiControllers.withdraw + `Withdraw/Crypto/${customerId}`)
 }
 const handleNewExchangeAPI = ({ customerId, amount, coin, address }) => {
@@ -17,5 +17,8 @@ const handleFiatConfirm = (obj) => {
 }
 const updateSecurity = (obj) => {
     return apiClient.put(ApiControllers.master + "UpdateSecurity", obj);
-  };
-export { getCryptoWithDrawWallets, withDrawCrypto, getWithdrawmemberCrypto, handleNewExchangeAPI,handleFiatConfirm,updateSecurity }
+};
+const getNetworkLu = (wallet) => {
+    return apiClient.get(ApiControllers.common + `NetWorkLU/${wallet}`);
+}
+export { getCryptoWithDrawWallets, withDrawCrypto, getWithdrawmemberCrypto, handleNewExchangeAPI, handleFiatConfirm, updateSecurity, getNetworkLu }

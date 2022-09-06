@@ -58,7 +58,7 @@ class PaymentDetails extends Component {
     this.useDivRef = React.createRef();
   }
   backToPayments = () => {
-    this.props.history.push("/payments");
+    this.props.history.push(`/payments/${"All"}`);
   };
   componentDidMount() {
     this.getCurrencyLookup();
@@ -85,7 +85,7 @@ class PaymentDetails extends Component {
         });
       } else {
         message.destroy();
-        this.setState({ ...this.state, errorMessage: response.data });
+        this.setState({ ...this.state, errorMessage: response.data, loading: false });
         this.useDivRef.current.scrollIntoView();
       }
     }
@@ -101,7 +101,6 @@ class PaymentDetails extends Component {
     }
   };
   getPayments = async () => {
-    debugger
     this.setState({ ...this.state, loading: true });
     if (this.props.match.params.id === "00000000-0000-0000-0000-000000000000") {
       let response = await getPaymentsData(
@@ -183,7 +182,7 @@ class PaymentDetails extends Component {
               className: "custom-msg",
               duration: 3,
             });
-            this.props.history.push("/payments");
+            this.props.history.push(`/payments/${"All"}`);
           } else {
             message.destroy();
             this.setState({ ...this.state, btnDisabled: false, loading: false, errorWarning: null, errorMessage: this.isErrorDispaly(response) })
@@ -209,7 +208,7 @@ class PaymentDetails extends Component {
               className: "custom-msg",
               duration: 3,
             });
-            this.props.history.push("/payments");
+            this.props.history.push(`/payments/${"All"}`);
           } else {
             message.destroy();
             this.setState({ ...this.state, btnDisabled: false, loading: false, errorWarning: null, errorMessage: this.isErrorDispaly(response) });

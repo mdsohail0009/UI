@@ -14,13 +14,15 @@ import { convertCurrency } from '../buy.component/buySellService';
 import { withRouter, Link } from 'react-router-dom';
 import apiCalls from '../../api/apiCalls';
 import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle, setWithdrawfiatenaable, setWithdrawfiat,setWalletAddress } from "../../reducers/sendreceiveReducer";
-import { getcoinDetails } from './api'
-import {createCryptoDeposit} from "../deposit.component/api"
+import { getcoinDetails } from './api';
+import {createCryptoDeposit} from "../deposit.component/api";
+import TransactionsHistory from "../transactions.history.component";
 class YourPortfolio extends Component {
     state = {
         loading: true,
         initLoading: true,
         portfolioData: [], buyDrawer: false, coinData: null,sendDrawer: false,
+        selectedWallet: ''
     }
     componentDidMount() {
         this.loadCryptos();
@@ -42,6 +44,9 @@ class YourPortfolio extends Component {
             this.props.dispatch(fetchYourPortfoliodata(this.props.userProfile.id));
         }
     }
+    cockpitCharts=()=>{
+      this.props.history.push("/cockpitCharts");
+    }
     showBuyDrawer = (item, key) => {
         if (!this.props?.userProfile?.isKYC) {
             this.props.history.push("/notkyc");
@@ -59,7 +64,7 @@ class YourPortfolio extends Component {
         if (key === "buy") {
             this.props.dispatch(fetchSelectedCoinDetails(item.coin, this.props.userProfile?.id));
             this.props.dispatch(setCoin({ ...item, toWalletCode: item.coin, toWalletId: item.id, toWalletName: item.coinFullName }));
-            convertCurrency({ from: item.coin, to: "USD", value: 1, isCrypto: false, memId: this.props.userProfile?.id, screenName: null }).then(val => {
+            convertCurrency({ from: item.coin, to: "USD", value: 1, isCrypto: false, customer_id: this.props.userProfile?.id, screenName: null }).then(val => {
                 this.props.dispatch(setExchangeValue({ key: item.coin, value: val }));
             });
             this.props.dispatch(setStep("step2"));
@@ -73,12 +78,16 @@ class YourPortfolio extends Component {
             buyDrawer: true
         })
     }
+    showInternalTransfer=()=>{
+      this.props.history.push(`/internalTransfer`)
+    }
+  
     showSendReceiveDrawer = async(e, value) => {
       let selectedObj = { ...value };
       selectedObj.coin = selectedObj.coin?.toUpperCase();
       selectedObj.coinFullName = selectedObj.coinFullName
       selectedObj.id = selectedObj.id;
-      selectedObj.withdrawMinValue = selectedObj.swapMinValue
+      selectedObj.withdrawMinValue = selectedObj.withdrawMinValue
       this.props.dispatch(fetchWithDrawWallets({ customerId: this.props?.userProfile?.id }));
       this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
       this.props.dispatch(setSubTitle(apiCalls.convertLocalLang("selectCurrencyinWallet")));
@@ -144,17 +153,33 @@ class YourPortfolio extends Component {
     closeDrawer = () => {
       this.setState({
           buyDrawer: false,
-          sendDrawer: false
+          sendDrawer: false,
+          transactions: false
       })
   }
+  showTransactionDrawer =(item) => {
+    this.setState({...this.state, transactions: true, selectedWallet: item?.coin});
+}
      menuBar = (item) => (
       <Menu>
           <ul className="pl-0 drpdwn-list">
-              <li  onClick={() =>  this.showSendReceiveDrawer(1, item)}>
-                  <Link value={1} className="c-pointer">Deposit</Link>
+              {/* <li  onClick={() =>  this.showSendReceiveDrawer(1, item)}>
+                  <Link value={1} className="c-pointer">Receive</Link>
+              </li> */}
+              <li onClick={() => this.showBuyDrawer(item, "buy")}>
+                  <Link  value={2} className="c-pointer">
+                  <Translate content="buy" />
+                  </Link>
               </li>
-              <li onClick={() => this.showSendReceiveDrawer(2, item)}>
-                  <Link  value={2} className="c-pointer">Withdraw</Link>
+              <li onClick={() => this.showBuyDrawer(item, "sell")}>
+                    <Link  value={4} className="c-pointer">
+                    <Translate content="sell" />
+                    </Link>
+                </li>
+                <li onClick={() => this.showInternalTransfer(item)}>
+                  <Link  value={5} className="c-pointer">
+                  <Translate content="menu_internal_transfer" />
+                  </Link>
               </li>
               
           </ul>
@@ -168,7 +193,7 @@ class YourPortfolio extends Component {
         return (
           <div className="portfolio-list">
            
-           <div  className="portfolio-title mb-16">
+           <div  className="portfolio-title mb-8">
            <div className='portfolio-data' >
             <Translate
               content="your_portfolio"
@@ -178,10 +203,17 @@ class YourPortfolio extends Component {
             <Currency prefix={"$"} defaultValue={totalCryptoValue}  className={`text-white-30 fs-16 m-0 ${totalCryptoValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '18px' }} />
             </div>
               <div>
-              <Link to="/cockpitCharts" className="dbchart-link fs-14 fw-500">
+              {/* <Link to="/cockpitCharts" className="dbchart-link fs-14 fw-500">
                 <Translate content="cockpit" />
                 <span className="icon sm right-angle ml-4" />
-              </Link></div>
+              </Link> */}
+
+              <Button className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
+                  <Translate content="cockpit" />
+                  <span className="icon sm right-angle ml-4" />
+              </Button>
+                    
+              </div>
             </div>
             <List
               className="mobile-list"
@@ -201,18 +233,25 @@ class YourPortfolio extends Component {
                   className=""
                   extra={
                     <div className='crypto-btns'>
-                      <Translate
-                        content="buy"
-                        component={Button}
-                        type="primary"
-                        onClick={() => this.showBuyDrawer(item, "buy")}
-                        className="custom-btn prime"
-                      />
-                      <Translate
+                      
+                      {/* <Translate
                         content="sell"
                         component={Button}
                         className="custom-btn sec ml-16"
                         onClick={() => this.showBuyDrawer(item, "sell")}
+                      /> */}
+                        <Translate
+                        content="deposit"
+                        component={Button}
+                        className="custom-btn prime text-purewhite mr-16"
+                        onClick={() =>  this.showSendReceiveDrawer(1, item)}
+                      />
+                      <Translate
+                        content="withdraw"
+                        component={Button}
+                        type="primary"
+                        onClick={() => this.showSendReceiveDrawer(2, item)}
+                        className="custom-btn sec"
                       />
                       
                       <Dropdown overlay={this.menuBar(item)} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
@@ -245,14 +284,14 @@ class YourPortfolio extends Component {
                     title={
                       <div className="mr-16">
                         <div style={{ display: "flex", alignItems: "center" }}>
-                          <Text className="fs-18 fw-400 text-upper text-white">
+                          <Text className="fs-16 fw-600 text-upper text-white">
                             {item.coin}
                           </Text>
-                          <Text className="fs-14 px-16 text-secondary">|</Text>
+                          <Text className="fs-14 px-8 text-secondary">|</Text>
                           <Currency
                             defaultValue={item.coinValueinNativeCurrency}
                             type={"text"}
-                            className={`fs-14 ${
+                            className={`lg-fontsize ${
                               item.coinValueinNativeCurrency > 0
                                 ? "text-green"
                                 : "text-red"
@@ -261,7 +300,7 @@ class YourPortfolio extends Component {
                         </div>
                         <Currency
                           defaultValue={item.coinBalance}
-                          className="text-white fs-20 text-left"
+                          className="text-white fs-18 text-left"
                           type={"text"}
                           prefix={""}
                         />
@@ -280,6 +319,13 @@ class YourPortfolio extends Component {
               onClose={() => this.closeDrawer()}
             />
             <SendReceive showDrawer={this.state.sendDrawer} onClose={() => this.closeDrawer()} />
+            {this.state.transactions && <TransactionsHistory
+              showDrawer={this.state.transactions}
+              selectWallet={this.state.selectedWallet}
+              onClose={() => {
+                this.closeDrawer();
+              }}
+            />}
           </div>
         );
     }

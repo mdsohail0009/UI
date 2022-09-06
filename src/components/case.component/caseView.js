@@ -334,15 +334,18 @@ class RequestedDocs extends Component {
                 <div className='case-stripe'>
                     <Row gutter={[16, 16]}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8} xxl={8}>
-                            <Text className='case-lbl'>Case Number</Text>
+                            <Translate Component={Text} content="Case_Number" className="case-lbl"/>
+                            {/* <Text className='case-lbl'>Case Number</Text> */}
                             <div className='case-val'>{caseData.caseNumber}</div>
                         </Col>
                         <Col xs={24} md={8} lg={8} xl={8} xxl={8}>
-                            <Text className='case-lbl'>Case Title</Text>
+                        <Translate Component={Text} content="Case_Title" className="case-lbl"/>
+                            {/* <Text className='case-lbl'>c</Text> */}
                             <div className='case-val'>{caseData.caseTitle}</div>
                         </Col>
                         <Col xs={24} md={8} lg={8} xl={8} xxl={8}>
-                            <Text className='case-lbl'>Case State</Text>
+                        <Translate Component={Text} content="Case_State" className="case-lbl"/>
+                            {/* <Text className='case-lbl'>Case State</Text> */}
                             <div className='case-val'>{caseData.state}</div>
                         </Col>
                     </Row>
@@ -398,7 +401,8 @@ class RequestedDocs extends Component {
                     </Row>
                 </div>
                 <div className="px-16">
-                    <Text className='fw-300 text-white-50 fs-12 '>Remarks</Text>
+                <Translate Component={Text} content="remarks" className="fw-300 text-white-50 fs-12"/>
+                    {/* <Text className='fw-300 text-white-50 fs-12 '>Remarks</Text> */}
                     {/* <div className='case-val'>{caseData.remarks ? caseData.remarks : '-'}</div> */}
                     <Title level={5} className='case-val'style={{ marginTop: '3px' }} maxLength={500} rows={4}>{caseData.remarks ? caseData.remarks : '-'}</Title>
                 </div>

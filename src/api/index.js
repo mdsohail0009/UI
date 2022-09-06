@@ -1,6 +1,7 @@
-import { create } from 'apisauce';
+import { create, } from 'apisauce';
 import { store } from '../store';
-import CryptoJS from 'crypto-js'
+import CryptoJS from 'crypto-js';
+import { useHistory } from 'react-router-dom';
 
 const ipRegistry = create({
     baseURL: 'https://api4.ipregistry.co'
@@ -41,9 +42,20 @@ const _encrypt = (msg, key) => {
     return ((salt.toString()) + (iv.toString()) + (encrypted.toString()));
 }
 apiClient.axiosInstance.interceptors.request.use((config) => {
-    const { oidc: { user }, userConfig: { userProfileInfo } } = store.getState()
+    const { oidc: { user }, userConfig: { userProfileInfo }, currentAction: { action },
+        menuItems } = store.getState()
     config.headers.Authorization = `Bearer ${user.access_token}`
-    if (userProfileInfo?.id) config.headers.AuthInformation = userProfileInfo?.id ? _encrypt(`{CustomerId:"${userProfileInfo?.id}"}`, userProfileInfo.sk) : ''
+    if (userProfileInfo?.id) config.headers.AuthInformation = userProfileInfo?.id ? _encrypt(`{CustomerId:"${userProfileInfo?.id}", Action:"${action || "view"
+        }", FeatureId:"${menuItems?.featurePermissions?.selectedScreenFeatureId}"}`, userProfileInfo.sk) : ''
     return config;
-})
+});
+// apiClient.axiosInstance.interceptors.response.use((response) => {
+//     return response;
+// }, (err) => {
+//     if (err.status === "401") {
+//         const navigate = useHistory();
+//         navigate.push("/accessdenied");
+//     } else{ return err;}
+
+// })
 export { apiClient, coinGekoClient, identityClient, uploadClient, ipRegistry, sumsub }

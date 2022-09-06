@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
-import { Typography, Radio, message, Spin } from 'antd';
+import { Typography, Radio, message, Spin,Button } from 'antd';
 import Translate from 'react-translate-component';
 import { getData } from './api';
 import NumberFormat from 'react-number-format';
 import Loader from '../../Shared/loader';
 import { connect } from 'react-redux';
+import { withRouter, Link } from 'react-router-dom';
 import { dashboardTransactionSub } from '../../utils/pubsub';
+import TransactionsHistory from "../transactions.history.component";
+
 class Portfolio extends Component {
     chart;
-
     constructor (props) {
         super(props);
         this.state = {
-
+            transactions: false,
             alert: false,
             errorMessage: "",
             allDocs: false,
@@ -77,24 +79,64 @@ class Portfolio extends Component {
           );
         }
     }
+    transactionDrawer =() => {
+        this.setState({ ...this.state, transactions: true});
+    }
+    closeDrawer = () => {
+        this.setState({transactions: false});
+    }
     render() {
         const { Title } = Typography;
 
         const { gridUrl, loading } = this.state;
         return (
-            <div className="mb-24">
+            <div className="mb-16">
+                <div className='mb-12 mt-4'>
                     <Translate content="menu_transactions_history" className="basicinfo" />
-                    <div className="mt-16">
+                    {/* <span>
+                       <Translate
+                        content="search"
+                        component={Button}
+                        type="primary"
+                        className="dbchart-link fs-14 fw-500"
+                        onClick={()=> this.transactionDrawer()}
+                      />
+                       <span className="icon sm search-angle ml-4" />
+                       </span>  */}
+                    <Button
+                        onClick={() => this.transactionDrawer()}
+                        className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}}
+                        >
+                           <Translate content="search" />
+                        <span className="icon sm search-angle ml-8"></span>
+                    </Button>
+                     {/* <div onClick={() => this.transactionDrawer()} className="dbchart-link fs-14 fw-500 c-pointer">
+                       
+                        <Translate content="search" />
+                        <span className="icon sm search-angle ml-4" />
+                      
+                    </div> */}
+                       {this.state.transactions &&
+                       <TransactionsHistory
+                        showDrawer={this.state.transactions}
+                        onClose={() => {
+                            this.closeDrawer();
+                        }}
+                    />
+                       }
+                       </div>
+                   
+                    <div>
 
-                        <div className="box basic-info responsive_table bg-none ">
-                            <table className='pay-grid view mb-view'>
+                        <div className="box dash-info basic-info responsive_table bg-none mb-0 ">
+                            <table className='pay-grid view mb-view'  style={{width: "100%"}}>
                                 <thead>
                                     <tr>
-                                        <th>Date</th>
-                                        <th>Type</th>
-                                        <th>Wallet</th>
-                                        <th>Value</th>
-                                        <th>State</th>
+                                        <th style={{width: "18%"}}>Date</th>
+                                        <th style={{width: "35%"}}>Type</th>
+                                        <th style={{width: "15%"}}>Wallet</th>
+                                        <th style={{width: "15%"}}>Value</th>
+                                        <th style={{width: "15%"}}>State</th>
                                     </tr>
                                 </thead>
                                 {loading ? (
@@ -152,10 +194,11 @@ class Portfolio extends Component {
         );
     }
 }
+
+const connectStateToProps = ({ userConfig }) => {
+    return { userProfileInfo: userConfig.userProfileInfo, twoFA:userConfig.twoFA }
+}
 const connectDispatchToProps = dispath => {
     return { dispath }
 }
-const connectStateToProps = ({ userConfig }) => {
-    return { userProfileInfo: userConfig.userProfileInfo }
-}
-export default connect(connectStateToProps, connectDispatchToProps)(Portfolio);
+export default connect(connectStateToProps, connectDispatchToProps)(withRouter(Portfolio));

@@ -43,10 +43,10 @@ class SelectWallet extends Component {
                     <span className="mt-16 val-updown c-pointer">
                         <span className="icon sm uparw-o-white d-block c-pointer mb-4" /><span className="icon sm dwnarw-o-white d-block c-pointer" />
                     </span>
-                </div>
+                </div> 
                 <Radio.Group defaultValue="min" buttonStyle="solid" className="round-pills">
-                    <Translate value="min" content="min" component={Radio.Button}value={1}  />
-                    <Translate value="half" content="half" component={Radio.Button}value={2}  />
+                    <Translate value="min" content="min" component={Radio.Button} value={1}  />
+                    <Translate value="half" content="half" component={Radio.Button} value={2}  />
                     <Translate value="max" content="all" component={Radio.Button} value={3} />
                 </Radio.Group>
                 <Translate content="preview" component={Button} size="large" block className="pop-btn" style={{ marginTop: '100px' }} onClick={() => this.props.changeStep('step5')} />

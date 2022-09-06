@@ -1,8 +1,10 @@
 import { Input, Spin } from 'antd';
 import Text from 'antd/lib/typography/Text';
-import React, { forwardRef, useImperativeHandle, useState } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { convertCurrencyDuplicate } from '../../buy.component/buySellService';
+import { handleSendFetch, setStep, setSubTitle, setWithdrawcrypto, setAddress } from '../../../reducers/sendreceiveReducer';
 import NumberFormat from 'react-number-format';
+import { connect } from 'react-redux';
 const LocalCryptoSwapper = (props, ref) => {
     const { localAmt = 0, cryptoAmt = 0, localCurrency = "USD", cryptoCurrency, onChange, sellData, showSwap = true, selectedCoin = null, showConvertion = true } = props;
     const [isSwaped, setSwapped] = useState(props.isSwap || false);
@@ -15,6 +17,7 @@ const LocalCryptoSwapper = (props, ref) => {
         "USD": "$",
         "GBP": "£"
     });
+
     useImperativeHandle(ref, () => ({
         changeInfo(info) {
             setInputChange(true);
@@ -63,6 +66,7 @@ const LocalCryptoSwapper = (props, ref) => {
 
 
     }
+
     return <div className="p-relative">
         <div className="enter-val-container common-withdraow withdraw-crypto">
             <Text className="fs-30 fw-400 text-white-30 text-yellow mr-4">{!isSwaped ? localCurrency : cryptoCurrency}</Text>
@@ -93,6 +97,9 @@ const LocalCryptoSwapper = (props, ref) => {
                 autoFocus
                 allowNegative={false}
             />
+        
+            {/* <div className='with-min'>Min</div>
+            <div className='with-max'>Max</div> */}
         </div>
         {showConvertion && <><NumberFormat value={isSwaped ? localvalue : cryptovalue} displayType={'text'} thousandSeparator={true} prefix={isSwaped ? symbols[localCurrency] : ""} renderText={(value, props) => <div {...props} className="fs-14 text-white-30 text-center d-block mb-36">{value} {isSwaped ? localCurrency : cryptoCurrency} {isConvertionLoad && <Spin size="small" />}</div>
         } />
@@ -105,4 +112,22 @@ const LocalCryptoSwapper = (props, ref) => {
     </div>
 
 }
-export default forwardRef(LocalCryptoSwapper);
+const connectStateToProps = ({ sendReceive, userConfig, addressBookReducer }) => {
+    return {addressBookReducer, sendReceive, userProfile: userConfig.userProfileInfo }
+}
+const connectDispatchToProps = dispatch => {
+    return {
+        // changeStep: (stepcode) => {
+        //     dispatch(setAddressStep(stepcode))
+        // },
+        changeStep: (stepcode) => {
+            dispatch(setStep(stepcode))
+        },
+        clearAddress: (stepcode) => {
+            dispatch(setAddress(stepcode))
+        },
+        dispatch
+    }
+}
+//export default connect(connectStateToProps, connectDispatchToProps)(LocalCryptoSwapper);
+ export default forwardRef(LocalCryptoSwapper);

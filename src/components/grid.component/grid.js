@@ -2,6 +2,7 @@ import React from 'react';
 import { toDataSourceRequestString, translateDataSourceResultGroups } from '@progress/kendo-data-query';
 import { store } from '../../store'
 import moment from 'moment';
+import CryptoJS from "crypto-js";
 import { ExcelExport } from '@progress/kendo-react-excel-export'
 // import { excellExportSubject } from './subscribir';
 const filterOperators = {
@@ -154,6 +155,26 @@ export function withState(WrappedGrid) {
             this.fetchData(_dataState);
         }
 
+        _encrypt = (msg, key) => {
+            msg = typeof (msg) == 'object' ? JSON.stringify(msg) : msg;
+            var salt = CryptoJS.lib.WordArray.random(128 / 8);
+
+            key = CryptoJS.PBKDF2(key, salt, {
+                keySize: 256 / 32,
+                iterations: 10
+            });
+
+            var iv = CryptoJS.lib.WordArray.random(128 / 8);
+
+            var encrypted = CryptoJS.AES.encrypt(msg, key, {
+                iv: iv,
+                padding: CryptoJS.pad.Pkcs7,
+                mode: CryptoJS.mode.CBC
+
+            });
+            return ((salt.toString()) + (iv.toString()) + (encrypted.toString()));
+        }
+        
         fetchData=(dataState) => {
             if (dataState.filter) {
                 dataState.filter.filters?.map((item) => {
@@ -165,7 +186,8 @@ export function withState(WrappedGrid) {
                 })
             }
             this.setState({ ...this.state, isLoading: true })
-            const { oidc: { user } } = store.getState();
+            const { oidc: { user }, userConfig: { userProfileInfo }, currentAction: { action },
+            menuItems } = store.getState();
             let queryStr = `${toDataSourceRequestString(dataState)}`; // Serialize the state.
             const hasGroups = dataState.group && dataState.group.length;
             if (this.props.additionalParams) {
@@ -178,10 +200,18 @@ export function withState(WrappedGrid) {
                 queryStr = '?' + queryStr
             }
             const base_url = this.props.url;
-            const init = { method: 'GET', accept: 'application/json', headers: { "Authorization": `Bearer ${user.access_token}` } };
+            const init = { method: 'GET', accept: 'application/json', headers: { "Authorization": `Bearer ${user.access_token}`,
+            "AuthInformation": userProfileInfo?.id ? this._encrypt(`{CustomerId:"${userProfileInfo?.id}", Action:"${action || "view"
+        }", FeatureId:"${menuItems?.featurePermissions?.selectedScreenFeatureId}"}`, userProfileInfo.sk) : '' } };
 
             fetch(`${base_url}${queryStr}`, init)
-                .then(response => response.json())
+                .then(response =>{
+					if (response.status === 401) {
+						return { data:null, total:null, unauthorized:401, message:'Unauthorized' }
+					} else {
+						return response.json()
+					}
+				})
                 .then(({ data, total }) => {
                     this.setState({
                         data: hasGroups ? translateDataSourceResultGroups(data) : data,

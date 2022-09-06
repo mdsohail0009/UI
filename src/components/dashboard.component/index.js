@@ -9,6 +9,7 @@ import Wallets from '../dashboard.component/wallets.component';
 import YourPortfolio from '../dashboard.component/yourportfolio.component';
 import apiCalls from '../../api/apiCalls';
 import Notices from './notices';
+import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 
 class Home extends Component {
     state = {
@@ -16,12 +17,28 @@ class Home extends Component {
         initLoading: true,
         visible: false,
         childrenDrawer: false,
+        permissions: {}
     };
+    permissionsInterval;
     componentDidMount() {
+        getFeaturePermissionsByKeyName(`cockpit`)
         this.getNotices();
         this.dashboardTrack();
+        this.permissionsInterval = setInterval(this.loadPermissions, 200);
     }
-
+    loadPermissions = () => {
+        if (this.props.cockpitPermissions) {
+            clearInterval(this.permissionsInterval);
+            let _permissions = {};
+            for (let action of this.props.cockpitPermissions?.actions) {
+                _permissions[action.permissionName] = action.values;
+            }
+            this.setState({ ...this.state, permissions: _permissions });
+            if(_permissions.view!=true){
+                this.props.history.push(`/accessdenied`)
+            }
+        }
+    }
     dashboardTrack = () => {
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Cockpit page view', "Username": this.props.userProfileInfo?.userName, "customerId": this.props.userProfileInfo?.id, "Feature": 'Cockpit', "Remarks": 'Cockpit page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Cockpit' });
     }
@@ -32,15 +49,15 @@ class Home extends Component {
         const { data: notices } = this.props.dashboard?.notices;
         return (
             <div className="main-container">
-                 {this.props?.twoFA &&((!this.props?.twoFA?.isEnabled) && (!this.props?.twoFA?.loading)) && <div>
-                        <AlertConfirmation type="error" title={"2FA"} showIcon description="Please enable two-factor authentication (2FA) by clicking on user profile in the top right hand corner and navigating to “Manage Your Account” > “Security” or by clicking on Enable 2FA."
-                            action={
-                                <Button size="small" type="text" onClick={() => this.props.history.push(`/userprofile?key=2`)}>
-                                    Enable 2FA
-                                </Button>
-                            } />
-                    </div>}
-                    {this.props.dashboard.notices.loading === false ? <Carousel className="docreq-slider" autoplay={true}>
+                {this.props?.twoFA && ((!this.props?.twoFA?.isEnabled) && (!this.props?.twoFA?.loading)) && <div>
+                    <AlertConfirmation type="error" title={"2FA"} showIcon description="Please enable two-factor authentication (2FA) by clicking on user profile in the top right hand corner and navigating to “Manage Your Account” > “Security” or by clicking on Enable 2FA."
+                        action={
+                            <Button size="small" type="text" onClick={() => this.props.history.push(`/userprofile?key=2`)}>
+                                Enable 2FA
+                            </Button>
+                        } />
+                </div>}
+                {this.props.dashboard.notices.loading === false ? <Carousel className="docreq-slider" autoplay={true}>
                     {notices?.map((notice, idx) => <div key={idx}>
                         <AlertConfirmation type="error" title={notice.title} showIcon description="Our Compliance Team is requesting documents in line with your recent transaction, Please click View Details. Thank you for your patience."
                             action={
@@ -51,25 +68,25 @@ class Home extends Component {
                     </div>)}
                 </Carousel> : ""}
 
-                <Row justify="center mt-36">
-                    <Col xs={24} md={12} xl={10}>
-                        <div className="markets-panel mb-36">
+                <Row justify="center mt-16">
+                    {this.state.permissions?.Balances && <Col xs={24} md={12} xl={10}>
+                        <div className="markets-panel mb-16 markets-line">
                             <Wallets />
                         </div>
                         <div className="markets-panel">
                             <YourPortfolio />
                         </div>
-                    </Col>
+                    </Col>}
                     <Col xs={24} md={12} xl={14}>
-                        <Portfolio
+                        {this.state.permissions.Transactions && <Portfolio
                             crypto="Bitcoin"
                             crypto_value='0.00'
                             crypto_usd="0.00 BTC"
-                            crypto_stock="0.0%" />
-                        <Notices />
-                        <div className="markets-panel">
+                            crypto_stock="0.0%" />}
+                        {this.state.permissions.Notices && <Notices />}
+                        {this.state.permissions.Markets && <div className="markets-panel mr-0">
                             <MarketCap />
-                        </div>
+                        </div>}
                     </Col>
                 </Row>
             </div >
@@ -78,7 +95,7 @@ class Home extends Component {
 
     }
 }
-const mapStateToProps = ({ userConfig, dashboard }) => {
-    return { userProfileInfo: userConfig.userProfileInfo, dashboard, twoFA: userConfig.twoFA }
+const mapStateToProps = ({ userConfig, dashboard, menuItems }) => {
+    return { userProfileInfo: userConfig.userProfileInfo, dashboard, twoFA: userConfig.twoFA, cockpitPermissions: menuItems?.featurePermissions?.cockpit }
 }
 export default connect(mapStateToProps, (dispatch) => { return { dispatch } })(Home);

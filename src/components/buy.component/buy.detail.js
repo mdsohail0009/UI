@@ -122,17 +122,21 @@ class SelectCrypto extends Component {
                 {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="error" message={apicalls.convertLocalLang('buy_crypto')} description={this.state.error?.message} />}
                 <div className="selectcrypto-container">
                     <Card className="crypto-card select mb-36" bordered={false}>
-                        <span className="d-flex align-center">
+                    <div className='d-flex justify-content'>
+                        <div>
+                        <span className="d-flex align-center mb-4">
                             <Image preview={false} src={impageWhitePath}/>
-                            <Text className="fs-24 text-purewhite crypto-name ml-8">{coinFullName}</Text>
+                            <Text className="crypto-percent text-purewhite">{percentage}<sup className="percent text-purewhite">%</sup></Text>
                         </span>
+                        <Text className="fs-24 text-purewhite crypto-name ml-4">{coinFullName}</Text>
+                        </div>
                         <div className="crypto-details">
-                            <Text className="crypto-percent text-purewhite fw-700">{percentage}<sup className="percent text-purewhite fw-700">%</sup></Text>
+                            
                             <div className="fs-16 text-purewhite fw-200 crypto-amount">
                                 <Currency prefix={""} defaultValue={coinBalance} suffixText={coin} />
                                 <NumberFormat value={coinFullName} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props}>{value}</div>} />
                             </div>
-                        </div>
+                        </div></div>
                     </Card>
                     <LocalCryptoSwapperCmp
                         localAmt={localValue}

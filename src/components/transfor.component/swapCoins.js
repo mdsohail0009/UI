@@ -7,9 +7,10 @@ import apiCalls from '../../api/apiCalls'
 import NumberFormat from 'react-number-format';
 import {setStepcode,setTransforObj} from '../../reducers/tranfor.Reducer'
 import Currency from '../shared/number.formate';
+import { setCurrentAction } from '../../reducers/actionsReducer';
 const { Option } = Select;
 
-const  TranforCoins = ({userProfile,onClose,dispatch,transforObj}) =>{
+const  TranforCoins = ({userProfile,onClose,dispatch,transforObj,transferPermissions}) =>{
     useEffect(()=>{
         loadApis();
         if(transforObj){
@@ -26,8 +27,10 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj}) =>{
     const [selectedwalletType,setSelectedwalletType] = useState(null)
     const useDivRef = React.useRef(null);
     const [form] = Form.useForm();
+    const [permission,setPermission]=useState({});
     // const [transfordata,setTransfordata] = useState(null)
     useEffect(()=>{
+        loadPermissions()
         if(transforObj && currencyLu.length>0){
             showBalance(transforObj.walletCode)
         }
@@ -37,6 +40,17 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj}) =>{
             handleFromchange(transforObj.fromWalletType)
         }
     },[fromWalletLu])
+
+
+   const loadPermissions = () => {
+		if (transferPermissions) {
+			let _permissions = {};
+			for (let action of transferPermissions?.actions) {
+				_permissions[action.permissionName] = action.values;
+			}
+            setPermission(_permissions)
+		}
+	}
     const loadApis = async()=>{
         let luLoader=false;
         let currencyLoder=false;
@@ -118,7 +132,6 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj}) =>{
         if(values.transferAmount.indexOf('.')==0){
             values.transferAmount = '0'+values.transferAmount
         }
-        // console.log(values)
         // const res = saveTransfor(values);
         // if(res.ok){
         //     onClose()
@@ -269,7 +282,7 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj}) =>{
                     </Form.Item>
                 </Col>
                 <Form.Item className="mb-0 mt-16">
-                    <Button
+                  {permission?.Transfer&& <Button
                       htmlType="submit"
                       size="large"
                       block
@@ -277,7 +290,7 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj}) =>{
                       loading={false}
                     >
                       <Translate content="transfor_btn_cnftransfor" style={{marginLeft:"15px"}} component={Form.label} />
-                    </Button>
+                    </Button>}
                   </Form.Item>
             </Form>
         </div>
@@ -285,11 +298,16 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj}) =>{
     </>)
 
 } 
-const connectStateToProps = ({ userConfig, TransforStore }) => {
-    return { userProfile: userConfig.userProfileInfo, transforObj:TransforStore.transforObj }
+
+
+const connectStateToProps = ({ userConfig,TransforStore,menuItems }) => {
+    return { userProfile: userConfig.userProfileInfo, transforObj:TransforStore.transforObj, transferPermissions:menuItems?.featurePermissions?.transfer }
 }
 const connectDispatchToProps = dispatch => {
     return {
+        setAction: (val) => {
+            dispatch(setCurrentAction(val))
+          },
         dispatch
     }
 }

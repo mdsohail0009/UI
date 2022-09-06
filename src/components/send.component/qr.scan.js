@@ -7,6 +7,7 @@ import QRCodeComponent from '../qr.code.component';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Loader from '../../Shared/loader';
 import apicalls from '../../api/apiCalls';
+import { getNetworkLu } from './api';
 import {
     EmailShareButton, EmailIcon,
     FacebookShareButton, FacebookIcon,
@@ -15,12 +16,20 @@ import {
     WhatsappShareButton, WhatsappIcon
 } from "react-share";
 class QRScan extends Component {
-    state = {}
+    constructor(props) {
+        super(props);
+        this.state = {
+            error: '',
+            netWorkData: [],
+            isnetworktrigger:false
+        }
+    }
     success = () => {
         message.success('Address was copied!');
     };
     componentDidMount() {
         this.trackevent();
+        
     }
     componentWillUnmount() {
         this.props.dispatch(setWalletAddress(null))
@@ -30,22 +39,33 @@ class QRScan extends Component {
             "Type": 'User', "Action": 'Deposit Crypto Scan page view', "Username": this.props.userProfile.userName, "customerId": this.props.userProfile.id, "Feature": 'Deposit Crypto', "Remarks": "Deposit Crypto Scan page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Crypto'
         });
     }
+    getNetworkObj = async () => {
+        this.setState({isnetworktrigger:true});
+        const response = await getNetworkLu(this.props?.sendReceive?.depositWallet?.walletCode);
+        console.log("HHHHHHHHH", response)
+        if (response.ok) {
+            this.setState({ netWorkData: response.data });
+        } else {
+            this.setState({ error: response.data });
+        }
+    }
+
     get walletAddress() {
         return this.props?.sendReceive?.depositWallet?.walletAddress
     }
     get shareMenu() {
         return <Menu className="share-adrs">
             <Menu.Item>
-                <WhatsappShareButton te url={process.env.REACT_APP_WEB_URL} title={this.walletAddress} >
+                <WhatsappShareButton te url={process.env.REACT_APP_WEB_URL} title={`Hello, I would like to share with my ${this.props?.sendReceive?.depositWallet?.walletCode} address for receive ${this.walletAddress}.Note:(Please make sure you are using the correct protocol otherwise you are risking of loosing the funds).I am using Suissebase. Thank you.`} >
                     <WhatsappIcon size={32} round={true} />
                 </WhatsappShareButton>
             </Menu.Item>
             <Menu.Item>
-                <EmailShareButton url={process.env.REACT_APP_WEB_URL} subject={"Wallet Address"} body={this.walletAddress} separator={";"} >
+                <EmailShareButton url={process.env.REACT_APP_WEB_URL} subject={"Wallet Address"} body={`Hello, I would like to share with my ${this.props?.sendReceive?.depositWallet?.walletCode} address for receive ${this.walletAddress}.Note:(Please make sure you are using the correct protocol otherwise you are risking of loosing the funds).I am using Suissebase. Thank you.`}  >
                     <EmailIcon size={32} round={true} />
                 </EmailShareButton>
             </Menu.Item>
-            <Menu.Item>
+            {/* <Menu.Item>
                 <TwitterShareButton url={process.env.REACT_APP_WEB_URL} title={this.walletAddress} >
                     <TwitterIcon size={32} round={true} />
                 </TwitterShareButton>
@@ -59,7 +79,7 @@ class QRScan extends Component {
                 <TelegramShareButton url={process.env.REACT_APP_WEB_URL} title={this.walletAddress} >
                     <TelegramIcon size={32} round={true} />
                 </TelegramShareButton>
-            </Menu.Item>
+            </Menu.Item> */}
         </Menu>
     }
     render() {
@@ -67,15 +87,27 @@ class QRScan extends Component {
         if (!this.props?.sendReceive?.depositWallet?.walletAddress) {
             return <Loader />
         }
+        const {netWorkData, isnetworktrigger}=this.state;
+        if(netWorkData.length<1 && !isnetworktrigger && this.props?.sendReceive?.depositWallet){
+            this.getNetworkObj()
+        }
         return (
             <div>
+               <div className="text-center f-12 mt-16 text-white custom-crypto-btns">
+                    {netWorkData && netWorkData.map((network) => {
+                        return <>
+                            <span className="mr-16 custom-bnt text-white-30 ">{network.code}</span>
+                        </>
+                    })}
+                </div>
                 <div className="scanner-img">
                     <QRCodeComponent value={this.props?.sendReceive?.depositWallet?.walletAddress} size={150} />
                 </div>
-                <div className="crypto-address">
-                    <Translate className="mb-0 fw-400 text-secondary" content="address" component={Text} />
+                <div className="crypto-address text-white">
+                    <Translate className="mb-0 fw-400 text-secondary" content="address" component={Text} />{" "}({this.props?.sendReceive?.depositWallet?.network})
+
                     <div className="mb-0 fw-600 text-white-30 walletadrs mb-copy">{this.props?.sendReceive?.depositWallet?.walletAddress}
-                        <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.walletAddress}  options={{ format: 'text/plain' }}>
+                        <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.walletAddress} options={{ format: 'text/plain' }}>
                             <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 custom-display"></Text>
                         </CopyToClipboard>
                     </div>
@@ -88,9 +120,13 @@ class QRScan extends Component {
                             <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 custom-display"></Text>
                         </CopyToClipboard></div>
                 </div>}
-                <Translate className="text-center f-12 text-white  mt-16" style={{fontWeight:"bolder"}}  content="address_hint_text" component={Paragraph} />
-                <Translate className="text-center f-12 text-white fw-200 mt-16" content="address_hint_text_1" component={Paragraph} />
-                <Paragraph className="text-center f-16 text-yellow fw-400 mt-16 mb-0">Note: {this.props?.sendReceive?.depositWallet?.note}</Paragraph>
+                <Paragraph>
+                    <ul className="text-white mt-24">
+                        <li className="list-dot"><Translate className=" f-12 text-white fw-200 mt-16" content="address_hint_text" component={Text} /></li>
+                        <li className="list-dot"><Translate className="f-12 text-white fw-200 mt-16" content="address_hint_text_1" component={Text} /></li>
+                        <li className="list-dot"><Text className=" f-12 text-yellow fw-200 mt-16">Note: {this.props?.sendReceive?.depositWallet?.note} </Text></li>
+                    </ul>
+                </Paragraph>
                 <Dropdown overlay={this.shareMenu}>
                     {/* <Button className="pop-btn mt-36" block>Share</Button> */}
                     <Button

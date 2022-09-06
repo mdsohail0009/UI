@@ -41,13 +41,18 @@ class SellToggle extends Component {
                 <div className="sellcrypto-container auto-scroll">
 
                     {this.props.sellData?.memberCoins?.data?.map((coin, idx) => <Card key={idx} className="crypto-card mb-16 c-pointer" bordered={false} onClick={() => { this.setCoinDetailData(coin); this.props.setExchangeValue({ key: coin.coin, value: coin.oneCoinValue }); }} >
-                        <span className="d-flex align-center">
+                    <div className="crypto-details d-flex">
+                    <div>
+                        <span className="d-flex align-center mb-4">
                             <Image preview={false} src={coin.impageWhitePath}/>
-                            <Text className="fs-24 textc-white crypto-name ml-12">{coin.coinFullName}</Text>
+                            <div className="crypto-percent">{coin.percentage}<sup className="percent textc-white fw-700">%</sup></div>
+
                         </span> 
-                        <div className="crypto-details">
-                            <Text className="crypto-percent textc-white fw-700">{coin.percentage}<sup className="percent textc-white fw-700">%</sup></Text>
-                            <div className="fs-16 textc-white fw-200 crypto-amount">
+                        
+                       
+                        <Text className="fs-24 textc-white crypto-name ml-4 mt-8">{coin.coinFullName}</Text>
+                        </div>
+                            <div className="fs-16 textc-white fw-200 crypto-amount ">
                                 <Currency prefix={""} defaultValue={coin.coinBalance} suffixText={coin.coin} />
                                 <Currency prefix={"$ "} defaultValue={coin.coinValueinNativeCurrency} suffixText="" />
                             </div>
