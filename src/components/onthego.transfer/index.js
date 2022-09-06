@@ -72,9 +72,10 @@ class OnthegoFundTransfer extends Component {
                             ]}
                         >
                             <Input.TextArea
-                                className="cust-input"
+                                className="cust-input cust-text-area address-book-cust"
                                 placeholder={"Description"}
-                                maxLength="500"
+                                maxLength={100}
+                                autoSize={{ minRows: 1, maxRows: 1 }}
                             />
                         </Form.Item>
 
@@ -113,11 +114,11 @@ class OnthegoFundTransfer extends Component {
                 </Row>
             </Form>,
             addressselection: <React.Fragment>
-                <div className="mb-16 text-center">
+                <div className="mb-16 text-left">
                     <text Paragraph
-                        className='text-white fs-30 fw-600  text-white px-4 '>Who are you sending money to?</text>
+                        className='text-white fs-30 fw-600 px-4 '>Who are you sending money to?</text>
                 </div>
-                <div className="d-flex cust-fund ml-24">
+                {/* <div className="d-flex cust-fund ml-24">
                 <label className="text-white">Search for Payeee</label>
                 <Search
                     placeholder=""
@@ -127,10 +128,29 @@ class OnthegoFundTransfer extends Component {
                     }}
                       autoComplete
                      
-                    /><Select className='text-black usr-add'>
-                  </Select>
+                    /> */}
+                    {/* <Select className='text-black usr-add'> */}
+                  {/* </Select> */}
                     {/* <span> <DownOutlined /></span> */}
-                </div>
+                {/* </div> */}
+                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>                         
+
+                            <Form.Item
+                                    className="custom-forminput custom-label mb-0 text-white-30 custom-placeholder"
+                                    name="lastName"
+                                    required
+                                    label={"Search for Payeee"}
+                                >     
+                                {/* <Search placeholder="Search" 
+                                addonAfter={<span className="icon md search-white" />}  size="middle" bordered={false} className="mt-24 mb-8 cust-input cust-select mb-0 text-white-30" />               */}
+                        <Select placeholder="Select Language" bordered={false}
+                            className="cust-input cust-select mb-0 text-white-30"
+                            dropdownClassName="select-drpdwn"
+                            addonAfter={<span className="icon md search-white" />}
+                           >
+                        </Select></Form.Item>
+                        </Col>
+
                 {(filterObj.length > 0) && <>
                     <Title className="fs-24 fw-600 text-white mt-24">Address Book</Title>
                     <Divider className="cust-divide" />

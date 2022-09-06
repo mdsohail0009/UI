@@ -28,11 +28,11 @@ class OthersBusiness extends Component {
                     onFinish={(values)=>{}}
                 >
                     <Row gutter={[16, 16]}>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
                                 name="favouriteName"
-                                label={"Save Whitelist name as"}
+                                label={"Save Whitelist Name As"}
                                 required
                                 rules={[
                                     {
@@ -58,10 +58,10 @@ class OthersBusiness extends Component {
                             </Form.Item>
                         </Col>
                     </Row>
-                    <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16">Recipient's Details</Paragraph>
-                    <Divider />
+                    <Paragraph className="mb-8 fs-18 text-white fw-500 mt-16"  style={{ fontSize: 18}} >Recipient's Details</Paragraph>
+                    {/* <Divider /> */}
                     <Row gutter={[16, 16]}>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
                                 name="beneficiaryName"

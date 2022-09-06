@@ -372,7 +372,7 @@ class PaymentsView extends Component {
                 <div className="main-container">
                     <Title className="basicinfo mb-16">Add Beneficiary Details</Title>
                     <div className="box basic-info">
-                        <Translate
+                        <Translate style={{ fontSize: 18}}
                             content="Beneficiary_Details"
                             component={Paragraph}
                             className="mb-16 fs-20 text-white fw-500"

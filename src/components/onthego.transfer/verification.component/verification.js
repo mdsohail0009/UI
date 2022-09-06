@@ -50,10 +50,10 @@ const Verification = (props) => {
 
 	const btnList = {
 		get_otp: (
-			<Text className="pl-0 ml-0 text-yellow-50" style={{ color: "yellow" }}>Click here to get Code</Text>
+			<Text className="text-yellow" >Click here to get Code</Text>
 		),
 		resendotp: (
-			<Text className="pl-0 ml-0 text-yellow-50" style={{ color: "yellow" }}>Resend Code</Text>
+			<Text className="text-yellow" >Resend Code</Text>
 		),
 		sentVerify: (
 			<Text
@@ -63,37 +63,37 @@ const Verification = (props) => {
 		),
 		verified: (
 
-			<Text className="pl-0 ml-0 text-yellow-50"> </Text>
+			<Text className="text-yellow"> </Text>
 
 		),
 	};
 	const verifyOtp = {
 		verifyOtpBtn: (
 
-			<Text className={`pl-0 ml-0 text-yellow-50 `} style={{ color: "yellow" }}>Click here to verify</Text>
+			<Text className={` text-yellow`} >Click here to verify</Text>
 		),
 	};
 	const emailBtn = {
 		get_email: (
 
-			<Text className={`pl-0 ml-0 text-yellow-50`} style={{ color: "yellow" }}>Click here to get code</Text>
+			<Text className={`text-yellow`} >Click here to get code</Text>
 		),
 		resendEmail: (
 
-			<Text className={`pl-0 ml-0 text-yellow-50 `} style={{ color: "yellow" }}>Click here to resend code</Text>
+			<Text className={`text-yellow `}>Click here to resend code</Text>
 
 		),
 		sentVerification: (
 
 			<Text
-				className={`pl-0 ml-0 text-white-50
+				className={`
             ${textDisable ? "c-notallowed" : ""}`}>Verification code sent</Text>
 		),
 	};
 	const verifyText = {
 		verifyTextBtn: (
 
-			<Text className={`pl-0 ml-0 text-yellow-50 `} style={{ color: "yellow" }}>Click here to verify</Text>
+			<Text paragraph className={`text-yellow `}>Click here to verify</Text>
 		),
 	};
 
@@ -433,8 +433,9 @@ const Verification = (props) => {
 										{!verifyEmailOtp && (
 											<Button
 												type="text"
-												style={{ color: "black" }}
+												// style={{ color: "black" }}
 												//loading={emailLoading}
+												style={{ color: "black", margin: "0 auto" }}
 												onClick={getEmail}>
 												{isResend && emailBtn[emailText]}
 											</Button>
@@ -512,7 +513,7 @@ const Verification = (props) => {
 										{!verifyTextotp && (
 											<Button
 												type="text"
-												style={{ color: "black" }}
+												style={{ color: "black", margin: "0 auto" }}
 												//loading={phoneLoading}
 												onClick={getOTP}
 												disabled={disable}>
@@ -526,7 +527,7 @@ const Verification = (props) => {
 												<span className="icon md info mr-8" />
 											</Tooltip>
 										)}
-										<Button
+										{/* <Button
 											type="text"
 											style={{ color: "black", margin: "0 auto" }}
 											onClick={getOtpVerification}
@@ -537,7 +538,20 @@ const Verification = (props) => {
 												<span className="icon md greenCheck" />
 											)}
 
-										</Button>
+										</Button> */}
+										{verify == true && (
+											<Button
+												type="text"
+												//loading={emailVerifyLoading}
+												onClick={getOtpVerification}
+												disabled={verifyPhone === true}>
+												{verifyOtp[verifyOtpText]}
+												{verifyTextotp === true && (
+													<span className="icon md greenCheck" />
+												)}
+
+											</Button>
+										)}
 									</div>
 								</div>
 							</Form.Item>

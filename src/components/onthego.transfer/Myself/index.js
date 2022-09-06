@@ -17,8 +17,8 @@ const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
         {currency === "USD" && <>
             <Row gutter={[16, 16]}>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
-                    <Tabs style={{ color: '#fff' }} onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey }); }}>
-                        <Tabs.TabPane tab="Domestic USD Transfer" className="text-white" key={"domestic"}></Tabs.TabPane>
+                    <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey }); }}>
+                        <Tabs.TabPane tab="Domestic USD Transfer" className="text-white"  key={"domestic"}></Tabs.TabPane>
                         <Tabs.TabPane tab="International USD Swift" className="text-white" key={"international"}></Tabs.TabPane>
                     </Tabs>
                 </Col>
@@ -26,12 +26,12 @@ const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
         </>}
 
         {currency == 'EUR' && <h2 style={{ fontSize: 18, textAlign: 'center', color: "white" }}>SEPA transfer</h2>}
-        <Row gutter={[16, 16]}><Col xs={24} md={12} lg={12} xl={12} xxl={12} id="favoriteName">
+        <Row gutter={[16, 16]}><Col xs={24} md={24} lg={24} xl={24} xxl={24} id="favoriteName">
             <Form.Item
                 className="custom-forminput custom-label mb-0"
                 name="favouriteName"
                 label={
-                    "Save Whitelist name as"
+                    "Save Whitelist Name As"
                 }
                 required
                 rules={[
@@ -52,7 +52,7 @@ const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
                     onChange={(e) => { }}
                     maxLength={20}
                     className="cust-input"
-                    placeholder={"Save Whitelist name as"}
+                    placeholder={"Save Whitelist Name As"}
                 >
                     {payeeLu?.map((item, indx) => (
                         <Option key={indx} value={item.name}>
@@ -81,7 +81,7 @@ const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
                     />
                 </Form.Item>
             </Col>}</Row>
-        <h2 style={{ fontSize: 16, color: "white" }}>Recipient's details</h2>
+        <h2 style={{ fontSize: 18, color: "white" }} className="mt-16">Recipient's details</h2>
 
         <div className="box basic-info alert-info-custom mt-16">
             <Row>
@@ -131,7 +131,7 @@ const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
             </Row>
         </div>
 
-        <h2 style={{ fontSize: 16, color: "white" }}>Bank details</h2>
+        <h2 style={{ fontSize: 18, color: "white" }} className="mt-16">Bank details</h2>
         {currency == 'EUR' && accountType && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
             <Form.Item
                 className="custom-forminput custom-label mb-0"
