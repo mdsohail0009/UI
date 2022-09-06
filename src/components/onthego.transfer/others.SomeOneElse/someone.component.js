@@ -1,26 +1,44 @@
 import React, { useEffect, useState } from "react";
 import { Input, Row, Col, Form, Button, Typography, Radio, Tabs, Image } from 'antd';
-import apicalls from "../../../api/apiCalls";
+import {createPayee, payeeAccountObj, savePayee} from "../api";
 import AddressDocumnet from "../../addressbook.component/document.upload";
-import FiatAddress from "../../addressbook.component/fiat.address";
 import PayeeBankDetails from "./bankdetails.component";
 import { validateContentRule } from "../../../utils/custom.validator";
 import Translate from "react-translate-component";
 import { Link } from 'react-router-dom';
 import apiCalls from "../../../api/apiCalls";
+import ConnectStateProps from "../../../utils/state.connect";
 const { Paragraph, Text, Title } = Typography;
 const { Search } = Input;
 
 const SomeoneComponent = (props) => {
     const [addressOptions, setAddressOptions] = useState({ addressType: "someoneelse", transferType: props.currency === "EUR" ? "sepa" : "swift", domesticType: 'domestic' });
     const [bankdetails, setBankdetails] = useState(null);
+    const [createPayeeObj, setCreatePayeeObj] = useState(null);
     const [form]=Form.useForm();
     useEffect(() => {
+        getpayeeCreate();
         form.setFieldsValue({ addressType: 'someoneelse', transferType: props.currency === "USD" ? 'sepa' : 'domestic' })
     }, [])
-    const onSubmit = (values) =>{
-        console.log(values)
-        console.log(bankdetails)
+    const getpayeeCreate = async() =>{
+        const createPayeeData = await createPayee(props.userProfile.id,'',addressOptions.addressType);
+        if(createPayeeData.ok){
+            setCreatePayeeObj(createPayeeData.data);
+        }
+    }
+    const onSubmit = async(values) =>{
+        // values.payeeAccountModels[0] = {...createPayeeObj.payeeAccountModels,...bankdetails}
+        let obj = {...createPayeeObj,...values};
+        obj.payeeAccountModels = [payeeAccountObj()];
+        obj.payeeAccountModels[0] = {...obj.payeeAccountModels[0],...bankdetails};
+        obj.payeeAccountModels[0].currencyType = props.currency;
+        obj['customerId'] = props.userProfile.id;
+        obj['amount'] = props.onTheGoObj.amount;
+        let payeesave = await savePayee(obj)
+        if(payeesave.ok){
+            console.log(payeesave.data)
+        }
+        
     }
     const getIbandata = (data) =>{
         setBankdetails(data);
@@ -253,4 +271,4 @@ const SomeoneComponent = (props) => {
         </>
     </React.Fragment>)
 }
-export default SomeoneComponent;
+export default ConnectStateProps(SomeoneComponent);

@@ -60,16 +60,18 @@ class OthersBusiness extends Component {
         _obj.payeeAccountModels[0].currencyType = "Fiat";
         _obj.payeeAccountModels[0].walletCode = "EUR";
         _obj.payeeAccountModels[0].bankName = ibanDetails?.bankName;
-
+        delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
         _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
         _obj.addressType = "Business";
         _obj.transferType = "sepa";
-        _obj.amount=this.props.amount;
+        _obj.amount = this.props.amount;
         const response = await savePayee(_obj);
         if (response.ok) {
-            this.setState({ ...this.state, errorMessage: null, isLoading: false });
+            this.setState({ ...this.state, errorMessage: null, isLoading: false }, () => {
+                this.props.onContinue(response.data);
+            });
         } else {
-            this.setState({ ...this.state, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false });
+            this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false });
         }
 
     }

@@ -1,4 +1,4 @@
-import { Tabs } from "antd";
+import { Alert, Tabs } from "antd";
 import { Form, Row, Col, AutoComplete, Select, Divider, Typography, Input, Button } from "antd";
 import React, { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
@@ -25,7 +25,7 @@ class BusinessTransfer extends Component {
     }
     loadDetails = async () => {
         this.setState({ ...this.state, errorMessage: null, isLoading: true });
-        const response = await createPayee(this.props.userProfile.id, "","business");
+        const response = await createPayee(this.props.userProfile.id, "", "business");
         if (response.ok) {
             let data = response.data;
             if (!data?.payeeAccountModels) {
@@ -40,7 +40,7 @@ class BusinessTransfer extends Component {
 
     }
     submitPayee = async (values) => {
-        let { details,selectedTab } = this.state;
+        let { details, selectedTab } = this.state;
         let _obj = { ...details, ...values };
         _obj.payeeAccountModels[0].currencyType = "Fiat";
         _obj.payeeAccountModels[0].walletCode = "USD";
@@ -53,23 +53,27 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
         _obj.addressType = "Business";
         _obj.transferType = selectedTab;
-        _obj.amount=this.props.amount;
+        _obj.amount = this.props.amount;
+        delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
+        this.setState({...this.state,errorMessage:null,isLoading:true});
         const response = await savePayee(_obj);
         if (response.ok) {
-            this.setState({ ...this.state, errorMessage: null, isLoading: false });
+            this.setState({ ...this.state, errorMessage: null, isLoading: false },()=>{
+                this.props.onContinue(response.data);
+            });
         } else {
-            this.setState({ ...this.state, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false });
+            this.setState({ ...this.state,details:{...details,...values}, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false });
         }
-
     }
     handleTabChange = (key) => {
         this.setState({ ...this.state, selectedTab: key });
-       setTimeout(()=>{ this.form.current.setFieldsValue(this.form.current.getFieldsValue())},500);
     }
     render() {
-        const { isLoading, details,selectedTab } = this.state;
+        const { isLoading, details, selectedTab, errorMessage } = this.state;
         return <Tabs className="cust-tabs-fait" onChange={this.handleTabChange} activeKey={selectedTab}>
             <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"}>
+            {errorMessage && <Alert type="error" description={errorMessage} showIcon />}
+               
                 {!isLoading && <Form initialValues={details}
                     className="custom-label  mb-0"
                     ref={this.form}
@@ -168,6 +172,7 @@ class BusinessTransfer extends Component {
                 {isLoading && <Loader />}
             </Tabs.TabPane>
             <Tabs.TabPane tab="International USD Swift" key={"international"}>
+                {errorMessage && <Alert type="error" description={errorMessage} showIcon />}
                 {!isLoading && <Form initialValues={details}
                     className="custom-label  mb-0"
                     ref={this.form}
