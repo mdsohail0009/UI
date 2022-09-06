@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input, Row, Col, Form, Button, Typography, Radio, Tabs, Image } from 'antd';
 import apicalls from "../../../api/apiCalls";
 import AddressDocumnet from "../../addressbook.component/document.upload";
@@ -13,17 +13,19 @@ const { Paragraph, Text, Title } = Typography;
 const { Search } = Input;
 
 const SomeoneComponent=(props)=>{
-    const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType: props.currency === "EUR" ? "sepa" : "swift", domesticType:'domestic' });
+    const [addressOptions, setAddressOptions] = useState({ addressType: "someoneelse", transferType: props.currency === "EUR" ? "sepa" : "swift", domesticType:'domestic' });
     const [isCCSP, setCCSP] = useState(false);
-    
+        useEffect(() =>{
+            props.form.setFieldsValue({addressType:'someoneelse',transferType:props.currency === "USD"?'sepa':'domestic'})
+        },[])
         return (<React.Fragment>
             <>
-            {console.log(props)}
-              
                     {props.currency === "USD" && <>
                         <Row gutter={[16, 16]}>
                             <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
-                                <Tabs style={{color:'#fff'}} className="cust-tabs-fait" onChange={(activekey)=>{setAddressOptions({ ...addressOptions, domesticType: activekey });props.form.resetFields()}}>
+                                <Tabs style={{color:'#fff'}} className="cust-tabs-fait" onChange={(activekey)=>{setAddressOptions({ ...addressOptions, domesticType: activekey });props.form.resetFields();
+                                props.form.setFieldsValue({addressType:'someoneelse',transferType:activekey})
+                                }}>
                                     <Tabs.TabPane tab="Domestic USD Transfer" className="text-white" key={"domestic"}></Tabs.TabPane>
                                     <Tabs.TabPane tab="International USD Swift" className="text-white" key={"international"}></Tabs.TabPane>
                                 </Tabs>
@@ -35,7 +37,7 @@ const SomeoneComponent=(props)=>{
                             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                                 <Form.Item
                                     className="custom-forminput custom-label mb-0"
-                                    name="firstName"
+                                    name="favouriteName"
                                     required
                                     rules={[
                                         {
@@ -128,7 +130,7 @@ const SomeoneComponent=(props)=>{
                             <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item
                                     className="custom-forminput custom-label mb-0"
-                                    name="addressline1"
+                                    name="line1"
                                     required
                                     rules={[
                                         {
@@ -156,7 +158,7 @@ const SomeoneComponent=(props)=>{
                             <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item
                                     className="custom-forminput custom-label mb-0"
-                                    name="addressline1"
+                                    name="line2"
                                     required
                                     rules={[
                                         {
@@ -184,7 +186,7 @@ const SomeoneComponent=(props)=>{
                             <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item
                                     className="custom-forminput custom-label mb-0"
-                                    name="addressline1"
+                                    name="line3"
                                     required
                                     rules={[
                                         {
@@ -224,11 +226,11 @@ const SomeoneComponent=(props)=>{
                             {apicalls.convertLocalLang("cancel")}
                         </Button> */}
                         <Button
-                            htmlType="button"
+                            htmlType="submit"
                             size="large"
                             className="pop-btn px-36"
                             style={{ minWidth: 150 }}
-                            onClick={() => props.onContinue("reviewdetails")}
+                            // onClick={() => console.log(props.form.getFieldsValue())}
                         >
                             <Translate content="continue" />
                         </Button>
