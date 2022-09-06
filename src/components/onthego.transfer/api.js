@@ -4,9 +4,9 @@ import { ApiControllers } from "../../api/config";
 const fetchIBANDetails = (iban) => {
     return apiClient.get(ApiControllers.master + `GetIBANAccountDetails?ibanNumber=${iban}`)
 }
-const createPayee = (account_id, addr_book_id,payeeType) => {
+const createPayee = (account_id, addr_book_id,address_type) => {
     addr_book_id = addr_book_id || "00000000-0000-0000-0000-000000000000";
-    return apiClient.get(ApiControllers.addressbook + `payee/Withdraw/Favourite/${addr_book_id}/${account_id}/${payeeType}`)
+    return apiClient.get(ApiControllers.addressbook + `payee/Withdraw/Favourite/${addr_book_id}/${account_id}/${address_type}`)
 }
 const payeeAccountObj = () => {
     return {

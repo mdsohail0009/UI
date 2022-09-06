@@ -9,15 +9,25 @@ import { connect } from "react-redux";
 
 const { Option } = Select;
 const { Text } = Typography;
-const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
+const MyselfNewTransfer = ({ currency, isBusiness, ...props }) => {
     const [form] = Form.useForm();
     const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType: currency === "EUR" ? "sepa" : "swift", domesticType: 'domestic', tabType: 'domestic' });
     const [bankDetails, setbankDetails] = useState({})
-    const [saveTransferObj,setsaveTransferObj]= useState({"id":"","customerId":props.userConfig.id,"favouriteName":"","firstName":"","lastName":"","beneficiaryName":"","line1":"","line2":"","line3":"","transferType":"","addressType":"","isAgree":true,"info":"","isBankContact":true,"relation":"","reasonOfTransfer":"","amount":0,"payeeAccountModels":[{"id":"","line1":"","line2":"","city":"","state":"","country":"","postalCode":"","currencyType":"","walletCode":"","accountNumber":"","swiftRouteBICNumber":"","bankName":"","userCreated":"","iban":"","bic":"","bankBranch":"","abaRoutingCode":"","documents":null}]})
+    const [saveTransferObj,setsaveTransferObj]= useState({"id":"00000000-0000-0000-0000-000000000000","customerId":props.userConfig.id,"favouriteName":"","firstName":"","lastName":"","beneficiaryName":"","line1":"","line2":"","line3":"","transferType":"","addressType":"","isAgree":true,"info":"","isBankContact":true,"relation":"","reasonOfTransfer":"","amount":0,"payeeAccountModels":[{"id":"00000000-0000-0000-0000-000000000000","line1":"","line2":"","city":"","state":"","country":"","postalCode":"","currencyType":"","walletCode":"","accountNumber":"","swiftRouteBICNumber":"","bankName":"","userCreated":props?.userConfig.firstName + props?.userConfig.lastName,"iban":"","bic":"","bankBranch":"","abaRoutingCode":"","documents":null}]})
     const [createTransfer]=useState({"favouriteName":"","accountNumber":"","swiftRouteBICNumber":"","bankName":"","iban":"","abaRoutingCode":"","line1":"","line2":""})
+    const [recipientDetails,setRecipientDetails]=useState({})
+    const [transfertypes]=useState({domestic:'Domestic',international:'International'})
     useEffect(() => {
+        getRecipientDetails()
     }, [])
-    const saveTransfer = (values) => {
+    const getRecipientDetails=async()=>{
+        const response = await apiCalls.getRecipientData(props.userConfig.id,isBusiness?'OwnBusiness':'MySelf');
+        if (response.ok) {
+            setRecipientDetails(response.data)
+            console.log(recipientDetails)
+        }
+    }
+    const saveTransfer = async(values) => {
         let saveObj=Object.assign({},saveTransferObj)
         saveObj.favouriteName=values.favouriteName;
         saveObj.payeeAccountModels[0].iban=currency=='EUR'?values.iban:null;
@@ -33,7 +43,20 @@ const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
         saveObj.payeeAccountModels[0].country=bankDetails.country?bankDetails.country:null;
         saveObj.payeeAccountModels[0].city=bankDetails.city?bankDetails.city:null;
         saveObj.payeeAccountModels[0].postalCode=bankDetails.zipCode?bankDetails.zipCode:null;
-        
+        saveObj.firstName=recipientDetails.firstName;
+        saveObj.lastName=recipientDetails.lastName;
+        saveObj.beneficiaryName=recipientDetails.beneficiaryName;
+        saveObj.line1=recipientDetails.line1;
+        saveObj.line2=recipientDetails.line2;
+        saveObj.line3=recipientDetails.line3;
+        saveObj.addressType=isBusiness?'OwnBusiness':'MySelf';
+        saveObj.transferType=transfertypes[addressOptions.tabType];
+        saveObj.payeeAccountModels[0].currencyType='fiat';
+        saveObj.payeeAccountModels[0].walletCode=currency;
+        const response = await apiCalls.saveTransferData(saveObj);
+        if (response.ok) {
+           props.onContinue()
+        }
     }
     const getBankDeails = async (e) => {
         const response = await apiCalls.getIBANData(e.target.value);
@@ -84,7 +107,7 @@ const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
                     />
             </Form.Item>
         </Col>
-            {currency == 'EUR' && !accountType && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+            {currency == 'EUR' && !isBusiness && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
                     className="custom-forminput custom-label mb-0"
                     name="iban"
@@ -110,46 +133,46 @@ const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
 
         <div className="box basic-info alert-info-custom mt-16">
             <Row>
-                {!accountType && <><Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                {!isBusiness && <><Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                     <label className="fs-14 fw-400 ">
                         <strong>First Name</strong>
                     </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">XXX</Text></div>
+                    <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.firstName}</Text></div>
 
                 </Col>
                     <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                         <label className="fs-14 fw-400 ">
                             <strong>Last Name</strong>
                         </label>
-                        <div><Text className="fs-14 fw-400 text-purewhite">XS</Text></div>
+                        <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.lastName}</Text></div>
 
                     </Col></>}
-                {accountType && <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                {isBusiness && <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                     <label className="fs-14 fw-400 ">
                         <strong>Beneficiary Name</strong>
                     </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">XXX</Text></div>
+                    <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.beneficiaryName}</Text></div>
 
                 </Col>}
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                     <label className="fs-14 fw-400 ">
                         <strong>Address Line 1</strong>
                     </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">XXX</Text></div>
+                    <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.line1!=null?recipientDetails.line1:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                     <label className="fs-14 fw-400 ">
                         <strong>Address Line 2</strong>
                     </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">XXX</Text></div>
+                    <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.line2!=null?recipientDetails.line2:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                     <label className="fs-14 fw-400 ">
                         <strong>Address Line 3</strong>
                     </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">XXX</Text></div>
+                    <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.line3!=null?recipientDetails.line3:'-'}</Text></div>
 
                 </Col>
 
@@ -157,7 +180,7 @@ const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
         </div>
 
         <h2 style={{ fontSize: 18, color: "white" }} className="mt-16">Bank details</h2>
-        {currency == 'EUR' && accountType && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+        {currency == 'EUR' && isBusiness && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
             <Form.Item
                 className="custom-forminput custom-label mb-0"
                 name="iban"
