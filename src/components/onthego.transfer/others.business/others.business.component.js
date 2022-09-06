@@ -4,7 +4,7 @@ import apiCalls from "../../../api/apiCalls";
 import { validateContentRule } from "../../../utils/custom.validator";
 import AddressDocumnet from "../../addressbook.component/document.upload";
 import { RecipientAddress } from "../../addressbook.v2/recipient.details";
-import { createPayee, fetchIBANDetails, payeeAccountObj } from "../api";
+import { createPayee, fetchIBANDetails, payeeAccountObj, savePayee } from "../api";
 import BusinessTransfer from "./transfer";
 import Loader from '../../../Shared/loader';
 import ConnectStateProps from "../../../utils/state.connect";
@@ -53,7 +53,29 @@ class OthersBusiness extends Component {
     setMasterObj = (values) => {
 
     }
-    submitPayee = (values) => {
+    submitPayee = async (values) => {
+        let { details, ibanDetails } = this.state;
+        let _obj = { ...details, ...values };
+        _obj.payeeAccountModels[0].line1 = ibanDetails.bankAddress;
+        _obj.payeeAccountModels[0].city = ibanDetails?.city;
+        _obj.payeeAccountModels[0].state = ibanDetails?.state;
+        _obj.payeeAccountModels[0].country = ibanDetails?.country;
+        _obj.payeeAccountModels[0].postalCode = ibanDetails?.zipCode;
+        _obj.payeeAccountModels[0].bankBranch = ibanDetails?.branch;
+        _obj.payeeAccountModels[0].iban = values?.iban;
+        _obj.payeeAccountModels[0].currencyType = "Fiat";
+        _obj.payeeAccountModels[0].walletCode = "EUR";
+        _obj.payeeAccountModels[0].bankName = ibanDetails?.bankName;
+
+        _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
+        _obj.addressType = "Business";
+        _obj.transferType = "sepa";
+        const response = await savePayee(_obj);
+        if (response.ok) {
+            this.setState({ ...this.state, errorMessage: null, isLoading: false });
+        } else {
+            this.setState({ ...this.state, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false });
+        }
 
     }
     render() {
