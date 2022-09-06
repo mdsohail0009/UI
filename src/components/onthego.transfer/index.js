@@ -19,13 +19,17 @@ class OnthegoFundTransfer extends Component {
         // filterObj:[],
         filterObj: [{ lable: "Payee 100", address: "100032498902", type: "1st Party" }, { lable: "Payee 100", address: "100032498902", type: "3rd Party" }],
         addressOptions: { addressType: "myself", transferType:this.props.selectedCurrency==="EUR"? "sepa":"domestic" },
-        isNewTransfer: false
+        isNewTransfer: false,
+        onTheGoObj : {amount:'',description:''}
     }
-    chnageStep = (step) => {
+    chnageStep = (step,values) => {
         this.setState({ ...this.state, step });
         if (step === 'newtransfer') {
-            this.setState({ ...this.state, step, isNewTransfer: true });
+            this.setState({ ...this.state, step, isNewTransfer: true,onTheGoObj:values});
         }
+    }
+    amountnext = (values) =>{
+        this.chnageStep("newtransfer",values)
     }
     renderStep = (step) => {
         const { filterObj } = this.state;
@@ -33,6 +37,7 @@ class OnthegoFundTransfer extends Component {
             enteramount: <Form
                 autoComplete="off"
                 initialValues={{amount:""}}
+                onFinish = {this.amountnext}
             >
                 <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -91,7 +96,7 @@ class OnthegoFundTransfer extends Component {
                                 size="large"
                                 className="pop-btn mb-36"
                                 style={{ minWidth: 300 }}
-                                onClick={() => this.chnageStep("newtransfer")}
+                                //onClick={() => this.chnageStep("newtransfer")}
                             >
                                 New Transfer
                             </Button>
@@ -377,7 +382,7 @@ class OnthegoFundTransfer extends Component {
                 </Form>
             </React.Fragment>,
             newtransfer: <>
-                <FiatAddress currency={this.props.selectedCurrency} onContinue={()=>this.chnageStep("reviewdetails")} onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} />
+                <FiatAddress currency={this.props.selectedCurrency} onContinue={()=>this.chnageStep("reviewdetails")} onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} />
             </>,
             declaration: <div className="text-center">
                 <Image width={80} preview={false} src={alertIcon} />

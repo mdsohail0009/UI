@@ -13,7 +13,7 @@ import SomeoneComponent from "../onthego.transfer/others.SomeOneElse/someone.com
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
-const FiatAddress = ({ onSubmit, onAddressOptionsChange, onContinue, PayeeLu = [], emailExist = false, countries = [], states = [], fiatAddress, ...props }) => {
+const FiatAddress = ({ onSubmit, onAddressOptionsChange, onContinue, PayeeLu = [], emailExist = false, countries = [], states = [], fiatAddress, onTheGoObj,...props }) => {
     const [form] = useForm();
     const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType: props.currency === "EUR" ? "sepa" : "domestic" });
     const [isCCSP, setCCSP] = useState(false);
@@ -532,7 +532,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, onContinue, PayeeLu = [
     </Form>
         {addressOptions.addressType === "myself" && <MyselfNewTransfer currency={props.currency} onContinue={() => onContinue()} {...props} accountType={props.userProfile?.isBusiness}></MyselfNewTransfer>}
         {addressOptions.addressType === "business" && <OthersBusiness isUSDTransfer={props.currency === "USD" ? true : false} onContinue={() => onContinue()} />}
-        {addressOptions.addressType === "someoneelse" && <SomeoneComponent addressType={addressOptions.addressType} currency={props.currency} onContinue={() => onContinue()} />}
+        {addressOptions.addressType === "someoneelse" && <SomeoneComponent addressType={addressOptions.addressType} currency={props.currency} onContinue={() => onContinue()} onTheGoObj={onTheGoObj} />}
     </>
 }
 
