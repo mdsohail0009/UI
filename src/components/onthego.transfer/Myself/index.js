@@ -12,17 +12,10 @@ const { Text } = Typography;
 const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
     const [form] = Form.useForm();
     const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType: currency === "EUR" ? "sepa" : "swift", domesticType: 'domestic', tabType: 'domestic' });
-    const [payeeLu,setpayeeLu] = useState([])
+   
     const [bankDetails,setbankDetails]=useState({})
     useEffect(() => {
-        getPayeeLu()
     }, [])
-    const getPayeeLu = async () => {
-        const response = await apiCalls.getPayeeLu(props?.userConfig?.id,currency);
-        if (response.ok) {
-            setpayeeLu(response.data)
-        }
-    }
     const saveTransfer = () => {
 
     }
@@ -68,18 +61,11 @@ const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
                     },
                 ]}
             >
-                <AutoComplete
-                    onChange={(e) => { }}
-                    maxLength={20}
-                    className="cust-input"
-                    placeholder={"Save Whitelist Name As"}
-                >
-                    {payeeLu?.map((item, indx) => (
-                        <Option key={indx} value={item.name}>
-                            {item.name}
-                        </Option>
-                    ))}
-                </AutoComplete>
+               
+                <Input
+                        className="cust-input"
+                        placeholder='Save Whitelist Name As'
+                    />
             </Form.Item>
         </Col>
             {currency == 'EUR' && !accountType && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
