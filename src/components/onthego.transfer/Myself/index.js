@@ -12,12 +12,28 @@ const { Text } = Typography;
 const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
     const [form] = Form.useForm();
     const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType: currency === "EUR" ? "sepa" : "swift", domesticType: 'domestic', tabType: 'domestic' });
-   
-    const [bankDetails,setbankDetails]=useState({})
+    const [bankDetails, setbankDetails] = useState({})
+    const [saveTransferObj,setsaveTransferObj]= useState({"id":"","customerId":props.userConfig.id,"favouriteName":"","firstName":"","lastName":"","beneficiaryName":"","line1":"","line2":"","line3":"","transferType":"","addressType":"","isAgree":true,"info":"","isBankContact":true,"relation":"","reasonOfTransfer":"","amount":0,"payeeAccountModels":[{"id":"","line1":"","line2":"","city":"","state":"","country":"","postalCode":"","currencyType":"","walletCode":"","accountNumber":"","swiftRouteBICNumber":"","bankName":"","userCreated":"","iban":"","bic":"","bankBranch":"","abaRoutingCode":"","documents":null}]})
+    const [createTransfer]=useState({"favouriteName":"","accountNumber":"","swiftRouteBICNumber":"","bankName":"","iban":"","abaRoutingCode":"","line1":"","line2":""})
     useEffect(() => {
     }, [])
-    const saveTransfer = () => {
-
+    const saveTransfer = (values) => {
+        let saveObj=Object.assign({},saveTransferObj)
+        saveObj.favouriteName=values.favouriteName;
+        saveObj.payeeAccountModels[0].iban=currency=='EUR'?values.iban:null;
+        saveObj.payeeAccountModels[0].accountNumber=currency=='USD'?values.accountNumber:null;
+        saveObj.payeeAccountModels[0].abaRoutingCode=values.abaRoutingCode?values.abaRoutingCode:null;
+        saveObj.payeeAccountModels[0].swiftRouteBICNumber=values.swiftRouteBICNumber?values.swiftRouteBICNumber:null;
+        saveObj.payeeAccountModels[0].line1=currency=='USD'?values.line1:null;
+        saveObj.payeeAccountModels[0].line2=currency=='USD'?values.line2:null;
+        saveObj.payeeAccountModels[0].state=bankDetails.state?bankDetails.state:null;
+        saveObj.payeeAccountModels[0].bankName=currency=='EUR'?bankDetails.bankName:values.bankName;
+        saveObj.payeeAccountModels[0].bic=bankDetails.routingNumber?bankDetails.routingNumber:null;
+        saveObj.payeeAccountModels[0].branch=bankDetails.branch?bankDetails.branch:null;
+        saveObj.payeeAccountModels[0].country=bankDetails.country?bankDetails.country:null;
+        saveObj.payeeAccountModels[0].city=bankDetails.city?bankDetails.city:null;
+        saveObj.payeeAccountModels[0].postalCode=bankDetails.zipCode?bankDetails.zipCode:null;
+        
     }
     const getBankDeails = async (e) => {
         const response = await apiCalls.getIBANData(e.target.value);
@@ -26,7 +42,7 @@ const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
         }
     }
     return <>
-        <Form layout="vertical" form={form} onFinish={saveTransfer} initialValues={{}}>
+        <Form layout="vertical" form={form} onFinish={saveTransfer} initialValues={{createTransfer}}>
        <> {currency === "USD" && <>
             <Row gutter={[16, 16]}>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
@@ -71,7 +87,7 @@ const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
             {currency == 'EUR' && !accountType && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
                     className="custom-forminput custom-label mb-0"
-                    name="IBAN"
+                    name="iban"
                     required
                     rules={[
                         {
@@ -144,7 +160,7 @@ const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
         {currency == 'EUR' && accountType && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
             <Form.Item
                 className="custom-forminput custom-label mb-0"
-                name="IBAN"
+                name="iban"
                 required
                 rules={[
                     {
@@ -157,14 +173,14 @@ const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
                 <Input
                     className="cust-input"
                     placeholder='IBAN'
-                />
+                    onBlur={(e)=>getBankDeails(e)}/>
             </Form.Item>
         </Col>}
         <Row gutter={[16, 16]}>
             {currency == 'USD' && <> <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
                     className="custom-forminput custom-label mb-0"
-                    name="Account Number"
+                    name="accountNumber"
                     label='Account Number' required
                     rules={[
                         {
@@ -180,10 +196,10 @@ const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
                 </Form.Item>
             </Col>
 
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                {currency == 'USD' && addressOptions.tabType == 'international'&&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
-                        name="BIC"
+                        name="swiftRouteBICNumber"
                         label={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC code' : 'ABA Routing Code'}
                         required
                         rules={[
@@ -197,11 +213,29 @@ const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
                             placeholder={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC code' : 'ABA Routing Code'}
                         />
                     </Form.Item>
-                </Col>
+                </Col>}
+                {!(currency == 'USD' && addressOptions.tabType == 'international')&&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                    <Form.Item
+                        className="custom-forminput custom-label mb-0"
+                        name="abaRoutingCode"
+                        label={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC code' : 'ABA Routing Code'}
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message: apiCalls.convertLocalLang("is_required"),
+                            }
+                        ]}>
+                        <Input
+                            className="cust-input"
+                            placeholder={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC code' : 'ABA Routing Code'}
+                        />
+                    </Form.Item>
+                </Col>}
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
-                        name="Bank Name"
+                        name="bankName"
                         label='Bank Name'
                         required
                         rules={[
@@ -221,7 +255,7 @@ const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
-                        name="Bank Address1"
+                        name="line1"
                         label='Bank Address 1'
                         required
                         rules={[
@@ -239,7 +273,7 @@ const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
-                        name="Bank Address2"
+                        name="line2"
                         label='Bank Address 2'
                     >
                         <Input
@@ -304,7 +338,7 @@ const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
         </div>}
         <div className="text-right mt-12">
             <Button
-                htmlType="button"
+                htmlType="submit"
                 size="large"
                 className="pop-btn px-36"
                 style={{ minWidth: 150 }}
