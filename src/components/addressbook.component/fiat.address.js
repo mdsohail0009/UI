@@ -572,11 +572,11 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, onContinue, PayeeLu = [
 
             </Row>
         </React.Fragment>}
-        {addressOptions.addressType === "myself" && <MyselfNewTransfer currency={props.currency} onContinue={() => onContinue()} {...props} accountType={props.userProfile?.isBusiness}></MyselfNewTransfer>}
 
         {/* } */}
 
     </Form>
+        {addressOptions.addressType === "myself" && <MyselfNewTransfer currency={props.currency} onContinue={() => onContinue()} {...props} accountType={props.userProfile?.isBusiness}></MyselfNewTransfer>}
         {addressOptions.addressType === "business" && <OthersBusiness isUSDTransfer={props.currency === "USD" ? true : false} onContinue={() => onContinue()} />}
     </>
 }
