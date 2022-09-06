@@ -901,9 +901,10 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .ant-form-item-control-input-content .pop-btn{margin-top: 20px;}
     .dep-withdraw,.sellcrypto-container {
         max-height: calc(100vh - 270px);
+    
     }
-
-
+    .main-container .ant-alert-icon{position:relative;top:5px;}
+    .enter-val-container .usdt-y{margin-bottom: 20px;}
 }
 @media (max-width: 1024px){
     .custom-gridresponsive .ant-drawer-body{word-wrap: unset !important;}
@@ -944,6 +945,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .bill_payment{display: block;}
     .sideropen{margin-left: -16px;padding: 12px;margin-top: 5px;border-radius: 0;min-height: 100vh;
         /* border-top-right-radius: 6px;border-bottom-right-radius: 6px; */
+        
         
     }
     .coin-bal{display: block !important;}
@@ -1361,4 +1363,8 @@ input[type=number]::-webkit-outer-spin-button {
 .markets-panel .custom-table .ant-table-body::-webkit-scrollbar-thumb{background-color: #899097 !important;}
 .pay-grid .ant-table-thead th.ant-table-column-has-sorters:hover{background: var(--bgDarkGrey);}
 .pay-grid .ant-table-cell-scrollbar{box-shadow: none;}
-.pay-grid .ant-table-body{height: 500px;}
+.pay-grid .ant-table-body{height: 500px;} 
+/* .new-add.get-code .ant-btn.ant-btn-text.ant-btn-loading {background: #899097;}  */
+.ant-btn-loading::before{background: transparent; border: none;}
+.buy .ant-list-item-meta-avatar{background-color: var(--bgDarkGreen);}
+.sell .ant-list-item-meta-avatar{background-color: var(--bgDarkRed);}

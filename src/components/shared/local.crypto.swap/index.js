@@ -69,7 +69,7 @@ const LocalCryptoSwapper = (props, ref) => {
 
     return <div className="p-relative">
         <div className="enter-val-container common-withdraow withdraw-crypto">
-            <Text className="fs-30 fw-400 text-white-30 text-yellow mr-4">{!isSwaped ? localCurrency : cryptoCurrency}</Text>
+            <Text className="fs-30 fw-400 text-white-30 text-yellow mr-4 usdt-y">{!isSwaped ? localCurrency : cryptoCurrency}</Text>
             <NumberFormat id="amtInput" className="fw-400 text-white-30 text-center enter-val enter-vel-field p-0" maxLength={25} customInput={Input} thousandSeparator={true} prefix={isSwaped ? "" : symbols[localCurrency]}
                 decimalScale={isSwaped ? 8 : 2}
                 autoComplete="off"
