@@ -13,18 +13,18 @@ class BusinessTransfer extends Component {
     state = { payeeLu: [] }
     render() {
         const { payeeLu } = this.state;
-        return <Tabs>
+        return <Tabs className="cust-tabs-fait">
             <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"}>
                 <Form initialValues={{}}
                     className="custom-label  mb-0"
                     form={this.form}
                 >
                     <Row gutter={[16, 16]}>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
                                 name="favouriteName"
-                                label={"Save Whitelist name as"}
+                                label={"Save Whitelist Name As"}
                                 required
                                 rules={[
                                     {
@@ -44,7 +44,7 @@ class BusinessTransfer extends Component {
                                     onChange={(e) => { }}
                                     maxLength={20}
                                     className="cust-input"
-                                    placeholder={" Save Whitelist name as"}
+                                    placeholder={" Save Whitelist Name As"}
                                 >
                                     {payeeLu?.map((item, indx) => (
                                         <Option key={indx} value={item.name}>
@@ -55,10 +55,10 @@ class BusinessTransfer extends Component {
                             </Form.Item>
                         </Col>
                     </Row>
-                    <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16">Recipient's Details</Paragraph>
-                    <Divider />
+                    <Paragraph className="mb-8  text-white fw-500 mt-16"  style={{ fontSize: 18}} >Recipient's Details</Paragraph>
+                    {/* <Divider /> */}
                     <Row gutter={[16, 16]}>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
                                 name="beneficiaryName"
@@ -89,10 +89,10 @@ class BusinessTransfer extends Component {
                         <RecipientAddress />
                     </Row>
                 </Form>
-                <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16">Recipient's Bank Details</Paragraph>
-                <Divider />
+                <Paragraph className="mb-8  text-white fw-500 mt-16" style={{ fontSize: 18}}>Recipient's Bank Details</Paragraph>
+                {/* <Divider /> */}
                 <DomesticTransfer/>
-                <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16">Please upload supporting docs for transaction</Paragraph>
+                <Paragraph className="mb-8 fs-14 text-white fw-500 mt-16">Please upload supporting docs for transaction</Paragraph>
                 <AddressDocumnet />
                 <div className="align-center">
                     <Row gutter={[16, 16]}>
@@ -116,11 +116,11 @@ class BusinessTransfer extends Component {
                     form={this.form}
                 >
                     <Row gutter={[16, 16]}>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
                                 name="favouriteName"
-                                label={"Save Whitelist name as"}
+                                label={"Save Whitelist Name As"}
                                 required
                                 rules={[
                                     {
@@ -140,7 +140,7 @@ class BusinessTransfer extends Component {
                                     onChange={(e) => { }}
                                     maxLength={20}
                                     className="cust-input"
-                                    placeholder={" Save Whitelist name as"}
+                                    placeholder={" Save Whitelist Name As"}
                                 >
                                     {payeeLu?.map((item, indx) => (
                                         <Option key={indx} value={item.name}>
@@ -151,10 +151,10 @@ class BusinessTransfer extends Component {
                             </Form.Item>
                         </Col>
                     </Row>
-                    <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16">Recipient's Details</Paragraph>
-                    <Divider />
+                    <Paragraph className="mb-8  text-white fw-500 mt-16"  style={{ fontSize: 18}} >Recipient's Details</Paragraph>
+                    {/* <Divider /> */}
                     <Row gutter={[16, 16]}>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
                                 name="beneficiaryName"
@@ -185,10 +185,10 @@ class BusinessTransfer extends Component {
                         <RecipientAddress />
                     </Row>
                 </Form>
-                <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16">Recipient's Bank Details</Paragraph>
-                <Divider />
+                <Paragraph className="mb-8 text-white fw-500 mt-16" style={{ fontSize: 18}}>Recipient's Bank Details</Paragraph>
+                {/* <Divider /> */}
               <InternationalTransfer/>
-                <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16">Please upload supporting docs for transaction</Paragraph>
+                <Paragraph className="mb-8 fs-14 text-white fw-500 mt-16">Please upload supporting docs for transaction</Paragraph>
                 <AddressDocumnet />
                 <div className="align-center">
                     <Row gutter={[16, 16]}>

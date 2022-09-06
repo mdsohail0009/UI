@@ -1,24 +1,37 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Row, Col, Typography, Select, AutoComplete, Input, Tabs, Button } from 'antd'
 import Translate from "react-translate-component";
-import ConnectStateProps from "../../../utils/state.connect";
 import apiCalls from "../../../api/apiCalls"
 import { validateContentRule } from "../../../utils/custom.validator";
+import { connect } from "react-redux";
 
 
 const { Option } = Select;
 const { Text } = Typography;
 const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
+    const [form] = Form.useForm();
     const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType: currency === "EUR" ? "sepa" : "swift", domesticType: 'domestic', tabType: 'domestic' });
-    const [payeeLu] = useState([])
+   
+    const [bankDetails,setbankDetails]=useState({})
+    useEffect(() => {
+    }, [])
+    const saveTransfer = () => {
 
-    return <React.Fragment>
-        {currency === "USD" && <>
+    }
+    const getBankDeails = async (e) => {
+        const response = await apiCalls.getIBANData(e.target.value);
+        if (response.ok) {
+            setbankDetails(response.data)
+        }
+    }
+    return <>
+        <Form layout="vertical" form={form} onFinish={saveTransfer} initialValues={{}}>
+       <> {currency === "USD" && <>
             <Row gutter={[16, 16]}>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
-                    <Tabs style={{ color: '#fff' }} onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey }); }}>
-                        <Tabs.TabPane tab="Domestic USD Transfer" className="text-white" key={"domestic"}></Tabs.TabPane>
+                    <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey }); }}>
+                        <Tabs.TabPane tab="Domestic USD Transfer" className="text-white"  key={"domestic"}></Tabs.TabPane>
                         <Tabs.TabPane tab="International USD Swift" className="text-white" key={"international"}></Tabs.TabPane>
                     </Tabs>
                 </Col>
@@ -26,14 +39,14 @@ const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
         </>}
 
         {currency == 'EUR' && <h2 style={{ fontSize: 18, textAlign: 'center', color: "white" }}>SEPA transfer</h2>}
-        <Row gutter={[16, 16]}><Col xs={24} md={12} lg={12} xl={12} xxl={12} id="favoriteName">
+        <Row gutter={[16, 16]}><Col xs={24} md={24} lg={24} xl={24} xxl={24} id="favoriteName">
             <Form.Item
                 className="custom-forminput custom-label mb-0"
                 name="favouriteName"
                 label={
-                    "Save Whitelist name as"
+                    "Save Whitelist Name As"
                 }
-                required
+                
                 rules={[
                     {
                         required: true,
@@ -48,18 +61,11 @@ const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
                     },
                 ]}
             >
-                <AutoComplete
-                    onChange={(e) => { }}
-                    maxLength={20}
-                    className="cust-input"
-                    placeholder={"Save Whitelist name as"}
-                >
-                    {payeeLu?.map((item, indx) => (
-                        <Option key={indx} value={item.name}>
-                            {item.name}
-                        </Option>
-                    ))}
-                </AutoComplete>
+               
+                <Input
+                        className="cust-input"
+                        placeholder='Save Whitelist Name As'
+                    />
             </Form.Item>
         </Col>
             {currency == 'EUR' && !accountType && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -71,17 +77,20 @@ const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
                         {
                             required: true,
                             message: apiCalls.convertLocalLang("is_required"),
-                        }
+                        },{
+                            pattern: /^[A-Za-z0-9]+$/,
+                            message: "Invalid IBAN number",
+                        },
                     ]}
                     label='IBAN'
                 >
                     <Input
                         className="cust-input"
                         placeholder='IBAN'
-                    />
+                    onBlur={(e)=>getBankDeails(e)}/>
                 </Form.Item>
             </Col>}</Row>
-        <h2 style={{ fontSize: 16, color: "white" }}>Recipient's details</h2>
+        <h2 style={{ fontSize: 18, color: "white" }} className="mt-16">Recipient's details</h2>
 
         <div className="box basic-info alert-info-custom mt-16">
             <Row>
@@ -131,7 +140,7 @@ const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
             </Row>
         </div>
 
-        <h2 style={{ fontSize: 16, color: "white" }}>Bank details</h2>
+        <h2 style={{ fontSize: 18, color: "white" }} className="mt-16">Bank details</h2>
         {currency == 'EUR' && accountType && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
             <Form.Item
                 className="custom-forminput custom-label mb-0"
@@ -241,55 +250,57 @@ const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
                 </Col></>}
         </Row>
         {currency == 'EUR' && <div className="box basic-info alert-info-custom mt-16">
-            <Row><Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+            {bankDetails.bankName!=''&&bankDetails.bankName!=null&&<Row>
+                <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                 <label className="fs-14 fw-400 ">
                     <strong>Bank Name</strong>
                 </label>
-                <div><Text className="fs-14 fw-400 text-purewhite">Barcslays Bank UK PLC</Text></div>
+                <div><Text className="fs-14 fw-400 text-purewhite">{(bankDetails.bankName!=''&&bankDetails.bankName!=null)?bankDetails.bankName:'-'}</Text></div>
 
             </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                     <label className="fs-14 fw-400 ">
                         <strong>BIC</strong>
                     </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">BUKBGB22</Text></div>
+                   <div><Text className="fs-14 fw-400 text-purewhite"> {bankDetails.routingNumber!=''&&bankDetails.routingNumber!=null?bankDetails.routingNumber:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                     <label className="fs-14 fw-400 ">
                         <strong>Branch</strong>
                     </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">CHELTENHAM</Text></div>
+                    <div><Text className="fs-14 fw-400 text-purewhite">{bankDetails.branch!=''&&bankDetails.branch!=null?bankDetails.branch:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                     <label className="fs-14 fw-400 ">
                         <strong>Country</strong>
                     </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">United Kingdom(UK)</Text></div>
+                    <div><Text className="fs-14 fw-400 text-purewhite">{bankDetails.country!=''&&bankDetails.country!=null?bankDetails.country:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                     <label className="fs-14 fw-400 ">
                         <strong>State</strong>
                     </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">XXX</Text></div>
+                    <div><Text className="fs-14 fw-400 text-purewhite">{bankDetails.state!=''&&bankDetails.state!=null?bankDetails.state:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                     <label className="fs-14 fw-400 ">
                         <strong>City</strong>
                     </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">Leicester</Text></div>
+                    <div><Text className="fs-14 fw-400 text-purewhite">{(bankDetails.city!=''&&bankDetails.city!=null)?bankDetails.city:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                     <label className="fs-14 fw-400 ">
                         <strong>Zip</strong>
                     </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">LE87 2BB</Text></div>
+                    <div><Text className="fs-14 fw-400 text-purewhite">{(bankDetails.zipCode!=''&&bankDetails.zipCode!=null)?bankDetails.zipCode:'-'}</Text></div>
 
-                </Col></Row>
+                </Col></Row>}
+                {(bankDetails.bankName==''||bankDetails.bankName==null)&&<span>No bank details available</span>}
         </div>}
         <div className="text-right mt-12">
             <Button
@@ -297,12 +308,18 @@ const MyselfNewTransfer = ({ currency, accountType, ...props }) => {
                 size="large"
                 className="pop-btn px-36"
                 style={{ minWidth: 150 }}
-                onClick={() => props.onContinue("reviewdetails")}
+               
             >
                 <Translate content="continue" />
             </Button>
-        </div>
-    </React.Fragment>
+        </div></></Form>
+    </>
 
 }
-export default ConnectStateProps(MyselfNewTransfer);
+const connectStateToProps = ({userConfig,
+  }) => {
+    return {
+      userConfig: userConfig.userProfileInfo
+    };
+  };
+export default connect(connectStateToProps)(MyselfNewTransfer);

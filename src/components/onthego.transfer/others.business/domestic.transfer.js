@@ -4,8 +4,6 @@ import {Form,Row,Col,Input} from "antd";
 import { validateContentRule } from "../../../utils/custom.validator";
 const {TextArea}=Input;
 class DomesticTransfer extends Component {
-
-
     render() {
         return <Row gutter={[16, 16]}>
             <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
