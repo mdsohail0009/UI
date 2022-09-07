@@ -1,10 +1,11 @@
 
 import React, { useEffect, useState } from "react";
-import { Form, Row, Col, Typography, Select, AutoComplete, Input, Tabs, Button } from 'antd'
+import { Form, Row, Col, Typography, Select, AutoComplete, Input, Tabs, Button,Alert } from 'antd'
 import Translate from "react-translate-component";
 import apiCalls from "../../../api/apiCalls"
 import { validateContentRule } from "../../../utils/custom.validator";
 import { connect } from "react-redux";
+import Loader from "../../../Shared/loader";
 
 
 const { Option } = Select;
@@ -17,17 +18,22 @@ const MyselfNewTransfer = ({ currency, isBusiness,amount, ...props }) => {
     const [createTransfer]=useState({"favouriteName":"","accountNumber":"","swiftRouteBICNumber":"","bankName":"","iban":"","abaRoutingCode":"","line1":"","line2":""})
     const [recipientDetails,setRecipientDetails]=useState({})
     const [transfertypes]=useState({domestic:'Domestic',international:'International'})
+	const [isBtnLoading, setBtnLoading] = useState(false);
+    const [isLoading,setLoader]=useState(true)
+    const [errorMessage,seterrorMessage]=useState();
     useEffect(() => {
         getRecipientDetails()
     }, [])
-    const getRecipientDetails=async()=>{
+    const getRecipientDetails=async()=>{setLoader(true)
         const response = await apiCalls.getRecipientData(props.userConfig.id,isBusiness?'OwnBusiness':'MySelf');
         if (response.ok) {
-            setRecipientDetails(response.data)
-            console.log(recipientDetails)
+            setRecipientDetails(response.data);setLoader(false)
+        }else{
+            seterrorMessage(isErrorDispaly(response));setLoader(false)
         }
     }
     const saveTransfer = async(values) => {
+		setBtnLoading(true);
         let saveObj=Object.assign({},saveTransferObj)
         saveObj.favouriteName=values.favouriteName;
         saveObj.payeeAccountModels[0].iban=currency=='EUR'?values.iban:null;
@@ -55,28 +61,52 @@ const MyselfNewTransfer = ({ currency, isBusiness,amount, ...props }) => {
         saveObj.payeeAccountModels[0].walletCode=currency;
         const response = await apiCalls.saveTransferData(saveObj);
         if (response.ok) {
-           props.onContinue()
+            setBtnLoading(false);
+           props.onContinue(response.data)
+        }else{seterrorMessage(isErrorDispaly(response));
+		setBtnLoading(false);
         }
     }
     const getBankDeails = async (e) => {
-        const response = await apiCalls.getIBANData(e.target.value);
-        if (response.ok) {
-            setbankDetails(response.data)
+        if(e.target.value){
+            const response = await apiCalls.getIBANData(e.target.value);
+            if (response.ok) {
+                setbankDetails(response.data)
+            }else{
+                seterrorMessage(isErrorDispaly(response));
+                setbankDetails(null)
+            }
         }
+        
     }
+    const isErrorDispaly = (objValue) => {
+        debugger
+        if (objValue.data && typeof objValue.data === "string") {
+          return objValue.data;
+        } else if (
+          objValue.originalError &&
+          typeof objValue.originalError.message === "string"
+        ) {
+          return objValue.originalError.message;
+        } else {
+          return "Something went wrong please try again!";
+        }
+      };
     return <>
         <Form layout="vertical" form={form} onFinish={saveTransfer} initialValues={{createTransfer}}>
        <> {currency === "USD" && <>
             <Row gutter={[16, 16]}>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
-                    <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey }); }}>
+                    <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });form.resetFields() }}>
                         <Tabs.TabPane tab="Domestic USD Transfer" className="text-white"  key={"domestic"}></Tabs.TabPane>
                         <Tabs.TabPane tab="International USD Swift" className="text-white" key={"international"}></Tabs.TabPane>
                     </Tabs>
                 </Col>
             </Row>
         </>}
-
+        {isLoading &&<Loader /> }
+        {errorMessage && <Alert type="error" showIcon closable={false} message={"An error occured"} description={errorMessage} />}
+        {!isLoading &&<>
         {currency == 'EUR' && <h2 style={{ fontSize: 18, textAlign: 'center', color: "white" }}>SEPA transfer</h2>}
         <Row gutter={[16, 16]}><Col xs={24} md={24} lg={24} xl={24} xxl={24} id="favoriteName">
             <Form.Item
@@ -116,9 +146,13 @@ const MyselfNewTransfer = ({ currency, isBusiness,amount, ...props }) => {
                         {
                             required: true,
                             message: apiCalls.convertLocalLang("is_required"),
-                        },{
-                            pattern: /^[A-Za-z0-9]+$/,
-                            message: "Invalid IBAN number",
+                        },
+                        {
+                            whitespace: true,
+                            message: apiCalls.convertLocalLang("is_required"),
+                        },
+                        {
+                            validator: validateContentRule,
                         },
                     ]}
                     label='IBAN'
@@ -189,7 +223,14 @@ const MyselfNewTransfer = ({ currency, isBusiness,amount, ...props }) => {
                     {
                         required: true,
                         message: apiCalls.convertLocalLang("is_required"),
-                    }
+                    },
+                    {
+                        whitespace: true,
+                        message: apiCalls.convertLocalLang("is_required"),
+                    },
+                    {
+                        validator: validateContentRule,
+                    },
                 ]}
                 label='IBAN'
             >
@@ -365,11 +406,13 @@ const MyselfNewTransfer = ({ currency, isBusiness,amount, ...props }) => {
                 size="large"
                 className="pop-btn px-36"
                 style={{ minWidth: 150 }}
-               
+                loading={isBtnLoading} 
             >
                 <Translate content="continue" />
             </Button>
-        </div></></Form>
+        </div></>}
+        </>
+        </Form>
     </>
 
 }
