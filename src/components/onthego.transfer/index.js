@@ -367,8 +367,9 @@ class OnthegoFundTransfer extends Component {
                                     className="pop-btn mb-36"
                                     style={{ minWidth: 300 }}
                                     onClick={() => {
-                                        this.reasonForm.current.validateFields().then(() => {
+                                        this.reasonForm.current.validateFields([this.state?.selectedTab === "domestic"?"abaRoutingCode":"swiftRouteBICNumber"]).then(() => {
                                             const fieldValues = this.reasonForm.current.getFieldsValue();
+                                            this.setState({ ...this.state, loading: true, errorMessage: null });
                                             updateRoutingCode(this.state.selectedPayee.id, (this.state?.selectedTab === "domestic" ? fieldValues.abaRoutingCode : fieldValues.swiftRouteBICNumber), this.state?.selectedTab !== "domestic")
                                                 .then(async (response) => {
                                                     this.setState({ ...this.state, loading: true, errorMessage: null });
@@ -377,10 +378,10 @@ class OnthegoFundTransfer extends Component {
                                                         if (res.ok) {
                                                             this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => this.chnageStep("reviewdetails"));
                                                         } else {
-                                                            this.setState({ ...this.state, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
+                                                            this.setState({ ...this.state,codeDetails:{...this.state.codeDetails,...fieldValues}, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
                                                         }
                                                     } else {
-                                                        this.setState({ ...this.state, loading: false, errorMessage: response.data?.message || response.data || response.originalError.message });
+                                                        this.setState({ ...this.state,codeDetails:{...this.state.codeDetails,...fieldValues}, loading: false, errorMessage: response.data?.message || response.data || response.originalError.message });
                                                     }
                                                 })
 
