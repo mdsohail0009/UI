@@ -299,13 +299,13 @@ class OnthegoFundTransfer extends Component {
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper mt-16">How much you will receive</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper mt-16  text-right">994.55 USD</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper mt-16  text-right">{`${this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission} ${this.state.reviewDetails?.walletCode}`}</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Total fees</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">5.45 USD</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{`${this.state.reviewDetails?.comission} ${this.state.reviewDetails?.walletCode}`}</Title>
                             </div>
                         </Col>
                         {/* <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
@@ -317,7 +317,7 @@ class OnthegoFundTransfer extends Component {
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Withdrawal amount</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">1000 USD</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{`${this.state.reviewDetails?.requestedAmount} ${this.state.reviewDetails?.walletCode}`}</Title>
                             </div>
                         </Col>
                         {/* <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
@@ -341,31 +341,31 @@ class OnthegoFundTransfer extends Component {
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper mt-16">Save Whitelist name as</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper mt-16  text-right">MBB</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper mt-16  text-right">{this.state.reviewDetails?.favouriteName}</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Beneficiary Name</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">Min Blue Black</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.name}</Title>
                             </div>
                         </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+                        {this.state.reviewDetails?.iban && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper ">IBAN </Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">LT1234567890</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.iban}</Title>
                             </div>
-                        </Col>
+                        </Col>}
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Reason for transfer </Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">Payment</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails.customerRemarks}</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Bank Name </Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">XXXX</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state?.reviewDetails?.bankName}</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
@@ -382,7 +382,7 @@ class OnthegoFundTransfer extends Component {
                                         className="pop-btn px-24"
 
                                     >
-                                        Continue to Verification
+                                        Confirm & Continue
                                     </Button>
                                 </Form.Item>
                             </div>
@@ -392,7 +392,7 @@ class OnthegoFundTransfer extends Component {
             </React.Fragment>,
             newtransfer: <>
                 <FiatAddress currency={this.props.selectedCurrency} amount={this.state.amount} onContinue={(obj) => {
-                    this.setState({...this.state,reviewDetails:obj},()=>{
+                    this.setState({ ...this.state, reviewDetails: obj }, () => {
                         this.chnageStep("reviewdetails")
                     })
                 }

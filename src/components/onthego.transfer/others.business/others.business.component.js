@@ -69,7 +69,7 @@ class OthersBusiness extends Component {
         const response = await savePayee(_obj);
         if (response.ok) {
             this.setState({ ...this.state, errorMessage: null, isLoading: false }, async () => {
-                const confirmRes = await confirmTransaction({ payeeId: response.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
+                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
                 if (confirmRes.ok) {
                     this.props.onContinue(confirmRes.data);
                     this.setState({ ...this.state, isLoading: false, errorMessage: null });
