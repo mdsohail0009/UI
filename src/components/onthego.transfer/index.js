@@ -8,19 +8,29 @@ import alertIcon from '../../assets/images/pending.png';
 import success from '../../assets/images/success.png';
 import Verification from "./verification.component/verification";
 import NumberFormat from "react-number-format";
+import ConnectStateProps from "../../utils/state.connect";
+import { fetchPayees } from "./api";
 const { Text, Title } = Typography;
 
 class OnthegoFundTransfer extends Component {
     enteramtForm = React.createRef();
     state = {
         step: "enteramount",
-        // filterObj:[],
-        filterObj: [{ lable: "Payee 100", address: "100032498902", type: "1st Party" }, { lable: "Payee 100", address: "100032498902", type: "3rd Party" }],
+        filterObj: [],
         addressOptions: { addressType: "myself", transferType: this.props.selectedCurrency === "EUR" ? "sepa" : "domestic" },
         isNewTransfer: false,
         amount: "",
         onTheGoObj: { amount: '', description: '' },
-        reviewDetails: {}
+        reviewDetails: {},
+        payees: [],
+        payeesLoading: true
+    }
+    componentDidMount() {
+        fetchPayees(this.props.userProfile.id).then((response) => {
+            if (response.ok) {
+                this.setState({ ...this.state, payeesLoading: false, filterObj: response.data, payees: response.data });
+            }
+        });
     }
     chnageStep = (step, values) => {
         this.setState({ ...this.state, step });
@@ -119,7 +129,14 @@ class OnthegoFundTransfer extends Component {
                                 size="large"
                                 className="pop-btn mb-36"
                                 style={{ minWidth: 300 }}
-                                onClick={() => { this.setState({ ...this.state, isNewTransfer: false }, () => this.chnageStep("addressselection")) }}
+                                onClick={() => {
+                                    this.setState({ ...this.state, isNewTransfer: false }, () => {
+                                        this.enteramtForm.current.validateFields().then(() => this.chnageStep("addressselection"))
+                                            .catch(error => {
+
+                                            });
+                                    })
+                                }}
                             >
                                 Addressbook
                             </Button>
@@ -132,21 +149,6 @@ class OnthegoFundTransfer extends Component {
                     <text Paragraph
                         className='text-white fs-30 fw-600 px-4 '>Who are you sending money to?</text>
                 </div>
-                {/* <div className="d-flex cust-fund ml-24">
-                <label className="text-white">Search for Payeee</label>
-                <Search
-                    placeholder=""
-                    className="search-input"
-                    style={{
-                        width: 515,
-                    }}
-                      autoComplete
-                     
-                    /> */}
-                {/* <Select className='text-black usr-add'> */}
-                {/* </Select> */}
-                {/* <span> <DownOutlined /></span> */}
-                {/* </div> */}
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 
                     <Form.Item
@@ -157,11 +159,14 @@ class OnthegoFundTransfer extends Component {
                     >
                         {/* <Search placeholder="Search" 
                                 addonAfter={<span className="icon md search-white" />}  size="middle" bordered={false} className="mt-24 mb-8 cust-input cust-select mb-0 text-white-30" />               */}
-                        <Select placeholder="Select Language" bordered={false}
+                        <Select placeholder="Select Payee" bordered={false} showSearch
                             className="cust-input cust-select mb-0 text-white-30"
                             dropdownClassName="select-drpdwn"
+
                             addonAfter={<span className="icon md search-white" />}
                         >
+
+                            {this.state.payees.map(payee => <Select.Option value={payee.id}>{payee.name}</Select.Option>)}
                         </Select></Form.Item>
                 </Col>
 
@@ -429,4 +434,4 @@ class OnthegoFundTransfer extends Component {
         </React.Fragment>
     }
 }
-export default OnthegoFundTransfer;
+export default ConnectStateProps(OnthegoFundTransfer);

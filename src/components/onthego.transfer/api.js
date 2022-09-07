@@ -4,7 +4,7 @@ import { ApiControllers } from "../../api/config";
 const fetchIBANDetails = (iban) => {
     return apiClient.get(ApiControllers.master + `GetIBANAccountDetails?ibanNumber=${iban}`)
 }
-const createPayee = (account_id, addr_book_id,address_type) => {
+const createPayee = (account_id, addr_book_id, address_type) => {
     addr_book_id = addr_book_id || "00000000-0000-0000-0000-000000000000";
     return apiClient.get(ApiControllers.addressbook + `payee/Withdraw/Favourite/${addr_book_id}/${account_id}/${address_type}`)
 }
@@ -48,17 +48,20 @@ const document = () => {
         "state": "",
         "info": "",
         "details": [
-            
+
         ]
     }
 }
 const uploadFile = (file) => {
     return uploadClient.post("UploadFile", file);
 }
-const savePayee = (obj)=>{
-    return apiClient.post(ApiControllers.addressbook+`payee`,obj);
+const savePayee = (obj) => {
+    return apiClient.post(ApiControllers.addressbook + `payee`, obj);
 }
-const confirmTransaction = (obj)=>{
-    return apiClient.post(ApiControllers.withdraw+`/Fiat/Confirm`,obj)
+const confirmTransaction = (obj) => {
+    return apiClient.post(ApiControllers.withdraw + `/Fiat/Confirm`, obj);
 }
-export { fetchIBANDetails, createPayee, payeeAccountObj, uploadFile,document,savePayee,confirmTransaction };
+const fetchPayees = (customer_id) => {
+    return apiClient.get(ApiControllers.addressbook + `PayeeLu/${customer_id}`);
+}
+export { fetchIBANDetails, createPayee, payeeAccountObj, uploadFile, document, savePayee, confirmTransaction, fetchPayees };
