@@ -23,7 +23,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     const [isLoading,setLoader]=useState(true)
     const [errorMessage,seterrorMessage]=useState();
     const useDivRef = React.useRef(null);
-    const [validIban,setValidIban]=useState(false)
+    const [validIban,setValidIban]=useState(true)
     useEffect(() => {
         getRecipientDetails()
     }, [])
@@ -79,7 +79,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
 		setBtnLoading(false);
         }
     }
-    const getBankDeails = async (e) => {
+    const getBankDeails = async (e) => {setValidIban(true)
         if(e.target.value){
             const response = await apiCalls.getIBANData(e.target.value);
             if (response.ok) {

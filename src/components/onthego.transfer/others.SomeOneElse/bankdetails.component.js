@@ -22,7 +22,7 @@ class PayeeBankDetails extends Component {
         isLoading: false,
         iBanDetals:null,
         IbanLoader:false,
-        isValidIban:false
+        isValidIban:true
     }
 
     handleIban = async(ibannumber) =>{
