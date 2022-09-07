@@ -8,6 +8,7 @@ import Translate from "react-translate-component";
 import { Link } from 'react-router-dom';
 import apiCalls from "../../../api/apiCalls";
 import ConnectStateProps from "../../../utils/state.connect";
+import Loader from "../../../Shared/loader";
 const { Paragraph, Text, Title } = Typography;
 const { Search } = Input;
 
@@ -17,6 +18,7 @@ const SomeoneComponent = (props) => {
     const [createPayeeObj, setCreatePayeeObj] = useState(null);
     const [documents, setDocuments] = useState(null);
     const [btnLoading, setBtnLoading] = useState(false);
+    const [mainLoader, setMailLoader] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [form]=Form.useForm();
     const useDivRef = React.useRef(null);
@@ -25,9 +27,13 @@ const SomeoneComponent = (props) => {
         getpayeeCreate();
     }, [])
     const getpayeeCreate = async() =>{
+        setMailLoader(true)
         const createPayeeData = await createPayee(props.userProfile.id,'',addressOptions.addressType);
         if(createPayeeData.ok){
             setCreatePayeeObj(createPayeeData.data);
+            setMailLoader(false)
+        }else{
+            setMailLoader(false)
         }
     }
     const onSubmit = async(values) =>{
@@ -61,7 +67,6 @@ const SomeoneComponent = (props) => {
         
     }
     const isErrorDispaly = (objValue) => {
-        debugger
         if (objValue.data && typeof objValue.data === "string") {
           return objValue.data;
         } else if (
@@ -78,14 +83,9 @@ const SomeoneComponent = (props) => {
     }
     return (<React.Fragment>
         <div ref={useDivRef}></div>
+        
         {errorMessage && <Alert type="error" showIcon closable={false} message={"An error occured"} description={errorMessage} />}
         <>
-            <Form
-                ref={form}
-                onFinish={onSubmit}
-                autoComplete="off"
-                initialValues={{}}
-            >
                 {props.currency === "USD" && <>
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
@@ -100,6 +100,15 @@ const SomeoneComponent = (props) => {
                     </Row>
                 </>}
                 {props.currency == 'EUR' && <h2 style={{ fontSize: 18, textAlign: 'center', color: "white" }}>SEPA transfer</h2>}
+                {mainLoader && <Loader />}
+        {!mainLoader && <>
+            <Form
+                ref={form}
+                onFinish={onSubmit}
+                autoComplete="off"
+                initialValues={{}}
+            >
+               
                 <Row gutter={[16, 16]} className={'pb-16'}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item
@@ -197,6 +206,40 @@ const SomeoneComponent = (props) => {
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
+                                name={"relation"}
+                                required
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        whitespace: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        validator: validateContentRule,
+                                    },
+                                ]}
+                                label={
+                                    <Translate
+                                        content="relationtobenificiary"
+                                        component={Form.label}
+                                    />
+                                }
+                            >
+                                <Input
+                                    className="cust-input"
+                                    placeholder={apiCalls.convertLocalLang(
+                                        "relationtobenificiary"
+                                    )}
+                                    maxLength="500"
+                                />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
                                 name="line1"
                                 required
                                 rules={[
@@ -222,20 +265,11 @@ const SomeoneComponent = (props) => {
                                 />
                             </Form.Item>
                         </Col>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
                                 name="line2"
-                                required
                                 rules={[
-                                    {
-                                        required: true,
-                                        message: apiCalls.convertLocalLang("is_required"),
-                                    },
-                                    {
-                                        whitespace: true,
-                                        message: apiCalls.convertLocalLang("is_required"),
-                                    },
                                     {
                                         validator: validateContentRule,
                                     },
@@ -250,20 +284,11 @@ const SomeoneComponent = (props) => {
                                 />
                             </Form.Item>
                         </Col>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
                                 name="line3"
-                                required
                                 rules={[
-                                    {
-                                        required: true,
-                                        message: apiCalls.convertLocalLang("is_required"),
-                                    },
-                                    {
-                                        whitespace: true,
-                                        message: apiCalls.convertLocalLang("is_required"),
-                                    },
                                     {
                                         validator: validateContentRule,
                                     },
@@ -283,6 +308,7 @@ const SomeoneComponent = (props) => {
                 {/* <Divider /> */}
                 <Paragraph className="mb-8 fw-500 text-white  mt-16" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                 <PayeeBankDetails form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />
+                <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16">Please upload supporting docs for transaction</Paragraph>
                 <AddressDocumnet documents={documents || null} onDocumentsChange={(docs) => {
                         setDocuments(docs)
                     }}/>
@@ -306,6 +332,7 @@ const SomeoneComponent = (props) => {
                     </Button>
                 </div>
             </Form>
+        </>}
         </>
     </React.Fragment>)
 }

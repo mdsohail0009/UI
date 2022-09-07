@@ -37,6 +37,8 @@ class PayeeBankDetails extends Component {
                 this.setState({...this.state,IbanLoader:false, isValidIban:false})
                 this.props.getIbandata(null);
             }
+        }else{
+            this.setState({...this.state,IbanLoader:false, isValidIban:false})
         }
     }
     renderAddress = (transferType) => {
@@ -111,7 +113,7 @@ class PayeeBankDetails extends Component {
                             />
                     </Form.Item>
                 </Col>
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                {/* <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
                         name={"relation"}
@@ -144,7 +146,7 @@ class PayeeBankDetails extends Component {
                                 maxLength="500"
                             />
                     </Form.Item>
-                </Col>
+                </Col> */}
                 </>
                 <Spin spinning={this.state.IbanLoader}>
                     {this.state.isValidIban && <div className="box basic-info alert-info-custom mt-16">
@@ -365,6 +367,40 @@ class PayeeBankDetails extends Component {
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
+                        name={"reasonOfTransfer"}
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message: apicalls.convertLocalLang("is_required"),
+                            },
+                            {
+                                whitespace: true,
+                                message: apicalls.convertLocalLang("is_required"),
+                            },
+                            {
+                                validator: validateContentRule,
+                            },
+                        ]}
+                        label={
+                            <Translate
+                                content="reasiontotransfor"
+                                component={Form.label}
+                            />
+                        }
+                    >
+                        <Input
+                            className="cust-input"
+                            placeholder={apicalls.convertLocalLang(
+                                "reasiontotransfor"
+                            )}
+                            maxLength="500"
+                        />
+                    </Form.Item>
+                </Col>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-forminput custom-label mb-0"
                         name={["payeeAccountModels","line1"]}
                         required
                         rules={[
@@ -399,16 +435,7 @@ class PayeeBankDetails extends Component {
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
                         name={["payeeAccountModels","line2"]}
-                        required
                         rules={[
-                            {
-                                required: true,
-                                message: apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                whitespace: true,
-                                message: apicalls.convertLocalLang("is_required"),
-                            },
                             {
                                 validator: validateContentRule,
                             },
@@ -428,41 +455,8 @@ class PayeeBankDetails extends Component {
                         ></TextArea>
                     </Form.Item>
                 </Col>
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item
-                        className="custom-forminput custom-label mb-0"
-                        name={"reasonOfTransfer"}
-                        required
-                        rules={[
-                            {
-                                required: true,
-                                message: apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                whitespace: true,
-                                message: apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                validator: validateContentRule,
-                            },
-                        ]}
-                        label={
-                            <Translate
-                                content="reasiontotransfor"
-                                component={Form.label}
-                            />
-                        }
-                    >
-                        <Input
-                            className="cust-input"
-                            placeholder={apicalls.convertLocalLang(
-                                "reasiontotransfor"
-                            )}
-                            maxLength="500"
-                        />
-                    </Form.Item>
-                </Col>
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                
+                {/* <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
                         name={"relation"}
@@ -495,7 +489,7 @@ class PayeeBankDetails extends Component {
                             maxLength="500"
                         />
                     </Form.Item>
-                </Col>
+                </Col> */}
             </>
         }
         return _templates[transferType]
