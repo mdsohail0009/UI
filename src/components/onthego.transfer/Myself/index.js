@@ -6,6 +6,7 @@ import apiCalls from "../../../api/apiCalls"
 import { validateContentRule } from "../../../utils/custom.validator";
 import { connect } from "react-redux";
 import Loader from "../../../Shared/loader";
+import {confirmTransaction} from '../api'
 
 
 const { Option } = Select;
@@ -62,8 +63,14 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         saveObj.amount=onTheGoObj.amount;
         const response = await apiCalls.saveTransferData(saveObj);
         if (response.ok) {
-            setBtnLoading(false);
-           props.onContinue(response.data)
+            const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: onTheGoObj.amount, reasonOfTransfer: null })
+            if (confirmRes.ok) {
+                setBtnLoading(false);
+                props.onContinue(confirmRes.data);
+            } else {
+                setBtnLoading(false);
+                seterrorMessage(isErrorDispaly(confirmRes));
+            }
         }else{seterrorMessage(isErrorDispaly(response));
 		setBtnLoading(false);
         }
