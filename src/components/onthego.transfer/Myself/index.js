@@ -22,6 +22,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
 	const [isBtnLoading, setBtnLoading] = useState(false);
     const [isLoading,setLoader]=useState(true)
     const [errorMessage,seterrorMessage]=useState();
+    const useDivRef = React.useRef(null);
     useEffect(() => {
         getRecipientDetails()
     }, [])
@@ -31,6 +32,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             setRecipientDetails(response.data);setLoader(false)
         }else{
             seterrorMessage(isErrorDispaly(response));setLoader(false)
+            useDivRef.current.scrollIntoView();
         }
     }
     const saveTransfer = async(values) => {
@@ -70,8 +72,10 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             } else {
                 setBtnLoading(false);
                 seterrorMessage(isErrorDispaly(confirmRes));
+                useDivRef.current.scrollIntoView();
             }
         }else{seterrorMessage(isErrorDispaly(response));
+            useDivRef.current.scrollIntoView();
 		setBtnLoading(false);
         }
     }
@@ -83,6 +87,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             }else{
                 seterrorMessage(isErrorDispaly(response));
                 setbankDetails(null)
+                useDivRef.current.scrollIntoView();
             }
         }
         
@@ -100,6 +105,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         }
       };
     return <>
+    <div ref={useDivRef}></div>
         <Form layout="vertical" form={form} onFinish={saveTransfer} initialValues={{createTransfer}}>
        <> {currency === "USD" && <>
             <Row gutter={[16, 16]}>
