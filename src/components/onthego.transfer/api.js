@@ -70,4 +70,7 @@ const fetchPastPayees = (customer_id, currency) => {
 const updatePayee = (obj) => {
     return apiClient.post(ApiControllers.addressbook + `UpdatePayee`,obj);
 }
-export { fetchIBANDetails, createPayee, payeeAccountObj, uploadFile, document, savePayee, confirmTransaction, fetchPayees, fetchPastPayees,updatePayee };
+const saveWithdraw = (obj) => {
+    return apiClient.post(ApiControllers.withdraw + `/Withdraw/Fiat`, obj);
+}
+export { fetchIBANDetails, createPayee, payeeAccountObj, uploadFile, document, savePayee, confirmTransaction, fetchPayees, fetchPastPayees,updatePayee, saveWithdraw };

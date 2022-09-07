@@ -9,9 +9,11 @@ import success from '../../assets/images/success.png';
 import Verification from "./verification.component/verification";
 import NumberFormat from "react-number-format";
 import ConnectStateProps from "../../utils/state.connect";
-import { fetchPayees, fetchPastPayees, confirmTransaction, updatePayee, document } from "./api";
+import { fetchPayees, fetchPastPayees, confirmTransaction, updatePayee, document, saveWithdraw } from "./api";
 import Loader from "../../Shared/loader";
 import Search from "antd/lib/input/Search";
+import Verifications from "./verification.component/verifications"
+
 const { Text, Title } = Typography;
 
 class OnthegoFundTransfer extends Component {
@@ -32,7 +34,8 @@ class OnthegoFundTransfer extends Component {
         errorMessage: null,
         codeDetails: { abaRoutingCode: "", swiftRouteBICNumber: "", reasionOfTransfer: "", documents: null },
         selectedPayee: {},
-        selectedTab: "domestic"
+        selectedTab: "domestic",
+        verifyData :null
     }
     componentDidMount() {
         fetchPayees(this.props.userProfile.id, this.props.selectedCurrency).then((response) => {
@@ -65,6 +68,13 @@ class OnthegoFundTransfer extends Component {
         }
         else
             this.setState({ ...this.state, filterObj: this.state.payees });
+    }
+    saveWithdrawdata = () =>{
+        
+    }
+    changesVerification = (obj) =>{
+        this.setState({...this.state,verifyData:obj})
+        console.log(obj)
     }
     renderStep = (step) => {
         const { filterObj, pastPayees, payeesLoading } = this.state;
@@ -515,14 +525,14 @@ class OnthegoFundTransfer extends Component {
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <Verification />
+                            <Verification onchangeData={(obj)=>this.changesVerification(obj)}/>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="text-center mt-36 create-account">
                                 <Form.Item className="mb-0 mt-16">
                                     <Button
                                         htmlType="button"
-                                        onClick={() => this.chnageStep(this.state.isNewTransfer ? "declaration" : "successpage")}
+                                        onClick={() =>{ this.saveWithdrawdata();this.chnageStep(this.state.isNewTransfer ? "declaration" : "successpage")}}
                                         size="large"
                                         block
                                         className="pop-btn px-24"
@@ -542,7 +552,8 @@ class OnthegoFundTransfer extends Component {
                     })
                 }
                 }
-                    onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} />
+                    onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} /> */}
+                <Verifications />
             </>,
             declaration: <div className="text-center">
                 <Image width={80} preview={false} src={alertIcon} />
