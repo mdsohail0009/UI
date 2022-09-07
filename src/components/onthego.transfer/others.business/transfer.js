@@ -113,7 +113,7 @@ class BusinessTransfer extends Component {
                     <Paragraph className="mb-8  text-white fw-500 mt-16" style={{ fontSize: 18 }} >Recipient's Details</Paragraph>
                     {/* <Divider /> */}
                     <Row gutter={[16, 16]}>
-                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
                                 name="beneficiaryName"
@@ -139,6 +139,33 @@ class BusinessTransfer extends Component {
                                     className="cust-input"
                                     placeholder={"Beneficiary Name"}
                                 />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
+                                name="relation"
+                                label={"Relationship to beneficiary"}
+                                required
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        whitespace: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        validator: validateContentRule,
+                                    },
+                                ]}
+                            >
+                                <Input
+                                    className="cust-input"
+                                    placeholder={"Relationship to beneficiary"}
+                                />
+
                             </Form.Item>
                         </Col>
                         <RecipientAddress />
@@ -210,7 +237,7 @@ class BusinessTransfer extends Component {
                     <Paragraph className="mb-8  text-white fw-500 mt-16" style={{ fontSize: 18 }} >Recipient's Details</Paragraph>
                     {/* <Divider /> */}
                     <Row gutter={[16, 16]}>
-                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
                                 name="beneficiaryName"
@@ -238,6 +265,33 @@ class BusinessTransfer extends Component {
                                 />
                             </Form.Item>
                         </Col>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Form.Item
+                    className="custom-forminput custom-label mb-0"
+                    name="relation"
+                    label={"Relationship to beneficiary"}
+                    required
+                    rules={[
+                        {
+                            required: true,
+                            message: apiCalls.convertLocalLang("is_required"),
+                        },
+                        {
+                            whitespace: true,
+                            message: apiCalls.convertLocalLang("is_required"),
+                        },
+                        {
+                            validator: validateContentRule,
+                        },
+                    ]}
+                >
+                    <Input
+                        className="cust-input"
+                        placeholder={"Relationship to beneficiary"}
+                    />
+
+                </Form.Item>
+            </Col>
                         <RecipientAddress />
                     </Row>
 

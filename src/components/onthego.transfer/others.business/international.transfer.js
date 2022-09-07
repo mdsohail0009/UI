@@ -89,7 +89,7 @@ class InternationalTransfer extends Component {
 
                 </Form.Item>
             </Col>
-            <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+            {/* <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
                     className="custom-forminput custom-label mb-0"
                     name="relation"
@@ -115,7 +115,7 @@ class InternationalTransfer extends Component {
                     />
 
                 </Form.Item>
-            </Col>
+            </Col> */}
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                     className="custom-forminput custom-label mb-0"

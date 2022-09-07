@@ -6,21 +6,24 @@ import apiCalls from "../../../api/apiCalls"
 import { validateContentRule } from "../../../utils/custom.validator";
 import { connect } from "react-redux";
 import Loader from "../../../Shared/loader";
+import {confirmTransaction} from '../api'
 
 
 const { Option } = Select;
 const { Text } = Typography;
-const MyselfNewTransfer = ({ currency, isBusiness,amount, ...props }) => {
+const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     const [form] = Form.useForm();
     const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType: currency === "EUR" ? "sepa" : "swift", domesticType: 'domestic', tabType: 'domestic' });
     const [bankDetails, setbankDetails] = useState({})
-    const [saveTransferObj]= useState({"id":"00000000-0000-0000-0000-000000000000","customerId":props.userConfig.id,"favouriteName":"","firstName":"","lastName":"","beneficiaryName":"","line1":"","line2":"","line3":"","transferType":"","addressType":"","isAgree":true,"info":"","isBankContact":true,"relation":"","reasonOfTransfer":"","amount":amount,"payeeAccountModels":[{"id":"00000000-0000-0000-0000-000000000000","line1":"","line2":"","city":"","state":"","country":"","postalCode":"","currencyType":"","walletCode":"","accountNumber":"","swiftRouteBICNumber":"","bankName":"","userCreated":props?.userConfig.firstName + props?.userConfig.lastName,"iban":"","bic":"","bankBranch":"","abaRoutingCode":"","documents":null}]})
+    const [saveTransferObj]= useState({"id":"00000000-0000-0000-0000-000000000000","customerId":props.userConfig.id,"favouriteName":"","firstName":"","lastName":"","beneficiaryName":"","line1":"","line2":"","line3":"","transferType":"","addressType":"","isAgree":true,"info":"","isBankContact":true,"relation":"","reasonOfTransfer":"","amount":0,"payeeAccountModels":[{"id":"00000000-0000-0000-0000-000000000000","line1":"","line2":"","city":"","state":"","country":"","postalCode":"","currencyType":"","walletCode":"","accountNumber":"","swiftRouteBICNumber":"","bankName":"","userCreated":props?.userConfig.firstName + props?.userConfig.lastName,"iban":"","bic":"","bankBranch":"","abaRoutingCode":"","documents":null}]})
     const [createTransfer]=useState({"favouriteName":"","accountNumber":"","swiftRouteBICNumber":"","bankName":"","iban":"","abaRoutingCode":"","line1":"","line2":""})
     const [recipientDetails,setRecipientDetails]=useState({})
     const [transfertypes]=useState({domestic:'Domestic',international:'International'})
 	const [isBtnLoading, setBtnLoading] = useState(false);
     const [isLoading,setLoader]=useState(true)
     const [errorMessage,seterrorMessage]=useState();
+    const useDivRef = React.useRef(null);
+    const [validIban,setValidIban]=useState(false)
     useEffect(() => {
         getRecipientDetails()
     }, [])
@@ -59,11 +62,20 @@ const MyselfNewTransfer = ({ currency, isBusiness,amount, ...props }) => {
         saveObj.transferType=currency=='EUR'?'Sepa':transfertypes[addressOptions.tabType];
         saveObj.payeeAccountModels[0].currencyType='fiat';
         saveObj.payeeAccountModels[0].walletCode=currency;
+        saveObj.amount=onTheGoObj.amount;
         const response = await apiCalls.saveTransferData(saveObj);
         if (response.ok) {
-            setBtnLoading(false);
-           props.onContinue(response.data)
+            const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: onTheGoObj.amount, reasonOfTransfer: null })
+            if (confirmRes.ok) {
+                setBtnLoading(false);
+                props.onContinue(confirmRes.data);
+            } else {
+                setBtnLoading(false);
+                seterrorMessage(isErrorDispaly(confirmRes));
+                useDivRef.current.scrollIntoView();
+            }
         }else{seterrorMessage(isErrorDispaly(response));
+            useDivRef.current.scrollIntoView();
 		setBtnLoading(false);
         }
     }
@@ -72,15 +84,19 @@ const MyselfNewTransfer = ({ currency, isBusiness,amount, ...props }) => {
             const response = await apiCalls.getIBANData(e.target.value);
             if (response.ok) {
                 setbankDetails(response.data)
+                if(response.data && (response.data?.routingNumber || response.data?.bankName)){
+                    setValidIban(true)
+                }else{
+                    setValidIban(false)
+                }
             }else{
                 seterrorMessage(isErrorDispaly(response));
-                setbankDetails(null)
+                setbankDetails({})
             }
         }
         
     }
     const isErrorDispaly = (objValue) => {
-        debugger
         if (objValue.data && typeof objValue.data === "string") {
           return objValue.data;
         } else if (
@@ -93,6 +109,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,amount, ...props }) => {
         }
       };
     return <>
+    <div ref={useDivRef}></div>
         <Form layout="vertical" form={form} onFinish={saveTransfer} initialValues={{createTransfer}}>
        <> {currency === "USD" && <>
             <Row gutter={[16, 16]}>
@@ -144,15 +161,15 @@ const MyselfNewTransfer = ({ currency, isBusiness,amount, ...props }) => {
                     required
                     rules={[
                         {
-                            required: true,
-                            message: apiCalls.convertLocalLang("is_required"),
-                        },
-                        {
-                            whitespace: true,
-                            message: apiCalls.convertLocalLang("is_required"),
-                        },
-                        {
-                            validator: validateContentRule,
+                            validator: (_, value) => {
+                                if (!value) {
+                                    return Promise.reject(apiCalls.convertLocalLang("is_required"));
+                                } else if (!validIban) {
+                                    return Promise.reject("Invalid Iban");
+                                } else {
+                                    return Promise.resolve();
+                                }
+                            },
                         },
                     ]}
                     label='IBAN'
@@ -221,15 +238,15 @@ const MyselfNewTransfer = ({ currency, isBusiness,amount, ...props }) => {
                 required
                 rules={[
                     {
-                        required: true,
-                        message: apiCalls.convertLocalLang("is_required"),
-                    },
-                    {
-                        whitespace: true,
-                        message: apiCalls.convertLocalLang("is_required"),
-                    },
-                    {
-                        validator: validateContentRule,
+                        validator: (_, value) => {
+                            if (!value) {
+                                return Promise.reject(apiCalls.convertLocalLang("is_required"));
+                            } else if (!validIban) {
+                                return Promise.reject("Invalid Iban");
+                            } else {
+                                return Promise.resolve();
+                            }
+                        },
                     },
                 ]}
                 label='IBAN'
@@ -348,12 +365,12 @@ const MyselfNewTransfer = ({ currency, isBusiness,amount, ...props }) => {
                 </Col></>}
         </Row>
         {currency == 'EUR' && <div className="box basic-info alert-info-custom mt-16">
-            {bankDetails&&bankDetails.bankName!=''&&bankDetails.bankName!=null&&<Row>
+            {bankDetails&&bankDetails?.bankName!=''&&bankDetails?.bankName!=null&&<Row>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                 <label className="fs-14 fw-400 ">
                     <strong>Bank Name</strong>
                 </label>
-                <div><Text className="fs-14 fw-400 text-purewhite">{(bankDetails.bankName!=''&&bankDetails.bankName!=null)?bankDetails.bankName:'-'}</Text></div>
+                <div><Text className="fs-14 fw-400 text-purewhite">{(bankDetails?.bankName!=''&&bankDetails?.bankName!=null)?bankDetails?.bankName:'-'}</Text></div>
 
             </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
