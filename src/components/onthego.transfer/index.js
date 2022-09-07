@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Input, Row, Col, Form, Button, Typography, List, Divider, Image, Select } from 'antd';
+import { Input, Row, Col, Form, Button, Typography, List, Divider, Image, Select, Tabs, Alert } from 'antd';
 import apicalls from "../../api/apiCalls";
 import AddressDocumnet from "../addressbook.component/document.upload";
 import oops from '../../assets/images/oops.png'
@@ -9,13 +9,16 @@ import success from '../../assets/images/success.png';
 import Verification from "./verification.component/verification";
 import NumberFormat from "react-number-format";
 import ConnectStateProps from "../../utils/state.connect";
-import { fetchPayees, saveWithdraw } from "./api";
+import { fetchPayees, fetchPastPayees, confirmTransaction, updatePayee, document, saveWithdraw } from "./api";
+import Loader from "../../Shared/loader";
+import Search from "antd/lib/input/Search";
 import Verifications from "./verification.component/verifications"
 
 const { Text, Title } = Typography;
 
 class OnthegoFundTransfer extends Component {
     enteramtForm = React.createRef();
+    reasonForm = React.createRef();
     state = {
         step: "enteramount",
         filterObj: [],
@@ -26,12 +29,23 @@ class OnthegoFundTransfer extends Component {
         reviewDetails: {},
         payees: [],
         payeesLoading: true,
+        pastPayees: [],
+        searchVal: "",
+        errorMessage: null,
+        codeDetails: { abaRoutingCode: "", swiftRouteBICNumber: "", reasionOfTransfer: "", documents: null },
+        selectedPayee: {},
+        selectedTab: "domestic",
         verifyData :null
     }
     componentDidMount() {
-        fetchPayees(this.props.userProfile.id).then((response) => {
+        fetchPayees(this.props.userProfile.id, this.props.selectedCurrency).then((response) => {
             if (response.ok) {
                 this.setState({ ...this.state, payeesLoading: false, filterObj: response.data, payees: response.data });
+            }
+        });
+        fetchPastPayees(this.props.userProfile.id, this.props.selectedCurrency).then((response) => {
+            if (response.ok) {
+                this.setState({ ...this.state, pastPayees: response.data });
             }
         });
     }
@@ -44,6 +58,14 @@ class OnthegoFundTransfer extends Component {
     amountnext = (values) => {
         this.chnageStep("newtransfer", values)
     }
+    handleSearch = ({ target: { value: val } }) => {
+        if (val) {
+            const filterObj = this.state.payees.filter(item => item.name.toLowerCase().includes(val));
+            this.setState({ ...this.state, filterObj, searchVal: val });
+        }
+        else
+            this.setState({ ...this.state, filterObj: this.state.payees });
+    }
     saveWithdrawdata = () =>{
         
     }
@@ -52,7 +74,7 @@ class OnthegoFundTransfer extends Component {
         console.log(obj)
     }
     renderStep = (step) => {
-        const { filterObj } = this.state;
+        const { filterObj, pastPayees, payeesLoading } = this.state;
         const steps = {
             enteramount: <Form
                 autoComplete="off"
@@ -77,7 +99,7 @@ class OnthegoFundTransfer extends Component {
                         >
                             <NumberFormat
                                 customInput={Input}
-                                className="cust-input custom-add-select "
+                                className="cust-input "
                                 placeholder={"Enter amount"}
                                 maxLength="20"
                                 decimalScale={8}
@@ -91,7 +113,7 @@ class OnthegoFundTransfer extends Component {
                             />
                         </Form.Item>
                     </Col>
-                    <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    {/* <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item
                             className="custom-forminput custom-label mb-0"
                             name="description"
@@ -113,7 +135,7 @@ class OnthegoFundTransfer extends Component {
                             />
                         </Form.Item>
 
-                    </Col>
+                    </Col> */}
                 </Row>
                 <Row gutter={[16, 16]}>
 
@@ -155,6 +177,7 @@ class OnthegoFundTransfer extends Component {
                 </Row>
             </Form>,
             addressselection: <React.Fragment>
+                {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
                 <div className="mb-16 text-left">
                     <text Paragraph
                         className='text-white fs-30 fw-600 px-4 '>Who are you sending money to?</text>
@@ -162,71 +185,85 @@ class OnthegoFundTransfer extends Component {
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 
                     <Form.Item
-                        className="custom-forminput custom-label mb-0 text-white-30 custom-placeholder"
                         name="lastName"
                         required
                         label={"Search for Payeee"}
                     >
-                        {/* <Search placeholder="Search" 
-                                addonAfter={<span className="icon md search-white" />}  size="middle" bordered={false} className="mt-24 mb-8 cust-input cust-select mb-0 text-white-30" />               */}
-                        <Select placeholder="Select Payee" bordered={false} showSearch
-                            className="cust-input cust-select mb-0 text-white-30"
-                            dropdownClassName="select-drpdwn"
+                        <Search
+                            placeholder="Select Payee" bordered={false} showSearch
+                            className=" "
+                            onChange={this.handleSearch}
+                            value={this.state.searchVal}
+                        />
+                        {/* {filterObj.map(payee => <Select.Option value={payee.id}>{payee.name}</Select.Option>)} */}
 
-                            addonAfter={<span className="icon md search-white" />}
-                        >
-
-                            {this.state.payees.map(payee => <Select.Option value={payee.id}>{payee.name}</Select.Option>)}
-                        </Select></Form.Item>
+                    </Form.Item>
                 </Col>
-
-                {(filterObj.length > 0) && <>
+                {this.state?.loading && <Loader />}
+                {(filterObj.length > 0) && (!this.state.loading) && <>
                     <Title className="fs-24 fw-600 text-white mt-24">Address Book</Title>
                     <Divider className="cust-divide" />
+
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                         {filterObj?.map((item, idx) =>
-                            <Row className="fund-border c-pointer" onClick={() => this.chnageStep(item.type === "3rd Party" ? "reasonfortransfer" : "reviewdetails")}>
-                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className="mb-16"><div class="fund-circle text-white">P</div></Col>
+                            <Row className="fund-border c-pointer" onClick={async () => {
+                                if (!["myself", "1stparty"].includes(item.addressType) || this.props.selectedCurrency != "EUR") {
+                                    this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item,codeDetails:{...this.state.codeDetails,...item} }, () => this.chnageStep("reasonfortransfer"));
+                                } else {
+                                    this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item ,codeDetails:{...this.state.codeDetails,...item}});
+                                    const res = await confirmTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount });
+                                    if (res.ok) {
+                                        this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => this.chnageStep("reviewdetails"));
+                                    } else {
+                                        this.setState({ ...this.state, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
+                                    }
+                                }
+                            }}>
+                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className="mb-16"><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
                                 <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="mb-16 small-text-align">
                                     <label className="fs-16 fw-400 text-purewhite">
-                                        <strong>Payee100
+                                        <strong>{item.name}
                                             {/* <small>{item.type}</small> */}
                                         </strong>
                                     </label>
-                                    <div><Text className="fs-14 fw-400 text-purewhite">USD acc ending in 4544</Text></div>
-
+                                    <div><Text className="fs-14 fw-400 text-purewhite">{this.props.selectedCurrency} acc ending in {item.accountNumber.substr(item.accountNumber.length - 4)}</Text></div>
                                 </Col>
                                 <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white"></span>
                                 </Col>
                             </Row>
-
-
                         )}
-                        {/* <Title className="fs-16 fw-600 text-white text-center cust-address">If address not found,<a className="create-new">Create New Transfer</a></Title> */}
                     </ul>
 
                     <Title className="fs-24 fw-600 text-white">Past Recipients</Title>
                     <Divider className="cust-divide" />
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
-                        {filterObj?.map((item, idx) =>
-                            <Row className="fund-border c-pointer" onClick={() => this.chnageStep(item.type === "3rd Party" ? "reasonfortransfer" : "reviewdetails")}>
-                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className="mb-16"><div class="fund-circle text-white">P</div></Col>
+                        {pastPayees?.map((item, idx) =>
+                            <Row className="fund-border c-pointer" onClick={async () => {
+                                if (!["myself", "1stparty"].includes(item.addressType) || this.props.selectedCurrency != "EUR") {
+                                    this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item }, () => this.chnageStep("reasonfortransfer"))
+                                } else {
+                                    this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item });
+                                    const res = await confirmTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount });
+                                    if (res.ok) {
+                                        this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => this.chnageStep("reviewdetails"));
+                                    } else {
+                                        this.setState({ ...this.state, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
+                                    }
+                                }
+                            }}>
+                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className="mb-16"><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
                                 <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="mb-16 small-text-align">
                                     <label className="fs-16 fw-400 text-purewhite">
-                                        <strong>Payee100
+                                        <strong>{item.name}
                                             {/* <small>{item.type}</small> */}
                                         </strong>
                                     </label>
-                                    <div><Text className="fs-14 fw-400 text-purewhite">USD acc ending in 4544</Text></div>
-
+                                    <div><Text className="fs-14 fw-400 text-purewhite">{this.props.selectedCurrency} acc ending in {item.accountNumber.substr(item.accountNumber.length - 4)}</Text></div>
                                 </Col>
                                 <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white"></span>
                                 </Col>
-
-
-
                             </Row>
 
                         )}
@@ -240,15 +277,19 @@ class OnthegoFundTransfer extends Component {
                 </div>}
             </React.Fragment>,
             reasonfortransfer: <React.Fragment>
-                <Form
+                {this.state?.loading && <Loader />}
+
+                {!this.state?.loading && <Form
                     autoComplete="off"
-                    initialValues={{}}
+                    initialValues={this.state.codeDetails}
+                    ref={this.reasonForm}
                 >
-                    <Row gutter={[16, 16]}>
+                    {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
+                    {!["myself", "1stparty"].includes(this.state.selectedPayee.addressType) && <React.Fragment><Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
-                                name="reason"
+                                name="reasionOfTransfer"
                                 label={"Reason for transfer"}
                                 required
                                 rules={[
@@ -259,7 +300,7 @@ class OnthegoFundTransfer extends Component {
                                     }
                                 ]}
                             >
-                                <Input.TextArea
+                                <Input
                                     className="cust-input "
                                     placeholder={"Reason for transfer"}
                                     maxLength="500"
@@ -268,9 +309,64 @@ class OnthegoFundTransfer extends Component {
 
                         </Col>
                     </Row>
+                        <AddressDocumnet documents={this.state.codeDetails.documents} onDocumentsChange={(docs) => {
+                        let {documents} = this.state.codeDetails;
+                        documents = docs;
+                        this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, documents } })
+                    }} title={"Upload supporting documents for transaction"} />
+                    </React.Fragment>}
+                    <Tabs className="cust-tabs-fait" activeKey={this.state.selectedTab} onChange={(key) => this.setState({ ...this.state, selectedTab: key })}>
+                        <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"}>
+                            <Row gutter={[16, 16]}>
+                                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                                    <Form.Item
+                                        className="custom-forminput custom-label mb-0"
+                                        name="abaRoutingCode"
+                                        label={"ABA Routing COde"}
+                                        required
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message:
+                                                    apicalls.convertLocalLang("is_required"),
+                                            }
+                                        ]}
+                                    >
+                                        <Input
+                                            className="cust-input "
+                                            placeholder={"ABA Routing Code"}
+                                            maxLength="500"
+                                        />
+                                    </Form.Item>
 
-                    <AddressDocumnet title={"Upload supporting documents for transaction"} />
+                                </Col>
+                            </Row>
+                        </Tabs.TabPane>
+                        <Tabs.TabPane tab="International USD Swift" key={"international"} className="text-white">
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                                <Form.Item
+                                    className="custom-forminput custom-label mb-0"
+                                    name="swiftRouteBICNumber"
+                                    label={"Swift / BIC Code"}
+                                    required
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message:
+                                                apicalls.convertLocalLang("is_required"),
+                                        }
+                                    ]}
+                                >
+                                    <Input
+                                        className="cust-input "
+                                        placeholder={"Swift / BIC Code"}
+                                        maxLength="500"
+                                    />
+                                </Form.Item>
 
+                            </Col>
+                        </Tabs.TabPane>
+                    </Tabs>
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={6} lg={6} xl={6} xxl={6}></Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -281,7 +377,41 @@ class OnthegoFundTransfer extends Component {
                                     size="large"
                                     className="pop-btn mb-36"
                                     style={{ minWidth: 300 }}
-                                    onClick={() => this.chnageStep("reviewdetails")}
+                                    onClick={() => {
+                                        let validateFileds = [];
+                                        const code = this.state?.selectedTab === "domestic" ? "abaRoutingCode" : "swiftRouteBICNumber";
+                                        validateFileds.push(code);
+                                        if (!["myself", "1stparty"].includes(this.state.selectedPayee.addressType)) {
+                                          validateFileds=  validateFileds.concat(["reasionOfTransfer", "files"]);
+                                        }
+                                        this.reasonForm.current.validateFields(validateFileds).then(() => {
+                                            const fieldValues = this.reasonForm.current.getFieldsValue();
+                                            this.setState({ ...this.state, loading: true, errorMessage: null });
+                                            const obj = {
+                                                "payeeId": this.state.selectedPayee.id,
+                                                "customerId": this.props.userProfile.id,
+                                                "reasonOfTransfer": fieldValues.reasionOfTransfer,
+                                                "routingNumber": fieldValues.abaRoutingCode,
+                                                "isInternational": this.state?.selectedTab !== "domestic",
+                                                "documents": this.state.codeDetails.documents
+                                            }
+                                            updatePayee(obj)
+                                                .then(async (response) => {
+                                                    this.setState({ ...this.state, loading: true, errorMessage: null });
+                                                    if (response.ok) {
+                                                        const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: this.state.codeDetails.reasonOfTransfer, amount: this.state.amount });
+                                                        if (res.ok) {
+                                                            this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => this.chnageStep("reviewdetails"));
+                                                        } else {
+                                                            this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, ...fieldValues }, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
+                                                        }
+                                                    } else {
+                                                        this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, ...fieldValues }, loading: false, errorMessage: response.data?.message || response.data || response.originalError.message });
+                                                    }
+                                                })
+
+                                        }).catch(() => { });
+                                    }}
                                 >
                                     Next
                                 </Button>
@@ -289,11 +419,10 @@ class OnthegoFundTransfer extends Component {
                         </Col>
                         <Col xs={24} md={6} lg={6} xl={6} xxl={6}></Col>
                     </Row>
-                </Form>
+                </Form>}
             </React.Fragment>,
             reviewdetails: <React.Fragment>,
                 <Form
-                    // initialValues={this.state.employeeData}
                     name="advanced_search"
                     ref={this.formRef}
                     onFinish={this.transferDetials}
@@ -381,13 +510,13 @@ class OnthegoFundTransfer extends Component {
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Reason for transfer </Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.customerRemarks}</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Bank Name </Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state?.reviewDetails?.bankName}</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state?.reviewDetails?.bankName || "-"}</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
@@ -402,7 +531,6 @@ class OnthegoFundTransfer extends Component {
                                         size="large"
                                         block
                                         className="pop-btn px-24"
-
                                     >
                                         Confirm & Continue
                                     </Button>
@@ -413,11 +541,8 @@ class OnthegoFundTransfer extends Component {
                 </Form>
             </React.Fragment>,
             newtransfer: <>
-                {/* <FiatAddress currency={this.props.selectedCurrency} amount={this.state.amount} onContinue={(obj) => {
-                   
-                   debugger;
-                   console.log(obj)
-                   this.setState({ ...this.state, reviewDetails: obj }, () => {
+                <FiatAddress currency={this.props.selectedCurrency} amount={this.state.amount} onContinue={(obj) => {
+                    this.setState({ ...this.state, reviewDetails: obj }, () => {
                         this.chnageStep("reviewdetails")
                     })
                 }
