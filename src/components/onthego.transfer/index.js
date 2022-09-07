@@ -299,13 +299,18 @@ class OnthegoFundTransfer extends Component {
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper mt-16">How much you will receive</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper mt-16  text-right">{`${this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission} ${this.state.reviewDetails?.walletCode}`}</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper mt-16  text-right">
+                                    <NumberFormat
+                                        value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Total fees</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{`${this.state.reviewDetails?.comission} ${this.state.reviewDetails?.walletCode}`}</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right"><NumberFormat
+                                    value={`${(this.state.reviewDetails?.comission)}`}
+                                    thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
                             </div>
                         </Col>
                         {/* <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
@@ -317,7 +322,9 @@ class OnthegoFundTransfer extends Component {
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Withdrawal amount</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{`${this.state.reviewDetails?.requestedAmount} ${this.state.reviewDetails?.walletCode}`}</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right"><NumberFormat
+                                    value={`${(this.state.reviewDetails?.requestedAmount)}`}
+                                    thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
                             </div>
                         </Col>
                         {/* <Col xs={24} sm={24} md={24} lg={24} xxl={24}>

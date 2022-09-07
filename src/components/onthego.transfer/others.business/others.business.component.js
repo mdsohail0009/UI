@@ -68,15 +68,14 @@ class OthersBusiness extends Component {
         this.setState({ ...this.state, isLoading: true, errorMessage: null });
         const response = await savePayee(_obj);
         if (response.ok) {
-            this.setState({ ...this.state, errorMessage: null, isLoading: false }, async () => {
-                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
-                if (confirmRes.ok) {
-                    this.props.onContinue(confirmRes.data);
-                    this.setState({ ...this.state, isLoading: false, errorMessage: null });
-                } else {
-                    this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false });
-                }
-            });
+            const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
+            if (confirmRes.ok) {
+                this.props.onContinue(confirmRes.data);
+                this.setState({ ...this.state, isLoading: false, errorMessage: null });
+            } else {
+                this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false });
+            }
+
         } else {
             this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false });
         }
