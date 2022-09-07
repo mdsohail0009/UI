@@ -23,6 +23,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     const [isLoading,setLoader]=useState(true)
     const [errorMessage,seterrorMessage]=useState();
     const useDivRef = React.useRef(null);
+    const [validIban,setValidIban]=useState(false)
     useEffect(() => {
         getRecipientDetails()
     }, [])
@@ -32,7 +33,6 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             setRecipientDetails(response.data);setLoader(false)
         }else{
             seterrorMessage(isErrorDispaly(response));setLoader(false)
-            useDivRef.current.scrollIntoView();
         }
     }
     const saveTransfer = async(values) => {
@@ -84,10 +84,14 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             const response = await apiCalls.getIBANData(e.target.value);
             if (response.ok) {
                 setbankDetails(response.data)
+                if(response.data && (response.data?.routingNumber || response.data?.bankName)){
+                    setValidIban(true)
+                }else{
+                    setValidIban(false)
+                }
             }else{
                 seterrorMessage(isErrorDispaly(response));
-                setbankDetails(null)
-                useDivRef.current.scrollIntoView();
+                setbankDetails({})
             }
         }
         
@@ -157,15 +161,15 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     required
                     rules={[
                         {
-                            required: true,
-                            message: apiCalls.convertLocalLang("is_required"),
-                        },
-                        {
-                            whitespace: true,
-                            message: apiCalls.convertLocalLang("is_required"),
-                        },
-                        {
-                            validator: validateContentRule,
+                            validator: (_, value) => {
+                                if (!value) {
+                                    return Promise.reject(apiCalls.convertLocalLang("is_required"));
+                                } else if (!validIban) {
+                                    return Promise.reject("Invalid Iban");
+                                } else {
+                                    return Promise.resolve();
+                                }
+                            },
                         },
                     ]}
                     label='IBAN'
@@ -234,15 +238,15 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 required
                 rules={[
                     {
-                        required: true,
-                        message: apiCalls.convertLocalLang("is_required"),
-                    },
-                    {
-                        whitespace: true,
-                        message: apiCalls.convertLocalLang("is_required"),
-                    },
-                    {
-                        validator: validateContentRule,
+                        validator: (_, value) => {
+                            if (!value) {
+                                return Promise.reject(apiCalls.convertLocalLang("is_required"));
+                            } else if (!validIban) {
+                                return Promise.reject("Invalid Iban");
+                            } else {
+                                return Promise.resolve();
+                            }
+                        },
                     },
                 ]}
                 label='IBAN'
@@ -361,12 +365,12 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 </Col></>}
         </Row>
         {currency == 'EUR' && <div className="box basic-info alert-info-custom mt-16">
-            {bankDetails&&bankDetails.bankName!=''&&bankDetails.bankName!=null&&<Row>
+            {bankDetails&&bankDetails?.bankName!=''&&bankDetails?.bankName!=null&&<Row>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                 <label className="fs-14 fw-400 ">
                     <strong>Bank Name</strong>
                 </label>
-                <div><Text className="fs-14 fw-400 text-purewhite">{(bankDetails.bankName!=''&&bankDetails.bankName!=null)?bankDetails.bankName:'-'}</Text></div>
+                <div><Text className="fs-14 fw-400 text-purewhite">{(bankDetails?.bankName!=''&&bankDetails?.bankName!=null)?bankDetails?.bankName:'-'}</Text></div>
 
             </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
