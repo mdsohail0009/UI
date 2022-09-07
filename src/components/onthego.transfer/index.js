@@ -89,7 +89,7 @@ class OnthegoFundTransfer extends Component {
                         >
                             <NumberFormat
                                 customInput={Input}
-                                className="cust-input custom-add-select "
+                                className="cust-input "
                                 placeholder={"Enter amount"}
                                 maxLength="20"
                                 decimalScale={8}
@@ -103,7 +103,7 @@ class OnthegoFundTransfer extends Component {
                             />
                         </Form.Item>
                     </Col>
-                    <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    {/* <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item
                             className="custom-forminput custom-label mb-0"
                             name="description"
@@ -125,7 +125,7 @@ class OnthegoFundTransfer extends Component {
                             />
                         </Form.Item>
 
-                    </Col>
+                    </Col> */}
                 </Row>
                 <Row gutter={[16, 16]}>
 
@@ -198,9 +198,9 @@ class OnthegoFundTransfer extends Component {
                         {filterObj?.map((item, idx) =>
                             <Row className="fund-border c-pointer" onClick={async () => {
                                 if (!["myself", "1stparty"].includes(item.addressType) || this.props.selectedCurrency != "EUR") {
-                                    this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item }, () => this.chnageStep("reasonfortransfer"));
+                                    this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item,codeDetails:{...this.state.codeDetails,...item} }, () => this.chnageStep("reasonfortransfer"));
                                 } else {
-                                    this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item });
+                                    this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item ,codeDetails:{...this.state.codeDetails,...item}});
                                     const res = await confirmTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount });
                                     if (res.ok) {
                                         this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => this.chnageStep("reviewdetails"));
