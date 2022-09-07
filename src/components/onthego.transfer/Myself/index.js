@@ -10,11 +10,11 @@ import Loader from "../../../Shared/loader";
 
 const { Option } = Select;
 const { Text } = Typography;
-const MyselfNewTransfer = ({ currency, isBusiness,amount, ...props }) => {
+const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     const [form] = Form.useForm();
     const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType: currency === "EUR" ? "sepa" : "swift", domesticType: 'domestic', tabType: 'domestic' });
     const [bankDetails, setbankDetails] = useState({})
-    const [saveTransferObj]= useState({"id":"00000000-0000-0000-0000-000000000000","customerId":props.userConfig.id,"favouriteName":"","firstName":"","lastName":"","beneficiaryName":"","line1":"","line2":"","line3":"","transferType":"","addressType":"","isAgree":true,"info":"","isBankContact":true,"relation":"","reasonOfTransfer":"","amount":amount,"payeeAccountModels":[{"id":"00000000-0000-0000-0000-000000000000","line1":"","line2":"","city":"","state":"","country":"","postalCode":"","currencyType":"","walletCode":"","accountNumber":"","swiftRouteBICNumber":"","bankName":"","userCreated":props?.userConfig.firstName + props?.userConfig.lastName,"iban":"","bic":"","bankBranch":"","abaRoutingCode":"","documents":null}]})
+    const [saveTransferObj]= useState({"id":"00000000-0000-0000-0000-000000000000","customerId":props.userConfig.id,"favouriteName":"","firstName":"","lastName":"","beneficiaryName":"","line1":"","line2":"","line3":"","transferType":"","addressType":"","isAgree":true,"info":"","isBankContact":true,"relation":"","reasonOfTransfer":"","amount":0,"payeeAccountModels":[{"id":"00000000-0000-0000-0000-000000000000","line1":"","line2":"","city":"","state":"","country":"","postalCode":"","currencyType":"","walletCode":"","accountNumber":"","swiftRouteBICNumber":"","bankName":"","userCreated":props?.userConfig.firstName + props?.userConfig.lastName,"iban":"","bic":"","bankBranch":"","abaRoutingCode":"","documents":null}]})
     const [createTransfer]=useState({"favouriteName":"","accountNumber":"","swiftRouteBICNumber":"","bankName":"","iban":"","abaRoutingCode":"","line1":"","line2":""})
     const [recipientDetails,setRecipientDetails]=useState({})
     const [transfertypes]=useState({domestic:'Domestic',international:'International'})
@@ -59,6 +59,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,amount, ...props }) => {
         saveObj.transferType=currency=='EUR'?'Sepa':transfertypes[addressOptions.tabType];
         saveObj.payeeAccountModels[0].currencyType='fiat';
         saveObj.payeeAccountModels[0].walletCode=currency;
+        saveObj.amount=onTheGoObj.amount;
         const response = await apiCalls.saveTransferData(saveObj);
         if (response.ok) {
             setBtnLoading(false);
@@ -80,7 +81,6 @@ const MyselfNewTransfer = ({ currency, isBusiness,amount, ...props }) => {
         
     }
     const isErrorDispaly = (objValue) => {
-        debugger
         if (objValue.data && typeof objValue.data === "string") {
           return objValue.data;
         } else if (
