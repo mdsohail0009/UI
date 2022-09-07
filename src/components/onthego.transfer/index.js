@@ -11,6 +11,7 @@ import NumberFormat from "react-number-format";
 import ConnectStateProps from "../../utils/state.connect";
 import { fetchPayees, fetchPastPayees, confirmTransaction, updateRoutingCode, document } from "./api";
 import Loader from "../../Shared/loader";
+import Search from "antd/lib/input/Search";
 const { Text, Title } = Typography;
 
 class OnthegoFundTransfer extends Component {
@@ -54,7 +55,7 @@ class OnthegoFundTransfer extends Component {
     amountnext = (values) => {
         this.chnageStep("newtransfer", values)
     }
-    handleSearch = (val) => {
+    handleSearch = ({target:{value:val}}) => {
         if (val) {
             const filterObj = this.state.payees.filter(item => item.name.toLowerCase().includes(val));
             this.setState({ ...this.state, filterObj, searchVal: val });
@@ -174,22 +175,18 @@ class OnthegoFundTransfer extends Component {
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 
                     <Form.Item
-                        className="custom-forminput custom-label mb-0 text-white-30 custom-placeholder"
                         name="lastName"
                         required
                         label={"Search for Payeee"}
                     >
-                        <Select
+                        <Search
                             placeholder="Select Payee" bordered={false} showSearch
-                            className="cust-input cust-select mb-0 text-white-30"
-                            dropdownClassName="select-drpdwn"
-                            onSearch={this.handleSearch}
-                            searchValue={this.state.searchVal}
+                            className=" "
+                            onChange={this.handleSearch}
                             value={this.state.searchVal}
-                            addonAfter={<span className="icon md search-white" />}
-                        >
-                            {filterObj.map(payee => <Select.Option value={payee.id}>{payee.name}</Select.Option>)}
-                        </Select>
+                        />
+                        {/* {filterObj.map(payee => <Select.Option value={payee.id}>{payee.name}</Select.Option>)} */}
+
                     </Form.Item>
                 </Col>
                 {this.state?.loading && <Loader />}
@@ -367,7 +364,7 @@ class OnthegoFundTransfer extends Component {
                                     className="pop-btn mb-36"
                                     style={{ minWidth: 300 }}
                                     onClick={() => {
-                                        this.reasonForm.current.validateFields([this.state?.selectedTab === "domestic"?"abaRoutingCode":"swiftRouteBICNumber"]).then(() => {
+                                        this.reasonForm.current.validateFields([this.state?.selectedTab === "domestic" ? "abaRoutingCode" : "swiftRouteBICNumber"]).then(() => {
                                             const fieldValues = this.reasonForm.current.getFieldsValue();
                                             this.setState({ ...this.state, loading: true, errorMessage: null });
                                             updateRoutingCode(this.state.selectedPayee.id, (this.state?.selectedTab === "domestic" ? fieldValues.abaRoutingCode : fieldValues.swiftRouteBICNumber), this.state?.selectedTab !== "domestic")
@@ -378,10 +375,10 @@ class OnthegoFundTransfer extends Component {
                                                         if (res.ok) {
                                                             this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => this.chnageStep("reviewdetails"));
                                                         } else {
-                                                            this.setState({ ...this.state,codeDetails:{...this.state.codeDetails,...fieldValues}, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
+                                                            this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, ...fieldValues }, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
                                                         }
                                                     } else {
-                                                        this.setState({ ...this.state,codeDetails:{...this.state.codeDetails,...fieldValues}, loading: false, errorMessage: response.data?.message || response.data || response.originalError.message });
+                                                        this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, ...fieldValues }, loading: false, errorMessage: response.data?.message || response.data || response.originalError.message });
                                                     }
                                                 })
 
@@ -398,7 +395,6 @@ class OnthegoFundTransfer extends Component {
             </React.Fragment>,
             reviewdetails: <React.Fragment>,
                 <Form
-                    // initialValues={this.state.employeeData}
                     name="advanced_search"
                     ref={this.formRef}
                     onFinish={this.transferDetials}
@@ -486,13 +482,13 @@ class OnthegoFundTransfer extends Component {
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Reason for transfer </Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.customerRemarks}</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.customerRemarks||"-"}</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Bank Name </Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state?.reviewDetails?.bankName}</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state?.reviewDetails?.bankName||"-"}</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
@@ -519,9 +515,6 @@ class OnthegoFundTransfer extends Component {
             </React.Fragment>,
             newtransfer: <>
                 <FiatAddress currency={this.props.selectedCurrency} amount={this.state.amount} onContinue={(obj) => {
-
-                    debugger;
-                    console.log(obj)
                     this.setState({ ...this.state, reviewDetails: obj }, () => {
                         this.chnageStep("reviewdetails")
                     })
