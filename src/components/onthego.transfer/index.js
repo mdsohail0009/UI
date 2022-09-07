@@ -53,7 +53,10 @@ class OnthegoFundTransfer extends Component {
         }
     }
     amountnext = (values) => {
-        this.chnageStep("newtransfer", values)
+        let _amt = values.amount;
+        _amt = _amt.replace(/,/g, "");
+        this.setState({ ...this.state, amount: _amt }, () => this.chnageStep("newtransfer", values))
+
     }
     handleSearch = ({ target: { value: val } }) => {
         if (val) {
@@ -152,7 +155,9 @@ class OnthegoFundTransfer extends Component {
                                 className="pop-btn mb-36"
                                 style={{ minWidth: 300 }}
                                 onClick={() => {
-                                    this.setState({ ...this.state, isNewTransfer: false }, () => {
+                                    let _amt = this.enteramtForm.current.getFieldsValue().amount;
+                                    _amt = _amt.replace(/,/g, "");
+                                    this.setState({ ...this.state, isNewTransfer: false, amount: _amt }, () => {
                                         this.enteramtForm.current.validateFields().then(() => this.chnageStep("addressselection"))
                                             .catch(error => {
 
@@ -198,9 +203,9 @@ class OnthegoFundTransfer extends Component {
                         {filterObj?.map((item, idx) =>
                             <Row className="fund-border c-pointer" onClick={async () => {
                                 if (!["myself", "1stparty"].includes(item.addressType) || this.props.selectedCurrency != "EUR") {
-                                    this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item,codeDetails:{...this.state.codeDetails,...item} }, () => this.chnageStep("reasonfortransfer"));
+                                    this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item, codeDetails: { ...this.state.codeDetails, ...item } }, () => this.chnageStep("reasonfortransfer"));
                                 } else {
-                                    this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item ,codeDetails:{...this.state.codeDetails,...item}});
+                                    this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item, codeDetails: { ...this.state.codeDetails, ...item } });
                                     const res = await confirmTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount });
                                     if (res.ok) {
                                         this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => this.chnageStep("reviewdetails"));
@@ -300,10 +305,10 @@ class OnthegoFundTransfer extends Component {
                         </Col>
                     </Row>
                         <AddressDocumnet documents={this.state.codeDetails.documents} onDocumentsChange={(docs) => {
-                        let {documents} = this.state.codeDetails;
-                        documents = docs;
-                        this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, documents } })
-                    }} title={"Upload supporting documents for transaction"} />
+                            let { documents } = this.state.codeDetails;
+                            documents = docs;
+                            this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, documents } })
+                        }} title={"Upload supporting documents for transaction"} />
                     </React.Fragment>}
                     <Tabs className="cust-tabs-fait" activeKey={this.state.selectedTab} onChange={(key) => this.setState({ ...this.state, selectedTab: key })}>
                         <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"}>
@@ -372,7 +377,7 @@ class OnthegoFundTransfer extends Component {
                                         const code = this.state?.selectedTab === "domestic" ? "abaRoutingCode" : "swiftRouteBICNumber";
                                         validateFileds.push(code);
                                         if (!["myself", "1stparty"].includes(this.state.selectedPayee.addressType)) {
-                                          validateFileds=  validateFileds.concat(["reasionOfTransfer", "files"]);
+                                            validateFileds = validateFileds.concat(["reasionOfTransfer", "files"]);
                                         }
                                         this.reasonForm.current.validateFields(validateFileds).then(() => {
                                             const fieldValues = this.reasonForm.current.getFieldsValue();
