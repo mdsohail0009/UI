@@ -4,7 +4,7 @@ import apiCalls from "../../../api/apiCalls";
 import { validateContentRule } from "../../../utils/custom.validator";
 import AddressDocumnet from "../../addressbook.component/document.upload";
 import { RecipientAddress } from "../../addressbook.v2/recipient.details";
-import { createPayee, fetchIBANDetails, payeeAccountObj, savePayee } from "../api";
+import { confirmTransaction, createPayee, fetchIBANDetails, payeeAccountObj, savePayee } from "../api";
 import BusinessTransfer from "./transfer";
 import Loader from '../../../Shared/loader';
 import ConnectStateProps from "../../../utils/state.connect";
@@ -65,10 +65,17 @@ class OthersBusiness extends Component {
         _obj.addressType = "Business";
         _obj.transferType = "sepa";
         _obj.amount = this.props.amount;
+        this.setState({ ...this.state, isLoading: true, errorMessage: null });
         const response = await savePayee(_obj);
         if (response.ok) {
-            this.setState({ ...this.state, errorMessage: null, isLoading: false }, () => {
-                this.props.onContinue(response.data);
+            this.setState({ ...this.state, errorMessage: null, isLoading: false }, async () => {
+                const confirmRes = await confirmTransaction({ payeeId: response.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
+                if (confirmRes.ok) {
+                    this.props.onContinue(confirmRes.data);
+                    this.setState({ ...this.state, isLoading: false, errorMessage: null });
+                } else {
+                    this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false });
+                }
             });
         } else {
             this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false });

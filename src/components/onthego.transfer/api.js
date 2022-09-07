@@ -59,6 +59,6 @@ const savePayee = (obj)=>{
     return apiClient.post(ApiControllers.addressbook+`payee`,obj);
 }
 const confirmTransaction = (obj)=>{
-    return apiClient.post(ApiControllers.withdraw+`Withdraw/Fiat`,obj)
+    return apiClient.post(ApiControllers.withdraw+`/Fiat/Confirm`,obj)
 }
 export { fetchIBANDetails, createPayee, payeeAccountObj, uploadFile,document,savePayee,confirmTransaction };

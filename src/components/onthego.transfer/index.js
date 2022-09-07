@@ -391,7 +391,7 @@ class OnthegoFundTransfer extends Component {
                 </Form>
             </React.Fragment>,
             newtransfer: <>
-                <FiatAddress currency={this.props.selectedCurrency} onContinue={(obj) => {
+                <FiatAddress currency={this.props.selectedCurrency} amount={this.state.amount} onContinue={(obj) => {
                     this.setState({...this.state,reviewDetails:obj},()=>{
                         this.chnageStep("reviewdetails")
                     })
