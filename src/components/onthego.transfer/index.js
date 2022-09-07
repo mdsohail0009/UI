@@ -9,7 +9,7 @@ import success from '../../assets/images/success.png';
 import Verification from "./verification.component/verification";
 import NumberFormat from "react-number-format";
 import ConnectStateProps from "../../utils/state.connect";
-import { fetchPayees, fetchPastPayees, confirmTransaction, updateRoutingCode, document } from "./api";
+import { fetchPayees, fetchPastPayees, confirmTransaction, updatePayee, document } from "./api";
 import Loader from "../../Shared/loader";
 import Search from "antd/lib/input/Search";
 const { Text, Title } = Typography;
@@ -30,7 +30,7 @@ class OnthegoFundTransfer extends Component {
         pastPayees: [],
         searchVal: "",
         errorMessage: null,
-        codeDetails: { abaRoutingCode: "", swiftRouteBICNumber: "", reasionOfTransfer: "", documents: document() },
+        codeDetails: { abaRoutingCode: "", swiftRouteBICNumber: "", reasionOfTransfer: "", documents: null },
         selectedPayee: {},
         selectedTab: "domestic"
     }
@@ -55,7 +55,7 @@ class OnthegoFundTransfer extends Component {
     amountnext = (values) => {
         this.chnageStep("newtransfer", values)
     }
-    handleSearch = ({target:{value:val}}) => {
+    handleSearch = ({ target: { value: val } }) => {
         if (val) {
             const filterObj = this.state.payees.filter(item => item.name.toLowerCase().includes(val));
             this.setState({ ...this.state, filterObj, searchVal: val });
@@ -275,11 +275,11 @@ class OnthegoFundTransfer extends Component {
                     ref={this.reasonForm}
                 >
                     {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
-                    {!["myself", "1stparty"].includes(this.state.addressOptions.addressType) && <React.Fragment><Row gutter={[16, 16]}>
+                    {!["myself", "1stparty"].includes(this.state.selectedPayee.addressType) && <React.Fragment><Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
-                                name="reason"
+                                name="reasionOfTransfer"
                                 label={"Reason for transfer"}
                                 required
                                 rules={[
@@ -290,7 +290,7 @@ class OnthegoFundTransfer extends Component {
                                     }
                                 ]}
                             >
-                                <Input.TextArea
+                                <Input
                                     className="cust-input "
                                     placeholder={"Reason for transfer"}
                                     maxLength="500"
@@ -299,7 +299,11 @@ class OnthegoFundTransfer extends Component {
 
                         </Col>
                     </Row>
-                        <AddressDocumnet title={"Upload supporting documents for transaction"} />
+                        <AddressDocumnet documents={this.state.codeDetails.documents} onDocumentsChange={(docs) => {
+                        let {documents} = this.state.codeDetails;
+                        documents = docs;
+                        this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, documents } })
+                    }} title={"Upload supporting documents for transaction"} />
                     </React.Fragment>}
                     <Tabs className="cust-tabs-fait" activeKey={this.state.selectedTab} onChange={(key) => this.setState({ ...this.state, selectedTab: key })}>
                         <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"}>
@@ -364,10 +368,24 @@ class OnthegoFundTransfer extends Component {
                                     className="pop-btn mb-36"
                                     style={{ minWidth: 300 }}
                                     onClick={() => {
-                                        this.reasonForm.current.validateFields([this.state?.selectedTab === "domestic" ? "abaRoutingCode" : "swiftRouteBICNumber"]).then(() => {
+                                        let validateFileds = [];
+                                        const code = this.state?.selectedTab === "domestic" ? "abaRoutingCode" : "swiftRouteBICNumber";
+                                        validateFileds.push(code);
+                                        if (!["myself", "1stparty"].includes(this.state.selectedPayee.addressType)) {
+                                          validateFileds=  validateFileds.concat(["reasionOfTransfer", "files"]);
+                                        }
+                                        this.reasonForm.current.validateFields(validateFileds).then(() => {
                                             const fieldValues = this.reasonForm.current.getFieldsValue();
                                             this.setState({ ...this.state, loading: true, errorMessage: null });
-                                            updateRoutingCode(this.state.selectedPayee.id, (this.state?.selectedTab === "domestic" ? fieldValues.abaRoutingCode : fieldValues.swiftRouteBICNumber), this.state?.selectedTab !== "domestic")
+                                            const obj = {
+                                                "payeeId": this.state.selectedPayee.id,
+                                                "customerId": this.props.userProfile.id,
+                                                "reasonOfTransfer": fieldValues.reasionOfTransfer,
+                                                "routingNumber": fieldValues.abaRoutingCode,
+                                                "isInternational": this.state?.selectedTab !== "domestic",
+                                                "documents": this.state.codeDetails.documents
+                                            }
+                                            updatePayee(obj)
                                                 .then(async (response) => {
                                                     this.setState({ ...this.state, loading: true, errorMessage: null });
                                                     if (response.ok) {
@@ -482,13 +500,13 @@ class OnthegoFundTransfer extends Component {
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Reason for transfer </Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.customerRemarks||"-"}</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Bank Name </Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state?.reviewDetails?.bankName||"-"}</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state?.reviewDetails?.bankName || "-"}</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
@@ -503,7 +521,6 @@ class OnthegoFundTransfer extends Component {
                                         size="large"
                                         block
                                         className="pop-btn px-24"
-
                                     >
                                         Confirm & Continue
                                     </Button>

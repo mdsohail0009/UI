@@ -67,7 +67,7 @@ const fetchPayees = (customer_id, currency) => {
 const fetchPastPayees = (customer_id, currency) => {
     return apiClient.get(ApiControllers.addressbook + `Payee/${customer_id}/${currency}`);
 }
-const updateRoutingCode = (id, code, isInternational) => {
-    return apiClient.put(ApiControllers.addressbook + `Payee/${id}/${code}/${isInternational}`);
+const updatePayee = (obj) => {
+    return apiClient.post(ApiControllers.addressbook + `UpdatePayee`,obj);
 }
-export { fetchIBANDetails, createPayee, payeeAccountObj, uploadFile, document, savePayee, confirmTransaction, fetchPayees, fetchPastPayees,updateRoutingCode };
+export { fetchIBANDetails, createPayee, payeeAccountObj, uploadFile, document, savePayee, confirmTransaction, fetchPayees, fetchPastPayees,updatePayee };
