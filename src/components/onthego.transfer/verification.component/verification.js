@@ -172,24 +172,12 @@ const Verification = (props) => {
 				this.setState({
 					...this.state,
 					errorMsg:
-						"Without Verifications you can't withdraw. Please select withdraw verifications from security section",
+						"Without Verifications you can't send. Please select send verifications from security section",
 				});
 			}
-		
-            props.changeInternalStep("internalTransferSuccess");
+			
 	};
-	// const isErrorDispaly = (objValue) => {
-	// 	if (objValue.data && typeof objValue.data === "string") {
-	// 	  return objValue.data;
-	// 	} else if (
-	// 	  objValue.originalError &&
-	// 	  typeof objValue.originalError.message === "string"
-	// 	) {
-	// 	  return objValue.originalError.message;
-	// 	} else {
-	// 	  return "Something went wrong please try again!";
-	// 	}
-	//   };
+	
 	const fullNumber = props.auth.phone_number;
 	const last4Digits = fullNumber.slice(-4);
 	const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
@@ -228,7 +216,7 @@ const Verification = (props) => {
 			}, 30000);
 		} else {
 			setMsg(response.data);
-			form.current.scrollIntoView(0, 0);
+			useOtpRef.current.scrollIntoView(0, 0);
 		}
 	};
 
@@ -237,6 +225,7 @@ const Verification = (props) => {
 		if (response.ok) {
 			setEmailDisable(true);
 			setIsEmailVerification(true);
+			updateverifyObj(true,'isEmailVerification')
 			setEmail(true);
 			setVerifyEmailOtp(true);
 			setEmailText(null);
@@ -251,6 +240,7 @@ const Verification = (props) => {
 			setMsg("Invalid email verification code");
 			useOtpRef.current.scrollIntoView(0, 0);
 			setIsEmailVerification(false);
+			updateverifyObj(false,'isEmailVerification')
 		}
 	};
 
@@ -298,6 +288,7 @@ const Verification = (props) => {
 			setMsg(null)
 			setVerifyPhone(true);
 			setIsPhoneVerification(true);
+			updateverifyObj(true,'isPhoneVerification')
 			setVerifyTextOtp(true);
 			setVerifyOtpText(null);
 			setInputDisable(true);
@@ -313,6 +304,7 @@ const Verification = (props) => {
 			setInputDisable(false);
 			setMsg("Invalid phone verification code");
 			setIsPhoneVerification(false);
+			updateverifyObj(false,'isPhoneVerification')
 		}
 	};
 	const handleChange = (e) => {
@@ -333,11 +325,22 @@ const Verification = (props) => {
 		setButtonText(null);
 		setDisableSave(false);
 	};
+	const updateverifyObj = (val,name) =>{
+		debugger;
+		if(name=='isEmailVerification'){
+			props.onchangeData({verifyData:verifyData,isEmailVerification:val,isAuthenticatorVerification:isAuthenticatorVerification,isPhoneVerification:isPhoneVerification })
+		}else if(name=='isPhoneVerification'){
+			props.onchangeData({verifyData:verifyData,isEmailVerification:isEmailVerification,isAuthenticatorVerification:isAuthenticatorVerification,isPhoneVerification:val })
+		}else if(name=='isAuthenticatorVerification'){
+			props.onchangeData({verifyData:verifyData,isEmailVerification:isEmailVerification,isAuthenticatorVerification:val,isPhoneVerification:isPhoneVerification })
+		}
+	}
 	const getAuthenticatorCode = async () => {
 		let response = await getAuthenticator(authCode, props.userConfig.id);
 		if (response.ok) {
 			setMsg(null)
 			setIsAuthenticatorVerification(true);
+			updateverifyObj(true,'isAuthenticatorVerification');
 			setVerifyAuthCode(true);
 			setAuthDisable(true);
 		} else if (response.data == null) {
@@ -347,7 +350,7 @@ const Verification = (props) => {
 			setAuthDisable(false);
 			useOtpRef.current.scrollIntoView(0, 0);
 			setMsg("Invalid authenticator code");
-			setIsAuthenticatorVerification(false);
+			updateverifyObj(false,'isAuthenticatorVerification');
 			setVerifyAuthCode(false);
 		}
 	};

@@ -9,7 +9,9 @@ import success from '../../assets/images/success.png';
 import Verification from "./verification.component/verification";
 import NumberFormat from "react-number-format";
 import ConnectStateProps from "../../utils/state.connect";
-import { fetchPayees } from "./api";
+import { fetchPayees, saveWithdraw } from "./api";
+import Verifications from "./verification.component/verifications"
+
 const { Text, Title } = Typography;
 
 class OnthegoFundTransfer extends Component {
@@ -23,7 +25,8 @@ class OnthegoFundTransfer extends Component {
         onTheGoObj: { amount: '', description: '' },
         reviewDetails: {},
         payees: [],
-        payeesLoading: true
+        payeesLoading: true,
+        verifyData :null
     }
     componentDidMount() {
         fetchPayees(this.props.userProfile.id).then((response) => {
@@ -40,6 +43,13 @@ class OnthegoFundTransfer extends Component {
     }
     amountnext = (values) => {
         this.chnageStep("newtransfer", values)
+    }
+    saveWithdrawdata = () =>{
+        
+    }
+    changesVerification = (obj) =>{
+        this.setState({...this.state,verifyData:obj})
+        console.log(obj)
     }
     renderStep = (step) => {
         const { filterObj } = this.state;
@@ -381,14 +391,14 @@ class OnthegoFundTransfer extends Component {
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <Verification />
+                            <Verification onchangeData={(obj)=>this.changesVerification(obj)}/>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="text-center mt-36 create-account">
                                 <Form.Item className="mb-0 mt-16">
                                     <Button
                                         htmlType="button"
-                                        onClick={() => this.chnageStep(this.state.isNewTransfer ? "declaration" : "successpage")}
+                                        onClick={() =>{ this.saveWithdrawdata();this.chnageStep(this.state.isNewTransfer ? "declaration" : "successpage")}}
                                         size="large"
                                         block
                                         className="pop-btn px-24"
@@ -403,7 +413,7 @@ class OnthegoFundTransfer extends Component {
                 </Form>
             </React.Fragment>,
             newtransfer: <>
-                <FiatAddress currency={this.props.selectedCurrency} amount={this.state.amount} onContinue={(obj) => {
+                {/* <FiatAddress currency={this.props.selectedCurrency} amount={this.state.amount} onContinue={(obj) => {
                    
                    debugger;
                    console.log(obj)
@@ -412,7 +422,8 @@ class OnthegoFundTransfer extends Component {
                     })
                 }
                 }
-                    onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} />
+                    onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} /> */}
+                <Verifications />
             </>,
             declaration: <div className="text-center">
                 <Image width={80} preview={false} src={alertIcon} />
