@@ -61,7 +61,10 @@ const savePayee = (obj) => {
 const confirmTransaction = (obj) => {
     return apiClient.post(ApiControllers.withdraw + `/Fiat/Confirm`, obj);
 }
-const fetchPayees = (customer_id) => {
-    return apiClient.get(ApiControllers.addressbook + `PayeeLu/${customer_id}`);
+const fetchPayees = (customer_id,currency) => {
+    return apiClient.get(ApiControllers.addressbook + `PayeeLu/${customer_id}/${currency}`);
 }
-export { fetchIBANDetails, createPayee, payeeAccountObj, uploadFile, document, savePayee, confirmTransaction, fetchPayees };
+const fetchPastPayees = (customer_id,currency) => {
+    return apiClient.get(ApiControllers.addressbook + `Payee/${customer_id}/${currency}`);
+}
+export { fetchIBANDetails, createPayee, payeeAccountObj, uploadFile, document, savePayee, confirmTransaction, fetchPayees,fetchPastPayees };

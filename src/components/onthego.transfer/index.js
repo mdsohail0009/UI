@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Input, Row, Col, Form, Button, Typography, List, Divider, Image, Select } from 'antd';
+import { Input, Row, Col, Form, Button, Typography, List, Divider, Image, Select, Tabs } from 'antd';
 import apicalls from "../../api/apiCalls";
 import AddressDocumnet from "../addressbook.component/document.upload";
 import oops from '../../assets/images/oops.png'
@@ -9,7 +9,7 @@ import success from '../../assets/images/success.png';
 import Verification from "./verification.component/verification";
 import NumberFormat from "react-number-format";
 import ConnectStateProps from "../../utils/state.connect";
-import { fetchPayees } from "./api";
+import { fetchPayees, fetchPastPayees } from "./api";
 const { Text, Title } = Typography;
 
 class OnthegoFundTransfer extends Component {
@@ -23,12 +23,19 @@ class OnthegoFundTransfer extends Component {
         onTheGoObj: { amount: '', description: '' },
         reviewDetails: {},
         payees: [],
-        payeesLoading: true
+        payeesLoading: true,
+        pastPayees: [],
+        searchVal: ""
     }
     componentDidMount() {
-        fetchPayees(this.props.userProfile.id).then((response) => {
+        fetchPayees(this.props.userProfile.id, this.props.selectedCurrency).then((response) => {
             if (response.ok) {
                 this.setState({ ...this.state, payeesLoading: false, filterObj: response.data, payees: response.data });
+            }
+        });
+        fetchPastPayees(this.props.userProfile.id, this.props.selectedCurrency).then((response) => {
+            if (response.ok) {
+                this.setState({ ...this.state, pastPayees: response.data });
             }
         });
     }
@@ -41,8 +48,16 @@ class OnthegoFundTransfer extends Component {
     amountnext = (values) => {
         this.chnageStep("newtransfer", values)
     }
+    handleSearch = (val) => {
+        if (val) {
+            const filterObj = this.state.payees.filter(item => item.name.toLowerCase().includes(val));
+            this.setState({ ...this.state, filterObj, searchVal: val });
+        }
+        else
+            this.setState({ ...this.state, filterObj: this.state.payees });
+    }
     renderStep = (step) => {
-        const { filterObj } = this.state;
+        const { filterObj, pastPayees, payeesLoading } = this.state;
         const steps = {
             enteramount: <Form
                 autoComplete="off"
@@ -157,17 +172,18 @@ class OnthegoFundTransfer extends Component {
                         required
                         label={"Search for Payeee"}
                     >
-                        {/* <Search placeholder="Search" 
-                                addonAfter={<span className="icon md search-white" />}  size="middle" bordered={false} className="mt-24 mb-8 cust-input cust-select mb-0 text-white-30" />               */}
-                        <Select placeholder="Select Payee" bordered={false} showSearch
+                        <Select
+                            placeholder="Select Payee" bordered={false} showSearch
                             className="cust-input cust-select mb-0 text-white-30"
                             dropdownClassName="select-drpdwn"
-
+                            onSearch={this.handleSearch}
+                            searchValue={this.state.searchVal}
+                            value={this.state.searchVal}
                             addonAfter={<span className="icon md search-white" />}
                         >
-
-                            {this.state.payees.map(payee => <Select.Option value={payee.id}>{payee.name}</Select.Option>)}
-                        </Select></Form.Item>
+                            {filterObj.map(payee => <Select.Option value={payee.id}>{payee.name}</Select.Option>)}
+                        </Select>
+                    </Form.Item>
                 </Col>
 
                 {(filterObj.length > 0) && <>
@@ -175,48 +191,47 @@ class OnthegoFundTransfer extends Component {
                     <Divider className="cust-divide" />
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                         {filterObj?.map((item, idx) =>
-                            <Row className="fund-border c-pointer" onClick={() => this.chnageStep(item.type === "3rd Party" ? "reasonfortransfer" : "reviewdetails")}>
-                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className="mb-16"><div class="fund-circle text-white">P</div></Col>
+                            <Row className="fund-border c-pointer" onClick={async () => {
+                                if (this.state.addressOptions.addressType != "myself") {
+                                    this.chnageStep("reasonfortransfer")
+                                } else {
+
+                                    this.chnageStep("reviewdetails");
+                                }
+                            }}>
+                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className="mb-16"><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
                                 <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="mb-16 small-text-align">
                                     <label className="fs-16 fw-400 text-purewhite">
-                                        <strong>Payee100
+                                        <strong>{item.name}
                                             {/* <small>{item.type}</small> */}
                                         </strong>
                                     </label>
-                                    <div><Text className="fs-14 fw-400 text-purewhite">USD acc ending in 4544</Text></div>
-
+                                    <div><Text className="fs-14 fw-400 text-purewhite">{this.props.selectedCurrency} acc ending in 4544</Text></div>
                                 </Col>
                                 <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white"></span>
                                 </Col>
                             </Row>
-
-
                         )}
-                        {/* <Title className="fs-16 fw-600 text-white text-center cust-address">If address not found,<a className="create-new">Create New Transfer</a></Title> */}
                     </ul>
 
                     <Title className="fs-24 fw-600 text-white">Past Recipients</Title>
                     <Divider className="cust-divide" />
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
-                        {filterObj?.map((item, idx) =>
+                        {pastPayees?.map((item, idx) =>
                             <Row className="fund-border c-pointer" onClick={() => this.chnageStep(item.type === "3rd Party" ? "reasonfortransfer" : "reviewdetails")}>
-                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className="mb-16"><div class="fund-circle text-white">P</div></Col>
+                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className="mb-16"><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
                                 <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="mb-16 small-text-align">
                                     <label className="fs-16 fw-400 text-purewhite">
-                                        <strong>Payee100
+                                        <strong>{item.name}
                                             {/* <small>{item.type}</small> */}
                                         </strong>
                                     </label>
-                                    <div><Text className="fs-14 fw-400 text-purewhite">USD acc ending in 4544</Text></div>
-
+                                    <div><Text className="fs-14 fw-400 text-purewhite">{this.props.selectedCurrency} acc ending in 4544</Text></div>
                                 </Col>
                                 <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white"></span>
                                 </Col>
-
-
-
                             </Row>
 
                         )}
@@ -234,7 +249,7 @@ class OnthegoFundTransfer extends Component {
                     autoComplete="off"
                     initialValues={{}}
                 >
-                    <Row gutter={[16, 16]}>
+                    {this.state.addressOptions.addressType !== "myself" && <React.Fragment><Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
@@ -259,8 +274,62 @@ class OnthegoFundTransfer extends Component {
                         </Col>
                     </Row>
 
-                    <AddressDocumnet title={"Upload supporting documents for transaction"} />
+                        <AddressDocumnet title={"Upload supporting documents for transaction"} />
 
+
+                    </React.Fragment>}
+                    <Tabs className="cust-tabs-fait">
+                        <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"}>
+                            <Row gutter={[16, 16]}>
+                                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                                    <Form.Item
+                                        className="custom-forminput custom-label mb-0"
+                                        name="abaRoutingCode"
+                                        label={"ABA Routing COde"}
+                                        required
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message:
+                                                    apicalls.convertLocalLang("is_required"),
+                                            }
+                                        ]}
+                                    >
+                                        <Input
+                                            className="cust-input "
+                                            placeholder={"ABA Routing Code"}
+                                            maxLength="500"
+                                        />
+                                    </Form.Item>
+
+                                </Col>
+                            </Row>
+                        </Tabs.TabPane>
+                        <Tabs.TabPane tab="International USD Swift" key={"international"} className="text-white">
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                                <Form.Item
+                                    className="custom-forminput custom-label mb-0"
+                                    name="swiftRouteBICNumber"
+                                    label={"Swift / BIC Code"}
+                                    required
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message:
+                                                apicalls.convertLocalLang("is_required"),
+                                        }
+                                    ]}
+                                >
+                                    <Input
+                                        className="cust-input "
+                                        placeholder={"Swift / BIC Code"}
+                                        maxLength="500"
+                                    />
+                                </Form.Item>
+
+                            </Col>
+                        </Tabs.TabPane>
+                    </Tabs>
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={6} lg={6} xl={6} xxl={6}></Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
