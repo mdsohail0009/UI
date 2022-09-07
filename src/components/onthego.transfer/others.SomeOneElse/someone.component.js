@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Input, Row, Col, Form, Button, Typography, Radio, Tabs, Image } from 'antd';
-import {createPayee, payeeAccountObj, savePayee} from "../api";
+import { Input, Row, Col, Form, Button, Typography, Radio, Tabs, Image, Alert } from 'antd';
+import {createPayee, payeeAccountObj, savePayee, confirmTransaction} from "../api";
 import AddressDocumnet from "../../addressbook.component/document.upload";
 import PayeeBankDetails from "./bankdetails.component";
 import { validateContentRule } from "../../../utils/custom.validator";
@@ -16,7 +16,11 @@ const SomeoneComponent = (props) => {
     const [bankdetails, setBankdetails] = useState(null);
     const [createPayeeObj, setCreatePayeeObj] = useState(null);
     const [documents, setDocuments] = useState(null);
+    const [btnLoading, setBtnLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const [form]=Form.useForm();
+    const useDivRef = React.useRef(null);
+
     useEffect(() => {
         getpayeeCreate();
     }, [])
@@ -27,28 +31,54 @@ const SomeoneComponent = (props) => {
         }
     }
     const onSubmit = async(values) =>{
-        // values.payeeAccountModels[0] = {...createPayeeObj.payeeAccountModels,...bankdetails}
         let obj = {...createPayeeObj,...values};
         obj.payeeAccountModels = [payeeAccountObj()];
         obj.payeeAccountModels[0] = {...obj.payeeAccountModels[0],...bankdetails,...values.payeeAccountModels};
         obj.payeeAccountModels[0].currencyType = "Fiat";
-        // obj.payeeAccountModels[0].documents = documents;
+        obj.payeeAccountModels[0].documents = documents;
+        obj.payeeAccountModels[0].walletCode = props.currency;
         obj['customerId'] = props.userProfile.id;
         obj['amount'] = props.onTheGoObj.amount;
         obj['transferType'] = props.currency === "USD" ? addressOptions.domesticType:'sepa' ;
         obj['addressType'] = addressOptions.addressType ;
-        // console.log(obj)
+        setBtnLoading(true)
         let payeesave = await savePayee(obj)
         if(payeesave.ok){
-            // console.log(payeesave.data)
-            props.onContinue(payeesave.data)
+            const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer })
+            if (confirmRes.ok) {
+                setBtnLoading(false);
+                props.onContinue(confirmRes.data);
+            } else {
+                setBtnLoading(false);
+                setErrorMessage(isErrorDispaly(confirmRes));
+                useDivRef.current.scrollIntoView();
+            }
+        }else{
+            setBtnLoading(true);
+            setErrorMessage(isErrorDispaly(payeesave));
+            useDivRef.current.scrollIntoView();
         }
         
     }
+    const isErrorDispaly = (objValue) => {
+        debugger
+        if (objValue.data && typeof objValue.data === "string") {
+          return objValue.data;
+        } else if (
+          objValue.originalError &&
+          typeof objValue.originalError.message === "string"
+        ) {
+          return objValue.originalError.message;
+        } else {
+          return "Something went wrong please try again!";
+        }
+      };
     const getIbandata = (data) =>{
         setBankdetails(data);
     }
     return (<React.Fragment>
+        <div ref={useDivRef}></div>
+        {errorMessage && <Alert type="error" showIcon closable={false} message={"An error occured"} description={errorMessage} />}
         <>
             <Form
                 ref={form}
@@ -268,6 +298,7 @@ const SomeoneComponent = (props) => {
                         htmlType="submit"
                         size="large"
                         className="pop-btn px-36"
+                        loading={btnLoading}
                         style={{ minWidth: 150 }}
                     // onClick={() => console.log(form.getFieldsValue())}
                     >

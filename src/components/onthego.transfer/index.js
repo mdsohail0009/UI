@@ -371,7 +371,7 @@ class OnthegoFundTransfer extends Component {
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Reason for transfer </Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails.customerRemarks}</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.customerRemarks}</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
@@ -404,7 +404,10 @@ class OnthegoFundTransfer extends Component {
             </React.Fragment>,
             newtransfer: <>
                 <FiatAddress currency={this.props.selectedCurrency} amount={this.state.amount} onContinue={(obj) => {
-                    this.setState({ ...this.state, reviewDetails: obj }, () => {
+                   
+                   debugger;
+                   console.log(obj)
+                   this.setState({ ...this.state, reviewDetails: obj }, () => {
                         this.chnageStep("reviewdetails")
                     })
                 }
