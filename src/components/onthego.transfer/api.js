@@ -58,4 +58,7 @@ const uploadFile = (file) => {
 const savePayee = (obj)=>{
     return apiClient.post(ApiControllers.addressbook+`payee`,obj);
 }
-export { fetchIBANDetails, createPayee, payeeAccountObj, uploadFile,document,savePayee };
+const confirmTransaction = (obj)=>{
+    return apiClient.post(ApiControllers.withdraw+`Withdraw/Fiat`,obj)
+}
+export { fetchIBANDetails, createPayee, payeeAccountObj, uploadFile,document,savePayee,confirmTransaction };
