@@ -7,6 +7,7 @@ import { RecipientAddress } from "../../addressbook.v2/recipient.details";
 import { confirmTransaction, createPayee, fetchIBANDetails, payeeAccountObj, savePayee } from "../api";
 import BusinessTransfer from "./transfer";
 import ConnectStateProps from "../../../utils/state.connect";
+import Loader from "../../../Shared/loader";
 const { Paragraph, Text } = Typography;
 const { TextArea } = Input;
 class OthersBusiness extends Component {
@@ -17,7 +18,7 @@ class OthersBusiness extends Component {
         isLoading: true,
         details: {},
         ibanDetails: {},
-        docDetails: {},isBtnLoading:false
+        docDetails: {}, isBtnLoading: false
     };
     componentDidMount() {
         this.loadDetails();
@@ -64,19 +65,19 @@ class OthersBusiness extends Component {
         _obj.addressType = "Business";
         _obj.transferType = "sepa";
         _obj.amount = this.props.amount;
-        this.setState({ ...this.state, isLoading: true, errorMessage: null,isBtnLoading:true });
+        this.setState({ ...this.state, isLoading: true, errorMessage: null, isBtnLoading: true });
         const response = await savePayee(_obj);
         if (response.ok) {
             const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
             if (confirmRes.ok) {
                 this.props.onContinue(confirmRes.data);
-                this.setState({ ...this.state, isLoading: false, errorMessage: null ,isBtnLoading:false});
+                this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
             } else {
-                this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false,isBtnLoading:false });
+                this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false, isBtnLoading: false });
             }
 
         } else {
-            this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false,isBtnLoading:false});
+            this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, isBtnLoading: false });
         }
 
     }
@@ -215,7 +216,7 @@ class OthersBusiness extends Component {
 
                             </Form.Item>
                         </Col>
-                        
+
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
@@ -247,7 +248,7 @@ class OthersBusiness extends Component {
                         </Col>
                     </Row>
                     <div className="box basic-info alert-info-custom mt-16">
-                        <Row>
+                        {Object.keys(this.state.ibanDetails).length !== 0 && <Row>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                                 <label className="fs-14 fw-400 ">
                                     <strong>Bank Name</strong>
@@ -304,7 +305,19 @@ class OthersBusiness extends Component {
                                 <div><Text className="fs-14 fw-400 text-purewhite">{this.state?.ibanDetails?.zipCode || "-"}</Text></div>
 
                             </Col>
-                        </Row>
+                        </Row>}
+                        {Object.keys(this.state.ibanDetails).length === 0 && !this.state.ibanDetailsLoading && <Row>
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                                <div><Text className="fs-14 fw-400 text-purewhite">No bank deatails available</Text></div>
+
+                            </Col>
+                        </Row>}
+                        {this.state.ibanDetailsLoading && <Row>
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+
+                                <Loader />
+                            </Col>
+                        </Row>}
                     </div>
                     <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16">Please upload supporting docs for transaction</Paragraph>
 
@@ -317,7 +330,7 @@ class OthersBusiness extends Component {
                         <Row gutter={[16, 16]}>
                             <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col>
                             <Col xs={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Button 
+                                <Button
                                     htmlType="submit"
                                     size="large"
                                     className="pop-btn mb-36"

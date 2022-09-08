@@ -221,29 +221,6 @@ class OnthegoFundTransfer extends Component {
                             />
                         </Form.Item>
                     </Col>
-                    {/* <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item
-                            className="custom-forminput custom-label mb-0"
-                            name="description"
-                            label={"Description"}
-                            required
-                            rules={[
-                                {
-                                    required: true,
-                                    message:
-                                        apicalls.convertLocalLang("is_required"),
-                                }
-                            ]}
-                        >
-                            <Input.TextArea
-                                className="cust-input cust-text-area address-book-cust"
-                                placeholder={"Description"}
-                                maxLength={100}
-                                autoSize={{ minRows: 1, maxRows: 1 }}
-                            />
-                        </Form.Item>
-
-                    </Col> */}
                 </Row>
                 <Row gutter={[16, 16]}>
 
@@ -257,7 +234,6 @@ class OnthegoFundTransfer extends Component {
                                 style={{ minWidth: 300 }}
                                 loading={this.state.newtransferLoader}
                                 disabled={this.state.addressLoader}
-                            //onClick={() => this.chnageStep("newtransfer")}
                             >
                                 New Transfer
                             </Button>
@@ -300,17 +276,14 @@ class OnthegoFundTransfer extends Component {
 
                     <Form.Item
                         name="lastName"
-                        required
                         label={"Search for Payee"}
                     >
                         <Search
-                            placeholder="Select Payee" bordered={false} showSearch
+                            placeholder="Search Payee" bordered={false} showSearch
                             className=" "
                             onChange={this.handleSearch}
                             value={this.state.searchVal}
                         />
-                        {/* {filterObj.map(payee => <Select.Option value={payee.id}>{payee.name}</Select.Option>)} */}
-
                     </Form.Item>
                 </Col>
                 {this.state?.loading && <Loader />}
@@ -681,7 +654,7 @@ class OnthegoFundTransfer extends Component {
             </>,
             declaration: <div className="text-center">
                 <Image width={80} preview={false} src={alertIcon} />
-                <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully</Title>
+                <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
                 <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                        Please sign using link received in email to whitelist your address. `}</Text>
                 <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
