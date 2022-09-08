@@ -140,9 +140,8 @@ const Verifications = (props) => {
         }
     };
     const handleEmailinputChange = (e) => {
-        console.log(email)
-        if (e.target.value) {
-            setEmail({ ...email, btnName: 'verifyOtpBtn', code: e.target.value })
+        if (e.value) {
+            setEmail({ ...email, btnName: 'verifyOtpBtn', code: e.value })
         } else {
             setEmail({ ...email, btnName: 'resendotp', code: '' })
         }
@@ -168,8 +167,8 @@ const Verifications = (props) => {
         }
     };
     const handlephoneinputChange = (e) => {
-        if (e.target.value) {
-            setPhone({ ...phone, btnName: 'verifyOtpBtn', code: e.target.value })
+        if (e.value) {
+            setPhone({ ...phone, btnName: 'verifyOtpBtn', code: e.value })
         } else {
             setPhone({ ...phone, btnName: 'resendotp', code: '' })
         }
@@ -226,8 +225,8 @@ const Verifications = (props) => {
         }
     };
     const handleAuthenticatorinputChange = (e) => {
-        if (e.target.value) {
-            setAuthenticator({ ...authenticator, code: e.target.value })
+        if (e.value) {
+            setAuthenticator({ ...authenticator, code: e.value })
         } else {
             setAuthenticator({ ...authenticator, code: '' })
         }
@@ -397,16 +396,20 @@ const Verifications = (props) => {
                                 ]}
                             >
                                 <div className="p-relative d-flex align-center">
-                                    <Input
-                                        type="text"
-                                        className="cust-input custom-add-select mb-0"
-                                        placeholder={"Enter code"}
-                                        maxLength={6}
-                                        style={{ width: "100%" }}
-                                        disabled={phone.btnName == 'get_otp' || phone.btnName == 'verified'}
-                                        // onClick={(event) => handleSendOtp(event.currentTarget.value)}
-                                        onChange={(e) => handlephoneinputChange(e)}
-                                    />
+                                   
+                                    <NumberFormat
+										customInput={Input}
+										thousandSeparator={false}
+										prefix={""}
+										decimalScale={0}
+										allowNegative={false}
+										className="cust-input custom-add-select mb-0"
+										placeholder={"Enter code"}
+										maxLength={6}
+										style={{ width: "100%" }}
+										onValueChange={(e) => handlephoneinputChange(e)} minLength={6}
+										disabled={phone.btnName == 'get_otp' || phone.btnName == 'verified'}
+									/>
                                     <div className="new-add c-pointer get-code text-yellow hy-align">
                                         {phone_btnList[phone.btnName]}
                                     </div>
@@ -441,16 +444,20 @@ const Verifications = (props) => {
                                 ]}
                             >
                                 <div className="p-relative d-flex align-center">
-                                    <Input
-                                        type="text"
-                                        className="cust-input custom-add-select mb-0"
-                                        placeholder={"Enter code"}
-                                        maxLength={6}
-                                        style={{ width: "100%" }}
-                                        disabled={email.btnName == 'get_otp' || email.btnName == 'verified'}
-                                        // onClick={(event) => handleSendOtp(event.currentTarget.value)}
-                                        onChange={(e) => handleEmailinputChange(e)}
-                                    />
+                                    
+                                    <NumberFormat
+										customInput={Input}
+										thousandSeparator={false}
+										prefix={""}
+										decimalScale={0}
+										allowNegative={false}
+										className="cust-input custom-add-select mb-0"
+										placeholder={"Enter code"}
+										maxLength={6}
+										style={{ width: "100%" }}
+										onValueChange={(e) => handleEmailinputChange(e)} minLength={6}
+										disabled={email.btnName == 'get_otp' || email.btnName == 'verified'}
+									/>
                                     <div className="new-add c-pointer get-code text-yellow hy-align">
                                         {email_btnList[email.btnName]}
                                     </div>
@@ -485,15 +492,20 @@ const Verifications = (props) => {
                                 ]}
                             >
                                 <div className="p-relative d-flex align-center">
-                                    <Input
-                                        type="text"
-                                        className="cust-input custom-add-select mb-0"
-                                        placeholder={"Enter code"}
-                                        maxLength={6}
-                                        style={{ width: "100%" }}
-                                        disabled={authenticator.btnName == 'get_otp' || authenticator.btnName == 'verified'}
-                                        onChange={(e) => handleAuthenticatorinputChange(e)}
-                                    />
+                                    
+                                    <NumberFormat
+										customInput={Input}
+										thousandSeparator={false}
+										prefix={""}
+										decimalScale={0}
+										allowNegative={false}
+										className="cust-input custom-add-select mb-0"
+										placeholder={"Enter code"}
+										maxLength={6}
+										style={{ width: "100%" }}
+										onValueChange={(e) => handleAuthenticatorinputChange(e)} minLength={6}
+										disabled={authenticator.btnName == 'get_otp' || authenticator.btnName == 'verified'}
+									/>
                                     <div className="new-add c-pointer get-code text-yellow hy-align">
                                         {authenticator_btnList[authenticator.btnName]}
                                     </div>
