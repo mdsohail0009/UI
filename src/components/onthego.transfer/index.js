@@ -35,7 +35,7 @@ class OnthegoFundTransfer extends Component {
         codeDetails: { abaRoutingCode: "", swiftRouteBICNumber: "", reasionOfTransfer: "", documents: null },
         selectedPayee: {},
         selectedTab: "domestic",
-        verifyData :null
+        verifyData: null
     }
     componentDidMount() {
         fetchPayees(this.props.userProfile.id, this.props.selectedCurrency).then((response) => {
@@ -69,11 +69,11 @@ class OnthegoFundTransfer extends Component {
         else
             this.setState({ ...this.state, filterObj: this.state.payees });
     }
-    saveWithdrawdata = () =>{
-        
+    saveWithdrawdata = () => {
+
     }
-    changesVerification = (obj) =>{
-        this.setState({...this.state,verifyData:obj})
+    changesVerification = (obj) => {
+        this.setState({ ...this.state, verifyData: obj })
         console.log(obj)
     }
     renderStep = (step) => {
@@ -525,14 +525,14 @@ class OnthegoFundTransfer extends Component {
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <Verification onchangeData={(obj)=>this.changesVerification(obj)}/>
+                            <Verification onchangeData={(obj) => this.changesVerification(obj)} />
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="text-center mt-36 create-account">
                                 <Form.Item className="mb-0 mt-16">
                                     <Button
                                         htmlType="button"
-                                        onClick={() =>{ this.saveWithdrawdata();this.chnageStep(this.state.isNewTransfer ? "declaration" : "successpage")}}
+                                        onClick={() => { this.saveWithdrawdata(); this.chnageStep(this.state.isNewTransfer ? "declaration" : "successpage") }}
                                         size="large"
                                         block
                                         className="pop-btn px-24"
@@ -552,14 +552,15 @@ class OnthegoFundTransfer extends Component {
                     })
                 }
                 }
-                    onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} /> 
+                    onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} />
                 <Verifications />
             </>,
             declaration: <div className="text-center">
                 <Image width={80} preview={false} src={alertIcon} />
                 <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully</Title>
-                <Text className="text-white-30">{`Declaration form has been sent to ${"have123@yopmail.com"}. 
+                <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                        Please sign using link received in email to whitelist your address`}</Text>
+                <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
                 {/*<div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBOARD</Button> */}
             </div>,
             successpage: <div className="text-center">
