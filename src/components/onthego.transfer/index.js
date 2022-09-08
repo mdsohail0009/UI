@@ -20,6 +20,7 @@ const { Text, Title } = Typography;
 class OnthegoFundTransfer extends Component {
     enteramtForm = React.createRef();
     reasonForm = React.createRef();
+    reviewScrool = React.createRef();
     state = {
         step: "enteramount",
         filterObj: [],
@@ -79,6 +80,7 @@ class OnthegoFundTransfer extends Component {
                     ...this.state,
                     errorMessage: "Please verify phone verification code"
                 });
+                this.reviewScrool.current.scrollIntoView()
                 return;
             }
         }
@@ -88,6 +90,7 @@ class OnthegoFundTransfer extends Component {
                     ...this.state,
                     errorMessage: "Please verify  email verification code"
                 });
+                this.reviewScrool.current.scrollIntoView()
                 return;
             }
         }
@@ -97,6 +100,7 @@ class OnthegoFundTransfer extends Component {
                     ...this.state,
                     errorMessage: "Please verify authenticator code"
                 });
+                this.reviewScrool.current.scrollIntoView()
                 return;
             }
         }
@@ -110,6 +114,7 @@ class OnthegoFundTransfer extends Component {
                 errorMessage:
                     "Without Verifications you can't send. Please select send verifications from security section",
             });
+            this.reviewScrool.current.scrollIntoView()
             return
         }
         }else{
@@ -118,6 +123,7 @@ class OnthegoFundTransfer extends Component {
                 errorMessage:
                     "Without Verifications you can't Procced.",
             });
+            this.reviewScrool.current.scrollIntoView()
             return
         }
         if (this.state.reviewDetails) {
@@ -511,7 +517,7 @@ class OnthegoFundTransfer extends Component {
                 </Form>
             </React.Fragment>,
             reviewdetails: <React.Fragment>
-                {this.state.errorMessage && <Alert type="error" showIcon closable={false} description={this.state.errorMessage} />}
+                <div ref={this.reviewScrool}></div>
                 <Form
                     name="advanced_search"
                     ref={this.formRef}
@@ -519,6 +525,8 @@ class OnthegoFundTransfer extends Component {
                     autoComplete="off">
                     <div className="text-center"> <text Paragraph
                         className='text-white fs-24 fw-600 mb-16 px-4 '>Review Details Of Transfer</text></div>
+                {this.state.errorMessage && <Alert type="error" showIcon closable={false} description={this.state.errorMessage} />}
+
                     <Row gutter={24}>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>

@@ -126,6 +126,7 @@ const Verifications = (props) => {
     };
 
     const verifyEmailOtp = async (values) => {
+        if(email.code && email.code>5){
         let response = await verifyEmailCode(props.userConfig.id, email.code);
         if (response.ok) {
         setEmail({ ...email, errorMsg: '', verified: true, btnName: 'verified' });
@@ -138,6 +139,9 @@ const Verifications = (props) => {
             setEmail({ ...email, errorMsg: 'Invalid email verification code' });
             updateverifyObj(false, 'isEmailVerification')
         }
+    }else{
+        setEmail({ ...email, errorMsg: 'Invalid email verification code', verified:false});
+    }
     };
     const handleEmailinputChange = (e) => {
         if (e.value) {
@@ -174,6 +178,7 @@ const Verifications = (props) => {
         }
     };
     const verifyPhoneOtp = async () => {
+        if(phone.code && phone.code>5){
         let response = await getVerification(props.userConfig.id, phone.code);
         if (response.ok) {
         setPhone({ ...phone, errorMsg: '', verified: true, btnName: 'verified' });
@@ -186,6 +191,9 @@ const Verifications = (props) => {
             setPhone({ ...phone, errorMsg: 'Invalid phone verification code', verified: false });
             updateverifyObj(false, 'isPhoneVerification')
         }
+    }else{
+        setPhone({ ...phone, errorMsg: 'Invalid phone verification code', verified: false });
+    }
     };
 
     const isErrorDispaly = (objValue) => {
@@ -211,6 +219,7 @@ const Verifications = (props) => {
         }
     }
     const verifyAuthenticatorOTP = async () => {
+        if(authenticator.code && authenticator.code>5){
         let response = await getAuthenticator(authenticator.code, props.userConfig.id);
         if (response.ok) {
             setAuthenticator({ ...authenticator, errorMsg: '', verified: true, btnName: 'verified' });
@@ -223,6 +232,9 @@ const Verifications = (props) => {
             setAuthenticator({ ...authenticator, errorMsg: 'Invalid authenticator verification code' });
             updateverifyObj(false, 'isAuthenticatorVerification')
         }
+    }else{
+        setAuthenticator({ ...authenticator, errorMsg: 'Invalid authenticator verification code', verified: false });
+    }
     };
     const handleAuthenticatorinputChange = (e) => {
         if (e.value) {
