@@ -472,7 +472,7 @@ class OnthegoFundTransfer extends Component {
                                                 "customerId": this.props.userProfile.id,
                                                 "reasonOfTransfer": fieldValues?.reasionOfTransfer,
                                                 "routingNumber": fieldValues?.abaRoutingCode,
-                                                "isInternational": this.props.selectedCurrency === "USD" ? this.state?.selectedTab !== "domestic" : "",
+                                                "isInternational": null,
                                                 "documents": this.state.codeDetails?.documents
                                             }
                                             updatePayee(obj)
