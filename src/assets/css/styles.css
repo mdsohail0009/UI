@@ -1386,7 +1386,7 @@ input[type=number]::-webkit-outer-spin-button {
 .fund-border{margin-top: 10px;}
 .custom-radio-btn .ant-radio-button-wrapper.span-text span{line-height: 15px;margin: initial;}
 .cust-fund{width: 88%;}
-.cust-divide{margin: 0px !important; height: 5px; background-color: var(--bgDarkGrey);}
+.cust-divide{margin: 0px !important; height: 2px; background-color: var(--bgDarkGrey);}
 .create-new{text-decoration: underline !important;}
 cust-address{margin-bottom: 0px !important;}
 .search-input .ant-input-wrapper.ant-input-group .ant-input{background-color: var(--bgWhite) !important; border-radius: 0px !important; height:34px !important; border-color: transparent !important; color: var(--bgBlack) !important;}
