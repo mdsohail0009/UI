@@ -552,7 +552,7 @@ class OnthegoFundTransfer extends Component {
                     })
                 }
                 }
-                    onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} /> */}
+                    onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} /> 
                 <Verifications />
             </>,
             declaration: <div className="text-center">
