@@ -18,7 +18,7 @@ class BusinessTransfer extends Component {
         errorMessage: null,
         isLoading: true,
         details: {},
-        selectedTab: "domestic"
+        selectedTab: "domestic",isBtnLoading:false
     };
     componentDidMount() {
         this.loadDetails();
@@ -55,14 +55,14 @@ class BusinessTransfer extends Component {
         _obj.transferType = selectedTab;
         _obj.amount = this.props.amount;
         delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
-        this.setState({...this.state,errorMessage:null,isLoading:true});
+        this.setState({...this.state,errorMessage:null,isLoading:false,isBtnLoading:true});
         const response = await savePayee(_obj);
         if (response.ok) {
-            this.setState({ ...this.state, errorMessage: null, isLoading: false },()=>{
+            this.setState({ ...this.state, errorMessage: null, isLoading: false,isBtnLoading:false },()=>{
                 this.props.onContinue(response.data);
             });
         } else {
-            this.setState({ ...this.state,details:{...details,...values}, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false });
+            this.setState({ ...this.state,details:{...details,...values}, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false,isBtnLoading:false });
         }
     }
     handleTabChange = (key) => {
@@ -189,7 +189,7 @@ class BusinessTransfer extends Component {
                                     size="large"
                                     className="pop-btn mb-36"
                                     style={{ minWidth: 300 }}
-                                >
+                                    loading={this.state.isBtnLoading}>
                                     Continue
                                 </Button>
                             </Col>
@@ -313,7 +313,7 @@ class BusinessTransfer extends Component {
                                     size="large"
                                     className="pop-btn mb-36"
                                     style={{ minWidth: 300 }}
-                                >
+                                loading={this.state.isBtnLoading}>
                                     Continue
                                 </Button>
                             </Col>
