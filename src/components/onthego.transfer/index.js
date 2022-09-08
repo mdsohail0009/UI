@@ -9,7 +9,7 @@ import success from '../../assets/images/success.png';
 import Verification from "./verification.component/verification";
 import NumberFormat from "react-number-format";
 import ConnectStateProps from "../../utils/state.connect";
-import { fetchPayees, fetchPastPayees, confirmTransaction, updatePayee, document, saveWithdraw } from "./api";
+import { fetchPayees, fetchPastPayees, confirmTransaction, updatePayee, document, saveWithdraw, validateAmount } from "./api";
 import Loader from "../../Shared/loader";
 import Search from "antd/lib/input/Search";
 import Verifications from "./verification.component/verifications"
@@ -59,7 +59,7 @@ class OnthegoFundTransfer extends Component {
     amountnext = (values) => {
         let _amt = values.amount;
         _amt = _amt.replace(/,/g, "");
-        this.setState({ ...this.state, amount: _amt }, () => this.chnageStep("newtransfer", values))
+        this.setState({ ...this.state, amount: _amt }, () => this.validateAmt(_amt, "newtransfer", values))
 
     }
     handleSearch = ({ target: { value: val } }) => {
@@ -72,47 +72,47 @@ class OnthegoFundTransfer extends Component {
     }
     saveWithdrawdata = async () => {
         this.setState({ ...this.state, isBtnLoading: true })
-        if(this.state.verifyData?.verifyData){
-        if (this.state.verifyData.verifyData.isPhoneVerified) {
-            if (!this.state.verifyData.isPhoneVerification) {
+        if (this.state.verifyData?.verifyData) {
+            if (this.state.verifyData.verifyData.isPhoneVerified) {
+                if (!this.state.verifyData.isPhoneVerification) {
+                    this.setState({
+                        ...this.state,
+                        errorMessage: "Please verify phone verification code"
+                    });
+                    return;
+                }
+            }
+            if (this.state.verifyData.verifyData.isEmailVerification) {
+                if (!this.state.verifyData.isEmailVerification) {
+                    this.setState({
+                        ...this.state,
+                        errorMessage: "Please verify  email verification code"
+                    });
+                    return;
+                }
+            }
+            if (this.state.verifyData.verifyData.twoFactorEnabled) {
+                if (!this.state.verifyData.isAuthenticatorVerification) {
+                    this.setState({
+                        ...this.state,
+                        errorMessage: "Please verify authenticator code"
+                    });
+                    return;
+                }
+            }
+            if (
+                this.state.verifyData.verifyData.isPhoneVerified == "" &&
+                this.state.verifyData.verifyData.isEmailVerification == "" &&
+                this.state.verifyData.verifyData.twoFactorEnabled == ""
+            ) {
                 this.setState({
                     ...this.state,
-                    errorMessage: "Please verify phone verification code"
+                    errorMessage:
+                        "Without Verifications you can't send. Please select send verifications from security section",
                 });
-                return;
+                return
             }
-        }
-        if (this.state.verifyData.verifyData.isEmailVerification) {
-            if (!this.state.verifyData.isEmailVerification) {
-                this.setState({
-                    ...this.state,
-                    errorMessage: "Please verify  email verification code"
-                });
-                return;
-            }
-        }
-        if (this.state.verifyData.verifyData.twoFactorEnabled) {
-            if (!this.state.verifyData.isAuthenticatorVerification) {
-                this.setState({
-                    ...this.state,
-                    errorMessage: "Please verify authenticator code"
-                });
-                return;
-            }
-        }
-        if (
-            this.state.verifyData.verifyData.isPhoneVerified == "" &&
-            this.state.verifyData.verifyData.isEmailVerification == "" &&
-            this.state.verifyData.verifyData.twoFactorEnabled == ""
-        ) {
-            this.setState({
-                ...this.state,
-                errorMessage:
-                    "Without Verifications you can't send. Please select send verifications from security section",
-            });
-            return
-        }
-        }else{
+        } else {
             this.setState({
                 ...this.state,
                 errorMessage:
@@ -159,6 +159,21 @@ class OnthegoFundTransfer extends Component {
             return "Something went wrong please try again!";
         }
     };
+    validateAmt = async (amt, step, values) => {
+        const obj = {
+            CustomerId: this.props.userProfile?.id,
+            amount: amt,
+            WalletCode: this.props.selectedCurrency
+        }
+        this.setState({ ...this.state, loading: true, errorMessage: null });
+        const res = await validateAmount(obj);
+        if (res.ok) {
+            this.setState({ ...this.state, loading: false, errorMessage: null }, () => this.chnageStep(step, values));
+        } else {
+            this.setState({ ...this.state, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message })
+        }
+
+    }
     renderStep = (step) => {
         const { filterObj, pastPayees, payeesLoading } = this.state;
         const steps = {
@@ -168,6 +183,7 @@ class OnthegoFundTransfer extends Component {
                 ref={this.enteramtForm}
                 onFinish={this.amountnext}
             >
+                {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
                 <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item
@@ -233,6 +249,7 @@ class OnthegoFundTransfer extends Component {
                                 size="large"
                                 className="pop-btn mb-36"
                                 style={{ minWidth: 300 }}
+                                loading={this.state.loading}
                             //onClick={() => this.chnageStep("newtransfer")}
                             >
                                 New Transfer
@@ -247,11 +264,12 @@ class OnthegoFundTransfer extends Component {
                                 size="large"
                                 className="pop-btn mb-36"
                                 style={{ minWidth: 300 }}
+                                loading={this.state.loading}
                                 onClick={() => {
                                     let _amt = this.enteramtForm.current.getFieldsValue().amount;
                                     _amt = _amt.replace(/,/g, "");
                                     this.setState({ ...this.state, isNewTransfer: false, amount: _amt }, () => {
-                                        this.enteramtForm.current.validateFields().then(() => this.chnageStep("addressselection"))
+                                        this.enteramtForm.current.validateFields().then(() => this.validateAmt(_amt, "addressselection", this.enteramtForm.current.getFieldsValue()))
                                             .catch(error => {
 
                                             });
