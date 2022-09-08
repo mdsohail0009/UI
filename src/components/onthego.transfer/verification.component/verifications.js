@@ -9,9 +9,9 @@ const Verifications = (props) => {
 
     const [verifyData, setVerifyData] = useState({});
     const [isLoading, setIsLoading] = useState(false)
-    const [email, setEmail] = useState({ showRuleMsg: '', errorMsg: '', btnName: 'get_otp', requestType: 'Send', code: '', verified: false });
-    const [phone, setPhone] = useState({ showRuleMsg: '', errorMsg: '', btnName: 'get_otp', requestType: 'Send', verified: false });
-    const [authenticator, setAuthenticator] = useState({ showRuleMsg: '', errorMsg: '', btnName: 'verifyOtpBtn', verified: false });
+    const [email, setEmail] = useState({ showRuleMsg: '', errorMsg: '', btnName: 'get_otp', requestType: 'Send', code: '', verified: false,btnloader:false });
+    const [phone, setPhone] = useState({ showRuleMsg: '', errorMsg: '', btnName: 'get_otp', requestType: 'Send', verified: false,btnloader:false });
+    const [authenticator, setAuthenticator] = useState({ showRuleMsg: '', errorMsg: '', btnName: 'verifyOtpBtn', verified: false,btnloader:false });
     const [phoneSeconds, setPhoneSeconds] = useState(30);
     const [emailSeconds, setEmailSeconds] = useState(30);
     const [errorMsg, setMsg] = useState(false);
@@ -57,46 +57,7 @@ const Verifications = (props) => {
     };
 
     const transferDetials = async (values) => {
-        // setAgreeRed(true);
-        // setDisableSave(false);
-        // 	setAgreeRed(true);
-        // 	if (verifyData.isPhoneVerified) {
-        // 		if (!isPhoneVerification) {
-        // 			setDisableSave(false);
-        // 			setMsg("Please verify phone verification code");
-        // 			useOtpRef.current.scrollIntoView(0, 0);
-        // 			return;
-        // 		}
-        // 	}
-        // 	if (verifyData.isEmailVerification) {
-        // 		if (!isEmailVerification) {
-        // 			setDisableSave(false);
-        // 			setMsg("Please verify  email verification code");
-        // 			useOtpRef.current.scrollIntoView(0, 0);
-        // 			return;
-        // 		}
-        // 	}
-        // 	if (verifyData.twoFactorEnabled) {
-        // 		if (!isAuthenticatorVerification) {
-        // 			setDisableSave(false);
-        // 			//setIsLoading(false);
-        // 			setMsg("Please verify authenticator code");
-        // 			useOtpRef.current.scrollIntoView(0, 0);
-        // 			return;
-        // 		}
-        // 	}
-        // 	if (
-        // 		verifyData.isPhoneVerified == "" &&
-        // 		verifyData.isEmailVerification == "" &&
-        // 		verifyData.twoFactorEnabled == ""
-        // 	) {
-        // 		this.setState({
-        // 			...this.state,
-        // 			errorMsg:
-        // 				"Without Verifications you can't send. Please select send verifications from security section",
-        // 		});
-        // 	}
-
+       
     };
 
     const getVerifyData = async () => {
@@ -114,33 +75,35 @@ const Verifications = (props) => {
     };
 
     const sendEmailOTP = async (val) => {
+        setEmail({...email,btnloader:true})
         let response = await sendEmail(props.userConfig.id, email.requestType);
         if (response.ok) {
-        let emailData = { ...email, errorMsg: '', btnName: 'code_Sent', requestType: 'Resend', showRuleMsg: `Enter 6 digit code sent to your Email Id` }
+        let emailData = { ...email, errorMsg: '', btnName: 'code_Sent', requestType: 'Resend', showRuleMsg: `Enter 6 digit code sent to your Email Id`,btnloader:false }
         setEmail(emailData)
         startemailTimer(emailData, 'emailSeconds')
         } else {
-            setEmail({ ...email, errorMsg: isErrorDispaly(response), showRuleMsg: '' })
+            setEmail({ ...email, errorMsg: isErrorDispaly(response), showRuleMsg: '',btnloader:false })
             useOtpRef.current.scrollIntoView(0, 0);
         }
     };
 
     const verifyEmailOtp = async (values) => {
+        setEmail({...email,btnloader:true})
         if(email.code && email.code>5){
         let response = await verifyEmailCode(props.userConfig.id, email.code);
         if (response.ok) {
-        setEmail({ ...email, errorMsg: '', verified: true, btnName: 'verified' });
+        setEmail({ ...email, errorMsg: '', verified: true, btnName: 'verified',btnloader:false });
         updateverifyObj(true, 'isEmailVerification')
         } else if (response.data == null) {
-            setEmail({ ...email, errorMsg: 'Invalid email verification code', verified: false });
+            setEmail({ ...email, errorMsg: 'Invalid email verification code', verified: false,btnloader:false });
             updateverifyObj(false, 'isEmailVerification')
         } else {
             useOtpRef.current.scrollIntoView(0, 0);
-            setEmail({ ...email, errorMsg: 'Invalid email verification code' });
+            setEmail({ ...email, errorMsg: 'Invalid email verification code' ,btnloader:false});
             updateverifyObj(false, 'isEmailVerification')
         }
     }else{
-        setEmail({ ...email, errorMsg: 'Invalid email verification code', verified:false});
+        setEmail({ ...email, errorMsg: 'Invalid email verification code', verified:false,btnloader:false});
     }
     };
     const handleEmailinputChange = (e) => {
@@ -160,13 +123,14 @@ const Verifications = (props) => {
     };
 
     const getphoneOTP = async (val) => {
+        setPhone({...phone,btnloader:true})
         let response = await getCode(props.userConfig.id, phone.requestType);
         if (response.ok) {
-        let phoneData = { ...phone, errorMsg: '', btnName: 'code_Sent', requestType: 'Resend', showRuleMsg: `Enter 6 digit code sent to ${maskedNumber}` }
+        let phoneData = { ...phone, errorMsg: '', btnName: 'code_Sent', requestType: 'Resend', showRuleMsg: `Enter 6 digit code sent to ${maskedNumber}`,btnloader:false }
         setPhone(phoneData)
         startphoneTimer(phoneData, 'phoneSeconds')
         } else {
-            setPhone({ ...phone, errorMsg: isErrorDispaly(response), showRuleMsg: '' })
+            setPhone({ ...phone, errorMsg: isErrorDispaly(response), showRuleMsg: '',btnloader:false })
             useOtpRef.current.scrollIntoView(0, 0);
         }
     };
@@ -178,21 +142,22 @@ const Verifications = (props) => {
         }
     };
     const verifyPhoneOtp = async () => {
+        setPhone({...phone,btnloader:true})
         if(phone.code && phone.code>5){
         let response = await getVerification(props.userConfig.id, phone.code);
         if (response.ok) {
-        setPhone({ ...phone, errorMsg: '', verified: true, btnName: 'verified' });
+        setPhone({ ...phone, errorMsg: '', verified: true, btnName: 'verified',btnloader:false });
         updateverifyObj(true, 'isPhoneVerification')
         } else if (response.data == null) {
-            setPhone({ ...phone, errorMsg: 'Invalid phone verification code', verified: false });
+            setPhone({ ...phone, errorMsg: 'Invalid phone verification code', verified: false,btnloader:false });
             updateverifyObj(false, 'isPhoneVerification')
         } else {
             useOtpRef.current.scrollIntoView(0, 0);
-            setPhone({ ...phone, errorMsg: 'Invalid phone verification code', verified: false });
+            setPhone({ ...phone, errorMsg: 'Invalid phone verification code', verified: false,btnloader:false });
             updateverifyObj(false, 'isPhoneVerification')
         }
     }else{
-        setPhone({ ...phone, errorMsg: 'Invalid phone verification code', verified: false });
+        setPhone({ ...phone, errorMsg: 'Invalid phone verification code', verified: false ,btnloader:false});
     }
     };
 
@@ -219,21 +184,22 @@ const Verifications = (props) => {
         }
     }
     const verifyAuthenticatorOTP = async () => {
+        setAuthenticator({...authenticator,btnloader:true})
         if(authenticator.code && authenticator.code>5){
         let response = await getAuthenticator(authenticator.code, props.userConfig.id);
         if (response.ok) {
-            setAuthenticator({ ...authenticator, errorMsg: '', verified: true, btnName: 'verified' });
+            setAuthenticator({ ...authenticator, errorMsg: '', verified: true, btnName: 'verified',btnloader:false });
             updateverifyObj(true, 'isAuthenticatorVerification')
         } else if (response.data == null) {
-            setAuthenticator({ ...authenticator, errorMsg: 'Invalid authenticator verification code', verified: false });
+            setAuthenticator({ ...authenticator, errorMsg: 'Invalid authenticator verification code', verified: false ,btnloader:false});
             updateverifyObj(false, 'isAuthenticatorVerification')
         } else {
             useOtpRef.current.scrollIntoView(0, 0);
-            setAuthenticator({ ...authenticator, errorMsg: 'Invalid authenticator verification code' });
+            setAuthenticator({ ...authenticator, errorMsg: 'Invalid authenticator verification code',btnloader:false });
             updateverifyObj(false, 'isAuthenticatorVerification')
         }
     }else{
-        setAuthenticator({ ...authenticator, errorMsg: 'Invalid authenticator verification code', verified: false });
+        setAuthenticator({ ...authenticator, errorMsg: 'Invalid authenticator verification code', verified: false,btnloader:false });
     }
     };
     const handleAuthenticatorinputChange = (e) => {
@@ -250,14 +216,14 @@ const Verifications = (props) => {
             <Button
                 type="text"
                 style={{ color: "black", margin: "0 auto" }}
-                onClick={() => getphoneOTP()}><Text className="text-yellow" >Click here to get Code</Text></Button>
+                onClick={() => getphoneOTP()} loading={phone.btnloader}><Text className="text-yellow" >Click here to get Code</Text></Button>
         ),
         resendotp: (
             <Button
                 type="text"
                 style={{ color: "black", margin: "0 auto" }}
                 onClick={() => getphoneOTP()}
-            ><Text className="text-yellow" >Resend Code</Text></Button>
+                loading={phone.btnloader}><Text className="text-yellow" >Resend Code</Text></Button>
         ),
         code_Sent: (<>
             <Button
@@ -289,7 +255,7 @@ const Verifications = (props) => {
                 type="text"
                 style={{ color: "black", margin: "0 auto" }}
                 onClick={() => verifyPhoneOtp()}
-            ><Text className={` text-yellow`} >Click here to verify</Text></Button>
+                loading={phone.btnloader}><Text className={` text-yellow`} >Click here to verify</Text></Button>
         ),
     };
     const email_btnList = {
@@ -297,13 +263,13 @@ const Verifications = (props) => {
             <Button
                 type="text"
                 style={{ color: "black", margin: "0 auto" }}
-                onClick={() => sendEmailOTP()}><Text className="text-yellow" >Click here to get Code</Text></Button>
+                onClick={() => sendEmailOTP()} loading={email.btnloader}><Text className="text-yellow" >Click here to get Code</Text></Button>
         ),
         resendotp: (
             <Button
                 type="text"
                 style={{ color: "black", margin: "0 auto" }}
-                onClick={() => sendEmailOTP()}><Text className="text-yellow" >Resend Code</Text></Button>
+                onClick={() => sendEmailOTP()} loading={email.btnloader}><Text className="text-yellow" >Resend Code</Text></Button>
         ),
         code_Sent: (<>
             <Button
@@ -335,7 +301,7 @@ const Verifications = (props) => {
                 type="text"
                 style={{ color: "black", margin: "0 auto" }}
                 onClick={() => verifyEmailOtp()}
-            ><Text className={` text-yellow`} >Click here to verify</Text></Button>
+                loading={email.btnloader}><Text className={` text-yellow`} >Click here to verify</Text></Button>
         ),
     };
     const authenticator_btnList = {
@@ -356,7 +322,7 @@ const Verifications = (props) => {
                 type="text"
                 style={{ color: "black", margin: "0 auto" }}
                 onClick={() => verifyAuthenticatorOTP()}
-            ><Text className={` text-yellow`} >Click here to verify</Text></Button>
+                loading={authenticator.btnloader}><Text className={` text-yellow`} >Click here to verify</Text></Button>
         ),
     };
     return (
