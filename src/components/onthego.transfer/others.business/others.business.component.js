@@ -85,7 +85,7 @@ class OthersBusiness extends Component {
         if (isUSDTransfer) { return <BusinessTransfer amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} /> }
         else {
             return <>
-                {this.state.errorMessage && <Alert type="error" showIcon closable={false} message={"An error occured"} description={this.state.errorMessage} />}
+                {this.state.errorMessage && <Alert type="error" showIcon closable={false} description={this.state.errorMessage} />}
                 <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16 text-center">SEPA Transfer</Paragraph>
                 <Form initialValues={this.state.details}
                     className="custom-label  mb-0"
