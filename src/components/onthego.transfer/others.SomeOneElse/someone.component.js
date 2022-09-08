@@ -133,6 +133,7 @@ const SomeoneComponent = (props) => {
                             }
                         >
                             <Input
+                                maxLength={20}
                                 className="cust-input"
                                 placeholder={apiCalls.convertLocalLang("saveWhitelistnameas")}
                             />

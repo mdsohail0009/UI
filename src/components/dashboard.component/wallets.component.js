@@ -22,7 +22,7 @@ class Wallets extends Component {
         selctedVal: '',
         transactions: false,
         selectedWallet: '',
-        showFuntransfer: false
+        showFuntransfer: false,
     }
     componentDidMount() {
         this.fetchWallets();
@@ -159,7 +159,7 @@ class Wallets extends Component {
                     title={[<div className="side-drawer-header">
                         {/* {this.renderTitle()} */}
                         <div className="">
-                            <Title className="basicinfo">Fund Transfer</Title>
+                            {/* <Title className="basicinfo">Fund Transfer</Title> */}
                         </div>
                         <span onClick={() => this.setState({ ...this.state, showFuntransfer: false })} className="icon md close-white c-pointer" />
                     </div>]}
