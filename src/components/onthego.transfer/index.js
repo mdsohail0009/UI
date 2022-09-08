@@ -469,16 +469,16 @@ class OnthegoFundTransfer extends Component {
                                             const obj = {
                                                 "payeeId": this.state.selectedPayee.id,
                                                 "customerId": this.props.userProfile.id,
-                                                "reasonOfTransfer": fieldValues.reasionOfTransfer,
-                                                "routingNumber": fieldValues.abaRoutingCode,
-                                                "isInternational": this.state?.selectedTab !== "domestic",
-                                                "documents": this.state.codeDetails.documents
+                                                "reasonOfTransfer": fieldValues?.reasionOfTransfer,
+                                                "routingNumber": fieldValues?.abaRoutingCode,
+                                                "isInternational": this.props.selectedCurrency === "USD" ? this.state?.selectedTab !== "domestic" : "",
+                                                "documents": this.state.codeDetails?.documents
                                             }
                                             updatePayee(obj)
                                                 .then(async (response) => {
                                                     this.setState({ ...this.state, loading: true, errorMessage: null });
                                                     if (response.ok) {
-                                                        const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: this.state.codeDetails.reasonOfTransfer, amount: this.state.amount });
+                                                        const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasonOfTransfer, amount: this.state.amount });
                                                         if (res.ok) {
                                                             this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => this.chnageStep("reviewdetails"));
                                                         } else {
