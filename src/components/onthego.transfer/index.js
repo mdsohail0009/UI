@@ -183,89 +183,94 @@ class OnthegoFundTransfer extends Component {
     renderStep = (step) => {
         const { filterObj, pastPayees, payeesLoading } = this.state;
         const steps = {
-            enteramount: <Form
-                autoComplete="off"
-                initialValues={{ amount: "" }}
-                ref={this.enteramtForm}
-                onFinish={this.amountnext}
-            >
-                {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
-                <Row gutter={[16, 16]}>
-                    <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item
-                            className="custom-forminput custom-label mb-0 fund-transfer-input"
-                            name="amount"
-                            label={"Enter amount"}
-                            required
-                            rules={[
-                                {
-                                    required: true,
-                                    message:
-                                        apicalls.convertLocalLang("is_required"),
-                                }
-                            ]}
-                        >
-                            <NumberFormat
-                                customInput={Input}
-                                className="cust-input "
-                                placeholder={"Enter amount"}
-                                maxLength="20"
-                                decimalScale={2}
-                                displayType="input"
-                                allowNegative={false}
-                                thousandSeparator={","}
-                                addonBefore={this.props.selectedCurrency}
-                                onValueChange={() => {
-                                    this.setState({ ...this.state, amount: this.enteramtForm.current.getFieldsValue().amount })
-                                }}
-                            />
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row gutter={[16, 16]}>
-
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                        <br />
-                        <Form.Item className="text-center">
-                            <Button
-                                htmlType="submit"
-                                size="large"
-                                className="pop-btn mb-36"
-                                style={{ minWidth: 300 }}
-                                loading={this.state.newtransferLoader}
-                                disabled={this.state.addressLoader}
+            enteramount: <>
+                <div className="mb-16 text-left">
+                    <text Paragraph
+                        className='text-white fs-30 fw-600 px-4 '>Transfer funds</text>
+                </div>
+                <Form
+                    autoComplete="off"
+                    initialValues={{ amount: "" }}
+                    ref={this.enteramtForm}
+                    onFinish={this.amountnext}
+                >
+                    {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
+                    <Row gutter={[16, 16]}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0 fund-transfer-input"
+                                name="amount"
+                                label={"Enter amount"}
+                                required
+                                rules={[
+                                    {
+                                        required: true,
+                                        message:
+                                            apicalls.convertLocalLang("is_required"),
+                                    }
+                                ]}
                             >
-                                New Transfer
-                            </Button>
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                        <br />
-                        <Form.Item className="text-center">
-                            <Button
-                                htmlType="button"
-                                size="large"
-                                className="pop-btn mb-36"
-                                style={{ minWidth: 300 }}
-                                loading={this.state.addressLoader}
-                                disabled={this.state.newtransferLoader}
-                                onClick={() => {
-                                    let _amt = this.enteramtForm.current.getFieldsValue().amount;
-                                    _amt = _amt.replace(/,/g, "");
-                                    this.setState({ ...this.state, isNewTransfer: false, amount: _amt }, () => {
-                                        this.enteramtForm.current.validateFields().then(() => this.validateAmt(_amt, "addressselection", this.enteramtForm.current.getFieldsValue(), "addressLoader"))
-                                            .catch(error => {
+                                <NumberFormat
+                                    customInput={Input}
+                                    className="cust-input "
+                                    placeholder={"Enter amount"}
+                                    maxLength="20"
+                                    decimalScale={2}
+                                    displayType="input"
+                                    allowNegative={false}
+                                    thousandSeparator={","}
+                                    addonBefore={this.props.selectedCurrency}
+                                    onValueChange={() => {
+                                        this.setState({ ...this.state, amount: this.enteramtForm.current.getFieldsValue().amount })
+                                    }}
+                                />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={[16, 16]}>
 
-                                            });
-                                    })
-                                }}
-                            >
-                                Addressbook
-                            </Button>
-                        </Form.Item>
-                    </Col>
-                </Row>
-            </Form>,
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <br />
+                            <Form.Item className="text-center">
+                                <Button
+                                    htmlType="submit"
+                                    size="large"
+                                    className="pop-btn mb-36"
+                                    style={{ minWidth: 300 }}
+                                    loading={this.state.newtransferLoader}
+                                    disabled={this.state.addressLoader}
+                                >
+                                    New Transfer
+                                </Button>
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <br />
+                            <Form.Item className="text-center">
+                                <Button
+                                    htmlType="button"
+                                    size="large"
+                                    className="pop-btn mb-36"
+                                    style={{ minWidth: 300 }}
+                                    loading={this.state.addressLoader}
+                                    disabled={this.state.newtransferLoader}
+                                    onClick={() => {
+                                        let _amt = this.enteramtForm.current.getFieldsValue().amount;
+                                        _amt = _amt.replace(/,/g, "");
+                                        this.setState({ ...this.state, isNewTransfer: false, amount: _amt }, () => {
+                                            this.enteramtForm.current.validateFields().then(() => this.validateAmt(_amt, "addressselection", this.enteramtForm.current.getFieldsValue(), "addressLoader"))
+                                                .catch(error => {
+
+                                                });
+                                        })
+                                    }}
+                                >
+                                    Addressbook
+                                </Button>
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                </Form></>,
             addressselection: <React.Fragment>
                 {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
                 <div className="mb-16 text-left">
@@ -364,6 +369,10 @@ class OnthegoFundTransfer extends Component {
                 </div>}
             </React.Fragment>,
             reasonfortransfer: <React.Fragment>
+                <div className="mb-16 text-left">
+                    <text Paragraph
+                        className='text-white fs-30 fw-600 px-4 '>Transfer Details</text>
+                </div>
                 <Form
                     autoComplete="off"
                     initialValues={this.state.codeDetails}
@@ -511,13 +520,17 @@ class OnthegoFundTransfer extends Component {
             </React.Fragment>,
             reviewdetails: <React.Fragment>
                 <div ref={this.reviewScrool}></div>
+                <div className="mb-16 text-left">
+                    <text Paragraph
+                        className='text-white fs-30 fw-600 px-4 '>Review Details Of Transfer</text>
+                </div>
                 <Form
                     name="advanced_search"
                     ref={this.formRef}
                     onFinish={this.transferDetials}
                     autoComplete="off">
-                    <div className="text-center"> <text Paragraph
-                        className='text-white fs-24 fw-600 mb-16 px-4 '>Review Details Of Transfer</text></div>
+                    {/* <div className="text-center"> <text Paragraph
+                        className='text-white fs-24 fw-600 mb-16 px-4 '>Review Details Of Transfer</text></div> */}
                     {this.state.errorMessage && <Alert type="error" showIcon closable={false} description={this.state.errorMessage} />}
 
                     <Row gutter={24}>
