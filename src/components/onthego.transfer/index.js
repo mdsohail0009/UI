@@ -60,7 +60,7 @@ class OnthegoFundTransfer extends Component {
     amountnext = (values) => {
         let _amt = values.amount;
         _amt = _amt.replace(/,/g, "");
-        this.setState({ ...this.state, amount: _amt }, () => this.validateAmt(_amt, "newtransfer", values))
+        this.setState({ ...this.state, amount: _amt }, () => this.validateAmt(_amt, "newtransfer", values,"newtransferLoader"))
 
     }
     handleSearch = ({ target: { value: val } }) => {
@@ -165,18 +165,18 @@ class OnthegoFundTransfer extends Component {
             return "Something went wrong please try again!";
         }
     };
-    validateAmt = async (amt, step, values) => {
+    validateAmt = async (amt, step, values,loader) => {
         const obj = {
             CustomerId: this.props.userProfile?.id,
             amount: amt,
             WalletCode: this.props.selectedCurrency
         }
-        this.setState({ ...this.state, loading: true, errorMessage: null });
+        this.setState({ ...this.state, [loader]: true, errorMessage: null });
         const res = await validateAmount(obj);
         if (res.ok) {
-            this.setState({ ...this.state, loading: false, errorMessage: null }, () => this.chnageStep(step, values));
+            this.setState({ ...this.state, [loader]: false, errorMessage: null }, () => this.chnageStep(step, values));
         } else {
-            this.setState({ ...this.state, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message })
+            this.setState({ ...this.state, [loader]: false, errorMessage: res.data?.message || res.data || res.originalError.message })
         }
 
     }
@@ -255,7 +255,8 @@ class OnthegoFundTransfer extends Component {
                                 size="large"
                                 className="pop-btn mb-36"
                                 style={{ minWidth: 300 }}
-                                loading={this.state.loading}
+                                loading={this.state.newtransferLoader}
+                                disabled={this.state.addressLoader}
                             //onClick={() => this.chnageStep("newtransfer")}
                             >
                                 New Transfer
@@ -270,12 +271,13 @@ class OnthegoFundTransfer extends Component {
                                 size="large"
                                 className="pop-btn mb-36"
                                 style={{ minWidth: 300 }}
-                                loading={this.state.loading}
+                                loading={this.state.addressLoader}
+                                disabled={this.state.newtransferLoader}
                                 onClick={() => {
                                     let _amt = this.enteramtForm.current.getFieldsValue().amount;
                                     _amt = _amt.replace(/,/g, "");
                                     this.setState({ ...this.state, isNewTransfer: false, amount: _amt }, () => {
-                                        this.enteramtForm.current.validateFields().then(() => this.validateAmt(_amt, "addressselection", this.enteramtForm.current.getFieldsValue()))
+                                        this.enteramtForm.current.validateFields().then(() => this.validateAmt(_amt, "addressselection", this.enteramtForm.current.getFieldsValue(),"addressLoader"))
                                             .catch(error => {
 
                                             });
