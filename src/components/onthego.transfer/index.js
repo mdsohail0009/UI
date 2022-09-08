@@ -70,67 +70,70 @@ class OnthegoFundTransfer extends Component {
         else
             this.setState({ ...this.state, filterObj: this.state.payees });
     }
-    saveWithdrawdata = async () =>{
-        	if (this.state.verifyData.verifyData.isPhoneVerified) {
-        		if (!this.state.verifyData.isPhoneVerification) {
-        			this.setState({
-                        ...this.state,
-                        errorMessage:"Please verify phone verification code"});
-        			return;
-        		}
-        	}
-        	if (this.state.verifyData.verifyData.isEmailVerification) {
-        		if (!this.state.verifyData.isEmailVerification) {
-        			this.setState({
-                        ...this.state,
-                        errorMessage:"Please verify  email verification code"});
-        			return;
-        		}
-        	}
-        	if (this.state.verifyData.verifyData.twoFactorEnabled) {
-        		if (!this.state.verifyData.isAuthenticatorVerification) {
-        			this.setState({
-                        ...this.state,
-                        errorMessage:"Please verify authenticator code"});
-        			return;
-        		}
-        	}
-        	if (
-        		this.state.verifyData.verifyData.isPhoneVerified == "" &&
-        		this.state.verifyData.verifyData.isEmailVerification == "" &&
-        		this.state.verifyData.verifyData.twoFactorEnabled == ""
-        	) {
-        		this.setState({
-        			...this.state,
-        			errorMessage:
-        				"Without Verifications you can't send. Please select send verifications from security section",
-        		});
-                return
-        	}
-        if(this.state.reviewDetails){
-        let obj = this.state.reviewDetails;
-        obj["accountNumber"] = obj.accountNumber?apicalls.encryptValue(obj.accountNumber,this.props.userProfile?.sk):null;
-        obj["bankName"] = obj.bankName?apicalls.encryptValue(obj.bankName, this.props.userProfile?.sk):null;
-        obj["bankAddress"] = obj.bankAddress?apicalls.encryptValue(obj.bankAddress, this.props.userProfile?.sk):null;
-        obj["beneficiaryAccountName"] = obj.beneficiaryAccountName?apicalls.encryptValue(obj.beneficiaryAccountName, this.props.userProfile?.sk):null;
-        obj["beneficiaryAccountAddress"] = obj.beneficiaryAccountAddress?apicalls.encryptValue(obj.beneficiaryAccountAddress, this.props.userProfile?.sk):null;
-        obj["routingNumber"] = obj.routingNumber?apicalls.encryptValue(obj.routingNumber, this.props.userProfile?.sk):null;
-              
-       const saveRes =  await saveWithdraw(obj)
-       if(saveRes.ok){
-        this.chnageStep(this.state.isNewTransfer ? "declaration" : "successpage")
-        this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id))
-        this.props.dispatch(fetchMarketCoinData(true))
-       }else{
-        this.setState({
-            ...this.state,
-            errorMessage: this.isErrorDispaly(saveRes),
-        });
-       }
+    saveWithdrawdata = async () => {
+        if (this.state.verifyData.verifyData.isPhoneVerified) {
+            if (!this.state.verifyData.isPhoneVerification) {
+                this.setState({
+                    ...this.state,
+                    errorMessage: "Please verify phone verification code"
+                });
+                return;
+            }
+        }
+        if (this.state.verifyData.verifyData.isEmailVerification) {
+            if (!this.state.verifyData.isEmailVerification) {
+                this.setState({
+                    ...this.state,
+                    errorMessage: "Please verify  email verification code"
+                });
+                return;
+            }
+        }
+        if (this.state.verifyData.verifyData.twoFactorEnabled) {
+            if (!this.state.verifyData.isAuthenticatorVerification) {
+                this.setState({
+                    ...this.state,
+                    errorMessage: "Please verify authenticator code"
+                });
+                return;
+            }
+        }
+        if (
+            this.state.verifyData.verifyData.isPhoneVerified == "" &&
+            this.state.verifyData.verifyData.isEmailVerification == "" &&
+            this.state.verifyData.verifyData.twoFactorEnabled == ""
+        ) {
+            this.setState({
+                ...this.state,
+                errorMessage:
+                    "Without Verifications you can't send. Please select send verifications from security section",
+            });
+            return
+        }
+        if (this.state.reviewDetails) {
+            let obj = this.state.reviewDetails;
+            obj["accountNumber"] = obj.accountNumber ? apicalls.encryptValue(obj.accountNumber, this.props.userProfile?.sk) : null;
+            obj["bankName"] = obj.bankName ? apicalls.encryptValue(obj.bankName, this.props.userProfile?.sk) : null;
+            obj["bankAddress"] = obj.bankAddress ? apicalls.encryptValue(obj.bankAddress, this.props.userProfile?.sk) : null;
+            obj["beneficiaryAccountName"] = obj.beneficiaryAccountName ? apicalls.encryptValue(obj.beneficiaryAccountName, this.props.userProfile?.sk) : null;
+            obj["beneficiaryAccountAddress"] = obj.beneficiaryAccountAddress ? apicalls.encryptValue(obj.beneficiaryAccountAddress, this.props.userProfile?.sk) : null;
+            obj["routingNumber"] = obj.routingNumber ? apicalls.encryptValue(obj.routingNumber, this.props.userProfile?.sk) : null;
+
+            const saveRes = await saveWithdraw(obj)
+            if (saveRes.ok) {
+                this.chnageStep(this.state.isNewTransfer ? "declaration" : "successpage")
+                this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id))
+                this.props.dispatch(fetchMarketCoinData(true))
+            } else {
+                this.setState({
+                    ...this.state,
+                    errorMessage: this.isErrorDispaly(saveRes),
+                });
+            }
+        }
     }
-    }
-    changesVerification = (obj) =>{
-        this.setState({...this.state,verifyData:obj})
+    changesVerification = (obj) => {
+        this.setState({ ...this.state, verifyData: obj })
         console.log(obj)
     }
     isErrorDispaly = (objValue) => {
@@ -281,8 +284,8 @@ class OnthegoFundTransfer extends Component {
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                         {filterObj?.map((item, idx) =>
                             <Row className="fund-border c-pointer" onClick={async () => {
-                                if (!["myself", "1stparty",'ownbusiness'].includes(item.addressType?.toLowerCase()) || this.props.selectedCurrency != "EUR") {
-                                    this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item,codeDetails:{...this.state.codeDetails,...item} }, () => this.chnageStep("reasonfortransfer"));
+                                if (!["myself", "1stparty", 'ownbusiness'].includes(item.addressType?.toLowerCase()) || this.props.selectedCurrency != "EUR") {
+                                    this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item, codeDetails: { ...this.state.codeDetails, ...item } }, () => this.chnageStep("reasonfortransfer"));
                                 } else {
                                     this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item, codeDetails: { ...this.state.codeDetails, ...item } });
                                     const res = await confirmTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount });
@@ -314,7 +317,7 @@ class OnthegoFundTransfer extends Component {
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                         {pastPayees?.map((item, idx) =>
                             <Row className="fund-border c-pointer" onClick={async () => {
-                                if (!["myself", "1stparty","ownbusiness"].includes(item.addressType?.toLowerCase()) || this.props.selectedCurrency != "EUR") {
+                                if (!["myself", "1stparty", "ownbusiness"].includes(item.addressType?.toLowerCase()) || this.props.selectedCurrency != "EUR") {
                                     this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item }, () => this.chnageStep("reasonfortransfer"))
                                 } else {
                                     this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item });
@@ -359,7 +362,7 @@ class OnthegoFundTransfer extends Component {
                     ref={this.reasonForm}
                 >
                     {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
-                    {!["myself", "1stparty","ownbusiness"].includes(this.state.selectedPayee.addressType?.toLowerCase()) && <React.Fragment><Row gutter={[16, 16]}>
+                    {!["myself", "1stparty", "ownbusiness"].includes(this.state.selectedPayee.addressType?.toLowerCase()) && <React.Fragment><Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
@@ -389,7 +392,7 @@ class OnthegoFundTransfer extends Component {
                             this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, documents } })
                         }} title={"Upload supporting documents for transaction"} />
                     </React.Fragment>}
-                    <Tabs className="cust-tabs-fait" activeKey={this.state.selectedTab} onChange={(key) => this.setState({ ...this.state, selectedTab: key })}>
+                    {this.props.selectedCurrency === "USD" && <Tabs className="cust-tabs-fait" activeKey={this.state.selectedTab} onChange={(key) => this.setState({ ...this.state, selectedTab: key })}>
                         <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"}>
                             <Row gutter={[16, 16]}>
                                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -440,7 +443,7 @@ class OnthegoFundTransfer extends Component {
 
                             </Col>
                         </Tabs.TabPane>
-                    </Tabs>
+                    </Tabs>}
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={6} lg={6} xl={6} xxl={6}></Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -453,9 +456,11 @@ class OnthegoFundTransfer extends Component {
                                     style={{ minWidth: 300 }}
                                     onClick={() => {
                                         let validateFileds = [];
-                                        const code = this.state?.selectedTab === "domestic" ? "abaRoutingCode" : "swiftRouteBICNumber";
-                                        validateFileds.push(code);
-                                        if (!["myself", "1stparty","ownbusiness"].includes(this.state.selectedPayee.addressType?.toLowerCase())) {
+                                        if (this.props.selectedCurrency === "USD") {
+                                            const code = this.state?.selectedTab === "domestic" ? "abaRoutingCode" : "swiftRouteBICNumber";
+                                            validateFileds.push(code);
+                                        }
+                                        if (!["myself", "1stparty", "ownbusiness"].includes(this.state.selectedPayee.addressType?.toLowerCase())) {
                                             validateFileds = validateFileds.concat(["reasionOfTransfer", "files"]);
                                         }
                                         this.reasonForm.current.validateFields(validateFileds).then(() => {
@@ -582,12 +587,12 @@ class OnthegoFundTransfer extends Component {
                                 <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.iban}</Title>
                             </div>
                         </Col>}
-                        <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+                        {this.state.reviewDetails?.customerRemarks && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Reason for transfer </Title>
                                 <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
                             </div>
-                        </Col>
+                        </Col>}
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Bank Name </Title>
@@ -595,14 +600,14 @@ class OnthegoFundTransfer extends Component {
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                        <Verifications onchangeData={(obj)=>this.changesVerification(obj)}/>
+                            <Verifications onchangeData={(obj) => this.changesVerification(obj)} />
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="text-center mt-36 create-account">
                                 <Form.Item className="mb-0 mt-16">
                                     <Button
                                         htmlType="button"
-                                        onClick={() =>{ this.saveWithdrawdata();}}
+                                        onClick={() => { this.saveWithdrawdata(); }}
                                         size="large"
                                         block
                                         className="pop-btn px-24"
@@ -622,7 +627,7 @@ class OnthegoFundTransfer extends Component {
                     })
                 }
                 }
-                    onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} /> 
+                    onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} />
             </>,
             declaration: <div className="text-center">
                 <Image width={80} preview={false} src={alertIcon} />
