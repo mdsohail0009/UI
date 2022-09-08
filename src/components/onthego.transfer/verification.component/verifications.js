@@ -58,45 +58,6 @@ const Verifications = (props) => {
 
     const transferDetials = async (values) => {
         // setAgreeRed(true);
-        // setDisableSave(false);
-        // 	setAgreeRed(true);
-        // 	if (verifyData.isPhoneVerified) {
-        // 		if (!isPhoneVerification) {
-        // 			setDisableSave(false);
-        // 			setMsg("Please verify phone verification code");
-        // 			useOtpRef.current.scrollIntoView(0, 0);
-        // 			return;
-        // 		}
-        // 	}
-        // 	if (verifyData.isEmailVerification) {
-        // 		if (!isEmailVerification) {
-        // 			setDisableSave(false);
-        // 			setMsg("Please verify  email verification code");
-        // 			useOtpRef.current.scrollIntoView(0, 0);
-        // 			return;
-        // 		}
-        // 	}
-        // 	if (verifyData.twoFactorEnabled) {
-        // 		if (!isAuthenticatorVerification) {
-        // 			setDisableSave(false);
-        // 			//setIsLoading(false);
-        // 			setMsg("Please verify authenticator code");
-        // 			useOtpRef.current.scrollIntoView(0, 0);
-        // 			return;
-        // 		}
-        // 	}
-        // 	if (
-        // 		verifyData.isPhoneVerified == "" &&
-        // 		verifyData.isEmailVerification == "" &&
-        // 		verifyData.twoFactorEnabled == ""
-        // 	) {
-        // 		this.setState({
-        // 			...this.state,
-        // 			errorMsg:
-        // 				"Without Verifications you can't send. Please select send verifications from security section",
-        // 		});
-        // 	}
-
     };
 
     const getVerifyData = async () => {
@@ -160,15 +121,15 @@ const Verifications = (props) => {
     };
 
     const getphoneOTP = async (val) => {
-        // let response = await getCode(props.userConfig.id, phone.requestType);
-        // if (response.ok) {
+        let response = await getCode(props.userConfig.id, phone.requestType);
+        if (response.ok) {
         let phoneData = { ...phone, errorMsg: '', btnName: 'code_Sent', requestType: 'Resend', showRuleMsg: `Enter 6 digit code sent to ${maskedNumber}` }
         setPhone(phoneData)
         startphoneTimer(phoneData, 'phoneSeconds')
-        // } else {
-        //     setPhone({ ...phone, errorMsg: isErrorDispaly(response), showRuleMsg: '' })
-        //     useOtpRef.current.scrollIntoView(0, 0);
-        // }
+        } else {
+            setPhone({ ...phone, errorMsg: isErrorDispaly(response), showRuleMsg: '' })
+            useOtpRef.current.scrollIntoView(0, 0);
+        }
     };
     const handlephoneinputChange = (e) => {
         if (e.value) {
@@ -179,18 +140,18 @@ const Verifications = (props) => {
     };
     const verifyPhoneOtp = async () => {
         if(phone.code && phone.code>5){
-        // let response = await getVerification(props.userConfig.id, phone.code);
-        // if (response.ok) {
+        let response = await getVerification(props.userConfig.id, phone.code);
+        if (response.ok) {
         setPhone({ ...phone, errorMsg: '', verified: true, btnName: 'verified' });
         updateverifyObj(true, 'isPhoneVerification')
-        // } else if (response.data == null) {
-        //     setPhone({ ...phone, errorMsg: 'Invalid phone verification code', verified: false });
-        //     updateverifyObj(false, 'isPhoneVerification')
-        // } else {
-        //     useOtpRef.current.scrollIntoView(0, 0);
-        //     setPhone({ ...phone, errorMsg: 'Invalid phone verification code', verified: false });
-        //     updateverifyObj(false, 'isPhoneVerification')
-        // }
+        } else if (response.data == null) {
+            setPhone({ ...phone, errorMsg: 'Invalid phone verification code', verified: false });
+            updateverifyObj(false, 'isPhoneVerification')
+        } else {
+            useOtpRef.current.scrollIntoView(0, 0);
+            setPhone({ ...phone, errorMsg: 'Invalid phone verification code', verified: false });
+            updateverifyObj(false, 'isPhoneVerification')
+        }
     }else{
         setPhone({ ...phone, errorMsg: 'Invalid phone verification code', verified: false });
     }
@@ -220,7 +181,7 @@ const Verifications = (props) => {
     }
     const verifyAuthenticatorOTP = async () => {
         if(authenticator.code && authenticator.code>5){
-        let response = await getAuthenticator(authenticator.code, props.userConfig.id);
+        let response = await getAuthenticator(authenticator.code, props.userConfig.userId);
         if (response.ok) {
             setAuthenticator({ ...authenticator, errorMsg: '', verified: true, btnName: 'verified' });
             updateverifyObj(true, 'isAuthenticatorVerification')
