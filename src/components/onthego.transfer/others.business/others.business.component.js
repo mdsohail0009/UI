@@ -18,7 +18,7 @@ class OthersBusiness extends Component {
         isLoading: true,
         details: {},
         ibanDetails: {},
-        docDetails: {}
+        docDetails: {},isBtnLoading:false
     };
     componentDidMount() {
         this.loadDetails();
@@ -65,19 +65,19 @@ class OthersBusiness extends Component {
         _obj.addressType = "Business";
         _obj.transferType = "sepa";
         _obj.amount = this.props.amount;
-        this.setState({ ...this.state, isLoading: true, errorMessage: null });
+        this.setState({ ...this.state, isLoading: false, errorMessage: null,isBtnLoading:true });
         const response = await savePayee(_obj);
         if (response.ok) {
             const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
             if (confirmRes.ok) {
                 this.props.onContinue(confirmRes.data);
-                this.setState({ ...this.state, isLoading: false, errorMessage: null });
+                this.setState({ ...this.state, isLoading: false, errorMessage: null ,isBtnLoading:false});
             } else {
-                this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false });
+                this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false,isBtnLoading:false });
             }
 
         } else {
-            this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false });
+            this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false,isBtnLoading:false});
         }
 
     }
@@ -327,7 +327,7 @@ class OthersBusiness extends Component {
                                     size="large"
                                     className="pop-btn mb-36"
                                     style={{ minWidth: 300 }}
-                                >
+                                    loading={this.state.isBtnLoading} >
                                     Continue
                                 </Button>
                             </Col>
