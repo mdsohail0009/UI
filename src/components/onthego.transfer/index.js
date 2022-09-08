@@ -512,12 +512,12 @@ class OnthegoFundTransfer extends Component {
                                 <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.iban}</Title>
                             </div>
                         </Col>}
-                        <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+                        {this.state.reviewDetails?.customerRemarks && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Reason for transfer </Title>
                                 <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
                             </div>
-                        </Col>
+                        </Col>}
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Bank Name </Title>
