@@ -18,7 +18,6 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     const [saveTransferObj]= useState({"id":"00000000-0000-0000-0000-000000000000","customerId":props.userConfig.id,"favouriteName":"","firstName":"","lastName":"","beneficiaryName":"","line1":"","line2":"","line3":"","transferType":"","addressType":"","isAgree":true,"info":"","isBankContact":true,"relation":"","reasonOfTransfer":"","amount":0,"payeeAccountModels":[{"id":"00000000-0000-0000-0000-000000000000","line1":"","line2":"","city":"","state":"","country":"","postalCode":"","currencyType":"","walletCode":"","accountNumber":"","swiftRouteBICNumber":"","bankName":"","userCreated":props?.userConfig.firstName + props?.userConfig.lastName,"iban":"","bic":"","bankBranch":"","abaRoutingCode":"","documents":null}]})
     const [createTransfer]=useState({"favouriteName":"","accountNumber":"","swiftRouteBICNumber":"","bankName":"","iban":"","abaRoutingCode":"","line1":"","line2":""})
     const [recipientDetails,setRecipientDetails]=useState({})
-    const [transfertypes]=useState({domestic:'Domestic',international:'International'})
 	const [isBtnLoading, setBtnLoading] = useState(false);
     const [isLoading,setLoader]=useState(true)
     const [errorMessage,seterrorMessage]=useState();
@@ -58,8 +57,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         saveObj.line1=recipientDetails.line1;
         saveObj.line2=recipientDetails.line2;
         saveObj.line3=recipientDetails.line3;
-        saveObj.addressType=isBusiness?'OwnBusiness':'MySelf';
-        saveObj.transferType=currency=='EUR'?'Sepa':transfertypes[addressOptions.tabType];
+        saveObj.addressType=isBusiness?'ownbusiness':'myself';
+        saveObj.transferType=currency=='EUR'?'sepa':addressOptions.tabType;
         saveObj.payeeAccountModels[0].currencyType='fiat';
         saveObj.payeeAccountModels[0].walletCode=currency;
         saveObj.amount=onTheGoObj.amount;
