@@ -467,7 +467,6 @@ class OnthegoFundTransfer extends Component {
                                         this.reasonForm.current.validateFields(validateFileds).then(() => {
                                             const fieldValues = this.reasonForm.current.getFieldsValue();
                                             this.setState({ ...this.state, loading: true, errorMessage: null });
-                                            debugger;
                                             const obj = {
                                                 "payeeId": this.state.selectedPayee.id,
                                                 "customerId": this.props.userProfile.id,
@@ -480,7 +479,7 @@ class OnthegoFundTransfer extends Component {
                                                 .then(async (response) => {
                                                     this.setState({ ...this.state, loading: true, errorMessage: null });
                                                     if (response.ok) {
-                                                        const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasonOfTransfer, amount: this.state.amount });
+                                                        const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasionOfTransfer, amount: this.state.amount });
                                                         if (res.ok) {
                                                             this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => this.chnageStep("reviewdetails"));
                                                         } else {
