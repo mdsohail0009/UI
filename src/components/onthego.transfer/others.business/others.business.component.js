@@ -6,7 +6,6 @@ import AddressDocumnet from "../../addressbook.component/document.upload";
 import { RecipientAddress } from "../../addressbook.v2/recipient.details";
 import { confirmTransaction, createPayee, fetchIBANDetails, payeeAccountObj, savePayee } from "../api";
 import BusinessTransfer from "./transfer";
-import Loader from '../../../Shared/loader';
 import ConnectStateProps from "../../../utils/state.connect";
 const { Paragraph, Text } = Typography;
 const { TextArea } = Input;
@@ -65,7 +64,7 @@ class OthersBusiness extends Component {
         _obj.addressType = "Business";
         _obj.transferType = "sepa";
         _obj.amount = this.props.amount;
-        this.setState({ ...this.state, isLoading: false, errorMessage: null,isBtnLoading:true });
+        this.setState({ ...this.state, isLoading: true, errorMessage: null,isBtnLoading:true });
         const response = await savePayee(_obj);
         if (response.ok) {
             const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
@@ -85,7 +84,6 @@ class OthersBusiness extends Component {
         const { isUSDTransfer } = this.props;
         if (isUSDTransfer) { return <BusinessTransfer amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} /> }
         else {
-            if (this.state.isLoading) { return <Loader /> }
             return <>
                 {this.state.errorMessage && <Alert type="error" showIcon closable={false} message={"An error occured"} description={this.state.errorMessage} />}
                 <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16 text-center">SEPA Transfer</Paragraph>
@@ -310,7 +308,7 @@ class OthersBusiness extends Component {
                     </div>
                     <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16">Please upload supporting docs for transaction</Paragraph>
 
-                    <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} onDocumentsChange={(docs) => {
+                    <AddressDocumnet documents={null} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
@@ -319,15 +317,12 @@ class OthersBusiness extends Component {
                         <Row gutter={[16, 16]}>
                             <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col>
                             <Col xs={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Button onClick={() => {
-                                    //this.props.onContinue()
-                                }
-                                }
+                                <Button 
                                     htmlType="submit"
                                     size="large"
                                     className="pop-btn mb-36"
                                     style={{ minWidth: 300 }}
-                                    loading={this.state.isBtnLoading} >
+                                    loading={this.state.isLoading} >
                                     Continue
                                 </Button>
                             </Col>
