@@ -60,7 +60,7 @@ class OnthegoFundTransfer extends Component {
     amountnext = (values) => {
         let _amt = values.amount;
         _amt = _amt.replace(/,/g, "");
-        this.setState({ ...this.state, amount: _amt }, () => this.validateAmt(_amt, "newtransfer", values))
+        this.setState({ ...this.state, amount: _amt }, () => this.validateAmt(_amt, "newtransfer", values, "newtransferLoader"))
 
     }
     handleSearch = ({ target: { value: val } }) => {
@@ -81,7 +81,7 @@ class OnthegoFundTransfer extends Component {
                         errorMessage: "Please verify phone verification code"
                     });
                     this.reviewScrool.current.scrollIntoView()
-                return;
+                    return;
                 }
             }
             if (this.state.verifyData.verifyData.isEmailVerification) {
@@ -91,7 +91,7 @@ class OnthegoFundTransfer extends Component {
                         errorMessage: "Please verify  email verification code"
                     });
                     this.reviewScrool.current.scrollIntoView()
-                return;
+                    return;
                 }
             }
             if (this.state.verifyData.verifyData.twoFactorEnabled) {
@@ -101,7 +101,7 @@ class OnthegoFundTransfer extends Component {
                         errorMessage: "Please verify authenticator code"
                     });
                     this.reviewScrool.current.scrollIntoView()
-                return;
+                    return;
                 }
             }
             if (
@@ -115,7 +115,7 @@ class OnthegoFundTransfer extends Component {
                         "Without Verifications you can't send. Please select send verifications from security section",
                 });
                 this.reviewScrool.current.scrollIntoView()
-            return
+                return
             }
         } else {
             this.setState({
@@ -165,18 +165,18 @@ class OnthegoFundTransfer extends Component {
             return "Something went wrong please try again!";
         }
     };
-    validateAmt = async (amt, step, values) => {
+    validateAmt = async (amt, step, values, loader) => {
         const obj = {
             CustomerId: this.props.userProfile?.id,
             amount: amt,
             WalletCode: this.props.selectedCurrency
         }
-        this.setState({ ...this.state, loading: true, errorMessage: null });
+        this.setState({ ...this.state, [loader]: true, errorMessage: null });
         const res = await validateAmount(obj);
         if (res.ok) {
-            this.setState({ ...this.state, loading: false, errorMessage: null }, () => this.chnageStep(step, values));
+            this.setState({ ...this.state, [loader]: false, errorMessage: null }, () => this.chnageStep(step, values));
         } else {
-            this.setState({ ...this.state, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message })
+            this.setState({ ...this.state, [loader]: false, errorMessage: res.data?.message || res.data || res.originalError.message })
         }
 
     }
@@ -255,7 +255,8 @@ class OnthegoFundTransfer extends Component {
                                 size="large"
                                 className="pop-btn mb-36"
                                 style={{ minWidth: 300 }}
-                                loading={this.state.loading}
+                                loading={this.state.newtransferLoader}
+                                disabled={this.state.addressLoader}
                             //onClick={() => this.chnageStep("newtransfer")}
                             >
                                 New Transfer
@@ -270,12 +271,13 @@ class OnthegoFundTransfer extends Component {
                                 size="large"
                                 className="pop-btn mb-36"
                                 style={{ minWidth: 300 }}
-                                loading={this.state.loading}
+                                loading={this.state.addressLoader}
+                                disabled={this.state.newtransferLoader}
                                 onClick={() => {
                                     let _amt = this.enteramtForm.current.getFieldsValue().amount;
                                     _amt = _amt.replace(/,/g, "");
                                     this.setState({ ...this.state, isNewTransfer: false, amount: _amt }, () => {
-                                        this.enteramtForm.current.validateFields().then(() => this.validateAmt(_amt, "addressselection", this.enteramtForm.current.getFieldsValue()))
+                                        this.enteramtForm.current.validateFields().then(() => this.validateAmt(_amt, "addressselection", this.enteramtForm.current.getFieldsValue(), "addressLoader"))
                                             .catch(error => {
 
                                             });
@@ -543,7 +545,7 @@ class OnthegoFundTransfer extends Component {
                     autoComplete="off">
                     <div className="text-center"> <text Paragraph
                         className='text-white fs-24 fw-600 mb-16 px-4 '>Review Details Of Transfer</text></div>
-                {this.state.errorMessage && <Alert type="error" showIcon closable={false} description={this.state.errorMessage} />}
+                    {this.state.errorMessage && <Alert type="error" showIcon closable={false} description={this.state.errorMessage} />}
 
                     <Row gutter={24}>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
@@ -611,12 +613,24 @@ class OnthegoFundTransfer extends Component {
                                 <Title className="mb-4 fs-10 text-white fw-500 text-upper mt-16  text-right">{this.state.reviewDetails?.favouriteName}</Title>
                             </div>
                         </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+                        {this.state.reviewDetails?.name && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Beneficiary Name</Title>
                                 <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.name}</Title>
                             </div>
-                        </Col>
+                        </Col>}
+                        {this.state.reviewDetails?.firstName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
+                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Beneficiary Name</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.firstName}</Title>
+                            </div>
+                        </Col>}
+                        {this.state.reviewDetails?.lastName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
+                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Beneficiary Name</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.lastName}</Title>
+                            </div>
+                        </Col>}
                         {this.state.reviewDetails?.iban && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper ">IBAN </Title>
@@ -629,12 +643,12 @@ class OnthegoFundTransfer extends Component {
                                 <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
                             </div>
                         </Col>}
-                        <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+                        {this.state.reviewDetails?.bankName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Bank Name </Title>
                                 <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state?.reviewDetails?.bankName || "-"}</Title>
                             </div>
-                        </Col>
+                        </Col>}
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <Verifications onchangeData={(obj) => this.changesVerification(obj)} />
                         </Col>
@@ -669,7 +683,7 @@ class OnthegoFundTransfer extends Component {
                 <Image width={80} preview={false} src={alertIcon} />
                 <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully</Title>
                 <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
-                       Please sign using link received in email to whitelist your address`}</Text>
+                       Please sign using link received in email to whitelist your address. `}</Text>
                 <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
                 {/*<div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBOARD</Button> */}
             </div>,
