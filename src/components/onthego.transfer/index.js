@@ -265,7 +265,7 @@ class OnthegoFundTransfer extends Component {
                                         })
                                     }}
                                 >
-                                    Addressbook
+                                    Address book
                                 </Button>
                             </Form.Item>
                         </Col>
