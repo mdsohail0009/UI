@@ -279,7 +279,7 @@ class OnthegoFundTransfer extends Component {
                         label={"Search for Payee"}
                     >
                         <Search
-                            placeholder="Select Payee" bordered={false} showSearch
+                            placeholder="Search Payee" bordered={false} showSearch
                             className=" "
                             onChange={this.handleSearch}
                             value={this.state.searchVal}
