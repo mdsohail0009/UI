@@ -72,6 +72,7 @@ class OnthegoFundTransfer extends Component {
     }
     saveWithdrawdata = async () => {
         this.setState({ ...this.state, isBtnLoading: true })
+        if(this.state.verifyData?.verifyData){
         if (this.state.verifyData.verifyData.isPhoneVerified) {
             if (!this.state.verifyData.isPhoneVerification) {
                 this.setState({
@@ -108,6 +109,14 @@ class OnthegoFundTransfer extends Component {
                 ...this.state,
                 errorMessage:
                     "Without Verifications you can't send. Please select send verifications from security section",
+            });
+            return
+        }
+        }else{
+            this.setState({
+                ...this.state,
+                errorMessage:
+                    "Without Verifications you can't Procced.",
             });
             return
         }
