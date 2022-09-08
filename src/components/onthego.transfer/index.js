@@ -127,7 +127,7 @@ class OnthegoFundTransfer extends Component {
             return
         }
         if (this.state.reviewDetails) {
-            let obj = this.state.reviewDetails;
+            let obj = Object.assign({},this.state.reviewDetails);
             obj["accountNumber"] = obj.accountNumber ? apicalls.encryptValue(obj.accountNumber, this.props.userProfile?.sk) : null;
             obj["bankName"] = obj.bankName ? apicalls.encryptValue(obj.bankName, this.props.userProfile?.sk) : null;
             obj["bankAddress"] = obj.bankAddress ? apicalls.encryptValue(obj.bankAddress, this.props.userProfile?.sk) : null;

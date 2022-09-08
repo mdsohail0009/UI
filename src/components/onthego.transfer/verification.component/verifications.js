@@ -160,15 +160,15 @@ const Verifications = (props) => {
     };
 
     const getphoneOTP = async (val) => {
-        let response = await getCode(props.userConfig.id, phone.requestType);
-        if (response.ok) {
+        // let response = await getCode(props.userConfig.id, phone.requestType);
+        // if (response.ok) {
         let phoneData = { ...phone, errorMsg: '', btnName: 'code_Sent', requestType: 'Resend', showRuleMsg: `Enter 6 digit code sent to ${maskedNumber}` }
         setPhone(phoneData)
         startphoneTimer(phoneData, 'phoneSeconds')
-        } else {
-            setPhone({ ...phone, errorMsg: isErrorDispaly(response), showRuleMsg: '' })
-            useOtpRef.current.scrollIntoView(0, 0);
-        }
+        // } else {
+        //     setPhone({ ...phone, errorMsg: isErrorDispaly(response), showRuleMsg: '' })
+        //     useOtpRef.current.scrollIntoView(0, 0);
+        // }
     };
     const handlephoneinputChange = (e) => {
         if (e.value) {
@@ -179,18 +179,18 @@ const Verifications = (props) => {
     };
     const verifyPhoneOtp = async () => {
         if(phone.code && phone.code>5){
-        let response = await getVerification(props.userConfig.id, phone.code);
-        if (response.ok) {
+        // let response = await getVerification(props.userConfig.id, phone.code);
+        // if (response.ok) {
         setPhone({ ...phone, errorMsg: '', verified: true, btnName: 'verified' });
         updateverifyObj(true, 'isPhoneVerification')
-        } else if (response.data == null) {
-            setPhone({ ...phone, errorMsg: 'Invalid phone verification code', verified: false });
-            updateverifyObj(false, 'isPhoneVerification')
-        } else {
-            useOtpRef.current.scrollIntoView(0, 0);
-            setPhone({ ...phone, errorMsg: 'Invalid phone verification code', verified: false });
-            updateverifyObj(false, 'isPhoneVerification')
-        }
+        // } else if (response.data == null) {
+        //     setPhone({ ...phone, errorMsg: 'Invalid phone verification code', verified: false });
+        //     updateverifyObj(false, 'isPhoneVerification')
+        // } else {
+        //     useOtpRef.current.scrollIntoView(0, 0);
+        //     setPhone({ ...phone, errorMsg: 'Invalid phone verification code', verified: false });
+        //     updateverifyObj(false, 'isPhoneVerification')
+        // }
     }else{
         setPhone({ ...phone, errorMsg: 'Invalid phone verification code', verified: false });
     }
@@ -400,12 +400,7 @@ const Verifications = (props) => {
                                         </Text>
                                     </div>
                                 }
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: "is required",
-                                    },
-                                ]}
+                                
                             >
                                 <div className="p-relative d-flex align-center">
                                    
@@ -417,9 +412,8 @@ const Verifications = (props) => {
 										allowNegative={false}
 										className="cust-input custom-add-select mb-0"
 										placeholder={"Enter code"}
-										maxLength={6}
 										style={{ width: "100%" }}
-										onValueChange={(e) => handlephoneinputChange(e)} minLength={6}
+										onValueChange={(e) => handlephoneinputChange(e)} 
 										disabled={phone.btnName == 'get_otp' || phone.btnName == 'verified'}
 									/>
                                     <div className="new-add c-pointer get-code text-yellow hy-align">
@@ -448,12 +442,7 @@ const Verifications = (props) => {
                                         </Text>
                                     </div>
                                 }
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: "is required",
-                                    },
-                                ]}
+                              
                             >
                                 <div className="p-relative d-flex align-center">
                                     
@@ -465,9 +454,8 @@ const Verifications = (props) => {
 										allowNegative={false}
 										className="cust-input custom-add-select mb-0"
 										placeholder={"Enter code"}
-										maxLength={6}
 										style={{ width: "100%" }}
-										onValueChange={(e) => handleEmailinputChange(e)} minLength={6}
+										onValueChange={(e) => handleEmailinputChange(e)}
 										disabled={email.btnName == 'get_otp' || email.btnName == 'verified'}
 									/>
                                     <div className="new-add c-pointer get-code text-yellow hy-align">
@@ -513,9 +501,8 @@ const Verifications = (props) => {
 										allowNegative={false}
 										className="cust-input custom-add-select mb-0"
 										placeholder={"Enter code"}
-										maxLength={6}
 										style={{ width: "100%" }}
-										onValueChange={(e) => handleAuthenticatorinputChange(e)} minLength={6}
+										onValueChange={(e) => handleAuthenticatorinputChange(e)} 
 										disabled={authenticator.btnName == 'get_otp' || authenticator.btnName == 'verified'}
 									/>
                                     <div className="new-add c-pointer get-code text-yellow hy-align">
