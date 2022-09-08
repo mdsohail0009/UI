@@ -83,7 +83,7 @@ class OthersBusiness extends Component {
     }
     render() {
         const { isUSDTransfer } = this.props;
-        if (isUSDTransfer) { return <BusinessTransfer amount={this.props?.amount} onContinue={() => this.props.onContinue()} /> }
+        if (isUSDTransfer) { return <BusinessTransfer amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} /> }
         else {
             if (this.state.isLoading) { return <Loader /> }
             return <>
