@@ -210,7 +210,7 @@ class OnthegoFundTransfer extends Component {
                                 className="cust-input "
                                 placeholder={"Enter amount"}
                                 maxLength="20"
-                                decimalScale={8}
+                                decimalScale={2}
                                 displayType="input"
                                 allowNegative={false}
                                 thousandSeparator={","}

@@ -148,6 +148,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             >
                
                 <Input
+                    maxLength={20}
                         className="cust-input"
                         placeholder='Save Whitelist Name As'
                     />
