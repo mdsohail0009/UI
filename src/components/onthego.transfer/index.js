@@ -36,7 +36,7 @@ class OnthegoFundTransfer extends Component {
         codeDetails: { abaRoutingCode: "", swiftRouteBICNumber: "", reasionOfTransfer: "", documents: null },
         selectedPayee: {},
         selectedTab: "domestic",
-        verifyData: null
+        verifyData: null,isBtnLoading:false
     }
     componentDidMount() {
         fetchPayees(this.props.userProfile.id, this.props.selectedCurrency).then((response) => {
@@ -71,6 +71,7 @@ class OnthegoFundTransfer extends Component {
             this.setState({ ...this.state, filterObj: this.state.payees });
     }
     saveWithdrawdata = async () =>{
+        this.setState({...this.state,isBtnLoading:true})
         	if (this.state.verifyData.verifyData.isPhoneVerified) {
         		if (!this.state.verifyData.isPhoneVerification) {
         			this.setState({
@@ -121,10 +122,11 @@ class OnthegoFundTransfer extends Component {
         this.chnageStep(this.state.isNewTransfer ? "declaration" : "successpage")
         this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id))
         this.props.dispatch(fetchMarketCoinData(true))
+        this.setState({...this.state,isBtnLoading:false})
        }else{
         this.setState({
             ...this.state,
-            errorMessage: this.isErrorDispaly(saveRes),
+            errorMessage: this.isErrorDispaly(saveRes),isBtnLoading:false
         });
        }
     }
@@ -606,7 +608,7 @@ class OnthegoFundTransfer extends Component {
                                         size="large"
                                         block
                                         className="pop-btn px-24"
-                                    >
+                                        loading={this.state.isBtnLoading} >
                                         Confirm & Continue
                                     </Button>
                                 </Form.Item>
