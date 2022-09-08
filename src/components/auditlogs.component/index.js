@@ -400,7 +400,7 @@ class AuditLogs extends Component {
             </div>
             <div className="coin-info">
               <Text>Device Version</Text>
-              <Text>{logRowData?.deviceType?.version}</Text>
+              <Text>{logRowData?.deviceType?.version?.replace("null","")}</Text>
             </div></>}
 
         </Drawer>
