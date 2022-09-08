@@ -607,13 +607,13 @@ class OnthegoFundTransfer extends Component {
                         </Col>}
                         {this.state.reviewDetails?.firstName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Beneficiary Name</Title>
+                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">First Name</Title>
                                 <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.firstName}</Title>
                             </div>
                         </Col>}
                         {this.state.reviewDetails?.lastName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Beneficiary Name</Title>
+                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Last Name</Title>
                                 <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.lastName}</Title>
                             </div>
                         </Col>}
