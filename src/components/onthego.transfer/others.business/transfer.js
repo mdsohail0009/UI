@@ -7,7 +7,7 @@ import { validateContentRule } from "../../../utils/custom.validator";
 import ConnectStateProps from "../../../utils/state.connect";
 import AddressDocumnet from "../../addressbook.component/document.upload";
 import { RecipientAddress } from "../../addressbook.v2/recipient.details";
-import { createPayee, payeeAccountObj, savePayee } from "../api";
+import { confirmTransaction, createPayee, payeeAccountObj, savePayee } from "../api";
 import DomesticTransfer from "./domestic.transfer";
 import InternationalTransfer from "./international.transfer";
 const { Option } = Select;
@@ -55,14 +55,18 @@ class BusinessTransfer extends Component {
         _obj.transferType = selectedTab;
         _obj.amount = this.props.amount;
         delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
-        this.setState({...this.state,errorMessage:null,isLoading:false,isBtnLoading:true});
+        this.setState({ ...this.state, errorMessage: null, isLoading: false,isBtnLoading:true });
         const response = await savePayee(_obj);
         if (response.ok) {
-            this.setState({ ...this.state, errorMessage: null, isLoading: false,isBtnLoading:false },()=>{
-                this.props.onContinue(response.data);
-            });
+            const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
+            if (confirmRes.ok) {
+                this.props.onContinue(confirmRes.data);
+                this.setState({ ...this.state, isLoading: false, errorMessage: null,isBtnLoading:false });
+            } else {
+                this.setState({ ...this.state, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false, isBtnLoading: false });
+            }
         } else {
-            this.setState({ ...this.state,details:{...details,...values}, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false,isBtnLoading:false });
+            this.setState({ ...this.state, details: { ...details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false,isBtnLoading:false });
         }
     }
     handleTabChange = (key) => {
@@ -72,9 +76,8 @@ class BusinessTransfer extends Component {
         const { isLoading, details, selectedTab, errorMessage } = this.state;
         return <Tabs className="cust-tabs-fait" onChange={this.handleTabChange} activeKey={selectedTab}>
             <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"}>
-            {errorMessage && <Alert type="error" description={errorMessage} showIcon />}
-               
-                {!isLoading && <Form initialValues={details}
+                {errorMessage && <Alert type="error" description={errorMessage} showIcon />}
+                <Form initialValues={details}
                     className="custom-label  mb-0"
                     ref={this.form}
                     onFinish={this.submitPayee}
@@ -175,7 +178,7 @@ class BusinessTransfer extends Component {
                     {/* <Divider /> */}
                     <DomesticTransfer />
                     <Paragraph className="mb-8 fs-14 text-white fw-500 mt-16">Please upload supporting docs for transaction</Paragraph>
-                    <AddressDocumnet documents={details?.payeeAccountModels[0]?.documents} onDocumentsChange={(docs) => {
+                    <AddressDocumnet documents={null} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
@@ -195,12 +198,11 @@ class BusinessTransfer extends Component {
                             </Col>
                         </Row>
                     </div>
-                </Form>}
-                {isLoading && <Loader />}
+                </Form>
             </Tabs.TabPane>
             <Tabs.TabPane tab="International USD Swift" key={"international"}>
                 {errorMessage && <Alert type="error" description={errorMessage} showIcon />}
-                {!isLoading && <Form initialValues={details}
+                <Form initialValues={details}
                     className="custom-label  mb-0"
                     ref={this.form}
                     onFinish={this.submitPayee}
@@ -266,32 +268,32 @@ class BusinessTransfer extends Component {
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                <Form.Item
-                    className="custom-forminput custom-label mb-0"
-                    name="relation"
-                    label={"Relationship to beneficiary"}
-                    required
-                    rules={[
-                        {
-                            required: true,
-                            message: apiCalls.convertLocalLang("is_required"),
-                        },
-                        {
-                            whitespace: true,
-                            message: apiCalls.convertLocalLang("is_required"),
-                        },
-                        {
-                            validator: validateContentRule,
-                        },
-                    ]}
-                >
-                    <Input
-                        className="cust-input"
-                        placeholder={"Relationship to beneficiary"}
-                    />
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
+                                name="relation"
+                                label={"Relationship to beneficiary"}
+                                required
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        whitespace: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        validator: validateContentRule,
+                                    },
+                                ]}
+                            >
+                                <Input
+                                    className="cust-input"
+                                    placeholder={"Relationship to beneficiary"}
+                                />
 
-                </Form.Item>
-            </Col>
+                            </Form.Item>
+                        </Col>
                         <RecipientAddress />
                     </Row>
 
@@ -299,7 +301,7 @@ class BusinessTransfer extends Component {
                     {/* <Divider /> */}
                     <InternationalTransfer />
                     <Paragraph className="mb-8 fs-14 text-white fw-500 mt-16">Please upload supporting docs for transaction</Paragraph>
-                    <AddressDocumnet documents={details?.payeeAccountModels[0]?.documents} onDocumentsChange={(docs) => {
+                    <AddressDocumnet documents={null} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
@@ -319,8 +321,8 @@ class BusinessTransfer extends Component {
                             </Col>
                         </Row>
                     </div>
-                </Form>}
-                {isLoading && <Loader />}
+                </Form>
+
             </Tabs.TabPane>
         </Tabs>
     }
