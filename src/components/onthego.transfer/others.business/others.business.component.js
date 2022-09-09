@@ -156,7 +156,7 @@ class OthersBusiness extends Component {
                                 />
                             </Form.Item>
                         </Col>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                       {this.props.type!=="manual"&& <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
                                 name="relation"
@@ -182,7 +182,7 @@ class OthersBusiness extends Component {
                                 />
 
                             </Form.Item>
-                        </Col>
+                        </Col>}
                         <RecipientAddress />
                     </Row>
 
@@ -218,7 +218,7 @@ class OthersBusiness extends Component {
                             </Form.Item>
                         </Col>
 
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        {this.props.type !== "manual" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
                                 name="reasonOfTransfer"
@@ -246,7 +246,7 @@ class OthersBusiness extends Component {
                                     onChange={this.handleIbanChange}
                                 />
                             </Form.Item>
-                        </Col>
+                        </Col>}
                     </Row>
                     <div className="box basic-info alert-info-custom mt-16">
                         {Object.keys(this.state.ibanDetails).length !== 0 && <Row>
@@ -271,13 +271,6 @@ class OthersBusiness extends Component {
                                 <div><Text className="fs-14 fw-400 text-purewhite">{this.state?.ibanDetails?.branch || "-"}</Text></div>
 
                             </Col>
-                            {/* <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 ">
-                                    <strong>Branch</strong>
-                                </label>
-                                <div><Text className="fs-14 fw-400 text-purewhite">CHELTENHAM</Text></div>
-
-                            </Col> */}
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                                 <label className="fs-14 fw-400 ">
                                     <strong>Country</strong>
