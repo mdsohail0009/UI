@@ -201,7 +201,7 @@ class OnthegoFundTransfer extends Component {
                             <Form.Item
                                 className="custom-forminput custom-label mb-0 fund-transfer-input"
                                 name="amount"
-                                label={"Enter amount"}
+                                label={"Enter Amount"}
                                 required
                                 rules={[
                                     {
@@ -214,7 +214,7 @@ class OnthegoFundTransfer extends Component {
                                 <NumberFormat
                                     customInput={Input}
                                     className="cust-input "
-                                    placeholder={"Enter amount"}
+                                    placeholder={"Enter Amount"}
                                     maxLength="20"
                                     decimalScale={2}
                                     displayType="input"
