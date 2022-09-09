@@ -320,7 +320,7 @@ class OthersBusiness extends Component {
                             </Col>
                         </Row>}
                     </div>
-                    <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16">Please upload supporting docs for transaction</Paragraph>
+                    <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16">Please upload supporting docs for transaction*</Paragraph>
 
                     <AddressDocumnet documents={null} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
