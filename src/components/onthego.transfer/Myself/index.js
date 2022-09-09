@@ -124,7 +124,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         {errorMessage && <Alert type="error" showIcon closable={false} message={"An error occured"} description={errorMessage} />}
         {!isLoading &&<>
         {currency == 'EUR' && <h2 style={{ fontSize: 18, textAlign: 'center', color: "white" }}>SEPA transfer</h2>}
-        <Row gutter={[16, 16]}><Col xs={24} md={24} lg={24} xl={24} xxl={24} id="favoriteName">
+        <Row gutter={[16, 16]}><Col xs={24} md={24} lg={24} xl={24} xxl={24} id="favoriteName" className="mt-16">
             <Form.Item
                 className="custom-forminput custom-label mb-0"
                 name="favouriteName"
@@ -180,49 +180,37 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     onBlur={(e)=>getBankDeails(e)}/>
                 </Form.Item>
             </Col>}</Row>
-        <h2 style={{ fontSize: 18, color: "white" }} className="mt-16">Recipient's details</h2>
+        <h2 style={{ fontSize: 16, color: "white" }} className="mt-24">Recipient's details</h2>
 
-        <div className="box basic-info alert-info-custom mt-16">
+        <div className="box basic-info alert-info-custom">
             <Row>
                 {!isBusiness && <><Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 ">
-                        <strong>First Name</strong>
-                    </label>
+                    <label className="fs-12 fw-300 "> First Name </label>
                     <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.firstName}</Text></div>
 
                 </Col>
                     <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 ">
-                            <strong>Last Name</strong>
-                        </label>
+                        <label className="fs-12 fw-300 ">Last Name</label>
                         <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.lastName}</Text></div>
 
                     </Col></>}
                 {isBusiness && <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 ">
-                        <strong>Beneficiary Name</strong>
-                    </label>
+                    <label className="fs-12 fw-300 ">Beneficiary Name</label>
                     <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.beneficiaryName}</Text></div>
 
                 </Col>}
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 ">
-                        <strong>Address Line 1</strong>
-                    </label>
+                    <label className="fs-12 fw-300">Address Line 1</label>
                     <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.line1!=null?recipientDetails.line1:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 ">
-                        <strong>Address Line 2</strong>
-                    </label>
+                    <label className="fs-12 fw-300 ">Address Line 2</label>
                     <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.line2!=null?recipientDetails.line2:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 ">
-                        <strong>Address Line 3</strong>
-                    </label>
+                    <label className="fs-12 fw-300 ">Address Line 3</label>
                     <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.line3!=null?recipientDetails.line3:'-'}</Text></div>
 
                 </Col>
@@ -230,7 +218,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             </Row>
         </div>
 
-        <h2 style={{ fontSize: 18, color: "white" }} className="mt-16">Bank details</h2>
+        <h2 style={{ fontSize: 16, color: "white" }} className="mt-16">Bank details</h2>
         {currency == 'EUR' && isBusiness && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
             <Form.Item
                 className="custom-forminput custom-label mb-0"
@@ -364,54 +352,40 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     </Form.Item>
                 </Col></>}
         </Row>
-        {currency == 'EUR' && <div className="box basic-info alert-info-custom mt-16">
+        {currency == 'EUR' && <div className="box basic-info alert-info-custom">
             {bankDetails&&bankDetails?.bankName!=''&&bankDetails?.bankName!=null&&<Row>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                <label className="fs-14 fw-400 ">
-                    <strong>Bank Name</strong>
-                </label>
+                <label className="fs-12 fw-300 ">Bank Name</label>
                 <div><Text className="fs-14 fw-400 text-purewhite">{(bankDetails?.bankName!=''&&bankDetails?.bankName!=null)?bankDetails?.bankName:'-'}</Text></div>
 
             </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 ">
-                        <strong>BIC</strong>
-                    </label>
+                    <label className="fs-12 fw-300 ">BIC</label>
                    <div><Text className="fs-14 fw-400 text-purewhite"> {bankDetails.routingNumber!=''&&bankDetails.routingNumber!=null?bankDetails.routingNumber:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 ">
-                        <strong>Branch</strong>
-                    </label>
+                    <label className="fs-12 fw-300 ">Branch</label>
                     <div><Text className="fs-14 fw-400 text-purewhite">{bankDetails.branch!=''&&bankDetails.branch!=null?bankDetails.branch:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 ">
-                        <strong>Country</strong>
-                    </label>
+                    <label className="fs-12 fw-300 ">Country</label>
                     <div><Text className="fs-14 fw-400 text-purewhite">{bankDetails.country!=''&&bankDetails.country!=null?bankDetails.country:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 ">
-                        <strong>State</strong>
-                    </label>
+                    <label className="fs-12 fw-300">State</label>
                     <div><Text className="fs-14 fw-400 text-purewhite">{bankDetails.state!=''&&bankDetails.state!=null?bankDetails.state:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 ">
-                        <strong>City</strong>
-                    </label>
+                    <label className="fs-12 fw-300">City</label>
                     <div><Text className="fs-14 fw-400 text-purewhite">{(bankDetails.city!=''&&bankDetails.city!=null)?bankDetails.city:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 ">
-                        <strong>Zip</strong>
-                    </label>
+                    <label className="fs-12 fw-300">Zip</label>
                     <div><Text className="fs-14 fw-400 text-purewhite">{(bankDetails.zipCode!=''&&bankDetails.zipCode!=null)?bankDetails.zipCode:'-'}</Text></div>
 
                 </Col></Row>}
