@@ -384,16 +384,28 @@ class PaymentDetails extends Component {
     }
   };
   popOverContent = () => {
-    const { moreBankInfo, tooltipLoad,isloading } = this.state;
+    const { moreBankInfo, tooltipLoad,isloading, currency } = this.state;
     if (!isloading) {
       return <Spin />;
     } else {
       return (
         <div className="more-popover">
-          <Text className="lbl text-white">Bank Label</Text>
-          <Text className="val text-white">{moreBankInfo?.bankLabel}</Text>
-          <Text className="lbl text-white">BIC/SWIFT/Routing Number</Text>
-          <Text className="val text-white">{moreBankInfo?.routingNumber}</Text>
+          {/* <Text className="lbl text-white">Bank Label</Text>
+          <Text className="val text-white">{moreBankInfo?.bankLabel}</Text> */}
+          {this.state.currency == "USD" &&<Text className="lbl text-white">BIC/SWIFT/ABARouting Number</Text>}
+          {this.state.currency == "USD" &&<Text className="val text-white">{moreBankInfo?.routingNumber}</Text>}
+          {this.state.currency == "USD" && <Text className="lbl text-white">Bank Address</Text>}
+          {this.state.currency == "USD" && <Text className="val text-white">{moreBankInfo?.beneficiaryAccountAddress}</Text>}
+          {/* <Text className="lbl text-white">Beneficiary Account Name</Text>
+          <Text className="val text-white">{moreBankInfo?.beneficiaryAccountName}</Text> */}
+          {this.state.currency == "EUR" && <Text className="lbl text-white">Country</Text>}
+          {this.state.currency == "EUR" && <Text className="val text-white">{moreBankInfo?.country}</Text>}
+          {this.state.currency == "EUR" && <Text className="lbl text-white">State</Text>}
+          {this.state.currency == "EUR" &&<Text className="val text-white">{moreBankInfo?.state}</Text>}
+          {this.state.currency == "EUR" &&<Text className="lbl text-white">City</Text>}
+          {this.state.currency == "EUR" &&<Text className="val text-white">{moreBankInfo?.city}</Text>}
+          {this.state.currency == "EUR" &&<Text className="lbl text-white">Postal Code</Text>}
+          {this.state.currency == "EUR" &&<Text className="val text-white">{moreBankInfo?.postalCode}</Text>}
         </div>
       );
     }
