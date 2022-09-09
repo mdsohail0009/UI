@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Typography, Button, Alert, Form, Input, Tooltip, Checkbox } from "antd";
+import { Typography, Button, Alert,Drawer, Form, Input,Modal, Tooltip, Checkbox } from "antd";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import Loader from "../../Shared/loader";
@@ -81,6 +81,7 @@ class WithdrawSummary extends Component {
 		btnLoading: false,
 		agreeRed: true,
 		permissions: {},
+		previewModal:false
 	};
 
 	useDivRef = React.createRef();
@@ -170,9 +171,18 @@ class WithdrawSummary extends Component {
 		this.loadData();
 	};
 	onCancel = () => {
+		debugger
+		this.setState({...this.state,previewModal:true})
 		this.props.dispatch(setWithdrawcrypto(null));
-		this.props.changeStep("step1");
+		//this.props.changeStep('withdraw_crpto_cancel_confirm');
+		//this.props.changeStep("step1");
 	};
+	onModalCancel=()=>{
+		this.setState({...this.state,previewModal:false})
+	}
+	onModalOk=()=>{
+		this.props.changeStep('withdraw_crypto_selected');
+	}
 	handleNewExchangeRate = async () => {
 		this.setState({ ...this.state, loading: true });
 		const { totalValue, walletCode, toWalletAddress } =
@@ -563,7 +573,9 @@ class WithdrawSummary extends Component {
 	address = this.props.sendReceive.withdrawCryptoObj?.toWalletAddress;
 	firstAddress = this.address?.slice(0, 4);
 	lastAddress = this.address?.slice(-4);
+	renderIcon=()=>{
 
+	}
 
 
 	render() {
@@ -991,8 +1003,75 @@ class WithdrawSummary extends Component {
 								className="text-white-30 pop-cancel fw-400"
 							/>
 						</div>
+							<Modal
+								className="documentmodal-width"
+								destroyOnClose={true}
+								title="Confirm"
+								width={350}
+								visible={this.state.previewModal}
+								closeIcon={
+									<Tooltip title="Close">
+										<span
+											className="icon md close-white c-pointer"
+
+											onClick={() => this.onModalCancel()}
+										/>
+									</Tooltip>
+								}
+								footer={
+									<>
+										<Button
+											className="pop-btn px-36"
+											style={{ margin: "0 8px" }}
+											onClick={() => this.onModalCancel()}
+
+										>
+											No
+										</Button>
+										<Button
+											className="pop-btn px-36"
+											style={{ margin: "0 8px" }}
+											onClick={() => this.onModalOk()}
+										>
+											Yes
+										</Button>
+									</>
+								}>
+									<div style={{color:"white"}}>
+								Are you sure you want to cancel?
+								Your address details will not be saved
+								</div>
+							</Modal>
+		{/* <Drawer
+                        destroyOnClose={true}
+                        title={[
+                            <div >
+                               
+                                <div className="text-center fs-16">
+                                    
+									<div>
+									Are you sure you want to cancel?
+									Your address details will not be saved
+									</div>
+									<span
+										onClick={() => this.onModalCancel()}
+										className="icon md close-white c-pointer"
+									/>
+                                </div>
+                                
+                            </div>,
+                        ]}
+                        placement="right"
+                        closable={true}
+                        visible={this.state.previewModal}
+                        closeIcon={null}
+                        className="side-drawer w-50p">
+                        
+                    </Drawer> */}
+					
 					</div>
 				)}
+				
 			</>
 		);
 	}

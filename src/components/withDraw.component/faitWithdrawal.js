@@ -286,12 +286,12 @@ const FaitWithdrawal = ({ props,
     } else {
       setAgreeRed(true);
       let totalamountVal = (typeof values.totalValue === "string")? values.totalValue.replace(/,/g, ""): values.totalValue
-      if (parseFloat(totalamountVal) > parseFloat(selectedWallet?.avilable)) {
-        useDivRef.current.scrollIntoView();
-        setBtnDisabled(false)
-        setLoading(false);
-        return setErrorMsg(apicalls.convertLocalLang("insufficient_balance"));
-      }
+      // if (parseFloat(totalamountVal) > parseFloat(selectedWallet?.avilable)) {
+      //   useDivRef.current.scrollIntoView();
+      //   setBtnDisabled(false)
+      //   setLoading(false);
+      //   return setErrorMsg(apicalls.convertLocalLang("insufficient_balance"));
+      // }
       if (
         parseFloat(
           typeof values.totalValue === "string"
@@ -488,7 +488,7 @@ const FaitWithdrawal = ({ props,
     const _types = {
       step1: (
         <>
-          <div className="suisfiat-height auto-scroll" style={{ marginTop: "10px" }}>
+          <div className="suisfiat-height suissefait-custome-alert auto-scroll" style={{ marginTop: "10px" }}>
             <div ref={useDivRef}></div>
             {isVerificationLoading && <Loader />}
             {errorMsg !== null && (

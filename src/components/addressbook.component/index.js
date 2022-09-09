@@ -26,7 +26,7 @@ import ActionsToolbar from "../toolbar.component/actions.toolbar";
 import { fetchFeaturePermissions, setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 import { getFeatureId } from "../shared/permissions/permissionService";
 import {setCurrentAction} from '../../reducers/actionsReducer'
-import {getFeaturePermissionsByKeyName} from '../shared/permissions/permissionService'
+import AddressBookV2 from "../addressbook.v2/fiat.address";
 
 const { Paragraph, Text } = Typography;
 
@@ -59,7 +59,6 @@ class AddressBook extends Component {
 
 			gridUrlCrypto: process.env.REACT_APP_GRID_API + "Address/Crypto",
 			gridUrlFiat: process.env.REACT_APP_GRID_API + "Address/Fiat",
-			isLoadPermissions:false,
 		};
 		this.gridFiatRef = React.createRef();
 		this.gridCryptoRef = React.createRef();
@@ -67,12 +66,6 @@ class AddressBook extends Component {
 		this.props.dispatch(setSelectedFeatureMenu(getFeatureId("/addressBook"),this.props.userConfig.id));
 	}
 	componentDidMount() {
-		
-		this.loadAddressbook()
-	}
-	loadAddressbook = () =>{
-		getFeaturePermissionsByKeyName('addressbook');
-		this.setState({...this.state,isLoadPermissions:false})
 		this.permissionsInterval = setInterval(this.loadPermissions, 200);
 			if (!this.state.cryptoFiat) {
 				apiCalls.trackEvent({
@@ -100,6 +93,7 @@ class AddressBook extends Component {
 				});
 			}
 
+		
 	}
 
 	loadPermissions = () => {
@@ -110,13 +104,9 @@ class AddressBook extends Component {
 			for (let action of this.props.addressBookPermissions?.actions) {
 				_permissions[action.permissionName] = action.values;
 			}
-			this.setState({ ...this.state, permissions: _permissions, isLoadPermissions:true });
+			this.setState({ ...this.state, permissions: _permissions });
 			if(!this.state.permissions?.view&&!this.state.permissions?.View) {
 				this.props.history.push("/accessdenied");
-			}
-			let viewPermission = this.props.addressBookPermissions.actions.filter((item) => item.permissionName == 'view')[0];
-			if (!viewPermission.values) {
-				this.props.history.push('/accessdenied')
 			}
 		}
 	}
@@ -657,7 +647,8 @@ class AddressBook extends Component {
 		const stepcodes = {
 			cryptoaddressbook: (<>
 				 {/* <NewAddressBook onCancel={() => this.closeBuyDrawer()} /> */}
-				<AddressCommonCom onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1}/>
+				{/* <AddressCommonCom onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1}/> */}
+				<AddressBookV2 type="addressbook" />
 				</>
 			),
 			selectcrypto: <SelectCrypto />,
@@ -699,11 +690,9 @@ class AddressBook extends Component {
 	  };
 
 	render() {
-		const { cryptoFiat, gridUrlCrypto, gridUrlFiat, customerId, btnDisabled, isLoadPermissions } =
+		const { cryptoFiat, gridUrlCrypto, gridUrlFiat, customerId, btnDisabled } =
 			this.state;
-		if((!this.props.addressBookPermissions )&& isLoadPermissions){
-			this.loadAddressbook()
-		}
+
 		return (
 			<>
 				<div className="box basic-info">
@@ -941,7 +930,7 @@ const connectStateToProps = ({ addressBookReducer, userConfig, oidc, menuItems, 
 		userConfig: userConfig.userProfileInfo,
 		oidc,
 		trackLogs: userConfig.trackAuditLogData,
-		addressBookPermissions: menuItems?.featurePermissions.addressbook,
+		addressBookPermissions: menuItems?.featurePermissions.addressBook,
 	};
 };
 const connectDispatchToProps = (dispatch) => {
