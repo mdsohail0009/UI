@@ -61,10 +61,10 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         saveObj.transferType=currency=='EUR'?'sepa':addressOptions.tabType;
         saveObj.payeeAccountModels[0].currencyType='fiat';
         saveObj.payeeAccountModels[0].walletCode=currency;
-        saveObj.amount=onTheGoObj.amount;
+        saveObj.amount=onTheGoObj?.amount;
         const response = await apiCalls.saveTransferData(saveObj);
         if (response.ok) {
-            const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: onTheGoObj.amount, reasonOfTransfer: null })
+            const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: onTheGoObj?.amount, reasonOfTransfer: null })
             if (confirmRes.ok) {
                 setBtnLoading(false);
                 props.onContinue(confirmRes.data);
@@ -113,7 +113,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
        <> {currency === "USD" && <>
             <Row gutter={[16, 16]}>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
-                    <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });form.resetFields() }}>
+                    <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });form.resetFields();seterrorMessage(null) }}>
                         <Tabs.TabPane tab="Domestic USD Transfer" className="text-white"  key={"domestic"}></Tabs.TabPane>
                         <Tabs.TabPane tab="International USD Swift" className="text-white" key={"international"}></Tabs.TabPane>
                     </Tabs>

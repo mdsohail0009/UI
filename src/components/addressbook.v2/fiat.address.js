@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Input, Row, Col, Form, Button, Typography, List, Divider, Image, Select, Tabs, Alert } from 'antd';
+import { Input, Row, Col, Form, Button, Typography, List, Divider, Image, Select, Tabs, Alert,Empty } from 'antd';
 import apicalls from "../../api/apiCalls";
 import AddressDocumnet from "../addressbook.component/document.upload";
 import oops from '../../assets/images/oops.png'
@@ -13,6 +13,9 @@ import Loader from "../../Shared/loader";
 import Search from "antd/lib/input/Search";
 import Verifications from "../onthego.transfer/verification.component/verifications"
 import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboardReducer';
+import {fetchMemberWallets} from '../dashboard.component/api'
+import Translate from 'react-translate-component';
+import { Link } from 'react-router-dom';
 
 const { Text, Title } = Typography;
 
@@ -21,7 +24,7 @@ class AddressBookV2 extends Component {
     reasonForm = React.createRef();
     reviewScrool = React.createRef();
     state = {
-        step: "newtransfer",
+        step: "currencySelection",
         filterObj: [],
         addressOptions: { addressType: "myself", transferType: this.props.selectedCurrency === "EUR" ? "sepa" : "domestic" },
         isNewTransfer: false,
@@ -36,7 +39,7 @@ class AddressBookV2 extends Component {
         codeDetails: { abaRoutingCode: "", swiftRouteBICNumber: "", reasionOfTransfer: "", documents: null },
         selectedPayee: {},
         selectedTab: "domestic",
-        verifyData: null, isBtnLoading: false
+        verifyData: null, isBtnLoading: false,loader:true,currency:null
     }
     componentDidMount() {
         fetchPayees(this.props.userProfile.id, this.props.selectedCurrency).then((response) => {
@@ -47,6 +50,11 @@ class AddressBookV2 extends Component {
         fetchPastPayees(this.props.userProfile.id, this.props.selectedCurrency).then((response) => {
             if (response.ok) {
                 this.setState({ ...this.state, pastPayees: response.data });
+            }
+        });
+        fetchMemberWallets(this.props.userProfile.id).then((response) => {
+            if (response.ok) {
+                this.setState({ ...this.state, coinListData: response.data,loader:false });
             }
         });
     }
@@ -179,9 +187,43 @@ class AddressBookV2 extends Component {
         }
 
     }
+    selectItem=(item)=>{
+        this.setState({...this.state,currency:item.walletCode},()=>
+            {this.chnageStep('newtransfer')}
+        )
+    }
     renderStep = (step) => {
-        const { filterObj, pastPayees, payeesLoading } = this.state;
+        const { filterObj, pastPayees, payeesLoading,coinListData,loader } = this.state;
         const steps = {
+            currencySelection: <React.Fragment>
+                <List
+                    itemLayout="horizontal"
+                    dataSource={coinListData}
+                    className="crypto-list auto-scroll wallet-list c-pointer"
+                    loading={loader ? loader : false}
+                    locale={{
+                        emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
+                            <Translate content="No_data" />
+                        } />
+                    }}
+                    renderItem={item => (
+
+                        <List.Item  onClick={() => this.selectItem(item)}>
+                            <Link>
+                                <List.Item.Meta
+                                    avatar={<Image preview={false} src={item.imagePath} />}
+
+                                    title={<div className="wallet-title">{item.walletCode}</div>}
+                                />
+                                <><div className="text-right coin-typo">
+                                    {item.amount !== 0 && <NumberFormat value={item.amount} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={item.walletCode=='USD'?'$':'€'} renderText={(value, props) => <div {...props} >{value}</div>} />}
+                                 
+                                </div></>
+                            </Link>
+                        </List.Item>
+                    )}
+                />
+            </React.Fragment>,
             reviewdetails: <React.Fragment>
                 <div ref={this.reviewScrool}></div>
                 <div className="mb-16 text-left">
@@ -321,7 +363,7 @@ class AddressBookV2 extends Component {
                 </Form>
             </React.Fragment>,
             newtransfer: <>
-                <FiatAddress currency={this.props.selectedCurrency} amount={this.state.amount} onContinue={(obj) => {
+                <FiatAddress currency={this.props.selectedCurrency||this.state.currency} amount={this.state.amount} onContinue={(obj) => {
                     this.setState({ ...this.state, reviewDetails: obj }, () => {
                         this.chnageStep("reviewdetails")
                     })
