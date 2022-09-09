@@ -472,7 +472,7 @@ class AddressBook extends Component {
 		}
 	};
 	addAddressBook = () => {
-		if (this.state.cryptoFiat) {
+		if (!this.state.cryptoFiat) {
 			this.setState({ ...this.state, fiatDrawer: true,errorWorning: null,selection: [],
 				isCheck: false, });
 			if (!this.state.fiatDrawer) {
