@@ -180,7 +180,8 @@ class NotificationScreen extends Component {
                                     mode="multiple"
                                     className={item.isAction ? "cust-input multi-select custom-notify":"cust-input-light"}
                                     style={{ width: "350px",marginBottom: "-17px"}}
-                                    placeholder="Select Notification Type"
+                                   // placeholder="Select Notification Type"
+                                   placeholder={<div className={!item.isAction &&"cust-light"}>Select Notification Type</div>} 
                                     optionFilterProp="children"
                                     onChange={(e) => this.handleChange(e, item)}
                                     value={item.selectedtypes}

@@ -1368,3 +1368,4 @@ input[type=number]::-webkit-outer-spin-button {
 .pay-grid .ant-table-body{height: 450px;}
 td.ant-table-column-sort{background: transparent;}
 .ant-table-thead th.ant-table-column-sort{background: var(--bgDarkGrey);}
+.cust-light{color: #6e6e74;}
