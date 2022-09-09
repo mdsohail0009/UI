@@ -18,6 +18,7 @@ import SelectCrypto from "../addressbook.component/selectCrypto";
 import apiCalls from "../../api/apiCalls";
 import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
 import Loader from '../../Shared/loader';
+import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService';
 
 const { Paragraph, Text } = Typography;
 
@@ -75,6 +76,7 @@ class CryptoWithDrawWallet extends Component {
         else {
             this.setState({ ...this.state, isVerificationMethodsChecked: isVerified });
         }
+        getFeaturePermissionsByKeyName(`sendreceivecrypto`)
         this.trackevent();
     }
     trackevent = () => {
