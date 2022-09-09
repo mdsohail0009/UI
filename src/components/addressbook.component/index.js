@@ -131,15 +131,15 @@ class AddressBook extends Component {
 			),
 		},
 		{
-
-			field: "favouriteName",
-			title: apiCalls.convertLocalLang("favorite_name"),
+			
+			field: "whiteListName",
+			title: "Whitelist Name",
 			filter: true,
 			width: 300,
 			customCell: (props) => (
 				<td>
 					<div className="gridLink" onClick={() => this.addressFiatView(props)}>
-						{props.dataItem.favouriteName}
+						{props.dataItem.whiteListName}
 					</div>
 					<Text className="file-label ml-8 fs-12">
 						{this.addressTypeNames(props?.dataItem?.addressType)}
@@ -147,14 +147,14 @@ class AddressBook extends Component {
 				</td>
 			),
 		},
-		{
-
-			field: "addressLable",
-			title: apiCalls.convertLocalLang("bank_label"),
-			filter: true,
-			filter: true,
-			width: 230,
-		},
+		// {
+			
+		// 	field: "addressLable",
+		// 	title: apiCalls.convertLocalLang("bank_label"),
+		// 	filter: true,
+		// 	filter: true,
+		// 	width: 230,
+		// },
 		{
 			field: "currency",
 			title: apiCalls.convertLocalLang("currency"),
@@ -170,9 +170,9 @@ class AddressBook extends Component {
 		},
 		{
 			field: "routingNumber",
-			title: apiCalls.convertLocalLang("BIC_SWIFT_routing_number"),
+			title: "BIC/SWIFT/ABARouting Number",
 			filter: true,
-			width: 250,
+			width: 270,
 		},
 		{
 			field: "bankName",
