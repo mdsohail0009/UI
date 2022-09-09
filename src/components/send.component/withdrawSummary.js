@@ -755,7 +755,7 @@ class WithdrawSummary extends Component {
 							form={this.form}
 							onFinish={this.saveWithdrwal}>
 							{this.state.permissions?.withdraw && this.state.verifyData.isPhoneVerified == true && (
-								<Text className="fs-14 mb-8 text-white d-block fw-200">
+								<Text className="text-upper fw-600 mb-4 text-white-50 pt-16">
 									Phone verification code *
 								</Text>
 							)}
@@ -903,7 +903,7 @@ class WithdrawSummary extends Component {
 								</Form.Item>
 							)}
 							{this.state.permissions?.withdraw && this.state.verifyData.twoFactorEnabled == true && (
-								<Text className="fs-14 mb-8 text-white d-block fw-200">
+								<Text className="text-upper fw-600 mb-4 text-white-50 pt-16">
 									Authenticator Code *
 								</Text>
 							)}

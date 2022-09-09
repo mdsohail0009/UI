@@ -468,7 +468,7 @@ const Verification = (props) => {
 							</Form.Item>
 						 )} 
                         	{verifyData.isPhoneVerified == true && (
-							<Text className="fs-14 mb-8 text-white d-block fw-200">
+							<Text className="text-upper fw-600 mb-4 text-white-50 pt-16">
 								Phone verification code *
 							</Text>
 						 )} 
@@ -561,7 +561,7 @@ const Verification = (props) => {
 
 						)} 
                         {verifyData.twoFactorEnabled == true && (
-							<Text className="fs-14 mb-8 text-white d-block fw-200">
+							<Text className="text-upper fw-600 mb-4 text-white-50 pt-16">
 								Authenticator Code *
 							</Text>
 						 )} 

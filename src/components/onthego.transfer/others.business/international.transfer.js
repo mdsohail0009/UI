@@ -169,7 +169,7 @@ class InternationalTransfer extends Component {
             </Col>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="custom-forminput custom-label mb-0"
+                    className="text-upper fw-600 mb-4 text-white-50 pt-16 custom-forminput custom-label"
                     name="reasonOfTransfer"
                     required
                     rules={[

@@ -220,7 +220,7 @@ class OthersBusiness extends Component {
 
                         {this.props.type !== "manual" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="text-upper fw-600 mb-4 text-white-50 pt-16 custom-forminput custom-label"
                                 name="reasonOfTransfer"
                                 required
                                 rules={[

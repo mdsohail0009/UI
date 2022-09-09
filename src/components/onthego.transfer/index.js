@@ -186,7 +186,7 @@ class OnthegoFundTransfer extends Component {
             enteramount: <>
                 <div className="mb-16 text-left">
                     <text Paragraph
-                        className='text-white fs-30 fw-600 px-4 '>Transfer funds</text>
+                        className='fs-24 fw-600 text-white px-4 mb-16 mt-4'>Transfer funds</text>
                 </div>
                 <Form
                     autoComplete="off"
@@ -199,7 +199,7 @@ class OnthegoFundTransfer extends Component {
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0 fund-transfer-input"
+                                className="text-upper fw-600 mb-4 text-white-50 pt-16 custom-forminput custom-label fund-transfer-input"
                                 name="amount"
                                 label={"Enter Amount"}
                                 required
@@ -276,13 +276,13 @@ class OnthegoFundTransfer extends Component {
                 {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
                 <div className="mb-16 text-left">
                     <text Paragraph
-                        className='text-white fs-30 fw-600 px-4 '>Who are you sending money to?</text>
+                        className='fs-24 fw-600 text-white px-4 mb-16 mt-4'>Who are you sending money to?</text>
                 </div>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 
-                    <Form.Item
+                    {/* <Form.Item
                         name="lastName"
-                        label={"Search for Payee"}
+                        // label={"Search for Payee"}
                     >
                         <Search
                             placeholder="Search Payee" bordered={false} showSearch
@@ -290,12 +290,13 @@ class OnthegoFundTransfer extends Component {
                             onChange={this.handleSearch}
                             value={this.state.searchVal}
                         />
-                    </Form.Item>
+                    </Form.Item> */}
+                     <Search placeholder="Search for Payee" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="mt-12" />
                 </Col>
                 {this.state?.loading && <Loader />}
                 {(filterObj.length > 0) && (!this.state.loading) && <>
-                    <Title className="fs-24 fw-600 text-white mt-24">Address Book</Title>
-                    <Divider className="cust-divide" />
+                    <Title className="fs-24 fw-600 text-white px-4 mb-16 mt-16">Address Book</Title>
+                    {/* <Divider className="cust-divide" /> */}
 
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                         {filterObj?.map((item, idx) =>
@@ -314,12 +315,12 @@ class OnthegoFundTransfer extends Component {
                             }}>
                                 <Col xs={2} md={2} lg={2} xl={3} xxl={3} className="mb-16"><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
                                 <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="mb-16 small-text-align">
-                                    <label className="fs-16 fw-400 text-purewhite">
-                                        <strong>{item.name}
+                                    <label className="fs-16 fw-600 text-upper text-white-30 l-height-normal">
+                                       {item.name}
                                             {/* <small>{item.type}</small> */}
-                                        </strong>
+                                        
                                     </label>
-                                   {item.accountNumber&& <div><Text className="fs-14 fw-400 text-purewhite">{this.props.selectedCurrency} acc ending in {item.accountNumber.substr(item.accountNumber.length - 4)}</Text></div>}
+                                   {item.accountNumber&& <div><Text className="fs-16 text-white-30 m-0">{this.props.selectedCurrency} acc ending in {item.accountNumber.substr(item.accountNumber.length - 4)}</Text></div>}
                                 </Col>
                                 <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white"></span>
@@ -328,8 +329,8 @@ class OnthegoFundTransfer extends Component {
                         )}
                     </ul>
 
-                    <Title className="fs-24 fw-600 text-white">Past Recipients</Title>
-                    <Divider className="cust-divide" />
+                    <Title className="fs-24 fw-600 text-white px-4 mb-16 mt-16">Past Recipients</Title>
+                    {/* <Divider className="cust-divide" /> */}
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                         {pastPayees?.map((item, idx) =>
                             <Row className="fund-border c-pointer" onClick={async () => {
@@ -347,12 +348,12 @@ class OnthegoFundTransfer extends Component {
                             }}>
                                 <Col xs={2} md={2} lg={2} xl={3} xxl={3} className="mb-16"><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
                                 <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="mb-16 small-text-align">
-                                    <label className="fs-16 fw-400 text-purewhite">
-                                        <strong>{item.name}
+                                    <label className="fs-16 fw-600 text-upper text-white-30 l-height-normal">
+                                        {item.name}
                                             {/* <small>{item.type}</small> */}
-                                        </strong>
+                                       
                                     </label>
-                                    <div><Text className="fs-14 fw-400 text-purewhite">{this.props.selectedCurrency} acc ending in {item.accountNumber.substr(item.accountNumber.length - 4)}</Text></div>
+                                    <div><Text className="fs-16 text-white-30 m-0">{this.props.selectedCurrency} acc ending in {item.accountNumber.substr(item.accountNumber.length - 4)}</Text></div>
                                 </Col>
                                 <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white"></span>
@@ -372,7 +373,7 @@ class OnthegoFundTransfer extends Component {
             reasonfortransfer: <React.Fragment>
                 <div className="mb-16 text-left">
                     <text Paragraph
-                        className='text-white fs-30 fw-600 px-4 '>Transfer Details</text>
+                        className='fs-24 fw-600 text-white px-4 mb-16 mt-4 '>Transfer Details</text>
                 </div>
                 <Form
                     autoComplete="off"
@@ -383,7 +384,7 @@ class OnthegoFundTransfer extends Component {
                     <React.Fragment><Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="text-upper fw-600 mb-4 text-white-50 pt-16 custom-forminput custom-label"
                                 name="reasionOfTransfer"
                                 label={"Reason for transfer"}
                                 required
@@ -463,16 +464,16 @@ class OnthegoFundTransfer extends Component {
                         </Tabs.TabPane>
                     </Tabs>} */}
                     <Row gutter={[16, 16]}>
-                        <Col xs={24} md={6} lg={6} xl={6} xxl={6}></Col>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                            <br />
+                        {/* <Col xs={24} md={6} lg={6} xl={6} xxl={6}></Col> */}
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                           
                             <Form.Item className="text-center">
                                 <Button
                                     htmlType="button"
                                     size="large"
-                                    className="pop-btn mb-36"
+                                    className="pop-btn mb-36 mt-36"
                                     loading={this.state.loading}
-                                    style={{ minWidth: 300 }}
+                                    style={{width: '100% '}}
                                     onClick={() => {
                                         let validateFileds = [];
                                         // if (this.props.selectedCurrency === "USD") {
@@ -515,7 +516,7 @@ class OnthegoFundTransfer extends Component {
                                 </Button>
                             </Form.Item>
                         </Col>
-                        <Col xs={24} md={6} lg={6} xl={6} xxl={6}></Col>
+                        {/* <Col xs={24} md={6} lg={6} xl={6} xxl={6}></Col> */}
                     </Row>
                 </Form>
             </React.Fragment>,
@@ -523,7 +524,7 @@ class OnthegoFundTransfer extends Component {
                 <div ref={this.reviewScrool}></div>
                 <div className="mb-16 text-left">
                     <text Paragraph
-                        className='text-white fs-30 fw-600 px-4 '>Review Details Of Transfer</text>
+                        className='fs-24 fw-600 text-white px-4 mb-16 mt-4'>Review Details Of Transfer</text>
                 </div>
                 <Form
                     name="advanced_search"
@@ -536,8 +537,8 @@ class OnthegoFundTransfer extends Component {
 
                     <Row gutter={24}>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Text className="mb-8 fs-14 text-white fw-500 text-upper mt-16">Transfer details</Text>
+                            <div className="d-flex justify-content" style={{ alignItems: 'baseline' }}>
+                                <Text className="fs-24 fw-600 text-white mt-4">Transfer details</Text>
 
                                 {/* <div><Link >Edit
                                 </Link>
@@ -546,48 +547,48 @@ class OnthegoFundTransfer extends Component {
                         </Col>
                         {"  "}
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper mt-16">How much you will receive</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper mt-16  text-right">
+                            <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
+                                <Title className="fs-14 text-white fw-400 text-captz ">How much you will receive</Title>
+                                <Title className="fs-14 text-white fw-500 text-upper text-right">
                                     <NumberFormat
                                         value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
                                         thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Total fees</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right"><NumberFormat
+                            <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
+                                <Title className="fs-14 text-white fw-400 text-captz">Total fees</Title>
+                                <Title className="fs-14 fw-500 text-white-50 text-upper text-right"><NumberFormat
                                     value={`${(this.state.reviewDetails?.comission)}`}
                                     thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
                             </div>
                         </Col>
                         {/* <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Total we will convert</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right"></Title>
+                            <div className="" style={{ alignItems: 'baseline' }}>
+                                <Title className="fs-10 text-white fw-400 text-upper ">Total we will convert</Title>
+                                <Title className="fs-10 text-white fw-500 text-upper  text-right"></Title>
                             </div>
                         </Col> */}
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Withdrawal amount</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right"><NumberFormat
+                            <div className=" pay-list py-4" style={{ alignItems: 'baseline' }}>
+                                <Title className="fs-14 text-white fw-400 text-captz">Withdrawal amount</Title>
+                                <Title className="fs-14 fw-500 text-white-50 text-right text-upper"><NumberFormat
                                     value={`${(this.state.reviewDetails?.requestedAmount)}`}
                                     thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
                             </div>
                         </Col>
                         {/* <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Description</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">Bike</Title>
+                            <div className="" style={{ alignItems: 'baseline' }}>
+                                <Title className="fs-10 text-white fw-400 text-upper ">Description</Title>
+                                <Title className="fs-10 text-white fw-500 text-upper  text-right">Bike</Title>
                             </div>
                         </Col> */}
                     </Row>
 
                     <Row gutter={24} className=" text-white mt-36">
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24} >
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Text className="mb-8 fs-14 text-white fw-500 text-upper mt-16">Recipient details</Text>
+                            <div className="d-flex justify-content" style={{ alignItems: 'baseline' }}>
+                                <Text className="fs-24 fw-600 text-white mb-0 mt-4">Recipient details</Text>
 
                                 {/* <div><Link >Change
                                 </Link>
@@ -595,45 +596,45 @@ class OnthegoFundTransfer extends Component {
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper mt-16">Save Whitelist name as</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper mt-16  text-right">{this.state.reviewDetails?.favouriteName}</Title>
+                            <div className=" pay-list py-4" style={{ alignItems: 'baseline' }}>
+                                <Title className="fs-14 text-white fw-400 text-captz">Save Whitelist name as</Title>
+                                <Title className="fs-14 fw-500 text-white-50 text-right text-upper">{this.state.reviewDetails?.favouriteName}</Title>
                             </div>
                         </Col>
                         {this.state.reviewDetails?.name && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Beneficiary Name</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.name}</Title>
+                            <div className=" pay-list py-4" style={{ alignItems: 'baseline' }}>
+                                <Title className="fs-14 text-white fw-400 text-captz">Beneficiary Name</Title>
+                                <Title className="fs-14 fw-500 text-white-50 text-right text-upper">{this.state.reviewDetails?.name}</Title>
                             </div>
                         </Col>}
                         {this.state.reviewDetails?.firstName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">First Name</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.firstName}</Title>
+                            <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
+                                <Title className="fs-14 text-white fw-400 text-captz">First Name</Title>
+                                <Title className="fs-14 fw-500 text-white-50 text-upper text-right">{this.state.reviewDetails?.firstName}</Title>
                             </div>
                         </Col>}
                         {this.state.reviewDetails?.lastName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Last Name</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.lastName}</Title>
+                            <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
+                                <Title className="fs-14 text-white fw-400 text-captz">Last Name</Title>
+                                <Title className="fs-14 fw-500 text-white-50 text-upper  text-right">{this.state.reviewDetails?.lastName}</Title>
                             </div>
                         </Col>}
                         {this.state.reviewDetails?.iban && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">IBAN </Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.iban}</Title>
+                            <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
+                                <Title className="fs-14 text-white fw-400 text-captz">IBAN </Title>
+                                <Title className="fs-14 fw-500 text-white-50 text-upper text-right">{this.state.reviewDetails?.iban}</Title>
                             </div>
                         </Col>}
                         {this.state.reviewDetails?.customerRemarks && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Reason for transfer </Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
+                            <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
+                                <Title className="fs-14 text-white fw-400 text-captz">Reason for transfer </Title>
+                                <Title className="fs-14 fw-500 text-white-50 text-upper text-right">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
                             </div>
                         </Col>}
                         {this.state.reviewDetails?.bankName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Bank Name </Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state?.reviewDetails?.bankName || "-"}</Title>
+                            <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
+                                <Title className="fs-14 text-white fw-400 text-captz">Bank Name </Title>
+                                <Title className="fs-14 fw-500 text-white-50 text-upper text-right">{this.state?.reviewDetails?.bankName || "-"}</Title>
                             </div>
                         </Col>}
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>

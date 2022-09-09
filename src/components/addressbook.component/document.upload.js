@@ -44,7 +44,7 @@ class AddressDocumnet extends Component {
             <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="text-left">
                 <div className='mb-24'>
                     <Paragraph
-                        className="mb-16 fs-14 text-white fw-500"
+                        className="mt-16 fs-14 text-white fw-500 mb-0"
                     >{this.props.title}</Paragraph>
                     <Form.Item name={"files"} required rules={[{
                         validator:(_,value)=>{
