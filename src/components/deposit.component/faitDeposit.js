@@ -14,6 +14,7 @@ import Loader from '../../Shared/loader';
 import success from '../../assets/images/success.png';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import apicalls from '../../api/apiCalls';
+import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 
 const LinkValue = (props) => {
   return (
@@ -56,7 +57,7 @@ class FaitDeposit extends Component {
         this.handlFiatDep(this.props.depositInfo?.depositCurrency, this.props.depositInfo?.currenciesWithBankInfo)
       }
     }
-
+    getFeaturePermissionsByKeyName(`sendreceivefiat`);
   }
   clearfiatValues = () => {
     this.props.fetchCurrencyWithBankDetails()
@@ -116,6 +117,19 @@ class FaitDeposit extends Component {
       }
     }
   }
+  isErrorDispaly = (objValue) => {
+    debugger
+    if (objValue.data && typeof objValue.data === "string") {
+      return objValue.data;
+    } else if (
+      objValue.originalError &&
+      typeof objValue.originalError.message === "string"
+    ) {
+      return objValue.originalError.message;
+    } else {
+      return "Something went wrong please try again!";
+    }
+  };
   handlFiatDep = async (e, currencyLu) => {
     let { depObj } = this.state;
     depObj.currency = e;
@@ -124,21 +138,26 @@ class FaitDeposit extends Component {
     for (var k in currencyLu) {
       if (currencyLu[k].walletCode === e) {
         if (currencyLu[k].bankDetailModel?.length === 1) {
+          debugger
           this.setState({ ...this.state, Loader: true })
           let reqdepositObj = await requestDepositFiat(currencyLu[k].bankDetailModel[0].bankId, this.props.member?.id);
           if (reqdepositObj.ok === true) {
             this.setState({
               ...this.state, fiatDepEur: e === "EUR", BankInfo: reqdepositObj.data, BankDetails: [], depObj: depObj, Loader: false, isTermsAgreed: false
             });
+          }else{
+            this.setState({
+              ...this.state,  Loader: false,errorMessage:this.isErrorDispaly(reqdepositObj)
+            });
           }
         } else {
           this.setState({
-            ...this.state, fiatDepEur: e === "EUR", BankDetails: currencyLu[k].bankDetailModel, BankInfo: null, depObj: depObj, isTermsAgreed: false
+            ...this.state, fiatDepEur: e === "EUR", BankDetails: currencyLu[k].bankDetailModel, BankInfo: null, depObj: depObj, isTermsAgreed: false, Loader: false,
           });
         }
       }
     }
-    this.formRef.current.setFieldsValue({ ...depObj })
+    this.formRef.current?.setFieldsValue({ ...depObj })
   }
   handlebankName = async (e) => {
     let { depObj } = this.state;
@@ -152,6 +171,8 @@ class FaitDeposit extends Component {
           this.setState({
             ...this.state, fiatDepEur: e === "EUR", BankInfo: reqdepositObj.data, depObj: depObj, bankLoader: false, isTermsAgreed: false
           });
+        }else{
+          this.setState({ ...this.state, bankLoader: false })
         }
       }
     }
@@ -224,7 +245,7 @@ class FaitDeposit extends Component {
           : <> {this.state.Loader && <Loader />}
 
             {!this.state.Loader && <Form layout="vertical" initialValues={{ ...depObj }} ref={this.formRef} onFinish={(values) => this.ConfirmDeposit(values)}><div className="suisfiat-container auto-scroll"><div ref={this.myRef}></div>
-              {this.state?.errorMessage !== null && this.state?.errorMessage !== '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="info" message="" description={this.state?.errorMessage} closable />}
+              {this.state?.errorMessage !== null && this.state?.errorMessage !== '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="error" message="" description={this.state?.errorMessage} closable />}
               {!this.state.showSuccessMsg && <Translate
                 className="mb-0 text-white-30 fs-14 fw-200 mt-16"
                 content="desposite_text"
@@ -276,7 +297,7 @@ class FaitDeposit extends Component {
                       component={Text}
                     />
                     <Translate
-                      className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                      className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24"
                       content="signature_bank"
                       component={Text}
                       with={{ value: BankInfo.accountName }} />
@@ -286,7 +307,7 @@ class FaitDeposit extends Component {
                       component={Text}
                     />
                     <Translate
-                      className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                      className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24"
                       content="signature_bank"
                       component={Text}
                       with={{ value: BankInfo.accountAddress }} />
@@ -297,10 +318,10 @@ class FaitDeposit extends Component {
                     {BankInfo.currencyCode == "USD" &&   <Text className="text-white-30 fs-14">Beneficiary Account No. </Text> }
                     {BankInfo.currencyCode == "EUR" &&   <Text className="text-white-30 fs-14">Beneficiary IBAN No. </Text> }
                     <CopyToClipboard text={BankInfo.accountNumber} options={{ format: 'text/plain' }}>
-                    <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="mb-0 fs-14 text-yellow fw-500" >{BankInfo.accountNumber}</Text>
+                    <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="mb-0 fs-18 fw-400 text-yellow fw-500" >{BankInfo.accountNumber}</Text>
                      </CopyToClipboard>
                     {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <Translate
-                      className="mt-36 fs-14 text-white fw-500 text-upper"
+                      className="mt-36 fs-20 text-white fw-500 text-upper"
                       content="for_Domestic_wires"
                       component={Paragraph}
                     />}
@@ -311,7 +332,7 @@ class FaitDeposit extends Component {
                     />}
                     {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <CopyToClipboard text={BankInfo.routingNumber} options={{ format: 'text/plain' }}><Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 d-block">{BankInfo.routingNumber}</Text></CopyToClipboard>}
                     <Translate
-                      className="mt-24 fs-14 text-white fw-500 text-upper"
+                      className="mt-24 fs-20 text-white fw-500 text-upper"
                       content="for_international_wires"
                       component={Paragraph}
                     />
@@ -322,7 +343,7 @@ class FaitDeposit extends Component {
                     />
                      <CopyToClipboard text={BankInfo.networkCode} options={{ format: 'text/plain' }}>
                     <Translate copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }}
-                      className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                      className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24"
                       content="SIGNU"
                       component={Text}
                       with={{ value: BankInfo.networkCode }}
@@ -334,7 +355,7 @@ class FaitDeposit extends Component {
                       component={Text}
                     />
                     <Translate
-                      className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                      className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24"
                       content="signature_bank"
                       component={Text}
                       with={{ value: BankInfo.bankName }} />
@@ -344,7 +365,7 @@ class FaitDeposit extends Component {
                       component={Text}
                     />
                     <Translate
-                      className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                      className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24"
                       content="signature_bank"
                       component={Text}
                       with={{ value: BankInfo.bankAddress }} />
@@ -355,7 +376,7 @@ class FaitDeposit extends Component {
                       component={Text}
                     />}
                     {BankInfo.referenceNo != null && BankInfo.referenceNo != '' &&
-                    <Text className="fs-20 text-white-30 l-height-normal d-block mb-24">{BankInfo.referenceNo}</Text>}
+                    <Text className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24">{BankInfo.referenceNo}</Text>}
                     
                     {BankInfo.depReferenceNo !== '' && <div className="crypto-address mb-36 mx-0">
                       <Translate
@@ -363,7 +384,7 @@ class FaitDeposit extends Component {
                         content="reference"
                         component={Text}
                       />
-                      <Paragraph className="mb-0 fw-600 text-white-30 walletadrs mb-copy">
+                      <Paragraph className="mb-0 fs-18 fw-500 text-white-30 walletadrs mb-copy">
                         {BankInfo.depReferenceNo}
                         <CopyToClipboard text={BankInfo.depReferenceNo} options={{ format: 'text/plain' }}>
                           <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 custom-display"   ></Text>

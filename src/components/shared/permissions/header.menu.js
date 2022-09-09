@@ -406,7 +406,7 @@ class HeaderPermissionMenu extends Component {
                         <ul className="pl-0 drpdwn-list">
                             {item?.subMenu?.map((subItem) => <li onClick={() => this.onMenuItemClick(subItem.key, subItem)}>
                                 <Link>
-                                    <Translate content={subItem.content} conmponent={Text} />{" "}
+                                    <Translate className="fs-20" content={subItem.content} conmponent={Text} />{" "}
                                     <span className="icon md rarrow-white" />
                                 </Link>
                             </li>)}
@@ -423,14 +423,14 @@ class HeaderPermissionMenu extends Component {
                         content={item.content}
                         component={Menu.Item}
                         key={indx}
-                        className="mr-16"
+                        className="mr-16 fs-20"
                     />
                 </Dropdown> : item.key === "trade" && <Translate
                     content={item.content}
                     component={Menu.Item}
                     key={item.key}
                     onClick={() => this.onMenuItemClick(item.key, item)}
-                    className="list-item"
+                    className="list-item fs-20"
                 />)}
                 <Menu.Item
                     key="9"

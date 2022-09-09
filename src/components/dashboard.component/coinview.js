@@ -85,7 +85,7 @@ componentWillUnmount(){
         if (key === "buy") {
             this.props.dispatch(fetchSelectedCoinDetails(selectedObj.coin, this.props.userProfile?.id));
             this.props.dispatch(setCoin({ ...selectedObj, toWalletCode: selectedObj.coin, toWalletId: selectedObj.id, toWalletName: selectedObj.coinFullName }));
-            convertCurrency({ from: selectedObj.coin, to: "USD", value: 1, isCrypto: false, memId: this.props.userProfile?.id, screenName: null }).then(val => {
+            convertCurrency({ from: selectedObj.coin, to: "USD", value: 1, isCrypto: false, customer_id: this.props.userProfile?.id, screenName: null }).then(val => {
                 this.props.dispatch(setExchangeValue({ key: selectedObj.coin, value: val }));
             });
             this.props.dispatch(setStep("step2"));

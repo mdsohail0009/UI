@@ -37,7 +37,7 @@ const Payments = (props) => {
   };
   const paymentsEdit = () => {
     if (selection.length == 0) {
-      setErrorWarning("Please select the one record");
+      setErrorWarning("Please select the record");
     } else {
       props.history.push(`/payments/${selectedObj}/${setSelectData.currency}/${setSelectData.state}/edit`)
     }
@@ -45,13 +45,24 @@ const Payments = (props) => {
   };
   const loadInfo = () =>{
     getCurrencyLookup();
-    props.dispatch(fetchFeaturePermissions(getFeatureId(`/payments`), props.userConfig.id))
+    // props.dispatch(fetchFeaturePermissions(getFeatureId(`/payments`), props.userConfig.id))
     if (props?.match?.path === `/payments`) {
       let key = "1"
       props.dispatch(setHeaderTab(key));
     }
+    
     setLoading(false)
   }
+  useEffect(() => {
+    if(props.billpaymentsPermission){
+      let viewPermission = props.billpaymentsPermission.actions.filter((item)=>item.permissionName == 'view')[0];
+      if(!viewPermission.values){
+        props.history.push('/accessdenied')
+      }
+    }else{
+      getFeaturePermissionsByKey('billpayments',loadInfo)
+    }
+  }, [props.billpaymentsPermission])
   useEffect(() => {
     getFeaturePermissionsByKey('billpayments',loadInfo)
   }, [])
@@ -155,8 +166,9 @@ const getCurrencyLookup = async () => {
   return (
     <>
       <div className="main-container">
-        <div className='bill_payment mb-16'>
-          <Title className="basicinfo mb-0"><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
+        <div className='bill_payment mb-16'> 
+          
+          <Title className="basicinfo mb-0"><span onClick={() => props.history?.push("/cockpit")} className='icon md c-pointer back mr-8'></span><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
           {/* <div className="cust-btns mb-d-none">
             <Button
               className="pop-btn px-24"
@@ -286,8 +298,8 @@ const getCurrencyLookup = async () => {
 }
 
 
-const connectStateToProps = ({ userConfig }) => {
-  return { userConfig: userConfig.userProfileInfo };
+const connectStateToProps = ({ userConfig,menuItems }) => {
+  return { userConfig: userConfig.userProfileInfo,billpaymentsPermission:menuItems?.featurePermissions?.billpayments };
 };
 
 const connectDispatchToProps = dispatch => {

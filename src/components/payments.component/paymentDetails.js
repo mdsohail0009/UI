@@ -85,7 +85,7 @@ class PaymentDetails extends Component {
         });
       } else {
         message.destroy();
-        this.setState({ ...this.state, errorMessage: response.data });
+        this.setState({ ...this.state, errorMessage: response.data, loading: false });
         this.useDivRef.current.scrollIntoView();
       }
     }

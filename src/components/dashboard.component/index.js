@@ -9,6 +9,7 @@ import Wallets from '../dashboard.component/wallets.component';
 import YourPortfolio from '../dashboard.component/yourportfolio.component';
 import apiCalls from '../../api/apiCalls';
 import Notices from './notices';
+import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 
 class Home extends Component {
     state = {
@@ -20,6 +21,7 @@ class Home extends Component {
     };
     permissionsInterval;
     componentDidMount() {
+        getFeaturePermissionsByKeyName(`cockpit`)
         this.getNotices();
         this.dashboardTrack();
         this.permissionsInterval = setInterval(this.loadPermissions, 200);
@@ -32,6 +34,9 @@ class Home extends Component {
                 _permissions[action.permissionName] = action.values;
             }
             this.setState({ ...this.state, permissions: _permissions });
+            if(_permissions.view!=true){
+                this.props.history.push(`/accessdenied`)
+            }
         }
     }
     dashboardTrack = () => {
@@ -63,9 +68,9 @@ class Home extends Component {
                     </div>)}
                 </Carousel> : ""}
 
-                <Row justify="center mt-36">
+                <Row justify="center mt-16">
                     {this.state.permissions?.Balances && <Col xs={24} md={12} xl={10}>
-                        <div className="markets-panel mb-36">
+                        <div className="markets-panel mb-16 markets-line">
                             <Wallets />
                         </div>
                         <div className="markets-panel">
@@ -79,7 +84,7 @@ class Home extends Component {
                             crypto_usd="0.00 BTC"
                             crypto_stock="0.0%" />}
                         {this.state.permissions.Notices && <Notices />}
-                        {this.state.permissions.Markets && <div className="markets-panel">
+                        {this.state.permissions.Markets && <div className="markets-panel mr-0">
                             <MarketCap />
                         </div>}
                     </Col>

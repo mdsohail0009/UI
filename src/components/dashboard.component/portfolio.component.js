@@ -5,7 +5,7 @@ import { getData } from './api';
 import NumberFormat from 'react-number-format';
 import Loader from '../../Shared/loader';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { dashboardTransactionSub } from '../../utils/pubsub';
 import TransactionsHistory from "../transactions.history.component";
 
@@ -90,8 +90,8 @@ class Portfolio extends Component {
 
         const { gridUrl, loading } = this.state;
         return (
-            <div className="mb-24">
-                <div>
+            <div className="mb-16">
+                <div className='mb-12 mt-4'>
                     <Translate content="menu_transactions_history" className="basicinfo" />
                     {/* <span>
                        <Translate
@@ -105,12 +105,17 @@ class Portfolio extends Component {
                        </span>  */}
                     <Button
                         onClick={() => this.transactionDrawer()}
-                        className="pop-btn dbchart-link fs-14 fw-500"
-                        style={{  height: 40,marginTop:"35px" }}
+                        className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}}
                         >
                            <Translate content="search" />
                         <span className="icon sm search-angle ml-8"></span>
                     </Button>
+                     {/* <div onClick={() => this.transactionDrawer()} className="dbchart-link fs-14 fw-500 c-pointer">
+                       
+                        <Translate content="search" />
+                        <span className="icon sm search-angle ml-4" />
+                      
+                    </div> */}
                        {this.state.transactions &&
                        <TransactionsHistory
                         showDrawer={this.state.transactions}
@@ -121,17 +126,17 @@ class Portfolio extends Component {
                        }
                        </div>
                    
-                    <div className="mt-16">
+                    <div>
 
-                        <div className="box basic-info responsive_table bg-none ">
-                            <table className='pay-grid view mb-view'>
+                        <div className="box dash-info basic-info responsive_table bg-none mb-0 ">
+                            <table className='pay-grid view mb-view'  style={{width: "100%"}}>
                                 <thead>
                                     <tr>
-                                        <th>Date</th>
-                                        <th>Type</th>
-                                        <th>Wallet</th>
-                                        <th>Value</th>
-                                        <th>State</th>
+                                        <th style={{width: "18%"}}>Date</th>
+                                        <th style={{width: "35%"}}>Type</th>
+                                        <th style={{width: "15%"}}>Wallet</th>
+                                        <th style={{width: "15%"}}>Value</th>
+                                        <th style={{width: "15%"}}>State</th>
                                     </tr>
                                 </thead>
                                 {loading ? (

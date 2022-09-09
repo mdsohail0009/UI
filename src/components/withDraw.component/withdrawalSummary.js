@@ -530,7 +530,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 						/>
 					</Text>
 					<Currency
-						className="fs-20 text-white-30 mb-36"
+						className="fs-18 fw-400 text-white-30 mb-36"
 						prefix={""}
 						defaultValue={sendReceive.withdrawFiatObj?.requestedAmount}
 						suffixText={sendReceive.withdrawFiatObj?.walletCode}
@@ -543,7 +543,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 						/>
 					</Text>
 					<Currency
-						className="fs-20 text-white-30 mb-36"
+						className="fs-18 fw-400 text-white-30 mb-36"
 						prefix={""}
 						defaultValue={sendReceive.withdrawFiatObj?.comission}
 						suffixText={sendReceive.withdrawFiatObj?.walletCode}
@@ -556,7 +556,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 						/>
 					</Text>
 					<Currency
-						className="fs-20 text-white-30 mb-36"
+						className="fs-18 fw-400 text-white-30 mb-36"
 						prefix={""}
 						defaultValue={sendReceive.withdrawFiatObj?.totalValue}
 						suffixText={sendReceive.withdrawFiatObj?.walletCode}
@@ -568,7 +568,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 							className="fs-14 text-white-50 fw-200"
 						/>
 					</Text>
-					<Text className="fs-20 text-white-30 d-block mb-36">
+					<Text className="fs-18 fw-400 text-white-30 d-block mb-36">
 						{sendReceive.withdrawFiatObj?.bankName}
 					</Text>
 					<Text className="fs-14 text-white-50 fw-200">
@@ -579,7 +579,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 							className="fs-14 text-white-50 fw-200"
 						/>
 					</Text>
-					<Text className="fs-20 text-white-30 d-block mb-36">
+					<Text className="fs-18 fw-400 text-white-30 d-block mb-36">
 						{sendReceive.withdrawFiatObj?.accountNumber}
 					</Text>
 					<Text className="fs-14 text-white-50 fw-200">
@@ -589,7 +589,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 							className="fs-14 text-white-50 fw-200"
 						/>
 					</Text>
-					<Text className="fs-20 text-white-30 d-block mb-36">
+					<Text className="fs-18 fw-400 text-white-30 d-block mb-36">
 						{sendReceive.withdrawFiatObj?.routingNumber}
 					</Text>
 

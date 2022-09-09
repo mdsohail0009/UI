@@ -205,7 +205,13 @@ export function withState(WrappedGrid) {
         }", FeatureId:"${menuItems?.featurePermissions?.selectedScreenFeatureId}"}`, userProfileInfo.sk) : '' } };
 
             fetch(`${base_url}${queryStr}`, init)
-                .then(response => response.json())
+                .then(response =>{
+					if (response.status === 401) {
+						return { data:null, total:null, unauthorized:401, message:'Unauthorized' }
+					} else {
+						return response.json()
+					}
+				})
                 .then(({ data, total }) => {
                     this.setState({
                         data: hasGroups ? translateDataSourceResultGroups(data) : data,
