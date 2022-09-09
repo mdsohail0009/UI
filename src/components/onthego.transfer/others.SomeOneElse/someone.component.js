@@ -84,7 +84,7 @@ const SomeoneComponent = (props) => {
     return (<React.Fragment>
         <div ref={useDivRef}></div>
         
-        {errorMessage && <Alert type="error" showIcon closable={false} message={"An error occured"} description={errorMessage} />}
+        {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
         <>
                 {props.currency === "USD" && <>
                     <Row gutter={[16, 16]}>

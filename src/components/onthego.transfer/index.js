@@ -176,7 +176,7 @@ class OnthegoFundTransfer extends Component {
         if (res.ok) {
             this.setState({ ...this.state, [loader]: false, errorMessage: null }, () => this.chnageStep(step, values));
         } else {
-            this.setState({ ...this.state, [loader]: false, errorMessage: res.data?.message || res.data || res.originalError.message })
+            this.setState({ ...this.state, [loader]: false, errorMessage: this.isErrorDispaly(res) })
         }
 
     }
@@ -201,28 +201,37 @@ class OnthegoFundTransfer extends Component {
                             <Form.Item
                                 className="custom-forminput custom-label mb-0 fund-transfer-input"
                                 name="amount"
-                                label={"Enter amount"}
+                                label={"Enter Amount"}
                                 required
                                 rules={[
                                     {
                                         required: true,
                                         message:
                                             apicalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        validator:(_,value)=>{
+                                            const reg = /.*[0-9].*/g;
+                                            if (value && !reg.test(value)) {
+                                                return Promise.reject("Invalid amount");
+                                            }
+                                            return Promise.resolve();
+                                        }
                                     }
                                 ]}
                             >
                                 <NumberFormat
                                     customInput={Input}
                                     className="cust-input "
-                                    placeholder={"Enter amount"}
-                                    maxLength="20"
+                                    placeholder={"Enter Amount"}
+                                    maxLength="13"
                                     decimalScale={2}
                                     displayType="input"
                                     allowNegative={false}
                                     thousandSeparator={","}
                                     addonBefore={this.props.selectedCurrency}
                                     onValueChange={() => {
-                                        this.setState({ ...this.state, amount: this.enteramtForm.current.getFieldsValue().amount })
+                                        this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount })
                                     }}
                                 />
                             </Form.Item>
@@ -283,9 +292,10 @@ class OnthegoFundTransfer extends Component {
                     <Form.Item
                         name="lastName"
                         label={"Search for Payee"}
+                        colon={false}
                     >
                         <Search
-                            placeholder="Search Payee" bordered={false} showSearch
+                            placeholder="Search for Payee" bordered={false} showSearch
                             className=" "
                             onChange={this.handleSearch}
                             value={this.state.searchVal}
@@ -319,7 +329,7 @@ class OnthegoFundTransfer extends Component {
                                             {/* <small>{item.type}</small> */}
                                         </strong>
                                     </label>
-                                   {item.accountNumber&& <div><Text className="fs-14 fw-400 text-purewhite">{this.props.selectedCurrency} acc ending in {item.accountNumber.substr(item.accountNumber.length - 4)}</Text></div>}
+                                   {item.accountNumber&& <div><Text className="fs-14 fw-400 text-purewhite">{this.props.selectedCurrency} account ending with {item.accountNumber.substr(item.accountNumber.length - 4)}</Text></div>}
                                 </Col>
                                 <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white"></span>
@@ -352,7 +362,7 @@ class OnthegoFundTransfer extends Component {
                                             {/* <small>{item.type}</small> */}
                                         </strong>
                                     </label>
-                                    <div><Text className="fs-14 fw-400 text-purewhite">{this.props.selectedCurrency} acc ending in {item.accountNumber.substr(item.accountNumber.length - 4)}</Text></div>
+                                    <div><Text className="fs-14 fw-400 text-purewhite">{this.props.selectedCurrency} account ending with {item.accountNumber.substr(item.accountNumber.length - 4)}</Text></div>
                                 </Col>
                                 <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white"></span>
@@ -366,7 +376,7 @@ class OnthegoFundTransfer extends Component {
                     <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
                     <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
                     <p className="fs-16 text-white-30 fw-200 mb-0"> {apicalls.convertLocalLang('address_available')} </p>
-                    <a onClick={() => this.chnageStep("newtransfer")}>Click here to make New Transfer</a>
+                    <a onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</a>
                 </div>}
             </React.Fragment>,
             reasonfortransfer: <React.Fragment>
