@@ -488,7 +488,7 @@ const FaitWithdrawal = ({ props,
     const _types = {
       step1: (
         <>
-          <div className="suisfiat-height auto-scroll" style={{ marginTop: "10px" }}>
+          <div className="suisfiat-height suissefait-custome-alert auto-scroll" style={{ marginTop: "10px" }}>
             <div ref={useDivRef}></div>
             {isVerificationLoading && <Loader />}
             {errorMsg !== null && (
@@ -506,7 +506,7 @@ const FaitWithdrawal = ({ props,
                 message="Verification alert !"
                 description={<Text>Without verifications you can't send. Please select send verifications from <a onClick={() => {
                   onDrawerClose();
-                  history.push("/userprofile?key=2")
+                  history.push("/userprofile/2")
                 }}>security section</a></Text>}
                 type="warning"
                 showIcon

@@ -823,7 +823,9 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .ant-popover-inner{padding: 8px 9px;}
     .ant-popover-inner-content .rarrow-white{margin-left: 0px!important;}
     .ant-popover-inner-content div, .ant-popover-inner{padding: 8px 8px !important;}
-   
+    .tlv-header .sideropen {background: var(--bgGloom) !important;}
+    .tlv-header .mobile-logo {padding-left: 0px;}
+    /* .enter-val-container.swap-com input{width: 65%;} */
 }
 @media (min-width : 414px) {
     .footer-links a{margin-right: 16px;}
@@ -1069,6 +1071,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .portfolio-list .ant-list-split ul li .custom-btn{min-width: 90px;}
     .coin-details.right{min-height: 705px;}
     .lg-fontsize{font-size: 12px !important;}
+    .side-drawer.custom-drawer-width .ant-drawer-content-wrapper{width:865px !important;}
 }
 @media (min-width: 1400px){
     .custom-font{font-size:30px !important;}
@@ -1105,6 +1108,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .addbook-height{max-height: calc(100vh - 112px);}
     .pop-btn-46{height:46px;}
     .minmax.custom-minmax{position: relative;right:-332px !important;top:-11px;width:100px;}
+    .side-drawer.custom-drawer-width .ant-drawer-content-wrapper{width: 1094px !important;}
     .lg-fontsize{font-size: 14px !important;}
 }
 
@@ -1240,7 +1244,8 @@ text-align: center !important;}
 .withdrawbg .ant-list-item-meta-avatar, .depositsbg .ant-list-item-meta-avatar, .withdraw.fiatbg .ant-list-item-meta-avatar, .withdraw.cryptobg .ant-list-item-meta-avatar{background-color: var(--bgDarkRed);}
 .requestbg .ant-list-item-meta-avatar, .documentsbg .ant-list-item-meta-avatar, .cutomersbg .ant-list-item-meta-avatar, .casesbg .ant-list-item-meta-avatar{background-color: var(--bgBlue);}
 .notification-conunt .bell span{position: absolute;right: -5px;top: -7px;width: 18px;height: 18px;background: #f6921e;border-radius: 50%;line-height: 18px;text-align: center;font-size: 10px;font-weight: 600;}
-
+.buy .ant-list-item-meta-avatar{background-color: var(--bgDarkGreen);}
+.sell .ant-list-item-meta-avatar{background-color: var(--bgDarkRed);}
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -1368,3 +1373,45 @@ input[type=number]::-webkit-outer-spin-button {
 .pay-grid .ant-table-body{height: 450px;}
 td.ant-table-column-sort{background: transparent;}
 .ant-table-thead th.ant-table-column-sort{background: var(--bgDarkGrey);}
+.custom-radio-btn.buysell-toggle{background-color: transparent;}
+.custom-table.pay-grid.view .ant-table-tbody > tr.ant-table-placeholder:hover > td{background-color: transparent;}
+.address-book-table .pay-grid tbody td{padding: 4px 8px 4px 8px;}
+.side-drawer.custom-drawer-width .ant-drawer-title{color: #fff;}
+.custom-radio-btn .ant-radio-button-wrapper{background: transparent;background-image: none;border-radius: 5px; margin-left: 5px;border: 1px solid #9b9bab;margin-right: 5px;color: var(--textWhite);width: auto;height: auto;display: inline-flex;align-items: center;}
+.custom-radio-btn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{border: transparent;}
+.custom-radio-btn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active{border: transparent;}
+.custom-radio-btn .ant-radio-button-wrapper-checked:not([class*=' ant-radio-button-wrapper-disabled']).ant-radio-button-wrapper:first-child{border: transparent;}
+.custom-radio-btn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):first-child{border: transparent;}
+.custom-radio-btn .ant-radio-button-wrapper span{margin:auto;}
+.custom-radio-btn .ant-radio-button-wrapper-checked{border:transparent;}
+.cust-input.cust-text-area.address-book-cust{padding:20px 16px 15px 16px!important;}
+.custom-radio-btn.buysell-toggle.crypto-toggle .ant-radio-button-checked{background-image: linear-gradient(99.09deg, var(--btnGrad1), var(--btnGrad2));border-radius: 5px;}
+.custom-radio-btn.buysell-toggle .ant-radio-button-wrapper-checked{color: #fff !important;;}
+.box.basic-info.alert-info-custom{background-color:var(--bgGloom) !important;border-radius: 15px;color: var(--textPureWhite);border-color: var(--borderGrey) !important;}
+.ant-btn.ant-btn-block.profile-btn:focus, .ant-btn.ant-btn-block.profile-btn:active{border: 1px solid #ED4B9E !important;}
+.fund-transfer-input .ant-input-group-addon:first-child{border-right: 1px solid #d9d9d9;}
+.fund-transfer-input .ant-input-group-addon{background-color: transparent;border: transparent;padding: 0 26px;}
+.fund-transfer-input .ant-input-group .ant-input{border:transparent;}
+.fund-transfer-input .ant-input:focus, .ant-input-focused{box-shadow:none;}
+.fund-transfer-input .ant-input-group-addon{color:#fff;}
+.fund-circle{width: 50px;height: 50px;height: 50px;border-radius: 50%;text-align: center;padding: 15px;background-color: var(--bgDarkGrey);}
+.small-text-align small{font-weight: 400; vertical-align: super;background-color: var(--bgDarkGrey);padding: 2px 6px;color: #fff;border-radius: 10px;}
+.fund-border{margin-top: 10px;}
+.custom-radio-btn .ant-radio-button-wrapper.span-text span{line-height: 15px;margin: initial;}
+.cust-fund{width: 88%;}
+.cust-divide{margin: 0px !important; height: 2px; background-color: var(--bgDarkGrey);}
+.create-new{text-decoration: underline !important;}
+cust-address{margin-bottom: 0px !important;}
+.search-input .ant-input-wrapper.ant-input-group .ant-input{background-color: var(--bgWhite) !important; border-radius: 0px !important; height:34px !important; border-color: transparent !important; color: var(--bgBlack) !important;}
+.search-input .ant-input-wrapper .ant-input-group-addon{background-color: var(--bgWhite) !important; border-radius: 0px !important; height:33px !important;}
+.search-input .ant-input-wrapper.ant-input-group .ant-input:hover{border-color: transparent !important;}
+.search-input .ant-input-wrapper.ant-input-group .ant-input:focus{box-shadow: none !important;}
+.search-input .ant-input-wrapper .ant-input-group-addon .ant-input-search-button:focus,.search-input .ant-input-wrapper .ant-input-group-addon .ant-input-search-button:hover{z-index: 0 !important;}
+.search-input .anticon.anticon-search{padding-right: 30px; }
+.usr-add .ant-select-arrow{color: var(--bgGrey); }
+.usr-add{position: relative; right: 32px; bottom: 6.7px;}
+.cust-tabs-fait .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{color: var(--textYellow) !important;font-size: 16px;}
+.cust-tabs-fait  .ant-tabs-ink-bar{background: #FFDB1A;}
+.cust-tabs-fait .ant-tabs-tab .ant-tabs-tab-btn{color: #fff !important;font-size: 16px;}
+.cust-tabs-fait .ant-tabs-tab + .ant-tabs-tab{margin: 0 0 0 90px;}
+.custom-placeholder .cust-select .ant-select-selection-placeholder{color:#fff !important;}

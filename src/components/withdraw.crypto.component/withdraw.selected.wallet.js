@@ -18,6 +18,7 @@ import SelectCrypto from "../addressbook.component/selectCrypto";
 import apiCalls from "../../api/apiCalls";
 import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
 import Loader from '../../Shared/loader';
+import CryptoTransfer from "../onthego.transfer/crypto.transfer"
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService';
 
 const { Paragraph, Text } = Typography;
@@ -45,7 +46,8 @@ class CryptoWithDrawWallet extends Component {
             cryptoFiat: false,
             isVerificationMethodsChecked: true,
             propsData: {},
-            isVerificationLoading: true
+            isVerificationLoading: true,
+            showFuntransfer:false,
         }
     }
     async checkVerification() {
@@ -154,7 +156,7 @@ class CryptoWithDrawWallet extends Component {
             this.props.changeStep('step8');
         } else {
             this.setState({
-                ...this.state, visible: true, errorWorning: null
+                ...this.state, visible: true, errorWorning: null, showFuntransfer: true
                 // , selection: [],
                 // isCheck: false,
             });
@@ -301,6 +303,11 @@ class CryptoWithDrawWallet extends Component {
         }
 
     }
+
+    handleModalClose=(childData)=>{
+        this.setState({ ...this.state, showFuntransfer: childData })
+    }
+
     render() {
         const { Text } = Typography;
         const { cryptoWithdraw: { selectedWallet } } = this.props.sendReceive;
@@ -315,7 +322,7 @@ class CryptoWithDrawWallet extends Component {
                 message="Verification alert !"
                 description={<Text>Without verifications you can't send. Please select send verifications from <a onClick={() => {
                     this.props.onDrawerClose();
-                    this.props.history.push("/userprofile?key=2")
+                    this.props.history.push("/userprofile/2")
                 }}>security section</a></Text>}
                 type="warning"
                 showIcon
@@ -392,6 +399,14 @@ class CryptoWithDrawWallet extends Component {
                                 </Tooltip>
                             </div>
                         </Form.Item>
+                        <div className="text-center mt-24 mb-24 ">
+                        <Button key="back" className='ant-btn  pop-btn'   onClick={() => this.selectCrypto()} >
+                            New Transfer
+                        </Button>,
+                        <Button key="submit" type="primary" className='ant-btn  pop-btn' style={{marginLeft:"10px"}} onClick={() => this.selectCrypto("ADDRESS")}>
+                            Whitelisted Address
+                        </Button>
+                        </div>
                         <Form.Item
                             className="custom-forminput custom-label mb-0"
                             name="CustomerRemarks"

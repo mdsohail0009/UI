@@ -12,6 +12,8 @@ import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import {addressTabUpdate} from '../../reducers/addressBookReducer'
 import { setHeaderTab } from "../../reducers/buysellReducer"
+import { withRouter } from 'react-router-dom';
+
 const { TabPane } = Tabs;
 class UserProfile extends Component {
     constructor(props) {
@@ -22,7 +24,7 @@ class UserProfile extends Component {
         isSetting: false,
         tabPosition: 'left',
         activeTab: this.props.match.params.key ? this.props.match.params.key : "1",
-       activeWithdrawFiat : false
+       activeWithdrawFiat : this.props.match.params.type=='fiat'?true: false
     }
 }
     componentDidMount() {
@@ -32,10 +34,11 @@ class UserProfile extends Component {
       }
         let activeKey = QueryString.parse(this.props.history.location.search)?.key;
         if (activeKey) {
-            this.setState({ ...this.state, activeTab: activeKey });
+            this.setState({ ...this.state, activeTab: activeKey});
         }
         if (this.props.addressBookReducer.addressTab) {
             this.setState({...this.state,activeTab:"5",activeWithdrawFiat: true});
+            this.props.history.push(`/userprofile/${5}/fiat`)
             this.props.dispatch(addressTabUpdate(false));
            }
     }
@@ -51,11 +54,20 @@ class UserProfile extends Component {
     }
 
     render() {
-        const { tabPosition } = this.state;
+        const { tabPosition, activeTab } = this.state;
+        if(this.props.match.params.key != activeTab){
+            if(this.props.match.params.key){
+                this.setState({ ...this.state, activeTab: this.props.match.params.key })
+            }else{
+                this.props.history.push(`/userprofile/${activeTab}`)
+            }
+        }
         return (<>
 
             <div className="main-container hidden-mobile">
-                <Tabs tabPosition={tabPosition} className="user-list" activeKey={this.state.activeTab} onChange={(key) => this.setState({ ...this.state, activeTab: key })}>
+                <Tabs tabPosition={tabPosition} className="user-list" activeKey={this.state.activeTab} onChange={(key) =>{ 
+                    this.props.history.push(`/userprofile/${key}`)
+                    this.setState({ ...this.state, activeTab: key })}}>
                     <TabPane tab={<span>
                         <span className="icon lg profile-icon mr-16" />
                         <Translate content="ProfileInfo" component={Tabs.TabPane.tab} /></span>} key="1">
@@ -128,4 +140,4 @@ const connectStateToProps = ({ addressBookReducer}) => {
 }
 export default connect(
     connectStateToProps,
-   )(UserProfile);
+   )(withRouter(UserProfile));
