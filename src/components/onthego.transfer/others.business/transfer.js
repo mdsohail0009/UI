@@ -81,6 +81,7 @@ class BusinessTransfer extends Component {
                     className="custom-label  mb-0"
                     ref={this.form}
                     onFinish={this.submitPayee}
+                    scrollToFirstError
                 >
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -206,6 +207,7 @@ class BusinessTransfer extends Component {
                     className="custom-label  mb-0"
                     ref={this.form}
                     onFinish={this.submitPayee}
+                    scrollToFirstError
                 >
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>

@@ -107,6 +107,7 @@ const SomeoneComponent = (props) => {
                 onFinish={onSubmit}
                 autoComplete="off"
                 initialValues={{}}
+                scrollToFirstError
             >
                
                 <Row gutter={[16, 16]} className={'pb-16'}>

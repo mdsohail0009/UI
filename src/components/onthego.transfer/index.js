@@ -193,6 +193,7 @@ class OnthegoFundTransfer extends Component {
                     initialValues={{ amount: "" }}
                     ref={this.enteramtForm}
                     onFinish={this.amountnext}
+                    scrollToFirstError
                 >
                     {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
                     <Row gutter={[16, 16]}>

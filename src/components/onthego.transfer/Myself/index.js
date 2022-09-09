@@ -109,7 +109,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
       };
     return <>
     <div ref={useDivRef}></div>
-        <Form layout="vertical" form={form} onFinish={saveTransfer} initialValues={{createTransfer}}>
+        <Form layout="vertical" form={form} onFinish={saveTransfer} initialValues={{createTransfer}} scrollToFirstError>
        <> {currency === "USD" && <>
             <Row gutter={[16, 16]}>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
