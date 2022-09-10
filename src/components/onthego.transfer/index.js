@@ -186,7 +186,7 @@ class OnthegoFundTransfer extends Component {
             enteramount: <>
                 <div className="mb-16 text-left">
                     <text Paragraph
-                        className='fs-24 fw-600 text-white px-4 mb-16 mt-4'>Transfer funds</text>
+                        className='fs-24 fw-600 text-white px-4 mb-16 mt-4 text-captz'>Transfer funds</text>
                 </div>
                 <Form
                     autoComplete="off"
@@ -199,7 +199,7 @@ class OnthegoFundTransfer extends Component {
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="text-upper fw-600 mb-4 text-white-50 pt-16 custom-forminput custom-label fund-transfer-input"
+                                className="text-upper fw-300 mb-4 text-white-50 pt-8 custom-forminput custom-label fund-transfer-input"
                                 name="amount"
                                 label={"Enter Amount"}
                                 required
@@ -276,7 +276,7 @@ class OnthegoFundTransfer extends Component {
                 {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
                 <div className="mb-16 text-left">
                     <text Paragraph
-                        className='fs-24 fw-600 text-white px-4 mb-16 mt-4'>Who are you sending money to?</text>
+                        className='fs-24 fw-600 text-white px-4 mb-16 mt-4 text-captz'>Who are you sending money to?</text>
                 </div>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 
@@ -295,7 +295,7 @@ class OnthegoFundTransfer extends Component {
                 </Col>
                 {this.state?.loading && <Loader />}
                 {(filterObj.length > 0) && (!this.state.loading) && <>
-                    <Title className="fs-24 fw-600 text-white px-4 mb-16 mt-16">Address Book</Title>
+                    <Title className="fw-600 text-white px-4 mb-16 mt-16 text-captz" style={{ fontSize: '18px' }}>Address Book</Title>
                     {/* <Divider className="cust-divide" /> */}
 
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
@@ -329,7 +329,7 @@ class OnthegoFundTransfer extends Component {
                         )}
                     </ul>
 
-                    <Title className="fs-24 fw-600 text-white px-4 mb-16 mt-16">Past Recipients</Title>
+                    <Title className="fw-600 text-white px-4 mb-16 mt-16 text-captz"  style={{ fontSize: '18px' }}>Past Recipients</Title>
                     {/* <Divider className="cust-divide" /> */}
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                         {pastPayees?.map((item, idx) =>
@@ -373,7 +373,7 @@ class OnthegoFundTransfer extends Component {
             reasonfortransfer: <React.Fragment>
                 <div className="mb-16 text-left">
                     <text Paragraph
-                        className='fs-24 fw-600 text-white px-4 mb-16 mt-4 '>Transfer Details</text>
+                        className='fw-600 text-white px-4 mb-16 mt-4 text-captz'style={{ fontSize: '18px ' }}>Transfer Details</text>
                 </div>
                 <Form
                     autoComplete="off"
@@ -384,7 +384,7 @@ class OnthegoFundTransfer extends Component {
                     <React.Fragment><Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="text-upper fw-600 mb-4 text-white-50 pt-16 custom-forminput custom-label"
+                                className="text-upper fw-300 mb-4 text-white-50 pt-8 custom-forminput custom-label"
                                 name="reasionOfTransfer"
                                 label={"Reason for transfer"}
                                 required
@@ -538,7 +538,7 @@ class OnthegoFundTransfer extends Component {
                     <Row gutter={24}>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex justify-content" style={{ alignItems: 'baseline' }}>
-                                <Text className="fs-24 fw-600 text-white mt-4">Transfer details</Text>
+                                <Text className="fw-600 text-white mt-4 text-captz"style={{ fontSize: '18px' }}>Transfer details</Text>
 
                                 {/* <div><Link >Edit
                                 </Link>
@@ -588,7 +588,7 @@ class OnthegoFundTransfer extends Component {
                     <Row gutter={24} className=" text-white mt-36">
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24} >
                             <div className="d-flex justify-content" style={{ alignItems: 'baseline' }}>
-                                <Text className="fs-24 fw-600 text-white mb-0 mt-4">Recipient details</Text>
+                                <Text className="fw-600 text-white mb-0 mt-4 text-captz" style={{ fontSize: '18px' }}>Recipient details</Text>
 
                                 {/* <div><Link >Change
                                 </Link>

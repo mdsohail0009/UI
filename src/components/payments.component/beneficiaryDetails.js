@@ -508,7 +508,7 @@ class PaymentsView extends Component {
                                 </Col>
                                 <Col xl={8}>
                                     <Form.Item
-                                        className="custom-forminput custom-label mb-24"
+                                        className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
                                         name="accountNumber"
                                         label={apiCalls.convertLocalLang('Bank_account')}
                                         required
@@ -605,7 +605,7 @@ class PaymentsView extends Component {
                                                 className="mb-16 fs-14 text-white fw-500 text-upper"
                                             >Please provide your identity proof</Paragraph>
                                             <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
-                                                className="upload mt-16"
+                                                className="upload mt-4"
                                                 multiple={false}
                                                 action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                                                 showUploadList={false}
@@ -640,7 +640,7 @@ class PaymentsView extends Component {
                                                 className="mb-16 fs-14 text-white fw-500 text-upper"
                                             >Please provide your address proof</Paragraph>
                                             <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
-                                                className="upload mt-16"
+                                                className="upload mt-4"
                                                 multiple={false}
                                                 action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                                                 showUploadList={false}
@@ -674,7 +674,7 @@ class PaymentsView extends Component {
                                                 className="mb-16 fs-14 text-white fw-500 text-upper"
                                             >Please provide your address proof</Paragraph>
                                             <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
-                                                className="upload mt-16"
+                                                className="upload mt-4"
                                                 multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                                                 showUploadList={false}
                                                 beforeUpload={(props) => { this.beforeUpload(props) }}

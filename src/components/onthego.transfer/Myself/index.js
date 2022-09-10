@@ -114,8 +114,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             <Row gutter={[16, 16]}>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                     <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });form.resetFields() }}>
-                        <Tabs.TabPane tab="Domestic USD Transfer" className="text-white"  key={"domestic"}></Tabs.TabPane>
-                        <Tabs.TabPane tab="International USD Swift" className="text-white" key={"international"}></Tabs.TabPane>
+                        <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz"  key={"domestic"}></Tabs.TabPane>
+                        <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"}></Tabs.TabPane>
                     </Tabs>
                 </Col>
             </Row>
@@ -126,7 +126,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         {currency == 'EUR' && <h2 style={{ fontSize: 18, textAlign: 'center', color: "white" }}>SEPA transfer</h2>}
         <Row gutter={[16, 16]}><Col xs={24} md={24} lg={24} xl={24} xxl={24} id="favoriteName" className="mt-16">
             <Form.Item
-                className="custom-forminput custom-label mb-0"
+                className="text-upper fw-300 mb-4 text-white-50 pt-8 custom-forminput custom-label"
                 name="favouriteName"
                 label={
                     "Save Whitelist Name As"
@@ -156,7 +156,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         </Col>
             {currency == 'EUR' && !isBusiness && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
-                    className="custom-forminput custom-label mb-0"
+                    className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
                     name="iban"
                     required
                     rules={[
@@ -180,7 +180,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     onBlur={(e)=>getBankDeails(e)}/>
                 </Form.Item>
             </Col>}</Row>
-        <h2 style={{ fontSize: 16, color: "white" }} className="mt-24">Recipient's details</h2>
+        <h2 style={{ fontSize: 18, color: "white" }} className="mt-24 text-captz">Recipient's details</h2>
 
         <div className="box basic-info alert-info-custom">
             <Row>
@@ -218,10 +218,10 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             </Row>
         </div>
 
-        <h2 style={{ fontSize: 16, color: "white" }} className="mt-16">Bank details</h2>
+        <h2 style={{ fontSize: 18, color: "white" }} className="mt-16 text-captz">Bank details</h2>
         {currency == 'EUR' && isBusiness && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
             <Form.Item
-                className="custom-forminput custom-label mb-0"
+                className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
                 name="iban"
                 required
                 rules={[
@@ -248,7 +248,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         <Row gutter={[16, 16]}>
             {currency == 'USD' && <> <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
-                    className="custom-forminput custom-label mb-0"
+                    className="text-upper fw-300 mb-4 text-white-50 pt-8 custom-forminput custom-label"
                     name="accountNumber"
                     label='Account Number' required
                     rules={[
@@ -267,7 +267,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
 
                 {currency == 'USD' && addressOptions.tabType == 'international'&&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                        className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
                         name="swiftRouteBICNumber"
                         label={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC code' : 'ABA Routing Code'}
                         required
@@ -285,7 +285,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 </Col>}
                 {!(currency == 'USD' && addressOptions.tabType == 'international')&&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                        className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
                         name="abaRoutingCode"
                         label={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC code' : 'ABA Routing Code'}
                         required
@@ -303,7 +303,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 </Col>}
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                        className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
                         name="bankName"
                         label='Bank Name'
                         required
@@ -323,7 +323,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
 
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                        className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
                         name="line1"
                         label='Bank Address 1'
                         required
@@ -341,7 +341,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 </Col>
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                        className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
                         name="line2"
                         label='Bank Address 2'
                     >

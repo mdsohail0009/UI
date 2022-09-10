@@ -1415,3 +1415,6 @@ cust-address{margin-bottom: 0px !important;}
 .cust-tabs-fait .ant-tabs-tab + .ant-tabs-tab{margin: 0 0 0 90px;}
 .custom-placeholder .cust-select .ant-select-selection-placeholder{color:#fff !important;}
 .side-drawer .ant-alert-message{margin-bottom: 0;}
+.custom-radio-btn.buysell-toggle.crypto-toggle .ant-radio-button-wrapper{font-size: 16px;font-weight: 300;}
+.buy.bg .ant-list-item-meta-avatar{background-color: var(--bgDarkGreen);}
+.sell.bg .ant-list-item-meta-avatar{background-color: var(--bgDarkRed);}

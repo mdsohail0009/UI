@@ -200,7 +200,7 @@ class AddressBookV2 extends Component {
                     <Row gutter={24}>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Text className="fs-24 fw-600 text-white px-4 mb-16 mt-4">Transfer details</Text>
+                                <Text className="fw-600 text-white px-4 mb-16 mt-4 text-captz" style={{ fontSize: '18px' }}>Transfer details</Text>
 
                                 {/* <div><Link >Edit
                                 </Link>
@@ -250,7 +250,7 @@ class AddressBookV2 extends Component {
                     <Row gutter={24} className=" text-white mt-36">
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24} >
                             <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                <Text className="fs-24 fw-600 text-white px-4 mb-16 mt-4">Recipient details</Text>
+                                <Text className="fw-600 text-white px-4 mb-16 mt-4 text-captz"style={{ fontSize: '18px' }}>Recipient details</Text>
 
                                 {/* <div><Link >Change
                                 </Link>

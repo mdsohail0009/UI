@@ -93,8 +93,8 @@ const SomeoneComponent = (props) => {
                                 setAddressOptions({ ...addressOptions, domesticType: activekey }); form.resetFields();
                                 form.setFieldsValue({ addressType: 'someoneelse', transferType: activekey })
                             }}>
-                                <Tabs.TabPane tab="Domestic USD Transfer" className="text-white" key={"domestic"}></Tabs.TabPane>
-                                <Tabs.TabPane tab="International USD Swift" className="text-white" key={"international"}></Tabs.TabPane>
+                                <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz" key={"domestic"}></Tabs.TabPane>
+                                <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"}></Tabs.TabPane>
                             </Tabs>
                         </Col>
                     </Row>
@@ -113,7 +113,7 @@ const SomeoneComponent = (props) => {
                 <Row gutter={[16, 16]} className={'pb-16'}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item
-                            className="custom-forminput custom-label mb-0"
+                            className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
                             name="favouriteName"
                             required
                             rules={[
@@ -151,7 +151,7 @@ const SomeoneComponent = (props) => {
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
                                 name="firstName"
                                 required
                                 rules={[
@@ -179,7 +179,7 @@ const SomeoneComponent = (props) => {
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
                                 name="lastName"
                                 required
                                 rules={[
@@ -207,7 +207,7 @@ const SomeoneComponent = (props) => {
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
                                 name={"relation"}
                                 required
                                 rules={[
@@ -241,7 +241,7 @@ const SomeoneComponent = (props) => {
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
                                 name="line1"
                                 required
                                 rules={[
@@ -269,7 +269,7 @@ const SomeoneComponent = (props) => {
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
                                 name="line2"
                                 rules={[
                                     {
@@ -288,7 +288,7 @@ const SomeoneComponent = (props) => {
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
                                 name="line3"
                                 rules={[
                                     {
@@ -310,7 +310,7 @@ const SomeoneComponent = (props) => {
                 {/* <Divider /> */}
                 <Paragraph className="mb-8 fw-500 text-white  mt-16" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                 <PayeeBankDetails form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />
-                <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16">Please upload supporting docs for transaction*</Paragraph>
+                <Paragraph className="mb-0 fs-14 text-white fw-500 mt-24">Please upload supporting docs for transaction*</Paragraph>
                 <AddressDocumnet documents={documents || null} onDocumentsChange={(docs) => {
                         setDocuments(docs)
                     }}/>

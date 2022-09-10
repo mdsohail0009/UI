@@ -343,7 +343,7 @@ const Verifications = (props) => {
                         onFinish={transferDetials}
                         autoComplete="off">
                         {verifyData.isPhoneVerified === true && (<>
-                            <Text className="text-upper fw-600 mb-4 text-white-50 pt-16">
+                            <Text className="text-upper fw-300 mb-4 text-white-50 pt-16">
                                 Phone verification code *
                             </Text>
                             <Form.Item
@@ -427,7 +427,7 @@ const Verifications = (props) => {
                         </>
                         )}
                         {verifyData.twoFactorEnabled === true && (<>
-                            <Text className="text-upper fw-600 mb-4 text-white-50 pt-16">
+                            <Text className="text-upper fw-300 mb-4 text-white-50 pt-16">
                                 Authenticator code *
                             </Text>
                             <Form.Item
