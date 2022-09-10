@@ -10,6 +10,7 @@ import { RecipientAddress } from "../../addressbook.v2/recipient.details";
 import { confirmTransaction, createPayee, payeeAccountObj, savePayee } from "../api";
 import DomesticTransfer from "./domestic.transfer";
 import InternationalTransfer from "./international.transfer";
+import Translate from "react-translate-component";
 const { Option } = Select;
 const { Paragraph } = Typography;
 class BusinessTransfer extends Component {
@@ -114,7 +115,11 @@ class BusinessTransfer extends Component {
                             </Form.Item>
                         </Col>
                     </Row>
-                    <Paragraph className="mb-8  text-white fw-500 mt-16" style={{ fontSize: 18 }} >Recipient's Details</Paragraph>
+                    <Translate style={{ fontSize: 18 }}
+                    content="Beneficiary_Details"
+                    component={Paragraph}
+                    className="mb-8  text-white fw-500 mt-16"
+                />
                     {/* <Divider /> */}
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -175,7 +180,7 @@ class BusinessTransfer extends Component {
                         <RecipientAddress />
                     </Row>
 
-                    <Paragraph className="mb-8  text-white fw-500 mt-16" style={{ fontSize: 18 }}>Recipient's Bank Details</Paragraph>
+                    <Paragraph className="mb-8  text-white fw-500 mt-16" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                     {/* <Divider /> */}
                     <DomesticTransfer />
                     <Paragraph className="mb-8 fs-14 text-white fw-500 mt-16">Please upload supporting docs for transaction*</Paragraph>

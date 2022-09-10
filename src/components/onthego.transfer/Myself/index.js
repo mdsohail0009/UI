@@ -7,7 +7,7 @@ import { validateContentRule } from "../../../utils/custom.validator";
 import { connect } from "react-redux";
 import Loader from "../../../Shared/loader";
 import {confirmTransaction} from '../api'
-
+const { Paragraph } = Typography;
 
 const { Option } = Select;
 const { Text } = Typography;
@@ -180,7 +180,11 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     onBlur={(e)=>getBankDeails(e)}/>
                 </Form.Item>
             </Col>}</Row>
-        <h2 style={{ fontSize: 18, color: "white" }} className="mt-16">Recipient's details</h2>
+            <Translate style={{ fontSize: 18 }}
+                    content="Beneficiary_Details"
+                    component={Paragraph}
+                    className="mb-8  text-white fw-500 mt-16"
+                />
 
         <div className="box basic-info alert-info-custom mt-16">
             <Row>
@@ -230,7 +234,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             </Row>
         </div>
 
-        <h2 style={{ fontSize: 18, color: "white" }} className="mt-16">Bank details</h2>
+        <Paragraph className="mb-8  text-white fw-500 mt-16" style={{ fontSize: 18 }}>Bank Details</Paragraph>
         {currency == 'EUR' && isBusiness && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
             <Form.Item
                 className="custom-forminput custom-label mb-0"

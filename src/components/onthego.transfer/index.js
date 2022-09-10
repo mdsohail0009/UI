@@ -336,6 +336,12 @@ class OnthegoFundTransfer extends Component {
                                 </Col>
                             </Row>
                         )}
+                        {(filterObj.length > 0) && <div className="success-pop text-center" style={{ marginTop: '20px' }}>
+                            <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
+                            <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
+                            <p className="fs-16 text-white-30 fw-200 mb-0"> {apicalls.convertLocalLang('address_available')} </p>
+                            <a onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</a>
+                        </div>}
                     </ul>
 
                     <Title className="fs-24 fw-600 text-white">Past Recipients</Title>
@@ -343,7 +349,7 @@ class OnthegoFundTransfer extends Component {
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                         {pastPayees?.map((item, idx) =>
                             <Row className="fund-border c-pointer" onClick={async () => {
-                                if (!["myself", "1stparty", "ownbusiness"].includes(item.addressType?.toLowerCase()) || this.props.selectedCurrency != "EUR") {
+                                if (!["myself", "1stparty", "ownbusiness"].includes(item.addressType?.toLowerCase())) {
                                     this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item }, () => this.chnageStep("reasonfortransfer"))
                                 } else {
                                     this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item });
@@ -370,14 +376,15 @@ class OnthegoFundTransfer extends Component {
                             </Row>
 
                         )}
+                        {(pastPayees.length > 0) && <div className="success-pop text-center" style={{ marginTop: '20px' }}>
+                            <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
+                            <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
+                            <p className="fs-16 text-white-30 fw-200 mb-0"> {'You have no past recipients'} </p>
+                            <a onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</a>
+                        </div>}
                     </ul>
                 </>}
-                {(!filterObj.length > 0) && <div className="success-pop text-center" style={{ marginTop: '20px' }}>
-                    <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
-                    <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
-                    <p className="fs-16 text-white-30 fw-200 mb-0"> {apicalls.convertLocalLang('address_available')} </p>
-                    <a onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</a>
-                </div>}
+               
             </React.Fragment>,
             reasonfortransfer: <React.Fragment>
                 <div className="mb-16 text-left">
@@ -492,7 +499,7 @@ class OnthegoFundTransfer extends Component {
                                         if (!["myself", "1stparty", "ownbusiness"].includes(this.state.selectedPayee.addressType?.toLowerCase())) {
                                             validateFileds = validateFileds.concat(["reasionOfTransfer", "files"]);
                                         }
-                                        this.reasonForm.current.validateFields(validateFileds).then(() => {
+                                        this.reasonForm.current.validateFields(validateFileds).then(async() => {
                                             const fieldValues = this.reasonForm.current.getFieldsValue();
                                             this.setState({ ...this.state, loading: true, errorMessage: null });
                                             const obj = {
@@ -503,20 +510,20 @@ class OnthegoFundTransfer extends Component {
                                                 "isInternational": null,
                                                 "documents": this.state.codeDetails?.documents
                                             }
-                                            updatePayee(obj)
-                                                .then(async (response) => {
-                                                    this.setState({ ...this.state, loading: true, errorMessage: null });
-                                                    if (response.ok) {
-                                                        const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasionOfTransfer, amount: this.state.amount });
+                                            // updatePayee(obj)
+                                            //     .then(async (response) => {
+                                            //         this.setState({ ...this.state, loading: true, errorMessage: null });
+                                            //         if (response.ok) {
+                                                        const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasionOfTransfer, amount: this.state.amount,documents: this.state.codeDetails?.documents});
                                                         if (res.ok) {
                                                             this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => this.chnageStep("reviewdetails"));
                                                         } else {
                                                             this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, ...fieldValues }, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
                                                         }
-                                                    } else {
-                                                        this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, ...fieldValues }, loading: false, errorMessage: response.data?.message || response.data || response.originalError.message });
-                                                    }
-                                                })
+                                                //     } else {
+                                                //         this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, ...fieldValues }, loading: false, errorMessage: response.data?.message || response.data || response.originalError.message });
+                                                //     }
+                                                // })
 
                                         }).catch(() => { });
                                     }}
@@ -547,7 +554,7 @@ class OnthegoFundTransfer extends Component {
                     <Row gutter={24}>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Text className="mb-8 fs-14 text-white fw-500 text-upper mt-16">Transfer details</Text>
+                                <Text className="mb-8 fs-14 text-white fw-500  mt-16">Transfer details</Text>
 
                                 {/* <div><Link >Edit
                                 </Link>
@@ -557,8 +564,8 @@ class OnthegoFundTransfer extends Component {
                         {"  "}
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper mt-16">How much you will receive</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper mt-16  text-right">
+                                <Title className="mb-4 fs-10 text-white fw-400  mt-16">How much you will receive</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500  mt-16  text-right">
                                     <NumberFormat
                                         value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
                                         thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
@@ -566,30 +573,30 @@ class OnthegoFundTransfer extends Component {
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Total fees</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right"><NumberFormat
+                                <Title className="mb-4 fs-10 text-white fw-400  ">Total fees</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500   text-right"><NumberFormat
                                     value={`${(this.state.reviewDetails?.comission)}`}
                                     thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
                             </div>
                         </Col>
                         {/* <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Total we will convert</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right"></Title>
+                                <Title className="mb-4 fs-10 text-white fw-400  ">Total we will convert</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500   text-right"></Title>
                             </div>
                         </Col> */}
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Withdrawal amount</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right"><NumberFormat
+                                <Title className="mb-4 fs-10 text-white fw-400  ">Withdrawal amount</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500   text-right"><NumberFormat
                                     value={`${(this.state.reviewDetails?.requestedAmount)}`}
                                     thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
                             </div>
                         </Col>
                         {/* <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Description</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">Bike</Title>
+                                <Title className="mb-4 fs-10 text-white fw-400  ">Description</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500   text-right">Bike</Title>
                             </div>
                         </Col> */}
                     </Row>
@@ -597,7 +604,7 @@ class OnthegoFundTransfer extends Component {
                     <Row gutter={24} className=" text-white mt-36">
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24} >
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Text className="mb-8 fs-14 text-white fw-500 text-upper mt-16">Recipient details</Text>
+                                <Text className="mb-8 fs-14 text-white fw-500  mt-16">Recipient details</Text>
 
                                 {/* <div><Link >Change
                                 </Link>
@@ -606,44 +613,63 @@ class OnthegoFundTransfer extends Component {
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper mt-16">Save Whitelist name as</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper mt-16  text-right">{this.state.reviewDetails?.favouriteName}</Title>
+                                <Title className="mb-4 fs-10 text-white fw-400  mt-16">Save Whitelist name as</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500  mt-16  text-right">{this.state.reviewDetails?.favouriteName}</Title>
                             </div>
                         </Col>
                         {this.state.reviewDetails?.name && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Beneficiary Name</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.name}</Title>
+                                <Title className="mb-4 fs-10 text-white fw-400  ">Beneficiary Name</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500   text-right">{this.state.reviewDetails?.name}</Title>
                             </div>
                         </Col>}
                         {this.state.reviewDetails?.firstName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">First Name</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.firstName}</Title>
+                                <Title className="mb-4 fs-10 text-white fw-400  ">First Name</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500   text-right">{this.state.reviewDetails?.firstName}</Title>
                             </div>
                         </Col>}
                         {this.state.reviewDetails?.lastName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Last Name</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.lastName}</Title>
+                                <Title className="mb-4 fs-10 text-white fw-400  ">Last Name</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500   text-right">{this.state.reviewDetails?.lastName}</Title>
                             </div>
                         </Col>}
                         {this.state.reviewDetails?.iban && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">IBAN </Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.iban}</Title>
+                                <Title className="mb-4 fs-10 text-white fw-400  ">IBAN </Title>
+                                <Title className="mb-4 fs-10 text-white fw-500   text-right">{this.state.reviewDetails?.iban}</Title>
                             </div>
                         </Col>}
                         {this.state.reviewDetails?.customerRemarks && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Reason for transfer </Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
+                                <Title className="mb-4 fs-10 text-white fw-400  ">Reason for transfer </Title>
+                                <Title className="mb-4 fs-10 text-white fw-500   text-right">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
                             </div>
                         </Col>}
+                        {this.state.reviewDetails?.addressType== "someoneelse" && this.state.reviewDetails?.transferType!="sepa" &&<>
+                        {this.state.reviewDetails?.abaRoutingCode && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
+                                <Title className="mb-4 fs-10 text-white fw-400  ">ABA Routing code</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500   text-right">{this.state.reviewDetails?.abaRoutingCode || "-"}</Title>
+                            </div>
+                        </Col>}
+                        {this.state.reviewDetails?.swiftRouteBICNumber && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
+                                <Title className="mb-4 fs-10 text-white fw-400  ">SWIFT / BIC Code</Title>
+                                <Title className="mb-4 fs-10 text-white fw-500   text-right">{this.state.reviewDetails?.swiftRouteBICNumber || "-"}</Title>
+                            </div>
+                        </Col>}
+                        {this.state.reviewDetails?.accountNumber && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
+                                <Title className="mb-4 fs-10 text-white fw-400  ">Account Number </Title>
+                                <Title className="mb-4 fs-10 text-white fw-500   text-right">{this.state.reviewDetails?.accountNumber || "-"}</Title>
+                            </div>
+                        </Col>}</>}
                         {this.state.reviewDetails?.bankName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Bank Name </Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state?.reviewDetails?.bankName || "-"}</Title>
+                                <Title className="mb-4 fs-10 text-white fw-400  ">Bank Name </Title>
+                                <Title className="mb-4 fs-10 text-white fw-500   text-right">{this.state?.reviewDetails?.bankName || "-"}</Title>
                             </div>
                         </Col>}
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
