@@ -68,12 +68,17 @@ class OthersBusiness extends Component {
         this.setState({ ...this.state, isLoading: true, errorMessage: null, isBtnLoading: true });
         const response = await savePayee(_obj);
         if (response.ok) {
-            const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
-            if (confirmRes.ok) {
-                this.props.onContinue(confirmRes.data);
-                this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
+            if (this.props.type !== "manual") {
+                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
+                if (confirmRes.ok) {
+                    this.props.onContinue(confirmRes.data);
+                    this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
+                } else {
+                    this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false, isBtnLoading: false });
+                }
             } else {
-                this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false, isBtnLoading: false });
+                this.props.onContinue({ close: true, isCrypto: false });
+                this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
             }
 
         } else {
@@ -156,7 +161,7 @@ class OthersBusiness extends Component {
                                 />
                             </Form.Item>
                         </Col>
-                       {this.props.type!=="manual"&& <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        {this.props.type !== "manual" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
                                 name="relation"

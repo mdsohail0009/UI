@@ -819,7 +819,7 @@ class AddressBook extends Component {
 					visible={this.state.fiatDrawer}
 					closeIcon={null}
 					className="side-drawer w-50p">
-					<AddressBookV3 type="manual" />
+					<AddressBookV3 type="manual" onContinue={(obj)=>this.closeBuyDrawer(obj)} />
 				</Drawer>
 				<Modal
 					title={
