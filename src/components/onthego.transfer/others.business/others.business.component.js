@@ -1,4 +1,4 @@
-import { Form, Row, Col, Divider, Typography, Input, Button, Alert } from "antd";
+import { Form, Row, Col, Divider, Typography, Input, Button, Alert, Image } from "antd";
 import React, { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
 import { validateContentRule } from "../../../utils/custom.validator";
@@ -9,8 +9,9 @@ import BusinessTransfer from "./transfer";
 import ConnectStateProps from "../../../utils/state.connect";
 import Loader from "../../../Shared/loader";
 import Translate from "react-translate-component";
-const { Paragraph, Text } = Typography;
-const { TextArea } = Input;
+import alertIcon from '../../../assets/images/pending.png';
+
+const { Paragraph, Text, Title } = Typography;
 class OthersBusiness extends Component {
     form = React.createRef();
     state = {
@@ -19,7 +20,8 @@ class OthersBusiness extends Component {
         isLoading: true,
         details: {},
         ibanDetails: {},
-        docDetails: {}, isBtnLoading: false
+        docDetails: {}, isBtnLoading: false,
+        showDeclartion: false
     };
     componentDidMount() {
         this.loadDetails();
@@ -78,8 +80,8 @@ class OthersBusiness extends Component {
                     this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false, isBtnLoading: false });
                 }
             } else {
-                this.props.onContinue({ close: true, isCrypto: false });
-                this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
+                // this.props.onContinue({ close: true, isCrypto: false });
+                this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false, showDeclartion: true });
             }
 
         } else {
@@ -89,7 +91,17 @@ class OthersBusiness extends Component {
     }
     render() {
         const { isUSDTransfer } = this.props;
-        if (isUSDTransfer) { return <BusinessTransfer amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} /> }
+        if (this.state.showDeclartion) {
+            return <div className="text-center">
+                <Image width={80} preview={false} src={alertIcon} />
+                <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
+                <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
+                   Please sign using link received in email to whitelist your address. `}</Text>
+                <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
+                <div className="my-25"><Button onClick={() => this.props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn text-textDark">BACK</Button></div>
+            </div>
+        }
+        if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} /> }
         else {
             return <>
                 {this.state.errorMessage && <Alert type="error" showIcon closable={false} description={this.state.errorMessage} />}
@@ -132,10 +144,10 @@ class OthersBusiness extends Component {
                         </Col>
                     </Row>
                     <Translate style={{ fontSize: 18 }}
-                    content="Beneficiary_Details"
-                    component={Paragraph}
-                    className="mb-8  text-white fw-500 mt-16"
-                />
+                        content="Beneficiary_Details"
+                        component={Paragraph}
+                        className="mb-8  text-white fw-500 mt-16"
+                    />
                     {/* <Divider /> */}
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -166,7 +178,7 @@ class OthersBusiness extends Component {
                                 />
                             </Form.Item>
                         </Col>
-                        {this.props.type !== "manual" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
                                 name="relation"
@@ -192,7 +204,7 @@ class OthersBusiness extends Component {
                                 />
 
                             </Form.Item>
-                        </Col>}
+                        </Col>
                         <RecipientAddress />
                     </Row>
 
