@@ -84,7 +84,7 @@ const SomeoneComponent = (props) => {
     return (<React.Fragment>
         <div ref={useDivRef}></div>
         
-        {errorMessage && <Alert type="error" showIcon closable={false} message={"An error occured"} description={errorMessage} />}
+        {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
         <>
                 {props.currency === "USD" && <>
                     <Row gutter={[16, 16]}>
@@ -308,7 +308,7 @@ const SomeoneComponent = (props) => {
                     </Row>
                 </>
                 {/* <Divider /> */}
-                <Paragraph className="mb-8 fw-500 text-white  mt-16" style={{ fontSize: 18 }}>Bank Details</Paragraph>
+                <Paragraph className="mb-8  text-white fw-500 mt-16" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                 <PayeeBankDetails form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />
                 <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16">Please upload supporting docs for transaction*</Paragraph>
                 <AddressDocumnet documents={documents || null} onDocumentsChange={(docs) => {

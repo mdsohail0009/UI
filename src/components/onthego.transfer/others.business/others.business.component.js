@@ -8,6 +8,7 @@ import { confirmTransaction, createPayee, fetchIBANDetails, payeeAccountObj, sav
 import BusinessTransfer from "./transfer";
 import ConnectStateProps from "../../../utils/state.connect";
 import Loader from "../../../Shared/loader";
+import Translate from "react-translate-component";
 const { Paragraph, Text } = Typography;
 const { TextArea } = Input;
 class OthersBusiness extends Component {
@@ -130,7 +131,11 @@ class OthersBusiness extends Component {
                             </Form.Item>
                         </Col>
                     </Row>
-                    <Paragraph className="mb-8 fs-18 text-white fw-500 mt-16" style={{ fontSize: 18 }} >Recipient's Details</Paragraph>
+                    <Translate style={{ fontSize: 18 }}
+                    content="Beneficiary_Details"
+                    component={Paragraph}
+                    className="mb-8  text-white fw-500 mt-16"
+                />
                     {/* <Divider /> */}
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -191,7 +196,7 @@ class OthersBusiness extends Component {
                         <RecipientAddress />
                     </Row>
 
-                    <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16">Recipient's Bank Details</Paragraph>
+                    <Paragraph className="mb-8  text-white fw-500 mt-16" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                     <Divider />
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
