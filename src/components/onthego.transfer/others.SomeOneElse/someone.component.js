@@ -29,11 +29,17 @@ const SomeoneComponent = (props) => {
         getpayeeCreate();
     }, [])
     const getpayeeCreate = async() =>{
-        setMailLoader(true)
-        const createPayeeData = await createPayee(props.userProfile.id,'',addressOptions.addressType);
+        setMailLoader(true);
+        const createPayeeData = await createPayee(props.userProfile.id,props.selectedAddress?.id || "",addressOptions.addressType);
         if(createPayeeData.ok){
             setCreatePayeeObj(createPayeeData.data);
             setMailLoader(false)
+            if(props.selectedAddress?.id){
+                
+                form.current.setFieldsValue({...createPayeeData.data,payeeAccountModels:createPayeeData.data.payeeAccountModels[0]})
+                setDocuments(createPayeeData.data.payeeAccountModels[0].documents)
+            }
+            
         }else{
             setMailLoader(false)
         }
@@ -45,8 +51,9 @@ const SomeoneComponent = (props) => {
         obj.payeeAccountModels[0].currencyType = "Fiat";
         obj.payeeAccountModels[0].documents = documents;
         obj.payeeAccountModels[0].walletCode = props.currency;
+        if(props.selectedAddress?.id){obj.payeeAccountModels[0].id = createPayeeObj.payeeAccountModels[0].id;}
         obj['customerId'] = props.userProfile.id;
-        if(props.type !== "manual")obj['amount'] = props.onTheGoObj.amount;
+        if(props.type !== "manual"){obj['amount'] = props.onTheGoObj.amount;}
         obj['transferType'] = props.currency === "USD" ? addressOptions.domesticType:'sepa' ;
         obj['addressType'] = addressOptions.addressType ;
         setBtnLoading(true)
@@ -193,6 +200,7 @@ const SomeoneComponent = (props) => {
                                 />
                             </Form.Item>
                         </Col>
+                        
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
@@ -331,7 +339,7 @@ const SomeoneComponent = (props) => {
                 </>
                 {/* <Divider /> */}
                 <Paragraph className="mb-8  text-white fw-500 mt-16" style={{ fontSize: 18 }}>Bank Details</Paragraph>
-                <PayeeBankDetails form={form} type={props.type} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />
+                {((props.selectedAddress?.id && createPayeeObj)||!props.selectedAddress?.id ) &&<PayeeBankDetails selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} type={props.type} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />}
                 <Paragraph className="fw-300 mb-0 pb-4 ml-12 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
                 <AddressDocumnet documents={documents || null} onDocumentsChange={(docs) => {
                         setDocuments(docs)

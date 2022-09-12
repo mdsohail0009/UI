@@ -19,7 +19,7 @@ class BusinessTransfer extends Component {
         errorMessage: null,
         isLoading: true,
         details: {},
-        selectedTab: "domestic",isBtnLoading:false
+        selectedTab: "domestic", isBtnLoading: false
     };
     componentDidMount() {
         this.loadDetails();
@@ -56,18 +56,22 @@ class BusinessTransfer extends Component {
         _obj.transferType = selectedTab;
         _obj.amount = this.props.amount;
         delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
-        this.setState({ ...this.state, errorMessage: null, isLoading: false,isBtnLoading:true });
+        this.setState({ ...this.state, errorMessage: null, isLoading: false, isBtnLoading: true });
         const response = await savePayee(_obj);
         if (response.ok) {
-            const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
-            if (confirmRes.ok) {
-                this.props.onContinue(confirmRes.data);
-                this.setState({ ...this.state, isLoading: false, errorMessage: null,isBtnLoading:false });
+            if (this.props.type != "manual") {
+                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
+                if (confirmRes.ok) {
+                    this.props.onContinue(confirmRes.data);
+                    this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
+                } else {
+                    this.setState({ ...this.state, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false, isBtnLoading: false });
+                }
             } else {
-                this.setState({ ...this.state, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false, isBtnLoading: false });
+                this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
             }
         } else {
-            this.setState({ ...this.state, details: { ...details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false,isBtnLoading:false });
+            this.setState({ ...this.state, details: { ...details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, isBtnLoading: false });
         }
     }
     handleTabChange = (key) => {
@@ -116,10 +120,10 @@ class BusinessTransfer extends Component {
                         </Col>
                     </Row>
                     <Translate style={{ fontSize: 18 }}
-                    content="Beneficiary_Details"
-                    component={Paragraph}
-                    className="mb-8  text-white fw-500 mt-16"
-                />
+                        content="Beneficiary_Details"
+                        component={Paragraph}
+                        className="mb-8  text-white fw-500 mt-16"
+                    />
                     {/* <Divider /> */}
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -322,7 +326,7 @@ class BusinessTransfer extends Component {
                                     size="large"
                                     className="pop-btn mb-36"
                                     style={{ minWidth: 300 }}
-                                loading={this.state.isBtnLoading}>
+                                    loading={this.state.isBtnLoading}>
                                     Continue
                                 </Button>
                             </Col>

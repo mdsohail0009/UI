@@ -167,9 +167,9 @@ const getPayeeLu = (customerId,currency) => {
 const saveTransferData=(obj)=>{
 	return apiClient.post(ApiControllers.addressbook+'payee',obj)
 }
-const getRecipientData=(customerId,type)=>{
+const getRecipientData=(customerId,type,addressbookId)=>{
 	return apiClient.get(
-        ApiControllers.addressbook + `payee/Withdraw/Favourite/00000000-0000-0000-0000-000000000000/${customerId}/${type}`
+        ApiControllers.addressbook + `payee/Withdraw/Favourite/${addressbookId}/${customerId}/${type}`
     );
 }
 let apicalls = {

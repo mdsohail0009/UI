@@ -152,7 +152,7 @@ class OthersBusiness extends Component {
                                 <Input
                                     maxLength={50}
                                     className="cust-input"
-                                    placeholder={"Save Whitelist name as"}
+                                    placeholder={"Save Whitelist Name as"}
                                 />
 
 

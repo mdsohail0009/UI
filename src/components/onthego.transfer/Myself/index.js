@@ -1,13 +1,14 @@
 
 import React, { useEffect, useState } from "react";
-import { Form, Row, Col, Typography, Select, Input, Tabs, Button,Alert, Spin } from 'antd'
+import { Form, Row, Col, Typography, Select, Input, Tabs, Button,Alert, Spin,Image } from 'antd'
 import Translate from "react-translate-component";
 import apiCalls from "../../../api/apiCalls"
 import { validateContentRule } from "../../../utils/custom.validator";
 import { connect } from "react-redux";
 import Loader from "../../../Shared/loader";
 import {confirmTransaction} from '../api'
-const { Paragraph } = Typography;
+import alertIcon from '../../../assets/images/pending.png';
+const { Paragraph,Title } = Typography;
 
 const { Option } = Select;
 const { Text } = Typography;
@@ -16,8 +17,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     const [form] = Form.useForm();
     const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType: currency === "EUR" ? "sepa" : "swift", domesticType: 'domestic', tabType: 'domestic' });
     const [bankDetails, setbankDetails] = useState({})
-    const [saveTransferObj]= useState({"id":"00000000-0000-0000-0000-000000000000","customerId":props.userConfig.id,"favouriteName":"","firstName":"","lastName":"","beneficiaryName":"","line1":"","line2":"","line3":"","transferType":"","addressType":"","isAgree":true,"info":"","isBankContact":true,"relation":"","reasonOfTransfer":"","amount":0,"payeeAccountModels":[{"id":"00000000-0000-0000-0000-000000000000","line1":"","line2":"","city":"","state":"","country":"","postalCode":"","currencyType":"","walletCode":"","accountNumber":"","swiftRouteBICNumber":"","bankName":"","userCreated":props?.userConfig.firstName + props?.userConfig.lastName,"iban":"","bic":"","bankBranch":"","abaRoutingCode":"","documents":null}]})
-    const [createTransfer]=useState({"favouriteName":"","accountNumber":"","swiftRouteBICNumber":"","bankName":"","iban":"","abaRoutingCode":"","line1":"","line2":""})
+    const [saveTransferObj,setsaveObj]= useState({"id":"00000000-0000-0000-0000-000000000000","customerId":props.userConfig.id,"favouriteName":"","firstName":"","lastName":"","beneficiaryName":"","line1":"","line2":"","line3":"","transferType":"","addressType":"","isAgree":true,"info":"","isBankContact":true,"relation":"","reasonOfTransfer":"","amount":0,"payeeAccountModels":[{"id":"00000000-0000-0000-0000-000000000000","line1":"","line2":"","city":"","state":"","country":"","postalCode":"","currencyType":"","walletCode":"","accountNumber":"","swiftRouteBICNumber":"","bankName":"","userCreated":props?.userConfig.firstName + props?.userConfig.lastName,"iban":"","bic":"","bankBranch":"","abaRoutingCode":"","documents":null}]})
+    const [createTransfer,setcreateTransfer]=useState({"favouriteName":"","accountNumber":"","swiftRouteBICNumber":"","bankName":"","iban":"","abaRoutingCode":"","line1":"","line2":""})
     const [recipientDetails,setRecipientDetails]=useState({})
 	const [isBtnLoading, setBtnLoading] = useState(false);
     const [isLoading,setLoader]=useState(true)
@@ -25,15 +26,28 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     const [errorMessage,seterrorMessage]=useState();
     const useDivRef = React.useRef(null);
     const [validIban,setValidIban]=useState(true)
+    const [showDeclartion, setShowDeclartion] = useState(false);
     useEffect(() => {
         getRecipientDetails()
     }, [])
-    const getRecipientDetails=async()=>{setLoader(true)
-        const response = await apiCalls.getRecipientData(props.userConfig.id,isBusiness?'OwnBusiness':'MySelf');
+    const getRecipientDetails = async () => {
+        setLoader(true)
+        const response = await apiCalls.getRecipientData(props.userConfig.id, isBusiness ? 'OwnBusiness' : 'MySelf', props.selectedAddress?.id || "00000000-0000-0000-0000-000000000000");
         if (response.ok) {
-            setRecipientDetails(response.data);setLoader(false)
-        }else{
-            seterrorMessage(isErrorDispaly(response));setLoader(false)
+            if (props.selectedAddress?.id) {
+                setLoader(false);setRecipientDetails(response.data)
+                setsaveObj(response.data)
+                setbankDetails(response.data.payeeAccountModels[0])
+                setcreateTransfer(response.data)
+                let obj=Object.assign({},response.data.payeeAccountModels[0])
+                form.setFieldsValue({favouriteName:response.data.favouriteName,accountNumber:obj.accountNumber,swiftRouteBICNumber:obj.swiftRouteBICNumber,
+                bankName:obj.bankName,iban:obj.iban,abaRoutingCode:obj.abaRoutingCode,line1:obj.line1,line2:obj.line2})
+            setAddressOptions({addressType:response.data.addressType,transferType:response.data.transferType,domesticType:response.data.transferType,tabType:response.data.transferType})
+            } else {
+                setRecipientDetails(response.data); setLoader(false)
+            }
+        } else {
+            seterrorMessage(isErrorDispaly(response)); setLoader(false)
         }
     }
     const saveTransfer = async(values) => {
@@ -66,14 +80,19 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         saveObj.amount=onTheGoObj?.amount;
         const response = await apiCalls.saveTransferData(saveObj);
         if (response.ok) {
-            const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: onTheGoObj?.amount, reasonOfTransfer: null })
-            if (confirmRes.ok) {
-                setBtnLoading(false);
-                props.onContinue(confirmRes.data);
-            } else {
-                setBtnLoading(false);
-                seterrorMessage(isErrorDispaly(confirmRes));
-                useDivRef.current.scrollIntoView();
+            if (props.type !== "manual") {
+                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: onTheGoObj?.amount, reasonOfTransfer: null })
+                if (confirmRes.ok) {
+                    setBtnLoading(false);
+                    props.onContinue(confirmRes.data);
+                } else {
+                    setBtnLoading(false);
+                    seterrorMessage(isErrorDispaly(confirmRes));
+                    useDivRef.current.scrollIntoView();
+                }
+            }
+            else {
+                setShowDeclartion(true)
             }
         }else{seterrorMessage(isErrorDispaly(response));
             useDivRef.current.scrollIntoView();
@@ -119,10 +138,18 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     return <>
     <div ref={useDivRef}></div>
         <Form layout="vertical" form={form} onFinish={saveTransfer} initialValues={{createTransfer}} scrollToFirstError>
-       <> {currency === "USD" && <>
+        {showDeclartion && <div className="text-center">
+                <Image width={80} preview={false} src={alertIcon} />
+                <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
+                <Text className="text-white-30">{`Declaration form has been sent to ${props.userProfile?.email}. 
+                   Please sign using link received in email to whitelist your address. `}</Text>
+                <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
+                <div className="my-25"><Button onClick={() => props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn text-textDark">BACK</Button></div>
+            </div>}
+       {!showDeclartion &&<> {currency === "USD" && <>
             <Row gutter={[16, 16]}>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
-                    <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });form.resetFields();seterrorMessage(null) }}>
+                    <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });form.resetFields();seterrorMessage(null) }} activeKey={addressOptions.tabType}>
                         <Tabs.TabPane tab="Domestic USD Transfer" className="text-white"  key={"domestic"}></Tabs.TabPane>
                         <Tabs.TabPane tab="International USD Swift" className="text-white" key={"international"}></Tabs.TabPane>
                     </Tabs>
@@ -455,7 +482,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 <Translate content="continue" />
             </Button>
         </div></>}
-        </>
+        </>}
         </Form>
     </>
 

@@ -88,6 +88,9 @@ const Verifications = (props) => {
     };
 
     const verifyEmailOtp = async (values) => {
+        if(!email.code){
+            setEmail({ ...email, errorMsg: 'Please enter email verification code', verified:false});
+        }
         if(email.code && email.code>5){
         setEmail({ ...email, errorMsg: '', showRuleMsg: '',btnLoader:true })
         let response = await verifyEmailCode(props.userConfig.id, email.code);
@@ -142,6 +145,9 @@ const Verifications = (props) => {
         }
     };
     const verifyPhoneOtp = async () => {
+        if(!phone.code){
+            setPhone({ ...phone, errorMsg: 'Please enter phone verification code', verified: false, btnLoader: false });
+        }
         if (phone.code && phone.code > 5) {
             setPhone({ ...phone, errorMsg: '', showRuleMsg: '', btnLoader: true })
             let response = await getVerification(props.userConfig.id, phone.code);
@@ -184,6 +190,9 @@ const Verifications = (props) => {
         }
     }
     const verifyAuthenticatorOTP = async () => {
+        if(!authenticator.code){
+            return setAuthenticator({ ...authenticator, errorMsg: 'Please enter authenticator code', verified: false, btnLoader:false });
+        }
         if(authenticator.code && authenticator.code>5){
             setAuthenticator({ ...authenticator, errorMsg: '', verified: false, btnLoader:true });
         let response = await getAuthenticator(authenticator.code, props.userConfig.userId);
@@ -237,7 +246,7 @@ const Verifications = (props) => {
         ${"c-notallowed"}`} >Verification code sent</Text></Button>
             <Tooltip
                 placement="topRight"
-                title={`Haven\'t received code ? Request new code in ${phoneSeconds} seconds. The code will expire after 30mins.`}>
+                title={`Haven't received code? Request new code in ${phoneSeconds} seconds. The code will expire after 30 minutes.`}>
                 <span className="icon md info mr-8" />
             </Tooltip>
         </>
@@ -357,7 +366,7 @@ const Verifications = (props) => {
                         autoComplete="off">
                         {verifyData.isPhoneVerified === true && (<>
                             <Text className="fs-14 mb-8 text-white d-block fw-200">
-                                Phone verification code *
+                            Phone Verification Code *
                             </Text>
                             <Form.Item
                                 name="emailCode"
@@ -409,7 +418,7 @@ const Verifications = (props) => {
                         )}
                         {verifyData.isEmailVerification === true && (<>
                             <Text className="fs-14 mb-8 text-white d-block fw-200">
-                                Email verification code *
+                            Email Verification Code *
                             </Text>
                             <Form.Item
                                 name="emailCode"
@@ -461,7 +470,7 @@ const Verifications = (props) => {
                         )}
                         {verifyData.twoFactorEnabled === true && (<>
                             <Text className="fs-14 mb-8 text-white d-block fw-200">
-                                Authenticator code *
+                            Authenticator Code *
                             </Text>
                             <Form.Item
                                 name="emailCode"
