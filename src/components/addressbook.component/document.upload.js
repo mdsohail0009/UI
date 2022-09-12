@@ -64,7 +64,7 @@ class AddressDocumnet extends Component {
                             multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                             showUploadList={false}
                             beforeUpload={(props) => {
-                                return props.name.split(".") < 2;
+                              //  return props.name.split(".").length < 2;
                             }}
                             onChange={({ file }) => {
                                 this.setState({ ...this.state, isDocLoading: true });
