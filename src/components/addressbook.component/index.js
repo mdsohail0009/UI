@@ -517,7 +517,7 @@ class AddressBook extends Component {
 			else
 				showFiat = !obj?.close;
 		};
-		this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat });
+		this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat,selectedObj:{} });
 		this.props.rejectCoinWallet();
 		this.props.clearFormValues();
 		this.props.clearCrypto();
