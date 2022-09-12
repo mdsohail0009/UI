@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Input, Row, Col, Form, Button, Typography, Radio, Tabs, Image, Alert } from 'antd';
+import { Input, Row, Col, Form, Button, Typography, Tabs, Image, Alert } from 'antd';
 import {createPayee, payeeAccountObj, savePayee, confirmTransaction} from "../api";
 import AddressDocumnet from "../../addressbook.component/document.upload";
 import PayeeBankDetails from "./bankdetails.component";
@@ -9,8 +9,9 @@ import { Link } from 'react-router-dom';
 import apiCalls from "../../../api/apiCalls";
 import ConnectStateProps from "../../../utils/state.connect";
 import Loader from "../../../Shared/loader";
+import alertIcon from '../../../assets/images/pending.png';
 const { Paragraph, Text, Title } = Typography;
-const { Search } = Input;
+const { Search,TextArea } = Input;
 
 const SomeoneComponent = (props) => {
     const [addressOptions, setAddressOptions] = useState({ addressType: "someoneelse", transferType: props.currency === "EUR" ? "sepa" : "swift", domesticType: 'domestic' });
@@ -20,6 +21,7 @@ const SomeoneComponent = (props) => {
     const [btnLoading, setBtnLoading] = useState(false);
     const [mainLoader, setMailLoader] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [showDeclartion, setShowDeclartion] = useState(false);
     const [form]=Form.useForm();
     const useDivRef = React.useRef(null);
 
@@ -27,11 +29,17 @@ const SomeoneComponent = (props) => {
         getpayeeCreate();
     }, [])
     const getpayeeCreate = async() =>{
-        setMailLoader(true)
-        const createPayeeData = await createPayee(props.userProfile.id,'',addressOptions.addressType);
+        setMailLoader(true);
+        const createPayeeData = await createPayee(props.userProfile.id,props.selectedAddress?.id || "",addressOptions.addressType);
         if(createPayeeData.ok){
             setCreatePayeeObj(createPayeeData.data);
             setMailLoader(false)
+            if(props.selectedAddress?.id){
+                
+                form.current.setFieldsValue({...createPayeeData.data,payeeAccountModels:createPayeeData.data.payeeAccountModels[0]})
+                setDocuments(createPayeeData.data.payeeAccountModels[0].documents)
+            }
+            
         }else{
             setMailLoader(false)
         }
@@ -43,24 +51,29 @@ const SomeoneComponent = (props) => {
         obj.payeeAccountModels[0].currencyType = "Fiat";
         obj.payeeAccountModels[0].documents = documents;
         obj.payeeAccountModels[0].walletCode = props.currency;
+        if(props.selectedAddress?.id){obj.payeeAccountModels[0].id = createPayeeObj.payeeAccountModels[0].id;}
         obj['customerId'] = props.userProfile.id;
-        obj['amount'] = props.onTheGoObj.amount;
+        if(props.type !== "manual"){obj['amount'] = props.onTheGoObj?.amount;}
         obj['transferType'] = props.currency === "USD" ? addressOptions.domesticType:'sepa' ;
         obj['addressType'] = addressOptions.addressType ;
         setBtnLoading(true)
         let payeesave = await savePayee(obj)
         if(payeesave.ok){
-            const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer })
-            if (confirmRes.ok) {
-                setBtnLoading(false);
-                props.onContinue(confirmRes.data);
-            } else {
-                setBtnLoading(false);
-                setErrorMessage(isErrorDispaly(confirmRes));
-                useDivRef.current.scrollIntoView();
+            if (props.type !== "manual") {
+                const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer })
+                if (confirmRes.ok) {
+                    setBtnLoading(false);
+                    props.onContinue(confirmRes.data);
+                } else {
+                    setBtnLoading(false);
+                    setErrorMessage(isErrorDispaly(confirmRes));
+                    useDivRef.current.scrollIntoView();
+                }
+            }else{
+                setShowDeclartion(true)
             }
         }else{
-            setBtnLoading(true);
+            setBtnLoading(false);
             setErrorMessage(isErrorDispaly(payeesave));
             useDivRef.current.scrollIntoView();
         }
@@ -82,16 +95,27 @@ const SomeoneComponent = (props) => {
         setBankdetails(data);
     }
     return (<React.Fragment>
+        {mainLoader && <Loader />}
+        {!mainLoader && <>
         <div ref={useDivRef}></div>
+            {showDeclartion && <div className="text-center">
+                <Image width={80} preview={false} src={alertIcon} />
+                <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
+                <Text className="text-white-30">{`Declaration form has been sent to ${props.userProfile?.email}. 
+                   Please sign using link received in email to whitelist your address. `}</Text>
+                <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
+                <div className="my-25"><Button onClick={() => props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn text-textDark">BACK</Button></div>
+            </div>}
         
-        {errorMessage && <Alert type="error" showIcon closable={false} message={"An error occured"} description={errorMessage} />}
-        <>
+        {!showDeclartion &&<>
                 {props.currency === "USD" && <>
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                             <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
-                                setAddressOptions({ ...addressOptions, domesticType: activekey }); form.resetFields();
-                                form.setFieldsValue({ addressType: 'someoneelse', transferType: activekey })
+                                setAddressOptions({ ...addressOptions, domesticType: activekey });
+                                debugger
+                                 form.current.resetFields();
+                                // form.current.setFieldsValue({ addressType: 'someoneelse', transferType: activekey })
                             }}>
                                 <Tabs.TabPane tab="Domestic USD Transfer" className="text-white" key={"domestic"}></Tabs.TabPane>
                                 <Tabs.TabPane tab="International USD Swift" className="text-white" key={"international"}></Tabs.TabPane>
@@ -99,14 +123,16 @@ const SomeoneComponent = (props) => {
                         </Col>
                     </Row>
                 </>}
-                {props.currency == 'EUR' && <h2 style={{ fontSize: 18, textAlign: 'center', color: "white" }}>SEPA transfer</h2>}
-                {mainLoader && <Loader />}
-        {!mainLoader && <>
+                {props.currency == 'EUR' && <h2 style={{ fontSize: 18, textAlign: 'center', color: "white" }}>SEPA Transfer</h2>}
+                
+        
+            {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
             <Form
                 ref={form}
                 onFinish={onSubmit}
                 autoComplete="off"
                 initialValues={{}}
+                scrollToFirstError
             >
                
                 <Row gutter={[16, 16]} className={'pb-16'}>
@@ -176,6 +202,7 @@ const SomeoneComponent = (props) => {
                                 />
                             </Form.Item>
                         </Col>
+                        
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
@@ -260,10 +287,12 @@ const SomeoneComponent = (props) => {
                                     "Address Line 1"
                                 }
                             >
-                                <Input
-                                    className="cust-input"
-                                    placeholder={"Address Line 1"}
-                                />
+                                    <TextArea
+                                        placeholder={'Address Line 1'}
+                                        className="cust-input cust-text-area address-book-cust"
+                                        autoSize={{ minRows: 1, maxRows: 2 }}
+                                        maxLength={100}
+                                    ></TextArea>
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -279,10 +308,12 @@ const SomeoneComponent = (props) => {
                                     "Address Line 2"
                                 }
                             >
-                                <Input
-                                    className="cust-input"
-                                    placeholder={"Address Line 2"}
-                                />
+                                 <TextArea
+                                        placeholder={'Address Line 2'}
+                                        className="cust-input cust-text-area address-book-cust"
+                                        autoSize={{ minRows: 1, maxRows: 2 }}
+                                        maxLength={100}
+                                    ></TextArea>
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -298,18 +329,20 @@ const SomeoneComponent = (props) => {
                                     "Address Line 3"
                                 }
                             >
-                                <Input
-                                    className="cust-input"
-                                    placeholder={"Address Line 3"}
-                                />
+                                <TextArea
+                                        placeholder={'Address Line 3'}
+                                        className="cust-input cust-text-area address-book-cust"
+                                        autoSize={{ minRows: 1, maxRows: 2 }}
+                                        maxLength={100}
+                                    ></TextArea>
                             </Form.Item>
                         </Col>
                     </Row>
                 </>
                 {/* <Divider /> */}
-                <Paragraph className="mb-8 fw-500 text-white  mt-16" style={{ fontSize: 18 }}>Bank Details</Paragraph>
-                <PayeeBankDetails form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />
-                <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16">Please upload supporting docs for transaction*</Paragraph>
+                <Paragraph className="mb-8  text-white fw-500 mt-16" style={{ fontSize: 18 }}>Bank Details</Paragraph>
+                {((props.selectedAddress?.id && createPayeeObj)||!props.selectedAddress?.id ) &&<PayeeBankDetails selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} type={props.type} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />}
+                <Paragraph className="fw-300 mb-0 pb-4 ml-12 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
                 <AddressDocumnet documents={documents || null} onDocumentsChange={(docs) => {
                         setDocuments(docs)
                     }}/>
@@ -334,7 +367,7 @@ const SomeoneComponent = (props) => {
                 </div>
             </Form>
         </>}
-        </>
+        </>}
     </React.Fragment>)
 }
 export default ConnectStateProps(SomeoneComponent);

@@ -52,26 +52,28 @@ class Wallets extends Component {
         }
 
         if (e === 2) {
-            this.props.dispatch(setWithdrawfiatenaable(true))
-            this.props.dispatch(setWithdrawfiat({ walletCode: value }))
+            // this.props.dispatch(setWithdrawfiatenaable(true))
+            // this.props.dispatch(setWithdrawfiat({ walletCode: value }))
+            this.setState({ ...this.setState, showFuntransfer: true, selectedCurrency:value })
         } else if (e === 1) {
             this.props.dispatch(setWithdrawfiatenaable(false))
             this.props.dispatch(setdepositCurrency(value))
+            this.setState({
+                valNum: e
+            }, () => {
+                this.setState({
+                    ...this.state,
+                    buyFiatDrawer: true,
+                    selctedVal: value
+                })
+    
+            })
         } else if (e === 3) {
             this.props.history.push(`/payments/${value.walletCode}`)
         } else {
-            this.props.history.push(`/internaltransfer`)
+            this.props.history.push(`/internaltransfer`);
         }
-        this.setState({
-            valNum: e
-        }, () => {
-            this.setState({
-                ...this.state,
-                buyFiatDrawer: true,
-                selctedVal: value
-            })
-
-        })
+        
     }
     showTransactionDrawer = (item) => {
         this.setState({ ...this.state, transactions: true, selectedWallet: item?.walletCode });
@@ -130,7 +132,7 @@ class Wallets extends Component {
                             />
                             <div className="crypto-btns">
                                 <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
-                                <Translate content="withdraw" onClick={() => { this.setState({ ...this.setState, showFuntransfer: true,selectedCurrency:item.walletCode }) }} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} />
+                                <Translate content="withdraw" onClick={() => { this.showSendReceiveDrawer(2, item.walletCode) }} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} />
                                 {/* <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
                                 <Translate content="withdraw" onClick={() => this.showSendReceiveDrawer(2, item.walletCode)} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} /> */}
                             </div>

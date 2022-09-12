@@ -7,7 +7,7 @@ import { tranforobj } from './config';
 import SwapCoins from './swapCoins';
 import TransforSummary from './transforSummary';
 import TransforSuccessMsg from './transforSuccess';
-import {setTransforObj, setStepcode} from '../../reducers/tranfor.Reducer'
+import { setTransforObj, setStepcode } from '../../reducers/tranfor.Reducer'
 import { setHeaderTab } from "../../reducers/buysellReducer";
 
 const { Paragraph } = Typography
@@ -30,9 +30,9 @@ class Transfor extends Component {
     }
     renderContent = () => {
         const stepcodes = {
-            tranforcoin: <SwapCoins onClose={()=>this.closeBuyDrawer()}/>,
-            tranforsummary: <TransforSummary onClose={()=>this.closeBuyDrawer()}/>,
-            tranforsuccess: <TransforSuccessMsg onClose={()=>this.closeBuyDrawer()}/>,
+            tranforcoin: <SwapCoins onClose={() => this.closeBuyDrawer()} />,
+            tranforsummary: <TransforSummary onClose={() => this.closeBuyDrawer()} />,
+            tranforsuccess: <TransforSuccessMsg onClose={() => this.closeBuyDrawer()} />,
         }
         return stepcodes[tranforobj[this.props.TransforStore.stepcode]]
     }
@@ -62,7 +62,7 @@ class Transfor extends Component {
                     <Translate className="text-white-30 fw-600 text-upper mb-4" content={this.props.TransforStore.stepTitles[tranforobj[this.props.TransforStore.stepcode]]} component={Paragraph} />
                     <Translate className="text-white-50 mb-0 fw-300 fs-14 swap-subtitlte" content={this.props.TransforStore.stepSubTitles[tranforobj[this.props.TransforStore.stepcode]]} component={Paragraph} /></div>
                 {this.renderIcon()}
-                </div>]}
+            </div>]}
             placement="right"
             closable={true}
             visible={this.props.showDrawer}

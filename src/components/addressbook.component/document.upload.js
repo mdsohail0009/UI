@@ -1,8 +1,9 @@
 import { Component } from "react";
-import { Row, Col, Typography, Upload, Form } from 'antd';
+import { Row, Col, Typography, Upload, Form, Modal, Button } from 'antd';
 import Loader from "../../Shared/loader";
 import { document } from "../onthego.transfer/api";
 import apiCalls from "../../api/apiCalls";
+import { bytesToSize } from "../../utils/service";
 
 const { Dragger } = Upload;
 const { Paragraph, Text, Title } = Typography;
@@ -17,14 +18,11 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 };
 class AddressDocumnet extends Component {
     state = {
-        filesList: this.props?.documents?.details || [],
-        documents: {}
+        filesList: [],
+        documents: {}, showDeleteModal: false, isDocLoading: false
     }
     componentDidMount() {
-        this.setState({ ...this.state, documents: this.props?.documents || document() })
-    }
-    setDocs = () => {
-
+        this.setState({ ...this.state, documents: this.props?.documents || document(), filesList: this.props?.documents ? [...this.props?.documents?.details] : [] })
     }
     docDetail = (doc) => {
         return {
@@ -47,27 +45,36 @@ class AddressDocumnet extends Component {
                         className="mb-16 fs-14 text-white fw-500"
                     >{this.props.title}</Paragraph>
                     <Form.Item name={"files"} required rules={[{
-                        validator:(_,value)=>{
-                            if(this.state.filesList.length==0){
-                                return Promise.reject(apiCalls.convertLocalLang("is_required"))
-                            }else{
-                                return Promise.resolve();
+                        validator: (_, value) => {
+                            if (this.state.filesList.length == 0) {
+                                return Promise.reject("At least one document is required")
+                            } else {
+                                const isValidFiles = this.state.filesList.filter(item => (item.name || item.documentName).indexOf(".") != (item.name || item.documentName).lastIndexOf(".")).length == 0;
+                                if (isValidFiles) { return Promise.resolve(); } else {
+                                    return Promise.reject("Double extension file not allowed");
+                                }
+
                             }
                         },
-                       
+
                     }
                     ]}>
                         <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
-                            className="upload mt-16"
-                            multiple={true} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
+                            className="upload mt-0"
+                            multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                             showUploadList={false}
-                            beforeUpload={(props) => { }}
-                            onChange={({ fileList, file }) => {
-                                this.setState({ ...this.state, filesList: fileList });
+                            beforeUpload={(props) => {
+                              //  return props.name.split(".").length < 2;
+                            }}
+                            onChange={({ file }) => {
+                                this.setState({ ...this.state, isDocLoading: true });
                                 if (file.status === "done") {
-                                    let { documents } = this.state;
-                                    documents?.details?.push(this.docDetail(file));
-                                    this.props?.onDocumentsChange(documents);
+                                    let { filesList: files } = this.state;
+                                    files.push(file);
+                                    this.setState({ ...this.state, filesList: files, isDocLoading: false });
+                                    let { documents: docs } = this.state;
+                                    docs?.details?.push(this.docDetail(file));
+                                    this.props?.onDocumentsChange(docs);
                                 }
                             }}
                         >
@@ -81,22 +88,47 @@ class AddressDocumnet extends Component {
                         </Dragger>
                     </Form.Item>
                     {this.state?.filesList?.map((file, indx) => <div className="docfile">
-                        {file.status === "uploading" && <Loader />}
-                        {file.status === "done" && <>
+                        {(file.status === "done" || file.status == true) && <>
                             <span className={`icon xl file mr-16`} />
-                            <div className="docdetails c-pointer">
-                                <EllipsisMiddle suffixCount={6}>{file.name}</EllipsisMiddle>
-                                <span className="fs-12 text-secondary">{file.size}</span>
+                            <div className="docdetails">
+                                <EllipsisMiddle suffixCount={6}>{file.name || file.documentName}</EllipsisMiddle>
+                                <span className="fs-12 text-secondary">{file.size ? bytesToSize(file.size) : ""}</span>
                             </div>
                             <span className="icon md close c-pointer" onClick={() => {
-                                let filesList = [...this.state.filesList];
-                                filesList.splice(indx, 1);
-                                this.setState({ ...this.state, filesList });
+                                this.setState({ ...this.state, showDeleteModal: true, selectedFileIdx: indx })
+
                             }} />
                         </>}
                     </div>)}
+                    {this.state.isDocLoading && <Loader />}
                 </div>
             </Col>
+            <Modal visible={this.state.showDeleteModal}
+                closable={false}
+                title={"Confirm delete"}
+                footer={
+                    <>
+                        <Button
+                            style={{ width: "100px", border: "1px solid #f2f2f2" }}
+                            className=" pop-cancel"
+                            onClick={() => { this.setState({ ...this.state, showDeleteModal: false }) }}>
+                            No
+                        </Button>
+                        <Button
+                            className="primary-btn pop-btn"
+                            onClick={() => {
+                                let filesList = [...this.state.filesList];
+                                filesList.splice(this.state.selectedFileIdx, 1);
+                                this.setState({ ...this.state, filesList, showDeleteModal: false });
+                            }}
+                            style={{ width: 120, height: 50 }}>
+                            {apiCalls.convertLocalLang("Yes")}
+                        </Button>
+                    </>
+                }>
+
+                <Paragraph className="text-white">Are you sure, do you really want to delete ?</Paragraph>
+            </Modal>
         </Row>
     }
 }
