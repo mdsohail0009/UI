@@ -168,7 +168,14 @@ const AddressCommonCom = (props) => {
   const withdraeTab = bilPay ? "Fiat" : (props?.cryptoTab == 1 ? "Crypto" : "Fiat");
 
   const showModal = () => {
-    setIsCryptoModalVisible(true);
+    debugger
+    if(bankmodalData.length==1){
+      useDivRef.current.scrollIntoView();
+        setErrorMsg("Cannot add more than one Crypto address details");
+    }else{
+      setIsCryptoModalVisible(true);
+    }
+   
     setEditBankDetails(false)
 
   };
