@@ -61,16 +61,16 @@ const Verifications = (props) => {
     };
 
     const getVerifyData = async () => {
-        setIsLoading(true)
+        props.onReviewDetailsLoading(true)
         let response = await getVerificationFields(props.userConfig.id);
         if (response.ok) {
             setVerifyData(response.data);
-            setIsLoading(false)
+            props.onReviewDetailsLoading(false)
         } else {
             setMsg(
                 "Without Verifications you can't withdraw.Please select withdraw verifications from security section"
             );
-            setIsLoading(false)
+            props.onReviewDetailsLoading(false)
         }
     };
 
