@@ -25,20 +25,25 @@ class PayeeBankDetails extends Component {
         isValidIban:false
     }
 
-    handleIban = async(ibannumber) =>{
-        this.setState({...this.state,iBanDetals:null,IbanLoader:true,isValidIban:false})
-        const ibanget = await apicalls.getIBANData(ibannumber)
-        if(ibanget.ok){
-            if(ibanget.data && (ibanget.data?.routingNumber || ibanget.data?.bankName)){
-                const bankdetails = {bankName:ibanget.data.bankName, bic:ibanget.data.bankName, bankBranch:ibanget.data.branch, country:ibanget.data.country, state:ibanget.data.state, city:ibanget.data.city, postalCode:ibanget.data.zipCode, line1:ibanget.data.bankAddress}
-                this.setState({...this.state,iBanDetals:bankdetails,IbanLoader:false, isValidIban:true})
-                this.props.getIbandata(bankdetails);
-            }else{
-                this.setState({...this.state,IbanLoader:false, isValidIban:false})
-                this.props.getIbandata(null);
+    handleIban = async (ibannumber) => {
+        if (ibannumber?.length > 3) {
+            this.setState({ ...this.state, iBanDetals: null, IbanLoader: true, isValidIban: true })
+            const ibanget = await apicalls.getIBANData(ibannumber)
+            if (ibanget.ok) {
+                if (ibanget.data && (ibanget.data?.routingNumber || ibanget.data?.bankName)) {
+                    const bankdetails = { bankName: ibanget.data.bankName, bic: ibanget.data.bankName, bankBranch: ibanget.data.branch, country: ibanget.data.country, state: ibanget.data.state, city: ibanget.data.city, postalCode: ibanget.data.zipCode, line1: ibanget.data.bankAddress }
+                    this.setState({ ...this.state, iBanDetals: bankdetails, IbanLoader: false, isValidIban: true })
+                    this.props.getIbandata(bankdetails);
+                    this.props.form.current?.setFieldsValue({ iban: ibannumber })
+                } else {
+                    this.setState({ ...this.state, IbanLoader: false, isValidIban: false })
+                    this.props.getIbandata(null);
+                }
+            } else {
+                this.setState({ ...this.state, IbanLoader: false, isValidIban: false })
             }
-        }else{
-            this.setState({...this.state,IbanLoader:false, isValidIban:false})
+        } else {
+            this.setState({ ...this.state, IbanLoader: false, isValidIban: false })
         }
     }
     renderAddress = (transferType) => {
@@ -66,7 +71,7 @@ class PayeeBankDetails extends Component {
                                 },
                             },
                         ]}
-                        onBlur={(e) => {
+                        onChange={(e) => {
                             this.handleIban(e.target.value)
                         }}
                     >
@@ -149,9 +154,10 @@ class PayeeBankDetails extends Component {
                 </Col> */}
                 </>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                <Spin spinning={this.state.IbanLoader}>
-                    {this.state.isValidIban && <div className="box basic-info alert-info-custom mt-16">
-                        <Row>
+
+                    <div className="box basic-info alert-info-custom mt-16">
+                    <Spin spinning={this.state.IbanLoader}>
+                    {this.state.iBanDetals && <Row>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                                 <label className="fs-14 fw-400 ">
                                     <strong>Bank Name</strong>
@@ -201,9 +207,11 @@ class PayeeBankDetails extends Component {
                                 <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals.postalCode||'---'}</Text></div>
 
                             </Col>
-                        </Row>
-                    </div>}
-                </Spin>
+                        </Row>}
+                        {!this.state.iBanDetals&&<span>No bank details available</span>}
+                        </Spin>
+                    </div>
+
                 </Col>
             </>,
             swift: <>

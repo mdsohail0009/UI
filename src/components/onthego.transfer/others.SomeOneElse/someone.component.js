@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Input, Row, Col, Form, Button, Typography, Radio, Tabs, Image, Alert } from 'antd';
+import { Input, Row, Col, Form, Button, Typography, Tabs, Image, Alert } from 'antd';
 import {createPayee, payeeAccountObj, savePayee, confirmTransaction} from "../api";
 import AddressDocumnet from "../../addressbook.component/document.upload";
 import PayeeBankDetails from "./bankdetails.component";
@@ -10,7 +10,7 @@ import apiCalls from "../../../api/apiCalls";
 import ConnectStateProps from "../../../utils/state.connect";
 import Loader from "../../../Shared/loader";
 const { Paragraph, Text, Title } = Typography;
-const { Search } = Input;
+const { Search,TextArea } = Input;
 
 const SomeoneComponent = (props) => {
     const [addressOptions, setAddressOptions] = useState({ addressType: "someoneelse", transferType: props.currency === "EUR" ? "sepa" : "swift", domesticType: 'domestic' });
@@ -84,14 +84,16 @@ const SomeoneComponent = (props) => {
     return (<React.Fragment>
         <div ref={useDivRef}></div>
         
-        {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
+        
         <>
                 {props.currency === "USD" && <>
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                             <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
-                                setAddressOptions({ ...addressOptions, domesticType: activekey }); form.resetFields();
-                                form.setFieldsValue({ addressType: 'someoneelse', transferType: activekey })
+                                setAddressOptions({ ...addressOptions, domesticType: activekey });
+                                debugger
+                                 form.current.resetFields();
+                                // form.current.setFieldsValue({ addressType: 'someoneelse', transferType: activekey })
                             }}>
                                 <Tabs.TabPane tab="Domestic USD Transfer" className="text-white" key={"domestic"}></Tabs.TabPane>
                                 <Tabs.TabPane tab="International USD Swift" className="text-white" key={"international"}></Tabs.TabPane>
@@ -99,9 +101,10 @@ const SomeoneComponent = (props) => {
                         </Col>
                     </Row>
                 </>}
-                {props.currency == 'EUR' && <h2 style={{ fontSize: 18, textAlign: 'center', color: "white" }}>SEPA transfer</h2>}
+                {props.currency == 'EUR' && <h2 style={{ fontSize: 18, textAlign: 'center', color: "white" }}>SEPA Transfer</h2>}
                 {mainLoader && <Loader />}
         {!mainLoader && <>
+            {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
             <Form
                 ref={form}
                 onFinish={onSubmit}
@@ -261,10 +264,12 @@ const SomeoneComponent = (props) => {
                                     "Address Line 1"
                                 }
                             >
-                                <Input
-                                    className="cust-input"
-                                    placeholder={"Address Line 1"}
-                                />
+                                    <TextArea
+                                        placeholder={'Address Line 1'}
+                                        className="cust-input cust-text-area address-book-cust"
+                                        autoSize={{ minRows: 1, maxRows: 2 }}
+                                        maxLength={100}
+                                    ></TextArea>
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -280,10 +285,12 @@ const SomeoneComponent = (props) => {
                                     "Address Line 2"
                                 }
                             >
-                                <Input
-                                    className="cust-input"
-                                    placeholder={"Address Line 2"}
-                                />
+                                 <TextArea
+                                        placeholder={'Address Line 2'}
+                                        className="cust-input cust-text-area address-book-cust"
+                                        autoSize={{ minRows: 1, maxRows: 2 }}
+                                        maxLength={100}
+                                    ></TextArea>
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -299,10 +306,12 @@ const SomeoneComponent = (props) => {
                                     "Address Line 3"
                                 }
                             >
-                                <Input
-                                    className="cust-input"
-                                    placeholder={"Address Line 3"}
-                                />
+                                <TextArea
+                                        placeholder={'Address Line 3'}
+                                        className="cust-input cust-text-area address-book-cust"
+                                        autoSize={{ minRows: 1, maxRows: 2 }}
+                                        maxLength={100}
+                                    ></TextArea>
                             </Form.Item>
                         </Col>
                     </Row>

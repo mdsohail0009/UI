@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { Form, Row, Col, Typography, Select, AutoComplete, Input, Tabs, Button,Alert } from 'antd'
+import { Form, Row, Col, Typography, Select, Input, Tabs, Button,Alert, Spin } from 'antd'
 import Translate from "react-translate-component";
 import apiCalls from "../../../api/apiCalls"
 import { validateContentRule } from "../../../utils/custom.validator";
@@ -11,6 +11,7 @@ const { Paragraph } = Typography;
 
 const { Option } = Select;
 const { Text } = Typography;
+const { TextArea } = Input;
 const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     const [form] = Form.useForm();
     const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType: currency === "EUR" ? "sepa" : "swift", domesticType: 'domestic', tabType: 'domestic' });
@@ -20,6 +21,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     const [recipientDetails,setRecipientDetails]=useState({})
 	const [isBtnLoading, setBtnLoading] = useState(false);
     const [isLoading,setLoader]=useState(true)
+    const [ibanLoading,setIbanLoader]=useState(false)
     const [errorMessage,seterrorMessage]=useState();
     const useDivRef = React.useRef(null);
     const [validIban,setValidIban]=useState(true)
@@ -78,8 +80,10 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
 		setBtnLoading(false);
         }
     }
-    const getBankDeails = async (e) => {setValidIban(true)
-        if(e.target.value){
+    const getBankDeails = async (e) => {
+        if(e.target.value?.length>3){
+            setValidIban(true)
+            setIbanLoader(true)
             const response = await apiCalls.getIBANData(e.target.value);
             if (response.ok) {
                 setbankDetails(response.data)
@@ -88,10 +92,15 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 }else{
                     setValidIban(false)
                 }
+                setIbanLoader(false)
             }else{
                 seterrorMessage(isErrorDispaly(response));
                 setbankDetails({})
+                setIbanLoader(false)
+                setValidIban(false)
             }
+        }else{
+            setValidIban(false)
         }
         
     }
@@ -120,10 +129,12 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 </Col>
             </Row>
         </>}
+        
+        
+        {currency == 'EUR' && <h2 style={{ fontSize: 18, textAlign: 'center', color: "white" }}>SEPA Transfer</h2>}
         {isLoading &&<Loader /> }
         {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
         {!isLoading &&<>
-        {currency == 'EUR' && <h2 style={{ fontSize: 18, textAlign: 'center', color: "white" }}>SEPA transfer</h2>}
         <Row gutter={[16, 16]}><Col xs={24} md={24} lg={24} xl={24} xxl={24} id="favoriteName">
             <Form.Item
                 className="custom-forminput custom-label mb-0"
@@ -254,11 +265,15 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     },
                 ]}
                 label='IBAN'
+                onChange={(e) => {
+                    getBankDeails(e)
+                }}
             >
                 <Input
                     className="cust-input"
                     placeholder='IBAN'
-                    onBlur={(e)=>getBankDeails(e)}/>
+                    // onBlur={(e)=>getBankDeails(e)}
+                    />
             </Form.Item>
         </Col>}
         <Row gutter={[16, 16]}>
@@ -303,7 +318,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
                         name="abaRoutingCode"
-                        label={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC code' : 'ABA Routing Code'}
+                        label={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
                         required
                         rules={[
                             {
@@ -313,7 +328,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         ]}>
                         <Input
                             className="cust-input"
-                            placeholder={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC code' : 'ABA Routing Code'}
+                            placeholder={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
                         />
                     </Form.Item>
                 </Col>}
@@ -337,7 +352,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 </Col>
 
 
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
                         name="line1"
@@ -349,26 +364,32 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                                 message: apiCalls.convertLocalLang("is_required"),
                             }
                         ]}>
-                        <Input
-                            className="cust-input"
-                            placeholder='Bank Address 1'
-                        />
+                        <TextArea
+                            placeholder={'Bank Address 1'}
+                            className="cust-input cust-text-area address-book-cust"
+                            autoSize={{ minRows: 1, maxRows: 2 }}
+                            maxLength={100}
+                        ></TextArea>
                     </Form.Item>
                 </Col>
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
                         name="line2"
                         label='Bank Address 2'
                     >
-                        <Input
-                            className="cust-input"
-                            placeholder='Bank Address 2'
-                        />
+                       
+                        <TextArea
+                            placeholder={'Bank Address 2'}
+                            className="cust-input cust-text-area address-book-cust"
+                            autoSize={{ minRows: 1, maxRows: 2 }}
+                            maxLength={100}
+                        ></TextArea>
                     </Form.Item>
                 </Col></>}
         </Row>
         {currency == 'EUR' && <div className="box basic-info alert-info-custom mt-16">
+            <Spin spinning={ibanLoading}>
             {bankDetails&&bankDetails?.bankName!=''&&bankDetails?.bankName!=null&&<Row>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                 <label className="fs-14 fw-400 ">
@@ -419,7 +440,9 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     <div><Text className="fs-14 fw-400 text-purewhite">{(bankDetails.zipCode!=''&&bankDetails.zipCode!=null)?bankDetails.zipCode:'-'}</Text></div>
 
                 </Col></Row>}
+                
                 {(bankDetails.bankName==''||bankDetails.bankName==null)&&<span>No bank details available</span>}
+                </Spin>
         </div>}
         <div className="text-right mt-12">
             <Button

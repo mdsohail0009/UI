@@ -1,4 +1,4 @@
-import { Form, Row, Col, Divider, Typography, Input, Button, Alert } from "antd";
+import { Form, Row, Col, Divider, Typography, Input, Button, Alert, Spin } from "antd";
 import React, { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
 import { validateContentRule } from "../../../utils/custom.validator";
@@ -9,6 +9,7 @@ import BusinessTransfer from "./transfer";
 import ConnectStateProps from "../../../utils/state.connect";
 import Loader from "../../../Shared/loader";
 import Translate from "react-translate-component";
+
 const { Paragraph, Text } = Typography;
 const { TextArea } = Input;
 class OthersBusiness extends Component {
@@ -19,7 +20,8 @@ class OthersBusiness extends Component {
         isLoading: true,
         details: {},
         ibanDetails: {},
-        docDetails: {}, isBtnLoading: false
+        docDetails: {}, isBtnLoading: false,
+        iBanValid:false
     };
     componentDidMount() {
         this.loadDetails();
@@ -40,12 +42,16 @@ class OthersBusiness extends Component {
         }
     }
     handleIbanChange = async ({ target: { value } }) => {
-        this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true });
-        const response = await fetchIBANDetails(value);
-        if (response.ok) {
-            this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null });
-        } else {
-            this.setState({ ...this.state, ibanDetailsLoading: false, errorMessage: response.data || response.data?.message || response.originalError?.message });
+        if (value?.length > 3) {
+            this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true,iBanValid:true });
+            const response = await fetchIBANDetails(value);
+            if (response.ok) {
+                this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:true });
+            } else {
+                this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false, errorMessage: response.data || response.data?.message || response.originalError?.message });
+            }
+        }else{
+            this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false})
         }
     }
     submitPayee = async (values) => {
@@ -66,7 +72,7 @@ class OthersBusiness extends Component {
         _obj.addressType = "Business";
         _obj.transferType = "sepa";
         _obj.amount = this.props.amount;
-        this.setState({ ...this.state, isLoading: true, errorMessage: null, isBtnLoading: true });
+        this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
         const response = await savePayee(_obj);
         if (response.ok) {
             const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
@@ -87,9 +93,11 @@ class OthersBusiness extends Component {
         if (isUSDTransfer) { return <BusinessTransfer amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} /> }
         else {
             return <>
+                {/* <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16 text-center">SEPA Transfer</Paragraph> */}
+                <h2 style={{ fontSize: 18, textAlign: 'center', color: "white" }}>SEPA Transfer</h2>
+                {this.state.isLoading && <Loader />}
                 {this.state.errorMessage && <Alert type="error" showIcon closable={false} description={this.state.errorMessage} />}
-                <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16 text-center">SEPA Transfer</Paragraph>
-                <Form initialValues={this.state.details}
+                {!this.state.isLoading && <Form initialValues={this.state.details}
                     className="custom-label  mb-0"
                     ref={this.form}
                     onFinish={this.submitPayee}
@@ -202,15 +210,15 @@ class OthersBusiness extends Component {
                                 required
                                 rules={[
                                     {
-                                        required: true,
-                                        message: apiCalls.convertLocalLang("is_required"),
-                                    },
-                                    {
-                                        whitespace: true,
-                                        message: apiCalls.convertLocalLang("is_required"),
-                                    },
-                                    {
-                                        validator: validateContentRule,
+                                        validator: (_, value) => {
+                                            if (!value) {
+                                                return Promise.reject(apiCalls.convertLocalLang("is_required"));
+                                            } else if (!this.state.iBanValid) {
+                                                return Promise.reject("Invalid Iban");
+                                            } else {
+                                                return Promise.resolve();
+                                            }
+                                        },
                                     },
                                 ]}
                             >
@@ -242,18 +250,19 @@ class OthersBusiness extends Component {
                                     },
                                 ]}
                                 label={
-                                    "Reason for transfer"
+                                    "Reason of Transfer"
                                 }
                             >
                                 <Input
                                     className="cust-input"
-                                    placeholder={"Reason for transfer"}
+                                    placeholder={"Reason of Transfer"}
                                     onChange={this.handleIbanChange}
                                 />
                             </Form.Item>
                         </Col>}
                     </Row>
                     <div className="box basic-info alert-info-custom mt-16">
+                        <Spin spinning={this.state.ibanDetailsLoading}>
                         {Object.keys(this.state.ibanDetails).length !== 0 && <Row>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                                 <label className="fs-14 fw-400 ">
@@ -311,12 +320,8 @@ class OthersBusiness extends Component {
 
                             </Col>
                         </Row>}
-                        {this.state.ibanDetailsLoading && <Row>
-                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
-
-                                <Loader />
-                            </Col>
-                        </Row>}
+                        </Spin>
+                       
                     </div>
                     <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16">Please upload supporting docs for transaction*</Paragraph>
 
@@ -340,7 +345,7 @@ class OthersBusiness extends Component {
                             </Col>
                         </Row>
                     </div>
-                </Form>
+                </Form>}
             </>;
         }
 

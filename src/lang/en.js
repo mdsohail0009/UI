@@ -650,7 +650,7 @@ export default {
 	accountnumber:"Account Number",
 	bankaddressline1:"Bank Address 1",
 	bankaddressline2:"Bank Address 2",
-	reasiontotransfor:'Reason of Transfor',
+	reasiontotransfor:'Reason of Transfer',
 	relationtobenificiary:'Relationship to Beneficiary',
 	saveWhitelistnameas:'Save Whitelist Name As',
 	continue:'Continue'
