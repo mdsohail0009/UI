@@ -50,6 +50,7 @@ const AddressCommonCom = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [bankmodalData, setModalData] = useState([])
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalCryptoVisible,setIsModalCryptoVisible]=useState(false)
   const [isModalDelete, setIsModalDelete] = useState(false);
   const [form] = Form.useForm();
   const [bankDetailForm] = Form.useForm();
@@ -167,12 +168,16 @@ const AddressCommonCom = (props) => {
   const withdraeTab = bilPay ? "Fiat" : (props?.cryptoTab == 1 ? "Crypto" : "Fiat");
 
   const showModal = () => {
-    setIsModalVisible(true);
+    setIsModalCryptoVisible(true);
     setEditBankDetails(false)
 
   };
   const handleOk = () => {
     setIsModalVisible(false);
+   // setEditBankDetails(false)
+  };
+  const handleCryptoOk = () => {
+    setIsModalCryptoVisible(false);
     setEditBankDetails(false)
   };
   const handleCoinChange = (e) => {
@@ -202,7 +207,7 @@ const AddressCommonCom = (props) => {
     }
   };
   const handleCancel = () => {
-    setIsModalVisible(false);
+    setIsModalCryptoVisible(false);
     bankDetailForm.resetFields();
     SetBankChange("BankAccount");
     setNewStates([]);
@@ -843,8 +848,8 @@ const AddressCommonCom = (props) => {
                 </Col>
                 <Modal
                   title={apiCalls.convertLocalLang((props?.cryptoTab == 1) && "cryptoAddress")}
-                  visible={isModalVisible}
-                  onOk={handleOk}
+                  visible={isModalCryptoVisible}
+                  onOk={handleCryptoOk}
                   width={800}
                   destroyOnClose={true}
                   closeIcon={
@@ -957,7 +962,8 @@ const AddressCommonCom = (props) => {
                           <Translate content="Save_btn_text" component={Text} />
                         </Button>
                       </div>
-                    </Form>}  </Modal>
+                    </Form>} 
+                     </Modal>
                   </Row>
                  </>
               }
