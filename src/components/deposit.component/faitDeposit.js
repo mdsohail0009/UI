@@ -15,7 +15,7 @@ import success from '../../assets/images/success.png';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import apicalls from '../../api/apiCalls';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
-import AddressBookV3 from '../addressbook.v3'
+
 const LinkValue = (props) => {
   return (
     <Translate className="textpure-yellow text-underline c-pointer"
@@ -241,7 +241,7 @@ class FaitDeposit extends Component {
           <Translate content="withdraw" component={Radio.Button} value={2} />
         </Radio.Group></div>}
         {faitdeposit ?
-          <AddressBookV3 onContinue={this.props.oncloseClick}/>
+          <SellToggle onDrawerClose={this.props.oncloseClick}/>
           : <> {this.state.Loader && <Loader />}
 
             {!this.state.Loader && <Form layout="vertical" initialValues={{ ...depObj }} ref={this.formRef} onFinish={(values) => this.ConfirmDeposit(values)}><div className="suisfiat-container auto-scroll"><div ref={this.myRef}></div>
