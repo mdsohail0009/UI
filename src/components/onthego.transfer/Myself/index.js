@@ -218,7 +218,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     <Input
                         className="cust-input"
                         placeholder='IBAN'
-                    onBlur={(e)=>getBankDeails(e)}/>
+                        onChange={(e)=>getBankDeails(e)}/>
                 </Form.Item>
             </Col>}</Row>
             <Translate style={{ fontSize: 18 }}
