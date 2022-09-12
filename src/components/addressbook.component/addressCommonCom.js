@@ -50,7 +50,7 @@ const AddressCommonCom = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [bankmodalData, setModalData] = useState([])
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isModalCryptoVisible,setIsModalCryptoVisible]=useState(false)
+  const [isCryptoModalVisible, setIsCryptoModalVisible] = useState(false);
   const [isModalDelete, setIsModalDelete] = useState(false);
   const [form] = Form.useForm();
   const [bankDetailForm] = Form.useForm();
@@ -93,7 +93,7 @@ const AddressCommonCom = (props) => {
     setEditBankDetails(true)
     let data = bankmodalData.find((items) => items.id == item.id)
     handleCountryChange(data?.payeeAccountCountry);
-    setIsModalVisible(true);
+    setIsCryptoModalVisible(true);
     setBankObj(data)
     SetBankChange(data?.bankType);
     if (props?.addressBookReducer?.cryptoTab == true) {
@@ -168,7 +168,7 @@ const AddressCommonCom = (props) => {
   const withdraeTab = bilPay ? "Fiat" : (props?.cryptoTab == 1 ? "Crypto" : "Fiat");
 
   const showModal = () => {
-    setIsModalCryptoVisible(true);
+    setIsCryptoModalVisible(true);
     setEditBankDetails(false)
 
   };
@@ -176,8 +176,9 @@ const AddressCommonCom = (props) => {
     setIsModalVisible(false);
    // setEditBankDetails(false)
   };
+  
   const handleCryptoOk = () => {
-    setIsModalCryptoVisible(false);
+    setIsCryptoModalVisible(false);
     setEditBankDetails(false)
   };
   const handleCoinChange = (e) => {
@@ -207,7 +208,7 @@ const AddressCommonCom = (props) => {
     }
   };
   const handleCancel = () => {
-    setIsModalCryptoVisible(false);
+    setIsCryptoModalVisible(false);
     bankDetailForm.resetFields();
     SetBankChange("BankAccount");
     setNewStates([]);
@@ -393,7 +394,7 @@ const AddressCommonCom = (props) => {
       
       setRecrdStatus(obj?.recordStatus);
     }
-    setIsModalVisible(false);
+    setIsCryptoModalVisible(false);
     bankDetailForm.resetFields();
     SetBankChange("BankAccount");
     setNewStates([]);
@@ -848,7 +849,7 @@ const AddressCommonCom = (props) => {
                 </Col>
                 <Modal
                   title={apiCalls.convertLocalLang((props?.cryptoTab == 1) && "cryptoAddress")}
-                  visible={isModalCryptoVisible}
+                  visible={isCryptoModalVisible}
                   onOk={handleCryptoOk}
                   width={800}
                   destroyOnClose={true}
