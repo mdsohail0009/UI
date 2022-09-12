@@ -19,9 +19,10 @@ const SomeoneComponent = (props) => {
     const [createPayeeObj, setCreatePayeeObj] = useState(null);
     const [documents, setDocuments] = useState(null);
     const [btnLoading, setBtnLoading] = useState(false);
-    const [mainLoader, setMailLoader] = useState(false);
+    const [mainLoader, setMailLoader] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
     const [showDeclartion, setShowDeclartion] = useState(false);
+    const [intialObj, setIntialObj] = useState(false);
     const [form]=Form.useForm();
     const useDivRef = React.useRef(null);
 
@@ -33,11 +34,13 @@ const SomeoneComponent = (props) => {
         const createPayeeData = await createPayee(props.userProfile.id,props.selectedAddress?.id || "",addressOptions.addressType);
         if(createPayeeData.ok){
             setCreatePayeeObj(createPayeeData.data);
-            setMailLoader(false)
             if(props.selectedAddress?.id){
-                form.current.setFieldsValue({...createPayeeData.data,payeeAccountModels:createPayeeData.data.payeeAccountModels[0]})
+                // form.current?.setFieldsValue({...createPayeeData.data,payeeAccountModels:createPayeeData.data.payeeAccountModels[0]})
+                setIntialObj({...createPayeeData.data,payeeAccountModels:createPayeeData.data.payeeAccountModels[0]})
                 setDocuments(createPayeeData.data.payeeAccountModels[0].documents)
+                setAddressOptions({ ...addressOptions, domesticType: createPayeeData.data.transferType });
             }
+            setMailLoader(false)
             
         }else{
             setMailLoader(false)
@@ -110,9 +113,8 @@ const SomeoneComponent = (props) => {
                 {props.currency === "USD" && <>
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
-                            <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
+                            <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
                                 setAddressOptions({ ...addressOptions, domesticType: activekey });
-                                debugger
                                  form.current.resetFields();
                                 // form.current.setFieldsValue({ addressType: 'someoneelse', transferType: activekey })
                             }}>
@@ -130,7 +132,7 @@ const SomeoneComponent = (props) => {
                 ref={form}
                 onFinish={onSubmit}
                 autoComplete="off"
-                initialValues={{}}
+                initialValues={intialObj}
                 scrollToFirstError
             >
                
