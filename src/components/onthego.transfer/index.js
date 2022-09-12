@@ -103,11 +103,11 @@ class OnthegoFundTransfer extends Component {
     }
     handleSearch = ({ target: { value: val } }) => {
         if (val) {
-            const filterObj = this.state.payees.filter(item => item.name.toLowerCase().includes(val));
+            const filterObj = this.state.payees.filter(item => item.name.toLowerCase().includes(val.toLowerCase()));
             this.setState({ ...this.state, filterObj, searchVal: val });
         }
         else
-            this.setState({ ...this.state, filterObj: this.state.payees });
+            this.setState({ ...this.state, filterObj: this.state.payees,searchVal: val });
     }
     saveWithdrawdata = async () => {
         this.setState({ ...this.state, isBtnLoading: true })
