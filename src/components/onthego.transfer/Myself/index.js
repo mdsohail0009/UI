@@ -1,13 +1,14 @@
 
 import React, { useEffect, useState } from "react";
-import { Form, Row, Col, Typography, Select, Input, Tabs, Button,Alert, Spin } from 'antd'
+import { Form, Row, Col, Typography, Select, Input, Tabs, Button,Alert, Spin,Image } from 'antd'
 import Translate from "react-translate-component";
 import apiCalls from "../../../api/apiCalls"
 import { validateContentRule } from "../../../utils/custom.validator";
 import { connect } from "react-redux";
 import Loader from "../../../Shared/loader";
 import {confirmTransaction} from '../api'
-const { Paragraph } = Typography;
+import alertIcon from '../../../assets/images/pending.png';
+const { Paragraph,Title } = Typography;
 
 const { Option } = Select;
 const { Text } = Typography;
@@ -25,6 +26,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     const [errorMessage,seterrorMessage]=useState();
     const useDivRef = React.useRef(null);
     const [validIban,setValidIban]=useState(true)
+    const [showDeclartion, setShowDeclartion] = useState(false);
     useEffect(() => {
         getRecipientDetails()
     }, [])
@@ -66,14 +68,19 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         saveObj.amount=onTheGoObj?.amount;
         const response = await apiCalls.saveTransferData(saveObj);
         if (response.ok) {
-            const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: onTheGoObj?.amount, reasonOfTransfer: null })
-            if (confirmRes.ok) {
-                setBtnLoading(false);
-                props.onContinue(confirmRes.data);
-            } else {
-                setBtnLoading(false);
-                seterrorMessage(isErrorDispaly(confirmRes));
-                useDivRef.current.scrollIntoView();
+            if (props.type !== "manual") {
+                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: onTheGoObj?.amount, reasonOfTransfer: null })
+                if (confirmRes.ok) {
+                    setBtnLoading(false);
+                    props.onContinue(confirmRes.data);
+                } else {
+                    setBtnLoading(false);
+                    seterrorMessage(isErrorDispaly(confirmRes));
+                    useDivRef.current.scrollIntoView();
+                }
+            }
+            else {
+                setShowDeclartion(true)
             }
         }else{seterrorMessage(isErrorDispaly(response));
             useDivRef.current.scrollIntoView();
@@ -119,7 +126,15 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     return <>
     <div ref={useDivRef}></div>
         <Form layout="vertical" form={form} onFinish={saveTransfer} initialValues={{createTransfer}} scrollToFirstError>
-       <> {currency === "USD" && <>
+        {showDeclartion && <div className="text-center">
+                <Image width={80} preview={false} src={alertIcon} />
+                <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
+                <Text className="text-white-30">{`Declaration form has been sent to ${props.userProfile?.email}. 
+                   Please sign using link received in email to whitelist your address. `}</Text>
+                <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
+                <div className="my-25"><Button onClick={() => props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn text-textDark">BACK</Button></div>
+            </div>}
+       {!showDeclartion &&<> {currency === "USD" && <>
             <Row gutter={[16, 16]}>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                     <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });form.resetFields();seterrorMessage(null) }}>
@@ -455,7 +470,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 <Translate content="continue" />
             </Button>
         </div></>}
-        </>
+        </>}
         </Form>
     </>
 
