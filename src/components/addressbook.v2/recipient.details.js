@@ -32,15 +32,10 @@ class RecipientAddress extends Component {
                             validator: validateContentRule,
                         },
                     ]}
-                    label={
-                        <Translate
-                            content="Address_Line1"
-                            component={Form.label}
-                        />
-                    }
+                    label="Address Line 1"
                 >
                     <TextArea
-                        placeholder={apiCalls.convertLocalLang("Address_Line1")}
+                        placeholder="Address Line 1"
                         className="cust-input cust-text-area address-book-cust"
                         autoSize={{ minRows: 1, maxRows: 1 }}
                         maxLength={100}
@@ -57,15 +52,10 @@ class RecipientAddress extends Component {
                             validator: validateContentRule,
                         }
                     ]}
-                    label={
-                        <Translate
-                            content="Address_Line2"
-                            component={Form.label}
-                        />
-                    }
+                    label="Address Line 2"
                 >
                     <TextArea
-                        placeholder={apiCalls.convertLocalLang("Address_Line2")}
+                        placeholder="Address Line 2"
                         className="cust-input cust-text-area address-book-cust"
                         autoSize={{ minRows: 1, maxRows: 1 }}
                         maxLength={100}
@@ -81,15 +71,10 @@ class RecipientAddress extends Component {
                             validator: validateContentRule,
                         },
                     ]}
-                    label={
-                        <Translate
-                            content="Address_Line3"
-                            component={Form.label}
-                        />
-                    }
+                    label="Address Line 3"
                 >
                     <TextArea
-                        placeholder={apiCalls.convertLocalLang("Address_Line3")}
+                        placeholder="Address Line 3"
                         className="cust-input cust-text-area address-book-cust"
                         autoSize={{ minRows: 1, maxRows: 1 }}
                         maxLength={100}
