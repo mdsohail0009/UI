@@ -508,7 +508,7 @@ class PaymentsView extends Component {
                                 </Col>
                                 <Col xl={8}>
                                     <Form.Item
-                                        className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
+                                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                                         name="accountNumber"
                                         label={apiCalls.convertLocalLang('Bank_account')}
                                         required

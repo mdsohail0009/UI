@@ -86,7 +86,7 @@ class BusinessTransfer extends Component {
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="text-upper fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label"
+                                className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label"
                                 name="favouriteName"
                                 label={"Save Whitelist Name As"}
                                 required
@@ -119,7 +119,7 @@ class BusinessTransfer extends Component {
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label text-upper fw-300 mb-8 px-4 text-white-50 pt-16"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-16"
                                 name="beneficiaryName"
                                 required
                                 rules={[
@@ -147,7 +147,7 @@ class BusinessTransfer extends Component {
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label text-upper fw-300 mb-8 px-4 text-white-50 pt-16"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-16"
                                 name="relation"
                                 label={"Relationship to beneficiary"}
                                 required
@@ -178,7 +178,7 @@ class BusinessTransfer extends Component {
                     <Paragraph className="mb-8 px-4 text-white fw-500 mt-36" style={{ fontSize: 18 }}>Recipient's Bank Details</Paragraph>
                     {/* <Divider /> */}
                     <DomesticTransfer />
-                    <Paragraph className="text-upper fw-300 mb-8 px-4 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
+                    <Paragraph className="fw-300 mb-0 ml-12 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
                     <AddressDocumnet documents={null} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;
@@ -212,7 +212,7 @@ class BusinessTransfer extends Component {
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="text-upper fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label"
+                                className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label"
                                 name="favouriteName"
                                 label={"Save Whitelist Name As"}
                                 required
@@ -243,7 +243,7 @@ class BusinessTransfer extends Component {
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label text-upper fw-300 mb-8 px-4 text-white-50 pt-16"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-16"
                                 name="beneficiaryName"
                                 required
                                 rules={[
@@ -271,7 +271,7 @@ class BusinessTransfer extends Component {
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label text-upper fw-300 mb-8 px-4 text-white-50 pt-16"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-16"
                                 name="relation"
                                 label={"Relationship to beneficiary"}
                                 required
@@ -302,7 +302,7 @@ class BusinessTransfer extends Component {
                     <Paragraph className="mb-8 text-white fw-500 mt-36 px-4" style={{ fontSize: 18 }}>Recipient's Bank Details</Paragraph>
                     {/* <Divider /> */}
                     <InternationalTransfer />
-                    <Paragraph className="text-upper fw-300 mb-8 px-4 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
+                    <Paragraph className="fw-300 mb-8 px-4 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
                     <AddressDocumnet documents={null} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;

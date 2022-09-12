@@ -725,7 +725,7 @@ const AddressCommonCom = (props) => {
                 <Row gutter={[16, 16]}>
                   <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                      className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
+                      className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                       name="favouriteName"
                       label={
                         <Translate
@@ -765,7 +765,7 @@ const AddressCommonCom = (props) => {
 
                   <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                      className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
+                      className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                       name="fullName"
                       required
                       rules={[
@@ -795,7 +795,7 @@ const AddressCommonCom = (props) => {
                     <Form.Item
                       name="email"
                       label={apiCalls.convertLocalLang("email")}
-                      className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
+                      className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                       type="email"
                       rules={[
                         {
@@ -829,7 +829,7 @@ const AddressCommonCom = (props) => {
                   </Col>
                   <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                      className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
+                      className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                       name="phoneNumber"
                       rules={[
                         {
@@ -868,7 +868,7 @@ const AddressCommonCom = (props) => {
                   {withdraeTab === "Fiat" && (
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                       <Form.Item
-                        className="text-upper fw-300 mb-4 text-white-50 pt-8 custom-forminput custom-label"
+                        className="fw-300 mb-4 text-white-50 pt-8 custom-forminput custom-label"
                         name="line1"
                         required
                         rules={[
@@ -909,7 +909,7 @@ const AddressCommonCom = (props) => {
                   {withdraeTab === "Fiat" && (
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                       <Form.Item
-                        className="text-upper fw-300 mb-4 text-white-50 pt-8 custom-forminput custom-label"
+                        className="fw-300 mb-4 text-white-50 pt-8 custom-forminput custom-label"
                         name="line2"
                         // required
                         // rules={[
@@ -944,7 +944,7 @@ const AddressCommonCom = (props) => {
                   {withdraeTab === "Fiat" && (
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                       <Form.Item
-                        className="text-upper fw-300 mb-4 text-white-50 pt-8 custom-forminput custom-label"
+                        className="fw-300 mb-4 text-white-50 pt-8 custom-forminput custom-label"
                         name="line2"
                         // required
                         // rules={[

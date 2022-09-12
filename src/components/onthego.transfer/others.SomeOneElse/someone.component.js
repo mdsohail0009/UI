@@ -113,7 +113,7 @@ const SomeoneComponent = (props) => {
                 <Row gutter={[16, 16]} className={'pb-16'}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item
-                            className="custom-forminput custom-label text-upper fw-300 mb-8 px-4 text-white-50 pt-16"
+                            className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-16"
                             name="favouriteName"
                             required
                             rules={[
@@ -151,7 +151,7 @@ const SomeoneComponent = (props) => {
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label text-upper fw-300 mb-8 px-4 text-white-50 pt-16"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-16"
                                 name="firstName"
                                 required
                                 rules={[
@@ -179,7 +179,7 @@ const SomeoneComponent = (props) => {
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label text-upper fw-300 mb-8 px-4 text-white-50 pt-16"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-16"
                                 name="lastName"
                                 required
                                 rules={[
@@ -207,7 +207,7 @@ const SomeoneComponent = (props) => {
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label text-upper fw-300 mb-8 px-4 text-white-50 pt-16"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-16"
                                 name={"relation"}
                                 required
                                 rules={[
@@ -241,7 +241,7 @@ const SomeoneComponent = (props) => {
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label text-upper fw-300 mb-8 px-4 text-white-50 pt-16"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-16"
                                 name="line1"
                                 required
                                 rules={[
@@ -269,7 +269,7 @@ const SomeoneComponent = (props) => {
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label text-upper fw-300 mb-8 px-4 text-white-50 pt-16"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-16"
                                 name="line2"
                                 rules={[
                                     {
@@ -288,7 +288,7 @@ const SomeoneComponent = (props) => {
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label text-upper fw-300 mb-8 px-4 text-white-50 pt-16"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-16"
                                 name="line3"
                                 rules={[
                                     {
@@ -310,7 +310,7 @@ const SomeoneComponent = (props) => {
                 {/* <Divider /> */}
                 <Paragraph className="mb-8 fw-500 text-white px-4 mt-36" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                 <PayeeBankDetails form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />
-                <Paragraph className="text-upper fw-300 mb-8 px-4 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
+                <Paragraph className="fw-300 mb-0 pb-4 ml-12 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
                 <AddressDocumnet documents={documents || null} onDocumentsChange={(docs) => {
                         setDocuments(docs)
                     }}/>

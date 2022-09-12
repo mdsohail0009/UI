@@ -209,7 +209,7 @@ class PayeeBankDetails extends Component {
             swift: <>
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name={["payeeAccountModels","accountNumber"]}
                         label={apicalls.convertLocalLang("accountnumber")}
                         required
@@ -250,7 +250,7 @@ class PayeeBankDetails extends Component {
                 </Col>
                 {this.props.domesticType === "international" &&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name={["payeeAccountModels","swiftRouteBICNumber"]}
                         label={apicalls.convertLocalLang(
                             "swifbictcode"
@@ -294,7 +294,7 @@ class PayeeBankDetails extends Component {
 
                 {this.props.domesticType === "domestic" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name={["payeeAccountModels","abaRoutingCode"]}
                         label={apicalls.convertLocalLang(
                             "Routing_number"
@@ -337,7 +337,7 @@ class PayeeBankDetails extends Component {
                 </Col>}
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name={["payeeAccountModels","bankName"]}
                         label={apicalls.convertLocalLang("Bank_name")}
                         required
@@ -368,7 +368,7 @@ class PayeeBankDetails extends Component {
                 </Col>
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name={"reasonOfTransfer"}
                         required
                         rules={[
@@ -402,7 +402,7 @@ class PayeeBankDetails extends Component {
                 </Col>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name={["payeeAccountModels","line1"]}
                         required
                         rules={[
@@ -435,7 +435,7 @@ class PayeeBankDetails extends Component {
                 </Col>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label text-upper fw-300 mb-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name={["payeeAccountModels","line2"]}
                         rules={[
                             {

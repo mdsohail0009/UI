@@ -259,7 +259,7 @@ class AddressBookV2 extends Component {
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                <Title className="fs-14 text-white fw-400 text-captz">Save Whitelist name as</Title>
+                                <Title className="fs-14 text-white fw-400 text-captz">Save Whitelist Name as</Title>
                                 <Title className="fs-14 text-white fw-500 text-upper text-right">{this.state.reviewDetails?.favouriteName}</Title>
                             </div>
                         </Col>
