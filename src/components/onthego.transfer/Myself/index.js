@@ -25,7 +25,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     const [ibanLoading,setIbanLoader]=useState(false)
     const [errorMessage,seterrorMessage]=useState();
     const useDivRef = React.useRef(null);
-    const [validIban,setValidIban]=useState(true)
+    const [validIban,setValidIban]=useState(false)
     const [showDeclartion, setShowDeclartion] = useState(false);
     useEffect(() => {
         getRecipientDetails()
@@ -421,7 +421,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         </Row>
         {currency == 'EUR' && <div className="box basic-info alert-info-custom mt-16">
             <Spin spinning={ibanLoading}>
-            {bankDetails&&bankDetails?.bankName!=''&&bankDetails?.bankName!=null&&<Row>
+            {validIban&&<Row>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                 <label className="fs-14 fw-400 text-white">
                     <strong>Bank Name</strong>
@@ -472,7 +472,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
 
                 </Col></Row>}
                 
-                {(bankDetails.bankName==''||bankDetails.bankName==null)&&<span>No bank details available</span>}
+                {(!validIban)&&<span>No bank details available</span>}
                 </Spin>
         </div>}
         <div className="text-right mt-12">
