@@ -22,10 +22,7 @@ class AddressDocumnet extends Component {
         documents: {}, showDeleteModal: false, isDocLoading: false
     }
     componentDidMount() {
-        this.setState({ ...this.state, documents: this.props?.documents || document(),filesList: this.props?.documents?.details || [] })
-    }
-    setDocs = () => {
-
+        this.setState({ ...this.state, documents: this.props?.documents || document(),filesList:this.props?.documents? [...this.props?.documents?.details]: [] })
     }
     docDetail = (doc) => {
         return {
