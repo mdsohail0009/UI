@@ -382,7 +382,7 @@ class OnthegoFundTransfer extends Component {
                 >
                     {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
                     <React.Fragment><Row gutter={[16, 16]}>
-                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
                             <Form.Item
                                 className="fw-300 mb-4 text-white-50 pt-8 custom-forminput custom-label"
                                 name="reasionOfTransfer"
