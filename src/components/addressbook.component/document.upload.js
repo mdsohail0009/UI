@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Row, Col, Typography, Upload, Form } from 'antd';
+import { Row, Col, Typography, Upload, Form, Modal,Button } from 'antd';
 import Loader from "../../Shared/loader";
 import { document } from "../onthego.transfer/api";
 import apiCalls from "../../api/apiCalls";
@@ -18,7 +18,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 class AddressDocumnet extends Component {
     state = {
         filesList: this.props?.documents?.details || [],
-        documents: {}
+        documents: {}, showDeleteModal: false
     }
     componentDidMount() {
         this.setState({ ...this.state, documents: this.props?.documents || document() })
@@ -82,21 +82,46 @@ class AddressDocumnet extends Component {
                     </Form.Item>
                     {this.state?.filesList?.map((file, indx) => <div className="docfile">
                         {file.status === "uploading" && <Loader />}
-                        {file.status === "done" ||file.status==true && <>
+                        {file.status === "done" || file.status == true && <>
                             <span className={`icon xl file mr-16`} />
                             <div className="docdetails c-pointer">
-                                <EllipsisMiddle suffixCount={6}>{file.name||file.documentName}</EllipsisMiddle>
+                                <EllipsisMiddle suffixCount={6}>{file.name || file.documentName}</EllipsisMiddle>
                                 <span className="fs-12 text-secondary">{file.size}</span>
                             </div>
                             <span className="icon md close c-pointer" onClick={() => {
-                                let filesList = [...this.state.filesList];
-                                filesList.splice(indx, 1);
-                                this.setState({ ...this.state, filesList });
+                                this.setState({ ...this.state, showDeleteModal: true, selectedFileIdx: indx })
+
                             }} />
                         </>}
                     </div>)}
                 </div>
             </Col>
+            <Modal visible={this.state.showDeleteModal}
+                closable={false}
+                title={"Confirm delete"}
+                footer={
+                    <>
+                        <Button
+                            style={{ width: "100px", border: "1px solid #f2f2f2" }}
+                            className=" pop-cancel"
+                            onClick={() => { this.setState({ ...this.state, showDeleteModal: false }) }}>
+                            No
+                        </Button>
+                        <Button
+                            className="primary-btn pop-btn"
+                            onClick={() => {
+                                let filesList = [...this.state.filesList];
+                                filesList.splice(this.state.selectedFileIdx, 1);
+                                this.setState({ ...this.state, filesList, showDeleteModal: false });
+                            }}
+                            style={{ width: 120, height: 50 }}>
+                            {apiCalls.convertLocalLang("Yes")}
+                        </Button>
+                    </>
+                }>
+               
+                <Paragraph className="text-white">Are you sure, do you really want to delete ?</Paragraph>
+            </Modal>
         </Row>
     }
 }
