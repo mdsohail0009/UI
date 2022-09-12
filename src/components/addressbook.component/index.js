@@ -154,13 +154,13 @@ class AddressBook extends Component {
 		},
 		{
 			field: "accountNumber",
-			title: apiCalls.convertLocalLang("Bank_account_iban"),
+			title: apiCalls.convertLocalLang("Bank_account_iban_name"),
 			filter: true,
 			width: 250,
 		},
 		{
 			field: "routingNumber",
-			title: "BIC/SWIFT/ABARouting Number",
+			title: apiCalls.convertLocalLang("BIC_SWIFT_ABArouting_number"),
 			filter: true,
 			width: 270,
 		},
@@ -569,8 +569,10 @@ class AddressBook extends Component {
 	};
 	addressTypeNames = (type) => {
 		const stepcodes = {
-			"1stparty": "1st Party",
-			"3rdparty": "3rd Party",
+			"ownbusiness": "Own Business",
+			"someoneelse": "Someone Else",
+			"Business": "Business",
+			"myself": "Myself"
 		};
 		return stepcodes[type];
 	};
