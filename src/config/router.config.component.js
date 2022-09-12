@@ -64,7 +64,7 @@ class RouteConfig extends Component {
         <ReactRoute path='/cases' component={CaseDocs} />
         <ReactRoute path='/docnotices' component={DocNotices} />
         <ReactRoute path='/enabletwofactor' component={TwoFactor} />
-        <ReactRoute path='/addressFiatView/:id' component={AddressFiatView} />
+        <ReactRoute path='/addressFiatView/:id?/:type' component={AddressFiatView} />
         <ReactRoute path='/addressCryptoView/:id' component={AddressCryptoView} />
         <Route path='/coindetails/:coinName' component={CoinDetails} />
         <ReactRoute path="/silent_redirect" component={SignInSilent} />

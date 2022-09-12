@@ -444,7 +444,7 @@ class AddressBook extends Component {
 		}
 	};
 	addressFiatView = ({ dataItem }) => {
-		this.props.history.push(`/addressFiatView/${dataItem.id}`);
+		this.props.history.push(`/addressFiatView/${dataItem.id}/${dataItem.addressType}`);
 	};
 	addressCryptoView = ({ dataItem }) => {
 		this.props.history.push(`/addressCryptoView/${dataItem.id}`);
