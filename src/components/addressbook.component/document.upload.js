@@ -47,14 +47,14 @@ class AddressDocumnet extends Component {
                         className="mb-16 fs-14 text-white fw-500"
                     >{this.props.title}</Paragraph>
                     <Form.Item name={"files"} required rules={[{
-                        validator:(_,value)=>{
-                            if(this.state.filesList.length==0){
+                        validator: (_, value) => {
+                            if (this.state.filesList.length == 0) {
                                 return Promise.reject(apiCalls.convertLocalLang("is_required"))
-                            }else{
+                            } else {
                                 return Promise.resolve();
                             }
                         },
-                       
+
                     }
                     ]}>
                         <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
@@ -82,10 +82,10 @@ class AddressDocumnet extends Component {
                     </Form.Item>
                     {this.state?.filesList?.map((file, indx) => <div className="docfile">
                         {file.status === "uploading" && <Loader />}
-                        {file.status === "done" && <>
+                        {file.status === "done" ||file.status==true && <>
                             <span className={`icon xl file mr-16`} />
                             <div className="docdetails c-pointer">
-                                <EllipsisMiddle suffixCount={6}>{file.name}</EllipsisMiddle>
+                                <EllipsisMiddle suffixCount={6}>{file.name||file.documentName}</EllipsisMiddle>
                                 <span className="fs-12 text-secondary">{file.size}</span>
                             </div>
                             <span className="icon md close c-pointer" onClick={() => {
