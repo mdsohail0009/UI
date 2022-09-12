@@ -227,45 +227,45 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         <div className="box basic-info alert-info-custom mt-16">
             <Row>
                 {!isBusiness && <><Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 ">
+                    <label className="fs-14 fw-400 text-white">
                         <strong>First Name</strong>
                     </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.firstName}</Text></div>
+                    <div><Text className="fs-14 fw-400 text-white">{recipientDetails.firstName}</Text></div>
 
                 </Col>
                     <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 ">
+                        <label className="fs-14 fw-400 text-white">
                             <strong>Last Name</strong>
                         </label>
-                        <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.lastName}</Text></div>
+                        <div><Text className="fs-14 fw-400 text-white">{recipientDetails.lastName}</Text></div>
 
                     </Col></>}
                 {isBusiness && <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 ">
+                    <label className="fs-14 fw-400 text-white">
                         <strong>Beneficiary Name</strong>
                     </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.beneficiaryName}</Text></div>
+                    <div><Text className="fs-14 fw-400 text-white">{recipientDetails.beneficiaryName}</Text></div>
 
                 </Col>}
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 ">
+                    <label className="fs-14 fw-400 text-white">
                         <strong>Address Line 1</strong>
                     </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.line1!=null?recipientDetails.line1:'-'}</Text></div>
+                    <div><Text className="fs-14 fw-400 text-white">{recipientDetails.line1!=null?recipientDetails.line1:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 ">
+                    <label className="fs-14 fw-400 text-white">
                         <strong>Address Line 2</strong>
                     </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.line2!=null?recipientDetails.line2:'-'}</Text></div>
+                    <div><Text className="fs-14 fw-400 text-white">{recipientDetails.line2!=null?recipientDetails.line2:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 ">
+                    <label className="fs-14 fw-400 text-white">
                         <strong>Address Line 3</strong>
                     </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.line3!=null?recipientDetails.line3:'-'}</Text></div>
+                    <div><Text className="fs-14 fw-400 text-white">{recipientDetails.line3!=null?recipientDetails.line3:'-'}</Text></div>
 
                 </Col>
 
@@ -419,52 +419,52 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             <Spin spinning={ibanLoading}>
             {bankDetails&&bankDetails?.bankName!=''&&bankDetails?.bankName!=null&&<Row>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                <label className="fs-14 fw-400 ">
+                <label className="fs-14 fw-400 text-white">
                     <strong>Bank Name</strong>
                 </label>
-                <div><Text className="fs-14 fw-400 text-purewhite">{(bankDetails?.bankName!=''&&bankDetails?.bankName!=null)?bankDetails?.bankName:'-'}</Text></div>
+                <div><Text className="fs-14 fw-400 text-white">{(bankDetails?.bankName!=''&&bankDetails?.bankName!=null)?bankDetails?.bankName:'-'}</Text></div>
 
             </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 ">
+                    <label className="fs-14 fw-400 text-white">
                         <strong>BIC</strong>
                     </label>
-                   <div><Text className="fs-14 fw-400 text-purewhite"> {bankDetails.routingNumber!=''&&bankDetails.routingNumber!=null?bankDetails.routingNumber:'-'}</Text></div>
+                   <div><Text className="fs-14 fw-400 text-white"> {bankDetails.routingNumber!=''&&bankDetails.routingNumber!=null?bankDetails.routingNumber:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 ">
+                    <label className="fs-14 fw-400 text-white">
                         <strong>Branch</strong>
                     </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">{bankDetails.branch!=''&&bankDetails.branch!=null?bankDetails.branch:'-'}</Text></div>
+                    <div><Text className="fs-14 fw-400 text-white">{bankDetails.branch!=''&&bankDetails.branch!=null?bankDetails.branch:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 ">
+                    <label className="fs-14 fw-400 text-white">
                         <strong>Country</strong>
                     </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">{bankDetails.country!=''&&bankDetails.country!=null?bankDetails.country:'-'}</Text></div>
+                    <div><Text className="fs-14 fw-400 text-white">{bankDetails.country!=''&&bankDetails.country!=null?bankDetails.country:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 ">
+                    <label className="fs-14 fw-400 text-white">
                         <strong>State</strong>
                     </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">{bankDetails.state!=''&&bankDetails.state!=null?bankDetails.state:'-'}</Text></div>
+                    <div><Text className="fs-14 fw-400 text-white">{bankDetails.state!=''&&bankDetails.state!=null?bankDetails.state:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 ">
+                    <label className="fs-14 fw-400 text-white">
                         <strong>City</strong>
                     </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">{(bankDetails.city!=''&&bankDetails.city!=null)?bankDetails.city:'-'}</Text></div>
+                    <div><Text className="fs-14 fw-400 text-white">{(bankDetails.city!=''&&bankDetails.city!=null)?bankDetails.city:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 ">
+                    <label className="fs-14 fw-400 text-white">
                         <strong>Zip</strong>
                     </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">{(bankDetails.zipCode!=''&&bankDetails.zipCode!=null)?bankDetails.zipCode:'-'}</Text></div>
+                    <div><Text className="fs-14 fw-400 text-white">{(bankDetails.zipCode!=''&&bankDetails.zipCode!=null)?bankDetails.zipCode:'-'}</Text></div>
 
                 </Col></Row>}
                 

@@ -163,52 +163,52 @@ class PayeeBankDetails extends Component {
                     <Spin spinning={this.state.IbanLoader}>
                     {this.state.iBanDetals && <Row>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 ">
+                                <label className="fs-14 fw-400 text-white">
                                     <strong>Bank Name</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals.bankName||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals.bankName||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 ">
+                                <label className="fs-14 fw-400 text-white">
                                     <strong>BIC</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals.bic||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals.bic||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 ">
+                                <label className="fs-14 fw-400 text-white">
                                     <strong>Branch</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals.bankBranch||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals.bankBranch||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 ">
+                                <label className="fs-14 fw-400 text-white">
                                     <strong>Country</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals.country||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals.country||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 ">
+                                <label className="fs-14 fw-400 text-white">
                                     <strong>State</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals.state||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals.state||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 ">
+                                <label className="fs-14 fw-400 text-white">
                                     <strong>City</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals.city||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals.city||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 ">
+                                <label className="fs-14 fw-400 text-white">
                                     <strong>Zip</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals.postalCode||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals.postalCode||'---'}</Text></div>
 
                             </Col>
                         </Row>}

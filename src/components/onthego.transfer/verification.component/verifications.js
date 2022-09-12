@@ -256,6 +256,7 @@ const Verifications = (props) => {
             <Button
                 type="text"
                 style={{ color: "black", margin: "0 auto" }}
+                disabled={true}
             ><Text className="text-yellow pr-24"> Verified </Text>
                 <span className="icon md greenCheck " />
             </Button>
@@ -305,6 +306,7 @@ const Verifications = (props) => {
             <Button
                 type="text"
                 style={{ color: "black", margin: "0 auto" }}
+                disabled={true}
             ><Text className="text-yellow pr-24"> Verified </Text>
                 <span className="icon md greenCheck " />
             </Button>
@@ -327,6 +329,7 @@ const Verifications = (props) => {
             <Button
                 type="text"
                 style={{ color: "black", margin: "0 auto" }}
+                disabled={true}
             ><Text className="text-yellow pr-24"> Verified </Text>
                 <span className="icon md greenCheck " />
             </Button>

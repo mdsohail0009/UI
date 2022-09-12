@@ -701,17 +701,17 @@ const AddressCommonCom = (props) => {
                 <div className="box basic-info alert-info-custom">
                   <Row>
                     <Col xs={24} md={24} lg={24} xl={8} xxl={8} className="mb-16">
-                      <label className="fs-14 fw-400 ">
+                      <label className="fs-14 fw-400 text-white">
                         <strong>Name</strong>
                       </label>
-                      <div><Text className="fs-14 fw-400 text-purewhite">{favouriteDetails.fullName || favouriteDetails?.businessName}</Text></div>
+                      <div><Text className="fs-14 fw-400 text-white">{favouriteDetails.fullName || favouriteDetails?.businessName}</Text></div>
 
                     </Col>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
-                      <label className="fs-14 fw-400 ">
+                      <label className="fs-14 fw-400 text-white">
                         <strong> Address</strong>
                       </label>
-                      <div><Text className="fs-14 fw-400 text-purewhite">{props.userConfig?.email}</Text></div>
+                      <div><Text className="fs-14 fw-400 text-white">{props.userConfig?.email}</Text></div>
                     </Col>
                   </Row>
                 </div></>}
