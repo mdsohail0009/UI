@@ -120,6 +120,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             }
         }else{
             setValidIban(false)
+            setbankDetails({})
         }
         
     }
@@ -137,6 +138,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
       };
     return <>
     <div ref={useDivRef}></div>
+    {isLoading &&<Loader /> }
+    {!isLoading &&
         <Form layout="vertical" form={form} onFinish={saveTransfer} initialValues={{createTransfer}} scrollToFirstError>
         {showDeclartion && <div className="text-center">
                 <Image width={80} preview={false} src={alertIcon} />
@@ -159,7 +162,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         
         
         {currency == 'EUR' && <h2 style={{ fontSize: 18, textAlign: 'center', color: "white" }}>SEPA Transfer</h2>}
-        {isLoading &&<Loader /> }
+        
         {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
         {!isLoading &&<>
         <Row gutter={[16, 16]}><Col xs={24} md={24} lg={24} xl={24} xxl={24} id="favoriteName">
@@ -284,7 +287,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             if (!value) {
                                 return Promise.reject(apiCalls.convertLocalLang("is_required"));
                             } else if (!validIban) {
-                                return Promise.reject("Invalid Iban");
+                                return Promise.reject("Please input a valid IBAN");
                             } else {
                                 return Promise.resolve();
                             }
@@ -327,7 +330,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
                         name="swiftRouteBICNumber"
-                        label={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC code' : 'ABA Routing Code'}
+                        label={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
                         required
                         rules={[
                             {
@@ -337,7 +340,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         ]}>
                         <Input
                             className="cust-input"
-                            placeholder={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC code' : 'ABA Routing Code'}
+                            placeholder={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
                         />
                     </Form.Item>
                 </Col>}
@@ -483,7 +486,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             </Button>
         </div></>}
         </>}
-        </Form>
+        </Form>}
     </>
 
 }

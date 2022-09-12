@@ -652,8 +652,8 @@ export default {
 	accountnumber:"Account Number",
 	bankaddressline1:"Bank Address 1",
 	bankaddressline2:"Bank Address 2",
-	reasiontotransfor:'Reason of Transfer',
-	relationtobenificiary:'Relationship to Beneficiary',
+	reasiontotransfor:'Reason Of Transfer',
+	relationtobenificiary:'Relationship To Beneficiary',
 	saveWhitelistnameas:'Save Whitelist Name As',
 	continue:'Continue'
 };

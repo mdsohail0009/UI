@@ -68,7 +68,7 @@ class PayeeBankDetails extends Component {
                                     if (!value) {
                                         return Promise.reject(apicalls.convertLocalLang("is_required"));
                                     } else if (!this.state.isValidIban) {
-                                        return Promise.reject("Invalid Iban");
+                                        return Promise.reject("Please input a valid IBAN");
                                     } else {
                                         return Promise.resolve();
                                     }
@@ -161,58 +161,58 @@ class PayeeBankDetails extends Component {
 
                     <div className="box basic-info alert-info-custom mt-16">
                     <Spin spinning={this.state.IbanLoader}>
-                    {this.state.iBanDetals && <Row>
+                    {this.state.isValidIban && <Row>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                                 <label className="fs-14 fw-400 text-white">
                                     <strong>Bank Name</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals.bankName||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.bankName||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                                 <label className="fs-14 fw-400 text-white">
                                     <strong>BIC</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals.bic||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.bic||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                                 <label className="fs-14 fw-400 text-white">
                                     <strong>Branch</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals.bankBranch||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.bankBranch||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                                 <label className="fs-14 fw-400 text-white">
                                     <strong>Country</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals.country||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.country||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                                 <label className="fs-14 fw-400 text-white">
                                     <strong>State</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals.state||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.state||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                                 <label className="fs-14 fw-400 text-white">
                                     <strong>City</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals.city||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.city||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                                 <label className="fs-14 fw-400 text-white">
                                     <strong>Zip</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals.postalCode||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.postalCode||'---'}</Text></div>
 
                             </Col>
                         </Row>}
-                        {!this.state.iBanDetals&&<span>No bank details available</span>}
+                        {!this.state.isValidIban&&<span>No bank details available</span>}
                         </Spin>
                     </div>
 
