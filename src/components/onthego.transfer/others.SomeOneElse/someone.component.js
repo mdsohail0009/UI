@@ -53,7 +53,7 @@ const SomeoneComponent = (props) => {
         obj.payeeAccountModels[0].walletCode = props.currency;
         if(props.selectedAddress?.id){obj.payeeAccountModels[0].id = createPayeeObj.payeeAccountModels[0].id;}
         obj['customerId'] = props.userProfile.id;
-        if(props.type !== "manual"){obj['amount'] = props.onTheGoObj.amount;}
+        if(props.type !== "manual"){obj['amount'] = props.onTheGoObj?.amount;}
         obj['transferType'] = props.currency === "USD" ? addressOptions.domesticType:'sepa' ;
         obj['addressType'] = addressOptions.addressType ;
         setBtnLoading(true)
@@ -95,6 +95,8 @@ const SomeoneComponent = (props) => {
         setBankdetails(data);
     }
     return (<React.Fragment>
+        {mainLoader && <Loader />}
+        {!mainLoader && <>
         <div ref={useDivRef}></div>
             {showDeclartion && <div className="text-center">
                 <Image width={80} preview={false} src={alertIcon} />
@@ -122,8 +124,8 @@ const SomeoneComponent = (props) => {
                     </Row>
                 </>}
                 {props.currency == 'EUR' && <h2 style={{ fontSize: 18, textAlign: 'center', color: "white" }}>SEPA Transfer</h2>}
-                {mainLoader && <Loader />}
-        {!mainLoader && <>
+                
+        
             {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
             <Form
                 ref={form}

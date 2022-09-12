@@ -95,7 +95,7 @@ class OnthegoFundTransfer extends Component {
         }
     }
     chnageStep = (step, values) => {
-        this.setState({ ...this.state, step });
+        this.setState({ ...this.state, step, onTheGoObj: values  });
         if (step === 'newtransfer') {
             this.setState({ ...this.state, step, isNewTransfer: true, onTheGoObj: values });
         }
@@ -263,7 +263,8 @@ class OnthegoFundTransfer extends Component {
                     <text Paragraph
                         className='text-white fs-30 fw-600 px-4 '>Transfer Funds</text>
                 </div>
-                <Spin spinning={isVarificationLoader}>
+                {isVarificationLoader && <Loader />}
+                {!isVarificationLoader && 
                     <Form
                         autoComplete="off"
                         initialValues={{ amount: "" }}
@@ -355,7 +356,7 @@ class OnthegoFundTransfer extends Component {
                                             onClick={() => {
                                                 let _amt = this.enteramtForm.current.getFieldsValue().amount;
                                                 _amt = _amt.replace(/,/g, "");
-                                                this.setState({ ...this.state, isNewTransfer: false, amount: _amt }, () => {
+                                                this.setState({ ...this.state, isNewTransfer: false, amount: _amt,onTheGoObj:this.enteramtForm.current.getFieldsValue() }, () => {
                                                     this.enteramtForm.current.validateFields().then(() => this.validateAmt(_amt, "addressselection", this.enteramtForm.current.getFieldsValue(), "addressLoader"))
                                                         .catch(error => {
 
@@ -369,7 +370,7 @@ class OnthegoFundTransfer extends Component {
                                 </Col>
                             </Row>
                         </>}
-                    </Form></Spin></>,
+                    </Form>}</>,
             addressselection: <React.Fragment>
                 {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
                 <div className="mb-16" style={{textAlign:'center'}}>

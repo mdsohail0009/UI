@@ -198,7 +198,7 @@ class OthersBusiness extends Component {
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
                                 name="relation"
-                                label={"Relationship to Beneficiary"}
+                                label={"Relationship To Beneficiary"}
                                 required
                                 rules={[
                                     {
@@ -216,7 +216,7 @@ class OthersBusiness extends Component {
                             >
                                 <Input
                                     className="cust-input"
-                                    placeholder={"Relationship to Beneficiary"}
+                                    placeholder={"Relationship To Beneficiary"}
                                 />
 
                             </Form.Item>
@@ -239,7 +239,7 @@ class OthersBusiness extends Component {
                                             if (!value) {
                                                 return Promise.reject(apiCalls.convertLocalLang("is_required"));
                                             } else if (!this.state.iBanValid) {
-                                                return Promise.reject("Invalid Iban");
+                                                return Promise.reject("Please input a valid IBAN");
                                             } else {
                                                 return Promise.resolve();
                                             }
@@ -275,12 +275,12 @@ class OthersBusiness extends Component {
                                     },
                                 ]}
                                 label={
-                                    "Reason of Transfer"
+                                    "Reason Of Transfer"
                                 }
                             >
                                 <Input
                                     className="cust-input"
-                                    placeholder={"Reason of Transfer"}
+                                    placeholder={"Reason Of Transfer"}
                                     onChange={this.handleIbanChange}
                                 />
                             </Form.Item>
@@ -288,7 +288,7 @@ class OthersBusiness extends Component {
                     </Row>
                     <div className="box basic-info alert-info-custom mt-16">
                         <Spin spinning={this.state.ibanDetailsLoading}>
-                        {Object.keys(this.state.ibanDetails).length !== 0 && <Row>
+                        {this.state.iBanValid && <Row>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                                 <label className="fs-14 fw-400 text-white">
                                     <strong>Bank Name</strong>
@@ -339,7 +339,7 @@ class OthersBusiness extends Component {
 
                             </Col>
                         </Row>}
-                        {Object.keys(this.state.ibanDetails).length === 0 && !this.state.ibanDetailsLoading && <Row>
+                        {!this.state.iBanValid && !this.state.ibanDetailsLoading && <Row>
                             <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
                                 <div><Text className="fs-14 fw-400 text-white">No bank details available</Text></div>
 

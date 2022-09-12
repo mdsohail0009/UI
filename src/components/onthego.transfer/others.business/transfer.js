@@ -158,7 +158,7 @@ class BusinessTransfer extends Component {
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
                                 name="relation"
-                                label={"Relationship to beneficiary"}
+                                label={"Relationship To beneficiary"}
                                 required
                                 rules={[
                                     {
@@ -176,7 +176,7 @@ class BusinessTransfer extends Component {
                             >
                                 <Input
                                     className="cust-input"
-                                    placeholder={"Relationship to beneficiary"}
+                                    placeholder={"Relationship To beneficiary"}
                                 />
 
                             </Form.Item>
@@ -308,7 +308,7 @@ class BusinessTransfer extends Component {
                         <RecipientAddress />
                     </Row>
 
-                    <Paragraph className="mb-8 text-white fw-500 mt-16" style={{ fontSize: 18 }}>Recipient's Bank Details</Paragraph>
+                    <Paragraph className="mb-8 text-white fw-500 mt-16" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                     {/* <Divider /> */}
                     <InternationalTransfer type={this.props.type} />
                     <Paragraph className="fw-300 mb-0 pb-4 ml-12 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
