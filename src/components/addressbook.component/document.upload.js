@@ -58,7 +58,7 @@ class AddressDocumnet extends Component {
                     }
                     ]}>
                         <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
-                            className="upload mt-16"
+                            className="upload mt-0"
                             multiple={true} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                             showUploadList={false}
                             beforeUpload={(props) => { }}

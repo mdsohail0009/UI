@@ -605,7 +605,7 @@ class PaymentsView extends Component {
                                                 className="mb-16 fs-14 text-white fw-500 text-upper"
                                             >Please provide your identity proof</Paragraph>
                                             <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
-                                                className="upload mt-16"
+                                                className="upload mt-0"
                                                 multiple={false}
                                                 action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                                                 showUploadList={false}
@@ -640,7 +640,7 @@ class PaymentsView extends Component {
                                                 className="mb-16 fs-14 text-white fw-500 text-upper"
                                             >Please provide your address proof</Paragraph>
                                             <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
-                                                className="upload mt-16"
+                                                className="upload mt-0"
                                                 multiple={false}
                                                 action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                                                 showUploadList={false}
@@ -674,7 +674,7 @@ class PaymentsView extends Component {
                                                 className="mb-16 fs-14 text-white fw-500 text-upper"
                                             >Please provide your address proof</Paragraph>
                                             <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
-                                                className="upload mt-16"
+                                                className="upload mt-0"
                                                 multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                                                 showUploadList={false}
                                                 beforeUpload={(props) => { this.beforeUpload(props) }}
