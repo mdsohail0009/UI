@@ -1,8 +1,9 @@
 import { Component } from "react";
-import { Row, Col, Typography, Upload, Form, Modal,Button } from 'antd';
+import { Row, Col, Typography, Upload, Form, Modal, Button } from 'antd';
 import Loader from "../../Shared/loader";
 import { document } from "../onthego.transfer/api";
 import apiCalls from "../../api/apiCalls";
+import { bytesToSize } from "../../utils/service";
 
 const { Dragger } = Upload;
 const { Paragraph, Text, Title } = Typography;
@@ -82,11 +83,11 @@ class AddressDocumnet extends Component {
                     </Form.Item>
                     {this.state?.filesList?.map((file, indx) => <div className="docfile">
                         {file.status === "uploading" && <Loader />}
-                        {file.status === "done" || file.status == true && <>
+                        {(file.status === "done" || file.status == true) && <>
                             <span className={`icon xl file mr-16`} />
-                            <div className="docdetails c-pointer">
+                            <div className="docdetails">
                                 <EllipsisMiddle suffixCount={6}>{file.name || file.documentName}</EllipsisMiddle>
-                                <span className="fs-12 text-secondary">{file.size}</span>
+                                <span className="fs-12 text-secondary">{file.size ? bytesToSize(file.size) : ""}</span>
                             </div>
                             <span className="icon md close c-pointer" onClick={() => {
                                 this.setState({ ...this.state, showDeleteModal: true, selectedFileIdx: indx })
@@ -119,7 +120,7 @@ class AddressDocumnet extends Component {
                         </Button>
                     </>
                 }>
-               
+
                 <Paragraph className="text-white">Are you sure, do you really want to delete ?</Paragraph>
             </Modal>
         </Row>
