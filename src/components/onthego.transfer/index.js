@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Input, Row, Col, Form, Button, Typography, List, Divider, Image, Select, Tabs, Alert } from 'antd';
+import { Input, Row, Col, Form, Button, Typography, List, Divider, Image, Select, Tabs, Alert, Spin } from 'antd';
 import apicalls from "../../api/apiCalls";
 import AddressDocumnet from "../addressbook.component/document.upload";
 import oops from '../../assets/images/oops.png'
@@ -36,7 +36,7 @@ class OnthegoFundTransfer extends Component {
         codeDetails: { abaRoutingCode: "", swiftRouteBICNumber: "", reasionOfTransfer: "", documents: null },
         selectedPayee: {},
         selectedTab: "domestic",
-        verifyData: null, isBtnLoading: false
+        verifyData: null, isBtnLoading: false, reviewDetailsLoading:false
     }
     componentDidMount() {
         fetchPayees(this.props.userProfile.id, this.props.selectedCurrency).then((response) => {
@@ -164,6 +164,9 @@ class OnthegoFundTransfer extends Component {
             return "Something went wrong please try again!";
         }
     };
+    onReviewDetailsLoading = (val) =>{
+        this.setState({...this.state,reviewDetailsLoading:val})
+    }
     validateAmt = async (amt, step, values, loader) => {
         const obj = {
             CustomerId: this.props.userProfile?.id,
@@ -541,6 +544,7 @@ class OnthegoFundTransfer extends Component {
                     <text Paragraph
                         className='text-white fs-30 fw-600 px-4 '>Review Details Of Transfer</text>
                 </div>
+                <Spin spinning={this.state.reviewDetailsLoading}>
                 <Form
                     name="advanced_search"
                     ref={this.formRef}
@@ -672,7 +676,7 @@ class OnthegoFundTransfer extends Component {
                             </div>
                         </Col>}
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <Verifications onchangeData={(obj) => this.changesVerification(obj)} />
+                            <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading = {(val)=>this.onReviewDetailsLoading(val)}/>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="text-center mt-36 create-account">
@@ -691,6 +695,7 @@ class OnthegoFundTransfer extends Component {
                         </Col>
                     </Row>
                 </Form>
+                </Spin>
             </React.Fragment>,
             newtransfer: <>
                 <FiatAddress currency={this.props.selectedCurrency} amount={this.state.amount} onContinue={(obj) => {
