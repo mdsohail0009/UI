@@ -314,7 +314,7 @@ const AddressCommonCom = (props) => {
     if (response.ok) {
       setCountry(response.data);
       let state = form.getFieldValue("country");
-      let states = response.data?.filter((item) => item.name?.toLowerCase() === state.toLowerCase());
+      let states = response.data?.filter((item) => item.name.toLowerCase());
       setState(states[0]?.stateLookUp);
     }
   }
@@ -379,7 +379,12 @@ const AddressCommonCom = (props) => {
       }
     } else {
       //bankmodalData.push(obj)
-      setModalData([obj])
+      if(bankmodalData.lenth>1){
+        setErrorMsg(apiCalls.convertLocalLang("agree_termsofservice"));
+      }else{
+        setModalData([obj])
+      }
+      
       setRecrdStatus(obj?.recordStatus);
     }
     setIsModalVisible(false);
