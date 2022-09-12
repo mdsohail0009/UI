@@ -143,59 +143,59 @@ class BankDetails extends Component {
                 <div className="box basic-info alert-info-custom mt-16">
                 <Row>
                     <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 ">
+                        <label className="fs-14 fw-400 text-white">
                             <strong>Bank Name</strong>
                         </label>
-                        <div><Text className="fs-14 fw-400 text-purewhite">Barcslays Bank UK PLC</Text></div>
+                        <div><Text className="fs-14 fw-400 text-white">Barcslays Bank UK PLC</Text></div>
 
                     </Col>
                     <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 ">
+                        <label className="fs-14 fw-400 text-white">
                             <strong>BIC</strong>
                         </label>
-                        <div><Text className="fs-14 fw-400 text-purewhite">BUKBGB22</Text></div>
+                        <div><Text className="fs-14 fw-400 text-white">BUKBGB22</Text></div>
 
                     </Col>
                     <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 ">
+                        <label className="fs-14 fw-400 text-white">
                             <strong>Branch</strong>
                         </label>
-                        <div><Text className="fs-14 fw-400 text-purewhite">CHELTENHAM</Text></div>
+                        <div><Text className="fs-14 fw-400 text-white">CHELTENHAM</Text></div>
 
                     </Col>
                     <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 ">
+                        <label className="fs-14 fw-400 text-white">
                             <strong>Branch</strong>
                         </label>
-                        <div><Text className="fs-14 fw-400 text-purewhite">CHELTENHAM</Text></div>
+                        <div><Text className="fs-14 fw-400 text-white">CHELTENHAM</Text></div>
 
                     </Col>
                     <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 ">
+                        <label className="fs-14 fw-400 text-white">
                             <strong>Country</strong>
                         </label>
-                        <div><Text className="fs-14 fw-400 text-purewhite">United Kingdom (GB)</Text></div>
+                        <div><Text className="fs-14 fw-400 text-white">United Kingdom (GB)</Text></div>
 
                     </Col>
                     <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 ">
+                        <label className="fs-14 fw-400 text-white">
                             <strong>State</strong>
                         </label>
-                        <div><Text className="fs-14 fw-400 text-purewhite">XXXX</Text></div>
+                        <div><Text className="fs-14 fw-400 text-white">XXXX</Text></div>
 
                     </Col>
                     <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 ">
+                        <label className="fs-14 fw-400 text-white">
                             <strong>City</strong>
                         </label>
-                        <div><Text className="fs-14 fw-400 text-purewhite">Leicester</Text></div>
+                        <div><Text className="fs-14 fw-400 text-white">Leicester</Text></div>
 
                     </Col>
                     <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 ">
+                        <label className="fs-14 fw-400 text-white">
                             <strong>Zip</strong>
                         </label>
-                        <div><Text className="fs-14 fw-400 text-purewhite">LE87 2BB</Text></div>
+                        <div><Text className="fs-14 fw-400 text-white">LE87 2BB</Text></div>
 
                     </Col>
                 </Row>

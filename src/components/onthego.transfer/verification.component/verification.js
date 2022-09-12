@@ -429,7 +429,6 @@ const Verification = (props) => {
 
 										style={{ width: "100%" }}
 										disabled={emailDisable}
-										onClick={(event) => handleSendOtp(event.currentTarget.value)}
 										onChange={(e) => handleEmailChange(e)}
 									/>
 									<div className="new-add c-pointer get-code text-yellow hy-align">

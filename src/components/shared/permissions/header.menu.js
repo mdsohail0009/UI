@@ -354,6 +354,18 @@ class HeaderPermissionMenu extends Component {
                             </Link>
                         </li>
                         <li
+                            onClick={() => this.onMenuItemClick("addressbook", { key: "addressbook", path: "/addressbook" })}
+                        >
+                            <Link>
+                                <Translate
+                                    content="address_book"
+                                    component={Text}
+                                    className="text-white-30"
+                                />
+                                <span className="icon md rarrow-white" />
+                            </Link>
+                        </li>
+                        <li
                             onClick={() => window.open('https://suissebase.egnyte.com/ul/jnDqGI4Nxj', '_blank')}
                         >
                             <Link>

@@ -124,7 +124,7 @@ withdrawFiatSummaryBack = () => {
                 closable={true}
                 visible={this.props.showDrawer}
                 closeIcon={null}
-                className="side-drawer"
+                className="side-drawer custom-fait-sidedrawer"
                 destroyOnClose={true}
             >
                 {this.renderContent()}

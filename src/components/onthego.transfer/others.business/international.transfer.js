@@ -1,8 +1,8 @@
 import { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
-import {Form,Row,Col,Input} from "antd";
+import { Form, Row, Col, Input } from "antd";
 import { validateContentRule } from "../../../utils/custom.validator";
-const {TextArea}=Input;
+const { TextArea } = Input;
 class InternationalTransfer extends Component {
 
 
@@ -167,7 +167,7 @@ class InternationalTransfer extends Component {
                     ></TextArea>
                 </Form.Item>
             </Col>
-            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            {this.props.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                     className="custom-forminput custom-label mb-0"
                     name="reasonOfTransfer"
@@ -186,17 +186,17 @@ class InternationalTransfer extends Component {
                         },
                     ]}
                     label={
-                        "Reason for transfer"
+                        "Reason Of Transfer"
                     }
                 >
                     <TextArea
-                        placeholder={"Reason for transfer"}
+                        placeholder={"Reason Of Transfer"}
                         className="cust-input cust-text-area address-book-cust"
                         autoSize={{ minRows: 1, maxRows: 1 }}
                         maxLength={100}
                     ></TextArea>
                 </Form.Item>
-            </Col>
+            </Col>}
         </Row>
     }
 }
