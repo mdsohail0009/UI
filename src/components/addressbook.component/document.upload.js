@@ -19,7 +19,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 class AddressDocumnet extends Component {
     state = {
         filesList: this.props?.documents?.details || [],
-        documents: {}, showDeleteModal: false
+        documents: {}, showDeleteModal: false, isDocLoading: false
     }
     componentDidMount() {
         this.setState({ ...this.state, documents: this.props?.documents || document() })
@@ -60,12 +60,15 @@ class AddressDocumnet extends Component {
                     ]}>
                         <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                             className="upload mt-16"
-                            multiple={true} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
+                            multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                             showUploadList={false}
                             beforeUpload={(props) => { }}
-                            onChange={({ fileList, file }) => {
-                                this.setState({ ...this.state, filesList: fileList });
+                            onChange={({ file }) => {
+                                this.setState({ ...this.state, isDocLoading: true });
                                 if (file.status === "done") {
+                                    let { filesList } = this.state;
+                                    filesList.push(file);
+                                    this.setState({ ...this.state, filesList, isDocLoading: false });
                                     let { documents } = this.state;
                                     documents?.details?.push(this.docDetail(file));
                                     this.props?.onDocumentsChange(documents);
@@ -82,7 +85,6 @@ class AddressDocumnet extends Component {
                         </Dragger>
                     </Form.Item>
                     {this.state?.filesList?.map((file, indx) => <div className="docfile">
-                        {file.status === "uploading" && <Loader />}
                         {(file.status === "done" || file.status == true) && <>
                             <span className={`icon xl file mr-16`} />
                             <div className="docdetails">
@@ -95,6 +97,7 @@ class AddressDocumnet extends Component {
                             }} />
                         </>}
                     </div>)}
+                    {this.state.isDocLoading && <Loader />}
                 </div>
             </Col>
             <Modal visible={this.state.showDeleteModal}
