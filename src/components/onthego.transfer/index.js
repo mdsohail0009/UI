@@ -537,7 +537,7 @@ class OnthegoFundTransfer extends Component {
             </React.Fragment>,
             reviewdetails: <React.Fragment>
                 <div ref={this.reviewScrool}></div>
-                <div className="mb-16 text-left">
+                <div className="mb-16 text-center">
                     <text Paragraph
                         className='text-white fs-30 fw-600 px-4 '>Review Details Of Transfer</text>
                 </div>
