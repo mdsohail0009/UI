@@ -88,7 +88,7 @@ class PayeeBankDetails extends Component {
                     </Form.Item>
                 </Col>
                  
-                {this.props.type !== "manual" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                {this.props.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
                         name={'reasonOfTransfer'}
@@ -290,7 +290,7 @@ class PayeeBankDetails extends Component {
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
                         name={["payeeAccountModels","abaRoutingCode"]}
-                        label="ABA Routing code"
+                        label="ABA Routing Code"
                         required
                         rules={[
                             {
@@ -320,7 +320,7 @@ class PayeeBankDetails extends Component {
                     >
                         <Input
                             className="cust-input "
-                            placeholder="ABA Routing code"
+                            placeholder="ABA Routing Code"
                             maxLength="500"
                         />
                     </Form.Item>
@@ -356,40 +356,7 @@ class PayeeBankDetails extends Component {
                         />
                     </Form.Item>
                 </Col>
-                {this.props.type !== "manual" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item
-                        className="custom-forminput custom-label mb-0"
-                        name={"reasonOfTransfer"}
-                        required
-                        rules={[
-                            {
-                                required: true,
-                                message: apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                whitespace: true,
-                                message: apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                validator: validateContentRule,
-                            },
-                        ]}
-                        label={
-                            <Translate
-                                content="reasiontotransfor"
-                                component={Form.label}
-                            />
-                        }
-                    >
-                        <Input
-                            className="cust-input"
-                            placeholder={apicalls.convertLocalLang(
-                                "reasiontotransfor"
-                            )}
-                            maxLength="500"
-                        />
-                    </Form.Item>
-                </Col>}
+                
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
@@ -448,10 +415,10 @@ class PayeeBankDetails extends Component {
                     </Form.Item>
                 </Col>
                 
-                {/* <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                {this.props.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
-                        name={"relation"}
+                        name={"reasonOfTransfer"}
                         required
                         rules={[
                             {
@@ -468,20 +435,21 @@ class PayeeBankDetails extends Component {
                         ]}
                         label={
                             <Translate
-                                content="relationtobenificiary"
+                                content="reasiontotransfor"
                                 component={Form.label}
                             />
                         }
                     >
-                        <Input
-                            className="cust-input"
+                        <TextArea
                             placeholder={apicalls.convertLocalLang(
                                 "reasiontotransfor"
                             )}
-                            maxLength="500"
-                        />
+                            className="cust-input cust-text-area address-book-cust"
+                            autoSize={{ minRows: 1, maxRows: 2 }}
+                            maxLength={100}
+                        ></TextArea>
                     </Form.Item>
-                </Col> */}
+                </Col>}
             </>
         }
         return _templates[transferType]

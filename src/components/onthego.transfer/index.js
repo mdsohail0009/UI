@@ -746,7 +746,7 @@ class OnthegoFundTransfer extends Component {
                                     <Title className="mb-4 fs-10 text-white fw-500   text-right">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
                                 </div>
                             </Col>}
-                            {this.state.reviewDetails?.addressType == "someoneelse" && this.state.reviewDetails?.transferType != "sepa" && <>
+                            
                                 {this.state.reviewDetails?.abaRoutingCode && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                     <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                         <Title className="mb-4 fs-10 text-white fw-400  ">ABA Routing code</Title>
@@ -764,7 +764,7 @@ class OnthegoFundTransfer extends Component {
                                         <Title className="mb-4 fs-10 text-white fw-400  ">Account Number </Title>
                                         <Title className="mb-4 fs-10 text-white fw-500   text-right">{this.state.reviewDetails?.accountNumber || "-"}</Title>
                                     </div>
-                                </Col>}</>}
+                                </Col>}
                             {this.state.reviewDetails?.bankName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                     <Title className="mb-4 fs-10 text-white fw-400  ">Bank Name </Title>
