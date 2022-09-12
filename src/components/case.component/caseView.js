@@ -330,7 +330,7 @@ class RequestedDocs extends Component {
         }
         return <>
             <div className="main-container">
-                <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile?key=6" />{caseData?.documents?.customerCaseTitle}</div>
+                <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile/6" />{caseData?.documents?.customerCaseTitle}</div>
                 <div className='case-stripe'>
                     <Row gutter={[16, 16]}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8} xxl={8}>
