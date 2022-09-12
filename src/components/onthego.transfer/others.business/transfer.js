@@ -91,7 +91,7 @@ class BusinessTransfer extends Component {
         if (isLoading) {
             return <Loader />
         }
-        if (this.state.showDeclartion) {
+        if (this.state.showDeclaration) {
             return <div className="text-center">
                 <Image width={80} preview={false} src={alertIcon} />
                 <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
@@ -210,7 +210,7 @@ class BusinessTransfer extends Component {
                     {/* <Divider /> */}
                     <DomesticTransfer type={this.props.type} />
                     <Paragraph className="fw-300 mb-0 pb-4 ml-12 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
-                    <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents||null} onDocumentsChange={(docs) => {
+                    <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
@@ -334,7 +334,7 @@ class BusinessTransfer extends Component {
                     {/* <Divider /> */}
                     <InternationalTransfer type={this.props.type} />
                     <Paragraph className="fw-300 mb-0 pb-4 ml-12 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
-                    <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents||null} onDocumentsChange={(docs) => {
+                    <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
