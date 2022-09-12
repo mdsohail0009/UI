@@ -745,7 +745,7 @@ const AddressCommonCom = (props) => {
                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                      <Form.Item
                        className="custom-forminput custom-label mb-0"
-                       name="beneficiaryName"
+                       name={props?.userConfig.isBusiness==true?"beneficiaryName":"firstName"}
                        required
                        rules={[
                          {
