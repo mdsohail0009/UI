@@ -279,49 +279,50 @@ class OnthegoFundTransfer extends Component {
                                 closable={false}
                             />
                         }
-                        {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
-                        <Row gutter={[16, 16]}>
-                            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Form.Item
-                                    className="custom-forminput custom-label mb-0 fund-transfer-input"
-                                    name="amount"
-                                    label={"Enter Amount"}
-                                    required
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message:
-                                                apicalls.convertLocalLang("is_required"),
-                                        },
-                                        {
-                                            validator: (_, value) => {
-                                                const reg = /.*[0-9].*/g;
-                                                if (value && !reg.test(value)) {
-                                                    return Promise.reject("Invalid amount");
-                                                }
-                                                return Promise.resolve();
+                    {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
+                    {isVerificationEnable &&<>
+                    <Row gutter={[16, 16]}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0 fund-transfer-input"
+                                name="amount"
+                                label={"Enter Amount"}
+                                required
+                                rules={[
+                                    {
+                                        required: true,
+                                        message:
+                                            apicalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        validator:(_,value)=>{
+                                            const reg = /.*[0-9].*/g;
+                                            if (value && !reg.test(value)) {
+                                                return Promise.reject("Invalid amount");
                                             }
+                                            return Promise.resolve();
                                         }
-                                    ]}
-                                >
-                                    <NumberFormat
-                                        customInput={Input}
-                                        className="cust-input "
-                                        placeholder={"Enter Amount"}
-                                        maxLength="13"
-                                        decimalScale={2}
-                                        displayType="input"
-                                        allowNegative={false}
-                                        thousandSeparator={","}
-                                        addonBefore={this.props.selectedCurrency}
-                                        onValueChange={() => {
-                                            this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount })
-                                        }}
-                                    />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <Row gutter={[16, 16]}>
+                                    }
+                                ]}
+                            >
+                                <NumberFormat
+                                    customInput={Input}
+                                    className="cust-input "
+                                    placeholder={"Enter Amount"}
+                                    maxLength="13"
+                                    decimalScale={2}
+                                    displayType="input"
+                                    allowNegative={false}
+                                    thousandSeparator={","}
+                                    addonBefore={this.props.selectedCurrency}
+                                    onValueChange={() => {
+                                        this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount })
+                                    }}
+                                />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={[16, 16]}>
 
                             <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                                 <br />
@@ -355,16 +356,17 @@ class OnthegoFundTransfer extends Component {
                                                 this.enteramtForm.current.validateFields().then(() => this.validateAmt(_amt, "addressselection", this.enteramtForm.current.getFieldsValue(), "addressLoader"))
                                                     .catch(error => {
 
-                                                    });
-                                            })
-                                        }}
-                                    >
-                                        Address book
-                                    </Button>
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                    </Form></Spin></>,
+                                                });
+                                        })
+                                    }}
+                                >
+                                    Address book
+                                </Button>
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    </>}
+                </Form></Spin></>,
             addressselection: <React.Fragment>
                 {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
                 <div className="mb-16 text-left">
@@ -387,12 +389,12 @@ class OnthegoFundTransfer extends Component {
                     </Form.Item>
                 </Col>
                 {this.state?.loading && <Loader />}
-                {(filterObj.length > 0) && (!this.state.loading) && <>
+                {(!this.state.loading) && <>
                     <Title className="fs-24 fw-600 text-white mt-24">Address Book</Title>
                     <Divider className="cust-divide" />
 
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
-                        {filterObj?.map((item, idx) =>
+                        {(filterObj.length > 0) && filterObj?.map((item, idx) =>
                             <Row className="fund-border c-pointer" onClick={async () => {
                                 if (!["myself", "1stparty", 'ownbusiness'].includes(item.addressType?.toLowerCase())) {
                                     this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item, codeDetails: { ...this.state.codeDetails, ...item } }, () => this.chnageStep("reasonfortransfer"));
@@ -431,7 +433,7 @@ class OnthegoFundTransfer extends Component {
                     <Title className="fs-24 fw-600 text-white">Past Recipients</Title>
                     <Divider className="cust-divide" />
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
-                        {pastPayees?.map((item, idx) =>
+                        {(pastPayees.length > 0) && pastPayees?.map((item, idx) =>
                             <Row className="fund-border c-pointer" onClick={async () => {
                                 if (!["myself", "1stparty", "ownbusiness"].includes(item.addressType?.toLowerCase())) {
                                     this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item }, () => this.chnageStep("reasonfortransfer"))

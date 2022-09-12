@@ -24,7 +24,11 @@ class PayeeBankDetails extends Component {
         IbanLoader:false,
         isValidIban:false
     }
-
+    componentDidMount(){
+        if(this.props.selectedAddress?.id && this.props.createPayeeObj){
+            this.handleIban(this.props.createPayeeObj.payeeAccountModels[0].iban)
+        }
+    }
     handleIban = async (ibannumber) => {
         if (ibannumber?.length > 3) {
             this.setState({ ...this.state, iBanDetals: null, IbanLoader: true, isValidIban: true })
@@ -227,24 +231,6 @@ class PayeeBankDetails extends Component {
                                 message:
                                     apicalls.convertLocalLang("is_required"),
                             },
-                            // {
-                            //     validator:(_, value) =>{
-                            //         if (this.state.emailExist) {
-                            //             return Promise.reject(
-                            //                 "Invalid  Bank Account Number"
-                            //             );
-                            //         } else if (
-                            //             value &&
-                            //             !/^[A-Za-z0-9]+$/.test(value)
-                            //         ) {
-                            //             return Promise.reject(
-                            //                 "Invalid  Bank Account Number"
-                            //             );
-                            //         } else {
-                            //             return Promise.resolve();
-                            //         }
-                            //     },
-                            // },
                         ]}
                     >
                         <Input

@@ -459,6 +459,7 @@ class AddressBook extends Component {
 				...this.state,
 				visible: false,
 				selection: [],
+				selectedObj:{},
 				isCheck: false,
 				errorWorning: `Record is already ${obj.addressState} you can't modify`,
 			});
