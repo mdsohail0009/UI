@@ -380,8 +380,8 @@ const Verifications = (props) => {
                                             {phone.showRuleMsg}
                                         </Text>
                                         <Text
-                                            className="fs-12 text-red fw-200"
-                                            style={{ float: "right", color: "var(--textRed)" }}>
+                                            className="fs-12 text-red-colr fw-600"
+                                            style={{ float: "right" }}>
                                             {phone.errorMsg}
                                         </Text>
                                     </div>
@@ -432,8 +432,8 @@ const Verifications = (props) => {
                                             {email.showRuleMsg}
                                         </Text>
                                         <Text
-                                            className="fs-12 text-red fw-200"
-                                            style={{ float: "right", color: "var(--textRed)" }}>
+                                            className="fs-12 text-red-colr fw-600"
+                                            style={{ float: "right" }}>
                                             {email.errorMsg}
                                         </Text>
                                     </div>
@@ -484,8 +484,8 @@ const Verifications = (props) => {
                                             {authenticator.showRuleMsg}
                                         </Text>
                                         <Text
-                                            className="fs-12 text-red fw-200"
-                                            style={{ float: "right", color: "var(--textRed)" }}>
+                                            className="fs-12 text-red-colr fw-600"
+                                            style={{ float: "right" }}>
                                             {authenticator.errorMsg}
                                         </Text>
                                     </div>
