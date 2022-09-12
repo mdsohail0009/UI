@@ -379,11 +379,12 @@ const AddressCommonCom = (props) => {
       }
     } else {
       //bankmodalData.push(obj)
-      if(bankmodalData.lenth>1){
-        setErrorMsg(apiCalls.convertLocalLang("agree_termsofservice"));
-      }else{
+      // if(bankmodalData.lenth !==0){
+      //   useDivRef.current.scrollIntoView();
+      //   setErrorMsg("Cannot add more than one Crypto address details");
+      // }else{
         setModalData([obj])
-      }
+      // }
       
       setRecrdStatus(obj?.recordStatus);
     }
