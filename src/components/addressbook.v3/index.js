@@ -9,11 +9,12 @@ import ConnectStateProps from "../../utils/state.connect";
 import NumberFormat from "react-number-format";
 class AddressBookV3 extends Component {
     state = {
-        currency: null,
+        currency: this.props.selectedAddress?.currency||null,
         fiatWallets: [],
         fiatWalletsLoading: true
     }
     componentDidMount() {
+        debugger
         this.setState({ ...this.state, fiatWalletsLoading: true });
         fetchMemberWallets(this.props?.userProfile?.id).then(res => {
             if (res.ok) {
@@ -56,7 +57,7 @@ class AddressBookV3 extends Component {
             </React.Fragment>
         }
         else if (this.props.isFiat)
-            return <FiatAddress currency={this.state.currency} onAddressOptionsChange={() => { }} type={this.props.type} onContinue={this.props?.onContinue} />
+            return <FiatAddress selectedAddress={this.props.selectedAddress} currency={this.state.currency} onAddressOptionsChange={() => { }} type={this.props.type} onContinue={this.props?.onContinue} />
         else
             return <SelectCrypto />
     }

@@ -28,14 +28,20 @@ class OthersBusiness extends Component {
     }
     loadDetails = async () => {
         this.setState({ ...this.state, errorMessage: null, isLoading: true });
-        const response = await createPayee(this.props.userProfile.id, "", "business");
+        const response = await createPayee(this.props.userProfile.id, this.props.selectedAddress?.id || "", "business");
         if (response.ok) {
             let data = response.data;
             if (!data?.payeeAccountModels) {
                 data.payeeAccountModels = [payeeAccountObj()];
             }
+            if (this.props.selectedAddress) {
+                const accountDetails = data.payeeAccountModels[0];
+                data = { ...data, ...accountDetails,line1:data.line1,line2:data.line2,line3:data.line3,bankAddress1:accountDetails.line1,bankAddress2:accountDetails.line2 };
+                delete data["documents"];
+                this.handleIbanChange({ target: { value: data?.iban } });
+            }
             this.setState({ ...this.state, errorMessage: null, details: data }, () => {
-                this.setState({ ...this.state, isLoading: false })
+                this.setState({ ...this.state, isLoading: false });
             });
         } else {
             this.setState({ ...this.state, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, details: {} });
@@ -68,7 +74,7 @@ class OthersBusiness extends Component {
         _obj.addressType = "Business";
         _obj.transferType = "sepa";
         _obj.amount = this.props.amount;
-        this.setState({ ...this.state, isLoading: true, errorMessage: null, isBtnLoading: true });
+        this.setState({ ...this.state, errorMessage: null, isBtnLoading: true });
         const response = await savePayee(_obj);
         if (response.ok) {
             if (this.props.type !== "manual") {
@@ -81,7 +87,7 @@ class OthersBusiness extends Component {
                 }
             } else {
                 // this.props.onContinue({ close: true, isCrypto: false });
-                this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false, showDeclartion: true });
+                this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
             }
 
         } else {
@@ -91,6 +97,9 @@ class OthersBusiness extends Component {
     }
     render() {
         const { isUSDTransfer } = this.props;
+        if (this.state.isLoading) {
+            return <Loader />
+        }
         if (this.state.showDeclartion) {
             return <div className="text-center">
                 <Image width={80} preview={false} src={alertIcon} />
@@ -337,7 +346,7 @@ class OthersBusiness extends Component {
                     </div>
                     <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16">Please upload supporting docs for transaction*</Paragraph>
 
-                    <AddressDocumnet documents={null} onDocumentsChange={(docs) => {
+                    <AddressDocumnet documents={this.state.details?.payeeAccountModels[0].documents} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
@@ -351,7 +360,7 @@ class OthersBusiness extends Component {
                                     size="large"
                                     className="pop-btn mb-36"
                                     style={{ minWidth: 300 }}
-                                    loading={this.state.isLoading} >
+                                    loading={this.state.isBtnLoading} >
                                     Continue
                                 </Button>
                             </Col>
