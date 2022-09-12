@@ -25,8 +25,10 @@ class PayeeBankDetails extends Component {
         isValidIban:false
     }
     componentDidMount(){
-        if(this.props.selectedAddress?.id && this.props.createPayeeObj){
-            this.handleIban(this.props.createPayeeObj.payeeAccountModels[0].iban)
+        if (this.props.selectedAddress?.id && this.props.createPayeeObj) {
+            if (this.props.createPayeeObj.payeeAccountModels[0]?.iban) {
+                this.handleIban(this.props.createPayeeObj.payeeAccountModels[0].iban)
+            }
         }
     }
     handleIban = async (ibannumber) => {

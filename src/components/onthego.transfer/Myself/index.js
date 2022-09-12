@@ -42,7 +42,10 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 let obj=Object.assign({},response.data.payeeAccountModels[0])
                 form.setFieldsValue({favouriteName:response.data.favouriteName,accountNumber:obj.accountNumber,swiftRouteBICNumber:obj.swiftRouteBICNumber,
                 bankName:obj.bankName,iban:obj.iban,abaRoutingCode:obj.abaRoutingCode,line1:obj.line1,line2:obj.line2})
-            setAddressOptions({addressType:response.data.addressType,transferType:response.data.transferType,domesticType:response.data.transferType,tabType:response.data.transferType})
+                setAddressOptions({addressType:response.data.addressType,transferType:response.data.transferType,domesticType:response.data.transferType,tabType:response.data.transferType})
+                if(obj.iban){
+                    getBankDeails(obj.iban)
+                }
             } else {
                 setRecipientDetails(response.data); setLoader(false)
             }
@@ -100,10 +103,10 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         }
     }
     const getBankDeails = async (e) => {
-        if(e.target.value?.length>3){
+        if(e?.length>3){
             setValidIban(true)
             setIbanLoader(true)
-            const response = await apiCalls.getIBANData(e.target.value);
+            const response = await apiCalls.getIBANData(e);
             if (response.ok) {
                 setbankDetails(response.data)
                 if(response.data && (response.data?.routingNumber || response.data?.bankName)){
@@ -297,7 +300,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 ]}
                 label='IBAN'
                 onChange={(e) => {
-                    getBankDeails(e)
+                    getBankDeails(e.target.value)
                 }}
             >
                 <Input
@@ -483,7 +486,9 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 style={{ minWidth: 150 }}
                 loading={isBtnLoading} 
             >
-                <Translate content="continue" />
+                                {props.type === "manual" && "Save"}
+                                {props.type !== "manual" && <Translate content="continue" />}
+                
             </Button>
         </div></>}
         </>}
