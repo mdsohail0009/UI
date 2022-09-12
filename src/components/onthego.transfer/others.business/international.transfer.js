@@ -186,11 +186,11 @@ class InternationalTransfer extends Component {
                         },
                     ]}
                     label={
-                        "Reason Of transfer"
+                        "Reason Of Transfer"
                     }
                 >
                     <TextArea
-                        placeholder={"Reason Of transfer"}
+                        placeholder={"Reason Of Transfer"}
                         className="cust-input cust-text-area address-book-cust"
                         autoSize={{ minRows: 1, maxRows: 1 }}
                         maxLength={100}

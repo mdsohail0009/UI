@@ -290,7 +290,7 @@ class PayeeBankDetails extends Component {
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
                         name={["payeeAccountModels","abaRoutingCode"]}
-                        label="ABA routing code"
+                        label="ABA Routing code"
                         required
                         rules={[
                             {
@@ -320,7 +320,7 @@ class PayeeBankDetails extends Component {
                     >
                         <Input
                             className="cust-input "
-                            placeholder="ABA routing code"
+                            placeholder="ABA Routing code"
                             maxLength="500"
                         />
                     </Form.Item>

@@ -158,7 +158,7 @@ class BusinessTransfer extends Component {
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
                                 name="relation"
-                                label={"Relationship To beneficiary"}
+                                label={"Relationship To Beneficiary"}
                                 required
                                 rules={[
                                     {
@@ -176,7 +176,7 @@ class BusinessTransfer extends Component {
                             >
                                 <Input
                                     className="cust-input"
-                                    placeholder={"Relationship To beneficiary"}
+                                    placeholder={"Relationship To Beneficiary"}
                                 />
 
                             </Form.Item>

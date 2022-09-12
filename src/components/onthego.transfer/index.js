@@ -471,7 +471,7 @@ class OnthegoFundTransfer extends Component {
                             <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
                             <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
                             <p className="fs-16 text-white-30 fw-200 mb-0"> {'You have no past recipients'} </p>
-                            <a onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</a>
+                            {/* <a onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</a> */}
                         </div>}
                     </ul>
                 </>}
