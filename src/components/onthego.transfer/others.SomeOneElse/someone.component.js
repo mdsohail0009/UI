@@ -325,9 +325,9 @@ const SomeoneComponent = (props) => {
                     <Button
                         htmlType="submit"
                         size="large"
-                        className="pop-btn px-36"
+                        className="pop-btn px-36 mt-36"
                         loading={btnLoading}
-                        style={{ minWidth: 150 }}
+                        style={{ minWidth: "100%" }}
                     // onClick={() => console.log(form.getFieldsValue())}
                     >
                         <Translate content="continue" />

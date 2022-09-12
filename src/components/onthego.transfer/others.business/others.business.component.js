@@ -94,7 +94,7 @@ class OthersBusiness extends Component {
                     onFinish={this.submitPayee}
                     scrollToFirstError
                 >
-                    <Row gutter={[16, 16]}>
+                    <Row gutter={[4, 4]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label"
@@ -127,7 +127,7 @@ class OthersBusiness extends Component {
                     </Row>
                     <Paragraph className="mb-0 fs-18 text-white fw-500 mt-16 px-4" style={{ fontSize: 18 }} >Recipient's Details</Paragraph>
                     {/* <Divider /> */}
-                    <Row gutter={[16, 16]}>
+                    <Row gutter={[4, 4]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
                                 className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-16"
@@ -323,7 +323,7 @@ class OthersBusiness extends Component {
                     <div className="align-center">
                         <Row gutter={[16, 16]}>
                             {/* <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col> */}
-                            <Col xs={12} md={12} lg={12} xl={12} xxl={12}>
+                            <Col xs={24} md={24}>
                                 <Button
                                     htmlType="submit"
                                     size="large"

@@ -196,7 +196,7 @@ class OnthegoFundTransfer extends Component {
                     scrollToFirstError
                 >
                     {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
-                    <Row gutter={[16, 16]}>
+                    <Row gutter={[4, 4]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label fund-transfer-input"

@@ -365,7 +365,7 @@ border-radius: 5px;}
 .pay-list{padding: 16px 0; border-bottom: 1px solid var(--borderLight);}
 .expiry-input{width: 200px;}
 .expiry-input input{width: 50px; padding: 0 4px;height: 50px;}
-.cust-input, .expiry-input,.cust-input .ant-input{background: transparent;border-radius: 30px;height: 50px;border: 1px solid var(--borderLight);color: var(--textWhite30); text-align: center;margin-bottom: 6px;font-size: 16px;padding: 0 16px !important; }
+.cust-input, .expiry-input,.cust-input .ant-input{background: transparent;border-radius: 30px;height: 50px;border: 1px solid var(--borderLight);color: var(--textWhite30); text-align: center;margin-bottom: 6px;font-size: 16px;padding: 0 16px !important;font-weight: 400; }
 .cust-input[disabled]{background-color: transparent;color: var(--textSecondary);border-color: inherit !important;}
 .input-label{color: var(--textWhite30); font-size: 14px;font-weight: 200;margin-left: 12px;margin-bottom: 8px !important; display: block;}
 .error-text{position: absolute; right: 0; top: 4px;color: var(--textError);}

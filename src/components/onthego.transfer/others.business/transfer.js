@@ -83,7 +83,7 @@ class BusinessTransfer extends Component {
                     onFinish={this.submitPayee}
                     scrollToFirstError
                 >
-                    <Row gutter={[16, 16]}>
+                    <Row gutter={[4, 4]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label"
@@ -116,7 +116,7 @@ class BusinessTransfer extends Component {
                     </Row>
                     <Paragraph className="mb-0  text-white fw-500 mt-16 px-4" style={{ fontSize: 18 }} >Recipient's Details</Paragraph>
                     {/* <Divider /> */}
-                    <Row gutter={[16, 16]}>
+                    <Row gutter={[4, 4]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
                                 className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-16"
@@ -192,7 +192,7 @@ class BusinessTransfer extends Component {
                                     htmlType="submit"
                                     size="large"
                                     className="pop-btn mb-36"
-                                    style={{ minWidth: 300 }}
+                                    style={{ minWidth: "100%" }}
                                     loading={this.state.isBtnLoading}>
                                     Continue
                                 </Button>
@@ -209,7 +209,7 @@ class BusinessTransfer extends Component {
                     onFinish={this.submitPayee}
                     scrollToFirstError
                 >
-                    <Row gutter={[16, 16]}>
+                    <Row gutter={[4, 4]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label"
@@ -240,7 +240,7 @@ class BusinessTransfer extends Component {
                     </Row>
                     <Paragraph className="mb-0 text-white fw-500 mt-16 px-4" style={{ fontSize: 18 }} >Recipient's Details</Paragraph>
                     {/* <Divider /> */}
-                    <Row gutter={[16, 16]}>
+                    <Row gutter={[4, 4]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
                                 className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-16"
@@ -316,7 +316,7 @@ class BusinessTransfer extends Component {
                                     htmlType="submit"
                                     size="large"
                                     className="pop-btn mb-36"
-                                    style={{ minWidth: 300 }}
+                                    style={{ minWidth: "100%" }}
                                 loading={this.state.isBtnLoading}>
                                     Continue
                                 </Button>

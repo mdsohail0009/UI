@@ -1318,7 +1318,7 @@ const AddressCommonCom = (props) => {
                   size="large"
                   className="pop-btn mb-36"
                   loading={btnDisabled}
-                  style={{ minWidth: 300 }}
+                  style={{ minWidth: "100%" }}
                 >
                   {isLoading && <Spin indicator={antIcon} />}{" "}
                   <Translate content="Save_btn_text" />
