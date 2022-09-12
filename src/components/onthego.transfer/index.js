@@ -259,9 +259,9 @@ class OnthegoFundTransfer extends Component {
                 />
             </React.Fragment>,
             enteramount: <>
-                <div className="mb-16 text-left">
+                <div className="mb-16" style={{textAlign:'center'}}>
                     <text Paragraph
-                        className='text-white fs-30 fw-600 px-4 '>Transfer funds</text>
+                        className='text-white fs-30 fw-600 px-4 '>Transfer Funds</text>
                 </div>
                 {isVarificationLoader && <Loader />}
                 {!isVarificationLoader && 
@@ -373,9 +373,9 @@ class OnthegoFundTransfer extends Component {
                     </Form>}</>,
             addressselection: <React.Fragment>
                 {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
-                <div className="mb-16 text-left">
+                <div className="mb-16" style={{textAlign:'center'}}>
                     <text Paragraph
-                        className='text-white fs-30 fw-600 px-4 '>Who are you sending money to?</text>
+                        className='text-white fs-30 fw-600 px-4 ' >Who are you sending money to?</text>
                 </div>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 
@@ -420,7 +420,7 @@ class OnthegoFundTransfer extends Component {
                                             {/* <small>{item.type}</small> */}
                                         </strong>
                                     </label>
-                                    {item.accountNumber && <div><Text className="fs-14 fw-400 text-white">{this.state.selectedCurrency} account ending with {item.accountNumber.substr(item.accountNumber.length - 4)}</Text></div>}
+                                    {item.accountNumber && <div><Text className="fs-14 fw-400 text-white">{this.state.selectedCurrency} account ending with {item.accountNumber?.substr(item.accountNumber.length - 4)}</Text></div>}
                                 </Col>
                                 <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white"></span>
@@ -459,7 +459,7 @@ class OnthegoFundTransfer extends Component {
                                             {/* <small>{item.type}</small> */}
                                         </strong>
                                     </label>
-                                    <div><Text className="fs-14 fw-400 text-white">{this.state.selectedCurrency} account ending with {item.accountNumber.substr(item.accountNumber.length - 4)}</Text></div>
+                                    <div><Text className="fs-14 fw-400 text-white">{this.state.selectedCurrency} account ending with {item.accountNumber?.substr(item.accountNumber?.length - 4)}</Text></div>
                                 </Col>
                                 <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white"></span>

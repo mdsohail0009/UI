@@ -1072,6 +1072,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .coin-details.right{min-height: 705px;}
     .lg-fontsize{font-size: 12px !important;}
     .side-drawer.custom-drawer-width .ant-drawer-content-wrapper{width:865px !important;}
+    .side-drawer.custom-fait-sidedrawer .ant-drawer-content-wrapper{width:500px !important;}
 }
 @media (min-width: 1400px){
     .custom-font{font-size:30px !important;}
