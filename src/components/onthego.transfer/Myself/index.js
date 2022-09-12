@@ -195,7 +195,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     />
             </Form.Item>
         </Col>
-            {currency == 'EUR' && !isBusiness && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+            {/* {currency == 'EUR' && !isBusiness && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
                     className="custom-forminput custom-label mb-0"
                     name="iban"
@@ -220,7 +220,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         placeholder='IBAN'
                         onChange={(e)=>getBankDeails(e)}/>
                 </Form.Item>
-            </Col>}</Row>
+            </Col>} */}
+            </Row>
             <Translate style={{ fontSize: 18 }}
                     content="Beneficiary_Details"
                     component={Paragraph}
@@ -276,7 +277,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         </div>
 
         <Paragraph className="mb-8  text-white fw-500 mt-16" style={{ fontSize: 18 }}>Bank Details</Paragraph>
-        {currency == 'EUR' && isBusiness && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+        {currency == 'EUR' && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
             <Form.Item
                 className="custom-forminput custom-label mb-0"
                 name="iban"
