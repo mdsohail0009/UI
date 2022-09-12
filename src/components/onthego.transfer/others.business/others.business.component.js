@@ -38,9 +38,10 @@ class OthersBusiness extends Component {
                 const accountDetails = data.payeeAccountModels[0];
                 data = { ...data, ...accountDetails,line1:data.line1,line2:data.line2,line3:data.line3,bankAddress1:accountDetails.line1,bankAddress2:accountDetails.line2 };
                 delete data["documents"];
-                this.handleIbanChange({ target: { value: data?.iban } });
+                // this.handleIbanChange({ target: { value: data?.iban } });
             }
-            this.setState({ ...this.state, errorMessage: null, details: data }, () => {
+            const ibanDetails=response.data?.payeeAccountModels[0]||{}
+            this.setState({ ...this.state, errorMessage: null, details: data,ibanDetails }, () => {
                 this.setState({ ...this.state, isLoading: false });
             });
         } else {
