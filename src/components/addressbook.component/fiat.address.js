@@ -7,9 +7,9 @@ import MyselfNewTransfer from '../onthego.transfer/Myself'
 import SomeoneComponent from "../onthego.transfer/others.SomeOneElse/someone.component"
 const FiatAddress = ({ onSubmit, onAddressOptionsChange,selectedAddress, onContinue, PayeeLu = [], emailExist = false, countries = [], states = [], fiatAddress, onTheGoObj, ...props }) => {
     const [form] = useForm();
-    const [addressOptions, setAddressOptions] = useState({ addressType:selectedAddress?.addressType?.toLowerCase()|| "myself", transferType: props.currency === "EUR" ? "sepa" : "domestic" });
-   
-   return <>
+    const addrType = selectedAddress?.addressType?selectedAddress?.addressType?.toLowerCase():props.userProfile?.isBusiness?"ownbusiness":"myself";
+    const [addressOptions, setAddressOptions] = useState({ addressType:addrType, transferType: props.currency === "EUR" ? "sepa" : "domestic" });
+    return <>
         <Form
             form={form}
             onFinish={onSubmit}
