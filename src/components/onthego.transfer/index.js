@@ -335,7 +335,7 @@ class OnthegoFundTransfer extends Component {
                                 </Col>
                             </Row>
                         )}
-                        {(filterObj.length > 0) && <div className="success-pop text-center" style={{ marginTop: '20px' }}>
+                        {(!filterObj.length > 0) && <div className="success-pop text-center" style={{ marginTop: '20px' }}>
                             <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
                             <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
                             <p className="fs-16 text-white-30 fw-200 mb-0"> {apicalls.convertLocalLang('address_available')} </p>
@@ -375,7 +375,7 @@ class OnthegoFundTransfer extends Component {
                             </Row>
 
                         )}
-                        {(pastPayees.length > 0) && <div className="success-pop text-center" style={{ marginTop: '20px' }}>
+                        {(!pastPayees.length > 0) && <div className="success-pop text-center" style={{ marginTop: '20px' }}>
                             <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
                             <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
                             <p className="fs-16 text-white-30 fw-200 mb-0"> {'You have no past recipients'} </p>
@@ -537,7 +537,7 @@ class OnthegoFundTransfer extends Component {
             </React.Fragment>,
             reviewdetails: <React.Fragment>
                 <div ref={this.reviewScrool}></div>
-                <div className="mb-16 text-left">
+                <div className="mb-16 text-center">
                     <text Paragraph
                         className='text-white fs-30 fw-600 px-4 '>Review Details Of Transfer</text>
                 </div>

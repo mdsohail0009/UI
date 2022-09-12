@@ -197,7 +197,7 @@ class OthersBusiness extends Component {
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
                                 name="relation"
-                                label={"Relationship to beneficiary"}
+                                label={"Relationship to Beneficiary"}
                                 required
                                 rules={[
                                     {
@@ -215,7 +215,7 @@ class OthersBusiness extends Component {
                             >
                                 <Input
                                     className="cust-input"
-                                    placeholder={"Relationship to beneficiary"}
+                                    placeholder={"Relationship to Beneficiary"}
                                 />
 
                             </Form.Item>
@@ -340,7 +340,7 @@ class OthersBusiness extends Component {
                         </Row>}
                         {Object.keys(this.state.ibanDetails).length === 0 && !this.state.ibanDetailsLoading && <Row>
                             <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
-                                <div><Text className="fs-14 fw-400 text-purewhite">No bank deatails available</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">No bank details available</Text></div>
 
                             </Col>
                         </Row>}

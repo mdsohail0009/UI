@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import apiCalls from "../../../api/apiCalls";
 import ConnectStateProps from "../../../utils/state.connect";
 import Loader from "../../../Shared/loader";
+import alertIcon from '../../../assets/images/pending.png';
 const { Paragraph, Text, Title } = Typography;
 const { Search,TextArea } = Input;
 
@@ -20,6 +21,7 @@ const SomeoneComponent = (props) => {
     const [btnLoading, setBtnLoading] = useState(false);
     const [mainLoader, setMailLoader] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [showDeclartion, setShowDeclartion] = useState(false);
     const [form]=Form.useForm();
     const useDivRef = React.useRef(null);
 
@@ -44,20 +46,24 @@ const SomeoneComponent = (props) => {
         obj.payeeAccountModels[0].documents = documents;
         obj.payeeAccountModels[0].walletCode = props.currency;
         obj['customerId'] = props.userProfile.id;
-        obj['amount'] = props.onTheGoObj.amount;
+        if(props.type !== "manual")obj['amount'] = props.onTheGoObj.amount;
         obj['transferType'] = props.currency === "USD" ? addressOptions.domesticType:'sepa' ;
         obj['addressType'] = addressOptions.addressType ;
         setBtnLoading(true)
         let payeesave = await savePayee(obj)
         if(payeesave.ok){
-            const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer })
-            if (confirmRes.ok) {
-                setBtnLoading(false);
-                props.onContinue(confirmRes.data);
-            } else {
-                setBtnLoading(false);
-                setErrorMessage(isErrorDispaly(confirmRes));
-                useDivRef.current.scrollIntoView();
+            if (props.type !== "manual") {
+                const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer })
+                if (confirmRes.ok) {
+                    setBtnLoading(false);
+                    props.onContinue(confirmRes.data);
+                } else {
+                    setBtnLoading(false);
+                    setErrorMessage(isErrorDispaly(confirmRes));
+                    useDivRef.current.scrollIntoView();
+                }
+            }else{
+                setShowDeclartion(true)
             }
         }else{
             setBtnLoading(true);
@@ -83,9 +89,16 @@ const SomeoneComponent = (props) => {
     }
     return (<React.Fragment>
         <div ref={useDivRef}></div>
+            {showDeclartion && <div className="text-center">
+                <Image width={80} preview={false} src={alertIcon} />
+                <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
+                <Text className="text-white-30">{`Declaration form has been sent to ${props.userProfile?.email}. 
+                   Please sign using link received in email to whitelist your address. `}</Text>
+                <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
+                <div className="my-25"><Button onClick={() => props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn text-textDark">BACK</Button></div>
+            </div>}
         
-        
-        <>
+        {!showDeclartion &&<>
                 {props.currency === "USD" && <>
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
@@ -318,7 +331,7 @@ const SomeoneComponent = (props) => {
                 </>
                 {/* <Divider /> */}
                 <Paragraph className="mb-8  text-white fw-500 mt-16" style={{ fontSize: 18 }}>Bank Details</Paragraph>
-                <PayeeBankDetails form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />
+                <PayeeBankDetails form={form} type={props.type} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />
                 <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16">Please upload supporting docs for transaction*</Paragraph>
                 <AddressDocumnet documents={documents || null} onDocumentsChange={(docs) => {
                         setDocuments(docs)
@@ -344,7 +357,7 @@ const SomeoneComponent = (props) => {
                 </div>
             </Form>
         </>}
-        </>
+        </>}
     </React.Fragment>)
 }
 export default ConnectStateProps(SomeoneComponent);
