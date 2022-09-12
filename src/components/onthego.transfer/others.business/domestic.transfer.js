@@ -1,8 +1,8 @@
 import { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
-import {Form,Row,Col,Input} from "antd";
+import { Form, Row, Col, Input } from "antd";
 import { validateContentRule } from "../../../utils/custom.validator";
-const {TextArea}=Input;
+const { TextArea } = Input;
 class DomesticTransfer extends Component {
     render() {
         return <Row gutter={[16, 16]}>
@@ -165,7 +165,7 @@ class DomesticTransfer extends Component {
                     ></TextArea>
                 </Form.Item>
             </Col>
-            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            {this.props.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                     className="custom-forminput custom-label mb-0"
                     name="reasonOfTransfer"
@@ -194,7 +194,7 @@ class DomesticTransfer extends Component {
                         maxLength={100}
                     ></TextArea>
                 </Form.Item>
-            </Col>
+            </Col>}
         </Row>
     }
 }

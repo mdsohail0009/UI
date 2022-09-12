@@ -5,7 +5,7 @@ import ConnectStateProps from "../../utils/state.connect";
 import OthersBusiness from "../onthego.transfer/others.business/others.business.component";
 import MyselfNewTransfer from '../onthego.transfer/Myself'
 import SomeoneComponent from "../onthego.transfer/others.SomeOneElse/someone.component"
-const FiatAddress = ({ onSubmit, onAddressOptionsChange, onContinue, PayeeLu = [], emailExist = false, countries = [], states = [], fiatAddress, onTheGoObj, ...props }) => {
+const FiatAddress = ({ onSubmit, onAddressOptionsChange,selectedAddress, onContinue, PayeeLu = [], emailExist = false, countries = [], states = [], fiatAddress, onTheGoObj, ...props }) => {
     const [form] = useForm();
     const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType: props.currency === "EUR" ? "sepa" : "domestic" });
     return <>
@@ -40,7 +40,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, onContinue, PayeeLu = [
         </Form>
         {addressOptions.addressType === "myself" && <MyselfNewTransfer currency={props.currency} onContinue={(obj) => onContinue(obj)} {...props} isBusiness={props.userProfile?.isBusiness}
             onTheGoObj={onTheGoObj} ></MyselfNewTransfer>}
-        {addressOptions.addressType === "business" && <OthersBusiness type={props.type} isUSDTransfer={props.currency === "USD" ? true : false} onContinue={(obj) => onContinue(obj)} amount={props.amount} />}
+        {addressOptions.addressType === "business" && <OthersBusiness selectedAddress={selectedAddress} type={props.type} isUSDTransfer={props.currency === "USD" ? true : false} onContinue={(obj) => onContinue(obj)} amount={props.amount} />}
         {addressOptions.addressType === "someoneelse" && <SomeoneComponent addressType={addressOptions.addressType} currency={props.currency} onContinue={(obj) => onContinue(obj)} onTheGoObj={onTheGoObj} />}
     </>
 }

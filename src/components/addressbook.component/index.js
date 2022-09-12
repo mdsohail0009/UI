@@ -92,7 +92,6 @@ class AddressBook extends Component {
 
 
 	}
-
 	loadPermissions = () => {
 		if (this.props.addressBookPermissions) {
 			this.props.dispatch(setSelectedFeatureMenu(this.props.addressBookPermissions?.featureId));
@@ -107,7 +106,6 @@ class AddressBook extends Component {
 			}
 		}
 	}
-
 	columnsFiat = [
 		{
 			field: "",
@@ -147,14 +145,6 @@ class AddressBook extends Component {
 				</td>
 			),
 		},
-		// {
-			
-		// 	field: "addressLable",
-		// 	title: apiCalls.convertLocalLang("bank_label"),
-		// 	filter: true,
-		// 	filter: true,
-		// 	width: 230,
-		// },
 		{
 			field: "currency",
 			title: apiCalls.convertLocalLang("currency"),
@@ -180,13 +170,6 @@ class AddressBook extends Component {
 			filter: true,
 			width: 200,
 		},
-		// {
-		// 	field: "bankAddress",
-		// 	title: apiCalls.convertLocalLang("Bank_address1"),
-		// 	filter: true,
-		// 	width: 250,
-		// },
-
 		{
 			field: "addressState",
 			title: apiCalls.convertLocalLang("addressState"),
@@ -267,57 +250,6 @@ class AddressBook extends Component {
 			filter: true,
 			width: 380,
 		},
-		// {
-		// 	field: "inputScore",
-		// 	title: "Input Score",
-		// 	width: 150,
-		// 	filter: true,
-		// 	customCell: (props) => (
-		// 		<td>
-		// 			{props.dataItem.inputScore ? props.dataItem.inputScore : 0}
-		// 			<Tooltip title="View More">
-		// 				<span
-		// 					className="icon md info c-pointer ml-8"
-		// 					style={{ float: "right" }}
-		// 					onClick={() =>
-		// 						this.setState({
-		// 							...this.state,
-
-		// 							cryptoModal: true,
-		// 							selectedId: props.dataItem.id,
-		// 							selectedModal: "Input",
-		// 						})
-		// 					}
-		// 				/>
-		// 			</Tooltip>
-		// 		</td>
-		// 	),
-		// },
-		// {
-		// 	field: "outputScore",
-		// 	title: "Output Score",
-		// 	width: 150,
-		// 	filter: true,
-		// 	customCell: (props) => (
-		// 		<td>
-		// 			{props.dataItem.outputScore ? props.dataItem.outputScore : 0}
-		// 			<Tooltip title="View More">
-		// 				<span
-		// 					className="icon md info c-pointer ml-8"
-		// 					style={{ float: "right" }}
-		// 					onClick={() =>
-		// 						this.setState({
-		// 							...this.state,
-		// 							cryptoModal: true,
-		// 							selectedId: props.dataItem.id,
-		// 							selectedModal: "Output",
-		// 						})
-		// 					}
-		// 				/>
-		// 			</Tooltip>
-		// 		</td>
-		// 	),
-		// },
 		{
 			field: "coin",
 			title: apiCalls.convertLocalLang("Coin"),
@@ -469,7 +401,7 @@ class AddressBook extends Component {
 		}
 	};
 	addAddressBook = () => {
-		if (!this.state.cryptoFiat) {
+		if (this.state.cryptoFiat) {
 			this.setState({
 				...this.state, fiatDrawer: true, errorWorning: null, selection: [],
 				isCheck: false,
@@ -645,8 +577,6 @@ class AddressBook extends Component {
 	renderContent = () => {
 		const stepcodes = {
 			cryptoaddressbook: (<>
-				{/* <NewAddressBook onCancel={() => this.closeBuyDrawer()} /> */}
-				{/* <AddressCommonCom onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1}/> */}
 				<AddressBookV2 type="addressbook" />
 			</>
 			),
@@ -819,7 +749,7 @@ class AddressBook extends Component {
 					visible={this.state.fiatDrawer}
 					closeIcon={null}
 					className="side-drawer w-50p">
-					<AddressBookV3 type="manual" />
+					<AddressBookV3 type="manual" isFiat={this.state.cryptoFiat} selectedAddress={this.state.selectedObj} onContinue={(obj)=>this.closeBuyDrawer(obj)} />
 				</Drawer>
 				<Modal
 					title={
