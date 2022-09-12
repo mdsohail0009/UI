@@ -54,7 +54,6 @@ class OnthegoFundTransfer extends Component {
                 this.setState({ ...this.state, pastPayees: response.data });
             }
         });
-        
     }
     verificationCheck = async() =>{
         this.setState({...this.state, isVarificationLoader:true})
@@ -346,12 +345,12 @@ class OnthegoFundTransfer extends Component {
                     </Form.Item>
                 </Col>
                 {this.state?.loading && <Loader />}
-                {(filterObj.length > 0) && (!this.state.loading) && <>
+                {(!this.state.loading) && <>
                     <Title className="fs-24 fw-600 text-white mt-24">Address Book</Title>
                     <Divider className="cust-divide" />
 
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
-                        {filterObj?.map((item, idx) =>
+                        {(filterObj.length > 0) && filterObj?.map((item, idx) =>
                             <Row className="fund-border c-pointer" onClick={async () => {
                                 if (!["myself", "1stparty", 'ownbusiness'].includes(item.addressType?.toLowerCase())) {
                                     this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item, codeDetails: { ...this.state.codeDetails, ...item } }, () => this.chnageStep("reasonfortransfer"));
@@ -390,7 +389,7 @@ class OnthegoFundTransfer extends Component {
                     <Title className="fs-24 fw-600 text-white">Past Recipients</Title>
                     <Divider className="cust-divide" />
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
-                        {pastPayees?.map((item, idx) =>
+                        {(pastPayees.length > 0) && pastPayees?.map((item, idx) =>
                             <Row className="fund-border c-pointer" onClick={async () => {
                                 if (!["myself", "1stparty", "ownbusiness"].includes(item.addressType?.toLowerCase())) {
                                     this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item }, () => this.chnageStep("reasonfortransfer"))
