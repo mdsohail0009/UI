@@ -355,20 +355,20 @@ class OthersBusiness extends Component {
                         payeeAccountModels[0].documents = docs;
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
                     }} />
-                    <div className="align-center">
-                        <Row gutter={[16, 16]}>
+                    <div className="text-right mt-12">
+                        {/* <Row gutter={[16, 16]}>
                             <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col>
-                            <Col xs={12} md={12} lg={12} xl={12} xxl={12}>
+                            <Col xs={12} md={12} lg={12} xl={12} xxl={12}> */}
                                 <Button
                                     htmlType="submit"
                                     size="large"
                                     className="pop-btn mb-36"
-                                    style={{ minWidth: 300 }}
+                                    style={{ minWidth: 150 }}
                                     loading={this.state.isBtnLoading} >
                                     Continue
                                 </Button>
-                            </Col>
-                        </Row>
+                            {/* </Col>
+                        </Row> */}
                     </div>
                 </Form>}
             </>;
