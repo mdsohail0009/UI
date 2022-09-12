@@ -12,7 +12,9 @@ import { fetchPayees, fetchPastPayees, confirmTransaction, updatePayee, document
 import Loader from "../../Shared/loader";
 import Search from "antd/lib/input/Search";
 import Verifications from "./verification.component/verifications"
+import {getVerificationFields} from "./verification.component/api"
 import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboardReducer';
+import { withRouter } from "react-router-dom/cjs/react-router-dom.min";
 
 const { Text, Title } = Typography;
 
@@ -36,9 +38,12 @@ class OnthegoFundTransfer extends Component {
         codeDetails: { abaRoutingCode: "", swiftRouteBICNumber: "", reasionOfTransfer: "", documents: null },
         selectedPayee: {},
         selectedTab: "domestic",
-        verifyData: null, isBtnLoading: false, reviewDetailsLoading:false
+        verifyData: null, isBtnLoading: false, reviewDetailsLoading:false,
+        isVerificationEnable :true,
+        isVarificationLoader:true
     }
     componentDidMount() {
+        this.verificationCheck()
         fetchPayees(this.props.userProfile.id, this.props.selectedCurrency).then((response) => {
             if (response.ok) {
                 this.setState({ ...this.state, payeesLoading: false, filterObj: response.data, payees: response.data });
@@ -49,6 +54,28 @@ class OnthegoFundTransfer extends Component {
                 this.setState({ ...this.state, pastPayees: response.data });
             }
         });
+        
+    }
+    verificationCheck = async() =>{
+        this.setState({...this.state, isVarificationLoader:true})
+        const verfResponse = await getVerificationFields(this.props.userProfile.id);
+        let minVerifications = 0;
+        if (verfResponse.ok) {
+            for (let verifMethod in verfResponse.data) {
+                if (["isEmailVerification", "isPhoneVerified", "twoFactorEnabled", "isLiveVerification"].includes(verifMethod) && verfResponse.data[verifMethod] === true) {
+                    minVerifications = minVerifications + 1;
+                }
+            }
+            if(minVerifications >= 2){
+                this.setState({...this.state, isVarificationLoader:false,isVerificationEnable:false})
+            }else{
+                this.setState({...this.state, isVarificationLoader:false,isVerificationEnable:false})
+            }
+        }else{
+            this.setState({...this.state, isVarificationLoader:false,errorMessage:this.isErrorDispaly(verfResponse)})
+        }
+        
+        return minVerifications >= 2;
     }
     chnageStep = (step, values) => {
         this.setState({ ...this.state, step });
@@ -183,13 +210,14 @@ class OnthegoFundTransfer extends Component {
 
     }
     renderStep = (step) => {
-        const { filterObj, pastPayees, payeesLoading } = this.state;
+        const { filterObj, pastPayees, payeesLoading,isVarificationLoader,isVerificationEnable } = this.state;
         const steps = {
             enteramount: <>
                 <div className="mb-16 text-left">
                     <text Paragraph
                         className='text-white fs-30 fw-600 px-4 '>Transfer funds</text>
                 </div>
+                <Spin spinning={isVarificationLoader}>
                 <Form
                     autoComplete="off"
                     initialValues={{ amount: "" }}
@@ -197,6 +225,17 @@ class OnthegoFundTransfer extends Component {
                     onFinish={this.amountnext}
                     scrollToFirstError
                 >
+                        {!isVerificationEnable &&
+                            <Alert
+                                message="Verification alert !"
+                                description={<Text>Without verifications you can't send. Please select send verifications from <a onClick={() => {
+                                    this.props.history.push("/userprofile?key=2")
+                                }}>security section</a></Text>}
+                                type="warning"
+                                showIcon
+                                closable={false}
+                            />
+                        }
                     {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -282,7 +321,7 @@ class OnthegoFundTransfer extends Component {
                             </Form.Item>
                         </Col>
                     </Row>
-                </Form></>,
+                </Form></Spin></>,
             addressselection: <React.Fragment>
                 {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
                 <div className="mb-16 text-left">
@@ -730,4 +769,4 @@ class OnthegoFundTransfer extends Component {
         </React.Fragment>
     }
 }
-export default ConnectStateProps(OnthegoFundTransfer);
+export default ConnectStateProps(withRouter(OnthegoFundTransfer));
