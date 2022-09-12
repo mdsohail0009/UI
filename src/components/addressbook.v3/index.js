@@ -1,7 +1,7 @@
-import React,{ Component } from "react";
+import React, { Component } from "react";
 import FiatAddress from "../addressbook.component/fiat.address";
 import SelectCrypto from "../addressbook.component/selectCrypto";
-import { List, Empty,Image } from 'antd';
+import { List, Empty, Image } from 'antd';
 import { Link } from "react-router-dom";
 import Translate from "react-translate-component";
 import { fetchMemberWallets } from '../dashboard.component/api'
@@ -9,12 +9,11 @@ import ConnectStateProps from "../../utils/state.connect";
 import NumberFormat from "react-number-format";
 class AddressBookV3 extends Component {
     state = {
-        currency: this.props.selectedAddress?.currency||null,
+        currency: this.props.selectedAddress?.currency || null,
         fiatWallets: [],
         fiatWalletsLoading: true
     }
     componentDidMount() {
-        debugger
         this.setState({ ...this.state, fiatWalletsLoading: true });
         fetchMemberWallets(this.props?.userProfile?.id).then(res => {
             if (res.ok) {
@@ -26,7 +25,7 @@ class AddressBookV3 extends Component {
     }
     render() {
         if (!this.state.currency) {
-         return   <React.Fragment>
+            return <React.Fragment>
                 <List
                     itemLayout="horizontal"
                     dataSource={this.state.fiatWallets}

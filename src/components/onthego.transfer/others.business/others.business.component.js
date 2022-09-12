@@ -10,8 +10,6 @@ import ConnectStateProps from "../../../utils/state.connect";
 import Loader from "../../../Shared/loader";
 import Translate from "react-translate-component";
 import alertIcon from '../../../assets/images/pending.png';
-
-
 const { Paragraph, Text, Title } = Typography;
 class OthersBusiness extends Component {
     form = React.createRef();
