@@ -103,8 +103,11 @@ class OnthegoFundTransfer extends Component {
     amountnext = (values) => {
         let _amt = values.amount;
         _amt = _amt.replace(/,/g, "");
+        if(_amt>0){
         this.setState({ ...this.state, amount: _amt }, () => this.validateAmt(_amt, "newtransfer", values, "newtransferLoader"))
-
+        }else{
+            this.setState({ ...this.state, errorMessage:'Amount must be greater than zero'});
+        }
     }
     handleSearch = ({ target: { value: val } }) => {
         if (val) {
@@ -356,12 +359,16 @@ class OnthegoFundTransfer extends Component {
                                             onClick={() => {
                                                 let _amt = this.enteramtForm.current.getFieldsValue().amount;
                                                 _amt = _amt.replace(/,/g, "");
+                                                if(_amt>0){
                                                 this.setState({ ...this.state, isNewTransfer: false, amount: _amt,onTheGoObj:this.enteramtForm.current.getFieldsValue() }, () => {
                                                     this.enteramtForm.current.validateFields().then(() => this.validateAmt(_amt, "addressselection", this.enteramtForm.current.getFieldsValue(), "addressLoader"))
                                                         .catch(error => {
 
                                                         });
                                                 })
+                                            }else{
+                                                this.setState({ ...this.state, errorMessage:'Amount must be greater than zero'})
+                                            }
                                             }}
                                         >
                                             Address book

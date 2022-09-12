@@ -47,7 +47,7 @@ class AddressDocumnet extends Component {
                     <Form.Item name={"files"} required rules={[{
                         validator: (_, value) => {
                             if (this.state.filesList.length == 0) {
-                                return Promise.reject(apiCalls.convertLocalLang("is_required"))
+                                return Promise.reject("At least one document is required")
                             } else {
                                 const isValidFiles = this.state.filesList.filter(item => (item.name || item.documentName).indexOf(".") != (item.name || item.documentName).lastIndexOf(".")).length == 0;
                                 if (isValidFiles) { return Promise.resolve(); } else {
