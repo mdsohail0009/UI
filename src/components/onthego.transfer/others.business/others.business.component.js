@@ -72,6 +72,7 @@ class OthersBusiness extends Component {
         _obj.payeeAccountModels[0].country = ibanDetails?.country;
         _obj.payeeAccountModels[0].postalCode = ibanDetails?.zipCode;
         _obj.payeeAccountModels[0].bankBranch = ibanDetails?.branch;
+        _obj.payeeAccountModels[0].bic=ibanDetails?.routingNumber;
         _obj.payeeAccountModels[0].iban = values?.iban;
         _obj.payeeAccountModels[0].currencyType = "Fiat";
         _obj.payeeAccountModels[0].walletCode = "EUR";
