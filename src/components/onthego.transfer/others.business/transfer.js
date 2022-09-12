@@ -187,7 +187,7 @@ class BusinessTransfer extends Component {
                     <Paragraph className="mb-8  text-white fw-500 mt-16" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                     {/* <Divider /> */}
                     <DomesticTransfer type={this.props.type} />
-                    <Paragraph className="mb-8 fs-14 text-white fw-500 mt-16">Please upload supporting docs for transaction*</Paragraph>
+                    <Paragraph className="fw-300 mb-0 pb-4 ml-12 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
                     <AddressDocumnet documents={null} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;
@@ -311,7 +311,7 @@ class BusinessTransfer extends Component {
                     <Paragraph className="mb-8 text-white fw-500 mt-16" style={{ fontSize: 18 }}>Recipient's Bank Details</Paragraph>
                     {/* <Divider /> */}
                     <InternationalTransfer type={this.props.type} />
-                    <Paragraph className="mb-8 fs-14 text-white fw-500 mt-16">Please upload supporting docs for transaction*</Paragraph>
+                    <Paragraph className="fw-300 mb-0 pb-4 ml-12 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
                     <AddressDocumnet documents={null} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;

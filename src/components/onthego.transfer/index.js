@@ -305,7 +305,7 @@ class OnthegoFundTransfer extends Component {
                             >
                                 <NumberFormat
                                     customInput={Input}
-                                    className="cust-input "
+                                    className="cust-input"
                                     placeholder={"Enter Amount"}
                                     maxLength="13"
                                     decimalScale={2}
@@ -373,7 +373,7 @@ class OnthegoFundTransfer extends Component {
                 </div>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 
-                    <Form.Item
+                    {/* <Form.Item
                         name="lastName"
                         label={"Search for Payee"}
                         colon={false}
@@ -384,7 +384,8 @@ class OnthegoFundTransfer extends Component {
                             onChange={this.handleSearch}
                             value={this.state.searchVal}
                         />
-                    </Form.Item>
+                    </Form.Item> */}
+                    <Search placeholder="Search for Payee" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="mt-12" />
                 </Col>
                 {this.state?.loading && <Loader />}
                 {(!this.state.loading) && <>
@@ -393,7 +394,7 @@ class OnthegoFundTransfer extends Component {
 
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                         {(filterObj.length > 0) && filterObj?.map((item, idx) =>
-                            <Row className="fund-border c-pointer" onClick={async () => {
+                            <Row className="fund-border c-pointer " onClick={async () => {
                                 if (!["myself", "1stparty", 'ownbusiness'].includes(item.addressType?.toLowerCase())) {
                                     this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item, codeDetails: { ...this.state.codeDetails, ...item } }, () => this.chnageStep("reasonfortransfer"));
                                 } else {
@@ -406,14 +407,14 @@ class OnthegoFundTransfer extends Component {
                                     }
                                 }
                             }}>
-                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className="mb-16"><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
-                                <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="mb-16 small-text-align">
-                                    <label className="fs-16 fw-400 text-purewhite">
+                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
+                                <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="small-text-align">
+                                    <label className="fs-16 fw-400 text-white">
                                         <strong>{item.name}
                                             {/* <small>{item.type}</small> */}
                                         </strong>
                                     </label>
-                                    {item.accountNumber && <div><Text className="fs-14 fw-400 text-purewhite">{this.props.selectedCurrency} account ending with {item.accountNumber.substr(item.accountNumber.length - 4)}</Text></div>}
+                                    {item.accountNumber && <div><Text className="fs-14 fw-400 text-white">{this.props.selectedCurrency} account ending with {item.accountNumber.substr(item.accountNumber.length - 4)}</Text></div>}
                                 </Col>
                                 <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white"></span>
@@ -445,14 +446,14 @@ class OnthegoFundTransfer extends Component {
                                     }
                                 }
                             }}>
-                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className="mb-16"><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
-                                <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="mb-16 small-text-align">
-                                    <label className="fs-16 fw-400 text-purewhite">
+                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
+                                <Col xs={24} md={24} lg={24} xl={19} xxl={19} className=" small-text-align">
+                                    <label className="fs-16 fw-400 text-white">
                                         <strong>{item.name}
                                             {/* <small>{item.type}</small> */}
                                         </strong>
                                     </label>
-                                    <div><Text className="fs-14 fw-400 text-purewhite">{this.props.selectedCurrency} account ending with {item.accountNumber.substr(item.accountNumber.length - 4)}</Text></div>
+                                    <div><Text className="fs-14 fw-400 text-white">{this.props.selectedCurrency} account ending with {item.accountNumber.substr(item.accountNumber.length - 4)}</Text></div>
                                 </Col>
                                 <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white"></span>
