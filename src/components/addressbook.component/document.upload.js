@@ -18,11 +18,11 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 };
 class AddressDocumnet extends Component {
     state = {
-        filesList: this.props?.documents?.details || [],
+        filesList:[],
         documents: {}, showDeleteModal: false, isDocLoading: false
     }
     componentDidMount() {
-        this.setState({ ...this.state, documents: this.props?.documents || document() })
+        this.setState({ ...this.state, documents: this.props?.documents || document(),filesList: this.props?.documents?.details || [] })
     }
     setDocs = () => {
 
@@ -52,7 +52,11 @@ class AddressDocumnet extends Component {
                             if (this.state.filesList.length == 0) {
                                 return Promise.reject(apiCalls.convertLocalLang("is_required"))
                             } else {
-                                return Promise.resolve();
+                                const isValidFiles = this.state.filesList.filter(item => (item.name || item.documentName).indexOf(".") != (item.name || item.documentName).lastIndexOf(".")).length == 0;
+                                if (isValidFiles) { return Promise.resolve(); } else {
+                                    return Promise.reject("Double extension file not allowed");
+                                }
+
                             }
                         },
 
@@ -66,12 +70,12 @@ class AddressDocumnet extends Component {
                             onChange={({ file }) => {
                                 this.setState({ ...this.state, isDocLoading: true });
                                 if (file.status === "done") {
-                                    let { filesList } = this.state;
-                                    filesList.push(file);
-                                    this.setState({ ...this.state, filesList, isDocLoading: false });
-                                    let { documents } = this.state;
-                                    documents?.details?.push(this.docDetail(file));
-                                    this.props?.onDocumentsChange(documents);
+                                    let { filesList:files } = this.state;
+                                    files.push(file);
+                                    this.setState({ ...this.state, filesList:files, isDocLoading: false });
+                                    let { documents:docs } = this.state;
+                                    docs?.details?.push(this.docDetail(file));
+                                    this.props?.onDocumentsChange(docs);
                                 }
                             }}
                         >
