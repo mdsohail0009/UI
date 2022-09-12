@@ -178,16 +178,16 @@ class BusinessTransfer extends Component {
                     <Paragraph className="mb-8 px-4 text-white fw-500 mt-36" style={{ fontSize: 18 }}>Recipient's Bank Details</Paragraph>
                     {/* <Divider /> */}
                     <DomesticTransfer />
-                    <Paragraph className="fw-300 mb-0 ml-12 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
+                    <Paragraph className="fw-300 mb-0 pb-4 ml-12 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
                     <AddressDocumnet documents={null} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
                     }} />
                     <div className="align-center">
-                        <Row gutter={[16, 16]}>
+                        <Row>
                             {/* <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col> */}
-                            <Col xs={12} md={12} lg={12} xl={12} xxl={12}>
+                            <Col xs={24} className="text-right">
                                 <Button
                                     htmlType="submit"
                                     size="large"
@@ -302,7 +302,7 @@ class BusinessTransfer extends Component {
                     <Paragraph className="mb-8 text-white fw-500 mt-36 px-4" style={{ fontSize: 18 }}>Recipient's Bank Details</Paragraph>
                     {/* <Divider /> */}
                     <InternationalTransfer />
-                    <Paragraph className="fw-300 mb-8 px-4 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
+                    <Paragraph className="fw-300 mb-0 pb-4 ml-12 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
                     <AddressDocumnet documents={null} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;
@@ -311,7 +311,7 @@ class BusinessTransfer extends Component {
                     <div className="align-center">
                         <Row gutter={[16, 16]}>
                             {/* <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col> */}
-                            <Col xs={12} md={12} lg={12} xl={12} xxl={12}>
+                            <Col xs={24} className="text-right">
                                 <Button
                                     htmlType="submit"
                                     size="large"

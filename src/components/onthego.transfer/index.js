@@ -186,7 +186,7 @@ class OnthegoFundTransfer extends Component {
             enteramount: <>
                 <div className="mb-16 text-left">
                     <text Paragraph
-                        className='fs-24 fw-600 text-white px-4 mb-16 mt-4 text-captz'>Transfer funds</text>
+                        className='fs-24 fw-600 text-white mb-16 mt-4 text-captz'>Transfer funds</text>
                 </div>
                 <Form
                     autoComplete="off"
@@ -276,7 +276,7 @@ class OnthegoFundTransfer extends Component {
                 {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
                 <div className="mb-16 text-left">
                     <text Paragraph
-                        className='fs-24 fw-600 text-white px-4 mb-16 mt-4 text-captz'>Who are you sending money to?</text>
+                        className='fs-24 fw-600 text-white mb-16 mt-4 text-captz'>Who are you sending money to?</text>
                 </div>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 
@@ -524,7 +524,7 @@ class OnthegoFundTransfer extends Component {
                 <div ref={this.reviewScrool}></div>
                 <div className="mb-16 text-left">
                     <text Paragraph
-                        className='fs-24 fw-600 text-white px-4 mb-16 mt-4'>Review Details Of Transfer</text>
+                        className='fs-24 fw-600 text-white mb-16 mt-4'>Review Details Of Transfer</text>
                 </div>
                 <Form
                     name="advanced_search"

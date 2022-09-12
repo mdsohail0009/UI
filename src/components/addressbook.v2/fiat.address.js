@@ -186,7 +186,7 @@ class AddressBookV2 extends Component {
                 <div ref={this.reviewScrool}></div>
                 <div className="mb-16 text-left">
                     <text Paragraph
-                        className='fs-24 fw-600 text-white px-4 mb-16 mt-4'>Review Details Of Transfer</text>
+                        className='fs-24 fw-600 text-white mb-16 mt-4'>Review Details Of Transfer</text>
                 </div>
                 <Form
                     name="advanced_search"

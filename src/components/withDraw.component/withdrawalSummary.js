@@ -612,7 +612,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 						
 						autoComplete="off">
 						{permissions?.withdraw  && verifyData.isPhoneVerified == true && (
-							<Text className="text-upper fw-300 mb-8 px-4 text-white-50 pt-16">
+							<Text className="fw-300 mb-8 px-4 text-white-50 pt-16">
 								Phone verification code *
 							</Text>
 						)}
@@ -765,7 +765,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 							</Form.Item>
 						)}
 						{permissions?.withdraw  && verifyData.twoFactorEnabled == true && (
-							<Text className="text-upper fw-300 mb-8 px-4 text-white-50 pt-16">
+							<Text className="fw-300 mb-8 px-4 text-white-50 pt-16">
 								Authenticator Code *
 							</Text>
 						)}
