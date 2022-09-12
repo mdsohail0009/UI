@@ -364,6 +364,7 @@ class OthersBusiness extends Component {
                                     size="large"
                                     className="pop-btn mb-36"
                                     style={{ minWidth: 150 }}
+                                    disabled={this.state.ibanDetailsLoading}
                                     loading={this.state.isBtnLoading} >
                                     Continue
                                 </Button>
