@@ -1,3 +1,4 @@
+
 import React, { Component } from "react";
 import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert, message, Spin } from "antd";
 import {
@@ -22,9 +23,10 @@ import ActionsToolbar from "../toolbar.component/actions.toolbar";
 import { fetchFeaturePermissions, setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 import { getFeatureId } from "../shared/permissions/permissionService";
 import { setCurrentAction } from '../../reducers/actionsReducer'
+import AddressBookV2 from "../addressbook.v2/fiat.address";
 import AddressBookV3 from "../addressbook.v3";
-import AddressCommonCom from './addressCommonCom';
-const { Paragraph, Text, Title } = Typography;
+import AddressCommonCom from "./addressCommonCom";
+const { Paragraph, Text,Title } = Typography;
 
 class AddressBook extends Component {
 	constructor(props) {
@@ -128,7 +130,7 @@ class AddressBook extends Component {
 			),
 		},
 		{
-
+			
 			field: "whiteListName",
 			title: "Whitelist Name",
 			filter: true,
@@ -231,7 +233,7 @@ class AddressBook extends Component {
 						{props.dataItem.favouriteName}
 					</div>
 					<Text className="file-label ml-8 fs-12">
-						{this.addressTypeNames(props?.dataItem?.addressType)}
+						{props.dataItem.addressType}
 					</Text>
 				</td>
 			),
@@ -517,7 +519,7 @@ class AddressBook extends Component {
 			else
 				showFiat = !obj?.close;
 		};
-		this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat });
+		this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat,selectedObj:{} });
 		this.props.rejectCoinWallet();
 		this.props.clearFormValues();
 		this.props.clearCrypto();
@@ -579,7 +581,7 @@ class AddressBook extends Component {
 	renderContent = () => {
 		const stepcodes = {
 			cryptoaddressbook: (<>
-				<AddressCommonCom onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1} />
+				<AddressCommonCom onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1}/>
 			</>
 			),
 			selectcrypto: <SelectCrypto />,
@@ -626,7 +628,7 @@ class AddressBook extends Component {
 
 		return (
 			<>
-
+				
 				<div className="box basic-info main-container">
 					<Translate
 						content="address_book"
@@ -751,7 +753,7 @@ class AddressBook extends Component {
 					visible={this.state.fiatDrawer}
 					closeIcon={null}
 					className="side-drawer w-50p">
-					<AddressBookV3 type="manual" isFiat={this.state.cryptoFiat} selectedAddress={this.state.selectedObj} onContinue={(obj) => this.closeBuyDrawer(obj)} />
+					<AddressBookV3 type="manual" isFiat={this.state.cryptoFiat} selectedAddress={this.state.selectedObj} onContinue={(obj)=>this.closeBuyDrawer(obj)} />
 				</Drawer>
 				<Modal
 					title={
