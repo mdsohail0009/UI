@@ -27,7 +27,7 @@ import AddressBookV2 from "../addressbook.v2/fiat.address";
 import AddressBookV3 from "../addressbook.v3";
 import AddressCommonCom from "./addressCommonCom";
 const { Paragraph, Text,Title } = Typography;
-
+const addressName = { "1stparty": "1st Party", "3rdparty": "3rd Party" };
 class AddressBook extends Component {
 	constructor(props) {
 		super(props);
@@ -233,7 +233,7 @@ class AddressBook extends Component {
 						{props.dataItem.favouriteName}
 					</div>
 					<Text className="file-label ml-8 fs-12">
-						{props.dataItem.addressType}
+						{addressName[props?.dataItem?.addressType]}
 					</Text>
 				</td>
 			),
@@ -444,7 +444,7 @@ class AddressBook extends Component {
 		}
 	};
 	addressFiatView = ({ dataItem }) => {
-		this.props.history.push(`/addressFiatView/${dataItem.id}`);
+		this.props.history.push(`/addressFiatView/${dataItem.id}/${dataItem.addressType}`);
 	};
 	addressCryptoView = ({ dataItem }) => {
 		this.props.history.push(`/addressCryptoView/${dataItem.id}`);

@@ -50,6 +50,7 @@ const AddressCommonCom = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [bankmodalData, setModalData] = useState([])
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isCryptoModalVisible, setIsCryptoModalVisible] = useState(false);
   const [isModalDelete, setIsModalDelete] = useState(false);
   const [form] = Form.useForm();
   const [bankDetailForm] = Form.useForm();
@@ -92,7 +93,7 @@ const AddressCommonCom = (props) => {
     setEditBankDetails(true)
     let data = bankmodalData.find((items) => items.id == item.id)
     handleCountryChange(data?.payeeAccountCountry);
-    setIsModalVisible(true);
+    setIsCryptoModalVisible(true);
     setBankObj(data)
     SetBankChange(data?.bankType);
     if (props?.addressBookReducer?.cryptoTab == true) {
@@ -167,12 +168,24 @@ const AddressCommonCom = (props) => {
   const withdraeTab = bilPay ? "Fiat" : (props?.cryptoTab == 1 ? "Crypto" : "Fiat");
 
   const showModal = () => {
-    setIsModalVisible(true);
+    debugger
+    if(bankmodalData.length==1){
+      useDivRef.current.scrollIntoView();
+        setErrorMsg("Cannot add more than one Crypto address details");
+    }else{
+      setIsCryptoModalVisible(true);
+    }
+   
     setEditBankDetails(false)
 
   };
   const handleOk = () => {
     setIsModalVisible(false);
+   // setEditBankDetails(false)
+  };
+  
+  const handleCryptoOk = () => {
+    setIsCryptoModalVisible(false);
     setEditBankDetails(false)
   };
   const handleCoinChange = (e) => {
@@ -202,7 +215,7 @@ const AddressCommonCom = (props) => {
     }
   };
   const handleCancel = () => {
-    setIsModalVisible(false);
+    setIsCryptoModalVisible(false);
     bankDetailForm.resetFields();
     SetBankChange("BankAccount");
     setNewStates([]);
@@ -239,7 +252,7 @@ const AddressCommonCom = (props) => {
           : props?.userConfig?.firstName + " " + props?.userConfig?.lastName,
         bankType: "bank",
         fullName: favouriteDetails.fullName,
-        phoneNumber: props?.userConfig.phoneNo,
+        phoneNo: props?.userConfig.phoneNo,
         email: props?.userConfig.email,
       });
       setBankType("bank");
@@ -301,7 +314,7 @@ const AddressCommonCom = (props) => {
   const handleCountry = (e) => {
     let code = e;
     form.setFieldsValue({ "state": null });
-    let states = country?.filter((item) => item.name?.toLowerCase() === code?.toLowerCase());
+    let states = country?.filter((item) => item.name?.toLowerCase() === code.toLowerCase());
     setState(states[0]?.stateLookUp);
   }
   const handleState = (e) => {
@@ -314,12 +327,11 @@ const AddressCommonCom = (props) => {
     if (response.ok) {
       setCountry(response.data);
       let state = form.getFieldValue("country");
-      let states = response.data?.filter((item) => item.name?.toLowerCase() === state?.toLowerCase());
+      let states = response.data?.filter((item) => item.name.toLowerCase());
       setState(states[0]?.stateLookUp);
     }
   }
   const isErrorDispaly = (objValue) => {
-    debugger
     if (objValue.data && typeof objValue.data === "string") {
       return objValue.data;
     } else if (
@@ -333,7 +345,6 @@ const AddressCommonCom = (props) => {
   };
 
   const saveModalwithdrawal = (values) => {
-    debugger
     let obj = {
       id: uuidv4(),
       payeeId: uuidv4(),
@@ -380,10 +391,17 @@ const AddressCommonCom = (props) => {
         }
       }
     } else {
-      bankmodalData.push(obj)
+      //bankmodalData.push(obj)
+      // if(bankmodalData.lenth !==0){
+      //   useDivRef.current.scrollIntoView();
+      //   setErrorMsg("Cannot add more than one Crypto address details");
+      // }else{
+        setModalData([obj])
+      // }
+      
       setRecrdStatus(obj?.recordStatus);
     }
-    setIsModalVisible(false);
+    setIsCryptoModalVisible(false);
     bankDetailForm.resetFields();
     SetBankChange("BankAccount");
     setNewStates([]);
@@ -454,7 +472,7 @@ const AddressCommonCom = (props) => {
       values["favouriteName"] = namecheck;
       values["fullName"] = values.fullName;
       values["email"] = values.email;
-      values["phoneNumber"] = values.phoneNumber;
+      values["phoneNo"] = values.phoneNo;
       values["addressType"] = values.addressType;
       values["line1"] = values.line1;
       values["line2"] = values.line2;
@@ -468,8 +486,8 @@ const AddressCommonCom = (props) => {
       let saveObj = Object.assign({}, values);
       saveObj.payeeAccountModels = bankmodalData
       if (withdraeTab === "Crypto")
-      debugger
         saveObj.documents = cryptoAddress?.documents;
+        saveObj.TransferType=props?.cryptoTab == 1&&"Crypto"
       let response = await saveAddressBook(saveObj);
       setAgreeRed(true);
       if (response.ok) {
@@ -607,7 +625,358 @@ const AddressCommonCom = (props) => {
               onFinish={savewithdrawal}
               autoComplete="off"
               initialValues={cryptoAddress}
-            > {(props?.cryptoTab == 2 || withdraeTab == "Fiat") && <>
+            >
+              {(props?.cryptoTab == 1) &&
+              <>
+             
+             <Form.Item
+                name="addressType"
+                label={
+                  <div>
+                  
+                    <Translate
+                content="address_type"
+                component={Text}
+                className="text-white"
+              />{" "}
+                    <Tooltip
+                      title={
+                        <ul className=" p-0" style={{ listStyleType: "none" }}>
+                          <li className=" mb-4">
+                            <span className="textpure-yellow">1st Party </span>:
+                            Funds will be deposited to your own bank account.
+                          </li>
+                          <li className=" mb-4">
+                            <span className="textpure-yellow">3rd Party </span>:
+                            Funds will be deposited to other beneficiary bank
+                            account.
+                          </li>
+                        </ul>
+                      }
+                    >
+                      <div className="icon md info c-pointer"></div>
+                    </Tooltip>
+                  </div>
+                }
+                className="custom-label"
+              >
+                <Radio.Group
+                  size="large"
+                  buttonStyle="solid"
+                  className="text-white ml-8"
+                  onChange={radioChangeHandler}
+                  defaultValue={
+                    (selectParty && "3rdparty") || (!selectParty && "1stparty")
+                  }
+
+                  value={
+                    (selectParty && "3rdparty") || (!selectParty && "1stparty")
+                  }
+                >
+                  <Radio
+                    value={"1stparty"}
+                    className="text-white"
+                    disabled={isEdit}
+                  >
+                  
+                    <Translate
+                content="first_party"
+                component={Text}
+                className="text-white"
+              />
+                  </Radio>
+                  <Radio
+                    value={"3rdparty"}
+                    className="text-white"
+                    disabled={isEdit}
+                  >
+                  
+                    <Translate
+                content="third_party"
+                component={Text}
+                className="text-white"
+              />
+                  </Radio>
+                </Radio.Group>
+              </Form.Item>
+                   <Translate
+                   content="Beneficiary_Details"
+                   component={Paragraph}
+                   className="mb-16 fs-14 text-aqua fw-500 text-upper"
+                 />
+                 <Row gutter={[16, 16]}>
+                   <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                     <Form.Item
+                       className="custom-forminput custom-label mb-0"
+                       name="favouriteName"
+                       label={
+                         <Translate content="favorite_name" component={Form.label} />
+                       }
+                       required
+                       rules={[
+                         {
+                           required: true,
+                           message: apiCalls.convertLocalLang('is_required')
+                         },
+                         {
+                           whitespace: true,
+                           message: apiCalls.convertLocalLang('is_required')
+                         },
+                         {
+                           validator: validateContentRule
+                         }
+                       ]}
+                     >
+                       <AutoComplete
+                         onChange={(e) => handleChange(e)}
+                         maxLength={20} className="cust-input"
+                         placeholder= {apiCalls.convertLocalLang("favorite_name")}
+                        
+                       >
+                         {PayeeLu?.map((item, indx) => (
+                           <Option key={indx} value={item.name}>
+                             {item.name}
+                           </Option>
+                         ))}
+                       </AutoComplete>
+                     </Form.Item>
+                   </Col>
+   
+                   <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                     <Form.Item
+                       className="custom-forminput custom-label mb-0"
+                       name="beneficiaryName"
+                       required
+                       rules={[
+                         {
+                           required: true,
+                           message: apiCalls.convertLocalLang('is_required')
+                         },
+                         {
+                           whitespace: true,
+                           message: apiCalls.convertLocalLang('is_required')
+                         },
+                         {
+                           validator: validateContentRule
+                         }
+   
+                       ]}
+                       label={
+                         <Translate content="Fait_Name" component={Form.label} />
+                       }
+                     >
+                       <Input
+                         className="cust-input"
+                         placeholder={apiCalls.convertLocalLang('Fait_Name')}
+                       />
+                     </Form.Item>
+                   </Col>
+                   <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                     <Form.Item
+                       name="email"
+                       label={apiCalls.convertLocalLang('email')}
+                       className="custom-forminput custom-label mb-0"
+                       type='email'
+                       rules={[
+                         { required: true, message: apiCalls.convertLocalLang('is_required') },
+                         {
+                           validator(_, value) {
+                             if (emailExist) {
+                               return Promise.reject("Email already exist");
+                             } else if (value && !(/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,15}(?:\.[a-z]{2})?)$/.test(value))) {
+                               return Promise.reject("Invalid email");
+                             }
+                             else {
+                               return Promise.resolve();
+                             }
+                           },
+                         },
+                       ]}>
+                       <Input placeholder={apiCalls.convertLocalLang('email')} className="cust-input" maxLength={100} />
+                     </Form.Item>
+                   </Col>
+                   <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                     <Form.Item
+                       className="custom-forminput custom-label mb-0"
+                       name="phoneNo"
+                       rules={[
+                         { required: true, message: apiCalls.convertLocalLang('is_required') },
+                         {
+                           validator(_, value) {
+                             if (emailExist) {
+                               return Promise.reject("Phone number already exist");
+                             } else if (value && !(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(value))) {
+                               return Promise.reject("Invalid phone number");
+                             }
+                             else {
+                               return Promise.resolve();
+                             }
+                           },
+                         },
+                       ]}
+                       label={
+                         <Translate content="Phone_No" component={Form.label} />
+                       }
+                     >
+                       <Input
+                         className="cust-input"
+                         maxLength="20"
+                         placeholder={apiCalls.convertLocalLang('Phone_No')}
+                         allowNegative={false}
+                       />
+   
+                     </Form.Item>
+                   </Col>
+                  
+                 </Row>
+                  <Row gutter={[16, 16]} >
+                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+
+                      <Translate
+                        content={props?.cryptoTab == 1 ? "cryptoAddressDetails" : "Beneficiary_BankDetails"}
+                        component={Paragraph}
+                        className="mb-16 mt-24 fs-14 text-aqua fw-500 text-upper"
+                      />
+                    </Col>
+                    <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="text-right">
+                  <Button
+                    onClick={showModal}
+                    style={{ height: "40px" }}
+                    className="pop-btn mb-36 mt-24"
+                  >
+                    <Translate
+                    content={props?.cryptoTab == 2 ? "bankAddress" : (withdraeTab == "Fiat" ? "bankAddress" : "cryptoAddress")}
+                   // content={props?.cryptoTab == 2 ? "cryptoAddress" : "bankAddress"}
+                    component={Text}
+                   
+                  />
+                    <span className="icon md add-icon-black ml-8"></span>
+                  </Button>
+
+                </Col>
+                <Modal
+                  title={apiCalls.convertLocalLang((props?.cryptoTab == 1) && "cryptoAddress")}
+                  visible={isCryptoModalVisible}
+                  onOk={handleCryptoOk}
+                  width={800}
+                  destroyOnClose={true}
+                  closeIcon={
+                    <Tooltip title="Close">
+                      <span
+                        className="icon md close-white c-pointer"
+                        onClick={() => handleCancel()}
+                      />
+                    </Tooltip>
+
+                  }
+                  footer={
+                    <div className="text-right mt-24">
+                    </div>
+                  }
+                >
+
+
+                  {props?.cryptoTab == 1 &&
+                    <Form
+                      form={bankDetailForm}
+                      initialValues={cryptoAddress}
+                      onFinish={saveModalwithdrawal}
+                      autoComplete="off">
+                      <Form.Item
+                        className="custom-label"
+                        label={
+                          <Translate content="AddressLabel" component={Form.label} />
+                        }
+                        name="label"
+                        required
+                        rules={[
+                          {
+                            required: true,
+                            message: apiCalls.convertLocalLang('is_required'),
+                            whitespace: true,
+                          },
+                          {
+                            validator: validateContentRule,
+                          },
+                        ]}>
+                        <Input
+                          className="cust-input mb-0"
+                          maxLength="20"
+                          placeholder={apiCalls.convertLocalLang('AddressLabel')}
+                        />
+                      </Form.Item>
+                      <Form.Item
+                        className="custom-label"
+                        name="walletCode"
+                        label={<Translate content="Coin" component={Form.label} />}
+                        rules={[
+                          {
+                            required: true,
+                            message: apiCalls.convertLocalLang("is_required"),
+                          },
+                        ]}>
+
+
+                        <Select
+                          placeholder={apiCalls.convertLocalLang("Selectcoin")}
+                          className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
+                          dropdownClassName="select-drpdwn"
+                          onChange={(e) => handleCoinChange(e)}
+                          bordered={false}
+                        >
+                          {coinDetails.map((item, indx) => (
+                            <Option key={indx} value={item.walletCode}>
+                              {item.walletCode}
+                            </Option>
+                          ))}
+                        </Select>
+                      </Form.Item>
+                      <Form.Item
+                        className="custom-label"
+                        name="walletAddress"
+                        label={<Translate content="address" component={Form.label} />}
+                        required
+
+                        rules={[
+                          // {
+                          //   required: true,
+                          //   //message: 'Is required',
+                          //   whitespace: true,
+                          // },
+                          {
+                            validator: validateAddressType,
+                          },
+                        ]}
+                        >
+                        <Input
+                          className="cust-input mb-0"
+                          maxLength="100"
+                          
+                          placeholder={apiCalls.convertLocalLang("address")}
+                        />
+                      </Form.Item>
+
+
+
+
+                      <div style={{ marginTop: "50px" }}>
+                        <Button
+                          htmlType="submit"
+                          size="large"
+                          block
+                          className="pop-btn"
+                          loading={btnDisabled}>
+                          {isLoading && <Spin indicator={antIcon} />}{" "}
+                          <Translate content="Save_btn_text" component={Text} />
+                        </Button>
+                      </div>
+                    </Form>} 
+                     </Modal>
+                  </Row>
+                 </>
+              }
+
+               {(props?.cryptoTab == 2 || withdraeTab == "Fiat") && <>
               <Form.Item
                 name="addressType"
 
@@ -655,7 +1024,7 @@ const AddressCommonCom = (props) => {
                 </Row>
               </Form.Item>
             </>}
-              {addressOptions.addressType === "myself" && <>
+              { (props?.cryptoTab == 2 && addressOptions.addressType === "myself") && <>
                 <Form>
                   <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -704,21 +1073,21 @@ const AddressCommonCom = (props) => {
                 <div className="box basic-info alert-info-custom">
                   <Row>
                     <Col xs={24} md={24} lg={24} xl={8} xxl={8} className="mb-16">
-                      <label className="fs-14 fw-400 ">
+                      <label className="fs-14 fw-400 text-white">
                         <strong>Name</strong>
                       </label>
-                      <div><Text className="fs-14 fw-400 text-purewhite">{favouriteDetails.fullName || favouriteDetails?.businessName}</Text></div>
+                      <div><Text className="fs-14 fw-400 text-white">{favouriteDetails.fullName || favouriteDetails?.businessName}</Text></div>
 
                     </Col>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
-                      <label className="fs-14 fw-400 ">
+                      <label className="fs-14 fw-400 text-white">
                         <strong> Address</strong>
                       </label>
-                      <div><Text className="fs-14 fw-400 text-purewhite">{props.userConfig?.email}</Text></div>
+                      <div><Text className="fs-14 fw-400 text-white">{props.userConfig?.email}</Text></div>
                     </Col>
                   </Row>
                 </div></>}
-              {addressOptions.addressType !== "myself" && <React.Fragment>
+              {(props?.cryptoTab == 2 || addressOptions.addressType !== "myself") && <React.Fragment>
                 <Translate
                   content="Beneficiary_Details"
                   component={Paragraph}
@@ -1139,7 +1508,7 @@ const AddressCommonCom = (props) => {
                   </Col>
 
                 </Row>}
-              {(props?.cryptoTab == 1) && <CryptoAdress />}
+              {/* {(props?.cryptoTab == 1) && <CryptoAdress />} */}
 
               {bankmodalData?.map((item, indx) => {
                 if (item.recordStatus !== "Deleted") {
