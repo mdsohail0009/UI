@@ -73,7 +73,7 @@ const SomeoneComponent = (props) => {
                 setShowDeclartion(true)
             }
         }else{
-            setBtnLoading(true);
+            setBtnLoading(false);
             setErrorMessage(isErrorDispaly(payeesave));
             useDivRef.current.scrollIntoView();
         }

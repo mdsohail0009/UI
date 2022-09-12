@@ -48,16 +48,6 @@ class OnthegoFundTransfer extends Component {
     }
     componentDidMount() {
         this.verificationCheck()
-        fetchPayees(this.props.userProfile.id, this.props.selectedCurrency).then((response) => {
-            if (response.ok) {
-                this.setState({ ...this.state, payeesLoading: false, filterObj: response.data, payees: response.data });
-            }
-        });
-        fetchPastPayees(this.props.userProfile.id, this.props.selectedCurrency).then((response) => {
-            if (response.ok) {
-                this.setState({ ...this.state, pastPayees: response.data });
-            }
-        });
         if (!this.state.selectedCurrency) {
             this.setState({ ...this.state, fiatWalletsLoading: true });
             fetchMemberWallets(this.props?.userProfile?.id).then(res => {
@@ -68,7 +58,22 @@ class OnthegoFundTransfer extends Component {
                 }
             });
         }
-
+      if(this.state.selectedCurrency){
+        this.getPayees();
+      }
+    }
+    getPayees() {
+        debugger
+        fetchPayees(this.props.userProfile.id, this.state.selectedCurrency).then((response) => {
+            if (response.ok) {
+                this.setState({ ...this.state, payeesLoading: false, filterObj: response.data, payees: response.data });
+            }
+        });
+        fetchPastPayees(this.props.userProfile.id, this.state.selectedCurrency).then((response) => {
+            if (response.ok) {
+                this.setState({ ...this.state, pastPayees: response.data });
+            }
+        });
     }
     verificationCheck = async () => {
         this.setState({ ...this.state, isVarificationLoader: true })
@@ -81,15 +86,13 @@ class OnthegoFundTransfer extends Component {
                 }
             }
             if (minVerifications >= 2) {
-                this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: false })
+                this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: true })
             } else {
                 this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: false })
             }
         } else {
             this.setState({ ...this.state, isVarificationLoader: false, errorMessage: this.isErrorDispaly(verfResponse) })
         }
-
-        return minVerifications >= 2;
     }
     chnageStep = (step, values) => {
         this.setState({ ...this.state, step });
@@ -105,11 +108,11 @@ class OnthegoFundTransfer extends Component {
     }
     handleSearch = ({ target: { value: val } }) => {
         if (val) {
-            const filterObj = this.state.payees.filter(item => item.name.toLowerCase().includes(val));
+            const filterObj = this.state.payees.filter(item => item.name.toLowerCase().includes(val.toLowerCase()));
             this.setState({ ...this.state, filterObj, searchVal: val });
         }
         else
-            this.setState({ ...this.state, filterObj: this.state.payees });
+            this.setState({ ...this.state, filterObj: this.state.payees,searchVal: val });
     }
     saveWithdrawdata = async () => {
         this.setState({ ...this.state, isBtnLoading: true })
@@ -212,7 +215,7 @@ class OnthegoFundTransfer extends Component {
         const obj = {
             CustomerId: this.props.userProfile?.id,
             amount: amt,
-            WalletCode: this.props.selectedCurrency
+            WalletCode: this.state.selectedCurrency
         }
         this.setState({ ...this.state, [loader]: true, errorMessage: null });
         const res = await validateAmount(obj);
@@ -239,7 +242,7 @@ class OnthegoFundTransfer extends Component {
                     }}
                     renderItem={item => (
 
-                        <List.Item onClick={() => this.setState({ ...this.state, selectcurrency: item.walletCode },()=>this.chnageStep("enteramount"))}>
+                        <List.Item onClick={() => this.setState({ ...this.state, selectedCurrency: item.walletCode }, () => {this.getPayees(); this.chnageStep("enteramount")})}>
                             <Link>
                                 <List.Item.Meta
                                     avatar={<Image preview={false} src={item.imagePath} />}
@@ -256,9 +259,9 @@ class OnthegoFundTransfer extends Component {
                 />
             </React.Fragment>,
             enteramount: <>
-                <div className="mb-16 text-left">
+                <div className="mb-16" style={{textAlign:'center'}}>
                     <text Paragraph
-                        className='text-white fs-30 fw-600 px-4 '>Transfer funds</text>
+                        className='text-white fs-30 fw-600 px-4 '>Transfer Funds</text>
                 </div>
                 <Spin spinning={isVarificationLoader}>
                     <Form
@@ -279,99 +282,99 @@ class OnthegoFundTransfer extends Component {
                                 closable={false}
                             />
                         }
-                    {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
-                    {isVerificationEnable &&<>
-                    <Row gutter={[16, 16]}>
-                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item
-                                className="custom-forminput custom-label mb-0 fund-transfer-input"
-                                name="amount"
-                                label={"Enter Amount"}
-                                required
-                                rules={[
-                                    {
-                                        required: true,
-                                        message:
-                                            apicalls.convertLocalLang("is_required"),
-                                    },
-                                    {
-                                        validator:(_,value)=>{
-                                            const reg = /.*[0-9].*/g;
-                                            if (value && !reg.test(value)) {
-                                                return Promise.reject("Invalid amount");
+                        {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
+                        {isVerificationEnable && <>
+                            <Row gutter={[16, 16]}>
+                                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                                    <Form.Item
+                                        className="custom-forminput custom-label mb-0 fund-transfer-input"
+                                        name="amount"
+                                        label={"Enter Amount"}
+                                        required
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message:
+                                                    apicalls.convertLocalLang("is_required"),
+                                            },
+                                            {
+                                                validator: (_, value) => {
+                                                    const reg = /.*[0-9].*/g;
+                                                    if (value && !reg.test(value)) {
+                                                        return Promise.reject("Invalid amount");
+                                                    }
+                                                    return Promise.resolve();
+                                                }
                                             }
-                                            return Promise.resolve();
-                                        }
-                                    }
-                                ]}
-                            >
-                                <NumberFormat
-                                    customInput={Input}
-                                    className="cust-input"
-                                    placeholder={"Enter Amount"}
-                                    maxLength="13"
-                                    decimalScale={2}
-                                    displayType="input"
-                                    allowNegative={false}
-                                    thousandSeparator={","}
-                                    addonBefore={this.props.selectedCurrency}
-                                    onValueChange={() => {
-                                        this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount })
-                                    }}
-                                />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={[16, 16]}>
-
-                            <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                                <br />
-                                <Form.Item className="text-center">
-                                    <Button
-                                        htmlType="submit"
-                                        size="large"
-                                        className="pop-btn mb-36"
-                                        style={{ minWidth: 300 }}
-                                        loading={this.state.newtransferLoader}
-                                        disabled={this.state.addressLoader}
+                                        ]}
                                     >
-                                        New Transfer
-                                    </Button>
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                                <br />
-                                <Form.Item className="text-center">
-                                    <Button
-                                        htmlType="button"
-                                        size="large"
-                                        className="pop-btn mb-36"
-                                        style={{ minWidth: 300 }}
-                                        loading={this.state.addressLoader}
-                                        disabled={this.state.newtransferLoader}
-                                        onClick={() => {
-                                            let _amt = this.enteramtForm.current.getFieldsValue().amount;
-                                            _amt = _amt.replace(/,/g, "");
-                                            this.setState({ ...this.state, isNewTransfer: false, amount: _amt }, () => {
-                                                this.enteramtForm.current.validateFields().then(() => this.validateAmt(_amt, "addressselection", this.enteramtForm.current.getFieldsValue(), "addressLoader"))
-                                                    .catch(error => {
+                                        <NumberFormat
+                                            customInput={Input}
+                                            className="cust-input"
+                                            placeholder={"Enter Amount"}
+                                            maxLength="13"
+                                            decimalScale={2}
+                                            displayType="input"
+                                            allowNegative={false}
+                                            thousandSeparator={","}
+                                            addonBefore={this.state.selectedCurrency}
+                                            onValueChange={() => {
+                                                this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount })
+                                            }}
+                                        />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={[16, 16]}>
 
-                                                });
-                                        })
-                                    }}
-                                >
-                                    Address book
-                                </Button>
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    </>}
-                </Form></Spin></>,
+                                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                                    <br />
+                                    <Form.Item className="text-center">
+                                        <Button
+                                            htmlType="submit"
+                                            size="large"
+                                            className="pop-btn mb-36"
+                                            style={{ minWidth: 300 }}
+                                            loading={this.state.newtransferLoader}
+                                            disabled={this.state.addressLoader}
+                                        >
+                                            New Transfer
+                                        </Button>
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                                    <br />
+                                    <Form.Item className="text-center">
+                                        <Button
+                                            htmlType="button"
+                                            size="large"
+                                            className="pop-btn mb-36"
+                                            style={{ minWidth: 300 }}
+                                            loading={this.state.addressLoader}
+                                            disabled={this.state.newtransferLoader}
+                                            onClick={() => {
+                                                let _amt = this.enteramtForm.current.getFieldsValue().amount;
+                                                _amt = _amt.replace(/,/g, "");
+                                                this.setState({ ...this.state, isNewTransfer: false, amount: _amt }, () => {
+                                                    this.enteramtForm.current.validateFields().then(() => this.validateAmt(_amt, "addressselection", this.enteramtForm.current.getFieldsValue(), "addressLoader"))
+                                                        .catch(error => {
+
+                                                        });
+                                                })
+                                            }}
+                                        >
+                                            Address book
+                                        </Button>
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </>}
+                    </Form></Spin></>,
             addressselection: <React.Fragment>
                 {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
-                <div className="mb-16 text-left">
+                <div className="mb-16" style={{textAlign:'center'}}>
                     <text Paragraph
-                        className='text-white fs-30 fw-600 px-4 '>Who are you sending money to?</text>
+                        className='text-white fs-30 fw-600 px-4 ' >Who are you sending money to?</text>
                 </div>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 
@@ -416,7 +419,7 @@ class OnthegoFundTransfer extends Component {
                                             {/* <small>{item.type}</small> */}
                                         </strong>
                                     </label>
-                                    {item.accountNumber && <div><Text className="fs-14 fw-400 text-white">{this.props.selectedCurrency} account ending with {item.accountNumber.substr(item.accountNumber.length - 4)}</Text></div>}
+                                    {item.accountNumber && <div><Text className="fs-14 fw-400 text-white">{this.state.selectedCurrency} account ending with {item.accountNumber.substr(item.accountNumber.length - 4)}</Text></div>}
                                 </Col>
                                 <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white"></span>
@@ -455,7 +458,7 @@ class OnthegoFundTransfer extends Component {
                                             {/* <small>{item.type}</small> */}
                                         </strong>
                                     </label>
-                                    <div><Text className="fs-14 fw-400 text-white">{this.props.selectedCurrency} account ending with {item.accountNumber.substr(item.accountNumber.length - 4)}</Text></div>
+                                    <div><Text className="fs-14 fw-400 text-white">{this.state.selectedCurrency} account ending with {item.accountNumber.substr(item.accountNumber.length - 4)}</Text></div>
                                 </Col>
                                 <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white"></span>
@@ -514,7 +517,7 @@ class OnthegoFundTransfer extends Component {
                             this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, documents } })
                         }} title={"Upload supporting documents for transaction"} />
                     </React.Fragment>
-                    {/* {this.props.selectedCurrency === "USD" && <Tabs className="cust-tabs-fait" activeKey={this.state.selectedTab} onChange={(key) => this.setState({ ...this.state, selectedTab: key })}>
+                    {/* {this.state.selectedCurrency === "USD" && <Tabs className="cust-tabs-fait" activeKey={this.state.selectedTab} onChange={(key) => this.setState({ ...this.state, selectedTab: key })}>
                         <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"}>
                             <Row gutter={[16, 16]}>
                                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -579,7 +582,7 @@ class OnthegoFundTransfer extends Component {
                                     style={{ minWidth: 300 }}
                                     onClick={() => {
                                         let validateFileds = [];
-                                        // if (this.props.selectedCurrency === "USD") {
+                                        // if (this.state.selectedCurrency === "USD") {
                                         //     const code = this.state?.selectedTab === "domestic" ? "abaRoutingCode" : "swiftRouteBICNumber";
                                         //     validateFileds.push(code);
                                         // }
@@ -783,7 +786,7 @@ class OnthegoFundTransfer extends Component {
                 </Spin>
             </React.Fragment>,
             newtransfer: <>
-                <FiatAddress currency={this.props.selectedCurrency} amount={this.state.amount} onContinue={(obj) => {
+                <FiatAddress currency={this.state.selectedCurrency} amount={this.state.amount} onContinue={(obj) => {
                     this.setState({ ...this.state, reviewDetails: obj }, () => {
                         this.chnageStep("reviewdetails")
                     })
