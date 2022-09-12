@@ -81,15 +81,13 @@ class OnthegoFundTransfer extends Component {
                 }
             }
             if (minVerifications >= 2) {
-                this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: false })
+                this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: true })
             } else {
                 this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: false })
             }
         } else {
             this.setState({ ...this.state, isVarificationLoader: false, errorMessage: this.isErrorDispaly(verfResponse) })
         }
-
-        return minVerifications >= 2;
     }
     chnageStep = (step, values) => {
         this.setState({ ...this.state, step });
