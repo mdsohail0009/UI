@@ -41,7 +41,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange,selectedAddress, onConti
         {addressOptions.addressType === "myself" && <MyselfNewTransfer currency={props.currency} onContinue={(obj) => onContinue(obj)} {...props} isBusiness={props.userProfile?.isBusiness}
             onTheGoObj={onTheGoObj} ></MyselfNewTransfer>}
         {addressOptions.addressType === "business" && <OthersBusiness selectedAddress={selectedAddress} type={props.type} isUSDTransfer={props.currency === "USD" ? true : false} onContinue={(obj) => onContinue(obj)} amount={props.amount} />}
-        {addressOptions.addressType === "someoneelse" && <SomeoneComponent addressType={addressOptions.addressType} currency={props.currency} onContinue={(obj) => onContinue(obj)} onTheGoObj={onTheGoObj} />}
+        {addressOptions.addressType === "someoneelse" && <SomeoneComponent addressType={addressOptions.addressType} type={props.type} currency={props.currency} onContinue={(obj) => onContinue(obj)} onTheGoObj={onTheGoObj} />}
     </>
 }
 
