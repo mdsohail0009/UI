@@ -260,7 +260,7 @@ class AuditLogs extends Component {
                 <Col xs={24} sm={24} md={3} className="px-8">
                   <Button
                     type="primary"
-                    className="primary-btn px-24 search-btn ant-btn-lg custom-btn prime mt-16 mb-8"
+                    className="primary-btn px-24 search-btn ant-btn-lg prime mt-16 mb-8 ant-btn pop-btn"
                     htmlType="submit"
                     onClick={this.handleSearch}
                   ><Translate content="search" />
