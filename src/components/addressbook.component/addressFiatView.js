@@ -40,7 +40,7 @@ const AddressFiatView = (props) => {
 		setIsLoading(false)
 	};
 	const backToAddressBook = () => {
-		props?.history?.push("/userprofile/5/fiat");
+		props?.history?.push("/addressbook");
 		props?.dispatch(addressTabUpdate(true));
 		
 	};

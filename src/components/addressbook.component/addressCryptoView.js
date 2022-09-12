@@ -40,8 +40,8 @@ const AddressCryptoView = (props) => {
 		setIsLoading(false)
 	};
 	const backToAddressBook = () => {
-		props?.history?.push("/userprofile/5");
-		props?.dispatch(addressTabUpdate(false))
+		props?.history?.push("/addressbook");
+		props?.dispatch(addressTabUpdate(false));
 	};
 
 
@@ -80,10 +80,10 @@ const AddressCryptoView = (props) => {
 												<div>
 													<label className="kpi-label">Name</label>
 													<div className=" kpi-val">
-														{cryptoAddress?.fullName === " " ||
-																		cryptoAddress?.fullName === null
+														{cryptoAddress?.beneficiaryName === " " ||
+																		cryptoAddress?.beneficiaryName === null
 																		? "-"
-																		: cryptoAddress?.fullName}
+																		: cryptoAddress?.beneficiaryName}
 													</div>
 												</div>
 											</Col>
@@ -104,10 +104,10 @@ const AddressCryptoView = (props) => {
 												<div>
 													<label className="kpi-label">Phone Number</label>
 													{ <div className=" kpi-val">
-													{cryptoAddress?.phoneNumber === " " ||
-																		cryptoAddress?.phoneNumber === null
+													{cryptoAddress?.phoneNo === " " ||
+																		cryptoAddress?.phoneNo === null
 																		? "-"
-																		: cryptoAddress?.phoneNumber}
+																		: cryptoAddress?.phoneNo}
 													
 													</div> }
 												</div>
