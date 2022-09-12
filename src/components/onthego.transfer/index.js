@@ -212,9 +212,9 @@ class OnthegoFundTransfer extends Component {
         const { filterObj, pastPayees, payeesLoading,isVarificationLoader,isVerificationEnable } = this.state;
         const steps = {
             enteramount: <>
-                <div className="mb-16 text-left">
+                <div className="mb-16" style={{textAlign:'center'}}>
                     <text Paragraph
-                        className='text-white fs-30 fw-600 px-4 '>Transfer funds</text>
+                        className='text-white fs-30 fw-600 px-4 '>Transfer Funds</text>
                 </div>
                 <Spin spinning={isVarificationLoader}>
                 <Form
@@ -325,9 +325,9 @@ class OnthegoFundTransfer extends Component {
                 </Form></Spin></>,
             addressselection: <React.Fragment>
                 {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
-                <div className="mb-16 text-left">
+                <div className="mb-16" style={{textAlign:'center'}}>
                     <text Paragraph
-                        className='text-white fs-30 fw-600 px-4 '>Who are you sending money to?</text>
+                        className='text-white fs-30 fw-600 px-4 ' >Who are you sending money to?</text>
                 </div>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 

@@ -184,7 +184,7 @@ class BusinessTransfer extends Component {
                         <RecipientAddress />
                     </Row>
 
-                    <Paragraph className="mb-8  text-white fw-500 mt-16" style={{ fontSize: 18 }}>Bank Details</Paragraph>
+                    <Paragraph className="mb-8  text-white fw-500" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                     {/* <Divider /> */}
                     <DomesticTransfer type={this.props.type} />
                     <Paragraph className="mb-8 fs-14 text-white fw-500 mt-16">Please upload supporting docs for transaction*</Paragraph>

@@ -224,8 +224,8 @@ class OthersBusiness extends Component {
                         <RecipientAddress />
                     </Row>
 
-                    <Paragraph className="mb-8  text-white fw-500 mt-16" style={{ fontSize: 18 }}>Bank Details</Paragraph>
-                    <Divider />
+                    <Paragraph className="mb-8  text-white fw-500" style={{ fontSize: 18 }}>Bank Details</Paragraph>
+                    {/* <Divider /> */}
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
