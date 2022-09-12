@@ -225,7 +225,8 @@ class BusinessTransfer extends Component {
                             className="pop-btn mb-36"
                             style={{ minWidth: 150 }}
                             loading={this.state.isBtnLoading}>
-                            Continue
+                            {this.props.type === "manual" && "Save"}
+                            {this.props.type !== "manual" && "Continue"}
                         </Button>
                         {/* </Col>
                         </Row> */}
@@ -349,7 +350,8 @@ class BusinessTransfer extends Component {
                             className="pop-btn mb-36"
                             style={{ minWidth: 150 }}
                             loading={this.state.isBtnLoading}>
-                            Continue
+                            {this.props.type === "manual" && "Save"}
+                            {this.props.type !== "manual" && "Continue"}
                         </Button>
                         {/* </Col>
                         </Row> */}

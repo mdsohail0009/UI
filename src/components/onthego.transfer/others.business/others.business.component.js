@@ -38,7 +38,9 @@ class OthersBusiness extends Component {
                 const accountDetails = data.payeeAccountModels[0];
                 data = { ...data, ...accountDetails,line1:data.line1,line2:data.line2,line3:data.line3,bankAddress1:accountDetails.line1,bankAddress2:accountDetails.line2 };
                 delete data["documents"];
-                // this.handleIbanChange({ target: { value: data?.iban } });
+                if (data?.iban) {
+                    this.handleIbanChange({ target: { value: data?.iban } });
+                }
             }
             const ibanDetails=response.data?.payeeAccountModels[0]||{}
             this.setState({ ...this.state, errorMessage: null, details: data,ibanDetails }, () => {
@@ -366,7 +368,9 @@ class OthersBusiness extends Component {
                                     style={{ minWidth: 150 }}
                                     disabled={this.state.ibanDetailsLoading}
                                     loading={this.state.isBtnLoading} >
-                                    Continue
+                            {this.props.type === "manual" && "Save"}
+                            {this.props.type !== "manual" && "Continue"}
+                                    
                                 </Button>
                             {/* </Col>
                         </Row> */}

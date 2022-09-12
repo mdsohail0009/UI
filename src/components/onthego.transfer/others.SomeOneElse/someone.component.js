@@ -35,7 +35,6 @@ const SomeoneComponent = (props) => {
             setCreatePayeeObj(createPayeeData.data);
             setMailLoader(false)
             if(props.selectedAddress?.id){
-                
                 form.current.setFieldsValue({...createPayeeData.data,payeeAccountModels:createPayeeData.data.payeeAccountModels[0]})
                 setDocuments(createPayeeData.data.payeeAccountModels[0].documents)
             }
@@ -343,6 +342,7 @@ const SomeoneComponent = (props) => {
                 <Paragraph className="mb-8  text-white fw-500 mt-16" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                 {((props.selectedAddress?.id && createPayeeObj)||!props.selectedAddress?.id ) &&<PayeeBankDetails selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} type={props.type} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />}
                 <Paragraph className="fw-300 mb-0 pb-4 ml-12 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
+                {console.log(documents)}
                 <AddressDocumnet documents={documents || null} onDocumentsChange={(docs) => {
                         setDocuments(docs)
                     }}/>
@@ -362,7 +362,8 @@ const SomeoneComponent = (props) => {
                         style={{ minWidth: 150 }}
                     // onClick={() => console.log(form.getFieldsValue())}
                     >
-                        <Translate content="continue" />
+                        {props.type === "manual" && "Save"}
+                        {props.type !== "manual" && <Translate content="continue" />}
                     </Button>
                 </div>
             </Form>
