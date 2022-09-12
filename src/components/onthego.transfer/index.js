@@ -67,7 +67,7 @@ class OnthegoFundTransfer extends Component {
                 }
             }
             if(minVerifications >= 2){
-                this.setState({...this.state, isVarificationLoader:false,isVerificationEnable:false})
+                this.setState({...this.state, isVarificationLoader:false,isVerificationEnable:true})
             }else{
                 this.setState({...this.state, isVarificationLoader:false,isVerificationEnable:false})
             }
@@ -237,6 +237,7 @@ class OnthegoFundTransfer extends Component {
                             />
                         }
                     {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
+                    {isVerificationEnable &&<>
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
@@ -321,6 +322,7 @@ class OnthegoFundTransfer extends Component {
                             </Form.Item>
                         </Col>
                     </Row>
+                    </>}
                 </Form></Spin></>,
             addressselection: <React.Fragment>
                 {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}

@@ -28,6 +28,7 @@ const getAuthenticator = (Code, customerId) => {
 	);
 };
 const getVerificationFields = (customerId) => {
+	debugger
 	return apiClient.get(
 		ApiControllers.master + `Verificationfields/${customerId}`
 	);
