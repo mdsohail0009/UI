@@ -218,7 +218,7 @@ border-radius: 5px;}
 .side-drawer .ant-drawer-header,.side-drawer-full .ant-drawer-header, .crypto-list-tabs .ant-tabs-nav::before{border: none;}
 .side-drawer-header.custom-drawer-header{padding: 30px 46px 30px 0px !important;}
 .side-drawer-full .ant-drawer-body{padding-top: 0 !important;}
-.side-drawer-full .side-drawer-header{font-size: 22px;font-weight: 400;}
+.side-drawer-full .side-drawer-header{font-size: 24px;font-weight: 400;}
 .buysell-toggle{border-radius: 20px; background: var(--bgDarkGrey); padding: 10px;display: inline-block;margin: 0 auto 50px}
 .buysell-toggle .ant-radio-button-wrapper{width: auto;border-radius: 15px;border: none;background: transparent;color: var(--textYellow);text-transform: capitalize;font-weight: 600;padding: 20px 40px; line-height: 0;font-size: 16px;text-align: center;}
 .buysell-toggle .ant-radio-button{border-radius: 15px;font-size: 12px;}
@@ -908,7 +908,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
         max-height: calc(100vh - 270px);
     }
     .mobile-viewbtns .ant-form-item-control-input-content .pop-btn{margin-bottom: 0 !important;}
-
+    .custom-gridresponsive table col{width:130px;}
 
 }
 @media (max-width: 1024px){
@@ -1266,7 +1266,7 @@ input[type=number]::-webkit-outer-spin-button {
 .delete-disable[disabled]{cursor: not-allowed;}
 .payments-modal .ant-modal-footer{border: none !important;}
 .payments-modal .modal-para{margin-left: 26px !important;} 
-.excel-btn{background-color: var(--bgYellow); border-color: var(--bgYellow); border-radius: 40px;height: 42px; text-transform: uppercase;font-weight: 700; transition: 0.3s ease; color: rgba(0, 0, 0, 0.85);padding: 0 15px;}
+.excel-btn{background-color: var(--bgYellow); border-color: var(--bgYellow); border-radius: 40px;height: 42px;font-weight: 700; transition: 0.3s ease; color: rgba(0, 0, 0, 0.85);padding: 0 15px;}
 .excel-btn:hover, .excel-btn:focus, .excel-btn:active{background-color: var(--bgDarkYellow);color: var(--textDark);border-color: var(--bgYellow);}
 .pay-docs{white-space: nowrap;max-width: 250px !important;overflow: hidden; text-overflow: ellipsis; width: 65px;word-break: inherit; display: inline-block; vertical-align: bottom;}
 .pay-account{white-space: nowrap;max-width: 250px !important;overflow: hidden; text-overflow: ellipsis; width: 100px;word-break: inherit; display: inline-block; vertical-align: bottom;}
@@ -1421,3 +1421,5 @@ cust-address{margin-bottom: 0px !important;}
 .custom-radio-btn.buysell-toggle.crypto-toggle .ant-radio-button-wrapper{font-size: 16px;font-weight: 300;}
 .buy.bg .ant-list-item-meta-avatar{background-color: var(--bgDarkGreen);}
 .sell.bg .ant-list-item-meta-avatar{background-color: var(--bgDarkRed);}
+.custom-gridresponsive table thead{font-size: 16px;font-weight: 500;}
+.custom-gridresponsive table td{font-size: 14px;font-weight: 400;}
