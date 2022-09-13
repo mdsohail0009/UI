@@ -37,7 +37,7 @@ const WithdrawCrypto = ({ dispatch, userProfile, sendReceive }) => {
                     
                 </span> 
                 
-                <Text className="fs-24 text-purewhite ml-4 mt-8">{wallet.coinFullName}</Text>
+                <Text className="fs-16 fw-600 text-purewhite ml-4 mt-8">{wallet.coinFullName}</Text>
                     </div>
                     <div>
                     <div className="crypto-amount">

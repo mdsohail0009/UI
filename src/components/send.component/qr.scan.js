@@ -122,16 +122,16 @@ class QRScan extends Component {
                 </div>}
                 <Paragraph>
                     <ul className="text-white mt-24">
-                        <li className="list-dot"><Translate className=" f-12 text-white fw-200 mt-16" content="address_hint_text" component={Text} /></li>
-                        <li className="list-dot"><Translate className="f-12 text-white fw-200 mt-16" content="address_hint_text_1" component={Text} /></li>
-                        <li className="list-dot"><Text className=" f-12 text-yellow fw-200 mt-16">Note: {this.props?.sendReceive?.depositWallet?.note} </Text></li>
+                        <li className="list-dot"><Translate className=" fs-12 text-white fw-200 mt-16" content="address_hint_text" component={Text} /></li>
+                        <li className="list-dot"><Translate className="fs-12 text-white fw-200 mt-16" content="address_hint_text_1" component={Text} /></li>
+                        <li className="list-dot"><Text className="fs-12 text-yellow fw-200 mt-16">Note: {this.props?.sendReceive?.depositWallet?.note} </Text></li>
                     </ul>
                 </Paragraph>
                 <Dropdown overlay={this.shareMenu}>
                     {/* <Button className="pop-btn mt-36" block>Share</Button> */}
                     <Button
                         style={{ borderRadius: 25, height: 50 }}
-                        className="mt-36 text-upper share-btn fw-600 fs-14" block>{apicalls.convertLocalLang('button')}</Button>
+                        className="mt-36 text-upper share-btn fw-600 fs-16" block>{apicalls.convertLocalLang('button')}</Button>
                 </Dropdown>
             </div>
         )

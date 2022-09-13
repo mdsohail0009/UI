@@ -60,7 +60,7 @@ const CryptoList = forwardRef(({ coinList, isLoading, onCoinSelected, coinType, 
                             title={<div className="wallet-title">{item[titleField || 'walletCode']}</div>}
                         />
                         <><div className="text-right coin-typo">
-                            {coinType === "swap" && item.coinBalance != null && <NumberFormat value={item.coinBalance} displayType={'text'} thousandSeparator={true} prefix={''} renderText={(value, props) => <div {...props} className="text-white-30 fw-600">{value}</div>} />}
+                            {coinType === "swap" && item.coinBalance != null && <NumberFormat value={item.coinBalance} displayType={'text'} thousandSeparator={true} prefix={''} renderText={(value, props) => <div {...props} className="text-white-30">{value}</div>} />}
                             {item.coinValueinNativeCurrency !== 0 && <NumberFormat value={coinType === "swap" ? item.coinValueinNativeCurrency : item.amountInUSD} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props} className={` ${coinType !== "swap" ? "fs-16 fw-500" : "fs-14 fw-400"} ${coinType === "swap" ? (item.coinBalance > 0 ? "text-green" : "text-red") : 'text-white'}`}>{value}</div>} />}
                             {coinType !== "swap" && <div className={item.percent_change_1h < 0 ? 'text-red fs-14' : 'text-green fs-14'}>{item.percent_change_1h} %</div>}
                         </div>

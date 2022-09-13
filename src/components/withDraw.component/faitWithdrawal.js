@@ -524,7 +524,7 @@ const FaitWithdrawal = ({ props,
                 <Translate
                   content="Beneficiary_BankDetails"
                   component={Paragraph}
-                  className="mb-8 fs-14 text-white fw-500 text-upper mt-16"
+                  className="mb-8 fs-16 text-white fw-500 text-upper mt-16"
                 />
               </div>
               <Form.Item
