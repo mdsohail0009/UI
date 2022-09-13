@@ -26,7 +26,16 @@ const Verifications = (props) => {
     useEffect(() => {
         getVerifyData();
     }, []);
-
+    useEffect(() => {
+        if(phoneSeconds==0 && phone.btnName=='code_Sent'){
+            setPhone({ ...phone, btnName: 'resendotp', code: '' });
+        }
+    }, [phoneSeconds]);
+    useEffect(() => {
+        if(emailSeconds==0 && email.btnName=='code_Sent'){
+            setEmail({ ...email, btnName: 'resendotp', code: '' });
+        }
+    }, [emailSeconds]);
     let timeInterval;
     let count = 30;
     const startphoneTimer = (secondsType) => {
