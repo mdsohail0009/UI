@@ -106,7 +106,10 @@ class OnthegoFundTransfer extends Component {
         if(_amt>0){
         this.setState({ ...this.state, amount: _amt }, () => this.validateAmt(_amt, "newtransfer", values, "newtransferLoader"))
         }else{
-            this.setState({ ...this.state, errorMessage:'Amount must be greater than zero'});
+            if(!_amt){
+                this.setState({ ...this.state, errorMessage:''});
+            }else{
+            this.setState({ ...this.state, errorMessage:'Amount must be greater than zero'});}
         }
     }
     handleSearch = ({ target: { value: val } }) => {
@@ -323,7 +326,7 @@ class OnthegoFundTransfer extends Component {
                                             thousandSeparator={","}
                                             addonBefore={this.state.selectedCurrency}
                                             onValueChange={() => {
-                                                this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount })
+                                                this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount,errorMessage:'' })
                                             }}
                                         />
                                     </Form.Item>
@@ -341,7 +344,7 @@ class OnthegoFundTransfer extends Component {
                                             style={{ minWidth: 300 }}
                                             loading={this.state.newtransferLoader}
                                             disabled={this.state.addressLoader}
-                                        >
+                                       >
                                             New Transfer
                                         </Button>
                                     </Form.Item>
@@ -367,7 +370,11 @@ class OnthegoFundTransfer extends Component {
                                                         });
                                                 })
                                             }else{
-                                                this.setState({ ...this.state, errorMessage:'Amount must be greater than zero'})
+                                                if(!_amt){
+                                                    this.setState({ ...this.state, errorMessage:''})
+                                                }else{
+                                                    this.setState({ ...this.state, errorMessage:'Amount must be greater than zero'})
+                                                }
                                             }
                                             }}
                                         >
@@ -407,7 +414,7 @@ class OnthegoFundTransfer extends Component {
 
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                         {(filterObj.length > 0) && filterObj?.map((item, idx) =>
-                            <Row className="fund-border c-pointer " onClick={async () => {
+                            <>{idx<5&&<Row className="fund-border c-pointer " onClick={async () => {
                                 if (!["myself", "1stparty", 'ownbusiness'].includes(item.addressType?.toLowerCase())) {
                                     this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item, codeDetails: { ...this.state.codeDetails, ...item } }, () => this.chnageStep("reasonfortransfer"));
                                 } else {
@@ -432,7 +439,7 @@ class OnthegoFundTransfer extends Component {
                                 <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white"></span>
                                 </Col>
-                            </Row>
+                            </Row>}</>
                         )}
                         {(!filterObj.length > 0) && <div className="success-pop text-center" style={{ marginTop: '20px' }}>
                             <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
