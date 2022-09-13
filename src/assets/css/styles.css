@@ -220,7 +220,7 @@ border-radius: 5px;}
 .side-drawer-full .ant-drawer-body{padding-top: 0 !important;}
 .side-drawer-full .side-drawer-header{font-size: 22px;font-weight: 400;}
 .buysell-toggle{border-radius: 20px; background: var(--bgDarkGrey); padding: 10px;display: inline-block;margin: 0 auto 50px}
-.buysell-toggle .ant-radio-button-wrapper{width: auto;border-radius: 15px;border: none;background: transparent;color: var(--textYellow);text-transform: capitalize;font-weight: 600;padding: 20px 40px; line-height: 0;font-size: 14px;text-align: center;}
+.buysell-toggle .ant-radio-button-wrapper{width: auto;border-radius: 15px;border: none;background: transparent;color: var(--textYellow);text-transform: capitalize;font-weight: 600;padding: 20px 40px; line-height: 0;font-size: 16px;text-align: center;}
 .buysell-toggle .ant-radio-button{border-radius: 15px;font-size: 12px;}
 .buysell-toggle .ant-radio-button-checked{background: var(--bgYellow);border-left: none;}
 .buysell-toggle .ant-radio-button-wrapper-checked{color: var(--textDark) !important; z-index: 0;}
@@ -898,7 +898,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .customaudit-select{margin-bottom: 16px;}
     .footer-links{text-align: center;}
     .enter-val-container input{font-size: 16px !important;padding: 0px 5px !important;}
-    .enter-val-container.swap-com input{width: 70%;}
+    .enter-val-container.swap-com input{width: 67%;}
     .ant-tabs > .ant-tabs-nav .ant-tabs-nav-more{display: none;}
     .ant-popover-inner-content div:hover{padding: 8px 22px !important;display: flex;align-items: center;}
     .tlv-logo{height:46px;padding-left:0;}
