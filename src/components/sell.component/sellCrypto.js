@@ -50,9 +50,9 @@ class SellToggle extends Component {
                         </span> 
                         
                        
-                        <Text className="fs-24 textc-white crypto-name ml-4 mt-8">{coin.coinFullName}</Text>
+                        <Text className="fs-16 textc-white crypto-name ml-4 mt-8 fw-600">{coin.coinFullName}</Text>
                         </div>
-                            <div className="fs-16 textc-white fw-200 crypto-amount ">
+                            <div className="fs-16 textc-white crypto-amount ">
                                 <Currency prefix={""} defaultValue={coin.coinBalance} suffixText={coin.coin} />
                                 <Currency prefix={"$ "} defaultValue={coin.coinValueinNativeCurrency} suffixText="" />
                             </div>

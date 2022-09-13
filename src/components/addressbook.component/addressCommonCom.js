@@ -621,9 +621,9 @@ const AddressCommonCom = (props) => {
                         setAddressOptions({ ...addressOptions, addressType: value.target.value })
                       }}
                     >
-                      <Radio.Button value="myself" className="custom-btn sec">{props.userConfig?.isBusiness ? "Own Business" : "My Self"}</Radio.Button>
-                      <Radio.Button value="someoneelse" className="custom-btn sec">SomeOne Else</Radio.Button>
-                      <Radio.Button value="business" className="custom-btn sec">Business</Radio.Button>
+                      <Radio.Button value="myself" className="custom-btn sec mt-8">{props.userConfig?.isBusiness ? "Own Business" : "My Self"}</Radio.Button>
+                      <Radio.Button value="someoneelse" className="custom-btn sec mt-8">SomeOne Else</Radio.Button>
+                      <Radio.Button value="business" className="custom-btn sec mt-8">Business</Radio.Button>
                     </Radio.Group>
                   </Col>
                 </Row>

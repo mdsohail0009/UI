@@ -133,7 +133,6 @@ class Wallets extends Component {
                                 <Translate content="withdraw" onClick={() => { this.setState({ ...this.setState, showFuntransfer: true,selectedCurrency:item.walletCode }) }} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} />
                                 {/* <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
                                 <Translate content="withdraw" onClick={() => this.showSendReceiveDrawer(2, item.walletCode)} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} /> */}
-                            </div>
                             <Dropdown 
                             overlay={this.menuBar(item)}
                              trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
@@ -144,6 +143,8 @@ class Wallets extends Component {
                         </Space>
                       </a>
                     </Dropdown>
+                            </div>
+                           
                         </List.Item>}
                 />
                 <SuissebaseFiat showDrawer={this.state.sendReceiveDrawer} valNum={this.state.valNum} onClose={() => this.closeDrawer()} />

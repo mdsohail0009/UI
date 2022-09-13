@@ -197,7 +197,7 @@ class OnthegoFundTransfer extends Component {
                 >
                     {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
                     <Row gutter={[4, 4]}>
-                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
                             <Form.Item
                                 className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label fund-transfer-input"
                                 name="amount"
@@ -228,16 +228,14 @@ class OnthegoFundTransfer extends Component {
                             </Form.Item>
                         </Col>
                     </Row>
-                    <Row gutter={[16, 16]}>
-
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                            <br />
+                    <Row gutter={[4, 4]} className="mt-16">
+                        <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns">               
                             <Form.Item className="text-center">
                                 <Button
                                     htmlType="submit"
                                     size="large"
                                     className="pop-btn mb-36"
-                                    style={{ minWidth: 300 }}
+                                    style={{ width: '100%' }}
                                     loading={this.state.newtransferLoader}
                                     disabled={this.state.addressLoader}
                                 >
@@ -245,14 +243,13 @@ class OnthegoFundTransfer extends Component {
                                 </Button>
                             </Form.Item>
                         </Col>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                            <br />
+                        <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
                             <Form.Item className="text-center">
                                 <Button
                                     htmlType="button"
                                     size="large"
                                     className="pop-btn mb-36"
-                                    style={{ minWidth: 300 }}
+                                    style={{ width: '100% '}}
                                     loading={this.state.addressLoader}
                                     disabled={this.state.newtransferLoader}
                                     onClick={() => {

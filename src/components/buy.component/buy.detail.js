@@ -128,11 +128,11 @@ class SelectCrypto extends Component {
                             <Image preview={false} src={impageWhitePath}/>
                             <Text className="crypto-percent text-purewhite">{percentage}<sup className="percent text-purewhite">%</sup></Text>
                         </span>
-                        <Text className="fs-24 text-purewhite crypto-name ml-4">{coinFullName}</Text>
+                        <Text className="fs-16 text-purewhite crypto-name ml-4 fw-600">{coinFullName}</Text>
                         </div>
                         <div className="crypto-details">
                             
-                            <div className="fs-16 text-purewhite fw-200 crypto-amount">
+                            <div className="fs-16 text-purewhite crypto-amount">
                                 <Currency prefix={""} defaultValue={coinBalance} suffixText={coin} />
                                 <NumberFormat value={coinFullName} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props}>{value}</div>} />
                             </div>
@@ -151,12 +151,12 @@ class SelectCrypto extends Component {
                         }}
                         isConvertionLoad={isConvertionLoading} />
 
-                    <Translate content="thousandKText" component={Paragraph} className="text-center f-16 text-yellow fw-400" />
-                    <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50 pt-16" />
+                    <Translate content="thousandKText" component={Paragraph} className="text-center fs-14 text-yellow fw-400" />
+                    <Translate content="find_with_wallet" component={Paragraph} className="text-upper mb-4 text-white-50 pt-16" />
                     <WalletList onWalletSelect={(e) => this.handleWalletSelection(e)} />
                     {/* <div className="fs-12 text-white-30 text-center mt-24"><Translate content="change_10Sec_amount" component={Paragraph} className="fs-12 text-white-30 text-center mt-24" /></div> */}
                     <div className="mt-24">
-                        <SuisseBtn title="PreviewBuy" onRefresh={() => this.refresh()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
+                        <SuisseBtn title="PreviewBuy" onRefresh={() => this.refresh()} className="pop-btn fs-16" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
                     </div>
                 </div>
 

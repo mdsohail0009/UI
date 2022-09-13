@@ -220,7 +220,7 @@ border-radius: 5px;}
 .side-drawer-full .ant-drawer-body{padding-top: 0 !important;}
 .side-drawer-full .side-drawer-header{font-size: 22px;font-weight: 400;}
 .buysell-toggle{border-radius: 20px; background: var(--bgDarkGrey); padding: 10px;display: inline-block;margin: 0 auto 50px}
-.buysell-toggle .ant-radio-button-wrapper{width: auto;border-radius: 15px;border: none;background: transparent;color: var(--textYellow);text-transform: capitalize;font-weight: 600;padding: 20px 40px; line-height: 0;font-size: 14px;text-align: center;}
+.buysell-toggle .ant-radio-button-wrapper{width: auto;border-radius: 15px;border: none;background: transparent;color: var(--textYellow);text-transform: capitalize;font-weight: 600;padding: 20px 40px; line-height: 0;font-size: 16px;text-align: center;}
 .buysell-toggle .ant-radio-button{border-radius: 15px;font-size: 12px;}
 .buysell-toggle .ant-radio-button-checked{background: var(--bgYellow);border-left: none;}
 .buysell-toggle .ant-radio-button-wrapper-checked{color: var(--textDark) !important; z-index: 0;}
@@ -826,6 +826,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .tlv-header .sideropen {background: var(--bgGloom) !important;}
     .tlv-header .mobile-logo {padding-left: 0px;}
     /* .enter-val-container.swap-com input{width: 65%;} */
+    .custom-radio-btn.buysell-toggle.crypto-toggle{text-align: left !important;}
 }
 @media (min-width : 414px) {
     .footer-links a{margin-right: 16px;}
@@ -897,7 +898,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .customaudit-select{margin-bottom: 16px;}
     .footer-links{text-align: center;}
     .enter-val-container input{font-size: 16px !important;padding: 0px 5px !important;}
-    .enter-val-container.swap-com input{width: 70%;}
+    .enter-val-container.swap-com input{width: 67%;}
     .ant-tabs > .ant-tabs-nav .ant-tabs-nav-more{display: none;}
     .ant-popover-inner-content div:hover{padding: 8px 22px !important;display: flex;align-items: center;}
     .tlv-logo{height:46px;padding-left:0;}
@@ -906,6 +907,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .dep-withdraw,.sellcrypto-container {
         max-height: calc(100vh - 270px);
     }
+    .mobile-viewbtns .ant-form-item-control-input-content .pop-btn{margin-bottom: 0 !important;}
 
 
 }
@@ -920,6 +922,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .custom-gridresponsive .k-pager-wrap .k-link {font: small-caption;font-size: 10px;}
     .custom-gridresponsive .k-pager-nav{min-width: calc(1.4285714286em + 3px);height: calc(1.4285714286em + 3px) }
 	.tlv-header .list-item.ant-menu-item .ant-menu-title-content{padding: 6px 0px;}
+    .mobile-viewbtns .ant-form-item-control-input-content .pop-btn{margin-bottom: 0 !important;margin-top: 0 !important;}
 }
 @media (max-width: 991px){
     .user-profile{width:42px;height: 42px;}
