@@ -71,11 +71,20 @@ class PayeeBankDetails extends Component {
                                         return Promise.reject(apicalls.convertLocalLang("is_required"));
                                     } else if (!this.state.isValidIban) {
                                         return Promise.reject("Please input a valid IBAN");
+                                    } else if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid  IBAN Number"
+                                        );
                                     } else {
                                         return Promise.resolve();
                                     }
                                 },
-                            },
+                            },{
+                                validator: validateContentRule
+                            }
                         ]}
                         onChange={(e) => {
                             this.handleIban(e.target.value)
