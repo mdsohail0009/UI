@@ -221,7 +221,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         <h2 style={{ fontSize: 18, color: "white" }} className="mt-36 text-captz px-4">Bank details</h2>
         {currency == 'EUR' && isBusiness && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
             <Form.Item
-                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-16"
+                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
                 name="iban"
                 required
                 rules={[
@@ -248,7 +248,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         <Row gutter={[4, 4]}>
             {currency == 'USD' && <> <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
-                    className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label"
+                    className="fw-300 mb-8 px-4 text-white-50  custom-forminput custom-label pt-8"
                     name="accountNumber"
                     label='Account Number' required
                     rules={[
@@ -267,7 +267,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
 
                 {currency == 'USD' && addressOptions.tabType == 'international'&&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-16"
+                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
                         name="swiftRouteBICNumber"
                         label={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC code' : 'ABA Routing Code'}
                         required
@@ -285,7 +285,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 </Col>}
                 {!(currency == 'USD' && addressOptions.tabType == 'international')&&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-16"
+                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
                         name="abaRoutingCode"
                         label={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC code' : 'ABA Routing Code'}
                         required
@@ -303,7 +303,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 </Col>}
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-16"
+                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
                         name="bankName"
                         label='Bank Name'
                         required
@@ -323,7 +323,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
 
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-16"
+                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
                         name="line1"
                         label='Bank Address 1'
                         required
@@ -341,7 +341,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 </Col>
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-16"
+                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
                         name="line2"
                         label='Bank Address 2'
                     >

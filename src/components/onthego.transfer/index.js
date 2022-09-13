@@ -228,7 +228,7 @@ class OnthegoFundTransfer extends Component {
                             </Form.Item>
                         </Col>
                     </Row>
-                    <Row gutter={[4, 4]}>
+                    <Row gutter={[4, 4]} className="mt-16">
                         <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns">               
                             <Form.Item className="text-center">
                                 <Button
