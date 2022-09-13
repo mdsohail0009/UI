@@ -243,11 +243,20 @@ class OthersBusiness extends Component {
                                                 return Promise.reject(apiCalls.convertLocalLang("is_required"));
                                             } else if (!this.state.iBanValid) {
                                                 return Promise.reject("Please input a valid IBAN");
-                                            } else {
+                                            } else if (
+                                                value &&
+                                                !/^[A-Za-z0-9]+$/.test(value)
+                                            ) {
+                                                return Promise.reject(
+                                                    "Invalid  IBAN Number"
+                                                );
+                                            }else {
                                                 return Promise.resolve();
                                             }
                                         },
-                                    },
+                                    },{
+                                        validator: validateContentRule
+                                    }
                                 ]}
                             >
                                 <Input
