@@ -25,7 +25,20 @@ class InternationalTransfer extends Component {
                         },
                         {
                             validator: validateContentRule,
-                        },
+                        },{
+                            validator: (_, value) => {
+                                if (
+                                    value &&
+                                    !/^[A-Za-z0-9]+$/.test(value)
+                                ) {
+                                    return Promise.reject(
+                                        "Invalid Account Number"
+                                    );
+                                }else {
+                                    return Promise.resolve();
+                                }
+                            },
+                        }
                     ]}
                 >
                     <Input
@@ -52,7 +65,20 @@ class InternationalTransfer extends Component {
                         },
                         {
                             validator: validateContentRule,
-                        },
+                        },{
+                            validator: (_, value) => {
+                                if (
+                                    value &&
+                                    !/^[A-Za-z0-9]+$/.test(value)
+                                ) {
+                                    return Promise.reject(
+                                        "Invalid Swift / BIC Code"
+                                    );
+                                }else {
+                                    return Promise.resolve();
+                                }
+                            },
+                        }
                     ]}
                 >
                     <Input
@@ -79,7 +105,20 @@ class InternationalTransfer extends Component {
                         },
                         {
                             validator: validateContentRule,
-                        },
+                        },{
+                            validator: (_, value) => {
+                                if (
+                                    value &&
+                                    !/^[A-Za-z0-9]+$/.test(value)
+                                ) {
+                                    return Promise.reject(
+                                        "Invalid Bank Name"
+                                    );
+                                }else {
+                                    return Promise.resolve();
+                                }
+                            },
+                        }
                     ]}
                 >
                     <Input
