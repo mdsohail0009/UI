@@ -85,6 +85,7 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
         setTheme(!theme)
         switcher({ theme: theme ? themes.DRT : themes.LHT });
         settingsObj.Theme = !theme ? 'Light Theme' : 'Dark Theme';
+        settingsObj.Language = settingsObj.Language?.toLowerCase();
         settingsObj.customerId = customer?.id;
         settingsObj.info = JSON.stringify(trackAuditLogData)
         let res = await saveSettingsData(settingsObj);
