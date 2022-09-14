@@ -383,7 +383,41 @@ class PayeeBankDetails extends Component {
                         />
                     </Form.Item>
                 </Col>
-                
+                {this.props.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-forminput custom-label mb-0"
+                        name={"reasonOfTransfer"}
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message: apicalls.convertLocalLang("is_required"),
+                            },
+                            {
+                                whitespace: true,
+                                message: apicalls.convertLocalLang("is_required"),
+                            },
+                            {
+                                validator: validateContentRule,
+                            },
+                        ]}
+                        label={
+                            <Translate
+                                content="reasiontotransfor"
+                                component={Form.label}
+                            />
+                        }
+                    >
+                        <TextArea
+                            placeholder={apicalls.convertLocalLang(
+                                "reasiontotransfor"
+                            )}
+                            className="cust-input cust-text-area address-book-cust"
+                            autoSize={{ minRows: 1, maxRows: 2 }}
+                            maxLength={100}
+                        ></TextArea>
+                    </Form.Item>
+                </Col>}
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
@@ -442,41 +476,7 @@ class PayeeBankDetails extends Component {
                     </Form.Item>
                 </Col>
                 
-                {this.props.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Form.Item
-                        className="custom-forminput custom-label mb-0"
-                        name={"reasonOfTransfer"}
-                        required
-                        rules={[
-                            {
-                                required: true,
-                                message: apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                whitespace: true,
-                                message: apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                validator: validateContentRule,
-                            },
-                        ]}
-                        label={
-                            <Translate
-                                content="reasiontotransfor"
-                                component={Form.label}
-                            />
-                        }
-                    >
-                        <TextArea
-                            placeholder={apicalls.convertLocalLang(
-                                "reasiontotransfor"
-                            )}
-                            className="cust-input cust-text-area address-book-cust"
-                            autoSize={{ minRows: 1, maxRows: 2 }}
-                            maxLength={100}
-                        ></TextArea>
-                    </Form.Item>
-                </Col>}
+                
             </>
         }
         return _templates[transferType]
