@@ -306,7 +306,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     />
             </Form.Item>
         </Col>}
-        <Row gutter={[4, 4]}>
+        <Row gutter={[8, 8]}>
             {currency == 'USD' && <> <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
                     className="fw-300 mb-8 px-4 text-white-50  custom-forminput custom-label pt-8"
@@ -432,9 +432,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         />
                     </Form.Item>
                 </Col>
-
-
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
                         name="line1"
@@ -454,7 +452,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         ></TextArea>
                     </Form.Item>
                 </Col>
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
                         name="line2"
@@ -467,7 +465,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             maxLength={100}
                         ></TextArea>
                     </Form.Item>
-                </Col></>}
+                </Col>
+                </>}
         </Row>
         {currency == 'EUR' && <div className="box basic-info alert-info-custom mt-16">
             <Spin spinning={ibanLoading}>

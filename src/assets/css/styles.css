@@ -655,7 +655,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .upload{border-radius: 30px !important;background-color: var(--bgDark) !important;border-color: var(--borderGrey) !important;}
 .upload .ant-upload{padding: 30px 0 !important;}
 .upload .ant-upload-text{font-weight: 600;color: var(--textWhite30) !important;}
-.docfile{background-color:var(--bgDark);border-radius: 20px;padding: 16px;display: flex;align-items: center;margin: 12px 16px 0 0;flex: 1 0 240px;width: 200px;}
+.docfile{background-color:var(--bgDark);border-radius: 20px;padding: 16px;display: flex;align-items: center;margin: 12px 16px 0 0;flex: 1 0 240px;}
 .docdetails{flex: 1; margin-right: 16px;}
 .docdetails .docname{font-weight: 700;color: var(--textWhite30);text-transform: uppercase; line-height: 16px;max-width: 150px !important;}
 .docfile-container{display: flex; flex-wrap: wrap;}
@@ -1420,3 +1420,5 @@ cust-address{margin-bottom: 0px !important;}
 .cust-tabs-fait .ant-tabs-tab + .ant-tabs-tab{margin: 0 0 0 90px;}
 .custom-placeholder .cust-select .ant-select-selection-placeholder{color:#fff !important;}
 .text-red-colr{color:#ff5e43 }
+.custom-label .ant-form-item-label{margin-bottom: 0 !important;padding-bottom:4px !important ;}
+.ant-form-item-label > label{height: 24px !important;}

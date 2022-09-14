@@ -16,7 +16,7 @@ class RecipientAddress extends Component {
 
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
+                    className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                     name="line1"
                     required
                     rules={[
@@ -44,7 +44,7 @@ class RecipientAddress extends Component {
             </Col>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
+                    className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                     name="line2"
                     rules={[
 
@@ -64,7 +64,7 @@ class RecipientAddress extends Component {
             </Col>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
+                    className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                     name="line3"
                     rules={[
                         {
@@ -128,7 +128,7 @@ class RecipientDetails extends Component {
             </Col>
             <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
-                    className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
+                    className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                     name="firstName"
                     required
                     rules={[
@@ -156,7 +156,7 @@ class RecipientDetails extends Component {
             </Col>
             <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
-                    className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
+                    className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                     name="lastName"
                     required
                     rules={[
