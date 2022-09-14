@@ -507,7 +507,7 @@ class OnthegoFundTransfer extends Component {
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
                                 name="reasionOfTransfer"
-                                label={"Reason of Transfer"}
+                                label={"Reason Of Transfer"}
                                 required
                                 rules={[
                                     {
@@ -519,7 +519,7 @@ class OnthegoFundTransfer extends Component {
                             >
                                 <Input
                                     className="cust-input "
-                                    placeholder={"Reason of Transfer"}
+                                    placeholder={"Reason Of Transfer"}
                                     maxLength="500"
                                 />
                             </Form.Item>
@@ -530,7 +530,7 @@ class OnthegoFundTransfer extends Component {
                             let { documents } = this.state.codeDetails;
                             documents = docs;
                             this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, documents } })
-                        }} title={"Upload supporting documents for transaction"} />
+                        }} title={"Please upload supporting documents for transaction"} />
                     </React.Fragment>
                     {/* {this.state.selectedCurrency === "USD" && <Tabs className="cust-tabs-fait" activeKey={this.state.selectedTab} onChange={(key) => this.setState({ ...this.state, selectedTab: key })}>
                         <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"}>
