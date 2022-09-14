@@ -111,7 +111,7 @@ class Wallets extends Component {
 
         return (
             <>
-                <Translate content="suissebase_title" component={Title} className="fs-24 fw-600 text-white px-4 mb-16 mt-4" />
+                <Translate content="suissebase_title" component={Title} className="fs-24 fw-600 text-white mb-16 mt-4" />
                 {/* <div style={{ display: "flex",alignItems:"baseline" }}>
 
                 <Translate content="suissebase_subtitle" component={Paragraph} className="text-white-30 fs-16 mb-16 px-4" />
@@ -161,7 +161,7 @@ class Wallets extends Component {
                     title={[<div className="side-drawer-header">
                         {/* {this.renderTitle()} */}
                         <div className="">
-                            {/* <Title className="basicinfo">Fund Transfer</Title> */}
+                            {/* <Title className="fs-24 mb-0 fw-600 basicinfo">Fund Transfer</Title> */}
                         </div>
                         <span onClick={() => this.setState({ ...this.state, showFuntransfer: false })} className="icon md close-white c-pointer" />
                     </div>]}

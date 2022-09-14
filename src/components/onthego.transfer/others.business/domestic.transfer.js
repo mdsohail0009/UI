@@ -1,11 +1,11 @@
 import { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
-import { Form, Row, Col, Input } from "antd";
+import {Form,Row,Col,Input} from "antd";
 import { validateContentRule } from "../../../utils/custom.validator";
-const { TextArea } = Input;
+const {TextArea}=Input;
 class DomesticTransfer extends Component {
     render() {
-        return <Row gutter={[12, 12]}>
+        return <Row gutter={[16, 16]}>
             <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
                     className="fw-300 mb-4 text-white-50 pt-8 custom-forminput custom-label"
@@ -24,21 +24,21 @@ class DomesticTransfer extends Component {
                         {
                             validator: validateContentRule,
                         },{
-                            validator: (_, value) => {
-                                if (
-                                    value &&
-                                    !/^[A-Za-z0-9]+$/.test(value)
-                                ) {
-                                    return Promise.reject(
-                                        "Invalid Account Number"
-                                    );
-                                }else {
-                                    return Promise.resolve();
-                                }
-                            },
-                        }
-                    ]}
-                >
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid Account Number"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            }
+                        ]}
+                    >
                     <Input
                         className="cust-input"
                         placeholder={"Account Number"}
@@ -204,7 +204,7 @@ class DomesticTransfer extends Component {
                     ></TextArea>
                 </Form.Item>
             </Col>
-            {this.props.type !== "manual" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+            {this.props.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                     className="fw-300 mb-4 text-white-50 pt-8 custom-forminput custom-label"
                     name="reasonOfTransfer"

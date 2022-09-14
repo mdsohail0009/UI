@@ -1,13 +1,13 @@
 import { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
-import { Form, Row, Col, Input } from "antd";
+import {Form,Row,Col,Input} from "antd";
 import { validateContentRule } from "../../../utils/custom.validator";
-const { TextArea } = Input;
+const {TextArea}=Input;
 class InternationalTransfer extends Component {
 
 
     render() {
-        return <Row gutter={[12, 12]}>
+        return <Row gutter={[16, 16]}>
             <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
                     className="fw-300 mb-4 text-white-50 pt-8 custom-forminput custom-label"
@@ -50,7 +50,7 @@ class InternationalTransfer extends Component {
             </Col>
             <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
-                    className="fw-300 mb-4 text-white-50 pt-8 custom-forminput custom-label"
+                    className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                     name="swiftRouteBICNumber"
                     label={"Swift / BIC Code"}
                     required
@@ -90,7 +90,7 @@ class InternationalTransfer extends Component {
             </Col>
             <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
-                    className="fw-300 mb-4 text-white-50 pt-8 custom-forminput custom-label"
+                    className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                     name="bankName"
                     label={"Bank Name"}
                     required
@@ -130,7 +130,7 @@ class InternationalTransfer extends Component {
             </Col>
             {/* <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
-                    className="fw-300 mb-4 text-white-50 pt-8 custom-forminput custom-label"
+                    className="custom-forminput custom-label mb-0"
                     name="relation"
                     label={"Relationship to beneficiary"}
                     required
@@ -157,7 +157,7 @@ class InternationalTransfer extends Component {
             </Col> */}
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="fw-300 mb-4 text-white-50 pt-8 custom-forminput custom-label"
+                    className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                     name="bankAddress1"
                     required
                     rules={[
@@ -187,7 +187,7 @@ class InternationalTransfer extends Component {
             </Col>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="fw-300 mb-4 text-white-50 pt-8 custom-forminput custom-label"
+                    className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                     name="bankAddress2"
                     rules={[
                         {

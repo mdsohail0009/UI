@@ -36,6 +36,7 @@ const Verifications = (props) => {
             setEmail({ ...email, btnName: 'resendotp', code: '' });
         }
     }, [emailSeconds]);
+
     let timeInterval;
     let count = 30;
     const startphoneTimer = (secondsType) => {
@@ -68,7 +69,7 @@ const Verifications = (props) => {
     const transferDetials = async (values) => {
         // setAgreeRed(true);
     };
- 
+
     const getVerifyData = async () => {
         props.onReviewDetailsLoading(true)
         let response = await getVerificationFields(props.userConfig.id);
@@ -408,10 +409,10 @@ const Verifications = (props) => {
                         form={form}
                         onFinish={transferDetials}
                         autoComplete="off">
-                        <>
+                            <>
                         {verifyData.isPhoneVerified === true && (<>
-                            <Text className="fs-14 mb-8 text-white d-block fw-200">
-                            Phone Verification Code *
+                            <Text className="fw-300 mb-8 px-4 text-white-50 pt-16">
+                                Phone Verification Code *
                             </Text>
                             <Form.Item
                                 name="emailCode"
@@ -422,8 +423,8 @@ const Verifications = (props) => {
                                             {phone.showRuleMsg}
                                         </Text>
                                         <Text
-                                            className="fs-12 text-red-colr fw-600"
-                                            style={{ float: "right" }}>
+                                            className="fs-12 text-red fw-200"
+                                            style={{ float: "right", color: "var(--textRed)" }}>
                                             {phone.errorMsg}
                                         </Text>
                                     </div>
@@ -431,7 +432,7 @@ const Verifications = (props) => {
                                 
                             >
                                 <div className="p-relative d-flex align-center">
-                                        <Input
+                                <Input
                                             type="text"
 
                                             className="cust-input custom-add-select mb-0"
@@ -442,6 +443,7 @@ const Verifications = (props) => {
                                             disabled={phone.btnName == 'get_otp' || phone.btnName == 'verified'}
                                             onChange={(e) => handlephoneinputChange(e)}
                                         />
+                                   
                                     {/* <NumberFormat
 										customInput={Input}
 										thousandSeparator={false}
@@ -463,7 +465,7 @@ const Verifications = (props) => {
                         )}
                         {verifyData.isEmailVerification === true && (<>
                             <Text className="fs-14 mb-8 text-white d-block fw-200">
-                            Email Verification Code *
+                                Email Verification Code *
                             </Text>
                             <Form.Item
                                 name="emailCode"
@@ -474,8 +476,8 @@ const Verifications = (props) => {
                                             {email.showRuleMsg}
                                         </Text>
                                         <Text
-                                            className="fs-12 text-red-colr fw-600"
-                                            style={{ float: "right" }}>
+                                            className="fs-12 text-red fw-200"
+                                            style={{ float: "right", color: "var(--textRed)" }}>
                                             {email.errorMsg}
                                         </Text>
                                     </div>
@@ -494,6 +496,7 @@ const Verifications = (props) => {
                                             disabled={email.btnName == 'get_otp' || email.btnName == 'verified'}
                                             onChange={(e) => handleEmailinputChange(e)}
                                         />
+                                    
                                     {/* <NumberFormat
 										customInput={Input}
 										thousandSeparator={false}
@@ -514,8 +517,8 @@ const Verifications = (props) => {
                         </>
                         )}
                         {verifyData.twoFactorEnabled === true && (<>
-                            <Text className="fs-14 mb-8 text-white d-block fw-200">
-                            Authenticator Code *
+                            <Text className="mb-8 px-4 fw-300 text-white-50 pt-16">
+                                Authenticator Code *
                             </Text>
                             <Form.Item
                                 name="emailCode"
@@ -526,8 +529,8 @@ const Verifications = (props) => {
                                             {authenticator.showRuleMsg}
                                         </Text>
                                         <Text
-                                            className="fs-12 text-red-colr fw-600"
-                                            style={{ float: "right" }}>
+                                            className="fs-12 text-red fw-200"
+                                            style={{ float: "right", color: "var(--textRed)" }}>
                                             {authenticator.errorMsg}
                                         </Text>
                                     </div>
@@ -550,7 +553,7 @@ const Verifications = (props) => {
                                             style={{ width: "100%" }}
                                             disabled={authenticator.btnName == 'get_otp' || authenticator.btnName == 'verified'}
                                             onChange={(e) => handleAuthenticatorinputChange(e)}
-                                        />
+                                        />                                    
                                     {/* <NumberFormat
 										customInput={Input}
 										thousandSeparator={false}
@@ -570,7 +573,7 @@ const Verifications = (props) => {
                             </Form.Item>
                         </>
                         )}
-                         {verifyData.isLiveVerification === true && (<>
+ {verifyData.isLiveVerification === true && (<>
                             <Text className="fs-14 mb-8 text-white d-block fw-200">
                             Live Verification *
                             </Text>
@@ -618,7 +621,6 @@ const Verifications = (props) => {
                             </>}
 
                     </Form>
-                    
                 </>
             )}
 
