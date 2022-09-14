@@ -412,7 +412,11 @@ const Verifications = (props) => {
                             <>
                         {verifyData.isPhoneVerified === true && (<>
                             <Text className="fw-300 mb-8 px-4 text-white-50 pt-16">
+<<<<<<< HEAD
                                 Phone Verification Code *
+=======
+                            Phone Verification Code *
+>>>>>>> 8cd0d0ab33172e950268cba640719bdd434641d4
                             </Text>
                             <Form.Item
                                 name="emailCode"
@@ -518,7 +522,11 @@ const Verifications = (props) => {
                         )}
                         {verifyData.twoFactorEnabled === true && (<>
                             <Text className="mb-8 px-4 fw-300 text-white-50 pt-16">
+<<<<<<< HEAD
                                 Authenticator Code *
+=======
+                            Authenticator Code *
+>>>>>>> 8cd0d0ab33172e950268cba640719bdd434641d4
                             </Text>
                             <Form.Item
                                 name="emailCode"
@@ -573,8 +581,13 @@ const Verifications = (props) => {
                             </Form.Item>
                         </>
                         )}
+<<<<<<< HEAD
  {verifyData.isLiveVerification === true && (<>
                             <Text className="fs-14 mb-8 text-white d-block fw-200">
+=======
+                         {verifyData.isLiveVerification === true && (<>
+                            <Text className="mb-8 px-4 fw-300 text-white-50 pt-16">
+>>>>>>> 8cd0d0ab33172e950268cba640719bdd434641d4
                             Live Verification *
                             </Text>
                             <Form.Item

@@ -228,7 +228,7 @@ class AddressBookV2 extends Component {
                 <div ref={this.reviewScrool}></div>
                 <div className="mb-16 text-left">
                     <text Paragraph
-                        className='text-white fs-30 fw-600 px-4 '>Review Details Of Transfer</text>
+                        className='fs-24 fw-600 text-white mb-16 mt-4'>Review Details Of Transfer</text>
                 </div>
                 <Form
                     name="advanced_search"
@@ -242,7 +242,7 @@ class AddressBookV2 extends Component {
                     <Row gutter={24}>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Text className="mb-8 fs-14 text-white fw-500 text-upper mt-16">Transfer details</Text>
+                                <Text className="fw-600 text-white px-4 mb-16 mt-4 text-captz" style={{ fontSize: '18px' }}>Transfer details</Text>
 
                                 {/* <div><Link >Edit
                                 </Link>
@@ -251,47 +251,47 @@ class AddressBookV2 extends Component {
                         </Col>
                         {"  "}
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper mt-16">How much you will receive</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper mt-16  text-right">
+                            <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
+                                <Title className="fs-14 text-white fw-400 text-captz">How much you will receive</Title>
+                                <Title className="fs-14 text-white fw-500 text-upper text-right">
                                     <NumberFormat
                                         value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
                                         thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Total fees</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right"><NumberFormat
+                            <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
+                                <Title className="fs-14 text-white fw-400 text-captz">Total fees</Title>
+                                <Title className="fs-14 text-white fw-500 text-upper text-right"><NumberFormat
                                     value={`${(this.state.reviewDetails?.comission)}`}
                                     thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
                             </div>
                         </Col>
                         {/* <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Total we will convert</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right"></Title>
+                            <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
+                                <Title className="fs-14 text-white fw-400 text-captz">Total we will convert</Title>
+                                <Title className="fs-14 text-white fw-500 text-upper text-right"></Title>
                             </div>
                         </Col> */}
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Withdrawal amount</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right"><NumberFormat
+                            <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
+                                <Title className="fs-14 text-white fw-400 text-captz">Withdrawal amount</Title>
+                                <Title className="fs-14 text-white fw-500 text-upper text-right"><NumberFormat
                                     value={`${(this.state.reviewDetails?.requestedAmount)}`}
                                     thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
                             </div>
                         </Col>
                         {/* <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Description</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">Bike</Title>
+                            <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
+                                <Title className="fs-14 text-white fw-400 text-captz">Description</Title>
+                                <Title className="fs-14 text-white fw-500 text-upper text-right">Bike</Title>
                             </div>
                         </Col> */}
                     </Row>
 
                     <Row gutter={24} className=" text-white mt-36">
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24} >
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
+                            <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                 <Text className="mb-8 fs-14 text-white fw-500 text-upper mt-16">Recipient details</Text>
 
                                 {/* <div><Link >Change
@@ -300,45 +300,45 @@ class AddressBookV2 extends Component {
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper mt-16">Save Whitelist name as</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper mt-16  text-right">{this.state.reviewDetails?.favouriteName}</Title>
+                            <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
+                                <Title className="fs-14 text-white fw-400 text-captz">Save Whitelist name as</Title>
+                                <Title className="fs-14 text-white fw-500 text-upper text-right">{this.state.reviewDetails?.favouriteName}</Title>
                             </div>
                         </Col>
                         {this.state.reviewDetails?.name && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Beneficiary Name</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.name}</Title>
+                            <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
+                                <Title className="fs-14 text-white fw-400 text-captz">Beneficiary Name</Title>
+                                <Title className="fs-14 text-white fw-500 text-upper text-right">{this.state.reviewDetails?.name}</Title>
                             </div>
                         </Col>}
                         {this.state.reviewDetails?.firstName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Beneficiary Name</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.firstName}</Title>
+                            <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
+                                <Title className="fs-14 text-white fw-400 text-captz">Beneficiary Name</Title>
+                                <Title className="fs-14 text-white fw-500 text-upper text-right">{this.state.reviewDetails?.firstName}</Title>
                             </div>
                         </Col>}
                         {this.state.reviewDetails?.lastName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Beneficiary Name</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.lastName}</Title>
+                            <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
+                                <Title className="fs-14 text-white fw-400 text-captz">Beneficiary Name</Title>
+                                <Title className="fs-14 text-white fw-500 text-upper text-right">{this.state.reviewDetails?.lastName}</Title>
                             </div>
                         </Col>}
                         {this.state.reviewDetails?.iban && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">IBAN </Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.iban}</Title>
+                            <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
+                                <Title className="fs-14 text-white fw-400 text-captz">IBAN </Title>
+                                <Title className="fs-14 text-white fw-500 text-upper text-right">{this.state.reviewDetails?.iban}</Title>
                             </div>
                         </Col>}
                         {this.state.reviewDetails?.customerRemarks && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Reason for transfer </Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
+                            <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
+                                <Title className="fs-14 text-white fw-400 text-captz">Reason for transfer </Title>
+                                <Title className="fs-14 text-white fw-500 text-upper text-right">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
                             </div>
                         </Col>}
                         {this.state.reviewDetails?.bankName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400 text-upper ">Bank Name </Title>
-                                <Title className="mb-4 fs-10 text-white fw-500 text-upper  text-right">{this.state?.reviewDetails?.bankName || "-"}</Title>
+                            <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
+                                <Title className="fs-14 text-white fw-400 text-captz">Bank Name </Title>
+                                <Title className="fs-14 text-white fw-500 text-upper text-right">{this.state?.reviewDetails?.bankName || "-"}</Title>
                             </div>
                         </Col>}
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>

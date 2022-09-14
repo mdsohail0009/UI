@@ -826,6 +826,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .tlv-header .sideropen {background: var(--bgGloom) !important;}
     .tlv-header .mobile-logo {padding-left: 0px;}
     /* .enter-val-container.swap-com input{width: 65%;} */
+    .custom-radio-btn.buysell-toggle.crypto-toggle{text-align: left !important;}
 }
 @media (min-width : 414px) {
     .footer-links a{margin-right: 16px;}
@@ -920,6 +921,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .custom-gridresponsive .k-pager-wrap .k-link {font: small-caption;font-size: 10px;}
     .custom-gridresponsive .k-pager-nav{min-width: calc(1.4285714286em + 3px);height: calc(1.4285714286em + 3px) }
 	.tlv-header .list-item.ant-menu-item .ant-menu-title-content{padding: 6px 0px;}
+    .mobile-viewbtns .ant-form-item-control-input-content .pop-btn{margin-bottom: 0 !important;margin-top: 0 !important;}
 }
 @media (max-width: 991px){
     .user-profile{width:42px;height: 42px;}

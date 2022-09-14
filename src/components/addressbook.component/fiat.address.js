@@ -30,9 +30,9 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange,selectedAddress, onConti
                                 onAddressOptionsChange({ ...addressOptions, addressType: value.target.value });
                             }}
                         >
-                            <Radio.Button value={props.userProfile?.isBusiness?"ownbusiness":"myself"}>{props.userProfile?.isBusiness ? "My Company" : "My Self"}</Radio.Button>
-                            <Radio.Button value="someoneelse">Someone Else</Radio.Button>
-                            <Radio.Button value="business">Business</Radio.Button>
+                            <Radio.Button className="custom-btn sec mt-8" value={props.userProfile?.isBusiness?"ownbusiness":"myself"}>{props.userProfile?.isBusiness ? "My Company" : "My Self"}</Radio.Button>
+                            <Radio.Button className="custom-btn sec mt-8" value="someoneelse">Someone Else</Radio.Button>
+                            <Radio.Button className="custom-btn sec mt-8" value="business">Business</Radio.Button>
                         </Radio.Group>
                     </Col>
                 </Row>
