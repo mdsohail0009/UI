@@ -109,7 +109,7 @@ class AddressDocumnet extends Component {
                 footer={
                     <>
                         <Button
-                            style={{ width: "100px", border: "1px solid #f2f2f2" }}
+                            style={{ width: "30px", border: "1px solid #f2f2f2" }}
                             className=" pop-cancel"
                             onClick={() => { this.setState({ ...this.state, showDeleteModal: false }) }}>
                             No

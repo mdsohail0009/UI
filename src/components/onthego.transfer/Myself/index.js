@@ -329,6 +329,19 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         {
                             required: true,
                             message: apiCalls.convertLocalLang("is_required"),
+                        },{
+                            validator: (_, value) => {
+                                if (
+                                    value &&
+                                    !/^[A-Za-z0-9]+$/.test(value)
+                                ) {
+                                    return Promise.reject(
+                                        "Invalid Account Number"
+                                    );
+                                }else {
+                                    return Promise.resolve();
+                                }
+                            },
                         }
                     ]}
                 >
@@ -349,6 +362,19 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             {
                                 required: true,
                                 message: apiCalls.convertLocalLang("is_required"),
+                            },{
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            addressOptions.tabType == 'international' ?"Invalid Swift / BIC Code":"Invalid ABA Routing Code"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
                             }
                         ]}>
                         <Input
@@ -367,6 +393,19 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             {
                                 required: true,
                                 message: apiCalls.convertLocalLang("is_required"),
+                            },{
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            addressOptions.tabType == 'international' ?"Invalid Swift / BIC Code":"Invalid ABA Routing Code"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
                             }
                         ]}>
                         <Input
@@ -385,6 +424,19 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             {
                                 required: true,
                                 message: apiCalls.convertLocalLang("is_required"),
+                            },{
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid Bank Name"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
                             }
                         ]}>
                         <Input

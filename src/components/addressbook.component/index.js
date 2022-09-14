@@ -406,7 +406,7 @@ class AddressBook extends Component {
 	addAddressBook = () => {
 		if (this.state.cryptoFiat) {
 			this.setState({
-				...this.state, fiatDrawer: true, errorWorning: null, selection: [],
+				...this.state, fiatDrawer: true, errorWorning: null, selection: [],selectedObj:{},
 				isCheck: false,
 			});
 			if (!this.state.fiatDrawer) {
@@ -427,7 +427,7 @@ class AddressBook extends Component {
 		} else {
 			this.setState({
 				...this.state, visible: true, errorWorning: null, selection: [],
-				isCheck: false,
+				isCheck: false,selectedObj:{}
 			});
 			apiCalls.trackEvent({
 				Type: "User",

@@ -241,7 +241,20 @@ class PayeeBankDetails extends Component {
                                 required: true,
                                 message:
                                     apicalls.convertLocalLang("is_required"),
-                            },
+                            },{
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid Account Number"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            }
                         ]}
                     >
                         <Input
@@ -266,25 +279,20 @@ class PayeeBankDetails extends Component {
                                 required: true,
                                 message:
                                     apicalls.convertLocalLang("is_required"),
-                            },
-                            // {
-                            //     validator:(_, value) =>{
-                            //         if (this.state.emailExist) {
-                            //             return Promise.reject(
-                            //                 "Invalid BIC/SWIFT/Routing number"
-                            //             );
-                            //         } else if (
-                            //             value &&
-                            //             !/^[A-Za-z0-9]+$/.test(value)
-                            //         ) {
-                            //             return Promise.reject(
-                            //                 "Invalid BIC/SWIFT/Routing number"
-                            //             );
-                            //         } else {
-                            //             return Promise.resolve();
-                            //         }
-                            //     },
-                            // },
+                            },{
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid Swift / BIC Code"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            }
                         ]}
                     >
                         <Input
@@ -308,25 +316,20 @@ class PayeeBankDetails extends Component {
                                 required: true,
                                 message:
                                     apicalls.convertLocalLang("is_required"),
-                            },
-                            // {
-                            //     validator:(_, value) =>{
-                            //         if (this.state.emailExist) {
-                            //             return Promise.reject(
-                            //                 "Invalid ACH/Routing number"
-                            //             );
-                            //         } else if (
-                            //             value &&
-                            //             !/^[A-Za-z0-9]+$/.test(value)
-                            //         ) {
-                            //             return Promise.reject(
-                            //                 "Invalid ACH/Routing number"
-                            //             );
-                            //         } else {
-                            //             return Promise.resolve();
-                            //         }
-                            //     },
-                            // },
+                            },{
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid ABA Routing Code"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            }
                         ]}
                     >
                         <Input
@@ -355,7 +358,20 @@ class PayeeBankDetails extends Component {
                             },
                             {
                                 validator: validateContentRule,
-                            },
+                            },{
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid Bank Name"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            }
                         ]}
                     >
                         <Input
