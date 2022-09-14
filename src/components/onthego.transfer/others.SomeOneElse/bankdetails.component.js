@@ -434,7 +434,20 @@ class PayeeBankDetails extends Component {
                             },
                             {
                                 validator: validateContentRule,
-                            },
+                            },{
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid Bank Address 1"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            }
                         ]}
                         label={
                             <Translate
@@ -458,7 +471,20 @@ class PayeeBankDetails extends Component {
                         rules={[
                             {
                                 validator: validateContentRule,
-                            },
+                            },{
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid Bank Address 2"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            }
                         ]}
                         label={
                             <Translate

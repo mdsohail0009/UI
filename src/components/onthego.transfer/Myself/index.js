@@ -457,6 +457,19 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             {
                                 required: true,
                                 message: apiCalls.convertLocalLang("is_required"),
+                            },{
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid Bank Address 1"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
                             }
                         ]}>
                         <TextArea
@@ -472,7 +485,21 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         className="custom-forminput custom-label mb-0"
                         name="line2"
                         label='Bank Address 2'
-                    >
+                        rules={[{
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid Bank Address 2"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            }
+                        ]}>
                        
                         <TextArea
                             placeholder={'Bank Address 2'}
