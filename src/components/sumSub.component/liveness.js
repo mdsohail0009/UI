@@ -35,7 +35,7 @@ class LiveNessSumsub extends Component {
                 if(type === 'idCheck.actionCompleted'){
                     if(payload.answer==="GREEN"){
                     this.setState({...this.state, applicantActionid:payload.applicantActionId})
-                    this.props.onConfirm(this.state)
+                    this.props.onConfirm({verifed:true,applicantActionid:payload.applicantActionId})
                     }
                 }
                 if(type === 'idCheck.onActionSubmitted'){
@@ -46,6 +46,7 @@ class LiveNessSumsub extends Component {
                 }  
                 if(type === 'idCheck.onError'){
                     this.setState({...this.state, liveError:true})
+                    this.props.onConfirm({verifed:false})
                 }  
             }).on('onError', (error) => {
             }).build()
