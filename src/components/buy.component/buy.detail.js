@@ -12,6 +12,7 @@ import NumberFormat from 'react-number-format';
 import LocalCryptoSwapperCmp from '../shared/local.crypto.swap/swap';
 import Currency from '../shared/number.formate';
 import apicalls from '../../api/apiCalls';
+import {  getPreview } from './api'
 class SelectCrypto extends Component {
     myRef = React.createRef();
     swapRef = React.createRef();
@@ -30,7 +31,9 @@ class SelectCrypto extends Component {
             error: {
                 valid: true,
                 description: message
-            }
+            },
+            errorMsg:null,
+            btnLoading:false
         }
     }
     componentDidMount() {
@@ -94,7 +97,8 @@ class SelectCrypto extends Component {
         this.props.setWallet(selectedWallet);
     }
 
-    handlePreview = () => {
+    handlePreview = async() => {
+        // return
         const { localValue, cryptoValue, isSwaped } = this.state.swapValues;
         const { buyMin, buyMax, coin, gbpInUsd, eurInUsd } = this.props.buyInfo?.selectedCoin?.data;
         const _vaidator = validatePreview({ localValue, cryptValue: cryptoValue, wallet: this.state.selectedWallet, maxPurchase: buyMax, minPurchase: buyMin, gbpInUsd, eurInUsd })
@@ -107,9 +111,28 @@ class SelectCrypto extends Component {
             this.setState({ ...this.state, error: "We can not process this request, Since commission is more than or equal to requested amount" });
 
         }
-        this.props.preview(this.state.selectedWallet, coin, (isSwaped ? cryptoValue : localValue), !isSwaped, this.props?.userProfileInfo.id);
-        this.props.setStep('step3');
+        this.setState({...this.state,btnLoading:true})
+        const response = await getPreview({ coin, currency: this.state.selectedWallet.currencyCode, amount:(isSwaped ? cryptoValue : localValue), isCrypto:!isSwaped, customer_id:this.props?.userProfileInfo.id });
+        if (response.ok) {
+            this.props.preview(this.state.selectedWallet, coin, (isSwaped ? cryptoValue : localValue), !isSwaped, this.props?.userProfileInfo.id);
+            this.props.setStep('step3');
+            this.setState({...this.state,btnLoading:false})
+        } else {
+            this.setState({ ...this.state,errorMsg:this.isErrorDispaly(response),btnLoading:false})
+            divScroll.current.scrollIntoView()
+        }
+        
     }
+    isErrorDispaly = (objValue) => {
+		if (objValue.data && typeof objValue.data === "string") {
+			return objValue.data;
+		} else if (objValue.originalError && typeof objValue.originalError.message === "string"
+		) {
+			return objValue.originalError.message;
+		} else {
+			return "Something went wrong please try again!";
+		}
+	};
     render() {
         if (this.props.buyInfo?.selectedCoin?.loading || !this.props.buyInfo?.selectedCoin?.data) {
             return <Loader />
@@ -119,6 +142,15 @@ class SelectCrypto extends Component {
         const { coin, coinFullName, coinBalance, percentage,impageWhitePath } = this.props.buyInfo?.selectedCoin?.data;
         return (
             <div id="divScroll" ref={this.myRef}>
+                {this.state.errorMsg && (
+                        <Alert
+                            className="mb-12"
+                            showIcon
+                            description={this.state.errorMsg}
+                            closable={false}
+                            type="error"
+                        />
+                    )}
                 {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="error" message={apicalls.convertLocalLang('buy_crypto')} description={this.state.error?.message} />}
                 <div className="selectcrypto-container">
                     <Card className="crypto-card select mb-36" bordered={false}>
@@ -156,7 +188,7 @@ class SelectCrypto extends Component {
                     <WalletList onWalletSelect={(e) => this.handleWalletSelection(e)} />
                     {/* <div className="fs-12 text-white-30 text-center mt-24"><Translate content="change_10Sec_amount" component={Paragraph} className="fs-12 text-white-30 text-center mt-24" /></div> */}
                     <div className="mt-24">
-                        <SuisseBtn title="PreviewBuy" onRefresh={() => this.refresh()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
+                        <SuisseBtn title="PreviewBuy" loading={this.state.btnLoading} onRefresh={() => this.refresh()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
                     </div>
                 </div>
 
