@@ -80,7 +80,7 @@ const AddressCryptoView = (props) => {
 												<div>
 													<label className="kpi-label">Name</label>
 													<div className=" kpi-val">
-														{cryptoAddress?.beneficiaryName === " " ||
+													{cryptoAddress?.beneficiaryName === " " ||
 																		cryptoAddress?.beneficiaryName === null
 																		? "-"
 																		: cryptoAddress?.beneficiaryName}
