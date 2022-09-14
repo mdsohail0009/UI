@@ -22,8 +22,6 @@ class DomesticTransfer extends Component {
                             message: apiCalls.convertLocalLang("is_required"),
                         },
                         {
-                            validator: validateContentRule,
-                        },{
                             validator: (_, value) => {
                                 if (
                                     value &&
@@ -62,8 +60,6 @@ class DomesticTransfer extends Component {
                             message: apiCalls.convertLocalLang("is_required"),
                         },
                         {
-                            validator: validateContentRule,
-                        },{
                             validator: (_, value) => {
                                 if (
                                     value &&
@@ -102,8 +98,6 @@ class DomesticTransfer extends Component {
                             message: apiCalls.convertLocalLang("is_required"),
                         },
                         {
-                            validator: validateContentRule,
-                        },{
                             validator: (_, value) => {
                                 if (
                                     value &&
@@ -126,6 +120,36 @@ class DomesticTransfer extends Component {
 
                 </Form.Item>
             </Col>
+            {this.props.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                <Form.Item
+                    className="custom-forminput custom-label mb-0"
+                    name="reasonOfTransfer"
+                    required
+                    rules={[
+                        {
+                            required: true,
+                            message: apiCalls.convertLocalLang("is_required"),
+                        },
+                        {
+                            whitespace: true,
+                            message: apiCalls.convertLocalLang("is_required"),
+                        },
+                        {
+                            validator: validateContentRule,
+                        },
+                    ]}
+                    label={
+                        "Reason Of Transfer"
+                    }
+                >
+                    <TextArea
+                        placeholder={"Reason Of Transfer"}
+                        className="cust-input cust-text-area address-book-cust"
+                        autoSize={{ minRows: 1, maxRows: 1 }}
+                        maxLength={100}
+                    ></TextArea>
+                </Form.Item>
+            </Col>}
             {/* <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
                     className="custom-forminput custom-label mb-0"
@@ -167,9 +191,7 @@ class DomesticTransfer extends Component {
                             whitespace: true,
                             message: apiCalls.convertLocalLang("is_required"),
                         },
-                        {
-                            validator: validateContentRule,
-                        },{
+                       {
                             validator: (_, value) => {
                                 if (
                                     value &&
@@ -202,8 +224,6 @@ class DomesticTransfer extends Component {
                     name="bankAddress2"
                     rules={[
                         {
-                            validator: validateContentRule,
-                        },{
                             validator: (_, value) => {
                                 if (
                                     value &&
@@ -230,36 +250,7 @@ class DomesticTransfer extends Component {
                     ></TextArea>
                 </Form.Item>
             </Col>
-            {this.props.type !== "manual" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                <Form.Item
-                    className="custom-forminput custom-label mb-0"
-                    name="reasonOfTransfer"
-                    required
-                    rules={[
-                        {
-                            required: true,
-                            message: apiCalls.convertLocalLang("is_required"),
-                        },
-                        {
-                            whitespace: true,
-                            message: apiCalls.convertLocalLang("is_required"),
-                        },
-                        {
-                            validator: validateContentRule,
-                        },
-                    ]}
-                    label={
-                        "Reason Of Transfer"
-                    }
-                >
-                    <TextArea
-                        placeholder={"Reason Of Transfer"}
-                        className="cust-input cust-text-area address-book-cust"
-                        autoSize={{ minRows: 1, maxRows: 1 }}
-                        maxLength={100}
-                    ></TextArea>
-                </Form.Item>
-            </Col>}
+            
         </Row>
     }
 }

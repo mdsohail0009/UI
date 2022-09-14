@@ -356,9 +356,7 @@ class PayeeBankDetails extends Component {
                                 message:
                                     apicalls.convertLocalLang("is_required"),
                             },
-                            {
-                                validator: validateContentRule,
-                            },{
+                           {
                                 validator: (_, value) => {
                                     if (
                                         value &&
@@ -433,8 +431,6 @@ class PayeeBankDetails extends Component {
                                 message: apicalls.convertLocalLang("is_required"),
                             },
                             {
-                                validator: validateContentRule,
-                            },{
                                 validator: (_, value) => {
                                     if (
                                         value &&
@@ -469,9 +465,7 @@ class PayeeBankDetails extends Component {
                         className="custom-forminput custom-label mb-0"
                         name={["payeeAccountModels","line2"]}
                         rules={[
-                            {
-                                validator: validateContentRule,
-                            },{
+                           {
                                 validator: (_, value) => {
                                     if (
                                         value &&
