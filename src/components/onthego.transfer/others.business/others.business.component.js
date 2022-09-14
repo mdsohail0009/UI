@@ -1,4 +1,4 @@
-import { Form, Row, Col, Divider, Typography, Input, Button, Alert } from "antd";
+import { Form, Row, Col, Divider, Typography, Input, Button, Alert,Image, Spin} from "antd";
 import React, { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
 import { validateContentRule } from "../../../utils/custom.validator";
