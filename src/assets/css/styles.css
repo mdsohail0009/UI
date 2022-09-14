@@ -1422,3 +1422,4 @@ cust-address{margin-bottom: 0px !important;}
 .text-red-colr{color:#ff5e43 }
 .custom-label .ant-form-item-label{margin-bottom: 0 !important;padding-bottom:4px !important ;}
 .ant-form-item-label > label{height: 24px !important;}
+.input-label.otp-verify .ant-form-item-control{margin-top: 4px;}
