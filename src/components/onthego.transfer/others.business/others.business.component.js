@@ -227,12 +227,12 @@ class OthersBusiness extends Component {
                         <RecipientAddress />
                     </Row>
 
-                    <Paragraph className="mb-8  text-white fw-500 mt-16" style={{ fontSize: 18 }}>Bank Details</Paragraph>
+                    <Paragraph className="mb-8 fs-18 text-white fw-500 mt-16 px-4" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                     {/* <Divider /> */}
-                    <Row gutter={[16, 16]}>
+                    <Row gutter={[8, 8]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
                                 name="iban"
                                 label={"IBAN"}
                                 required
@@ -270,7 +270,7 @@ class OthersBusiness extends Component {
 
                         {this.props.type !== "manual" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
                                 name="reasonOfTransfer"
                                 required
                                 rules={[
@@ -375,7 +375,7 @@ class OthersBusiness extends Component {
                                     htmlType="submit"
                                     size="large"
                                     className="pop-btn mb-36"
-                                    style={{ minWidth: 150 }}
+                                    // style={{ minWidth: 150 }}
                                     disabled={this.state.ibanDetailsLoading}
                                     loading={this.state.isBtnLoading} >
                             {this.props.type === "manual" && "Save"}
