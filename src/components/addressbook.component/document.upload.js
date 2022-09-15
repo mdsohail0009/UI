@@ -120,6 +120,9 @@ class AddressDocumnet extends Component {
                                 let filesList = [...this.state.filesList];
                                 filesList.splice(this.state.selectedFileIdx, 1);
                                 this.setState({ ...this.state, filesList, showDeleteModal: false });
+                                let { documents: docs } = this.state;
+                                docs.details=Object.assign([],filesList)
+                                this.props?.onDocumentsChange(docs);
                             }}
                             style={{ width: 120, height: 50 }}>
                             {apiCalls.convertLocalLang("Yes")}
