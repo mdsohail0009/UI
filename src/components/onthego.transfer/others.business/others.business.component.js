@@ -47,7 +47,7 @@ class OthersBusiness extends Component {
             }
             const ibanDetails = response.data?.payeeAccountModels[0] || {}
             this.setState({ ...this.state, errorMessage: null, details: data, ibanDetails }, () => {
-                this.setState({ ...this.state, isLoading: false, edit: isEdit });
+                this.setState({ ...this.state, isLoading: false, isEdit: edit });
                 this.props?.onEdit(edit);
             });
         } else {
