@@ -99,7 +99,7 @@ class PayeeBankDetails extends Component {
                     </Form.Item>
                 </Col>
                  
-                {this.props.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                {this.props.type !== "manual" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
                         name={'reasonOfTransfer'}
@@ -174,52 +174,52 @@ class PayeeBankDetails extends Component {
                     <Spin spinning={this.state.IbanLoader}>
                     {this.state.isValidIban && <Row>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
+                                <label className="fs-14 fw-400 ">
                                     <strong>Bank Name</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.bankName||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals?.bankName||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
+                                <label className="fs-14 fw-400 ">
                                     <strong>BIC</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.bic||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals?.bic||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
+                                <label className="fs-14 fw-400 ">
                                     <strong>Branch</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.bankBranch||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals?.bankBranch||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
+                                <label className="fs-14 fw-400 ">
                                     <strong>Country</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.country||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals?.country||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
+                                <label className="fs-14 fw-400 ">
                                     <strong>State</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.state||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals?.state||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
+                                <label className="fs-14 fw-400 ">
                                     <strong>City</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.city||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals?.city||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
+                                <label className="fs-14 fw-400 ">
                                     <strong>Zip</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.postalCode||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals?.postalCode||'---'}</Text></div>
 
                             </Col>
                         </Row>}
@@ -232,7 +232,7 @@ class PayeeBankDetails extends Component {
             swift: <>
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name={["payeeAccountModels","accountNumber"]}
                         label={apicalls.convertLocalLang("accountnumber")}
                         required
@@ -268,7 +268,7 @@ class PayeeBankDetails extends Component {
                 </Col>
                 {this.props.domesticType === "international" &&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name={["payeeAccountModels","swiftRouteBICNumber"]}
                         label={apicalls.convertLocalLang(
                             "swifbictcode"
@@ -307,7 +307,7 @@ class PayeeBankDetails extends Component {
 
                 {this.props.domesticType === "domestic" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name={["payeeAccountModels","abaRoutingCode"]}
                         label="ABA Routing Code"
                         required
@@ -341,7 +341,7 @@ class PayeeBankDetails extends Component {
                 </Col>}
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name={["payeeAccountModels","bankName"]}
                         label={apicalls.convertLocalLang("Bank_name")}
                         required
@@ -383,7 +383,7 @@ class PayeeBankDetails extends Component {
                 </Col>
                 {this.props.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name={"reasonOfTransfer"}
                         required
                         rules={[
@@ -418,7 +418,7 @@ class PayeeBankDetails extends Component {
                 </Col>}
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name={["payeeAccountModels","line1"]}
                         required
                         rules={[
@@ -462,7 +462,7 @@ class PayeeBankDetails extends Component {
                 </Col>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name={["payeeAccountModels","line2"]}
                         rules={[
                            {
