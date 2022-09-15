@@ -46,7 +46,7 @@ class BankWallets extends Component {
                   </li> */}
                   <li  onClick={() => 
                     //window.open("http://localhost:3001/dashboard")}
-                    window.open(process.env.REACT_APP_BANK_UI_URL +`/dashboard/${item.currency}`, "_blank")}
+                    window.open(process.env.REACT_APP_BANK_UI_URL +`dashboard/${item.currency}`, "_blank")}
                     >
                   <Link  value={5} className="c-pointer">
                       <Translate content="suisse_wallets" />
@@ -98,7 +98,7 @@ class BankWallets extends Component {
                               <div className="crypto-btns mt-8">
                                   <Translate content="transfer_funds"  component={Button} type="primary" className="custom-btn prime" 
                                    onClick={() =>
-                                    window.open(process.env.REACT_APP_BANK_UI_URL +`/transfer/${item.currency}`, "_blank")
+                                    window.open(process.env.REACT_APP_BANK_UI_URL +`transfer/${item.currency}`, "_blank")
                                   }
                                   // onClick={() =>
                                   //   window.open(`http://localhost:3001/transfer/${item.currency}`)
