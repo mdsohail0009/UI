@@ -117,7 +117,7 @@ const AddressFiatView = (props) => {
 										<Row className="kpi-List">
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
-													<label className="kpi-label">Favorite Name</label>
+													<label className="kpi-label">Save Whitelist Name As</label>
 													<div className=" kpi-val">
 														{fiatAddress?.favouriteName === " " ||
 															fiatAddress?.favouriteName === null
@@ -133,19 +133,21 @@ const AddressFiatView = (props) => {
 														{fiatAddress?.addressType === " " ||
 															fiatAddress?.addressType === null
 															? "-"
-															: fiatAddress?.addressType}
+															: (fiatAddress?.addressType=="someoneelse")&&"SOMEONE ELSE"||
+															(fiatAddress?.addressType=="ownbusiness")&&"OWN BUSINESS"||
+															(fiatAddress?.addressType=="business")&&"BUSINESS"}
 
 													</div>}
 												</div>
 											</Col>}
 											{fiatAddress?.transferType && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
-													<label className="kpi-label">Transfor Type</label>
+													<label className="kpi-label">Transfer Type</label>
 													{<div className=" kpi-val">
 														{fiatAddress?.transferType === " " ||
 															fiatAddress?.transferType === null
 															? "-"
-															: fiatAddress?.transferType}
+															: fiatAddress?.transferType.toUpperCase()}
 
 													</div>}
 												</div>
@@ -186,7 +188,7 @@ const AddressFiatView = (props) => {
 											</Col>}
 											{fiatAddress?.relation &&<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
-													<label className="kpi-label">Relation</label>
+													<label className="kpi-label">Relationship To Beneficiary</label>
 													<div className=" kpi-val">
 														{fiatAddress?.relation === " " ||
 															fiatAddress?.relation === null
@@ -234,7 +236,8 @@ const AddressFiatView = (props) => {
 													</div>}
 												</div>
 											</Col>
-											{fiatAddress?.line2 &&<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+											{/* {fiatAddress?.line2 && */}
+											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">Address Line 2</label>
 													{<div className="kpi-val">
@@ -243,8 +246,10 @@ const AddressFiatView = (props) => {
 															? "-"
 															: fiatAddress?.line2}</div>}
 												</div>
-											</Col>}
-											{fiatAddress?.line3 &&<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+											</Col>
+											{/* // }
+											// {fiatAddress?.line3 && */}
+											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">Address Line 3</label>
 													{<div className="kpi-val">
@@ -253,7 +258,8 @@ const AddressFiatView = (props) => {
 															? "-"
 															: fiatAddress?.line3}</div>}
 												</div>
-											</Col>}
+											</Col>
+											{/* // } */}
 
 
 
@@ -480,7 +486,7 @@ const AddressFiatView = (props) => {
 														</Col>}
 														{item.line1 && <Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
-																Address Line 1
+															Bank Address 1
 															</Text>
 															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
 																{item.line1 === " " ||
@@ -491,7 +497,7 @@ const AddressFiatView = (props) => {
 														</Col>}
 														{item.line2 && <Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
-																Address Line 2
+															Bank Address 2
 															</Text>
 															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
 																{item.line2 === " " ||
@@ -500,6 +506,7 @@ const AddressFiatView = (props) => {
 																	: item.line2}
 															</Title>
 														</Col>}
+														
 
 													</Row>
 												</div>
