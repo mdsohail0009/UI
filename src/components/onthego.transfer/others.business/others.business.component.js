@@ -36,7 +36,7 @@ class OthersBusiness extends Component {
             if (!data?.payeeAccountModels) {
                 data.payeeAccountModels = [payeeAccountObj()];
             }
-            if (this.props.selectedAddress) {
+            if (this.props.selectedAddress?.id) {
                 const accountDetails = data.payeeAccountModels[0];
                 data = { ...data, ...accountDetails, line1: data.line1, line2: data.line2, line3: data.line3, bankAddress1: accountDetails.line1, bankAddress2: accountDetails.line2 };
                 delete data["documents"];
@@ -45,10 +45,10 @@ class OthersBusiness extends Component {
                 }
                 edit = true;
             }
+            this.props?.onEdit(edit);
             const ibanDetails = response.data?.payeeAccountModels[0] || {}
             this.setState({ ...this.state, errorMessage: null, details: data, ibanDetails }, () => {
                 this.setState({ ...this.state, isLoading: false, isEdit: edit });
-                this.props?.onEdit(edit);
             });
         } else {
             this.setState({ ...this.state, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, details: {} });
