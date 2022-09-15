@@ -71,11 +71,20 @@ class PayeeBankDetails extends Component {
                                         return Promise.reject(apicalls.convertLocalLang("is_required"));
                                     } else if (!this.state.isValidIban) {
                                         return Promise.reject("Please input a valid IBAN");
+                                    } else if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid  IBAN Number"
+                                        );
                                     } else {
                                         return Promise.resolve();
                                     }
                                 },
-                            },
+                            },{
+                                validator: validateContentRule
+                            }
                         ]}
                         onChange={(e) => {
                             this.handleIban(e.target.value)
@@ -90,7 +99,7 @@ class PayeeBankDetails extends Component {
                     </Form.Item>
                 </Col>
                  
-                {this.props.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                {this.props.type !== "manual" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
                         name={'reasonOfTransfer'}
@@ -165,52 +174,52 @@ class PayeeBankDetails extends Component {
                     <Spin spinning={this.state.IbanLoader}>
                     {this.state.isValidIban && <Row>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
+                                <label className="fs-14 fw-400 ">
                                     <strong>Bank Name</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.bankName||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals?.bankName||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
+                                <label className="fs-14 fw-400 ">
                                     <strong>BIC</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.bic||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals?.bic||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
+                                <label className="fs-14 fw-400 ">
                                     <strong>Branch</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.bankBranch||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals?.bankBranch||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
+                                <label className="fs-14 fw-400 ">
                                     <strong>Country</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.country||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals?.country||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
+                                <label className="fs-14 fw-400 ">
                                     <strong>State</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.state||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals?.state||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
+                                <label className="fs-14 fw-400 ">
                                     <strong>City</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.city||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals?.city||'---'}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
+                                <label className="fs-14 fw-400 ">
                                     <strong>Zip</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.postalCode||'---'}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.iBanDetals?.postalCode||'---'}</Text></div>
 
                             </Col>
                         </Row>}
@@ -223,7 +232,7 @@ class PayeeBankDetails extends Component {
             swift: <>
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name={["payeeAccountModels","accountNumber"]}
                         label={apicalls.convertLocalLang("accountnumber")}
                         required
@@ -232,7 +241,20 @@ class PayeeBankDetails extends Component {
                                 required: true,
                                 message:
                                     apicalls.convertLocalLang("is_required"),
-                            },
+                            },{
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid Account Number"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            }
                         ]}
                     >
                         <Input
@@ -246,7 +268,7 @@ class PayeeBankDetails extends Component {
                 </Col>
                 {this.props.domesticType === "international" &&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name={["payeeAccountModels","swiftRouteBICNumber"]}
                         label={apicalls.convertLocalLang(
                             "swifbictcode"
@@ -257,25 +279,20 @@ class PayeeBankDetails extends Component {
                                 required: true,
                                 message:
                                     apicalls.convertLocalLang("is_required"),
-                            },
-                            // {
-                            //     validator:(_, value) =>{
-                            //         if (this.state.emailExist) {
-                            //             return Promise.reject(
-                            //                 "Invalid BIC/SWIFT/Routing number"
-                            //             );
-                            //         } else if (
-                            //             value &&
-                            //             !/^[A-Za-z0-9]+$/.test(value)
-                            //         ) {
-                            //             return Promise.reject(
-                            //                 "Invalid BIC/SWIFT/Routing number"
-                            //             );
-                            //         } else {
-                            //             return Promise.resolve();
-                            //         }
-                            //     },
-                            // },
+                            },{
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid Swift / BIC Code"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            }
                         ]}
                     >
                         <Input
@@ -290,7 +307,7 @@ class PayeeBankDetails extends Component {
 
                 {this.props.domesticType === "domestic" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name={["payeeAccountModels","abaRoutingCode"]}
                         label="ABA Routing Code"
                         required
@@ -299,25 +316,20 @@ class PayeeBankDetails extends Component {
                                 required: true,
                                 message:
                                     apicalls.convertLocalLang("is_required"),
-                            },
-                            // {
-                            //     validator:(_, value) =>{
-                            //         if (this.state.emailExist) {
-                            //             return Promise.reject(
-                            //                 "Invalid ACH/Routing number"
-                            //             );
-                            //         } else if (
-                            //             value &&
-                            //             !/^[A-Za-z0-9]+$/.test(value)
-                            //         ) {
-                            //             return Promise.reject(
-                            //                 "Invalid ACH/Routing number"
-                            //             );
-                            //         } else {
-                            //             return Promise.resolve();
-                            //         }
-                            //     },
-                            // },
+                            },{
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid ABA Routing Code"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            }
                         ]}
                     >
                         <Input
@@ -329,7 +341,7 @@ class PayeeBankDetails extends Component {
                 </Col>}
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name={["payeeAccountModels","bankName"]}
                         label={apicalls.convertLocalLang("Bank_name")}
                         required
@@ -344,9 +356,20 @@ class PayeeBankDetails extends Component {
                                 message:
                                     apicalls.convertLocalLang("is_required"),
                             },
-                            {
-                                validator: validateContentRule,
-                            },
+                           {
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[a-z0-9_.-\s]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid Bank Name"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            }
                         ]}
                     >
                         <Input
@@ -358,68 +381,9 @@ class PayeeBankDetails extends Component {
                         />
                     </Form.Item>
                 </Col>
-                
-                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Form.Item
-                        className="custom-forminput custom-label mb-0"
-                        name={["payeeAccountModels","line1"]}
-                        required
-                        rules={[
-                            {
-                                required: true,
-                                message: apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                whitespace: true,
-                                message: apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                validator: validateContentRule,
-                            },
-                        ]}
-                        label={
-                            <Translate
-                                content="bankaddressline1"
-                                component={Form.label}
-                            />
-                        }
-                    >
-                        <TextArea
-                            placeholder={apicalls.convertLocalLang("bankaddressline1")}
-                            className="cust-input cust-text-area address-book-cust"
-                            autoSize={{ minRows: 1, maxRows: 2 }}
-                            maxLength={100}
-                        ></TextArea>
-                    </Form.Item>
-                </Col>
-                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Form.Item
-                        className="custom-forminput custom-label mb-0"
-                        name={["payeeAccountModels","line2"]}
-                        rules={[
-                            {
-                                validator: validateContentRule,
-                            },
-                        ]}
-                        label={
-                            <Translate
-                                content="bankaddressline2"
-                                component={Form.label}
-                            />
-                        }
-                    >
-                        <TextArea
-                            placeholder={apicalls.convertLocalLang("bankaddressline2")}
-                            className="cust-input cust-text-area address-book-cust"
-                            autoSize={{ minRows: 1, maxRows: 2 }}
-                            maxLength={100}
-                        ></TextArea>
-                    </Form.Item>
-                </Col>
-                
                 {this.props.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name={"reasonOfTransfer"}
                         required
                         rules={[
@@ -452,6 +416,87 @@ class PayeeBankDetails extends Component {
                         ></TextArea>
                     </Form.Item>
                 </Col>}
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                        name={["payeeAccountModels","line1"]}
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message: apicalls.convertLocalLang("is_required"),
+                            },
+                            {
+                                whitespace: true,
+                                message: apicalls.convertLocalLang("is_required"),
+                            },
+                            {
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid Bank Address 1"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            }
+                        ]}
+                        label={
+                            <Translate
+                                content="bankaddressline1"
+                                component={Form.label}
+                            />
+                        }
+                    >
+                        <TextArea
+                            placeholder={apicalls.convertLocalLang("bankaddressline1")}
+                            className="cust-input cust-text-area address-book-cust"
+                            autoSize={{ minRows: 1, maxRows: 2 }}
+                            maxLength={100}
+                        ></TextArea>
+                    </Form.Item>
+                </Col>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                        name={["payeeAccountModels","line2"]}
+                        rules={[
+                           {
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid Bank Address 2"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            }
+                        ]}
+                        label={
+                            <Translate
+                                content="bankaddressline2"
+                                component={Form.label}
+                            />
+                        }
+                    >
+                        <TextArea
+                            placeholder={apicalls.convertLocalLang("bankaddressline2")}
+                            className="cust-input cust-text-area address-book-cust"
+                            autoSize={{ minRows: 1, maxRows: 2 }}
+                            maxLength={100}
+                        ></TextArea>
+                    </Form.Item>
+                </Col>
+                
+                
             </>
         }
         return _templates[transferType]

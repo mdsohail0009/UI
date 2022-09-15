@@ -12,7 +12,6 @@ import DomesticTransfer from "./domestic.transfer";
 import InternationalTransfer from "./international.transfer";
 import Translate from "react-translate-component";
 import alertIcon from '../../../assets/images/pending.png';
-
 const { Option } = Select;
 const { Paragraph, Title, Text } = Typography;
 class BusinessTransfer extends Component {
@@ -84,7 +83,7 @@ class BusinessTransfer extends Component {
         }
     }
     handleTabChange = (key) => {
-        this.setState({ ...this.state, selectedTab: key });
+        this.setState({ ...this.state, selectedTab: key,errorMessage:null });this.form.current.resetFields();
     }
     render() {
         const { isLoading, details, selectedTab, errorMessage } = this.state;
@@ -102,7 +101,7 @@ class BusinessTransfer extends Component {
             </div>
         }
         return <Tabs className="cust-tabs-fait" onChange={this.handleTabChange} activeKey={selectedTab}>
-            <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"}>
+            <Tabs.TabPane tab="Domestic USD transfer" className="text-white text-captz" key={"domestic"}>
                 {errorMessage && <Alert type="error" description={errorMessage} showIcon />}
                 <Form initialValues={details}
                     className="custom-label  mb-0"
@@ -110,10 +109,10 @@ class BusinessTransfer extends Component {
                     onFinish={this.submitPayee}
                     scrollToFirstError
                 >
-                    <Row gutter={[16, 16]}>
+                    <Row gutter={[4, 4]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label"
                                 name="favouriteName"
                                 label={"Save Whitelist Name As"}
                                 required
@@ -141,16 +140,16 @@ class BusinessTransfer extends Component {
                             </Form.Item>
                         </Col>
                     </Row>
-                    <Translate style={{ fontSize: 18 }}
+                    <Translate 
                         content="Beneficiary_Details"
                         component={Paragraph}
-                        className="mb-8  text-white fw-500 mt-16"
+                        className="mb-8  text-white fw-500 mt-16 px-4" style={{ fontSize: 18 }} 
                     />
                     {/* <Divider /> */}
-                    <Row gutter={[16, 16]}>
+                    <Row gutter={[4, 4]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                                 name="beneficiaryName"
                                 required
                                 rules={[
@@ -178,7 +177,7 @@ class BusinessTransfer extends Component {
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                                 name="relation"
                                 label={"Relationship To Beneficiary"}
                                 required
@@ -206,7 +205,7 @@ class BusinessTransfer extends Component {
                         <RecipientAddress />
                     </Row>
 
-                    <Paragraph className="mb-8  text-white fw-500" style={{ fontSize: 18 }}>Bank Details</Paragraph>
+                    <Paragraph className="mb-8 px-4 text-white fw-500 mt-36" style={{ fontSize: 18 }}>Recipient's Bank Details</Paragraph>
                     {/* <Divider /> */}
                     <DomesticTransfer type={this.props.type} />
                     <Paragraph className="fw-300 mb-0 pb-4 ml-12 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
@@ -216,24 +215,24 @@ class BusinessTransfer extends Component {
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
                     }} />
                     <div className="text-right mt-12">
-                        {/* <Row gutter={[16, 16]}>
-                            <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col>
-                            <Col xs={12} md={12} lg={12} xl={12} xxl={12}> */}
-                        <Button
-                            htmlType="submit"
-                            size="large"
-                            className="pop-btn mb-36"
-                            style={{ minWidth: 150 }}
-                            loading={this.state.isBtnLoading}>
-                            {this.props.type === "manual" && "Save"}
-                            {this.props.type !== "manual" && "Continue"}
-                        </Button>
-                        {/* </Col>
+                        {/* <Row> */}
+                            {/* <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col> */}
+                            {/* <Col xs={24} className="text-right"> */}
+                                <Button
+                                    htmlType="submit"
+                                    size="large"
+                                    className="pop-btn mb-36"
+                                    style={{ minWidth: "100%" }}
+                                    loading={this.state.isBtnLoading}>
+                                    {this.props.type === "manual" && "Save"}
+                                    {this.props.type !== "manual" && "Continue"}
+                                </Button>
+                            {/* </Col>
                         </Row> */}
                     </div>
                 </Form>
             </Tabs.TabPane>
-            <Tabs.TabPane tab="International USD Swift" key={"international"}>
+            <Tabs.TabPane tab="International USD Swift" className="text-captz" key={"international"}>
                 {errorMessage && <Alert type="error" description={errorMessage} showIcon />}
                 <Form initialValues={details}
                     className="custom-label  mb-0"
@@ -241,10 +240,10 @@ class BusinessTransfer extends Component {
                     onFinish={this.submitPayee}
                     scrollToFirstError
                 >
-                    <Row gutter={[16, 16]}>
+                    <Row gutter={[4, 4]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label"
                                 name="favouriteName"
                                 label={"Save Whitelist Name As"}
                                 required
@@ -270,12 +269,12 @@ class BusinessTransfer extends Component {
                             </Form.Item>
                         </Col>
                     </Row>
-                    <Paragraph className="mb-8  text-white fw-500 mt-16" style={{ fontSize: 18 }} >Recipient's Details</Paragraph>
+                    <Paragraph className="mb-8 text-white fw-500 mt-16 px-4" style={{ fontSize: 18 }} >Recipient's Details</Paragraph>
                     {/* <Divider /> */}
-                    <Row gutter={[16, 16]}>
+                    <Row gutter={[12, 12]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                                 name="beneficiaryName"
                                 required
                                 rules={[
@@ -303,9 +302,9 @@ class BusinessTransfer extends Component {
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                                 name="relation"
-                                label={"Relationship to Beneficiary"}
+                                label={"Relationship To Beneficiary"}
                                 required
                                 rules={[
                                     {
@@ -323,7 +322,7 @@ class BusinessTransfer extends Component {
                             >
                                 <Input
                                     className="cust-input"
-                                    placeholder={"Relationship to Beneficiary"}
+                                    placeholder={"Relationship To Beneficiary"}
                                 />
 
                             </Form.Item>
@@ -331,7 +330,7 @@ class BusinessTransfer extends Component {
                         <RecipientAddress />
                     </Row>
 
-                    <Paragraph className="mb-8 text-white fw-500 mt-16" style={{ fontSize: 18 }}>Bank Details</Paragraph>
+                    <Paragraph className="mb-8 text-white fw-500 mt-36 px-4" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                     {/* <Divider /> */}
                     <InternationalTransfer type={this.props.type} />
                     <Paragraph className="fw-300 mb-0 pb-4 ml-12 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
@@ -340,20 +339,20 @@ class BusinessTransfer extends Component {
                         payeeAccountModels[0].documents = docs;
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
                     }} />
-                    <div className="text-right mt-12">
-                        {/* <Row gutter={[16, 16]}>
-                            <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col>
-                            <Col xs={12} md={12} lg={12} xl={12} xxl={12}> */}
-                        <Button
-                            htmlType="submit"
-                            size="large"
-                            className="pop-btn mb-36"
-                            style={{ minWidth: 150 }}
-                            loading={this.state.isBtnLoading}>
-                            {this.props.type === "manual" && "Save"}
-                            {this.props.type !== "manual" && "Continue"}
-                        </Button>
-                        {/* </Col>
+                    <div className="align-center">
+                        {/* <Row gutter={[16, 16]}> */}
+                            {/* <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col> */}
+                            {/* <Col xs={24} className="text-right"> */}
+                                <Button
+                                    htmlType="submit"
+                                    size="large"
+                                    className="pop-btn mb-36"
+                                    style={{ minWidth: "100%" }}
+                                    loading={this.state.isBtnLoading}>
+                                    {this.props.type === "manual" && "Save"}
+                                    {this.props.type !== "manual" && "Continue"}
+                                </Button>
+                            {/* </Col>
                         </Row> */}
                     </div>
                 </Form>

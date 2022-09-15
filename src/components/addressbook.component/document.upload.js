@@ -11,7 +11,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
     const suffix = children.slice(-suffixCount).trim();
     return (
-        <Text className="mb-0 fs-14 docname c-pointer d-block" style={{ maxWidth: '100%' }} ellipsis={{ suffix }}>
+        <Text className="mb-0 fs-14 docname d-block" style={{ maxWidth: '100%' }} ellipsis={{ suffix }}>
             {start}
         </Text>
     );
@@ -60,7 +60,7 @@ class AddressDocumnet extends Component {
                     }
                     ]}>
                         <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
-                            className="upload mt-0"
+                            className="upload mt-4"
                             multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                             showUploadList={false}
                             beforeUpload={(props) => {
@@ -109,7 +109,7 @@ class AddressDocumnet extends Component {
                 footer={
                     <>
                         <Button
-                            style={{ width: "100px", border: "1px solid #f2f2f2" }}
+                            style={{ width: "30px", border: "1px solid #f2f2f2" }}
                             className=" pop-cancel"
                             onClick={() => { this.setState({ ...this.state, showDeleteModal: false }) }}>
                             No
@@ -118,8 +118,13 @@ class AddressDocumnet extends Component {
                             className="primary-btn pop-btn"
                             onClick={() => {
                                 let filesList = [...this.state.filesList];
+                                filesList[this.state.selectedFileIdx].state='Deleted'
+                                let obj=Object.assign([],filesList)
                                 filesList.splice(this.state.selectedFileIdx, 1);
                                 this.setState({ ...this.state, filesList, showDeleteModal: false });
+                                let { documents: docs } = this.state;
+                                docs.details=Object.assign([],obj)
+                                this.props?.onDocumentsChange(docs);
                             }}
                             style={{ width: 120, height: 50 }}>
                             {apiCalls.convertLocalLang("Yes")}

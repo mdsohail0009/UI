@@ -20,6 +20,7 @@ import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
 import Loader from '../../Shared/loader';
 import CryptoTransfer from "../onthego.transfer/crypto.transfer"
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService';
+import { handleNewExchangeAPI } from "../send.component/api";
 
 const { Paragraph, Text } = Typography;
 
@@ -48,6 +49,7 @@ class CryptoWithDrawWallet extends Component {
             propsData: {},
             isVerificationLoading: true,
             showFuntransfer:false,
+            errorMsg:null
         }
     }
     async checkVerification() {
@@ -230,10 +232,32 @@ class CryptoWithDrawWallet extends Component {
             "amounttype": this.state.amountPercentageType,
             "CustomerRemarks": this.state.customerRemarks
         }
+        const response = await handleNewExchangeAPI({
+			customerId: this.props?.userProfile?.id,
+			amount: obj.totalValue,
+			address: obj.toWalletAddress,
+			coin: obj.walletCode,
+		});
+		if (response.ok) {
+            this.props.dispatch(setWithdrawcrypto(obj))
+            this.props.changeStep('withdraw_crpto_summary');
+		} else {
+			this.setState({ ...this.state, loading: false,errorMsg:this.isErrorDispaly(response) });
+            this.myRef.current.scrollIntoView()
+		}
         //this.props.dispatch(setSubTitle(apicalls.convertLocalLang('withdrawSummary')));
-        this.props.dispatch(setWithdrawcrypto(obj))
-        this.props.changeStep('withdraw_crpto_summary');
+       
     }
+    isErrorDispaly = (objValue) => {
+		if (objValue.data && typeof objValue.data === "string") {
+			return objValue.data;
+		} else if (objValue.originalError && typeof objValue.originalError.message === "string"
+		) {
+			return objValue.originalError.message;
+		} else {
+			return "Something went wrong please try again!";
+		}
+	};
     renderModalContent = () => {
         if (!this.props?.sendReceive?.cryptoWithdraw?.selectedWallet) { return null }
         const { walletAddress, CryptoAmnt, confirmationStep } = this.state;
@@ -333,6 +357,15 @@ class CryptoWithDrawWallet extends Component {
             <div ref={this.myRef}>
                 <div> {this.state.error != null && <Alert type="error"
                     description={this.state.error} onClose={() => this.setState({ ...this.state, error: null })} showIcon />}
+                    {this.state.errorMsg && (
+                        <Alert
+                            className="mb-12"
+                            showIcon
+                            description={this.state.errorMsg}
+                            closable={false}
+                            type="error"
+                        />
+                    )}
 
                     <Card className="crypto-card select mb-36" bordered={false}>
 

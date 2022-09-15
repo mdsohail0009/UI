@@ -11,6 +11,7 @@ import Loader from "../../../Shared/loader";
 import Translate from "react-translate-component";
 import alertIcon from '../../../assets/images/pending.png';
 const { Paragraph, Text, Title } = Typography;
+const { TextArea } = Input;
 class OthersBusiness extends Component {
     form = React.createRef();
     state = {
@@ -55,7 +56,11 @@ class OthersBusiness extends Component {
             this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true,iBanValid:true });
             const response = await fetchIBANDetails(value);
             if (response.ok) {
-                this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:true });
+                if(response.data && (response.data?.routingNumber || response.data?.bankName)){
+                    this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:true });
+                }else{
+                    this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:false });
+                }
             } else {
                 this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false, errorMessage: response.data || response.data?.message || response.originalError?.message });
             }
@@ -165,13 +170,13 @@ class OthersBusiness extends Component {
                     <Translate style={{ fontSize: 18 }}
                         content="Beneficiary_Details"
                         component={Paragraph}
-                        className="mb-8  text-white fw-500 mt-16"
+                        className="mb-8 fs-18 text-white fw-500 mt-16"
                     />
                     {/* <Divider /> */}
-                    <Row gutter={[16, 16]}>
+                    <Row gutter={[12, 12]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                                 name="beneficiaryName"
                                 required
                                 rules={[
@@ -199,7 +204,7 @@ class OthersBusiness extends Component {
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                                 name="relation"
                                 label={"Relationship To Beneficiary"}
                                 required
@@ -227,12 +232,12 @@ class OthersBusiness extends Component {
                         <RecipientAddress />
                     </Row>
 
-                    <Paragraph className="mb-8  text-white fw-500 mt-16" style={{ fontSize: 18 }}>Bank Details</Paragraph>
+                    <Paragraph className="mb-8 fs-14 text-white fw-500 mt-36 px-4">Bank Details</Paragraph>
                     {/* <Divider /> */}
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                                 name="iban"
                                 label={"IBAN"}
                                 required
@@ -243,11 +248,18 @@ class OthersBusiness extends Component {
                                                 return Promise.reject(apiCalls.convertLocalLang("is_required"));
                                             } else if (!this.state.iBanValid) {
                                                 return Promise.reject("Please input a valid IBAN");
-                                            } else {
+                                            } else if (
+                                                value &&
+                                                !/^[A-Za-z0-9]+$/.test(value)
+                                            ) {
+                                                return Promise.reject(
+                                                    "Invalid  IBAN Number"
+                                                );
+                                            }else {
                                                 return Promise.resolve();
                                             }
                                         },
-                                    },
+                                    }
                                 ]}
                             >
                                 <Input
@@ -261,7 +273,7 @@ class OthersBusiness extends Component {
 
                         {this.props.type !== "manual" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="fw-300 mb-8 px-4 text-white-50 py-4 custom-forminput custom-label"
                                 name="reasonOfTransfer"
                                 required
                                 rules={[
@@ -293,58 +305,58 @@ class OthersBusiness extends Component {
                         <Spin spinning={this.state.ibanDetailsLoading}>
                         {this.state.iBanValid && <Row>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
+                                <label className="fs-14 fw-400">
                                     <strong>Bank Name</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.ibanDetails?.bankName || "-"}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.ibanDetails?.bankName || "-"}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
+                                <label className="fs-14 fw-400 ">
                                     <strong>BIC</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.ibanDetails?.routingNumber || "-"}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.ibanDetails?.routingNumber || "-"}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
+                                <label className="fs-14 fw-400 ">
                                     <strong>Branch</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.branch || "-"}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state?.ibanDetails?.branch || "-"}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
+                                <label className="fs-14 fw-400 ">
                                     <strong>Country</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.country || "-"}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state?.ibanDetails?.country || "-"}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
+                                <label className="fs-14 fw-400 ">
                                     <strong>State</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.state || "-"}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state?.ibanDetails?.state || "-"}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
+                                <label className="fs-14 fw-400 ">
                                     <strong>City</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.city || "-"}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state?.ibanDetails?.city || "-"}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
+                                <label className="fs-14 fw-400 ">
                                     <strong>Zip</strong>
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.zipCode || "-"}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state?.ibanDetails?.zipCode || "-"}</Text></div>
 
                             </Col>
                         </Row>}
                         {!this.state.iBanValid && !this.state.ibanDetailsLoading && <Row>
                             <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
-                                <div><Text className="fs-14 fw-400 text-white">No bank details available</Text></div>
+                                <div><Text className="fs-14 fw-400 text-purewhite">No bank deatails available</Text></div>
 
                             </Col>
                         </Row>}
@@ -358,7 +370,7 @@ class OthersBusiness extends Component {
                         payeeAccountModels[0].documents = docs;
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
                     }} />
-                    <div className="text-right mt-12">
+                    <div className="align-center">
                         {/* <Row gutter={[16, 16]}>
                             <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col>
                             <Col xs={12} md={12} lg={12} xl={12} xxl={12}> */}
@@ -366,7 +378,7 @@ class OthersBusiness extends Component {
                                     htmlType="submit"
                                     size="large"
                                     className="pop-btn mb-36"
-                                    style={{ minWidth: 150 }}
+                                    //style={{ minWidth: 150 }}
                                     disabled={this.state.ibanDetailsLoading}
                                     loading={this.state.isBtnLoading} >
                             {this.props.type === "manual" && "Save"}
