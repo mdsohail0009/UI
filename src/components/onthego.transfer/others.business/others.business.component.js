@@ -375,15 +375,15 @@ class OthersBusiness extends Component {
                         payeeAccountModels[0].documents = docs;
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
                     }} />
-                    <div className="align-center">
+                    <div className="text-center mt-36">
                         {/* <Row gutter={[16, 16]}>
                             <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col>
                             <Col xs={12} md={12} lg={12} xl={12} xxl={12}> */}
                                 <Button
                                     htmlType="submit"
                                     size="large"
-                                    className="pop-btn mb-36"
-                                    //style={{ minWidth: 150 }}
+                                    className="pop-btn px-36"
+                                    style={{ width:'100%' }}
                                     disabled={this.state.ibanDetailsLoading}
                                     loading={this.state.isBtnLoading} >
                             {this.props.type === "manual" && "Save"}
