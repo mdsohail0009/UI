@@ -37,6 +37,7 @@ class AddressDocumnet extends Component {
             "path": doc?.response[0]
         }
     }
+  
     render() {
         return <Row >
             <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="text-left">
@@ -46,9 +47,14 @@ class AddressDocumnet extends Component {
                     >{this.props.title}</Paragraph>
                     <Form.Item name={"files"} required rules={[{
                         validator: (_, value) => {
+                            let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
                             if (this.state.filesList.length == 0) {
                                 return Promise.reject("At least one document is required")
-                            } else {
+                            }
+                            if (!fileType[value.file.type]) {
+                                return Promise.reject("PNG, JPG,JPEG and PDF files are allowed");
+                            }
+                            else {
                                 const isValidFiles = this.state.filesList.filter(item => (item.name || item.documentName).indexOf(".") != (item.name || item.documentName).lastIndexOf(".")).length == 0;
                                 if (isValidFiles) { return Promise.resolve(); } else {
                                     return Promise.reject("Double extension file not allowed");
