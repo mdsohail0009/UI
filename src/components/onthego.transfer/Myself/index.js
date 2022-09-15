@@ -428,7 +428,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                                 validator: (_, value) => {
                                     if (
                                         value &&
-                                        !/^[A-Za-z0-9]+$/.test(value)
+                                        !/^[a-z0-9_.-\s]+$/.test(value)
                                     ) {
                                         return Promise.reject(
                                             "Invalid Bank Name"
