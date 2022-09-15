@@ -303,8 +303,6 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                                 return Promise.resolve();
                             }
                         },
-                    },{
-                        validator: validateContentRule
                     }
                 ]}
                 label='IBAN'

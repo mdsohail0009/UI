@@ -254,8 +254,6 @@ class OthersBusiness extends Component {
                                                 return Promise.resolve();
                                             }
                                         },
-                                    },{
-                                        validator: validateContentRule
                                     }
                                 ]}
                             >
