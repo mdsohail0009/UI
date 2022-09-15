@@ -373,7 +373,7 @@ class CryptoWithDrawWallet extends Component {
                             <div>
                                 <span className="d-flex align-center mb-4">
                                     <Image preview={false} src={selectedWallet.impageWhitePath} />
-                                    <Text className="crypto-percent">{selectedWallet?.percentage}<sup className="percent fw-700">%</sup></Text>
+                                    {/* <Text className="crypto-percent">{selectedWallet?.percentage}<sup className="percent fw-700">%</sup></Text> */}
                                 </span>
                                 <Text className="fs-24 text-purewhite ml-4">{selectedWallet?.coinFullName}</Text>
 
@@ -443,7 +443,7 @@ class CryptoWithDrawWallet extends Component {
                             <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
                                 <Form.Item className="text-center">
                                     <Button key="submit" type="primary" className='ant-btn pop-btn' style={{ marginLeft: "10px",width:"100%" }} onClick={() => this.selectCrypto("ADDRESS")}>
-                                        Whitelisted Address
+                                        Address Book
                                     </Button>
                                 </Form.Item>
                             </Col>

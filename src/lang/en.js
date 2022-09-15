@@ -1,5 +1,5 @@
 export default {
-	header_title: "Cockpit",
+	header_title: "Dashboard",
 	user_type: "%(lable)s",
 	Portfolio_title: "Crypto Portfolio",
 	your_portfolio: "Crypto Balances",
@@ -281,9 +281,9 @@ export default {
 	Fifth_Avenue: "%(value)s",
 	reference: "Reference",
 	reference_hint_text:
-		"Important: This code identifies your receives. Please include the reference code when submitting the wire transfer in either the transaction description or purpose.",
+		"Important: This code helps us in identifying your deposit. Please include the reference code when submitting the wire transfer to us.",
 	desposite_text:
-		"Please select the currency you would like to receive in. The bank account details for the specific currency will then be shown. You are then required to wire the funds over to the provided bank details.",
+		"The bank account details for the specific currency you chose is displayed below. You are required to wire the funds over to the provided bank details.",
 	EUR_amount: "EUR Amount",
 	Fee: "Fee",
 	Amount_to_pay: "Amount to pay",

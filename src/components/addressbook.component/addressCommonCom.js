@@ -1,17 +1,49 @@
-import React, { useState, useEffect } from "react";
-import { Form, Typography, Input, Button, Select } from "antd";
+import React, { Component,useState, useEffect } from "react";
+import { Form, Typography, Input, Button, Select,Image } from "antd";
+import alertIcon from '../../assets/images/pending.png';
+import ConnectStateProps from "../../utils/state.connect";
 const { Text, Paragraph, Title } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
 const handleChange = (value) => {
   console.log(`selected ${value}`);
 };
-const LinkValue = (props) => {
+  class LinkValue extends Component {
+    form = React.createRef();
+    state = {
+        errorMessage: null,
+        ibanDetailsLoading: false,
+        isLoading: true,
+        details: {},
+        ibanDetails: {},
+        docDetails: {}, isBtnLoading: false,
+        showDeclartion: false,
+        iBanValid:false
+    };
   
-  return (
-    
+    submit  = async (values) => {
+      this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
+    }
+  render() {
+    if (this.state.showDeclartion) {
+      return <div className="text-center">
+          <Image width={80} preview={false} src={alertIcon} />
+          <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
+          <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
+             Please sign using link received in email to whitelist your address. `}</Text>
+          <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
+          <div className="my-25"><Button onClick={() => this.props.onContinue({ close: true, isCrypto: true })} type="primary" className="mt-36 pop-btn text-textDark">BACK</Button></div>
+      </div>
+  }
+  else {
+    return <>
     <div>
-      <Form >
+      <Form 
+      //initialValues={this.state.details}
+      className="custom-label  mb-0"
+      ref={this.form}
+      onFinish={this.submit}
+      >
         <Form.Item className="custom-label"
           name="addressType"
           label="Save Whitelist Name As* ">
@@ -53,7 +85,10 @@ const LinkValue = (props) => {
         </Form.Item>
       </Form>
     </div>
-  )
+    </>
+  } 
 };
 
-export default LinkValue;
+}
+
+export default ConnectStateProps(LinkValue);
