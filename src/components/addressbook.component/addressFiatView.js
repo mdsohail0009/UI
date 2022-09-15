@@ -40,7 +40,7 @@ const AddressFiatView = (props) => {
 		setIsLoading(false)
 	};
 	const backToAddressBook = () => {
-		props?.history?.push("/addressbook");
+		props?.history?.push("/addressbook?key=2");
 		props?.dispatch(addressTabUpdate(true));
 
 	};
