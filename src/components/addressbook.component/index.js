@@ -702,7 +702,7 @@ class AddressBook extends Component {
 							{this.renderTitle()}
 							<div className="text-center fs-16">
 								<Translate
-									className="text-white-30 fw-600 text-upper mb-4"
+									className="text-white-30 fw-600 text-upper mb-4 fs-24"
 									content={
 										this.props.addressBookReducer.stepTitles[
 										config[this.props.addressBookReducer.stepcode]
