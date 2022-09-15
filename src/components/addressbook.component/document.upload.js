@@ -31,7 +31,7 @@ class AddressDocumnet extends Component {
             "documentName": doc.name,
             "status": true,
             "recorder": 0,
-            "remarks": "",
+            "remarks":  doc.size,
             "isChecked": true,
             "state": "",
             "path": doc?.response[0]
