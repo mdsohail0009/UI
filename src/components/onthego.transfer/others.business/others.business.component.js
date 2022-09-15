@@ -21,7 +21,8 @@ class OthersBusiness extends Component {
         ibanDetails: {},
         docDetails: {}, isBtnLoading: false,
         showDeclartion: false,
-        iBanValid:false
+        iBanValid: false,
+        isEdit: false
     };
     componentDidMount() {
         this.loadDetails();
@@ -29,6 +30,7 @@ class OthersBusiness extends Component {
     loadDetails = async () => {
         this.setState({ ...this.state, errorMessage: null, isLoading: true });
         const response = await createPayee(this.props.userProfile.id, this.props.selectedAddress?.id || "", "business");
+        let edit = false;
         if (response.ok) {
             let data = response.data;
             if (!data?.payeeAccountModels) {
@@ -36,15 +38,17 @@ class OthersBusiness extends Component {
             }
             if (this.props.selectedAddress) {
                 const accountDetails = data.payeeAccountModels[0];
-                data = { ...data, ...accountDetails,line1:data.line1,line2:data.line2,line3:data.line3,bankAddress1:accountDetails.line1,bankAddress2:accountDetails.line2 };
+                data = { ...data, ...accountDetails, line1: data.line1, line2: data.line2, line3: data.line3, bankAddress1: accountDetails.line1, bankAddress2: accountDetails.line2 };
                 delete data["documents"];
                 if (data?.iban) {
                     this.handleIbanChange({ target: { value: data?.iban } });
                 }
+                edit = true;
             }
-            const ibanDetails=response.data?.payeeAccountModels[0]||{}
-            this.setState({ ...this.state, errorMessage: null, details: data,ibanDetails }, () => {
-                this.setState({ ...this.state, isLoading: false });
+            const ibanDetails = response.data?.payeeAccountModels[0] || {}
+            this.setState({ ...this.state, errorMessage: null, details: data, ibanDetails }, () => {
+                this.setState({ ...this.state, isLoading: false, edit: isEdit });
+                this.props?.onEdit(edit);
             });
         } else {
             this.setState({ ...this.state, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, details: {} });
@@ -52,19 +56,19 @@ class OthersBusiness extends Component {
     }
     handleIbanChange = async ({ target: { value } }) => {
         if (value?.length > 3) {
-            this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true,iBanValid:true });
+            this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true, iBanValid: true });
             const response = await fetchIBANDetails(value);
             if (response.ok) {
-                if(response.data && (response.data?.routingNumber || response.data?.bankName)){
-                    this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:true });
-                }else{
-                    this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:false });
+                if (response.data && (response.data?.routingNumber || response.data?.bankName)) {
+                    this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid: true });
+                } else {
+                    this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid: false });
                 }
             } else {
-                this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false, errorMessage: response.data || response.data?.message || response.originalError?.message });
+                this.setState({ ...this.state, ibanDetailsLoading: false, iBanValid: false, errorMessage: response.data || response.data?.message || response.originalError?.message });
             }
-        }else{
-            this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false})
+        } else {
+            this.setState({ ...this.state, ibanDetailsLoading: false, iBanValid: false })
         }
     }
     submitPayee = async (values) => {
@@ -76,7 +80,7 @@ class OthersBusiness extends Component {
         _obj.payeeAccountModels[0].country = ibanDetails?.country;
         _obj.payeeAccountModels[0].postalCode = ibanDetails?.zipCode;
         _obj.payeeAccountModels[0].bankBranch = ibanDetails?.branch;
-        _obj.payeeAccountModels[0].bic=ibanDetails?.routingNumber;
+        _obj.payeeAccountModels[0].bic = ibanDetails?.routingNumber;
         _obj.payeeAccountModels[0].iban = values?.iban;
         _obj.payeeAccountModels[0].currencyType = "Fiat";
         _obj.payeeAccountModels[0].walletCode = "EUR";
@@ -254,7 +258,7 @@ class OthersBusiness extends Component {
                                                 return Promise.reject(
                                                     "Invalid  IBAN Number"
                                                 );
-                                            }else {
+                                            } else {
                                                 return Promise.resolve();
                                             }
                                         },
@@ -295,67 +299,67 @@ class OthersBusiness extends Component {
                                 <Input
                                     className="cust-input"
                                     placeholder={"Reason Of Transfer"}
-                                    // onChange={this.handleIbanChange}
+                                // onChange={this.handleIbanChange}
                                 />
                             </Form.Item>
                         </Col>}
                     </Row>
                     <div className="box basic-info alert-info-custom mt-16">
                         <Spin spinning={this.state.ibanDetailsLoading}>
-                        {this.state.iBanValid && <Row>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
-                                    <strong>Bank Name</strong>
-                                </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.ibanDetails?.bankName || "-"}</Text></div>
+                            {this.state.iBanValid && <Row>
+                                <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                                    <label className="fs-14 fw-400 text-white">
+                                        <strong>Bank Name</strong>
+                                    </label>
+                                    <div><Text className="fs-14 fw-400 text-white">{this.state.ibanDetails?.bankName || "-"}</Text></div>
 
-                            </Col>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
-                                    <strong>BIC</strong>
-                                </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.ibanDetails?.routingNumber || "-"}</Text></div>
+                                </Col>
+                                <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                                    <label className="fs-14 fw-400 text-white">
+                                        <strong>BIC</strong>
+                                    </label>
+                                    <div><Text className="fs-14 fw-400 text-white">{this.state.ibanDetails?.routingNumber || "-"}</Text></div>
 
-                            </Col>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
-                                    <strong>Branch</strong>
-                                </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.branch || "-"}</Text></div>
+                                </Col>
+                                <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                                    <label className="fs-14 fw-400 text-white">
+                                        <strong>Branch</strong>
+                                    </label>
+                                    <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.branch || "-"}</Text></div>
 
-                            </Col>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
-                                    <strong>Country</strong>
-                                </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.country || "-"}</Text></div>
+                                </Col>
+                                <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                                    <label className="fs-14 fw-400 text-white">
+                                        <strong>Country</strong>
+                                    </label>
+                                    <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.country || "-"}</Text></div>
 
-                            </Col>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
-                                    <strong>State</strong>
-                                </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.state || "-"}</Text></div>
+                                </Col>
+                                <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                                    <label className="fs-14 fw-400 text-white">
+                                        <strong>State</strong>
+                                    </label>
+                                    <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.state || "-"}</Text></div>
 
-                            </Col>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
-                                    <strong>City</strong>
-                                </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.city || "-"}</Text></div>
+                                </Col>
+                                <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                                    <label className="fs-14 fw-400 text-white">
+                                        <strong>City</strong>
+                                    </label>
+                                    <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.city || "-"}</Text></div>
 
-                            </Col>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
-                                    <strong>Zip</strong>
-                                </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.zipCode || "-"}</Text></div>
+                                </Col>
+                                <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                                    <label className="fs-14 fw-400 text-white">
+                                        <strong>Zip</strong>
+                                    </label>
+                                    <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.zipCode || "-"}</Text></div>
 
-                            </Col>
-                        </Row>}
-                        {!this.state.iBanValid && !this.state.ibanDetailsLoading &&<span>No bank details available</span>}
+                                </Col>
+                            </Row>}
+                            {!this.state.iBanValid && !this.state.ibanDetailsLoading && <span>No bank details available</span>}
                         </Spin>
-                       
+
                     </div>
                     <Paragraph className="fw-300 mb-0 pb-4 ml-12 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
 
@@ -368,18 +372,18 @@ class OthersBusiness extends Component {
                         {/* <Row gutter={[16, 16]}>
                             <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col>
                             <Col xs={12} md={12} lg={12} xl={12} xxl={12}> */}
-                                <Button
-                                    htmlType="submit"
-                                    size="large"
-                                    className="pop-btn mb-36"
-                                    style={{ minWidth: 150 }}
-                                    disabled={this.state.ibanDetailsLoading}
-                                    loading={this.state.isBtnLoading} >
+                        <Button
+                            htmlType="submit"
+                            size="large"
+                            className="pop-btn mb-36"
+                            style={{ minWidth: 150 }}
+                            disabled={this.state.ibanDetailsLoading}
+                            loading={this.state.isBtnLoading} >
                             {this.props.type === "manual" && "Save"}
                             {this.props.type !== "manual" && "Continue"}
-                                    
-                                </Button>
-                            {/* </Col>
+
+                        </Button>
+                        {/* </Col>
                         </Row> */}
                     </div>
                 </Form>}
