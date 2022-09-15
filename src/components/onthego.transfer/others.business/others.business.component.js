@@ -55,7 +55,11 @@ class OthersBusiness extends Component {
             this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true,iBanValid:true });
             const response = await fetchIBANDetails(value);
             if (response.ok) {
-                this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:true });
+                if(response.data && (response.data?.routingNumber || response.data?.bankName)){
+                    this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:true });
+                }else{
+                    this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:false });
+                }
             } else {
                 this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false, errorMessage: response.data || response.data?.message || response.originalError?.message });
             }
@@ -349,12 +353,7 @@ class OthersBusiness extends Component {
 
                             </Col>
                         </Row>}
-                        {!this.state.iBanValid && !this.state.ibanDetailsLoading && <Row>
-                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
-                                <div><Text className="fs-14 fw-400 text-white">No bank details available</Text></div>
-
-                            </Col>
-                        </Row>}
+                        {!this.state.iBanValid && !this.state.ibanDetailsLoading &&<span>No bank details available</span>}
                         </Spin>
                        
                     </div>
