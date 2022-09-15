@@ -254,7 +254,7 @@ const Verifications = (props) => {
                 style={{ color: "black", margin: "0 auto" }}
                 loading={phone.btnLoader}
                 onClick={() => getphoneOTP()}
-            ><Text className="text-yellow" >Resend Code</Text></Button>
+            ><Text className="text-yellow" >Click here to resend code</Text></Button>
         ),
         code_Sent: (<>
             <Button
@@ -304,7 +304,7 @@ const Verifications = (props) => {
                 type="text"
                 style={{ color: "black", margin: "0 auto" }}
                 loading={email.btnLoader}
-                onClick={() => sendEmailOTP()}><Text className="text-yellow" >Resend Code</Text></Button>
+                onClick={() => sendEmailOTP()}><Text className="text-yellow" >Click here to resend code</Text></Button>
         ),
         code_Sent: (<>
             <Button

@@ -492,7 +492,7 @@ class OnthegoFundTransfer extends Component {
             reasonfortransfer: <React.Fragment>
                 <div className="mb-16" style={{textAlign:'center'}}>
                     <text Paragraph
-                        className='fw-600 text-white px-4 mb-16 mt-4 text-captz'style={{ fontSize: '18px ' }}>Transfer Details</text>
+                        className='text-white fs-30 fw-600 px-4 mb-16 mt-4'style={{ fontSize: '18px ' }}>Transfer Details</text>
                 </div>
                 <Form
                     autoComplete="off"
