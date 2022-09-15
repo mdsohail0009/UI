@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Input, Row, Col, Form, Button, Typography, Tabs, Image, Alert } from 'antd';
+import { Input, Row, Col, Form, Button, Typography, Radio, Tabs, Image, Alert } from 'antd';
 import {createPayee, payeeAccountObj, savePayee, confirmTransaction} from "../api";
 import AddressDocumnet from "../../addressbook.component/document.upload";
 import PayeeBankDetails from "./bankdetails.component";
@@ -118,16 +118,14 @@ const SomeoneComponent = (props) => {
                                  form.current.resetFields();
                                 // form.current.setFieldsValue({ addressType: 'someoneelse', transferType: activekey })
                             }}>
-                                <Tabs.TabPane tab="Domestic USD Transfer" className="text-white" key={"domestic"}></Tabs.TabPane>
-                                <Tabs.TabPane tab="International USD Swift" className="text-white" key={"international"}></Tabs.TabPane>
+                                <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz" key={"domestic"}></Tabs.TabPane>
+                                <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"}></Tabs.TabPane>
                             </Tabs>
                         </Col>
                     </Row>
                 </>}
                 {props.currency == 'EUR' && <h2 style={{ fontSize: 18, textAlign: 'center', color: "white" }}>SEPA Transfer</h2>}
-                
-        
-            {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
+                {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
             <Form
                 ref={form}
                 onFinish={onSubmit}
@@ -139,7 +137,7 @@ const SomeoneComponent = (props) => {
                 <Row gutter={[16, 16]} className={'pb-16'}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item
-                            className="custom-forminput custom-label mb-0"
+                            className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-16"
                             name="favouriteName"
                             required
                             rules={[
@@ -171,13 +169,13 @@ const SomeoneComponent = (props) => {
                 <Translate style={{ fontSize: 18 }}
                     content="Beneficiary_Details"
                     component={Paragraph}
-                    className="mb-8  text-white fw-500 mt-16"
+                    className="mb-8 px-4 text-white fw-500 mt-16"
                 />
                 <>
-                    <Row gutter={[16, 16]}>
+                    <Row gutter={[4, 4]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                                 name="firstName"
                                 required
                                 rules={[
@@ -203,10 +201,9 @@ const SomeoneComponent = (props) => {
                                 />
                             </Form.Item>
                         </Col>
-                        
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                                 name="lastName"
                                 required
                                 rules={[
@@ -234,7 +231,7 @@ const SomeoneComponent = (props) => {
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                                 name={"relation"}
                                 required
                                 rules={[
@@ -268,7 +265,7 @@ const SomeoneComponent = (props) => {
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                                 name="line1"
                                 required
                                 rules={[
@@ -288,7 +285,7 @@ const SomeoneComponent = (props) => {
                                     "Address Line 1"
                                 }
                             >
-                                    <TextArea
+                                <TextArea
                                         placeholder={'Address Line 1'}
                                         className="cust-input cust-text-area address-book-cust"
                                         autoSize={{ minRows: 1, maxRows: 2 }}
@@ -298,7 +295,7 @@ const SomeoneComponent = (props) => {
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                                 name="line2"
                                 rules={[
                                     {
@@ -309,7 +306,7 @@ const SomeoneComponent = (props) => {
                                     "Address Line 2"
                                 }
                             >
-                                 <TextArea
+                                <TextArea
                                         placeholder={'Address Line 2'}
                                         className="cust-input cust-text-area address-book-cust"
                                         autoSize={{ minRows: 1, maxRows: 2 }}
@@ -319,7 +316,7 @@ const SomeoneComponent = (props) => {
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                                 name="line3"
                                 rules={[
                                     {
@@ -341,8 +338,8 @@ const SomeoneComponent = (props) => {
                     </Row>
                 </>
                 {/* <Divider /> */}
-                <Paragraph className="mb-8  text-white fw-500 mt-16" style={{ fontSize: 18 }}>Bank Details</Paragraph>
-                {((props.selectedAddress?.id && createPayeeObj)||!props.selectedAddress?.id ) &&<PayeeBankDetails selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} type={props.type} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />}
+                <Paragraph className="mb-8 fw-500 text-white px-4 mt-36" style={{ fontSize: 18 }}>Bank Details</Paragraph>
+                {((props.selectedAddress?.id && createPayeeObj)||!props.selectedAddress?.id ) &&<PayeeBankDetails form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />}
                 <Paragraph className="fw-300 mb-0 pb-4 ml-12 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
                 {console.log(documents)}
                 <AddressDocumnet documents={documents || null} onDocumentsChange={(docs) => {
@@ -359,9 +356,9 @@ const SomeoneComponent = (props) => {
                     <Button
                         htmlType="submit"
                         size="large"
-                        className="pop-btn px-36"
+                        className="pop-btn px-36 mt-36"
                         loading={btnLoading}
-                        style={{ minWidth: 150 }}
+                        style={{ minWidth: "100%" }}
                     // onClick={() => console.log(form.getFieldsValue())}
                     >
                         {props.type === "manual" && "Save"}
