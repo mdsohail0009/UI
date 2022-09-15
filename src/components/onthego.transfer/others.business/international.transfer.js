@@ -106,7 +106,7 @@ class InternationalTransfer extends Component {
                                     !/^[a-z0-9_.-\s]+$/.test(value)
                                 ) {
                                     return Promise.reject(
-                                        "Invalid Bank Name"
+                                        "Please enter valid content"
                                     );
                                 }else {
                                     return Promise.resolve();
@@ -122,36 +122,7 @@ class InternationalTransfer extends Component {
 
                 </Form.Item>
             </Col>
-            {this.props.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                <Form.Item
-                    className="custom-forminput custom-label mb-0"
-                    name="reasonOfTransfer"
-                    required
-                    rules={[
-                        {
-                            required: true,
-                            message: apiCalls.convertLocalLang("is_required"),
-                        },
-                        {
-                            whitespace: true,
-                            message: apiCalls.convertLocalLang("is_required"),
-                        },
-                        {
-                            validator: validateContentRule,
-                        },
-                    ]}
-                    label={
-                        "Reason Of Transfer"
-                    }
-                >
-                    <TextArea
-                        placeholder={"Reason Of Transfer"}
-                        className="cust-input cust-text-area address-book-cust"
-                        autoSize={{ minRows: 1, maxRows: 1 }}
-                        maxLength={100}
-                    ></TextArea>
-                </Form.Item>
-            </Col>}
+           
             {/* <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
                     className="custom-forminput custom-label mb-0"
@@ -252,7 +223,36 @@ class InternationalTransfer extends Component {
                     ></TextArea>
                 </Form.Item>
             </Col>
-           
+            {this.props.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                <Form.Item
+                    className="custom-forminput custom-label mb-0"
+                    name="reasonOfTransfer"
+                    required
+                    rules={[
+                        {
+                            required: true,
+                            message: apiCalls.convertLocalLang("is_required"),
+                        },
+                        {
+                            whitespace: true,
+                            message: apiCalls.convertLocalLang("is_required"),
+                        },
+                        {
+                            validator: validateContentRule,
+                        },
+                    ]}
+                    label={
+                        "Reason Of Transfer"
+                    }
+                >
+                    <TextArea
+                        placeholder={"Reason Of Transfer"}
+                        className="cust-input cust-text-area address-book-cust"
+                        autoSize={{ minRows: 1, maxRows: 1 }}
+                        maxLength={100}
+                    ></TextArea>
+                </Form.Item>
+            </Col>}
         </Row>
     }
 }

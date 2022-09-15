@@ -363,7 +363,7 @@ class PayeeBankDetails extends Component {
                                         !/^[a-z0-9_.-\s]+$/.test(value)
                                     ) {
                                         return Promise.reject(
-                                            "Invalid Bank Name"
+                                            "Please enter valid content"
                                         );
                                     }else {
                                         return Promise.resolve();
@@ -379,6 +379,86 @@ class PayeeBankDetails extends Component {
                             )}
                             maxLength="500"
                         />
+                    </Form.Item>
+                </Col>
+               
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                        name={["payeeAccountModels","line1"]}
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message: apicalls.convertLocalLang("is_required"),
+                            },
+                            {
+                                whitespace: true,
+                                message: apicalls.convertLocalLang("is_required"),
+                            },
+                            {
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Please enter valid content"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            }
+                        ]}
+                        label={
+                            <Translate
+                                content="bankaddressline1"
+                                component={Form.label}
+                            />
+                        }
+                    >
+                        <TextArea
+                            placeholder={apicalls.convertLocalLang("bankaddressline1")}
+                            className="cust-input cust-text-area address-book-cust"
+                            autoSize={{ minRows: 1, maxRows: 2 }}
+                            maxLength={100}
+                        ></TextArea>
+                    </Form.Item>
+                </Col>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                        name={["payeeAccountModels","line2"]}
+                        rules={[
+                           {
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Please enter valid content"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            }
+                        ]}
+                        label={
+                            <Translate
+                                content="bankaddressline2"
+                                component={Form.label}
+                            />
+                        }
+                    >
+                        <TextArea
+                            placeholder={apicalls.convertLocalLang("bankaddressline2")}
+                            className="cust-input cust-text-area address-book-cust"
+                            autoSize={{ minRows: 1, maxRows: 2 }}
+                            maxLength={100}
+                        ></TextArea>
                     </Form.Item>
                 </Col>
                 {this.props.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -416,86 +496,6 @@ class PayeeBankDetails extends Component {
                         ></TextArea>
                     </Form.Item>
                 </Col>}
-                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
-                        name={["payeeAccountModels","line1"]}
-                        required
-                        rules={[
-                            {
-                                required: true,
-                                message: apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                whitespace: true,
-                                message: apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                validator: (_, value) => {
-                                    if (
-                                        value &&
-                                        !/^[A-Za-z0-9]+$/.test(value)
-                                    ) {
-                                        return Promise.reject(
-                                            "Invalid Bank Address 1"
-                                        );
-                                    }else {
-                                        return Promise.resolve();
-                                    }
-                                },
-                            }
-                        ]}
-                        label={
-                            <Translate
-                                content="bankaddressline1"
-                                component={Form.label}
-                            />
-                        }
-                    >
-                        <TextArea
-                            placeholder={apicalls.convertLocalLang("bankaddressline1")}
-                            className="cust-input cust-text-area address-book-cust"
-                            autoSize={{ minRows: 1, maxRows: 2 }}
-                            maxLength={100}
-                        ></TextArea>
-                    </Form.Item>
-                </Col>
-                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
-                        name={["payeeAccountModels","line2"]}
-                        rules={[
-                           {
-                                validator: (_, value) => {
-                                    if (
-                                        value &&
-                                        !/^[A-Za-z0-9]+$/.test(value)
-                                    ) {
-                                        return Promise.reject(
-                                            "Invalid Bank Address 2"
-                                        );
-                                    }else {
-                                        return Promise.resolve();
-                                    }
-                                },
-                            }
-                        ]}
-                        label={
-                            <Translate
-                                content="bankaddressline2"
-                                component={Form.label}
-                            />
-                        }
-                    >
-                        <TextArea
-                            placeholder={apicalls.convertLocalLang("bankaddressline2")}
-                            className="cust-input cust-text-area address-book-cust"
-                            autoSize={{ minRows: 1, maxRows: 2 }}
-                            maxLength={100}
-                        ></TextArea>
-                    </Form.Item>
-                </Col>
-                
                 
             </>
         }
