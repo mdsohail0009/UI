@@ -1,4 +1,4 @@
-import { Form, Row, Col, Divider, Typography, Input, Button, Alert,Image, Spin} from "antd";
+import { Form, Row, Col, Divider, Typography, Input, Button, Alert, Image, Spin } from "antd";
 import React, { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
 import { validateContentRule } from "../../../utils/custom.validator";
@@ -10,7 +10,7 @@ import ConnectStateProps from "../../../utils/state.connect";
 import Loader from "../../../Shared/loader";
 import Translate from "react-translate-component";
 import alertIcon from '../../../assets/images/pending.png';
-const { Paragraph, Text,Title } = Typography;
+const { Paragraph, Text, Title } = Typography;
 const { TextArea } = Input;
 class OthersBusiness extends Component {
     form = React.createRef();
@@ -56,7 +56,11 @@ class OthersBusiness extends Component {
             this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true,iBanValid:true });
             const response = await fetchIBANDetails(value);
             if (response.ok) {
-                this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:true });
+                if(response.data && (response.data?.routingNumber || response.data?.bankName)){
+                    this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:true });
+                }else{
+                    this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:false });
+                }
             } else {
                 this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false, errorMessage: response.data || response.data?.message || response.originalError?.message });
             }
@@ -122,8 +126,8 @@ class OthersBusiness extends Component {
         if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} /> }
         else {
             return <>
-                
-                <Paragraph className="mb-16 fs-16 text-white fw-500 mt-16 text-center">SEPA Transfer</Paragraph>
+                {/* <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16 text-center">SEPA Transfer</Paragraph> */}
+                <h2 style={{ fontSize: 18, textAlign: 'center', color: "white" }}>SEPA Transfer</h2>
                 {this.state.isLoading && <Loader />}
                 {this.state.errorMessage && <Alert type="error" showIcon closable={false} description={this.state.errorMessage} />}
                 {!this.state.isLoading && <Form initialValues={this.state.details}
@@ -132,10 +136,10 @@ class OthersBusiness extends Component {
                     onFinish={this.submitPayee}
                     scrollToFirstError
                 >
-                    <Row gutter={[4, 4]}>
+                    <Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label"
+                                className="custom-forminput custom-label mb-0"
                                 name="favouriteName"
                                 label={"Save Whitelist Name As"}
                                 required
@@ -166,7 +170,7 @@ class OthersBusiness extends Component {
                     <Translate style={{ fontSize: 18 }}
                         content="Beneficiary_Details"
                         component={Paragraph}
-                        className="mb-8 fs-18 text-white fw-500 mt-16 px-4"
+                        className="mb-8 fs-18 text-white fw-500 mt-16"
                     />
                     {/* <Divider /> */}
                     <Row gutter={[12, 12]}>
@@ -198,7 +202,7 @@ class OthersBusiness extends Component {
                                 />
                             </Form.Item>
                         </Col>
-                       <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
                                 className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                                 name="relation"
@@ -228,9 +232,9 @@ class OthersBusiness extends Component {
                         <RecipientAddress />
                     </Row>
 
-                    <Paragraph className="mb-8 fs-14 text-white fw-500 mt-36 px-4">Recipient's Bank Details</Paragraph>
+                    <Paragraph className="mb-8 fs-14 text-white fw-500 mt-36 px-4">Bank Details</Paragraph>
                     {/* <Divider /> */}
-                    <Row gutter={[8, 8]}>
+                    <Row gutter={[16, 16]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
                                 className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
@@ -255,8 +259,6 @@ class OthersBusiness extends Component {
                                                 return Promise.resolve();
                                             }
                                         },
-                                    },{
-                                        validator: validateContentRule
                                     }
                                 ]}
                             >
@@ -269,7 +271,7 @@ class OthersBusiness extends Component {
                             </Form.Item>
                         </Col>
 
-                        {this.props.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                        {this.props.type !== "manual" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
                                 className="fw-300 mb-8 px-4 text-white-50 py-4 custom-forminput custom-label"
                                 name="reasonOfTransfer"
@@ -300,10 +302,10 @@ class OthersBusiness extends Component {
                         </Col>}
                     </Row>
                     <div className="box basic-info alert-info-custom mt-16">
-                    <Spin spinning={this.state.ibanDetailsLoading}>
+                        <Spin spinning={this.state.ibanDetailsLoading}>
                         {this.state.iBanValid && <Row>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 ">
+                                <label className="fs-14 fw-400">
                                     <strong>Bank Name</strong>
                                 </label>
                                 <div><Text className="fs-14 fw-400 text-purewhite">{this.state.ibanDetails?.bankName || "-"}</Text></div>
@@ -370,13 +372,13 @@ class OthersBusiness extends Component {
                     }} />
                     <div className="align-center">
                         {/* <Row gutter={[16, 16]}>
-                            // {/* <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col> */}
-                            {/* <Col xs={24} md={24}> */}
-                            <Button
+                            <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col>
+                            <Col xs={12} md={12} lg={12} xl={12} xxl={12}> */}
+                                <Button
                                     htmlType="submit"
                                     size="large"
                                     className="pop-btn mb-36"
-                                    // style={{ minWidth: 150 }}
+                                    //style={{ minWidth: 150 }}
                                     disabled={this.state.ibanDetailsLoading}
                                     loading={this.state.isBtnLoading} >
                             {this.props.type === "manual" && "Save"}

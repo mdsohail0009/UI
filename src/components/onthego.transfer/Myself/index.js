@@ -162,11 +162,12 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 </Col>
             </Row>
         </>}
+        
+        
         {currency == 'EUR' && <h2 style={{ fontSize: 18, textAlign: 'center', color: "white" }}>SEPA Transfer</h2>}
         
         {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
         {!isLoading &&<>
-        {currency == 'EUR' && <h2 style={{ fontSize: 18, textAlign: 'center', color: "white" }}>SEPA transfer</h2>}
         <Row gutter={[4, 4]}><Col xs={24} md={24} lg={24} xl={24} xxl={24} id="favoriteName" className="mt-16">
             <Form.Item
                 className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label"
@@ -220,11 +221,11 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     <Input
                         className="cust-input"
                         placeholder='IBAN'
-                    onChange={(e)=>getBankDeails(e)}/>
+                        onChange={(e)=>getBankDeails(e)}/>
                 </Form.Item>
             </Col>} */}
             </Row>
-        <Translate style={{ fontSize: 18,color: "white" }}
+            <Translate style={{ fontSize: 18,color: "white" }}
                     content="Beneficiary_Details"
                     component={Paragraph}
                     className="mt-24 text-captz px-4 text-white fw-500"
@@ -233,32 +234,44 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         <div className="box basic-info alert-info-custom">
             <Row>
                 {!isBusiness && <><Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-12 fw-300 "> First Name </label>
+                    <label className="fs-12 fw-300">
+                        First name
+                    </label>
                     <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.firstName}</Text></div>
 
                 </Col>
                     <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-12 fw-300 ">Last Name</label>
+                        <label className="fs-12 fw-300">
+                            Last Name
+                        </label>
                         <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.lastName}</Text></div>
 
                     </Col></>}
                 {isBusiness && <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-12 fw-300 ">Beneficiary Name</label>
+                    <label className="fs-12 fw-300">
+                        Beneficiary Name
+                    </label>
                     <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.beneficiaryName}</Text></div>
 
                 </Col>}
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-12 fw-300">Address Line 1</label>
+                    <label className="fs-12 fw-300 ">
+                        Address Line 1
+                    </label>
                     <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.line1!=null?recipientDetails.line1:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-12 fw-300 ">Address Line 2</label>
+                    <label className="fs-12 fw-300 ">
+                        Address Line 2
+                    </label>
                     <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.line2!=null?recipientDetails.line2:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-12 fw-300 ">Address Line 3</label>
+                    <label className="fs-12 fw-300">
+                       Address Line 3
+                    </label>
                     <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.line3!=null?recipientDetails.line3:'-'}</Text></div>
 
                 </Col>
@@ -266,7 +279,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             </Row>
         </div>
 
-        <h2 style={{ fontSize: 18, color: "white" }} className="mt-36 text-captz px-4">Bank details</h2>
+        <h2 style={{ fontSize: 18, color: "white" }} className="mt-36 text-captz px-4">Bank Details</h2>
         {currency == 'EUR' && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
             <Form.Item
                 className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
@@ -415,7 +428,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                                 validator: (_, value) => {
                                     if (
                                         value &&
-                                        !/^[A-Za-z0-9]+$/.test(value)
+                                        !/^[a-z0-9_.-\s]+$/.test(value)
                                     ) {
                                         return Promise.reject(
                                             "Invalid Bank Name"
@@ -432,6 +445,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         />
                     </Form.Item>
                 </Col>
+
+
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
@@ -442,6 +457,19 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             {
                                 required: true,
                                 message: apiCalls.convertLocalLang("is_required"),
+                            },{
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid Bank Address 1"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
                             }
                         ]}>
                         <TextArea
@@ -457,55 +485,72 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
                         name="line2"
                         label='Bank Address 2'
-                    >
-                         <TextArea
+                        rules={[{
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid Bank Address 2"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            }
+                        ]}>
+                       
+                        <TextArea
                             placeholder={'Bank Address 2'}
                             className="cust-input cust-text-area address-book-cust"
                             autoSize={{ minRows: 1, maxRows: 2 }}
                             maxLength={100}
                         ></TextArea>
                     </Form.Item>
-                </Col>
-                </>}
+                </Col></>}
         </Row>
         {currency == 'EUR' && <div className="box basic-info alert-info-custom mt-16">
             <Spin spinning={ibanLoading}>
             {validIban&&<Row>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                <label className="fs-12 fw-300 ">Bank Name</label>
+                <label className="fs-12 fw-300">
+                        Bank Name
+                </label>
                 <div><Text className="fs-14 fw-400 text-purewhite">{(bankDetails?.bankName!=''&&bankDetails?.bankName!=null)?bankDetails?.bankName:'-'}</Text></div>
 
             </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-12 fw-300 ">BIC</label>
+                <label className="fs-12 fw-300 ">BIC</label>
                    <div><Text className="fs-14 fw-400 text-purewhite"> {bankDetails.routingNumber!=''&&bankDetails.routingNumber!=null?bankDetails.routingNumber:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-12 fw-300 ">Branch</label>
+                <label className="fs-12 fw-300 ">Branch</label>
                     <div><Text className="fs-14 fw-400 text-purewhite">{bankDetails.branch!=''&&bankDetails.branch!=null?bankDetails.branch:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-12 fw-300 ">Country</label>
+                <label className="fs-12 fw-300 ">Country</label>
                     <div><Text className="fs-14 fw-400 text-purewhite">{bankDetails.country!=''&&bankDetails.country!=null?bankDetails.country:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-12 fw-300">State</label>
+                <label className="fs-12 fw-300">State</label>
                     <div><Text className="fs-14 fw-400 text-purewhite">{bankDetails.state!=''&&bankDetails.state!=null?bankDetails.state:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-12 fw-300">City</label>
+                <label className="fs-12 fw-300">City</label>
                     <div><Text className="fs-14 fw-400 text-purewhite">{(bankDetails.city!=''&&bankDetails.city!=null)?bankDetails.city:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-12 fw-300">Zip</label>
+                <label className="fs-12 fw-300">Zip</label>
                     <div><Text className="fs-14 fw-400 text-purewhite">{(bankDetails.zipCode!=''&&bankDetails.zipCode!=null)?bankDetails.zipCode:'-'}</Text></div>
 
                 </Col></Row>}
+                
                 {(!validIban)&&<span>No bank details available</span>}
                 </Spin>
         </div>}
@@ -517,7 +562,6 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 style={{ width:'100%' }}
                 loading={isBtnLoading} 
             >
-            
                                 {props.type === "manual" && "Save"}
                                 {props.type !== "manual" && <Translate content="continue" />}
                 

@@ -1,14 +1,15 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { Form, Row, Col, Radio } from 'antd';
 import { useForm } from "antd/lib/form/Form";
 import ConnectStateProps from "../../utils/state.connect";
 import OthersBusiness from "../onthego.transfer/others.business/others.business.component";
 import MyselfNewTransfer from '../onthego.transfer/Myself'
 import SomeoneComponent from "../onthego.transfer/others.SomeOneElse/someone.component"
-const FiatAddress = ({ onSubmit, onAddressOptionsChange,selectedAddress, onContinue, PayeeLu = [], emailExist = false, countries = [], states = [], fiatAddress, onTheGoObj, ...props }) => {
+const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onContinue, PayeeLu = [], emailExist = false, countries = [], states = [], fiatAddress, onTheGoObj, ...props }) => {
     const [form] = useForm();
-    const addrType = selectedAddress?.addressType?selectedAddress?.addressType?.toLowerCase():props.userProfile?.isBusiness?"ownbusiness":"myself";
-    const [addressOptions, setAddressOptions] = useState({ addressType:addrType, transferType: props.currency === "EUR" ? "sepa" : "domestic" });
+    const addrType = selectedAddress?.addressType ? selectedAddress?.addressType?.toLowerCase() : props.userProfile?.isBusiness ? "ownbusiness" : "myself";
+    const [addressOptions, setAddressOptions] = useState({ addressType: addrType, transferType: props.currency === "EUR" ? "sepa" : "domestic" });
+    const [isEdit, setIsEdit] = useState(false);
     return <>
         <Form
             form={form}
@@ -29,8 +30,9 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange,selectedAddress, onConti
                                 setAddressOptions({ ...addressOptions, addressType: value.target.value });
                                 onAddressOptionsChange({ ...addressOptions, addressType: value.target.value });
                             }}
+                            disabled={isEdit}
                         >
-                            <Radio.Button className="custom-btn sec mt-8" value={props.userProfile?.isBusiness?"ownbusiness":"myself"}>{props.userProfile?.isBusiness ? "My Company" : "My Self"}</Radio.Button>
+                            <Radio.Button className="custom-btn sec mt-8" value={props.userProfile?.isBusiness ? "ownbusiness" : "myself"}>{props.userProfile?.isBusiness ? "My Company" : "My Self"}</Radio.Button>
                             <Radio.Button className="custom-btn sec mt-8" value="someoneelse">Someone Else</Radio.Button>
                             <Radio.Button className="custom-btn sec mt-8" value="business">Business</Radio.Button>
                         </Radio.Group>
@@ -38,10 +40,12 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange,selectedAddress, onConti
                 </Row>
             </Form.Item>
         </Form>
-        {(addressOptions.addressType === "ownbusiness"||addressOptions.addressType === "myself") && <MyselfNewTransfer currency={props.currency} type={props.type} onContinue={(obj) => onContinue(obj)} {...props} isBusiness={props.userProfile?.isBusiness}
-            onTheGoObj={{amount:props.amount}} selectedAddress={selectedAddress}></MyselfNewTransfer>}
-        {addressOptions.addressType === "business" && <OthersBusiness selectedAddress={selectedAddress} type={props.type} isUSDTransfer={props.currency === "USD" ? true : false} onContinue={(obj) => onContinue(obj)} amount={props.amount} />}
-        {addressOptions.addressType === "someoneelse" && <SomeoneComponent selectedAddress={selectedAddress} addressType={addressOptions.addressType} type={props.type} currency={props.currency} onContinue={(obj) => onContinue(obj)} onTheGoObj={{amount:props.amount}} />}
+        {(addressOptions.addressType === "ownbusiness" || addressOptions.addressType === "myself") && <MyselfNewTransfer currency={props.currency} type={props.type} onContinue={(obj) => onContinue(obj)} {...props} isBusiness={props.userProfile?.isBusiness}
+            onTheGoObj={{ amount: props.amount }} selectedAddress={selectedAddress}></MyselfNewTransfer>}
+        {addressOptions.addressType === "business" && <OthersBusiness selectedAddress={selectedAddress} type={props.type} isUSDTransfer={props.currency === "USD" ? true : false} onContinue={(obj) => onContinue(obj)} amount={props.amount} onEdit={(val) => {
+            setIsEdit(val);
+        }} />}
+        {addressOptions.addressType === "someoneelse" && <SomeoneComponent selectedAddress={selectedAddress} addressType={addressOptions.addressType} type={props.type} currency={props.currency} onContinue={(obj) => onContinue(obj)} onTheGoObj={{ amount: props.amount }} />}
     </>
 }
 
