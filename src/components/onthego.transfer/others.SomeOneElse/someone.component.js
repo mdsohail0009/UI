@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Input, Row, Col, Form, Button, Typography, Tabs, Image, Alert } from 'antd';
-import { createPayee, payeeAccountObj, savePayee, confirmTransaction } from "../api";
+import { Input, Row, Col, Form, Button, Typography, Radio, Tabs, Image, Alert } from 'antd';
+import {createPayee, payeeAccountObj, savePayee, confirmTransaction} from "../api";
 import AddressDocumnet from "../../addressbook.component/document.upload";
 import PayeeBankDetails from "./bankdetails.component";
 import { validateContentRule } from "../../../utils/custom.validator";
@@ -122,29 +122,65 @@ const SomeoneComponent = (props) => {
                                 form.current.resetFields();
                                 // form.current.setFieldsValue({ addressType: 'someoneelse', transferType: activekey })
                             }}>
-                                <Tabs.TabPane tab="Domestic USD Transfer" className="text-white" key={"domestic"}></Tabs.TabPane>
-                                <Tabs.TabPane tab="International USD Swift" className="text-white" key={"international"}></Tabs.TabPane>
+                                <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz" key={"domestic"}></Tabs.TabPane>
+                                <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"}></Tabs.TabPane>
                             </Tabs>
                         </Col>
                     </Row>
                 </>}
                 {props.currency == 'EUR' && <h2 style={{ fontSize: 18, textAlign: 'center', color: "white" }}>SEPA Transfer</h2>}
-
-
                 {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
-                <Form
-                    ref={form}
-                    onFinish={onSubmit}
-                    autoComplete="off"
-                    initialValues={intialObj}
-                    scrollToFirstError
-                >
+            <Form
+                ref={form}
+                onFinish={onSubmit}
+                autoComplete="off"
+                initialValues={intialObj}
+                scrollToFirstError
+            >
+               
+                <Row gutter={[16, 16]} className={'pb-16'}>
+                    <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Form.Item
+                            className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-16"
+                            name="favouriteName"
+                            required
+                            rules={[
+                                {
+                                    required: true,
+                                    message: apiCalls.convertLocalLang("is_required"),
+                                },
+                                {
+                                    whitespace: true,
+                                    message: apiCalls.convertLocalLang("is_required"),
+                                },
+                                {
+                                    validator: validateContentRule,
+                                },
+                            ]}
+                            label={
+                                <Translate content={"saveWhitelistnameas"} component={Form.label} />
+                            }
+                        >
+                            <Input
+                                maxLength={20}
+                                className="cust-input"
+                                placeholder={apiCalls.convertLocalLang("saveWhitelistnameas")}
+                            />
+                        </Form.Item>
+                    </Col>
 
-                    <Row gutter={[16, 16]} className={'pb-16'}>
-                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                </Row>
+                <Translate style={{ fontSize: 18 }}
+                    content="Beneficiary_Details"
+                    component={Paragraph}
+                    className="mb-8 px-4 text-white fw-500 mt-16"
+                />
+                <>
+                    <Row gutter={[4, 4]}>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
-                                name="favouriteName"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                name="firstName"
                                 required
                                 rules={[
                                     {
@@ -160,196 +196,157 @@ const SomeoneComponent = (props) => {
                                     },
                                 ]}
                                 label={
-                                    <Translate content={"saveWhitelistnameas"} component={Form.label} />
+                                    <Translate content={"first_name"} component={Form.label} />
                                 }
                             >
                                 <Input
-                                    maxLength={20}
                                     className="cust-input"
-                                    placeholder={apiCalls.convertLocalLang("saveWhitelistnameas")}
+                                    placeholder={apiCalls.convertLocalLang("first_name")}
                                 />
                             </Form.Item>
                         </Col>
-
-                    </Row>
-                    <Translate style={{ fontSize: 18 }}
-                        content="Beneficiary_Details"
-                        component={Paragraph}
-                        className="mb-8  text-white fw-500 mt-16"
-                    />
-                    <>
-                        <Row gutter={[16, 16]}>
-                            <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item
-                                    className="custom-forminput custom-label mb-0"
-                                    name="firstName"
-                                    required
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: apiCalls.convertLocalLang("is_required"),
-                                        },
-                                        {
-                                            whitespace: true,
-                                            message: apiCalls.convertLocalLang("is_required"),
-                                        },
-                                        {
-                                            validator: validateContentRule,
-                                        },
-                                    ]}
-                                    label={
-                                        <Translate content={"first_name"} component={Form.label} />
-                                    }
-                                >
-                                    <Input
-                                        className="cust-input"
-                                        placeholder={apiCalls.convertLocalLang("first_name")}
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                name="lastName"
+                                required
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        whitespace: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        validator: validateContentRule,
+                                    },
+                                ]}
+                                label={
+                                    <Translate content={"last_name"} component={Form.label} />
+                                }
+                            >
+                                <Input
+                                    className="cust-input"
+                                    placeholder={apiCalls.convertLocalLang("last_name")}
+                                />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                name={"relation"}
+                                required
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        whitespace: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        validator: validateContentRule,
+                                    },
+                                ]}
+                                label={
+                                    <Translate
+                                        content="relationtobenificiary"
+                                        component={Form.label}
                                     />
-                                </Form.Item>
-                            </Col>
-
-                            <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item
-                                    className="custom-forminput custom-label mb-0"
-                                    name="lastName"
-                                    required
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: apiCalls.convertLocalLang("is_required"),
-                                        },
-                                        {
-                                            whitespace: true,
-                                            message: apiCalls.convertLocalLang("is_required"),
-                                        },
-                                        {
-                                            validator: validateContentRule,
-                                        },
-                                    ]}
-                                    label={
-                                        <Translate content={"last_name"} component={Form.label} />
-                                    }
-                                >
-                                    <Input
-                                        className="cust-input"
-                                        placeholder={apiCalls.convertLocalLang("last_name")}
-                                    />
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item
-                                    className="custom-forminput custom-label mb-0"
-                                    name={"relation"}
-                                    required
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: apiCalls.convertLocalLang("is_required"),
-                                        },
-                                        {
-                                            whitespace: true,
-                                            message: apiCalls.convertLocalLang("is_required"),
-                                        },
-                                        {
-                                            validator: validateContentRule,
-                                        },
-                                    ]}
-                                    label={
-                                        <Translate
-                                            content="relationtobenificiary"
-                                            component={Form.label}
-                                        />
-                                    }
-                                >
-                                    <Input
-                                        className="cust-input"
-                                        placeholder={apiCalls.convertLocalLang(
-                                            "relationtobenificiary"
-                                        )}
-                                        maxLength="500"
-                                    />
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Form.Item
-                                    className="custom-forminput custom-label mb-0"
-                                    name="line1"
-                                    required
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: apiCalls.convertLocalLang("is_required"),
-                                        },
-                                        {
-                                            whitespace: true,
-                                            message: apiCalls.convertLocalLang("is_required"),
-                                        },
-                                        {
-                                            validator: validateContentRule,
-                                        },
-                                    ]}
-                                    label={
-                                        "Address Line 1"
-                                    }
-                                >
-                                    <TextArea
+                                }
+                            >
+                                <Input
+                                    className="cust-input"
+                                    placeholder={apiCalls.convertLocalLang(
+                                        "relationtobenificiary"
+                                    )}
+                                    maxLength="500"
+                                />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                name="line1"
+                                required
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        whitespace: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        validator: validateContentRule,
+                                    },
+                                ]}
+                                label={
+                                    "Address Line 1"
+                                }
+                            >
+                                <TextArea
                                         placeholder={'Address Line 1'}
                                         className="cust-input cust-text-area address-book-cust"
                                         autoSize={{ minRows: 1, maxRows: 2 }}
                                         maxLength={100}
                                     ></TextArea>
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Form.Item
-                                    className="custom-forminput custom-label mb-0"
-                                    name="line2"
-                                    rules={[
-                                        {
-                                            validator: validateContentRule,
-                                        },
-                                    ]}
-                                    label={
-                                        "Address Line 2"
-                                    }
-                                >
-                                    <TextArea
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                name="line2"
+                                rules={[
+                                    {
+                                        validator: validateContentRule,
+                                    },
+                                ]}
+                                label={
+                                    "Address Line 2"
+                                }
+                            >
+                                <TextArea
                                         placeholder={'Address Line 2'}
                                         className="cust-input cust-text-area address-book-cust"
                                         autoSize={{ minRows: 1, maxRows: 2 }}
                                         maxLength={100}
                                     ></TextArea>
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Form.Item
-                                    className="custom-forminput custom-label mb-0"
-                                    name="line3"
-                                    rules={[
-                                        {
-                                            validator: validateContentRule,
-                                        },
-                                    ]}
-                                    label={
-                                        "Address Line 3"
-                                    }
-                                >
-                                    <TextArea
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                name="line3"
+                                rules={[
+                                    {
+                                        validator: validateContentRule,
+                                    },
+                                ]}
+                                label={
+                                    "Address Line 3"
+                                }
+                            >
+                                <TextArea
                                         placeholder={'Address Line 3'}
                                         className="cust-input cust-text-area address-book-cust"
                                         autoSize={{ minRows: 1, maxRows: 2 }}
                                         maxLength={100}
                                     ></TextArea>
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                    </>
-                    {/* <Divider /> */}
-                    <Paragraph className="mb-8  text-white fw-500 mt-16" style={{ fontSize: 18 }}>Bank Details</Paragraph>
-                    {((props.selectedAddress?.id && createPayeeObj) || !props.selectedAddress?.id) && <PayeeBankDetails selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} type={props.type} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data) => getIbandata(data)} />}
-                    <Paragraph className="fw-300 mb-0 pb-4 ml-12 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
-                    {console.log(documents)}
-                    <AddressDocumnet documents={documents || null} onDocumentsChange={(docs) => {
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                </>
+                {/* <Divider /> */}
+                <Paragraph className="mb-8 fw-500 text-white px-4 mt-36" style={{ fontSize: 18 }}>Bank Details</Paragraph>
+                {((props.selectedAddress?.id && createPayeeObj)||!props.selectedAddress?.id ) &&<PayeeBankDetails form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />}
+                <Paragraph className="fw-300 mb-0 pb-4 ml-12 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
+                {console.log(documents)}
+                <AddressDocumnet documents={documents || null} onDocumentsChange={(docs) => {
                         setDocuments(docs)
                     }} />
                     <div className="text-right mt-12">
@@ -360,20 +357,20 @@ const SomeoneComponent = (props) => {
                         >
                             {apicalls.convertLocalLang("cancel")}
                         </Button> */}
-                        <Button
-                            htmlType="submit"
-                            size="large"
-                            className="pop-btn px-36"
-                            loading={btnLoading}
-                            style={{ minWidth: 150 }}
-                        // onClick={() => console.log(form.getFieldsValue())}
-                        >
-                            {props.type === "manual" && "Save"}
-                            {props.type !== "manual" && <Translate content="continue" />}
-                        </Button>
-                    </div>
-                </Form>
-            </>}
+                    <Button
+                        htmlType="submit"
+                        size="large"
+                        className="pop-btn px-36 mt-36"
+                        loading={btnLoading}
+                        style={{ minWidth: "100%" }}
+                    // onClick={() => console.log(form.getFieldsValue())}
+                    >
+                        {props.type === "manual" && "Save"}
+                        {props.type !== "manual" && <Translate content="continue" />}
+                    </Button>
+                </div>
+            </Form>
+        </>}
         </>}
     </React.Fragment>)
 }
