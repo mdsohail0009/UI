@@ -83,7 +83,7 @@ class BusinessTransfer extends Component {
         }
     }
     handleTabChange = (key) => {
-        this.setState({ ...this.state, selectedTab: key });
+        this.setState({ ...this.state, selectedTab: key,errorMessage:null });this.form.current.resetFields();
     }
     render() {
         const { isLoading, details, selectedTab, errorMessage } = this.state;

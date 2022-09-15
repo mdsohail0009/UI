@@ -369,7 +369,7 @@ class OnthegoFundTransfer extends Component {
                                                 })
                                             }else{
                                                 if(!_amt){
-                                                    this.setState({ ...this.state, errorMessage:''})
+                                                    this.setState({ ...this.state, errorMessage:'Enter amount'})
                                                 }else{
                                                     this.setState({ ...this.state, errorMessage:'Amount must be greater than zero'})
                                                 }
@@ -490,7 +490,7 @@ class OnthegoFundTransfer extends Component {
 
             </React.Fragment>,
             reasonfortransfer: <React.Fragment>
-                <div className="mb-16 text-left">
+                <div className="mb-16" style={{textAlign:'center'}}>
                     <text Paragraph
                         className='fw-600 text-white px-4 mb-16 mt-4 text-captz'style={{ fontSize: '18px ' }}>Transfer Details</text>
                 </div>
@@ -505,7 +505,7 @@ class OnthegoFundTransfer extends Component {
                             <Form.Item
                                 className="fw-300 mb-4 text-white-50 py-4 custom-forminput custom-label"
                                 name="reasionOfTransfer"
-                                label={"Reason of Transfer"}
+                                label={"Reason Of Transfer"}
                                 required
                                 rules={[
                                     {
@@ -517,7 +517,7 @@ class OnthegoFundTransfer extends Component {
                             >
                                 <Input
                                     className="cust-input "
-                                    placeholder={"Reason of Transfer"}
+                                    placeholder={"Reason Of Transfer"}
                                     maxLength="500"
                                 />
                             </Form.Item>
@@ -528,7 +528,7 @@ class OnthegoFundTransfer extends Component {
                             let { documents } = this.state.codeDetails;
                             documents = docs;
                             this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, documents } })
-                        }} title={"Upload supporting documents for transaction"} />
+                        }} title={"Please upload supporting documents for transaction"} />
                     </React.Fragment>
                     {/* {this.state.selectedCurrency === "USD" && <Tabs className="cust-tabs-fait" activeKey={this.state.selectedTab} onChange={(key) => this.setState({ ...this.state, selectedTab: key })}>
                         <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"}>

@@ -246,7 +246,7 @@ const Verifications = (props) => {
                 type="text"
                 style={{ color: "black", margin: "0 auto" }}
                 loading={phone.btnLoader}
-                onClick={() => getphoneOTP()}><Text className="text-yellow" >Click here to get Code</Text></Button>
+                onClick={() => getphoneOTP()}><Text className="text-yellow" >Click here to get code</Text></Button>
         ),
         resendotp: (
             <Button
@@ -265,7 +265,7 @@ const Verifications = (props) => {
         ${"c-notallowed"}`} >Verification code sent</Text></Button>
             <Tooltip
                 placement="topRight"
-                title={`Haven't received code? Request new code in ${phoneSeconds} seconds. The code will expire after 30 minutes.`}>
+                title={`Haven't received code? Request new code in ${phoneSeconds} seconds. The code will expire after 30 seconds.`}>
                 <span className="icon md info mr-8" />
             </Tooltip>
         </>
@@ -297,7 +297,7 @@ const Verifications = (props) => {
                 type="text"
                 style={{ color: "black", margin: "0 auto" }}
                 loading={email.btnLoader}
-                onClick={() => sendEmailOTP()}><Text className="text-yellow" >Click here to get Code</Text></Button>
+                onClick={() => sendEmailOTP()}><Text className="text-yellow" >Click here to get code</Text></Button>
         ),
         resendotp: (
             <Button
