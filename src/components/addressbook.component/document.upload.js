@@ -118,10 +118,12 @@ class AddressDocumnet extends Component {
                             className="primary-btn pop-btn"
                             onClick={() => {
                                 let filesList = [...this.state.filesList];
+                                filesList[this.state.selectedFileIdx].state='Deleted'
+                                let obj=Object.assign([],filesList)
                                 filesList.splice(this.state.selectedFileIdx, 1);
                                 this.setState({ ...this.state, filesList, showDeleteModal: false });
                                 let { documents: docs } = this.state;
-                                docs.details=Object.assign([],filesList)
+                                docs.details=Object.assign([],obj)
                                 this.props?.onDocumentsChange(docs);
                             }}
                             style={{ width: 120, height: 50 }}>
