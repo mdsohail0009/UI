@@ -16,7 +16,7 @@ import alertIcon from '../../../assets/images/pending.png';
 const { Option } = Select;
 const { Paragraph, Title, Text } = Typography;
 class BusinessTransfer extends Component {
-    form = React.createRef();
+    form = React.createRef();useDivRef=React.createRef()
     state = {
         errorMessage: null,
         isLoading: true,
@@ -70,7 +70,7 @@ class BusinessTransfer extends Component {
         if (response.ok) {
             if (this.props.type != "manual") {
                 const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
-                if (confirmRes.ok) {
+                if (confirmRes.ok) {this.useDivRef.current.scrollIntoView()
                     this.props.onContinue(confirmRes.data);
                     this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
                 } else {
@@ -79,7 +79,7 @@ class BusinessTransfer extends Component {
             } else {
                 this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false, showDeclaration: true });
             }
-        } else {
+        } else {this.useDivRef.current.scrollIntoView()
             this.setState({ ...this.state, details: { ...details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, isBtnLoading: false });
         }
     }
@@ -101,10 +101,10 @@ class BusinessTransfer extends Component {
                 <div className="my-25"><Button onClick={() => this.props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn text-textDark">BACK</Button></div>
             </div>
         }
-        return <Tabs className="cust-tabs-fait" onChange={this.handleTabChange} activeKey={selectedTab}>
+        return <div ref={this.useDivRef}><Tabs className="cust-tabs-fait" onChange={this.handleTabChange} activeKey={selectedTab}>
             <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"}>
-                {errorMessage && <Alert type="error" description={errorMessage} showIcon />}
-                <Form initialValues={details}
+            <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
+               <Form initialValues={details}
                     className="custom-label  mb-0"
                     ref={this.form}
                     onFinish={this.submitPayee}
@@ -231,10 +231,10 @@ class BusinessTransfer extends Component {
                         {/* </Col>
                         </Row> */}
                     </div>
-                </Form>
+                </Form></div>
             </Tabs.TabPane>
             <Tabs.TabPane tab="International USD Swift" key={"international"}>
-                {errorMessage && <Alert type="error" description={errorMessage} showIcon />}
+            <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
                 <Form initialValues={details}
                     className="custom-label  mb-0"
                     ref={this.form}
@@ -356,10 +356,10 @@ class BusinessTransfer extends Component {
                         {/* </Col>
                         </Row> */}
                     </div>
-                </Form>
+                </Form></div>
 
             </Tabs.TabPane>
-        </Tabs>
+        </Tabs></div>
     }
 }
 

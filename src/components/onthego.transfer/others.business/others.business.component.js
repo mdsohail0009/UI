@@ -13,6 +13,7 @@ import alertIcon from '../../../assets/images/pending.png';
 const { Paragraph, Text, Title } = Typography;
 class OthersBusiness extends Component {
     form = React.createRef();
+    useDivRef=React.createRef()
     state = {
         errorMessage: null,
         ibanDetailsLoading: false,
@@ -94,6 +95,7 @@ class OthersBusiness extends Component {
                 if (confirmRes.ok) {
                     this.props.onContinue(confirmRes.data);
                     this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
+                    this.useDivRef.current.scrollIntoView()
                 } else {
                     this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false, isBtnLoading: false });
                 }
@@ -103,6 +105,7 @@ class OthersBusiness extends Component {
             }
 
         } else {
+            this.useDivRef.current.scrollIntoView()
             this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, isBtnLoading: false });
         }
 
@@ -124,7 +127,7 @@ class OthersBusiness extends Component {
         }
         if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} /> }
         else {
-            return <>
+            return <><div ref={this.useDivRef}>
                 {/* <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16 text-center">SEPA Transfer</Paragraph> */}
                 <h2 style={{ fontSize: 18, textAlign: 'center', color: "white" }}>SEPA Transfer</h2>
                 {this.state.isLoading && <Loader />}
@@ -382,7 +385,7 @@ class OthersBusiness extends Component {
                             {/* </Col>
                         </Row> */}
                     </div>
-                </Form>}
+                </Form>}</div>
             </>;
         }
 
