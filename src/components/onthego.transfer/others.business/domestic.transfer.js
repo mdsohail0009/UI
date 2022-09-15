@@ -5,10 +5,10 @@ import { validateContentRule } from "../../../utils/custom.validator";
 const { TextArea } = Input;
 class DomesticTransfer extends Component {
     render() {
-        return <Row gutter={[16, 16]}>
+        return <Row gutter={[8, 8]}>
             <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
-                    className="custom-forminput custom-label mb-0"
+                    className="fw-300 mb-4 text-white-50 py-4 custom-forminput custom-label"
                     name="accountNumber"
                     label={"Account Number"}
                     required
@@ -46,7 +46,7 @@ class DomesticTransfer extends Component {
             </Col>
             <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
-                    className="custom-forminput custom-label mb-0"
+                    className="fw-300 mb-4 text-white-50 py-4 custom-forminput custom-label"
                     name="abaRoutingCode"
                     label={"ABA Routing Code"}
                     required
@@ -84,7 +84,7 @@ class DomesticTransfer extends Component {
             </Col>
             <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
-                    className="custom-forminput custom-label mb-0"
+                    className="fw-300 mb-4 text-white-50 py-4 custom-forminput custom-label"
                     name="bankName"
                     label={"Bank Name"}
                     required
@@ -179,7 +179,7 @@ class DomesticTransfer extends Component {
             </Col> */}
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="custom-forminput custom-label mb-0"
+                    className="fw-300 mb-4 text-white-50 py-4 custom-forminput custom-label"
                     name="bankAddress1"
                     required
                     rules={[
@@ -220,7 +220,7 @@ class DomesticTransfer extends Component {
             </Col>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="custom-forminput custom-label mb-0"
+                    className="fw-300 mb-4 text-white-50 py-4 custom-forminput custom-label"
                     name="bankAddress2"
                     rules={[
                         {
