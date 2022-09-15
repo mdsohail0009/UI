@@ -301,8 +301,7 @@ class OnthegoFundTransfer extends Component {
                                         rules={[
                                             {
                                                 required: true,
-                                                message:
-                                                    apicalls.convertLocalLang("is_required"),
+                                                message:'Please enter amount',
                                             },
                                             {
                                                 validator: (_, value) => {
@@ -369,7 +368,7 @@ class OnthegoFundTransfer extends Component {
                                                 })
                                             }else{
                                                 if(!_amt){
-                                                    this.setState({ ...this.state, errorMessage:'Enter amount'})
+                                                    this.setState({ ...this.state, errorMessage:'Please enter amount'})
                                                 }else{
                                                     this.setState({ ...this.state, errorMessage:'Amount must be greater than zero'})
                                                 }
