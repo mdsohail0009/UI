@@ -20,6 +20,7 @@ class BankWallets extends Component {
         this.getCustomerAccountBalance(); 
     }
     getCustomerAccountBalance = async ()=>{
+      debugger
       this.setState({...this.state,isLoading:true})
         let response  = await apicalls.getCustomerBankDetails(this.props.userProfile.id)
         if(response.ok){
@@ -43,7 +44,10 @@ class BankWallets extends Component {
                   {/* <li  onClick={() =>  this.showSendReceiveDrawer(1, item)}>
                       <Link value={1} className="c-pointer">Receive</Link>
                   </li> */}
-                  <li  onClick={() => window.open("http://localhost:3001/dashboard")}>
+                  <li  onClick={() => 
+                    //window.open("http://localhost:3001/dashboard")}
+                    window.open(process.env.REACT_APP_BANK_UI_URL +`/dashboard/${item.currency}`, "_blank")}
+                    >
                   <Link  value={5} className="c-pointer">
                       <Translate content="suisse_wallets" />
                       </Link>
@@ -93,20 +97,20 @@ class BankWallets extends Component {
                                {item.isAccountExist ?(
                               <div className="crypto-btns mt-8">
                                   <Translate content="transfer_funds"  component={Button} type="primary" className="custom-btn prime" 
-                                //    onClick={() =>
-                                //     window.open(process.env.REACT_APP_BANK_UI_URL, "_blank")
-                                //   }
-                                  onClick={() =>
-                                    window.open(`http://localhost:3001/transfer/${item.currency}`)
+                                   onClick={() =>
+                                    window.open(process.env.REACT_APP_BANK_UI_URL +`/transfer/${item.currency}`, "_blank")
                                   }
+                                  // onClick={() =>
+                                  //   window.open(`http://localhost:3001/transfer/${item.currency}`)
+                                  // }
                                   />
                                   <Translate content="receive_funds"  component={Button} type="primary" className="custom-btn sec ml-16"  
-                                //    onClick={() =>
-                                //     window.open(process.env.REACT_APP_BANK_UI_URL, "_blank")
-                                //   }
-                                onClick={() =>
-                                    window.open(`http://localhost:3001/addView/${item.id}/${item.currency}`)
+                                   onClick={() =>
+                                    window.open(process.env.REACT_APP_BANK_UI_URL + `addView/${item.id}/${item.currency}`, "_blank")
                                   }
+                                // onClick={() =>
+                                //     window.open(`http://localhost:3001/addView/${item.id}/${item.currency}`)
+                                //   }
                                   /> 
                                   
                             <Dropdown 
@@ -125,14 +129,10 @@ class BankWallets extends Component {
                             ) :(
                               <div className="crypto-btns mt-8">
                               <Translate content="createnow" type="primary" component={Button} className="custom-btn prime" 
-                            //    onClick={() =>
-                            //     window.open(process.env.REACT_APP_BANK_UI_URL, "_blank")
-                            //   }
-                            
-                              //onClick={()=>this.createAccount(item.currency)}
-                              onClick={() =>
-                                window.open(`http://localhost:3001/feepage/${item.currency}`)
+                               onClick={() =>
+                                window.open(process.env.REACT_APP_BANK_UI_URL+`feepage/${item.currency}`, "_blank")
                               }
+          
                              />  
                             
                               </div> )}
