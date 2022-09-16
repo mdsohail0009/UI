@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Row, Col, Typography, Upload, Form, Modal, Button } from 'antd';
+import { Row, Col, Typography, Upload, Form, Modal, Button,Alert } from 'antd';
 import Loader from "../../Shared/loader";
 import { document } from "../onthego.transfer/api";
 import apiCalls from "../../api/apiCalls";
@@ -19,7 +19,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 class AddressDocumnet extends Component {
     state = {
         filesList: [],
-        documents: {}, showDeleteModal: false, isDocLoading: false
+        documents: {}, showDeleteModal: false, isDocLoading: false,errorWarning:null
     }
     componentDidMount() {
         this.setState({ ...this.state, documents: this.props?.documents || document(), filesList: this.props?.documents ? [...this.props?.documents?.details] : [] })
@@ -37,9 +37,34 @@ class AddressDocumnet extends Component {
             "path": doc?.response[0]
         }
     }
-  
+    beforeUpload = (file) => {
+        this.setState({...this.state,errorWarning:null})
+        let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
+        if (!fileType[file.type]) {
+            this.setState({...this.state,errorWarning:"File is not allowed. You can upload jpg, png, jpeg and PDF  files", isDocLoading: false})
+        }
+        else {
+            const isValidFiles = this.state.filesList.filter(item => (item.name || item.documentName).indexOf(".") != (item.name || item.documentName).lastIndexOf(".")).length == 0;
+            if (isValidFiles) { return Promise.resolve(); } else {
+                this.setState({...this.state,errorWarning:"File don't allow double extension", isDocLoading: false});
+            }
+
+        }
+    }
     render() {
         return <Row >
+            {this.state.errorWarning !== undefined && this.state.errorWarning !== null && (
+                <div style={{ width: '100%' }}>
+                    <Alert
+                        className="w-100 mb-16"
+                        type="warning"
+                        description={this.state.errorWarning}
+                        showIcon
+                        closable={false}
+                        style={{ marginBottom: 0, marginTop: '16px' }}
+                    />
+                </div>
+            )}
             <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="text-left">
                 <div className='mb-24'>
                     <Paragraph
@@ -47,20 +72,10 @@ class AddressDocumnet extends Component {
                     >{this.props.title}</Paragraph>
                     <Form.Item name={"files"} required rules={[{
                         validator: (_, value) => {
-                            let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
                             if (this.state.filesList.length == 0) {
                                 return Promise.reject("At least one document is required")
                             }
-                            if (!fileType[value.file.type]) {
-                                return Promise.reject("PNG, JPG,JPEG and PDF files are allowed");
-                            }
-                            else {
-                                const isValidFiles = this.state.filesList.filter(item => (item.name || item.documentName).indexOf(".") != (item.name || item.documentName).lastIndexOf(".")).length == 0;
-                                if (isValidFiles) { return Promise.resolve(); } else {
-                                    return Promise.reject("Double extension file not allowed");
-                                }
-
-                            }
+                           
                         },
 
                     }
@@ -70,7 +85,7 @@ class AddressDocumnet extends Component {
                             multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                             showUploadList={false}
                             beforeUpload={(props) => {
-                              //  return props.name.split(".").length < 2;
+                                this.beforeUpload(props)
                             }}
                             onChange={({ file }) => {
                                 this.setState({ ...this.state, isDocLoading: true });
