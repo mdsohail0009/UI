@@ -637,5 +637,5 @@ export default {
 	createnow:"Create Now",
 	transfer_funds:'Send',
 	receive_funds:'Receive',
-	suisse_wallets:'Transfer to digital Wallet',
+	suisse_wallets:'SuisseBase digital Wallet',
 };
