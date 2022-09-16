@@ -138,7 +138,7 @@ class AddressBook extends Component {
 			customCell: (props) => (
 				<td>
 					<div className="gridLink" onClick={() => this.addressFiatView(props)}>
-					{props.dataItem.favouriteName}
+					{props?.dataItem?.whiteListName}
 					</div>
 					<Text className="file-label ml-8 fs-12">
 						{this.addressTypeNames(props?.dataItem?.addressType)}
