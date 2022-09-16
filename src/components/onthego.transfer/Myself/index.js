@@ -428,7 +428,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                                 validator: (_, value) => {
                                     if (
                                         value &&
-                                        !/^[a-z0-9_.-\s]+$/.test(value)
+                                        !/^[a-zA-Z0-9_.-\s]+$/.test(value)
                                     ) {
                                         return Promise.reject(
                                             "Please enter valid content"

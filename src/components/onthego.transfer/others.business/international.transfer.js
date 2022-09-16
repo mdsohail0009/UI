@@ -103,7 +103,7 @@ class InternationalTransfer extends Component {
                             validator: (_, value) => {
                                 if (
                                     value &&
-                                    !/^[a-z0-9_.-\s]+$/.test(value)
+                                    !/^[A-Za-z0-9_.-\s]+$/.test(value)
                                 ) {
                                     return Promise.reject(
                                         "Please enter valid content"

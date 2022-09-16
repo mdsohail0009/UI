@@ -99,10 +99,10 @@ class PayeeBankDetails extends Component {
                     </Form.Item>
                 </Col>
                  
-                {/* {this.props.type !== "manual" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                {this.props.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label mb-0"
-                        name={'reasonOfTransfer'}
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                        name={"reasonOfTransfer"}
                         required
                         rules={[
                             {
@@ -124,15 +124,16 @@ class PayeeBankDetails extends Component {
                             />
                         }
                     >
-                        <Input
-                                className="cust-input"
-                                placeholder={apicalls.convertLocalLang(
-                                    "reasiontotransfor"
-                                )}
-                                maxLength="500"
-                            />
+                        <TextArea
+                            placeholder={apicalls.convertLocalLang(
+                                "reasiontotransfor"
+                            )}
+                            className="cust-input cust-text-area address-book-cust"
+                            autoSize={{ minRows: 1, maxRows: 2 }}
+                            maxLength={100}
+                        ></TextArea>
                     </Form.Item>
-                </Col>} */}
+                </Col>}
                 {/* <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
@@ -360,7 +361,7 @@ class PayeeBankDetails extends Component {
                                 validator: (_, value) => {
                                     if (
                                         value &&
-                                        !/^[a-z0-9_.-\s]+$/.test(value)
+                                        !/^[A-Za-z0-9_.-\s]+$/.test(value)
                                     ) {
                                         return Promise.reject(
                                             "Please enter valid content"
@@ -461,7 +462,7 @@ class PayeeBankDetails extends Component {
                         ></TextArea>
                     </Form.Item>
                 </Col>
-                {/* {this.props.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                {this.props.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name={"reasonOfTransfer"}
@@ -495,7 +496,7 @@ class PayeeBankDetails extends Component {
                             maxLength={100}
                         ></TextArea>
                     </Form.Item>
-                </Col>} */}
+                </Col>}
                 
             </>
         }
