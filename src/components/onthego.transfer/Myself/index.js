@@ -37,6 +37,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             if (props.selectedAddress?.id) {
                 setLoader(false);setRecipientDetails(response.data)
                 setsaveObj(response.data)
+                props.onEdit(true);
                 setbankDetails(response.data.payeeAccountModels[0])
                 setcreateTransfer(response.data)
                 let obj=Object.assign({},response.data.payeeAccountModels[0])
@@ -47,6 +48,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     getBankDeails(obj.iban)
                 }
             } else {
+                props.onEdit(false);
                 setRecipientDetails(response.data); setLoader(false)
             }
         } else {
