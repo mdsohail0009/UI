@@ -46,12 +46,29 @@ class BankWallets extends Component {
                   </li> */}
                   <li  onClick={() => 
                     //window.open("http://localhost:3001/dashboard")}
+                    window.open(process.env.REACT_APP_BANK_UI_URL +`internaltransfer`, "_blank")}
+                    >
+                  <Link  value={5} className="c-pointer">
+                  Internal Transfer
+                      </Link>
+                  </li>
+                  <li  onClick={() => 
+                    //window.open("http://localhost:3001/dashboard")}
+                    window.open(process.env.REACT_APP_BANK_UI_URL +`addView/${item.id}`, "_blank")}
+                    >
+                  <Link  value={5} className="c-pointer">
+                  Accounts Page
+                      </Link>
+                  </li>
+                  <li  onClick={() => 
+                    //window.open("http://localhost:3001/dashboard")}
                     window.open(process.env.REACT_APP_BANK_UI_URL +`dashboard/${item.currency}`, "_blank")}
                     >
                   <Link  value={5} className="c-pointer">
-                      <Translate content="suisse_wallets" />
+                  SuisseBase Wallet
                       </Link>
                   </li>
+                  
                   {/* <li onClick={() => this.showBuyDrawer(item, "sell")}>
                         <Link  value={4} className="c-pointer">
                         <Translate content="Receive" />
@@ -95,7 +112,7 @@ class BankWallets extends Component {
                             
                                />
                                {item.isAccountExist ?(
-                              <div className="crypto-btns mt-8">
+                              <>{item?.accountStatus?.toLowerCase()!='pending' &&<div className="crypto-btns mt-8">
                                   <Translate content="transfer_funds"  component={Button} type="primary" className="custom-btn prime" 
                                    onClick={() =>
                                     window.open(process.env.REACT_APP_BANK_UI_URL +`transfer/${item.currency}`, "_blank")
@@ -124,7 +141,12 @@ class BankWallets extends Component {
                             </a>
                           </Dropdown>
                               </div>
-                              
+                    }
+                    {item?.accountStatus?.toLowerCase()=='pending'&&<div className="crypto-btns mt-8">
+                              <Button content="Pending" type="primary"className="custom-btn prime" >Pending</Button>  
+                            
+                              </div>}
+                    </>
                               
                             ) :(
                               <div className="crypto-btns mt-8">
