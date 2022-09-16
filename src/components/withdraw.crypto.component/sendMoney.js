@@ -54,6 +54,9 @@ class SendMoney extends Component {
         this.props.dispatch(setWithdrawcrypto({ ...obj, toWalletAddress: item.address }))
         this.props.changeStep('withdraw_crypto_selected');
     }
+    handlePreview = () => {
+        this.props.changeStep('withdraw_crpto_summary');
+    }
   
     selectCrypto = (type) => {
         debugger
@@ -130,7 +133,7 @@ class SendMoney extends Component {
                                     <div><Text className="fs-16 text-white-30 m-0">fdghbnm</Text></div>
                                 </Col>
                                 <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
-                                    <span class="icon md rarrow-white"></span>
+                                    <span class="icon md rarrow-white" onClick={() => this.handlePreview()}></span>
                                 </Col>
                             </Row></>
                     </ul>
@@ -148,7 +151,7 @@ class SendMoney extends Component {
                                 <div><Text className="fs-16 text-white-30 m-0">USDT(ERC-20)</Text></div>
                             </Col>
                             <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
-                                <span class="icon md rarrow-white"></span>
+                                <span class="icon md rarrow-white" onClick={() => this.handlePreview()}></span>
                             </Col>
                            
                         </Row>
@@ -162,7 +165,7 @@ class SendMoney extends Component {
                                 <div><Text className="fs-16 text-white-30 m-0">USDT(ERC-20)</Text></div>
                             </Col>
                             <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
-                                <span class="icon md rarrow-white"></span>
+                                <span class="icon md rarrow-white" onClick={() => this.handlePreview()}></span>
                             </Col>
                             </Row></>
                         {/* {(!pastPayees?.length > 0) && <div className="success-pop text-center" style={{ marginTop: '20px' }}>

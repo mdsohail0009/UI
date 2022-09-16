@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import Loader from "../../Shared/loader";
 import Currency from "../shared/number.formate";
+import { withRouter } from 'react-router';
 import { handleNewExchangeAPI, withDrawCrypto } from "../send.component/api";
 import { fetchDashboardcalls } from "../../reducers/dashboardReducer";
 import {
@@ -18,6 +19,7 @@ import { publishBalanceRfresh } from "../../utils/pubsub";
 import { Link } from "react-router-dom";
 import NumberFormat from "react-number-format";
 import { setCurrentAction } from "../../reducers/actionsReducer";
+
 class WithdrawSummary extends Component {
 	state = {
 		onTermsChange: false,
@@ -181,13 +183,14 @@ class WithdrawSummary extends Component {
 		this.setState({...this.state,previewModal:false})
 	}
 	onModalOk=()=>{
+		debugger
 		this.props.changeStep('withdraw_crypto_selected');
 	}
 	handleNewExchangeRate = async () => {
 		this.setState({ ...this.state, loading: true });
 		const { totalValue, walletCode, toWalletAddress } =
-			this.props.sendReceive.withdrawCryptoObj;
-		let _obj = { ...this.props.sendReceive.withdrawCryptoObj };
+			this.props.sendReceive?.withdrawCryptoObj;
+		let _obj = { ...this.props.sendReceive?.withdrawCryptoObj };
 		const response = await handleNewExchangeAPI({
 			customerId: this.props?.userProfile?.id,
 			amount: totalValue,
@@ -745,7 +748,18 @@ class WithdrawSummary extends Component {
 								component={Text}
 							/>
 							<Text className="fw-400 text-white">
-								{this.firstAddress + "................" + this.lastAddress}
+								{/* {this.firstAddress + "................" + this.lastAddress} */}
+								0bce................pgh4
+							</Text>
+						</div>
+						<div className="pay-list fs-14">
+							<Translate
+								className="fw-400 text-white"
+								content="network"
+								component={Text}
+							/>
+							<Text className="fw-400 text-white">
+								ERC-20
 							</Text>
 						</div>
 						<Form
@@ -991,9 +1005,6 @@ class WithdrawSummary extends Component {
 							{this.state.permissions?.withdraw && <Button size="large" block className="pop-btn" htmlType="submit" loading={this.state.btnLoading}>
 								<Translate content="with_draw" component={Text} />
 							</Button>}
-							<Button size="large" block className="pop-btn" htmlType="submit" loading={this.state.btnLoading}>
-								<Translate content="cancel" component={Text} />
-							</Button>
 
 						</Form>
 						<div className="text-center mt-16">
@@ -1026,23 +1037,22 @@ class WithdrawSummary extends Component {
 										<Button
 											className="pop-btn px-36"
 											style={{ margin: "0 8px" }}
+											onClick={() => this.onModalOk()}
+										>
+											Yes
+										</Button>
+										<Button
+											className="pop-btn px-36"
+											style={{ margin: "0 8px" }}
 											onClick={() => this.onModalCancel()}
 
 										>
 											No
 										</Button>
-										<Button
-											className="pop-btn px-36"
-											style={{ margin: "0 8px" }}
-											onClick={() => this.onModalOk()}
-										>
-											Yes
-										</Button>
 									</>
 								}>
 									<div style={{color:"white"}}>
 								Are you sure you want to cancel?
-								Your address details will not be saved
 								</div>
 							</Modal>
 		{/* <Drawer
@@ -1105,4 +1115,4 @@ const connectDispatchToProps = (dispatch) => {
 export default connect(
 	connectStateToProps,
 	connectDispatchToProps
-)(WithdrawSummary);
+)(withRouter(WithdrawSummary));
