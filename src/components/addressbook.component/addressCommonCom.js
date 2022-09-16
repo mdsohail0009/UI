@@ -20,6 +20,13 @@ const handleChange = (value) => {
         showDeclartion: false,
         iBanValid:false
     };
+    handleTokenChange = (value) => {
+      console.log(`selected ${value}`);
+    };
+
+    handleNetworkChange = (value) => {
+      console.log(`selected ${value}`);
+    };
   
     submit  = async (values) => {
       this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
@@ -45,7 +52,7 @@ const handleChange = (value) => {
       onFinish={this.submit}
       >
         <Form.Item className="custom-label"
-          name="addressType"
+          name="whiteListName"
           label="Save Whitelist Name As* ">
           <Input className="cust-input" placeholder="Save Whitelist Name As" />
         </Form.Item>
@@ -53,23 +60,23 @@ const handleChange = (value) => {
           <Text className="fs-24 fw-600 text-purewhite">Beneficiary Details</Text>
         </div>
         <Form.Item className="custom-label"
-          name="addressType"
+          name="token"
           label="Token* ">
-          <Select className="cust-input" defaultValue="Token" onChange={handleChange}>
+          <Select className="cust-input" defaultValue="Token" onChange={this.handleTokenChange}>
             <Option value="Token">Token</Option>
             <Option value="Network">Network</Option>
           </Select>
         </Form.Item>
         <Form.Item className="custom-label"
-          name="addressType"
+          name="network"
           label="Network* ">
-          <Select className="cust-input" defaultValue="Network" onChange={handleChange}>
-            <Option value="jack">Jack</Option>
+          <Select className="cust-input" defaultValue="Network" onChange={this.handleNetworkChange}>
+            <Option value="jack">ERC-20</Option>
             <Option value="Network">Network</Option>
           </Select>
         </Form.Item>
         <Form.Item className="custom-label"
-          name="addressType"
+          name="walletAddress"
           label="Wallet Address* ">
           <Input className="cust-input" placeholder="Wallet Address" />
         </Form.Item>

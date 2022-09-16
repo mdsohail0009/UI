@@ -991,6 +991,9 @@ class WithdrawSummary extends Component {
 							{this.state.permissions?.withdraw && <Button size="large" block className="pop-btn" htmlType="submit" loading={this.state.btnLoading}>
 								<Translate content="with_draw" component={Text} />
 							</Button>}
+							<Button size="large" block className="pop-btn" htmlType="submit" loading={this.state.btnLoading}>
+								<Translate content="cancel" component={Text} />
+							</Button>
 
 						</Form>
 						<div className="text-center mt-16">

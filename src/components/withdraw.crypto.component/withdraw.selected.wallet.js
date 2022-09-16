@@ -140,7 +140,7 @@ class CryptoWithDrawWallet extends Component {
     };
     selectCrypto = (type) => {
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
-        this.props.dispatch(setSubTitle(apicalls.convertLocalLang('select_address')));
+        this.props.dispatch(setSubTitle(apicalls.convertLocalLang('send_crypto_address')));
         let obj = {
             "customerId": this.props.userProfile.id,
             "customerWalletId": id,
@@ -155,7 +155,7 @@ class CryptoWithDrawWallet extends Component {
         this.props.dispatch(setWithdrawcrypto(obj))
         this.setState({ ...this.state, loading: true })
         if (type == "ADDRESS") {
-            this.props.changeStep('step8');
+            this.props.changeStep('step10');
         } else {
             this.setState({
                 ...this.state, visible: true, errorWorning: null, showFuntransfer: true
@@ -442,7 +442,9 @@ class CryptoWithDrawWallet extends Component {
                             </Col>
                             <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
                                 <Form.Item className="text-center">
-                                    <Button key="submit" type="primary" className='ant-btn pop-btn' style={{ marginLeft: "10px",width:"100%" }} onClick={() => this.selectCrypto("ADDRESS")}>
+                                    <Button key="submit" type="primary" className='ant-btn pop-btn' style={{ marginLeft: "10px",width:"100%" }} 
+                                     onClick={() => this.selectCrypto("ADDRESS")}
+                                    >
                                         Address Book
                                     </Button>
                                 </Form.Item>

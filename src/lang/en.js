@@ -655,5 +655,6 @@ export default {
 	reasiontotransfor:'Reason Of Transfer',
 	relationtobenificiary:'Relationship To Beneficiary',
 	saveWhitelistnameas:'Save Whitelist Name As',
-	continue:'Continue'
+	continue:'Continue',
+	send_crypto_address: "Send Crypto",
 };
