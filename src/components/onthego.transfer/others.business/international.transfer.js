@@ -168,7 +168,7 @@ class InternationalTransfer extends Component {
                             validator: (_, value) => {
                                 if (
                                     value &&
-                                    !/^[A-Za-z0-9]+$/.test(value)
+                                    !/^[a-zA-Z0-9_.-\s]+$/.test(value)
                                 ) {
                                     return Promise.reject(
                                         "Invalid Bank Address 1"
@@ -200,7 +200,7 @@ class InternationalTransfer extends Component {
                             validator: (_, value) => {
                                 if (
                                     value &&
-                                    !/^[A-Za-z0-9]+$/.test(value)
+                                    !/^[a-zA-Z0-9_.-\s]+$/.test(value)
                                 ) {
                                     return Promise.reject(
                                         "Invalid Bank Address 2"
