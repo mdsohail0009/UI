@@ -101,7 +101,7 @@ class BusinessTransfer extends Component {
             </div>
         }
         return <div ref={this.useDivRef}><Tabs className="cust-tabs-fait" onChange={this.handleTabChange} activeKey={selectedTab}>
-            <Tabs.TabPane tab="Domestic USD transfer" className="text-white text-captz" key={"domestic"}>
+            <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"}>
                 <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
                 <Form initialValues={details}
                     className="custom-label  mb-0"
@@ -232,7 +232,7 @@ class BusinessTransfer extends Component {
                     </div>
                 </Form></div>
             </Tabs.TabPane>
-            <Tabs.TabPane tab="International USD Swift" className="text-captz" key={"international"}>
+            <Tabs.TabPane tab="International USD Swift" key={"international"}>
             <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
                 <Form initialValues={details}
                     className="custom-label  mb-0"
