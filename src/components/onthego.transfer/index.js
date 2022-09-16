@@ -301,7 +301,7 @@ class OnthegoFundTransfer extends Component {
                                         rules={[
                                             {
                                                 required: true,
-                                                message:'Please enter amount',
+                                                message:'Is required',
                                             },
                                             {
                                                 validator: (_, value) => {
