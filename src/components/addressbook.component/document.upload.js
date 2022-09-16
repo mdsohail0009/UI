@@ -95,7 +95,7 @@ class AddressDocumnet extends Component {
                     </Form.Item>
                     {this.state?.filesList?.map((file, indx) => <div className="docfile">
                         {(file.status === "done" || file.status == true) && <>
-                            <span className={`icon xl file mr-16`} />
+                            <span className={`icon xl ${(file.name.slice(-3) === "zip" ? "file" : "") || (file.name.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                             <div className="docdetails">
                                 <EllipsisMiddle suffixCount={6}>{file.name || file.documentName}</EllipsisMiddle>
                                 <span className="fs-12 text-secondary">{file.size ? bytesToSize(file.size) : ""}</span>
