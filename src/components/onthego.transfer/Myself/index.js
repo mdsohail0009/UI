@@ -477,7 +477,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             placeholder={'Bank Address 1'}
                             className="cust-input cust-text-area address-book-cust"
                             autoSize={{ minRows: 1, maxRows: 2 }}
-                            maxLength={100}
+                            maxLength={1000}
                         ></TextArea>
                     </Form.Item>
                 </Col>
@@ -506,7 +506,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             placeholder={'Bank Address 2'}
                             className="cust-input cust-text-area address-book-cust"
                             autoSize={{ minRows: 1, maxRows: 2 }}
-                            maxLength={100}
+                            maxLength={1000}
                         ></TextArea>
                     </Form.Item>
                 </Col></>}

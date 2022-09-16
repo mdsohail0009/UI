@@ -185,7 +185,7 @@ class DomesticTransfer extends Component {
                         placeholder={"Bank Address 1"}
                         className="cust-input cust-text-area address-book-cust"
                         autoSize={{ minRows: 1, maxRows: 1 }}
-                        maxLength={100}
+                        maxLength={1000}
                     ></TextArea>
                 </Form.Item>
             </Col>
@@ -217,7 +217,7 @@ class DomesticTransfer extends Component {
                         placeholder={"Bank Address 2"}
                         className="cust-input cust-text-area address-book-cust"
                         autoSize={{ minRows: 1, maxRows: 1 }}
-                        maxLength={100}
+                        maxLength={1000}
                     ></TextArea>
                 </Form.Item>
             </Col>

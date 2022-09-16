@@ -293,7 +293,7 @@ const [edit,setEdit]=useState(false)
                                         placeholder={'Address Line 1'}
                                         className="cust-input cust-text-area address-book-cust"
                                         autoSize={{ minRows: 1, maxRows: 2 }}
-                                        maxLength={100}
+                                        maxLength={1000}
                                     ></TextArea>
                             </Form.Item>
                         </Col>
@@ -314,7 +314,7 @@ const [edit,setEdit]=useState(false)
                                         placeholder={'Address Line 2'}
                                         className="cust-input cust-text-area address-book-cust"
                                         autoSize={{ minRows: 1, maxRows: 2 }}
-                                        maxLength={100}
+                                        maxLength={1000}
                                     ></TextArea>
                             </Form.Item>
                         </Col>
@@ -335,7 +335,7 @@ const [edit,setEdit]=useState(false)
                                         placeholder={'Address Line 3'}
                                         className="cust-input cust-text-area address-book-cust"
                                         autoSize={{ minRows: 1, maxRows: 2 }}
-                                        maxLength={100}
+                                        maxLength={1000}
                                     ></TextArea>
                             </Form.Item>
                         </Col>

@@ -423,7 +423,7 @@ class PayeeBankDetails extends Component {
                             placeholder={apicalls.convertLocalLang("bankaddressline1")}
                             className="cust-input cust-text-area address-book-cust"
                             autoSize={{ minRows: 1, maxRows: 2 }}
-                            maxLength={100}
+                            maxLength={1000}
                         ></TextArea>
                     </Form.Item>
                 </Col>
@@ -458,7 +458,7 @@ class PayeeBankDetails extends Component {
                             placeholder={apicalls.convertLocalLang("bankaddressline2")}
                             className="cust-input cust-text-area address-book-cust"
                             autoSize={{ minRows: 1, maxRows: 2 }}
-                            maxLength={100}
+                            maxLength={1000}
                         ></TextArea>
                     </Form.Item>
                 </Col>
