@@ -90,6 +90,7 @@ class SendReceive extends Component {
             withdraw_crypto_liveness: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             withdraw_crpto_summary: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             withdraw_crpto_success: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
+            sendMoney:<span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
 
         }
         return stepcodes[config[this.props.sendReceive.stepcode]]
