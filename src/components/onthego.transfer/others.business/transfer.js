@@ -20,8 +20,9 @@ class BusinessTransfer extends Component {
         errorMessage: null,
         isLoading: true,
         details: {},
-        selectedTab: "domestic", isBtnLoading: false,
-        showDeclaration: false
+        selectedTab: this.props?.selectedAddress?.transferType || "domestic", isBtnLoading: false,
+        showDeclaration: false,
+        isEdit: false
     };
     componentDidMount() {
         this.loadDetails();
@@ -31,16 +32,17 @@ class BusinessTransfer extends Component {
         const response = await createPayee(this.props.userProfile.id, this.props.selectedAddress?.id || "", "business");
         if (response.ok) {
             let data = response.data;
+            let edit = false;
             if (!data?.payeeAccountModels) {
                 data.payeeAccountModels = [payeeAccountObj()];
             }
-            if (this.props.selectedAddress) {
+            if (this.props.selectedAddress?.id) {
+                edit = true;
                 const accountDetails = data.payeeAccountModels[0];
                 data = { ...data, ...accountDetails, line1: data.line1, line2: data.line2, line3: data.line3, bankAddress1: accountDetails.line1, bankAddress2: accountDetails.line2 };
                 delete data["documents"];
-                // this.handleIbanChange({ target: { value: data?.iban } });
             }
-            this.setState({ ...this.state, errorMessage: null, details: data }, () => {
+            this.setState({ ...this.state, errorMessage: null, details: data, isEdit: edit }, () => {
                 this.setState({ ...this.state, isLoading: false })
             });
         } else {
@@ -83,7 +85,7 @@ class BusinessTransfer extends Component {
         }
     }
     handleTabChange = (key) => {
-        this.setState({ ...this.state, selectedTab: key,errorMessage:null });this.form.current.resetFields();
+        this.setState({ ...this.state, selectedTab: key, errorMessage: null }); this.form.current.resetFields();
     }
     render() {
         const { isLoading, details, selectedTab, errorMessage } = this.state;
@@ -101,7 +103,7 @@ class BusinessTransfer extends Component {
             </div>
         }
         return <Tabs className="cust-tabs-fait" onChange={this.handleTabChange} activeKey={selectedTab}>
-            <Tabs.TabPane tab="Domestic USD transfer" className="text-white text-captz" key={"domestic"}>
+            <Tabs.TabPane disabled={this.state.isEdit} tab="Domestic USD transfer" className="text-white text-captz" key={"domestic"}>
                 {errorMessage && <Alert type="error" description={errorMessage} showIcon />}
                 <Form initialValues={details}
                     className="custom-label  mb-0"
@@ -140,10 +142,10 @@ class BusinessTransfer extends Component {
                             </Form.Item>
                         </Col>
                     </Row>
-                    <Translate 
+                    <Translate
                         content="Beneficiary_Details"
                         component={Paragraph}
-                        className="mb-8  text-white fw-500 mt-16 px-4" style={{ fontSize: 18 }} 
+                        className="mb-8  text-white fw-500 mt-16 px-4" style={{ fontSize: 18 }}
                     />
                     {/* <Divider /> */}
                     <Row gutter={[4, 4]}>
@@ -216,23 +218,23 @@ class BusinessTransfer extends Component {
                     }} />
                     <div className="text-right mt-12">
                         {/* <Row> */}
-                            {/* <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col> */}
-                            {/* <Col xs={24} className="text-right"> */}
-                                <Button
-                                    htmlType="submit"
-                                    size="large"
-                                    className="pop-btn mb-36"
-                                    style={{ minWidth: "100%" }}
-                                    loading={this.state.isBtnLoading}>
-                                    {this.props.type === "manual" && "Save"}
-                                    {this.props.type !== "manual" && "Continue"}
-                                </Button>
-                            {/* </Col>
+                        {/* <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col> */}
+                        {/* <Col xs={24} className="text-right"> */}
+                        <Button
+                            htmlType="submit"
+                            size="large"
+                            className="pop-btn mb-36"
+                            style={{ minWidth: "100%" }}
+                            loading={this.state.isBtnLoading}>
+                            {this.props.type === "manual" && "Save"}
+                            {this.props.type !== "manual" && "Continue"}
+                        </Button>
+                        {/* </Col>
                         </Row> */}
                     </div>
                 </Form>
             </Tabs.TabPane>
-            <Tabs.TabPane tab="International USD Swift" className="text-captz" key={"international"}>
+            <Tabs.TabPane disabled={this.state.isEdit} tab="International USD Swift" className="text-captz" key={"international"}>
                 {errorMessage && <Alert type="error" description={errorMessage} showIcon />}
                 <Form initialValues={details}
                     className="custom-label  mb-0"
@@ -341,18 +343,18 @@ class BusinessTransfer extends Component {
                     }} />
                     <div className="align-center">
                         {/* <Row gutter={[16, 16]}> */}
-                            {/* <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col> */}
-                            {/* <Col xs={24} className="text-right"> */}
-                                <Button
-                                    htmlType="submit"
-                                    size="large"
-                                    className="pop-btn mb-36"
-                                    style={{ minWidth: "100%" }}
-                                    loading={this.state.isBtnLoading}>
-                                    {this.props.type === "manual" && "Save"}
-                                    {this.props.type !== "manual" && "Continue"}
-                                </Button>
-                            {/* </Col>
+                        {/* <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col> */}
+                        {/* <Col xs={24} className="text-right"> */}
+                        <Button
+                            htmlType="submit"
+                            size="large"
+                            className="pop-btn mb-36"
+                            style={{ minWidth: "100%" }}
+                            loading={this.state.isBtnLoading}>
+                            {this.props.type === "manual" && "Save"}
+                            {this.props.type !== "manual" && "Continue"}
+                        </Button>
+                        {/* </Col>
                         </Row> */}
                     </div>
                 </Form>
