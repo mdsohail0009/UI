@@ -131,14 +131,14 @@ class AddressBook extends Component {
 		},
 		{
 
-			field: "whiteListName",
+			field: "favouriteName",
 			title: "Save Whitelist Name As",
 			filter: true,
 			width: 300,
 			customCell: (props) => (
 				<td>
 					<div className="gridLink" onClick={() => this.addressFiatView(props)}>
-						{props.dataItem.whiteListName}
+					{props.dataItem.favouriteName}
 					</div>
 					<Text className="file-label ml-8 fs-12">
 						{this.addressTypeNames(props?.dataItem?.addressType)}

@@ -301,7 +301,7 @@ class OnthegoFundTransfer extends Component {
                                         rules={[
                                             {
                                                 required: true,
-                                                message:'Please enter amount',
+                                                message:'Is required',
                                             },
                                             {
                                                 validator: (_, value) => {
@@ -350,30 +350,30 @@ class OnthegoFundTransfer extends Component {
                                 <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
                                     <Form.Item className="text-center">
                                         <Button
-                                            htmlType="button"
+                                            htmlType="submit"
                                             size="large"
                                             className="pop-btn mb-36"
                                             style={{ width: '100% '}}
                                             loading={this.state.addressLoader}
                                             disabled={this.state.newtransferLoader}
-                                            onClick={() => {
-                                                let _amt = this.enteramtForm.current.getFieldsValue().amount;
-                                                _amt = _amt.replace(/,/g, "");
-                                                if(_amt>0){
-                                                this.setState({ ...this.state, isNewTransfer: false, amount: _amt,onTheGoObj:this.enteramtForm.current.getFieldsValue() }, () => {
-                                                    this.enteramtForm.current.validateFields().then(() => this.validateAmt(_amt, "addressselection", this.enteramtForm.current.getFieldsValue(), "addressLoader"))
-                                                        .catch(error => {
+                                            // onClick={() => {
+                                            //     let _amt = this.enteramtForm.current.getFieldsValue().amount;
+                                            //     _amt = _amt.replace(/,/g, "");
+                                            //     if(_amt>0){
+                                            //     this.setState({ ...this.state, isNewTransfer: false, amount: _amt,onTheGoObj:this.enteramtForm.current.getFieldsValue() }, () => {
+                                            //         this.enteramtForm.current.validateFields().then(() => this.validateAmt(_amt, "addressselection", this.enteramtForm.current.getFieldsValue(), "addressLoader"))
+                                            //             .catch(error => {
 
-                                                        });
-                                                })
-                                            }else{
-                                                if(!_amt){
-                                                    this.setState({ ...this.state, errorMessage:'Please enter amount'})
-                                                }else{
-                                                    this.setState({ ...this.state, errorMessage:'Amount must be greater than zero'})
-                                                }
-                                            }
-                                            }}
+                                            //             });
+                                            //     })
+                                            // }else{
+                                            //     if(!_amt){
+                                            //         this.setState({ ...this.state, errorMessage:'Please enter amount'})
+                                            //     }else{
+                                            //         this.setState({ ...this.state, errorMessage:'Amount must be greater than zero'})
+                                            //     }
+                                            // }
+                                            // }}
                                         >
                                             Address book
                                         </Button>
