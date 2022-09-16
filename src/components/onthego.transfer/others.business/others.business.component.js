@@ -98,18 +98,22 @@ class OthersBusiness extends Component {
                 if (confirmRes.ok) {
                     this.props.onContinue(confirmRes.data);
                     this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
-                    this.useDivRef.current.scrollIntoView()
+                  //  this.useDivRef.current.scrollIntoView()
                 } else {
                     this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false, isBtnLoading: false });
+                  //  this.useDivRef.current.scrollIntoView(0,0)
+                  window.scrollTo(0, 0);
                 }
             } else {
                 // this.props.onContinue({ close: true, isCrypto: false });
                 this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
+                this.useDivRef.current.scrollIntoView(0,0)
             }
 
         } else {
-            this.useDivRef.current.scrollIntoView()
+            
             this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, isBtnLoading: false });
+           // this.useDivRef.current.scrollIntoView()
         }
 
     }
