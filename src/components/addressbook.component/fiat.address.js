@@ -37,13 +37,13 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onCont
                             disabled={isEdit}
                         >
                             <Radio.Button
-                            // disabled={props?.selectedAddress?.id !== "00000000-0000-0000-0000-000000000000" && props?.selectedAddress?.addressType !== "ownbusiness"?true:false}
+                           // disabled={props?.selectedAddress?.id !== "00000000-0000-0000-0000-000000000000" && props?.selectedAddress?.addressType !== "ownbusiness"?true:false}
                             className="custom-btn sec mt-8" value={props.userProfile?.isBusiness ? "ownbusiness" : "myself"}>{props.userProfile?.isBusiness ? "My Company" : "My Self"}</Radio.Button>
                             <Radio.Button
                                   // disabled={props?.selectedAddress?.id !== "00000000-0000-0000-0000-000000000000" && props?.selectedAddress?.addressType !== "someoneelse"?true:false}
                                 className="custom-btn sec mt-8" value="someoneelse">Someone Else</Radio.Button>
                             <Radio.Button
-                               //disabled={props?.selectedAddress?.id !== "00000000-0000-0000-0000-000000000000" && props?.selectedAddress?.addressType !== "business"?true:false}
+                             //  disabled={props?.selectedAddress?.id !== "00000000-0000-0000-0000-000000000000" && props?.selectedAddress?.addressType !== "business"?true:false}
                                 className="custom-btn sec mt-8" value="business">Business</Radio.Button>
                         </Radio.Group>
                     </Col>
