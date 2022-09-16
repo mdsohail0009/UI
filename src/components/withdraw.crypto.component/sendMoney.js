@@ -127,10 +127,10 @@ class SendMoney extends Component {
                                 <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">R</div></Col>
                                 <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="small-text-align">
                                     <label className="fs-16 fw-600 text-upper text-white-30 l-height-normal">
-                                        <strong>dfxghjk
+                                        <strong>beneficiary 100
                                         </strong>
                                     </label>
-                                    <div><Text className="fs-16 text-white-30 m-0">fdghbnm</Text></div>
+                                    <div><Text className="fs-16 text-white-30 m-0">USD acc ending in 4544</Text></div>
                                 </Col>
                                 <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white" onClick={() => this.handlePreview()}></span>
@@ -145,7 +145,7 @@ class SendMoney extends Component {
                             <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">R</div></Col>
                             <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="small-text-align">
                                 <label className="fs-16 fw-600 text-upper text-white-30 l-height-normal">
-                                    <strong>Whitelisted Name()
+                                    <strong>John's Metamask(0x...)
                                     </strong>
                                 </label>
                                 <div><Text className="fs-16 text-white-30 m-0">USDT(ERC-20)</Text></div>
@@ -159,7 +159,7 @@ class SendMoney extends Component {
                         <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">R</div></Col>
                             <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="small-text-align">
                                 <label className="fs-16 fw-600 text-upper text-white-30 l-height-normal">
-                                    <strong>Whitelisted Name()
+                                    <strong>Smith Metamask(3b...)
                                     </strong>
                                 </label>
                                 <div><Text className="fs-16 text-white-30 m-0">USDT(ERC-20)</Text></div>
