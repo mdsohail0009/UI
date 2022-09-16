@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Card, Alert, message,Image } from 'antd';
+import { Typography, Card, Alert, message,Image,Select } from 'antd';
 import WalletList from '../shared/walletList';
 import { changeStep, setTab } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
@@ -13,6 +13,7 @@ import LocalCryptoSwapperCmp from '../shared/local.crypto.swap/swap';
 import Currency from '../shared/number.formate';
 import apicalls from '../../api/apiCalls';
 import {  getPreview } from './api'
+const { Option } = Select;
 class SelectCrypto extends Component {
     myRef = React.createRef();
     swapRef = React.createRef();
@@ -20,6 +21,7 @@ class SelectCrypto extends Component {
         super(props);
         this.state = {
             buyDrawer: false,
+            isShowCoinsData: false,
             swapValues: {
                 localValue: '',
                 cryptoValue: '',
@@ -133,6 +135,9 @@ class SelectCrypto extends Component {
 			return "Something went wrong please try again!";
 		}
 	};
+    selectBuyCurrency = () => {
+       this.setState({ ...this.state, isShowCoinsData: true})
+    }
     render() {
         if (this.props.buyInfo?.selectedCoin?.loading || !this.props.buyInfo?.selectedCoin?.data) {
             return <Loader />
@@ -170,7 +175,32 @@ class SelectCrypto extends Component {
                             </div>
                         </div></div>
                     </Card>
-                    <LocalCryptoSwapperCmp
+          <form className="form">
+            <div className="my-36">
+              <Translate
+                className="input-label"
+                content="buy_select_currency"
+                component={Text}
+              />
+              <Select
+               // defaultValue="EUR"
+               placeholder="Select Currency"
+                className="cust-input mb-0"
+                dropdownClassName="select-drpdwn"
+                style={{ width: "100%" }}
+                bordered={false}
+                showArrow={false}
+                onChange={this.selectBuyCurrency}
+                suffixIcon={<span className="icon md uparrow" />}
+              >
+                <Option value="USD">USD</Option>
+                <Option value="EUR">EUR</Option>
+                <Option value="GBP">GBP</Option>
+              </Select>
+            </div>
+            </form>
+            {this.state.isShowCoinsData && <div>
+                   <LocalCryptoSwapperCmp
                         localAmt={localValue}
                         cryptoAmt={cryptoValue}
                         localCurrency={this.state.selectedWallet?.currencyCode || "USD"}
@@ -190,6 +220,7 @@ class SelectCrypto extends Component {
                     <div className="mt-24">
                         <SuisseBtn title="PreviewBuy" loading={this.state.btnLoading} onRefresh={() => this.refresh()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
                     </div>
+                    </div>}
                 </div>
 
             </div>

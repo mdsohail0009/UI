@@ -657,4 +657,5 @@ export default {
 	saveWhitelistnameas:'Save Whitelist Name As',
 	continue:'Continue',
 	send_crypto_address: "Send Crypto",
+	buy_select_currency: "Select Currency To Buy With",
 };
