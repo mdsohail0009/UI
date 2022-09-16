@@ -40,7 +40,7 @@ class DomesticTransfer extends Component {
                     <Input
                         className="cust-input"
                         placeholder={"Account Number"}
-                    />
+                        maxLength={100}/>
 
                 </Form.Item>
             </Col>
@@ -78,7 +78,7 @@ class DomesticTransfer extends Component {
                     <Input
                         className="cust-input"
                         placeholder={"ABA Routing Code"}
-                    />
+                        maxLength={100}/>
 
                 </Form.Item>
             </Col>
@@ -116,7 +116,7 @@ class DomesticTransfer extends Component {
                     <Input
                         className="cust-input"
                         placeholder={"Bank Name"}
-                    />
+                        maxLength={100}/>
 
                 </Form.Item>
             </Col>

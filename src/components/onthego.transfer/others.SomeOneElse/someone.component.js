@@ -162,7 +162,7 @@ const SomeoneComponent = (props) => {
                             }
                         >
                             <Input
-                                maxLength={20}
+                                maxLength={100}
                                 className="cust-input"
                                 placeholder={apiCalls.convertLocalLang("saveWhitelistnameas")}
                             />
@@ -202,7 +202,7 @@ const SomeoneComponent = (props) => {
                                 <Input
                                     className="cust-input"
                                     placeholder={apiCalls.convertLocalLang("first_name")}
-                                />
+                                    maxLength={100}/>
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -230,7 +230,7 @@ const SomeoneComponent = (props) => {
                                 <Input
                                     className="cust-input"
                                     placeholder={apiCalls.convertLocalLang("last_name")}
-                                />
+                                    maxLength={100}/>
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -263,7 +263,7 @@ const SomeoneComponent = (props) => {
                                     placeholder={apiCalls.convertLocalLang(
                                         "relationtobenificiary"
                                     )}
-                                    maxLength="500"
+                                    maxLength={100}
                                 />
                             </Form.Item>
                         </Col>

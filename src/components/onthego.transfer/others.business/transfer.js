@@ -131,7 +131,7 @@ class BusinessTransfer extends Component {
                                 ]}
                             >
                                 <Input
-                                    maxLength={20}
+                                    maxLength={100}
                                     className="cust-input"
                                     placeholder={" Save Whitelist Name As"}
                                 />
@@ -172,7 +172,7 @@ class BusinessTransfer extends Component {
                                 <Input
                                     className="cust-input"
                                     placeholder={"Beneficiary Name"}
-                                />
+                                    maxLength={100}/>
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -198,7 +198,7 @@ class BusinessTransfer extends Component {
                                 <Input
                                     className="cust-input"
                                     placeholder={"Relationship To Beneficiary"}
-                                />
+                                    maxLength={100}/>
 
                             </Form.Item>
                         </Col>
@@ -262,7 +262,7 @@ class BusinessTransfer extends Component {
                                 ]}
                             >
                                 <Input
-                                    maxLength={20}
+                                    maxLength={100}
                                     className="cust-input"
                                     placeholder={" Save Whitelist Name As"}
                                 />
@@ -297,7 +297,7 @@ class BusinessTransfer extends Component {
                                 <Input
                                     className="cust-input"
                                     placeholder={"Beneficiary Name"}
-                                />
+                                    maxLength={100}/>
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -323,7 +323,7 @@ class BusinessTransfer extends Component {
                                 <Input
                                     className="cust-input"
                                     placeholder={"Relationship To Beneficiary"}
-                                />
+                                    maxLength={100}/>
 
                             </Form.Item>
                         </Col>

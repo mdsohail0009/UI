@@ -192,7 +192,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             >
                
                 <Input
-                    maxLength={20}
+                    maxLength={100}
                         className="cust-input"
                         placeholder='Save Whitelist Name As'
                     />
@@ -316,7 +316,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     className="cust-input"
                     placeholder='IBAN'
                     // onBlur={(e)=>getBankDeails(e)}
-                    />
+                    maxLength={100}/>
             </Form.Item>
         </Col>}
         <Row gutter={[8, 8]}>
@@ -348,7 +348,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     <Input
                         className="cust-input"
                         placeholder='Account Number'
-                    />
+                    maxLength={100}/>
                 </Form.Item>
             </Col>
 
@@ -380,7 +380,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         <Input
                             className="cust-input"
                             placeholder={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
-                        />
+                        maxLength={100}/>
                     </Form.Item>
                 </Col>}
                 {!(currency == 'USD' && addressOptions.tabType == 'international')&&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -411,7 +411,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         <Input
                             className="cust-input"
                             placeholder={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
-                        />
+                        maxLength={100}/>
                     </Form.Item>
                 </Col>}
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -442,7 +442,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         <Input
                             className="cust-input"
                             placeholder='Bank Name'
-                        />
+                            maxLength={100}/>
                     </Form.Item>
                 </Col>
 

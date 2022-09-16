@@ -42,7 +42,7 @@ class InternationalTransfer extends Component {
                     <Input
                         className="cust-input"
                         placeholder={"Account Number"}
-                    />
+                        maxLength={100}/>
 
                 </Form.Item>
             </Col>
@@ -80,7 +80,7 @@ class InternationalTransfer extends Component {
                     <Input
                         className="cust-input"
                         placeholder={"Swift / BIC Code"}
-                    />
+                        maxLength={100}/>
 
                 </Form.Item>
             </Col>
@@ -118,7 +118,7 @@ class InternationalTransfer extends Component {
                     <Input
                         className="cust-input"
                         placeholder={"Bank Name"}
-                    />
+                        maxLength={100} />
 
                 </Form.Item>
             </Col>
