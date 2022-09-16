@@ -23,7 +23,8 @@ class OthersBusiness extends Component {
         ibanDetails: {},
         docDetails: {}, isBtnLoading: false,
         showDeclartion: false,
-        iBanValid:false
+        iBanValid:false,
+        isEdit: false
     };
     componentDidMount() {
         this.loadDetails();
@@ -43,7 +44,8 @@ class OthersBusiness extends Component {
                 delete data["documents"];
                 if (data?.iban) {
                     this.handleIbanChange({ target: { value: data?.iban } });
-                }
+                } 
+                 edit = true;
             }
             this.props?.onEdit(edit);
             const ibanDetails = response.data?.payeeAccountModels[0] || {}

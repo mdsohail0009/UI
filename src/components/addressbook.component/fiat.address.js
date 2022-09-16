@@ -51,7 +51,9 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onCont
             </Form.Item>
         </Form>
         {(addressOptions.addressType === "ownbusiness" || addressOptions.addressType === "myself") && <MyselfNewTransfer currency={props.currency} type={props.type} onContinue={(obj) => onContinue(obj)} {...props} isBusiness={props.userProfile?.isBusiness}
-            onTheGoObj={{ amount: props.amount }} selectedAddress={selectedAddress}></MyselfNewTransfer>}
+            onTheGoObj={{ amount: props.amount }} selectedAddress={selectedAddress} onEdit={(val) => {
+                setIsEdit(val);
+            }}></MyselfNewTransfer>}
         {addressOptions.addressType === "business" && <OthersBusiness selectedAddress={selectedAddress} type={props.type} isUSDTransfer={props.currency === "USD" ? true : false} onContinue={(obj) => onContinue(obj)} amount={props.amount} onEdit={(val) => {
             setIsEdit(val);
         }} />}

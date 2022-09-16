@@ -25,7 +25,7 @@ const SomeoneComponent = (props) => {
     const [intialObj, setIntialObj] = useState(false);
     const [form] = Form.useForm();
     const useDivRef = React.useRef(null);
-
+const [edit,setEdit]=useState(false)
     useEffect(() => {
         getpayeeCreate();
     }, [])
@@ -43,7 +43,7 @@ const SomeoneComponent = (props) => {
                 edit = true;
             }
             props?.onEdit(edit);
-
+            setEdit(true)
             setMailLoader(false)
 
         } else {
@@ -122,8 +122,8 @@ const SomeoneComponent = (props) => {
                                 form.current.resetFields();
                                 // form.current.setFieldsValue({ addressType: 'someoneelse', transferType: activekey })
                             }}>
-                                <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz" key={"domestic"}></Tabs.TabPane>
-                                <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"}></Tabs.TabPane>
+                                <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
+                                <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"} disabled={edit}></Tabs.TabPane>
                             </Tabs>
                         </Col>
                     </Row>

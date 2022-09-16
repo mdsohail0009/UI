@@ -20,8 +20,8 @@ class BusinessTransfer extends Component {
         errorMessage: null,
         isLoading: true,
         details: {},
-        selectedTab: "domestic", isBtnLoading: false,
-        showDeclaration: false
+        selectedTab: this.props.selectedAddress?.transferType||"domestic", isBtnLoading: false,
+        showDeclaration: false,isEdit:false
     };
     componentDidMount() {
         this.loadDetails();
@@ -30,17 +30,18 @@ class BusinessTransfer extends Component {
         this.setState({ ...this.state, errorMessage: null, isLoading: true });
         const response = await createPayee(this.props.userProfile.id, this.props.selectedAddress?.id || "", "business");
         if (response.ok) {
-            let data = response.data;
+            let data = response.data;let edit=false;
             if (!data?.payeeAccountModels) {
                 data.payeeAccountModels = [payeeAccountObj()];
             }
-            if (this.props.selectedAddress) {
+            if (this.props.selectedAddress?.id) {
                 const accountDetails = data.payeeAccountModels[0];
                 data = { ...data, ...accountDetails, line1: data.line1, line2: data.line2, line3: data.line3, bankAddress1: accountDetails.line1, bankAddress2: accountDetails.line2 };
                 delete data["documents"];
                 // this.handleIbanChange({ target: { value: data?.iban } });
+                 edit = true;
             }
-            this.setState({ ...this.state, errorMessage: null, details: data }, () => {
+            this.setState({ ...this.state, errorMessage: null, details: data,isEdit:edit }, () => {
                 this.setState({ ...this.state, isLoading: false })
             });
         } else {
@@ -101,7 +102,7 @@ class BusinessTransfer extends Component {
             </div>
         }
         return <div ref={this.useDivRef}><Tabs className="cust-tabs-fait" onChange={this.handleTabChange} activeKey={selectedTab}>
-            <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"}>
+            <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"} disabled={this.state.isEdit}>
                 <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
                 <Form initialValues={details}
                     className="custom-label  mb-0"
@@ -232,7 +233,7 @@ class BusinessTransfer extends Component {
                     </div>
                 </Form></div>
             </Tabs.TabPane>
-            <Tabs.TabPane tab="International USD Swift" key={"international"}>
+            <Tabs.TabPane tab="International USD Swift" key={"international"} disabled={this.state.isEdit}>
             <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
                 <Form initialValues={details}
                     className="custom-label  mb-0"

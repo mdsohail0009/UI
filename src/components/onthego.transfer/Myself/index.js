@@ -27,6 +27,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     const useDivRef = React.useRef(null);
     const [validIban,setValidIban]=useState(false)
     const [showDeclartion, setShowDeclartion] = useState(false);
+    const [isEdit,setIsEdit]=useState(false)
     useEffect(() => {
         getRecipientDetails()
     }, [])
@@ -45,7 +46,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 setAddressOptions({addressType:response.data.addressType,transferType:response.data.transferType,domesticType:response.data.transferType,tabType:response.data.transferType})
                 if(obj.iban){
                     getBankDeails(obj.iban)
-                }
+                }let edit = true; props?.onEdit(edit);setIsEdit(true)
             } else {
                 setRecipientDetails(response.data); setLoader(false)
             }
@@ -156,8 +157,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             <Row gutter={[16, 16]}>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                     <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });form.resetFields();seterrorMessage(null) }} activeKey={addressOptions.tabType}>
-                        <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz"  key={"domestic"}></Tabs.TabPane>
-                        <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"}></Tabs.TabPane>
+                        <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz"  key={"domestic"} disabled={isEdit}></Tabs.TabPane>
+                        <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"} disabled={isEdit}></Tabs.TabPane>
                     </Tabs>
                 </Col>
             </Row>
