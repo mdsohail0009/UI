@@ -247,7 +247,7 @@ export default {
 	Bank_account_iban: "IBAN",
 	Bank_account_iban_name: "Bank Account Number/IBAN",
 	iban: "IBAN",
-	BIC_SWIFT_routing_number: "BIC / SWIFT / Routing Number",
+	BIC_SWIFT_routing_number: "BIC / SWIFT / Routing Code",
 	BIC_SWIFT_ABArouting_number: "BIC / SWIFT / ABA Routing Code",
 	bicnumber: "BIC",
 	swiftcode: "Swift Code",
