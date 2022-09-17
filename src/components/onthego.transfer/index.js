@@ -47,6 +47,7 @@ class OnthegoFundTransfer extends Component {
         fiatWallets: []
     }
     componentDidMount() {
+        debugger
         this.verificationCheck()
         if (!this.state.selectedCurrency) {
             this.setState({ ...this.state, fiatWalletsLoading: true });
@@ -797,7 +798,7 @@ class OnthegoFundTransfer extends Component {
                 </Spin>
             </React.Fragment>,
             newtransfer: <>
-                <FiatAddress currency={this.state.selectedCurrency} amount={this.state.amount} onContinue={(obj) => {
+                <FiatAddress typeOntheGo={this.props?.ontheGoType} currency={this.state.selectedCurrency} amount={this.state.amount} onContinue={(obj) => {
                     this.setState({ ...this.state, reviewDetails: obj }, () => {
                         this.chnageStep("reviewdetails")
                     })

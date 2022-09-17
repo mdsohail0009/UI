@@ -75,6 +75,7 @@ class OthersBusiness extends Component {
         }
     }
     submitPayee = async (values) => {
+        debugger
         let { details, ibanDetails } = this.state;
         let _obj = { ...details, ...values };
         _obj.payeeAccountModels[0].line1 = ibanDetails.bankAddress;
@@ -283,7 +284,7 @@ class OthersBusiness extends Component {
                             </Form.Item>
                         </Col>
 
-                        {this.props.type == "manual" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        {this.props.ontheGoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="fw-300 mb-8 px-4 text-white-50 py-4 custom-forminput custom-label"
                                 name="reasonOfTransfer"
@@ -312,6 +313,7 @@ class OthersBusiness extends Component {
                                     maxLength={1000}/>
                             </Form.Item>
                         </Col>}
+                         
                     </Row>
                     <div className="box basic-info alert-info-custom mt-16">
                         <Spin spinning={this.state.ibanDetailsLoading}>

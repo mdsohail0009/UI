@@ -51,6 +51,7 @@ const [edit,setEdit]=useState(false)
         }
     }
     const onSubmit = async (values) => {
+        debugger
         let obj = { ...createPayeeObj, ...values };
         obj.payeeAccountModels = [payeeAccountObj()];
         obj.payeeAccountModels[0] = { ...obj.payeeAccountModels[0], ...bankdetails, ...values.payeeAccountModels };
@@ -122,8 +123,8 @@ const [edit,setEdit]=useState(false)
                                 form.current.resetFields();
                                 // form.current.setFieldsValue({ addressType: 'someoneelse', transferType: activekey })
                             }}>
-                                <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
-                                <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"} disabled={edit}></Tabs.TabPane>
+                                <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz" key={"domestic"}></Tabs.TabPane>
+                                <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"} ></Tabs.TabPane>
                             </Tabs>
                         </Col>
                     </Row>
@@ -344,7 +345,7 @@ const [edit,setEdit]=useState(false)
                 {/* <Divider /> */}
                 <Paragraph className="mb-8 fw-500 text-white px-4 mt-36" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                 {((props.selectedAddress?.id && createPayeeObj)||!props.selectedAddress?.id ) &&
-                 <PayeeBankDetails form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />}
+                 <PayeeBankDetails GoType={props.ontheGoType} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />}
                 
                 <Paragraph className="fw-300 mb-0 pb-4 ml-12 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
                 {console.log(documents)}
