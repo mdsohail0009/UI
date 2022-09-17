@@ -52,6 +52,7 @@ class Wallets extends Component {
         }
 
         if (e === 2) {
+            debugger
             // this.props.dispatch(setWithdrawfiatenaable(true))
             // this.props.dispatch(setWithdrawfiat({ walletCode: value }))
             this.setState({ ...this.setState, showFuntransfer: true, selectedCurrency:value })
@@ -168,7 +169,7 @@ class Wallets extends Component {
                     className="side-drawer w-50p"
                     visible={this.state.showFuntransfer}
                 >
-                    <OnthegoFundTransfer selectedCurrency={this.state.selectedCurrency} />
+                    <OnthegoFundTransfer selectedCurrency={this.state.selectedCurrency} ontheGoType={"Onthego"} />
                 </Drawer>
             </>
         );

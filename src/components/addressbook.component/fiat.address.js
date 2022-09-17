@@ -54,10 +54,10 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onCont
             onTheGoObj={{ amount: props.amount }} selectedAddress={selectedAddress} onEdit={(val) => {
                 setIsEdit(val);
             }}></MyselfNewTransfer>}
-        {addressOptions.addressType === "business" && <OthersBusiness selectedAddress={selectedAddress} type={props.type} isUSDTransfer={props.currency === "USD" ? true : false} onContinue={(obj) => onContinue(obj)} amount={props.amount} onEdit={(val) => {
+        {addressOptions.addressType === "business" && <OthersBusiness ontheGoType={props.typeOntheGo} selectedAddress={selectedAddress} type={props.type} isUSDTransfer={props.currency === "USD" ? true : false} onContinue={(obj) => onContinue(obj)} amount={props.amount} onEdit={(val) => {
             setIsEdit(val);
         }} />}
-        {addressOptions.addressType === "someoneelse" && <SomeoneComponent selectedAddress={selectedAddress} addressType={addressOptions.addressType} type={props.type} currency={props.currency} onContinue={(obj) => onContinue(obj)} onTheGoObj={{ amount: props.amount }} onEdit={(val) => {
+        {addressOptions.addressType === "someoneelse" && <SomeoneComponent ontheGoType={props.typeOntheGo} selectedAddress={selectedAddress} addressType={addressOptions.addressType} type={props.type} currency={props.currency} onContinue={(obj) => onContinue(obj)} onTheGoObj={{ amount: props.amount }} onEdit={(val) => {
             setIsEdit(val);
         }} />}
     </>
