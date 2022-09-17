@@ -41,9 +41,9 @@ const [edit,setEdit]=useState(false)
                 setDocuments(createPayeeData.data.payeeAccountModels[0].documents)
                 setAddressOptions({ ...addressOptions, domesticType: createPayeeData.data.transferType });
                 edit = true;
+                props?.onEdit(edit);
+                setEdit(true)
             }
-            props?.onEdit(edit);
-            setEdit(true)
             setMailLoader(false)
 
         } else {
