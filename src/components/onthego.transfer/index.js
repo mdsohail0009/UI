@@ -369,7 +369,8 @@ class OnthegoFundTransfer extends Component {
                                                 })
                                             }else{
                                                 if(!_amt){
-                                                    this.setState({ ...this.state, errorMessage:'Please enter amount'})
+                                                    this.enteramtForm.current.validateFields()
+                                                   // this.setState({ ...this.state, errorMessage:'Please enter amount'})
                                                 }else{
                                                     this.setState({ ...this.state, errorMessage:'Amount must be greater than zero'})
                                                 }
