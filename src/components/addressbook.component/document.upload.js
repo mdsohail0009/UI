@@ -51,12 +51,14 @@ class AddressDocumnet extends Component {
                             if (this.state.filesList.length == 0) {
                                 return Promise.reject("At least one document is required")
                             }
-                            if (!fileType[value.file.type]) {
+                            if (value&&!fileType[value.file.type]) {
+                                this.setState({...this.state,isDocLoading:false})
                                 return Promise.reject("File is not allowed. You can upload jpg, png, jpeg and PDF  files");
                             }
                             else {
                                 const isValidFiles = this.state.filesList.filter(item => (item.name || item.documentName).indexOf(".") != (item.name || item.documentName).lastIndexOf(".")).length == 0;
                                 if (isValidFiles) { return Promise.resolve(); } else {
+                                    this.setState({...this.state,isDocLoading:false})
                                     return Promise.reject("File don't allow double extension");
                                 }
 
