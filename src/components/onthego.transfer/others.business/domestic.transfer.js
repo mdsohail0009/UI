@@ -45,7 +45,7 @@ class DomesticTransfer extends Component {
                     <Input
                         className="cust-input"
                         placeholder={"Account Number"}
-                        maxLength={20}/>
+                        maxLength={50}/>
 
                 </Form.Item>
             </Col>
@@ -83,7 +83,7 @@ class DomesticTransfer extends Component {
                     <Input
                         className="cust-input"
                         placeholder={"ABA Routing Code"}
-                        maxLength={20}/>
+                        maxLength={50}/>
 
                 </Form.Item>
             </Col>

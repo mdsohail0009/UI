@@ -96,7 +96,7 @@ class PayeeBankDetails extends Component {
                             placeholder={apicalls.convertLocalLang(
                                 "Bank_account_iban"
                             )}
-                            maxLength={20}/>
+                            maxLength={50}/>
                     </Form.Item>
                 </Col>
                  
@@ -264,7 +264,7 @@ class PayeeBankDetails extends Component {
                             placeholder={apicalls.convertLocalLang(
                                 "accountnumber"
                             )}
-                            maxLength={20}
+                            maxLength={50}
                         />
                     </Form.Item>
                 </Col>
@@ -302,7 +302,7 @@ class PayeeBankDetails extends Component {
                             placeholder={apicalls.convertLocalLang(
                                 "swifbictcode"
                             )}
-                            maxLength={20}
+                            maxLength={50}
                         />
                     </Form.Item>
                 </Col>}
@@ -337,7 +337,7 @@ class PayeeBankDetails extends Component {
                         <Input
                             className="cust-input "
                             placeholder="ABA Routing Code"
-                            maxLength={20}
+                            maxLength={50}
                         />
                     </Form.Item>
                 </Col>}

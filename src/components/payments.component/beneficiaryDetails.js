@@ -523,7 +523,7 @@ class PaymentsView extends Component {
                                             }
                                         ]}
                                     >
-                                        <Input className="cust-input"  maxLength={20} placeholder={apiCalls.convertLocalLang('Bank_account')} />
+                                        <Input className="cust-input"  maxLength={50} placeholder={apiCalls.convertLocalLang('Bank_account')} />
                                     </Form.Item>
                                 </Col>
                                 <Col xl={8}>
