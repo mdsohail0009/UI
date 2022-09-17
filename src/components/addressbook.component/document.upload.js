@@ -19,7 +19,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 class AddressDocumnet extends Component {
     state = {
         filesList: [],
-        documents: {}, showDeleteModal: false, isDocLoading: false
+        documents: {}, showDeleteModal: false, isDocLoading: false,selectedObj:{}
     }
     componentDidMount() {
         this.setState({ ...this.state, documents: this.props?.documents || document(), filesList: this.props?.documents ? [...this.props?.documents?.details] : [] })
@@ -43,7 +43,7 @@ class AddressDocumnet extends Component {
             <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="text-left">
                 <div className='mb-24'>
                     <Paragraph
-                        className="mb-16 fs-14 text-white fw-500"
+                      className="mb-8 fs-14 text-white fw-500 ml-12" 
                     >{this.props.title}</Paragraph>
                     <Form.Item name={"files"} required rules={[{
                         validator: (_, value) => {
@@ -103,7 +103,7 @@ class AddressDocumnet extends Component {
                                 <span className="fs-12 text-secondary">{file.size ? bytesToSize(file.size) : ""}</span>
                             </div>
                             <span className="icon md close c-pointer" onClick={() => {
-                                this.setState({ ...this.state, showDeleteModal: true, selectedFileIdx: indx })
+                                this.setState({ ...this.state, showDeleteModal: true, selectedFileIdx: indx,selectedObj:file })
 
                             }} />
                         </>}
@@ -125,12 +125,17 @@ class AddressDocumnet extends Component {
                         <Button
                             className="primary-btn pop-btn"
                             onClick={() => {
-                                let filesList = [...this.state.filesList];
-                                filesList[this.state.selectedFileIdx].state='Deleted'
-                                let obj=Object.assign([],filesList)
+                                let { documents: docs } = this.state;
+                                let files = docs.details;
+                                for(var k in files){
+                                    if(files[k].id==this.state.selectedObj.id){
+                                        files[k].state='Deleted'
+                                    }
+                                }
+                                let obj=Object.assign([],files)
+                                let {filesList}=this.state
                                 filesList.splice(this.state.selectedFileIdx, 1);
                                 this.setState({ ...this.state, filesList, showDeleteModal: false });
-                                let { documents: docs } = this.state;
                                 docs.details=Object.assign([],obj)
                                 this.props?.onDocumentsChange(docs);
                             }}

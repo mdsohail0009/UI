@@ -358,7 +358,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
 
                 {currency == 'USD' && addressOptions.tabType == 'international'&&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label fw-400 mb-8 px-4 text-white pt-8"
                         name="swiftRouteBICNumber"
                         label={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
                         required

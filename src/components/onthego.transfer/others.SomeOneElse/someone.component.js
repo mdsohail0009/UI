@@ -41,9 +41,9 @@ const [edit,setEdit]=useState(false)
                 setDocuments(createPayeeData.data.payeeAccountModels[0].documents)
                 setAddressOptions({ ...addressOptions, domesticType: createPayeeData.data.transferType });
                 edit = true;
+                props?.onEdit(edit);
+                setEdit(true)
             }
-            props?.onEdit(edit);
-            setEdit(true)
             setMailLoader(false)
 
         } else {
@@ -123,8 +123,8 @@ const [edit,setEdit]=useState(false)
                                 form.current.resetFields();
                                 // form.current.setFieldsValue({ addressType: 'someoneelse', transferType: activekey })
                             }}>
-                                <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz" key={"domestic"}></Tabs.TabPane>
-                                <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"} ></Tabs.TabPane>
+                                <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
+                                <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"} disabled={edit} ></Tabs.TabPane>
                             </Tabs>
                         </Col>
                     </Row>
