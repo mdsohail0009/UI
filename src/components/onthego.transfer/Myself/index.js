@@ -296,17 +296,20 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             } else if (
                                 value &&
                                 !/^[A-Za-z0-9]+$/.test(value)
-                            ) {
+                            ) 
+                            {
                                 return Promise.reject(
-                                    "Invalid  IBAN Number"
+                                    "Please input a valid IBAN"
                                 );
-                            }else {
+                            }
+                            else {
                                 return Promise.resolve();
                             }
                         },
-                    },{
-                        validator: validateContentRule
-                    }
+                    },
+                    // {
+                    //     validator: validateContentRule
+                    // }
                 ]}
                 label='IBAN'
                 onChange={(e) => {
@@ -317,7 +320,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     className="cust-input"
                     placeholder='IBAN'
                     // onBlur={(e)=>getBankDeails(e)}
-                    maxLength={100}/>
+                    maxLength={50}/>
             </Form.Item>
         </Col>}
         <Row gutter={[8, 8]}>
@@ -349,7 +352,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     <Input
                         className="cust-input"
                         placeholder='Account Number'
-                    maxLength={100}/>
+                    maxLength={50}/>
                 </Form.Item>
             </Col>
 
@@ -381,7 +384,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         <Input
                             className="cust-input"
                             placeholder={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
-                        maxLength={100}/>
+                            maxLength={50}/>
                     </Form.Item>
                 </Col>}
                 {!(currency == 'USD' && addressOptions.tabType == 'international')&&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -411,8 +414,9 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         ]}>
                         <Input
                             className="cust-input"
+                            
                             placeholder={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
-                        maxLength={100}/>
+                        maxLength={50}/>
                     </Form.Item>
                 </Col>}
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -425,20 +429,25 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             {
                                 required: true,
                                 message: apiCalls.convertLocalLang("is_required"),
-                            },{
-                                validator: (_, value) => {
-                                    if (
-                                        value &&
-                                        !/^[a-zA-Z0-9_.-\s]+$/.test(value)
-                                    ) {
-                                        return Promise.reject(
-                                            "Please enter valid content"
-                                        );
-                                    }else {
-                                        return Promise.resolve();
-                                    }
-                                },
+                            },
+                            {
+                                validator: validateContentRule
                             }
+                            // {
+                            //     validator:
+                            //      (_, value) => {
+                            //         if (
+                            //             value &&
+                            //             !/^[a-zA-Z0-9_.-\s]+$/.test(value)
+                            //         ) {
+                            //             return Promise.reject(
+                            //                 "Please enter valid content"
+                            //             );
+                            //         }else {
+                            //             return Promise.resolve();
+                            //         }
+                            //     },
+                            // }
                         ]}>
                         <Input
                             className="cust-input"
@@ -458,20 +467,23 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             {
                                 required: true,
                                 message: apiCalls.convertLocalLang("is_required"),
-                            },{
-                                validator: (_, value) => {
-                                    if (
-                                        value &&
-                                        !/^[a-zA-Z0-9_.-\s]+$/.test(value)
-                                    ) {
-                                        return Promise.reject(
-                                            "Please enter valid content"
-                                        );
-                                    }else {
-                                        return Promise.resolve();
-                                    }
-                                },
-                            }
+                            }, {
+                                validator: validateContentRule,
+                            },
+                            // {
+                            //     validator: (_, value) => {
+                            //         if (
+                            //             value &&
+                            //             !/^[a-zA-Z0-9_.-\s]+$/.test(value)
+                            //         ) {
+                            //             return Promise.reject(
+                            //                 "Please enter valid content"
+                            //             );
+                            //         }else {
+                            //             return Promise.resolve();
+                            //         }
+                            //     },
+                            // }
                         ]}>
                         <TextArea
                             placeholder={'Bank Address 1'}
@@ -486,20 +498,23 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
                         name="line2"
                         label='Bank Address 2'
-                        rules={[{
-                                validator: (_, value) => {
-                                    if (
-                                        value &&
-                                        !/^[a-zA-Z0-9_.-\s]+$/.test(value)
-                                    ) {
-                                        return Promise.reject(
-                                            "Please enter valid content"
-                                        );
-                                    }else {
-                                        return Promise.resolve();
-                                    }
-                                },
-                            }
+                        rules={[ {
+                            validator: validateContentRule,
+                        },
+                            // {
+                            //     validator: (_, value) => {
+                            //         if (
+                            //             value &&
+                            //             !/^[a-zA-Z0-9_.-\s]+$/.test(value)
+                            //         ) {
+                            //             return Promise.reject(
+                            //                 "Please enter valid content"
+                            //             );
+                            //         }else {
+                            //             return Promise.resolve();
+                            //         }
+                            //     },
+                            // }
                         ]}>
                        
                         <TextArea

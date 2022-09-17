@@ -1272,7 +1272,7 @@ const AddressCommonCom = (props) => {
                           placeholder={apiCalls.convertLocalLang("Address_Line1")}
                           className="cust-input cust-text-area address-book-cust"
                           autoSize={{ minRows: 1, maxRows: 2 }}
-                          maxLength={100}
+                          maxLength={1000}
                         ></TextArea>
                       </Form.Item>
                     </Col>

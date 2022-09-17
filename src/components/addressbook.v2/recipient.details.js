@@ -38,7 +38,7 @@ class RecipientAddress extends Component {
                         placeholder="Address Line 1"
                         className="cust-input cust-text-area address-book-cust"
                         autoSize={{ minRows: 1, maxRows: 1 }}
-                        maxLength={100}
+                        maxLength={1000}
                     ></TextArea>
                 </Form.Item>
             </Col>
@@ -58,7 +58,7 @@ class RecipientAddress extends Component {
                         placeholder="Address Line 2"
                         className="cust-input cust-text-area address-book-cust"
                         autoSize={{ minRows: 1, maxRows: 1 }}
-                        maxLength={100}
+                        maxLength={1000}
                     ></TextArea>
                 </Form.Item>
             </Col>
@@ -77,7 +77,7 @@ class RecipientAddress extends Component {
                         placeholder="Address Line 3"
                         className="cust-input cust-text-area address-book-cust"
                         autoSize={{ minRows: 1, maxRows: 1 }}
-                        maxLength={100}
+                        maxLength={1000}
                     ></TextArea>
                 </Form.Item>
             </Col>
@@ -114,7 +114,7 @@ class RecipientDetails extends Component {
                 >
                     <AutoComplete
                         onChange={(e) => { }}
-                        maxLength={20}
+                        maxLength={100}
                         className="cust-input"
                         placeholder={"Save Whitelist name as"}
                     >
@@ -150,6 +150,7 @@ class RecipientDetails extends Component {
                 >
                     <Input
                         className="cust-input"
+                        maxLength={100}
                         placeholder={apiCalls.convertLocalLang("first_name")}
                     />
                 </Form.Item>
@@ -178,6 +179,7 @@ class RecipientDetails extends Component {
                 >
                     <Input
                         className="cust-input"
+                        maxLength={100}
                         placeholder={apiCalls.convertLocalLang("last_name")}
                     />
                 </Form.Item>

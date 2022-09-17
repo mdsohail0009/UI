@@ -4,6 +4,11 @@ import { Form, Row, Col, Input } from "antd";
 import { validateContentRule } from "../../../utils/custom.validator";
 const { TextArea } = Input;
 class DomesticTransfer extends Component {
+    componentDidMount() {
+       debugger
+       
+       // this.setState({ ...this.state, documents: this.props?.documents || document(), filesList: this.props?.documents ? [...this.props?.documents?.details] : [] })
+    }
     render() {
         return <Row gutter={[8, 8]}>
             <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -40,7 +45,7 @@ class DomesticTransfer extends Component {
                     <Input
                         className="cust-input"
                         placeholder={"Account Number"}
-                        maxLength={100}/>
+                        maxLength={50}/>
 
                 </Form.Item>
             </Col>
@@ -78,7 +83,7 @@ class DomesticTransfer extends Component {
                     <Input
                         className="cust-input"
                         placeholder={"ABA Routing Code"}
-                        maxLength={100}/>
+                        maxLength={50}/>
 
                 </Form.Item>
             </Col>
@@ -98,19 +103,22 @@ class DomesticTransfer extends Component {
                             message: apiCalls.convertLocalLang("is_required"),
                         },
                         {
-                            validator: (_, value) => {
-                                if (
-                                    value &&
-                                    !/^[A-Za-z0-9_.-\s]+$/.test(value)
-                                ) {
-                                    return Promise.reject(
-                                        "Please enter valid content"
-                                    );
-                                }else {
-                                    return Promise.resolve();
-                                }
-                            },
-                        }
+                            validator: validateContentRule,
+                        },
+                        // {
+                        //     validator: (_, value) => {
+                        //         if (
+                        //             value &&
+                        //             !/^[A-Za-z0-9_.-\s]+$/.test(value)
+                        //         ) {
+                        //             return Promise.reject(
+                        //                 "Please enter valid content"
+                        //             );
+                        //         }else {
+                        //             return Promise.resolve();
+                        //         }
+                        //     },
+                        // }
                     ]}
                 >
                     <Input
@@ -162,20 +170,23 @@ class DomesticTransfer extends Component {
                             whitespace: true,
                             message: apiCalls.convertLocalLang("is_required"),
                         },
-                       {
-                            validator: (_, value) => {
-                                if (
-                                    value &&
-                                    !/^[a-zA-Z0-9_.-\s]+$/.test(value)
-                                ) {
-                                    return Promise.reject(
-                                        "Please enter valid content"
-                                    );
-                                }else {
-                                    return Promise.resolve();
-                                }
-                            },
-                        }
+                        {
+                            validator: validateContentRule,
+                        },
+                    //    {
+                    //         validator: (_, value) => {
+                    //             if (
+                    //                 value &&
+                    //                 !/^[a-zA-Z0-9_.-\s]+$/.test(value)
+                    //             ) {
+                    //                 return Promise.reject(
+                    //                     "Please enter valid content"
+                    //                 );
+                    //             }else {
+                    //                 return Promise.resolve();
+                    //             }
+                    //         },
+                    //     }
                     ]}
                     label={
                         "Bank Address 1"
@@ -195,19 +206,22 @@ class DomesticTransfer extends Component {
                     name="bankAddress2"
                     rules={[
                         {
-                            validator: (_, value) => {
-                                if (
-                                    value &&
-                                    !/^[a-zA-Z0-9_.-\s]+$/.test(value)
-                                ) {
-                                    return Promise.reject(
-                                        "Please enter valid content"
-                                    );
-                                }else {
-                                    return Promise.resolve();
-                                }
-                            },
-                        }
+                            validator: validateContentRule,
+                        },
+                        // {
+                        //     validator: (_, value) => {
+                        //         if (
+                        //             value &&
+                        //             !/^[a-zA-Z0-9_.-\s]+$/.test(value)
+                        //         ) {
+                        //             return Promise.reject(
+                        //                 "Please enter valid content"
+                        //             );
+                        //         }else {
+                        //             return Promise.resolve();
+                        //         }
+                        //     },
+                        // }
                     ]}
                     label={
                         "Bank Address 2"
@@ -247,7 +261,7 @@ class DomesticTransfer extends Component {
                         placeholder={"Reason Of Transfer"}
                         className="cust-input cust-text-area address-book-cust"
                         autoSize={{ minRows: 1, maxRows: 1 }}
-                        maxLength={100}
+                        maxLength={1000}
                     ></TextArea>
                 </Form.Item>
             </Col>}

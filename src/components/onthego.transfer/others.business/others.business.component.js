@@ -27,6 +27,7 @@ class OthersBusiness extends Component {
         isEdit: false
     };
     componentDidMount() {
+        debugger
         this.loadDetails();
     }
     loadDetails = async () => {
@@ -264,7 +265,7 @@ class OthersBusiness extends Component {
                                                 !/^[A-Za-z0-9]+$/.test(value)
                                             ) {
                                                 return Promise.reject(
-                                                    "Invalid  IBAN Number"
+                                                    "Please input a valid IBAN"
                                                 );
                                             }else {
                                                 return Promise.resolve();
@@ -277,12 +278,12 @@ class OthersBusiness extends Component {
                                     className="cust-input"
                                     placeholder={"IBAN"}
                                     onChange={this.handleIbanChange}
-                                    maxLength={100}/>
+                                    maxLength={50}/>
 
                             </Form.Item>
                         </Col>
 
-                        {this.props.type !== "manual" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        {this.props.type == "manual" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
                                 className="fw-300 mb-8 px-4 text-white-50 py-4 custom-forminput custom-label"
                                 name="reasonOfTransfer"
@@ -308,7 +309,7 @@ class OthersBusiness extends Component {
                                     className="cust-input"
                                     placeholder={"Reason Of Transfer"}
                                     // onChange={this.handleIbanChange}
-                                    maxLength={100}/>
+                                    maxLength={1000}/>
                             </Form.Item>
                         </Col>}
                     </Row>

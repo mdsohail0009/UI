@@ -350,30 +350,30 @@ class OnthegoFundTransfer extends Component {
                                 <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
                                     <Form.Item className="text-center">
                                         <Button
-                                            htmlType="submit"
+                                           htmlType="button"
                                             size="large"
                                             className="pop-btn mb-36"
                                             style={{ width: '100% '}}
                                             loading={this.state.addressLoader}
                                             disabled={this.state.newtransferLoader}
-                                            // onClick={() => {
-                                            //     let _amt = this.enteramtForm.current.getFieldsValue().amount;
-                                            //     _amt = _amt.replace(/,/g, "");
-                                            //     if(_amt>0){
-                                            //     this.setState({ ...this.state, isNewTransfer: false, amount: _amt,onTheGoObj:this.enteramtForm.current.getFieldsValue() }, () => {
-                                            //         this.enteramtForm.current.validateFields().then(() => this.validateAmt(_amt, "addressselection", this.enteramtForm.current.getFieldsValue(), "addressLoader"))
-                                            //             .catch(error => {
+                                            onClick={() => {
+                                                let _amt = this.enteramtForm.current.getFieldsValue().amount;
+                                                _amt = _amt.replace(/,/g, "");
+                                                if(_amt>0){
+                                                this.setState({ ...this.state, isNewTransfer: false, amount: _amt,onTheGoObj:this.enteramtForm.current.getFieldsValue() }, () => {
+                                                    this.enteramtForm.current.validateFields().then(() => this.validateAmt(_amt, "addressselection", this.enteramtForm.current.getFieldsValue(), "addressLoader"))
+                                                        .catch(error => {
 
-                                            //             });
-                                            //     })
-                                            // }else{
-                                            //     if(!_amt){
-                                            //         this.setState({ ...this.state, errorMessage:'Please enter amount'})
-                                            //     }else{
-                                            //         this.setState({ ...this.state, errorMessage:'Amount must be greater than zero'})
-                                            //     }
-                                            // }
-                                            // }}
+                                                        });
+                                                })
+                                            }else{
+                                                if(!_amt){
+                                                    this.setState({ ...this.state, errorMessage:'Please enter amount'})
+                                                }else{
+                                                    this.setState({ ...this.state, errorMessage:'Amount must be greater than zero'})
+                                                }
+                                            }
+                                            }}
                                         >
                                             Address book
                                         </Button>
@@ -517,7 +517,7 @@ class OnthegoFundTransfer extends Component {
                                 <Input
                                     className="cust-input "
                                     placeholder={"Reason Of Transfer"}
-                                    maxLength="500"
+                                    maxLength={1000}
                                 />
                             </Form.Item>
 
@@ -716,62 +716,62 @@ class OnthegoFundTransfer extends Component {
                             <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                     <Title className="fs-14 text-white fw-400 text-captz">Save Whitelist name as</Title>
-                                    <Title className="fs-14 fw-500 text-white-50 text-right text-upper">{this.state.reviewDetails?.favouriteName}</Title>
+                                    <Title className="fs-14 fw-500 text-white-50 text-right ">{this.state.reviewDetails?.favouriteName}</Title>
                                 </div>
                             </Col>
                             {this.state.reviewDetails?.name && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                     <Title className="fs-14 text-white fw-400 text-captz">Beneficiary Name</Title>
-                                    <Title className="fs-14 fw-500 text-white-50 text-right text-upper">{this.state.reviewDetails?.name}</Title>
+                                    <Title className="fs-14 fw-500 text-white-50 text-right ">{this.state.reviewDetails?.name}</Title>
                                 </div>
                             </Col>}
                             {this.state.reviewDetails?.firstName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                     <Title className="fs-14 text-white fw-400 text-captz">First Name</Title>
-                                    <Title className="fs-14 fw-500 text-white-50 text-right text-upper">{this.state.reviewDetails?.firstName}</Title>
+                                    <Title className="fs-14 fw-500 text-white-50 text-right ">{this.state.reviewDetails?.firstName}</Title>
                                 </div>
                             </Col>}
                             {this.state.reviewDetails?.lastName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                     <Title className="fs-14 text-white fw-400 text-captz">Last Name</Title>
-                                    <Title className="fs-14 fw-500 text-white-50 text-right text-upper">{this.state.reviewDetails?.lastName}</Title>
+                                    <Title className="fs-14 fw-500 text-white-50 text-right t">{this.state.reviewDetails?.lastName}</Title>
                                 </div>
                             </Col>}
                             {this.state.reviewDetails?.iban && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                     <Title className="fs-14 text-white fw-400 text-captz">IBAN </Title>
-                                    <Title className="fs-14 fw-500 text-white-50 text-right text-upper">{this.state.reviewDetails?.iban}</Title>
+                                    <Title className="fs-14 fw-500 text-white-50 text-right">{this.state.reviewDetails?.iban}</Title>
                                 </div>
                             </Col>}
                             {this.state.reviewDetails?.customerRemarks && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                     <Title className="fs-14 text-white fw-400 text-captz">Reason of Transfer </Title>
-                                    <Title className="fs-14 fw-500 text-white-50 text-right text-upper">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
+                                    <Title className="fs-14 fw-500 text-white-50 text-right">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
                                 </div>
                             </Col>}
                             
                                 {this.state.reviewDetails?.abaRoutingCode && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                     <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                         <Title className="fs-14 text-white fw-400 text-captz">ABA Routing code</Title>
-                                        <Title className="fs-14 fw-500 text-white-50 text-right text-upper">{this.state.reviewDetails?.abaRoutingCode || "-"}</Title>
+                                        <Title className="fs-14 fw-500 text-white-50 text-right ">{this.state.reviewDetails?.abaRoutingCode || "-"}</Title>
                                     </div>
                                 </Col>}
                                 {this.state.reviewDetails?.swiftRouteBICNumber && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                     <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                         <Title className="fs-14 text-white fw-400 text-captz">SWIFT / BIC Code</Title>
-                                        <Title className="fs-14 fw-500 text-white-50 text-right text-upper">{this.state.reviewDetails?.swiftRouteBICNumber || "-"}</Title>
+                                        <Title className="fs-14 fw-500 text-white-50 text-right ">{this.state.reviewDetails?.swiftRouteBICNumber || "-"}</Title>
                                     </div>
                                 </Col>}
                                 {this.state.reviewDetails?.accountNumber && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                     <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                         <Title className="fs-14 text-white fw-400 text-captz">Account Number </Title>
-                                        <Title className="fs-14 fw-500 text-white-50 text-right text-upper">{this.state.reviewDetails?.accountNumber || "-"}</Title>
+                                        <Title className="fs-14 fw-500 text-white-50 text-right ">{this.state.reviewDetails?.accountNumber || "-"}</Title>
                                     </div>
                                 </Col>}
                             {this.state.reviewDetails?.bankName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                     <Title className="fs-14 text-white fw-400 text-captz">Bank Name </Title>
-                                    <Title className="fs-14 fw-500 text-white-50 text-right text-upper">{this.state?.reviewDetails?.bankName || "-"}</Title>
+                                    <Title className="fs-14 fw-500 text-white-50 text-right ">{this.state?.reviewDetails?.bankName || "-"}</Title>
                                 </div>
                             </Col>}
                             <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
