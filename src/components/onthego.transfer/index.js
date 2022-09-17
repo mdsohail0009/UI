@@ -517,7 +517,7 @@ class OnthegoFundTransfer extends Component {
                                 <Input
                                     className="cust-input "
                                     placeholder={"Reason Of Transfer"}
-                                    maxLength="500"
+                                    maxLength={1000}
                                 />
                             </Form.Item>
 

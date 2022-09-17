@@ -67,6 +67,7 @@ class BankDetails extends Component {
                             placeholder={apicalls.convertLocalLang(
                                 "Bank_account_iban"
                             )}
+                            maxLength="20"
                         />
                     </Form.Item>
                 </Col>

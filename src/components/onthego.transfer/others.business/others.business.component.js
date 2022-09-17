@@ -278,7 +278,7 @@ class OthersBusiness extends Component {
                                     className="cust-input"
                                     placeholder={"IBAN"}
                                     onChange={this.handleIbanChange}
-                                    maxLength={100}/>
+                                    maxLength={20}/>
 
                             </Form.Item>
                         </Col>
@@ -309,7 +309,7 @@ class OthersBusiness extends Component {
                                     className="cust-input"
                                     placeholder={"Reason Of Transfer"}
                                     // onChange={this.handleIbanChange}
-                                    maxLength={100}/>
+                                    maxLength={1000}/>
                             </Form.Item>
                         </Col>}
                     </Row>
