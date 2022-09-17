@@ -235,52 +235,52 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         <div className="box basic-info alert-info-custom">
             <Row>
                 {!isBusiness && <><Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-12 fw-300">
+                    <label className="fs-12 fw-600 text-white">
                         First name
                     </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.firstName}</Text></div>
+                    <div><Text className="fs-14 fw-400 text-white">{recipientDetails.firstName}</Text></div>
 
                 </Col>
                     <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-12 fw-300">
+                        <label className="fs-12 fw-600 text-white">
                             Last Name
                         </label>
-                        <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.lastName}</Text></div>
+                        <div><Text className="fs-14 fw-400 text-white">{recipientDetails.lastName}</Text></div>
 
                     </Col></>}
                 {isBusiness && <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-12 fw-300">
+                    <label className="fs-12 fw-600 text-white">
                         Beneficiary Name
                     </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.beneficiaryName}</Text></div>
+                    <div><Text className="fs-14 fw-400 text-white">{recipientDetails.beneficiaryName}</Text></div>
 
                 </Col>}
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-12 fw-300 ">
+                    <label className="fs-12 fw-600 text-white ">
                         Address Line 1
                     </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.line1!=null?recipientDetails.line1:'-'}</Text></div>
+                    <div><Text className="fs-14 fw-400 text-white">{recipientDetails.line1!=null?recipientDetails.line1:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-12 fw-300 ">
+                    <label className="fs-12 fw-600 text-white ">
                         Address Line 2
                     </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.line2!=null?recipientDetails.line2:'-'}</Text></div>
+                    <div><Text className="fs-14 fw-400 text-white">{recipientDetails.line2!=null?recipientDetails.line2:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-12 fw-300">
+                    <label className="fs-12 fw-600 text-white">
                        Address Line 3
                     </label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">{recipientDetails.line3!=null?recipientDetails.line3:'-'}</Text></div>
+                    <div><Text className="fs-14 fw-400 text-white">{recipientDetails.line3!=null?recipientDetails.line3:'-'}</Text></div>
 
                 </Col>
 
             </Row>
         </div>
 
-        <h2 style={{ fontSize: 18, color: "white" }} className="mt-36 text-captz px-4">Bank Details</h2>
+        <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white">Bank Details</h2>
         {currency == 'EUR' && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
             <Form.Item
                 className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
@@ -530,40 +530,40 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             <Spin spinning={ibanLoading}>
             {validIban&&<Row>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                <label className="fs-12 fw-300">
+                <label className="fs-12 fw-500">
                         Bank Name
                 </label>
-                <div><Text className="fs-14 fw-400 text-purewhite">{(bankDetails?.bankName!=''&&bankDetails?.bankName!=null)?bankDetails?.bankName:'-'}</Text></div>
+                <div><Text className="fs-14 fw-400 text-white">{(bankDetails?.bankName!=''&&bankDetails?.bankName!=null)?bankDetails?.bankName:'-'}</Text></div>
 
             </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                <label className="fs-12 fw-300 ">BIC</label>
-                   <div><Text className="fs-14 fw-400 text-purewhite"> {bankDetails.routingNumber!=''&&bankDetails.routingNumber!=null?bankDetails.routingNumber:'-'}</Text></div>
+                <label className="fs-12 fw-500 ">BIC</label>
+                   <div><Text className="fs-14 fw-400 text-white"> {bankDetails.routingNumber!=''&&bankDetails.routingNumber!=null?bankDetails.routingNumber:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                <label className="fs-12 fw-300 ">Branch</label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">{bankDetails.branch!=''&&bankDetails.branch!=null?bankDetails.branch:'-'}</Text></div>
+                <label className="fs-12 fw-500 ">Branch</label>
+                    <div><Text className="fs-14 fw-400 text-white">{bankDetails.branch!=''&&bankDetails.branch!=null?bankDetails.branch:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                <label className="fs-12 fw-300 ">Country</label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">{bankDetails.country!=''&&bankDetails.country!=null?bankDetails.country:'-'}</Text></div>
+                <label className="fs-12 fw-500 ">Country</label>
+                    <div><Text className="fs-14 fw-400 text-white">{bankDetails.country!=''&&bankDetails.country!=null?bankDetails.country:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                <label className="fs-12 fw-300">State</label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">{bankDetails.state!=''&&bankDetails.state!=null?bankDetails.state:'-'}</Text></div>
+                <label className="fs-12 fw-500">State</label>
+                    <div><Text className="fs-14 fw-400 text-white">{bankDetails.state!=''&&bankDetails.state!=null?bankDetails.state:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                <label className="fs-12 fw-300">City</label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">{(bankDetails.city!=''&&bankDetails.city!=null)?bankDetails.city:'-'}</Text></div>
+                <label className="fs-12 fw-500">City</label>
+                    <div><Text className="fs-14 fw-400 text-white">{(bankDetails.city!=''&&bankDetails.city!=null)?bankDetails.city:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                <label className="fs-12 fw-300">Zip</label>
-                    <div><Text className="fs-14 fw-400 text-purewhite">{(bankDetails.zipCode!=''&&bankDetails.zipCode!=null)?bankDetails.zipCode:'-'}</Text></div>
+                <label className="fs-12 fw-500">Zip</label>
+                    <div><Text className="fs-14 fw-400 text-white">{(bankDetails.zipCode!=''&&bankDetails.zipCode!=null)?bankDetails.zipCode:'-'}</Text></div>
 
                 </Col></Row>}
                 

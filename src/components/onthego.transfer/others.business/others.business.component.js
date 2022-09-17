@@ -319,65 +319,65 @@ class OthersBusiness extends Component {
                         <Spin spinning={this.state.ibanDetailsLoading}>
                         {this.state.iBanValid && <Row>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400">
-                                    <strong>Bank Name</strong>
+                                <label className="fs-12 fw-500">
+                                    Bank Name
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.ibanDetails?.bankName || "-"}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-white">{this.state.ibanDetails?.bankName || "-"}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 ">
-                                    <strong>BIC</strong>
+                                <label className="fs-12 fw-500 ">
+                                BIC
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state.ibanDetails?.routingNumber || "-"}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-white">{this.state.ibanDetails?.routingNumber || "-"}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 ">
-                                    <strong>Branch</strong>
+                                <label className="fs-12 fw-500 ">
+                                    Branch
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state?.ibanDetails?.branch || "-"}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.branch || "-"}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 ">
-                                    <strong>Country</strong>
+                                <label className="fs-12 fw-500 ">
+                                    Country
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state?.ibanDetails?.country || "-"}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.country || "-"}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 ">
-                                    <strong>State</strong>
+                                <label className="fs-12 fw-500 ">
+                                    State
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state?.ibanDetails?.state || "-"}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.state || "-"}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 ">
-                                    <strong>City</strong>
+                                <label className="fs-12 fw-500 ">
+                                    City
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state?.ibanDetails?.city || "-"}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.city || "-"}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 ">
-                                    <strong>Zip</strong>
+                                <label className="fs-12 fw-500 ">
+                                    Zip
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-purewhite">{this.state?.ibanDetails?.zipCode || "-"}</Text></div>
+                                <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.zipCode || "-"}</Text></div>
 
                             </Col>
                         </Row>}
                         {!this.state.iBanValid && !this.state.ibanDetailsLoading && <Row>
                             <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
-                                <div><Text className="fs-14 fw-400 text-purewhite">No bank deatails available</Text></div>
+                                <div><Text className="fs-14 fw-400 text-white">No bank deatails available</Text></div>
 
                             </Col>
                         </Row>}
                         </Spin>
                        
                     </div>
-                    <Paragraph className="fw-300 mb-0 pb-4 ml-12 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
+                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs for transaction*</Paragraph>
 
                     <AddressDocumnet documents={this.state.details?.payeeAccountModels[0].documents} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
