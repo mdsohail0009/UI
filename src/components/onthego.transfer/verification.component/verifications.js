@@ -573,7 +573,7 @@ const Verifications = (props) => {
                             </Form.Item>
                         </>
                         )}
-                         {verifyData.isLiveVerification === true && (<>
+                         {/* {verifyData.isLiveVerification === true && (<>
                             <Text className="mb-8 px-4 fw-300 text-white-50 pt-16">
                             Live Verification *
                             </Text>
@@ -614,7 +614,7 @@ const Verifications = (props) => {
                                 </div>
                             </Form.Item>
                         </>
-                        )}
+                        )} */}
                         </>
                             {liveverification.isLiveEnable &&<>
                                 <LiveNessSumsub onConfirm={(data) => verifyLiveness(data)} />
