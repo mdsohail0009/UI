@@ -667,7 +667,7 @@ class OnthegoFundTransfer extends Component {
                             {"  "}
                             <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-400 text-captz">How much you will receive</Title>
+                                <Title className="fs-14 text-white fw-500 text-captz">How much you will receive</Title>
                                     <Title className="fs-14 text-white fw-500 text-upper text-right">
                                         <NumberFormat
                                             value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
@@ -676,7 +676,7 @@ class OnthegoFundTransfer extends Component {
                             </Col>
                             <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-400 text-captz">Total fees</Title>
+                                <Title className="fs-14 text-white fw-500 text-captz">Total fees</Title>
                                     <Title className="fs-14 text-white fw-500 text-upper text-right"><NumberFormat
                                         value={`${(this.state.reviewDetails?.comission)}`}
                                         thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
@@ -690,7 +690,7 @@ class OnthegoFundTransfer extends Component {
                         </Col> */}
                             <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-400 text-captz">Withdrawal amount</Title>
+                                <Title className="fs-14 text-white fw-500 text-captz">Withdrawal amount</Title>
                                     <Title className="fs-14 text-white fw-500 text-upper text-right"><NumberFormat
                                         value={`${(this.state.reviewDetails?.requestedAmount)}`}
                                         thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
@@ -716,63 +716,63 @@ class OnthegoFundTransfer extends Component {
                             </Col>
                             <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-400 text-captz">Save Whitelist name as</Title>
-                                    <Title className="fs-14 fw-500 text-white-50 text-right ">{this.state.reviewDetails?.favouriteName}</Title>
+                                <Title className="fs-14 text-white fw-500 text-captz">Save Whitelist name as</Title>
+                                   <Title className="fs-14 fw-500 text-white text-right ">{this.state.reviewDetails?.favouriteName}</Title>
                                 </div>
                             </Col>
                             {this.state.reviewDetails?.name && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-400 text-captz">Beneficiary Name</Title>
+                                    <Title className="fs-14 text-white fw-500 text-captz">Beneficiary Name</Title>
                                     <Title className="fs-14 fw-500 text-white-50 text-right ">{this.state.reviewDetails?.name}</Title>
                                 </div>
                             </Col>}
                             {this.state.reviewDetails?.firstName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-400 text-captz">First Name</Title>
-                                    <Title className="fs-14 fw-500 text-white-50 text-right ">{this.state.reviewDetails?.firstName}</Title>
+                                <Title className="fs-14 text-white fw-500 text-captz">First Name</Title>
+                                   <Title className="fs-14 fw-500 text-white text-right ">{this.state.reviewDetails?.firstName}</Title>
                                 </div>
                             </Col>}
                             {this.state.reviewDetails?.lastName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-400 text-captz">Last Name</Title>
+                                    <Title className="fs-14 text-white fw-500 text-captz">Last Name</Title>
                                     <Title className="fs-14 fw-500 text-white-50 text-right t">{this.state.reviewDetails?.lastName}</Title>
                                 </div>
                             </Col>}
                             {this.state.reviewDetails?.iban && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-400 text-captz">IBAN </Title>
+                                    <Title className="fs-14 text-white fw-500 text-captz">IBAN </Title>
                                     <Title className="fs-14 fw-500 text-white-50 text-right">{this.state.reviewDetails?.iban}</Title>
                                 </div>
                             </Col>}
                             {this.state.reviewDetails?.customerRemarks && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-400 text-captz">Reason of Transfer </Title>
+                                    <Title className="fs-14 text-white fw-500 text-captz">Reason of Transfer </Title>
                                     <Title className="fs-14 fw-500 text-white-50 text-right">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
                                 </div>
                             </Col>}
                             
                                 {this.state.reviewDetails?.abaRoutingCode && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                     <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                        <Title className="fs-14 text-white fw-400 text-captz">ABA Routing code</Title>
+                                        <Title className="fs-14 text-white fw-500 text-captz">ABA Routing code</Title>
                                         <Title className="fs-14 fw-500 text-white-50 text-right ">{this.state.reviewDetails?.abaRoutingCode || "-"}</Title>
                                     </div>
                                 </Col>}
                                 {this.state.reviewDetails?.swiftRouteBICNumber && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                     <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                        <Title className="fs-14 text-white fw-400 text-captz">SWIFT / BIC Code</Title>
-                                        <Title className="fs-14 fw-500 text-white-50 text-right ">{this.state.reviewDetails?.swiftRouteBICNumber || "-"}</Title>
+                                    <Title className="fs-14 text-white fw-500 text-captz">SWIFT / BIC Code</Title>
+                                        <Title className="fs-14 fw-500 text-white text-right">{this.state.reviewDetails?.swiftRouteBICNumber || "-"}</Title>
                                     </div>
                                 </Col>}
                                 {this.state.reviewDetails?.accountNumber && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                     <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                        <Title className="fs-14 text-white fw-400 text-captz">Account Number </Title>
-                                        <Title className="fs-14 fw-500 text-white-50 text-right ">{this.state.reviewDetails?.accountNumber || "-"}</Title>
+                                    <Title className="fs-14 text-white fw-500 text-captz">Account Number </Title>
+                                         <Title className="fs-14 fw-500 text-white text-right">{this.state.reviewDetails?.accountNumber || "-"}</Title>
                                     </div>
                                 </Col>}
                             {this.state.reviewDetails?.bankName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-400 text-captz">Bank Name </Title>
-                                    <Title className="fs-14 fw-500 text-white-50 text-right ">{this.state?.reviewDetails?.bankName || "-"}</Title>
+                                <Title className="fs-14 text-white fw-500 text-captz">Bank Name </Title>
+                                    <Title className="fs-14 fw-500 text-white text-right">{this.state?.reviewDetails?.bankName || "-"}</Title>
                                 </div>
                             </Col>}
                             <Col xs={24} sm={24} md={24} lg={24} xxl={24}>

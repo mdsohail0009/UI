@@ -640,7 +640,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 }
 .kpi-List .icon{margin: 6px 10px 0 0;}
 .kpi-List .icon + div{flex: 1;}
-.kpi-List .kpi-label{font-size: 12px;color: var(--textWhite50);}
+.kpi-List .kpi-label{font-size: 12px;color: var(--textWhite);}
 .kpi-List .kpi-val{font-size: 14px;font-weight: 500;color: var(--textWhite30);word-break: break-word;margin-right: 12px;}
 .kpi-item .kpi-val{margin-left: 0;}
 .accordian .ant-collapse-item:last-child > .ant-collapse-content, .accordian .ant-collapse-item{border-color: var(--borderGrey);background-color: var(--bgDarkGrey);}
@@ -704,7 +704,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .docreq-slider .slick-dots li{width: 30px;}
 .coin-select{position: absolute; right:13px; bottom: 13px;}
 .ant-modal-close-x{cursor: default;}
-.addCryptoList{list-style: none; padding-left: 0;max-height: calc(100vh - 188px); overflow-y: auto;}
+.addCryptoList{list-style: none; padding-left: 0;max-height: calc(100vh - 380px); overflow-y: auto;}
 .addCryptoList li{padding:10px; color: var(--textWhite);border-bottom: 1px solid var(--borderLight);font-size: 16px;}
 .addCryptoList li:hover{background-color:var(--bgBlu); cursor: pointer;}
 .tinycontent{word-break: break-all;max-height: 100px;height: 100px;overflow:hidden;}
@@ -907,7 +907,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .dep-withdraw,.sellcrypto-container {
         max-height: calc(100vh - 270px);
     }
-
+    .code-sent-tool-tip{display: flex;}
 
 }
 @media (max-width: 1024px){
@@ -1423,3 +1423,4 @@ cust-address{margin-bottom: 0px !important;}
 .custom-label .ant-form-item-label{margin-bottom: 0 !important;padding-bottom:4px !important ;}
 .ant-form-item-label > label{height: 24px !important;}
 .input-label.otp-verify .ant-form-item-control{margin-top: 4px;}
+.ant-form-item-label > label{font-weight: 500;}
