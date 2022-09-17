@@ -76,15 +76,16 @@ class PayeeBankDetails extends Component {
                                         !/^[A-Za-z0-9]+$/.test(value)
                                     ) {
                                         return Promise.reject(
-                                            "Invalid  IBAN Number"
+                                            "Please input a valid IBAN"
                                         );
                                     } else {
                                         return Promise.resolve();
                                     }
                                 },
-                            },{
-                                validator: validateContentRule
-                            }
+                            },
+                            // {
+                            //     validator: validateContentRule
+                            // }
                         ]}
                         onChange={(e) => {
                             this.handleIban(e.target.value)
@@ -99,7 +100,7 @@ class PayeeBankDetails extends Component {
                     </Form.Item>
                 </Col>
                  
-                {this.props.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                {/* {this.props.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name={"reasonOfTransfer"}
@@ -133,7 +134,7 @@ class PayeeBankDetails extends Component {
                             maxLength={100}
                         ></TextArea>
                     </Form.Item>
-                </Col>}
+                </Col>} */}
                 {/* <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"

@@ -4,6 +4,11 @@ import { Form, Row, Col, Input } from "antd";
 import { validateContentRule } from "../../../utils/custom.validator";
 const { TextArea } = Input;
 class DomesticTransfer extends Component {
+    componentDidMount() {
+       debugger
+       
+       // this.setState({ ...this.state, documents: this.props?.documents || document(), filesList: this.props?.documents ? [...this.props?.documents?.details] : [] })
+    }
     render() {
         return <Row gutter={[8, 8]}>
             <Col xs={24} md={12} lg={12} xl={12} xxl={12}>

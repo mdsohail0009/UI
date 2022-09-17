@@ -5,15 +5,15 @@ import ConnectStateProps from "../../utils/state.connect";
 import OthersBusiness from "../onthego.transfer/others.business/others.business.component";
 import MyselfNewTransfer from '../onthego.transfer/Myself'
 import SomeoneComponent from "../onthego.transfer/others.SomeOneElse/someone.component"
-// import { useEffect } from "react";
+import { useEffect } from "react";
 const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onContinue, PayeeLu = [], emailExist = false, countries = [], states = [], fiatAddress, onTheGoObj, ...props }) => {
     const [form] = useForm();
     const addrType = selectedAddress?.addressType ? selectedAddress?.addressType?.toLowerCase() : props.userProfile?.isBusiness ? "ownbusiness" : "myself";
     const [addressOptions, setAddressOptions] = useState({ addressType: addrType, transferType: props.currency === "EUR" ? "sepa" : "domestic" });
     const [isEdit, setIsEdit] = useState(false);
-    // useEffect(() => {
-    //   debugger
-    // }, [])
+    useEffect(() => {
+      debugger
+    }, [])
     return <>
         <Form
             form={form}

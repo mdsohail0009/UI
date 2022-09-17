@@ -296,17 +296,20 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             } else if (
                                 value &&
                                 !/^[A-Za-z0-9]+$/.test(value)
-                            ) {
+                            ) 
+                            {
                                 return Promise.reject(
-                                    "Invalid  IBAN Number"
+                                    "Please input a valid IBAN"
                                 );
-                            }else {
+                            }
+                            else {
                                 return Promise.resolve();
                             }
                         },
-                    },{
-                        validator: validateContentRule
-                    }
+                    },
+                    // {
+                    //     validator: validateContentRule
+                    // }
                 ]}
                 label='IBAN'
                 onChange={(e) => {
