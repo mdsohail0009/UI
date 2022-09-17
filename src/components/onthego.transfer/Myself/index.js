@@ -425,20 +425,25 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             {
                                 required: true,
                                 message: apiCalls.convertLocalLang("is_required"),
-                            },{
-                                validator: (_, value) => {
-                                    if (
-                                        value &&
-                                        !/^[a-zA-Z0-9_.-\s]+$/.test(value)
-                                    ) {
-                                        return Promise.reject(
-                                            "Please enter valid content"
-                                        );
-                                    }else {
-                                        return Promise.resolve();
-                                    }
-                                },
+                            },
+                            {
+                                validator: validateContentRule
                             }
+                            // {
+                            //     validator:
+                            //      (_, value) => {
+                            //         if (
+                            //             value &&
+                            //             !/^[a-zA-Z0-9_.-\s]+$/.test(value)
+                            //         ) {
+                            //             return Promise.reject(
+                            //                 "Please enter valid content"
+                            //             );
+                            //         }else {
+                            //             return Promise.resolve();
+                            //         }
+                            //     },
+                            // }
                         ]}>
                         <Input
                             className="cust-input"
@@ -458,20 +463,23 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             {
                                 required: true,
                                 message: apiCalls.convertLocalLang("is_required"),
-                            },{
-                                validator: (_, value) => {
-                                    if (
-                                        value &&
-                                        !/^[a-zA-Z0-9_.-\s]+$/.test(value)
-                                    ) {
-                                        return Promise.reject(
-                                            "Please enter valid content"
-                                        );
-                                    }else {
-                                        return Promise.resolve();
-                                    }
-                                },
-                            }
+                            }, {
+                                validator: validateContentRule,
+                            },
+                            // {
+                            //     validator: (_, value) => {
+                            //         if (
+                            //             value &&
+                            //             !/^[a-zA-Z0-9_.-\s]+$/.test(value)
+                            //         ) {
+                            //             return Promise.reject(
+                            //                 "Please enter valid content"
+                            //             );
+                            //         }else {
+                            //             return Promise.resolve();
+                            //         }
+                            //     },
+                            // }
                         ]}>
                         <TextArea
                             placeholder={'Bank Address 1'}
@@ -486,20 +494,23 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
                         name="line2"
                         label='Bank Address 2'
-                        rules={[{
-                                validator: (_, value) => {
-                                    if (
-                                        value &&
-                                        !/^[a-zA-Z0-9_.-\s]+$/.test(value)
-                                    ) {
-                                        return Promise.reject(
-                                            "Please enter valid content"
-                                        );
-                                    }else {
-                                        return Promise.resolve();
-                                    }
-                                },
-                            }
+                        rules={[ {
+                            validator: validateContentRule,
+                        },
+                            // {
+                            //     validator: (_, value) => {
+                            //         if (
+                            //             value &&
+                            //             !/^[a-zA-Z0-9_.-\s]+$/.test(value)
+                            //         ) {
+                            //             return Promise.reject(
+                            //                 "Please enter valid content"
+                            //             );
+                            //         }else {
+                            //             return Promise.resolve();
+                            //         }
+                            //     },
+                            // }
                         ]}>
                        
                         <TextArea

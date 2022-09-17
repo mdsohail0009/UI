@@ -98,21 +98,23 @@ class InternationalTransfer extends Component {
                         {
                             whitespace: true,
                             message: apiCalls.convertLocalLang("is_required"),
+                        },{
+                            validator: validateContentRule,
                         },
-                       {
-                            validator: (_, value) => {
-                                if (
-                                    value &&
-                                    !/^[A-Za-z0-9_.-\s]+$/.test(value)
-                                ) {
-                                    return Promise.reject(
-                                        "Please enter valid content"
-                                    );
-                                }else {
-                                    return Promise.resolve();
-                                }
-                            },
-                        }
+                    //    {
+                    //         validator: (_, value) => {
+                    //             if (
+                    //                 value &&
+                    //                 !/^[A-Za-z0-9_.-\s]+$/.test(value)
+                    //             ) {
+                    //                 return Promise.reject(
+                    //                     "Please enter valid content"
+                    //                 );
+                    //             }else {
+                    //                 return Promise.resolve();
+                    //             }
+                    //         },
+                    //     }
                     ]}
                 >
                     <Input
@@ -163,21 +165,23 @@ class InternationalTransfer extends Component {
                         {
                             whitespace: true,
                             message: apiCalls.convertLocalLang("is_required"),
+                        },{
+                            validator: validateContentRule,
                         },
-                       {
-                            validator: (_, value) => {
-                                if (
-                                    value &&
-                                    !/^[a-zA-Z0-9_.-\s]+$/.test(value)
-                                ) {
-                                    return Promise.reject(
-                                        "Invalid Bank Address 1"
-                                    );
-                                }else {
-                                    return Promise.resolve();
-                                }
-                            },
-                        }
+                    //    {
+                    //         validator: (_, value) => {
+                    //             if (
+                    //                 value &&
+                    //                 !/^[a-zA-Z0-9_.-\s]+$/.test(value)
+                    //             ) {
+                    //                 return Promise.reject(
+                    //                     "Invalid Bank Address 1"
+                    //                 );
+                    //             }else {
+                    //                 return Promise.resolve();
+                    //             }
+                    //         },
+                    //     }
                     ]}
                     label={
                         "Bank Address 1"
@@ -197,19 +201,22 @@ class InternationalTransfer extends Component {
                     name="bankAddress2"
                     rules={[
                         {
-                            validator: (_, value) => {
-                                if (
-                                    value &&
-                                    !/^[a-zA-Z0-9_.-\s]+$/.test(value)
-                                ) {
-                                    return Promise.reject(
-                                        "Invalid Bank Address 2"
-                                    );
-                                }else {
-                                    return Promise.resolve();
-                                }
-                            },
-                        }
+                            validator: validateContentRule,
+                        },
+                        // {
+                        //     validator: (_, value) => {
+                        //         if (
+                        //             value &&
+                        //             !/^[a-zA-Z0-9_.-\s]+$/.test(value)
+                        //         ) {
+                        //             return Promise.reject(
+                        //                 "Invalid Bank Address 2"
+                        //             );
+                        //         }else {
+                        //             return Promise.resolve();
+                        //         }
+                        //     },
+                        // }
                     ]}
                     label={
                         "Bank Address 2"

@@ -98,19 +98,22 @@ class DomesticTransfer extends Component {
                             message: apiCalls.convertLocalLang("is_required"),
                         },
                         {
-                            validator: (_, value) => {
-                                if (
-                                    value &&
-                                    !/^[A-Za-z0-9_.-\s]+$/.test(value)
-                                ) {
-                                    return Promise.reject(
-                                        "Please enter valid content"
-                                    );
-                                }else {
-                                    return Promise.resolve();
-                                }
-                            },
-                        }
+                            validator: validateContentRule,
+                        },
+                        // {
+                        //     validator: (_, value) => {
+                        //         if (
+                        //             value &&
+                        //             !/^[A-Za-z0-9_.-\s]+$/.test(value)
+                        //         ) {
+                        //             return Promise.reject(
+                        //                 "Please enter valid content"
+                        //             );
+                        //         }else {
+                        //             return Promise.resolve();
+                        //         }
+                        //     },
+                        // }
                     ]}
                 >
                     <Input
@@ -162,20 +165,23 @@ class DomesticTransfer extends Component {
                             whitespace: true,
                             message: apiCalls.convertLocalLang("is_required"),
                         },
-                       {
-                            validator: (_, value) => {
-                                if (
-                                    value &&
-                                    !/^[a-zA-Z0-9_.-\s]+$/.test(value)
-                                ) {
-                                    return Promise.reject(
-                                        "Please enter valid content"
-                                    );
-                                }else {
-                                    return Promise.resolve();
-                                }
-                            },
-                        }
+                        {
+                            validator: validateContentRule,
+                        },
+                    //    {
+                    //         validator: (_, value) => {
+                    //             if (
+                    //                 value &&
+                    //                 !/^[a-zA-Z0-9_.-\s]+$/.test(value)
+                    //             ) {
+                    //                 return Promise.reject(
+                    //                     "Please enter valid content"
+                    //                 );
+                    //             }else {
+                    //                 return Promise.resolve();
+                    //             }
+                    //         },
+                    //     }
                     ]}
                     label={
                         "Bank Address 1"
@@ -195,19 +201,22 @@ class DomesticTransfer extends Component {
                     name="bankAddress2"
                     rules={[
                         {
-                            validator: (_, value) => {
-                                if (
-                                    value &&
-                                    !/^[a-zA-Z0-9_.-\s]+$/.test(value)
-                                ) {
-                                    return Promise.reject(
-                                        "Please enter valid content"
-                                    );
-                                }else {
-                                    return Promise.resolve();
-                                }
-                            },
-                        }
+                            validator: validateContentRule,
+                        },
+                        // {
+                        //     validator: (_, value) => {
+                        //         if (
+                        //             value &&
+                        //             !/^[a-zA-Z0-9_.-\s]+$/.test(value)
+                        //         ) {
+                        //             return Promise.reject(
+                        //                 "Please enter valid content"
+                        //             );
+                        //         }else {
+                        //             return Promise.resolve();
+                        //         }
+                        //     },
+                        // }
                     ]}
                     label={
                         "Bank Address 2"

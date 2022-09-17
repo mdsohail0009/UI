@@ -356,21 +356,23 @@ class PayeeBankDetails extends Component {
                                 whitespace: true,
                                 message:
                                     apicalls.convertLocalLang("is_required"),
+                            },{
+                                validator: validateContentRule,
                             },
-                           {
-                                validator: (_, value) => {
-                                    if (
-                                        value &&
-                                        !/^[A-Za-z0-9_.-\s]+$/.test(value)
-                                    ) {
-                                        return Promise.reject(
-                                            "Please enter valid content"
-                                        );
-                                    }else {
-                                        return Promise.resolve();
-                                    }
-                                },
-                            }
+                        //    {
+                        //         validator: (_, value) => {
+                        //             if (
+                        //                 value &&
+                        //                 !/^[A-Za-z0-9_.-\s]+$/.test(value)
+                        //             ) {
+                        //                 return Promise.reject(
+                        //                     "Please enter valid content"
+                        //                 );
+                        //             }else {
+                        //                 return Promise.resolve();
+                        //             }
+                        //         },
+                        //     }
                         ]}
                     >
                         <Input
@@ -396,21 +398,23 @@ class PayeeBankDetails extends Component {
                             {
                                 whitespace: true,
                                 message: apicalls.convertLocalLang("is_required"),
+                            },{
+                                validator: validateContentRule,
                             },
-                            {
-                                validator: (_, value) => {
-                                    if (
-                                        value &&
-                                        !/^[a-zA-Z0-9_.-\s]+$/.test(value)
-                                    ) {
-                                        return Promise.reject(
-                                            "Please enter valid content"
-                                        );
-                                    }else {
-                                        return Promise.resolve();
-                                    }
-                                },
-                            }
+                            // {
+                            //     validator: (_, value) => {
+                            //         if (
+                            //             value &&
+                            //             !/^[a-zA-Z0-9_.-\s]+$/.test(value)
+                            //         ) {
+                            //             return Promise.reject(
+                            //                 "Please enter valid content"
+                            //             );
+                            //         }else {
+                            //             return Promise.resolve();
+                            //         }
+                            //     },
+                            // }
                         ]}
                         label={
                             <Translate
@@ -431,21 +435,23 @@ class PayeeBankDetails extends Component {
                     <Form.Item
                         className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name={["payeeAccountModels","line2"]}
-                        rules={[
-                           {
-                                validator: (_, value) => {
-                                    if (
-                                        value &&
-                                        !/^[a-zA-Z0-9_.-\s]+$/.test(value)
-                                    ) {
-                                        return Promise.reject(
-                                            "Please enter valid content"
-                                        );
-                                    }else {
-                                        return Promise.resolve();
-                                    }
-                                },
-                            }
+                        rules={[{
+                            validator: validateContentRule,
+                        },
+                        //    {
+                        //         validator: (_, value) => {
+                        //             if (
+                        //                 value &&
+                        //                 !/^[a-zA-Z0-9_.-\s]+$/.test(value)
+                        //             ) {
+                        //                 return Promise.reject(
+                        //                     "Please enter valid content"
+                        //                 );
+                        //             }else {
+                        //                 return Promise.resolve();
+                        //             }
+                        //         },
+                        //     }
                         ]}
                         label={
                             <Translate
