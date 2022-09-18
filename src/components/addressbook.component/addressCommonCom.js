@@ -2,6 +2,9 @@ import React, { Component,useState, useEffect } from "react";
 import { Form, Typography, Input, Button, Select,Image } from "antd";
 import alertIcon from '../../assets/images/pending.png';
 import ConnectStateProps from "../../utils/state.connect";
+import { setAddressStep } from "../../reducers/addressBookReducer";
+import { setAddress, setStep } from "../../reducers/sendreceiveReducer";
+import { connect } from "react-redux";
 const { Text, Paragraph, Title } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
@@ -29,7 +32,12 @@ const handleChange = (value) => {
     };
   
     submit  = async (values) => {
-      this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
+      if (window?.location?.pathname.includes('addressbook')) {
+        this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
+      }
+      else {
+        this.props.changeStep('withdraw_crpto_summary');
+      }
     }
   render() {
     if (this.state.showDeclartion) {
@@ -97,5 +105,23 @@ const handleChange = (value) => {
 };
 
 }
+const connectStateToProps = ({ sendReceive, userConfig,addressBookReducer }) => {
+  return { addressBookReducer,sendReceive, userProfile: userConfig.userProfileInfo }
+}
+const connectDispatchToProps = dispatch => {
+  return {
+      changeStep: (stepcode) => {
+          dispatch(setAddressStep(stepcode))
+      },
+      changeStep: (stepcode) => {
+          dispatch(setStep(stepcode))
+      },
+      SelectedAddress: (addressObj) => {
+          dispatch(setAddress(addressObj));
+      },
+     
+      dispatch
+  }
+}
 
-export default ConnectStateProps(LinkValue);
+export default connect(connectStateToProps, connectDispatchToProps)(LinkValue);

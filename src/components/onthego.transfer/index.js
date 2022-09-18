@@ -267,7 +267,7 @@ class OnthegoFundTransfer extends Component {
             enteramount: <>
                 <div className="mb-16" style={{textAlign:'center'}}>
                     <text Paragraph
-                        className='text-white fs-30 fw-600 px-4 '>Transfer Funds</text>
+                        className='text-white fs-30 fw-600 px-4 '>Send Fiat</text>
                 </div>
                 {isVarificationLoader && <Loader />}
                 {!isVarificationLoader && 
