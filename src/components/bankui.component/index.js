@@ -62,7 +62,7 @@ class BankWallets extends Component {
                   </li>
                   <li  onClick={() => 
                     //window.open("http://localhost:3001/dashboard")}
-                    window.open(process.env.REACT_APP_BANK_UI_URL +`dashboard/${item.currency}`, "_blank")}
+                    window.open(process.env.REACT_APP_BANK_UI_URL +`dashboard/digitalwallet/${item.currency}`, "_blank")}
                     >
                   <Link  value={5} className="c-pointer">
                   SuisseBase Wallet
@@ -121,9 +121,13 @@ class BankWallets extends Component {
                                   //   window.open(`http://localhost:3001/transfer/${item.currency}`)
                                   // }
                                   />
-                                  <Translate content="receive_funds"  component={Button} type="primary" className="custom-btn sec ml-16"  
+                                  {/* <Translate content="receive_funds"  component={Button} type="primary" className="custom-btn sec ml-16"  
                                    onClick={() =>
                                     window.open(process.env.REACT_APP_BANK_UI_URL + `addView/${item.id}/${item.currency}`, "_blank")
+                                  } */}
+                                    <Translate content="receive_funds"  component={Button} type="primary" className="custom-btn sec ml-16"  
+                                   onClick={() =>
+                                    window.open(process.env.REACT_APP_BANK_UI_URL + `dashboard/receive/${item.currency}/${item.id}`, "_blank")
                                   }
                                 // onClick={() =>
                                 //     window.open(`http://localhost:3001/addView/${item.id}/${item.currency}`)
