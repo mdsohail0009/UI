@@ -48,6 +48,7 @@ import {
 import { setStep as byFiatSetStep } from "../../../reducers/buyFiatReducer";
 import {
     setStep as sendSetStep,
+    setWithdrawfiat,
     setWithdrawfiatenaable
 } from "../../../reducers/sendreceiveReducer";
 import { getmemeberInfo } from "../../../reducers/configReduser";
@@ -150,7 +151,19 @@ class HeaderPermissionMenu extends Component {
             this.props.history.push("/docnotices");
         }
     }
+    showSendDrawer = (item, menuItem) => {
+        debugger
+        if (item == 'fiat') {
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivecrypto: true } });
+            this.props. dispatch(setWithdrawfiat(""));
+            this.props.dispatch(byFiatSetStep("step1"));
+            this.props.dispatch(setWithdrawfiatenaable(false));
+        } else {
+           
+        }
+    }
     navigate = (menuKey, menuItem) => {
+        debugger
         if (menuItem.path === "/modal") {
             if (menuItem.dispatchStep) {
                 switch (menuKey) {
@@ -411,17 +424,53 @@ class HeaderPermissionMenu extends Component {
                 }}
             >
               
-                {data?.map((item, indx) => item.menuitemType === "dropdown" ?
-                  <Menu.Item>
-                <div className="d-flex" >
-                 {item?.subMenu?.map((subItem) => <li onClick={() => this.onMenuItemClick(subItem.key, subItem)}>
-                                 <Link>
-                                     <Translate className="fs-20" content={subItem.content} conmponent={Text} />{" "}
+                {data?.map((item, indx) => item.iconName === "SendReceive" ?
+                <Menu.Item
+            >
+                
+               <Dropdown
+               onClick={() =>
+                   this.setState({ ...this.state, visbleProfileMenu: false })
+               }
+               overlay={<Menu>
+                   <ul className="pl-0 drpdwn-list">
+                   <li onClick={() => this.showSendDrawer('fiat',item)}>
+                           <Link value={2} className="c-pointer">
+                               <Translate content="tab_fiat" />
+                           </Link>
+                       </li>
+                       <li onClick={() => this.navigate('sendreceivecrypto',item)}>
+                           <Link value={4} className="c-pointer">
+                               <Translate content="tab_crypto" />
+                           </Link>
+                       </li>
+                   </ul>
+               </Menu>}
+               trigger={["click"]}
+               placement="bottomCenter"
+               arrow
+               overlayClassName="secureDropdown depwith-drpdown"
+               getPopupContainer={() => document.getElementById("area")}
+           >
+               <Translate
+                   content={item.content}
+                   component={Menu.Item}
+                   key={indx}
+                   className="mr-16 fs-20"
+               />
+           </Dropdown> 
+           </Menu.Item>
+           
+                //   <Menu.Item>
+                // <div className="d-flex" >
+                //  {item?.subMenu?.map((subItem) => <li onClick={() => this.onMenuItemClick(subItem.key, subItem)}>
+                //                  <Link>
+                //                      <Translate className="fs-20" content={subItem.content} conmponent={Text} />{" "}
                                      
-                                 </Link>
-                             </li>)}
-                             </div>
-                             </Menu.Item>
+                //                  </Link>
+                //              </li>)}
+                //              </div>
+                //              </Menu.Item>
                 // <Dropdown
                 //     onClick={() =>
                 //         this.setState({ ...this.state, visbleProfileMenu: false })
@@ -467,21 +516,16 @@ class HeaderPermissionMenu extends Component {
                 }
                 overlay={<Menu>
                     <ul className="pl-0 drpdwn-list">
-                        {/* {item?.subMenu?.map((subItem) => <li onClick={() => this.onMenuItemClick(subItem.key, subItem)}>
-                            <Link>
-                                <Translate className="fs-20" content={subItem.content} conmponent={Text} />{" "}
-                                <span className="icon md rarrow-white" />
+                    <li onClick={() => this.onMenuItemClick(item.key, item)}>
+                            <Link value={2} className="c-pointer">
+                                <Translate content="buy" />
                             </Link>
-                        </li>)} */}
-                        <Link onClick={() => this.onMenuItemClick(item.key, item)}>
-                            Buy{" "}
-                            <span className="icon md rarrow-white" />
-                        </Link><br/>
-                        <Link onClick={() => this.onMenuItemClick(item.key, item)}>
-                            Sell{" "}
-                            <span className="icon md rarrow-white" />
-                        </Link>
-
+                        </li>
+                        <li onClick={() => this.onMenuItemClick(item.key, item)}>
+                            <Link value={4} className="c-pointer">
+                                <Translate content="sell" />
+                            </Link>
+                        </li>
                     </ul>
                 </Menu>}
                 trigger={["click"]}

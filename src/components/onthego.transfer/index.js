@@ -18,6 +18,7 @@ import { withRouter } from "react-router-dom/cjs/react-router-dom.min";
 import { fetchMemberWallets } from "../dashboard.component/api";
 import Translate from "react-translate-component";
 import { Link } from "react-router-dom";
+import Paragraph from "antd/lib/typography/Paragraph";
 const { Text, Title } = Typography;
 
 class OnthegoFundTransfer extends Component {
@@ -236,6 +237,17 @@ class OnthegoFundTransfer extends Component {
         const { filterObj, pastPayees, payeesLoading, isVarificationLoader, isVerificationEnable } = this.state;
         const steps = {
             selectcurrency: <React.Fragment>
+                <Translate
+                    className="mb-0 text-white-30 fs-14 fw-200 mt-16"
+                    content="send_fiat_text"
+                    component={Paragraph}
+                />
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    {/* <Text className="fs-14 mb-8 text-white d-block fw-200">
+                        Search for beneficiary *
+                    </Text> */}
+                    <Search placeholder="Search Currency" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="text-center mt-12" />
+                </Col>
                 <List
                     itemLayout="horizontal"
                     dataSource={this.state.fiatWallets}

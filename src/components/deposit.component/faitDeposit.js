@@ -1,5 +1,5 @@
 import React, { Component, createRef } from 'react';
-import { Typography, Input, Button, Select, Radio, Form, Alert, Space } from 'antd';
+import { Typography, Input, Button, Select, Radio, Form, Alert, Space, Col } from 'antd';
 import { Link } from 'react-router-dom';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
@@ -82,6 +82,7 @@ class FaitDeposit extends Component {
     }
   }
   handleshowTab = async (tabKey) => {
+    debugger
     this.setState({
       ...this.state,
       faitdeposit: tabKey === 2,
@@ -230,6 +231,7 @@ class FaitDeposit extends Component {
     const link = <LinkValue content="terms_service" />;
     const { faitdeposit, BankInfo, depObj } = this.state;
     const { currenciesWithBankInfo } = this.props.depositInfo;
+    const { Search } = Input;
     return (
       <>
         {!this.state.showSuccessMsg && <div className="text-center"><Radio.Group
@@ -239,6 +241,14 @@ class FaitDeposit extends Component {
           <Translate content="deposit" component={Radio.Button} value={1} />
           <Translate content="withdraw" component={Radio.Button} value={2} />
         </Radio.Group></div>}
+        {/* <Translate
+          className="mb-0 text-white-30 fs-14 fw-200 mt-16"
+          content="send_fiat_text"
+          component={Paragraph}
+        />
+        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+          <Search placeholder="Search Currency" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="text-center mt-12" />
+        </Col> */}
         {faitdeposit ?
           <div className='mt-16'>
            <OnthegoFundTransfer />

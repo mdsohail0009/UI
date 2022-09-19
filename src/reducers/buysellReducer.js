@@ -38,6 +38,7 @@ let initialState = {
     stepcode: "step1",
     stepTitles: {
         buycrypto: "buy_assets",
+        sellcrypto: "sell_assets",
         selectcrypto: "selected_crypto",
         summary: "selected_crypto",
         billtype: "link_a_card",

@@ -16,7 +16,7 @@ export default {
 	ftr_careers: "Careers",
 	ftr_tc_p: "Legan & Policy",
 	search_currency: "Search Currency",
-	buy_assets: "Trade Assets",
+	buy_assets: "Buy Crypto",
 	deposite_a_crypto: "Receive a Crypto",
 	deposite_a_cryto_txt: "Get crypto by simply sharing your QR address",
 	purchase_a_crypto: "Buy your Crypto for Cash",
@@ -263,7 +263,7 @@ export default {
 	Recipient_address3: "Recipient Address Line 3",
 	Reference: "Reference",
 	//Fiat_deposit: "Fiat Deposit / Withdraw ",
-	Fiat_deposit: "Fiat Send/Receive",
+	Fiat_deposit: "Send Fiat",
 	Fiat_withdrawl: "Fiat Withdrawal",
 	Beneficiary_Accountname: "Beneficiary Account Name",
 	Innovative_Concepts: "INNOVATIVE CONCEPTS AG",
@@ -659,4 +659,5 @@ export default {
 	send_crypto_address: "Send Crypto",
 	buy_select_currency: "SELECT CURRENCY TO BUY WITH",
 	network: "Network",
+	send_fiat_text: "Send form your Suissebase FIAT Wallet",
 };
