@@ -266,7 +266,7 @@ export default {
 	Recipient_address3: "Recipient Address Line 3",
 	Reference: "Reference",
 	//Fiat_deposit: "Fiat Deposit / Withdraw ",
-	Fiat_deposit: "Send Fiat",
+	Fiat_deposit: "Receive Fiat",
 	Fiat_withdrawl: "Fiat Withdrawal",
 	Beneficiary_Accountname: "Beneficiary Account Name",
 	Innovative_Concepts: "INNOVATIVE CONCEPTS AG",
@@ -317,7 +317,7 @@ export default {
 	with_draw: "Send",
 	crypto_with_draw_success: "Back to Send Crypto",
 	withdrawal_success: "Withdraw success",
-	dep_with_assets: "Crypto Send/Receive",
+	dep_with_assets: "Receive Crypto",
 	links: "%(link)s",
 	remarks: "Remarks",
 	customer_remarks:"Customer Remarks",
@@ -663,4 +663,5 @@ export default {
 	buy_select_currency: "SELECT CURRENCY TO BUY WITH",
 	network: "Network",
 	send_fiat_text: "Send form your Suissebase FIAT Wallet",
+    receive_fiat_text: "Receive in your Suissebase FIAT Wallet",
 };

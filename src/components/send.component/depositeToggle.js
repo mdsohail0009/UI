@@ -64,13 +64,13 @@ class DepositeCrypto extends Component {
         const { activeKey } = this.state
         return (
             <>
-                <div className="text-center"><Radio.Group value={this.state.activeKey}
+                {/* <div className="text-center"><Radio.Group value={this.state.activeKey}
                     onChange={this.handleBuySellToggle}
                     className="buysell-toggle crypto-toggle text-upper">
                     <Translate value={1} content="deposit" component={Radio.Button} />
                     <Translate value={2} content="withdraw" component={Radio.Button} />
                 </Radio.Group>
-                </div>
+                </div> */}
                 {activeKey === 2 && <WithdrawCrypto />}
                 {activeKey === 1 && <CryptoDeposit />}
             </>

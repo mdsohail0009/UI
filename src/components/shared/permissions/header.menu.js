@@ -153,6 +153,21 @@ class HeaderPermissionMenu extends Component {
             this.props.history.push("/docnotices");
         }
     }
+
+    showReceiveDrawer = (item, menuItem) => {
+        debugger
+        if (item == 'fiat') {
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivefiat: true } });
+            this.props. dispatch(setWithdrawfiat(""));
+            this.props.dispatch(byFiatSetStep("step1"));
+            this.props.dispatch(setWithdrawfiatenaable(false));
+        } else {
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivecrypto: true } });
+            this.props. dispatch(setWithdrawfiat(""));
+            this.props.dispatch(byFiatSetStep("step1"));
+            this.props.dispatch(setWithdrawfiatenaable(false));
+        }
+    }
     showSendDrawer = (item, menuItem) => {
         debugger
         if (item == 'fiat') {
@@ -438,134 +453,110 @@ class HeaderPermissionMenu extends Component {
                     this.props.dispatch(setHeaderTab(key.key));
                 }}
             >
-              
-                {data?.map((item, indx) => item.iconName === "SendReceive" ?
-                <Menu.Item
-            >
-                
-               <Dropdown
-               onClick={() =>
-                   this.setState({ ...this.state, visbleProfileMenu: false })
-               }
-               overlay={<Menu>
-                   <ul className="pl-0 drpdwn-list">
-                   <li onClick={() => this.showSendDrawer('fiat',item)}>
-                           <Link value={2} className="c-pointer">
-                               <Translate content="tab_fiat" />
-                           </Link>
-                       </li>
-                       <li onClick={() => this.showSendDrawer('crypto',item)}>
-                           <Link value={4} className="c-pointer">
-                               <Translate content="tab_crypto" />
-                           </Link>
-                       </li>
-                   </ul>
-               </Menu>}
-               trigger={["click"]}
-               placement="bottomCenter"
-               arrow
-               overlayClassName="secureDropdown depwith-drpdown"
-               getPopupContainer={() => document.getElementById("area")}
-           >
-               <Translate
-                   content={item.content}
-                   component={Menu.Item}
-                   key={indx}
-                   className="mr-16 fs-20"
-               />
-           </Dropdown> 
-           </Menu.Item>
-           
-                //   <Menu.Item>
-                // <div className="d-flex" >
-                //  {item?.subMenu?.map((subItem) => <li onClick={() => this.onMenuItemClick(subItem.key, subItem)}>
-                //                  <Link>
-                //                      <Translate className="fs-20" content={subItem.content} conmponent={Text} />{" "}
-                                     
-                //                  </Link>
-                //              </li>)}
-                //              </div>
-                //              </Menu.Item>
-                // <Dropdown
-                //     onClick={() =>
-                //         this.setState({ ...this.state, visbleProfileMenu: false })
-                //     }
-                //     overlay={<Menu>
-                //         <ul className="pl-0 drpdwn-list">
-                //             {item?.subMenu?.map((subItem) => <li onClick={() => this.onMenuItemClick(subItem.key, subItem)}>
-                //                 <Link>
-                //                     <Translate className="fs-20" content={subItem.content} conmponent={Text} />{" "}
-                //                     <span className="icon md rarrow-white" />
-                //                 </Link>
-                //             </li>)}
 
-                //         </ul>
-                //     </Menu>}
-                //     trigger={["click"]}
-                //     placement="bottomCenter"
-                //     arrow
-                //     overlayClassName="secureDropdown depwith-drpdown"
-                //     getPopupContainer={() => document.getElementById("area")}
-                // >
-                //     <Translate
-                //         content={item.content}
-                //         component={Menu.Item}
-                //         key={indx}
-                //         className="mr-16 fs-20"
-                //     />
-                // </Dropdown>
-                //  <Translate
-                //     content={item.content}
-                //     component={Menu.Item}
-                //     key={item.key}
-                //     onClick={() => this.onMenuItemClick(item.key, item)}
-                //     className="list-item fs-20"
-                // />
-                
-                 : item.key === "trade" && 
-                 <Menu.Item
-             >
-                <Dropdown
-                onClick={() =>
-                    this.setState({ ...this.state, visbleProfileMenu: false })
-                }
-                overlay={<Menu>
-                    <ul className="pl-0 drpdwn-list">
-                    <li onClick={() => this.onMenuItemClick(item.key, item)}>
-                            <Link value={2} className="c-pointer">
-                                <Translate content="buy" />
-                            </Link>
-                        </li>
-                        <li onClick={() => this.showSellDrawer("sell", item)}>
-                            <Link value={4} className="c-pointer">
-                                <Translate content="sell" />
-                            </Link>
-                        </li>
-                    </ul>
-                </Menu>}
-                trigger={["click"]}
-                placement="bottomCenter"
-                arrow
-                overlayClassName="secureDropdown depwith-drpdown"
-                getPopupContainer={() => document.getElementById("area")}
-            >
-                <Translate
-                    content={item.content}
-                    component={Menu.Item}
-                    key={indx}
-                    className="mr-16 fs-20"
-                />
-            </Dropdown> 
-            </Menu.Item>
-                // <Translate
-                //     content={item.content}
-                //     component={Menu.Item}
-                //     key={item.key}
-                //     onClick={() => this.onMenuItemClick(item.key, item)}
-                //     className="list-item fs-20"
-                // />
-                
-                )}
+                <Menu.Item>
+                    <Dropdown
+                        onClick={() =>
+                            this.setState({ ...this.state, visbleProfileMenu: false })
+                        }
+                        overlay={<Menu>
+                            <ul className="pl-0 drpdwn-list">
+                                <li onClick={() => this.showSellDrawer("buy")}>
+                                    <Link value={2} className="c-pointer">
+                                        <Translate content="buy" />
+                                    </Link>
+                                </li>
+                                <li onClick={() => this.showSellDrawer("sell")}>
+                                    <Link value={4} className="c-pointer">
+                                        <Translate content="sell" />
+                                    </Link>
+                                </li>
+                            </ul>
+                        </Menu>}
+                        trigger={["click"]}
+                        placement="bottomCenter"
+                        arrow
+                        overlayClassName="secureDropdown depwith-drpdown"
+                        getPopupContainer={() => document.getElementById("area")}
+                    >
+                        <Translate
+                            content="menu_buy_sell"
+                            component={Menu.Item}
+                            key="4"
+                            className="mr-16 fs-20"
+                        />
+                    </Dropdown>
+                </Menu.Item>
+               
+                <Menu.Item>
+                    <Dropdown
+                        onClick={() =>
+                            this.setState({ ...this.state, visbleProfileMenu: false })
+                        }
+                        overlay={<Menu>
+                            <ul className="pl-0 drpdwn-list">
+                                <li onClick={() => this.showReceiveDrawer('fiat')}>
+                                    <Link value={2} className="c-pointer">
+                                        <Translate content="tab_fiat" />
+                                    </Link>
+                                </li>
+                                <li onClick={() => this.showReceiveDrawer('crypto')}>
+                                    <Link value={4} className="c-pointer">
+                                        <Translate content="tab_crypto" />
+                                    </Link>
+                                </li>
+                            </ul>
+                        </Menu>}
+                        trigger={["click"]}
+                        placement="bottomCenter"
+                        arrow
+                        overlayClassName="secureDropdown depwith-drpdown"
+                        getPopupContainer={() => document.getElementById("area")}
+                    >
+                        <Translate
+                            content="deposit"
+                            component={Menu.Item}
+                            key="5"
+                            className="mr-16 fs-20"
+                        />
+                    </Dropdown>
+                </Menu.Item>
+
+                <Menu.Item>
+                    <Dropdown
+                        onClick={() =>
+                            this.setState({ ...this.state, visbleProfileMenu: false })
+                        }
+                        overlay={<Menu>
+                            <ul className="pl-0 drpdwn-list">
+                                <li onClick={() => this.showSendDrawer('fiat')}>
+                                    <Link value={2} className="c-pointer">
+                                        <Translate content="tab_fiat" />
+                                    </Link>
+                                </li>
+                                <li onClick={() => this.showSendDrawer('crypto')}>
+                                    <Link value={4} className="c-pointer">
+                                        <Translate content="tab_crypto" />
+                                    </Link>
+                                </li>
+                            </ul>
+                        </Menu>}
+                        trigger={["click"]}
+                        placement="bottomCenter"
+                        arrow
+                        overlayClassName="secureDropdown depwith-drpdown"
+                        getPopupContainer={() => document.getElementById("area")}
+                    >
+                        <Translate
+                            content="withdraw"
+                            component={Menu.Item}
+                            key="5"
+                            className="mr-16 fs-20"
+                        />
+                    </Dropdown>
+                </Menu.Item>
+                 
+             
                
                 <Menu.Item
                     key="9"
