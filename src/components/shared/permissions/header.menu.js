@@ -437,13 +437,52 @@ class HeaderPermissionMenu extends Component {
                         key={indx}
                         className="mr-16 fs-20"
                     />
-                </Dropdown> : item.key === "trade" && <Translate
+                </Dropdown> : item.key === "trade" && 
+                <Dropdown
+                onClick={() =>
+                    this.setState({ ...this.state, visbleProfileMenu: false })
+                }
+                overlay={<Menu>
+                    <ul className="pl-0 drpdwn-list">
+                        {/* {item?.subMenu?.map((subItem) => <li onClick={() => this.onMenuItemClick(subItem.key, subItem)}>
+                            <Link>
+                                <Translate className="fs-20" content={subItem.content} conmponent={Text} />{" "}
+                                <span className="icon md rarrow-white" />
+                            </Link>
+                        </li>)} */}
+                        <Link onClick={() => this.onMenuItemClick(item.key, item)}>
+                            Buy{" "}
+                            <span className="icon md rarrow-white" />
+                        </Link><br/>
+                        <Link onClick={() => this.onMenuItemClick(item.key, item)}>
+                            Sell{" "}
+                            <span className="icon md rarrow-white" />
+                        </Link>
+
+                    </ul>
+                </Menu>}
+                trigger={["click"]}
+                placement="bottomCenter"
+                arrow
+                overlayClassName="secureDropdown depwith-drpdown"
+                getPopupContainer={() => document.getElementById("area")}
+            >
+                <Translate
                     content={item.content}
                     component={Menu.Item}
-                    key={item.key}
-                    onClick={() => this.onMenuItemClick(item.key, item)}
-                    className="list-item fs-20"
-                />)}
+                    key={indx}
+                    className="mr-16 fs-20"
+                />
+            </Dropdown> 
+                // <Translate
+                //     content={item.content}
+                //     component={Menu.Item}
+                //     key={item.key}
+                //     onClick={() => this.onMenuItemClick(item.key, item)}
+                //     className="list-item fs-20"
+                // />
+                
+                )}
                 <Menu.Item
                     key="9"
                     className="notification-conunt"
