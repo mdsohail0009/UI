@@ -42,7 +42,7 @@ class BusinessTransfer extends Component {
                 // this.handleIbanChange({ target: { value: data?.iban } });
                  edit = true;
             }
-            this.setState({ ...this.state, errorMessage: null, details: data,isEdit:edit, isSelectedId:  response.data?.id}, () => {
+            this.setState({ ...this.state,selectedTab:data.transferType, errorMessage: null, details: data,isEdit:edit, isSelectedId:  response.data?.id}, () => {
                 this.setState({ ...this.state, isLoading: false })
             });
         } else {
