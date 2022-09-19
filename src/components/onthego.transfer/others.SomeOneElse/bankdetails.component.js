@@ -26,13 +26,14 @@ class PayeeBankDetails extends Component {
     }
     componentDidMount(){
         debugger
-        if (this.props.selectedAddress?.id && this.props.createPayeeObj) {
-            if (this.props.createPayeeObj.payeeAccountModels[0]?.iban) {
-                this.handleIban(this.props.createPayeeObj.payeeAccountModels[0].iban)
+        if (this?.props?.selectedAddress?.id && this.props?.createPayeeObj) {
+            if (this.props?.createPayeeObj?.payeeAccountModels[0]?.iban) {
+                this.handleIban(this.props?.createPayeeObj?.payeeAccountModels[0].iban)
             }
         }
     }
     handleIban = async (ibannumber) => {
+        debugger
         if (ibannumber?.length > 3) {
             this.setState({ ...this.state, iBanDetals: null, IbanLoader: true, isValidIban: true })
             const ibanget = await apicalls.getIBANData(ibannumber)

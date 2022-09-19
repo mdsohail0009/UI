@@ -28,6 +28,7 @@ const SomeoneComponent = (props) => {
 const [edit,setEdit]=useState(false);
 const [isSelectedId,setIsSelectedId] = useState(null);
     useEffect(() => {
+        debugger
         getpayeeCreate();
     }, [])
     const getpayeeCreate = async () => {
@@ -350,7 +351,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                 {/* <Divider /> */}
                 <Paragraph className="mb-8 fw-500 text-white px-4 mt-36" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                 {((props.selectedAddress?.id && createPayeeObj)||!props.selectedAddress?.id ) &&
-                 <PayeeBankDetails GoType={props.ontheGoType} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />}
+                 <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />}
                 
                 <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs for transaction*</Paragraph>
                 {console.log(documents)}
