@@ -256,10 +256,10 @@ const Verifications = (props) => {
                 onClick={() => getphoneOTP()}
             ><Text className="text-yellow" >Click here to resend code</Text></Button>
         ),
-        code_Sent: (<>
+        code_Sent: (<div style={{ margin: "0 auto"}} className="code-sent-tool-tip">
             <Button
                 type="text"
-                style={{ color: "black", margin: "0 auto" }}
+                style={{ color: "black" }}
             ><Text
                 className={`pl-0 ml-0 text-white-50
         ${"c-notallowed"}`} >Verification code sent</Text></Button>
@@ -268,7 +268,7 @@ const Verifications = (props) => {
                 title={`Haven't received code? Request new code in ${phoneSeconds} seconds. The code will expire after 30 seconds.`}>
                 <span className="icon md info mr-8" />
             </Tooltip>
-        </>
+        </div>
         ),
         verified: (
 
@@ -411,7 +411,7 @@ const Verifications = (props) => {
                         autoComplete="off">
                             <>
                         {verifyData.isPhoneVerified === true && (<>
-                            <Text className="fw-300 mb-8 px-4 text-white-50 pt-16">
+                            <Text className="fw-500 mb-8 px-4 text-white pt-16">
                             Phone Verification Code *
                             </Text>
                             <Form.Item
@@ -464,7 +464,7 @@ const Verifications = (props) => {
                         </>
                         )}
                         {verifyData.isEmailVerification === true && (<>
-                            <Text className="fs-14 mb-8 text-white d-block fw-200">
+                            <Text className="fs-14 mb-8 text-white d-block fw-500">
                                 Email Verification Code *
                             </Text>
                             <Form.Item
@@ -517,7 +517,7 @@ const Verifications = (props) => {
                         </>
                         )}
                         {verifyData.twoFactorEnabled === true && (<>
-                            <Text className="mb-8 px-4 fw-300 text-white-50 pt-16">
+                            <Text className="mb-8 px-4 fw-500 text-white pt-16">
                             Authenticator Code *
                             </Text>
                             <Form.Item
