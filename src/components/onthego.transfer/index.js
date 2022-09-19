@@ -409,7 +409,7 @@ class OnthegoFundTransfer extends Component {
                 {this.state?.loading && <Loader />}
                 {(!this.state.loading) && <>
                     <Title className="fw-600 text-white px-4 mb-16 mt-16 text-captz" style={{ fontSize: '18px' }}>Address Book</Title>
-                    {/* <Divider className="cust-divide" /> */}
+                    <Divider className="cust-divide" />
 
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                         {(filterObj.length > 0) && filterObj?.map((item, idx) =>
@@ -428,7 +428,7 @@ class OnthegoFundTransfer extends Component {
                             }}>
                                 <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
                                 <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="small-text-align">
-                                    <label className="fs-16 fw-600 text-white l-height-normal">{item.name}</label>
+                                    <label className="fs-16 fw-600 text-white l-height-normal text-captz">{item.name}</label>
                                     {item.accountNumber && <div><Text className="fs-14 text-white-30 m-0">{this.state.selectedCurrency} account ending with {item.accountNumber?.substr(item.accountNumber.length - 4)}</Text></div>}
                                 </Col>
                                 <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
@@ -445,7 +445,7 @@ class OnthegoFundTransfer extends Component {
                     </ul>
 
                     <Title className="fw-600 text-white px-4 mb-16 mt-16 text-captz" style={{ fontSize: '18px' }}>Past Recipients</Title>
-                    {/* <Divider className="cust-divide" /> */}
+                    <Divider className="cust-divide" />
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                         {(pastPayees.length > 0) && pastPayees?.map((item, idx) =>
                             <Row className="fund-border c-pointer" onClick={async () => {
@@ -463,7 +463,7 @@ class OnthegoFundTransfer extends Component {
                             }}>
                                 <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
                                 <Col xs={24} md={24} lg={24} xl={19} xxl={19} className=" small-text-align">
-                                    <label className="fs-16 fw-600 text-white l-height-normal">{item.name}</label>
+                                    <label className="fs-16 fw-600 text-white l-height-normal text-captz">{item.name}</label>
                                     <div><Text className="fs-14 text-white-30 m-0">{this.state.selectedCurrency} account ending with {item.accountNumber?.substr(item.accountNumber?.length - 4)}</Text></div>
                                 </Col>
                                 <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">

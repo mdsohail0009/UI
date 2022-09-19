@@ -380,7 +380,7 @@ class OthersBusiness extends Component {
                         </Spin>
                        
                     </div>
-                    <Paragraph className="fw-300 mb-0 pb-4 ml-12 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
+                    <Paragraph className="fw-300 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs for transaction*</Paragraph>
 
                     <AddressDocumnet documents={this.state.details?.payeeAccountModels[0].documents} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
