@@ -1,4 +1,3 @@
-
 import React, { Component } from "react";
 import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert, message, Spin } from "antd";
 import {
@@ -26,14 +25,14 @@ import { setCurrentAction } from '../../reducers/actionsReducer'
 import AddressBookV2 from "../addressbook.v2/fiat.address";
 import AddressBookV3 from "../addressbook.v3";
 import AddressCommonCom from "./addressCommonCom";
-const { Paragraph, Text,Title } = Typography;
+const { Paragraph, Text, Title } = Typography;
 const addressName = { "1stparty": "1st Party", "3rdparty": "3rd Party" };
 class AddressBook extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			visible: false,
-			cryptoFiat: this.props?.activeFiat ? true : false,
+			cryptoFiat: (this.props?.activeFiat || new URLSearchParams(this.props.history?.location?.search).get("key") == 2) ? true : false,
 			fiatDrawer: false,
 			isCheck: false,
 			selection: [],
@@ -130,15 +129,15 @@ class AddressBook extends Component {
 			),
 		},
 		{
-			
-			field: "whiteListName",
-			title: "Whitelist Name",
+
+			field: "favouriteName",
+			title: "Save Whitelist Name As",
 			filter: true,
 			width: 300,
 			customCell: (props) => (
 				<td>
 					<div className="gridLink" onClick={() => this.addressFiatView(props)}>
-						{props.dataItem.whiteListName}
+					{props?.dataItem?.whiteListName}
 					</div>
 					<Text className="file-label ml-8 fs-12">
 						{this.addressTypeNames(props?.dataItem?.addressType)}
@@ -399,14 +398,14 @@ class AddressBook extends Component {
 					modifiedBy: "",
 					status: [],
 				},
-				
+
 			});
 		}
 	};
 	addAddressBook = () => {
 		if (this.state.cryptoFiat) {
 			this.setState({
-				...this.state, fiatDrawer: true, errorWorning: null, selection: [],
+				...this.state, fiatDrawer: true, errorWorning: null, selection: [], selectedObj: {},
 				isCheck: false,
 			});
 			if (!this.state.fiatDrawer) {
@@ -427,7 +426,7 @@ class AddressBook extends Component {
 		} else {
 			this.setState({
 				...this.state, visible: true, errorWorning: null, selection: [],
-				isCheck: false,
+				isCheck: false, selectedObj: {}
 			});
 			apiCalls.trackEvent({
 				Type: "User",
@@ -463,7 +462,7 @@ class AddressBook extends Component {
 				...this.state,
 				visible: false,
 				selection: [],
-				selectedObj:{},
+				selectedObj: {},
 				isCheck: false,
 				errorWorning: `Record is already ${obj.addressState} you can't modify`,
 			});
@@ -521,7 +520,7 @@ class AddressBook extends Component {
 			else
 				showFiat = !obj?.close;
 		};
-		this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat,selectedObj:{} });
+		this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat, selectedObj: {} });
 		this.props.rejectCoinWallet();
 		this.props.clearFormValues();
 		this.props.clearCrypto();
@@ -583,7 +582,7 @@ class AddressBook extends Component {
 	renderContent = () => {
 		const stepcodes = {
 			cryptoaddressbook: (<>
-				<AddressCommonCom onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1}/>
+				<AddressCommonCom onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1} />
 			</>
 			),
 			selectcrypto: <SelectCrypto />,
@@ -630,7 +629,7 @@ class AddressBook extends Component {
 
 		return (
 			<>
-				
+
 				<div className="box basic-info main-container">
 					<Translate
 						content="address_book"
@@ -644,7 +643,7 @@ class AddressBook extends Component {
 					/>
 					<div className="display-flex mb-16">
 						<Radio.Group
-							defaultValue={this.props?.activeFiat ? 2 : 1}
+							defaultValue={(this.props?.activeFiat||this.state.cryptoFiat) ? 2 : 1}
 							onChange={this.handleWithdrawToggle}
 							className="buysell-toggle mx-0"
 							style={{ display: "inline-block" }}>
@@ -755,7 +754,7 @@ class AddressBook extends Component {
 					visible={this.state.fiatDrawer}
 					closeIcon={null}
 					className="side-drawer w-50p">
-					<AddressBookV3 type="manual" isFiat={this.state.cryptoFiat} selectedAddress={this.state.selectedObj} onContinue={(obj)=>this.closeBuyDrawer(obj)} />
+					<AddressBookV3 type="manual" isFiat={this.state.cryptoFiat} selectedAddress={this.state.selectedObj} onContinue={(obj) => this.closeBuyDrawer(obj)} />
 				</Drawer>
 				<Modal
 					title={

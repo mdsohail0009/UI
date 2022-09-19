@@ -14,7 +14,6 @@ const { Paragraph, Text } = Typography;
 const CryptoTransfer = (props) => {
     const [form] = Form.useForm();
     const savewithdrawalCryptoDetails=()=>{
-        debugger
         props.changeStep('withdraw_crypto_selected');
         props.parentCallback(false);
     }

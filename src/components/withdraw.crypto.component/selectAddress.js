@@ -53,7 +53,6 @@ class SelectAddress extends Component {
     }
   
     selectCrypto = (type) => {
-        debugger
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         //this.props.dispatch(setSubTitle(apicalls.convertLocalLang('select_address')));
         let obj = {

@@ -21,6 +21,9 @@ const coinGekoClient = create({
 const uploadClient = create({
     baseURL: process.env.REACT_APP_UPLOAD_API
 })
+const bankClient = create({
+    baseURL: process.env.REACT_APP_BANKAPI_END_POINT
+})
 const _encrypt = (msg, key) => {
 
     msg = typeof (msg) == 'object' ? JSON.stringify(msg) : msg;
@@ -49,6 +52,21 @@ apiClient.axiosInstance.interceptors.request.use((config) => {
         }", FeatureId:"${menuItems?.featurePermissions?.selectedScreenFeatureId}"}`, userProfileInfo.sk) : ''
     return config;
 });
+bankClient.axiosInstance.interceptors.request.use((config) => {
+
+    const { oidc: { user }, userConfig: { userProfileInfo }, currentAction: { action },
+
+        menuItems } = store.getState()
+
+    config.headers.Authorization = `Bearer ${user.access_token}`
+
+    if (userProfileInfo?.id) config.headers.AuthInformation = userProfileInfo?.id ? _encrypt(`{CustomerId:"${userProfileInfo?.id}", Action:"${action || "view"
+
+        }", FeatureId:"${menuItems?.featurePermissions?.selectedScreenFeatureId}"}`, userProfileInfo.sk) : ''
+
+    return config;
+
+});
 // apiClient.axiosInstance.interceptors.response.use((response) => {
 //     return response;
 // }, (err) => {
@@ -59,4 +77,4 @@ apiClient.axiosInstance.interceptors.request.use((config) => {
 //     } else { return err; }
 
 // });
-export { apiClient, coinGekoClient, identityClient, uploadClient, ipRegistry, sumsub }
+export { apiClient, coinGekoClient, identityClient, uploadClient, ipRegistry, sumsub,bankClient }

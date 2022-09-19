@@ -168,7 +168,6 @@ const AddressCommonCom = (props) => {
   const withdraeTab = bilPay ? "Fiat" : (props?.cryptoTab == 1 ? "Crypto" : "Fiat");
 
   const showModal = () => {
-    debugger
     if(bankmodalData.length==1){
       useDivRef.current.scrollIntoView();
         setErrorMsg("Cannot add more than one Crypto address details");
@@ -426,7 +425,6 @@ const AddressCommonCom = (props) => {
 
   }
   const handleBankChange = (e) => {
-    debugger
     SetBankChange(e)
     bankDetailForm.setFieldsValue({
       IBAN: "", accountNumber: "", swiftCode: "", bankName: "", payeeAccountCountry: null, payeeAccountState: null,
@@ -992,9 +990,9 @@ const AddressCommonCom = (props) => {
                         setAddressOptions({ ...addressOptions, addressType: value.target.value })
                       }}
                     >
-                      <Radio.Button value="myself">{props.userConfig?.isBusiness ? "Own Business" : "My Self"}</Radio.Button>
-                      <Radio.Button value="someoneelse">SomeOne Else</Radio.Button>
-                      <Radio.Button value="business">Business</Radio.Button>
+                      <Radio.Button value="myself" className="custom-btn sec mt-8">{props.userConfig?.isBusiness ? "Own Business" : "My Self"}</Radio.Button>
+                      <Radio.Button value="someoneelse" className="custom-btn sec mt-8">SomeOne Else</Radio.Button>
+                      <Radio.Button value="business" className="custom-btn sec mt-8">Business</Radio.Button>
                     </Radio.Group>
                   </Col>
                 </Row>
@@ -1091,12 +1089,12 @@ const AddressCommonCom = (props) => {
                 <Translate
                   content="Beneficiary_Details"
                   component={Paragraph}
-                  className="mb-16 fs-14 text-aqua fw-500 text-upper"
+                  className="mb-16 text-white fw-500 mt-36 px-4" style={{ fontSize: 18 }}
                 />
                 <Row gutter={[16, 16]}>
                   <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                      className="custom-forminput custom-label mb-0"
+                     className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                       name="favouriteName"
                       label={
                         <Translate
@@ -1136,7 +1134,7 @@ const AddressCommonCom = (props) => {
 
                   <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                      className="custom-forminput custom-label mb-0"
+                      className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                       name="fullName"
                       required
                       rules={[
@@ -1166,7 +1164,7 @@ const AddressCommonCom = (props) => {
                     <Form.Item
                       name="email"
                       label={apiCalls.convertLocalLang("email")}
-                      className="custom-forminput custom-label mb-0"
+                      className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                       type="email"
                       rules={[
                         {
@@ -1200,7 +1198,7 @@ const AddressCommonCom = (props) => {
                   </Col>
                   <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                      className="custom-forminput custom-label mb-0"
+                      className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                       name="phoneNumber"
                       rules={[
                         {
@@ -1239,7 +1237,7 @@ const AddressCommonCom = (props) => {
                   {withdraeTab === "Fiat" && (
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                       <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                         className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name="line1"
                         required
                         rules={[
@@ -1272,7 +1270,7 @@ const AddressCommonCom = (props) => {
                           placeholder={apiCalls.convertLocalLang("Address_Line1")}
                           className="cust-input cust-text-area address-book-cust"
                           autoSize={{ minRows: 1, maxRows: 2 }}
-                          maxLength={100}
+                          maxLength={1000}
                         ></TextArea>
                       </Form.Item>
                     </Col>
@@ -1280,7 +1278,7 @@ const AddressCommonCom = (props) => {
                   {withdraeTab === "Fiat" && (
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                       <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name="line2"
                         // required
                         // rules={[
@@ -1315,7 +1313,7 @@ const AddressCommonCom = (props) => {
                   {withdraeTab === "Fiat" && (
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                       <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                       className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name="line2"
                         // required
                         // rules={[
@@ -1350,7 +1348,7 @@ const AddressCommonCom = (props) => {
                   {withdraeTab === "Fiat" && (
                     <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                       <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                       className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name="country"
                         required
                         rules={[
@@ -1418,7 +1416,7 @@ const AddressCommonCom = (props) => {
                   {withdraeTab === "Fiat" && (
                     <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                       <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                         className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name="city"
                         required
                         rules={[
@@ -1449,7 +1447,7 @@ const AddressCommonCom = (props) => {
                   {withdraeTab === "Fiat" && (
                     <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                       <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name="postalCode"
                         required
                         rules={[
@@ -1689,7 +1687,7 @@ const AddressCommonCom = (props) => {
                   size="large"
                   className="pop-btn mb-36"
                   loading={btnDisabled}
-                  style={{ minWidth: 300 }}
+                  style={{ minWidth: "100%" }}
                 >
                   {isLoading && <Spin indicator={antIcon} />}{" "}
                   <Translate content="Save_btn_text" />

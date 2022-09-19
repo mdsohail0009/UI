@@ -1,12 +1,12 @@
 
 import React, { useEffect, useState } from "react";
-import { Form, Row, Col, Typography, Select, Input, Tabs, Button,Alert, Spin,Image } from 'antd'
+import { Form, Row, Col, Typography, Select, AutoComplete, Input, Tabs, Button,Alert,Spin,Image } from 'antd'
 import Translate from "react-translate-component";
 import apiCalls from "../../../api/apiCalls"
 import { validateContentRule } from "../../../utils/custom.validator";
 import { connect } from "react-redux";
 import Loader from "../../../Shared/loader";
-import {confirmTransaction} from '../api'
+import {confirmTransaction} from '../api';
 import alertIcon from '../../../assets/images/pending.png';
 const { Paragraph,Title } = Typography;
 
@@ -27,6 +27,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     const useDivRef = React.useRef(null);
     const [validIban,setValidIban]=useState(false)
     const [showDeclartion, setShowDeclartion] = useState(false);
+    const [isEdit,setIsEdit]=useState(false);
+    const [isSelectedId,setIsSelectedId] = useState(null);
     useEffect(() => {
         getRecipientDetails()
     }, [])
@@ -45,7 +47,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 setAddressOptions({addressType:response.data.addressType,transferType:response.data.transferType,domesticType:response.data.transferType,tabType:response.data.transferType})
                 if(obj.iban){
                     getBankDeails(obj.iban)
-                }
+                }let edit = true; props?.onEdit(edit);setIsEdit(true)
+                setIsSelectedId(response.data?.id);
             } else {
                 setRecipientDetails(response.data); setLoader(false)
             }
@@ -81,6 +84,9 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         saveObj.payeeAccountModels[0].currencyType='fiat';
         saveObj.payeeAccountModels[0].walletCode=currency;
         saveObj.amount=onTheGoObj?.amount;
+        if(isEdit){
+            saveObj.id = isSelectedId ? isSelectedId: saveObj.payeeId;
+        }
         const response = await apiCalls.saveTransferData(saveObj);
         if (response.ok) {
             if (props.type !== "manual") {
@@ -156,21 +162,21 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             <Row gutter={[16, 16]}>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                     <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });form.resetFields();seterrorMessage(null) }} activeKey={addressOptions.tabType}>
-                        <Tabs.TabPane tab="Domestic USD Transfer" className="text-white"  key={"domestic"}></Tabs.TabPane>
-                        <Tabs.TabPane tab="International USD Swift" className="text-white" key={"international"}></Tabs.TabPane>
+                        <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz"  key={"domestic"} disabled={isEdit}></Tabs.TabPane>
+                        <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"} disabled={isEdit}></Tabs.TabPane>
                     </Tabs>
                 </Col>
             </Row>
         </>}
         
         
-        {currency == 'EUR' && <h2 style={{ fontSize: 18, textAlign: 'center', color: "white" }}>SEPA Transfer</h2>}
+        {currency == 'EUR' && <h2 className="text-white fw-600" style={{ fontSize: 18, textAlign: 'center' }}>SEPA Transfer</h2>}
         
         {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
         {!isLoading &&<>
-        <Row gutter={[16, 16]}><Col xs={24} md={24} lg={24} xl={24} xxl={24} id="favoriteName">
+        <Row gutter={[4, 4]}><Col xs={24} md={24} lg={24} xl={24} xxl={24} id="favoriteName" className="mt-16">
             <Form.Item
-                className="custom-forminput custom-label mb-0"
+                className="fw-300 mb-8 px-4 text-white-50 custom-forminput custom-label"
                 name="favouriteName"
                 label={
                     "Save Whitelist Name As"
@@ -192,7 +198,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             >
                
                 <Input
-                    maxLength={20}
+                    maxLength={100}
                         className="cust-input"
                         placeholder='Save Whitelist Name As'
                     />
@@ -225,52 +231,52 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 </Form.Item>
             </Col>} */}
             </Row>
-            <Translate style={{ fontSize: 18 }}
+            <Translate style={{ fontSize: 18,color: "white" }}
                     content="Beneficiary_Details"
                     component={Paragraph}
-                    className="mb-8  text-white fw-500 mt-16"
+                    className="mt-24 text-captz px-4 text-white fw-600"
                 />
 
-        <div className="box basic-info alert-info-custom mt-16">
+        <div className="box basic-info alert-info-custom">
             <Row>
                 {!isBusiness && <><Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 text-white">
-                        <strong>First Name</strong>
+                    <label className="fs-12 fw-600 text-white">
+                        First name
                     </label>
                     <div><Text className="fs-14 fw-400 text-white">{recipientDetails.firstName}</Text></div>
 
                 </Col>
                     <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 text-white">
-                            <strong>Last Name</strong>
+                        <label className="fs-12 fw-600 text-white">
+                            Last Name
                         </label>
                         <div><Text className="fs-14 fw-400 text-white">{recipientDetails.lastName}</Text></div>
 
                     </Col></>}
                 {isBusiness && <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 text-white">
-                        <strong>Beneficiary Name</strong>
+                    <label className="fs-12 fw-600 text-white">
+                        Beneficiary Name
                     </label>
                     <div><Text className="fs-14 fw-400 text-white">{recipientDetails.beneficiaryName}</Text></div>
 
                 </Col>}
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 text-white">
-                        <strong>Address Line 1</strong>
+                    <label className="fs-12 fw-600 text-white ">
+                        Address Line 1
                     </label>
                     <div><Text className="fs-14 fw-400 text-white">{recipientDetails.line1!=null?recipientDetails.line1:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 text-white">
-                        <strong>Address Line 2</strong>
+                    <label className="fs-12 fw-600 text-white ">
+                        Address Line 2
                     </label>
                     <div><Text className="fs-14 fw-400 text-white">{recipientDetails.line2!=null?recipientDetails.line2:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 text-white">
-                        <strong>Address Line 3</strong>
+                    <label className="fs-12 fw-600 text-white">
+                       Address Line 3
                     </label>
                     <div><Text className="fs-14 fw-400 text-white">{recipientDetails.line3!=null?recipientDetails.line3:'-'}</Text></div>
 
@@ -279,10 +285,10 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             </Row>
         </div>
 
-        <Paragraph className="mb-8  text-white fw-500 mt-16" style={{ fontSize: 18 }}>Bank Details</Paragraph>
+        <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
         {currency == 'EUR' && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
             <Form.Item
-                className="custom-forminput custom-label mb-0"
+                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
                 name="iban"
                 required
                 rules={[
@@ -292,11 +298,23 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                                 return Promise.reject(apiCalls.convertLocalLang("is_required"));
                             } else if (!validIban) {
                                 return Promise.reject("Please input a valid IBAN");
-                            } else {
+                            } else if (
+                                value &&
+                                !/^[A-Za-z0-9]+$/.test(value)
+                            ) 
+                            {
+                                return Promise.reject(
+                                    "Please input a valid IBAN"
+                                );
+                            }
+                            else {
                                 return Promise.resolve();
                             }
                         },
                     },
+                    // {
+                    //     validator: validateContentRule
+                    // }
                 ]}
                 label='IBAN'
                 onChange={(e) => {
@@ -307,32 +325,45 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     className="cust-input"
                     placeholder='IBAN'
                     // onBlur={(e)=>getBankDeails(e)}
-                    />
+                    maxLength={50}/>
             </Form.Item>
         </Col>}
-        <Row gutter={[16, 16]}>
+        <Row gutter={[8, 8]}>
             {currency == 'USD' && <> <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
-                    className="custom-forminput custom-label mb-0"
+                    className="fw-300 mb-8 px-4 text-white-50  custom-forminput custom-label pt-8"
                     name="accountNumber"
                     label='Account Number' required
                     rules={[
                         {
                             required: true,
                             message: apiCalls.convertLocalLang("is_required"),
+                        },{
+                            validator: (_, value) => {
+                                if (
+                                    value &&
+                                    !/^[A-Za-z0-9]+$/.test(value)
+                                ) {
+                                    return Promise.reject(
+                                        "Invalid Account Number"
+                                    );
+                                }else {
+                                    return Promise.resolve();
+                                }
+                            },
                         }
                     ]}
                 >
                     <Input
                         className="cust-input"
                         placeholder='Account Number'
-                    />
+                    maxLength={50}/>
                 </Form.Item>
             </Col>
 
                 {currency == 'USD' && addressOptions.tabType == 'international'&&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                        className="custom-forminput custom-label fw-400 mb-8 px-4 text-white pt-8"
                         name="swiftRouteBICNumber"
                         label={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
                         required
@@ -340,17 +371,30 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             {
                                 required: true,
                                 message: apiCalls.convertLocalLang("is_required"),
+                            },{
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            addressOptions.tabType == 'international' ?"Invalid Swift / BIC Code":"Invalid ABA Routing Code"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
                             }
                         ]}>
                         <Input
                             className="cust-input"
                             placeholder={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
-                        />
+                            maxLength={50}/>
                     </Form.Item>
                 </Col>}
                 {!(currency == 'USD' && addressOptions.tabType == 'international')&&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
                         name="abaRoutingCode"
                         label={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
                         required
@@ -358,17 +402,31 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             {
                                 required: true,
                                 message: apiCalls.convertLocalLang("is_required"),
+                            },{
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            addressOptions.tabType == 'international' ?"Invalid Swift / BIC Code":"Invalid ABA Routing Code"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
                             }
                         ]}>
                         <Input
                             className="cust-input"
+                            
                             placeholder={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
-                        />
+                        maxLength={50}/>
                     </Form.Item>
                 </Col>}
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
                         name="bankName"
                         label='Bank Name'
                         required
@@ -376,19 +434,37 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             {
                                 required: true,
                                 message: apiCalls.convertLocalLang("is_required"),
+                            },
+                            {
+                                validator: validateContentRule
                             }
+                            // {
+                            //     validator:
+                            //      (_, value) => {
+                            //         if (
+                            //             value &&
+                            //             !/^[a-zA-Z0-9_.-\s]+$/.test(value)
+                            //         ) {
+                            //             return Promise.reject(
+                            //                 "Please enter valid content"
+                            //             );
+                            //         }else {
+                            //             return Promise.resolve();
+                            //         }
+                            //     },
+                            // }
                         ]}>
                         <Input
                             className="cust-input"
                             placeholder='Bank Name'
-                        />
+                            maxLength={100}/>
                     </Form.Item>
                 </Col>
 
 
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
                         name="line1"
                         label='Bank Address 1'
                         required
@@ -396,28 +472,61 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             {
                                 required: true,
                                 message: apiCalls.convertLocalLang("is_required"),
-                            }
+                            }, {
+                                validator: validateContentRule,
+                            },
+                            // {
+                            //     validator: (_, value) => {
+                            //         if (
+                            //             value &&
+                            //             !/^[a-zA-Z0-9_.-\s]+$/.test(value)
+                            //         ) {
+                            //             return Promise.reject(
+                            //                 "Please enter valid content"
+                            //             );
+                            //         }else {
+                            //             return Promise.resolve();
+                            //         }
+                            //     },
+                            // }
                         ]}>
                         <TextArea
                             placeholder={'Bank Address 1'}
                             className="cust-input cust-text-area address-book-cust"
                             autoSize={{ minRows: 1, maxRows: 2 }}
-                            maxLength={100}
+                            maxLength={1000}
                         ></TextArea>
                     </Form.Item>
                 </Col>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
                         name="line2"
                         label='Bank Address 2'
-                    >
+                        rules={[ {
+                            validator: validateContentRule,
+                        },
+                            // {
+                            //     validator: (_, value) => {
+                            //         if (
+                            //             value &&
+                            //             !/^[a-zA-Z0-9_.-\s]+$/.test(value)
+                            //         ) {
+                            //             return Promise.reject(
+                            //                 "Please enter valid content"
+                            //             );
+                            //         }else {
+                            //             return Promise.resolve();
+                            //         }
+                            //     },
+                            // }
+                        ]}>
                        
                         <TextArea
                             placeholder={'Bank Address 2'}
                             className="cust-input cust-text-area address-book-cust"
                             autoSize={{ minRows: 1, maxRows: 2 }}
-                            maxLength={100}
+                            maxLength={1000}
                         ></TextArea>
                     </Form.Item>
                 </Col></>}
@@ -426,51 +535,39 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             <Spin spinning={ibanLoading}>
             {validIban&&<Row>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                <label className="fs-14 fw-400 text-white">
-                    <strong>Bank Name</strong>
+                <label className="fs-12 fw-500">
+                        Bank Name
                 </label>
-                <div><Text className="fs-14 fw-400 text-white">{(bankDetails?.bankName!=''&&bankDetails?.bankName!=null)?bankDetails?.bankName:'-'}</Text></div>
+                <div className="pr-24"><Text className="fs-14 fw-400 text-white">{(bankDetails?.bankName!=''&&bankDetails?.bankName!=null)?bankDetails?.bankName:'-'}</Text></div>
 
             </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 text-white">
-                        <strong>BIC</strong>
-                    </label>
-                   <div><Text className="fs-14 fw-400 text-white"> {bankDetails.routingNumber!=''&&bankDetails.routingNumber!=null?bankDetails.routingNumber:'-'}</Text></div>
+                <label className="fs-12 fw-500 ">BIC</label>
+                   <div className="pr-24"><Text className="fs-14 fw-400 text-white"> {bankDetails.routingNumber!=''&&bankDetails.routingNumber!=null?bankDetails.routingNumber:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 text-white">
-                        <strong>Branch</strong>
-                    </label>
-                    <div><Text className="fs-14 fw-400 text-white">{bankDetails.branch!=''&&bankDetails.branch!=null?bankDetails.branch:'-'}</Text></div>
+                <label className="fs-12 fw-500 ">Branch</label>
+                    <div className="pr-24"><Text className="fs-14 fw-400 text-white">{bankDetails.branch!=''&&bankDetails.branch!=null?bankDetails.branch:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 text-white">
-                        <strong>Country</strong>
-                    </label>
+                <label className="fs-12 fw-500 ">Country</label>
                     <div><Text className="fs-14 fw-400 text-white">{bankDetails.country!=''&&bankDetails.country!=null?bankDetails.country:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 text-white">
-                        <strong>State</strong>
-                    </label>
+                <label className="fs-12 fw-500">State</label>
                     <div><Text className="fs-14 fw-400 text-white">{bankDetails.state!=''&&bankDetails.state!=null?bankDetails.state:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 text-white">
-                        <strong>City</strong>
-                    </label>
+                <label className="fs-12 fw-500">City</label>
                     <div><Text className="fs-14 fw-400 text-white">{(bankDetails.city!=''&&bankDetails.city!=null)?bankDetails.city:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-14 fw-400 text-white">
-                        <strong>Zip</strong>
-                    </label>
+                <label className="fs-12 fw-500">Zip</label>
                     <div><Text className="fs-14 fw-400 text-white">{(bankDetails.zipCode!=''&&bankDetails.zipCode!=null)?bankDetails.zipCode:'-'}</Text></div>
 
                 </Col></Row>}
@@ -478,12 +575,12 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 {(!validIban)&&<span>No bank details available</span>}
                 </Spin>
         </div>}
-        <div className="text-right mt-12">
+        <div className="text-center mt-36">
             <Button
                 htmlType="submit"
                 size="large"
                 className="pop-btn px-36"
-                style={{ minWidth: 150 }}
+                style={{ width:'100%' }}
                 loading={isBtnLoading} 
             >
                                 {props.type === "manual" && "Save"}
