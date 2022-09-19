@@ -136,7 +136,8 @@ const AddressFiatView = (props) => {
 															:(fiatAddress?.addressType=="myself")&&"MYSELF"||
 															 (fiatAddress?.addressType=="someoneelse")&&"SOMEONE ELSE"||
 															(fiatAddress?.addressType=="ownbusiness")&&"OWN BUSINESS"||
-															(fiatAddress?.addressType=="business")&&"BUSINESS"}
+															(fiatAddress?.addressType=="business")&&"BUSINESS"||
+															(fiatAddress?.addressType=="Business")&&"BUSINESS"}
 
 													</div>}
 												</div>
