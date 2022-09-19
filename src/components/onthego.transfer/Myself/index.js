@@ -543,12 +543,12 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                 <label className="fs-12 fw-500 ">BIC</label>
-                   <div><Text className="fs-14 fw-400 text-white"> {bankDetails.routingNumber!=''&&bankDetails.routingNumber!=null?bankDetails.routingNumber:'-'}</Text></div>
+                   <div className="pr-24"><Text className="fs-14 fw-400 text-white"> {bankDetails.routingNumber!=''&&bankDetails.routingNumber!=null?bankDetails.routingNumber:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                 <label className="fs-12 fw-500 ">Branch</label>
-                    <div><Text className="fs-14 fw-400 text-white">{bankDetails.branch!=''&&bankDetails.branch!=null?bankDetails.branch:'-'}</Text></div>
+                    <div className="pr-24"><Text className="fs-14 fw-400 text-white">{bankDetails.branch!=''&&bankDetails.branch!=null?bankDetails.branch:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">

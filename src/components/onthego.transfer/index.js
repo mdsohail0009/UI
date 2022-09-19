@@ -716,7 +716,7 @@ class OnthegoFundTransfer extends Component {
                             {this.state.reviewDetails?.name && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                     <Title className="fs-14 text-white fw-500 text-captz">Beneficiary Name</Title>
-                                    <Title className="fs-14 fw-500 text-white-50 text-right ">{this.state.reviewDetails?.name}</Title>
+                                    <Title className="fs-14 fw-500 text-white text-right ">{this.state.reviewDetails?.name}</Title>
                                 </div>
                             </Col>}
                             {this.state.reviewDetails?.firstName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
