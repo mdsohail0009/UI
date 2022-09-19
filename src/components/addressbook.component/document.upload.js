@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Row, Col, Typography, Upload, Form, Modal, Button } from 'antd';
+import { Row, Col, Typography, Upload, Form, Modal, Button,Alert } from 'antd';
 import Loader from "../../Shared/loader";
 import { document } from "../onthego.transfer/api";
 import apiCalls from "../../api/apiCalls";
@@ -19,7 +19,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 class AddressDocumnet extends Component {
     state = {
         filesList: [],
-        documents: {}, showDeleteModal: false, isDocLoading: false,selectedObj:{}
+        documents: {}, showDeleteModal: false, isDocLoading: false,selectedObj:{},errorMessage:null
     }
     componentDidMount() {
         this.setState({ ...this.state, documents: this.props?.documents || document(), filesList: this.props?.documents ? [...this.props?.documents?.details] : [] })
@@ -45,20 +45,22 @@ class AddressDocumnet extends Component {
                     <Paragraph
                       className="mb-8 fs-14 text-white fw-500 ml-12" 
                     >{this.props.title}</Paragraph>
+                     {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
                     <Form.Item name={"files"} required rules={[{
                         validator: (_, value) => {
                             let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
                             if (this.state.filesList.length == 0) {
+                                this.setState({...this.state,isDocLoading:false,errorMessage:null })
                                 return Promise.reject("At least one document is required")
                             }
                             if (value&&!fileType[value.file.type]) {
-                                this.setState({...this.state,isDocLoading:false})
+                                this.setState({...this.state,isDocLoading:false,errorMessage:null })
                                 return Promise.reject("File is not allowed. You can upload jpg, png, jpeg and PDF  files");
                             }
                             else {
                                 const isValidFiles = this.state.filesList.filter(item => (item.name || item.documentName).indexOf(".") != (item.name || item.documentName).lastIndexOf(".")).length == 0;
                                 if (isValidFiles) { return Promise.resolve(); } else {
-                                    this.setState({...this.state,isDocLoading:false})
+                                    this.setState({...this.state,isDocLoading:false,errorMessage:null })
                                     return Promise.reject("File don't allow double extension");
                                 }
 
@@ -79,10 +81,13 @@ class AddressDocumnet extends Component {
                                 if (file.status === "done") {
                                     let { filesList: files } = this.state;
                                     files.push(file);
-                                    this.setState({ ...this.state, filesList: files, isDocLoading: false });
+                                    this.setState({ ...this.state, filesList: files, isDocLoading: false,errorMessage:null });
                                     let { documents: docs } = this.state;
                                     docs?.details?.push(this.docDetail(file));
                                     this.props?.onDocumentsChange(docs);
+                                }else if(file.status ==='error'){
+                                    console.log(file)
+                                    this.setState({ ...this.state, isDocLoading: false,errorMessage:file?.response });
                                 }
                             }}
                         >
