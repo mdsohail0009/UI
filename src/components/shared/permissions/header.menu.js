@@ -410,34 +410,57 @@ class HeaderPermissionMenu extends Component {
                     this.props.dispatch(setHeaderTab(key.key));
                 }}
             >
-                {data?.map((item, indx) => item.menuitemType === "dropdown" ? <Dropdown
-                    onClick={() =>
-                        this.setState({ ...this.state, visbleProfileMenu: false })
-                    }
-                    overlay={<Menu>
-                        <ul className="pl-0 drpdwn-list">
-                            {item?.subMenu?.map((subItem) => <li onClick={() => this.onMenuItemClick(subItem.key, subItem)}>
-                                <Link>
-                                    <Translate className="fs-20" content={subItem.content} conmponent={Text} />{" "}
-                                    <span className="icon md rarrow-white" />
-                                </Link>
-                            </li>)}
+              
+                {data?.map((item, indx) => item.menuitemType === "dropdown" ?
+                  <Menu.Item>
+                <div className="d-flex" >
+                 {item?.subMenu?.map((subItem) => <li onClick={() => this.onMenuItemClick(subItem.key, subItem)}>
+                                 <Link>
+                                     <Translate className="fs-20" content={subItem.content} conmponent={Text} />{" "}
+                                     
+                                 </Link>
+                             </li>)}
+                             </div>
+                             </Menu.Item>
+                // <Dropdown
+                //     onClick={() =>
+                //         this.setState({ ...this.state, visbleProfileMenu: false })
+                //     }
+                //     overlay={<Menu>
+                //         <ul className="pl-0 drpdwn-list">
+                //             {item?.subMenu?.map((subItem) => <li onClick={() => this.onMenuItemClick(subItem.key, subItem)}>
+                //                 <Link>
+                //                     <Translate className="fs-20" content={subItem.content} conmponent={Text} />{" "}
+                //                     <span className="icon md rarrow-white" />
+                //                 </Link>
+                //             </li>)}
 
-                        </ul>
-                    </Menu>}
-                    trigger={["click"]}
-                    placement="bottomCenter"
-                    arrow
-                    overlayClassName="secureDropdown depwith-drpdown"
-                    getPopupContainer={() => document.getElementById("area")}
-                >
-                    <Translate
-                        content={item.content}
-                        component={Menu.Item}
-                        key={indx}
-                        className="mr-16 fs-20"
-                    />
-                </Dropdown> : item.key === "trade" && 
+                //         </ul>
+                //     </Menu>}
+                //     trigger={["click"]}
+                //     placement="bottomCenter"
+                //     arrow
+                //     overlayClassName="secureDropdown depwith-drpdown"
+                //     getPopupContainer={() => document.getElementById("area")}
+                // >
+                //     <Translate
+                //         content={item.content}
+                //         component={Menu.Item}
+                //         key={indx}
+                //         className="mr-16 fs-20"
+                //     />
+                // </Dropdown>
+                //  <Translate
+                //     content={item.content}
+                //     component={Menu.Item}
+                //     key={item.key}
+                //     onClick={() => this.onMenuItemClick(item.key, item)}
+                //     className="list-item fs-20"
+                // />
+                
+                 : item.key === "trade" && 
+                 <Menu.Item
+             >
                 <Dropdown
                 onClick={() =>
                     this.setState({ ...this.state, visbleProfileMenu: false })
@@ -474,6 +497,7 @@ class HeaderPermissionMenu extends Component {
                     className="mr-16 fs-20"
                 />
             </Dropdown> 
+            </Menu.Item>
                 // <Translate
                 //     content={item.content}
                 //     component={Menu.Item}
@@ -483,6 +507,7 @@ class HeaderPermissionMenu extends Component {
                 // />
                 
                 )}
+               
                 <Menu.Item
                     key="9"
                     className="notification-conunt"
