@@ -25,7 +25,8 @@ const SomeoneComponent = (props) => {
     const [intialObj, setIntialObj] = useState(false);
     const [form] = Form.useForm();
     const useDivRef = React.useRef(null);
-const [edit,setEdit]=useState(false)
+const [edit,setEdit]=useState(false);
+const [isSelectedId,setIsSelectedId] = useState(null);
     useEffect(() => {
         getpayeeCreate();
     }, [])
@@ -42,7 +43,8 @@ const [edit,setEdit]=useState(false)
                 setAddressOptions({ ...addressOptions, domesticType: createPayeeData.data.transferType });
                 edit = true;
                 props?.onEdit(edit);
-                setEdit(true)
+                setEdit(true);
+                setIsSelectedId(createPayeeData?.data?.id);
             }
             setMailLoader(false)
 
@@ -63,6 +65,9 @@ const [edit,setEdit]=useState(false)
         if (props.type !== "manual") { obj['amount'] = props.onTheGoObj?.amount; }
         obj['transferType'] = props.currency === "USD" ? addressOptions.domesticType : 'sepa';
         obj['addressType'] = addressOptions.addressType;
+        if(edit){
+            obj.id = isSelectedId ? isSelectedId : createPayeeObj.payeeAccountModels[0]?.payeeId;
+        }
         setBtnLoading(true)
         let payeesave = await savePayee(obj)
         if (payeesave.ok) {
