@@ -1,4 +1,4 @@
-import { apiClient, ipRegistry } from "./";
+import { apiClient, ipRegistry ,bankClient} from "./";
 import { ApiControllers } from "./config";
 import counterpart from "counterpart";
 import { store } from "../store";
@@ -107,6 +107,11 @@ const downloadKyc = (Customerid) => {
 const updateSecurity = (obj) => {
 	return apiClient.put(ApiControllers.master + "UpdateSecurity", obj);
 };
+const getCustomerBankDetails = (customerId)=>{
+
+    return bankClient.get(ApiControllers.bank + `GetAccountBalanceByCustomerId/${customerId}`);
+
+}
 
 const encryptValue = (msg, key) => {
 	msg = typeof msg == "string" ? msg : JSON.stringify(msg);
@@ -202,6 +207,6 @@ let apicalls = {
 	getVerificationFields,
 	twofactor,
 	getInfoVal,
-	getReferalDetails,getPayeeLu,saveTransferData,getRecipientData
+	getReferalDetails,getPayeeLu,saveTransferData,getRecipientData,getCustomerBankDetails
 };
 export default apicalls;
