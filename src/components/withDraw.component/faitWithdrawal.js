@@ -318,7 +318,6 @@ const FaitWithdrawal = ({ props,
       }
       setLoading(false);
       setErrorMsg(null);
-      debugger
       values["customerId"] = userConfig.id;
       values["memberWalletId"] = accountDetails[0].id;
       values["beneficiaryAccountName"] = userConfig.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig.lastName;

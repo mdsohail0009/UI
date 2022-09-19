@@ -11,8 +11,10 @@ import Loader from "../../../Shared/loader";
 import Translate from "react-translate-component";
 import alertIcon from '../../../assets/images/pending.png';
 const { Paragraph, Text, Title } = Typography;
+const { TextArea } = Input;
 class OthersBusiness extends Component {
     form = React.createRef();
+    useDivRef=React.createRef()
     state = {
         errorMessage: null,
         ibanDetailsLoading: false,
@@ -21,7 +23,9 @@ class OthersBusiness extends Component {
         ibanDetails: {},
         docDetails: {}, isBtnLoading: false,
         showDeclartion: false,
-        iBanValid:false
+        iBanValid:false,
+        isEdit: false,
+        isSelectedId: null
     };
     componentDidMount() {
         this.loadDetails();
@@ -30,21 +34,24 @@ class OthersBusiness extends Component {
         this.setState({ ...this.state, errorMessage: null, isLoading: true });
         const response = await createPayee(this.props.userProfile.id, this.props.selectedAddress?.id || "", "business");
         if (response.ok) {
+            let edit=false;
             let data = response.data;
             if (!data?.payeeAccountModels) {
                 data.payeeAccountModels = [payeeAccountObj()];
             }
-            if (this.props.selectedAddress) {
+            if (this.props.selectedAddress?.id) {
                 const accountDetails = data.payeeAccountModels[0];
                 data = { ...data, ...accountDetails,line1:data.line1,line2:data.line2,line3:data.line3,bankAddress1:accountDetails.line1,bankAddress2:accountDetails.line2 };
                 delete data["documents"];
                 if (data?.iban) {
                     this.handleIbanChange({ target: { value: data?.iban } });
-                }
+                } 
+                 edit = true;
             }
-            const ibanDetails=response.data?.payeeAccountModels[0]||{}
-            this.setState({ ...this.state, errorMessage: null, details: data,ibanDetails }, () => {
-                this.setState({ ...this.state, isLoading: false });
+            this.props?.onEdit(edit);
+            const ibanDetails = response.data?.payeeAccountModels[0] || {}
+            this.setState({ ...this.state, errorMessage: null, details: data, ibanDetails }, () => {
+                this.setState({ ...this.state, isLoading: false, isEdit: edit, isSelectedId:  response.data?.id });
             });
         } else {
             this.setState({ ...this.state, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, details: {} });
@@ -55,7 +62,11 @@ class OthersBusiness extends Component {
             this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true,iBanValid:true });
             const response = await fetchIBANDetails(value);
             if (response.ok) {
-                this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:true });
+                if(response.data && (response.data?.routingNumber || response.data?.bankName)){
+                    this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:true });
+                }else{
+                    this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:false });
+                }
             } else {
                 this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false, errorMessage: response.data || response.data?.message || response.originalError?.message });
             }
@@ -64,7 +75,7 @@ class OthersBusiness extends Component {
         }
     }
     submitPayee = async (values) => {
-        let { details, ibanDetails } = this.state;
+        let { details, ibanDetails,isSelectedId,isEdit } = this.state;
         let _obj = { ...details, ...values };
         _obj.payeeAccountModels[0].line1 = ibanDetails.bankAddress;
         _obj.payeeAccountModels[0].city = ibanDetails?.city;
@@ -82,6 +93,9 @@ class OthersBusiness extends Component {
         _obj.addressType = "Business";
         _obj.transferType = "sepa";
         _obj.amount = this.props.amount;
+        if(isEdit){
+            _obj.id = isSelectedId ? isSelectedId : details?.payeeId;
+        }
         this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
         const response = await savePayee(_obj);
         if (response.ok) {
@@ -90,16 +104,22 @@ class OthersBusiness extends Component {
                 if (confirmRes.ok) {
                     this.props.onContinue(confirmRes.data);
                     this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
+                  //  this.useDivRef.current.scrollIntoView()
                 } else {
                     this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false, isBtnLoading: false });
+                  //  this.useDivRef.current.scrollIntoView(0,0)
+                  window.scrollTo(0, 0);
                 }
             } else {
                 // this.props.onContinue({ close: true, isCrypto: false });
                 this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
+                this.useDivRef.current?.scrollIntoView(0,0)
             }
 
         } else {
+            
             this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, isBtnLoading: false });
+           // this.useDivRef.current.scrollIntoView()
         }
 
     }
@@ -120,9 +140,9 @@ class OthersBusiness extends Component {
         }
         if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} /> }
         else {
-            return <>
+            return <><div ref={this.useDivRef}>
                 {/* <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16 text-center">SEPA Transfer</Paragraph> */}
-                <h2 style={{ fontSize: 18, textAlign: 'center', color: "white" }}>SEPA Transfer</h2>
+                <h2 className="text-white fw-600" style={{ fontSize: 18, textAlign: 'center' }}>SEPA Transfer</h2>
                 {this.state.isLoading && <Loader />}
                 {this.state.errorMessage && <Alert type="error" showIcon closable={false} description={this.state.errorMessage} />}
                 {!this.state.isLoading && <Form initialValues={this.state.details}
@@ -153,7 +173,7 @@ class OthersBusiness extends Component {
                                 ]}
                             >
                                 <Input
-                                    maxLength={50}
+                                    maxLength={100}
                                     className="cust-input"
                                     placeholder={"Save Whitelist Name As"}
                                 />
@@ -165,13 +185,13 @@ class OthersBusiness extends Component {
                     <Translate style={{ fontSize: 18 }}
                         content="Beneficiary_Details"
                         component={Paragraph}
-                        className="mb-8  text-white fw-500 mt-16"
+                        className="mb-8 fs-18 text-white fw-500 mt-16"
                     />
                     {/* <Divider /> */}
-                    <Row gutter={[16, 16]}>
+                    <Row gutter={[12, 12]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                                 name="beneficiaryName"
                                 required
                                 rules={[
@@ -194,12 +214,12 @@ class OthersBusiness extends Component {
                                 <Input
                                     className="cust-input"
                                     placeholder={"Beneficiary Name"}
-                                />
+                                    maxLength={100}/>
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                                 name="relation"
                                 label={"Relationship To Beneficiary"}
                                 required
@@ -220,19 +240,19 @@ class OthersBusiness extends Component {
                                 <Input
                                     className="cust-input"
                                     placeholder={"Relationship To Beneficiary"}
-                                />
+                                    maxLength={100}/>
 
                             </Form.Item>
                         </Col>
                         <RecipientAddress />
                     </Row>
 
-                    <Paragraph className="mb-8  text-white fw-500 mt-16" style={{ fontSize: 18 }}>Bank Details</Paragraph>
+                    <Paragraph className="mb-8 fs-14 text-white fw-500 mt-36 px-4">Bank Details</Paragraph>
                     {/* <Divider /> */}
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                                 name="iban"
                                 label={"IBAN"}
                                 required
@@ -243,25 +263,32 @@ class OthersBusiness extends Component {
                                                 return Promise.reject(apiCalls.convertLocalLang("is_required"));
                                             } else if (!this.state.iBanValid) {
                                                 return Promise.reject("Please input a valid IBAN");
-                                            } else {
+                                            } else if (
+                                                value &&
+                                                !/^[A-Za-z0-9]+$/.test(value)
+                                            ) {
+                                                return Promise.reject(
+                                                    "Please input a valid IBAN"
+                                                );
+                                            }else {
                                                 return Promise.resolve();
                                             }
                                         },
-                                    },
+                                    }
                                 ]}
                             >
                                 <Input
                                     className="cust-input"
                                     placeholder={"IBAN"}
                                     onChange={this.handleIbanChange}
-                                />
+                                    maxLength={50}/>
 
                             </Form.Item>
                         </Col>
 
-                        {this.props.type !== "manual" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        {this.props.ontheGoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="fw-300 mb-8 px-4 text-white-50 py-4 custom-forminput custom-label"
                                 name="reasonOfTransfer"
                                 required
                                 rules={[
@@ -285,58 +312,59 @@ class OthersBusiness extends Component {
                                     className="cust-input"
                                     placeholder={"Reason Of Transfer"}
                                     // onChange={this.handleIbanChange}
-                                />
+                                    maxLength={1000}/>
                             </Form.Item>
                         </Col>}
+                         
                     </Row>
                     <div className="box basic-info alert-info-custom mt-16">
                         <Spin spinning={this.state.ibanDetailsLoading}>
                         {this.state.iBanValid && <Row>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
-                                    <strong>Bank Name</strong>
+                                <label className="fs-12 fw-500">
+                                    Bank Name
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.ibanDetails?.bankName || "-"}</Text></div>
+                                <div className="pr-24"><Text className="fs-14 fw-400 text-white">{this.state.ibanDetails?.bankName || "-"}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
-                                    <strong>BIC</strong>
+                                <label className="fs-12 fw-500 ">
+                                BIC
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.ibanDetails?.routingNumber || "-"}</Text></div>
+                                <div className="pr-24"><Text className="fs-14 fw-400 text-white">{this.state.ibanDetails?.routingNumber || "-"}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
-                                    <strong>Branch</strong>
+                                <label className="fs-12 fw-500 ">
+                                    Branch
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.branch || "-"}</Text></div>
+                                <div className="pr-24"><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.branch || "-"}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
-                                    <strong>Country</strong>
+                                <label className="fs-12 fw-500 ">
+                                    Country
                                 </label>
                                 <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.country || "-"}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
-                                    <strong>State</strong>
+                                <label className="fs-12 fw-500 ">
+                                    State
                                 </label>
                                 <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.state || "-"}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
-                                    <strong>City</strong>
+                                <label className="fs-12 fw-500 ">
+                                    City
                                 </label>
                                 <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.city || "-"}</Text></div>
 
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-14 fw-400 text-white">
-                                    <strong>Zip</strong>
+                                <label className="fs-12 fw-500 ">
+                                    Zip
                                 </label>
                                 <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.zipCode || "-"}</Text></div>
 
@@ -351,22 +379,22 @@ class OthersBusiness extends Component {
                         </Spin>
                        
                     </div>
-                    <Paragraph className="fw-300 mb-0 pb-4 ml-12 text-white-50 pt-16">Please upload supporting docs for transaction*</Paragraph>
+                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs for transaction*</Paragraph>
 
                     <AddressDocumnet documents={this.state.details?.payeeAccountModels[0].documents} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
                     }} />
-                    <div className="text-right mt-12">
+                    <div className="text-center mt-36">
                         {/* <Row gutter={[16, 16]}>
                             <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col>
                             <Col xs={12} md={12} lg={12} xl={12} xxl={12}> */}
                                 <Button
                                     htmlType="submit"
                                     size="large"
-                                    className="pop-btn mb-36"
-                                    style={{ minWidth: 150 }}
+                                    className="pop-btn px-36"
+                                    style={{ width:'100%' }}
                                     disabled={this.state.ibanDetailsLoading}
                                     loading={this.state.isBtnLoading} >
                             {this.props.type === "manual" && "Save"}
@@ -376,7 +404,7 @@ class OthersBusiness extends Component {
                             {/* </Col>
                         </Row> */}
                     </div>
-                </Form>}
+                </Form>}</div>
             </>;
         }
 

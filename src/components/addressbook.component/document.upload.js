@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Row, Col, Typography, Upload, Form, Modal, Button } from 'antd';
+import { Row, Col, Typography, Upload, Form, Modal, Button,Alert } from 'antd';
 import Loader from "../../Shared/loader";
 import { document } from "../onthego.transfer/api";
 import apiCalls from "../../api/apiCalls";
@@ -11,7 +11,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
     const suffix = children.slice(-suffixCount).trim();
     return (
-        <Text className="mb-0 fs-14 docname c-pointer d-block" style={{ maxWidth: '100%' }} ellipsis={{ suffix }}>
+        <Text className="mb-0 fs-14 docname d-block" style={{ maxWidth: '100%' }} ellipsis={{ suffix }}>
             {start}
         </Text>
     );
@@ -19,7 +19,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 class AddressDocumnet extends Component {
     state = {
         filesList: [],
-        documents: {}, showDeleteModal: false, isDocLoading: false
+        documents: {}, showDeleteModal: false, isDocLoading: false,selectedObj:{},errorMessage:null
     }
     componentDidMount() {
         this.setState({ ...this.state, documents: this.props?.documents || document(), filesList: this.props?.documents ? [...this.props?.documents?.details] : [] })
@@ -31,27 +31,37 @@ class AddressDocumnet extends Component {
             "documentName": doc.name,
             "status": true,
             "recorder": 0,
-            "remarks": "",
+            "remarks":  doc.size,
             "isChecked": true,
             "state": "",
             "path": doc?.response[0]
         }
     }
+  
     render() {
         return <Row >
             <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="text-left">
                 <div className='mb-24'>
                     <Paragraph
-                        className="mb-16 fs-14 text-white fw-500"
+                      className="mb-8 fs-14 text-white fw-500 ml-12" 
                     >{this.props.title}</Paragraph>
+                     {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
                     <Form.Item name={"files"} required rules={[{
                         validator: (_, value) => {
+                            let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
                             if (this.state.filesList.length == 0) {
+                               // this.setState({...this.state,isDocLoading:false,errorMessage:null })
                                 return Promise.reject("At least one document is required")
-                            } else {
+                            }
+                            if (value&&!fileType[value.file.type]) {
+                                this.setState({...this.state,isDocLoading:false,errorMessage:null })
+                                return Promise.reject("File is not allowed. You can upload jpg, png, jpeg and PDF  files");
+                            }
+                            else {
                                 const isValidFiles = this.state.filesList.filter(item => (item.name || item.documentName).indexOf(".") != (item.name || item.documentName).lastIndexOf(".")).length == 0;
                                 if (isValidFiles) { return Promise.resolve(); } else {
-                                    return Promise.reject("Double extension file not allowed");
+                                    this.setState({...this.state,isDocLoading:false,errorMessage:null })
+                                    return Promise.reject("File don't allow double extension");
                                 }
 
                             }
@@ -60,7 +70,7 @@ class AddressDocumnet extends Component {
                     }
                     ]}>
                         <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
-                            className="upload mt-0"
+                            className="upload mt-4"
                             multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                             showUploadList={false}
                             beforeUpload={(props) => {
@@ -71,10 +81,13 @@ class AddressDocumnet extends Component {
                                 if (file.status === "done") {
                                     let { filesList: files } = this.state;
                                     files.push(file);
-                                    this.setState({ ...this.state, filesList: files, isDocLoading: false });
+                                    this.setState({ ...this.state, filesList: files, isDocLoading: false,errorMessage:null });
                                     let { documents: docs } = this.state;
                                     docs?.details?.push(this.docDetail(file));
                                     this.props?.onDocumentsChange(docs);
+                                }else if(file.status ==='error'){
+                                    console.log(file)
+                                    this.setState({ ...this.state, isDocLoading: false,errorMessage:file?.response });
                                 }
                             }}
                         >
@@ -89,13 +102,13 @@ class AddressDocumnet extends Component {
                     </Form.Item>
                     {this.state?.filesList?.map((file, indx) => <div className="docfile">
                         {(file.status === "done" || file.status == true) && <>
-                            <span className={`icon xl file mr-16`} />
+                            <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "":(file.documentName?.slice(-3) === "zip" ? "file" : "")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                             <div className="docdetails">
                                 <EllipsisMiddle suffixCount={6}>{file.name || file.documentName}</EllipsisMiddle>
                                 <span className="fs-12 text-secondary">{file.size ? bytesToSize(file.size) : ""}</span>
                             </div>
                             <span className="icon md close c-pointer" onClick={() => {
-                                this.setState({ ...this.state, showDeleteModal: true, selectedFileIdx: indx })
+                                this.setState({ ...this.state, showDeleteModal: true, selectedFileIdx: indx,selectedObj:file })
 
                             }} />
                         </>}
@@ -109,7 +122,7 @@ class AddressDocumnet extends Component {
                 footer={
                     <>
                         <Button
-                            style={{ width: "100px", border: "1px solid #f2f2f2" }}
+                            style={{ width: "30px", border: "1px solid #f2f2f2" }}
                             className=" pop-cancel"
                             onClick={() => { this.setState({ ...this.state, showDeleteModal: false }) }}>
                             No
@@ -117,9 +130,19 @@ class AddressDocumnet extends Component {
                         <Button
                             className="primary-btn pop-btn"
                             onClick={() => {
-                                let filesList = [...this.state.filesList];
+                                let { documents: docs } = this.state;
+                                let files = docs.details;
+                                for(var k in files){
+                                    if(files[k].id==this.state.selectedObj.id){
+                                        files[k].state='Deleted'
+                                    }
+                                }
+                                let obj=Object.assign([],files)
+                                let {filesList}=this.state
                                 filesList.splice(this.state.selectedFileIdx, 1);
                                 this.setState({ ...this.state, filesList, showDeleteModal: false });
+                                docs.details=Object.assign([],obj)
+                                this.props?.onDocumentsChange(docs);
                             }}
                             style={{ width: 120, height: 50 }}>
                             {apiCalls.convertLocalLang("Yes")}

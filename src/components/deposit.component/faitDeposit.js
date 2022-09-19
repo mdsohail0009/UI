@@ -36,8 +36,8 @@ class FaitDeposit extends Component {
     fiatDepEur: false,
     faitdeposit: false,
     BankDetails: [],
-    BankInfo: null,
-    depObj: { currency: null, BankName: null, Amount: null },
+     BankInfo: null, 
+     depObj: { currency: null, BankName: null, Amount: null },
     tabValue: 1, Loader: false, isTermsAgreed: false, errorMessage: null, showSuccessMsg: false,
     bankLoader: false
   }
@@ -137,7 +137,6 @@ class FaitDeposit extends Component {
     for (var k in currencyLu) {
       if (currencyLu[k].walletCode === e) {
         if (currencyLu[k].bankDetailModel?.length === 1) {
-          debugger
           this.setState({ ...this.state, Loader: true })
           let reqdepositObj = await requestDepositFiat(currencyLu[k].bankDetailModel[0].bankId, this.props.member?.id);
           if (reqdepositObj.ok === true) {
@@ -197,17 +196,17 @@ class FaitDeposit extends Component {
 
     // }
     // else {
-    this.formRef.current.validateFields().then(async () => {
-      this.setState({ ...this.state, Loader: true, errorMessage: null })
-      let createObj = { "id": "00000000-0000-0000-0000-000000000000", "bankId": BankInfo.id, "currency": depObj.currency, "bankName": BankInfo.bankName, "bankAddress": BankInfo.bankAddress, "amount": parseFloat(depObj.Amount), "accountNumber": BankInfo.accountNumber, "routingNumber": BankInfo.routingNumber, "swiftorBICCode": BankInfo.networkCode, "benficiaryBankName": BankInfo.accountName, "reference": BankInfo.depReferenceNo, "benficiaryAccountAddrress": BankInfo.accountAddress, 'referenceNo': BankInfo.referenceNo }
-      this.props.trackAuditLogData.Action = 'Save';
-      this.props.trackAuditLogData.Remarks = (createObj.amount + ' ' + createObj.currency + ' deposited.')
+      this.formRef.current.validateFields().then(async () => {
+        this.setState({ ...this.state, Loader: true, errorMessage: null })
+        let createObj = { "id": "00000000-0000-0000-0000-000000000000", "bankId": BankInfo.id, "currency": depObj.currency, "bankName": BankInfo.bankName, "bankAddress": BankInfo.bankAddress, "amount": parseFloat(depObj.Amount), "accountNumber": BankInfo.accountNumber, "routingNumber": BankInfo.routingNumber, "swiftorBICCode": BankInfo.networkCode, "benficiaryBankName": BankInfo.accountName, "reference": BankInfo.depReferenceNo, "benficiaryAccountAddrress": BankInfo.accountAddress, 'referenceNo': BankInfo.referenceNo }
+        this.props.trackAuditLogData.Action = 'Save';
+        this.props.trackAuditLogData.Remarks = (createObj.amount + ' ' + createObj.currency + ' deposited.')
 
-      this.props.changeStep('step2');
-      this.props.dispatch(setsavefiatobject(createObj));
+        this.props.changeStep('step2');
+        this.props.dispatch(setsavefiatobject(createObj));
 
-
-    });
+      
+      });
     // }
   }
   onTermsChange = (chkd) => {
@@ -240,7 +239,7 @@ class FaitDeposit extends Component {
           <Translate content="withdraw" component={Radio.Button} value={2} />
         </Radio.Group></div>}
         {faitdeposit ?
-         <div className='mt-16'>
+          <div className='mt-16'>
            <OnthegoFundTransfer />
          </div>
           : <> {this.state.Loader && <Loader />}
@@ -284,7 +283,7 @@ class FaitDeposit extends Component {
                       )}
                     </Select>
                   </div></Form.Item>}
-                {this.state.bankLoader && <Loader />}
+                  {this.state.bankLoader && <Loader />}
 
                 {this.state.BankInfo &&
                   <div className="fiatdep-info">
@@ -292,35 +291,35 @@ class FaitDeposit extends Component {
                     <div className="d-flex">
                       {/* <span className={`coin ${depObj.currency.toLowerCase()}`} style={{ marginRight: '8px', marginTop: '15px' }} /> */}
                       <div style={{ flex: 1 }}>
-                        <Translate
-                          className="fw-200 text-white-50 fs-14"
-                          content="account_name"
-                          component={Text}
-                        />
-                        <Translate
-                          className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24"
-                          content="signature_bank"
-                          component={Text}
-                          with={{ value: BankInfo.accountName }} />
-                        <Translate
-                          className="fw-200 text-white-50 fs-14"
-                          content="account_address"
-                          component={Text}
-                        />
-                        <Translate
-                          className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24"
-                          content="signature_bank"
-                          component={Text}
-                          with={{ value: BankInfo.accountAddress }} />
+                          <Translate
+                      className="fw-200 text-white-50 fs-14"
+                      content="account_name"
+                      component={Text}
+                    />
+                    <Translate
+                      className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24"
+                      content="signature_bank"
+                      component={Text}
+                      with={{ value: BankInfo.accountName }} />
+                          <Translate
+                      className="fw-200 text-white-50 fs-14"
+                      content="account_address"
+                      component={Text}
+                    />
+                    <Translate
+                      className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24"
+                      content="signature_bank"
+                      component={Text}
+                      with={{ value: BankInfo.accountAddress }} />
                       </div>
-
+                      
                     </div>
                     {/* <Text className="text-white-30 fs-14">A/C </Text> */}
                     {BankInfo.currencyCode == "USD" && <Text className="text-white-30 fs-14">Beneficiary Account No. </Text>}
                     {BankInfo.currencyCode == "EUR" && <Text className="text-white-30 fs-14">Beneficiary IBAN No. </Text>}
                     <CopyToClipboard text={BankInfo.accountNumber} options={{ format: 'text/plain' }}>
-                      <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="mb-0 fs-18 fw-400 text-yellow fw-500" >{BankInfo.accountNumber}</Text>
-                    </CopyToClipboard>
+                    <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="mb-0 fs-18 fw-400 text-yellow fw-500" >{BankInfo.accountNumber}</Text>
+                     </CopyToClipboard>
                     {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <Translate
                       className="mt-36 fs-20 text-white fw-500 text-upper"
                       content="for_Domestic_wires"
@@ -342,14 +341,14 @@ class FaitDeposit extends Component {
                       content="Swift_BICcode"
                       component={Text}
                     />
-                    <CopyToClipboard text={BankInfo.networkCode} options={{ format: 'text/plain' }}>
-                      <Translate copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }}
-                        className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24"
-                        content="SIGNU"
-                        component={Text}
-                        with={{ value: BankInfo.networkCode }}
-                      />
-                    </CopyToClipboard>
+                     <CopyToClipboard text={BankInfo.networkCode} options={{ format: 'text/plain' }}>
+                    <Translate copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }}
+                      className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24"
+                      content="SIGNU"
+                      component={Text}
+                      with={{ value: BankInfo.networkCode }}
+                       />
+                       </CopyToClipboard>
                     <Translate
                       className="fw-200 text-white-50 fs-14"
                       content="beneficiaryBank"
@@ -370,15 +369,15 @@ class FaitDeposit extends Component {
                       content="signature_bank"
                       component={Text}
                       with={{ value: BankInfo.bankAddress }} />
+                      {BankInfo.referenceNo != null && BankInfo.referenceNo != '' && 
+                    <Translate
+                      className="fw-200 text-white-50 fs-14"
+                      content="bank_Reference_No"
+                      component={Text}
+                    />}
                     {BankInfo.referenceNo != null && BankInfo.referenceNo != '' &&
-                      <Translate
-                        className="fw-200 text-white-50 fs-14"
-                        content="bank_Reference_No"
-                        component={Text}
-                      />}
-                    {BankInfo.referenceNo != null && BankInfo.referenceNo != '' &&
-                      <Text className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24">{BankInfo.referenceNo}</Text>}
-
+                    <Text className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24">{BankInfo.referenceNo}</Text>}
+                    
                     {BankInfo.depReferenceNo !== '' && <div className="crypto-address mb-36 mx-0">
                       <Translate
                         className="mb-0 fw-400 fs-14 text-secondary"
@@ -424,7 +423,7 @@ class FaitDeposit extends Component {
                     </Form.Item> */}
 
                   </div>
-
+                  
                 }
               </div>
 

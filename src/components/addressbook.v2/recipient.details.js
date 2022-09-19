@@ -16,7 +16,7 @@ class RecipientAddress extends Component {
 
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="custom-forminput custom-label mb-0"
+                    className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                     name="line1"
                     required
                     rules={[
@@ -38,13 +38,13 @@ class RecipientAddress extends Component {
                         placeholder="Address Line 1"
                         className="cust-input cust-text-area address-book-cust"
                         autoSize={{ minRows: 1, maxRows: 1 }}
-                        maxLength={100}
+                        maxLength={1000}
                     ></TextArea>
                 </Form.Item>
             </Col>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="custom-forminput custom-label mb-0"
+                    className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                     name="line2"
                     rules={[
 
@@ -58,13 +58,13 @@ class RecipientAddress extends Component {
                         placeholder="Address Line 2"
                         className="cust-input cust-text-area address-book-cust"
                         autoSize={{ minRows: 1, maxRows: 1 }}
-                        maxLength={100}
+                        maxLength={1000}
                     ></TextArea>
                 </Form.Item>
             </Col>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="custom-forminput custom-label mb-0"
+                    className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                     name="line3"
                     rules={[
                         {
@@ -77,7 +77,7 @@ class RecipientAddress extends Component {
                         placeholder="Address Line 3"
                         className="cust-input cust-text-area address-book-cust"
                         autoSize={{ minRows: 1, maxRows: 1 }}
-                        maxLength={100}
+                        maxLength={1000}
                     ></TextArea>
                 </Form.Item>
             </Col>
@@ -92,7 +92,7 @@ class RecipientDetails extends Component {
         return <React.Fragment>
             <Col xs={24} md={12} lg={12} xl={12} xxl={12} id="favoriteName">
                 <Form.Item
-                    className="custom-forminput custom-label mb-0"
+                    className="fw-300 mb-8 px-4 text-white-50 custom-forminput custom-label"
                     name="favouriteName"
                     label={
                         "Save Whitelist name as"
@@ -114,7 +114,7 @@ class RecipientDetails extends Component {
                 >
                     <AutoComplete
                         onChange={(e) => { }}
-                        maxLength={20}
+                        maxLength={100}
                         className="cust-input"
                         placeholder={"Save Whitelist name as"}
                     >
@@ -128,7 +128,7 @@ class RecipientDetails extends Component {
             </Col>
             <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
-                    className="custom-forminput custom-label mb-0"
+                    className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                     name="firstName"
                     required
                     rules={[
@@ -150,13 +150,14 @@ class RecipientDetails extends Component {
                 >
                     <Input
                         className="cust-input"
+                        maxLength={100}
                         placeholder={apiCalls.convertLocalLang("first_name")}
                     />
                 </Form.Item>
             </Col>
             <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
-                    className="custom-forminput custom-label mb-0"
+                    className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                     name="lastName"
                     required
                     rules={[
@@ -178,6 +179,7 @@ class RecipientDetails extends Component {
                 >
                     <Input
                         className="cust-input"
+                        maxLength={100}
                         placeholder={apiCalls.convertLocalLang("last_name")}
                     />
                 </Form.Item>
