@@ -140,7 +140,8 @@ class CryptoWithDrawWallet extends Component {
     };
     selectCrypto = (type) => {
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
-        this.props.dispatch(setSubTitle(apicalls.convertLocalLang('send_crypto_address')));
+       // this.props.dispatch(setSubTitle(apicalls.convertLocalLang('send_crypto_address')));
+       this.props.dispatch(setSubTitle(""))
         let obj = {
             "customerId": this.props.userProfile.id,
             "customerWalletId": id,
