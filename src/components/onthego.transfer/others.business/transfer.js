@@ -25,7 +25,6 @@ class BusinessTransfer extends Component {
         isSelectedId: null
     };
     componentDidMount() {
-        debugger
         this.loadDetails();
 
     }

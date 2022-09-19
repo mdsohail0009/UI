@@ -171,7 +171,6 @@ class WithdrawSummary extends Component {
 		this.loadData();
 	};
 	onCancel = () => {
-		debugger
 		this.setState({...this.state,previewModal:true})
 		this.props.dispatch(setWithdrawcrypto(null));
 		//this.props.changeStep('withdraw_crpto_cancel_confirm');

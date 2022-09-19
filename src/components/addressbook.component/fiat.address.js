@@ -12,7 +12,6 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onCont
     const [addressOptions, setAddressOptions] = useState({ addressType: addrType, transferType: props.currency === "EUR" ? "sepa" : "domestic" });
     const [isEdit, setIsEdit] = useState(false);
     useEffect(() => {
-      debugger
     }, [])
     return <>
         <Form

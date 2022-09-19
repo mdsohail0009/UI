@@ -20,7 +20,6 @@ class BankWallets extends Component {
         this.getCustomerAccountBalance(); 
     }
     getCustomerAccountBalance = async ()=>{
-      debugger
       this.setState({...this.state,isLoading:true})
         let response  = await apicalls.getCustomerBankDetails(this.props.userProfile.id)
         if(response.ok){

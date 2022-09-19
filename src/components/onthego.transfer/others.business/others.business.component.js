@@ -28,7 +28,6 @@ class OthersBusiness extends Component {
         isSelectedId: null
     };
     componentDidMount() {
-        debugger
         this.loadDetails();
     }
     loadDetails = async () => {

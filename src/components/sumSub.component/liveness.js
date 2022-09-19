@@ -14,7 +14,6 @@ class LiveNessSumsub extends Component {
         this.launchWebSdk();  
     }
     launchWebSdk = async () => {
-        debugger
         apicalls.sumsublivenessacesstoken(this.props.userConfig.userId,"liveness_action",this.state.applicantActionid).then((res) => {
         let snsWebSdkInstance = snsWebSdk.init(
             res.data.token,
