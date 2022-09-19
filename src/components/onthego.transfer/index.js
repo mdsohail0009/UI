@@ -171,7 +171,7 @@ class OnthegoFundTransfer extends Component {
             this.setState({
                 ...this.state,
                 errorMessage:
-                    "Without Verifications you can't Procced.",
+                    "Without Verifications you can't Proceed.",
             });
             this.reviewScrool.current.scrollIntoView()
             return
