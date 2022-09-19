@@ -53,7 +53,8 @@ class BankWallets extends Component {
                   </li>
                   <li  onClick={() => 
                     //window.open("http://localhost:3001/dashboard")}
-                    window.open(process.env.REACT_APP_BANK_UI_URL +`addView/${item.id}`, "_blank")}
+                  // window.open(process.env.REACT_APP_BANK_UI_URL +`addView/${item.id}`, "_blank")}
+                  this.props.history.push(`/internaltransfer`)}
                     >
                   <Link  value={5} className="c-pointer">
                   Accounts Page

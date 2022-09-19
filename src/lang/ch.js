@@ -598,4 +598,10 @@ export default {
 	transfer_funds:'發送',
     receive_funds:'收到',
     suisse_wallets:'轉移到數字錢包',
+	receve_funds: "收到",
+	bankAddress: "添加銀行地址",
+	send_fund: "發送",
+	createnow: "立即創建",
+	receve_funds: "收到",
+
 };
