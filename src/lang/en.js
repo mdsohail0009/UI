@@ -17,6 +17,7 @@ export default {
 	ftr_tc_p: "Legan & Policy",
 	search_currency: "Search Currency",
 	buy_assets: "Buy Crypto",
+	sell_assets: "Sell Crypto",
 	deposite_a_crypto: "Receive a Crypto",
 	deposite_a_cryto_txt: "Get crypto by simply sharing your QR address",
 	purchase_a_crypto: "Buy your Crypto for Cash",
@@ -110,8 +111,10 @@ export default {
 	confirm_text: "Swapping 0.00549635 BTC for 0.10183318 ETH",
 	deposite_Btc: "Receive BTC",
 	sell_your_crypto_for_cash: "Sell your Crypto for Cash",
+	buy_your_crypto_for_cash_text:
+		"Easily buy crypto straight from your wallet.",
 	sell_your_crypto_for_cash_text:
-		"Easily buy and sell crypto straight from your wallet.",
+		"Easily sell crypto straight from your wallet.",
 	sell_your_fiat_for_cash: "Sell your Fiat for Cash",
 	// menu_buy_sell: "Buy / Sell",
 	menu_buy_sell:"Trade",

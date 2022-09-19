@@ -14,13 +14,12 @@ class CryptoComponent extends Component {
     ref = React.createRef();
     constructor(props) {
         super(props)
-
         this.state = {
             buyDrawer: false,
             crypto: config.tlvCoinsList,
             buyToggle: 'Buy',
             isBuy: false,
-            tabKey: 1
+            tabKey: props.isTab ? 2 : 1
         }
         this.buySellEventTracks = this.buySellEventTracks.bind(this);
     }
@@ -68,8 +67,8 @@ class CryptoComponent extends Component {
                         <Translate content="sell" component={Radio.Button} value={2} />
                     </Radio.Group>
                 </div> */}
-                {this.props.buySell.tabKey === 1 ? <>
-                    <Translate content="sell_your_crypto_for_cash_text" component={Paragraph} className="text-white-30 fw-300 fs-16 mt-16" />
+                {this.props.buySell.tabKey === 1 && !this.props.isTab ? <>
+                    <Translate content="buy_your_crypto_for_cash_text" component={Paragraph} className="text-white-30 fw-300 fs-16 mt-16" />
                     {/* <Tabs className="crypto-list-tabs" onChange={(key) => {
                         const types = {
                             1: "All", 2: "Gainers", 3: "Losers"

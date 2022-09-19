@@ -129,7 +129,9 @@ class HeaderPermissionMenu extends Component {
             auditLogs: false,
             notifications: false,
             swap: false,
-            changePassword: false
+            changePassword: false,
+            selectedTab: false,
+            sell: false
 
         },
     }
@@ -154,12 +156,25 @@ class HeaderPermissionMenu extends Component {
     showSendDrawer = (item, menuItem) => {
         debugger
         if (item == 'fiat') {
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivecrypto: true } });
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivefiat: true } });
             this.props. dispatch(setWithdrawfiat(""));
             this.props.dispatch(byFiatSetStep("step1"));
             this.props.dispatch(setWithdrawfiatenaable(false));
         } else {
-           
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivecrypto: true } });
+            this.props. dispatch(setWithdrawfiat(""));
+            this.props.dispatch(byFiatSetStep("step1"));
+            this.props.dispatch(setWithdrawfiatenaable(false));
+        }
+    }
+    showSellDrawer = (item, menuItem) => {
+        debugger
+        if (item == 'buy') {
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: false } });
+            this.props.dispatch(setStep(menuItem.dispatchStep))
+        } else {
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: true } });
+            this.props.dispatch(setStep(menuItem.dispatchStep))
         }
     }
     navigate = (menuKey, menuItem) => {
@@ -187,7 +202,7 @@ class HeaderPermissionMenu extends Component {
                         break;
                 }
             }
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true } });
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true, selectedTab: false } });
         } else if (menuItem.path) {
             this.props.history.push(menuItem.path);
         }
@@ -439,7 +454,7 @@ class HeaderPermissionMenu extends Component {
                                <Translate content="tab_fiat" />
                            </Link>
                        </li>
-                       <li onClick={() => this.navigate('sendreceivecrypto',item)}>
+                       <li onClick={() => this.showSendDrawer('crypto',item)}>
                            <Link value={4} className="c-pointer">
                                <Translate content="tab_crypto" />
                            </Link>
@@ -521,7 +536,7 @@ class HeaderPermissionMenu extends Component {
                                 <Translate content="buy" />
                             </Link>
                         </li>
-                        <li onClick={() => this.onMenuItemClick(item.key, item)}>
+                        <li onClick={() => this.showSellDrawer("sell", item)}>
                             <Link value={4} className="c-pointer">
                                 <Translate content="sell" />
                             </Link>
@@ -636,8 +651,14 @@ class HeaderPermissionMenu extends Component {
             />
             <BuySell
                 showDrawer={this.state.drawerMenu.trade}
+                isTabKey = {this.state.drawerMenu.selectedTab}
                 onClose={() => this.closeDrawer("trade")}
             />
+            {/* <SellTogge 
+             showDrawer={this.state.drawerMenu.sell}
+             isTaKey = {this.state.selectedTab}
+             onClose={() => this.closeDrawer("trade")}
+            /> */}
             <SendReceive
                 showDrawer={this.state.drawerMenu.sendreceivecrypto}
                 onClose={() => this.closeDrawer("sendreceivecrypto")}

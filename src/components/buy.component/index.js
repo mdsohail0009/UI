@@ -39,7 +39,7 @@ class BuySell extends Component {
     }
     renderContent = () => {
         const stepcodes = {
-            buycrypto: <CryptoComponent />,
+            buycrypto: <CryptoComponent isTab= {this.props.isTabKey}/>,
             billtype: <BillType />,
             addcard: <AddCard />,
             depositcrypto: <DepositCrypto />,
@@ -101,10 +101,12 @@ class BuySell extends Component {
         return (<Drawer
             title={[<div className="side-drawer-header">
                 {this.renderTitle()}
-                <div className="text-center fs-16">
+                {this.props.isTabKey && <div className="text-center fs-16">
+                    <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin }} className="mb-0 text-white-30 fw-600 text-upper" content="sell_assets" component={Paragraph} />
+                </div>}
+                {!this.props.isTabKey && <div className="text-center fs-16">
                     <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin }} className="mb-0 text-white-30 fw-600 text-upper" content={this.props.buySell.stepTitles[config[this.props.buySell.stepcode]]} component={Paragraph} />
-                    {/* <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin, value: this.numberWithCommas(this.props.sellData?.exchangeValues[this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin]) }} className="text-white-50 mb-0 fs-14 fw-300" content={this.props.buySell.stepSubTitles[config[this.props.buySell.stepcode]]} component={Paragraph} /> */}
-                </div>
+                </div>}
                 {this.renderIcon()}</div>]}
             placement="right"
             closable={true}
