@@ -50,7 +50,7 @@ class AddressDocumnet extends Component {
                         validator: (_, value) => {
                             let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
                             if (this.state.filesList.length == 0) {
-                                this.setState({...this.state,isDocLoading:false,errorMessage:null })
+                               // this.setState({...this.state,isDocLoading:false,errorMessage:null })
                                 return Promise.reject("At least one document is required")
                             }
                             if (value&&!fileType[value.file.type]) {
