@@ -453,7 +453,7 @@ class HeaderPermissionMenu extends Component {
                     this.props.dispatch(setHeaderTab(key.key));
                 }}
             >
-
+            {data?.map((item, indx) => item.key === "trade" &&
                 <Menu.Item>
                     <Dropdown
                         onClick={() =>
@@ -461,12 +461,12 @@ class HeaderPermissionMenu extends Component {
                         }
                         overlay={<Menu>
                             <ul className="pl-0 drpdwn-list">
-                                <li onClick={() => this.showSellDrawer("buy")}>
+                                <li onClick={() => this.showSellDrawer("buy",item)}>
                                     <Link value={2} className="c-pointer">
                                         <Translate content="buy" />
                                     </Link>
                                 </li>
-                                <li onClick={() => this.showSellDrawer("sell")}>
+                                <li onClick={() => this.showSellDrawer("sell",item)}>
                                     <Link value={4} className="c-pointer">
                                         <Translate content="sell" />
                                     </Link>
@@ -486,7 +486,7 @@ class HeaderPermissionMenu extends Component {
                             className="mr-16 fs-20"
                         />
                     </Dropdown>
-                </Menu.Item>
+                </Menu.Item>)}
                
                 <Menu.Item>
                     <Dropdown
