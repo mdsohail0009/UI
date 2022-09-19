@@ -428,12 +428,8 @@ class OnthegoFundTransfer extends Component {
                             }}>
                                 <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
                                 <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="small-text-align">
-                                    <label className="fs-16 fw-600 text-upper text-white-30 l-height-normal">
-                                        <strong>{item.name}
-                                            {/* <small>{item.type}</small> */}
-                                        </strong>
-                                    </label>
-                                    {item.accountNumber && <div><Text className="fs-16 text-white-30 m-0">{this.state.selectedCurrency} account ending with {item.accountNumber?.substr(item.accountNumber.length - 4)}</Text></div>}
+                                    <label className="fs-16 fw-600 text-white l-height-normal">{item.name}</label>
+                                    {item.accountNumber && <div><Text className="fs-14 text-white-30 m-0">{this.state.selectedCurrency} account ending with {item.accountNumber?.substr(item.accountNumber.length - 4)}</Text></div>}
                                 </Col>
                                 <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white"></span>
@@ -467,12 +463,8 @@ class OnthegoFundTransfer extends Component {
                             }}>
                                 <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
                                 <Col xs={24} md={24} lg={24} xl={19} xxl={19} className=" small-text-align">
-                                    <label className="fs-16 fw-600 text-upper text-white-30 l-height-normal">
-                                        <strong>{item.name}
-                                            {/* <small>{item.type}</small> */}
-                                        </strong>
-                                    </label>
-                                    <div><Text className="fs-16 text-white-30 m-0">{this.state.selectedCurrency} account ending with {item.accountNumber?.substr(item.accountNumber?.length - 4)}</Text></div>
+                                    <label className="fs-16 fw-600 text-white l-height-normal">{item.name}</label>
+                                    <div><Text className="fs-14 text-white-30 m-0">{this.state.selectedCurrency} account ending with {item.accountNumber?.substr(item.accountNumber?.length - 4)}</Text></div>
                                 </Col>
                                 <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white"></span>
@@ -736,26 +728,26 @@ class OnthegoFundTransfer extends Component {
                             {this.state.reviewDetails?.lastName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                     <Title className="fs-14 text-white fw-500 text-captz">Last Name</Title>
-                                    <Title className="fs-14 fw-500 text-white-50 text-right t">{this.state.reviewDetails?.lastName}</Title>
+                                    <Title className="fs-14 fw-500 text-white text-right ">{this.state.reviewDetails?.lastName}</Title>
                                 </div>
                             </Col>}
                             {this.state.reviewDetails?.iban && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                     <Title className="fs-14 text-white fw-500 text-captz">IBAN </Title>
-                                    <Title className="fs-14 fw-500 text-white-50 text-right">{this.state.reviewDetails?.iban}</Title>
+                                    <Title className="fs-14 fw-500 text-white text-right">{this.state.reviewDetails?.iban}</Title>
                                 </div>
                             </Col>}
                             {this.state.reviewDetails?.customerRemarks && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                     <Title className="fs-14 text-white fw-500 text-captz">Reason of Transfer </Title>
-                                    <Title className="fs-14 fw-500 text-white-50 text-right">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
+                                    <Title className="fs-14 fw-500 text-white text-right">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
                                 </div>
                             </Col>}
                             
                                 {this.state.reviewDetails?.abaRoutingCode && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                     <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                         <Title className="fs-14 text-white fw-500 text-captz">ABA Routing code</Title>
-                                        <Title className="fs-14 fw-500 text-white-50 text-right ">{this.state.reviewDetails?.abaRoutingCode || "-"}</Title>
+                                        <Title className="fs-14 fw-500 text-white text-right ">{this.state.reviewDetails?.abaRoutingCode || "-"}</Title>
                                     </div>
                                 </Col>}
                                 {this.state.reviewDetails?.swiftRouteBICNumber && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
