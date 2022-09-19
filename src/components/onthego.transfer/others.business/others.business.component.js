@@ -24,7 +24,8 @@ class OthersBusiness extends Component {
         docDetails: {}, isBtnLoading: false,
         showDeclartion: false,
         iBanValid:false,
-        isEdit: false
+        isEdit: false,
+        isSelectedId: null
     };
     componentDidMount() {
         debugger
@@ -51,7 +52,7 @@ class OthersBusiness extends Component {
             this.props?.onEdit(edit);
             const ibanDetails = response.data?.payeeAccountModels[0] || {}
             this.setState({ ...this.state, errorMessage: null, details: data, ibanDetails }, () => {
-                this.setState({ ...this.state, isLoading: false, isEdit: edit });
+                this.setState({ ...this.state, isLoading: false, isEdit: edit, isSelectedId:  response.data?.id });
             });
         } else {
             this.setState({ ...this.state, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, details: {} });
@@ -75,8 +76,7 @@ class OthersBusiness extends Component {
         }
     }
     submitPayee = async (values) => {
-        debugger
-        let { details, ibanDetails } = this.state;
+        let { details, ibanDetails,isSelectedId,isEdit } = this.state;
         let _obj = { ...details, ...values };
         _obj.payeeAccountModels[0].line1 = ibanDetails.bankAddress;
         _obj.payeeAccountModels[0].city = ibanDetails?.city;
@@ -94,6 +94,9 @@ class OthersBusiness extends Component {
         _obj.addressType = "Business";
         _obj.transferType = "sepa";
         _obj.amount = this.props.amount;
+        if(isEdit){
+            _obj.id = isSelectedId ? isSelectedId : details?.payeeId;
+        }
         this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
         const response = await savePayee(_obj);
         if (response.ok) {
@@ -111,7 +114,7 @@ class OthersBusiness extends Component {
             } else {
                 // this.props.onContinue({ close: true, isCrypto: false });
                 this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
-                this.useDivRef.current.scrollIntoView(0,0)
+                this.useDivRef.current?.scrollIntoView(0,0)
             }
 
         } else {

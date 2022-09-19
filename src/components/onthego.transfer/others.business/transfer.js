@@ -21,7 +21,8 @@ class BusinessTransfer extends Component {
         isLoading: true,
         details: {},
         selectedTab: this.props.selectedAddress?.transferType||"domestic", isBtnLoading: false,
-        showDeclaration: false,isEdit:false
+        showDeclaration: false,isEdit:false,
+        isSelectedId: null
     };
     componentDidMount() {
         this.loadDetails();
@@ -41,7 +42,7 @@ class BusinessTransfer extends Component {
                 // this.handleIbanChange({ target: { value: data?.iban } });
                  edit = true;
             }
-            this.setState({ ...this.state, errorMessage: null, details: data,isEdit:edit }, () => {
+            this.setState({ ...this.state, errorMessage: null, details: data,isEdit:edit, isSelectedId:  response.data?.id}, () => {
                 this.setState({ ...this.state, isLoading: false })
             });
         } else {
@@ -50,7 +51,7 @@ class BusinessTransfer extends Component {
 
     }
     submitPayee = async (values) => {
-        let { details, selectedTab } = this.state;
+        let { details, selectedTab,isEdit,isSelectedId } = this.state;
         let _obj = { ...details, ...values };
         _obj.payeeAccountModels[0].currencyType = "Fiat";
         _obj.payeeAccountModels[0].walletCode = "USD";
@@ -64,6 +65,9 @@ class BusinessTransfer extends Component {
         _obj.addressType = "Business";
         _obj.transferType = selectedTab;
         _obj.amount = this.props.amount;
+        if(isEdit){
+            _obj.id = isSelectedId? isSelectedId:details?.payeeId;
+        }
         delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
         this.setState({ ...this.state, errorMessage: null, isLoading: false, isBtnLoading: true });
         const response = await savePayee(_obj);

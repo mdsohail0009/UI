@@ -27,7 +27,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     const useDivRef = React.useRef(null);
     const [validIban,setValidIban]=useState(false)
     const [showDeclartion, setShowDeclartion] = useState(false);
-    const [isEdit,setIsEdit]=useState(false)
+    const [isEdit,setIsEdit]=useState(false);
+    const [isSelectedId,setIsSelectedId] = useState(null);
     useEffect(() => {
         getRecipientDetails()
     }, [])
@@ -47,6 +48,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 if(obj.iban){
                     getBankDeails(obj.iban)
                 }let edit = true; props?.onEdit(edit);setIsEdit(true)
+                setIsSelectedId(response.data?.id);
             } else {
                 setRecipientDetails(response.data); setLoader(false)
             }
@@ -82,6 +84,9 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         saveObj.payeeAccountModels[0].currencyType='fiat';
         saveObj.payeeAccountModels[0].walletCode=currency;
         saveObj.amount=onTheGoObj?.amount;
+        if(isEdit){
+            saveObj.id = isSelectedId ? isSelectedId: saveObj.payeeId;
+        }
         const response = await apiCalls.saveTransferData(saveObj);
         if (response.ok) {
             if (props.type !== "manual") {
