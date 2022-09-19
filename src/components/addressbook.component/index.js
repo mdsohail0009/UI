@@ -30,7 +30,6 @@ const addressName = { "1stparty": "1st Party", "3rdparty": "3rd Party" };
 class AddressBook extends Component {
 	constructor(props) {
 		super(props);
-		debugger
 		this.state = {
 			visible: false,
 			cryptoFiat: (this.props?.activeFiat || new URLSearchParams(this.props.history?.location?.search).get("key") == 2) ? true : false,

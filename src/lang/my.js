@@ -616,5 +616,8 @@ export default {
 	bankaddressline1:"銀行地址 1",
 	bankaddressline2:"銀行地址 2",
 	saveWhitelistnameas:'Save Whitelist Name As',
-	continue:'Continue'
+	continue:'Continue',
+	transfer_funds:'Ipadala',
+    receive_funds:'Tumanggap',
+    suisse_wallets:'Ilipat sa digital Wallets',
 };

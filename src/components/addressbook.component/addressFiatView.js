@@ -486,7 +486,8 @@ const AddressFiatView = (props) => {
 																	: item.postalCode}
 															</Title>
 														</Col>}
-														{item.line1 && <Col xs={24} md={24} lg={14} xl={8} xxl={4}>
+														{/* {item.line1 && */}
+														 <Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
 															Bank Address 1
 															</Text>
@@ -496,8 +497,10 @@ const AddressFiatView = (props) => {
 																	? "-"
 																	: item.line1}
 															</Title>
-														</Col>}
-														{item.line2 && <Col xs={24} md={24} lg={14} xl={8} xxl={4}>
+														</Col>
+														{/* // } */}
+														{/* {item.line2 &&  */}
+														<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
 															Bank Address 2
 															</Text>
@@ -507,7 +510,8 @@ const AddressFiatView = (props) => {
 																	? "-"
 																	: item.line2}
 															</Title>
-														</Col>}
+														</Col>
+														{/* } */}
 														
 
 													</Row>

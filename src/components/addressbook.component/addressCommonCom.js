@@ -168,7 +168,6 @@ const AddressCommonCom = (props) => {
   const withdraeTab = bilPay ? "Fiat" : (props?.cryptoTab == 1 ? "Crypto" : "Fiat");
 
   const showModal = () => {
-    debugger
     if(bankmodalData.length==1){
       useDivRef.current.scrollIntoView();
         setErrorMsg("Cannot add more than one Crypto address details");
@@ -426,7 +425,6 @@ const AddressCommonCom = (props) => {
 
   }
   const handleBankChange = (e) => {
-    debugger
     SetBankChange(e)
     bankDetailForm.setFieldsValue({
       IBAN: "", accountNumber: "", swiftCode: "", bankName: "", payeeAccountCountry: null, payeeAccountState: null,

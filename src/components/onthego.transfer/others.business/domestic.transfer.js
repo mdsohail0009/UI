@@ -5,7 +5,6 @@ import { validateContentRule } from "../../../utils/custom.validator";
 const { TextArea } = Input;
 class DomesticTransfer extends Component {
     componentDidMount() {
-       debugger
        
        // this.setState({ ...this.state, documents: this.props?.documents || document(), filesList: this.props?.documents ? [...this.props?.documents?.details] : [] })
     }

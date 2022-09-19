@@ -95,7 +95,6 @@ class SellSummary extends Component {
         }
       };
       loadPermissions = () => {
-		debugger
 		if (this.props.buySellPermissions) {
 			clearInterval(this.permissionsInterval);
 			let _permissions = {};

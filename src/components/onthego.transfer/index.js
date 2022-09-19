@@ -47,7 +47,6 @@ class OnthegoFundTransfer extends Component {
         fiatWallets: []
     }
     componentDidMount() {
-        debugger
         this.verificationCheck()
         if (!this.state.selectedCurrency) {
             this.setState({ ...this.state, fiatWalletsLoading: true });
@@ -64,7 +63,6 @@ class OnthegoFundTransfer extends Component {
       }
     }
     getPayees() {
-        debugger
         fetchPayees(this.props.userProfile.id, this.state.selectedCurrency).then((response) => {
             if (response.ok) {
                 this.setState({ ...this.state, payeesLoading: false, filterObj: response.data, payees: response.data });
@@ -413,7 +411,7 @@ class OnthegoFundTransfer extends Component {
 
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                         {(filterObj.length > 0) && filterObj?.map((item, idx) =>
-                            <>{idx<5&&<Row className="fund-border c-pointer " onClick={async () => {
+                            <>{<Row className="fund-border c-pointer " onClick={async () => {
                                 if (!["myself", "1stparty", 'ownbusiness'].includes(item.addressType?.toLowerCase())) {
                                     this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item, codeDetails: { ...this.state.codeDetails, ...item } }, () => this.chnageStep("reasonfortransfer"));
                                 } else {

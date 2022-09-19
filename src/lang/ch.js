@@ -594,5 +594,8 @@ export default {
 	bankaddressline1:"Alamat Bank 1",
 	bankaddressline2:"Alamat Bank 2",
 	saveWhitelistnameas:'Save Whitelist Name As',
-	continue:'Continue'
+	continue:'Continue',
+	transfer_funds:'發送',
+    receive_funds:'收到',
+    suisse_wallets:'轉移到數字錢包',
 };
