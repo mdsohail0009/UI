@@ -1,11 +1,13 @@
 import React, { Component,useState, useEffect } from "react";
-import { Form, Typography, Input, Button, Select,Image } from "antd";
+import { Form, Typography, Input, Button, Select,Image, Alert } from "antd";
 import alertIcon from '../../assets/images/pending.png';
 import ConnectStateProps from "../../utils/state.connect";
 import { setAddressStep } from "../../reducers/addressBookReducer";
 import { setAddress, setStep } from "../../reducers/sendreceiveReducer";
 import { connect } from "react-redux";
 import { getCryptoData } from "./api";
+import Loader from '../../Shared/loader';
+
 const { Text, Paragraph, Title } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
@@ -23,7 +25,7 @@ const handleChange = (value) => {
         docDetails: {}, isBtnLoading: false,
         showDeclartion: false,
         iBanValid:false,
-        cryptoData: null,
+        cryptoData: {},
     };
 
     componentDidMount() {
@@ -37,7 +39,24 @@ const handleChange = (value) => {
       if(response.ok){
         this.setState({ ...this.state, cryptoData: response.data, isLoading: false})
       }
+      else {
+        this.setState({ ...this.state, isLoading: false, errorMessage: this.isErrorDispaly(response)})
+      }
     }
+
+    isErrorDispaly = (objValue) => {
+      if (objValue.data && typeof objValue.data === "string") {
+        return objValue.data;
+      } else if (
+        objValue.originalError &&
+        typeof objValue.originalError.message === "string"
+      ) {
+        return objValue.originalError.message;
+      } else {
+        return "Something went wrong please try again!";
+      }
+    };
+
     handleTokenChange = (value) => {
       console.log(`selected ${value}`);
     };
@@ -55,7 +74,11 @@ const handleChange = (value) => {
       }
     }
   render() {
-    if (this.state.showDeclartion) {
+    const { isLoading, errorMessage, showDeclartion, cryptoData } = this.state;
+    if (isLoading) {
+      return <Loader />
+    }
+    if (showDeclartion) {
       return <div className="text-center">
           <Image width={80} preview={false} src={alertIcon} />
           <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully </Title>
@@ -68,8 +91,9 @@ const handleChange = (value) => {
   else {
     return <>
     <div>
+    {errorMessage && <Alert type="error" description={errorMessage} showIcon />}
       <Form 
-      //initialValues={this.state.details}
+      initialValues={cryptoData}
       className="custom-label  mb-0"
       ref={this.form}
       onFinish={this.submit}
