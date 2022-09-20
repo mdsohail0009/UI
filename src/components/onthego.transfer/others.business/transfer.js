@@ -20,27 +20,29 @@ class BusinessTransfer extends Component {
         errorMessage: null,
         isLoading: true,
         details: {},
-        selectedTab: this.props.selectedAddress?.transferType||"domestic", isBtnLoading: false,
-        showDeclaration: false,isEdit:false,
+        selectedTab: this.props?.selectedAddress?.transferType || "domestic", isBtnLoading: false,
+        showDeclaration: false,
+        isEdit: false,
         isSelectedId: null
     };
     componentDidMount() {
         this.loadDetails();
-
     }
     loadDetails = async () => {
         this.setState({ ...this.state, errorMessage: null, isLoading: true });
         const response = await createPayee(this.props.userProfile.id, this.props.selectedAddress?.id || "", "business");
         if (response.ok) {
-            let data = response.data;let edit=false;
+            let data = response.data;
+            let edit = false;
             if (!data?.payeeAccountModels) {
                 data.payeeAccountModels = [payeeAccountObj()];
             }
             if (this.props.selectedAddress?.id) {
+                edit = true;
                 const accountDetails = data.payeeAccountModels[0];
                 data = { ...data, ...accountDetails, line1: data.line1, line2: data.line2, line3: data.line3, bankAddress1: accountDetails.line1, bankAddress2: accountDetails.line2 };
                 delete data["documents"];
-                // this.handleIbanChange({ target: { value: data?.iban } });
+                 // this.handleIbanChange({ target: { value: data?.iban } });
                  edit = true;
             }
             if(data.transferType== "international"){
@@ -48,7 +50,7 @@ class BusinessTransfer extends Component {
             }else{
                 this.setState({ ...this.state, selectedTab:"domestic" })  
             }
-            this.setState({ ...this.state, errorMessage: null, details: data,isEdit:edit, isSelectedId:  response.data?.id}, () => {
+            this.setState({ ...this.state, errorMessage: null, details: data, isEdit: edit, isSelectedId:  response.data?.id }, () => {
                 this.setState({ ...this.state, isLoading: false })
             });
         } else {
@@ -80,7 +82,7 @@ class BusinessTransfer extends Component {
         if (response.ok) {
             if (this.props.type != "manual") {
                 const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
-                if (confirmRes.ok) {this.useDivRef.current.scrollIntoView()
+                if (confirmRes.ok) {this.useDivRef.current?.scrollIntoView()
                     this.props.onContinue(confirmRes.data);
                     this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
                 } else {
@@ -89,12 +91,13 @@ class BusinessTransfer extends Component {
             } else {
                 this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false, showDeclaration: true });
             }
-        } else {this.useDivRef.current.scrollIntoView()
+        } else {
+            this.useDivRef.current.scrollIntoView()
             this.setState({ ...this.state, details: { ...details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, isBtnLoading: false });
         }
     }
     handleTabChange = (key) => {
-        this.setState({ ...this.state, selectedTab: key,errorMessage:null });this.form.current.resetFields();
+        this.setState({ ...this.state, selectedTab: key, errorMessage: null }); this.form.current.resetFields();
     }
     render() {
         const { isLoading, details, selectedTab, errorMessage } = this.state;
