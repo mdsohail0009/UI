@@ -620,4 +620,8 @@ export default {
 	transfer_funds:'Ipadala',
     receive_funds:'Tumanggap',
     suisse_wallets:'Ilipat sa digital Wallets',
+	receve_funds: "Tumanggap",
+	bankAddress: "Magdagdag ng Address ng Bangko",
+  send_fund: "Ipadala",
+  createnow: "Lumikha Ngayon",
 };

@@ -661,10 +661,10 @@ export default {
   continue: "Continue",
   bankAddress: "Add Bank Address",
   send_fund: "Send",
-  receive_fund: "Receive",
+  receive_funds: "Receive",
   createnow: "Create Now",
   transfer_funds: "Send",
   receve_funds: "Receive",
   suisse_wallets: "SuisseBase Wallet",
-  
+
 };

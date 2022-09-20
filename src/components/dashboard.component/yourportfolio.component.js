@@ -191,8 +191,8 @@ class YourPortfolio extends Component {
         const { totalCryptoValue, totalFiatValue } = this.props.dashboard.portFolio.data;
         const { coinData } = this.state;
         return (
-          <div className="">
-{/*            
+          <div className="portfolio-list">
+           
            <div  className="portfolio-title mb-8">
            <div className='portfolio-data' >
             <Translate
@@ -203,10 +203,10 @@ class YourPortfolio extends Component {
             <Currency prefix={"$"} defaultValue={totalCryptoValue}  className={`text-white-30 fs-16 m-0 ${totalCryptoValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '18px' }} />
             </div>
               <div>
-              <Link to="/cockpitCharts" className="dbchart-link fs-14 fw-500">
+              {/* <Link to="/cockpitCharts" className="dbchart-link fs-14 fw-500">
                 <Translate content="cockpit" />
                 <span className="icon sm right-angle ml-4" />
-              </Link>
+              </Link> */}
 
               <Button className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
                   <Translate content="cockpit" />
@@ -214,7 +214,7 @@ class YourPortfolio extends Component {
               </Button>
                     
               </div>
-            </div> */}
+            </div>
             <List
               className="mobile-list"
               itemLayout="horizontal"
