@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input,Drawer,Typography,Alert,Col,Row, } from 'antd';
+import { Input,Drawer,Typography,Alert,Col,Row,Divider } from 'antd';
 import { favouriteFiatAddress } from '../addressbook.component/api';
 import { setAddress, setStep, setWithdrawcrypto } from '../../reducers/sendreceiveReducer';
 import oops from '../../assets/images/oops.png'
@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import apicalls from '../../api/apiCalls';
 import { setAddressStep} from "../../reducers/addressBookReducer";
 import CryptoTransfer from '../onthego.transfer/crypto.transfer';
+import {fetchPayees, fetchPastPayees,confirmTransaction, validateAmount } from '../onthego.transfer/api';
 const { Paragraph, Text, Title } = Typography;
 class SendMoney extends Component {
     
@@ -17,36 +18,71 @@ class SendMoney extends Component {
         filterObj: [],
         loading: false,
         showFuntransfer:false,
-        pastPayees: []
+        pastPayees: [],
+        payeesLoading: true,
+        selectedPayee: {},
     }
     async componentDidMount() {
         debugger
-        this.getAddressLu();
+        //this.validateAmt('addressselection');
+        this.getPayees();
+       // this.getAddressLu();
         await this.trackevent()
     }
+
+    getPayees() {
+        this.setState({ ...this.state, loading: true })
+        fetchPayees(this.props.userProfile.id, this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin).then((response) => {
+            if (response.ok) {
+                this.setState({ ...this.state, loading: false, payeesLoading: false, filterObj: response.data, payees: response.data });
+            }
+        });
+        fetchPastPayees(this.props.userProfile.id, this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin).then((response) => {
+            if (response.ok) {
+                this.setState({ ...this.state, loading: false, pastPayees: response.data });
+            }
+        });
+    }
+
+    validateAmt = async (step, values, loader) => {
+        debugger
+        const obj = {
+            CustomerId: this.props.userProfile?.id,
+            amount: this.props?.sendReceive?.withdrawCryptoObj.totalValue,
+            WalletCode: this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin
+        }
+        this.setState({ ...this.state, [loader]: true, errorMessage: null });
+        const res = await validateAmount(obj);
+        if (res.ok) {
+            this.setState({ ...this.state, [loader]: false, errorMessage: null }, () => this.chnageStep(step, values));
+        } else {
+            this.setState({ ...this.state, [loader]: false, errorMessage: this.isErrorDispaly(res) })
+        }
+
+    }
+   
     trackevent = () => {
         apicalls.trackEvent({
             "Type": 'User', "Action": 'Withdraw Crypto Address page view  ', "Username": this.props.userProfile.userName, "customerId": this.props.userProfile.id, "Feature": 'Withdraw Crypto', "Remarks": "Withdraw Crypto Address page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto'
         });
     }
-    getAddressLu = async () => {
-        this.setState({ ...this.state, loading: true })
-        let customerId = this.props.userProfile.id;
-        let coin_code = this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coin;
-        let recAddress = await favouriteFiatAddress(customerId, 'crypto', coin_code)
-        if (recAddress.ok) {
-            this.setState({ ...this.state, addressLu: recAddress.data, loading: false, filterObj: recAddress.data });
+    // getAddressLu = async () => {
+    //     this.setState({ ...this.state, loading: true })
+    //     let customerId = this.props.userProfile.id;
+    //     let coin_code = this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coin;
+    //     let recAddress = await favouriteFiatAddress(customerId, 'crypto', coin_code)
+    //     if (recAddress.ok) {
+    //         this.setState({ ...this.state, addressLu: recAddress.data, loading: false, filterObj: recAddress.data });
+    //     }
+    //     else { this.setState({ ...this.state, loading: true }) }
+    // }
+    handleSearch = ({ target: { value: val } }) => {
+        if (val) {
+            const filterObj = this.state.payees.filter(item => item.name.toLowerCase().includes(val.toLowerCase()));
+            this.setState({ ...this.state, filterObj, searchVal: val });
         }
-        else { this.setState({ ...this.state, loading: true }) }
-    }
-    handleSearch = (value) => {
-        let filteraddresslabel;
-        if (!value) {
-            filteraddresslabel = this.state.addressLu;
-        } else {
-            filteraddresslabel = this.state.addressLu.filter(item => (item.name?item.name:item.lable)?.toLowerCase().includes(value.toLowerCase()));
-        }
-        this.setState({ ...this.state, filterObj: filteraddresslabel })
+        else
+            this.setState({ ...this.state, filterObj: this.state.payees,searchVal: val });
     }
     handleSelectAdd = (item) => {
         this.props.SelectedAddress(item)
@@ -122,9 +158,9 @@ class SendMoney extends Component {
                     <Search placeholder="Search for beneficiary" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="text-center mt-12" />
                 </Col>
                 {this.state?.loading && <Loader />}
-                {(!this.state.loading) && <>
+                {/* {(!this.state.loading) && <>
                     <Title className="fw-600 text-white px-4 mb-16 mt-16 text-captz" style={{ fontSize: '18px' }}>Address Book</Title>
-                    {/* <Divider className="cust-divide" /> */}
+                  
 
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                             <><Row className="fund-border c-pointer ">
@@ -143,7 +179,7 @@ class SendMoney extends Component {
                     </ul>
 
                     <Title className="fw-600 text-white px-4 mb-16 mt-16 text-captz" style={{ fontSize: '18px' }}>Past Recipients</Title>
-                    {/* <Divider className="cust-divide" /> */}
+                  
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                             <><Row className="fund-border c-pointer ">
                             <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">R</div></Col>
@@ -172,13 +208,83 @@ class SendMoney extends Component {
                                 <span class="icon md rarrow-white" onClick={() => this.handlePreview()}></span>
                             </Col>
                             </Row></>
-                        {/* {(!pastPayees?.length > 0) && <div className="success-pop text-center" style={{ marginTop: '20px' }}>
+                      
+                    </ul>
+                </>} */}
+
+                {(!this.state.loading) && <>
+                    <Title className="fw-600 text-white px-4 mb-16 mt-16 text-captz" style={{ fontSize: '18px' }}>Address Book</Title>
+                    <Divider className="cust-divide" />
+
+                    <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
+                        {(filterObj.length > 0) && filterObj?.map((item, idx) =>
+                            <>{<Row className="fund-border c-pointer " onClick={async () => {
+                                if (!["myself", "1stparty", 'ownbusiness'].includes(item.addressType?.toLowerCase())) {
+                                    this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item, codeDetails: { ...this.state.codeDetails, ...item } }, () => this.props.changeStep('withdraw_crpto_summary'));
+                                } else {
+                                    this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item, codeDetails: { ...this.state.codeDetails, ...item } });
+                                    const res = await confirmTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount });
+                                    if (!res.ok) {
+                                        this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => this.props.changeStep('withdraw_crpto_summary'));
+                                    } else {
+                                        this.setState({ ...this.state, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
+                                    }
+                                }
+                            }}>
+                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
+                                <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="small-text-align">
+                                    <label className="fs-16 fw-600 text-white l-height-normal text-captz">{item.name}</label>
+                                    {item.accountNumber && <div><Text className="fs-14 text-white-30 m-0">{this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin} account ending with {item.accountNumber?.substr(item.accountNumber.length - 4)}</Text></div>}
+                                </Col>
+                                <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
+                                    <span class="icon md rarrow-white"></span>
+                                </Col>
+                            </Row>}</>
+                        )}
+                        {(!filterObj.length > 0) && <div className="success-pop text-center" style={{ marginTop: '20px' }}>
+                            <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
+                            <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
+                            <p className="fs-16 text-white-30 fw-200 mb-0"> {apicalls.convertLocalLang('address_available')} </p>
+                            <a onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</a>
+                        </div>}
+                    </ul>
+
+                    <Title className="fw-600 text-white px-4 mb-16 mt-16 text-captz" style={{ fontSize: '18px' }}>Past Recipients</Title>
+                    <Divider className="cust-divide" />
+                    <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
+                        {(pastPayees.length > 0) && pastPayees?.map((item, idx) =>
+                            <Row className="fund-border c-pointer" onClick={async () => {
+                                if (!["myself", "1stparty", "ownbusiness"].includes(item.addressType?.toLowerCase())) {
+                                    this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item }, () => this.props.changeStep('withdraw_crpto_summary'))
+                                } else {
+                                    this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item });
+                                    const res = await confirmTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount });
+                                    if (res.ok) {
+                                        this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => this.props.changeStep('withdraw_crpto_summary'));
+                                    } else {
+                                        this.setState({ ...this.state, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
+                                    }
+                                }
+                            }}>
+                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
+                                <Col xs={24} md={24} lg={24} xl={19} xxl={19} className=" small-text-align">
+                                    <label className="fs-16 fw-600 text-white l-height-normal text-captz">{item.name}</label>
+                                    <div><Text className="fs-14 text-white-30 m-0">{this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin} account ending with {item.accountNumber?.substr(item.accountNumber?.length - 4)}</Text></div>
+                                </Col>
+                                <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
+                                    <span class="icon md rarrow-white"></span>
+                                </Col>
+                            </Row>
+
+                        )}
+                        {(!pastPayees.length > 0) && <div className="success-pop text-center" style={{ marginTop: '20px' }}>
                             <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
                             <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
                             <p className="fs-16 text-white-30 fw-200 mb-0"> {'You have no past recipients'} </p>
-                        </div>} */}
+                        </div>}
                     </ul>
                 </>}
+                
              </>    
         );
     }
