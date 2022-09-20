@@ -30,43 +30,44 @@
 //         }
 //     }
     
-//     // createAccount= (e)=>{
-//     //     if(this.props.userProfile.isBusiness){
-//     //         window.open(`http://localhost:3001/businessCreateAccount/${e}`)
-//     //     }else{
-//     //         window.open(`http://localhost:3001/createAccount/${e}`)
-//     //     }
-//     // }
-//       menuBar = (item) => (
-//         <Menu>
-//               <ul className="pl-0 drpdwn-list">
-//                   {/* <li  onClick={() =>  this.showSendReceiveDrawer(1, item)}>
-//                       <Link value={1} className="c-pointer">Receive</Link>
-//                   </li> */}
-//                   <li  onClick={() => 
-//                     //window.open("http://localhost:3001/dashboard")}
-//                     window.open(process.env.REACT_APP_BANK_UI_URL +`internaltransfer`, "_blank")}
-//                     >
-//                   <Link  value={5} className="c-pointer">
-//                   Internal Transfer
-//                       </Link>
-//                   </li>
-//                   <li  onClick={() => 
-//                     //window.open("http://localhost:3001/dashboard")}
-//                     window.open(process.env.REACT_APP_BANK_UI_URL +`addView/${item.id}`, "_blank")}
-//                     >
-//                   <Link  value={5} className="c-pointer">
-//                   Accounts Page
-//                       </Link>
-//                   </li>
-//                   <li  onClick={() => 
-//                     //window.open("http://localhost:3001/dashboard")}
-//                     window.open(process.env.REACT_APP_BANK_UI_URL +`dashboard/digitalwallet/${item.currency}`, "_blank")}
-//                     >
-//                   <Link  value={5} className="c-pointer">
-//                   SuisseBase Wallet
-//                       </Link>
-//                   </li>
+    // createAccount= (e)=>{
+    //     if(this.props.userProfile.isBusiness){
+    //         window.open(`http://localhost:3001/businessCreateAccount/${e}`)
+    //     }else{
+    //         window.open(`http://localhost:3001/createAccount/${e}`)
+    //     }
+    // }
+      // menuBar = (item) => (
+      //   <Menu>
+      //         <ul className="pl-0 drpdwn-list">
+      //             {/* <li  onClick={() =>  this.showSendReceiveDrawer(1, item)}>
+      //                 <Link value={1} className="c-pointer">Receive</Link>
+      //             </li> */}
+      //             <li  onClick={() => 
+      //               //window.open("http://localhost:3001/dashboard")}
+      //               window.open(process.env.REACT_APP_BANK_UI_URL +`internaltransfer`, "_blank")}
+      //               >
+      //             <Link  value={5} className="c-pointer">
+      //             Internal Transfer
+      //                 </Link>
+      //             </li>
+      //             <li  onClick={() => 
+      //               //window.open("http://localhost:3001/dashboard")}
+      //             // window.open(process.env.REACT_APP_BANK_UI_URL +`addView/${item.id}`, "_blank")}
+      //             this.props.history.push(`/internaltransfer`)}
+      //               >
+      //             <Link  value={5} className="c-pointer">
+      //             Accounts Page
+      //                 </Link>
+      //             </li>
+      //             <li  onClick={() => 
+      //               //window.open("http://localhost:3001/dashboard")}
+      //               window.open(process.env.REACT_APP_BANK_UI_URL +`dashboard/digitalwallet/${item.currency}`, "_blank")}
+      //               >
+      //             <Link  value={5} className="c-pointer">
+      //             SuisseBase Wallet
+      //                 </Link>
+      //             </li>
                   
 //                   {/* <li onClick={() => this.showBuyDrawer(item, "sell")}>
 //                         <Link  value={4} className="c-pointer">
