@@ -62,7 +62,7 @@ class AuditLogs extends Component {
     { field: "feature", title: apicalls.convertLocalLang('Features'), filter: true, width: 360 },
     { field: "action", title: apicalls.convertLocalLang('Action'), width: 360, filter: true },
     { field: "description", title: "Description", filter: true, width: 620 },
-    // { field: "", title: "", width: 100, customCell: (props) => (<td><Tooltip title="View More"><div className="icon md info c-pointer" onClick={() => this.showMoreAuditLogs(props)}></div></Tooltip></td>) },
+    { field: "", title: "", width: 100, customCell: (props) => (<td><Tooltip title="More Info"><div className="icon md info c-pointer" onClick={() => this.showMoreAuditLogs(props)}></div></Tooltip></td>) },
   ]
   showMoreAuditLogs = (e) => {
     this.fetchAuditLoginfo(e.dataItem.id, e);
@@ -400,7 +400,7 @@ class AuditLogs extends Component {
             </div>
             <div className="coin-info">
               <Text>Device Version</Text>
-              <Text>{logRowData?.deviceType?.version}</Text>
+              <Text>{logRowData?.deviceType?.version?.replace("null","")}</Text>
             </div></>}
 
         </Drawer>

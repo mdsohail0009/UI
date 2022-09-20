@@ -27,7 +27,7 @@ class NotificationScreen extends Component {
       noticObject: {},
       errorMsg: null,
       btnDisabled: false,
-      btnLoader:false
+      btnLoader: false
     };
   }
 
@@ -53,12 +53,13 @@ class NotificationScreen extends Component {
   };
 
   saveBankInfo = async () => {
-    this.setState({...this.state,btnDisabled:true, btnLoader: true})
+    this.setState({ ...this.state, btnDisabled: true, btnLoader: true })
     for (var y in this.state.notification) {
       if (
         this.state.notification[y].isAction &&
         this.state.notification[y].selectedtypes.length < 1
-      ) {window.scrollTo(0, 0)
+      ) {
+        window.scrollTo(0, 0)
         return this.setState({
           ...this.state,
           errorMsg: "At least one notification type is required", btnLoader: false,
@@ -67,7 +68,7 @@ class NotificationScreen extends Component {
     }
 
     let response = await saveNotification(this.state.notification);
-      
+
     if (response.ok) {
       this.setState({
         ...this.state,
@@ -84,8 +85,8 @@ class NotificationScreen extends Component {
       });
       this.setState({ ...this.state, errorMsg: null });
     } else {
-      
-      this.setState({ ...this.state, errorMsg: this.isErrorDispaly(response),btnLoader: false });
+
+      this.setState({ ...this.state, errorMsg: this.isErrorDispaly(response), btnLoader: false });
     }
   };
   isErrorDispaly = ({ data }) => {
@@ -138,8 +139,8 @@ class NotificationScreen extends Component {
               ref={this.formRef}
               autoComplete="off"
             >
-               {this.state.isLoading ? (<div  colSpan="8" className="p-16 text-center">
-                <Loader  /></div>
+              {this.state.isLoading ? (<div colSpan="8" className="p-16 text-center">
+                <Loader /></div>
               ) : (<>
                 <table className="pay-grid">
                   <thead>
@@ -149,98 +150,98 @@ class NotificationScreen extends Component {
                       <th style={{ width: 180 }}>Subscribe</th>
                     </tr>
                   </thead>
-                  {this.state.notification.length!== 0 ? <>
-                  <tbody>
-                    {this.state.notification?.map((item, i) => {
-                      return (
-                        <>
-                        
-                          <tr key={i}>
-                            <td height="50">
-                              <span>{item.action}</span>
-                            </td>
-                            <td style={{ width: 350 }}>
-                              <div className="multiselect-textbox" >
-                                <Form.Item
-                                  required
-                                  rules={[
-                                    {
-                                      validator: async (_, item) => {
-                                        if (item.selectedtypes.length < 1) {
-                                          return Promise.reject(
-                                            new Error("At least 2 passengers")
-                                          );
-                                        }
+                  {this.state.notification.length !== 0 ? <>
+                    <tbody>
+                      {this.state.notification?.map((item, i) => {
+                        return (
+                          <>
+
+                            <tr key={i}>
+                              <td height="50">
+                                <span>{item.action}</span>
+                              </td>
+                              <td style={{ width: 350 }}>
+                                <div className="multiselect-textbox" >
+                                  <Form.Item
+                                    required
+                                    rules={[
+                                      {
+                                        validator: async (_, item) => {
+                                          if (item.selectedtypes.length < 1) {
+                                            return Promise.reject(
+                                              new Error("At least 2 passengers")
+                                            );
+                                          }
+                                        },
                                       },
-                                    },
-                                  ]}
-                                >
-                                  <Select
-                                    showSearch
-                                    mode="multiple"
-                                    className={item.isAction ? "cust-input multi-select custom-notify":"cust-input-light"}
-                                    style={{ width: "350px",marginBottom: "-17px"}}
-                                    placeholder="Select Notification Type"
-                                    optionFilterProp="children"
-                                    onChange={(e) => this.handleChange(e, item)}
-                                    value={item.selectedtypes}
-                                    disabled={
-                                      item.isAction === true ? false : true
-                                    }
+                                    ]}
                                   >
-                                    {item.notificationTypes?.map(
-                                      (assign, idx) => (
-                                        <Option key={idx} value={assign.type}>
-                                          {assign.type}
-                                        </Option>
-                                      )
-                                    )}
-                                  </Select>
-                                </Form.Item>
-                              </div>
-                            </td>
-                            <td style={{ width: 100 }}>
-                              <div>
-                                <Switch
-                                  onChange={(event) =>
-                                    this.enableAction(event, item)
-                                  }
-                                  checked={item.isAction}
-                                  size="medium"
-                                  className="custom-toggle"
-                                   />
-                              </div>
-                            </td>
-                          </tr>
+                                    <Select
+                                      showSearch
+                                      mode="multiple"
+                                      className={item.isAction ? "cust-input multi-select custom-notify" : "cust-input-light"}
+                                      style={{ width: "350px", marginBottom: "-17px" }}
+                                      placeholder={<div className={!item.isAction && "cust-light"}>Select Notification Type</div>}
+                                      optionFilterProp="children"
+                                      onChange={(e) => this.handleChange(e, item)}
+                                      value={item.selectedtypes}
+                                      disabled={
+                                        item.isAction === true ? false : true
+                                      }
+                                    >
+                                      {item.notificationTypes?.map(
+                                        (assign, idx) => (
+                                          <Option key={idx} value={assign.type}>
+                                            {assign.type}
+                                          </Option>
+                                        )
+                                      )}
+                                    </Select>
+                                  </Form.Item>
+                                </div>
+                              </td>
+                              <td style={{ width: 100 }}>
+                                <div>
+                                  <Switch
+                                    onChange={(event) =>
+                                      this.enableAction(event, item)
+                                    }
+                                    checked={item.isAction}
+                                    size="medium"
+                                    className="custom-toggle"
+                                  />
+                                </div>
+                              </td>
+                            </tr>
                           </>
-                        
-                      )
-                    })}
-                  </tbody> </>:<>
-                  <tbody>
-                          <tr>
-                            <td
-                              colSpan="8"
-                              className="p-16 text-center"
-                              style={{ color: "white", width: 300 }}
-                            >
-                              No notification settings available
-                            </td>
-                          </tr>{" "}
-                        </tbody>
-</> }
+
+                        )
+                      })}
+                    </tbody> </> : <>
+                    <tbody>
+                      <tr>
+                        <td
+                          colSpan="8"
+                          className="p-16 text-center"
+                          style={{ color: "white", width: 300 }}
+                        >
+                          No notification settings available
+                        </td>
+                      </tr>{" "}
+                    </tbody>
+                  </>}
                 </table>
-                
+
                 <div className="text-center">
-              {this.state.notification.length !== 0 && <Button
-                        htmlType="submit"
-                        size="large"
-                        className="pop-btn mt-36"
-                        loading={this.state.btnLoader}
-                        style={{ minWidth: 200, marginLeft: 462 }}>
-                        <Translate content="Save_btn_text" />
-                    </Button>}
-            </div></>)}
+                  {this.state.notification.length !== 0 && <Button
+                    htmlType="submit"
+                    size="large"
+                    className="pop-btn mt-36"
+                    loading={this.state.btnLoader}
+                    style={{ minWidth: 200, marginLeft: 462 }}>
+                    <Translate content="Save_btn_text" />
+                  </Button>}
+                </div></>)}
             </Form>
           </div>
         </div>
