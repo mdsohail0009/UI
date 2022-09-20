@@ -266,7 +266,7 @@ export default {
 	Recipient_address3: "Recipient Address Line 3",
 	Reference: "Reference",
 	//Fiat_deposit: "Fiat Deposit / Withdraw ",
-	Fiat_deposit: "Receive Fiat",
+	Fiat_deposit: "Receive/Send Fiat",
 	Fiat_withdrawl: "Fiat Withdrawal",
 	Beneficiary_Accountname: "Beneficiary Account Name",
 	Innovative_Concepts: "INNOVATIVE CONCEPTS AG",

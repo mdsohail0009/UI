@@ -177,7 +177,7 @@ class HeaderPermissionMenu extends Component {
             this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivefiat: true, sendCryptoTab: false } });
             this.props. dispatch(setWithdrawfiat(""));
             this.props.dispatch(byFiatSetStep("step1"));
-            this.props.dispatch(setWithdrawfiatenaable(false));
+            this.props.dispatch(setWithdrawfiatenaable(true));
         } else {
             this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivecrypto: true, sendCryptoTab: true } });
             this.props. dispatch(setWithdrawfiat(""));

@@ -1,5 +1,6 @@
 const SET_STEP = "setStep";
 const CLEAR_STEP = "clearStep";
+const SET_SUB_TITLE = "setSubTitle";
 const setStep = (payload) => {
     return {
         type: SET_STEP,
@@ -12,6 +13,12 @@ const clearStep = (payload) => {
         payload
     }
 }
+const setSubTitle = (payload) => {
+    return {
+      type: SET_SUB_TITLE,
+      payload
+    };
+  };
 let initialState = {
     stepcode: "step1",
     stepTitles: {
@@ -52,4 +59,4 @@ const BuyFiatReducer = (state = initialState, action) => {
 
 }
 export default BuyFiatReducer;
-export { setStep, clearStep }
+export { setStep, clearStep, setSubTitle }

@@ -7,8 +7,8 @@ import SellToggle from '../withDraw.component/faitWithdrawal';
 import config from '../../config/config';
 import NumberFormat from 'react-number-format';
 import { getCurrencieswithBankDetails, setdepositCurrency, updatdepfiatobject, setsavefiatobject, setFiatFinalRes } from '../../reducers/depositReducer'
-import { rejectWithdrawfiat, setSubTitle, setWithdrawfiatenaable } from '../../reducers/sendreceiveReducer';
-import { setStep } from '../../reducers/buyFiatReducer';
+import { rejectWithdrawfiat, setWithdrawfiatenaable } from '../../reducers/sendreceiveReducer';
+import { setStep, setSubTitle } from '../../reducers/buyFiatReducer';
 import { savedepositFiat, requestDepositFiat } from './api';
 import Loader from '../../Shared/loader';
 import success from '../../assets/images/success.png';
@@ -47,6 +47,7 @@ class FaitDeposit extends Component {
     this.props.fetchCurrencyWithBankDetails()
     if (this.props.sendReceive.withdrawFiatEnable) {
       this.handleshowTab(2);
+      this.props.dispatch(setSubTitle(apicalls.convertLocalLang("withdrawFiat")));
     } else {
       this.handleshowTab(1);
 
@@ -261,7 +262,7 @@ class FaitDeposit extends Component {
               {this.state?.errorMessage !== null && this.state?.errorMessage !== '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="error" message="" description={this.state?.errorMessage} closable />}
               {!this.state.showSuccessMsg && <Translate
                 className="mb-0 text-white-30 fs-14 fw-200 mt-16"
-                content="receive_fiat_text"
+                content={this.props.sendReceive.withdrawFiatEnable ?  "send_fiat_text": "receive_fiat_text"}
                 component={Paragraph}
               />}
                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
