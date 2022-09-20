@@ -10,7 +10,7 @@ import { withRouter,Link } from 'react-router-dom';
 import TransactionsHistory from "../transactions.history.component";
 import { setWithdrawfiatenaable, setWithdrawfiat, setStep } from '../../reducers/sendreceiveReducer';
 import { setdepositCurrency, getCurrencieswithBankDetails } from '../../reducers/depositReducer';
-import BankWallets from '../bankui.component'
+// import BankWallets from '../bankui.component'
 const { Title, Paragraph } = Typography;
 
 class Wallets extends Component {
@@ -111,7 +111,7 @@ class Wallets extends Component {
 
         return (
             <>
-             <BankWallets/>
+             {/* <BankWallets/> */}
             <div className="d-flex align-center justify-content">
                 <Translate content="suissebase_title" component={Title} className="fs-24 fw-600 text-white px-4 mb-16 mt-4" />
                 <div>
