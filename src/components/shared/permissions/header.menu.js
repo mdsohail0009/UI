@@ -60,6 +60,8 @@ import { userManager } from "../../../authentication";
 import { setCurrentAction } from "../../../reducers/actionsReducer";
 import { KEY_URL_MAP } from "./config";
 import { getFeaturePermissionsByKey } from "./permissionService";
+import WithdrawCryptoComponent from "../../withdraw.crypto.component";
+import WithdrawCrypto from "../../withdraw.crypto.component";
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
 counterpart.registerTranslations("my", my);
@@ -131,7 +133,8 @@ class HeaderPermissionMenu extends Component {
             swap: false,
             changePassword: false,
             selectedTab: false,
-            sell: false
+            sell: false,
+            sendCryptoTab: false
 
         },
     }
@@ -157,12 +160,12 @@ class HeaderPermissionMenu extends Component {
     showReceiveDrawer = (item, menuItem) => {
         debugger
         if (item == 'fiat') {
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivefiat: true } });
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivefiat: true, sendCryptoTab: false } });
             this.props. dispatch(setWithdrawfiat(""));
             this.props.dispatch(byFiatSetStep("step1"));
             this.props.dispatch(setWithdrawfiatenaable(false));
         } else {
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivecrypto: true } });
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivecrypto: true, sendCryptoTab: false } });
             this.props. dispatch(setWithdrawfiat(""));
             this.props.dispatch(byFiatSetStep("step1"));
             this.props.dispatch(setWithdrawfiatenaable(false));
@@ -171,12 +174,12 @@ class HeaderPermissionMenu extends Component {
     showSendDrawer = (item, menuItem) => {
         debugger
         if (item == 'fiat') {
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivefiat: true } });
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivefiat: true, sendCryptoTab: false } });
             this.props. dispatch(setWithdrawfiat(""));
             this.props.dispatch(byFiatSetStep("step1"));
             this.props.dispatch(setWithdrawfiatenaable(false));
         } else {
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivecrypto: true } });
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivecrypto: true, sendCryptoTab: true } });
             this.props. dispatch(setWithdrawfiat(""));
             this.props.dispatch(byFiatSetStep("step1"));
             this.props.dispatch(setWithdrawfiatenaable(false));
@@ -645,15 +648,17 @@ class HeaderPermissionMenu extends Component {
                 isTabKey = {this.state.drawerMenu.selectedTab}
                 onClose={() => this.closeDrawer("trade")}
             />
-            {/* <SellTogge 
-             showDrawer={this.state.drawerMenu.sell}
-             isTaKey = {this.state.selectedTab}
-             onClose={() => this.closeDrawer("trade")}
-            /> */}
+          
             <SendReceive
                 showDrawer={this.state.drawerMenu.sendreceivecrypto}
+                isSendTab = {this.state.drawerMenu.sendCryptoTab}
                 onClose={() => this.closeDrawer("sendreceivecrypto")}
             />
+            
+            {/* <WithdrawCrypto
+                showDrawer={this.state.drawerMenu.sendreceivecrypto}
+                onClose={() => this.closeDrawer("sendreceivecrypto")}
+            /> */}
             <SwapCrypto
                 swapRef={(cd) => (this.child = cd)}
                 showDrawer={this.state.drawerMenu.swap}

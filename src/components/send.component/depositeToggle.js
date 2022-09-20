@@ -19,8 +19,8 @@ class DepositeCrypto extends Component {
         activeKey: 1
     }
     componentDidMount() {
-        this.setState({ ...this.state, activeKey: this.props.sendReceive?.cryptoWithdraw?.activeKey || 1, sendReceive: true });
-        this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 1 }));
+        this.setState({ ...this.state, activeKey: this.props?.activeTab ? 2 : (this.props.sendReceive?.cryptoWithdraw?.activeKey || 1), sendReceive: true });
+        this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: this.state?.activeKey ? 2 : 1 }));
         this.props.dispatch(setSubTitle(`USD ${this.props.dashboard?.totalFiatValue}` + " " + apicalls.convertLocalLang('total_balance')));
         apicalls.trackEvent({
             "Type": 'User', "Action": 'Deposit Crypto page view', "Username": this.props.userProfile.userName, "customerId": this.props.userProfile.id, "Feature": 'Deposit Crypto', "Remarks": "Deposit Crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Crypto'

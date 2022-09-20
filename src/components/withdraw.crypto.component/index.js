@@ -6,10 +6,12 @@ import ConnectStateProps from "../../utils/state.connect";
 import Currency from '../shared/number.formate';
 import Loader from '../../Shared/loader';
 import apicalls from "../../api/apiCalls";
+import CryptoList from '../shared/cryptolist';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
+import { connect } from "react-redux";
 
 const { Paragraph, Text } = Typography;
-const WithdrawCrypto = ({ dispatch, userProfile, sendReceive }) => {
+const WithdrawCrypto = ({ dispatch, userProfile, sendReceive, props, changeStep }) => {
     useEffect(() => {
         loadData();
         getFeaturePermissionsByKeyName(`sendreceivecrypto`)
@@ -24,10 +26,15 @@ const WithdrawCrypto = ({ dispatch, userProfile, sendReceive }) => {
     if (wallets?.loading) {
         return <Loader />
     }
+   const handleCoinSelection = (wallet) => {
+    dispatch(setSelectedWithDrawWallet(wallet)); 
+    dispatch(setStep('withdraw_crypto_selected'))
+   // changeStep('withdraw_crpto_summary');
+    }
     return <>
         <Translate content="withdraw_a_crypto_text" component={Paragraph} className="text-white-30 fw-300 fs-16 mt-16" />
         <div className="dep-withdraw auto-scroll">
-            {wallets?.data.length ? <>{wallets?.data?.map((wallet, indx) => <Card key={indx} className="crypto-card mb-16 c-pointer" bordered={false} onClick={() => { dispatch(setSelectedWithDrawWallet(wallet)); dispatch(setStep('withdraw_crypto_selected')) }} >
+            {/* {wallets?.data.length ? <>{wallets?.data?.map((wallet, indx) => <Card key={indx} className="crypto-card mb-16 c-pointer" bordered={false} onClick={() => { dispatch(setSelectedWithDrawWallet(wallet)); dispatch(setStep('withdraw_crypto_selected')) }} >
                 
                 <div className="crypto-details d-flex">
                     <div>
@@ -45,10 +52,24 @@ const WithdrawCrypto = ({ dispatch, userProfile, sendReceive }) => {
                         <Currency defaultValue={wallet.coinValueinNativeCurrency} prefix={"$"} type={"text"} />
                     </div>
                 </div></div>
-            </Card>)}</> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apicalls.convertLocalLang('No_data')} />}
+            </Card>)}</> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apicalls.convertLocalLang('No_data')} />} */}
+             <CryptoList  isLoading={wallets?.loading} showSearch={true} coinList={wallets?.data} coinType="Sell" onCoinSelected={(wallet) => handleCoinSelection(wallet)} />
         </div>
 
     </>
 }
 
-export default ConnectStateProps(WithdrawCrypto);
+const connectStateToProps = ({ sendReceive, userConfig,addressBookReducer }) => {
+    return { addressBookReducer,sendReceive, userProfile: userConfig.userProfileInfo }
+}
+const connectDispatchToProps = dispatch => {
+    return {
+      
+        changeStep: (stepcode) => {
+            dispatch(setStep(stepcode))
+        },
+       
+        dispatch
+    }
+}
+export default connect(connectStateToProps, connectDispatchToProps)(WithdrawCrypto);

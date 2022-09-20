@@ -42,7 +42,7 @@ class SendReceive extends Component {
     }
     renderContent = () => {
         const stepcodes = {
-            depositecrypto: <DepositeCrypto activeTab={this.props.valNum} />,
+            depositecrypto: <DepositeCrypto activeTab={this.props?.isSendTab ? this.props?.isSendTab : this.props.valNum} />,
             withdraw: <CryptoWithDrawWallet onDrawerClose={this.closeDrawer} />,
             scanner: <ScanQR />,
             withdrawaddress: <WithdrawAddress />,
@@ -100,8 +100,11 @@ class SendReceive extends Component {
             title={[<div className="side-drawer-header">
                 {this.renderTitle()}
                 <div className="text-center fs-16">
-                    <Translate className="mb-0 text-white-30 fw-600 text-upper" content={this.props.sendReceive.stepTitles[config[this.props.sendReceive.stepcode]]} component={Paragraph} />
-                    <Paragraph className="text-white-50 mb-0 fs-14 fw-300 px-8" >{this.props.sendReceive?.subTitle} {this.props.sendReceive?.selectedCoin?.coin} </Paragraph></div>
+                    <Translate className="mb-0 text-white-30 fw-600 text-upper" content={this.props?.isSendTab ? "send_crypto" :this.props.sendReceive.stepTitles[config[this.props.sendReceive.stepcode]]} component={Paragraph} />
+                    {/* <Paragraph className="text-white-50 mb-0 fs-14 fw-300 px-8" >{this.props.sendReceive?.subTitle} {this.props.sendReceive?.selectedCoin?.coin} </Paragraph> */}
+                       <Paragraph className="text-white-50 mb-0 fs-14 fw-300 px-8" >USD 997394.5 Total balance
+                        </Paragraph>
+                    </div>
                 {this.renderIcon()}
             </div>]}
             placement="right"
