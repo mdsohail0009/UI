@@ -118,6 +118,12 @@ const emailCheck = (email,type) => {
     }
 }
 
+const getCryptoData = (id,customerId) => {
+	return apiClient.get(
+		ApiControllers.addressbook + `Crypto/${id}/${customerId}`
+	);
+};
+
 export {
 	emailCheck,
 	getPayeeLu,
@@ -139,5 +145,6 @@ export {
 	getFileURL,
 	savePayee,
 	getInfoVal,
-	downloadDeclForm
+	downloadDeclForm,
+	getCryptoData
 };

@@ -5,13 +5,14 @@ import ConnectStateProps from "../../utils/state.connect";
 import { setAddressStep } from "../../reducers/addressBookReducer";
 import { setAddress, setStep } from "../../reducers/sendreceiveReducer";
 import { connect } from "react-redux";
+import { getCryptoData } from "./api";
 const { Text, Paragraph, Title } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
 const handleChange = (value) => {
   console.log(`selected ${value}`);
 };
-  class LinkValue extends Component {
+  class AddressCommonCom extends Component {
     form = React.createRef();
     state = {
         errorMessage: null,
@@ -21,8 +22,22 @@ const handleChange = (value) => {
         ibanDetails: {},
         docDetails: {}, isBtnLoading: false,
         showDeclartion: false,
-        iBanValid:false
+        iBanValid:false,
+        cryptoData: null,
     };
+
+    componentDidMount() {
+       this.getCryptoData();
+    }
+
+    getCryptoData = async() => {
+      let id = this.props?.addressBookReducer?.selectedRowData?.id || "00000000-0000-0000-0000-000000000000";
+      this.setState({ ...this.state, isLoading: true})
+      let response = await getCryptoData(id,this.props.userProfile?.id);
+      if(response.ok){
+        this.setState({ ...this.state, cryptoData: response.data, isLoading: false})
+      }
+    }
     handleTokenChange = (value) => {
       console.log(`selected ${value}`);
     };
@@ -124,4 +139,4 @@ const connectDispatchToProps = dispatch => {
   }
 }
 
-export default connect(connectStateToProps, connectDispatchToProps)(LinkValue);
+export default connect(connectStateToProps, connectDispatchToProps)(AddressCommonCom);
