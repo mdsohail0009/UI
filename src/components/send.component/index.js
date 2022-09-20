@@ -15,6 +15,7 @@ import SelectCrypto from '../addressbook.component/selectCrypto';
 import WithdrawaCryptolLive from '../withdraw.crypto.component/withdrawLive';
 import SuccessMsg from '../withdraw.crypto.component/success';
 import SelectAddress from '../withdraw.crypto.component/selectAddress';
+import SendMoney from '../withdraw.crypto.component/sendMoney';
 const { Paragraph } = Typography
 class SendReceive extends Component {
     state = {
@@ -41,7 +42,7 @@ class SendReceive extends Component {
     }
     renderContent = () => {
         const stepcodes = {
-            depositecrypto: <DepositeCrypto activeTab={this.props.valNum} />,
+            depositecrypto: <DepositeCrypto activeTab={this.props?.isSendTab ? this.props?.isSendTab : this.props.valNum} />,
             withdraw: <CryptoWithDrawWallet onDrawerClose={this.closeDrawer} />,
             scanner: <ScanQR />,
             withdrawaddress: <WithdrawAddress />,
@@ -52,7 +53,8 @@ class SendReceive extends Component {
             selectCrypto: <SelectCrypto />,
             withdraw_crypto_liveness: <WithdrawaCryptolLive />,
             withdraw_crpto_summary: <WithdrawSummary />,
-            withdraw_crpto_success: <SuccessMsg onBackCLick={() => this.props.dispatch(setStep("step1"))} />
+            withdraw_crpto_success: <SuccessMsg onBackCLick={() => this.props.dispatch(setStep("step1"))} />,
+            sendMoney: <SendMoney />
 
         }
         return stepcodes[config[this.props.sendReceive.stepcode]]
@@ -88,6 +90,7 @@ class SendReceive extends Component {
             withdraw_crypto_liveness: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             withdraw_crpto_summary: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             withdraw_crpto_success: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
+            sendMoney:<span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
 
         }
         return stepcodes[config[this.props.sendReceive.stepcode]]
@@ -97,8 +100,11 @@ class SendReceive extends Component {
             title={[<div className="side-drawer-header">
                 {this.renderTitle()}
                 <div className="text-center fs-16">
-                    <Translate className="mb-0 text-white-30 fw-600 text-upper" content={this.props.sendReceive.stepTitles[config[this.props.sendReceive.stepcode]]} component={Paragraph} />
-                    <Paragraph className="text-white-50 mb-0 fs-14 fw-300 px-8" >{this.props.sendReceive?.subTitle} {this.props.sendReceive?.selectedCoin?.coin} </Paragraph></div>
+                    <Translate className="mb-0 text-white-30 fw-600 text-upper" content={this.props?.isSendTab ? "send_crypto" :this.props.sendReceive.stepTitles[config[this.props.sendReceive.stepcode]]} component={Paragraph} />
+                    {/* <Paragraph className="text-white-50 mb-0 fs-14 fw-300 px-8" >{this.props.sendReceive?.subTitle} {this.props.sendReceive?.selectedCoin?.coin} </Paragraph> */}
+                       <Paragraph className="text-white-50 mb-0 fs-14 fw-300 px-8" >USD 997394.5 Total balance
+                        </Paragraph>
+                    </div>
                 {this.renderIcon()}
             </div>]}
             placement="right"

@@ -31,7 +31,7 @@ const CryptoList = forwardRef(({ coinList, isLoading, onCoinSelected, coinType, 
         if (!value) {
             filtercoinsList = coinList;
         } else {
-            filtercoinsList = coinList.filter(item => (item[titleField || 'walletCode']).toLowerCase().includes(value.toLowerCase()));
+            filtercoinsList = coinList.filter(item => (item[titleField || 'walletCode' || 'coin']).toLowerCase().includes(value.toLowerCase()));
         }
         setCoinListData(filtercoinsList)
     }
@@ -51,22 +51,47 @@ const CryptoList = forwardRef(({ coinList, isLoading, onCoinSelected, coinType, 
             <Translate content="No_data"  />
             } /> }}
             renderItem={item => (
+                <div>
+              {coinType === "Sell" ?
+               <>
+               <List.Item className={(item[titleField ||  'coin'] === selList[titleField || 'coin'] ? " select" : "")}>
+               <Link onClick={() => selectList(item)}>
+                   <List.Item.Meta
+                     avatar={ <Image preview={false} src={item.impagePath}/>}
 
-                <List.Item className={(item[titleField || 'walletCode'] === selList[titleField || 'walletCode'] ? " select" : "")}>
-                    <Link onClick={() => selectList(item)}>
-                        <List.Item.Meta
-                          avatar={ <Image preview={false} src={item.impagePath}/>}
+                       title={<div className="wallet-title">{item[titleField ||  'coin']}</div>}
+                   />
+                   <><div className="text-right coin-typo">
+                       {coinType === "swap" && item.coinBalance != null && <NumberFormat value={item.coinBalance} displayType={'text'} thousandSeparator={true} prefix={''} renderText={(value, props) => <div {...props} className="text-white-30 fw-600">{value}</div>} />}
+                       {item.coinValueinNativeCurrency !== 0 && <NumberFormat value={coinType === "swap" ? item.coinValueinNativeCurrency : item.amountInUSD || item.coinBalance} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props} className={` ${coinType !== "swap" ? "fs-16 fw-500" : "fs-14 fw-400"} ${coinType === "swap" ? (item.coinBalance > 0 ? "text-green" : "text-red") : 'text-white'}`}>{value}</div>} />}
+                       {coinType !== "swap" && <div className={item.percent_change_1h < 0 ? 'text-red fs-14' : 'text-green fs-14'}>{item.percent_change_1h} %</div>}
+                   </div>
+                       {coinType !== "swap" && <> {item.percent_change_1h >= 0 ? <span className="icon sm uparrow ml-12" /> : <span className="icon sm downarrow ml-12" />}</>}</>
+               </Link>
+           </List.Item>
+              </> : 
+              <>
+              <List.Item className={(item[titleField || 'walletCode' ] === selList[titleField || 'walletCode'] ? " select" : "")}>
+               <Link onClick={() => selectList(item)}>
+                   <List.Item.Meta
+                     avatar={ <Image preview={false} src={item.impagePath}/>}
 
-                            title={<div className="wallet-title">{item[titleField || 'walletCode']}</div>}
-                        />
-                        <><div className="text-right coin-typo">
-                            {coinType === "swap" && item.coinBalance != null && <NumberFormat value={item.coinBalance} displayType={'text'} thousandSeparator={true} prefix={''} renderText={(value, props) => <div {...props} className="text-white-30 fw-600">{value}</div>} />}
-                            {item.coinValueinNativeCurrency !== 0 && <NumberFormat value={coinType === "swap" ? item.coinValueinNativeCurrency : item.amountInUSD} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props} className={` ${coinType !== "swap" ? "fs-16 fw-500" : "fs-14 fw-400"} ${coinType === "swap" ? (item.coinBalance > 0 ? "text-green" : "text-red") : 'text-white'}`}>{value}</div>} />}
-                            {coinType !== "swap" && <div className={item.percent_change_1h < 0 ? 'text-red fs-14' : 'text-green fs-14'}>{item.percent_change_1h} %</div>}
-                        </div>
-                            {coinType !== "swap" && <> {item.percent_change_1h >= 0 ? <span className="icon sm uparrow ml-12" /> : <span className="icon sm downarrow ml-12" />}</>}</>
-                    </Link>
-                </List.Item>
+                       title={<div className="wallet-title">{item[titleField || 'walletCode']}</div>}
+                   />
+                   <><div className="text-right coin-typo">
+                       {coinType === "swap" && item.coinBalance != null && <NumberFormat value={item.coinBalance} displayType={'text'} thousandSeparator={true} prefix={''} renderText={(value, props) => <div {...props} className="text-white-30 fw-600">{value}</div>} />}
+                       {item.coinValueinNativeCurrency !== 0 && <NumberFormat value={coinType === "swap" ? item.coinValueinNativeCurrency : item.amountInUSD || item.coinBalance} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props} className={` ${coinType !== "swap" ? "fs-16 fw-500" : "fs-14 fw-400"} ${coinType === "swap" ? (item.coinBalance > 0 ? "text-green" : "text-red") : 'text-white'}`}>{value}</div>} />}
+                       {coinType !== "swap" && <div className={item.percent_change_1h < 0 ? 'text-red fs-14' : 'text-green fs-14'}>{item.percent_change_1h} %</div>}
+                   </div>
+                       {coinType !== "swap" && <> {item.percent_change_1h >= 0 ? <span className="icon sm uparrow ml-12" /> : <span className="icon sm downarrow ml-12" />}</>}</>
+               </Link>
+           </List.Item>
+              </>
+
+            }
+            </div>
+            
+              
             )}
         />
     </>

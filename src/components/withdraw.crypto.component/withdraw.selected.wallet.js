@@ -48,8 +48,8 @@ class CryptoWithDrawWallet extends Component {
             isVerificationMethodsChecked: true,
             propsData: {},
             isVerificationLoading: true,
-            showFuntransfer:false,
-            errorMsg:null
+            showFuntransfer: false,
+            errorMsg: null
         }
     }
     async checkVerification() {
@@ -140,7 +140,8 @@ class CryptoWithDrawWallet extends Component {
     };
     selectCrypto = (type) => {
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
-        this.props.dispatch(setSubTitle(apicalls.convertLocalLang('select_address')));
+       // this.props.dispatch(setSubTitle(apicalls.convertLocalLang('send_crypto_address')));
+       this.props.dispatch(setSubTitle(""))
         let obj = {
             "customerId": this.props.userProfile.id,
             "customerWalletId": id,
@@ -155,7 +156,7 @@ class CryptoWithDrawWallet extends Component {
         this.props.dispatch(setWithdrawcrypto(obj))
         this.setState({ ...this.state, loading: true })
         if (type == "ADDRESS") {
-            this.props.changeStep('step8');
+            this.props.changeStep('step10');
         } else {
             this.setState({
                 ...this.state, visible: true, errorWorning: null, showFuntransfer: true
@@ -233,31 +234,31 @@ class CryptoWithDrawWallet extends Component {
             "CustomerRemarks": this.state.customerRemarks
         }
         const response = await handleNewExchangeAPI({
-			customerId: this.props?.userProfile?.id,
-			amount: obj.totalValue,
-			address: obj.toWalletAddress,
-			coin: obj.walletCode,
-		});
-		if (response.ok) {
+            customerId: this.props?.userProfile?.id,
+            amount: obj.totalValue,
+            address: obj.toWalletAddress,
+            coin: obj.walletCode,
+        });
+        if (response.ok) {
             this.props.dispatch(setWithdrawcrypto(obj))
             this.props.changeStep('withdraw_crpto_summary');
-		} else {
-			this.setState({ ...this.state, loading: false,errorMsg:this.isErrorDispaly(response) });
+        } else {
+            this.setState({ ...this.state, loading: false, errorMsg: this.isErrorDispaly(response) });
             this.myRef.current.scrollIntoView()
-		}
+        }
         //this.props.dispatch(setSubTitle(apicalls.convertLocalLang('withdrawSummary')));
-       
+
     }
     isErrorDispaly = (objValue) => {
-		if (objValue.data && typeof objValue.data === "string") {
-			return objValue.data;
-		} else if (objValue.originalError && typeof objValue.originalError.message === "string"
-		) {
-			return objValue.originalError.message;
-		} else {
-			return "Something went wrong please try again!";
-		}
-	};
+        if (objValue.data && typeof objValue.data === "string") {
+            return objValue.data;
+        } else if (objValue.originalError && typeof objValue.originalError.message === "string"
+        ) {
+            return objValue.originalError.message;
+        } else {
+            return "Something went wrong please try again!";
+        }
+    };
     renderModalContent = () => {
         if (!this.props?.sendReceive?.cryptoWithdraw?.selectedWallet) { return null }
         const { walletAddress, CryptoAmnt, confirmationStep } = this.state;
@@ -328,7 +329,7 @@ class CryptoWithDrawWallet extends Component {
 
     }
 
-    handleModalClose=(childData)=>{
+    handleModalClose = (childData) => {
         this.setState({ ...this.state, showFuntransfer: childData })
     }
 
@@ -373,7 +374,7 @@ class CryptoWithDrawWallet extends Component {
                             <div>
                                 <span className="d-flex align-center mb-4">
                                     <Image preview={false} src={selectedWallet.impageWhitePath} />
-                                    <Text className="crypto-percent">{selectedWallet?.percentage}<sup className="percent fw-700">%</sup></Text>
+                                    {/* <Text className="crypto-percent">{selectedWallet?.percentage}<sup className="percent fw-700">%</sup></Text> */}
                                 </span>
                                 <Text className="fs-24 text-purewhite ml-4">{selectedWallet?.coinFullName}</Text>
 
@@ -432,14 +433,24 @@ class CryptoWithDrawWallet extends Component {
                                 </Tooltip>
                             </div>
                         </Form.Item>
-                        <div className="text-center mt-24 mb-24 ">
-                        <Button key="back" className='ant-btn  pop-btn'   onClick={() => this.selectCrypto()} >
-                            New Transfer
-                        </Button>,
-                        <Button key="submit" type="primary" className='ant-btn  pop-btn' style={{marginLeft:"10px"}} onClick={() => this.selectCrypto("ADDRESS")}>
-                            Whitelisted Address
-                        </Button>
-                        </div>
+                        <Row gutter={[4, 4]} className="text-center mt-24 mb-24">
+                            <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
+                                <Form.Item className="text-center">
+                                    <Button key="back" className='ant-btn pop-btn' style={{width:"100%"}} onClick={() => this.selectCrypto()} >
+                                        New Transfer
+                                    </Button>
+                                </Form.Item>
+                            </Col>
+                            <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
+                                <Form.Item className="text-center">
+                                    <Button key="submit" type="primary" className='ant-btn pop-btn' style={{ marginLeft: "10px",width:"100%" }} 
+                                     onClick={() => this.selectCrypto("ADDRESS")}
+                                    >
+                                        Address Book
+                                    </Button>
+                                </Form.Item>
+                            </Col>
+                        </Row>
                         <Form.Item
                             className="custom-forminput custom-label mb-0"
                             name="CustomerRemarks"
