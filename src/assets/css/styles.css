@@ -1077,6 +1077,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .side-drawer.custom-fait-sidedrawer .ant-drawer-content-wrapper{width:750px !important;}
 }
 @media (min-width: 1400px){
+
     .custom-font{font-size:30px !important;}
     .main-container{max-width: 1320px; }
     .mega-menu{max-width: 1320px;}
@@ -1086,7 +1087,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .crypto-list-tabs .crypto-list{max-height: calc(100vh - 350px); overflow-y: auto; padding-right: 10px;}
     .sellcrypto-container{max-height: calc(100vh - 230px);}
     .suisfiat-container, .suisfiat-height{max-height: calc(100vh - 195px);}
-    .addCryptoList{max-height: calc(100vh - 218px); overflow-y: auto; }
+    .addCryptoList{max-height: calc(100vh - 480px); overflow-y: auto; }
     .addCryptoList .xxl-fs{font-size:14px !important;}
     .addCryptoList .xxl-fs-16{font-size:16px !important;}
     .round-pills .ant-radio-button-wrapper,.default-radio .ant-radio-button-wrapper{min-width: 120px;}
@@ -1424,3 +1425,4 @@ cust-address{margin-bottom: 0px !important;}
 .ant-form-item-label > label{height: 24px !important;}
 .input-label.otp-verify .ant-form-item-control{margin-top: 4px;}
 .ant-form-item-label > label{font-weight: 500;}
+.main-container .k-loading-color{background-color: transparent !important;}
