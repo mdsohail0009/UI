@@ -31,7 +31,8 @@ const CryptoList = forwardRef(({ coinList, isLoading, onCoinSelected, coinType, 
         if (!value) {
             filtercoinsList = coinList;
         } else {
-            filtercoinsList = coinList.filter(item => (item[titleField || 'walletCode' || 'coin']).toLowerCase().includes(value.toLowerCase()));
+            
+            filtercoinsList = coinType === "Sell" ? coinList.filter(item => (item[titleField || 'coin']).toLowerCase().includes(value.toLowerCase())) : coinList.filter(item => (item[titleField || 'walletCode']).toLowerCase().includes(value.toLowerCase()));
         }
         setCoinListData(filtercoinsList)
     }

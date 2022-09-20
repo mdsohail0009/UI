@@ -21,6 +21,7 @@ import Loader from '../../Shared/loader';
 import CryptoTransfer from "../onthego.transfer/crypto.transfer"
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService';
 import { handleNewExchangeAPI } from "../send.component/api";
+import { validateAmount } from '../onthego.transfer/api';
 
 const { Paragraph, Text } = Typography;
 
@@ -69,7 +70,7 @@ class CryptoWithDrawWallet extends Component {
         const isVerified = await this.checkVerification();
         if (isVerified) {
             if (this.props.sendReceive.withdrawCryptoObj) {
-                this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.withdrawCryptoObj?.totalValue, localValue: 0 })
+                this.eleRef.current?.handleConvertion({ cryptoValue: this.props.sendReceive?.withdrawCryptoObj?.totalValue, localValue: 0 })
                 this.setState({ ...this.state, walletAddress: this.props.sendReceive.withdrawCryptoObj.toWalletAddress, amountPercentageType: this.props.sendReceive.withdrawCryptoObj.amounttype });
             } else {
                 this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 })
@@ -138,7 +139,7 @@ class CryptoWithDrawWallet extends Component {
         };
         return titles[config[this.props.addressBookReducer.stepcode]];
     };
-    selectCrypto = (type) => {
+    selectCrypto = async (type) => {
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
        // this.props.dispatch(setSubTitle(apicalls.convertLocalLang('send_crypto_address')));
        this.props.dispatch(setSubTitle(""))
@@ -156,7 +157,46 @@ class CryptoWithDrawWallet extends Component {
         this.props.dispatch(setWithdrawcrypto(obj))
         this.setState({ ...this.state, loading: true })
         if (type == "ADDRESS") {
-            this.props.changeStep('step10');
+            this.props.changeStep('step8');
+        }
+        else if (type == "ADDRESSBOOK") {
+            debugger
+            const amt = parseFloat(this.state.CryptoAmnt);
+            const { withdrawMaxValue, withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
+            this.setState({ ...this.state, error: null });
+            if (this.state.CryptoAmnt === "") {
+                this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('enter_amount') });
+                this.myRef.current.scrollIntoView();
+            }
+            else if (this.state.CryptoAmnt === "0" || amt === 0) {
+                this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_greater_zero') });
+                this.myRef.current.scrollIntoView();
+            }
+            else if (amt < withdrawMinValue) {
+                this.setState({ ...this.state, error: apicalls.convertLocalLang('amount_min') + " " + withdrawMinValue });
+                this.myRef.current.scrollIntoView();
+            } else if (amt > withdrawMaxValue) {
+                this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_max') + " " + withdrawMaxValue });
+                this.myRef.current.scrollIntoView();
+            } else if (amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
+                this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_less') });
+                this.myRef.current.scrollIntoView();
+            }
+            else {
+                const validObj = {
+                    CustomerId: this.props.userProfile?.id,
+                    amount: this.state.CryptoAmnt ? this.state.CryptoAmnt : null,
+                    WalletCode: this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin
+                }
+                const res = await validateAmount(validObj);
+                if (res.ok) {
+                    this.setState({ ...this.state, loading: false, errorMsg: null }, () => this.props.changeStep('step10'));
+                } else {
+                    this.setState({ ...this.state, loading: false, errorMsg: this.isErrorDispaly(res) })
+                    this.myRef.current.scrollIntoView();
+                }
+            }
+           // this.props.changeStep('step10');
         } else {
             this.setState({
                 ...this.state, visible: true, errorWorning: null, showFuntransfer: true
@@ -444,7 +484,7 @@ class CryptoWithDrawWallet extends Component {
                             <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
                                 <Form.Item className="text-center">
                                     <Button key="submit" type="primary" className='ant-btn pop-btn' style={{ marginLeft: "10px",width:"100%" }} 
-                                     onClick={() => this.selectCrypto("ADDRESS")}
+                                    loading={this.state.loading} onClick={() => this.selectCrypto("ADDRESSBOOK")}
                                     >
                                         Address Book
                                     </Button>

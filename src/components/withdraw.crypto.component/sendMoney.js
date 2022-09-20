@@ -23,8 +23,6 @@ class SendMoney extends Component {
         selectedPayee: {},
     }
     async componentDidMount() {
-        debugger
-        //this.validateAmt('addressselection');
         this.getPayees();
        // this.getAddressLu();
         await this.trackevent()
@@ -44,22 +42,22 @@ class SendMoney extends Component {
         });
     }
 
-    validateAmt = async (step, values, loader) => {
-        debugger
-        const obj = {
-            CustomerId: this.props.userProfile?.id,
-            amount: this.props?.sendReceive?.withdrawCryptoObj.totalValue,
-            WalletCode: this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin
-        }
-        this.setState({ ...this.state, [loader]: true, errorMessage: null });
-        const res = await validateAmount(obj);
-        if (res.ok) {
-            this.setState({ ...this.state, [loader]: false, errorMessage: null }, () => this.chnageStep(step, values));
-        } else {
-            this.setState({ ...this.state, [loader]: false, errorMessage: this.isErrorDispaly(res) })
-        }
+    // validateAmt = async (step, values, loader) => {
+    //     debugger
+    //     const obj = {
+    //         CustomerId: this.props.userProfile?.id,
+    //         amount: this.props?.sendReceive?.withdrawCryptoObj.totalValue,
+    //         WalletCode: this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin
+    //     }
+    //     this.setState({ ...this.state, [loader]: true, errorMessage: null });
+    //     const res = await validateAmount(obj);
+    //     if (res.ok) {
+    //         this.setState({ ...this.state, [loader]: false, errorMessage: null }, () => this.chnageStep(step, values));
+    //     } else {
+    //         this.setState({ ...this.state, [loader]: false, errorMessage: this.isErrorDispaly(res) })
+    //     }
 
-    }
+    // }
    
     trackevent = () => {
         apicalls.trackEvent({
