@@ -288,7 +288,7 @@ class HeaderPermissionMenu extends Component {
                             alt={"image"}
                         />
                     )}
-                    <p className="mb-15 ml-8 profile-value" style={{ flexGrow: 12 }}>
+                    <p className="mb-15 ml-8 profile-value" style={{ flexGrow: 12,marginTop:"5px"}}>
                     {this.props.userConfig.isBusiness?this.props.userConfig.businessName:
                     <>{this.props.userConfig.firstName}{" "}{this.props.userConfig.lastName}</> }
                         {/* {this.props.userConfig.firstName} {this.props.userConfig.lastName} */}
