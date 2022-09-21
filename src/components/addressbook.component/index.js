@@ -696,7 +696,7 @@ class AddressBook extends Component {
 						className="basicinfo"
 					/>
 					<Text className="fs-14 text-yellow fw-400 mb-36 d-block">
-						(Note : Whitelisting of Crypto Address and Bank Account is required, Please add below.)
+						Note : Whitelisting of Crypto Address and Bank Account is required, Please add below.
 					</Text>
 					<div className="display-flex mb-16">
 						<Radio.Group
