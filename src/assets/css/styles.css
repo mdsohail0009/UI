@@ -603,7 +603,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .ant-modal-confirm-btns button:first-child{background-color: transparent;border: none;color: var(--textWhite30);}
 .ant-modal-confirm-btns button:nth-child(2){background-color: var(--bgYellow) !important;border: none;color: var(--textDark);border-radius: 16px;padding: 4px 30px}
 .ant-modal-confirm-btns button:first-child:hover{color: var(--textYellow);}
-.ant-picker-input > input, .ant-form-item-label > label{color: var(--textWhite30)}
+.ant-picker-input > input, .ant-form-item-label > label{color: var(--textWhite);}
 .search-bg{border: 1px solid rgba(0,0,0,.08);color: #313c46 !important;background-color: var(--bgDarkGrey) !important;padding: 15px 10px;}
 .anticon-copy svg, .anticon-check svg{color: var(--textYellow);}
 .k-pager-numbers .k-link.k-state-selected,.k-list .k-item.k-state-selected, .k-list-optionlabel.k-state-selected ,.k-list .k-item.k-state-selected:hover,.k-list-optionlabel.k-state-selected:hover{color: var(--textDark);background-color: var(--bgYellow);}
@@ -640,7 +640,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 }
 .kpi-List .icon{margin: 6px 10px 0 0;}
 .kpi-List .icon + div{flex: 1;}
-.kpi-List .kpi-label{font-size: 12px;color: var(--textWhite50);}
+.kpi-List .kpi-label{font-size: 12px;color: var(--textWhite);}
 .kpi-List .kpi-val{font-size: 14px;font-weight: 500;color: var(--textWhite30);word-break: break-word;margin-right: 12px;}
 .kpi-item .kpi-val{margin-left: 0;}
 .accordian .ant-collapse-item:last-child > .ant-collapse-content, .accordian .ant-collapse-item{border-color: var(--borderGrey);background-color: var(--bgDarkGrey);}
@@ -704,7 +704,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .docreq-slider .slick-dots li{width: 30px;}
 .coin-select{position: absolute; right:13px; bottom: 13px;}
 .ant-modal-close-x{cursor: default;}
-.addCryptoList{list-style: none; padding-left: 0;max-height: calc(100vh - 188px); overflow-y: auto;}
+.addCryptoList{list-style: none; padding-left: 0;max-height: calc(100vh - 380px); overflow-y: auto;}
 .addCryptoList li{padding:10px; color: var(--textWhite);border-bottom: 1px solid var(--borderLight);font-size: 16px;}
 .addCryptoList li:hover{background-color:var(--bgBlu); cursor: pointer;}
 .tinycontent{word-break: break-all;max-height: 100px;height: 100px;overflow:hidden;}
@@ -907,7 +907,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .dep-withdraw,.sellcrypto-container {
         max-height: calc(100vh - 270px);
     }
-
+    .code-sent-tool-tip{display: flex;}
 
 }
 @media (max-width: 1024px){
@@ -1390,7 +1390,7 @@ td.ant-table-column-sort{background: transparent;}
 .cust-input.cust-text-area.address-book-cust{padding:20px 16px 15px 16px!important;}
 .custom-radio-btn.buysell-toggle.crypto-toggle .ant-radio-button-checked{background-image: linear-gradient(99.09deg, var(--btnGrad1), var(--btnGrad2));border-radius: 5px;}
 .custom-radio-btn.buysell-toggle .ant-radio-button-wrapper-checked{color: #fff !important;;}
-.box.basic-info.alert-info-custom{background-color:var(--bgDark) !important;border-radius: 15px;color: var(--textPureWhite);border-color: var(--borderGrey) !important;}
+.box.basic-info.alert-info-custom{background-color:var(--bgDark) !important;border-radius: 15px;color: var(--textWhite);border-color: var(--borderGrey) !important;}
 .ant-btn.ant-btn-block.profile-btn:focus, .ant-btn.ant-btn-block.profile-btn:active{border: 1px solid #ED4B9E !important;}
 .fund-transfer-input .ant-input-group-addon:first-child{border-right: 1px solid #d9d9d9;cursor:not-allowed}
 .fund-transfer-input .ant-input-group-addon{background-color: transparent;border: transparent;padding: 0 26px;}
@@ -1423,4 +1423,4 @@ cust-address{margin-bottom: 0px !important;}
 .custom-label .ant-form-item-label{margin-bottom: 0 !important;padding-bottom:4px !important ;}
 .ant-form-item-label > label{height: 24px !important;}
 .input-label.otp-verify .ant-form-item-control{margin-top: 4px;}
-.cust-light{color: #6e6e74;}
+.ant-form-item-label > label{font-weight: 500;}
