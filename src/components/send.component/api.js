@@ -9,9 +9,12 @@ const withDrawCrypto = (obj) => {
 const getWithdrawmemberCrypto = ({ customerId }) => {
     return apiClient.get(ApiControllers.withdraw + `Withdraw/Crypto/${customerId}`)
 }
-const handleNewExchangeAPI = ({ customerId, amount, coin, address }) => {
-    return apiClient.get(ApiControllers.withdraw + `Withdraw/Crypto/Confirm/${customerId}/${coin}/${amount}/${address}`);
-}
+// const handleNewExchangeAPI = ({ customerId, amount, coin, address }) => { //new call added
+//    return apiClient.get(ApiControllers.withdraw + `Withdraw/Crypto/Confirm/${customerId}/${coin}/${amount}/${address}`);
+// }
+const handleNewExchangeAPI = (obj) => {
+    return apiClient.post(ApiControllers.withdraw + `Crypto/Confirm`, obj);
+ }
 const handleFiatConfirm = (obj) => {
     return apiClient.post(ApiControllers.withdraw + `Withdraw/Fiat/Confirm`, obj);
 }

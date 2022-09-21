@@ -21,6 +21,8 @@ import { publishBalanceRfresh } from "../../utils/pubsub";
 import { Link } from "react-router-dom";
 import NumberFormat from "react-number-format";
 import { setCurrentAction } from "../../reducers/actionsReducer";
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import apicalls from '../../api/apiCalls';
 
 class WithdrawSummary extends Component {
 	state = {
@@ -198,15 +200,18 @@ class WithdrawSummary extends Component {
 	}
 	handleNewExchangeRate = async () => {
 		this.setState({ ...this.state, loading: true });
-		const { totalValue, walletCode, toWalletAddress } =
+		const { totalValue, walletCode, toWalletAddress, addressBookId, network } =
 			this.props.sendReceive?.withdrawCryptoObj;
 		let _obj = { ...this.props.sendReceive?.withdrawCryptoObj };
-		const response = await handleNewExchangeAPI({
+		let withdrawObj = {
 			customerId: this.props?.userProfile?.id,
-			amount: totalValue,
+			addressBookId: addressBookId,
+			coinAmount: totalValue,
 			address: toWalletAddress,
 			coin: walletCode,
-		});
+			network: network
+		}
+		const response = await handleNewExchangeAPI(withdrawObj);
 		if (response.ok) {
 			_obj["comission"] = response.data?.comission;
 			_obj.totalValue = response?.data?.amount;
@@ -757,10 +762,9 @@ class WithdrawSummary extends Component {
 								content="address"
 								component={Text}
 							/>
-							<Text className="fw-400 text-white">
-								{/* {this.firstAddress + "................" + this.lastAddress} */}
-								0bce................pgh4
-							</Text>
+								<CopyToClipboard text={this.props.sendReceive.withdrawCryptoObj?.toWalletAddress} options={{ format: 'text/plain' }}>
+									<Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="mb-0 fs-18 fw-400 text-white fw-500" >{this.props.sendReceive.withdrawCryptoObj?.toWalletAddress}</Text>
+								</CopyToClipboard>
 						</div>
 						<div className="pay-list fs-14">
 							<Translate
@@ -769,7 +773,7 @@ class WithdrawSummary extends Component {
 								component={Text}
 							/>
 							<Text className="fw-400 text-white">
-								ERC-20
+							{this.props.sendReceive.withdrawCryptoObj?.network}
 							</Text>
 						</div>
 						<Form

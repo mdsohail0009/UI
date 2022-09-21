@@ -93,7 +93,9 @@ class SendMoney extends Component {
         this.props.dispatch(setWithdrawcrypto({ ...obj, toWalletAddress: item.address }))
         this.props.changeStep('withdraw_crypto_selected');
     }
-    handlePreview = () => {
+    handlePreview = (item) => {
+        let obj = this.props.sendReceive.withdrawCryptoObj;
+        this.props.dispatch(setWithdrawcrypto({ ...obj, toWalletAddress: item.walletAddress, addressBookId: item.id, network: item.network }))
         this.props.changeStep('withdraw_crpto_summary');
     }
   
@@ -223,12 +225,12 @@ class SendMoney extends Component {
                         {(filterObj.length > 0) && filterObj?.map((item, idx) =>
                             <>{<Row className="fund-border c-pointer " onClick={async () => {
                                 if (!["myself", "1stparty", 'ownbusiness'].includes(item.addressType?.toLowerCase())) {
-                                    this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item, codeDetails: { ...this.state.codeDetails, ...item } }, () => this.props.changeStep('withdraw_crpto_summary'));
+                                    this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item, codeDetails: { ...this.state.codeDetails, ...item } }, () => {this.handlePreview(item)});
                                 } else {
                                     this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item, codeDetails: { ...this.state.codeDetails, ...item } });
                                     const res = await apiCalls.confirmCryptoTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount });
                                     if (!res.ok) {
-                                        this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => this.props.changeStep('withdraw_crpto_summary'));
+                                        this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => {this.handlePreview(item)});
                                     } else {
                                         this.setState({ ...this.state, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
                                     }
@@ -259,12 +261,12 @@ class SendMoney extends Component {
                         {(pastPayees.length > 0) && pastPayees?.map((item, idx) =>
                             <Row className="fund-border c-pointer" onClick={async () => {
                                 if (!["myself", "1stparty", "ownbusiness"].includes(item.addressType?.toLowerCase())) {
-                                    this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item }, () => this.props.changeStep('withdraw_crpto_summary'))
+                                    this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item }, () => {this.handlePreview(item)})
                                 } else {
                                     this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item });
                                     const res = await apiCalls.confirmCryptoTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount });
                                     if (res.ok) {
-                                        this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => this.props.changeStep('withdraw_crpto_summary'));
+                                        this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => {this.handlePreview(item)});
                                     } else {
                                         this.setState({ ...this.state, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
                                     }
