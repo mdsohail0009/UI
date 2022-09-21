@@ -492,7 +492,7 @@ const FaitWithdrawal = ({ props,
     const _types = {
       step1: (
         <>
-          <div className="suisfiat-height auto-scroll" style={{ marginTop: "10px" }}>
+          <div className="suisfiat-height suissefait-custome-alert auto-scroll" style={{ marginTop: "10px" }}>
             <div ref={useDivRef}></div>
             {isVerificationLoading && <Loader />}
             {errorMsg !== null && (
