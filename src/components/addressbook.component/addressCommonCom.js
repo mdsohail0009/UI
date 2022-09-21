@@ -201,7 +201,7 @@ const AddressCommonCom = (props) => {
 
         if (!validAddress) {
           return Promise.reject(
-            "Address is not Valid, please enter a valid address according to the coin selected"
+            "Address is not valid, Please enter a valid address according to the coin selected"
           );
         } else {
           return Promise.resolve();
