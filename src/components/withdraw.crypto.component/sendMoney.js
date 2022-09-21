@@ -34,10 +34,16 @@ class SendMoney extends Component {
             if (response.ok) {
                 this.setState({ ...this.state, loading: false, payeesLoading: false, filterObj: response.data, payees: response.data });
             }
+            else {
+                this.setState({ ...this.state, loading: false, payeesLoading: false, filterObj: [] });
+            }
        
         let res = await apiCalls.getPayeeCrypto(this.props.userProfile.id, this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin);
             if (res.ok) {
                 this.setState({ ...this.state, loading: false, pastPayees: res.data });
+            }
+            else {
+                this.setState({ ...this.state, loading: false,  pastPayees: [] });
             }
     }
 
@@ -228,10 +234,11 @@ class SendMoney extends Component {
                                     }
                                 }
                             }}>
-                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
+                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name?.charAt(0).toUpperCase()}</div></Col>
                                 <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="small-text-align">
-                                    <label className="fs-16 fw-600 text-white l-height-normal text-captz">{item.name}</label>
-                                    {item.accountNumber && <div><Text className="fs-14 text-white-30 m-0">{this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin} account ending with {item.accountNumber?.substr(item.accountNumber.length - 4)}</Text></div>}
+                                    <label className="fs-16 fw-600 text-white l-height-normal text-captz">{item?.name}</label>
+                                    {/* {item.accountNumber && <div><Text className="fs-14 text-white-30 m-0">{this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin} account ending with {item.accountNumber?.substr(item.accountNumber.length - 4)}</Text></div>} */}
+                                    {item.walletAddress && <div><Text className="fs-14 text-white-30 m-0">{item.walletAddress}</Text></div>}
                                 </Col>
                                 <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white"></span>
@@ -263,10 +270,10 @@ class SendMoney extends Component {
                                     }
                                 }
                             }}>
-                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
+                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name?.charAt(0).toUpperCase()}</div></Col>
                                 <Col xs={24} md={24} lg={24} xl={19} xxl={19} className=" small-text-align">
-                                    <label className="fs-16 fw-600 text-white l-height-normal text-captz">{item.name}</label>
-                                    <div><Text className="fs-14 text-white-30 m-0">{this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin} account ending with {item.accountNumber?.substr(item.accountNumber?.length - 4)}</Text></div>
+                                    <label className="fs-16 fw-600 text-white l-height-normal text-captz">{item?.name}</label>
+                                    <div><Text className="fs-14 text-white-30 m-0">{item?.walletAddress}</Text></div>
                                 </Col>
                                 <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white"></span>
