@@ -1,4 +1,4 @@
-import { Card, Typography, Empty,Image } from "antd";
+import { Card, Typography, Empty,Image, Spin } from "antd";
 import { useEffect } from "react";
 import Translate from "react-translate-component";
 import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setStep, setSubTitle } from "../../reducers/sendreceiveReducer";
@@ -53,7 +53,8 @@ const WithdrawCrypto = ({ dispatch, userProfile, sendReceive, props, changeStep 
                     </div>
                 </div></div>
             </Card>)}</> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apicalls.convertLocalLang('No_data')} />} */}
-             <CryptoList  isLoading={wallets?.loading} showSearch={true} coinList={wallets?.data} coinType="Sell" onCoinSelected={(wallet) => handleCoinSelection(wallet)} />
+             {/* <CryptoList  isLoading={wallets?.loading} showSearch={true} coinList={wallets?.data} coinType={"swap"} onCoinSelected={(wallet) => handleCoinSelection(wallet)} /> */}
+            <Spin spinning={wallets?.loading}><CryptoList showSearch={true} titleField={'coin'} iconField={'coin'} showValues={true} coinList={wallets?.loading ? [] : wallets?.data} isLoading={wallets?.loading} coinType={"swap"} onCoinSelected={(wallet) => handleCoinSelection(wallet)}/></Spin>
         </div>
 
     </>
