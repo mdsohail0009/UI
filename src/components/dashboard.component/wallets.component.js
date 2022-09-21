@@ -58,6 +58,7 @@ class Wallets extends Component {
             this.setState({ ...this.setState, showFuntransfer: true, selectedCurrency:value })
         } else if (e === 1) {
             this.props.dispatch(setWithdrawfiatenaable(false))
+            //this.props.dispatch(setSendCrypto(false))
             this.props.dispatch(setdepositCurrency(value))
             this.setState({
                 valNum: e

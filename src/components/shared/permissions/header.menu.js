@@ -49,7 +49,8 @@ import { setStep as byFiatSetStep } from "../../../reducers/buyFiatReducer";
 import {
     setStep as sendSetStep,
     setWithdrawfiat,
-    setWithdrawfiatenaable
+    setWithdrawfiatenaable,
+    setSendCrypto
 } from "../../../reducers/sendreceiveReducer";
 import { getmemeberInfo } from "../../../reducers/configReduser";
 import { clearPermissions, fetchFeaturePermissions, fetchFeatures, setSelectedFeatureMenu, updatePermissions } from "../../../reducers/feturesReducer";
@@ -164,11 +165,13 @@ class HeaderPermissionMenu extends Component {
             this.props. dispatch(setWithdrawfiat(""));
             this.props.dispatch(byFiatSetStep("step1"));
             this.props.dispatch(setWithdrawfiatenaable(false));
+            this.props.dispatch(setSendCrypto(false));
         } else {
             this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivecrypto: true, sendCryptoTab: false } });
             this.props. dispatch(setWithdrawfiat(""));
             this.props.dispatch(byFiatSetStep("step1"));
             this.props.dispatch(setWithdrawfiatenaable(false));
+            this.props.dispatch(setSendCrypto(false));
         }
     }
     showSendDrawer = (item, menuItem) => {
@@ -178,11 +181,13 @@ class HeaderPermissionMenu extends Component {
             this.props. dispatch(setWithdrawfiat(""));
             this.props.dispatch(byFiatSetStep("step1"));
             this.props.dispatch(setWithdrawfiatenaable(true));
+            this.props.dispatch(setSendCrypto(true));
         } else {
             this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivecrypto: true, sendCryptoTab: true } });
             this.props. dispatch(setWithdrawfiat(""));
             this.props.dispatch(byFiatSetStep("step1"));
             this.props.dispatch(setWithdrawfiatenaable(false));
+            this.props.dispatch(setSendCrypto(true));
         }
     }
     showSellDrawer = (item, menuItem) => {

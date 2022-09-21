@@ -15,6 +15,7 @@ const SET_WITHDRAW_FINAL_RES = "setWithdrawFinalRes";
 const SET_CRYPTO_FINAL_RES = "setCryptoFinalRes";
 const SET_WFTOTALVALUE = "setWFTotalValue";
 const CLEAR_AMOUNT = "setClearAmount";
+const SET_SEND_CRYPTO = "setSendCrypto";
 
 const setStep = (payload) => {
   return {
@@ -43,6 +44,12 @@ const setCryptoFinalRes = (payload) => {
 const setSubTitle = (payload) => {
   return {
     type: SET_SUB_TITLE,
+    payload
+  };
+};
+const setSendCrypto = (payload) => {
+  return {
+    type: SET_SEND_CRYPTO,
     payload
   };
 };
@@ -176,7 +183,8 @@ let initialState = {
   addressObj: null,
   withdrawFinalRes: {},
   cryptoFinalRes: {},
-  wFTotalValue: null
+  wFTotalValue: null,
+  SendCryptoEnable: false,
 };
 const sendReceiveReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -231,6 +239,9 @@ const sendReceiveReducer = (state = initialState, action) => {
     case CLEAR_AMOUNT:
       state={...state, wFTotalValue: null}
       return state;
+    case SET_SEND_CRYPTO:
+      state = { ...state, SendCryptoEnable: action.payload };
+      return state;
 
     default:
     return state;
@@ -256,5 +267,6 @@ export {
   setWithdrawcrypto,
   setAddress,
   setWFTotalValue,
-  setClearAmount
+  setClearAmount,
+  setSendCrypto
 };
