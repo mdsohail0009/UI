@@ -6,7 +6,7 @@ import oops from '../../assets/images/oops.png'
 import Loader from '../../Shared/loader';
 
 import { connect } from 'react-redux';
-import apicalls from '../../api/apiCalls';
+import apiCalls from "../../api/apiCalls";
 import { setAddressStep} from "../../reducers/addressBookReducer";
 import CryptoTransfer from '../onthego.transfer/crypto.transfer';
 import {fetchPayees, fetchPastPayees,confirmTransaction, validateAmount } from '../onthego.transfer/api';
@@ -28,18 +28,17 @@ class SendMoney extends Component {
         await this.trackevent()
     }
 
-    getPayees() {
+    getPayees= async () => {
         this.setState({ ...this.state, loading: true })
-        fetchPayees(this.props.userProfile.id, this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin).then((response) => {
+        let response = await apiCalls.getPayeeCryptoLu(this.props.userProfile.id, this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin);
             if (response.ok) {
                 this.setState({ ...this.state, loading: false, payeesLoading: false, filterObj: response.data, payees: response.data });
             }
-        });
-        fetchPastPayees(this.props.userProfile.id, this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin).then((response) => {
-            if (response.ok) {
-                this.setState({ ...this.state, loading: false, pastPayees: response.data });
+       
+        let res = await apiCalls.getPayeeCrypto(this.props.userProfile.id, this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin);
+            if (res.ok) {
+                this.setState({ ...this.state, loading: false, pastPayees: res.data });
             }
-        });
     }
 
     // validateAmt = async (step, values, loader) => {
@@ -60,7 +59,7 @@ class SendMoney extends Component {
     // }
    
     trackevent = () => {
-        apicalls.trackEvent({
+        apiCalls.trackEvent({
             "Type": 'User', "Action": 'Withdraw Crypto Address page view  ', "Username": this.props.userProfile.userName, "customerId": this.props.userProfile.id, "Feature": 'Withdraw Crypto', "Remarks": "Withdraw Crypto Address page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto'
         });
     }
@@ -95,7 +94,7 @@ class SendMoney extends Component {
     selectCrypto = (type) => {
         debugger
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
-        //this.props.dispatch(setSubTitle(apicalls.convertLocalLang('send_crypto_address')));
+        //this.props.dispatch(setSubTitle(apiCalls.convertLocalLang('send_crypto_address')));
         let obj = {
             "customerId": this.props.userProfile.id,
             "customerWalletId": id,
@@ -221,7 +220,7 @@ class SendMoney extends Component {
                                     this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item, codeDetails: { ...this.state.codeDetails, ...item } }, () => this.props.changeStep('withdraw_crpto_summary'));
                                 } else {
                                     this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item, codeDetails: { ...this.state.codeDetails, ...item } });
-                                    const res = await confirmTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount });
+                                    const res = await apiCalls.confirmCryptoTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount });
                                     if (!res.ok) {
                                         this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => this.props.changeStep('withdraw_crpto_summary'));
                                     } else {
@@ -241,8 +240,8 @@ class SendMoney extends Component {
                         )}
                         {(!filterObj.length > 0) && <div className="success-pop text-center" style={{ marginTop: '20px' }}>
                             <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
-                            <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
-                            <p className="fs-16 text-white-30 fw-200 mb-0"> {apicalls.convertLocalLang('address_available')} </p>
+                            <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apiCalls.convertLocalLang('oops')}</h1>
+                            <p className="fs-16 text-white-30 fw-200 mb-0"> {apiCalls.convertLocalLang('address_available')} </p>
                             <a onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</a>
                         </div>}
                     </ul>
@@ -256,7 +255,7 @@ class SendMoney extends Component {
                                     this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item }, () => this.props.changeStep('withdraw_crpto_summary'))
                                 } else {
                                     this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item });
-                                    const res = await confirmTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount });
+                                    const res = await apiCalls.confirmCryptoTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount });
                                     if (res.ok) {
                                         this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => this.props.changeStep('withdraw_crpto_summary'));
                                     } else {
@@ -277,7 +276,7 @@ class SendMoney extends Component {
                         )}
                         {(!pastPayees.length > 0) && <div className="success-pop text-center" style={{ marginTop: '20px' }}>
                             <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
-                            <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
+                            <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apiCalls.convertLocalLang('oops')}</h1>
                             <p className="fs-16 text-white-30 fw-200 mb-0"> {'You have no past recipients'} </p>
                         </div>}
                     </ul>

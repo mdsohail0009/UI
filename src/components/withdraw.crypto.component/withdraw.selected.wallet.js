@@ -450,7 +450,7 @@ class CryptoWithDrawWallet extends Component {
                     </div>
 
                     <Form>
-                        <Form.Item
+                        {/* <Form.Item
                             name="toWalletAddress"
                             className="custom-forminput custom-label  mb-16"
                             required
@@ -461,18 +461,14 @@ class CryptoWithDrawWallet extends Component {
 
                                     disabled={true} onChange={({ currentTarget: { value } }) => { this.setState({ ...this.state, walletAddress: value }); this.props.clearAddress(null) }}
                                     maxLength="250" />
-                                {/* <Tooltip placement="top" title="Send to new wallet" style={{ flexGrow: 1 }}>
-                                    <div className="new-add c-pointer" style={{borderRadius:'0'}} onClick={() => this.selectCrypto()}>
-                                        <span className="icon md diag-arrow d-block c-pointer"></span>
-                                    </div>
-                                </Tooltip> */}
+                             
                                 <Tooltip placement="top" title={<span>{apicalls.convertLocalLang('SelectAddress')}</span>} style={{ flexGrow: 1 }}>
                                     <div className="new-add c-pointer" onClick={() => this.selectCrypto("ADDRESS")}>
                                         <span className="icon md diag-arrow d-block c-pointer"></span>
                                     </div>
                                 </Tooltip>
                             </div>
-                        </Form.Item>
+                        </Form.Item> */}
                         <Row gutter={[4, 4]} className="text-center mt-24 mb-24">
                             <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
                                 <Form.Item className="text-center">
