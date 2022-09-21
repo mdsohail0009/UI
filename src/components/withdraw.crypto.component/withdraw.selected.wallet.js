@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import { Typography, Button, Drawer, Card, Input, Radio, Alert, Row, Col, Form, Modal, Tooltip, Image } from 'antd';
 import { handleSendFetch, setStep, setSubTitle, setWithdrawcrypto, setAddress } from '../../reducers/sendreceiveReducer';
@@ -17,7 +18,7 @@ import SelectCrypto from "../addressbook.component/selectCrypto";
 import apiCalls from "../../api/apiCalls";
 import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
 import Loader from '../../Shared/loader';
-
+import CryptoTransfer from "../onthego.transfer/crypto.transfer"
 const { Paragraph, Text } = Typography;
 
 class CryptoWithDrawWallet extends Component {
@@ -43,7 +44,8 @@ class CryptoWithDrawWallet extends Component {
             cryptoFiat: false,
             isVerificationMethodsChecked: true,
             propsData: {},
-            isVerificationLoading: true
+            isVerificationLoading: true,
+            showFuntransfer:false,
         }
     }
     async checkVerification() {
@@ -84,54 +86,9 @@ class CryptoWithDrawWallet extends Component {
     componentWillUnmount() {
         this.setState({ ...this.state, isWithdrawSuccess: false });
     }
-    closeBuyDrawer = (obj) => {
-        let showCrypto = false, showFiat = false;
-        if (obj) {
-            if (obj.isCrypto)
-                showCrypto = !obj?.close;
-            else
-                showFiat = !obj?.close;
-        };
-        this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat });
-
-    };
-    renderContent = () => {
-        const stepcodes = {
-            cryptoaddressbook: (<>
-                {/* <NewAddressBook onCancel={() => this.closeBuyDrawer()} /> */}
-                <AddressCommonCom onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1} />
-            </>
-            ),
-            selectcrypto: <SelectCrypto />,
-        };
-        return stepcodes[config[this.props.addressBookReducer.stepcode]];
-    };
-    renderIcon = () => {
-        const stepcodes = {
-            cryptoaddressbook: (
-                <span
-                    onClick={() => this.closeBuyDrawer()}
-                    className="icon md close-white c-pointer"
-                />
-            ),
-            selectcrypto: <span />,
-        };
-        return stepcodes[config[this.props.addressBookReducer.stepcode]];
-    };
-
-    renderTitle = () => {
-        const titles = {
-            cryptoaddressbook: <span />,
-            selectcrypto: (
-                <span
-                    onClick={this.backStep}
-                    className="icon md lftarw-white c-pointer"
-                />
-            ),
-        };
-        return titles[config[this.props.addressBookReducer.stepcode]];
-    };
+   
     selectCrypto = (type) => {
+        debugger
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.props.dispatch(setSubTitle(apicalls.convertLocalLang('select_address')));
         let obj = {
@@ -150,11 +107,9 @@ class CryptoWithDrawWallet extends Component {
         if (type == "ADDRESS") {
             this.props.changeStep('step8');
         } else {
-            this.setState({
-                ...this.state, visible: true, errorWorning: null
-                // , selection: [],
-                // isCheck: false,
-            });
+            // this.setState({ ...this.state, visible: true, errorWorning: null });
+            this.setState({ ...this.state, showFuntransfer: true  });
+
         }
 
 
@@ -223,9 +178,7 @@ class CryptoWithDrawWallet extends Component {
             "totalValue": this.state.CryptoAmnt,
             "tag": "",
             "amounttype": this.state.amountPercentageType,
-            "CustomerRemarks": this.state.customerRemarks,
-            "createdby": this.props.userProfile.isBusiness==true?this.props.userProfile.businessName:
-             <>{this.props.userProfile.firstName}{this.props.userProfile.lastName}</>
+            "CustomerRemarks": this.state.customerRemarks
         }
         //this.props.dispatch(setSubTitle(apicalls.convertLocalLang('withdrawSummary')));
         this.props.dispatch(setWithdrawcrypto(obj))
@@ -300,6 +253,11 @@ class CryptoWithDrawWallet extends Component {
         }
 
     }
+
+    handleModalClose=(childData)=>{
+        this.setState({ ...this.state, showFuntransfer: childData })
+    }
+
     render() {
         const { Text } = Typography;
         const { cryptoWithdraw: { selectedWallet } } = this.props.sendReceive;
@@ -311,13 +269,13 @@ class CryptoWithDrawWallet extends Component {
         }
         if (!this.state.isVerificationMethodsChecked) {
             return <Alert
-                message="Verification method alert !"
+                message="Verification alert !"
                 description={<Text>Without verifications you can't send. Please select send verifications from <a onClick={() => {
                     this.props.onDrawerClose();
-                    this.props.history.push("/userprofile/2")
+                    this.props.history.push("/userprofile?key=2")
                 }}>security section</a></Text>}
                 type="warning"
-                showIcon
+                // showIcon
                 closable
             />
         }
@@ -375,22 +333,20 @@ class CryptoWithDrawWallet extends Component {
                             label={apicalls.convertLocalLang('sendTo')}
                         >
                             <div className="p-relative d-flex align-center">
-                                <Input className="cust-input custom-add-select mb-0" placeholder={apicalls.convertLocalLang('enter_address')} value={this.state.walletAddress}
-
+                                <Input className="cust-input  mb-0" placeholder={apicalls.convertLocalLang('enter_address')} value={this.state.walletAddress}
                                     disabled={true} onChange={({ currentTarget: { value } }) => { this.setState({ ...this.state, walletAddress: value }); this.props.clearAddress(null) }}
                                     maxLength="250" />
-                                {/* <Tooltip placement="top" title="Send to new wallet" style={{ flexGrow: 1 }}>
-                                    <div className="new-add c-pointer" style={{borderRadius:'0'}} onClick={() => this.selectCrypto()}>
-                                        <span className="icon md diag-arrow d-block c-pointer"></span>
-                                    </div>
-                                </Tooltip> */}
-                                <Tooltip placement="top" title={<span>{apicalls.convertLocalLang('SelectAddress')}</span>} style={{ flexGrow: 1 }}>
-                                    <div className="new-add c-pointer" onClick={() => this.selectCrypto("ADDRESS")}>
-                                        <span className="icon md diag-arrow d-block c-pointer"></span>
-                                    </div>
-                                </Tooltip>
+                                
                             </div>
                         </Form.Item>
+                        <div className="text-center mt-24 mb-24 ">
+                        <Button key="back" className='ant-btn  pop-btn'   onClick={() => this.selectCrypto()} >
+                            New Transfer
+                        </Button>,
+                        <Button key="submit" type="primary" className='ant-btn  pop-btn' style={{marginLeft:"10px"}} onClick={() => this.selectCrypto("ADDRESS")}>
+                            Whitelisted Address
+                        </Button>
+                        </div>
                         <Form.Item
                             className="custom-forminput custom-label mb-0"
                             name="CustomerRemarks"
@@ -420,42 +376,22 @@ class CryptoWithDrawWallet extends Component {
                     ]} visible={this.state.showModal}>
                         {this.renderModalContent()}
                     </Modal>
-                    <Drawer
-                        destroyOnClose={true}
-                        title={[
-                            <div className="side-drawer-header">
-                                {this.renderTitle()}
-                                <div className="text-center fs-16">
-                                    <Translate
-                                        className="text-white-30 fw-600 text-upper mb-4"
-                                        content={
-                                            this.props.addressBookReducer.stepTitles[
-                                            config[this.props.addressBookReducer.stepcode]
-                                            ]
-                                        }
-                                        component={Paragraph}
-                                    />
-                                    <Translate
-                                        className="text-white-50 mb-0 fw-300 fs-14 swap-subtitlte"
-                                        content={
-                                            this.props.addressBookReducer.stepSubTitles[
-                                            config[this.props.addressBookReducer.stepcode]
-                                            ]
-                                        }
-                                        component={Paragraph}
-                                    />
-                                </div>
-                                {this.renderIcon()}
-                            </div>,
-                        ]}
-                        placement="right"
-                        closable={true}
-                        visible={this.state.visible}
-                        closeIcon={null}
-                        className="side-drawer w-50p">
-                        {this.renderContent()}
-                    </Drawer>
+                   
+                   
                 </div>
+                <Drawer
+                    destroyOnClose={true}
+                    title={[<div className="side-drawer-header">
+                        <div className="text-center fs-16 fw-500">
+                            <Paragraph className='text-white fs-24 fw-500' >Address Type</Paragraph>
+                        </div>
+                        <span onClick={() => this.setState({ ...this.state, showFuntransfer: false })} className="icon md close-white c-pointer" />
+                    </div>]}
+                    className="side-drawer w-50p"
+                    visible={this.state.showFuntransfer}
+                >
+                     <CryptoTransfer parentCallback = {this.handleModalClose}/>
+                </Drawer>
             </div>
         )
     }
