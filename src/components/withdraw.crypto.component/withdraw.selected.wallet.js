@@ -21,7 +21,7 @@ import Loader from '../../Shared/loader';
 import CryptoTransfer from "../onthego.transfer/crypto.transfer"
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService';
 import { handleNewExchangeAPI } from "../send.component/api";
-import { validateAmount } from '../onthego.transfer/api';
+import { validateCryptoAmount } from '../onthego.transfer/api';
 
 const { Paragraph, Text } = Typography;
 
@@ -160,7 +160,6 @@ class CryptoWithDrawWallet extends Component {
             this.props.changeStep('step8');
         }
         else if (type == "ADDRESSBOOK") {
-            debugger
             const amt = parseFloat(this.state.CryptoAmnt);
             const { withdrawMaxValue, withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
             this.setState({ ...this.state, error: null });
@@ -188,7 +187,7 @@ class CryptoWithDrawWallet extends Component {
                     amount: this.state.CryptoAmnt ? this.state.CryptoAmnt : null,
                     WalletCode: this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin
                 }
-                const res = await validateAmount(validObj);
+                const res = await validateCryptoAmount(validObj);
                 if (res.ok) {
                     this.setState({ ...this.state, loading: false, errorMsg: null }, () => this.props.changeStep('step10'));
                 } else {
