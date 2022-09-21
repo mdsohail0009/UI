@@ -90,7 +90,7 @@ class YourPortfolio extends Component {
       selectedObj.withdrawMinValue = selectedObj.withdrawMinValue
       this.props.dispatch(fetchWithDrawWallets({ customerId: this.props?.userProfile?.id }));
       this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
-      this.props.dispatch(setSubTitle(apiCalls.convertLocalLang("selectCurrencyinWallet")));
+      this.props.dispatch(setSubTitle(apiCalls.convertLocalLang("wallet_address")));
       let coin = value.coin?.toUpperCase();
       if (!this.props?.userProfile?.isKYC) {
           this.props.history.push("/notkyc");
