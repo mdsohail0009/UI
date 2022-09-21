@@ -25,7 +25,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
     const suffix = children.slice(-suffixCount).trim();
     return (
-        <Text className="mb-0 fs-14 docname c-pointer d-block"
+        <Text className="mb-0 fs-14 docnames c-pointer d-block"
             style={{ maxWidth: '100%' }} ellipsis={{ suffix }}>
             {start}
         </Text>
@@ -153,7 +153,9 @@ class RequestedDocs extends Component {
         item.repliedBy = `${(this.props.userProfileInfo?.isBusiness==true)?this.props.userProfileInfo?.businessName:this.props.userProfileInfo?.firstName}`;
         item.repliedDate = Mome().format("YYYY-MM-DDTHH:mm:ss");
         item.info = JSON.stringify(this.props.trackAuditLogData);
+        item.customerId=this.props.userProfileInfo.id;
         this.setState({ ...this.state, btnLoading: true });
+        
         const response = await saveDocReply(item);
         if (response.ok) {
             success('Document has been submitted');

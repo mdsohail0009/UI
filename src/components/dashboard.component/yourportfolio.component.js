@@ -79,8 +79,21 @@ class YourPortfolio extends Component {
         })
     }
     showInternalTransfer=()=>{
-      this.props.history.push(`/internalTransfer`)
+      debugger
+      if(!this.props?.twoFA?.isEnabled){
+        this.props.history.push("/enabletwofactor");
+        return;
     }
+      if (this.props?.userProfile?.isDocsRequested) {
+        this.props.history.push("/docnotices");
+        return;
+    }
+   else if (!this.props?.userProfile?.isKYC) {
+        this.props.history.push("/notkyc");
+        return;
+    }else{
+      this.props.history.push(`/internalTransfer`)
+    }}
   
     showSendReceiveDrawer = async(e, value) => {
       let selectedObj = { ...value };

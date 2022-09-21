@@ -332,7 +332,7 @@ const FaitWithdrawal = ({ props,
       values["routingNumber"] = bankDetails[0].swiftRouteBICNumber || bankDetails[0].routingNumber;
       values["WalletCode"] = accountDetails[0].currencyCode;
       values["CustomerRemarks"] = values.CustomerRemarks;
-      values["Createdby"] =userConfig.userName;
+      values["createdby"]=userConfig.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig.lastName
       const response = await handleFiatConfirm(values);
       if (response.ok) {
         setBtnDisabled(false);

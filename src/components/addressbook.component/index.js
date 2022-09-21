@@ -792,7 +792,7 @@ class AddressBook extends Component {
 						{apiCalls.convertLocalLang("really_want")}{" "}
 						{this.state.selectedObj.status === "Active"
 							? apiCalls.convertLocalLang("deactivate")
-							: apiCalls.convertLocalLang("activate")}
+							: apiCalls.convertLocalLang("activate")}?
 					</p>
 				</Modal>
 				<Modal
