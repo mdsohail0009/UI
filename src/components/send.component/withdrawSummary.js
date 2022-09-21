@@ -12,6 +12,8 @@ import {
 	setCryptoFinalRes, setStep,
 	setSubTitle,
 	setWithdrawcrypto,
+	handleSendFetch,
+	setAddress,
 } from "../../reducers/sendreceiveReducer";
 
 import apiCalls from "../../api/apiCalls";
@@ -182,8 +184,17 @@ class WithdrawSummary extends Component {
 		this.setState({...this.state,previewModal:false})
 	}
 	onModalOk=()=>{
-		debugger
-		this.props.changeStep('withdraw_crypto_selected');
+		this.setState({...this.state,previewModal:false})
+        if (this.props.onClose) {
+            this.props.onClose();
+        }
+		// this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
+		// this.props.dispatch(setWithdrawcrypto(null));
+		// this.props.dispatch(setSubTitle(""));
+		// publishBalanceRfresh("success");
+		this.props.dispatch(setWithdrawcrypto(null))
+        this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 1 }));
+        this.props.dispatch(setAddress(null))
 	}
 	handleNewExchangeRate = async () => {
 		this.setState({ ...this.state, loading: true });

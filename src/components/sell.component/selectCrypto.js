@@ -234,6 +234,7 @@ class SelectSellCrypto extends Component {
                        isSwaped={this.state.isSwap}
                     />
                     <Translate content="thousandKText" component={Paragraph} className="text-center f-16 text-yellow fw-400" />
+                    <Translate content="contact_amount_text" component={Paragraph} className="text-center f-16 text-yellow fw-400" />
                     <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills" onChange={({ target: { value } }) => {
                         this.clickMinamnt(value)
                     }}>
@@ -241,8 +242,8 @@ class SelectSellCrypto extends Component {
                         <Translate value="half" content="half" component={Radio.Button} />
                         <Translate value="all" content="all" component={Radio.Button} />
                     </Radio.Group>
-                    <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50" />
-                    <WalletList isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)} />
+                    {/* <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50" />
+                    <WalletList isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)} /> */}
                     <div className="mt-24">
                         <SuisseBtn autoDisable={true} title="PreviewSell" className="pop-btn" onClick={() => { this.previewSellData() }} />
                     </div>

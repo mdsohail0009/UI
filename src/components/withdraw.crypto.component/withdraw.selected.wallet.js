@@ -487,7 +487,7 @@ class CryptoWithDrawWallet extends Component {
                                 </Form.Item>
                             </Col>
                         </Row>
-                        <Form.Item
+                        {/* <Form.Item
                             className="custom-forminput custom-label mb-0"
                             name="CustomerRemarks"
                             label="Customer Remarks"
@@ -503,9 +503,9 @@ class CryptoWithDrawWallet extends Component {
                                 maxLength={200}
                                 placeholder="Customer Remarks"
                             />
-                        </Form.Item>
+                        </Form.Item> */}
                     </Form>
-                    <Translate content="Confirm_crypto" loading={this.state.loading} component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.handlePreview()} target="#top" />
+                    {/* <Translate content="Confirm_crypto" loading={this.state.loading} component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.handlePreview()} target="#top" /> */}
                     <Modal onCancel={() => { this.setState({ ...this.state, showModal: false }) }} title="Withdrawal" footer={[
                         <Button key="back" onClick={this.handleCancel} disabled={this.state.loading}>
                             Return

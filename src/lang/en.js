@@ -673,4 +673,5 @@ export default {
 	network: "Network",
 	send_fiat_text: "Send form your Suissebase FIAT Wallet",
     receive_fiat_text: "Receive in your Suissebase FIAT Wallet",
+	contact_amount_text: "Please contact support for higher amounts.",
 };
