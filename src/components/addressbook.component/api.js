@@ -124,6 +124,17 @@ const getCryptoData = (id,customerId) => {
 	);
 };
 
+const saveCryptoData = (id,customerId) => {
+	return apiClient.get(
+		ApiControllers.addressbook + `Crypto/${id}/${customerId}`
+	);
+};
+const networkLu = (coinName) => {
+    return apiClient.get(
+        ApiControllers.common + `NetWorkLU/${coinName}`
+    );
+};
+
 export {
 	emailCheck,
 	getPayeeLu,
@@ -146,5 +157,11 @@ export {
 	savePayee,
 	getInfoVal,
 	downloadDeclForm,
-	getCryptoData
+	getCryptoData,
+	saveCryptoData,
+	networkLu
 };
+
+
+////https://devapi.suissebase.io/api/v1/addressbook/Crypto/{id}/{customerId}
+//https://devapi.suissebase.io/api/v1/Common/NetWorkLU/BTC

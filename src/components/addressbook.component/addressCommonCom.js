@@ -5,7 +5,7 @@ import ConnectStateProps from "../../utils/state.connect";
 import { setAddressStep } from "../../reducers/addressBookReducer";
 import { setAddress, setStep } from "../../reducers/sendreceiveReducer";
 import { connect } from "react-redux";
-import { getCryptoData } from "./api";
+import { getCryptoData,saveCryptoData,getCoinList,networkLu } from "./api";
 import Loader from '../../Shared/loader';
 
 const { Text, Paragraph, Title } = Typography;
@@ -26,10 +26,13 @@ const handleChange = (value) => {
         showDeclartion: false,
         iBanValid:false,
         cryptoData: {},
+        coinsList: [],
+        networksList:[]
     };
 
     componentDidMount() {
        this.getCryptoData();
+       this.coinList();
     }
 
     getCryptoData = async() => {
@@ -56,9 +59,28 @@ const handleChange = (value) => {
         return "Something went wrong please try again!";
       }
     };
+    coinList = async () => {
+      let fromlist = await getCoinList("All")      
+        if (fromlist.ok) {
+          this.setState({ ...this.state, coinsList: fromlist.data, isLoading: false })
+      } else {
+          this.setState({ ...this.state, coinsList: [], isLoading: false })
+      }
 
+  }
+  networkList = async (val) => {
+    debugger
+    let fromlist = await networkLu(val)      
+      if (fromlist.ok) {
+        this.setState({ ...this.state, networksList: fromlist.data, isLoading: false })
+    } else {
+        this.setState({ ...this.state, networksList: [], isLoading: false })
+    }
+}
     handleTokenChange = (value) => {
+      debugger
       console.log(`selected ${value}`);
+      this.networkList(value)
     };
 
     handleNetworkChange = (value) => {
@@ -66,15 +88,25 @@ const handleChange = (value) => {
     };
   
     submit  = async (values) => {
-      if (window?.location?.pathname.includes('addressbook')) {
-        this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
+      let obj = {...values };
+      obj.whiteListName = values.whiteListName;
+      obj.token = values.token;
+      obj.network =values.network;
+      obj.walletAddress =values.walletAddress;
+     
+      let response=await saveCryptoData(obj)
+      if(response.ok){
+        if (window?.location?.pathname.includes('addressbook')) {
+          this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
+        }
+        else {
+          this.props.changeStep('withdraw_crpto_summary');
+        }
       }
-      else {
-        this.props.changeStep('withdraw_crpto_summary');
-      }
+      
     }
   render() {
-    const { isLoading, errorMessage, showDeclartion, cryptoData } = this.state;
+    const { isLoading, errorMessage, showDeclartion, cryptoData,coinsList,networksList } = this.state;
     if (isLoading) {
       return <Loader />
     }
@@ -108,19 +140,59 @@ const handleChange = (value) => {
         </div>
         <Form.Item className="custom-label"
           name="token"
-          label="Token* ">
-          <Select className="cust-input" defaultValue="Token" onChange={this.handleTokenChange}>
+          label="Token* "
+          rules={[
+            {
+              required: true,
+              message: "Is required",
+            },
+          ]}
+          >
+          {/* <Select className="cust-input" defaultValue="Token" onChange={this.handleTokenChange}>
             <Option value="Token">Token</Option>
             <Option value="Network">Network</Option>
-          </Select>
+          </Select> */}
+
+            <Select
+              //showSearch
+              className="cust-input"
+              onChange={this.handleTokenChange}
+              // onChange={(e) =>
+              //   this.handleChange(e, "AssignedTo")
+              // }
+              placeholder="Select Token"
+              optionFilterProp="children"
+            >
+              {coinsList?.map((item, idx) => (
+                <Option key={idx} value={item.network}>
+                  {item.network}
+                </Option>
+              ))}
+            </Select>
         </Form.Item>
         <Form.Item className="custom-label"
           name="network"
           label="Network* ">
-          <Select className="cust-input" defaultValue="Network" onChange={this.handleNetworkChange}>
+          {/* <Select className="cust-input" defaultValue="Network" onChange={this.handleNetworkChange}>
             <Option value="jack">ERC-20</Option>
             <Option value="Network">Network</Option>
-          </Select>
+          </Select> */}
+          <Select
+              //showSearch
+              className="cust-input"
+              onChange={this.handleTokenChange}
+              // onChange={(e) =>
+              //   this.handleChange(e, "AssignedTo")
+              // }
+              placeholder="Select Network"
+              optionFilterProp="children"
+            >
+              {networksList?.map((item, idx) => (
+                <Option key={idx} value={item.name}>
+                  {item.name}
+                </Option>
+              ))}
+            </Select>
         </Form.Item>
         <Form.Item className="custom-label"
           name="walletAddress"
