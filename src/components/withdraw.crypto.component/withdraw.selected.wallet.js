@@ -157,9 +157,11 @@ class CryptoWithDrawWallet extends Component {
             'amounttype': this.state.amountPercentageType
         }
         this.props.dispatch(setWithdrawcrypto(obj))
+        this.props.dispatch(setSubTitle(apicalls.convertLocalLang('wallet_address')));
         this.setState({ ...this.state, loading: true, newtransferLoader: true  })
         if (type == "ADDRESS") {
             this.props.changeStep('step8');
+            this.props.dispatch(setSubTitle(""))
         }
         else {
             this.amountNext(type,buttonLoader);
@@ -198,6 +200,7 @@ class CryptoWithDrawWallet extends Component {
                 this.setState({ ...this.state, [loader]: true, errorMessage: null, errorMsg: null });
                 const res = await validateCryptoAmount(validObj);
                 if (res.ok) {
+                    this.props.dispatch(setSubTitle(""));
                     type == "ADDRESSBOOK" ?  this.setState({ ...this.state, loading: false, [loader]: false, errorMsg: null }, () => this.props.changeStep('step10')): 
                     this.setState({
                         ...this.state, visible: true, errorWorning: null, errorMsg: null, [loader]: false, showFuntransfer: true
@@ -476,7 +479,7 @@ class CryptoWithDrawWallet extends Component {
                             <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
                                 <Form.Item className="text-center">
                                     <Button key="back" className='ant-btn pop-btn' style={{width:"100%"}} 
-                                     loading={this.state.newtransferLoader}
+                                     loading={this.state.loading || this.state.newtransferLoader}
                                      disabled={this.state.addressLoader}
                                     onClick={() => this.selectCrypto('NEWTRANSFER',"newtransferLoader")} >
                                         New Transfer
@@ -487,7 +490,6 @@ class CryptoWithDrawWallet extends Component {
                                 <Form.Item className="text-center">
                                     <Button key="submit" type="primary" className='ant-btn pop-btn' style={{ marginLeft: "10px",width:"100%" }} 
                                     loading={this.state.loading || this.state.addressLoader} onClick={() => this.selectCrypto("ADDRESSBOOK","addressLoader")}
-                                   // loading={this.state.newtransferLoader}
                                     disabled={this.state.newtransferLoader} >
                                         Address Book
                                     </Button>
