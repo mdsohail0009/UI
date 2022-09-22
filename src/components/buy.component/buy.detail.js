@@ -93,7 +93,7 @@ class SelectCrypto extends Component {
     }
     handleWalletSelection = (walletId) => {
         const selectedWallet = this.props.buyInfo?.memberFiat?.data?.filter(item => item.id === walletId)[0];
-        this.setState({ ...this.state, selectedWallet }, () => {
+        this.setState({ ...this.state, isShowCoinsData: true, selectedWallet }, () => {
             this.handleConvertion();
         });
         this.props.setWallet(selectedWallet);
@@ -175,30 +175,11 @@ class SelectCrypto extends Component {
                             </div>
                         </div></div>
                     </Card>
-          <form className="form">
-            <div className="my-36">
-              <Translate
-                className="input-label"
-                content="buy_select_currency"
-                component={Text}
-              />
-              <Select
-               // defaultValue="EUR"
-               placeholder="Select Currency"
-                className="cust-input mb-0"
-                dropdownClassName="select-drpdwn"
-                style={{ width: "100%" }}
-                bordered={false}
-                showArrow={false}
-                onChange={this.selectBuyCurrency}
-                suffixIcon={<span className="icon md uparrow" />}
-              >
-                <Option value="USD">USD</Option>
-                <Option value="EUR">EUR</Option>
-                <Option value="GBP">GBP</Option>
-              </Select>
-            </div>
-            </form>
+          
+                    <div className="my-36">
+                        <Translate content="buy_select_currency" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50 pt-16" />
+                        <WalletList onWalletSelect={(e) => this.handleWalletSelection(e)} />
+                    </div>
             {this.state.isShowCoinsData && <div>
                    <LocalCryptoSwapperCmp
                         localAmt={localValue}

@@ -129,7 +129,7 @@ class SelectSellCrypto extends Component {
                 obj.toWalletName = this.props.sellData.memberFiat.data[k].currencyCode;
             }
         }
-        this.setState({ ...this.state, sellSaveData: obj }, () => {
+        this.setState({ ...this.state, isShowCoinsData: true, sellSaveData: obj }, () => {
             this.handleConvertion();
         });
     }
@@ -197,30 +197,11 @@ class SelectSellCrypto extends Component {
                             </div>
                         </div></div>
                     </Card>}
-                    <form className="form">
-            <div className="my-36">
-              <Translate
-                className="input-label"
-                content="buy_select_currency"
-                component={Text}
-              />
-              <Select
-               // defaultValue="EUR"
-               placeholder="Select Currency"
-                className="cust-input mb-0"
-                dropdownClassName="select-drpdwn"
-                style={{ width: "100%" }}
-                bordered={false}
-                showArrow={false}
-                onChange={this.selectBuyCurrency}
-                suffixIcon={<span className="icon md uparrow" />}
-              >
-                <Option value="USD">USD</Option>
-                <Option value="EUR">EUR</Option>
-                <Option value="GBP">GBP</Option>
-              </Select>
-            </div>
-            </form>
+                    
+               <div className="my-36">
+                        <Translate content="buy_select_currency" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50 pt-16" />
+                        <WalletList onWalletSelect={(e) => this.handleWalletSelection(e)} />
+                    </div>
             {this.state.isShowCoinsData && <div> <LocalCryptoSwapperCmp
                         cryptoAmt={this.state.CryptoAmnt}
                         localAmt={this.state.USDAmnt}
