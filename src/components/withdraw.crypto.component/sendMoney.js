@@ -134,13 +134,13 @@ class SendMoney extends Component {
         return (
             <>
              {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
-             <div className="mb-16">
+             {/* <div className="mb-16">
                     <text Paragraph
                         className='fs-26 fw-600 text-white mb-16 mt-4 text-captz text-right'>Send Crypto</text>
-                </div>
-                <div className="mb-16">
+                </div> */}
+              <div className="mb-16" style={{textAlign:'center'}}>
                     <text Paragraph
-                        className='fs-18 fw-600 text-white mb-16 mt-4 text-captz text-right'>Who are you sending crypto to?</text>
+                        className='fs-24 fw-600 text-white mb-16 mt-4 text-captz' >Who are you sending crypto to?</text>
                 </div>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 
