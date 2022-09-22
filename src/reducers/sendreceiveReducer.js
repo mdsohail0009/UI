@@ -184,7 +184,7 @@ let initialState = {
   withdrawFinalRes: {},
   cryptoFinalRes: {},
   wFTotalValue: null,
-  SendCryptoEnable: false,
+  sendCryptoEnable: false,
 };
 const sendReceiveReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -240,7 +240,7 @@ const sendReceiveReducer = (state = initialState, action) => {
       state={...state, wFTotalValue: null}
       return state;
     case SET_SEND_CRYPTO:
-      state = { ...state, SendCryptoEnable: action.payload };
+      state = { ...state, sendCryptoEnable: action.payload };
       return state;
 
     default:
