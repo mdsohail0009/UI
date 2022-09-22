@@ -50,7 +50,9 @@ class CryptoWithDrawWallet extends Component {
             propsData: {},
             isVerificationLoading: true,
             showFuntransfer: false,
-            errorMsg: null
+            errorMsg: null,
+            newtransferLoader: false,
+            addressLoader: false
         }
     }
     async checkVerification() {
@@ -139,7 +141,7 @@ class CryptoWithDrawWallet extends Component {
         };
         return titles[config[this.props.addressBookReducer.stepcode]];
     };
-    selectCrypto = async (type) => {
+    selectCrypto = async (type,buttonLoader) => {
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
        // this.props.dispatch(setSubTitle(apicalls.convertLocalLang('send_crypto_address')));
        this.props.dispatch(setSubTitle(""))
@@ -155,12 +157,18 @@ class CryptoWithDrawWallet extends Component {
             'amounttype': this.state.amountPercentageType
         }
         this.props.dispatch(setWithdrawcrypto(obj))
-        this.setState({ ...this.state, loading: true })
+        this.setState({ ...this.state, loading: true, newtransferLoader: true  })
         if (type == "ADDRESS") {
             this.props.changeStep('step8');
         }
-        else if (type == "ADDRESSBOOK") {
-            const amt = parseFloat(this.state.CryptoAmnt);
+        else {
+            this.amountNext(type,buttonLoader);
+        }
+
+    }
+
+    amountNext = async (type,loader) => {
+        const amt = parseFloat(this.state.CryptoAmnt);
             const { withdrawMaxValue, withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
             this.setState({ ...this.state, error: null });
             if (this.state.CryptoAmnt === "") {
@@ -187,25 +195,21 @@ class CryptoWithDrawWallet extends Component {
                     amount: this.state.CryptoAmnt ? this.state.CryptoAmnt : null,
                     WalletCode: this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin
                 }
+                this.setState({ ...this.state, [loader]: true, errorMessage: null, errorMsg: null });
                 const res = await validateCryptoAmount(validObj);
                 if (res.ok) {
-                    this.setState({ ...this.state, loading: false, errorMsg: null }, () => this.props.changeStep('step10'));
+                    type == "ADDRESSBOOK" ?  this.setState({ ...this.state, loading: false, [loader]: false, errorMsg: null }, () => this.props.changeStep('step10')): 
+                    this.setState({
+                        ...this.state, visible: true, errorWorning: null, errorMsg: null, [loader]: false, showFuntransfer: true
+                    });
                 } else {
                     this.setState({ ...this.state, loading: false, errorMsg: this.isErrorDispaly(res) })
                     this.myRef.current.scrollIntoView();
                 }
             }
-           // this.props.changeStep('step10');
-        } else {
-            this.setState({
-                ...this.state, visible: true, errorWorning: null, showFuntransfer: true
-                // , selection: [],
-                // isCheck: false,
-            });
-        }
-
-
-    }
+           
+        } 
+       
 
     clickMinamnt(type) {
         let usdamnt; let cryptoamnt;
@@ -471,7 +475,10 @@ class CryptoWithDrawWallet extends Component {
                         <Row gutter={[4, 4]} className="text-center mt-24 mb-24">
                             <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
                                 <Form.Item className="text-center">
-                                    <Button key="back" className='ant-btn pop-btn' style={{width:"100%"}} onClick={() => this.selectCrypto()} >
+                                    <Button key="back" className='ant-btn pop-btn' style={{width:"100%"}} 
+                                     loading={this.state.newtransferLoader}
+                                     disabled={this.state.addressLoader}
+                                    onClick={() => this.selectCrypto('NEWTRANSFER',"newtransferLoader")} >
                                         New Transfer
                                     </Button>
                                 </Form.Item>
@@ -479,8 +486,9 @@ class CryptoWithDrawWallet extends Component {
                             <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
                                 <Form.Item className="text-center">
                                     <Button key="submit" type="primary" className='ant-btn pop-btn' style={{ marginLeft: "10px",width:"100%" }} 
-                                    loading={this.state.loading} onClick={() => this.selectCrypto("ADDRESSBOOK")}
-                                    >
+                                    loading={this.state.loading || this.state.addressLoader} onClick={() => this.selectCrypto("ADDRESSBOOK","addressLoader")}
+                                   // loading={this.state.newtransferLoader}
+                                    disabled={this.state.newtransferLoader} >
                                         Address Book
                                     </Button>
                                 </Form.Item>
