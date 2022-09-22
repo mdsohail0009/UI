@@ -215,7 +215,6 @@ class BankWallets extends Component {
             )}
           ></List>
         )}
-        <hr></hr>
       </>
     );
   }

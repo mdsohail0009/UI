@@ -204,7 +204,7 @@ class YourPortfolio extends Component {
         const { totalCryptoValue, totalFiatValue } = this.props.dashboard.portFolio.data;
         const { coinData } = this.state;
         return (
-          <div className="">
+          <div className="" style={{borderTop:'1px solid #c2c2c2'}}>
 {/*            
            <div  className="portfolio-title mb-8">
            <div className='portfolio-data' >
