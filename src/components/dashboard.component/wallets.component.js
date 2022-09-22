@@ -111,7 +111,7 @@ class Wallets extends Component {
 
         return (
             <>
-             <BankWallets/>
+             {/* <BankWallets/> */}
             <div className="d-flex align-center justify-content">
                 <Translate content="suissebase_title" component={Title} className="fs-24 fw-600 text-white px-4 mb-16 mt-4" />
                 <div>
