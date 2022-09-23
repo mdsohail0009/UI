@@ -10,6 +10,10 @@ import apiCalls from "../../api/apiCalls";
 import { setAddressStep} from "../../reducers/addressBookReducer";
 import CryptoTransfer from '../onthego.transfer/crypto.transfer';
 import {fetchPayees, fetchPastPayees,confirmTransaction, validateAmount } from '../onthego.transfer/api';
+import AddressCommonCom from '../addressbook.component/addressCommonCom';
+import SelectCrypto from '../addressbook.component/selectCrypto';
+import { processSteps as config } from "../addressbook.component/config";
+import Translate from 'react-translate-component';
 const { Paragraph, Text, Title } = Typography;
 class SendMoney extends Component {
     
@@ -100,7 +104,8 @@ class SendMoney extends Component {
     }
 
     chnageStep=() =>{
-        this.setState({...this.state, showFuntransfer: true, errorWorning: null });
+        debugger
+        this.setState({...this.state, visible: true, showFuntransfer: true, errorWorning: null });
     }
   
     selectCrypto = (type) => {
@@ -129,9 +134,56 @@ class SendMoney extends Component {
                 // isCheck: false,
             });
         }
-
-
     }
+    
+    closeBuyDrawer = (obj) => {
+        let showCrypto = false, showFiat = false;
+        if (obj) {
+            if (obj.isCrypto)
+                showCrypto = !obj?.close;
+            else
+                showFiat = !obj?.close;
+        };
+        this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat });
+
+    };
+
+    renderContent = () => {
+        const stepcodes = {
+            cryptoaddressbook: (<>
+                <AddressCommonCom onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1} />
+            </>
+            ),
+            selectcrypto: <SelectCrypto />,
+        };
+        return stepcodes[config[this.props.addressBookReducer.stepcode]];
+    };
+    renderIcon = () => {
+        const stepcodes = {
+            cryptoaddressbook: (
+                <span
+                    onClick={() => this.closeBuyDrawer()}
+                    className="icon md close-white c-pointer"
+                />
+            ),
+            selectcrypto: <span />,
+        };
+        return stepcodes[config[this.props.addressBookReducer.stepcode]];
+    };
+
+
+    renderTitle = () => {
+        const titles = {
+            cryptoaddressbook: <span />,
+            selectcrypto: (
+                <span
+                    onClick={this.backStep}
+                    className="icon md lftarw-white c-pointer"
+                />
+            ),
+        };
+        return titles[config[this.props.addressBookReducer.stepcode]];
+    };
     render() {
         const { filterObj, loading, pastPayees } = this.state;
         const { Search } = Input;
@@ -295,6 +347,41 @@ class SendMoney extends Component {
                     </ul>
                 </>}
                 
+                <Drawer
+                        destroyOnClose={true}
+                        title={[
+                            <div className="side-drawer-header">
+                                {this.renderTitle()}
+                                <div className="text-center fs-16">
+                                    <Translate
+                                        className="text-white-30 fw-600 text-upper mb-4"
+                                        content={
+                                            this.props.addressBookReducer.stepTitles[
+                                            config[this.props.addressBookReducer.stepcode]
+                                            ]
+                                        }
+                                        component={Paragraph}
+                                    />
+                                    <Translate
+                                        className="text-white-50 mb-0 fw-300 fs-14 swap-subtitlte"
+                                        content={
+                                            this.props.addressBookReducer.stepSubTitles[
+                                            config[this.props.addressBookReducer.stepcode]
+                                            ]
+                                        }
+                                        component={Paragraph}
+                                    />
+                                </div>
+                                {this.renderIcon()}
+                            </div>,
+                        ]}
+                        placement="right"
+                        closable={true}
+                        visible={this.state.visible}
+                        closeIcon={null}
+                        className="side-drawer w-50p">
+                        {this.renderContent()}
+                    </Drawer>
              </>    
         );
     }
