@@ -200,7 +200,7 @@ class WithdrawSummary extends Component {
 	}
 	handleNewExchangeRate = async () => {
 		this.setState({ ...this.state, loading: true });
-		const { totalValue, walletCode, toWalletAddress, addressBookId, network } =
+		const { totalValue, walletCode, toWalletAddress, addressBookId, network, memberWalletId } =
 			this.props.sendReceive?.withdrawCryptoObj;
 		let _obj = { ...this.props.sendReceive?.withdrawCryptoObj };
 		let withdrawObj = {
@@ -209,7 +209,8 @@ class WithdrawSummary extends Component {
 			coinAmount: totalValue,
 			address: toWalletAddress,
 			coin: walletCode,
-			network: network
+			network: network,
+			memberWalletId: memberWalletId
 		}
 		const response = await handleNewExchangeAPI(withdrawObj);
 		if (response.ok) {

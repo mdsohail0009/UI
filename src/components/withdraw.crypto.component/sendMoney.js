@@ -95,7 +95,7 @@ class SendMoney extends Component {
     }
     handlePreview = (item) => {
         let obj = this.props.sendReceive.withdrawCryptoObj;
-        this.props.dispatch(setWithdrawcrypto({ ...obj, toWalletAddress: item.walletAddress, addressBookId: item.id, network: item.network }))
+        this.props.dispatch(setWithdrawcrypto({ ...obj, toWalletAddress: item.walletAddress, addressBookId: item.id, network: item.network, memberWalletId: item.memberWalletId }))
         this.props.changeStep('withdraw_crpto_summary');
     }
   
