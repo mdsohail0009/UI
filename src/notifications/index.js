@@ -35,6 +35,7 @@ const Notifications = ({
     });
   };
   const fetchNotifications = async () => {
+    debugger
     notificationsTrack();
     if (userProfile?.id) {
       setLoading(true);

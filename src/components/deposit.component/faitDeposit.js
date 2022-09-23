@@ -305,7 +305,7 @@ class FaitDeposit extends Component {
                   </div></Form.Item>}
                   {this.state.bankLoader && <Loader />}
 
-                {this.state.BankInfo &&
+                {(this.state.BankInfo && !this.state.bankLoader) &&
                   <div className="fiatdep-info">
 
                     <div className="d-flex">
