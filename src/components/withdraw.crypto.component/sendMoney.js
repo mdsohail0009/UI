@@ -98,6 +98,10 @@ class SendMoney extends Component {
         this.props.dispatch(setWithdrawcrypto({ ...obj, toWalletAddress: item.walletAddress, addressBookId: item.id, network: item.network, memberWalletId: item.memberWalletId }))
         this.props.changeStep('withdraw_crpto_summary');
     }
+
+    chnageStep=() =>{
+        this.setState({...this.state, showFuntransfer: true, errorWorning: null });
+    }
   
     selectCrypto = (type) => {
         debugger

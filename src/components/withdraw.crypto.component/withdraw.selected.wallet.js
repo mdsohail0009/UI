@@ -206,7 +206,7 @@ class CryptoWithDrawWallet extends Component {
                         ...this.state, visible: true, errorWorning: null, errorMsg: null, [loader]: false, showFuntransfer: true
                     });
                 } else {
-                    this.setState({ ...this.state, loading: false, errorMsg: this.isErrorDispaly(res) })
+                    this.setState({ ...this.state, loading: false, [loader]: false, errorMsg: this.isErrorDispaly(res) })
                     this.myRef.current.scrollIntoView();
                 }
             }
