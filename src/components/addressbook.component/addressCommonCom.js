@@ -67,13 +67,18 @@ class AddressCommonCom extends Component {
     }
   };
   coinList = async () => {
+    debugger
     let fromlist = await getCoinList("All")
     if (fromlist.ok) {
       this.setState({ ...this.state, coinsList: fromlist.data, isLoading: false })
     } else {
       this.setState({ ...this.state, coinsList: [], isLoading: false })
     }
-
+if(this.props.sendReceive.cryptoWithdraw.selectedWallet){
+  this.form?.current?.setFieldsValue({token:this.props.sendReceive.cryptoWithdraw.selectedWallet.coin})
+  let val=this.props.sendReceive.cryptoWithdraw.selectedWallet.coin
+  this.networkList(val)
+}
   }
   networkList = async (val) => {
     debugger
@@ -216,6 +221,7 @@ class AddressCommonCom extends Component {
                 placeholder="Select Token"
                 optionFilterProp="children"
                 maxLength={50}
+                disabled={this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin ? true:false}
               >
                 {coinsList?.map((item, idx) => (
                   <Option key={idx} value={item.walletCode}>
