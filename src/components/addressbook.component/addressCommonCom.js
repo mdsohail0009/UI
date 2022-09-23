@@ -1,20 +1,15 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { Component} from "react";
 import { Form, Typography, Input, Button, Select, Image, Alert } from "antd";
 import alertIcon from '../../assets/images/pending.png';
-import ConnectStateProps from "../../utils/state.connect";
 import { setAddressStep } from "../../reducers/addressBookReducer";
 import { setAddress, setStep } from "../../reducers/sendreceiveReducer";
 import { connect } from "react-redux";
 import { getCryptoData, saveCryptoData, getCoinList, networkLu } from "./api";
 import Loader from '../../Shared/loader';
 import WAValidator from "multicoin-address-validator";
-import apiCalls from "../../api/apiCalls";
-const { Text, Paragraph, Title } = Typography;
+const { Text, Title } = Typography;
 const { Option } = Select;
-const { TextArea } = Input;
-const handleChange = (value) => {
-  console.log(`selected ${value}`);
-};
+
 class AddressCommonCom extends Component {
   form = React.createRef();
   useDivRef = React.createRef()
@@ -41,7 +36,6 @@ class AddressCommonCom extends Component {
     this.coinList();
   }
   getCryptoData = async () => {
-    debugger
     let id = this.props?.addressBookReducer?.selectedRowData?.id || "00000000-0000-0000-0000-000000000000";
     this.setState({ ...this.state, isLoading: true })
     let response = await getCryptoData(id, this.props.userProfile?.id);
@@ -67,7 +61,6 @@ class AddressCommonCom extends Component {
     }
   };
   coinList = async () => {
-    debugger
     let fromlist = await getCoinList("All")
     if (fromlist.ok) {
       this.setState({ ...this.state, coinsList: fromlist.data, isLoading: false })
@@ -81,7 +74,6 @@ if(this.props.sendReceive.cryptoWithdraw.selectedWallet){
 }
   }
   networkList = async (val) => {
-    debugger
     let fromlist = await networkLu(val)
     if (fromlist.ok) {
       this.setState({ ...this.state, networksList: fromlist.data, isLoading: false })
@@ -90,20 +82,16 @@ if(this.props.sendReceive.cryptoWithdraw.selectedWallet){
     }
   }
   handleTokenChange = (value) => {
-    debugger
      this.form?.current?.setFieldsValue({network:null});
-    // console.log(`selected ${value}`);
     this.form?.current?.validateFields(["walletAddress"], this.validateAddressType(value))
     this.networkList(value)
   };
 
   handleNetworkChange = (value) => {
-    debugger
     console.log(`selected ${value}`);
   };
 
   submit = async (values) => {
-    debugger
     let obj = {
       id: "00000000-0000-0000-0000-000000000000",
       saveWhiteListName: values.saveWhiteListName,
@@ -136,7 +124,6 @@ if(this.props.sendReceive.cryptoWithdraw.selectedWallet){
 
   }
   validateAddressType = (_, value) => {
-    debugger
     if (value) {
       let address = value.trim();
       let coinType = this.form?.current?.getFieldsValue("token");
@@ -153,7 +140,6 @@ if(this.props.sendReceive.cryptoWithdraw.selectedWallet){
         } else {
           return Promise.reject('Please select Network');
         }
-
       } else {
         return Promise.reject("Please select a coin first");
       }
@@ -174,7 +160,6 @@ if(this.props.sendReceive.cryptoWithdraw.selectedWallet){
              Please sign using link received in email to whitelist your address. `}</Text>
         <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
         <div className="my-25"><Button
-          //  onClick={() => this.props.onContinue({ close: true, isCrypto: true })}
           onClick={this.props.onCancel}
           type="primary" className="mt-36 pop-btn text-textDark">BACK</Button></div>
       </div>
@@ -212,17 +197,14 @@ if(this.props.sendReceive.cryptoWithdraw.selectedWallet){
                   required: true,
                   message: "Is required",
                 },
-              ]}
-            >
-
+              ]} >
               <Select
                 className="cust-input"
                 onChange={this.handleTokenChange}
                 placeholder="Select Token"
                 optionFilterProp="children"
                 maxLength={50}
-                disabled={this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin ? true:false}
-              >
+                disabled={this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin ? true:false}>
                 {coinsList?.map((item, idx) => (
                   <Option key={idx} value={item.walletCode}>
                     {item.walletCode}
@@ -243,7 +225,6 @@ if(this.props.sendReceive.cryptoWithdraw.selectedWallet){
               <Select
                 className="cust-input"
                 onChange={this.handleNetworkChange}
-
                 maxLength={100}
                 placeholder="Select Network"
                 optionFilterProp="children"
@@ -260,9 +241,7 @@ if(this.props.sendReceive.cryptoWithdraw.selectedWallet){
               name="walletAddress"
               label="Wallet Address"
               required
-
               rules={[
-
                 {
                   validator: this.validateAddressType,
                 },
