@@ -76,4 +76,7 @@ const saveWithdraw = (obj) => {
 const validateAmount = (obj) => {
     return apiClient.post(ApiControllers.withdraw + `Fiat/commision`, obj)
 }
-export { fetchIBANDetails, createPayee, payeeAccountObj, uploadFile, document, savePayee, confirmTransaction, fetchPayees, fetchPastPayees, updatePayee, saveWithdraw, validateAmount };
+const validateCryptoAmount = (obj) => {
+    return apiClient.post(ApiControllers.withdraw + `Crypto/commision`, obj)
+}
+export { fetchIBANDetails, createPayee, payeeAccountObj, uploadFile, document, savePayee, confirmTransaction, fetchPayees, fetchPastPayees, updatePayee, saveWithdraw, validateAmount, validateCryptoAmount };

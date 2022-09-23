@@ -5,12 +5,15 @@ import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import Loader from "../../Shared/loader";
 import Currency from "../shared/number.formate";
+import { withRouter } from 'react-router';
 import { handleNewExchangeAPI, withDrawCrypto } from "../send.component/api";
 import { fetchDashboardcalls } from "../../reducers/dashboardReducer";
 import {
 	setCryptoFinalRes, setStep,
 	setSubTitle,
 	setWithdrawcrypto,
+	handleSendFetch,
+	setAddress,
 } from "../../reducers/sendreceiveReducer";
 
 import apiCalls from "../../api/apiCalls";
@@ -18,6 +21,9 @@ import { publishBalanceRfresh } from "../../utils/pubsub";
 import { Link } from "react-router-dom";
 import NumberFormat from "react-number-format";
 import { setCurrentAction } from "../../reducers/actionsReducer";
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import apicalls from '../../api/apiCalls';
+
 class WithdrawSummary extends Component {
 	state = {
 		onTermsChange: false,
@@ -180,22 +186,36 @@ class WithdrawSummary extends Component {
 		this.setState({...this.state,previewModal:false})
 	}
 	onModalOk=()=>{
-		this.props.changeStep('withdraw_crypto_selected');
+		this.setState({...this.state,previewModal:false})
+        if (this.props.onClose) {
+            this.props.onClose();
+        }
+		// this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
+		// this.props.dispatch(setWithdrawcrypto(null));
+		// this.props.dispatch(setSubTitle(""));
+		// publishBalanceRfresh("success");
+		this.props.dispatch(setWithdrawcrypto(null))
+        this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 1 }));
+        this.props.dispatch(setAddress(null))
 	}
 	handleNewExchangeRate = async () => {
 		this.setState({ ...this.state, loading: true });
-		const { totalValue, walletCode, toWalletAddress } =
-			this.props.sendReceive.withdrawCryptoObj;
-		let _obj = { ...this.props.sendReceive.withdrawCryptoObj };
-		const response = await handleNewExchangeAPI({
+		const { totalValue, walletCode, toWalletAddress, addressBookId, network } =
+			this.props.sendReceive?.withdrawCryptoObj;
+		let _obj = { ...this.props.sendReceive?.withdrawCryptoObj };
+		let withdrawObj = {
 			customerId: this.props?.userProfile?.id,
-			amount: totalValue,
+			addressBookId: addressBookId,
+			coinAmount: totalValue,
 			address: toWalletAddress,
 			coin: walletCode,
-		});
+			network: network,
+		}
+		const response = await handleNewExchangeAPI(withdrawObj);
 		if (response.ok) {
 			_obj["comission"] = response.data?.comission;
 			_obj.totalValue = response?.data?.amount;
+			_obj.memberWalletId = response?.data?.memberWalletId;
 			this.props?.dispatch(setWithdrawcrypto(_obj));
 			this.setState({
 				...this.state,
@@ -743,8 +763,18 @@ class WithdrawSummary extends Component {
 								content="address"
 								component={Text}
 							/>
+								<CopyToClipboard text={this.props.sendReceive.withdrawCryptoObj?.toWalletAddress} options={{ format: 'text/plain' }}>
+									<Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="mb-0 fs-18 fw-400 text-white fw-500" >{this.props.sendReceive.withdrawCryptoObj?.toWalletAddress}</Text>
+								</CopyToClipboard>
+						</div>
+						<div className="pay-list fs-14">
+							<Translate
+								className="fw-400 text-white"
+								content="network"
+								component={Text}
+							/>
 							<Text className="fw-400 text-white">
-								{this.firstAddress + "................" + this.lastAddress}
+							{this.props.sendReceive.withdrawCryptoObj?.network}
 							</Text>
 						</div>
 						<Form
@@ -1022,23 +1052,22 @@ class WithdrawSummary extends Component {
 										<Button
 											className="pop-btn px-36"
 											style={{ margin: "0 8px" }}
+											onClick={() => this.onModalOk()}
+										>
+											Yes
+										</Button>
+										<Button
+											className="pop-btn px-36"
+											style={{ margin: "0 8px" }}
 											onClick={() => this.onModalCancel()}
 
 										>
 											No
 										</Button>
-										<Button
-											className="pop-btn px-36"
-											style={{ margin: "0 8px" }}
-											onClick={() => this.onModalOk()}
-										>
-											Yes
-										</Button>
 									</>
 								}>
 									<div style={{color:"white"}}>
 								Are you sure you want to cancel?
-								Your address details will not be saved
 								</div>
 							</Modal>
 		{/* <Drawer
@@ -1101,4 +1130,4 @@ const connectDispatchToProps = (dispatch) => {
 export default connect(
 	connectStateToProps,
 	connectDispatchToProps
-)(WithdrawSummary);
+)(withRouter(WithdrawSummary));

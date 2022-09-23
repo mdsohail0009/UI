@@ -1,5 +1,5 @@
 import React, { Component, createRef } from 'react';
-import { Typography, Input, Button, Select, Radio, Form, Alert, Space } from 'antd';
+import { Typography, Input, Button, Spin, Select, Radio, Form, Alert, Space, Col } from 'antd';
 import { Link } from 'react-router-dom';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
@@ -8,7 +8,7 @@ import config from '../../config/config';
 import NumberFormat from 'react-number-format';
 import { getCurrencieswithBankDetails, setdepositCurrency, updatdepfiatobject, setsavefiatobject, setFiatFinalRes } from '../../reducers/depositReducer'
 import { rejectWithdrawfiat, setWithdrawfiatenaable } from '../../reducers/sendreceiveReducer';
-import { setStep } from '../../reducers/buyFiatReducer';
+import { setStep, setSubTitle } from '../../reducers/buyFiatReducer';
 import { savedepositFiat, requestDepositFiat } from './api';
 import Loader from '../../Shared/loader';
 import success from '../../assets/images/success.png';
@@ -16,6 +16,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import apicalls from '../../api/apiCalls';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 import OnthegoFundTransfer from '../onthego.transfer';
+
 const LinkValue = (props) => {
   return (
     <Translate className="textpure-yellow text-underline c-pointer"
@@ -46,6 +47,7 @@ class FaitDeposit extends Component {
     this.props.fetchCurrencyWithBankDetails()
     if (this.props.sendReceive.withdrawFiatEnable) {
       this.handleshowTab(2);
+      this.props.dispatch(setSubTitle(apicalls.convertLocalLang("withdrawFiat")));
     } else {
       this.handleshowTab(1);
 
@@ -82,6 +84,7 @@ class FaitDeposit extends Component {
     }
   }
   handleshowTab = async (tabKey) => {
+    debugger
     this.setState({
       ...this.state,
       faitdeposit: tabKey === 2,
@@ -212,6 +215,7 @@ class FaitDeposit extends Component {
   onTermsChange = (chkd) => {
     this.setState({ ...this.state, isTermsAgreed: chkd })
   }
+ 
   renderModalContent = () => {
     return <>
       <div className="success-pop text-center mb-24">
@@ -229,15 +233,24 @@ class FaitDeposit extends Component {
     const link = <LinkValue content="terms_service" />;
     const { faitdeposit, BankInfo, depObj } = this.state;
     const { currenciesWithBankInfo } = this.props.depositInfo;
+    const { Search } = Input;
     return (
       <>
-        {!this.state.showSuccessMsg && <div className="text-center"><Radio.Group
+        {/* {!this.state.showSuccessMsg && <div className="text-center"><Radio.Group
           onChange={this.handleBuySellToggle}
           value={this.state.tabValue}
           className="buysell-toggle  crypto-toggle">
           <Translate content="deposit" component={Radio.Button} value={1} />
           <Translate content="withdraw" component={Radio.Button} value={2} />
-        </Radio.Group></div>}
+        </Radio.Group></div>} */}
+        {/* <Translate
+          className="mb-0 text-white-30 fs-14 fw-200 mt-16"
+          content="send_fiat_text"
+          component={Paragraph}
+        />
+        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+          <Search placeholder="Search Currency" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="text-center mt-12" />
+        </Col> */}
         {faitdeposit ?
           <div className='mt-16'>
            <OnthegoFundTransfer />
@@ -248,9 +261,14 @@ class FaitDeposit extends Component {
               {this.state?.errorMessage !== null && this.state?.errorMessage !== '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="error" message="" description={this.state?.errorMessage} closable />}
               {!this.state.showSuccessMsg && <Translate
                 className="mb-0 text-white-30 fs-14 fw-200 mt-16"
-                content="desposite_text"
+                content={this.props.sendReceive.withdrawFiatEnable ?  "send_fiat_text": "receive_fiat_text"}
                 component={Paragraph}
               />}
+               <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    {/* <Search placeholder="Search Currency" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="text-center mt-12" /> */}
+                </Col>
+               
+             
               <div className="my-36">
                 {!this.state.showSuccessMsg && <Form.Item
                   className="custom-forminput mb-24"
@@ -267,7 +285,9 @@ class FaitDeposit extends Component {
                         <Option key={idx} value={item.walletCode}>{item.walletCode}
                         </Option>
                       )}
-                    </Select></div></Form.Item>}
+                    </Select>
+                  </div></Form.Item>}
+                   
                 {this.state.BankInfo === null && depObj.currency !== null && this.state.BankDetails?.length === 0 && <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="bank_msg" /></Text>}
                 {this.state.BankDetails?.length > 1 && depObj.currency !== null && <Form.Item><Translate
                   className="input-label"

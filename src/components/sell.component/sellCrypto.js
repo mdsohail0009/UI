@@ -9,6 +9,7 @@ import { setCoin, setExchangeValue } from '../../reducers/buyReducer';
 import Currency from '../shared/number.formate';
 import { getSelectedCoinDetails } from '../buy.component/api'
 import apicalls from '../../api/apiCalls';
+import CryptoList from '../shared/cryptolist';
 
 class SellToggle extends Component {
     state = {
@@ -40,7 +41,7 @@ class SellToggle extends Component {
 
                 <div className="sellcrypto-container auto-scroll">
 
-                    {this.props.sellData?.memberCoins?.data?.map((coin, idx) => <Card key={idx} className="crypto-card mb-16 c-pointer" bordered={false} onClick={() => { this.setCoinDetailData(coin); this.props.setExchangeValue({ key: coin.coin, value: coin.oneCoinValue }); }} >
+                    {/* {this.props.sellData?.memberCoins?.data?.map((coin, idx) => <Card key={idx} className="crypto-card mb-16 c-pointer" bordered={false} onClick={() => { this.setCoinDetailData(coin); this.props.setExchangeValue({ key: coin.coin, value: coin.oneCoinValue }); }} >
                     <div className="crypto-details d-flex">
                     <div>
                         <span className="d-flex align-center mb-4">
@@ -57,7 +58,9 @@ class SellToggle extends Component {
                                 <Currency prefix={"$ "} defaultValue={coin.coinValueinNativeCurrency} suffixText="" />
                             </div>
                         </div>
-                    </Card>)}
+                    </Card>)} */}
+
+    <CryptoList ref={this.ref} isLoading={this.state?.loading} showSearch={true} coinList={this.props?.sellData?.memberCoins?.data} coinType="Sell" onCoinSelected={(coin) => this.setCoinDetailData(coin)} />
                 </div>
             </>
         )

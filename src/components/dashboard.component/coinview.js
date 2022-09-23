@@ -12,7 +12,7 @@ import { updateCoinDetail } from '../../reducers/sellReducer'
 import { convertCurrency } from '../buy.component/buySellService';
 import apiCalls from '../../api/apiCalls';
 import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboardReducer'
-import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle, setWithdrawfiatenaable, setWithdrawfiat, setWalletAddress } from "../../reducers/sendreceiveReducer";
+import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle, setWithdrawfiatenaable, setWithdrawfiat, setWalletAddress, setSendCrypto } from "../../reducers/sendreceiveReducer";
 import NumberFormat from "react-number-format";
 import { coinSubject } from '../../utils/pubsub';
 import { createCryptoDeposit } from '../deposit.component/api';
@@ -110,7 +110,7 @@ componentWillUnmount(){
         selectedObj.withdrawMinValue = selectedObj.withDrawMinValue
         this.props.dispatch(fetchWithDrawWallets({ customerId: this.props?.userProfile?.id }));
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
-        this.props.dispatch(setSubTitle(apiCalls.convertLocalLang("selectCurrencyinWallet")));
+        this.props.dispatch(setSubTitle(apiCalls.convertLocalLang("wallet_address")));
         let coin = value.symbol.toUpperCase();
         if (!this.props?.userProfile?.isKYC) {
             this.props.history.push("/notkyc");
@@ -135,6 +135,7 @@ componentWillUnmount(){
         }
         if (e == 2) {
             this.props.dispatch(setWithdrawfiatenaable(true))
+            this.props.dispatch(setSendCrypto(true));
             this.props.dispatch(setWithdrawfiat({ walletCode: coin }))
             this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
             this.props.changeStep('withdraw_crypto_selected');

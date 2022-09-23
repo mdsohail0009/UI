@@ -13,7 +13,7 @@ import { updateCoinDetail } from '../../reducers/sellReducer'
 import { convertCurrency } from '../buy.component/buySellService';
 import { withRouter, Link } from 'react-router-dom';
 import apiCalls from '../../api/apiCalls';
-import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle, setWithdrawfiatenaable, setWithdrawfiat,setWalletAddress } from "../../reducers/sendreceiveReducer";
+import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle, setWithdrawfiatenaable, setWithdrawfiat,setWalletAddress, setSendCrypto } from "../../reducers/sendreceiveReducer";
 import { getcoinDetails } from './api';
 import {createCryptoDeposit} from "../deposit.component/api";
 import TransactionsHistory from "../transactions.history.component";
@@ -103,7 +103,7 @@ class YourPortfolio extends Component {
       selectedObj.withdrawMinValue = selectedObj.withdrawMinValue
       this.props.dispatch(fetchWithDrawWallets({ customerId: this.props?.userProfile?.id }));
       this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
-      this.props.dispatch(setSubTitle(apiCalls.convertLocalLang("selectCurrencyinWallet")));
+      this.props.dispatch(setSubTitle(apiCalls.convertLocalLang("wallet_address")));
       let coin = value.coin?.toUpperCase();
       if (!this.props?.userProfile?.isKYC) {
           this.props.history.push("/notkyc");
@@ -130,6 +130,7 @@ class YourPortfolio extends Component {
           this.props.dispatch(setWithdrawfiatenaable(true))
           this.props.dispatch(setWithdrawfiat({ walletCode: coin }))
           this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
+          this.props.dispatch(setSendCrypto(true));
           this.props.changeStep('withdraw_crypto_selected');
         //   this.setState({
         //     ...this.state,
@@ -221,10 +222,10 @@ class YourPortfolio extends Component {
                 <span className="icon sm right-angle ml-4" />
               </Link>
 
-              <Button className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
+              {/* <Button className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
                   <Translate content="cockpit" />
                   <span className="icon sm right-angle ml-4" />
-              </Button>
+              </Button> */}
                     
               </div>
             </div> */}

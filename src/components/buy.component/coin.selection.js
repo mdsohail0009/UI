@@ -14,13 +14,12 @@ class CryptoComponent extends Component {
     ref = React.createRef();
     constructor(props) {
         super(props)
-
         this.state = {
             buyDrawer: false,
             crypto: config.tlvCoinsList,
             buyToggle: 'Buy',
             isBuy: false,
-            tabKey: 1
+            tabKey: props.isTab ? 2 : 1
         }
         this.buySellEventTracks = this.buySellEventTracks.bind(this);
     }
@@ -59,7 +58,7 @@ class CryptoComponent extends Component {
         const { coins: coinListdata } = this.props?.buyInfo;
         return (
             <>
-                <div className="text-center">
+                {/* <div className="text-center">
                     <Radio.Group
                         value={this.props.buySell.tabKey}
                         onChange={this.handleBuySellToggle}
@@ -67,10 +66,10 @@ class CryptoComponent extends Component {
                         <Translate content="buy" component={Radio.Button} value={1} />
                         <Translate content="sell" component={Radio.Button} value={2} />
                     </Radio.Group>
-                </div>
-                {this.props.buySell.tabKey === 1 ? <>
-                    <Translate content="sell_your_crypto_for_cash_text" component={Paragraph} className="text-white-30 fw-300 fs-16 mt-16" />
-                    <Tabs className="crypto-list-tabs" onChange={(key) => {
+                </div> */}
+                {this.props.buySell.tabKey === 1 && !this.props.isTab ? <>
+                    <Translate content="buy_your_crypto_for_cash_text" component={Paragraph} className="text-white-30 fw-300 fs-16 mt-16" />
+                    {/* <Tabs className="crypto-list-tabs" onChange={(key) => {
                         const types = {
                             1: "All", 2: "Gainers", 3: "Losers"
                         };
@@ -87,7 +86,9 @@ class CryptoComponent extends Component {
                         <TabPane tab={<Translate content="losers" component={Tabs.TabPane.tab} className="custom-font fw-400 fs-16" ></Translate>} key="3">
                             <CryptoList ref={this.ref} coinType="Losers" showSearch={true} isLoading={coinListdata["Losers"]?.loading} coinList={coinListdata["Losers"]?.data} onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
                         </TabPane>
-                    </Tabs></> : <>
+                    </Tabs> */}
+                    <CryptoList ref={this.ref} isLoading={coinListdata["All"]?.loading} showSearch={true} coinList={coinListdata["All"]?.data} coinType="All" onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
+                    </> : <>
                     <Translate content="sell_your_crypto_for_cash_text" component={Paragraph} className="text-white-30 fw-300 fs-16 mt-16" />
                     <SellToggle /></>
                 }

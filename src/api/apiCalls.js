@@ -177,6 +177,19 @@ const getRecipientData=(customerId,type,addressbookId)=>{
         ApiControllers.addressbook + `payee/Withdraw/Favourite/${addressbookId}/${customerId}/${type}`
     );
 }
+const getPayeeCryptoLu = (customerId,currency) => {
+	return apiClient.get(
+		ApiControllers.addressbook + `PayeeCryptoLu/${customerId}/${currency}`
+	);
+};
+const getPayeeCrypto = (customerId,currency) => {
+	return apiClient.get(
+		ApiControllers.addressbook + `PayeeCrypto/${customerId}/${currency}`
+	);
+};
+const confirmCryptoTransaction = (obj) => {
+    return apiClient.post(ApiControllers.withdraw + `/Crypto/Confirm`, obj);
+}
 let apicalls = {
 	getportfolio,
 	getCryptos,
@@ -207,6 +220,9 @@ let apicalls = {
 	getVerificationFields,
 	twofactor,
 	getInfoVal,
-	getReferalDetails,getPayeeLu,saveTransferData,getRecipientData,getCustomerBankDetails
+	getReferalDetails,getPayeeLu,saveTransferData,getRecipientData,getCustomerBankDetails,
+	getPayeeCryptoLu,
+	getPayeeCrypto,
+	confirmCryptoTransaction
 };
 export default apicalls;

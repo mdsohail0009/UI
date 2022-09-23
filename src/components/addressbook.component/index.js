@@ -25,6 +25,7 @@ import { setCurrentAction } from '../../reducers/actionsReducer'
 import AddressBookV2 from "../addressbook.v2/fiat.address";
 import AddressBookV3 from "../addressbook.v3";
 import AddressCommonCom from "./addressCommonCom";
+import AddressCypto from "./addressCrypto"
 const { Paragraph, Text, Title } = Typography;
 const addressName = { "1stparty": "1st Party", "3rdparty": "3rd Party" };
 class AddressBook extends Component {
@@ -221,28 +222,34 @@ class AddressBook extends Component {
 				</td>
 			),
 		},
+		
 		{
 			field: "favouriteName",
-			title: apiCalls.convertLocalLang("favorite_name"),
+			title: "Save Whitelist Name As",
 			filter: true,
-			width: 300,
+			width: 250,
 			customCell: (props) => (
 				<td>
 					<div className="gridLink" onClick={() => this.addressCryptoView(props)}>
 						{props.dataItem.favouriteName}
 					</div>
-					<Text className="file-label ml-8 fs-12">
+					{/* <Text className="file-label ml-8 fs-12">
 						{addressName[props?.dataItem?.addressType]}
-					</Text>
+					</Text> */}
 				</td>
 			),
 		},
 		{
-
-			field: "addressLable",
-			title: apiCalls.convertLocalLang("AddressLabel"),
+			field: "coin",
+			title: "Token",
 			filter: true,
-			width: 230,
+			width: 120,
+		},
+		{
+			field: "network",
+			title: "Network",
+			filter: true,
+			width: 120,
 		},
 		{
 			field: "address",
@@ -250,23 +257,12 @@ class AddressBook extends Component {
 			filter: true,
 			width: 380,
 		},
-		{
-			field: "coin",
-			title: apiCalls.convertLocalLang("Coin"),
-			filter: true,
-			width: 120,
-		},
+		
 		{
 			field: "addressState",
 			title: apiCalls.convertLocalLang("addressState"),
 			filter: true,
 			width: 180,
-		},
-		{
-			field: "status",
-			title: apiCalls.convertLocalLang("Status"),
-			filter: true,
-			width: 100,
 		},
 		{
 			field: "isWhitelisted",
@@ -284,6 +280,12 @@ class AddressBook extends Component {
 			filter: false,
 			width: 200,
 		},
+		{
+			field: "status",
+			title: apiCalls.convertLocalLang("Status"),
+			filter: true,
+			width: 100,
+		},
 	];
 	async downloadDeclarationForm(dataItem) {
 		this.setState({ ...this.state, isDownloading: true, selectedDeclaration: dataItem.payeeAccountId });
@@ -295,7 +297,7 @@ class AddressBook extends Component {
 	}
 
 	handleInputChange = (prop, e) => {
-
+debugger
 		this.setState({ ...this.state, errorWorning: null });
 		const rowObj = prop.dataItem;
 		const value =
@@ -449,6 +451,7 @@ class AddressBook extends Component {
 		this.props.history.push(`/addressCryptoView/${dataItem.id}`);
 	};
 	editAddressBook = () => {
+		debugger
 		this.setState({ ...this.state, errorWorning: null, selection: [] });
 		let obj = this.state.selectedObj;
 		if (!this.state.isCheck) {
@@ -513,6 +516,7 @@ class AddressBook extends Component {
 		}
 	};
 	closeBuyDrawer = (obj) => {
+		debugger
 		let showCrypto = false, showFiat = false;
 		if (obj) {
 			if (obj.isCrypto)
@@ -530,6 +534,21 @@ class AddressBook extends Component {
 			this.gridCryptoRef.current.refreshGrid();
 		}
 	};
+
+	closeCryptoDrawer=(obj)=>{
+		let showCrypto = false
+		if (obj) {
+			if (obj.isCrypto)
+				showCrypto = !obj?.close;
+			
+		};
+		this.setState({ ...this.state, visible: showCrypto, selectedObj: {} });
+		this.props.rejectCoinWallet();
+		this.props.clearFormValues();
+		this.props.clearCrypto();
+		this.gridCryptoRef.current.refreshGrid();
+		
+	}
 	backStep = () => {
 		this.props.changeStep("step1");
 	};
@@ -582,7 +601,7 @@ class AddressBook extends Component {
 	renderContent = () => {
 		const stepcodes = {
 			cryptoaddressbook: (<>
-				<AddressCommonCom onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1} />
+				<AddressCypto onCancel={(obj) => this.closeCryptoDrawer(obj)} cryptoTab={1} selectedAddress={this.state.selectedObj}/>
 			</>
 			),
 			selectcrypto: <SelectCrypto />,
@@ -701,7 +720,7 @@ class AddressBook extends Component {
 							{this.renderTitle()}
 							<div className="text-center fs-16">
 								<Translate
-									className="text-white-30 fw-600 text-upper mb-4"
+									className="text-white-30 fw-600 text-upper mb-4 fs-24"
 									content={
 										this.props.addressBookReducer.stepTitles[
 										config[this.props.addressBookReducer.stepcode]
@@ -774,8 +793,8 @@ class AddressBook extends Component {
 					footer={
 						<>
 							<Button
-								style={{ width: "100px", border: "1px solid #f2f2f2" }}
-								className=" pop-cancel"
+								style={{ width: 120, border: "1px solid #f2f2f2",height: 50 }}
+								className="primary-btn pop-btn"
 								onClick={this.handleCancel}>
 								No
 							</Button>

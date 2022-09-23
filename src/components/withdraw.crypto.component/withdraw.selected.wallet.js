@@ -21,6 +21,7 @@ import Loader from '../../Shared/loader';
 import CryptoTransfer from "../onthego.transfer/crypto.transfer"
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService';
 import { handleNewExchangeAPI } from "../send.component/api";
+import { validateCryptoAmount } from '../onthego.transfer/api';
 
 const { Paragraph, Text } = Typography;
 
@@ -48,8 +49,10 @@ class CryptoWithDrawWallet extends Component {
             isVerificationMethodsChecked: true,
             propsData: {},
             isVerificationLoading: true,
-            showFuntransfer:false,
-            errorMsg:null
+            showFuntransfer: false,
+            errorMsg: null,
+            newtransferLoader: false,
+            addressLoader: false
         }
     }
     async checkVerification() {
@@ -69,7 +72,7 @@ class CryptoWithDrawWallet extends Component {
         const isVerified = await this.checkVerification();
         if (isVerified) {
             if (this.props.sendReceive.withdrawCryptoObj) {
-                this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.withdrawCryptoObj?.totalValue, localValue: 0 })
+                this.eleRef.current?.handleConvertion({ cryptoValue: this.props.sendReceive?.withdrawCryptoObj?.totalValue, localValue: 0 })
                 this.setState({ ...this.state, walletAddress: this.props.sendReceive.withdrawCryptoObj.toWalletAddress, amountPercentageType: this.props.sendReceive.withdrawCryptoObj.amounttype });
             } else {
                 this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 })
@@ -138,9 +141,10 @@ class CryptoWithDrawWallet extends Component {
         };
         return titles[config[this.props.addressBookReducer.stepcode]];
     };
-    selectCrypto = (type) => {
+    selectCrypto = async (type,buttonLoader) => {
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
-        this.props.dispatch(setSubTitle(apicalls.convertLocalLang('select_address')));
+       // this.props.dispatch(setSubTitle(apicalls.convertLocalLang('send_crypto_address')));
+       this.props.dispatch(setSubTitle(""))
         let obj = {
             "customerId": this.props.userProfile.id,
             "customerWalletId": id,
@@ -153,19 +157,62 @@ class CryptoWithDrawWallet extends Component {
             'amounttype': this.state.amountPercentageType
         }
         this.props.dispatch(setWithdrawcrypto(obj))
-        this.setState({ ...this.state, loading: true })
+        this.props.dispatch(setSubTitle(apicalls.convertLocalLang('wallet_address')));
+        this.setState({ ...this.state, loading: true, newtransferLoader: true  })
         if (type == "ADDRESS") {
             this.props.changeStep('step8');
-        } else {
-            this.setState({
-                ...this.state, visible: true, errorWorning: null, showFuntransfer: true
-                // , selection: [],
-                // isCheck: false,
-            });
+            this.props.dispatch(setSubTitle(""))
+        }
+        else {
+            this.amountNext(type,buttonLoader);
         }
 
-
     }
+
+    amountNext = async (type,loader) => {
+        const amt = parseFloat(this.state.CryptoAmnt);
+            const { withdrawMaxValue, withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
+            this.setState({ ...this.state, error: null });
+            if (this.state.CryptoAmnt === "") {
+                this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('enter_amount') });
+                this.myRef.current.scrollIntoView();
+            }
+            else if (this.state.CryptoAmnt === "0" || amt === 0) {
+                this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_greater_zero') });
+                this.myRef.current.scrollIntoView();
+            }
+            else if (amt < withdrawMinValue) {
+                this.setState({ ...this.state, error: apicalls.convertLocalLang('amount_min') + " " + withdrawMinValue });
+                this.myRef.current.scrollIntoView();
+            } else if (amt > withdrawMaxValue) {
+                this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_max') + " " + withdrawMaxValue });
+                this.myRef.current.scrollIntoView();
+            } else if (amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
+                this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_less') });
+                this.myRef.current.scrollIntoView();
+            }
+            else {
+                const validObj = {
+                    CustomerId: this.props.userProfile?.id,
+                    amount: this.state.CryptoAmnt ? this.state.CryptoAmnt : null,
+                    WalletCode: this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin
+                }
+                this.setState({ ...this.state, [loader]: true, errorMessage: null, errorMsg: null });
+                const res = await validateCryptoAmount(validObj);
+                if (res.ok) {
+                    this.props.dispatch(setSubTitle(""));
+                    type == "ADDRESSBOOK" ?  this.setState({ ...this.state, loading: false, [loader]: false, errorMsg: null }, () => this.props.changeStep('step10')): 
+                    this.setState({
+                        ...this.state, visible: true, errorWorning: null, errorMsg: null, [loader]: false, showFuntransfer: true
+                    });
+                } else {
+                    this.setState({ ...this.state, loading: false, [loader]: false, errorMsg: this.isErrorDispaly(res) })
+                    this.myRef.current.scrollIntoView();
+                }
+            }
+           
+        } 
+       
 
     clickMinamnt(type) {
         let usdamnt; let cryptoamnt;
@@ -233,31 +280,31 @@ class CryptoWithDrawWallet extends Component {
             "CustomerRemarks": this.state.customerRemarks
         }
         const response = await handleNewExchangeAPI({
-			customerId: this.props?.userProfile?.id,
-			amount: obj.totalValue,
-			address: obj.toWalletAddress,
-			coin: obj.walletCode,
-		});
-		if (response.ok) {
+            customerId: this.props?.userProfile?.id,
+            amount: obj.totalValue,
+            address: obj.toWalletAddress,
+            coin: obj.walletCode,
+        });
+        if (response.ok) {
             this.props.dispatch(setWithdrawcrypto(obj))
             this.props.changeStep('withdraw_crpto_summary');
-		} else {
-			this.setState({ ...this.state, loading: false,errorMsg:this.isErrorDispaly(response) });
+        } else {
+            this.setState({ ...this.state, loading: false, errorMsg: this.isErrorDispaly(response) });
             this.myRef.current.scrollIntoView()
-		}
+        }
         //this.props.dispatch(setSubTitle(apicalls.convertLocalLang('withdrawSummary')));
-       
+
     }
     isErrorDispaly = (objValue) => {
-		if (objValue.data && typeof objValue.data === "string") {
-			return objValue.data;
-		} else if (objValue.originalError && typeof objValue.originalError.message === "string"
-		) {
-			return objValue.originalError.message;
-		} else {
-			return "Something went wrong please try again!";
-		}
-	};
+        if (objValue.data && typeof objValue.data === "string") {
+            return objValue.data;
+        } else if (objValue.originalError && typeof objValue.originalError.message === "string"
+        ) {
+            return objValue.originalError.message;
+        } else {
+            return "Something went wrong please try again!";
+        }
+    };
     renderModalContent = () => {
         if (!this.props?.sendReceive?.cryptoWithdraw?.selectedWallet) { return null }
         const { walletAddress, CryptoAmnt, confirmationStep } = this.state;
@@ -328,7 +375,7 @@ class CryptoWithDrawWallet extends Component {
 
     }
 
-    handleModalClose=(childData)=>{
+    handleModalClose = (childData) => {
         this.setState({ ...this.state, showFuntransfer: childData })
     }
 
@@ -373,7 +420,7 @@ class CryptoWithDrawWallet extends Component {
                             <div>
                                 <span className="d-flex align-center mb-4">
                                     <Image preview={false} src={selectedWallet.impageWhitePath} />
-                                    <Text className="crypto-percent">{selectedWallet?.percentage}<sup className="percent fw-700">%</sup></Text>
+                                    {/* <Text className="crypto-percent">{selectedWallet?.percentage}<sup className="percent fw-700">%</sup></Text> */}
                                 </span>
                                 <Text className="fs-24 text-purewhite ml-4">{selectedWallet?.coinFullName}</Text>
 
@@ -409,7 +456,7 @@ class CryptoWithDrawWallet extends Component {
                     </div>
 
                     <Form>
-                        <Form.Item
+                        {/* <Form.Item
                             name="toWalletAddress"
                             className="custom-forminput custom-label  mb-16"
                             required
@@ -420,27 +467,36 @@ class CryptoWithDrawWallet extends Component {
 
                                     disabled={true} onChange={({ currentTarget: { value } }) => { this.setState({ ...this.state, walletAddress: value }); this.props.clearAddress(null) }}
                                     maxLength="250" />
-                                {/* <Tooltip placement="top" title="Send to new wallet" style={{ flexGrow: 1 }}>
-                                    <div className="new-add c-pointer" style={{borderRadius:'0'}} onClick={() => this.selectCrypto()}>
-                                        <span className="icon md diag-arrow d-block c-pointer"></span>
-                                    </div>
-                                </Tooltip> */}
+                             
                                 <Tooltip placement="top" title={<span>{apicalls.convertLocalLang('SelectAddress')}</span>} style={{ flexGrow: 1 }}>
                                     <div className="new-add c-pointer" onClick={() => this.selectCrypto("ADDRESS")}>
                                         <span className="icon md diag-arrow d-block c-pointer"></span>
                                     </div>
                                 </Tooltip>
                             </div>
-                        </Form.Item>
-                        <div className="text-center mt-24 mb-24 ">
-                        <Button key="back" className='ant-btn  pop-btn'   onClick={() => this.selectCrypto()} >
-                            New Transfer
-                        </Button>,
-                        <Button key="submit" type="primary" className='ant-btn  pop-btn' style={{marginLeft:"10px"}} onClick={() => this.selectCrypto("ADDRESS")}>
-                            Whitelisted Address
-                        </Button>
-                        </div>
-                        <Form.Item
+                        </Form.Item> */}
+                        <Row gutter={[4, 4]} className="text-center mt-24 mb-24">
+                            <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
+                                <Form.Item className="text-center">
+                                    <Button key="back" className='ant-btn pop-btn' style={{width:"100%"}} 
+                                     loading={this.state.loading || this.state.newtransferLoader}
+                                     disabled={this.state.addressLoader}
+                                    onClick={() => this.selectCrypto('NEWTRANSFER',"newtransferLoader")} >
+                                        New Transfer
+                                    </Button>
+                                </Form.Item>
+                            </Col>
+                            <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
+                                <Form.Item className="text-center">
+                                    <Button key="submit" type="primary" className='ant-btn pop-btn' style={{ marginLeft: "10px",width:"100%" }} 
+                                    loading={this.state.loading || this.state.addressLoader} onClick={() => this.selectCrypto("ADDRESSBOOK","addressLoader")}
+                                    disabled={this.state.newtransferLoader} >
+                                        Address Book
+                                    </Button>
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        {/* <Form.Item
                             className="custom-forminput custom-label mb-0"
                             name="CustomerRemarks"
                             label="Customer Remarks"
@@ -456,9 +512,9 @@ class CryptoWithDrawWallet extends Component {
                                 maxLength={200}
                                 placeholder="Customer Remarks"
                             />
-                        </Form.Item>
+                        </Form.Item> */}
                     </Form>
-                    <Translate content="Confirm_crypto" loading={this.state.loading} component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.handlePreview()} target="#top" />
+                    {/* <Translate content="Confirm_crypto" loading={this.state.loading} component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.handlePreview()} target="#top" /> */}
                     <Modal onCancel={() => { this.setState({ ...this.state, showModal: false }) }} title="Withdrawal" footer={[
                         <Button key="back" onClick={this.handleCancel} disabled={this.state.loading}>
                             Return
