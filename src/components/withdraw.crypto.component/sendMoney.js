@@ -10,7 +10,7 @@ import apiCalls from "../../api/apiCalls";
 import { setAddressStep} from "../../reducers/addressBookReducer";
 import CryptoTransfer from '../onthego.transfer/crypto.transfer';
 import {fetchPayees, fetchPastPayees,confirmTransaction, validateAmount } from '../onthego.transfer/api';
-import AddressCommonCom from '../addressbook.component/addressCommonCom';
+import AddressCypto from '../addressbook.component/addressCommonCom';
 import SelectCrypto from '../addressbook.component/selectCrypto';
 import { processSteps as config } from "../addressbook.component/config";
 import Translate from 'react-translate-component';
@@ -151,7 +151,7 @@ class SendMoney extends Component {
     renderContent = () => {
         const stepcodes = {
             cryptoaddressbook: (<>
-                <AddressCommonCom onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1} />
+                <AddressCypto onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1} />
             </>
             ),
             selectcrypto: <SelectCrypto />,
