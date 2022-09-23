@@ -10,7 +10,7 @@ import WAValidator from "multicoin-address-validator";
 const { Text, Title } = Typography;
 const { Option } = Select;
 
-class AddAddressCypto extends Component {
+class AddressCypto extends Component {
   form = React.createRef();
   useDivRef = React.createRef()
   constructor(props) {
@@ -172,6 +172,7 @@ if(this.props.sendReceive.cryptoWithdraw.selectedWallet){
             ref={this.form}
             onFinish={this.submit}
           >
+            Hellow
             <Form.Item className="custom-label"
               name="saveWhiteListName"
               label="Save Whitelist Name As"
@@ -289,4 +290,4 @@ const connectDispatchToProps = dispatch => {
   }
 }
 
-export default connect(connectStateToProps, connectDispatchToProps)(AddAddressCypto);
+export default connect(connectStateToProps, connectDispatchToProps)(AddressCypto);

@@ -25,7 +25,7 @@ import { setCurrentAction } from '../../reducers/actionsReducer'
 import AddressBookV2 from "../addressbook.v2/fiat.address";
 import AddressBookV3 from "../addressbook.v3";
 import AddressCommonCom from "./addressCommonCom";
-import AddAddressCypto from "../addressCrypto.component/addAddressCrypto"
+import AddressCypto from "./addressCrypto"
 const { Paragraph, Text, Title } = Typography;
 const addressName = { "1stparty": "1st Party", "3rdparty": "3rd Party" };
 class AddressBook extends Component {
@@ -601,7 +601,7 @@ debugger
 	renderContent = () => {
 		const stepcodes = {
 			cryptoaddressbook: (<>
-				<AddAddressCypto onCancel={(obj) => this.closeCryptoDrawer(obj)} cryptoTab={1} selectedAddress={this.state.selectedObj}/>
+				<AddressCypto onCancel={(obj) => this.closeCryptoDrawer(obj)} cryptoTab={1} selectedAddress={this.state.selectedObj}/>
 			</>
 			),
 			selectcrypto: <SelectCrypto />,
