@@ -2,7 +2,7 @@ import React, { Component} from "react";
 import { Form, Typography, Input, Button, Select, Image, Alert } from "antd";
 import alertIcon from '../../assets/images/pending.png';
 import { setAddressStep } from "../../reducers/addressBookReducer";
-import { setAddress, setStep } from "../../reducers/sendreceiveReducer";
+import { setAddress, setStep, setWithdrawcrypto } from "../../reducers/sendreceiveReducer";
 import { connect } from "react-redux";
 import { getCryptoData, saveCryptoData, getCoinList, networkLu } from "./api";
 import Loader from '../../Shared/loader';
@@ -118,11 +118,28 @@ if(this.props.sendReceive.cryptoWithdraw.selectedWallet){
         this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
       }
       else {
+        let _obj = this.props.sendReceive?.withdrawCryptoObj;
+        this.props?.dispatch(setWithdrawcrypto({..._obj, network: values?.network}));
         this.props.changeStep('withdraw_crpto_summary');
       }
     }
+    else {
+			this.setState({ ...this.state, isBtnLoading: false,  errorMessage: this.isErrorDispaly(response), });
+		}
 
   }
+
+  isErrorDispaly = (objValue) => {
+    if (objValue.data && typeof objValue.data === "string") {
+      return objValue.data;
+    } else if (objValue.originalError && typeof objValue.originalError.message === "string"
+    ) {
+      return objValue.originalError.message;
+    } else {
+      return "Something went wrong please try again!";
+    }
+  };
+
   validateAddressType = (_, value) => {
     if (value) {
       let address = value.trim();
