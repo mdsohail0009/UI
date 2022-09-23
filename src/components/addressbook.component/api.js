@@ -124,10 +124,8 @@ const getCryptoData = (id,customerId) => {
 	);
 };
 
-const saveCryptoData = (id,customerId) => {
-	return apiClient.get(
-		ApiControllers.addressbook + `Crypto/${id}/${customerId}`
-	);
+const saveCryptoData = (obj) => {
+	return apiClient.post(ApiControllers.addressbook + `Crypto`, obj);
 };
 const networkLu = (coinName) => {
     return apiClient.get(
