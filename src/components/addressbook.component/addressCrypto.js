@@ -172,7 +172,6 @@ if(this.props.sendReceive.cryptoWithdraw.selectedWallet){
             ref={this.form}
             onFinish={this.submit}
           >
-            Hellow
             <Form.Item className="custom-label"
               name="saveWhiteListName"
               label="Save Whitelist Name As"

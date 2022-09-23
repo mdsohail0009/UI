@@ -774,7 +774,7 @@ class WithdrawSummary extends Component {
 								component={Text}
 							/>
 							<Text className="fw-400 text-white">
-							{this.props.sendReceive.withdrawCryptoObj?.network}
+							{this.props.sendReceive.withdrawCryptoObj?.network || '-'}
 							</Text>
 						</div>
 						<Form

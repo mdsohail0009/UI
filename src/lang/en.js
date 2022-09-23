@@ -112,7 +112,7 @@ export default {
 	deposite_Btc: "Receive BTC",
 	sell_your_crypto_for_cash: "Sell your Crypto for Cash",
 	buy_your_crypto_for_cash_text:
-		"Easily buy crypto straight from your wallet.",
+		"Easily buy crypto straight to your wallet.",
 	sell_your_crypto_for_cash_text:
 		"Easily sell crypto straight from your wallet.",
 	sell_your_fiat_for_cash: "Sell your Fiat for Cash",
