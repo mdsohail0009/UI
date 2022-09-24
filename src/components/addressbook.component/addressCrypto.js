@@ -148,27 +148,7 @@ class AddressCrypto extends Component {
       return Promise.reject('Is required');
     }
   };
-  // validateAddressType = (_, value) => {
-  //   debugger
-  //   if (value) {
-  //     let address = value.trim();
-  //     let coinType = this.form?.current?.getFieldsValue("token");
-  //     if (coinType) {
-  //       const validAddress = WAValidator.validate(address, coinType.token, "both");
-  //       if (!validAddress) {
-  //         return Promise.reject(
-  //           "Address is not valid, Please enter a valid address according to the coin selected"
-  //         );
-  //       } else {
-  //         return Promise.resolve();
-  //       }
-  //     } else {
-  //       return Promise.reject("Please select a coin first");
-  //     }
-  //   } else {
-  //     return Promise.reject('Is required');
-  //   }
-  // };
+
   render() {
     const { isLoading, errorMessage, showDeclartion, cryptoData, coinsList, networksList } = this.state;
     if (isLoading) {
