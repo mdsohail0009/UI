@@ -2,7 +2,7 @@ import React, { Component} from "react";
 import { Form, Typography, Input, Button, Select, Image, Alert } from "antd";
 import alertIcon from '../../assets/images/pending.png';
 import { setAddressStep } from "../../reducers/addressBookReducer";
-import { setAddress, setStep } from "../../reducers/sendreceiveReducer";
+import { setAddress, setStep, setWithdrawcrypto } from "../../reducers/sendreceiveReducer";
 import { connect } from "react-redux";
 import { getCryptoData, saveCryptoData, getCoinList, networkLu } from "./api";
 import Loader from '../../Shared/loader';
@@ -11,7 +11,7 @@ import { validateContentRule } from "../../utils/custom.validator";
 const { Text, Title } = Typography;
 const { Option } = Select;
 
-class AddressCypto extends Component {
+class AddressCrypto extends Component {
   form = React.createRef();
   useDivRef = React.createRef()
   constructor(props) {
@@ -119,6 +119,8 @@ if(this.props.sendReceive.cryptoWithdraw.selectedWallet){
         this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
       }
       else {
+        let _obj = this.props.sendReceive?.withdrawCryptoObj;
+        this.props?.dispatch(setWithdrawcrypto({..._obj, network: values?.network, isShowDeclaration: true}));
         this.props.changeStep('withdraw_crpto_summary');
       }
     }
@@ -200,7 +202,6 @@ if(this.props.sendReceive.cryptoWithdraw.selectedWallet){
                   required: true,
                   message: "Is required",
                 },
-                
               ]} >
               <Select
                 className="cust-input"
@@ -295,4 +296,4 @@ const connectDispatchToProps = dispatch => {
   }
 }
 
-export default connect(connectStateToProps, connectDispatchToProps)(AddressCypto);
+export default connect(connectStateToProps, connectDispatchToProps)(AddressCrypto);

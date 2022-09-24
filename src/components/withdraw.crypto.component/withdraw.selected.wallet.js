@@ -13,7 +13,7 @@ import SuccessMsg from './success';
 import apicalls from '../../api/apiCalls';
 import { validateContent, validateContentRule } from '../../utils/custom.validator';
 import { processSteps as config } from "../addressbook.component/config";
-import AddressCommonCom from "../addressbook.component/addressCommonCom";
+import AddressCrypto from "../addressbook.component/addressCrypto";
 import SelectCrypto from "../addressbook.component/selectCrypto";
 import apiCalls from "../../api/apiCalls";
 import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
@@ -109,7 +109,7 @@ class CryptoWithDrawWallet extends Component {
         const stepcodes = {
             cryptoaddressbook: (<>
                 {/* <NewAddressBook onCancel={() => this.closeBuyDrawer()} /> */}
-                <AddressCommonCom onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1} />
+                <AddressCrypto onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1} />
             </>
             ),
             selectcrypto: <SelectCrypto />,

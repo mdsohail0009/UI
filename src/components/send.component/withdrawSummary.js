@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 
-import { Typography, Button, Alert,Drawer, Form, Input,Modal, Tooltip, Checkbox } from "antd";
+import { Typography, Button, Alert,Drawer, Form, Input,Modal, Tooltip, Checkbox, Image } from "antd";
 import { connect } from "react-redux";
+import alertIcon from '../../assets/images/pending.png';
 import Translate from "react-translate-component";
 import Loader from "../../Shared/loader";
 import Currency from "../shared/number.formate";
@@ -23,6 +24,8 @@ import NumberFormat from "react-number-format";
 import { setCurrentAction } from "../../reducers/actionsReducer";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import apicalls from '../../api/apiCalls';
+
+const { Text, Title } = Typography;
 
 class WithdrawSummary extends Component {
 	state = {
@@ -87,7 +90,8 @@ class WithdrawSummary extends Component {
 		btnLoading: false,
 		agreeRed: true,
 		permissions: {},
-		previewModal:false
+		previewModal:false,
+		showDeclartion: false,
 	};
 
 	useDivRef = React.createRef();
@@ -199,8 +203,9 @@ class WithdrawSummary extends Component {
         this.props.dispatch(setAddress(null))
 	}
 	handleNewExchangeRate = async () => {
+		debugger
 		this.setState({ ...this.state, loading: true });
-		const { totalValue, walletCode, toWalletAddress, addressBookId, network } =
+		const { totalValue, walletCode, toWalletAddress, addressBookId, network, isShowDeclaration } =
 			this.props.sendReceive?.withdrawCryptoObj;
 		let _obj = { ...this.props.sendReceive?.withdrawCryptoObj };
 		let withdrawObj = {
@@ -539,13 +544,24 @@ class WithdrawSummary extends Component {
 				saveObj.Createdby=this.props.userProfile.userName;
 				let withdrawal = await withDrawCrypto(saveObj);
 				if (withdrawal.ok) {
-					this.setState({ ...this.state, btnLoading: false })
-					this.props.dispatch(setCryptoFinalRes(withdrawal.data));
-					this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
-					this.props.dispatch(setWithdrawcrypto(null));
-					this.props.dispatch(setSubTitle(""));
-					this.props.changeStep("withdraw_crpto_success");
-					publishBalanceRfresh("success");
+					debugger
+					if(saveObj?.isShowDeclaration) {
+						this.props.dispatch(setCryptoFinalRes(withdrawal.data));
+						this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
+						this.props.dispatch(setWithdrawcrypto(null));
+						this.props.dispatch(setSubTitle(""));
+						this.setState({ ...this.state, errorMsg: null, isBtnLoading: false, showDeclartion: true });
+						publishBalanceRfresh("success");
+					}
+					else {
+						this.setState({ ...this.state, btnLoading: false })
+						this.props.dispatch(setCryptoFinalRes(withdrawal.data));
+						this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
+						this.props.dispatch(setWithdrawcrypto(null));
+						this.props.dispatch(setSubTitle(""));
+						this.props.changeStep("withdraw_crpto_success");
+						publishBalanceRfresh("success");
+					}
 				}
 
 				else {
@@ -599,7 +615,7 @@ class WithdrawSummary extends Component {
 
 	render() {
 		const { Paragraph, Text } = Typography;
-		const { seconds, disable, textDisable, seconds2, agreeRed } = this.state;
+		const { seconds, disable, textDisable, seconds2, agreeRed, showDeclartion } = this.state;
 		const link = <this.LinkValue content="terms_service" />;
 
 		const btnList = {
@@ -666,6 +682,19 @@ class WithdrawSummary extends Component {
 		if (this.state.loading) {
 			return <Loader />;
 		}
+		if (showDeclartion) {
+			return <div className="text-center">
+			  <Image width={80} preview={false} src={alertIcon} />
+			  <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully </Title>
+			  <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
+				   Please sign using link received in email to whitelist your address. `}</Text>
+			  <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
+			  <div className="my-25"><Button
+				onClick={() => { this.props.onBackCLick("step1"); this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: 2 })) }}
+				type="primary" className="mt-36 pop-btn text-textDark">BACK</Button></div>
+			</div>
+		  }
+		  else {
 		return (
 			<>
 				<div ref={this.useDivRef}></div>
@@ -1102,6 +1131,7 @@ class WithdrawSummary extends Component {
 				
 			</>
 		);
+	   }
 	}
 }
 

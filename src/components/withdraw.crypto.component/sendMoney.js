@@ -10,7 +10,7 @@ import apiCalls from "../../api/apiCalls";
 import { setAddressStep} from "../../reducers/addressBookReducer";
 import CryptoTransfer from '../onthego.transfer/crypto.transfer';
 import {fetchPayees, fetchPastPayees,confirmTransaction, validateAmount } from '../onthego.transfer/api';
-import AddressCypto from '../addressbook.component/addressCommonCom';
+import AddressCrypto from '../addressbook.component/addressCrypto';
 import SelectCrypto from '../addressbook.component/selectCrypto';
 import { processSteps as config } from "../addressbook.component/config";
 import Translate from 'react-translate-component';
@@ -99,7 +99,7 @@ class SendMoney extends Component {
     }
     handlePreview = (item) => {
         let obj = this.props.sendReceive.withdrawCryptoObj;
-        this.props.dispatch(setWithdrawcrypto({ ...obj, toWalletAddress: item.walletAddress, addressBookId: item.id, network: item.network }))
+        this.props.dispatch(setWithdrawcrypto({ ...obj, toWalletAddress: item.walletAddress, addressBookId: item.id, network: item.network, isShowDeclaration: false }))
         this.props.changeStep('withdraw_crpto_summary');
     }
 
@@ -151,7 +151,7 @@ class SendMoney extends Component {
     renderContent = () => {
         const stepcodes = {
             cryptoaddressbook: (<>
-                <AddressCypto onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1} />
+                <AddressCrypto onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1} />
             </>
             ),
             selectcrypto: <SelectCrypto />,
