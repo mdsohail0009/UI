@@ -68,11 +68,11 @@ class AddressCrypto extends Component {
     } else {
       this.setState({ ...this.state, coinsList: [], isLoading: false })
     }
-if(this.props.sendReceive.cryptoWithdraw.selectedWallet){
-  this.form?.current?.setFieldsValue({token:this.props.sendReceive.cryptoWithdraw.selectedWallet.coin})
-  let val=this.props.sendReceive.cryptoWithdraw.selectedWallet.coin
-  this.networkList(val)
-}
+    if(this.props.sendReceive.cryptoWithdraw.selectedWallet){
+      this.form?.current?.setFieldsValue({token:this.props.sendReceive.cryptoWithdraw.selectedWallet.coin})
+      let val=this.props.sendReceive.cryptoWithdraw.selectedWallet.coin
+      this.networkList(val)
+    }
   }
   networkList = async (val) => {
     let fromlist = await networkLu(val)
@@ -83,7 +83,7 @@ if(this.props.sendReceive.cryptoWithdraw.selectedWallet){
     }
   }
   handleTokenChange = (value) => {
-     this.form?.current?.setFieldsValue({network:null});
+    this.form?.current?.setFieldsValue({network:null});
     this.form?.current?.validateFields(["walletAddress"], this.validateAddressType(value))
     this.networkList(value)
   };
@@ -125,7 +125,7 @@ if(this.props.sendReceive.cryptoWithdraw.selectedWallet){
       }
     }
     else {
-        this.setState({ ...this.state, isBtnLoading: false,  errorMessage: this.isErrorDispaly(response), });
+      this.setState({ ...this.state, isBtnLoading: false,  errorMessage: this.isErrorDispaly(response), });
     }
   }
   validateAddressType = (_, value) => {
@@ -134,13 +134,13 @@ if(this.props.sendReceive.cryptoWithdraw.selectedWallet){
       let coinType = this.form?.current?.getFieldsValue("token");
       if (coinType) {
         const validAddress = WAValidator.validate(address, coinType.token, "both");
-          if (!validAddress) {
-            return Promise.reject(
-              "Address is not valid, Please enter a valid address according to the coin selected"
-            );
-          } else {
-            return Promise.resolve();
-          }
+        if (!validAddress) {
+          return Promise.reject(
+            "Address is not valid, Please enter a valid address according to the coin selected"
+          );
+        } else {
+          return Promise.resolve();
+        }
       } else {
         return Promise.reject("Please select a coin first");
       }
@@ -186,7 +186,7 @@ if(this.props.sendReceive.cryptoWithdraw.selectedWallet){
                 },
                 {
                   validator: validateContentRule,
-              },
+                },
               ]}
             >
               <Input className="cust-input" maxLength={100} placeholder="Save Whitelist Name As" />
