@@ -129,7 +129,6 @@ class AddressCrypto extends Component {
     }
   }
   validateAddressType = (_, value) => {
-    debugger
     if (value) {
       let address = value.trim();
       let coinType = this.form?.current?.getFieldValue("token");
