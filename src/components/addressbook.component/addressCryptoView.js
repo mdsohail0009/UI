@@ -44,10 +44,60 @@ const AddressCryptoView = (props) => {
 		props?.dispatch(addressTabUpdate(false));
 	};
 
+	const docPreview = async (file) => {
+		debugger
+		let res = await getFileURL({ url: file.path });
+		if (res.ok) {
+			setPreviewModal(true);
+			setPreviewPath(res.data);
+		}
+	};
+	const filePreviewPath = () => {
+		return previewPath;
 
+	};
 	const iban = cryptoAddress?.bankType === "iban" ? "IBAN" : "Bank Account"
 	const iban1 = cryptoAddress?.bankType === "iban" ? "IBAN" : "Bank Account Number"
-
+	const filePreviewModal = (
+		<Modal
+			className="documentmodal-width"
+			destroyOnClose={true}
+			title="Preview"
+			width={1000}
+			visible={previewModal}
+			closeIcon={
+				<Tooltip title="Close">
+					<span
+						className="icon md close-white c-pointer"
+						onClick={() => setPreviewModal(false)}
+					/>
+				</Tooltip>
+			}
+			footer={
+				<>
+					<Button
+						className="pop-btn px-36"
+						style={{ margin: "0 8px" }}
+						onClick={() => setPreviewModal(false)}>
+						Close
+					</Button>
+					<Button
+						className="pop-btn px-36"
+						style={{ margin: "0 8px" }}
+						onClick={() => window.open(previewPath, "_blank")}>
+						Download
+					</Button>
+				</>
+			}>
+			<FilePreviewer
+				hideControls={true}
+				file={{
+					url: previewPath ? filePreviewPath() : null,
+					mimeType: previewPath?.includes(".pdf") ? "application/pdf" : "",
+				}}
+			/>
+		</Modal>
+	);
 
 	return (
 		<>
@@ -120,27 +170,45 @@ const AddressCryptoView = (props) => {
 													</div>
 												</div>
 											</Col>
-												{cryptoAddress?.documents?.details.map((file) =>
+												
+										</Row>
+										{cryptoAddress?.documents?.details.map((file) => (
 													<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-														<div className="docfile mr-0" key={file.id}>
-															<span className={`icon xl file mr-16`} />
+														<div
+															className="docfile mr-0 d-flex ml-8"
+															key={file.id}>
+															<span
+																className={`icon xl ${(file.documentName?.slice(-3) === "zip" &&
+																		"file") ||
+																	(file.documentName?.slice(-3) !== "zip" &&
+																		"") ||
+																	((file.documentName?.slice(-3) === "pdf" ||
+																		file.documentName?.slice(-3) === "PDF") &&
+																		"file") ||
+																	(file.documentName?.slice(-3) !== "pdf" &&
+																		file.documentName?.slice(-3) !== "PDF" &&
+																		"image")
+																	} mr-16`}
+															/>
 															<div
 																className="docdetails c-pointer"
-															// onClick={() => docPreview(file)}
-															>
+																onClick={() => docPreview(file)}>
 																{file.name !== null ? (
 																	<EllipsisMiddle suffixCount={4}>
 																		{file.documentName}
 																	</EllipsisMiddle>
 																) : (
-																	<EllipsisMiddle suffixCount={4}>Name</EllipsisMiddle>
+																	<EllipsisMiddle suffixCount={4}>
+																		Name
+																	</EllipsisMiddle>
 																)}
+																<span className="fs-12 text-secondary">
+																	{bytesToSize(file.remarks)}
+																</span>
 															</div>
 														</div>
 													</Col>
-												)}
-										</Row>
-
+												))}
 									</Col>
 								</Row>
 							)}
@@ -156,7 +224,7 @@ const AddressCryptoView = (props) => {
 					)}
 				</div>
 			</div>
-
+			{filePreviewModal}
 		</>
 	);
 };
