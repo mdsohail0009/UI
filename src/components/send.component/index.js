@@ -52,7 +52,7 @@ class SendReceive extends Component {
             selectAddress: <SelectAddress />,
             selectCrypto: <SelectCrypto />,
             withdraw_crypto_liveness: <WithdrawaCryptolLive />,
-            withdraw_crpto_summary: <WithdrawSummary onClose={() => this.closeDrawer()}/>,
+            withdraw_crpto_summary: <WithdrawSummary onClose={() => this.closeDrawer()} onBackCLick={() => this.props.dispatch(setStep("step1"))} />,
             withdraw_crpto_success: <SuccessMsg onBackCLick={() => this.props.dispatch(setStep("step1"))} />,
             sendMoney: <SendMoney />
 

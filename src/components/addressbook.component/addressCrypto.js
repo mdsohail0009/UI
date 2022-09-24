@@ -120,7 +120,7 @@ class AddressCrypto extends Component {
       }
       else {
         let _obj = this.props.sendReceive?.withdrawCryptoObj;
-        this.props?.dispatch(setWithdrawcrypto({..._obj, network: values?.network, isShowDeclaration: true}));
+        this.props?.dispatch(setWithdrawcrypto({..._obj, toWalletAddress: values?.walletAddress,  network: values?.network, isShowDeclaration: true}));
         this.props.changeStep('withdraw_crpto_summary');
       }
     }
