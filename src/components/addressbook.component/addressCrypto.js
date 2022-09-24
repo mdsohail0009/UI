@@ -160,6 +160,7 @@ if(this.props.sendReceive.cryptoWithdraw.selectedWallet){
         <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
         <div className="my-25"><Button
           onClick={this.props.onCancel}
+          style={{width:"250px"}}
           type="primary" className="mt-36 pop-btn text-textDark">BACK</Button></div>
       </div>
     }
