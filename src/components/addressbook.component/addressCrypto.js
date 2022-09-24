@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { getCryptoData, saveCryptoData, getCoinList, networkLu } from "./api";
 import Loader from '../../Shared/loader';
 import WAValidator from "multicoin-address-validator";
+import { validateContentRule } from "../../utils/custom.validator";
 const { Text, Title } = Typography;
 const { Option } = Select;
 
@@ -180,6 +181,9 @@ if(this.props.sendReceive.cryptoWithdraw.selectedWallet){
                   required: true,
                   message: "Is required",
                 },
+                {
+                  validator: validateContentRule,
+              },
               ]}
             >
               <Input className="cust-input" maxLength={100} placeholder="Save Whitelist Name As" />
@@ -195,6 +199,7 @@ if(this.props.sendReceive.cryptoWithdraw.selectedWallet){
                   required: true,
                   message: "Is required",
                 },
+                
               ]} >
               <Select
                 className="cust-input"

@@ -222,10 +222,10 @@ class YourPortfolio extends Component {
                 <span className="icon sm right-angle ml-4" />
               </Link>
 
-              {/* <Button className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
+               <Button className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
                   <Translate content="cockpit" />
                   <span className="icon sm right-angle ml-4" />
-              </Button> */}
+              </Button> 
                     
               </div>
             </div> */}
