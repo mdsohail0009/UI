@@ -286,7 +286,7 @@ export default {
 	reference_hint_text:
 		"Important: This code helps us in identifying your deposit. Please include the reference code when submitting the wire transfer to us.",
 	desposite_text:
-		"The bank account details for the specific currency you chose is displayed below. You are required to wire the funds over to the provided bank details.",
+		"Ireto ambany ireto ny antsipirihan'ny kaonty any amin'ny banky ho an'ny vola manokana nosafidianao. Takiana aminao ny hihaino ny vola amin'ny antsipirihany avy amin'ny banky.",
 	EUR_amount: "EUR Amount",
 	Fee: "Fee",
 	Amount_to_pay: "Amount to pay",
@@ -660,7 +660,6 @@ export default {
 	relationtobenificiary:'Relationship To Beneficiary',
 	saveWhitelistnameas:'Save Whitelist Name As',
 	continue:'Continue',
-	continue: "Continue",
 	bankAddress: "Add Bank Address",
 	send_fund: "Send",
 	receive_funds: "Receive",
