@@ -127,7 +127,7 @@ const AddressCryptoView = (props) => {
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
-													<label className="kpi-label">Coin</label>
+													<label className="kpi-label">Token</label>
 													<div className=" kpi-val">
 														{cryptoAddress?.token === " " ||
 															cryptoAddress?.token === null
