@@ -573,8 +573,8 @@ class AddressBook extends Component {
 	addressTypeNames = (type) => {
 		const stepcodes = {
 			"ownbusiness": "Own Business",
-			"someoneelse": "Someone Else",
-			"Business": "Business",
+			"someoneelse": "someoneelse",
+			"Business": "otherbusiness",
 			"myself": "Myself"
 		};
 		return stepcodes[type];

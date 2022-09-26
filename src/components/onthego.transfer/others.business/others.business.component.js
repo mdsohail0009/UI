@@ -32,7 +32,7 @@ class OthersBusiness extends Component {
     }
     loadDetails = async () => {
         this.setState({ ...this.state, errorMessage: null, isLoading: true });
-        const response = await createPayee(this.props.userProfile.id, this.props.selectedAddress?.id || "", "business");
+        const response = await createPayee(this.props.userProfile.id, this.props.selectedAddress?.id || "", "otherbusiness");
         if (response.ok) {
             let edit=false;
             let data = response.data;
@@ -90,7 +90,7 @@ class OthersBusiness extends Component {
         _obj.payeeAccountModels[0].bankName = ibanDetails?.bankName;
         delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
         _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
-        _obj.addressType = "Business";
+        _obj.addressType = "otherbusiness";
         _obj.transferType = "sepa";
         _obj.amount = this.props.amount;
         if(isEdit){
