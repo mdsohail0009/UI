@@ -14,7 +14,7 @@ const { Paragraph, Text, Title } = Typography;
 const { Search, TextArea } = Input;
 
 const SomeoneComponent = (props) => {
-    const [addressOptions, setAddressOptions] = useState({ addressType: "someoneelse", transferType: props.currency === "EUR" ? "sepa" : "swift", domesticType: 'domestic' });
+    const [addressOptions, setAddressOptions] = useState({ addressType: "individuals", transferType: props.currency === "EUR" ? "sepa" : "swift", domesticType: 'domestic' });
     const [bankdetails, setBankdetails] = useState(null);
     const [createPayeeObj, setCreatePayeeObj] = useState(null);
     const [documents, setDocuments] = useState(null);
@@ -351,7 +351,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                 {((props.selectedAddress?.id && createPayeeObj)||!props.selectedAddress?.id ) &&
                  <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />}
                 
-                <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs for transaction*</Paragraph>
+                <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
                 {console.log(documents)}
                 <AddressDocumnet documents={documents || null} onDocumentsChange={(docs) => {
                         setDocuments(docs)

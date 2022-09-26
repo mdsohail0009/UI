@@ -15,7 +15,9 @@ const Verifications = (props) => {
     const [phoneSeconds, setPhoneSeconds] = useState(30);
     const [emailSeconds, setEmailSeconds] = useState(30);
     const [errorMsg, setMsg] = useState(false);
-
+    const [phbtnColor,setPhBtnColor]=useState(false)
+    const [emailbtnColor,setEmailBtnColor]=useState(false)
+    const [authbtnColor,setAuthBtnColor]=useState(false)
     const [form] = Form.useForm();
     const useOtpRef = React.useRef(null);
     const { Text, Title } = Typography;
@@ -98,6 +100,7 @@ const Verifications = (props) => {
     };
 
     const verifyEmailOtp = async (values) => {
+        debugger
         if(!email.code){
             setEmail({ ...email, errorMsg: 'Please enter email verification code', verified:false});
         }
@@ -105,6 +108,7 @@ const Verifications = (props) => {
         setEmail({ ...email, errorMsg: '', showRuleMsg: '',btnLoader:true })
         let response = await verifyEmailCode(props.userConfig.id, email.code);
         if (response.ok) {
+            setEmailBtnColor(true)
         setEmail({ ...email, errorMsg: '', verified: true, btnName: 'verified', btnLoader:false });
         updateverifyObj(true, 'isEmailVerification')
         } else if (response.data == null) {
@@ -155,6 +159,7 @@ const Verifications = (props) => {
         }
     };
     const verifyPhoneOtp = async () => {
+        debugger
         if(!phone.code){
             setPhone({ ...phone, errorMsg: 'Please enter phone verification code', verified: false, btnLoader: false });
         }
@@ -162,6 +167,7 @@ const Verifications = (props) => {
             setPhone({ ...phone, errorMsg: '', showRuleMsg: '', btnLoader: true })
             let response = await getVerification(props.userConfig.id, phone.code);
             if (response.ok) {
+                setPhBtnColor(true)
                 setPhone({ ...phone, errorMsg: '', verified: true, btnName: 'verified', btnLoader: false });
                 updateverifyObj(true, 'isPhoneVerification')
             } else if (response.data == null) {
@@ -192,14 +198,15 @@ const Verifications = (props) => {
 
     const updateverifyObj = (val, name) => {
         if (name == 'isEmailVerification') {
-            props.onchangeData({ verifyData: verifyData, isEmailVerification: val, isAuthenticatorVerification: authenticator.verified, isPhoneVerification: phone.verified })
+            props.onchangeData({ verifyData: verifyData,phBtn:phbtnColor, isEmailVerification: val, isAuthenticatorVerification: authenticator.verified, isPhoneVerification: phone.verified })
         } else if (name == 'isPhoneVerification') {
-            props.onchangeData({ verifyData: verifyData, isEmailVerification: email.verified, isAuthenticatorVerification: authenticator.verified, isPhoneVerification: val })
+            props.onchangeData({ verifyData: verifyData,emailBtn:emailbtnColor, isEmailVerification: email.verified, isAuthenticatorVerification: authenticator.verified, isPhoneVerification: val })
         } else if (name == 'isAuthenticatorVerification') {
-            props.onchangeData({ verifyData: verifyData, isEmailVerification: email.verified, isAuthenticatorVerification: val, isPhoneVerification: phone.verified })
+            props.onchangeData({ verifyData: verifyData,authBtn:authbtnColor, isEmailVerification: email.verified, isAuthenticatorVerification: val, isPhoneVerification: phone.verified })
         }
     }
     const verifyAuthenticatorOTP = async () => {
+        debugger
         if(!authenticator.code){
             return setAuthenticator({ ...authenticator, errorMsg: 'Please enter authenticator code', verified: false, btnLoader:false });
         }
@@ -207,6 +214,7 @@ const Verifications = (props) => {
             setAuthenticator({ ...authenticator, errorMsg: '', verified: false, btnLoader:true });
         let response = await getAuthenticator(authenticator.code, props.userConfig.userId);
         if (response.ok) {
+            setAuthBtnColor(true)
             setAuthenticator({ ...authenticator, errorMsg: '', verified: true, btnName: 'verified', btnLoader:false });
             updateverifyObj(true, 'isAuthenticatorVerification')
         } else if (response.data == null) {

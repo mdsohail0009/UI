@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Input, Row, Col, Form, Button, Typography, List, Divider, Image, Alert, Spin, Empty } from 'antd';
+import {Select,Input, Row, Col, Form, Button, Typography, List, Divider, Image, Alert, Spin, Empty } from 'antd';
 import apicalls from "../../api/apiCalls";
 import AddressDocumnet from "../addressbook.component/document.upload";
 import oops from '../../assets/images/oops.png'
@@ -8,7 +8,7 @@ import alertIcon from '../../assets/images/pending.png';
 import success from '../../assets/images/success.png';
 import NumberFormat from "react-number-format";
 import ConnectStateProps from "../../utils/state.connect";
-import { fetchPayees, fetchPastPayees, confirmTransaction, updatePayee, document, saveWithdraw, validateAmount } from "./api";
+import { fetchPayees,getCoinwithBank, fetchPastPayees, confirmTransaction, updatePayee, document, saveWithdraw, validateAmount } from "./api";
 import Loader from "../../Shared/loader";
 import Search from "antd/lib/input/Search";
 import Verifications from "./verification.component/verifications"
@@ -19,7 +19,7 @@ import { fetchMemberWallets } from "../dashboard.component/api";
 import Translate from "react-translate-component";
 import { Link } from "react-router-dom";
 const { Text, Title } = Typography;
-
+const { Option } = Select;
 class OnthegoFundTransfer extends Component {
     enteramtForm = React.createRef();
     reasonForm = React.createRef();
@@ -61,6 +61,15 @@ class OnthegoFundTransfer extends Component {
       if(this.state.selectedCurrency){
         this.getPayees();
       }
+      this.getCoinDetails()
+    }
+
+    getCoinDetails=async()=>{
+        debugger
+   let response=await getCoinwithBank()
+   if(response.ok){
+    let obj=response.data
+   }
     }
     getPayees() {
         fetchPayees(this.props.userProfile.id, this.state.selectedCurrency).then((response) => {
@@ -231,6 +240,7 @@ class OnthegoFundTransfer extends Component {
         }
 
     }
+ 
     renderStep = (step) => {
         const { filterObj, pastPayees, payeesLoading, isVarificationLoader, isVerificationEnable } = this.state;
         const steps = {
@@ -322,11 +332,12 @@ class OnthegoFundTransfer extends Component {
                                             displayType="input"
                                             allowNegative={false}
                                             thousandSeparator={","}
-                                            addonBefore={this.state.selectedCurrency}
+                                             addonBefore={this.state.selectedCurrency}
                                             onValueChange={() => {
                                                 this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount,errorMessage:'' })
                                             }}
                                         />
+                                      
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -496,7 +507,7 @@ class OnthegoFundTransfer extends Component {
                             <Form.Item
                                 className="fw-300 mb-4 text-white-50 py-4 custom-forminput custom-label"
                                 name="reasionOfTransfer"
-                                label={"Reason Of Transfer"}
+                                label={"Reason for transfer"}
                                 required
                                 rules={[
                                     {
@@ -508,7 +519,7 @@ class OnthegoFundTransfer extends Component {
                             >
                                 <Input
                                     className="cust-input "
-                                    placeholder={"Reason Of Transfer"}
+                                    placeholder={"Reason for transfer"}
                                     maxLength={1000}
                                 />
                             </Form.Item>
@@ -778,6 +789,7 @@ class OnthegoFundTransfer extends Component {
                                             size="large"
                                             block
                                             className="pop-btn px-24"
+                   
                                             loading={this.state.isBtnLoading} >
                                             Confirm & Continue
                                         </Button>
