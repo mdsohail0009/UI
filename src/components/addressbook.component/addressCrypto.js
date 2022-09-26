@@ -68,9 +68,9 @@ class AddressCrypto extends Component {
     } else {
       this.setState({ ...this.state, coinsList: [], isLoading: false })
     }
-    if(this.props.sendReceive.cryptoWithdraw.selectedWallet){
-      this.form?.current?.setFieldsValue({token:this.props.sendReceive.cryptoWithdraw.selectedWallet.coin})
-      let val=this.props.sendReceive.cryptoWithdraw.selectedWallet.coin
+    if(this.props.sendReceive?.withdrawFiatObj?.walletCode){
+      this.form?.current?.setFieldsValue({token:this.props.sendReceive?.withdrawFiatObj?.walletCode})
+      let val=this.props.sendReceive?.withdrawFiatObj?.walletCode
       this.networkList(val)
     }
   }
@@ -210,7 +210,7 @@ class AddressCrypto extends Component {
                 placeholder="Select Token"
                 optionFilterProp="children"
                 maxLength={50}
-                disabled={this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin ? true:false}>
+                disabled={this.props?.sendReceive?.withdrawFiatObj?.walletCode ? true:false}>
                 {coinsList?.map((item, idx) => (
                   <Option key={idx} value={item.walletCode}>
                     {item.walletCode}
