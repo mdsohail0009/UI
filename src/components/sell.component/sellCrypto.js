@@ -36,8 +36,8 @@ class SellToggle extends Component {
         if (this.props.sellData?.memberCoins?.loading||this.state.loading) { return <Loader /> }
         return (
             <>
-                {!this.props?.sellData?.memberCoins?.loading && (!this.props.sellData?.memberCoins?.data || this.props.sellData?.memberCoins?.data?.length == 0)
-                    && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apicalls.convertLocalLang('No_data')} />}
+                {/* {!this.props?.sellData?.memberCoins?.loading && (!this.props.sellData?.memberCoins?.data || this.props.sellData?.memberCoins?.data?.length == 0)
+                    && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apicalls.convertLocalLang('No_data')} />} */}
 
                 <div className="sellcrypto-container auto-scroll">
 
