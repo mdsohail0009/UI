@@ -107,7 +107,8 @@ class PayeeBankDetails extends Component {
                     onFinish={this.handleCoinChange}
                     scrollToFirstError
                 >
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <div className="d-flex align-center" style={{justifyContent:'left'}}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
                         name={["payeeAccountModels","iban"]}
@@ -144,21 +145,25 @@ class PayeeBankDetails extends Component {
                     >
                         <Input
                             className="cust-input"
+                            style={{ width:'350px' }}
                             placeholder={apicalls.convertLocalLang(
                                 "Bank_account_iban"
                             )}
                             maxLength={50}/>
-                    </Form.Item>
-                </Col>
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mt-10">
-                            <Button className="pop-btn dbchart-link fs-14 fw-500" 
+                             <Button className="pop-btn dbchart-link fs-14 fw-500 mb-8"  
                             //style={{ height: 36, }}
-                            style={{ width:'100%' }}
+                            style={{ width:'200px' }}
                             loading={this.state.isValidateLoading} 
                             onClick={() => this.handleCoinChange(this.state.enteredIbanData)} >
                                 <Translate content="validate" />
                             </Button>
-                        </Col>
+                    </Form.Item>
+                    
+                   
+                            </div>
+                           
+                </Col>
+                
                        </Form>
                  
                 {this.props.GoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>

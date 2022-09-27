@@ -342,7 +342,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
 
         <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
         {currency == 'EUR' && <Row gutter={[8, 8]} className="align-center">
-        {currency == 'EUR' && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+        {currency == 'EUR' && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            <div className="d-flex align-center" style={{justifyContent:'left'}}>
             <Form.Item
                 className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
                 name="iban"
@@ -382,17 +383,20 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     placeholder='IBAN'
                     // onBlur={(e)=>getBankDeails(e)}
                     maxLength={50}/>
+
             </Form.Item>
+                                    <Button className="pop-btn dbchart-link fs-14 fw-500 mb-8"
+                                        style={{ width: '200px' }}
+                                        loading={isValidateLoading}
+                                        onClick={() => handleCoinChange(enteredIbanData, "true")} >
+                                        <Translate content="validate" />
+                                    </Button>
+           
+            </div>
         </Col>}
-                        {currency == 'EUR' && <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mt-10">
-                            <Button className="pop-btn dbchart-link fs-14 fw-500" 
-                            //style={{ height: 36, }}
-                            style={{ width:'40%' }}
-                            loading={isValidateLoading} 
-                             onClick={() => handleCoinChange(enteredIbanData,"true")} >
-                                <Translate content="validate" />
-                            </Button>
-                        </Col>}
+                        
+                           
+                        
         </Row>}
         <Row gutter={[8, 8]}>
             {currency == 'USD' && <> <Col xs={24} md={12} lg={12} xl={12} xxl={12}>

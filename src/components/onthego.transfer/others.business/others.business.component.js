@@ -289,7 +289,8 @@ class OthersBusiness extends Component {
                     <Paragraph className="mb-8 fs-14 text-white fw-500 mt-36 px-4">Bank Details</Paragraph>
                     {/* <Divider /> */}
                     <Row gutter={[16, 16]}>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                        <div className="d-flex align-center" style={{justifyContent:'left'}}>
                             <Form.Item
                                 className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                                 name="iban"
@@ -322,20 +323,21 @@ class OthersBusiness extends Component {
                                 <Input
                                     className="cust-input"
                                     placeholder={"IBAN"}
+                                    style={{ width:'350px' }}s
                                     onChange={this.handleIbanChange}
                                     maxLength={50}/>
 
                             </Form.Item>
-                        </Col>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mt-10">
-                            <Button className="pop-btn dbchart-link fs-14 fw-500" 
+                            <Button className="pop-btn dbchart-link fs-14 fw-500 mb-8" 
                             //style={{ height: 36, }}
-                            style={{ width:'40%' }}
+                            style={{ width:'200px' }}
                             loading={this.state.isValidateLoading} 
                              onClick={() => this.handleCoinChange(this.state?.enteredIbanData)} >
                                 <Translate content="validate" />
                             </Button>
+                            </div>
                         </Col>
+                       
 
                         {this.props.ontheGoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item

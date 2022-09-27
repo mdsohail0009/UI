@@ -329,7 +329,7 @@ class OnthegoFundTransfer extends Component {
                                     >
                                         <NumberFormat
                                             customInput={Input}
-                                            className="cust-input"
+                                            className="cust-input cust-select-arrow"
                                             placeholder={"Enter Amount"}
                                             maxLength="13"
                                             decimalScale={2}
@@ -799,7 +799,7 @@ class OnthegoFundTransfer extends Component {
                                             size="large"
                                             block
                                             className="pop-btn px-24"
-                   
+                 style={{backgroundColor:'#ccc',borderColor:'#3d3d3d'}}
                                             loading={this.state.isBtnLoading} >
                                             Confirm & Continue
                                         </Button>

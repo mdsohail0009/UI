@@ -1427,3 +1427,4 @@ cust-address{margin-bottom: 0px !important;}
 .ant-form-item-label > label{font-weight: 500;}
 .main-container .k-loading-color{background-color: transparent !important;}
 .btncolor{background:"gray"}
+.cust-select-arrow .ant-select-single .ant-select-selector .ant-select-selection-item::after{margin-left: 3px;}
