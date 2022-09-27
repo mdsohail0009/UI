@@ -15,6 +15,7 @@ const antIcon = (
 );
 class PayeeBankDetails extends Component {
     form = React.createRef();
+    bankDetailForm= React.createRef();
     state = {
         emailExist: false,
         bankDetailForm: React.createRef(),
@@ -46,7 +47,7 @@ class PayeeBankDetails extends Component {
             if (ibanget.ok) {
                 if (ibanget.data && (ibanget.data?.routingNumber || ibanget.data?.bankName)) {
                     const bankdetails = { bankName: ibanget.data.bankName, bic: ibanget.data.routingNumber, bankBranch: ibanget.data.branch, country: ibanget.data.country, state: ibanget.data.state, city: ibanget.data.city, postalCode: ibanget.data.zipCode, line1: ibanget.data.bankAddress }
-                    this.setState({ ...this.state, iBanDetals: bankdetails, IbanLoader: false, isValidIban: true })
+                    this.setState({ ...this.state, iBanDetals: bankdetails, IbanLoader: false, isValidIban: true, isShowValid: false })
                     this.props.getIbandata(bankdetails);
                     this.props.form.current?.setFieldsValue({ iban: ibannumber })
                 } else {
@@ -67,14 +68,10 @@ class PayeeBankDetails extends Component {
         if (e?.length > 10) {
             this.setState({ ...this.state, isValidCheck: true, isShowValid: false});
             this.handleIban(e, "true");
-           
         }
         else {
             this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}});
-           this.form.current?.validateFields().then(values =>{
-                this.validateIbanType();
-           })
-          // this.validateIbanType("iban",e,'true');
+           this.bankDetailForm?.current?.validateFields(["iban"], this.validateIbanType)
         }
     }
 
@@ -101,12 +98,6 @@ class PayeeBankDetails extends Component {
         const _templates = {
             sepa: <>
             <>
-            <Form 
-                    className="custom-label  mb-0"
-                    ref={this.form}
-                    onFinish={this.handleCoinChange}
-                    scrollToFirstError
-                >
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <div className="d-flex align-center" style={{justifyContent:'left'}}>
                     <Form.Item
@@ -150,21 +141,19 @@ class PayeeBankDetails extends Component {
                                 "Bank_account_iban"
                             )}
                             maxLength={50}/>
-                             <Button className="pop-btn dbchart-link fs-14 fw-500 mb-8"  
+                    </Form.Item>
+                    <Button className="pop-btn dbchart-link fs-14 fw-500 mb-8"  
                             //style={{ height: 36, }}
                             style={{ width:'200px' }}
                             loading={this.state.isValidateLoading} 
                             onClick={() => this.handleCoinChange(this.state.enteredIbanData)} >
                                 <Translate content="validate" />
                             </Button>
-                    </Form.Item>
-                    
                    
                             </div>
                            
                 </Col>
                 
-                       </Form>
                  
                 {this.props.GoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item

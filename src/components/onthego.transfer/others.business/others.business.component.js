@@ -48,7 +48,7 @@ class OthersBusiness extends Component {
                 data = { ...data, ...accountDetails,line1:data.line1,line2:data.line2,line3:data.line3,bankAddress1:accountDetails.line1,bankAddress2:accountDetails.line2 };
                 delete data["documents"];
                 if (data?.iban) {
-                    this.handleIbanChange({ target: { value: data?.iban } });
+                    this.handleIbanChange({ target: { value: data?.iban, isNext: true } });
                 } 
                  edit = true;
             }
@@ -114,6 +114,7 @@ class OthersBusiness extends Component {
         }
     };
     submitPayee = async (values) => {
+        debugger
         let { details, ibanDetails,isSelectedId,isEdit } = this.state;
         let _obj = { ...details, ...values };
         _obj.payeeAccountModels[0].line1 = ibanDetails.bankAddress;
@@ -123,7 +124,7 @@ class OthersBusiness extends Component {
         _obj.payeeAccountModels[0].postalCode = ibanDetails?.zipCode;
         _obj.payeeAccountModels[0].bankBranch = ibanDetails?.branch;
         _obj.payeeAccountModels[0].bic=ibanDetails?.routingNumber;
-        _obj.payeeAccountModels[0].iban = values?.iban;
+        _obj.payeeAccountModels[0].iban = values?.iban ? values?.iban : this.form.current?.getFieldValue('iban');
         _obj.payeeAccountModels[0].currencyType = "Fiat";
         _obj.payeeAccountModels[0].walletCode = "EUR";
         _obj.payeeAccountModels[0].bankName = ibanDetails?.bankName;

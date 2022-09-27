@@ -50,7 +50,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 bankName:obj.bankName,iban:obj.iban,abaRoutingCode:obj.abaRoutingCode,line1:obj.line1,line2:obj.line2})
                 setAddressOptions({addressType:response.data.addressType,transferType:response.data.transferType,domesticType:response.data.transferType,tabType:response.data.transferType})
                 if(obj.iban){
-                    getBankDeails(obj.iban)
+                    getBankDeails(obj.iban,"true")
                 }let edit = true; props?.onEdit(edit);setIsEdit(true)
                 setIsSelectedId(response.data?.id);
             } else {
@@ -381,11 +381,12 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 <Input
                     className="cust-input"
                     placeholder='IBAN'
+                    style={{ width:'350px' }}
                     // onBlur={(e)=>getBankDeails(e)}
                     maxLength={50}/>
 
             </Form.Item>
-                                    <Button className="pop-btn dbchart-link fs-14 fw-500 mb-8"
+                                    <Button className={`pop-btn dbchart-link fs-14 fw-500 ${!validIban && "mb-8"}`}
                                         style={{ width: '200px' }}
                                         loading={isValidateLoading}
                                         onClick={() => handleCoinChange(enteredIbanData, "true")} >
