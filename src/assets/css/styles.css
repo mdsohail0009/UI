@@ -1427,3 +1427,4 @@ cust-address{margin-bottom: 0px !important;}
 .ant-form-item-label > label{font-weight: 500;}
 .main-container .k-loading-color{background-color: transparent !important;}
 .hy-align .ant-btn-loading::before{background-color: transparent !important;}
+.cust-pop-up-btn .ant-btn{border: none !important;}

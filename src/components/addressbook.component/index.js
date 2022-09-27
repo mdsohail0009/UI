@@ -791,7 +791,7 @@ debugger
 						</Tooltip>
 					}
 					footer={
-						<>
+						<div className="cust-pop-up-btn">
 							<Button
 								style={{ width: 120, border: "1px solid #f2f2f2",height: 50 }}
 								className="primary-btn pop-btn"
@@ -805,7 +805,7 @@ debugger
 								loading={btnDisabled}>
 								{apiCalls.convertLocalLang("Yes")}
 							</Button>
-						</>
+						</div>
 					}>
 					<p className="fs-16 mb-0">
 						{apiCalls.convertLocalLang("really_want")}{" "}
