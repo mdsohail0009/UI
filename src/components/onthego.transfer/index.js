@@ -65,7 +65,6 @@ class OnthegoFundTransfer extends Component {
     }
 
     getCoinDetails=async()=>{
-        debugger
    let response=await getCoinwithBank()
    if(response.ok){
     let obj=response.data
@@ -240,6 +239,10 @@ class OnthegoFundTransfer extends Component {
         }
 
     }
+
+    handleCurrencyChange =(e) => {
+        this.setState({ ...this.state, selectedCurrency: e});
+    }
  
     renderStep = (step) => {
         const { filterObj, pastPayees, payeesLoading, isVarificationLoader, isVerificationEnable } = this.state;
@@ -332,7 +335,13 @@ class OnthegoFundTransfer extends Component {
                                             displayType="input"
                                             allowNegative={false}
                                             thousandSeparator={","}
-                                             addonBefore={this.state.selectedCurrency}
+                                             //addonBefore={this.state.selectedCurrency}
+                                             addonBefore={<Select  defaultValue={this.state.selectedCurrency}
+                                                onChange={(e) => this.handleCurrencyChange(e)}
+                                                placeholder="Select">
+                                                <option value="EUR">EUR</option>
+                                                <option value="USD">USD</option>
+                                            </Select>}
                                             onValueChange={() => {
                                                 this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount,errorMessage:'' })
                                             }}
