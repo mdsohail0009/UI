@@ -297,7 +297,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             </Row>
         </div>
 
-        <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Detailssss</h2>
+        <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
        <Row gutter={[8, 8]} className="align-center">
         {currency == 'EUR' && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
             <Form.Item
@@ -341,7 +341,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     maxLength={50}/>
             </Form.Item>
         </Col>}
-                        {currency == 'EUR' && <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mt-16">
+                        {currency == 'EUR' && <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mt-8">
                             <Button className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36, }} onClick={() => getBankDeails(enteredIbanData,"true")} >
                                 <Translate content="validate" />
                             </Button>
