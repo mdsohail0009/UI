@@ -666,5 +666,5 @@ export default {
   transfer_funds: "Send",
   receve_funds: "Receive",
   suisse_wallets: "SuisseBase Wallet",
-
+  validate: "Validate",
 };

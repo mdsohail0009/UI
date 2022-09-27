@@ -29,6 +29,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     const [showDeclartion, setShowDeclartion] = useState(false);
     const [isEdit,setIsEdit]=useState(false);
     const [isSelectedId,setIsSelectedId] = useState(null);
+    const [isShowBankDetails,setIsShowBankDetails]=useState(false)
+    const [enteredIbanData,setEnteredIbanData] = useState(null);
     useEffect(() => {
         getRecipientDetails()
     }, [])
@@ -108,26 +110,36 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
 		setBtnLoading(false);
         }
     }
-    const getBankDeails = async (e) => {
-        if(e?.length>3){
-            setValidIban(true)
-            setIbanLoader(true)
+    const getBankDeails = async (e,isValid) => {
+        setEnteredIbanData(e);
+        if(e?.length>10&&isValid){
+            setValidIban(true) 
+            isValid ? setIbanLoader(true) : setIbanLoader(false);
             const response = await apiCalls.getIBANData(e);
             if (response.ok) {
-                setbankDetails(response.data)
-                if(response.data && (response.data?.routingNumber || response.data?.bankName)){
+                if(isValid){
+                    setIsShowBankDetails(true);
+                    setbankDetails(response.data);
+                }
+                if(isValid&&response.data && (response.data?.routingNumber || response.data?.bankName)){
                     setValidIban(true)
+                    setIsShowBankDetails(true);
                 }else{
                     setValidIban(false)
                 }
-                setIbanLoader(false)
+              setIbanLoader(false)
             }else{
                 seterrorMessage(isErrorDispaly(response));
                 setbankDetails({})
                 setIbanLoader(false)
                 setValidIban(false)
             }
-        }else{
+        }
+        else if(e?.length>10&&!isValid) {
+            setValidIban(true); 
+            setbankDetails({});
+        } 
+        else{
             setValidIban(false)
             setbankDetails({})
         }
@@ -285,7 +297,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             </Row>
         </div>
 
-        <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
+        <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Detailssss</h2>
+       <Row gutter={[8, 8]} className="align-center">
         {currency == 'EUR' && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
             <Form.Item
                 className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
@@ -328,6 +341,12 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     maxLength={50}/>
             </Form.Item>
         </Col>}
+                        {currency == 'EUR' && <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mt-16">
+                            <Button className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36, }} onClick={() => getBankDeails(enteredIbanData,"true")} >
+                                <Translate content="validate" />
+                            </Button>
+                        </Col>}
+        </Row>
         <Row gutter={[8, 8]}>
             {currency == 'USD' && <> <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
@@ -533,7 +552,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         </Row>
         {currency == 'EUR' && <div className="box basic-info alert-info-custom mt-16">
             <Spin spinning={ibanLoading}>
-            {validIban&&<Row>
+            {validIban&&isShowBankDetails&&<Row>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                 <label className="fs-12 fw-500">
                         Bank Name
@@ -572,7 +591,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
 
                 </Col></Row>}
                 
-                {(!validIban)&&<span>No bank details available</span>}
+                {(!validIban||!isShowBankDetails)&&<span>No bank details available</span>}
                 </Spin>
         </div>}
         <div className="text-center mt-36">
