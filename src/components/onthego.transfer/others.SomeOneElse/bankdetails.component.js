@@ -39,7 +39,6 @@ class PayeeBankDetails extends Component {
         }
     }
     handleIban = async (ibannumber,isNext) => {
-        debugger
         this.setState({ ...this.state, enteredIbanData: ibannumber, isShowValid: false});
         if (ibannumber?.length > 10 && isNext) {
             this.setState({ ...this.state, iBanDetals: null, IbanLoader: true, isValidIban: true })
@@ -63,7 +62,6 @@ class PayeeBankDetails extends Component {
     }
 
     handleCoinChange = (e) => {
-        debugger
         this.setState({ ...this.state, isValidateLoading: true});
         if (e?.length > 10) {
             this.setState({ ...this.state, isValidCheck: true, isShowValid: false});
@@ -71,12 +69,14 @@ class PayeeBankDetails extends Component {
         }
         else {
             this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}});
-           this.bankDetailForm?.current?.validateFields(["iban"], this.validateIbanType)
+          this.props?.form?.validateFields(["iban"], this.validateIbanType)
+        //   this.props?.form?.validateFields(["iban"]).then(values =>{
+        //     this.validateIbanType("iban", e);
+        //   })
         }
     }
 
      validateIbanType = (_, value) => {
-        debugger
         this.setState({ ...this.state, isValidateLoading: false, isShowValid: this.state.isShowValid?this.state.isShowValid:false});
         if (!value&&this.state.isShowValid) {
             return Promise.reject("is required");

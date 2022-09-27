@@ -44,7 +44,10 @@ class OnthegoFundTransfer extends Component {
         verifyData: null, isBtnLoading: false, reviewDetailsLoading: false,
         isVerificationEnable: true,
         isVarificationLoader: true,
-        fiatWallets: []
+        fiatWallets: [],
+        isPhMail: false,
+        isPhAuth: false,
+        isAuthMail: false
     }
     componentDidMount() {
         this.verificationCheck()
@@ -96,6 +99,15 @@ class OnthegoFundTransfer extends Component {
                 this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: true })
             } else {
                 this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: false })
+            }
+            if(verfResponse.isPhoneVerification&&verfResponse.isEmailVerification) {
+                this.setState({ ...this.state, isPhMail: true});
+            }
+            if(verfResponse.isPhoneVerification&&verfResponse.twoFactorEnabled) {
+                this.setState({ ...this.state, isPhAuth: true});
+            }
+            if(verfResponse.twoFactorEnabled&&verfResponse.isEmailVerification) {
+                this.setState({ ...this.state, isAuthMail: true});
             }
         } else {
             this.setState({ ...this.state, isVarificationLoader: false, errorMessage: this.isErrorDispaly(verfResponse) })
@@ -246,7 +258,7 @@ class OnthegoFundTransfer extends Component {
     }
  
     renderStep = (step) => {
-        const { filterObj, pastPayees, payeesLoading, isVarificationLoader, isVerificationEnable } = this.state;
+        const { filterObj, pastPayees, payeesLoading, isVarificationLoader, isVerificationEnable,isPhMail,isPhAuth,isAuthMail } = this.state;
         const steps = {
             selectcurrency: <React.Fragment>
                 <List
@@ -799,7 +811,7 @@ class OnthegoFundTransfer extends Component {
                                             size="large"
                                             block
                                             className="pop-btn px-24"
-                 style={{backgroundColor:'#ccc',borderColor:'#3d3d3d'}}
+                                            style={(isPhMail&&!this.state.verifyData?.phBtn&&!this.state.verifyData?.emailBtn)||(isPhAuth&&!this.state.verifyData?.phBtn&&!this.state.verifyData?.authBtn)||(isAuthMail&&!this.state.verifyData?.emailBtn&&!this.state.verifyData?.authBtn)||(!this.state.verifyData?.phBtn&&!this.state.verifyData?.emailBtn&&!this.state.verifyData?.authBtn) &&{backgroundColor:'#ccc',borderColor:'#3d3d3d'}}
                                             loading={this.state.isBtnLoading} >
                                             Confirm & Continue
                                         </Button>

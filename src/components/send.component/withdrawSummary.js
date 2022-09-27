@@ -903,7 +903,7 @@ class WithdrawSummary extends Component {
 							)}
 							{this.state.permissions?.withdraw && this.state.verifyData.twoFactorEnabled == true && (
 								<Text className="fs-14 mb-8 text-white d-block fw-200">
-									Authenticator Code *
+									Authenticator Codesss *
 								</Text>
 							)}
 							{this.state.permissions?.withdraw && this.state.verifyData.twoFactorEnabled == true && (
