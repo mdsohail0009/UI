@@ -305,12 +305,12 @@ class OthersBusiness extends Component {
                                     },
                                 ]}
                                 label={
-                                    "Reason Of Transfer"
+                                    "Reason for transfer"
                                 }
                             >
                                 <Input
                                     className="cust-input"
-                                    placeholder={"Reason Of Transfer"}
+                                    placeholder={"Reason for transfer"}
                                     // onChange={this.handleIbanChange}
                                     maxLength={1000}/>
                             </Form.Item>
@@ -379,7 +379,7 @@ class OthersBusiness extends Component {
                         </Spin>
                        
                     </div>
-                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs for transaction*</Paragraph>
+                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
 
                     <AddressDocumnet documents={this.state.details?.payeeAccountModels[0].documents} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;

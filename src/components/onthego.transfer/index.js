@@ -530,7 +530,7 @@ class OnthegoFundTransfer extends Component {
                             let { documents } = this.state.codeDetails;
                             documents = docs;
                             this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, documents } })
-                        }} title={"Please upload supporting documents for transaction*"} />
+                        }} title={"Please upload supporting docs to explain relationship with beneficiary*"} />
                     </React.Fragment>
                     {/* {this.state.selectedCurrency === "USD" && <Tabs className="cust-tabs-fait" activeKey={this.state.selectedTab} onChange={(key) => this.setState({ ...this.state, selectedTab: key })}>
                         <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"}>
@@ -748,7 +748,7 @@ class OnthegoFundTransfer extends Component {
                             </Col>}
                             {this.state.reviewDetails?.customerRemarks && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">Reason of Transfer </Title>
+                                    <Title className="fs-14 text-white fw-500 text-captz">Reason for transfer </Title>
                                     <Title className="fs-14 fw-500 text-white text-right">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
                                 </div>
                             </Col>}
