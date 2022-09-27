@@ -225,6 +225,7 @@ class OnthegoFundTransfer extends Component {
         this.setState({ ...this.state, reviewDetailsLoading: val })
     }
     validateAmt = async (amt, step, values, loader) => {
+        this.getPayees();
         const obj = {
             CustomerId: this.props.userProfile?.id,
             amount: amt,

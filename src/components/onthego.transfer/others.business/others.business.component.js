@@ -25,7 +25,11 @@ class OthersBusiness extends Component {
         showDeclartion: false,
         iBanValid:false,
         isEdit: false,
-        isSelectedId: null
+        isSelectedId: null,
+        enteredIbanData: null,
+        isShowValid: false,
+        isValidateLoading: false,
+        isValidCheck: false
     };
     componentDidMount() {
         this.loadDetails();
@@ -57,23 +61,58 @@ class OthersBusiness extends Component {
             this.setState({ ...this.state, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, details: {} });
         }
     }
-    handleIbanChange = async ({ target: { value } }) => {
-        if (value?.length > 3) {
+    handleIbanChange = async ({ target: { value,isNext } }) => {
+        this.setState({ ...this.state, enteredIbanData: value, isShowValid: false});
+        if (value?.length > 10 && isNext) {
             this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true,iBanValid:true });
             const response = await fetchIBANDetails(value);
             if (response.ok) {
                 if(response.data && (response.data?.routingNumber || response.data?.bankName)){
-                    this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:true });
+                    this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:true, isValidateLoading: false });
                 }else{
-                    this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:false });
+                    this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:false, isValidateLoading: false });
                 }
             } else {
-                this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false, errorMessage: response.data || response.data?.message || response.originalError?.message });
+                this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false, errorMessage: response.data || response.data?.message || response.originalError?.message, isValidateLoading: false });
             }
-        }else{
-            this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false})
+        }
+        else{
+            this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false, enteredIbanData: value, isShowValid: false})
         }
     }
+
+     handleCoinChange = (e) => {
+        let value = e ? e: this.form.current?.getFieldValue('iban');
+        this.setState({ ...this.state, isValidateLoading: true});
+        if (value?.length > 10) {
+            this.setState({ ...this.state, isValidCheck: true, isShowValid: false});
+            this.handleIbanChange({ target: { value: value, isNext: true }});
+           
+        }
+        else {
+            this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}});
+            this.form.current?.validateFields(["iban"], this.validateIbanType)
+        }
+    }
+
+     validateIbanType = (_, value) => {
+        this.setState({ ...this.state, isValidateLoading: false});
+        if (!value&&this.state.isShowValid) {
+            return Promise.reject(apiCalls.convertLocalLang("is_required"));
+        } else if (!this.state.iBanValid&&this.state.isShowValid) {
+            return Promise.reject("Please input a valid IBAN");
+        } else if (
+            value &&this.state.isShowValid&&
+            !/^[A-Za-z0-9]+$/.test(value)
+        ) {
+            return Promise.reject(
+                "Please input a valid IBAN"
+            );
+        }
+        else {
+            return Promise.resolve();
+        }
+    };
     submitPayee = async (values) => {
         let { details, ibanDetails,isSelectedId,isEdit } = this.state;
         let _obj = { ...details, ...values };
@@ -257,24 +296,27 @@ class OthersBusiness extends Component {
                                 label={"IBAN"}
                                 required
                                 rules={[
+                                    // {
+                                    //     validator: (_, value) => {
+                                    //         if (!value) {
+                                    //             return Promise.reject(apiCalls.convertLocalLang("is_required"));
+                                    //         } else if (!this.state.iBanValid) {
+                                    //             return Promise.reject("Please input a valid IBAN");
+                                    //         } else if (
+                                    //             value &&
+                                    //             !/^[A-Za-z0-9]+$/.test(value)
+                                    //         ) {
+                                    //             return Promise.reject(
+                                    //                 "Please input a valid IBAN"
+                                    //             );
+                                    //         }else {
+                                    //             return Promise.resolve();
+                                    //         }
+                                    //     },
+                                    // }
                                     {
-                                        validator: (_, value) => {
-                                            if (!value) {
-                                                return Promise.reject(apiCalls.convertLocalLang("is_required"));
-                                            } else if (!this.state.iBanValid) {
-                                                return Promise.reject("Please input a valid IBAN");
-                                            } else if (
-                                                value &&
-                                                !/^[A-Za-z0-9]+$/.test(value)
-                                            ) {
-                                                return Promise.reject(
-                                                    "Please input a valid IBAN"
-                                                );
-                                            }else {
-                                                return Promise.resolve();
-                                            }
-                                        },
-                                    }
+                                        validator: this.validateIbanType,
+                                      },
                                 ]}
                             >
                                 <Input
@@ -284,6 +326,15 @@ class OthersBusiness extends Component {
                                     maxLength={50}/>
 
                             </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mt-10">
+                            <Button className="pop-btn dbchart-link fs-14 fw-500" 
+                            //style={{ height: 36, }}
+                            style={{ width:'40%' }}
+                            loading={this.state.isValidateLoading} 
+                             onClick={() => this.handleCoinChange(this.state?.enteredIbanData)} >
+                                <Translate content="validate" />
+                            </Button>
                         </Col>
 
                         {this.props.ontheGoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>

@@ -31,6 +31,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     const [isSelectedId,setIsSelectedId] = useState(null);
     const [isShowBankDetails,setIsShowBankDetails]=useState(false)
     const [enteredIbanData,setEnteredIbanData] = useState(null);
+    const [isShowValid,setIsShowValid] = useState(false);
+    const [isValidateLoading, setValidateLoading] = useState(false);
     useEffect(() => {
         getRecipientDetails()
     }, [])
@@ -112,12 +114,14 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     }
     const getBankDeails = async (e,isValid) => {
         setEnteredIbanData(e);
+        setIsShowValid(false);
         if(e?.length>10&&isValid){
             setValidIban(true) 
             isValid ? setIbanLoader(true) : setIbanLoader(false);
             const response = await apiCalls.getIBANData(e);
             if (response.ok) {
                 if(isValid){
+                    setValidateLoading(false);
                     setIsShowBankDetails(true);
                     setbankDetails(response.data);
                 }
@@ -133,18 +137,57 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 setbankDetails({})
                 setIbanLoader(false)
                 setValidIban(false)
+                setValidateLoading(false);
             }
         }
-        else if(e?.length>10&&!isValid) {
+        if(e?.length>10&&!isValid) {
             setValidIban(true); 
-            setbankDetails({});
+            setValidateLoading(false);
+           // setbankDetails({});
         } 
-        else{
-            setValidIban(false)
-            setbankDetails({})
-        }
+        // else{
+        //     setValidIban(false)
+        //     setbankDetails({})
+        // }
         
     }
+
+    const handleCoinChange = (e) => {
+        debugger
+        setValidateLoading(true);
+        if (e?.length > 10) {
+            setIsShowValid(false);
+            getBankDeails(e, "true");
+           
+        }
+        else {
+            setIsShowValid(true);
+            setValidIban(false); 
+            setbankDetails({});
+            form.validateFields(["iban"], validateIbanType)
+        }
+    }
+
+    const validateIbanType = (_, value) => {
+        debugger
+        setValidateLoading(false);
+        if (!value&&isShowValid) {
+            return Promise.reject(apiCalls.convertLocalLang("is_required"));
+        } else if (!validIban&&isShowValid) {
+            return Promise.reject("Please input a valid IBAN");
+        } else if (
+            value &&isShowValid&&
+            !/^[A-Za-z0-9]+$/.test(value)
+        ) {
+            return Promise.reject(
+                "Please input a valid IBAN"
+            );
+        }
+        else {
+            return Promise.resolve();
+        }
+    };
+
     const isErrorDispaly = (objValue) => {
         if (objValue.data && typeof objValue.data === "string") {
           return objValue.data;
@@ -298,36 +341,36 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         </div>
 
         <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
-       <Row gutter={[8, 8]} className="align-center">
+        {currency == 'EUR' && <Row gutter={[8, 8]} className="align-center">
         {currency == 'EUR' && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
             <Form.Item
                 className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
                 name="iban"
                 required
                 rules={[
-                    {
-                        validator: (_, value) => {
-                            if (!value) {
-                                return Promise.reject(apiCalls.convertLocalLang("is_required"));
-                            } else if (!validIban) {
-                                return Promise.reject("Please input a valid IBAN");
-                            } else if (
-                                value &&
-                                !/^[A-Za-z0-9]+$/.test(value)
-                            ) 
-                            {
-                                return Promise.reject(
-                                    "Please input a valid IBAN"
-                                );
-                            }
-                            else {
-                                return Promise.resolve();
-                            }
-                        },
-                    },
                     // {
-                    //     validator: validateContentRule
-                    // }
+                    //     validator: (_, value) => {
+                    //         if (!value) {
+                    //             return Promise.reject(apiCalls.convertLocalLang("is_required"));
+                    //         } else if (!validIban) {
+                    //             return Promise.reject("Please input a valid IBAN");
+                    //         } else if (
+                    //             value &&
+                    //             !/^[A-Za-z0-9]+$/.test(value)
+                    //         ) 
+                    //         {
+                    //             return Promise.reject(
+                    //                 "Please input a valid IBAN"
+                    //             );
+                    //         }
+                    //         else {
+                    //             return Promise.resolve();
+                    //         }
+                    //     },
+                    // },
+                    {
+                        validator: validateIbanType,
+                      },
                 ]}
                 label='IBAN'
                 onChange={(e) => {
@@ -341,12 +384,16 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     maxLength={50}/>
             </Form.Item>
         </Col>}
-                        {currency == 'EUR' && <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mt-8">
-                            <Button className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36, }} onClick={() => getBankDeails(enteredIbanData,"true")} >
+                        {currency == 'EUR' && <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mt-10">
+                            <Button className="pop-btn dbchart-link fs-14 fw-500" 
+                            //style={{ height: 36, }}
+                            style={{ width:'40%' }}
+                            loading={isValidateLoading} 
+                             onClick={() => handleCoinChange(enteredIbanData,"true")} >
                                 <Translate content="validate" />
                             </Button>
                         </Col>}
-        </Row>
+        </Row>}
         <Row gutter={[8, 8]}>
             {currency == 'USD' && <> <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item

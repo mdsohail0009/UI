@@ -14,6 +14,7 @@ const antIcon = (
     />
 );
 class PayeeBankDetails extends Component {
+    form = React.createRef();
     state = {
         emailExist: false,
         bankDetailForm: React.createRef(),
@@ -22,7 +23,12 @@ class PayeeBankDetails extends Component {
         isLoading: false,
         iBanDetals:null,
         IbanLoader:false,
-        isValidIban:false
+        isValidIban:false,
+        enteredIbanData: "",
+        isShowValid: false,
+        isValidateLoading: false,
+        isValidCheck: false,
+        ibannumber: null
     }
     componentDidMount(){
         if (this?.props?.selectedAddress?.id && this.props?.createPayeeObj) {
@@ -31,8 +37,10 @@ class PayeeBankDetails extends Component {
             }
         }
     }
-    handleIban = async (ibannumber) => {
-        if (ibannumber?.length > 3) {
+    handleIban = async (ibannumber,isNext) => {
+        debugger
+        this.setState({ ...this.state, enteredIbanData: ibannumber, isShowValid: false});
+        if (ibannumber?.length > 10 && isNext) {
             this.setState({ ...this.state, iBanDetals: null, IbanLoader: true, isValidIban: true })
             const ibanget = await apicalls.getIBANData(ibannumber)
             if (ibanget.ok) {
@@ -49,13 +57,56 @@ class PayeeBankDetails extends Component {
                 this.setState({ ...this.state, IbanLoader: false, isValidIban: false })
             }
         } else {
-            this.setState({ ...this.state, IbanLoader: false, isValidIban: false })
+            this.setState({ ...this.state, enteredIbanData: ibannumber, isShowValid: false, IbanLoader: false, isValidIban: false })
         }
     }
+
+    handleCoinChange = (e) => {
+        debugger
+        this.setState({ ...this.state, isValidateLoading: true});
+        if (e?.length > 10) {
+            this.setState({ ...this.state, isValidCheck: true, isShowValid: false});
+            this.handleIban(e, "true");
+           
+        }
+        else {
+            this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}});
+           this.form.current?.validateFields().then(values =>{
+                this.validateIbanType();
+           })
+          // this.validateIbanType("iban",e,'true');
+        }
+    }
+
+     validateIbanType = (_, value) => {
+        debugger
+        this.setState({ ...this.state, isValidateLoading: false, isShowValid: this.state.isShowValid?this.state.isShowValid:false});
+        if (!value&&this.state.isShowValid) {
+            return Promise.reject("is required");
+        } else if (!this.state.isValidIban&&this.state.isShowValid) {
+            return Promise.reject("Please input a valid IBAN");
+        } else if (
+            value &&this.state.isShowValid&&
+            !/^[A-Za-z0-9]+$/.test(value)
+        ) {
+            return Promise.reject(
+                "Please input a valid IBAN"
+            );
+        }
+        else {
+            return Promise.resolve();
+        }
+    };
     renderAddress = (transferType) => {
         const _templates = {
             sepa: <>
             <>
+            <Form 
+                    className="custom-label  mb-0"
+                    ref={this.form}
+                    onFinish={this.handleCoinChange}
+                    scrollToFirstError
+                >
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
@@ -65,27 +116,27 @@ class PayeeBankDetails extends Component {
                         )}
                         required
                         rules={[
-                            {
-                                validator: (_, value) => {
-                                    if (!value) {
-                                        return Promise.reject(apicalls.convertLocalLang("is_required"));
-                                    } else if (!this.state.isValidIban) {
-                                        return Promise.reject("Please input a valid IBAN");
-                                    } else if (
-                                        value &&
-                                        !/^[A-Za-z0-9]+$/.test(value)
-                                    ) {
-                                        return Promise.reject(
-                                            "Please input a valid IBAN"
-                                        );
-                                    } else {
-                                        return Promise.resolve();
-                                    }
-                                },
-                            },
                             // {
-                            //     validator: validateContentRule
-                            // }
+                            //     validator: (_, value) => {
+                            //         if (!value) {
+                            //             return Promise.reject(apicalls.convertLocalLang("is_required"));
+                            //         } else if (!this.state.isValidIban) {
+                            //             return Promise.reject("Please input a valid IBAN");
+                            //         } else if (
+                            //             value &&
+                            //             !/^[A-Za-z0-9]+$/.test(value)
+                            //         ) {
+                            //             return Promise.reject(
+                            //                 "Please input a valid IBAN"
+                            //             );
+                            //         } else {
+                            //             return Promise.resolve();
+                            //         }
+                            //     },
+                            // },
+                            {
+                                validator: this.validateIbanType,
+                              },
                         ]}
                         onChange={(e) => {
                             this.handleIban(e.target.value)
@@ -99,6 +150,16 @@ class PayeeBankDetails extends Component {
                             maxLength={50}/>
                     </Form.Item>
                 </Col>
+                <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mt-10">
+                            <Button className="pop-btn dbchart-link fs-14 fw-500" 
+                            //style={{ height: 36, }}
+                            style={{ width:'100%' }}
+                            loading={this.state.isValidateLoading} 
+                            onClick={() => this.handleCoinChange(this.state.enteredIbanData)} >
+                                <Translate content="validate" />
+                            </Button>
+                        </Col>
+                       </Form>
                  
                 {this.props.GoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
