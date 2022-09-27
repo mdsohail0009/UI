@@ -305,12 +305,12 @@ class OthersBusiness extends Component {
                                     },
                                 ]}
                                 label={
-                                    "Reason for transfer"
+                                    "Reason For Transfer"
                                 }
                             >
                                 <Input
                                     className="cust-input"
-                                    placeholder={"Reason for transfer"}
+                                    placeholder={"Reason For Transfer"}
                                     // onChange={this.handleIbanChange}
                                     maxLength={1000}/>
                             </Form.Item>

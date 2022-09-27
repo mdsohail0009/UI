@@ -334,7 +334,7 @@ class AddressBookV2 extends Component {
                         </Col>}
                         {this.state.reviewDetails?.customerRemarks && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                <Title className="fs-14 text-white fw-400 text-captz">Reason for transfer </Title>
+                                <Title className="fs-14 text-white fw-400 text-captz">Reason For Transfer </Title>
                                 <Title className="fs-14 text-white fw-500  text-right">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
                             </div>
                         </Col>}

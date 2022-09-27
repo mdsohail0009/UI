@@ -516,7 +516,7 @@ class OnthegoFundTransfer extends Component {
                             <Form.Item
                                 className="fw-300 mb-4 text-white-50 py-4 custom-forminput custom-label"
                                 name="reasionOfTransfer"
-                                label={"Reason for transfer"}
+                                label={"Reason For Transfer"}
                                 required
                                 rules={[
                                     {
@@ -528,7 +528,7 @@ class OnthegoFundTransfer extends Component {
                             >
                                 <Input
                                     className="cust-input "
-                                    placeholder={"Reason for transfer"}
+                                    placeholder={"Reason For Transfer"}
                                     maxLength={1000}
                                 />
                             </Form.Item>
@@ -757,7 +757,7 @@ class OnthegoFundTransfer extends Component {
                             </Col>}
                             {this.state.reviewDetails?.customerRemarks && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">Reason for transfer </Title>
+                                    <Title className="fs-14 text-white fw-500 text-captz">Reason For Transfer </Title>
                                     <Title className="fs-14 fw-500 text-white text-right">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
                                 </div>
                             </Col>}
