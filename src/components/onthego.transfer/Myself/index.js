@@ -366,19 +366,19 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     className="cust-input"
                     placeholder='IBAN'
                     // onBlur={(e)=>getBankDeails(e)}
-                    />                      
+                    maxLength={50}/>                      
             </Form.Item>
                                         
                
             </div>
         </Col>}
-        <Col xs={24} md={10} lg={10} xl={10} xxl={10}>
+        {currency == 'EUR' &&<Col xs={24} md={10} lg={10} xl={10} xxl={10}>
             <Button className={`pop-btn dbchart-link fs-14 fw-500`} style={{width:"150px",marginTop:"32px",height:"42px"}}
                 loading={isValidateLoading}
                 onClick={() => onIbanValidate(enteredIbanData)} >
                 <Translate content="validate" />
             </Button>      
-        </Col>
+        </Col>}
 
                         
                            

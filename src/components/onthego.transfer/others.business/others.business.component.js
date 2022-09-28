@@ -293,9 +293,8 @@ class OthersBusiness extends Component {
                     <Paragraph className="mb-8 fs-14 text-white fw-500 mt-36 px-4">Bank Details</Paragraph>
                     {/* <Divider /> */}
                     <Row gutter={[16, 16]}>
-                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                        <div className=" custom-btn-error" style={{justifyContent:'left',display:'table'}}>
-                         <div style={{display:'table-row'}}>
+                   <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
+                       <div className=" custom-btn-error">
                             <Form.Item
                                 className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                                 name="iban"
@@ -310,21 +309,19 @@ class OthersBusiness extends Component {
                                 <Input
                                     className="cust-input"
                                     placeholder={"IBAN"}
-                                    style={{ width:'350px',display:'table-cell !important' }}
+                                    //style={{ width:'350px',display:'table-cell !important' }}
                                     onChange={this.handleIbanChange}
                                     maxLength={50}/>
 
                             </Form.Item>
-                            <Form.Item > 
-                              <Button className={`pop-btn dbchart-link fs-14 fw-500`}
-                            style={{ width:'200px', marginTop: '22px' }}
+                            </div>
+                       </Col>
+                       <Col xs={24} md={10} lg={10} xl={10} xxl={10}>
+                       <Button className={`pop-btn dbchart-link fs-14 fw-500`} style={{width:"150px",marginTop:"32px",height:"42px"}}
                             loading={this.state.isValidateLoading} 
                              onClick={() => this.onIbanValidate(this.state?.enteredIbanData)} >
                                 <Translate content="validate" />
                             </Button>
-                           </Form.Item>
-                            </div>
-                            </div>
                         </Col>
                        
 
