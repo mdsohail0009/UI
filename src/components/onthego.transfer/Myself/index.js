@@ -366,7 +366,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     className="cust-input"
                     placeholder='IBAN'
                     // onBlur={(e)=>getBankDeails(e)}
-                    />                      
+                    maxLength={50}/>                      
             </Form.Item>
                                         
                
