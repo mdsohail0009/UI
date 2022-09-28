@@ -153,7 +153,6 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     }
 
     const onIbanValidate = (e) => {
-        debugger
         setValidateLoading(true);
         if (e?.length > 10) {
             if (e &&!/^[A-Za-z0-9]+$/.test(e)) {
@@ -347,9 +346,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
 
         <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
         {currency == 'EUR' && <Row gutter={[8, 8]} className="align-center">
-        {currency == 'EUR' && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-            <div className=" custom-btn-error" style={{justifyContent:'left',display:'table'}}>
-                <div style={{display:'table-row'}}>
+        {currency == 'EUR' && <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
+            <div className=" custom-btn-error">
             <Form.Item
                 className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
                 name="iban"
@@ -367,23 +365,21 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 <Input
                     className="cust-input"
                     placeholder='IBAN'
-                    style={{ width:'350px',display:'table-cell !important' }}
                     // onBlur={(e)=>getBankDeails(e)}
-                    maxLength={50}/>
-
+                    />                      
             </Form.Item>
-                                        <Form.Item >
-                                            <Button className={`pop-btn dbchart-link fs-14 fw-500`}
-                                                style={{ width: '200px', marginTop: '22px' }}
-                                                loading={isValidateLoading}
-                                                onClick={() => onIbanValidate(enteredIbanData)} >
-                                                <Translate content="validate" />
-                                            </Button>
-                                        </Form.Item>
-                                  
-            </div>
+                                        
+               
             </div>
         </Col>}
+        <Col xs={24} md={10} lg={10} xl={10} xxl={10}>
+            <Button className={`pop-btn dbchart-link fs-14 fw-500`} style={{width:"150px",marginTop:"32px",height:"42px"}}
+                loading={isValidateLoading}
+                onClick={() => onIbanValidate(enteredIbanData)} >
+                <Translate content="validate" />
+            </Button>      
+        </Col>
+
                         
                            
                         
