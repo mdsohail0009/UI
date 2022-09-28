@@ -655,7 +655,7 @@ export default {
   accountnumber: "Account Number",
   bankaddressline1: "Bank Address 1",
   bankaddressline2: "Bank Address 2",
-  reasiontotransfor: "Reason Of Transfer",
+  reasiontotransfor: "Reason For Transfer",
   relationtobenificiary: "Relationship To Beneficiary",
   saveWhitelistnameas: "Save Whitelist Name As",
   continue: "Continue",
@@ -666,5 +666,5 @@ export default {
   transfer_funds: "Send",
   receve_funds: "Receive",
   suisse_wallets: "SuisseBase Wallet",
-
+  validate: "Validate",
 };

@@ -25,14 +25,18 @@ class OthersBusiness extends Component {
         showDeclartion: false,
         iBanValid:false,
         isEdit: false,
-        isSelectedId: null
+        isSelectedId: null,
+        enteredIbanData: null,
+        isShowValid: false,
+        isValidateLoading: false,
+        isValidCheck: false
     };
     componentDidMount() {
         this.loadDetails();
     }
     loadDetails = async () => {
         this.setState({ ...this.state, errorMessage: null, isLoading: true });
-        const response = await createPayee(this.props.userProfile.id, this.props.selectedAddress?.id || "", "business");
+        const response = await createPayee(this.props.userProfile.id, this.props.selectedAddress?.id || "", "otherbusiness");
         if (response.ok) {
             let edit=false;
             let data = response.data;
@@ -44,7 +48,7 @@ class OthersBusiness extends Component {
                 data = { ...data, ...accountDetails,line1:data.line1,line2:data.line2,line3:data.line3,bankAddress1:accountDetails.line1,bankAddress2:accountDetails.line2 };
                 delete data["documents"];
                 if (data?.iban) {
-                    this.handleIbanChange({ target: { value: data?.iban } });
+                    this.handleIbanChange({ target: { value: data?.iban, isNext: true } });
                 } 
                  edit = true;
             }
@@ -57,23 +61,62 @@ class OthersBusiness extends Component {
             this.setState({ ...this.state, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, details: {} });
         }
     }
-    handleIbanChange = async ({ target: { value } }) => {
-        if (value?.length > 3) {
+    handleIbanChange = async ({ target: { value,isNext } }) => {
+        this.setState({ ...this.state, enteredIbanData: value, isShowValid: false});
+        if (value?.length > 10 && isNext) {
             this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true,iBanValid:true });
             const response = await fetchIBANDetails(value);
             if (response.ok) {
                 if(response.data && (response.data?.routingNumber || response.data?.bankName)){
-                    this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:true });
+                    this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:true, isValidateLoading: false });
                 }else{
-                    this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:false });
+                    this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:false, isValidateLoading: false });
                 }
             } else {
-                this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false, errorMessage: response.data || response.data?.message || response.originalError?.message });
+                this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false, errorMessage: response.data || response.data?.message || response.originalError?.message, isValidateLoading: false });
             }
-        }else{
-            this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false})
+        }
+        else{
+            this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false, enteredIbanData: value, isShowValid: false, isValidateLoading: false})
         }
     }
+
+     onIbanValidate = (e) => {
+        let value = e ? e: this.form.current?.getFieldValue('iban');
+        if (value?.length > 10) {
+            if (value &&!/^[A-Za-z0-9]+$/.test(value)) {
+                this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true});
+                this.form.current?.validateFields(["iban"], this.validateIbanType)
+            }
+            else {
+                this.setState({ ...this.state, isValidCheck: true, isShowValid: false, isValidateLoading: true});
+                this.handleIbanChange({ target: { value: value, isNext: true }});
+            }
+        }
+        else {
+            this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true});
+            this.form.current?.validateFields(["iban"], this.validateIbanType)
+        }
+    }
+
+     validateIbanType = (_, value) => {
+        this.setState({ ...this.state, isValidateLoading: false});
+        if (!value&&this.state.isShowValid) {
+            return Promise.reject(apiCalls.convertLocalLang("is_required"));
+        } else if (!this.state.iBanValid&&this.state.isShowValid) {
+            return Promise.reject("Please input a valid IBAN");
+        } else if (
+            value &&this.state.isShowValid&&
+            !/^[A-Za-z0-9]+$/.test(value)
+        ) {
+            return Promise.reject(
+                "Please input a valid IBAN"
+            );
+        }
+        else {
+            return Promise.resolve();
+        }
+    };
     submitPayee = async (values) => {
         let { details, ibanDetails,isSelectedId,isEdit } = this.state;
         let _obj = { ...details, ...values };
@@ -84,13 +127,13 @@ class OthersBusiness extends Component {
         _obj.payeeAccountModels[0].postalCode = ibanDetails?.zipCode;
         _obj.payeeAccountModels[0].bankBranch = ibanDetails?.branch;
         _obj.payeeAccountModels[0].bic=ibanDetails?.routingNumber;
-        _obj.payeeAccountModels[0].iban = values?.iban;
+        _obj.payeeAccountModels[0].iban = values?.iban ? values?.iban : this.form.current?.getFieldValue('iban');
         _obj.payeeAccountModels[0].currencyType = "Fiat";
         _obj.payeeAccountModels[0].walletCode = "EUR";
         _obj.payeeAccountModels[0].bankName = ibanDetails?.bankName;
         delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
         _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
-        _obj.addressType = "Business";
+        _obj.addressType = "otherbusiness";
         _obj.transferType = "sepa";
         _obj.amount = this.props.amount;
         if(isEdit){
@@ -250,7 +293,8 @@ class OthersBusiness extends Component {
                     <Paragraph className="mb-8 fs-14 text-white fw-500 mt-36 px-4">Bank Details</Paragraph>
                     {/* <Divider /> */}
                     <Row gutter={[16, 16]}>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                   <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
+                       <div className=" custom-btn-error">
                             <Form.Item
                                 className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                                 name="iban"
@@ -258,33 +302,28 @@ class OthersBusiness extends Component {
                                 required
                                 rules={[
                                     {
-                                        validator: (_, value) => {
-                                            if (!value) {
-                                                return Promise.reject(apiCalls.convertLocalLang("is_required"));
-                                            } else if (!this.state.iBanValid) {
-                                                return Promise.reject("Please input a valid IBAN");
-                                            } else if (
-                                                value &&
-                                                !/^[A-Za-z0-9]+$/.test(value)
-                                            ) {
-                                                return Promise.reject(
-                                                    "Please input a valid IBAN"
-                                                );
-                                            }else {
-                                                return Promise.resolve();
-                                            }
-                                        },
-                                    }
+                                        validator: this.validateIbanType,
+                                      },
                                 ]}
                             >
                                 <Input
                                     className="cust-input"
                                     placeholder={"IBAN"}
+                                    //style={{ width:'350px',display:'table-cell !important' }}
                                     onChange={this.handleIbanChange}
                                     maxLength={50}/>
 
                             </Form.Item>
+                            </div>
+                       </Col>
+                       <Col xs={24} md={10} lg={10} xl={10} xxl={10}>
+                       <Button className={`pop-btn dbchart-link fs-14 fw-500`} style={{width:"150px",marginTop:"36px",height:"42px"}}
+                            loading={this.state.isValidateLoading} 
+                             onClick={() => this.onIbanValidate(this.state?.enteredIbanData)} >
+                                <Translate content="validate" />
+                            </Button>
                         </Col>
+                       
 
                         {this.props.ontheGoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
@@ -305,12 +344,12 @@ class OthersBusiness extends Component {
                                     },
                                 ]}
                                 label={
-                                    "Reason Of Transfer"
+                                    "Reason For Transfer"
                                 }
                             >
                                 <Input
                                     className="cust-input"
-                                    placeholder={"Reason Of Transfer"}
+                                    placeholder={"Reason For Transfer"}
                                     // onChange={this.handleIbanChange}
                                     maxLength={1000}/>
                             </Form.Item>
@@ -379,7 +418,7 @@ class OthersBusiness extends Component {
                         </Spin>
                        
                     </div>
-                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs for transaction*</Paragraph>
+                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
 
                     <AddressDocumnet documents={this.state.details?.payeeAccountModels[0].documents} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;

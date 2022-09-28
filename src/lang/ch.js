@@ -603,5 +603,5 @@ export default {
 	send_fund: "發送",
 	createnow: "立即創建",
 	receve_funds: "收到",
-
+	validate: "驗證",
 };

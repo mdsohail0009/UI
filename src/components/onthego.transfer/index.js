@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Input, Row, Col, Form, Button, Typography, List, Divider, Image, Alert, Spin, Empty } from 'antd';
+import {Select,Input, Row, Col, Form, Button, Typography, List, Divider, Image, Alert, Spin, Empty } from 'antd';
 import apicalls from "../../api/apiCalls";
 import AddressDocumnet from "../addressbook.component/document.upload";
 import oops from '../../assets/images/oops.png'
@@ -8,7 +8,7 @@ import alertIcon from '../../assets/images/pending.png';
 import success from '../../assets/images/success.png';
 import NumberFormat from "react-number-format";
 import ConnectStateProps from "../../utils/state.connect";
-import { fetchPayees, fetchPastPayees, confirmTransaction, updatePayee, document, saveWithdraw, validateAmount } from "./api";
+import { fetchPayees,getCoinwithBank, fetchPastPayees, confirmTransaction, updatePayee, document, saveWithdraw, validateAmount } from "./api";
 import Loader from "../../Shared/loader";
 import Search from "antd/lib/input/Search";
 import Verifications from "./verification.component/verifications"
@@ -19,7 +19,7 @@ import { fetchMemberWallets } from "../dashboard.component/api";
 import Translate from "react-translate-component";
 import { Link } from "react-router-dom";
 const { Text, Title } = Typography;
-
+const { Option } = Select;
 class OnthegoFundTransfer extends Component {
     enteramtForm = React.createRef();
     reasonForm = React.createRef();
@@ -44,7 +44,8 @@ class OnthegoFundTransfer extends Component {
         verifyData: null, isBtnLoading: false, reviewDetailsLoading: false,
         isVerificationEnable: true,
         isVarificationLoader: true,
-        fiatWallets: []
+        fiatWallets: [],
+        isShowGreyButton: false,
     }
     componentDidMount() {
         this.verificationCheck()
@@ -61,6 +62,14 @@ class OnthegoFundTransfer extends Component {
       if(this.state.selectedCurrency){
         this.getPayees();
       }
+      this.getCoinDetails()
+    }
+
+    getCoinDetails=async()=>{
+   let response=await getCoinwithBank()
+   if(response.ok){
+    let obj=response.data
+   }
     }
     getPayees() {
         fetchPayees(this.props.userProfile.id, this.state.selectedCurrency).then((response) => {
@@ -89,6 +98,15 @@ class OnthegoFundTransfer extends Component {
             } else {
                 this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: false })
             }
+            // if(verfResponse.isPhoneVerified&&verfResponse.isEmailVerification) {
+            //     this.setState({ ...this.state, isPhMail: true});
+            // }
+            // if(verfResponse.isPhoneVerified&&verfResponse.twoFactorEnabled) {
+            //     this.setState({ ...this.state, isShowGreyButton: true});
+            // }
+            // if(verfResponse.twoFactorEnabled&&verfResponse.isEmailVerification) {
+            //     this.setState({ ...this.state, isAuthMail: true});
+            // }
         } else {
             this.setState({ ...this.state, isVarificationLoader: false, errorMessage: this.isErrorDispaly(verfResponse) })
         }
@@ -198,8 +216,22 @@ class OnthegoFundTransfer extends Component {
         }
     }
     changesVerification = (obj) => {
-        this.setState({ ...this.state, verifyData: obj })
+        debugger
+        //this.setState({ ...this.state, verifyData: obj })
         console.log(obj)
+        if(obj.isPhoneVerification&&obj.isEmailVerification&&(obj.verifyData?.isPhoneVerified&&obj.verifyData?.isEmailVerification)) {
+            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
+        }
+        if(obj.isPhoneVerification&&obj.isAuthenticatorVerification&&(obj.verifyData?.isPhoneVerified&&obj.verifyData?.twoFactorEnabled)) {
+            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
+        }
+        if(obj.isAuthenticatorVerification&&obj.isEmailVerification&&(obj.verifyData?.twoFactorEnabled&&obj.verifyData?.isEmailVerification)) {
+            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
+        }
+        if(obj.isPhoneVerification&&obj.isAuthenticatorVerification&&obj.isEmailVerification&&(obj.verifyData?.isPhoneVerified&&obj.verifyData?.twoFactorEnabled&&obj.verifyData?.isEmailVerification)){
+            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
+        }
+       
     }
     isErrorDispaly = (objValue) => {
         if (objValue.data && typeof objValue.data === "string") {
@@ -217,6 +249,7 @@ class OnthegoFundTransfer extends Component {
         this.setState({ ...this.state, reviewDetailsLoading: val })
     }
     validateAmt = async (amt, step, values, loader) => {
+        this.getPayees();
         const obj = {
             CustomerId: this.props.userProfile?.id,
             amount: amt,
@@ -231,8 +264,13 @@ class OnthegoFundTransfer extends Component {
         }
 
     }
+
+    handleCurrencyChange =(e) => {
+        this.setState({ ...this.state, selectedCurrency: e});
+    }
+ 
     renderStep = (step) => {
-        const { filterObj, pastPayees, payeesLoading, isVarificationLoader, isVerificationEnable } = this.state;
+        const { filterObj, pastPayees, payeesLoading, isVarificationLoader, isVerificationEnable,isPhMail,isShowGreyButton,isAuthMail } = this.state;
         const steps = {
             selectcurrency: <React.Fragment>
                 <List
@@ -315,18 +353,25 @@ class OnthegoFundTransfer extends Component {
                                     >
                                         <NumberFormat
                                             customInput={Input}
-                                            className="cust-input"
+                                            className="cust-input cust-select-arrow"
                                             placeholder={"Enter Amount"}
                                             maxLength="13"
                                             decimalScale={2}
                                             displayType="input"
                                             allowNegative={false}
                                             thousandSeparator={","}
-                                            addonBefore={this.state.selectedCurrency}
+                                             //addonBefore={this.state.selectedCurrency}
+                                             addonBefore={<Select  defaultValue={this.state.selectedCurrency}
+                                                onChange={(e) => this.handleCurrencyChange(e)}
+                                                placeholder="Select">
+                                                <option value="EUR">EUR</option>
+                                                <option value="USD">USD</option>
+                                            </Select>}
                                             onValueChange={() => {
                                                 this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount,errorMessage:'' })
                                             }}
                                         />
+                                      
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -496,7 +541,7 @@ class OnthegoFundTransfer extends Component {
                             <Form.Item
                                 className="fw-300 mb-4 text-white-50 py-4 custom-forminput custom-label"
                                 name="reasionOfTransfer"
-                                label={"Reason Of Transfer"}
+                                label={"Reason For Transfer"}
                                 required
                                 rules={[
                                     {
@@ -508,7 +553,7 @@ class OnthegoFundTransfer extends Component {
                             >
                                 <Input
                                     className="cust-input "
-                                    placeholder={"Reason Of Transfer"}
+                                    placeholder={"Reason For Transfer"}
                                     maxLength={1000}
                                 />
                             </Form.Item>
@@ -519,7 +564,7 @@ class OnthegoFundTransfer extends Component {
                             let { documents } = this.state.codeDetails;
                             documents = docs;
                             this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, documents } })
-                        }} title={"Please upload supporting documents for transaction*"} />
+                        }} title={"Please upload supporting docs to explain relationship with beneficiary*"} />
                     </React.Fragment>
                     {/* {this.state.selectedCurrency === "USD" && <Tabs className="cust-tabs-fait" activeKey={this.state.selectedTab} onChange={(key) => this.setState({ ...this.state, selectedTab: key })}>
                         <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"}>
@@ -737,7 +782,7 @@ class OnthegoFundTransfer extends Component {
                             </Col>}
                             {this.state.reviewDetails?.customerRemarks && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">Reason of Transfer </Title>
+                                    <Title className="fs-14 text-white fw-500 text-captz">Reason For Transfer </Title>
                                     <Title className="fs-14 fw-500 text-white text-right">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
                                 </div>
                             </Col>}
@@ -778,7 +823,9 @@ class OnthegoFundTransfer extends Component {
                                             size="large"
                                             block
                                             className="pop-btn px-24"
-                                            loading={this.state.isBtnLoading} >
+                                           // style={(isPhMail&&!this.state.verifyData?.phBtn&&!this.state.verifyData?.emailBtn)||(isShowGreyButton&&!this.state.verifyData?.phBtn&&!this.state.verifyData?.authBtn)||(isAuthMail&&!this.state.verifyData?.emailBtn&&!this.state.verifyData?.authBtn)||(!this.state.verifyData?.phBtn&&!this.state.verifyData?.emailBtn&&!this.state.verifyData?.authBtn) &&{backgroundColor:'#ccc',borderColor:'#3d3d3d'}}
+                                              style ={{backgroundColor: !isShowGreyButton  &&'#ccc',borderColor: !isShowGreyButton  &&'#3d3d3d'}}
+                                           loading={this.state.isBtnLoading} >
                                             Confirm & Continue
                                         </Button>
                                     </Form.Item>
