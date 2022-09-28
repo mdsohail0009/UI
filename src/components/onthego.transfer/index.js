@@ -45,9 +45,7 @@ class OnthegoFundTransfer extends Component {
         isVerificationEnable: true,
         isVarificationLoader: true,
         fiatWallets: [],
-        isPhMail: false,
-        isPhAuth: false,
-        isAuthMail: false
+        isShowGreyButton: false,
     }
     componentDidMount() {
         this.verificationCheck()
@@ -100,15 +98,15 @@ class OnthegoFundTransfer extends Component {
             } else {
                 this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: false })
             }
-            if(verfResponse.isPhoneVerification&&verfResponse.isEmailVerification) {
-                this.setState({ ...this.state, isPhMail: true});
-            }
-            if(verfResponse.isPhoneVerification&&verfResponse.twoFactorEnabled) {
-                this.setState({ ...this.state, isPhAuth: true});
-            }
-            if(verfResponse.twoFactorEnabled&&verfResponse.isEmailVerification) {
-                this.setState({ ...this.state, isAuthMail: true});
-            }
+            // if(verfResponse.isPhoneVerified&&verfResponse.isEmailVerification) {
+            //     this.setState({ ...this.state, isPhMail: true});
+            // }
+            // if(verfResponse.isPhoneVerified&&verfResponse.twoFactorEnabled) {
+            //     this.setState({ ...this.state, isShowGreyButton: true});
+            // }
+            // if(verfResponse.twoFactorEnabled&&verfResponse.isEmailVerification) {
+            //     this.setState({ ...this.state, isAuthMail: true});
+            // }
         } else {
             this.setState({ ...this.state, isVarificationLoader: false, errorMessage: this.isErrorDispaly(verfResponse) })
         }
@@ -218,8 +216,22 @@ class OnthegoFundTransfer extends Component {
         }
     }
     changesVerification = (obj) => {
-        this.setState({ ...this.state, verifyData: obj })
+        debugger
+        //this.setState({ ...this.state, verifyData: obj })
         console.log(obj)
+        if(obj.isPhoneVerification&&obj.isEmailVerification&&(obj.verifyData?.isPhoneVerified&&obj.verifyData?.isEmailVerification)) {
+            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
+        }
+        if(obj.isPhoneVerification&&obj.isAuthenticatorVerification&&(obj.verifyData?.isPhoneVerified&&obj.verifyData?.twoFactorEnabled)) {
+            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
+        }
+        if(obj.isAuthenticatorVerification&&obj.isEmailVerification&&(obj.verifyData?.twoFactorEnabled&&obj.verifyData?.isEmailVerification)) {
+            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
+        }
+        if(obj.isPhoneVerification&&obj.isAuthenticatorVerification&&obj.isEmailVerification&&(obj.verifyData?.isPhoneVerified&&obj.verifyData?.twoFactorEnabled&&obj.verifyData?.isEmailVerification)){
+            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
+        }
+       
     }
     isErrorDispaly = (objValue) => {
         if (objValue.data && typeof objValue.data === "string") {
@@ -258,7 +270,7 @@ class OnthegoFundTransfer extends Component {
     }
  
     renderStep = (step) => {
-        const { filterObj, pastPayees, payeesLoading, isVarificationLoader, isVerificationEnable,isPhMail,isPhAuth,isAuthMail } = this.state;
+        const { filterObj, pastPayees, payeesLoading, isVarificationLoader, isVerificationEnable,isPhMail,isShowGreyButton,isAuthMail } = this.state;
         const steps = {
             selectcurrency: <React.Fragment>
                 <List
@@ -811,8 +823,9 @@ class OnthegoFundTransfer extends Component {
                                             size="large"
                                             block
                                             className="pop-btn px-24"
-                                            style={(isPhMail&&!this.state.verifyData?.phBtn&&!this.state.verifyData?.emailBtn)||(isPhAuth&&!this.state.verifyData?.phBtn&&!this.state.verifyData?.authBtn)||(isAuthMail&&!this.state.verifyData?.emailBtn&&!this.state.verifyData?.authBtn)||(!this.state.verifyData?.phBtn&&!this.state.verifyData?.emailBtn&&!this.state.verifyData?.authBtn) &&{backgroundColor:'#ccc',borderColor:'#3d3d3d'}}
-                                            loading={this.state.isBtnLoading} >
+                                           // style={(isPhMail&&!this.state.verifyData?.phBtn&&!this.state.verifyData?.emailBtn)||(isShowGreyButton&&!this.state.verifyData?.phBtn&&!this.state.verifyData?.authBtn)||(isAuthMail&&!this.state.verifyData?.emailBtn&&!this.state.verifyData?.authBtn)||(!this.state.verifyData?.phBtn&&!this.state.verifyData?.emailBtn&&!this.state.verifyData?.authBtn) &&{backgroundColor:'#ccc',borderColor:'#3d3d3d'}}
+                                              style ={{backgroundColor: !isShowGreyButton  &&'#ccc',borderColor: !isShowGreyButton  &&'#3d3d3d'}}
+                                           loading={this.state.isBtnLoading} >
                                             Confirm & Continue
                                         </Button>
                                     </Form.Item>
