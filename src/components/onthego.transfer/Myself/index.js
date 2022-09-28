@@ -345,7 +345,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         </div>
 
         <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
-        {currency == 'EUR' && <Row gutter={[8, 8]} className="align-center">
+        {currency == 'EUR' && <Row gutter={[8, 8]} >
         {currency == 'EUR' && <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
             <div className=" custom-btn-error">
             <Form.Item
