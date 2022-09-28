@@ -624,4 +624,5 @@ export default {
 	bankAddress: "Magdagdag ng Address ng Bangko",
   send_fund: "Ipadala",
   createnow: "Lumikha Ngayon",
+  validate: "E-manan-kery",
 };

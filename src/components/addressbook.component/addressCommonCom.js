@@ -991,8 +991,8 @@ const AddressCommonCom = (props) => {
                       }}
                     >
                       <Radio.Button value="myself" className="custom-btn sec mt-8">{props.userConfig?.isBusiness ? "Own Business" : "My Self"}</Radio.Button>
-                      <Radio.Button value="someoneelse" className="custom-btn sec mt-8">SomeOne Else</Radio.Button>
-                      <Radio.Button value="business" className="custom-btn sec mt-8">Business</Radio.Button>
+                      <Radio.Button value="individuals" className="custom-btn sec mt-8">INDIVIDUALS</Radio.Button>
+                      <Radio.Button value="otherbusiness" className="custom-btn sec mt-8">OTHER BUSINESS</Radio.Button>
                     </Radio.Group>
                   </Col>
                 </Row>
@@ -1151,7 +1151,7 @@ const AddressCommonCom = (props) => {
                         },
                       ]}
                       label={
-                        <Translate content={addressOptions.addressType === "business" ? "buisiness_name" : "Fait_Name"} component={Form.label} />
+                        <Translate content={addressOptions.addressType === "otherbusiness" ? "buisiness_name" : "Fait_Name"} component={Form.label} />
                       }
                     >
                       <Input
@@ -1478,7 +1478,7 @@ const AddressCommonCom = (props) => {
                 </Row>
               </React.Fragment>}
               {(props?.cryptoTab == 2 || withdraeTab == "Fiat") && (addressOptions.addressType == "myself" ||
-                addressOptions.addressType == "someoneelse" || addressOptions.addressType == "buissiness") &&
+                addressOptions.addressType == "individuals" || addressOptions.addressType == "buissiness") &&
                 <Row gutter={[16, 16]}>
                   <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Translate
