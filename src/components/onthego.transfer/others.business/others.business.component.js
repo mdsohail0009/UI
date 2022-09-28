@@ -81,12 +81,17 @@ class OthersBusiness extends Component {
         }
     }
 
-     handleCoinChange = (e) => {
+     onIbanValidate = (e) => {
         let value = e ? e: this.form.current?.getFieldValue('iban');
         if (value?.length > 10) {
-            this.setState({ ...this.state, isValidCheck: true, isShowValid: false, isValidateLoading: true});
-            this.handleIbanChange({ target: { value: value, isNext: true }});
-           
+            if (value &&!/^[A-Za-z0-9]+$/.test(value)) {
+                this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true});
+                this.form.current?.validateFields(["iban"], this.validateIbanType)
+            }
+            else {
+                this.setState({ ...this.state, isValidCheck: true, isShowValid: false, isValidateLoading: true});
+                this.handleIbanChange({ target: { value: value, isNext: true }});
+            }
         }
         else {
             this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true});
@@ -314,7 +319,7 @@ class OthersBusiness extends Component {
                               <Button className={`pop-btn dbchart-link fs-14 fw-500`}
                             style={{ width:'200px', marginTop: '22px' }}
                             loading={this.state.isValidateLoading} 
-                             onClick={() => this.handleCoinChange(this.state?.enteredIbanData)} >
+                             onClick={() => this.onIbanValidate(this.state?.enteredIbanData)} >
                                 <Translate content="validate" />
                             </Button>
                            </Form.Item>

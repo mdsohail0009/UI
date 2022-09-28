@@ -61,8 +61,14 @@ class PayeeBankDetails extends Component {
 
     onIbanValidate = (e) => {
         if (e?.length > 10) {
-            this.setState({ ...this.state, isValidCheck: true, isShowValid: false,isValidateLoading: true});
-            this.handleIban(e, "true");
+            if (e &&!/^[A-Za-z0-9]+$/.test(e)) {
+                this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {},isValidateLoading: true});
+                this.props.form?.current?.validateFields([["payeeAccountModels","iban"]], this.validateIbanType);
+            }
+            else {
+                this.setState({ ...this.state, isValidCheck: true, isShowValid: false,isValidateLoading: true});
+                this.handleIban(e, "true");
+            }
         }
         else {
             this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {},isValidateLoading: true});

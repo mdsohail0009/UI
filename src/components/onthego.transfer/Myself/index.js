@@ -153,11 +153,18 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     }
 
     const onIbanValidate = (e) => {
+        debugger
         setValidateLoading(true);
         if (e?.length > 10) {
-            setIsShowValid(false);
-            getBankDeails(e, "true");
-           
+            if (e &&!/^[A-Za-z0-9]+$/.test(e)) {
+                setIsShowValid(true);
+                setbankDetails({});
+                form?.validateFields(["iban"], validateIbanType)
+            }
+            else {
+                setIsShowValid(false);
+                getBankDeails(e, "true");
+            }
         }
         else {
             setIsShowValid(true);
