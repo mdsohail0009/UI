@@ -14,8 +14,6 @@ const antIcon = (
     />
 );
 class PayeeBankDetails extends Component {
-    form = React.createRef();
-    bankDetailForm= React.createRef();
     state = {
         emailExist: false,
         bankDetailForm: React.createRef(),
@@ -61,7 +59,7 @@ class PayeeBankDetails extends Component {
         }
     }
 
-    handleCoinChange = (e) => {
+    onIbanValidate = (e) => {
         this.setState({ ...this.state, isValidateLoading: true});
         if (e?.length > 10) {
             this.setState({ ...this.state, isValidCheck: true, isShowValid: false});
@@ -69,14 +67,14 @@ class PayeeBankDetails extends Component {
         }
         else {
             this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}});
-          this.props?.form?.validateFields(["iban"], this.validateIbanType)
+          this.props.form.current?.validateFields([["payeeAccountModels","iban"]], this.validateIbanType)
         //   this.props?.form?.validateFields(["iban"]).then(values =>{
         //     this.validateIbanType("iban", e);
         //   })
         }
     }
 
-     validateIbanType = (_, value) => {
+    validateIbanType = (_, value) => {
         this.setState({ ...this.state, isValidateLoading: false, isShowValid: this.state.isShowValid?this.state.isShowValid:false});
         if (!value&&this.state.isShowValid) {
             return Promise.reject("is required");
@@ -146,7 +144,8 @@ class PayeeBankDetails extends Component {
                             //style={{ height: 36, }}
                             style={{ width:'200px' }}
                             loading={this.state.isValidateLoading} 
-                            onClick={() => this.handleCoinChange(this.state.enteredIbanData)} >
+                            // onClick={() => this.props.onIbanValidate(this.state.enteredIbanData)} >
+                            onClick={() => this.onIbanValidate(this.state.enteredIbanData)} >
                                 <Translate content="validate" />
                             </Button>
                    
