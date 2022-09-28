@@ -77,20 +77,19 @@ class OthersBusiness extends Component {
             }
         }
         else{
-            this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false, enteredIbanData: value, isShowValid: false})
+            this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false, enteredIbanData: value, isShowValid: false, isValidateLoading: false})
         }
     }
 
      handleCoinChange = (e) => {
         let value = e ? e: this.form.current?.getFieldValue('iban');
-        this.setState({ ...this.state, isValidateLoading: true});
         if (value?.length > 10) {
-            this.setState({ ...this.state, isValidCheck: true, isShowValid: false});
+            this.setState({ ...this.state, isValidCheck: true, isShowValid: false, isValidateLoading: true});
             this.handleIbanChange({ target: { value: value, isNext: true }});
            
         }
         else {
-            this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}});
+            this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true});
             this.form.current?.validateFields(["iban"], this.validateIbanType)
         }
     }
@@ -114,7 +113,6 @@ class OthersBusiness extends Component {
         }
     };
     submitPayee = async (values) => {
-        debugger
         let { details, ibanDetails,isSelectedId,isEdit } = this.state;
         let _obj = { ...details, ...values };
         _obj.payeeAccountModels[0].line1 = ibanDetails.bankAddress;
@@ -291,31 +289,14 @@ class OthersBusiness extends Component {
                     {/* <Divider /> */}
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                        <div className="d-flex align-center" style={{justifyContent:'left'}}>
+                        <div className=" custom-btn-error" style={{justifyContent:'left',display:'table'}}>
+                         <div style={{display:'table-row'}}>
                             <Form.Item
                                 className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
                                 name="iban"
                                 label={"IBAN"}
                                 required
                                 rules={[
-                                    // {
-                                    //     validator: (_, value) => {
-                                    //         if (!value) {
-                                    //             return Promise.reject(apiCalls.convertLocalLang("is_required"));
-                                    //         } else if (!this.state.iBanValid) {
-                                    //             return Promise.reject("Please input a valid IBAN");
-                                    //         } else if (
-                                    //             value &&
-                                    //             !/^[A-Za-z0-9]+$/.test(value)
-                                    //         ) {
-                                    //             return Promise.reject(
-                                    //                 "Please input a valid IBAN"
-                                    //             );
-                                    //         }else {
-                                    //             return Promise.resolve();
-                                    //         }
-                                    //     },
-                                    // }
                                     {
                                         validator: this.validateIbanType,
                                       },
@@ -324,18 +305,20 @@ class OthersBusiness extends Component {
                                 <Input
                                     className="cust-input"
                                     placeholder={"IBAN"}
-                                    style={{ width:'350px' }}s
+                                    style={{ width:'350px',display:'table-cell !important' }}
                                     onChange={this.handleIbanChange}
                                     maxLength={50}/>
 
                             </Form.Item>
-                            <Button className="pop-btn dbchart-link fs-14 fw-500 mb-8" 
-                            //style={{ height: 36, }}
-                            style={{ width:'200px' }}
+                            <Form.Item > 
+                              <Button className={`pop-btn dbchart-link fs-14 fw-500`}
+                            style={{ width:'200px', marginTop: '22px' }}
                             loading={this.state.isValidateLoading} 
                              onClick={() => this.handleCoinChange(this.state?.enteredIbanData)} >
                                 <Translate content="validate" />
                             </Button>
+                           </Form.Item>
+                            </div>
                             </div>
                         </Col>
                        

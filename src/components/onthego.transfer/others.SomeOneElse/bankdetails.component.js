@@ -44,33 +44,29 @@ class PayeeBankDetails extends Component {
             if (ibanget.ok) {
                 if (ibanget.data && (ibanget.data?.routingNumber || ibanget.data?.bankName)) {
                     const bankdetails = { bankName: ibanget.data.bankName, bic: ibanget.data.routingNumber, bankBranch: ibanget.data.branch, country: ibanget.data.country, state: ibanget.data.state, city: ibanget.data.city, postalCode: ibanget.data.zipCode, line1: ibanget.data.bankAddress }
-                    this.setState({ ...this.state, iBanDetals: bankdetails, IbanLoader: false, isValidIban: true, isShowValid: false })
+                    this.setState({ ...this.state, iBanDetals: bankdetails, IbanLoader: false, isValidIban: true, isShowValid: false, isValidateLoading: false })
                     this.props.getIbandata(bankdetails);
                     this.props.form.current?.setFieldsValue({ iban: ibannumber })
                 } else {
-                    this.setState({ ...this.state, IbanLoader: false, isValidIban: false })
+                    this.setState({ ...this.state, IbanLoader: false, isValidIban: false, isValidateLoading: false })
                     this.props.getIbandata(null);
                 }
             } else {
-                this.setState({ ...this.state, IbanLoader: false, isValidIban: false })
+                this.setState({ ...this.state, IbanLoader: false, isValidIban: false, isValidateLoading: false })
             }
         } else {
-            this.setState({ ...this.state, enteredIbanData: ibannumber, isShowValid: false, IbanLoader: false, isValidIban: false })
+            this.setState({ ...this.state, enteredIbanData: ibannumber, isShowValid: false, IbanLoader: false, isValidIban: false, isValidateLoading: false })
         }
     }
 
     onIbanValidate = (e) => {
-        this.setState({ ...this.state, isValidateLoading: true});
         if (e?.length > 10) {
-            this.setState({ ...this.state, isValidCheck: true, isShowValid: false});
+            this.setState({ ...this.state, isValidCheck: true, isShowValid: false,isValidateLoading: true});
             this.handleIban(e, "true");
         }
         else {
-            this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}});
-          this.props.form.current?.validateFields([["payeeAccountModels","iban"]], this.validateIbanType)
-        //   this.props?.form?.validateFields(["iban"]).then(values =>{
-        //     this.validateIbanType("iban", e);
-        //   })
+            this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {},isValidateLoading: true});
+          this.props.form?.current?.validateFields([["payeeAccountModels","iban"]], this.validateIbanType)
         }
     }
 
@@ -97,7 +93,8 @@ class PayeeBankDetails extends Component {
             sepa: <>
             <>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                    <div className="d-flex align-center" style={{justifyContent:'left'}}>
+                <div className=" custom-btn-error" style={{justifyContent:'left',display:'table'}}>
+                <div style={{display:'table-row'}}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
                         name={["payeeAccountModels","iban"]}
@@ -106,24 +103,6 @@ class PayeeBankDetails extends Component {
                         )}
                         required
                         rules={[
-                            // {
-                            //     validator: (_, value) => {
-                            //         if (!value) {
-                            //             return Promise.reject(apicalls.convertLocalLang("is_required"));
-                            //         } else if (!this.state.isValidIban) {
-                            //             return Promise.reject("Please input a valid IBAN");
-                            //         } else if (
-                            //             value &&
-                            //             !/^[A-Za-z0-9]+$/.test(value)
-                            //         ) {
-                            //             return Promise.reject(
-                            //                 "Please input a valid IBAN"
-                            //             );
-                            //         } else {
-                            //             return Promise.resolve();
-                            //         }
-                            //     },
-                            // },
                             {
                                 validator: this.validateIbanType,
                               },
@@ -134,23 +113,22 @@ class PayeeBankDetails extends Component {
                     >
                         <Input
                             className="cust-input"
-                            style={{ width:'350px' }}
+                            style={{ width:'350px', display:'table-cell !important' }}
                             placeholder={apicalls.convertLocalLang(
                                 "Bank_account_iban"
                             )}
                             maxLength={50}/>
                     </Form.Item>
-                    <Button className="pop-btn dbchart-link fs-14 fw-500 mb-8"  
-                            //style={{ height: 36, }}
-                            style={{ width:'200px' }}
-                            loading={this.state.isValidateLoading} 
-                            // onClick={() => this.props.onIbanValidate(this.state.enteredIbanData)} >
-                            onClick={() => this.onIbanValidate(this.state.enteredIbanData)} >
-                                <Translate content="validate" />
-                            </Button>
-                   
+                            <Form.Item >
+                                <Button className={`pop-btn dbchart-link fs-14 fw-500`}
+                                    style={{ width: '200px',marginTop:'22px' }}
+                                    loading={this.state.isValidateLoading}
+                                    onClick={() => this.onIbanValidate(this.state.enteredIbanData)} >
+                                    <Translate content="validate" />
+                                </Button>
+                            </Form.Item>
+                           </div>
                             </div>
-                           
                 </Col>
                 
                  

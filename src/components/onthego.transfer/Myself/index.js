@@ -152,8 +152,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         
     }
 
-    const handleCoinChange = (e) => {
-        debugger
+    const onIbanValidate = (e) => {
         setValidateLoading(true);
         if (e?.length > 10) {
             setIsShowValid(false);
@@ -164,12 +163,11 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             setIsShowValid(true);
             setValidIban(false); 
             setbankDetails({});
-            form.validateFields(["iban"], validateIbanType)
+            form?.validateFields(["iban"], validateIbanType)
         }
     }
 
     const validateIbanType = (_, value) => {
-        debugger
         setValidateLoading(false);
         if (!value&&isShowValid) {
             return Promise.reject(apiCalls.convertLocalLang("is_required"));
@@ -343,32 +341,13 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
         {currency == 'EUR' && <Row gutter={[8, 8]} className="align-center">
         {currency == 'EUR' && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-            <div className="d-flex align-center" style={{justifyContent:'left'}}>
+            <div className=" custom-btn-error" style={{justifyContent:'left',display:'table'}}>
+                <div style={{display:'table-row'}}>
             <Form.Item
                 className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
                 name="iban"
                 required
                 rules={[
-                    // {
-                    //     validator: (_, value) => {
-                    //         if (!value) {
-                    //             return Promise.reject(apiCalls.convertLocalLang("is_required"));
-                    //         } else if (!validIban) {
-                    //             return Promise.reject("Please input a valid IBAN");
-                    //         } else if (
-                    //             value &&
-                    //             !/^[A-Za-z0-9]+$/.test(value)
-                    //         ) 
-                    //         {
-                    //             return Promise.reject(
-                    //                 "Please input a valid IBAN"
-                    //             );
-                    //         }
-                    //         else {
-                    //             return Promise.resolve();
-                    //         }
-                    //     },
-                    // },
                     {
                         validator: validateIbanType,
                       },
@@ -381,18 +360,21 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 <Input
                     className="cust-input"
                     placeholder='IBAN'
-                    style={{ width:'350px' }}
+                    style={{ width:'350px',display:'table-cell !important' }}
                     // onBlur={(e)=>getBankDeails(e)}
                     maxLength={50}/>
 
             </Form.Item>
-                                    <Button className={`pop-btn dbchart-link fs-14 fw-500 ${!validIban && "mb-8"}`}
-                                        style={{ width: '200px' }}
-                                        loading={isValidateLoading}
-                                        onClick={() => handleCoinChange(enteredIbanData, "true")} >
-                                        <Translate content="validate" />
-                                    </Button>
-           
+                                        <Form.Item >
+                                            <Button className={`pop-btn dbchart-link fs-14 fw-500`}
+                                                style={{ width: '200px', marginTop: '22px' }}
+                                                loading={isValidateLoading}
+                                                onClick={() => onIbanValidate(enteredIbanData)} >
+                                                <Translate content="validate" />
+                                            </Button>
+                                        </Form.Item>
+                                  
+            </div>
             </div>
         </Col>}
                         
