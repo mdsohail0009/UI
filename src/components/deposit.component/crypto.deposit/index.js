@@ -22,7 +22,7 @@ const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {
         // dispatch(setSubTitle(`${coin.coinBalance ? coin.coinBalance : '0'} ${coin.coin}` + " " + apicalls.convertLocalLang('available')
         // ));
         setLoading(true)
-        const response = await createCryptoDeposit({ customerId: userProfile?.id, walletCode: coin?.coin });
+        const response = await createCryptoDeposit({ customerId: userProfile?.id, walletCode: coin?.coin, network: coin?.netWork });
         if (response.ok) {
             dispatch(setWalletAddress(response.data));
             dispatch(fetchDashboardcalls(userProfile?.id));
