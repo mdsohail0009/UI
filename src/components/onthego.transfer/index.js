@@ -365,7 +365,7 @@ class OnthegoFundTransfer extends Component {
                                     >
                                         <NumberFormat
                                             customInput={Input}
-                                            className="cust-input cust-select-arrow"
+                                            className="cust-input cust-select-arrow tfunds-inputgroup"
                                             placeholder={"Enter Amount"}
                                             maxLength="13"
                                             decimalScale={2}
