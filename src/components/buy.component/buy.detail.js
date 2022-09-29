@@ -121,7 +121,7 @@ class SelectCrypto extends Component {
             this.setState({...this.state,btnLoading:false})
         } else {
             this.setState({ ...this.state,errorMsg:this.isErrorDispaly(response),btnLoading:false})
-            this.divScroll.current.scrollIntoView()
+            this.divScroll?.current?.scrollIntoView()
         }
         
     }

@@ -1428,3 +1428,9 @@ cust-address{margin-bottom: 0px !important;}
 .main-container .k-loading-color{background-color: transparent !important;}
 .hy-align .ant-btn-loading::before{background-color: transparent !important;}
 .cust-pop-up-btn .ant-btn{border: none !important;}
+.btncolor{background:"gray"}
+.cust-select-arrow .ant-select-single .ant-select-selector .ant-select-selection-item::after{margin-left: 8px;}
+ .fund-transfer-input .tfunds-inputgroup .ant-input-group-addon{ padding: 0 10px 0 0 !important;}
+ .fund-transfer-input .tfunds-inputgroup .ant-select{ width:150px !important;}
+ .fund-transfer-input .tfunds-inputgroup .ant-select-selection-item{padding: 0 !important;}
+ .plist-textwrap {width: 500px;word-wrap: break-word;}

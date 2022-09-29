@@ -636,4 +636,5 @@ export default {
     receive_fiat_text: "Mandraisa ao amin'ny Suissebase FIAT Wallet",
 	contact_amount_text: "Mifandraisa amin'ny tohan-kevitra amin'ny vola ambony kokoa.",
 	buy_your_crypto_for_cash_text: "Mividiana mora foana ny crypto amin'ny poketranao.",
+	validate: "E-manan-kery",
 };

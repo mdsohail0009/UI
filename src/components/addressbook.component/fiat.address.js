@@ -40,10 +40,10 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onCont
                             className="custom-btn sec mt-8" value={props.userProfile?.isBusiness ? "ownbusiness" : "myself"}>{props.userProfile?.isBusiness ? "My Company" : "My Self"}</Radio.Button>
                             <Radio.Button
                                   // disabled={props?.selectedAddress?.id !== "00000000-0000-0000-0000-000000000000" && props?.selectedAddress?.addressType !== "someoneelse"?true:false}
-                                className="custom-btn sec mt-8" value="someoneelse">Someone Else</Radio.Button>
+                                className="custom-btn sec mt-8" value="individuals">INDIVIDUALS</Radio.Button>
                             <Radio.Button
                              //  disabled={props?.selectedAddress?.id !== "00000000-0000-0000-0000-000000000000" && props?.selectedAddress?.addressType !== "business"?true:false}
-                                className="custom-btn sec mt-8" value="business">Business</Radio.Button>
+                                className="custom-btn sec mt-8" value="otherbusiness">OTHER BUSINESS</Radio.Button>
                         </Radio.Group>
                     </Col>
                 </Row>
@@ -53,10 +53,10 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onCont
             onTheGoObj={{ amount: props.amount }} selectedAddress={selectedAddress} onEdit={(val) => {
                 setIsEdit(val);
             }}></MyselfNewTransfer>}
-        {addressOptions.addressType === "business" && <OthersBusiness ontheGoType={props.typeOntheGo} selectedAddress={selectedAddress} type={props.type} isUSDTransfer={props.currency === "USD" ? true : false} onContinue={(obj) => onContinue(obj)} amount={props.amount} onEdit={(val) => {
+        {addressOptions.addressType === "otherbusiness" && <OthersBusiness ontheGoType={props.typeOntheGo} selectedAddress={selectedAddress} type={props.type} isUSDTransfer={props.currency === "USD" ? true : false} onContinue={(obj) => onContinue(obj)} amount={props.amount} onEdit={(val) => {
             setIsEdit(val);
         }} />}
-        {addressOptions.addressType === "someoneelse" && <SomeoneComponent ontheGoType={props.typeOntheGo} selectedAddress={selectedAddress} addressType={addressOptions.addressType} type={props.type} currency={props.currency} onContinue={(obj) => onContinue(obj)} onTheGoObj={{ amount: props.amount }} onEdit={(val) => {
+        {addressOptions.addressType === "individuals" && <SomeoneComponent ontheGoType={props.typeOntheGo} selectedAddress={selectedAddress} addressType={addressOptions.addressType} type={props.type} currency={props.currency} onContinue={(obj) => onContinue(obj)} onTheGoObj={{ amount: props.amount }} onEdit={(val) => {
             setIsEdit(val);
         }} />}
     </>
