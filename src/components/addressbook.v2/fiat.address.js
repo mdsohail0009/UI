@@ -36,6 +36,9 @@ class AddressBookV2 extends Component {
         pastPayees: [],
         searchVal: "",
         errorMessage: null,
+        phBtn:false,
+        emailBtn:false,
+        authBtn:false,
         codeDetails: { abaRoutingCode: "", swiftRouteBICNumber: "", reasionOfTransfer: "", documents: null },
         selectedPayee: {},
         selectedTab: "domestic",
@@ -157,7 +160,7 @@ class AddressBookV2 extends Component {
         }
     }
     changesVerification = (obj) => {
-        this.setState({ ...this.state, verifyData: obj })
+        this.setState({ ...this.state, verifyData: obj,phBtn:obj.phBtn,emailBtn:obj.emailBtn,authBtn:obj.authBtn })
         console.log(obj)
     }
     isErrorDispaly = (objValue) => {
@@ -331,7 +334,7 @@ class AddressBookV2 extends Component {
                         </Col>}
                         {this.state.reviewDetails?.customerRemarks && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                <Title className="fs-14 text-white fw-400 text-captz">Reason for transfer </Title>
+                                <Title className="fs-14 text-white fw-400 text-captz">Reason For Transfer </Title>
                                 <Title className="fs-14 text-white fw-500  text-right">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
                             </div>
                         </Col>}
@@ -352,7 +355,9 @@ class AddressBookV2 extends Component {
                                         onClick={() => { this.saveWithdrawdata(); }}
                                         size="large"
                                         block
-                                        className="pop-btn px-24"
+                                       className="pop-btn px-24"
+                                        style={(this.state.phBtn==true&&this.state.emailBtn==true)||(this.state.phBtn==true&&this.state.authBtn==true)
+                                            ||(this.state.authBtn==true&&this.state.emailBtn==true)?"pop-btn px-24":"gray" }
                                         loading={this.state.isBtnLoading} >
                                         Confirm & Continue
                                     </Button>

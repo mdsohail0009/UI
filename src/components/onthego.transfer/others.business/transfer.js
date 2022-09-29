@@ -30,7 +30,7 @@ class BusinessTransfer extends Component {
     }
     loadDetails = async () => {
         this.setState({ ...this.state, errorMessage: null, isLoading: true });
-        const response = await createPayee(this.props.userProfile.id, this.props.selectedAddress?.id || "", "business");
+        const response = await createPayee(this.props.userProfile.id, this.props.selectedAddress?.id || "", "otherbusiness");
         if (response.ok) {
             let data = response.data;
             let edit = false;
@@ -59,6 +59,7 @@ class BusinessTransfer extends Component {
 
     }
     submitPayee = async (values) => {
+        debugger
         let { details, selectedTab,isEdit,isSelectedId } = this.state;
         let _obj = { ...details, ...values };
         _obj.payeeAccountModels[0].currencyType = "Fiat";
@@ -70,7 +71,7 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].line1 = values.bankAddress1;
         _obj.payeeAccountModels[0].line2 = values.bankAddress2;
         _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
-        _obj.addressType = "Business";
+        _obj.addressType = "otherbusiness";
         _obj.transferType = selectedTab;
         _obj.amount = this.props.amount;
         if(isEdit){
@@ -222,7 +223,7 @@ class BusinessTransfer extends Component {
                     <Paragraph className="mb-8 px-4 text-white fw-500 mt-36" style={{ fontSize: 18 }}>Recipient's Bank Details</Paragraph>
                     {/* <Divider /> */}
                     <DomesticTransfer type={this.props.type} />
-                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs for transaction*</Paragraph>
+                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
                     <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;
@@ -347,7 +348,7 @@ class BusinessTransfer extends Component {
                     <Paragraph className="mb-8 text-white fw-500 mt-36 px-4" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                     {/* <Divider /> */}
                     <InternationalTransfer type={this.props.type} />
-                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs for transaction*</Paragraph>
+                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
                     <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;

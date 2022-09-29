@@ -592,8 +592,8 @@ debugger
 	addressTypeNames = (type) => {
 		const stepcodes = {
 			"ownbusiness": "Own Business",
-			"someoneelse": "Someone Else",
-			"Business": "Business",
+			"individuals": "Individuals",
+			"otherbusiness": "Other Business",
 			"myself": "Myself"
 		};
 		return stepcodes[type];

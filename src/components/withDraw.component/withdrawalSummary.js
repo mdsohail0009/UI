@@ -767,7 +767,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 						)}
 						{permissions?.withdraw  && verifyData.twoFactorEnabled == true && (
 							<Text className="fs-14 mb-8 text-white d-block fw-200">
-								Authenticator Code *
+								Authenticator Codeddd *
 							</Text>
 						)}
 						{permissions?.withdraw  && verifyData.twoFactorEnabled == true && (
