@@ -1428,3 +1428,7 @@ cust-address{margin-bottom: 0px !important;}
 .main-container .k-loading-color{background-color: transparent !important;}
 .hy-align .ant-btn-loading::before{background-color: transparent !important;}
 .cust-pop-up-btn .ant-btn{border: none !important;}
+.btncolor{background:"gray"}
+.cust-select-arrow .ant-select-single .ant-select-selector .ant-select-selection-item::after{margin-left: 8px;}
+/* .ant-select-dropdown-placement-bottomLeft{width: 95px !important;left: 709px !important;}
+.cust-select-arrow .ant-input-group-addon{padding: 0 12px !important;} */

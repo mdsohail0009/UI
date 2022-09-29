@@ -656,7 +656,7 @@ export default {
 	accountnumber:"Account Number",
 	bankaddressline1:"Bank Address 1",
 	bankaddressline2:"Bank Address 2",
-	reasiontotransfor:'Reason Of Transfer',
+	reasiontotransfor:'Reason For Transfer',
 	relationtobenificiary:'Relationship To Beneficiary',
 	saveWhitelistnameas:'Save Whitelist Name As',
 	continue:'Continue',
@@ -673,4 +673,5 @@ export default {
 	send_fiat_text: "Send form your Suissebase FIAT Wallet",
     receive_fiat_text: "Receive in your Suissebase FIAT Wallet",
 	contact_amount_text: "Please contact support for higher amounts.",
+	validate: "Validate",
 };

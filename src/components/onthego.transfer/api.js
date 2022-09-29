@@ -8,6 +8,9 @@ const createPayee = (account_id, addr_book_id, address_type) => {
     addr_book_id = addr_book_id || "00000000-0000-0000-0000-000000000000";
     return apiClient.get(ApiControllers.addressbook + `payee/Withdraw/Favourite/${addr_book_id}/${account_id}/${address_type}`)
 }
+const getCoinwithBank=()=>{
+    return apiClient.get(ApiControllers.withdraw + `Withdraw/CurrencyWithBank`)
+}
 const payeeAccountObj = () => {
     return {
         "id": "00000000-0000-0000-0000-000000000000",
@@ -79,4 +82,4 @@ const validateAmount = (obj) => {
 const validateCryptoAmount = (obj) => {
     return apiClient.post(ApiControllers.withdraw + `Crypto/commision`, obj)
 }
-export { fetchIBANDetails, createPayee, payeeAccountObj, uploadFile, document, savePayee, confirmTransaction, fetchPayees, fetchPastPayees, updatePayee, saveWithdraw, validateAmount, validateCryptoAmount };
+export { fetchIBANDetails, getCoinwithBank,createPayee, payeeAccountObj, uploadFile, document, savePayee, confirmTransaction, fetchPayees, fetchPastPayees, updatePayee, saveWithdraw, validateAmount, validateCryptoAmount };
