@@ -224,14 +224,14 @@ class AddressBook extends Component {
 		},
 		
 		{
-			field: "favouriteName",
+			field: "whiteListName",
 			title: "Save Whitelist Name As",
 			filter: true,
 			width: 250,
 			customCell: (props) => (
 				<td>
 					<div className="gridLink" onClick={() => this.addressCryptoView(props)}>
-						{props.dataItem.favouriteName}
+						{props.dataItem?.whiteListName}
 					</div>
 					{/* <Text className="file-label ml-8 fs-12">
 						{addressName[props?.dataItem?.addressType]}
