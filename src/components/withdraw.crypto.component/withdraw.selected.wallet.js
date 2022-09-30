@@ -23,7 +23,7 @@ import { handleNewExchangeAPI } from "../send.component/api";
 import { validateCryptoAmount } from '../onthego.transfer/api';
 import NumberFormat from "react-number-format";
 
-const { Paragraph, Text } = Typography;
+const { Paragraph, Text,Title } = Typography;
 
 class CryptoWithDrawWallet extends Component {
     enteramtForm = React.createRef();
@@ -484,13 +484,11 @@ class CryptoWithDrawWallet extends Component {
                             scrollToFirstError
                         >
 
-                            <Row gutter={[16, 16]}>
+                            <Row gutter={[16, 16]} className="align-center">
                                 <Col xs={24} md={24} lg={3} xl={3} xxl={3}>
-                                    <div className="enter-val-container swap-com">
-                                        <Text className="fs-30 fw-400 text-white-30 text-yellow mr-4">
+                                        <Title className="fs-30 fw-400 mt-16 text-white-30 text-yellow mr-4 mb-0">
                                             BTC
-                                        </Text>
-                                    </div>
+                                        </Title>
                                 </Col>
                                 <Col xs={24} md={24} lg={21} xl={21} xxl={21}>
                                     <Form.Item
@@ -530,17 +528,18 @@ class CryptoWithDrawWallet extends Component {
                                         />
                                     </Form.Item>
                                 </Col>
-                            </Row>
+                                <Col xs={24} md={24} lg={24} xl={24} xxl={24} style={{marginTop:"-20px"}}>
 
-                            <div class="minmax ">
-                                <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn with-min" onClick={() => this.clickMinamnt("min")}>
+                            <div class="text-right mr-16">
+                                <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn " onClick={() => this.clickMinamnt("min")}>
                                     <span >Min</span>
                                 </button>
-                                <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn with-max" onClick={() => this.clickMinamnt("all")}>
+                                <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn " onClick={() => this.clickMinamnt("all")}>
                                     <span>Max</span>
                                 </button>
                             </div>
-
+                            </Col>
+                            </Row>
                             <Row gutter={[4, 4]} className="text-center mt-24 mb-24">
                                 <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
                                     <Form.Item className="text-center">
