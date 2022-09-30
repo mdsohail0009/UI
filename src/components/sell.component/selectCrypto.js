@@ -180,6 +180,7 @@ class SelectSellCrypto extends Component {
         return (
             <>
                 <div ref={this.myRef}>  {this.state?.errorMessage !== null && this.state?.errorMessage !== '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="error" message={apicalls.convertLocalLang('sellCrypto')} description={this.state?.errorMessage} />}
+                <div className="selectcrypto-container">
                     {coinDetailData && <Card className="crypto-card select mb-36 d-flex" bordered={false}>
                         <div className='d-flex justify-content'>
                         <div>
@@ -199,8 +200,8 @@ class SelectSellCrypto extends Component {
                     </Card>}
                     
                <div className="my-36">
-                        <Translate content="buy_select_currency" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50 pt-16" />
-                        <WalletList onWalletSelect={(e) => this.handleWalletSelection(e)} />
+                        <Translate content="sell_select_currency" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50 pt-16" />
+                        <WalletList placeholder="Select Currency" onWalletSelect={(e) => this.handleWalletSelection(e)} />
                     </div>
             {this.state.isShowCoinsData && <div> <LocalCryptoSwapperCmp
                         cryptoAmt={this.state.CryptoAmnt}
@@ -230,6 +231,7 @@ class SelectSellCrypto extends Component {
                     </div>
                     </div>}
 
+                    </div>
                     </div>
             </>
 
