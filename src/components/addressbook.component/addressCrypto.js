@@ -62,35 +62,45 @@ class AddressCrypto extends Component {
     }
   };
   coinList = async () => {
-    let fromlist = await getCoinList("All")
-    if (fromlist.ok) {
-      this.setState({ ...this.state, coinsList: fromlist.data, isLoading: false })
+    let response = await getCoinList("All")
+    if (response.ok) {
+      this.setState({ ...this.state, coinsList: response.data, isLoading: false })
     } else {
       this.setState({ ...this.state, coinsList: [], isLoading: false })
     }
     if(this.props.sendReceive?.withdrawFiatObj?.walletCode){
       this.form?.current?.setFieldsValue({token:this.props.sendReceive?.withdrawFiatObj?.walletCode})
       let val=this.props.sendReceive?.withdrawFiatObj?.walletCode
-      this.networkList(val)
+     // this.networkList(val)
+      this.handleTokenChange(val);
     }
   }
-  networkList = async (val) => {
-    let fromlist = await networkLu(val)
-    if (fromlist.ok) {
-      this.setState({ ...this.state, networksList: fromlist.data, isLoading: false })
-    } else {
-      this.setState({ ...this.state, networksList: [], isLoading: false })
-    }
-  }
+  // networkList = async (val) => { //network lu also added in coins list
+  //   let fromlist = await networkLu(val)
+  //   if (fromlist.ok) {
+  //     this.setState({ ...this.state, networksList: fromlist.data, isLoading: false })
+  //   } else {
+  //     this.setState({ ...this.state, networksList: [], isLoading: false })
+  //   }
+  // }
   handleTokenChange = (value) => {
     this.form?.current?.setFieldsValue({network:null});
     this.form?.current?.validateFields(["walletAddress"], this.validateAddressType(value))
-    this.networkList(value)
+    let networkLu = [];
+    if(value) {
+      this.state.coinsList?.filter(function (item){
+        if(item.walletCode == value) {
+          networkLu = item?.network;
+        }
+      })
+    }
+    this.setState({ ...this.state, networksList: networkLu})
+    //this.networkList(value)
   };
 
-  handleNetworkChange = (value) => {
-    console.log(`selected ${value}`);
-  };
+  // handleNetworkChange = (value) => {
+  //   console.log(`selected ${value}`);
+  // };
 
   submit = async (values) => {
     let obj = {
@@ -230,7 +240,7 @@ class AddressCrypto extends Component {
             >
               <Select
                 className="cust-input"
-                onChange={this.handleNetworkChange}
+                //onChange={this.handleNetworkChange}
                 maxLength={100}
                 placeholder="Select Network"
                 optionFilterProp="children"
