@@ -212,9 +212,9 @@ class SendMoney extends Component {
                             value={this.state.searchVal}
                         />
                     </Form.Item> */}
-                    <Text className="fs-14 mb-8 text-white d-block fw-200">
+                    {/* <Text className="fs-14 mb-8 text-white d-block fw-200">
 									Search for beneficiary *
-								</Text>
+								</Text> */}
                                 
                     <Search placeholder="Search for beneficiary" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="text-center mt-12" />
                 </Col>

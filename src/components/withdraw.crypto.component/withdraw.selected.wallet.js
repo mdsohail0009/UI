@@ -172,37 +172,35 @@ class CryptoWithDrawWallet extends Component {
     }
 
     amountNext = async (values) => {
+        this.setState({ ...this.state, error: null });
         let amt = values.amount;
         amt = typeof amt == "string" ? amt?.replace(/,/g, "") : amt;
-        if (amt > 0) {
-            this.setState({ ...this.state, amount: amt }, () => this.validateAmt(amt, "newtransfer", values, "newtransferLoader"))
-        } else {
-            this.validationsCheck(amt);
+        const { withdrawMaxValue, withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
+        this.setState({ ...this.state, error: null });
+        if (amt === "") {
+            this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('enter_amount') });
+            this.myRef.current.scrollIntoView();
         }
+        else if (this.state.CryptoAmnt === "0" || amt == 0) {
+            this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_greater_zero') });
+            this.myRef.current.scrollIntoView();
+        }
+        else if (amt < withdrawMinValue) {
+            this.setState({ ...this.state, error: apicalls.convertLocalLang('amount_min') + " " + withdrawMinValue });
+            this.myRef.current.scrollIntoView();
+        } else if (amt > withdrawMaxValue) {
+            this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_max') + " " + withdrawMaxValue });
+            this.myRef.current.scrollIntoView();
+        } else if (amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
+            this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_less') });
+            this.myRef.current.scrollIntoView();
+        }
+        else {
+            this.setState({ ...this.state, amount: amt }, () => this.validateAmt(amt, "newtransfer", values, "newtransferLoader"))
+            
+        } 
     } 
 
-        validationsCheck (amt) {
-            const { withdrawMaxValue, withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
-            this.setState({ ...this.state, error: null });
-            if (amt === "") {
-                this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('enter_amount') });
-                this.myRef.current.scrollIntoView();
-            }
-            else if (this.state.CryptoAmnt === "0" || amt === 0) {
-                this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_greater_zero') });
-                this.myRef.current.scrollIntoView();
-            }
-            else if (amt < withdrawMinValue) {
-                this.setState({ ...this.state, error: apicalls.convertLocalLang('amount_min') + " " + withdrawMinValue });
-                this.myRef.current.scrollIntoView();
-            } else if (amt > withdrawMaxValue) {
-                this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_max') + " " + withdrawMaxValue });
-                this.myRef.current.scrollIntoView();
-            } else if (amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
-                this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_less') });
-                this.myRef.current.scrollIntoView();
-            }
-        }
 
         validateAmt = async (amt, type, values,loader) => {
             const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
@@ -487,7 +485,7 @@ class CryptoWithDrawWallet extends Component {
                             <Row gutter={[16, 16]} className="align-center">
                                 <Col xs={24} md={24} lg={3} xl={3} xxl={3}>
                                         <Title className="fs-30 fw-400 mt-16 text-white-30 text-yellow mr-4 mb-0">
-                                            BTC
+                                           {selectedWallet?.coin}
                                         </Title>
                                 </Col>
                                 <Col xs={24} md={24} lg={21} xl={21} xxl={21}>
@@ -569,19 +567,39 @@ class CryptoWithDrawWallet extends Component {
                                                 let _amt = this.enteramtForm.current.getFieldsValue().amount;
                                                 _amt = typeof _amt == "string" ? _amt.replace(/,/g, "") : _amt;
                                                 if (_amt > 0) {
-                                                    this.setState({ ...this.state, isNewTransfer: false, amount: _amt, onTheGoObj: this.enteramtForm.current.getFieldsValue() }, () => {
-                                                        this.enteramtForm.current.validateFields().then(() => this.validateAmt(_amt, "addressSelection", this.enteramtForm.current.getFieldsValue(), "addressLoader"))
-                                                            .catch(error => {
-
-                                                            });
-                                                    })
+                                                     if (_amt < selectedWallet?.withdrawMinValue) {
+                                                        this.setState({ ...this.state, error: apicalls.convertLocalLang('amount_min') + " " + selectedWallet?.withdrawMinValue });
+                                                        this.myRef.current.scrollIntoView();
+                                                    } else if (_amt > selectedWallet?.withdrawMaxValue) {
+                                                        this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_max') + " " + selectedWallet?.withdrawMaxValue });
+                                                        this.myRef.current.scrollIntoView();
+                                                    } else if (_amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
+                                                        this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_less') });
+                                                        this.myRef.current.scrollIntoView();
+                                                    }
+                                                    else {
+                                                        this.setState({ ...this.state, isNewTransfer: false, amount: _amt, onTheGoObj: this.enteramtForm.current.getFieldsValue() }, () => {
+                                                            this.enteramtForm.current.validateFields().then(() => this.validateAmt(_amt, "addressSelection", this.enteramtForm.current.getFieldsValue(), "addressLoader"))
+                                                                .catch(error => {
+    
+                                                                });
+                                                        })
+                                                    }
+                                                   
                                                 } else {
                                                     if (!_amt) {
                                                         this.enteramtForm.current.validateFields()
                                                         // this.setState({ ...this.state, errorMessage:'Please enter amount'})
                                                     } else {
-                                                        this.validationsCheck(_amt);
-                                                        //this.setState({ ...this.state, errorMessage:'Amount must be greater than zero'})
+                                                       // this.validationsCheck(_amt);
+                                                        if (_amt === "") {
+                                                            this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('enter_amount') });
+                                                            this.myRef.current.scrollIntoView();
+                                                        }
+                                                        else if (this.state.CryptoAmnt == "0" || _amt == 0) {
+                                                            this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_greater_zero') });
+                                                            this.myRef.current.scrollIntoView();
+                                                        }
                                                     }
                                                 }
                                             }}
