@@ -178,7 +178,7 @@ class SelectCrypto extends Component {
           
                     <div className="my-36">
                         <Translate content="buy_select_currency" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50 pt-16" />
-                        <WalletList onWalletSelect={(e) => this.handleWalletSelection(e)} />
+                        <WalletList placeholder="Select Currency" onWalletSelect={(e) => this.handleWalletSelection(e)} />
                     </div>
             {this.state.isShowCoinsData && <div>
                    <LocalCryptoSwapperCmp

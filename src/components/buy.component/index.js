@@ -28,6 +28,7 @@ class BuySell extends Component {
         }
     }
     componentDidMount(){
+        debugger
         getFeaturePermissionsByKeyName(`trade`)
     }
     closeBuyDrawer = () => {
@@ -67,7 +68,7 @@ class BuySell extends Component {
             billingaddress: <span onClick={() => this.props.dispatch(setStep("step5"))} className="icon md lftarw-white c-pointer" />,
             addressscanner: <span onClick={() => this.props.dispatch(setStep("step6"))} className="icon md lftarw-white c-pointer" />,
             depositfiat: <span onClick={() => this.props.dispatch(setStep("step5"))} className="icon md lftarw-white c-pointer" />,
-            selectedcrypto: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
+            selectedcrypto: <span  isTabKey="2" onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
             sellsummary: <span onClick={() => this.props.dispatch(setStep("step10"))} className="icon md lftarw-white c-pointer" />,
             successmsg: <span />,
             sellsuccessmsg: <span />,
@@ -98,6 +99,7 @@ class BuySell extends Component {
         return x ? x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0;
     }
     render() {
+        debugger
         return (<Drawer
             title={[<div className="side-drawer-header">
                 {this.renderTitle()}

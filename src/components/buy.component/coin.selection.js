@@ -68,7 +68,7 @@ class CryptoComponent extends Component {
                     </Radio.Group>
                 </div> */}
                 {this.props.buySell.tabKey === 1 && !this.props.isTab ? <>
-                    <Translate content="buy_your_crypto_for_cash_text" component={Paragraph} className="text-white-30 fw-300 fs-16 mt-16" />
+                    <Translate content="buy_your_crypto_for_cash_text" component={Paragraph} className="text-white-30 fw-300 fs-16 mt-16 text-center" />
                     {/* <Tabs className="crypto-list-tabs" onChange={(key) => {
                         const types = {
                             1: "All", 2: "Gainers", 3: "Losers"
@@ -89,7 +89,7 @@ class CryptoComponent extends Component {
                     </Tabs> */}
                     <CryptoList ref={this.ref} isLoading={coinListdata["All"]?.loading} showSearch={true} coinList={coinListdata["All"]?.data} coinType="All" onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
                     </> : <>
-                    <Translate content="sell_your_crypto_for_cash_text" component={Paragraph} className="text-white-30 fw-300 fs-16 mt-16" />
+                    <Translate content="sell_your_crypto_for_cash_text" component={Paragraph} className="text-white-30 fw-300 fs-16 mt-16 text-center" />
                     <SellToggle /></>
                 }
             </>
