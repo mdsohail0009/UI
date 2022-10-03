@@ -120,7 +120,7 @@ class AddressCrypto extends Component {
       }
       else {
         let _obj = this.props.sendReceive?.withdrawCryptoObj;
-        this.props?.dispatch(setWithdrawcrypto({..._obj, toWalletAddress: values?.walletAddress,  network: values?.network, isShowDeclaration: true}));
+        this.props?.dispatch(setWithdrawcrypto({..._obj, addressBookId: response.data?.payeeAccountId, toWalletAddress: values?.walletAddress,  network: values?.network, isShowDeclaration: true}));
         this.props.changeStep('withdraw_crpto_summary');
       }
     }
@@ -182,6 +182,9 @@ class AddressCrypto extends Component {
               name="saveWhiteListName"
               label="Save Whitelist Name As"
               rules={[
+                {whitespace: true,
+                  message: "Is required",
+                },
                 {
                   required: true,
                   message: "Is required",
