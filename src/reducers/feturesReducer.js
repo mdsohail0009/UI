@@ -53,8 +53,8 @@ const fetchFeatures = (app_id, customer_id) => {
                 }
             }
             const _cockpit = menu.find(item => (item.key == "cockpit" || item.path == "/cockpit"));
-            menu = menu.filter(item => (!item.isTab && !["/cockpit", "/balances"].includes(item.path)));
-            dispatch(setData({ data: menu, error: null, key: "features", loading: false,originalData:response.data }));
+            menu = menu.filter(item => (!item.parentId && !["cockpit", "balances", "addressbook", "billpayments", "transactions"].includes(item.key)));
+            dispatch(setData({ data: menu, error: null, key: "features", loading: false, originalData: response.data }));
             if (_cockpit && window.location.pathname?.includes('cockpit')) {
                 dispatch(setSelectedFeatureMenu(_cockpit.id))
             }
@@ -83,8 +83,8 @@ const fetchFeaturePermissions = (feature_id, customer_id, callback) => {
 }
 const initialState = {
     features: { loading: true, data: [], error: null },
-    featurePermissions: { loading: true, data: [], error: null,selectedScreenFeatureId: null  },
-    accessDenied:false
+    featurePermissions: { loading: true, data: [], error: null, selectedScreenFeatureId: null },
+    accessDenied: false
 }
 const featuresReducer = (state = initialState, action) => {
 
@@ -97,13 +97,13 @@ const featuresReducer = (state = initialState, action) => {
             state = { ...state, [action.payload.key]: { ...state[action.payload.key], ...action.payload } };
             return state;
         case SET_SELECTED_FEATUREID:
-            state = { ...state, featurePermissions: { ...state.featurePermissions, selectedScreenFeatureId: action.payload,  } };
+            state = { ...state, featurePermissions: { ...state.featurePermissions, selectedScreenFeatureId: action.payload, } };
             return state;
         case UPDATE_ACCESSDENIED:
-            state = { ...state, accessDenied:action.payload  };
+            state = { ...state, accessDenied: action.payload };
             return state;
         case CLEAR_PERMISSIONS:
-            state = { ...state, featurePermissions: { data: [], error: null, loading: true,selectedScreenFeatureId: null } };
+            state = { ...state, featurePermissions: { data: [], error: null, loading: true, selectedScreenFeatureId: null } };
             return state;
         default:
             return state;
