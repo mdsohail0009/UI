@@ -153,36 +153,36 @@ class HeaderPermissionMenu extends Component {
         }
     }
 
-    showReceiveDrawer = (item, menuItem) => {
-        if (item == 'fiat') {
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivefiat: true, sendCryptoTab: false } });
-            this.props.dispatch(setWithdrawfiat(""));
-            this.props.dispatch(byFiatSetStep("step1"));
-            this.props.dispatch(setWithdrawfiatenaable(false));
-            this.props.dispatch(setSendCrypto(false));
-        } else {
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivecrypto: true, sendCryptoTab: false } });
-            this.props.dispatch(setWithdrawfiat(""));
-            this.props.dispatch(byFiatSetStep("step1"));
-            this.props.dispatch(setWithdrawfiatenaable(false));
-            this.props.dispatch(setSendCrypto(false));
-        }
-    }
-    showSendDrawer = (item, menuItem) => {
-        if (item == 'fiat') {
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivefiat: true, sendCryptoTab: false } });
-            this.props.dispatch(setWithdrawfiat(""));
-            this.props.dispatch(byFiatSetStep("step1"));
-            this.props.dispatch(setWithdrawfiatenaable(true));
-            this.props.dispatch(setSendCrypto(true));
-        } else {
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivecrypto: true, sendCryptoTab: true } });
-            this.props.dispatch(setWithdrawfiat(""));
-            this.props.dispatch(byFiatSetStep("step1"));
-            this.props.dispatch(setWithdrawfiatenaable(false));
-            this.props.dispatch(setSendCrypto(true));
-        }
-    }
+    // showReceiveDrawer = (item, menuItem) => {
+    //     if (item == 'fiat') {
+    //         this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivefiat: true, sendCryptoTab: false } });
+    //         this.props.dispatch(setWithdrawfiat(""));
+    //         this.props.dispatch(byFiatSetStep("step1"));
+    //         this.props.dispatch(setWithdrawfiatenaable(false));
+    //         this.props.dispatch(setSendCrypto(false));
+    //     } else {
+    //         this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivecrypto: true, sendCryptoTab: false } });
+    //         this.props.dispatch(setWithdrawfiat(""));
+    //         this.props.dispatch(byFiatSetStep("step1"));
+    //         this.props.dispatch(setWithdrawfiatenaable(false));
+    //         this.props.dispatch(setSendCrypto(false));
+    //     }
+    // }
+    // showSendDrawer = (item, menuItem) => {
+    //     if (item == 'fiat') {
+    //         this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivefiat: true, sendCryptoTab: false } });
+    //         this.props.dispatch(setWithdrawfiat(""));
+    //         this.props.dispatch(byFiatSetStep("step1"));
+    //         this.props.dispatch(setWithdrawfiatenaable(true));
+    //         this.props.dispatch(setSendCrypto(true));
+    //     } else {
+    //         this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivecrypto: true, sendCryptoTab: true } });
+    //         this.props.dispatch(setWithdrawfiat(""));
+    //         this.props.dispatch(byFiatSetStep("step1"));
+    //         this.props.dispatch(setWithdrawfiatenaable(false));
+    //         this.props.dispatch(setSendCrypto(true));
+    //     }
+    // }
     showSellDrawer = (item, menuItem) => {
         debugger
         if (item == 'buy') {
@@ -195,7 +195,7 @@ class HeaderPermissionMenu extends Component {
     }
     navigate = (menuKey, menuItem) => {
         if (menuItem.path === "/modal") {
-            if (menuItem.dispatchStep) {
+            if (!menuItem.dispatchStep) {
                 switch (menuKey) {
                     case "trade_buy":
                         this.props.dispatch(setStep(menuItem.dispatchStep));
@@ -217,12 +217,14 @@ class HeaderPermissionMenu extends Component {
                         this.props.dispatch(sendSetStep("step1"));
                         break;
                     case "send_fiat":
+                        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivefiat: true, sendCryptoTab: false } });
                         this.props.dispatch(setWithdrawfiat(""));
                         this.props.dispatch(byFiatSetStep("step1"));
                         this.props.dispatch(setWithdrawfiatenaable(true));
                         this.props.dispatch(setSendCrypto(true));
                         break;
                     case "send_crypto":
+                        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivecrypto: true, sendCryptoTab: true } });
                         this.props.dispatch(setWithdrawfiat(""));
                         this.props.dispatch(byFiatSetStep("step1"));
                         this.props.dispatch(setWithdrawfiatenaable(false));
