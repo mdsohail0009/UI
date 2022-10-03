@@ -247,7 +247,7 @@ class HeaderPermissionMenu extends Component {
         }
     }
     onMenuItemClick = async (menuKey, menuItem) => {
-        const perIgnoreLst = ["notifications", "auditLogs"];
+        const perIgnoreLst = ["notifications", "auditLogs","cases"];
         if (perIgnoreLst.includes(menuKey)) { this.navigate(menuKey, menuItem) }
         else {
             const ignoreKycLst = ["transactions"];
@@ -425,6 +425,18 @@ class HeaderPermissionMenu extends Component {
                             <Link>
                                 <Translate
                                     content="address_book"
+                                    component={Text}
+                                    className="text-white-30"
+                                />
+                                <span className="icon md rarrow-white" />
+                            </Link>
+                        </li>
+                        <li
+                            onClick={() => this.onMenuItemClick("cases", { key: "cases", path: "/cases" })}
+                        >
+                            <Link>
+                                <Translate
+                                    content="case"
                                     component={Text}
                                     className="text-white-30"
                                 />
