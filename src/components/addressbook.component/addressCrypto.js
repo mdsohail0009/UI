@@ -34,7 +34,7 @@ class AddressCrypto extends Component {
 
   componentDidMount() {
     this.getCryptoData();
-    this.coinList();
+    // this.coinList();
   }
   getCryptoData = async () => {
     let id = this.props?.addressBookReducer?.selectedRowData?.id || "00000000-0000-0000-0000-000000000000";
@@ -47,6 +47,7 @@ class AddressCrypto extends Component {
       this.setState({ ...this.state, isLoading: false, errorMessage: this.isErrorDispaly(response) })
     }
     this.form?.current?.setFieldsValue(response.data);
+    this.coinList();
   }
 
   isErrorDispaly = (objValue) => {
@@ -68,9 +69,8 @@ class AddressCrypto extends Component {
     } else {
       this.setState({ ...this.state, coinsList: [], isLoading: false })
     }
-    if(this.props.sendReceive?.withdrawFiatObj?.walletCode){
-      this.form?.current?.setFieldsValue({token:this.props.sendReceive?.withdrawFiatObj?.walletCode})
-      let val=this.props.sendReceive?.withdrawFiatObj?.walletCode
+    if(this.state.cryptoData.network){
+     let val=this.state.cryptoData.token
       this.networkList(val)
     }
   }
@@ -105,7 +105,7 @@ class AddressCrypto extends Component {
       status: 1,
       adressstate: "fd",
       currencyType: "Crypto",
-      walletAddress: values.walletAddress,
+      walletAddress:  values.walletAddress.trim(),
       customerId: this.props.userProfile.id
     }
     if (this.state.cryptoData.id !== "00000000-0000-0000-0000-000000000000") {
@@ -136,13 +136,13 @@ class AddressCrypto extends Component {
         const validAddress = WAValidator.validate(address, coinType, "both");
           if (!validAddress) {
             return Promise.reject(
-              "Address is not valid, Please enter a valid address according to the coin selected"
+              "Address is not valid, Please enter a valid address according to the token selected"
             );
           } else {
             return Promise.resolve();
           }
       } else {
-        return Promise.reject("Please select a coin first");
+        return Promise.reject("Please select a token first ");
       }
     } else {
       return Promise.reject('Is required');
@@ -176,6 +176,7 @@ class AddressCrypto extends Component {
             className="custom-label  mb-0"
             ref={this.form}
             onFinish={this.submit}
+            scrollToFirstError
           >
             <Form.Item className="custom-label"
               name="saveWhiteListName"
@@ -210,7 +211,7 @@ class AddressCrypto extends Component {
                 placeholder="Select Token"
                 optionFilterProp="children"
                 maxLength={50}
-                disabled={this.props?.sendReceive?.withdrawFiatObj?.walletCode ? true:false}>
+                disabled={this.state.cryptoData.network? true:false}>
                 {coinsList?.map((item, idx) => (
                   <Option key={idx} value={item.walletCode}>
                     {item.walletCode}
@@ -248,6 +249,7 @@ class AddressCrypto extends Component {
               label="Wallet Address"
               required
               rules={[
+                
                 {
                   validator: this.validateAddressType,
                 },

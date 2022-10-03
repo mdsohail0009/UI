@@ -253,7 +253,7 @@ class AddressBook extends Component {
 		},
 		{
 			field: "address",
-			title: apiCalls.convertLocalLang("address"),
+			title: "Wallet Address",
 			filter: true,
 			width: 380,
 		},
@@ -263,6 +263,12 @@ class AddressBook extends Component {
 			title: apiCalls.convertLocalLang("addressState"),
 			filter: true,
 			width: 180,
+		},
+		{
+			field: "status",
+			title: apiCalls.convertLocalLang("Status"),
+			filter: true,
+			width: 100,
 		},
 		{
 			field: "isWhitelisted",
@@ -279,13 +285,7 @@ class AddressBook extends Component {
 			title: apiCalls.convertLocalLang("whitelist"),
 			filter: false,
 			width: 200,
-		},
-		{
-			field: "status",
-			title: apiCalls.convertLocalLang("Status"),
-			filter: true,
-			width: 100,
-		},
+		}
 	];
 	async downloadDeclarationForm(dataItem) {
 		this.setState({ ...this.state, isDownloading: true, selectedDeclaration: dataItem.payeeAccountId });
@@ -720,7 +720,7 @@ debugger
 							{this.renderTitle()}
 							<div className="text-center fs-16">
 								<Translate
-									className="text-white-30 fw-600 text-upper mb-4 fs-24"
+									className="text-white-30 fw-600 text-upper "
 									content={
 										this.props.addressBookReducer.stepTitles[
 										config[this.props.addressBookReducer.stepcode]
@@ -792,20 +792,20 @@ debugger
 					}
 					footer={
 						<div className="cust-pop-up-btn">
-							<Button
-								style={{ width: 120, border: "1px solid #f2f2f2",height: 50 }}
-								className="primary-btn pop-btn"
-								onClick={this.handleCancel}>
-								No
-							</Button>
-							<Button
-								className="primary-btn pop-btn"
-								onClick={this.handleSatatuSave}
-								style={{ width: 120, height: 50 }}
-								loading={btnDisabled}>
-								{apiCalls.convertLocalLang("Yes")}
-							</Button>
-						</div>
+						<Button
+							style={{ width: 120, border: "1px solid #f2f2f2",height: 50 }}
+							className="primary-btn pop-btn"
+							onClick={this.handleCancel}>
+							No
+						</Button>
+						<Button
+							className="primary-btn pop-btn"
+							onClick={this.handleSatatuSave}
+							style={{ width: 120, height: 50 }}
+							loading={btnDisabled}>
+							{apiCalls.convertLocalLang("Yes")}
+						</Button>
+					</div>
 					}>
 					<p className="fs-16 mb-0">
 						{apiCalls.convertLocalLang("really_want")}{" "}
