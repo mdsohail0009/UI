@@ -625,7 +625,7 @@ export default {
 	Personal_referral_link: "Personal referral link",
 	Business_referral_link: "Business referral link",
 	account_text: "Account Reference Confirmation/Letter",
-	addressbook_note: "NOTE: Whitelisting of Crypto Address and Bank Account is required,please add below.",
+	addressbook_note: "Note: Whitelisting of Crypto Address and Bank Account is required, Please add below.",
 	bank_label: "Bank Label",
 	first_party: "1st Party",
 	third_party: "3rd Party",
