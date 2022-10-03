@@ -169,7 +169,6 @@ class HeaderPermissionMenu extends Component {
         }
     }
     showSendDrawer = (item, menuItem) => {
-        debugger
         if (item == 'fiat') {
             this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, sendreceivefiat: true, sendCryptoTab: false } });
             this.props.dispatch(setWithdrawfiat(""));
@@ -213,6 +212,18 @@ class HeaderPermissionMenu extends Component {
                         break;
                     case "sendreceivecrypto":
                         this.props.dispatch(sendSetStep("step1"));
+                        break;
+                    case "send_fiat":
+                        this.props.dispatch(setWithdrawfiat(""));
+                        this.props.dispatch(byFiatSetStep("step1"));
+                        this.props.dispatch(setWithdrawfiatenaable(true));
+                        this.props.dispatch(setSendCrypto(true));
+                        break;
+                    case "send_crypto":
+                        this.props.dispatch(setWithdrawfiat(""));
+                        this.props.dispatch(byFiatSetStep("step1"));
+                        this.props.dispatch(setWithdrawfiatenaable(false));
+                        this.props.dispatch(setSendCrypto(true));
                         break;
                     default:
                         break;
@@ -278,8 +289,8 @@ class HeaderPermissionMenu extends Component {
         if (key == "send") {
             this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, send_crypto: false, send_fiat: false, receive_fiat: false, reaceive_crypto: false } });
         }
-        else if(key==="trade"){
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, "trade_buy": false,"trade_sell": false } });
+        else if (key === "trade") {
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, "trade_buy": false, "trade_sell": false } });
         }
         this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [key]: false } });
     }
