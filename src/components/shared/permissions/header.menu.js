@@ -197,7 +197,10 @@ class HeaderPermissionMenu extends Component {
         if (menuItem.path === "/modal") {
             if (menuItem.dispatchStep) {
                 switch (menuKey) {
-                    case "trade":
+                    case "trade_buy":
+                        this.props.dispatch(setStep(menuItem.dispatchStep));
+                        break;
+                    case "trade_sell":
                         this.props.dispatch(setStep(menuItem.dispatchStep));
                         break;
                     case "transfer":
