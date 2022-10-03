@@ -144,7 +144,8 @@ class AddressCrypto extends Component {
       } else {
         return Promise.reject("Please select a token first ");
       }
-    } else {
+    } 
+    else {
       return Promise.reject('Is required');
     }
   };
@@ -160,11 +161,12 @@ class AddressCrypto extends Component {
         <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully </Title>
         <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
              Please sign using link received in email to whitelist your address. `}</Text>
-        <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
-        <div className="my-25"><Button
+        <Text className="text-white-30">{`Please note that your send will only be processed once your whitelisted address has been approved`}</Text>
+       
+       {! window?.location?.pathname.includes('addressbook')&&<div className="my-25"><Button
           onClick={this.props.onCancel}
           style={{width:"250px"}}
-          type="primary" className="mt-36 pop-btn text-textDark">BACK</Button></div>
+          type="primary" className="mt-36 pop-btn text-textDark">BACK</Button></div> } 
       </div>
     }
     else {
@@ -250,7 +252,6 @@ class AddressCrypto extends Component {
               className="custom-label"
               name="walletAddress"
               label="Wallet Address"
-              required
               rules={[
                 
                 {
