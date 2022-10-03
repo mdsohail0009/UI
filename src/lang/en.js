@@ -674,5 +674,5 @@ export default {
     receive_fiat_text: "Receive in your Suissebase FIAT Wallet",
 	contact_amount_text: "Please contact support for higher amounts.",
 	validate: "Validate",
-	sell_select_currency: "SELECT CURRENCY TO RECEIVE"
+	sell_select_currency: "SELECT CURRENCY TO RECEIVE",
 };
