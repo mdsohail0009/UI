@@ -211,13 +211,13 @@ class HeaderPermissionMenu extends Component {
                     case "sendReceive":
                         this.props.dispatch(sendSetStep("step1"));
                         break;
-                    case "sendreceivefiat":
-                        this.props.dispatch(byFiatSetStep("step1"));
-                        this.props.dispatch(setWithdrawfiatenaable(false));
-                        break;
-                    case "sendreceivecrypto":
-                        this.props.dispatch(sendSetStep("step1"));
-                        break;
+                    // case "sendreceivefiat":
+                    //     this.props.dispatch(byFiatSetStep("step1"));
+                    //     this.props.dispatch(setWithdrawfiatenaable(false));
+                    //     break;
+                    // case "sendreceivecrypto":
+                    //     this.props.dispatch(sendSetStep("step1"));
+                    //     break;
                     case "send_fiat":
                         this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, send_fiat: true, sendCryptoTab: false } });
                         this.props.dispatch(setWithdrawfiat(""));
@@ -250,7 +250,7 @@ class HeaderPermissionMenu extends Component {
                         break;
                 }
             }
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true, selectedTab:  menuKey === "trade_sell" ? true :false } });
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true, selectedTab:  menuKey === "trade_sell" ? true :false, sendCryptoTab: menuKey === "send_crypto" ? true :false } });
         } else if (menuItem.path) {
             this.props.history.push(menuItem.path);
         }
