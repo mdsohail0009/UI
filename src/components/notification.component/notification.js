@@ -223,7 +223,7 @@ class NotificationScreen extends Component {
                         <td
                           colSpan="8"
                           className="p-16 text-center"
-                          style={{ color: "white", width: 300 }}
+                          style={{width: 300 }}
                         >
                           No notification settings available
                         </td>

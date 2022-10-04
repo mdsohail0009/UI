@@ -370,7 +370,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         size="large"
                         className="pop-btn px-36 mt-36"
                         loading={btnLoading}
-                        style={{ minWidth: "100%" }}
+                        // style={{ minWidth: "100%" }}
                     // onClick={() => console.log(form.getFieldsValue())}
                     >
                         {props.type === "manual" && "Save"}

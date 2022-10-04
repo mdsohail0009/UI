@@ -759,7 +759,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
 .pay-grid{width: 100%;border: 1px solid rgba(0,0,0,.08);}
 .pay-grid thead th{background-color: var(--bgDarkGrey);padding: 8px;width: 250px; color: var(--textWhite30);font-weight: 500;text-align: left;font-size: 16px;}
 .pay-grid thead th:last-child{width: 500px;}
-.pay-grid tbody td{padding: 8px; color: var(--textWhite30);font-weight: 400;font-size: 14px ;border: 1px solid rgba(0,0,0,.08);}
+.pay-grid tbody td{padding: 8px; color: var(--textWhite);font-weight: 400;font-size: 14px ;border: 1px solid rgba(0,0,0,.08);}
 .pay-grid tbody tr:nth-child(even){background-color: rgba(0,0,0,.04);}
 /* .pay-grid tbody tr:hover{background-color: var(--bgDarkGrey);} */
 .ant-table-placeholder:hover{background: transparentc;}
@@ -1438,3 +1438,13 @@ cust-address{margin-bottom: 0px !important;}
  .send-fiat-input.cust-input, .cust-input .ant-input{font-size: 16px !important;}
  .send-crypto-sumry .ant-checkbox-wrapper.ant-custumcheck {position: relative;bottom: 10px !important;}
  .fiat-crypto-model .ant-moda{width: 520px;}
+ /* Standard */
+ .k-grid-header .k-header > .k-link{font-size: 16px;font-weight: 500;}
+ .k-grid td{font-size: 14px;font-weight: 400;}
+ .ant-form-item-label > label{font-weight: 500;height: 24px !important;color: var(--textWhite);font-size: 14px;text-align: left;}
+ h1.sub-heading {text-transform: capitalize;padding-left:4px; padding-right:4px;font-size:18px;font-weight:600;margin-top: 36px;color:var(--textWhite);}
+ .pop-btn, .confirm-btn{height: 46px;}
+ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom: 16px;padding-left:4px; padding-right:4px;}
+ .drawer-heading{}
+ .box.basic-info{border-radius: 0 !important;}
+ .sidebar-push{padding:30px 16px 24px;}

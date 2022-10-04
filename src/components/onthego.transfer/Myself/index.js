@@ -633,12 +633,12 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 {(!validIban||!isShowBankDetails)&&<span>No bank details available</span>}
                 </Spin>
         </div>}
-        <div className="text-center mt-36">
+        <div className="text-right mt-36">
             <Button
                 htmlType="submit"
                 size="large"
                 className="pop-btn px-36"
-                style={{ width:'100%' }}
+                // style={{ width:'100%' }}
                 loading={isBtnLoading} 
             >
                                 {props.type === "manual" && "Save"}
