@@ -34,7 +34,7 @@ class AddressCrypto extends Component {
 
   componentDidMount() {
     this.getCryptoData();
-    this.coinList();
+    // this.coinList();
   }
   getCryptoData = async () => {
     let id = this.props?.addressBookReducer?.selectedRowData?.id || "00000000-0000-0000-0000-000000000000";
@@ -47,6 +47,7 @@ class AddressCrypto extends Component {
       this.setState({ ...this.state, isLoading: false, errorMessage: this.isErrorDispaly(response) })
     }
     this.form?.current?.setFieldsValue(response.data);
+    this.coinList();
   }
 
   isErrorDispaly = (objValue) => {
@@ -68,9 +69,8 @@ class AddressCrypto extends Component {
     } else {
       this.setState({ ...this.state, coinsList: [], isLoading: false })
     }
-    if(this.props.sendReceive?.withdrawFiatObj?.walletCode){
-      this.form?.current?.setFieldsValue({token:this.props.sendReceive?.withdrawFiatObj?.walletCode})
-      let val=this.props.sendReceive?.withdrawFiatObj?.walletCode
+    if(this.state.cryptoData.network){
+     let val=this.state.cryptoData.token
       this.networkList(val)
     }
   }
@@ -93,6 +93,7 @@ class AddressCrypto extends Component {
   };
 
   submit = async (values) => {
+    debugger
     let obj = {
       id: "00000000-0000-0000-0000-000000000000",
       saveWhiteListName: values.saveWhiteListName,
@@ -105,7 +106,7 @@ class AddressCrypto extends Component {
       status: 1,
       adressstate: "fd",
       currencyType: "Crypto",
-      walletAddress: values.walletAddress,
+      walletAddress:  values.walletAddress.trim(),
       customerId: this.props.userProfile.id
     }
     if (this.state.cryptoData.id !== "00000000-0000-0000-0000-000000000000") {
@@ -120,7 +121,7 @@ class AddressCrypto extends Component {
       }
       else {
         let _obj = this.props.sendReceive?.withdrawCryptoObj;
-        this.props?.dispatch(setWithdrawcrypto({..._obj, toWalletAddress: values?.walletAddress,  network: values?.network, isShowDeclaration: true}));
+        this.props?.dispatch(setWithdrawcrypto({..._obj, addressBookId: response.data?.payeeAccountId || response.data?.id, toWalletAddress: values?.walletAddress,  network: values?.network, isShowDeclaration: true}));
         this.props.changeStep('withdraw_crpto_summary');
       }
     }
@@ -136,15 +137,16 @@ class AddressCrypto extends Component {
         const validAddress = WAValidator.validate(address, coinType, "both");
           if (!validAddress) {
             return Promise.reject(
-              "Address is not valid, Please enter a valid address according to the coin selected"
+              "Address is not valid, Please enter a valid address according to the token selected"
             );
           } else {
             return Promise.resolve();
           }
       } else {
-        return Promise.reject("Please select a coin first");
+        return Promise.reject("Please select a token first ");
       }
-    } else {
+    } 
+    else {
       return Promise.reject('Is required');
     }
   };
@@ -160,11 +162,12 @@ class AddressCrypto extends Component {
         <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully </Title>
         <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
              Please sign using link received in email to whitelist your address. `}</Text>
-        <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
-        <div className="my-25"><Button
+        <Text className="text-white-30">{`Please note that your send will only be processed once your whitelisted address has been approved`}</Text>
+       
+       {! window?.location?.pathname.includes('addressbook')&&<div className="my-25"><Button
           onClick={this.props.onCancel}
           style={{width:"250px"}}
-          type="primary" className="mt-36 pop-btn text-textDark">BACK</Button></div>
+          type="primary" className="mt-36 pop-btn text-textDark">BACK</Button></div> } 
       </div>
     }
     else {
@@ -176,11 +179,15 @@ class AddressCrypto extends Component {
             className="custom-label  mb-0"
             ref={this.form}
             onFinish={this.submit}
+            scrollToFirstError
           >
             <Form.Item className="custom-label"
               name="saveWhiteListName"
               label="Save Whitelist Name As"
               rules={[
+                {whitespace: true,
+                  message: "Is required",
+                },
                 {
                   required: true,
                   message: "Is required",
@@ -210,7 +217,7 @@ class AddressCrypto extends Component {
                 placeholder="Select Token"
                 optionFilterProp="children"
                 maxLength={50}
-                disabled={this.props?.sendReceive?.withdrawFiatObj?.walletCode ? true:false}>
+                disabled={this.state.cryptoData.network? true:false}>
                 {coinsList?.map((item, idx) => (
                   <Option key={idx} value={item.walletCode}>
                     {item.walletCode}
@@ -246,8 +253,8 @@ class AddressCrypto extends Component {
               className="custom-label"
               name="walletAddress"
               label="Wallet Address"
-              required
               rules={[
+                
                 {
                   validator: this.validateAddressType,
                 },
