@@ -718,9 +718,9 @@ debugger
 					title={[
 						<div className="side-drawer-header">
 							{this.renderTitle()}
-							<div className="text-center fs-16">
+							<div className="text-center fs-24">
 								<Translate
-									className="text-white-30 fw-600 text-upper "
+									className="text-white-30 fw-600 text-captz "
 									content={
 										this.props.addressBookReducer.stepTitles[
 										config[this.props.addressBookReducer.stepcode]
@@ -794,7 +794,7 @@ debugger
 						<div className="cust-pop-up-btn">
 						<Button
 							style={{ width: 120, border: "1px solid #f2f2f2",height: 50 }}
-							className="primary-btn pop-btn"
+							className="primary-btn pop-cancel"
 							onClick={this.handleCancel}>
 							No
 						</Button>

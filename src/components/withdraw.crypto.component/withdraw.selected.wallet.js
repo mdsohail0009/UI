@@ -482,7 +482,7 @@ class CryptoWithDrawWallet extends Component {
                             scrollToFirstError
                         >
 
-                            <Row gutter={[16, 16]} className="align-center">
+                            <Row gutter={[16, 16]} className="align-center send-crypto-err">
                                 <Col xs={24} md={24} lg={3} xl={3} xxl={3}>
                                         <Title className="fs-30 fw-400 mt-16 text-white-30 text-yellow mr-4 mb-0">
                                            {selectedWallet?.coin}
