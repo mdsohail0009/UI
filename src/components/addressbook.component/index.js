@@ -718,9 +718,9 @@ debugger
 					title={[
 						<div className="side-drawer-header">
 							{this.renderTitle()}
-							<div className="text-center fs-16">
+							<div className="text-center fs-24">
 								<Translate
-									className="text-white-30 fw-600 text-upper "
+									className="text-white-30 fw-600 text-captz "
 									content={
 										this.props.addressBookReducer.stepTitles[
 										config[this.props.addressBookReducer.stepcode]
