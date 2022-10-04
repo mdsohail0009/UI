@@ -1438,6 +1438,8 @@ cust-address{margin-bottom: 0px !important;}
  .send-fiat-input.cust-input, .cust-input .ant-input{font-size: 16px !important;}
  .send-crypto-sumry .ant-checkbox-wrapper.ant-custumcheck {position: relative;bottom: 10px !important;}
  .fiat-crypto-model .ant-moda{width: 520px;}
+ .send-crypto-err .custom-forminput .ant-form-item-control .ant-form-item-explain-error{position:absolute; bottom: -22px !important;}
+ .buy-usdt-btn .ant-btn .ant-btn-lg :focus{box-shadow : none !important;--antd-wave-shadow-color:none !important;}
  /* Standard */
  .k-grid-header .k-header > .k-link{font-size: 16px;font-weight: 500;}
  .k-grid td{font-size: 14px;font-weight: 400;}
