@@ -198,10 +198,12 @@ class HeaderPermissionMenu extends Component {
             if (!menuItem.dispatchStep) {
                 switch (menuKey) {
                     case "trade_buy":
-                        this.props.dispatch(setStep(menuItem.dispatchStep));
+                        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: false } });
+                        this.props.dispatch(setStep("step1"));
                         break;
                     case "trade_sell":
-                        this.props.dispatch(setStep(menuItem.dispatchStep));
+                        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: true } });
+                        this.props.dispatch(setStep("step1"));
                         break;
                     case "transfer":
                         this.props.dispatch(transforSetStep(menuItem.dispatchStep));
@@ -234,7 +236,7 @@ class HeaderPermissionMenu extends Component {
                         break;
                 }
             }
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true, selectedTab: false } });
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true, selectedTab:  menuKey === "trade_sell" ? true :false } });
         } else if (menuItem.path) {
             this.props.history.push(menuItem.path);
         }
