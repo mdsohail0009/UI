@@ -195,11 +195,11 @@ class HeaderPermissionMenu extends Component {
     // }
     navigate = (menuKey, menuItem) => {
         if (menuItem.path === "/modal") {
-            if (!menuItem.dispatchStep) {
+            if (!menuItem.dispatchStep||menuItem.dispatchStep) {
                 switch (menuKey) {
                     case "trade_buy":
                         this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: false } });
-                        this.props.dispatch(setStep("step1"));
+                        this.props.dispatch(menuItem.dispatchStep ? setStep(menuItem.dispatchStep) :setStep("step1"));
                         break;
                     case "trade_sell":
                         this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: true } });
