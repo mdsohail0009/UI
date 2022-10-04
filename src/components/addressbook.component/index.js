@@ -794,7 +794,7 @@ debugger
 						<div className="cust-pop-up-btn">
 						<Button
 							style={{ width: 120, border: "1px solid #f2f2f2",height: 50 }}
-							className="primary-btn pop-btn"
+							className="primary-btn pop-cancel"
 							onClick={this.handleCancel}>
 							No
 						</Button>
