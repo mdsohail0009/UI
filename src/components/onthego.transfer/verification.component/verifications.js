@@ -24,8 +24,10 @@ const Verifications = (props) => {
     const fullNumber = props.auth.phone_number;
     const last4Digits = fullNumber.slice(-4);
     const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
+    const [permissions, setPermissions] = useState({});
 
     useEffect(() => {
+        loadPermissions();
         getVerifyData();
     }, []);
     useEffect(() => {
@@ -71,6 +73,16 @@ const Verifications = (props) => {
     const transferDetials = async (values) => {
         // setAgreeRed(true);
     };
+
+   const loadPermissions = () => {
+		if (props.withdrawCryptoPermissions) {
+			let _permissions = {};
+			for (let action of props.withdrawCryptoPermissions?.actions) {
+				_permissions[action.permissionName] = action.values;
+			}
+            setPermissions(_permissions);
+		}
+	}
 
     const getVerifyData = async () => {
         props.onReviewDetailsLoading(true)
@@ -418,7 +430,7 @@ const Verifications = (props) => {
                         onFinish={transferDetials}
                         autoComplete="off">
                             <>
-                        {verifyData.isPhoneVerified === true && (<>
+                        {verifyData.isPhoneVerified === true && permissions?.Send && (<>
                             <Text className="fw-500 mb-8 px-4 text-white pt-16">
                             Phone Verification Code *
                             </Text>
@@ -471,7 +483,7 @@ const Verifications = (props) => {
                             </Form.Item>
                         </>
                         )}
-                        {verifyData.isEmailVerification === true && (<>
+                        {verifyData.isEmailVerification === true && permissions?.Send && (<>
                             <Text className="fs-14 mb-8 text-white d-block fw-500">
                                 Email Verification Code *
                             </Text>
@@ -524,7 +536,7 @@ const Verifications = (props) => {
                             </Form.Item>
                         </>
                         )}
-                        {verifyData.twoFactorEnabled === true && (<>
+                        {verifyData.twoFactorEnabled === true && permissions?.Send && (<>
                             <Text className="mb-8 px-4 fw-500 text-white pt-16">
                             Authenticator Code *
                             </Text>
@@ -624,7 +636,7 @@ const Verifications = (props) => {
                         </>
                         )} */}
                         </>
-                            {liveverification.isLiveEnable &&<>
+                            {liveverification.isLiveEnable &&  permissions?.Send &&<>
                                 <LiveNessSumsub onConfirm={(data) => verifyLiveness(data)} />
                             </>}
 
@@ -636,10 +648,11 @@ const Verifications = (props) => {
     );
 };
 
-const connectStateToProps = ({ userConfig, oidc }) => {
+const connectStateToProps = ({ userConfig, oidc, menuItems }) => {
     return {
         userConfig: userConfig.userProfileInfo,
-        auth: oidc.user.profile
+        auth: oidc.user.profile,
+        withdrawCryptoPermissions: menuItems?.featurePermissions?.send_fiat,
 
     };
 };

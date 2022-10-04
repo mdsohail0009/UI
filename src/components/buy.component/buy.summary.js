@@ -214,7 +214,7 @@ class BuySummary extends Component {
 
 
 const connectStateToProps = ({ buySell, buyInfo, userConfig,menuItems }) => {
-    return { buySell, sellData: buyInfo, customer: userConfig.userProfileInfo, buySellPermissions: menuItems?.featurePermissions["trade"], trackAuditLogData: userConfig.trackAuditLogData }
+    return { buySell, sellData: buyInfo, customer: userConfig.userProfileInfo, buySellPermissions: menuItems?.featurePermissions?.trade_buy, trackAuditLogData: userConfig.trackAuditLogData }
 }
 const connectDispatchToProps = dispatch => {
     return {

@@ -192,7 +192,7 @@ class Summary extends Component {
 							component={Text}
 						/>
 					</div>
-					{(permissions) &&
+					{(this.state.permissions?.Sell) &&
 					<div className="d-flex p-16 mb-36 agree-check">
 						<label
 						>
@@ -220,7 +220,7 @@ class Summary extends Component {
 							<Translate content="refund_cancellation" component="Text" />
 						</Paragraph>
 					</div>}
-					{(permissions ) &&
+					{(this.state.permissions?.Sell) &&
 					<SuisseBtn
 						className={"pop-btn"}
 						onRefresh={() => this.props.onRefresh()}
@@ -247,7 +247,7 @@ class Summary extends Component {
 	}
 }
 const connectStateToProps = ({ menuItems }) => {
-    return { buySellPermissions: menuItems?.featurePermissions["trade"] }
+    return { buySellPermissions: menuItems?.featurePermissions?.trade_sell}
 }
 const connectDispatchToProps = dispatch => {
 	return {

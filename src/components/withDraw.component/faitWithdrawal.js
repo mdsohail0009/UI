@@ -906,6 +906,7 @@ const FaitWithdrawal = ({ props,
         {renderModalContent()}
       </Modal>
       <Drawer
+      
         destroyOnClose={true}
         title={[<div className="side-drawer-header">
           <span />

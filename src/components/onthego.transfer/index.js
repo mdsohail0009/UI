@@ -19,6 +19,7 @@ import { fetchMemberWallets } from "../dashboard.component/api";
 import Translate from "react-translate-component";
 import { Link } from "react-router-dom";
 import Paragraph from "antd/lib/typography/Paragraph";
+import { connect } from "react-redux";
 const { Text, Title } = Typography;
 const { Option } = Select;
 class OnthegoFundTransfer extends Component {
@@ -47,9 +48,11 @@ class OnthegoFundTransfer extends Component {
         isVarificationLoader: true,
         fiatWallets: [],
         isShowGreyButton: false,
+        permissions: {},
     }
     componentDidMount() {
         this.verificationCheck()
+        this.permissionsInterval = setInterval(this.loadPermissions, 200);
         if (!this.state.selectedCurrency) {
             this.setState({ ...this.state, fiatWalletsLoading: true });
             fetchMemberWallets(this.props?.userProfile?.id).then(res => {
@@ -65,6 +68,18 @@ class OnthegoFundTransfer extends Component {
       }
       this.getCoinDetails()
     }
+
+    loadPermissions = () => {
+		debugger
+		if (this.props.withdrawCryptoPermissions) {
+			clearInterval(this.permissionsInterval);
+			let _permissions = {};
+			for (let action of this.props.withdrawCryptoPermissions?.actions) {
+				_permissions[action.permissionName] = action.values;
+			}
+			this.setState({ ...this.state, permissions: _permissions });
+		}
+	}
 
     getCoinDetails=async()=>{
    let response=await getCoinwithBank()
@@ -826,7 +841,7 @@ class OnthegoFundTransfer extends Component {
                             <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} />
                             </Col>
-                            <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+                           {this.state.permissions?.Send && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="text-center mt-36 create-account">
                                     <Form.Item className="mb-0 mt-16">
                                         <Button
@@ -842,7 +857,7 @@ class OnthegoFundTransfer extends Component {
                                         </Button>
                                     </Form.Item>
                                 </div>
-                            </Col>
+                            </Col>}
                         </Row>
                     </Form>
                 </Spin>
@@ -880,4 +895,22 @@ class OnthegoFundTransfer extends Component {
         </React.Fragment>
     }
 }
-export default ConnectStateProps(withRouter(OnthegoFundTransfer));
+const connectStateToProps = ({ sendReceive, userConfig, menuItems,oidc }) => {
+    debugger
+	return {
+		sendReceive,
+		userProfile: userConfig?.userProfileInfo,
+		trackAuditLogData: userConfig?.trackAuditLogData,
+		withdrawCryptoPermissions: menuItems?.featurePermissions?.send_fiat,
+		oidc:oidc?.user?.profile
+	};
+};
+const connectDispatchToProps = dispatch => {
+    return {
+        changeInternalStep: (stepcode) => {
+            // dispatch(setInternalStep(stepcode))
+        },
+        dispatch
+    }
+}
+export default connect(connectStateToProps,connectDispatchToProps)(withRouter(OnthegoFundTransfer));
