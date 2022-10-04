@@ -343,7 +343,7 @@ class OnthegoFundTransfer extends Component {
                             <Row gutter={[16, 16]}>
                                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                                     <Form.Item
-                                        className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label fund-transfer-input"
+                                        className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label fund-transfer-input send-fiat-input"
                                         name="amount"
                                         label={"Enter Amount"}
                                         required
