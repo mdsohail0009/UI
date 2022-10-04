@@ -182,7 +182,7 @@ class WithdrawSummary extends Component {
 	};
 	onCancel = () => {
 		this.setState({...this.state,previewModal:true})
-		this.props.dispatch(setWithdrawcrypto(null));
+		//this.props.dispatch(setWithdrawcrypto(null));
 		//this.props.changeStep('withdraw_crpto_cancel_confirm');
 		//this.props.changeStep("step1");
 	};
@@ -1029,7 +1029,7 @@ class WithdrawSummary extends Component {
 							)}
 
 							<Form.Item
-								className="custom-forminput mb-36 agree"
+								className="custom-forminput mb-36 agree send-crypto-sumry"
 								name="isAccept"
 								valuePropName="checked"
 								required
@@ -1062,7 +1062,7 @@ class WithdrawSummary extends Component {
 							/>
 						</div>
 							<Modal
-								className="documentmodal-width"
+								className="documentmodal-width fiat-crypto-model"
 								destroyOnClose={true}
 								title="Confirm"
 								width={350}
@@ -1077,14 +1077,7 @@ class WithdrawSummary extends Component {
 									</Tooltip>
 								}
 								footer={
-									<>
-										<Button
-											className="pop-btn px-36"
-											style={{ margin: "0 8px" }}
-											onClick={() => this.onModalOk()}
-										>
-											Yes
-										</Button>
+									<>									
 										<Button
 											className="pop-btn px-36"
 											style={{ margin: "0 8px" }}
@@ -1092,6 +1085,13 @@ class WithdrawSummary extends Component {
 
 										>
 											No
+										</Button>
+										<Button
+											className="pop-btn px-36"
+											style={{ margin: "0 8px" }}
+											onClick={() => this.onModalOk()}
+										>
+											Yes
 										</Button>
 									</>
 								}>

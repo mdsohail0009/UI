@@ -253,6 +253,7 @@ class AddressCrypto extends Component {
               className="custom-label"
               name="walletAddress"
               label="Wallet Address"
+              required
               rules={[
                 
                 {
