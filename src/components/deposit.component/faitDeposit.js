@@ -46,9 +46,11 @@ class FaitDeposit extends Component {
     this.props.fiatRef(this)
     this.props.fetchCurrencyWithBankDetails()
     if (this.props.sendReceive.withdrawFiatEnable) {
+      getFeaturePermissionsByKeyName(`send_fiat`);
       this.handleshowTab(2);
       this.props.dispatch(setSubTitle(apicalls.convertLocalLang("withdrawFiat")));
     } else {
+      getFeaturePermissionsByKeyName(`receive_fiat`);
       this.handleshowTab(1);
 
       let { depObj } = this.state;
@@ -59,7 +61,7 @@ class FaitDeposit extends Component {
         this.handlFiatDep(this.props.depositInfo?.depositCurrency, this.props.depositInfo?.currenciesWithBankInfo)
       }
     }
-    getFeaturePermissionsByKeyName(`sendreceivefiat`);
+    //getFeaturePermissionsByKeyName(`send_fiat`);
   }
   clearfiatValues = () => {
     this.props.fetchCurrencyWithBankDetails()

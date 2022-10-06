@@ -87,7 +87,7 @@ class CryptoWithDrawWallet extends Component {
         else {
             this.setState({ ...this.state, isVerificationMethodsChecked: isVerified });
         }
-        getFeaturePermissionsByKeyName(`sendreceivecrypto`)
+        getFeaturePermissionsByKeyName(`send_crypto`)
         this.trackevent();
     }
     trackevent = () => {

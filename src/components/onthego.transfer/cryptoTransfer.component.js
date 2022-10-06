@@ -240,7 +240,6 @@ class OnthegoCryptoTransfer extends Component {
     }
 
     renderStep = (step) => {
-        debugger
         const { filterObj, pastPayees, payeesLoading, isVarificationLoader, isVerificationEnable,isPhMail,isShowGreyButton,isAuthMail } = this.state;
         const steps = {
             enteramount: <>
