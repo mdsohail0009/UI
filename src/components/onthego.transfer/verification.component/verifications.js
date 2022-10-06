@@ -112,7 +112,6 @@ const Verifications = (props) => {
     };
 
     const verifyEmailOtp = async (values) => {
-        debugger
         if(!email.code){
             setEmail({ ...email, errorMsg: 'Please enter email verification code', verified:false});
         }
@@ -171,7 +170,6 @@ const Verifications = (props) => {
         }
     };
     const verifyPhoneOtp = async () => {
-        debugger
         if(!phone.code){
             setPhone({ ...phone, errorMsg: 'Please enter phone verification code', verified: false, btnLoader: false });
         }
@@ -218,7 +216,6 @@ const Verifications = (props) => {
         }
     }
     const verifyAuthenticatorOTP = async () => {
-        debugger
         if(!authenticator.code){
             return setAuthenticator({ ...authenticator, errorMsg: 'Please enter authenticator code', verified: false, btnLoader:false });
         }

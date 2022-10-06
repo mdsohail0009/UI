@@ -146,7 +146,6 @@ class CryptoWithDrawWallet extends Component {
         return titles[config[this.props.addressBookReducer.stepcode]];
     };
     selectCrypto = async (type,buttonLoader) => {
-        debugger
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
        this.props.dispatch(setSubTitle(""))
         let obj = {

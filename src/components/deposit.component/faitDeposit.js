@@ -86,7 +86,6 @@ class FaitDeposit extends Component {
     }
   }
   handleshowTab = async (tabKey) => {
-    debugger
     this.setState({
       ...this.state,
       faitdeposit: tabKey === 2,

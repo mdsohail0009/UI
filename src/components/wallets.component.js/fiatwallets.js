@@ -38,7 +38,6 @@ class FiatWallets extends Component {
         this.props.history.push("/docnotices");
     }
     showSendReceiveDrawer = (e, value) => {
-        debugger
         if (this.props?.userProfile?.isDocsRequested) {
             this.props.history.push("/docnotices");
             return;

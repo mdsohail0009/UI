@@ -79,7 +79,6 @@ class YourPortfolio extends Component {
         })
     }
     showInternalTransfer=()=>{
-      debugger
       if(!this.props?.twoFA?.isEnabled){
         this.props.history.push("/enabletwofactor");
         return;

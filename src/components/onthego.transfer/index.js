@@ -70,7 +70,6 @@ class OnthegoFundTransfer extends Component {
     }
 
     loadPermissions = () => {
-		debugger
 		if (this.props.withdrawCryptoPermissions) {
 			clearInterval(this.permissionsInterval);
 			let _permissions = {};
@@ -232,7 +231,6 @@ class OnthegoFundTransfer extends Component {
         }
     }
     changesVerification = (obj) => {
-        debugger
         //this.setState({ ...this.state, verifyData: obj })
         console.log(obj)
         if(obj.isPhoneVerification&&obj.isEmailVerification&&(obj.verifyData?.isPhoneVerified&&obj.verifyData?.isEmailVerification)) {
@@ -896,7 +894,6 @@ class OnthegoFundTransfer extends Component {
     }
 }
 const connectStateToProps = ({ sendReceive, userConfig, menuItems,oidc }) => {
-    debugger
 	return {
 		sendReceive,
 		userProfile: userConfig?.userProfileInfo,

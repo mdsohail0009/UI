@@ -184,7 +184,6 @@ class HeaderPermissionMenu extends Component {
     //     }
     // }
     // showSellDrawer = (item, menuItem) => {
-    //     debugger
     //     if (item == 'buy') {
     //         this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: false } });
     //         this.props.dispatch(setStep(menuItem.dispatchStep))

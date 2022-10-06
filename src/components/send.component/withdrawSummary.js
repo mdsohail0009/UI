@@ -203,7 +203,6 @@ class WithdrawSummary extends Component {
         this.props.dispatch(setAddress(null))
 	}
 	handleNewExchangeRate = async () => {
-		debugger
 		this.setState({ ...this.state, loading: true });
 		const { totalValue, walletCode, toWalletAddress, addressBookId, network, isShowDeclaration } =
 			this.props.sendReceive?.withdrawCryptoObj;
@@ -544,7 +543,6 @@ class WithdrawSummary extends Component {
 				saveObj.Createdby=this.props.userProfile.userName;
 				let withdrawal = await withDrawCrypto(saveObj);
 				if (withdrawal.ok) {
-					debugger
 					if(saveObj?.isShowDeclaration) {
 						this.props.dispatch(setCryptoFinalRes(withdrawal.data));
 						this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));

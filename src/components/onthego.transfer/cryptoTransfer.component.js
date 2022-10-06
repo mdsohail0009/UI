@@ -67,7 +67,6 @@ class OnthegoCryptoTransfer extends Component {
         selectedPayee: {},
     }
     componentDidMount() {
-        debugger
        // this.verificationCheck()
        this.enteramtForm?.current?.setFieldsValue({amount:this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue});
         this.permissionsInterval = setInterval(this.loadPermissions, 200);
@@ -134,7 +133,6 @@ class OnthegoCryptoTransfer extends Component {
     };
 
     chnageStep = (step, values) => {
-        debugger
         this.props.onTransfer("true");
         this.setState({ ...this.state, step, onTheGoObj: values });
         if (step === 'newtransfer') {
