@@ -1460,7 +1460,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .ant-menu-item:active, .ant-menu-submenu-title:active{background-color: transparent;}
 .custom-declaraton{height: calc(100vh - 200px);align-items: center;display: flex;justify-content: center;}
 .pop-cancel span{color:var(--textYellow);}
-.pop-btn{width: 300px;}
+/* .pop-btn{width: 300px;} */
 .custom-declaraton .declaration-content{width: 600px;}
 .side-drawer .side-drawer-header{align-items: flex-start;}
 .ant-alert-message{display: none;}
