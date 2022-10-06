@@ -9,7 +9,7 @@ import { withRouter } from "react-router-dom/cjs/react-router-dom.min";
 import { fetchMemberWallets } from "../dashboard.component/api";
 import { connect } from "react-redux";
 import { validateCryptoAmount } from '../onthego.transfer/api';
-import { setStep, setSubTitle, setWithdrawcrypto, setAddress } from '../../reducers/sendreceiveReducer';
+import { setStep, setSubTitle, setWithdrawcrypto, setAddress, setSendCrypto, hideSendCrypto } from '../../reducers/sendreceiveReducer';
 import AddressCrypto from "../addressbook.component/addressCrypto";
 import { setAddressStep} from "../../reducers/addressBookReducer";
 
@@ -113,8 +113,10 @@ class OnthegoCryptoTransfer extends Component {
 
     chnageStep = (step, values) => {
         this.props.onTransfer("true");
+        this.props.dispatch(hideSendCrypto(false));
         this.setState({ ...this.state, step, onTheGoObj: values });
         if (step === 'newtransfer') {
+            this.props.dispatch(hideSendCrypto(true));
             this.setState({ ...this.state, step, isNewTransfer: true, onTheGoObj: values });
         }
     }
@@ -164,6 +166,7 @@ class OnthegoCryptoTransfer extends Component {
         this.getPayees();
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.props.dispatch(setSubTitle(""))
+        this.props.dispatch(hideSendCrypto(false));
          let obj = {
              "customerId": this.props.userProfile.id,
              "customerWalletId": id,
