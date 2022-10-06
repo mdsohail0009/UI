@@ -130,7 +130,7 @@ class AddressBook extends Component {
 		},
 		{
 
-			field: "favouriteName",
+			field: "whiteListName",
 			title: "Save Whitelist Name As",
 			filter: true,
 			width: 300,
