@@ -1,7 +1,7 @@
 
 import React, { Component} from "react";
 import { Form, Typography, Input, Button, Select, Image, Alert,Row,Col } from "antd";
-import alertIcon from '../../assets/images/pending.png';
+import alertIcon from '../../assets/images/success.png';
 import { setAddressStep } from "../../reducers/addressBookReducer";
 import { setAddress, setStep, setWithdrawcrypto,rejectWithdrawfiat } from "../../reducers/sendreceiveReducer";
 import { connect } from "react-redux";
