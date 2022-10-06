@@ -648,9 +648,8 @@ debugger
 
 		return (
 			<>
-
-				<div className="box basic-info main-container">
-					<Translate
+			<div className="main-container">
+			<Translate
 						content="address_book"
 						component={Text}
 						className="basicinfo"
@@ -658,8 +657,9 @@ debugger
 					<Translate
 						content="addressbook_note"
 						component={Text}
-						className="fs-14 text-yellow fw-400 mb-36 d-block"
+						className="fs-14 text-yellow fw-400 mb-12 d-block"
 					/>
+				<div className="box basic-info">
 					<div className="display-flex mb-16">
 						<Radio.Group
 							defaultValue={(this.props?.activeFiat||this.state.cryptoFiat) ? 2 : 1}
@@ -711,6 +711,7 @@ debugger
 							additionalParams={{ customerId: customerId }}
 						/>
 					)}
+				</div>
 				</div>
 
 				<Drawer
