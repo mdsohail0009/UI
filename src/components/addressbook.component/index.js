@@ -598,7 +598,7 @@ class AddressBook extends Component {
 	renderContent = () => {
 		const stepcodes = {
 			cryptoaddressbook: (<>
-				<AddressCrypto onCancel={(obj) => this.closeCryptoDrawer(obj)} cryptoTab={1} selectedAddress={this.state.selectedObj}/>
+				<AddressCrypto  type= "manual" onCancel={(obj) => this.closeCryptoDrawer(obj)} cryptoTab={1} selectedAddress={this.state.selectedObj}/>
 			</>
 			),
 			selectcrypto: <SelectCrypto />,
