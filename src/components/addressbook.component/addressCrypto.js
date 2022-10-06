@@ -122,7 +122,7 @@ class AddressCrypto extends Component {
     let response = await saveCryptoData(obj)
     if (response.ok) {
       this.setState({ ...this.state, isBtnLoading: false })
-      if (window?.location?.pathname.includes('addressbook')) {
+      if (window?.location?.pathname.includes('addressbook')&& this.props.type === "manual") {
         this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
       }
       else {
