@@ -163,7 +163,7 @@ class AddressCrypto extends Component {
       return <Loader />
     }
     if (showDeclartion) {
-      return <div className="text-center">
+      return<div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
         <Image width={80} preview={false} src={alertIcon} />
         <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully </Title>
         <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
@@ -174,6 +174,7 @@ class AddressCrypto extends Component {
           onClick={this.props.onCancel}
           style={{width:"250px"}}
           type="" className="mt-36 pop-cancel ">BACK</Button></div>
+      </div>
       </div>
     }
     else {

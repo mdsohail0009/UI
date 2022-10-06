@@ -1681,13 +1681,13 @@ const AddressCommonCom = (props) => {
                 )}
               </div>
 
-              <Form.Item className="text-center">
+              <Form.Item className="text-right">
                 <Button
                   htmlType="submit"
                   size="large"
                   className="pop-btn mb-36"
                   loading={btnDisabled}
-                  style={{ minWidth: "100%" }}
+                  // style={{ minWidth: "100%" }}
                 >
                   {isLoading && <Spin indicator={antIcon} />}{" "}
                   <Translate content="Save_btn_text" />

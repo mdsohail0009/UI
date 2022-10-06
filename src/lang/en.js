@@ -636,7 +636,7 @@ export default {
 	select_type: "Select Type",
 	swift_code: "Swift Code",
 	confirm_activate: "CONFIRM ACTIVE",
-	confirm_deactivate: "CONFIRM DEACTIVATE",
+	confirm_deactivate: "Confirm Deactivate",
 	really_want: "Do you really want to",
 	deactivate: "deactivate",
 	activate: "active",
@@ -675,4 +675,5 @@ export default {
 	contact_amount_text: "Please contact support for higher amounts.",
 	validate: "Validate",
 	sell_select_currency: "SELECT CURRENCY TO RECEIVE",
+	note:"Note",
 };

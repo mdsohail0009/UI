@@ -647,15 +647,21 @@ class AddressBook extends Component {
 			<>
 			<div className="main-container">
 			<Translate
-						content="address_book"
-						component={Text}
-						className="basicinfo"
-					/>
-					<Translate
-						content="addressbook_note"
-						component={Text}
-						className="fs-14 text-yellow fw-400 mb-12 d-block"
-					/>
+				content="address_book"
+				component={Title}
+				className="basicinfo mb-0"
+			/>
+			<Text className="fs-16 text-white fw-500 mb-12 d-block">Note: <span className="fs-14 text-white fw-400 mb-12">Whitelisting of Crypto Address and Bank Account is required, Please add below.</span></Text>
+			{/* <Translate
+				content="note"
+				component={Text}
+				className="fs-14 text-white fw-400 mb-12 d-block"
+			/>
+			<Translate
+				content="addressbook_note"
+				component={Text}
+				className="fs-14 text-white fw-400 mb-12 d-block"
+			/> */}
 				<div className="box basic-info">
 					<div className="display-flex mb-16">
 						<Radio.Group

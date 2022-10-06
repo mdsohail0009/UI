@@ -276,7 +276,7 @@ const Verifications = (props) => {
         code_Sent: (<div style={{ margin: "0 auto"}} className="code-sent-tool-tip">
             <Button
                 type="text"
-                style={{ color: "black" }}
+                style={{ color: "black",margin: "0 auto" }}
             ><Text
                 className={`pl-0 ml-0 text-white-50
         ${"c-notallowed"}`} >Verification code sent</Text></Button>

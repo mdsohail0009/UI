@@ -486,14 +486,14 @@ class HeaderPermissionMenu extends Component {
                                 content={item.content}
                                 component={Menu.Item}
                                 key="4"
-                                className="mr-16 fs-20"
+                                className="fs-20 custom-header"
                             />
                         </Dropdown>
                     </Menu.Item> : <Menu.Item onClick={() => this.onMenuItemClick(item.key, item)}>
 
                         <Translate content={item.content}
                             component={Menu.Item}
-                            className="mr-16 fs-20" />
+                            className="fs-20 custom-header" />
                     </Menu.Item>}
                 </React.Fragment>)}
 
