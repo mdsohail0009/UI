@@ -103,13 +103,13 @@ const AddressFiatView = (props) => {
 	return (
 		<>
 			<div className="main-container">
-				<div className="box basic-info">
+				<div className="box ">
 					{loading ? (
 						<Loader />
 					) : (
 						<>
-							<Title className="page-title text-white">
-								BENEFICIARY DETAILS
+							<Title className="basic-info">
+							Beneficiary Bank Details
 							</Title>
 							{fiatAddress && (
 								<Row gutter={8}>
@@ -314,8 +314,8 @@ const AddressFiatView = (props) => {
 
 											
 										</Row>
-										<Title className="page-title text-white">
-											BENEFICIARY BANK DETAILS
+										<Title className="basic-info">
+											Beneficiary Bank Details
 										</Title>
 										<Row>
 											{bankDetailes?.map((item, idx) => (

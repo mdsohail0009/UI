@@ -101,14 +101,15 @@ const AddressCryptoView = (props) => {
 	return (
 		<>
 			<div className="main-container">
+			<Title className="basicinfo mb-12">
+								Beneficiary Details
+							</Title>
 				<div className="box basic-info">
 					{loading ? (
 						<Loader />
 					) : (
 						<>
-							<Title className="page-title text-white">
-								BENEFICIARY DETAILS
-							</Title>
+							
 							{cryptoAddress && (
 								<Row gutter={8}>
 									<Col xl={24} xxl={24} className="bank-view">

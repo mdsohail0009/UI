@@ -635,7 +635,7 @@ export default {
 	select_state: "Select State",
 	select_type: "Select Type",
 	swift_code: "Swift Code",
-	confirm_activate: "CONFIRM ACTIVE",
+	confirm_activate: "Confirm Activate",
 	confirm_deactivate: "Confirm Deactivate",
 	really_want: "Do you really want to",
 	deactivate: "deactivate",
