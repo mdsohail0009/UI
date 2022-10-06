@@ -17,6 +17,7 @@ const { Text, Title } = Typography;
 const { Option } = Select;
 class OnthegoCryptoTransfer extends Component {
     enteramtForm = React.createRef();
+    myRef = React.createRef();
     state = {
         step: !this.props.selectedCurrency ? "enteramount" : "selectcurrency",
         filterObj: [],
@@ -227,7 +228,18 @@ class OnthegoCryptoTransfer extends Component {
                         onFinish={this.amountNext}
                         scrollToFirstError
                     >
-
+                        <div ref={this.myRef}></div>
+             {this.state.error != null && <Alert type="error"
+                    description={this.state.error} onClose={() => this.setState({ ...this.state, error: null })} showIcon />}
+                    {this.state.errorMsg && (
+                        <Alert
+                            className="mb-12"
+                            showIcon
+                            description={this.state.errorMsg}
+                            closable={false}
+                            type="error"
+                        />
+                    )}
                         <Row gutter={[16, 16]} className="align-center send-crypto-err">
                             <Col xs={24} md={24} lg={3} xl={4} xxl={4}>
                                 <Title className="fs-30 fw-400 mt-16 text-white-30 text-yellow  mb-0">
