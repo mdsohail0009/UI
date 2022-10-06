@@ -45,7 +45,7 @@ import {
     setSendCrypto
 } from "../../../reducers/sendreceiveReducer";
 import { getmemeberInfo } from "../../../reducers/configReduser";
-import { clearPermissions, fetchFeaturePermissions, fetchFeatures, setSelectedFeatureMenu, updatePermissions } from "../../../reducers/feturesReducer";
+import { clearPermissions, fetchFeatures, setSelectedFeatureMenu } from "../../../reducers/feturesReducer";
 import { readNotification as readNotifications } from "../../../notifications/api";
 import apicalls from "../../../api/apiCalls";
 import { setNotificationCount } from "../../../reducers/dashboardReducer";
@@ -60,7 +60,7 @@ const { Paragraph, Text } = Typography;
 const { Sider } = Layout;
 class MobileHeaderMenu extends Component {
     render() {
-        const { onMenuItemClick, features: { features: { data, error, loading } } } = this.props;
+        const { onMenuItemClick, features: { features: { data } } } = this.props;
         return <> <Menu
             theme="light"
             mode="vertical"
@@ -155,7 +155,6 @@ class HeaderPermissionMenu extends Component {
     
     navigate = (menuKey, menuItem) => {
         if (menuItem.path === "/modal") {
-            if (!menuItem.dispatchStep||menuItem.dispatchStep) {
                 switch (menuKey) {
                     case "trade_buy":
                         this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: false } });
@@ -202,7 +201,6 @@ class HeaderPermissionMenu extends Component {
                     default:
                         break;
                 }
-            }
             this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true, selectedTab:  menuKey === "trade_sell" ? true :false, sendCryptoTab: menuKey === "send_crypto" ? true :false } });
         } else if (menuItem.path) {
             this.props.history.push(menuItem.path);
@@ -449,7 +447,7 @@ class HeaderPermissionMenu extends Component {
                 </div>
             </Menu>
         );
-        const { features: { data, error, loading } } = this.props.menuItems;
+        const { features: { data } } = this.props.menuItems;
         const { collapsed, isShowSider } = this.props;
         const { send_crypto, send_fiat, receive_crypto, receive_fiat } = this.state.drawerMenu
         return <>
