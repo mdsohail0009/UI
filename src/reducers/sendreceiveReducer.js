@@ -16,6 +16,7 @@ const SET_CRYPTO_FINAL_RES = "setCryptoFinalRes";
 const SET_WFTOTALVALUE = "setWFTotalValue";
 const CLEAR_AMOUNT = "setClearAmount";
 const SET_SEND_CRYPTO = "setSendCrypto";
+const HIDE_SEND_CRYPTO = "hideSendCrypto";
 
 const setStep = (payload) => {
   return {
@@ -53,6 +54,13 @@ const setSendCrypto = (payload) => {
     payload
   };
 };
+const hideSendCrypto = (payload) => {
+  return {
+    type: HIDE_SEND_CRYPTO,
+    payload
+  };
+};
+
 const setWithdrawfiat = (payload) => {
   return {
     type: SET_WITHDRAWFIAT,
@@ -185,6 +193,7 @@ let initialState = {
   cryptoFinalRes: {},
   wFTotalValue: null,
   sendCryptoEnable: false,
+  sendCryptoHide: false,
 };
 const sendReceiveReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -242,7 +251,9 @@ const sendReceiveReducer = (state = initialState, action) => {
     case SET_SEND_CRYPTO:
       state = { ...state, sendCryptoEnable: action.payload };
       return state;
-
+      case HIDE_SEND_CRYPTO:
+        state = { ...state, sendCryptoHide: action.payload };
+        return state;
     default:
     return state;
 
@@ -268,5 +279,6 @@ export {
   setAddress,
   setWFTotalValue,
   setClearAmount,
-  setSendCrypto
+  setSendCrypto,
+  hideSendCrypto
 };

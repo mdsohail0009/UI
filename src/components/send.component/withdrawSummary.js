@@ -15,6 +15,7 @@ import {
 	setWithdrawcrypto,
 	handleSendFetch,
 	setAddress,
+	hideSendCrypto,
 } from "../../reducers/sendreceiveReducer";
 
 import apiCalls from "../../api/apiCalls";
@@ -182,9 +183,6 @@ class WithdrawSummary extends Component {
 	};
 	onCancel = () => {
 		this.setState({...this.state,previewModal:true})
-		//this.props.dispatch(setWithdrawcrypto(null));
-		//this.props.changeStep('withdraw_crpto_cancel_confirm');
-		//this.props.changeStep("step1");
 	};
 	onModalCancel=()=>{
 		this.setState({...this.state,previewModal:false})
@@ -194,10 +192,6 @@ class WithdrawSummary extends Component {
         if (this.props.onClose) {
             this.props.onClose();
         }
-		// this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
-		// this.props.dispatch(setWithdrawcrypto(null));
-		// this.props.dispatch(setSubTitle(""));
-		// publishBalanceRfresh("success");
 		this.props.dispatch(setWithdrawcrypto(null))
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 1 }));
         this.props.dispatch(setAddress(null))
@@ -523,17 +517,6 @@ class WithdrawSummary extends Component {
 					return;
 				}
 			}
-			// if (
-			// 	this.state.verifyData.isPhoneVerified == "" &&
-			// 	this.state.verifyData.isEmailVerification == "" &&
-			// 	this.state.verifyData.twoFactorEnabled == ""
-			// ) {
-			// 	this.setState({
-			// 		...this.state,
-			// 		errorMsg:
-			// 			"Without Verifications you can't withdraw. Please select withdraw verifications from security section", btnLoading: false
-			// 	});
-			// }
 			if (this.props.userProfile.isBusiness || !this.state.verifyData?.isLiveVerification) {
 				let saveObj = this.props.sendReceive.withdrawCryptoObj;
 				let trackAuditLogData = this.props.trackAuditLogData;
@@ -544,6 +527,7 @@ class WithdrawSummary extends Component {
 				let withdrawal = await withDrawCrypto(saveObj);
 				if (withdrawal.ok) {
 					if(saveObj?.isShowDeclaration) {
+						this.props.dispatch(hideSendCrypto(true));
 						this.props.dispatch(setCryptoFinalRes(withdrawal.data));
 						this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
 						this.props.dispatch(setWithdrawcrypto(null));
@@ -553,6 +537,7 @@ class WithdrawSummary extends Component {
 					}
 					else {
 						this.setState({ ...this.state, btnLoading: false })
+						this.props.dispatch(hideSendCrypto(true));
 						this.props.dispatch(setCryptoFinalRes(withdrawal.data));
 						this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
 						this.props.dispatch(setWithdrawcrypto(null));
@@ -575,17 +560,6 @@ class WithdrawSummary extends Component {
 				);
 				this.props.changeStep("withdraw_crypto_liveness");
 			}
-			//  else {
-			// 	this.props.dispatch(
-			// 		setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
-			// 	);
-			// 	this.props.changeStep("withdraw_crypto_liveness");
-			// }
-			// this.setState({ 
-			// 	...this.state,
-			// 	errorMsg:
-			// 		"We can not process this request, Since commission is more than or equal to requested amount",
-			// });
 		}
 	};
 	isErrorDispaly = (objValue) => {
@@ -1098,32 +1072,6 @@ class WithdrawSummary extends Component {
 								Are you sure you want to cancel?
 								</div>
 							</Modal>
-		{/* <Drawer
-                        destroyOnClose={true}
-                        title={[
-                            <div >
-                               
-                                <div className="text-center fs-16">
-                                    
-									<div>
-									Are you sure you want to cancel?
-									Your address details will not be saved
-									</div>
-									<span
-										onClick={() => this.onModalCancel()}
-										className="icon md close-white c-pointer"
-									/>
-                                </div>
-                                
-                            </div>,
-                        ]}
-                        placement="right"
-                        closable={true}
-                        visible={this.state.previewModal}
-                        closeIcon={null}
-                        className="side-drawer w-50p">
-                        
-                    </Drawer> */}
 					
 					</div>
 				)}
