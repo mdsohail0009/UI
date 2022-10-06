@@ -255,12 +255,12 @@ class OnthegoCryptoTransfer extends Component {
                     >
 
                         <Row gutter={[16, 16]} className="align-center send-crypto-err">
-                            <Col xs={24} md={24} lg={3} xl={3} xxl={3}>
-                                <Title className="fs-30 fw-400 mt-16 text-white-30 text-yellow mr-4 mb-0">
+                            <Col xs={24} md={24} lg={3} xl={4} xxl={4}>
+                                <Title className="fs-30 fw-400 mt-16 text-white-30 text-yellow  mb-0">
                                     {this.props.selectedWallet?.coin}
                                 </Title>
                             </Col>
-                            <Col xs={24} md={24} lg={21} xl={21} xxl={21}>
+                            <Col xs={24} md={24} lg={21} xl={20} xxl={20}>
                                 <Form.Item
                                     className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label fund-transfer-input send-crypto-input"
                                     name="amount"

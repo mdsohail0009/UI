@@ -1048,7 +1048,7 @@ class WithdrawSummary extends Component {
 								<Translate content="with_draw" component={Text} />
 							</Button>}
 
-						</Form>
+						
 						<div className="text-center mt-16">
 							<Translate
 								content="cancel"
@@ -1059,6 +1059,7 @@ class WithdrawSummary extends Component {
 								className="text-white-30 pop-cancel fw-400"
 							/>
 						</div>
+						</Form>
 							<Modal
 								className="documentmodal-width fiat-crypto-model"
 								destroyOnClose={true}
