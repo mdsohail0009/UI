@@ -297,7 +297,6 @@ class AddressBook extends Component {
 	}
 
 	handleInputChange = (prop, e) => {
-debugger
 		this.setState({ ...this.state, errorWorning: null });
 		const rowObj = prop.dataItem;
 		const value =
@@ -451,7 +450,6 @@ debugger
 		this.props.history.push(`/addressCryptoView/${dataItem.id}`);
 	};
 	editAddressBook = () => {
-		debugger
 		this.setState({ ...this.state, errorWorning: null, selection: [] });
 		let obj = this.state.selectedObj;
 		if (!this.state.isCheck) {
@@ -516,7 +514,6 @@ debugger
 		}
 	};
 	closeBuyDrawer = (obj) => {
-		debugger
 		let showCrypto = false, showFiat = false;
 		if (obj) {
 			if (obj.isCrypto)

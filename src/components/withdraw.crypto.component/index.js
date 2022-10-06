@@ -14,7 +14,7 @@ const { Paragraph, Text } = Typography;
 const WithdrawCrypto = ({ dispatch, userProfile, sendReceive, props, changeStep }) => {
     useEffect(() => {
         loadData();
-        getFeaturePermissionsByKeyName(`sendreceivecrypto`)
+        getFeaturePermissionsByKeyName(`send_crypto`)
     }, []);// eslint-disable-line react-hooks/exhaustive-deps
     const loadData = () => {
         dispatch(fetchWithDrawWallets({ customerId: userProfile?.id }));

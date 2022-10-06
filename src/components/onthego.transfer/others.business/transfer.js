@@ -59,7 +59,6 @@ class BusinessTransfer extends Component {
 
     }
     submitPayee = async (values) => {
-        debugger
         let { details, selectedTab,isEdit,isSelectedId } = this.state;
         let _obj = { ...details, ...values };
         _obj.payeeAccountModels[0].currencyType = "Fiat";

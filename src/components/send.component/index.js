@@ -16,6 +16,7 @@ import WithdrawaCryptolLive from '../withdraw.crypto.component/withdrawLive';
 import SuccessMsg from '../withdraw.crypto.component/success';
 import SelectAddress from '../withdraw.crypto.component/selectAddress';
 import SendMoney from '../withdraw.crypto.component/sendMoney';
+import OnthegoCryptoTransfer from '../onthego.transfer/cryptoTransfer.component';
 const { Paragraph } = Typography
 class SendReceive extends Component {
     state = {
@@ -54,7 +55,8 @@ class SendReceive extends Component {
             withdraw_crypto_liveness: <WithdrawaCryptolLive />,
             withdraw_crpto_summary: <WithdrawSummary onClose={() => this.closeDrawer()} onBackCLick={() => this.props.dispatch(setStep("step1"))} />,
             withdraw_crpto_success: <SuccessMsg onBackCLick={() => this.props.dispatch(setStep("step1"))} />,
-            sendMoney: <SendMoney />
+            //sendMoney: <SendMoney />
+            sendMoney: <OnthegoCryptoTransfer />
 
         }
         return stepcodes[config[this.props.sendReceive.stepcode]]

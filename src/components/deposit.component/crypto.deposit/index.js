@@ -12,7 +12,7 @@ import { getFeaturePermissionsByKeyName } from '../../shared/permissions/permiss
 
 const { Title, Paragraph } = Typography;
 const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {
-    useEffect(() => { fetchMemberCoins(); getFeaturePermissionsByKeyName(`sendreceivecrypto`)}, []);
+    useEffect(() => { fetchMemberCoins(); getFeaturePermissionsByKeyName(`send_crypto`)}, []);
     const [errorMsg,seterrorMsg] = useState(null)
     const [loading,setLoading] = useState(null)
     const fetchMemberCoins = () => {

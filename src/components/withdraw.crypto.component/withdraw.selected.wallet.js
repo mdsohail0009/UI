@@ -22,6 +22,7 @@ import { getFeaturePermissionsByKeyName } from '../shared/permissions/permission
 import { handleNewExchangeAPI } from "../send.component/api";
 import { validateCryptoAmount } from '../onthego.transfer/api';
 import NumberFormat from "react-number-format";
+import OnthegoCryptoTransfer from '../onthego.transfer/cryptoTransfer.component';
 
 const { Paragraph, Text,Title } = Typography;
 
@@ -53,7 +54,8 @@ class CryptoWithDrawWallet extends Component {
             showFuntransfer: false,
             errorMsg: null,
             newtransferLoader: false,
-            addressLoader: false
+            addressLoader: false,
+            isHideCard: false
         }
     }
     async checkVerification() {
@@ -85,7 +87,7 @@ class CryptoWithDrawWallet extends Component {
         else {
             this.setState({ ...this.state, isVerificationMethodsChecked: isVerified });
         }
-        getFeaturePermissionsByKeyName(`sendreceivecrypto`)
+        getFeaturePermissionsByKeyName(`send_crypto`)
         this.trackevent();
     }
     trackevent = () => {
@@ -144,7 +146,6 @@ class CryptoWithDrawWallet extends Component {
         return titles[config[this.props.addressBookReducer.stepcode]];
     };
     selectCrypto = async (type,buttonLoader) => {
-        debugger
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
        this.props.dispatch(setSubTitle(""))
         let obj = {
@@ -405,6 +406,9 @@ class CryptoWithDrawWallet extends Component {
     handleModalClose = (childData) => {
         this.setState({ ...this.state, showFuntransfer: childData })
     }
+    newTransferClick = (isHide) => {
+        this.setState({ ...this.state, isHideCard: isHide ? isHide : true })
+    }
 
     render() {
         const { Text } = Typography;
@@ -441,7 +445,7 @@ class CryptoWithDrawWallet extends Component {
                         />
                     )}
 
-                    <Card className="crypto-card select mb-36" bordered={false}>
+                   {!this.state.isHideCard && <Card className="crypto-card select mb-36" bordered={false}>
 
                         <div className="crypto-details d-flex">
                             <div>
@@ -459,174 +463,162 @@ class CryptoWithDrawWallet extends Component {
                                     <Currency defaultValue={selectedWallet?.coinValueinNativeCurrency} prefix={"$"} type={"text"} />
                                 </div>
                             </div></div>
-                    </Card>
-                    {/* <LocalCryptoSwap ref={this.eleRef} showConvertion={false}
-                        isSwap={this.state.isSwap}
-                        cryptoAmt={this.state.CryptoAmnt}
-                        localAmt={this.state.USDAmnt}
-                        cryptoCurrency={selectedWallet?.coin}
-                        localCurrency={"USD"}
-                        selectedCoin={selectedWallet?.coin}
-                        // clickAmt={this.clickMinamnt}
-                        // parentCallback = {this.clickMinamnt}
-                        onConvertion={(val) => {
-                            this.setState({ ...this.state, loading: val })
-                        }}
-                        onChange={({ localValue, cryptoValue, isSwaped, isInputChange }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped, amountPercentageType: isInputChange ? this.state.amountPercentageType : "" }) }} customerId={this.props.userProfile.id} screenName='withdrawcrypto' /> */}
+                    </Card>}
                     {!this.state.isVerificationLoading &&
-                        <Form
-                            autoComplete="off"
-                            initialValues={{ amount: "" }}
-                            ref={this.enteramtForm}
-                            onFinish={this.amountNext}
-                            scrollToFirstError
-                        >
+                    <OnthegoCryptoTransfer onTransfer={this.newTransferClick} selectedWallet= {selectedWallet} sendReceive={this.props.sendReceive} addressBookReducer= {this.props.addressBookReducer}/>
+                        // <Form
+                        //     autoComplete="off"
+                        //     initialValues={{ amount: "" }}
+                        //     ref={this.enteramtForm}
+                        //     onFinish={this.amountNext}
+                        //     scrollToFirstError
+                        // >
 
-                            <Row gutter={[16, 16]} className="align-center send-crypto-err">
-                                <Col xs={24} md={24} lg={3} xl={3} xxl={3}>
-                                        <Title className="fs-30 fw-400 mt-16 text-white-30 text-yellow mr-4 mb-0">
-                                           {selectedWallet?.coin}
-                                        </Title>
-                                </Col>
-                                <Col xs={24} md={24} lg={21} xl={21} xxl={21}>
-                                    <Form.Item
-                                        className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label fund-transfer-input send-crypto-input"
-                                        name="amount"                               
-                                        //label={"Enter Amount"}                                      
-                                        required
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message: 'Is required',
-                                            },
-                                            {
-                                                validator: (_, value) => {
-                                                    const reg = /.*[0-9].*/g;
-                                                    if (value && !reg.test(value)) {
-                                                        return Promise.reject("Invalid amount");
-                                                    }
-                                                    return Promise.resolve();
-                                                }
-                                            }
-                                        ]}
-                                    >
-                                        <NumberFormat
-                                            customInput={Input}
-                                            className="cust-input"
-                                            placeholder={"Enter Amount"}
-                                            maxLength="13"
-                                            decimalScale={8}
-                                            displayType="input"
-                                            allowNegative={false}
-                                            thousandSeparator={","}
-                                            addonBefore={this.state.selectedCurrency}
-                                            onValueChange={() => {
-                                                this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: '' })
-                                            }}
-                                        />
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={24} md={24} lg={24} xl={24} xxl={24} style={{marginTop:"-20px"}}>
+                        //     <Row gutter={[16, 16]} className="align-center send-crypto-err">
+                        //         <Col xs={24} md={24} lg={3} xl={3} xxl={3}>
+                        //                 <Title className="fs-30 fw-400 mt-16 text-white-30 text-yellow mr-4 mb-0">
+                        //                    {selectedWallet?.coin}
+                        //                 </Title>
+                        //         </Col>
+                        //         <Col xs={24} md={24} lg={21} xl={21} xxl={21}>
+                        //             <Form.Item
+                        //                 className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label fund-transfer-input send-crypto-input"
+                        //                 name="amount"                               
+                        //                 //label={"Enter Amount"}                                      
+                        //                 required
+                        //                 rules={[
+                        //                     {
+                        //                         required: true,
+                        //                         message: 'Is required',
+                        //                     },
+                        //                     {
+                        //                         validator: (_, value) => {
+                        //                             const reg = /.*[0-9].*/g;
+                        //                             if (value && !reg.test(value)) {
+                        //                                 return Promise.reject("Invalid amount");
+                        //                             }
+                        //                             return Promise.resolve();
+                        //                         }
+                        //                     }
+                        //                 ]}
+                        //             >
+                        //                 <NumberFormat
+                        //                     customInput={Input}
+                        //                     className="cust-input"
+                        //                     placeholder={"Enter Amount"}
+                        //                     maxLength="13"
+                        //                     decimalScale={8}
+                        //                     displayType="input"
+                        //                     allowNegative={false}
+                        //                     thousandSeparator={","}
+                        //                     addonBefore={this.state.selectedCurrency}
+                        //                     onValueChange={() => {
+                        //                         this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: '' })
+                        //                     }}
+                        //                 />
+                        //             </Form.Item>
+                        //         </Col>
+                        //         <Col xs={24} md={24} lg={24} xl={24} xxl={24} style={{marginTop:"-20px"}}>
 
-                            <div class="text-right mr-16">
-                                <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn " onClick={() => this.clickMinamnt("min")}>
-                                    <span >Min</span>
-                                </button>
-                                <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn " onClick={() => this.clickMinamnt("all")}>
-                                    <span>Max</span>
-                                </button>
-                            </div>
-                            </Col>
-                            </Row>
-                            <Row gutter={[16, 4]} className="text-center mt-24 mb-24">
-                                <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
-                                    <Form.Item className="text-center">
-                                        <Button
-                                            htmlType="submit"
-                                            size="large"
-                                            className="pop-btn mb-36"
-                                            style={{ width: '100%' }}
-                                            loading={this.state.newtransferLoader}
-                                        // disabled={this.state.addressLoader}
-                                        >
-                                            New Transfer
-                                        </Button>
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
-                                    <Form.Item className="text-center">
-                                        <Button
-                                            htmlType="button"
-                                            size="large"
-                                            className="pop-btn mb-36"
-                                            style={{ width: '100% ' }}
-                                            loading={this.state.addressLoader}
-                                            disabled={this.state.newtransferLoader}
-                                            //onClick={() => this.addressAmtNext()}
-                                            onClick={() => {
-                                                let _amt = this.enteramtForm.current.getFieldsValue().amount;
-                                                _amt = typeof _amt == "string" ? _amt.replace(/,/g, "") : _amt;
-                                                if (_amt > 0) {
-                                                     if (_amt < selectedWallet?.withdrawMinValue) {
-                                                        this.setState({ ...this.state, error: apicalls.convertLocalLang('amount_min') + " " + selectedWallet?.withdrawMinValue });
-                                                        this.myRef.current.scrollIntoView();
-                                                    } else if (_amt > selectedWallet?.withdrawMaxValue) {
-                                                        this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_max') + " " + selectedWallet?.withdrawMaxValue });
-                                                        this.myRef.current.scrollIntoView();
-                                                    } else if (_amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
-                                                        this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_less') });
-                                                        this.myRef.current.scrollIntoView();
-                                                    }
-                                                    else {
-                                                        this.setState({ ...this.state, isNewTransfer: false, amount: _amt, onTheGoObj: this.enteramtForm.current.getFieldsValue() }, () => {
-                                                            this.enteramtForm.current.validateFields().then(() => this.validateAmt(_amt, "addressSelection", this.enteramtForm.current.getFieldsValue(), "addressLoader"))
-                                                                .catch(error => {
+                        //     <div class="text-right mr-16">
+                        //         <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn " onClick={() => this.clickMinamnt("min")}>
+                        //             <span >Min</span>
+                        //         </button>
+                        //         <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn " onClick={() => this.clickMinamnt("all")}>
+                        //             <span>Max</span>
+                        //         </button>
+                        //     </div>
+                        //     </Col>
+                        //     </Row>
+                        //     <Row gutter={[16, 4]} className="text-center mt-24 mb-24">
+                        //         <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
+                        //             <Form.Item className="text-center">
+                        //                 <Button
+                        //                     htmlType="submit"
+                        //                     size="large"
+                        //                     className="pop-btn mb-36"
+                        //                     style={{ width: '100%' }}
+                        //                     loading={this.state.newtransferLoader}
+                        //                 // disabled={this.state.addressLoader}
+                        //                 >
+                        //                     New Transfer
+                        //                 </Button>
+                        //             </Form.Item>
+                        //         </Col>
+                        //         <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
+                        //             <Form.Item className="text-center">
+                        //                 <Button
+                        //                     htmlType="button"
+                        //                     size="large"
+                        //                     className="pop-btn mb-36"
+                        //                     style={{ width: '100% ' }}
+                        //                     loading={this.state.addressLoader}
+                        //                     disabled={this.state.newtransferLoader}
+                        //                     //onClick={() => this.addressAmtNext()}
+                        //                     onClick={() => {
+                        //                         let _amt = this.enteramtForm.current.getFieldsValue().amount;
+                        //                         _amt = typeof _amt == "string" ? _amt.replace(/,/g, "") : _amt;
+                        //                         if (_amt > 0) {
+                        //                              if (_amt < selectedWallet?.withdrawMinValue) {
+                        //                                 this.setState({ ...this.state, error: apicalls.convertLocalLang('amount_min') + " " + selectedWallet?.withdrawMinValue });
+                        //                                 this.myRef.current.scrollIntoView();
+                        //                             } else if (_amt > selectedWallet?.withdrawMaxValue) {
+                        //                                 this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_max') + " " + selectedWallet?.withdrawMaxValue });
+                        //                                 this.myRef.current.scrollIntoView();
+                        //                             } else if (_amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
+                        //                                 this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_less') });
+                        //                                 this.myRef.current.scrollIntoView();
+                        //                             }
+                        //                             else {
+                        //                                 this.setState({ ...this.state, isNewTransfer: false, amount: _amt, onTheGoObj: this.enteramtForm.current.getFieldsValue() }, () => {
+                        //                                     this.enteramtForm.current.validateFields().then(() => this.validateAmt(_amt, "addressSelection", this.enteramtForm.current.getFieldsValue(), "addressLoader"))
+                        //                                         .catch(error => {
     
-                                                                });
-                                                        })
-                                                    }
+                        //                                         });
+                        //                                 })
+                        //                             }
                                                    
-                                                } else {
-                                                    if (!_amt) {
-                                                        this.enteramtForm.current.validateFields()
-                                                        // this.setState({ ...this.state, errorMessage:'Please enter amount'})
-                                                    } else {
-                                                       // this.validationsCheck(_amt);
-                                                        if (_amt === "") {
-                                                            this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('enter_amount') });
-                                                            this.myRef.current.scrollIntoView();
-                                                        }
-                                                        else if (this.state.CryptoAmnt == "0" || _amt == 0) {
-                                                            this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_greater_zero') });
-                                                            this.myRef.current.scrollIntoView();
-                                                        }
-                                                    }
-                                                }
-                                            }}
-                                        >
-                                            Address Book
-                                        </Button>
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-                            {/* <Form.Item
-                            className="custom-forminput custom-label mb-0"
-                            name="CustomerRemarks"
-                            label="Customer Remarks"
-                            rules={[
-                                {
-                                    validator: validateContentRule
-                                }
-                            ]}
-                        >
-                            <Input
-                                className="cust-input"
-                                onChange={(event) => this.handleRemarkChange(event)}
-                                maxLength={200}
-                                placeholder="Customer Remarks"
-                            />
-                        </Form.Item> */}
-                        </Form>
+                        //                         } else {
+                        //                             if (!_amt) {
+                        //                                 this.enteramtForm.current.validateFields()
+                        //                                 // this.setState({ ...this.state, errorMessage:'Please enter amount'})
+                        //                             } else {
+                        //                                // this.validationsCheck(_amt);
+                        //                                 if (_amt === "") {
+                        //                                     this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('enter_amount') });
+                        //                                     this.myRef.current.scrollIntoView();
+                        //                                 }
+                        //                                 else if (this.state.CryptoAmnt == "0" || _amt == 0) {
+                        //                                     this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_greater_zero') });
+                        //                                     this.myRef.current.scrollIntoView();
+                        //                                 }
+                        //                             }
+                        //                         }
+                        //                     }}
+                        //                 >
+                        //                     Address Book
+                        //                 </Button>
+                        //             </Form.Item>
+                        //         </Col>
+                        //     </Row>
+                        //     {/* <Form.Item
+                        //     className="custom-forminput custom-label mb-0"
+                        //     name="CustomerRemarks"
+                        //     label="Customer Remarks"
+                        //     rules={[
+                        //         {
+                        //             validator: validateContentRule
+                        //         }
+                        //     ]}
+                        // >
+                        //     <Input
+                        //         className="cust-input"
+                        //         onChange={(event) => this.handleRemarkChange(event)}
+                        //         maxLength={200}
+                        //         placeholder="Customer Remarks"
+                        //     />
+                        // </Form.Item> */}
+                        // </Form>
                     }
                     {/* <Translate content="Confirm_crypto" loading={this.state.loading} component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.handlePreview()} target="#top" /> */}
                     <Modal onCancel={() => { this.setState({ ...this.state, showModal: false }) }} title="Withdrawal" footer={[

@@ -203,7 +203,6 @@ class WithdrawSummary extends Component {
         this.props.dispatch(setAddress(null))
 	}
 	handleNewExchangeRate = async () => {
-		debugger
 		this.setState({ ...this.state, loading: true });
 		const { totalValue, walletCode, toWalletAddress, addressBookId, network, isShowDeclaration } =
 			this.props.sendReceive?.withdrawCryptoObj;
@@ -544,7 +543,6 @@ class WithdrawSummary extends Component {
 				saveObj.Createdby=this.props.userProfile.userName;
 				let withdrawal = await withDrawCrypto(saveObj);
 				if (withdrawal.ok) {
-					debugger
 					if(saveObj?.isShowDeclaration) {
 						this.props.dispatch(setCryptoFinalRes(withdrawal.data));
 						this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
@@ -812,12 +810,12 @@ class WithdrawSummary extends Component {
 							autoComplete="off"
 							form={this.form}
 							onFinish={this.saveWithdrwal}>
-							{this.state.permissions?.withdraw && this.state.verifyData.isPhoneVerified == true && (
+							{this.state.permissions?.Send && this.state.verifyData.isPhoneVerified == true && (
 								<Text className="fs-14 mb-8 text-white d-block fw-200">
 									Phone verification code *
 								</Text>
 							)}
-							{this.state.permissions?.withdraw && this.state.verifyData.isPhoneVerified == true && (
+							{this.state.permissions?.Send && this.state.verifyData.isPhoneVerified == true && (
 								<Form.Item
 									name="code"
 									className="input-label otp-verify"
@@ -886,12 +884,12 @@ class WithdrawSummary extends Component {
 								</Form.Item>
 							)}
 							{this.state.verifyData.isPhoneVerified}
-							{this.state.permissions?.withdraw && this.state.verifyData.isEmailVerification == true && (
+							{this.state.permissions?.Send && this.state.verifyData.isEmailVerification == true && (
 								<Text className="fs-14 mb-8 text-white d-block fw-200">
 									Email verification code *
 								</Text>
 							)}
-							{this.state.permissions?.withdraw && this.state.verifyData.isEmailVerification == true && (
+							{this.state.permissions?.Send && this.state.verifyData.isEmailVerification == true && (
 								<Form.Item
 									name="emailCode"
 									className="input-label otp-verify"
@@ -960,12 +958,12 @@ class WithdrawSummary extends Component {
 									</div>
 								</Form.Item>
 							)}
-							{this.state.permissions?.withdraw && this.state.verifyData.twoFactorEnabled == true && (
+							{this.state.permissions?.Send && this.state.verifyData.twoFactorEnabled == true && (
 								<Text className="fs-14 mb-8 text-white d-block fw-200">
 									Authenticator Codesss *
 								</Text>
 							)}
-							{this.state.permissions?.withdraw && this.state.verifyData.twoFactorEnabled == true && (
+							{this.state.permissions?.Send && this.state.verifyData.twoFactorEnabled == true && (
 								<Form.Item
 									name="authenticator"
 									className="input-label otp-verify"
@@ -1034,7 +1032,7 @@ class WithdrawSummary extends Component {
 								valuePropName="checked"
 								required
 							>
-								{this.state.permissions?.withdraw && <span className="d-flex">
+								{this.state.permissions?.Send && <span className="d-flex">
 									<Checkbox className={`ant-custumcheck ${!agreeRed ? "check-red" : " "}`} />
 									<span className="withdraw-check"></span>
 									<Translate
@@ -1046,7 +1044,7 @@ class WithdrawSummary extends Component {
 									/>
 								</span>}
 							</Form.Item>
-							{this.state.permissions?.withdraw && <Button size="large" block className="pop-btn" htmlType="submit" loading={this.state.btnLoading}>
+							{this.state.permissions?.Send && <Button size="large" block className="pop-btn" htmlType="submit" loading={this.state.btnLoading}>
 								<Translate content="with_draw" component={Text} />
 							</Button>}
 
@@ -1140,7 +1138,7 @@ const connectStateToProps = ({ sendReceive, userConfig, menuItems,oidc }) => {
 		sendReceive,
 		userProfile: userConfig.userProfileInfo,
 		trackAuditLogData: userConfig.trackAuditLogData,
-		withdrawCryptoPermissions: menuItems?.featurePermissions?.sendreceivecrypto,
+		withdrawCryptoPermissions: menuItems?.featurePermissions?.send_crypto,
 		oidc:oidc.user?.profile
 	};
 };

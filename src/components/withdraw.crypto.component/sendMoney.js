@@ -52,7 +52,6 @@ class SendMoney extends Component {
     }
 
     // validateAmt = async (step, values, loader) => {
-    //     debugger
     //     const obj = {
     //         CustomerId: this.props.userProfile?.id,
     //         amount: this.props?.sendReceive?.withdrawCryptoObj.totalValue,
@@ -104,12 +103,10 @@ class SendMoney extends Component {
     }
 
     chnageStep=() =>{
-        debugger
         this.setState({...this.state, visible: true, showFuntransfer: true, errorWorning: null });
     }
   
     selectCrypto = (type) => {
-        debugger
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         //this.props.dispatch(setSubTitle(apiCalls.convertLocalLang('send_crypto_address')));
         let obj = {

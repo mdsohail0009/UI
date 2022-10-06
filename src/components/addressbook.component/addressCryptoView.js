@@ -45,7 +45,6 @@ const AddressCryptoView = (props) => {
 	};
 
 	const docPreview = async (file) => {
-		debugger
 		let res = await getFileURL({ url: file.path });
 		if (res.ok) {
 			setPreviewModal(true);

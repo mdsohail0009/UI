@@ -93,7 +93,6 @@ class AddressCrypto extends Component {
   };
 
   submit = async (values) => {
-    debugger
     let obj = {
       id: "00000000-0000-0000-0000-000000000000",
       saveWhiteListName: values.saveWhiteListName,
