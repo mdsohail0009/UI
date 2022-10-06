@@ -290,7 +290,7 @@ class AddressCrypto extends Component {
                 size="large"
                 className="pop-btn mb-36 px-36"
                 loading={this.state.isBtnLoading}
-                // style={{ minWidth: "100%" }}
+                style={{ width: "300px" }}
               >
                 Save
               </Button>
