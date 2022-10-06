@@ -3,12 +3,13 @@ import React, { Component} from "react";
 import { Form, Typography, Input, Button, Select, Image, Alert,Row,Col } from "antd";
 import alertIcon from '../../assets/images/success.png';
 import { setAddressStep } from "../../reducers/addressBookReducer";
-import { setAddress, setStep, setWithdrawcrypto,rejectWithdrawfiat } from "../../reducers/sendreceiveReducer";
+import { setAddress, setStep, setWithdrawcrypto,rejectWithdrawfiat, setSendCrypto, hideSendCrypto } from "../../reducers/sendreceiveReducer";
 import { connect } from "react-redux";
 import { getCryptoData, saveCryptoData, getCoinList, networkLu } from "./api";
 import Loader from '../../Shared/loader';
 import WAValidator from "multicoin-address-validator";
 import { validateContentRule } from "../../utils/custom.validator";
+import Translate from "react-translate-component";
 const { Text, Title } = Typography;
 const { Option } = Select;
 
@@ -127,7 +128,9 @@ class AddressCrypto extends Component {
       else {
         let _obj = this.props.sendReceive?.withdrawCryptoObj;
         this.props?.dispatch(setWithdrawcrypto({..._obj, addressBookId: response.data?.payeeAccountId || response.data?.id, toWalletAddress: values?.walletAddress,  network: values?.network, isShowDeclaration: true}));
-        this.props.dispatch(rejectWithdrawfiat())
+        this.props.dispatch(rejectWithdrawfiat());
+        this.props.dispatch(hideSendCrypto(false));
+        this.props.dispatch(setSendCrypto(true));
         this.props.changeStep('withdraw_crpto_summary');
       }
     }
@@ -292,7 +295,8 @@ class AddressCrypto extends Component {
                 loading={this.state.isBtnLoading}
                 style={{ width: "300px" }}
               >
-                Save
+                {this.props.type === "manual" && "Save"}
+                {this.props.type !== "manual" && <Translate content="continue" />}
               </Button>
             </Form.Item>
           </Form>
