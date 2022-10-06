@@ -1,8 +1,9 @@
+
 import React, { Component} from "react";
 import { Form, Typography, Input, Button, Select, Image, Alert,Row,Col } from "antd";
 import alertIcon from '../../assets/images/pending.png';
 import { setAddressStep } from "../../reducers/addressBookReducer";
-import { setAddress, setStep, setWithdrawcrypto } from "../../reducers/sendreceiveReducer";
+import { setAddress, setStep, setWithdrawcrypto,rejectWithdrawfiat } from "../../reducers/sendreceiveReducer";
 import { connect } from "react-redux";
 import { getCryptoData, saveCryptoData, getCoinList, networkLu } from "./api";
 import Loader from '../../Shared/loader';
@@ -69,8 +70,13 @@ class AddressCrypto extends Component {
     } else {
       this.setState({ ...this.state, coinsList: [], isLoading: false })
     }
-    if(this.state.cryptoData.network){
-     let val=this.state.cryptoData.token
+    // if(this.state.cryptoData.network){
+    //  let val=this.state.cryptoData.token
+    //   this.networkList(val)
+    // }
+    if(this.props.sendReceive?.withdrawFiatObj?.walletCode){
+      this.form?.current?.setFieldsValue({token:this.props.sendReceive?.withdrawFiatObj?.walletCode})
+      let val=this.props.sendReceive?.withdrawFiatObj?.walletCode
       this.networkList(val)
     }
   }
@@ -121,6 +127,7 @@ class AddressCrypto extends Component {
       else {
         let _obj = this.props.sendReceive?.withdrawCryptoObj;
         this.props?.dispatch(setWithdrawcrypto({..._obj, addressBookId: response.data?.payeeAccountId || response.data?.id, toWalletAddress: values?.walletAddress,  network: values?.network, isShowDeclaration: true}));
+        this.props.dispatch(rejectWithdrawfiat())
         this.props.changeStep('withdraw_crpto_summary');
       }
     }
@@ -163,7 +170,7 @@ class AddressCrypto extends Component {
              Please sign using link received in email to whitelist your address. `}</Text>
         <Text className="text-white-30">{`Please note that your send will only be processed once your whitelisted address has been approved`}</Text>
        
-      <div className="my-25"><Button
+        <div className="my-25"><Button
           onClick={this.props.onCancel}
           style={{width:"250px"}}
           type="" className="mt-36 pop-cancel ">BACK</Button></div>
@@ -218,7 +225,8 @@ class AddressCrypto extends Component {
                 placeholder="Select Token"
                 optionFilterProp="children"
                 maxLength={50}
-                disabled={this.state.cryptoData.network? true:false}>
+                //disabled={this.state.cryptoData.network? true:false}
+                disabled={this.props?.sendReceive?.withdrawFiatObj?.walletCode ? true:false}>
                 {coinsList?.map((item, idx) => (
                   <Option key={idx} value={item.walletCode}>
                     {item.walletCode}

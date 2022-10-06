@@ -107,6 +107,7 @@ class CryptoWithDrawWallet extends Component {
                 showFiat = !obj?.close;
         };
         this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat });
+       
         this.props.dispatch(rejectWithdrawfiat())
     };
     renderContent = () => {
@@ -445,7 +446,7 @@ class CryptoWithDrawWallet extends Component {
                         />
                     )}
 
-                   {!this.state.isHideCard && <Card className="crypto-card select mb-36" bordered={false}>
+{!this.state.isHideCard && <Card className="crypto-card select mb-36" bordered={false}>
 
                         <div className="crypto-details d-flex">
                             <div>
@@ -464,8 +465,21 @@ class CryptoWithDrawWallet extends Component {
                                 </div>
                             </div></div>
                     </Card>}
+                    {/* <LocalCryptoSwap ref={this.eleRef} showConvertion={false}
+                        isSwap={this.state.isSwap}
+                        cryptoAmt={this.state.CryptoAmnt}
+                        localAmt={this.state.USDAmnt}
+                        cryptoCurrency={selectedWallet?.coin}
+                        localCurrency={"USD"}
+                        selectedCoin={selectedWallet?.coin}
+                        // clickAmt={this.clickMinamnt}
+                        // parentCallback = {this.clickMinamnt}
+                        onConvertion={(val) => {
+                            this.setState({ ...this.state, loading: val })
+                        }}
+                        onChange={({ localValue, cryptoValue, isSwaped, isInputChange }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped, amountPercentageType: isInputChange ? this.state.amountPercentageType : "" }) }} customerId={this.props.userProfile.id} screenName='withdrawcrypto' /> */}
                     {!this.state.isVerificationLoading &&
-                    <OnthegoCryptoTransfer onTransfer={this.newTransferClick} selectedWallet= {selectedWallet} sendReceive={this.props.sendReceive} addressBookReducer= {this.props.addressBookReducer}/>
+                     <OnthegoCryptoTransfer onTransfer={this.newTransferClick} selectedWallet= {selectedWallet} sendReceive={this.props.sendReceive} addressBookReducer= {this.props.addressBookReducer}/>
                         // <Form
                         //     autoComplete="off"
                         //     initialValues={{ amount: "" }}
@@ -618,7 +632,7 @@ class CryptoWithDrawWallet extends Component {
                         //         placeholder="Customer Remarks"
                         //     />
                         // </Form.Item> */}
-                        // </Form>
+                       // </Form>
                     }
                     {/* <Translate content="Confirm_crypto" loading={this.state.loading} component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.handlePreview()} target="#top" /> */}
                     <Modal onCancel={() => { this.setState({ ...this.state, showModal: false }) }} title="Withdrawal" footer={[
