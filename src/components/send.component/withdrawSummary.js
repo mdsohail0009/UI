@@ -1068,7 +1068,7 @@ class WithdrawSummary extends Component {
 										</Button>
 									</>
 								}>
-									<div style={{color:"white"}}>
+									<div>
 								Are you sure you want to cancel?
 								</div>
 							</Modal>
