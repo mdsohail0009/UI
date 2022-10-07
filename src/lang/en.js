@@ -670,7 +670,7 @@ export default {
 	send_crypto_address: "Send Crypto",
 	buy_select_currency: "SELECT CURRENCY TO BUY WITH",
 	network: "Network",
-	send_fiat_text: "Send form your Suissebase FIAT Wallet",
+	send_fiat_text: "Send from your Suissebase FIAT Wallet",
     receive_fiat_text: "Receive in your Suissebase FIAT Wallet",
 	contact_amount_text: "Please contact support for higher amounts.",
 	validate: "Validate",
