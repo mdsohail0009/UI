@@ -803,7 +803,7 @@ class AddressBook extends Component {
 							style={{border: "1px solid #f2f2f2",width:'150px',height: '46px' }}
 							className="primary-btn pop-cancel"
 							onClick={this.handleCancel}>
-							No
+							NO
 						</Button>
 						<Button
 							className="primary-btn pop-btn"
