@@ -238,7 +238,7 @@ componentWillUnmount(){
                 <Col lg={10} xl={10} xxl={10}>
                     <div className="box p-24 coin-details right">
 
-                        {this.state.coinData ? <><Title component={Title} className="fs-24 fw-600 mb-36 text-white-30">{coinData?.symbol.toUpperCase()} Price and Market Stats</Title>
+                        {this.state.coinData ? <><Title component={Title} className="fs-24 fw-600 mb-36 text-white-30">{coinData?.symbol.toUpperCase()} Price and Market Status</Title>
                             <div className="coin-info">
                                 <Text>{coinData?.symbol.toUpperCase()} Price</Text>
                                 <Text>
