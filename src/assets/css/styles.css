@@ -258,7 +258,7 @@ border-radius: 5px;}
 .btn-dropdown .ant-btn:hover{background-color: var(--bgDarkYellow); color: #000;}
 .btn-dropdown button, .pop-btn:hover, .pop-btn:focus, .pop-btn:active{background-color: var(--bgDarkYellow);color: var(--textDark);border-color: var(--bgYellow);}
 .pop-cancel{background-color: transparent !important;color: var(--textWhite30) !important; border-color: transparent !important; border-radius: 40px;height: 57px;padding: 0;}
-.pop-cancel:hover span{color: var(--textYellow) !important;text-decoration: underline;}
+.pop-cancel:hover span{color: var(--textYellow) !important;}
 .cancel-btn{height: 48px; text-transform: uppercase;font-weight: 700;text-align: center;}
 .custon-btngroup{height: 48px; text-transform: uppercase; border:0;font-weight: 700;text-align: center; margin-top: 10px; width:50%}
 .pick-btn{ border-radius:0 30px 30px 0; background-color: var(--bgYellow);}
@@ -640,8 +640,8 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 }
 .kpi-List .icon{margin: 6px 10px 0 0;}
 .kpi-List .icon + div{flex: 1;}
-.kpi-List .kpi-label{font-size: 14px;color: var(--textWhite);font-weight: 300;}
-.kpi-List .kpi-val{font-size: 14px;font-weight: 400;color: var(--textWhite30);word-break: break-word;margin-right: 12px;text-transform: capitalize;}
+.kpi-List .kpi-label{font-size: 14px;color: var(--textWhite);font-weight: 600;}
+.kpi-List .kpi-val{font-size: 16px;font-weight: 600;color: var(--textWhite30);word-break: break-word;margin-right: 12px;text-transform: capitalize;}
 .kpi-item .kpi-val{margin-left: 0;}
 .accordian .ant-collapse-item:last-child > .ant-collapse-content, .accordian .ant-collapse-item{border-color: var(--borderGrey);background-color: var(--bgDarkGrey);}
 .accordian .ant-collapse-header{border-radius: 20px !important;font-size: 18px;font-weight: 600;background-color:var(--bgOrion);color: var(--textWhite30) !important;padding: 16px 20px 16px 24px !important;}
@@ -985,6 +985,8 @@ font-size: 12px;font-weight: 500;height: 20px;}
   .mb-view tr th, .mb-view tr td{min-width:150px !important}
    /* .layout.ant-layout-has-sider .icon.lg.hamburg{width: 24px; height: 24px;background: var(--lightThemeIcons) no-repeat; display: inline-block; border-radius: 6px;background-position: -55px 2px; transform: scale(1.4);} */
    /* .layout .icon.md.close-white{width: 24px; height: 24px;background: var(--lightThemeIcons) no-repeat; display: inline-block; border-radius: 6px;background-position: -55px 2px; transform: scale(1.4);} */
+   .cust-cypto-view{width: auto !important;}
+   .custom-alert-width{width: auto !important;}
 }
 @media (min-width: 768px){
     .tlv-header{height: 96px !important;border-radius: 0 !important;}
@@ -1460,7 +1462,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .custom-header span {padding: 6px 10px;}
 .ant-menu-item:active, .ant-menu-submenu-title:active{background-color: transparent;}
 .custom-declaraton{height: calc(100vh - 200px);align-items: center;display: flex;justify-content: center;}
-.pop-cancel span{color:var(--textDefautlYlw);}
+.pop-cancel span{color:var(--textYellow);}
 /* .pop-btn{width: 300px;} */
 .custom-declaraton .declaration-content{width: 600px;}
 .side-drawer .side-drawer-header{align-items: flex-start;}
@@ -1468,3 +1470,11 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .k-grid th{padding:0px 12px 0px 3px; height:42px;}
 .basic-info{padding:16px;}
 /* .ant-modal-header{border-color: transparent;} */
+/* .custom-alert-width{width:900px;} */
+td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;width: 100%;}
+.cust-pop-up-btn .primary-btn.pop-cancel{border: transparent !important;}
+.cust-pop-up-btn .primary-btn.pop-cancel:hover{border: 1px solid #f2f2f2 !important;}
+.custom-back-btn .pop-cancel{border: transparent !important;}
+.custom-back-btn .pop-cancel:hover{border: 1px solid #f2f2f2 !important;}
+.custom-alert-width{width:800px;margin: auto;padding: 8px 10px;background-color:var(--bgDark) !important;border-radius: 15px;color: var(--textWhite);border-color: var(--borderGrey) !important;padding:24px;}
+.cust-cypto-view{width: 900px;margin: auto;}

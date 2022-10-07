@@ -173,9 +173,9 @@ class AddressCrypto extends Component {
              Please sign using link received in email to whitelist your address. `}</Text>
         <Text className="text-white-30">{`Please note that your send will only be processed once your whitelisted address has been approved`}</Text>
        
-        <div className="my-25"><Button
+        <div className="my-25 custom-back-btn"><Button
           onClick={this.props.onCancel}
-          style={{width:"250px"}}
+          style={{width:"150px",height:"46px"}}
           type="" className="mt-36 pop-cancel ">BACK</Button></div>
       </div>
       </div>

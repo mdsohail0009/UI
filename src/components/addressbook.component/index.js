@@ -797,7 +797,7 @@ class AddressBook extends Component {
 					footer={
 						<div className="cust-pop-up-btn">
 						<Button
-							style={{ width: 120, border: "1px solid #f2f2f2",height: 50 }}
+							style={{border: "1px solid #f2f2f2",width:'150px',height: '46px' }}
 							className="primary-btn pop-cancel"
 							onClick={this.handleCancel}>
 							No
@@ -805,7 +805,7 @@ class AddressBook extends Component {
 						<Button
 							className="primary-btn pop-btn"
 							onClick={this.handleSatatuSave}
-							style={{ width: 120, height: 50 }}
+							style={{ width: '150px', height: '46px' }}
 							loading={btnDisabled}>
 							{apiCalls.convertLocalLang("Yes")}
 						</Button>

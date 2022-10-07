@@ -100,21 +100,22 @@ const AddressCryptoView = (props) => {
 
 	return (
 		<>
-			<div className="main-container">
+			<div className="main-container cust-cypto-view">
 			<Title className="basicinfo mb-12">
-								Beneficiary Details
-							</Title>
-				<div className="box basic-info">
+				Beneficiary Details
+			</Title>
+				<div className="box basic-info ">
 					{loading ? (
 						<Loader />
 					) : (
 						<>
 							
 							{cryptoAddress && (
+								<div className="custom-alert-width">
 								<Row gutter={8}>
 									<Col xl={24} xxl={24} className="bank-view">
 										<Row className="kpi-List">
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+											<Col xs={24} sm={24} md={12} lg={14} xxl={14}>
 												<div>
 													<label className="kpi-label">Save Whitelist Name As</label>
 													<div className=" kpi-val">
@@ -125,7 +126,7 @@ const AddressCryptoView = (props) => {
 													</div>
 												</div>
 											</Col>
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+											<Col xs={24} sm={24} md={12} lg={5} xxl={5}>
 												<div>
 													<label className="kpi-label">Token</label>
 													<div className=" kpi-val">
@@ -136,7 +137,7 @@ const AddressCryptoView = (props) => {
 													</div>
 												</div>
 											</Col>
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+											<Col xs={24} sm={24} md={12} lg={5} xxl={5}>
 												<div>
 													<label className="kpi-label">Network</label>
 													<div className=" kpi-val">
@@ -148,7 +149,7 @@ const AddressCryptoView = (props) => {
 												</div>
 											</Col>
 											
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+											<Col xs={24} sm={24} md={12} lg={14} xxl={14}>
 												<div>
 													<label className="kpi-label">Wallet Address</label>
 													<div className=" kpi-val">
@@ -159,7 +160,7 @@ const AddressCryptoView = (props) => {
 													</div>
 												</div>
 											</Col>
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+											<Col xs={24} sm={24} md={12} lg={5} xxl={5}>
 												<div>
 													<label className="kpi-label">Address State</label>
 													<div className=" kpi-val">
@@ -211,11 +212,12 @@ const AddressCryptoView = (props) => {
 												))}
 									</Col>
 								</Row>
+								</div>
 							)}
 							<div className="text-right mt-24">
 								<Button
 									className="pop-btn px-36"
-									style={{ margin: "0 8px" }}
+									style={{ margin: "0 8px",width:'250px'}}
 									onClick={backToAddressBook}>
 									Cancel
 								</Button>
