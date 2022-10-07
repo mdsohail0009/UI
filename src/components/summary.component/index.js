@@ -192,7 +192,7 @@ class Summary extends Component {
 							component={Text}
 						/>
 					</div>
-					{(this.state.permissions?.Sell) &&
+					{(permissions || this.state.permissions?.Sell) &&
 					<div className="d-flex p-16 mb-36 agree-check">
 						<label
 						>
@@ -220,7 +220,7 @@ class Summary extends Component {
 							<Translate content="refund_cancellation" component="Text" />
 						</Paragraph>
 					</div>}
-					{(this.state.permissions?.Sell) &&
+					{(permissions || this.state.permissions?.Sell) &&
 					<SuisseBtn
 						className={"pop-btn"}
 						onRefresh={() => this.props.onRefresh()}
