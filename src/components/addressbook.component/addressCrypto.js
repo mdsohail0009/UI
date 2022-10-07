@@ -71,13 +71,12 @@ class AddressCrypto extends Component {
     } else {
       this.setState({ ...this.state, coinsList: [], isLoading: false })
     }
-    // if(this.state.cryptoData.network){
-    //  let val=this.state.cryptoData.token
-    //   this.networkList(val)
-    // }
-    if(this.props.sendReceive?.withdrawFiatObj?.walletCode){
-      this.form?.current?.setFieldsValue({token:this.props.sendReceive?.withdrawFiatObj?.walletCode})
-      let val=this.props.sendReceive?.withdrawFiatObj?.walletCode
+    if(this.state.cryptoData.network){
+     let val=this.state.cryptoData.token
+      this.networkList(val)
+    }else if(this.props?.sendReceive?.withdrawFiatObj?.walletCode){
+      let val=this.props?.sendReceive?.withdrawFiatObj?.walletCode
+      this.form?.current?.setFieldsValue({token:val});
       this.networkList(val)
     }
   }
@@ -122,6 +121,11 @@ class AddressCrypto extends Component {
     let response = await saveCryptoData(obj)
     if (response.ok) {
       this.setState({ ...this.state, isBtnLoading: false })
+      //this.props?.dispatch(withdrawFiatObj(obj.walletCode))
+      // if (window?.location?.pathname.includes('addressbook')) {
+      //   this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
+    
+      // }
       if (window?.location?.pathname.includes('addressbook')&& this.props.type === "manual") {
         this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
       }

@@ -12,7 +12,7 @@ import { validateCryptoAmount } from '../onthego.transfer/api';
 import { setStep, setSubTitle, setWithdrawcrypto, setAddress, setSendCrypto, hideSendCrypto } from '../../reducers/sendreceiveReducer';
 import AddressCrypto from "../addressbook.component/addressCrypto";
 import { setAddressStep} from "../../reducers/addressBookReducer";
-
+import {rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
 const { Text, Title } = Typography;
 const { Option } = Select;
 class OnthegoCryptoTransfer extends Component {
@@ -119,13 +119,15 @@ class OnthegoCryptoTransfer extends Component {
         if (step === 'newtransfer') {
             this.props.dispatch(hideSendCrypto(true));
             this.setState({ ...this.state, step, isNewTransfer: true, onTheGoObj: values });
-        }
+        }else{
+        this.props.dispatch(rejectWithdrawfiat())}
     }
     amountNext = async (values) => {
         this.setState({ ...this.state, error: null });
         let amt = values.amount;
         amt = typeof amt == "string" ? amt?.replace(/,/g, "") : amt;
         const { withdrawMaxValue, withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
+        this.setState({ ...this.state, error: null });
         if (amt === "") {
             this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('enter_amount') });
             this.myRef.current.scrollIntoView();

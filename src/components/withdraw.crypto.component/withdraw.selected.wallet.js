@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import { Typography, Button, Drawer, Card, Input, Radio, Alert, Row, Col, Form, Modal, Tooltip, Image } from 'antd';
 import { handleSendFetch, setStep, setSubTitle, setWithdrawcrypto, setAddress,rejectWithdrawfiat, hideSendCrypto } from '../../reducers/sendreceiveReducer';
@@ -108,7 +109,7 @@ class CryptoWithDrawWallet extends Component {
                 showFiat = !obj?.close;
         };
         this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat });
-       
+
         this.props.dispatch(rejectWithdrawfiat())
     };
     renderContent = () => {
