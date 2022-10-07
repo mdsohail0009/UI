@@ -93,7 +93,7 @@ border-radius: 5px;}
 .drpdwn-list li.no-hover:hover{background-color: transparent !important;}
 .drpdwn-list li span.icon{transition: margin 0.3s ease-in; margin-left: auto;}
 .drpdwn-list li:hover span.icon{margin-right: -3px ;}
-.icon, .k-i-more-vertical.k-icon, .custom-checkbox input[type=checkbox]+span{background: var(--lightThemeIcons) no-repeat; display: inline-block; vertical-align: middle;}
+.icon, .k-i-more-vertical.k-icon,.ant-select-arrow, .custom-checkbox input[type=checkbox]+span{background: var(--lightThemeIcons) no-repeat; display: inline-block; vertical-align: middle;}
 .icon.xl{width: 32px; height: 32px;}
 .icon.md{width: 20px; height: 20px;}
 .icon.xxxl{width: 70px; height: 70px;}
@@ -1478,3 +1478,5 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;width:
 .custom-back-btn .pop-cancel:hover{border: 1px solid #f2f2f2 !important;}
 .custom-alert-width{width:800px;margin: auto;padding: 8px 10px;background-color:var(--bgDark) !important;border-radius: 15px;color: var(--textWhite);border-color: var(--borderGrey) !important;padding:24px;}
 .cust-cypto-view{width: 900px;margin: auto;}
+.ant-select-arrow .anticon{display: none;}
+.ant-select-arrow{width: 20px;height: 20px;background-position: -351px -5px;transform: scale(0.9);}
