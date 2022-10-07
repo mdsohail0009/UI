@@ -13,7 +13,7 @@ import { updateCoinDetail } from '../../reducers/sellReducer'
 import { convertCurrency } from '../buy.component/buySellService';
 import { withRouter, Link } from 'react-router-dom';
 import apiCalls from '../../api/apiCalls';
-import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle, setWithdrawfiatenaable, setWithdrawfiat,setWalletAddress, setSendCrypto } from "../../reducers/sendreceiveReducer";
+import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle, setWithdrawfiatenaable,rejectWithdrawfiat, setWithdrawfiat,setWalletAddress, setSendCrypto } from "../../reducers/sendreceiveReducer";
 import { getcoinDetails } from './api';
 import {createCryptoDeposit} from "../deposit.component/api";
 import TransactionsHistory from "../transactions.history.component";
@@ -164,6 +164,7 @@ class YourPortfolio extends Component {
       })
   }
     closeDrawer = () => {
+      this.props.dispatch(rejectWithdrawfiat())
       this.setState({
           buyDrawer: false,
           sendDrawer: false,

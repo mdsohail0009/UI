@@ -1,3 +1,4 @@
+
 import React, { Component } from "react";
 import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert, message, Spin } from "antd";
 import {
@@ -20,6 +21,7 @@ import Info from "../shared/info";
 import { DownloadOutlined } from '@ant-design/icons';
 import ActionsToolbar from "../toolbar.component/actions.toolbar";
 import { fetchFeaturePermissions, setSelectedFeatureMenu } from "../../reducers/feturesReducer";
+import {rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
 import { getFeatureId } from "../shared/permissions/permissionService";
 import { setCurrentAction } from '../../reducers/actionsReducer'
 import AddressBookV2 from "../addressbook.v2/fiat.address";
@@ -514,6 +516,7 @@ class AddressBook extends Component {
 		}
 	};
 	closeBuyDrawer = (obj) => {
+		this.props.dispatch(rejectWithdrawfiat())
 		let showCrypto = false, showFiat = false;
 		if (obj) {
 			if (obj.isCrypto)
@@ -848,11 +851,12 @@ class AddressBook extends Component {
 		);
 	}
 }
-const connectStateToProps = ({ addressBookReducer, userConfig, oidc, menuItems, }) => {
+const connectStateToProps = ({ addressBookReducer, sendReceive,userConfig, oidc, menuItems, }) => {
 	return {
 		addressBookReducer,
 		userConfig: userConfig.userProfileInfo,
 		oidc,
+		sendReceive,
 		trackLogs: userConfig.trackAuditLogData,
 		addressBookPermissions: menuItems?.featurePermissions.addressBook,
 	};

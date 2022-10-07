@@ -12,7 +12,7 @@ import { validateCryptoAmount } from '../onthego.transfer/api';
 import { setStep, setSubTitle, setWithdrawcrypto, setAddress, setSendCrypto, hideSendCrypto } from '../../reducers/sendreceiveReducer';
 import AddressCrypto from "../addressbook.component/addressCrypto";
 import { setAddressStep} from "../../reducers/addressBookReducer";
-
+import {rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
 const { Text, Title } = Typography;
 const { Option } = Select;
 class OnthegoCryptoTransfer extends Component {
@@ -119,7 +119,8 @@ class OnthegoCryptoTransfer extends Component {
         if (step === 'newtransfer') {
             this.props.dispatch(hideSendCrypto(true));
             this.setState({ ...this.state, step, isNewTransfer: true, onTheGoObj: values });
-        }
+        }else{
+        this.props.dispatch(rejectWithdrawfiat())}
     }
     amountNext = async (values) => {
         this.setState({ ...this.state, error: null });
@@ -128,21 +129,21 @@ class OnthegoCryptoTransfer extends Component {
         const { withdrawMaxValue, withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null });
         if (amt === "") {
-            this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('enter_amount') });
+            this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('enter_amount') });
             this.myRef.current.scrollIntoView();
         }
         else if (amt == 0) {
-            this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_greater_zero') });
+            this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_greater_zero') });
             this.myRef.current.scrollIntoView();
         }
         else if (amt < withdrawMinValue) {
-            this.setState({ ...this.state, error: apicalls.convertLocalLang('amount_min') + " " + withdrawMinValue });
+            this.setState({ ...this.state, errorMsg: null, error: apicalls.convertLocalLang('amount_min') + " " + withdrawMinValue });
             this.myRef.current.scrollIntoView();
         } else if (amt > withdrawMaxValue) {
-            this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_max') + " " + withdrawMaxValue });
+            this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_max') + " " + withdrawMaxValue });
             this.myRef.current.scrollIntoView();
         } else if (amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
-            this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_less') });
+            this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_less') });
             this.myRef.current.scrollIntoView();
         }
         else {
@@ -195,7 +196,7 @@ class OnthegoCryptoTransfer extends Component {
                 ...this.state, visible: true, errorWorning: null, errorMsg: null, [loader]: false, showFuntransfer: true
             },() => this.chnageStep(type, values));
         } else {
-            this.setState({ ...this.state, loading: false, [loader]: false, errorMsg: this.isErrorDispaly(res) })
+            this.setState({ ...this.state, loading: false, [loader]: false, error: null, errorMsg: this.isErrorDispaly(res) })
             this.myRef.current.scrollIntoView();
         }
 
@@ -271,7 +272,7 @@ class OnthegoCryptoTransfer extends Component {
                                         customInput={Input}
                                         className="cust-input"
                                         placeholder={"Enter Amount"}
-                                        maxLength="13"
+                                        maxLength="20"
                                         decimalScale={8}
                                         displayType="input"
                                         allowNegative={false}
@@ -323,13 +324,13 @@ class OnthegoCryptoTransfer extends Component {
                                             _amt = typeof _amt == "string" ? _amt.replace(/,/g, "") : _amt;
                                             if (_amt > 0) {
                                                 if (_amt < this.props.selectedWallet?.withdrawMinValue) {
-                                                    this.setState({ ...this.state, error: apicalls.convertLocalLang('amount_min') + " " + this.props.selectedWallet?.withdrawMinValue });
+                                                    this.setState({ ...this.state, errorMsg: null, error: apicalls.convertLocalLang('amount_min') + " " + this.props.selectedWallet?.withdrawMinValue });
                                                     this.myRef.current.scrollIntoView();
                                                 } else if (_amt > this.props.selectedWallet?.withdrawMaxValue) {
-                                                    this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_max') + " " + this.props.selectedWallet?.withdrawMaxValue });
+                                                    this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_max') + " " + this.props.selectedWallet?.withdrawMaxValue });
                                                     this.myRef.current.scrollIntoView();
                                                 } else if (_amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
-                                                    this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_less') });
+                                                    this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_less') });
                                                     this.myRef.current.scrollIntoView();
                                                 }
                                                 else {
@@ -346,11 +347,11 @@ class OnthegoCryptoTransfer extends Component {
                                                     this.enteramtForm.current.validateFields()
                                                 } else {
                                                     if (_amt === "") {
-                                                        this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('enter_amount') });
+                                                        this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('enter_amount') });
                                                         this.myRef.current.scrollIntoView();
                                                     }
                                                     else if (this.state.CryptoAmnt == "0" || _amt == 0) {
-                                                        this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_greater_zero') });
+                                                        this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_greater_zero') });
                                                         this.myRef.current.scrollIntoView();
                                                     }
                                                 }
