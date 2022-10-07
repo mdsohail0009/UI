@@ -1473,7 +1473,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* .custom-alert-width{width:900px;} */
 td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;width: 100%;}
 .cust-pop-up-btn .primary-btn.pop-cancel{border: transparent !important;}
-.cust-pop-up-btn .primary-btn.pop-cancel:hover{border: 1px solid #f2f2f2 !important;}
+.cust-pop-up-btn .primary-btn.pop-cancel:hover{border: 1px solid var(--textYellow) !important;}
 .custom-back-btn .pop-cancel{border: transparent !important;}
 .custom-back-btn .pop-cancel:hover{border: 1px solid #f2f2f2 !important;}
 .custom-alert-width{width:800px;margin: auto;padding: 8px 10px;background-color:var(--bgDark) !important;border-radius: 15px;color: var(--textWhite);border-color: var(--borderGrey) !important;padding:24px;}
