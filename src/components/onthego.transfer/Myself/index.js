@@ -223,6 +223,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });form.resetFields();seterrorMessage(null) }} activeKey={addressOptions.tabType}>
                         <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz"  key={"domestic"} disabled={isEdit}></Tabs.TabPane>
                         <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"} disabled={isEdit}></Tabs.TabPane>
+                        <Tabs.TabPane tab="International USD IBAN" className="text-white text-captz" key={"internationalIBAN"} disabled={isEdit}></Tabs.TabPane>
                     </Tabs>
                 </Col>
             </Row>
@@ -345,8 +346,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         </div>
 
         <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
-        {currency == 'EUR' && <Row gutter={[8, 8]} >
-        {currency == 'EUR' && <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
+        {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Row gutter={[8, 8]} >
+        {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
             <div className="custom-btn-error">
             <Form.Item
                 className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
@@ -372,7 +373,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                
             </div>
         </Col>}
-        {currency == 'EUR' &&<Col xs={24} md={10} lg={10} xl={10} xxl={10}>
+        {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') &&<Col xs={24} md={10} lg={10} xl={10} xxl={10}>
             <Button className={`pop-btn dbchart-link fs-14 fw-500`} style={{width:"150px",marginTop:"32px",height:"42px"}}
                 loading={isValidateLoading}
                 onClick={() => onIbanValidate(enteredIbanData)} >
@@ -385,7 +386,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         
         </Row>}
         <Row gutter={[8, 8]}>
-            {currency == 'USD' && <> <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+            {(currency == 'USD' && addressOptions.tabType !== 'internationalIBAN')  && <> <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
                     className="fw-300 mb-8 px-4 text-white-50  custom-forminput custom-label pt-8"
                     name="accountNumber"
@@ -587,7 +588,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     </Form.Item>
                 </Col></>}
         </Row>
-        {currency == 'EUR' && <div className="box basic-info alert-info-custom mt-16">
+        {(currency == 'EUR' || addressOptions.tabType == 'internationalIBAN') && <div className="box basic-info alert-info-custom mt-16">
             <Spin spinning={ibanLoading}>
             {validIban&&isShowBankDetails&&<Row>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">

@@ -30,6 +30,7 @@ class PayeeBankDetails extends Component {
         ibannumber: null
     }
     componentDidMount(){
+        debugger
         if (this?.props?.selectedAddress?.id && this.props?.createPayeeObj) {
             if (this.props?.createPayeeObj?.payeeAccountModels[0]?.iban) {
                 this.handleIban(this.props?.createPayeeObj?.payeeAccountModels[0].iban,"true")
@@ -95,6 +96,7 @@ class PayeeBankDetails extends Component {
         }
     };
     renderAddress = (transferType) => {
+        debugger
         const _templates = {
             sepa: <>
             <>
@@ -545,12 +547,12 @@ class PayeeBankDetails extends Component {
         return _templates[transferType]
     }
     render() {
-        const { addressType, transferType, onSubmit, bankDetails = {}, emailExist = false, onCancel } = this.props;
+        const { addressType, transferType, onSubmit, bankDetails = {}, emailExist = false, onCancel, domesticType } = this.props;
         const { countries, states, isLoading } = this.state;
         
         return <>
             <Row gutter={[16, 16]} className={'pb-16'}>
-                {this.renderAddress(transferType)}
+                {this.renderAddress(domesticType == "internationalIBAN" ? "sepa" : transferType)}
             </Row>
             </>
 

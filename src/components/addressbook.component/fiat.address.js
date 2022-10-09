@@ -6,6 +6,7 @@ import OthersBusiness from "../onthego.transfer/others.business/others.business.
 import MyselfNewTransfer from '../onthego.transfer/Myself'
 import SomeoneComponent from "../onthego.transfer/others.SomeOneElse/someone.component"
 import { useEffect } from "react";
+//import InternationalIbanTransfer from '../onthego.transfer/internationationalIban'
 const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onContinue, PayeeLu = [], emailExist = false, countries = [], states = [], fiatAddress, onTheGoObj, ...props }) => {
     const [form] = useForm();
     const addrType = selectedAddress?.addressType ? selectedAddress?.addressType?.toLowerCase() : props.userProfile?.isBusiness ? "ownbusiness" : "myself";
