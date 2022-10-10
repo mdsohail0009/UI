@@ -416,7 +416,7 @@ export default {
 	submit: "Submit",
 	Enteraddresslabel: "Address Label",
 	Enteraddress: "Enter Address",
-	AddFiatAddress: "ADD FIAT ADDRESS",
+	AddFiatAddress: "Add Fiat Address",
 	Selectcoin: "Select Coin",
 	documents: "Documents",
 	tab_crypto: "Crypto",

@@ -55,7 +55,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .custom-btn.outline{border-color: var(--bgDarkGrey) !important;}
 .custom-btn.prime{background-image: linear-gradient(99.09deg, var(--btnGrad1), var(--btnGrad2));}
 .custom-btn.sec{background: transparent;background-image: none;border: 1px solid var(--btnBorder); color: var(--textWhite);}
-.custom-btn.sec:hover{background-color: var(--bgWhite);color: var(--textDark);}
+.custom-btn.sec:hover{background-image: linear-gradient(99.09deg, var(--btnGrad1), var(--btnGrad2));color: var(--textWhite);}
 .carousel-card{background-color: var(--bgDarkYellow);border-radius: 30px;overflow: auto;max-height: 265px;}
 .ant-carousel .slick-dots-bottom{bottom: 10px  !important;}
 .ant-carousel .slick-dots li button{background: var(--bgGrey) !important; opacity: 0.5;height: 4px;border-radius: 2px;}
@@ -241,7 +241,7 @@ border-radius: 5px;}
 .auto-scroll::-webkit-scrollbar-thumb{background-color: var(--bgDark1);}
 .crypto-list-tabs .ant-list-item, .wallet-list .ant-list-item{border-color: var(--borderLight);}
 .wallet-list .ant-list-item:hover, .wallet-list .ant-list-item.select, .addCryptoList li.select{background-color: var(--bgBlu);}
-.wallet-list li a, .crypto-list li a{display: inline-flex; align-items: center;flex-grow: 1;}
+.wallet-list li a, .crypto-list li a{display: inline-flex; align-items: center;flex-grow: 1; padding: 0px 5px;}
 .wallet-list h4{margin-bottom: 0;}
 .crypto-toggle .ant-radio-button-wrapper{padding: 22px;}
 .crypto-list-tabs .ant-tabs-tab{font-size: 16px; margin: 0; padding-bottom: 0;}
@@ -392,7 +392,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .cust-input.ant-select{padding: 0 !important;}
 .wallet-title{font-size: 16px; text-transform: uppercase; color: var(--textWhite30); margin-bottom: 0; font-weight: 600;}
 .crypto-list .ant-list-item-meta, .wallet-list .ant-list-item-meta{display: flex;align-items: center;}
-.crypto-list .ant-list-item, .wallet-list .ant-list-item{padding:5px 0 0 2px !important}
+.crypto-list .ant-list-item, .wallet-list .ant-list-item{padding:5px 0 0 2px !important;margin-top:5px}
 .recomoned-bg{background: var(--texthover);font-size: 12px;padding: 0 2px;line-height: 1.2;color: var(--textWhite);float: right;}
 .text-width{width: 250px;}
 .a-text{color: var(--bgBlue);}

@@ -101,11 +101,11 @@ class BuySell extends Component {
         return (<Drawer
             title={[<div className="side-drawer-header">
                 {this.renderTitle()}
-                {this.props.isTabKey && <div className="text-center fs-16">
-                    <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin }} className="mb-0 text-white-30 fw-600 text-upper" content="sell_assets" component={Paragraph} />
+                {this.props.isTabKey && <div className="text-center fs-24">
+                    <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin }} className="mb-0 text-white-30 fw-600" content="sell_assets" component={Paragraph} />
                 </div>}
-                {!this.props.isTabKey && <div className="text-center fs-16">
-                    <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin }} className="mb-0 text-white-30 fw-600 text-upper" content={this.props.buySell.stepTitles[config[this.props.buySell.stepcode]]} component={Paragraph} />
+                {!this.props.isTabKey && <div className="text-center fs-24">
+                    <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin }} className="mb-0 text-white-30 fw-600" content={this.props.buySell.stepTitles[config[this.props.buySell.stepcode]]} component={Paragraph} />
                 </div>}
                 {this.renderIcon()}</div>]}
             placement="right"

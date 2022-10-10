@@ -10,7 +10,7 @@ import CryptoList from '../shared/cryptolist';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 import { connect } from "react-redux";
 
-const { Paragraph, Text } = Typography;
+const { Paragraph, Text, Title } = Typography;
 const WithdrawCrypto = ({ dispatch, userProfile, sendReceive, props, changeStep }) => {
     useEffect(() => {
         loadData();
@@ -32,7 +32,10 @@ const WithdrawCrypto = ({ dispatch, userProfile, sendReceive, props, changeStep 
    // changeStep('withdraw_crpto_summary');
     }
     return <>
-        <Translate content="withdraw_a_crypto_text" component={Paragraph} className="text-white fw-500 fs-16 mt-16 mb-8 px-4 text-captz" />
+        <div className="mb-16 mt-8">
+                    <Title
+                        className='sub-heading'>Select An Asset To Send From Your Crypto Wallet</Title>
+                </div>
         <div className="dep-withdraw auto-scroll">
             {/* {wallets?.data.length ? <>{wallets?.data?.map((wallet, indx) => <Card key={indx} className="crypto-card mb-16 c-pointer" bordered={false} onClick={() => { dispatch(setSelectedWithDrawWallet(wallet)); dispatch(setStep('withdraw_crypto_selected')) }} >
                 

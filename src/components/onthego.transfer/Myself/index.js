@@ -298,48 +298,48 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     className="mt-24 text-captz px-4 text-white fw-600"
                 />
 
-        <div className="box basic-info alert-info-custom">
+        <div className="box basic-info alert-info-custom kpi-List">
             <Row>
                 {!isBusiness && <><Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-12 fw-600 text-white">
+                <div><label className="kpi-label">
                         First name
-                    </label>
-                    <div><Text className="fs-14 fw-400 text-white">{recipientDetails.firstName}</Text></div>
+                    </label><div>
+                    <Text className=" kpi-val">{recipientDetails.firstName}</Text></div></div>
 
                 </Col>
                     <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-12 fw-600 text-white">
+                    <div> <label className="kpi-label">
                             Last Name
                         </label>
-                        <div><Text className="fs-14 fw-400 text-white">{recipientDetails.lastName}</Text></div>
+                        <div><Text className="kpi-val">{recipientDetails.lastName}</Text></div></div>
 
                     </Col></>}
                 {isBusiness && <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-12 fw-600 text-white">
+                <div><label className="kpi-label">
                         Beneficiary Name
                     </label>
-                    <div><Text className="fs-14 fw-400 text-white">{recipientDetails.beneficiaryName}</Text></div>
+                    <div><Text className="kpi-val">{recipientDetails.beneficiaryName}</Text></div></div>
 
                 </Col>}
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-12 fw-600 text-white ">
+                <div> <label className="kpi-label">
                         Address Line 1
                     </label>
-                    <div><Text className="fs-14 fw-400 text-white">{recipientDetails.line1!=null?recipientDetails.line1:'-'}</Text></div>
+                    <div><Text className="kpi-val">{recipientDetails.line1!=null?recipientDetails.line1:'-'}</Text></div></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-12 fw-600 text-white ">
+                <div> <label className="kpi-label ">
                         Address Line 2
                     </label>
-                    <div><Text className="fs-14 fw-400 text-white">{recipientDetails.line2!=null?recipientDetails.line2:'-'}</Text></div>
+                    <div><Text className="kpi-val">{recipientDetails.line2!=null?recipientDetails.line2:'-'}</Text></div></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-12 fw-600 text-white">
+                <div><label className="kpi-label">
                        Address Line 3
                     </label>
-                    <div><Text className="fs-14 fw-400 text-white">{recipientDetails.line3!=null?recipientDetails.line3:'-'}</Text></div>
+                    <div><Text className="kpi-val">{recipientDetails.line3!=null?recipientDetails.line3:'-'}</Text></div></div>
 
                 </Col>
 

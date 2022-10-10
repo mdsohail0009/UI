@@ -1003,7 +1003,7 @@ const AddressCommonCom = (props) => {
                 <Translate
                   content="transfer_type"
                   component={Text}
-                  className="text-white"
+                  className="text-white fs-18 fw-600"
                 />
                 <Row gutter={[16, 16]}>
 
@@ -1015,8 +1015,8 @@ const AddressCommonCom = (props) => {
                         setAddressOptions({ ...addressOptions, transferType: value.target.value })
                       }}
                     >
-                      <Radio.Button value="sepa">SEPA</Radio.Button>
-                      <Radio.Button value="swift">SWIFT</Radio.Button>
+                      <Radio.Button value="sepa" className="custom-btn sec">SEPA</Radio.Button>
+                      <Radio.Button value="swift" className="custom-btn sec">SWIFT</Radio.Button>
                     </Radio.Group>
                   </Col>
                 </Row>

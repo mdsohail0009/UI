@@ -287,11 +287,10 @@ class OnthegoFundTransfer extends Component {
         const { filterObj, pastPayees, payeesLoading, isVarificationLoader, isVerificationEnable,isPhMail,isShowGreyButton,isAuthMail } = this.state;
         const steps = {
             selectcurrency: <React.Fragment>
-                <Translate
-                    className="mb-0 text-white-30 fs-14 fw-200 mt-16"
-                    content="send_fiat_text"
-                    component={Paragraph}
-                />
+                <div className="mb-8 mt-8">
+                    <Title
+                        className='sub-heading'>Send from your Suissebase FIAT Wallet</Title>
+                </div>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     {/* <Text className="fs-14 mb-8 text-white d-block fw-200">
                         Search for beneficiary *
@@ -327,9 +326,9 @@ class OnthegoFundTransfer extends Component {
                 />
             </React.Fragment>,
             enteramount: <>
-                <div className="mb-16" style={{textAlign:'center'}}>
-                    <text Paragraph
-                        className='text-white fs-30 fw-600 px-4 '>Send Fiat</text>
+                <div className="mb-8 mt-8">
+                    <Title
+                        className='sub-heading'>Send Fiat</Title>
                 </div>
                 {isVarificationLoader && <Loader />}
                 {!isVarificationLoader && 
@@ -454,9 +453,9 @@ class OnthegoFundTransfer extends Component {
                     </Form>}</>,
             addressselection: <React.Fragment>
                 {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
-                <div className="mb-16" style={{textAlign:'center'}}>
-                    <text Paragraph
-                        className='fs-24 fw-600 text-white mb-16 mt-4 text-captz' >Who are you sending money to?</text>
+                <div className="mb-8 mt-8">
+                    <Title
+                        className='sub-heading'>Who are you sending money to?</Title>
                 </div>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 

@@ -263,7 +263,7 @@ const Verifications = (props) => {
                 type="text"
                 style={{ color: "black", margin: "0 auto" }}
                 loading={phone.btnLoader}
-                onClick={() => getphoneOTP()}><Text className="text-yellow" >Click here to get code</Text></Button>
+                onClick={() => getphoneOTP()}><Text className="text-yellow getcode" >Click here to get code</Text></Button>
         ),
         resendotp: (
             <Button
