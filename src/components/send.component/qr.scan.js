@@ -44,7 +44,6 @@ class QRScan extends Component {
     getNetworkObj = async () => {
         this.setState({isnetworktrigger:true});
         const response = await getNetworkLu(this.props?.sendReceive?.depositWallet?.walletCode);
-        console.log("HHHHHHHHH", response)
         if (response.ok) {
             this.setState({ netWorkData: response.data });
         } else {
@@ -55,7 +54,6 @@ class QRScan extends Component {
     onNetworkView = async (netWork) => {
         this.setState({...this.state, isLoading: true})
         const response = await createCryptoDeposit({customerId: this.props.userProfile?.id,walletCode:this.props?.sendReceive?.depositWallet?.walletCode, network: netWork?.code});
-        console.log("HHHHHHHHH", response)
         if (response.ok) {
             this.setState({...this.state, error: null, isLoading: false})
             this.props.dispatch(setWalletAddress(response.data));
@@ -119,10 +117,13 @@ class QRScan extends Component {
                <div className="text-center f-12 mt-16 text-white custom-crypto-btns">
                     {netWorkData && netWorkData.map((network) => {
                         return <>
-                            <span className="mr-16 custom-bnt text-white-30 ">
-                                <a onClick={() => this.onNetworkView(network)}>
-                                    {network.code}
-                                </a>
+                            <span className="mr-16 custom-bnt text-white-30">
+                               {netWorkData.length>1 &&<a onClick={() => this.onNetworkView(network)}>
+                                    <span style ={{backgroundColor: this.props?.sendReceive?.depositWallet?.network ==network.code  &&'#ccc',borderColor: this.props?.sendReceive?.depositWallet?.network ==network.code  &&'#3d3d3d'}}>
+                                        {network.code}
+                                        </span>
+                                </a>}
+                                {netWorkData.length == 1 &&  `${network.code}`}
                             </span>
                         </>
                     })}
