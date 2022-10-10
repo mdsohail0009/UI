@@ -139,11 +139,13 @@ class OnthegoCryptoTransfer extends Component {
         else if (amt < withdrawMinValue) {
             this.setState({ ...this.state, errorMsg: null, error: apicalls.convertLocalLang('amount_min') + " " + withdrawMinValue });
             this.myRef.current.scrollIntoView();
-        } else if (amt > withdrawMaxValue) {
-            this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_max') + " " + withdrawMaxValue });
-            this.myRef.current.scrollIntoView();
-        } else if (amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
-            this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_less') });
+        } 
+        // else if (amt > withdrawMaxValue) {
+        //     this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_max') + " " + withdrawMaxValue });
+        //     this.myRef.current.scrollIntoView();
+        // } 
+        else if (amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
+            this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('insufficient_balance') });
             this.myRef.current.scrollIntoView();
         }
         else {
@@ -326,11 +328,13 @@ class OnthegoCryptoTransfer extends Component {
                                                 if (_amt < this.props.selectedWallet?.withdrawMinValue) {
                                                     this.setState({ ...this.state, errorMsg: null, error: apicalls.convertLocalLang('amount_min') + " " + this.props.selectedWallet?.withdrawMinValue });
                                                     this.myRef.current.scrollIntoView();
-                                                } else if (_amt > this.props.selectedWallet?.withdrawMaxValue) {
-                                                    this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_max') + " " + this.props.selectedWallet?.withdrawMaxValue });
-                                                    this.myRef.current.scrollIntoView();
-                                                } else if (_amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
-                                                    this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_less') });
+                                                } 
+                                                // else if (_amt > this.props.selectedWallet?.withdrawMaxValue) {
+                                                //     this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_max') + " " + this.props.selectedWallet?.withdrawMaxValue });
+                                                //     this.myRef.current.scrollIntoView();
+                                                // } 
+                                                else if (_amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
+                                                    this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('insufficient_balance') });
                                                     this.myRef.current.scrollIntoView();
                                                 }
                                                 else {
@@ -376,7 +380,7 @@ class OnthegoCryptoTransfer extends Component {
                         className='fs-24 fw-600 text-white mb-16 mt-4 text-captz' >Who are you sending crypto to?</text>
                 </div>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Search placeholder="Search for beneficiary" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="text-center mt-12" />
+                    <Search placeholder="Search For Beneficiary" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="text-center mt-12" />
                 </Col>
                 {this.state?.loading && <Loader />}
                 {(!this.state.loading) && <>

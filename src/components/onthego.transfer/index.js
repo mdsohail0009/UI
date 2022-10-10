@@ -294,7 +294,7 @@ class OnthegoFundTransfer extends Component {
                 />
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     {/* <Text className="fs-14 mb-8 text-white d-block fw-200">
-                        Search for beneficiary *
+                        Search For Beneficiary *
                     </Text> */}
                     <Search placeholder="Search Currency" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="text-center mt-12" />
                 </Col>
