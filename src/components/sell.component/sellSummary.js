@@ -9,7 +9,6 @@ import {Alert} from 'antd'
 import { setSellFinalRes } from '../../reducers/sellReducer'
 import apicalls from '../../api/apiCalls';
 import { setCurrentAction } from '../../reducers/actionsReducer';
-import { setSellTitleHide } from '../../reducers/buysellReducer';
 
 
 class SellSummary extends Component {
@@ -48,7 +47,6 @@ class SellSummary extends Component {
         }
     }
     async saveSellData() {
-        debugger
         this.setState({ ...this.state,loader:true, error: { valid: true, message: '',agreeRed:true } })
         if (!this.state.isTermsAgree) {
             this.setState({
@@ -72,7 +70,7 @@ class SellSummary extends Component {
             let res = await savesellData(obj);
             if (res.ok) {
                 this.props.sellResData(res.data);
-                this.props.sellTitleHide(true);
+                //this.props.sellTitleHide(true);
                 this.props.changeStep('sellsuccess')
                 this.setState({ ...this.state, loader: false,isLoading: false, disableConfirm: false })
                 this.props.fetchDashboardData(this.props.customer.id)
@@ -159,9 +157,9 @@ const connectDispatchToProps = dispatch => {
         sellResData: (data) => {
             dispatch(setSellFinalRes(data))
         },
-        sellTitleHide: (val) => {
-            dispatch(setSellTitleHide(val))
-        },
+        // sellTitleHide: (val) => {
+        //     dispatch(setSellTitleHide(val))
+        // },
         setAction: (val) => {
 			dispatch(setCurrentAction(val))
 		  },
