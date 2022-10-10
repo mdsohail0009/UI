@@ -231,6 +231,15 @@ class OnthegoFundTransfer extends Component {
         if(obj.isPhoneVerification&&obj.isAuthenticatorVerification&&obj.isEmailVerification&&(obj.verifyData?.isPhoneVerified&&obj.verifyData?.twoFactorEnabled&&obj.verifyData?.isEmailVerification)){
             this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
         }
+        if(obj.verifyData?.isLiveVerification&&obj.isEmailVerification&&obj.verifyData?.isEmailVerification){
+            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
+        }
+        if(obj.verifyData?.isLiveVerification&&obj.isPhoneVerification&&obj.verifyData?.isPhoneVerified){
+            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
+        }
+        if(obj.verifyData?.isLiveVerification&&obj.isAuthenticatorVerification&&obj.verifyData?.twoFactorEnabled){
+            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
+        }
        
     }
     isErrorDispaly = (objValue) => {
