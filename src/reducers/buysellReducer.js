@@ -36,7 +36,7 @@ const setHeaderTab = (payload) => {
 }
 const setSellTitleHide = (payload) => {
     return {
-        type: SET_HEADER_TAB,
+        type: SET_SELL_TITLE_HIDE,
         payload
     }
 }
