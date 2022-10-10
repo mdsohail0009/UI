@@ -6,7 +6,7 @@ import ConnectStateProps from '../../utils/state.connect';
 import BuySummary from './buy.summary';
 import BillType from '../pay.component/payOption';
 import SelectCrypto from './buy.detail';
-import { setStep, setTab, setHeaderTab } from '../../reducers/buysellReducer';
+import { setStep, setTab, setHeaderTab, setSellTitleHide } from '../../reducers/buysellReducer';
 import { processSteps as config } from './config';
 import DepositFiat from '../deposit.component/depositFiat'
 import WireTransfer from '../wire.transfer.component/wireTransfer';
@@ -98,6 +98,7 @@ class BuySell extends Component {
         return x ? x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0;
     }
     render() {
+        debugger
         return (<Drawer
             title={[<div className="side-drawer-header">
                 {this.renderTitle()}

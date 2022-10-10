@@ -43,6 +43,7 @@ class BuySummary extends Component {
     });
   };
   pay = async () => {
+    debugger
     this.setState({ ...this.state, error: { valid: true, message: null,agreeRed:true, } });
     if (this.state.isTermsAgreed) {
       const {

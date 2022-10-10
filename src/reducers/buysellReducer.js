@@ -3,7 +3,7 @@ const CLEAR_STEP = "clearStep";
 const CHANGE_STEP = "changeStep"
 const SET_TAB = "setTab";
 const SET_HEADER_TAB = "setHeaderTab";
-
+const SET_SELL_TITLE_HIDE = "setSellTitleHide";
 const setStep = (payload) => {
     return {
         type: SET_STEP,
@@ -29,6 +29,12 @@ const clearStep = (payload) => {
     }
 }
 const setHeaderTab = (payload) => {
+    return {
+        type: SET_HEADER_TAB,
+        payload
+    }
+}
+const setSellTitleHide = (payload) => {
     return {
         type: SET_HEADER_TAB,
         payload
@@ -86,4 +92,4 @@ const buySellReducer = (state = initialState, action) => {
 
 }
 export default buySellReducer;
-export { setStep, clearStep, changeStep, setTab,setHeaderTab }
+export { setStep, clearStep, changeStep, setTab,setHeaderTab, setSellTitleHide }
