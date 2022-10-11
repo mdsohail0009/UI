@@ -202,7 +202,7 @@ class AddressBookV2 extends Component {
                 <List
                     itemLayout="horizontal"
                     dataSource={coinListData}
-                    className="crypto-list auto-scroll wallet-list c-pointer"
+                    className="crypto-list auto-scroll wallet-list"
                     loading={loader ? loader : false}
                     locale={{
                         emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={

@@ -301,7 +301,7 @@ class OnthegoFundTransfer extends Component {
                 <List
                     itemLayout="horizontal"
                     dataSource={this.state.fiatWallets}
-                    className="crypto-list auto-scroll wallet-list c-pointer"
+                    className="crypto-list auto-scroll wallet-list"
                     loading={this.state.fiatWalletsLoading}
                     locale={{
                         emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
