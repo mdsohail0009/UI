@@ -323,11 +323,11 @@ class OnthegoFundTransfer extends Component {
                         onFinish={this.amountnext}
                         scrollToFirstError
                     >
-                        {!isVerificationEnable &&
+                       {!isVerificationEnable &&
                             <Alert
                                 message="Verification alert !"
                                 description={<Text>Without verifications you can't send. Please select send verifications from <a onClick={() => {
-                                    this.props.history.push("/userprofile?key=2")
+                                    this.props.history.push("/userprofile/2")
                                 }}>security section</a></Text>}
                                 type="warning"
                                 showIcon
@@ -562,7 +562,7 @@ class OnthegoFundTransfer extends Component {
                                 <Input
                                     className="cust-input "
                                     placeholder={"Reason For Transfer"}
-                                    maxLength={1000}
+                                    maxLength={200}
                                 />
                             </Form.Item>
 
@@ -715,7 +715,7 @@ class OnthegoFundTransfer extends Component {
                                     <Title className="fs-14 text-white fw-500 text-upper text-right">
                                         <NumberFormat
                                             value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
-                                            thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
+                                            thousandSeparator={true} displayType={"text"}  decimalPlaces={2}/> {`${this.state.reviewDetails?.walletCode}`}</Title>
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={24} lg={24} xxl={24}>

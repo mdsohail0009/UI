@@ -1431,3 +1431,4 @@ cust-address{margin-bottom: 0px !important;}
  .fund-transfer-input .tfunds-inputgroup .ant-input-group-addon{ padding: 0 10px 0 0 !important;}
  .fund-transfer-input .tfunds-inputgroup .ant-select{ width:150px !important;}
  .fund-transfer-input .tfunds-inputgroup .ant-select-selection-item{padding: 0 !important;}
+td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;width: 100%;}
