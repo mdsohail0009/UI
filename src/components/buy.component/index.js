@@ -101,7 +101,7 @@ class BuySell extends Component {
         return (<Drawer
             title={[<div className="side-drawer-header">
                 {this.renderTitle()}
-                {this.props.isTabKey && <div className="text-center fs-16">
+                {this.props.isTabKey && this.props.buySell?.stepcode !=="sellsuccess"&& <div className="text-center fs-16">
                     <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin }} className="mb-0 text-white-30 fw-600 text-upper" content="sell_assets" component={Paragraph} />
                 </div>}
                 {!this.props.isTabKey && <div className="text-center fs-16">
