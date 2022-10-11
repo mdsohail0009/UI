@@ -8,7 +8,7 @@ import {
     Drawer,
     Button, Popover
 } from "antd";
-import { setHeaderTab, setStep } from "../../../reducers/buysellReducer";
+import { setHeaderTab, setStep, setSellHeaderHide } from "../../../reducers/buysellReducer";
 import Translate from "react-translate-component";
 import en from "../../../lang/en";
 import ch from "../../../lang/ch";
@@ -158,10 +158,12 @@ class HeaderPermissionMenu extends Component {
                 switch (menuKey) {
                     case "trade_buy":
                         this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: false } });
+                        this.props.dispatch(setSellHeaderHide(false));
                         this.props.dispatch(menuItem.dispatchStep ? setStep(menuItem.dispatchStep) :setStep("step1"));
                         break;
                     case "trade_sell":
                         this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: true } });
+                        this.props.dispatch(setSellHeaderHide(false));
                         this.props.dispatch(setStep("step1"));
                         break;
                     case "transfer":

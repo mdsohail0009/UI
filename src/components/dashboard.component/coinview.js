@@ -7,7 +7,7 @@ import LineChart from './lineChart';
 import BuySell from '../buy.component';
 import SendReceive from '../send.component'
 import { fetchSelectedCoinDetails, setExchangeValue, setCoin } from '../../reducers/buyReducer';
-import { setStep } from '../../reducers/buysellReducer';
+import { setStep, setSellHeaderHide } from '../../reducers/buysellReducer';
 import { updateCoinDetail } from '../../reducers/sellReducer'
 import { convertCurrency } from '../buy.component/buySellService';
 import apiCalls from '../../api/apiCalls';
@@ -88,11 +88,13 @@ componentWillUnmount(){
             convertCurrency({ from: selectedObj.coin, to: "USD", value: 1, isCrypto: false, customer_id: this.props.userProfile?.id, screenName: null }).then(val => {
                 this.props.dispatch(setExchangeValue({ key: selectedObj.coin, value: val }));
             });
+            this.props.dispatch(setSellHeaderHide(false));
             this.props.dispatch(setStep("step2"));
         } else if (key === "sell") {
             this.props.dispatch(setCoin(selectedObj));
             this.props.dispatch(setExchangeValue({ key: selectedObj.coin, value: selectedObj.oneCoinValue }));
             this.props.dispatch(updateCoinDetail(selectedObj))
+            this.props.dispatch(setSellHeaderHide(false));
             this.props.dispatch(setStep("step10"));
         }
         this.setState({

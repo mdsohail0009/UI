@@ -6,7 +6,7 @@ import ConnectStateProps from '../../utils/state.connect';
 import BuySummary from './buy.summary';
 import BillType from '../pay.component/payOption';
 import SelectCrypto from './buy.detail';
-import { setStep, setTab, setHeaderTab, setSellTitleHide } from '../../reducers/buysellReducer';
+import { setStep, setTab, setHeaderTab, setSellHeaderHide } from '../../reducers/buysellReducer';
 import { processSteps as config } from './config';
 import DepositFiat from '../deposit.component/depositFiat'
 import WireTransfer from '../wire.transfer.component/wireTransfer';
@@ -28,6 +28,7 @@ class BuySell extends Component {
         }
     }
     componentDidMount(){
+        this.props.dispatch(setSellHeaderHide(false));
         getFeaturePermissionsByKeyName(`trade`)
     }
     closeBuyDrawer = () => {
@@ -36,6 +37,10 @@ class BuySell extends Component {
         if (this.props.onClose) {
             this.props.onClose();
         }
+    }
+    handleBackSell = () => {
+        this.props.dispatch(setSellHeaderHide(true));
+        this.props.dispatch(setStep("step1"));
     }
     renderContent = () => {
         const stepcodes = {
@@ -67,7 +72,7 @@ class BuySell extends Component {
             billingaddress: <span onClick={() => this.props.dispatch(setStep("step5"))} className="icon md lftarw-white c-pointer" />,
             addressscanner: <span onClick={() => this.props.dispatch(setStep("step6"))} className="icon md lftarw-white c-pointer" />,
             depositfiat: <span onClick={() => this.props.dispatch(setStep("step5"))} className="icon md lftarw-white c-pointer" />,
-            selectedcrypto: <span  isTabKey="2" onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
+            selectedcrypto: <span  isTabKey="2" onClick={this.handleBackSell} className="icon md lftarw-white c-pointer" />,
             sellsummary: <span onClick={() => this.props.dispatch(setStep("step10"))} className="icon md lftarw-white c-pointer" />,
             successmsg: <span />,
             sellsuccessmsg: <span />,
@@ -101,10 +106,10 @@ class BuySell extends Component {
         return (<Drawer
             title={[<div className="side-drawer-header">
                 {this.renderTitle()}
-                {this.props.isTabKey && this.props.buySell?.stepcode !=="sellsuccess"&& <div className="text-center fs-16">
+                {((this.props.isTabKey && this.props.buySell?.stepcode !=="sellsuccess") || this.props.buySell?.sellHeader) && <div className="text-center fs-16">
                     <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin }} className="mb-0 text-white-30 fw-600 text-upper" content="sell_assets" component={Paragraph} />
                 </div>}
-                {!this.props.isTabKey && <div className="text-center fs-16">
+                {!this.props.isTabKey && !this.props.buySell?.sellHeader&& <div className="text-center fs-16">
                     <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin }} className="mb-0 text-white-30 fw-600 text-upper" content={this.props.buySell.stepTitles[config[this.props.buySell.stepcode]]} component={Paragraph} />
                 </div>}
                 {this.renderIcon()}</div>]}
