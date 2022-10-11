@@ -281,7 +281,7 @@ class OnthegoCryptoTransfer extends Component {
                                         thousandSeparator={","}
                                         addonBefore={this.state.selectedCurrency}
                                         onValueChange={() => {
-                                            this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: '' })
+                                            this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: null,error: null })
                                         }}
                                     />
                                 </Form.Item>
@@ -324,6 +324,7 @@ class OnthegoCryptoTransfer extends Component {
                                         onClick={() => {
                                             let _amt = this.enteramtForm.current.getFieldsValue().amount;
                                             _amt = typeof _amt == "string" ? _amt.replace(/,/g, "") : _amt;
+                                            this.setState({ ...this.state, errorMsg: null, error: null});
                                             if (_amt > 0) {
                                                 if (_amt < this.props.selectedWallet?.withdrawMinValue) {
                                                     this.setState({ ...this.state, errorMsg: null, error: apicalls.convertLocalLang('amount_min') + " " + this.props.selectedWallet?.withdrawMinValue });
