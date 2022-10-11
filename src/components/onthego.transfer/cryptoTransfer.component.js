@@ -217,6 +217,31 @@ class OnthegoCryptoTransfer extends Component {
             this.enteramtForm?.current?.setFieldsValue({amount:this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue});
         }
     }
+     numberValidator = async function (rule, value, callback) {
+        if (value) {
+            if (typeof value === "number") {
+                value = value.toString();
+            }
+            if (
+                (value.indexOf(".") > -1 && value.split(".")[0].length >= 11) ||
+                (value.indexOf(".") < 0 && value.length >= 11)
+            ) {
+                throw new Error("Amount exceeded");
+            } 
+            else if (value.indexOf(".") > -1 && value.split(".")[0].length == 0) {
+                throw new Error("Please enter amount");
+            }
+            else {
+                callback();
+            }
+        }
+        else if(value == 0 && typeof value === "number") {
+            callback();
+        }
+        else if(!value) {
+            throw new Error("Is required");
+        }
+    };
 
     renderStep = (step) => {
         const { filterObj, pastPayees, payeesLoading, isVarificationLoader, isVerificationEnable,isPhMail,isShowGreyButton,isAuthMail } = this.state;
@@ -256,18 +281,20 @@ class OnthegoCryptoTransfer extends Component {
                                     required
                                     rules={[
                                         {
-                                            required: true,
-                                            message: 'Is required',
+                                            // required: true,
+                                            // message: 'Is required',
+                                            type: "number",
+                                            validator: this.numberValidator
                                         },
-                                        {
-                                            validator: (_, value) => {
-                                                const reg = /.*[0-9].*/g;
-                                                if (value && !reg.test(value)) {
-                                                    return Promise.reject("Invalid amount");
-                                                }
-                                                return Promise.resolve();
-                                            }
-                                        }
+                                        // {
+                                        //     validator: (_, value) => {
+                                        //         const reg = /.*[0-9].*/g;
+                                        //         if (value && !reg.test(value)) {
+                                        //             return Promise.reject("Invalid amount");
+                                        //         }
+                                        //         return Promise.resolve();
+                                        //     }
+                                        // }
                                     ]}
                                 >
                                     <NumberFormat
