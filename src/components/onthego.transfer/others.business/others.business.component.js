@@ -228,7 +228,7 @@ class OthersBusiness extends Component {
                     <Translate style={{ fontSize: 18 }}
                         content="Beneficiary_Details"
                         component={Paragraph}
-                        className="mb-8 fs-18 text-white fw-500 mt-16"
+                        className="mb-8 text-white fw-500 mt-16"
                     />
                     {/* <Divider /> */}
                     <Row gutter={[12, 12]}>
@@ -289,8 +289,8 @@ class OthersBusiness extends Component {
                         </Col>
                         <RecipientAddress />
                     </Row>
-
-                    <Paragraph className="mb-8 fs-14 text-white fw-500 mt-36 px-4">Bank Details</Paragraph>
+                    <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
+                    
                     {/* <Divider /> */}
                     <Row gutter={[16, 16]}>
                    <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
@@ -351,7 +351,7 @@ class OthersBusiness extends Component {
                                     className="cust-input"
                                     placeholder={"Reason For Transfer"}
                                     // onChange={this.handleIbanChange}
-                                    maxLength={1000}/>
+                                    maxLength={200}/>
                             </Form.Item>
                         </Col>}
                          
