@@ -35,7 +35,6 @@ class Summary extends Component {
 		this.permissionsInterval = setInterval(this.loadPermissions, 200);
 	}
 	loadPermissions = () => {
-		debugger
 		if (this.props.buyPermissions) {
 			clearInterval(this.permissionsInterval);
 			let _permissions = {};
