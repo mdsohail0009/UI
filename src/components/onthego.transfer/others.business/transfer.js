@@ -27,13 +27,15 @@ class BusinessTransfer extends Component {
         isValidCheck: false,
         iBanValid: false,
          ibanDetails: {},
-        isValidateLoading: false
+        isValidateLoading: false,
+        ibanDetailsLoading: false
     };
     componentDidMount() {
         this.loadDetails();
 
     }
     loadDetails = async () => {
+        debugger
         this.setState({ ...this.state, errorMessage: null, isLoading: true });
         const response = await createPayee(this.props.userProfile.id, this.props.selectedAddress?.id || "", "otherbusiness");
         if (response.ok) {
