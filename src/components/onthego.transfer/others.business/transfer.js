@@ -219,7 +219,7 @@ class BusinessTransfer extends Component {
                         <RecipientAddress />
                     </Row>
 
-                    <Paragraph className="mb-8 px-4 text-white fw-500 mt-36" style={{ fontSize: 18 }}>Recipient's Bank Details</Paragraph>
+                    <Paragraph className="mb-8 px-4 text-white fw-500 mt-36" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                     {/* <Divider /> */}
                     <DomesticTransfer type={this.props.type} />
                     <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
@@ -283,7 +283,8 @@ class BusinessTransfer extends Component {
                             </Form.Item>
                         </Col>
                     </Row>
-                    <Paragraph className="mb-8 text-white fw-500 mt-16 px-4" style={{ fontSize: 18 }} >Recipient's Details</Paragraph>
+                    
+                    <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white fw-600">Recipient's Details</h2>
                     {/* <Divider /> */}
                     <Row gutter={[12, 12]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -343,8 +344,7 @@ class BusinessTransfer extends Component {
                         </Col>
                         <RecipientAddress />
                     </Row>
-
-                    <Paragraph className="mb-8 text-white fw-500 mt-36 px-4" style={{ fontSize: 18 }}>Bank Details</Paragraph>
+                    <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
                     {/* <Divider /> */}
                     <InternationalTransfer type={this.props.type} />
                     <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>

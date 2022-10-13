@@ -260,7 +260,7 @@ class DomesticTransfer extends Component {
                         placeholder={"Reason For Transfer"}
                         className="cust-input cust-text-area address-book-cust"
                         autoSize={{ minRows: 1, maxRows: 1 }}
-                        maxLength={1000}
+                        maxLength={200}
                     ></TextArea>
                 </Form.Item>
             </Col>}

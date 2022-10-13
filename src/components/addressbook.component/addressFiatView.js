@@ -135,7 +135,7 @@ const AddressFiatView = (props) => {
 														{fiatAddress?.addressType === " " ||
 															fiatAddress?.addressType === null
 															? "-"
-															:(fiatAddress?.addressType=="myself")&&"MYSELF"||
+															:(fiatAddress?.addressType=="myself")&&"MY SELF"||
 															 (fiatAddress?.addressType=="individuals")&&"INDIVIDUALS"||
 															(fiatAddress?.addressType=="ownbusiness")&&"OWN BUSINESS"||
 															(fiatAddress?.addressType=="otherbusiness")&&"OTHER BUSINESS"}
@@ -355,18 +355,7 @@ const AddressFiatView = (props) => {
 																	: item.iban}
 															</Title>
 														</Col>}
-														{item.bic &&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
-															<Text className="fw-300 text-white-50 fs-12">
-																BIC
-															</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
-
-																{item.bic === " " ||
-																	item.bic === null
-																	? "-"
-																	: item.bic}
-															</Title>
-														</Col>}
+														
 														{item?.bankType && <Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
 																Bank Type
@@ -427,6 +416,18 @@ const AddressFiatView = (props) => {
 																	: item.bankName}
 															</Title>
 														</Col>}
+														{item.bic &&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
+															<Text className="fw-300 text-white-50 fs-12">
+																BIC
+															</Text>
+															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
+
+																{item.bic === " " ||
+																	item.bic === null
+																	? "-"
+																	: item.bic}
+															</Title>
+														</Col>}
 														{item?.bankBranch && <Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
 																Bank branch
@@ -477,7 +478,7 @@ const AddressFiatView = (props) => {
 														</Col>}
 														{item?.postalCode &&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
-																Postal Code
+																Zip
 															</Text>
 															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
 
@@ -488,7 +489,7 @@ const AddressFiatView = (props) => {
 															</Title>
 														</Col>}
 														{/* {item.line1 && */}
-														 <Col xs={24} md={24} lg={14} xl={8} xxl={4}>
+														 {item.walletCode!='EUR'&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
 															Bank Address 1
 															</Text>
@@ -498,10 +499,10 @@ const AddressFiatView = (props) => {
 																	? "-"
 																	: item.line1}
 															</Title>
-														</Col>
+														</Col>}
 														{/* // } */}
 														{/* {item.line2 &&  */}
-														<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
+														{item.walletCode!='EUR'&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
 															Bank Address 2
 															</Text>
@@ -511,7 +512,7 @@ const AddressFiatView = (props) => {
 																	? "-"
 																	: item.line2}
 															</Title>
-														</Col>
+														</Col>}
 														{/* } */}
 														
 

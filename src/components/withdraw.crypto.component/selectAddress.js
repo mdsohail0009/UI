@@ -105,7 +105,7 @@ class SelectAddress extends Component {
                             <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
                             <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
                             <p className="fs-16 text-white-30 fw-200 mb-0"> {apicalls.convertLocalLang('address_available')} </p>
-                            <a onClick={() => this.selectCrypto()}>Click hear to make New Transfer</a>
+                            {/* <a onClick={() => this.selectCrypto()}>Click hear to make New Transfer</a> */}
                         </div>}
                     </>
                  
