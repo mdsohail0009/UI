@@ -218,6 +218,7 @@ class OnthegoCryptoTransfer extends Component {
         }
     }
      numberValidator = async function (rule, value, callback) {
+        debugger
         if (value) {
             if (typeof value === "number") {
                 value = value.toString();
@@ -228,9 +229,9 @@ class OnthegoCryptoTransfer extends Component {
             ) {
                 throw new Error("Amount exceeded");
             } 
-            else if (value.indexOf(".") > -1 && value.split(".")[0].length == 0) {
-                throw new Error("Please enter amount");
-            }
+            // else if (value.indexOf(".") > -1 && value.split(".")[0].length == 0) {
+            //     throw new Error("Please enter amount");
+            // }
             else {
                 callback();
             }
@@ -305,7 +306,7 @@ class OnthegoCryptoTransfer extends Component {
                                         decimalScale={8}
                                         displayType="input"
                                         allowNegative={false}
-                                        thousandSeparator={","}
+                                        thousandSeparator={true}
                                         addonBefore={this.state.selectedCurrency}
                                         onValueChange={() => {
                                             this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: null,error: null })
