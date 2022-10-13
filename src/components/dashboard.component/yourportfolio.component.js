@@ -96,6 +96,7 @@ class YourPortfolio extends Component {
     }}
   
     showSendReceiveDrawer = async(e, value) => {
+      debugger
       let selectedObj = { ...value };
       selectedObj.coin = selectedObj.coin?.toUpperCase();
       selectedObj.coinFullName = selectedObj.coinFullName
@@ -142,7 +143,7 @@ class YourPortfolio extends Component {
           this.props.dispatch(setStep("step7"));
           this.props.dispatch(setSubTitle(` ${coin}` + " " + "balance" +" "+ ":" +" "+ `${selectedObj.coinBalance ? selectedObj.coinBalance : '0'}`+`${" "}`+`${coin}`
             ));
-             const response = await createCryptoDeposit({ customerId: this.props.userProfile?.id, walletCode: coin });
+             const response = await createCryptoDeposit({ customerId: this.props.userProfile?.id, walletCode: coin, network: selectedObj?.netWork });
              if (response.ok) {
                 this.props.dispatch(setWalletAddress(response.data));
                // this.props.dispatch(fetchDashboardcalls(this.props.userProfile?.id));
