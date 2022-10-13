@@ -432,14 +432,14 @@ class CryptoWithDrawWallet extends Component {
                                 </Tooltip>
                             </div>
                         </Form.Item>
-                        <div className="text-center mt-24 mb-24 ">
+                        {/* <div className="text-center mt-24 mb-24 ">
                         <Button key="back" className='ant-btn  pop-btn'   onClick={() => this.selectCrypto()} >
                             New Transfer
                         </Button>,
                         <Button key="submit" type="primary" className='ant-btn  pop-btn' style={{marginLeft:"10px"}} onClick={() => this.selectCrypto("ADDRESS")}>
                             Whitelisted Address
                         </Button>
-                        </div>
+                        </div> */}
                         <Form.Item
                             className="custom-forminput custom-label mb-0"
                             name="CustomerRemarks"

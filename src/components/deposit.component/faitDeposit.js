@@ -240,7 +240,7 @@ class FaitDeposit extends Component {
         </Radio.Group></div>}
         {faitdeposit ?
           <div className='mt-16'>
-           <OnthegoFundTransfer />
+           <OnthegoFundTransfer  ontheGoType={"Onthego"}/>
          </div>
           : <> {this.state.Loader && <Loader />}
 
