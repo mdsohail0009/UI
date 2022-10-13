@@ -139,6 +139,8 @@ class AddressCrypto extends Component {
       }
     }
     else {
+      this.setState({ ...this.state, errorMessage: response.data, loading: false });
+        this.useDivRef.current.scrollIntoView();
       this.setState({ ...this.state, isBtnLoading: false,  errorMessage: this.isErrorDispaly(response), });
     }
   }
@@ -186,14 +188,15 @@ class AddressCrypto extends Component {
     }
     else {
       return <>
-        <div>
+      
+        <div ref={this.useDivRef}></div>
           {errorMessage && <Alert type="error" description={errorMessage} showIcon />}
           <Form
             initialValues={cryptoData}
             className="custom-label  mb-0"
             ref={this.form}
             onFinish={this.submit}
-            scrollToFirstError
+             scrollToFirstError
           >
             <Form.Item className="fw-300 mb-8 px-4 text-white-50 custom-forminput custom-label pt-8"
               name="saveWhiteListName"
@@ -304,7 +307,7 @@ class AddressCrypto extends Component {
               </Button>
             </Form.Item>
           </Form>
-        </div>
+       
       </>
     }
   };
