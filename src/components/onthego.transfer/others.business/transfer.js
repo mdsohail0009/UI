@@ -52,7 +52,12 @@ class BusinessTransfer extends Component {
             }
             if(data.transferType== "international"){
                 this.setState({ ...this.state, selectedTab:data.transferType })
-            }else{
+            }
+            if(data.transferType== "internationalIBAN"){
+                this.setState({ ...this.state, selectedTab:data.transferType })
+                 this.handleIbanChange({ target: { value: data?.iban, isNext: true } });
+            }
+            else{
                 this.setState({ ...this.state, selectedTab:"domestic" })  
             }
             const ibanDetails = response.data?.payeeAccountModels[0] || {}
@@ -71,17 +76,15 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].currencyType = "Fiat";
         _obj.payeeAccountModels[0].walletCode = "USD";
         _obj.payeeAccountModels[0].accountNumber = values?.accountNumber;
-        _obj.payeeAccountModels[0].bankName = values?.bankName;
+        _obj.payeeAccountModels[0].bankName = selectedTab == "internationalIBAN" ? ibanDetails?.bankName :  values?.bankName;
         _obj.payeeAccountModels[0].abaRoutingCode = values?.abaRoutingCode;
         _obj.payeeAccountModels[0].swiftRouteBICNumber = values?.swiftRouteBICNumber;
-        _obj.payeeAccountModels[0].line1 = values.bankAddress1;
+        _obj.payeeAccountModels[0].line1 = selectedTab == "internationalIBAN" ? ibanDetails?.bankAddress : values.bankAddress1;
         _obj.payeeAccountModels[0].line2 = values.bankAddress2;
         _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
         _obj.addressType = "otherbusiness";
         _obj.transferType = selectedTab;
         _obj.amount = this.props.amount;
-
-        _obj.payeeAccountModels[0].line1 = ibanDetails?.bankAddress;
         _obj.payeeAccountModels[0].city = ibanDetails?.city;
         _obj.payeeAccountModels[0].state = ibanDetails?.state;
         _obj.payeeAccountModels[0].country = ibanDetails?.country;
@@ -89,7 +92,6 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].bankBranch = ibanDetails?.branch;
         _obj.payeeAccountModels[0].bic=ibanDetails?.routingNumber;
         _obj.payeeAccountModels[0].iban = values?.iban ? values?.iban : this.form.current?.getFieldValue('iban');
-        _obj.payeeAccountModels[0].bankName = ibanDetails?.bankName;
         if(isEdit){
             _obj.id = isSelectedId? isSelectedId:details?.payeeId;
         }
@@ -135,6 +137,7 @@ class BusinessTransfer extends Component {
         }
     }
     onIbanValidate = (e) => {
+        debugger
         let value = e ? e: this.form.current?.getFieldValue('iban');
         if (value?.length > 10) {
             if (value &&!/^[A-Za-z0-9]+$/.test(value)) {
