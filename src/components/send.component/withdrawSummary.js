@@ -866,7 +866,7 @@ class WithdrawSummary extends Component {
 											{this.state.tooltipEmail == true && (
 												<Tooltip
 													placement="topRight"
-													title={`Haven\'t received code? Request new code in ${seconds2} seconds. The code will expire after 30mins.`}>
+													title={`Haven\'t received code? Request new code in ${seconds2} seconds. The code will expire after 5mins.`}>
 
 													<span className="icon md info mr-8" />
 												</Tooltip>
