@@ -202,7 +202,7 @@ class Summary extends Component {
 							component={Text}
 						/>
 					</div>
-					{(this.state.buyPermissions?.Buy || this.state.permissions?.Sell) &&
+					{permissions &&
 					<div className="d-flex p-16 mb-36 agree-check">
 						<label
 						>
@@ -230,7 +230,16 @@ class Summary extends Component {
 							<Translate content="refund_cancellation" component="Text" />
 						</Paragraph>
 					</div>}
-					{((this.state.buyPermissions?.Buy || permissions)|| this.state.permissions?.Sell) &&
+					{(okBtnTitle == "buy" && permissions) &&
+					<SuisseBtn
+						className={"pop-btn"}
+						onRefresh={() => this.props.onRefresh()}
+						title={okBtnTitle || "pay"}
+						loading={isButtonLoad}
+						autoDisable={true}
+						onClick={() => this.props.onClick()}
+					/>}
+					{(okBtnTitle == "sell" && permissions) &&
 					<SuisseBtn
 						className={"pop-btn"}
 						onRefresh={() => this.props.onRefresh()}

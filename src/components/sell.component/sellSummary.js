@@ -21,6 +21,7 @@ class SellSummary extends Component {
             permissions:{},
              error: { valid: true, message: null,agreeRed:true } }
     componentDidMount() {
+        debugger
         this.fetchPreviewData()
         setTimeout(() => this.setState({ ...this.state, disableConfirm: true }), 12000)
         this.EventTrack();
@@ -96,6 +97,7 @@ class SellSummary extends Component {
         }
       };
       loadPermissions = () => {
+        debugger
 		if (this.props.buySellPermissions) {
 			clearInterval(this.permissionsInterval);
 			let _permissions = {};
@@ -141,7 +143,7 @@ class SellSummary extends Component {
 }
 
 const connectStateToProps = ({ buySell, sellInfo, userConfig,menuItems }) => {
-    return { buySell, sellData: sellInfo, customer: userConfig.userProfileInfo,buySellPermissions: menuItems?.featurePermissions["trade"], trackAuditLogData: userConfig.trackAuditLogData }
+    return { buySell, sellData: sellInfo, customer: userConfig.userProfileInfo,buySellPermissions: menuItems?.featurePermissions?.trade_sell, trackAuditLogData: userConfig.trackAuditLogData }
 }
 const connectDispatchToProps = dispatch => {
     return {

@@ -13,6 +13,7 @@ import LocalCryptoSwapperCmp from '../shared/local.crypto.swap/swap';
 import Currency from '../shared/number.formate';
 import apicalls from '../../api/apiCalls';
 import {  getPreview } from './api'
+import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 const { Option } = Select;
 class SelectCrypto extends Component {
     myRef = React.createRef();
@@ -39,6 +40,7 @@ class SelectCrypto extends Component {
         }
     }
     componentDidMount() {
+        getFeaturePermissionsByKeyName(`trade_buy`)
         this.props.getCoinsList(this.props.userProfileInfo?.id);
         this.props.setTabKey();
         this.EventTrack()
