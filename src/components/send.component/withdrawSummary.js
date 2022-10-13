@@ -49,7 +49,7 @@ class WithdrawSummary extends Component {
 		showtext: true,
 		timeInterval: "",
 		count: 120,
-		loading: false,
+		loading: true,
 		comission: null,
 		emailText: "get_email",
 		tooltipVisible: false,
@@ -785,7 +785,7 @@ class WithdrawSummary extends Component {
 							form={this.form}
 							onFinish={this.saveWithdrwal}>
 							{this.state.permissions?.Send && this.state.verifyData.isPhoneVerified == true && (
-								<Text className="fs-14 mb-8 text-white d-block fw-200">
+								<Text className="fs-14 mb-8 text-white d-block fw-400">
 									Phone verification code *
 								</Text>
 							)}
@@ -827,6 +827,7 @@ class WithdrawSummary extends Component {
 											{!this.state.verifyTextotp && (
 												<Button
 													type="text"
+													className="loading-btn"
 													loading={this.state.phoneLoading}
 													style={{ color: "black" }}
 													onClick={this.getOTP}
@@ -839,7 +840,7 @@ class WithdrawSummary extends Component {
 													placement="topRight"
 													title={`Haven\'t received code? Request new code in ${seconds} seconds. The code will expire after 30mins.`}>
 
-													<span className="icon md info mr-8" />
+													<span className="icon md info mr-16" />
 												</Tooltip>
 											)}
 											<Button
@@ -933,7 +934,7 @@ class WithdrawSummary extends Component {
 								</Form.Item>
 							)}
 							{this.state.permissions?.Send && this.state.verifyData.twoFactorEnabled == true && (
-								<Text className="fs-14 mb-8 text-white d-block fw-200">
+								<Text className="fs-14 mb-8 text-white d-block fw-400">
 									Authenticator Code *
 								</Text>
 							)}

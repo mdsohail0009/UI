@@ -278,7 +278,7 @@ const Verifications = (props) => {
                 type="text"
                 style={{ color: "black",margin: "0 auto" }}
             ><Text
-                className={`pl-0 ml-0 text-white-50
+                className={`pl-0 ml-0 mr-0 text-white-50
         ${"c-notallowed"}`} >Verification code sent</Text></Button>
             <Tooltip
                 placement="topRight"
@@ -305,7 +305,9 @@ const Verifications = (props) => {
                 style={{ color: "black", margin: "0 auto" }}
                 onClick={() => verifyPhoneOtp()}
                 loading={phone.btnLoader}
-            ><Text className={` text-yellow`} >Click here to verify</Text></Button>
+            >
+                <Text className={` text-yellow`} >Click here to verify</Text>
+          </Button>
         ),
     };
     const email_btnList = {
@@ -333,7 +335,7 @@ const Verifications = (props) => {
             <Tooltip
                 placement="topRight"
                 title={`Haven\'t received code ? Request new code in ${emailSeconds} seconds. The code will expire after 30mins.`}>
-                <span className="icon md info mr-8" />
+                <span className="icon md info mr-8 aaa" />
             </Tooltip>
         </>
         ),
@@ -473,7 +475,7 @@ const Verifications = (props) => {
 										onValueChange={(e) => handlephoneinputChange(e)} 
 										disabled={phone.btnName == 'get_otp' || phone.btnName == 'verified'}
 									/> */}
-                                    <div className="new-add c-pointer get-code text-yellow hy-align">
+                                    <div className="new-add c-pointer get-code text-yellow hy-align aa">
                                         {phone_btnList[phone.btnName]}
                                     </div>
                                 </div>
@@ -583,7 +585,7 @@ const Verifications = (props) => {
 										onValueChange={(e) => handleAuthenticatorinputChange(e)} 
 										disabled={authenticator.btnName == 'get_otp' || authenticator.btnName == 'verified'}
 									/> */}
-                                    <div className="new-add c-pointer get-code text-yellow hy-align">
+                                    <div className="new-add c-pointer get-code text-yellow hy-align bb">
                                         {authenticator_btnList[authenticator.btnName]}
                                     </div>
                                 </div>

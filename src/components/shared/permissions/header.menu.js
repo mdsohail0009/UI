@@ -73,7 +73,7 @@ class MobileHeaderMenu extends Component {
 
             <Translate
                 content="header_title"
-                onClick={() => this.props.history.push("/cockpit")}
+                onClick={this.routeToCockpit}
                 component={Menu.Item}
                 className="list-item"
             />

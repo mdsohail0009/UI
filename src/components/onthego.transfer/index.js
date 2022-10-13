@@ -480,7 +480,7 @@ class OnthegoFundTransfer extends Component {
 
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                         {(filterObj.length > 0) && filterObj?.map((item, idx) =>
-                            <>{<Row className="fund-border c-pointer " onClick={async () => {
+                            <>{<Row className="fund-border c-pointer" onClick={async () => {
                                 if (!["myself", "1stparty", 'ownbusiness'].includes(item.addressType?.toLowerCase())) {
                                     this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item, codeDetails: { ...this.state.codeDetails, ...item } }, () => this.chnageStep("reasonfortransfer"));
                                 } else {
@@ -493,12 +493,12 @@ class OnthegoFundTransfer extends Component {
                                     }
                                 }
                             }}>
-                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
-                                <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="small-text-align">
+                                <Col xs={6} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
+                                <Col xs={14} md={24} lg={24} xl={19} xxl={19} className="small-text-align">
                                     <label className="fs-16 fw-600 text-white l-height-normal text-captz">{item.name}</label>
                                     {item.accountNumber && <div><Text className="fs-14 text-white-30 m-0">{this.state.selectedCurrency} account ending with {item.accountNumber?.substr(item.accountNumber.length - 4)}</Text></div>}
                                 </Col>
-                                <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
+                                <Col xs={4} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white"></span>
                                 </Col>
                             </Row>}</>
@@ -528,12 +528,12 @@ class OnthegoFundTransfer extends Component {
                                     }
                                 }
                             }}>
-                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
-                                <Col xs={24} md={24} lg={24} xl={19} xxl={19} className=" small-text-align">
+                                <Col xs={6} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
+                                <Col xs={14} md={24} lg={24} xl={19} xxl={19} className=" small-text-align">
                                     <label className="fs-16 fw-600 text-white l-height-normal text-captz">{item.name}</label>
                                     <div><Text className="fs-14 text-white-30 m-0">{this.state.selectedCurrency} account ending with {item.accountNumber?.substr(item.accountNumber?.length - 4)}</Text></div>
                                 </Col>
-                                <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
+                                <Col xs={4} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white"></span>
                                 </Col>
                             </Row>
@@ -879,7 +879,7 @@ class OnthegoFundTransfer extends Component {
             successpage: <div className="text-center">
                 <Image width={80} preview={false} src={success} />
                 <Title level={2} className="text-white-30 my-16 mb-0">Your transaction has been processed successfully</Title>
-                {/* <Text className="text-white-30">{`Declaration form has been sent to ${"have123@yopmail.com"}. 
+                {/* <Text className="text-white-30">{`Declaration form has been sent to ${"have123@yopmail.com"} 
                    Please sign using link received in email to whitelist your address`}</Text> */}
                 {/*<div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBOARD</Button> */}
             </div>
