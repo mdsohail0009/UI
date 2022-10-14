@@ -663,7 +663,7 @@ class WithdrawSummary extends Component {
 			  <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
 			  <div className="my-25"><Button
 				onClick={() => { this.props?.onBackCLick("step1"); this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: 2 })) }}
-				type="primary" className="mt-36 pop-btn text-textDark">BACK</Button></div>
+				type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button></div>
 			</div>
 		  }
 		  else {
