@@ -47,7 +47,7 @@ const CryptoList = forwardRef(({ coinList, isLoading, onCoinSelected, coinType, 
             itemLayout="horizontal"
             dataSource={coinListData}
             loadMore={loadMore ? loadMore : ''}
-            className="crypto-list auto-scroll wallet-list c-pointer"
+            className="crypto-list auto-scroll wallet-list"
             loading={isLoading ? isLoading : false}
            locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
             <Translate content="No_data"  />

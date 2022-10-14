@@ -202,7 +202,7 @@ class AddressBookV2 extends Component {
                 <List
                     itemLayout="horizontal"
                     dataSource={coinListData}
-                    className="crypto-list auto-scroll wallet-list c-pointer"
+                    className="crypto-list auto-scroll wallet-list"
                     loading={loader ? loader : false}
                     locale={{
                         emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
@@ -259,7 +259,7 @@ class AddressBookV2 extends Component {
                                 <Title className="fs-14 text-white fw-500 text-upper text-right">
                                     <NumberFormat
                                         value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
-                                        thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
+                                        thousandSeparator={true} displayType={"text"} decimalPlaces={2}/> {`${this.state.reviewDetails?.walletCode}`}</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>

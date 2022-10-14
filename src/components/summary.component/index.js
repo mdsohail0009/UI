@@ -26,20 +26,30 @@ const LinkValue = (props) => {
 class Summary extends Component {
 	
 	state = {
-		permissions: {}
+		permissions: {},
+		buyPermissions: {},
+		sellPermissions: {}
 	};
 	
 	componentDidMount() {
 		this.permissionsInterval = setInterval(this.loadPermissions, 200);
 	}
 	loadPermissions = () => {
-		if (this.props.buySellPermissions) {
+		if (this.props.buyPermissions) {
 			clearInterval(this.permissionsInterval);
 			let _permissions = {};
-			for (let action of this.props.buySellPermissions?.actions) {
+			for (let action of this.props.buyPermissions?.actions) {
 				_permissions[action.permissionName] = action.values;
 			}
-			this.setState({ ...this.state, permissions: _permissions });
+			this.setState({ ...this.state, buyPermissions: _permissions });
+		}
+		if (this.props.sellPermissions) {
+			clearInterval(this.permissionsInterval);
+			let _permissions = {};
+			for (let action of this.props.sellPermissions?.actions) {
+				_permissions[action.permissionName] = action.values;
+			}
+			this.setState({ ...this.state, sellPermissions: _permissions });
 		}
 	}
 	render() {
@@ -192,7 +202,7 @@ class Summary extends Component {
 							component={Text}
 						/>
 					</div>
-					{(permissions || this.state.permissions?.Sell) &&
+					{permissions &&
 					<div className="d-flex p-16 mb-36 agree-check">
 						<label
 						>
@@ -220,7 +230,16 @@ class Summary extends Component {
 							<Translate content="refund_cancellation" component="Text" />
 						</Paragraph>
 					</div>}
-					{(permissions || this.state.permissions?.Sell) &&
+					{(okBtnTitle == "buy" && permissions) &&
+					<SuisseBtn
+						className={"pop-btn"}
+						onRefresh={() => this.props.onRefresh()}
+						title={okBtnTitle || "pay"}
+						loading={isButtonLoad}
+						autoDisable={true}
+						onClick={() => this.props.onClick()}
+					/>}
+					{(okBtnTitle == "sell" && permissions) &&
 					<SuisseBtn
 						className={"pop-btn"}
 						onRefresh={() => this.props.onRefresh()}
@@ -247,7 +266,7 @@ class Summary extends Component {
 	}
 }
 const connectStateToProps = ({ menuItems }) => {
-    return { buySellPermissions: menuItems?.featurePermissions?.trade_sell}
+    return { buyPermissions: menuItems?.featurePermissions?.trade_buy, sellPermissions: menuItems?.featurePermissions?.trade_sell}
 }
 const connectDispatchToProps = dispatch => {
 	return {

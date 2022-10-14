@@ -79,6 +79,15 @@ class AddressCrypto extends Component {
       this.form?.current?.setFieldsValue({token:val});
       this.networkList(val)
     }
+    else if(this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !=" "
+    ||this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !=null||
+    this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !=undefined){
+      let val=this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin
+      this.form?.current?.setFieldsValue({token:val});
+      this.networkList(val)
+    }
+    
+
   }
   networkList = async (val) => {
     let fromlist = await networkLu(val)
@@ -139,6 +148,8 @@ class AddressCrypto extends Component {
       }
     }
     else {
+      this.setState({ ...this.state, errorMessage: response.data, loading: false });
+        this.useDivRef.current.scrollIntoView();
       this.setState({ ...this.state, isBtnLoading: false,  errorMessage: this.isErrorDispaly(response), });
     }
   }
@@ -186,14 +197,15 @@ class AddressCrypto extends Component {
     }
     else {
       return <>
-        <div>
+      
+        <div ref={this.useDivRef}></div>
           {errorMessage && <Alert type="error" description={errorMessage} showIcon />}
           <Form
             initialValues={cryptoData}
             className="custom-label  mb-0"
             ref={this.form}
             onFinish={this.submit}
-            scrollToFirstError
+             scrollToFirstError
           >
             <Form.Item className="fw-300 mb-8 px-4 text-white-50 custom-forminput custom-label pt-8"
               name="saveWhiteListName"
@@ -304,7 +316,7 @@ class AddressCrypto extends Component {
               </Button>
             </Form.Item>
           </Form>
-        </div>
+       
       </>
     }
   };

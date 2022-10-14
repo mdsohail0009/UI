@@ -5,12 +5,13 @@ import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
 import { fetchMemberWalletsData, fetchPortfolioData } from '../../reducers/dashboardReducer';
 import ConnectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
-import MassPayment from '../buyfiat.component'
+import MassPayment from '../buyfiat.component';
 import { withRouter,Link } from 'react-router-dom';
 import TransactionsHistory from "../transactions.history.component";
 import { setWithdrawfiatenaable, setWithdrawfiat, setStep } from '../../reducers/sendreceiveReducer';
 import { setdepositCurrency, getCurrencieswithBankDetails } from '../../reducers/depositReducer';
-import BankWallets from '../bankui.component'
+import BankWallets from '../bankui.component';
+import {setReceiveFiatHead} from '../../reducers/buyFiatReducer';
 const { Title, Paragraph } = Typography;
 
 class Wallets extends Component {
@@ -54,9 +55,11 @@ class Wallets extends Component {
         }
 
         if (e === 2) {
+            this.props.dispatch(setReceiveFiatHead(false));
             this.props.dispatch(setWithdrawfiatenaable(true))
             this.props.dispatch(setWithdrawfiat({ walletCode: value }))
         } else if(e===1) {
+            this.props.dispatch(setReceiveFiatHead(true));
             this.props.dispatch(setWithdrawfiatenaable(false))
             //this.props.dispatch(setSendCrypto(false))
             this.props.dispatch(setdepositCurrency(value))

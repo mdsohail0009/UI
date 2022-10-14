@@ -11,6 +11,7 @@ import { updatesellsaveObject } from '../../reducers/sellReducer'
 import Currency from '../shared/number.formate';
 import apicalls from '../../api/apiCalls';
 import { convertCurrencyDuplicate } from '../buy.component/buySellService';
+import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 const { Option } = Select;
 class SelectSellCrypto extends Component {
     myRef = React.createRef();
@@ -28,6 +29,7 @@ class SelectSellCrypto extends Component {
         isShowCoinsData: false
     }
     componentDidMount() {
+        getFeaturePermissionsByKeyName(`trade_sell`)
         this.fetchdefaultMinAmntValues();
         this.props.dispatch(setTab(2));
         this.EventTrack();

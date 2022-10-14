@@ -8,7 +8,7 @@ import ConnectStateProps from '../../utils/state.connect';
 import { fetchYourPortfoliodata,fetchMarketCoinData,fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import Currency from '../shared/number.formate';
 import { fetchSelectedCoinDetails, setExchangeValue, setCoin } from '../../reducers/buyReducer';
-import { setStep } from '../../reducers/buysellReducer';
+import { setStep, setSellHeaderHide } from '../../reducers/buysellReducer';
 import { updateCoinDetail } from '../../reducers/sellReducer'
 import { convertCurrency } from '../buy.component/buySellService';
 import { withRouter, Link } from 'react-router-dom';
@@ -67,8 +67,10 @@ class YourPortfolio extends Component {
             convertCurrency({ from: item.coin, to: "USD", value: 1, isCrypto: false, customer_id: this.props.userProfile?.id, screenName: null }).then(val => {
                 this.props.dispatch(setExchangeValue({ key: item.coin, value: val }));
             });
+            this.props.dispatch(setSellHeaderHide(false));
             this.props.dispatch(setStep("step2"));
         } else if (key === "sell") {
+          this.props.dispatch(setSellHeaderHide(false));
             this.props.dispatch(setCoin(item));
             this.props.dispatch(setExchangeValue({ key: item.coin, value: item.oneCoinValue }));
             this.props.dispatch(updateCoinDetail(item))
