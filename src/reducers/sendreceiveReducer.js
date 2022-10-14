@@ -6,7 +6,6 @@ const SET_WALLET_ADDRESS = "setWalletAddress";
 const HANDLE_SEND_FETCH = "handleSendFetch";
 const SET_WITHDRAWFIAT = "setWithdrawfiat";
 const REJECT_WITHDRAWFIAT = "rejectWithdrawfiat";
-const REJECT_WITHDRAWFIAT_WALLET = "rejectWithdrawfiatWallet";
 const SET_WITHDRAWFIAT_ENABLE = "setWithdrawfiatenaable";
 const REJECT_WITHDRAWFIAT_ENABLE = "rejectWithdrawfiatenaable";
 const SET_WITHDRAWCRYPTO = "setWithdrawcrypto";
@@ -80,12 +79,7 @@ const rejectWithdrawfiat = (payload) => {
     payload
   };
 };
-const rejectWithdrawfiatWallet = (payload) => {
-  return {
-    type: REJECT_WITHDRAWFIAT_WALLET,
-    payload
-  };
-};
+
 const setWithdrawfiatenaable = (payload) => {
   return {
     type: SET_WITHDRAWFIAT_ENABLE,
@@ -132,7 +126,7 @@ const fetchWithDrawWallets = ({ customerId }) => {
       dispatch(
         handleSendFetch({
           key: "cryptoWithdraw",
-          wallets: { loading: false, data: response.data,withdrawFiatWalletObj:response.data }
+          wallets: { loading: false, data: response.data }
         })
       );
     } else {
@@ -148,7 +142,7 @@ const fetchWithDrawWallets = ({ customerId }) => {
 const setSelectedWithDrawWallet = (wallet) => {
   return (dispatch) => {
     dispatch(
-      handleSendFetch({ key: "cryptoWithdraw", selectedWallet: wallet,withdrawFiatWalletObj:wallet })
+      handleSendFetch({ key: "cryptoWithdraw", selectedWallet: wallet })
     );
   };
 };
@@ -201,7 +195,6 @@ let initialState = {
   wFTotalValue: null,
   sendCryptoEnable: false,
   sendCryptoHide: false,
-  withdrawFiatWalletObj:{}
 };
 const sendReceiveReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -222,9 +215,7 @@ const sendReceiveReducer = (state = initialState, action) => {
     case REJECT_WITHDRAWFIAT:
       state = { ...state, withdrawFiatObj: null };
       return state;
-      case REJECT_WITHDRAWFIAT_WALLET:
-        state = { ...state, withdrawFiatWalletObj: null };
-        return state;
+      
     case SET_WITHDRAWFIAT_ENABLE:
       state = { ...state, withdrawFiatEnable: action.payload };
       return state;

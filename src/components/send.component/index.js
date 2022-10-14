@@ -25,7 +25,7 @@ class SendReceive extends Component {
     closeDrawer = () => {
         //this.props.dispatch(setStep("step1"));
         this.props.dispatch(rejectWithdrawfiat())
-        this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", withdrawFiatWalletObj: null }));
+        this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", selectedWallet: null }));
         this.props.dispatch(fetchWithDrawWallets({ customerId:null }));
         this.props.dispatch(setSubTitle(""))
         if (this.props.onClose) {

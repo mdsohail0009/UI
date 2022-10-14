@@ -79,10 +79,10 @@ class AddressCrypto extends Component {
       this.form?.current?.setFieldsValue({token:val});
       this.networkList(val)
     }
-    else if(this.props?.sendReceive?.cryptoWithdraw?.withdrawFiatWalletObj?.coin !=" "
-    ||this.props?.sendReceive?.cryptoWithdraw?.withdrawFiatWalletObj?.coin !=null||
-    this.props?.sendReceive?.cryptoWithdraw?.withdrawFiatWalletObj?.coin !=undefined){
-      let val=this.props?.sendReceive?.cryptoWithdraw?.withdrawFiatWalletObj?.coin
+    else if(this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !=" "
+    ||this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !=null||
+    this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !=undefined){
+      let val=this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin
       this.form?.current?.setFieldsValue({token:val});
       this.networkList(val)
     }
