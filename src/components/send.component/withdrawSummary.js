@@ -1019,20 +1019,22 @@ class WithdrawSummary extends Component {
 									/>
 								</span>}
 							</Form.Item>
-							{this.state.permissions?.Send && <Button size="large" block className="pop-btn" htmlType="submit" loading={this.state.btnLoading}>
-								<Translate content="with_draw" component={Text} />
-							</Button>}
-
-						
-						<div className="text-center mt-16">
+							<div className="d-flex align-center btn-content">
+							<div className="text-center mt-16">
 							<Translate
 								content="cancel"
 								component={Button}
 								onClick={() => this.onCancel()}
 								type="text"
 								size="large"
-								className="text-white-30 pop-cancel fw-400"
+								className="text-white-30 fw-400 pop-cancel custom-send"
 							/>
+						</div>
+
+						
+							<div>{this.state.permissions?.Send && <Button size="large" className="pop-btn ml-24 custom-send" htmlType="submit" loading={this.state.btnLoading}>
+								<Translate content="with_draw" component={Text} />
+							</Button>}</div>
 						</div>
 						</Form>
 							<Modal
