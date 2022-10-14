@@ -233,16 +233,25 @@ class OnthegoFundTransfer extends Component {
     changesVerification = (obj) => {
         //this.setState({ ...this.state, verifyData: obj })
         console.log(obj)
-        if(obj.isPhoneVerification&&obj.isEmailVerification&&(obj.verifyData?.isPhoneVerified&&obj.verifyData?.isEmailVerification)) {
+        if(obj.isPhoneVerification&&obj.isEmailVerification&&(obj.verifyData?.isPhoneVerified&&obj.verifyData?.isEmailVerification&&!obj.verifyData?.twoFactorEnabled)) {
             this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
         }
-        if(obj.isPhoneVerification&&obj.isAuthenticatorVerification&&(obj.verifyData?.isPhoneVerified&&obj.verifyData?.twoFactorEnabled)) {
+        if(obj.isPhoneVerification&&obj.isAuthenticatorVerification&&(obj.verifyData?.isPhoneVerified&&obj.verifyData?.twoFactorEnabled&&!obj.verifyData?.isEmailVerification)) {
             this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
         }
-        if(obj.isAuthenticatorVerification&&obj.isEmailVerification&&(obj.verifyData?.twoFactorEnabled&&obj.verifyData?.isEmailVerification)) {
+        if(obj.isAuthenticatorVerification&&obj.isEmailVerification&&(obj.verifyData?.twoFactorEnabled&&obj.verifyData?.isEmailVerification&&!obj.verifyData?.isPhoneVerified)) {
             this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
         }
         if(obj.isPhoneVerification&&obj.isAuthenticatorVerification&&obj.isEmailVerification&&(obj.verifyData?.isPhoneVerified&&obj.verifyData?.twoFactorEnabled&&obj.verifyData?.isEmailVerification)){
+            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
+        }
+        if(obj.verifyData?.isLiveVerification&&obj.isEmailVerification&&!obj.verifyData?.isPhoneVerified&&!obj.verifyData?.twoFactorEnabled&&obj.verifyData?.isEmailVerification){
+            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
+        }
+        if(obj.verifyData?.isLiveVerification&&obj.isPhoneVerification&&!obj.verifyData?.twoFactorEnabled&&!obj.verifyData?.isEmailVerification&&obj.verifyData?.isPhoneVerified){
+            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
+        }
+        if(obj.verifyData?.isLiveVerification&&obj.isAuthenticatorVerification&&!obj.verifyData?.isPhoneVerified&&!obj.verifyData?.isEmailVerification&&obj.verifyData?.twoFactorEnabled){
             this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
         }
        
@@ -293,14 +302,14 @@ class OnthegoFundTransfer extends Component {
                 </div>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     {/* <Text className="fs-14 mb-8 text-white d-block fw-200">
-                        Search for beneficiary *
+                        Search For Beneficiary *
                     </Text> */}
                     <Search placeholder="Search Currency" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="text-center mt-12" />
                 </Col>
                 <List
                     itemLayout="horizontal"
                     dataSource={this.state.fiatWallets}
-                    className="crypto-list auto-scroll wallet-list c-pointer"
+                    className="crypto-list auto-scroll wallet-list"
                     loading={this.state.fiatWalletsLoading}
                     locale={{
                         emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
@@ -339,11 +348,11 @@ class OnthegoFundTransfer extends Component {
                         onFinish={this.amountnext}
                         scrollToFirstError
                     >
-                        {!isVerificationEnable &&
+                       {!isVerificationEnable &&
                             <Alert
                                 message="Verification alert !"
                                 description={<Text>Without verifications you can't send. Please select send verifications from <a onClick={() => {
-                                    this.props.history.push("/userprofile?key=2")
+                                    this.props.history.push("/userprofile/2")
                                 }}>security section</a></Text>}
                                 type="warning"
                                 showIcon
@@ -578,7 +587,7 @@ class OnthegoFundTransfer extends Component {
                                 <Input
                                     className="cust-input "
                                     placeholder={"Reason For Transfer"}
-                                    maxLength={1000}
+                                    maxLength={200}
                                 />
                             </Form.Item>
 
@@ -731,7 +740,7 @@ class OnthegoFundTransfer extends Component {
                                     <Title className="fs-14 text-white fw-500 text-upper text-right">
                                         <NumberFormat
                                             value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
-                                            thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
+                                            thousandSeparator={true} displayType={"text"}  decimalPlaces={2}/> {`${this.state.reviewDetails?.walletCode}`}</Title>
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={24} lg={24} xxl={24}>

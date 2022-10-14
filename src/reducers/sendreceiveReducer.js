@@ -79,6 +79,7 @@ const rejectWithdrawfiat = (payload) => {
     payload
   };
 };
+
 const setWithdrawfiatenaable = (payload) => {
   return {
     type: SET_WITHDRAWFIAT_ENABLE,
@@ -214,6 +215,7 @@ const sendReceiveReducer = (state = initialState, action) => {
     case REJECT_WITHDRAWFIAT:
       state = { ...state, withdrawFiatObj: null };
       return state;
+      
     case SET_WITHDRAWFIAT_ENABLE:
       state = { ...state, withdrawFiatEnable: action.payload };
       return state;

@@ -9,12 +9,13 @@ import { withRouter } from "react-router-dom/cjs/react-router-dom.min";
 import { fetchMemberWallets } from "../dashboard.component/api";
 import { connect } from "react-redux";
 import { validateCryptoAmount } from '../onthego.transfer/api';
-import { setStep, setSubTitle, setWithdrawcrypto, setAddress, setSendCrypto, hideSendCrypto } from '../../reducers/sendreceiveReducer';
+import { setStep, setSubTitle, setWithdrawcrypto, setAddress, hideSendCrypto } from '../../reducers/sendreceiveReducer';
 import AddressCrypto from "../addressbook.component/addressCrypto";
 import { setAddressStep} from "../../reducers/addressBookReducer";
 import {rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
+
 const { Text, Title } = Typography;
-const { Option } = Select;
+
 class OnthegoCryptoTransfer extends Component {
     enteramtForm = React.createRef();
     myRef = React.createRef();
@@ -51,7 +52,6 @@ class OnthegoCryptoTransfer extends Component {
         selectedPayee: {},
     }
     componentDidMount() {
-       // this.verificationCheck()
        this.enteramtForm?.current?.setFieldsValue({amount:this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue});
         this.permissionsInterval = setInterval(this.loadPermissions, 200);
         if (!this.state.selectedCurrency) {
@@ -139,11 +139,13 @@ class OnthegoCryptoTransfer extends Component {
         else if (amt < withdrawMinValue) {
             this.setState({ ...this.state, errorMsg: null, error: apicalls.convertLocalLang('amount_min') + " " + withdrawMinValue });
             this.myRef.current.scrollIntoView();
-        } else if (amt > withdrawMaxValue) {
-            this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_max') + " " + withdrawMaxValue });
-            this.myRef.current.scrollIntoView();
-        } else if (amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
-            this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_less') });
+        } 
+        // else if (amt > withdrawMaxValue) {
+        //     this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_max') + " " + withdrawMaxValue });
+        //     this.myRef.current.scrollIntoView();
+        // } 
+        else if (amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
+            this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('insufficient_balance') });
             this.myRef.current.scrollIntoView();
         }
         else {
@@ -215,6 +217,32 @@ class OnthegoCryptoTransfer extends Component {
             this.enteramtForm?.current?.setFieldsValue({amount:this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue});
         }
     }
+     numberValidator = async function (rule, value, callback) {
+        debugger
+        if (value) {
+            if (typeof value === "number") {
+                value = value.toString();
+            }
+            if (
+                (value.indexOf(".") > -1 && value.split(".")[0].length >= 11) ||
+                (value.indexOf(".") < 0 && value.length >= 11)
+            ) {
+                throw new Error("Amount exceeded");
+            } 
+            // else if (value.indexOf(".") > -1 && value.split(".")[0].length == 0) {
+            //     throw new Error("Please enter amount");
+            // }
+            else {
+                callback();
+            }
+        }
+        else if(value == 0 && typeof value === "number") {
+            callback();
+        }
+        else if(!value) {
+            throw new Error("Is required");
+        }
+    };
 
     renderStep = (step) => {
         const { filterObj, pastPayees, payeesLoading, isVarificationLoader, isVerificationEnable,isPhMail,isShowGreyButton,isAuthMail } = this.state;
@@ -254,18 +282,20 @@ class OnthegoCryptoTransfer extends Component {
                                     required
                                     rules={[
                                         {
-                                            required: true,
-                                            message: 'Is required',
+                                            // required: true,
+                                            // message: 'Is required',
+                                            type: "number",
+                                            validator: this.numberValidator
                                         },
-                                        {
-                                            validator: (_, value) => {
-                                                const reg = /.*[0-9].*/g;
-                                                if (value && !reg.test(value)) {
-                                                    return Promise.reject("Invalid amount");
-                                                }
-                                                return Promise.resolve();
-                                            }
-                                        }
+                                        // {
+                                        //     validator: (_, value) => {
+                                        //         const reg = /.*[0-9].*/g;
+                                        //         if (value && !reg.test(value)) {
+                                        //             return Promise.reject("Invalid amount");
+                                        //         }
+                                        //         return Promise.resolve();
+                                        //     }
+                                        // }
                                     ]}
                                 >
                                     <NumberFormat
@@ -276,10 +306,10 @@ class OnthegoCryptoTransfer extends Component {
                                         decimalScale={8}
                                         displayType="input"
                                         allowNegative={false}
-                                        thousandSeparator={","}
+                                        thousandSeparator={true}
                                         addonBefore={this.state.selectedCurrency}
                                         onValueChange={() => {
-                                            this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: '' })
+                                            this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: null,error: null })
                                         }}
                                     />
                                 </Form.Item>
@@ -322,15 +352,18 @@ class OnthegoCryptoTransfer extends Component {
                                         onClick={() => {
                                             let _amt = this.enteramtForm.current.getFieldsValue().amount;
                                             _amt = typeof _amt == "string" ? _amt.replace(/,/g, "") : _amt;
+                                            this.setState({ ...this.state, errorMsg: null, error: null});
                                             if (_amt > 0) {
                                                 if (_amt < this.props.selectedWallet?.withdrawMinValue) {
                                                     this.setState({ ...this.state, errorMsg: null, error: apicalls.convertLocalLang('amount_min') + " " + this.props.selectedWallet?.withdrawMinValue });
                                                     this.myRef.current.scrollIntoView();
-                                                } else if (_amt > this.props.selectedWallet?.withdrawMaxValue) {
-                                                    this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_max') + " " + this.props.selectedWallet?.withdrawMaxValue });
-                                                    this.myRef.current.scrollIntoView();
-                                                } else if (_amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
-                                                    this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_less') });
+                                                } 
+                                                // else if (_amt > this.props.selectedWallet?.withdrawMaxValue) {
+                                                //     this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_max') + " " + this.props.selectedWallet?.withdrawMaxValue });
+                                                //     this.myRef.current.scrollIntoView();
+                                                // } 
+                                                else if (_amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
+                                                    this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('insufficient_balance') });
                                                     this.myRef.current.scrollIntoView();
                                                 }
                                                 else {
@@ -376,7 +409,7 @@ class OnthegoCryptoTransfer extends Component {
                         className='fs-24 fw-600 text-white mb-16 mt-4 text-captz' >Who are you sending crypto to?</text>
                 </div>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Search placeholder="Search for beneficiary" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="text-center mt-12" />
+                    <Search placeholder="Search For Beneficiary" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="text-center mt-12" />
                 </Col>
                 {this.state?.loading && <Loader />}
                 {(!this.state.loading) && <>
@@ -400,8 +433,7 @@ class OnthegoCryptoTransfer extends Component {
                             }}>
                                 <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name?.charAt(0).toUpperCase()}</div></Col>
                                 <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="small-text-align">
-                                    <label className="fs-16 fw-600 text-white l-height-normal text-captz">{item?.name} ({item.walletAddress?.length > 0 ? item.walletAddress.substring(0,4)+ `......`+ item.walletAddress.slice(-4):""})</label>
-                                    {/* {item.accountNumber && <div><Text className="fs-14 text-white-30 m-0">{this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin} account ending with {item.accountNumber?.substr(item.accountNumber.length - 4)}</Text></div>} */}
+                                    <label className="fs-16 fw-600 text-white l-height-normal c-pointer">{item?.name} ({item.walletAddress?.length > 0 ? item.walletAddress.substring(0,4)+ `......`+ item.walletAddress.slice(-4):""})</label>
                                     {item.walletAddress && <div><Text className="fs-14 text-white-30 m-0">{item.walletCode} ({item.network})</Text></div>}
                                 </Col>
                                 <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
@@ -436,7 +468,7 @@ class OnthegoCryptoTransfer extends Component {
                             }}>
                                 <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name?.charAt(0).toUpperCase()}</div></Col>
                                 <Col xs={24} md={24} lg={24} xl={19} xxl={19} className=" small-text-align">
-                                    <label className="fs-16 fw-600 text-white l-height-normal text-captz">{item?.name} ({item.walletAddress?.length > 0 ? item.walletAddress.substring(0,4)+ `......`+ item.walletAddress.slice(-4):""})</label>
+                                    <label className="fs-16 fw-600 text-white l-height-normal c-pointer">{item?.name} ({item.walletAddress?.length > 0 ? item.walletAddress.substring(0,4)+ `......`+ item.walletAddress.slice(-4):""})</label>
                                     <div><Text className="fs-14 text-white-30 m-0">{item?.walletCode} ({item.network})</Text></div>
                                 </Col>
                                 <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">

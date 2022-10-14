@@ -114,9 +114,17 @@ withdrawFiatSummaryBack = () => {
                     <div className="side-drawer-header">
                         {this.renderTitle()}
                         <div className="text-center fs-24">
+                            {this.props.buyFiat?.receiveFiatHeader && <>
+                               <Translate className="mb-0 text-white-30 fw-600" content="DepositandFiat"  component={Paragraph} />
+                               <Translate className="text-white-50 mb-0 fs-14 fw-300" content={this.props.buyFiat.stepSubTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
+                               </>
+                            }
+                            {!this.props.buyFiat?.receiveFiatHeader && <>
                             <Translate className="mb-0 text-white-30 fw-600" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
                             <Translate className="text-white-50 mb-0 fs-14 fw-300" content={this.props.buyFiat.stepSubTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
-                        </div>
+                            </>
+                            }
+                            </div>
                         {this.renderIcon()}
                     </div>
                 ]}
