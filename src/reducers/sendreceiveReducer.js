@@ -275,7 +275,6 @@ export {
   setSubTitle,
   setWithdrawfiat,
   rejectWithdrawfiat,
-  rejectWithdrawfiatWallet,
   setWithdrawfiatenaable,
   rejectWithdrawfiatenaable,
   setWithdrawcrypto,
