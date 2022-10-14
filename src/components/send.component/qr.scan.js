@@ -119,7 +119,7 @@ class QRScan extends Component {
                         return <>
                             <span className="mr-16 custom-bnt text-white-30">
                                {netWorkData.length>1 &&<a onClick={() => this.onNetworkView(network)}>
-                                    <span style ={{backgroundColor: this.props?.sendReceive?.depositWallet?.network ==network.code  &&'#ccc',borderColor: this.props?.sendReceive?.depositWallet?.network ==network.code  &&'#3d3d3d'}}>
+                                    <span className='fw-500'>
                                         {network.code}
                                         </span>
                                 </a>}
