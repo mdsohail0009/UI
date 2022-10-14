@@ -32,9 +32,9 @@ const WithdrawCrypto = ({ dispatch, userProfile, sendReceive, props, changeStep 
    // changeStep('withdraw_crpto_summary');
     }
     return <>
-        <div className="mb-16 mt-8">
+        <div className="mt-8">
                     <Title
-                        className='sub-heading'>Select An Asset To Send From Your Crypto Wallet</Title>
+                        className='sub-heading code-lbl'>Select An Asset To Send From Your Crypto Wallet</Title>
                 </div>
         <div className="dep-withdraw auto-scroll">
             {/* {wallets?.data.length ? <>{wallets?.data?.map((wallet, indx) => <Card key={indx} className="crypto-card mb-16 c-pointer" bordered={false} onClick={() => { dispatch(setSelectedWithDrawWallet(wallet)); dispatch(setStep('withdraw_crypto_selected')) }} >

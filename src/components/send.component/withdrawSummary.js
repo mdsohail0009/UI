@@ -655,7 +655,7 @@ class WithdrawSummary extends Component {
 			return <Loader />;
 		}
 		if (showDeclartion) {
-			return <div className="text-center">
+			return <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
 			  <Image width={80} preview={false} src={alertIcon} />
 			  <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully </Title>
 			  <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
@@ -664,7 +664,7 @@ class WithdrawSummary extends Component {
 			  <div className="my-25"><Button
 				onClick={() => { this.props?.onBackCLick("step1"); this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: 2 })) }}
 				type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button></div>
-			</div>
+			</div></div>
 		  }
 		  else {
 		return (
@@ -785,7 +785,7 @@ class WithdrawSummary extends Component {
 							form={this.form}
 							onFinish={this.saveWithdrwal}>
 							{this.state.permissions?.Send && this.state.verifyData.isPhoneVerified == true && (
-								<Text className="fs-14 mb-8 text-white d-block fw-400">
+								<Text className="fs-14 mb-8 text-white d-block fw-500 code-lbl">
 									Phone verification code *
 								</Text>
 							)}
@@ -934,7 +934,7 @@ class WithdrawSummary extends Component {
 								</Form.Item>
 							)}
 							{this.state.permissions?.Send && this.state.verifyData.twoFactorEnabled == true && (
-								<Text className="fs-14 mb-8 text-white d-block fw-400">
+								<Text className="fs-14 mb-8 text-white d-block fw-500 code-lbl">
 									Authenticator Code *
 								</Text>
 							)}
@@ -1027,7 +1027,7 @@ class WithdrawSummary extends Component {
 								onClick={() => this.onCancel()}
 								type="text"
 								size="large"
-								className="text-white-30 fw-400 pop-cancel custom-send"
+								className="text-white-30 fw-400 pop-cancel custom-send mb-12"
 							/>
 						</div>
 
