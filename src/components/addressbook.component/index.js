@@ -48,6 +48,7 @@ class AddressBook extends Component {
 			errorWorning: null,
 			isDownloading: false,
 			permissions: {},
+			showHeading:false,
 			obj: {
 				id: [],
 				tableName: "Common.PayeeAccounts",
@@ -516,6 +517,7 @@ class AddressBook extends Component {
 		}
 	};
 	closeBuyDrawer = (obj) => {
+		debugger
 		this.props.dispatch(rejectWithdrawfiat())
 		let showCrypto = false, showFiat = false;
 		if (obj) {
@@ -524,7 +526,9 @@ class AddressBook extends Component {
 			else
 				showFiat = !obj?.close;
 		};
-		this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat, selectedObj: {} });
+		this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat, selectedObj: {}});
+		setTimeout(() => this.setState({ ...this.state,showHeading:false}), 2000);
+		
 		this.props.rejectCoinWallet();
 		this.props.clearFormValues();
 		this.props.clearCrypto();
@@ -532,6 +536,7 @@ class AddressBook extends Component {
 			this.gridFiatRef.current.refreshGrid();
 		} else {
 			this.gridCryptoRef.current.refreshGrid();
+			
 		}
 	};
 
@@ -598,10 +603,14 @@ class AddressBook extends Component {
 		};
 		return stepcodes[type];
 	};
+	headingChange=(data)=>{
+		debugger
+		this.setState({...this.state,showHeading:data})
+	}
 	renderContent = () => {
 		const stepcodes = {
 			cryptoaddressbook: (<>
-				<AddressCrypto  type= "manual" onCancel={(obj) => this.closeCryptoDrawer(obj)} cryptoTab={1} selectedAddress={this.state.selectedObj}/>
+				<AddressCrypto  type= "manual" onCancel={(obj) => this.closeCryptoDrawer(obj)} headingUpdate={this.headingChange} cryptoTab={1} selectedAddress={this.state.selectedObj}/>
 			</>
 			),
 			selectcrypto: <SelectCrypto />,
@@ -729,9 +738,10 @@ class AddressBook extends Component {
 								<Translate
 									className="text-white-30 fw-600 text-captz "
 									content={
+										this.state.showHeading!=true&&(
 										this.props.addressBookReducer.stepTitles[
 										config[this.props.addressBookReducer.stepcode]
-										]
+										])
 									}
 									component={Paragraph}
 								/>
