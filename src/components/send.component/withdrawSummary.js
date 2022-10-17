@@ -685,7 +685,7 @@ class WithdrawSummary extends Component {
 				) : (
 					<div className="auto-scroll">
 						<div
-							className="fs-36 text-white-30 fw-200 text-center"
+							className="fs-36 text-white-30 fw-500 text-center"
 							style={{ lineHeight: "36px" }}>
 							<Currency
 								prefix={""}
@@ -698,7 +698,7 @@ class WithdrawSummary extends Component {
 								}
 							/>{" "}
 						</div>
-						<div className="text-white-50 fw-400 text-center fs-14 mb-16">
+						<div className="text-white-50 fw-500 text-center fs-14 mb-16">
 							<Currency
 								defaultValue={this.state.usdAmount}
 								prefix={""}
@@ -709,7 +709,7 @@ class WithdrawSummary extends Component {
 						</div>
 						<div className="pay-list fs-14">
 							<Translate
-								className="fw-400 text-white"
+								className="fw-500 text-white"
 								content="exchange_rate"
 								component={Text}
 							/>
@@ -717,20 +717,20 @@ class WithdrawSummary extends Component {
 								defaultValue={this.state.OneusdAmount}
 								decimalPlaces={8}
 								prefix={""}
-								className="fw-400 text-white-30"
+								className="fw-500 text-white-30"
 								prefixText={`1 ${this.props.sendReceive.withdrawCryptoObj?.walletCode
 									} = ${"USD"}`}
 							/>
 						</div>
 						<div className="pay-list fs-14">
 							<Translate
-								className="fw-400 text-white"
+								className="fw-500 text-white"
 								content="amount"
 								component={Text}
 							/>
 							<Currency
 								prefix={""}
-								className={"text-white"}
+								className={"text-white fw-500"}
 								decimalPlaces={8}
 								defaultValue={
 									this.props.sendReceive.withdrawCryptoObj?.totalValue
@@ -742,12 +742,12 @@ class WithdrawSummary extends Component {
 						</div>
 						<div className="pay-list fs-14">
 							<Translate
-								className="fw-400 text-white"
+								className="fw-500 text-white"
 								content="WithdrawalFee"
 								component={Text}
 							/>
 							<Text
-								className="fw-400 text-white"
+								className="fw-500 text-white"
 								style={{
 									width: "250px",
 									textOverflow: "ellipsis",
@@ -760,7 +760,7 @@ class WithdrawSummary extends Component {
 						</div>
 						<div className="pay-list fs-14">
 							<Translate
-								className="fw-400 text-white"
+								className="fw-500 text-white"
 								content="address"
 								component={Text}
 							/>
@@ -770,11 +770,11 @@ class WithdrawSummary extends Component {
 						</div>
 						<div className="pay-list fs-14">
 							<Translate
-								className="fw-400 text-white"
+								className="fw-500 text-white"
 								content="network"
 								component={Text}
 							/>
-							<Text className="fw-400 text-white">
+							<Text className="fw-500 text-white">
 							{this.props.sendReceive.withdrawCryptoObj?.network || '-'}
 							</Text>
 						</div>

@@ -912,7 +912,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .k-pager-sizes.k-label{margin-left: -6px;}
     .k-pager-wrap{margin-left: -11px;}
     .k-dropdown-wrap{margin-right: -8px;}
-
+    /* .ant-popover.ant-popover-placement-left {left: 176px !important;} */
 }
 @media (max-width: 1024px){
     .custom-gridresponsive .ant-drawer-body{word-wrap: unset !important;}
