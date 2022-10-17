@@ -203,7 +203,7 @@ class Summary extends Component {
 						/>
 					</div>
 					{permissions &&
-					<div className="d-flex p-16 mb-36 agree-check">
+					<div className="d-flex p-16 mb-24 agree-check">
 						<label
 						>
 							<input
@@ -239,17 +239,9 @@ class Summary extends Component {
 						autoDisable={true}
 						onClick={() => this.props.onClick()}
 					/>}
-					{(okBtnTitle == "sell" && permissions) &&
-					<SuisseBtn
-						className={"pop-btn"}
-						onRefresh={() => this.props.onRefresh()}
-						title={okBtnTitle || "pay"}
-						loading={isButtonLoad}
-						autoDisable={true}
-						onClick={() => this.props.onClick()}
-					/>}
+					
 
-
+					<div className="d-flex align-center btn-content">
 					<div className="text-center mt-16">
 						<Translate
 							content="cancel"
@@ -257,9 +249,19 @@ class Summary extends Component {
 							onClick={() => this.props.onCancel()}
 							type="text"
 							size="large"
-							className="text-white-30 pop-cancel fw-400"
+							className="text-white-30 fw-400 pop-cancel custom-send mb-12"
 						/>
 					</div>
+					<div>
+					{(okBtnTitle == "sell" && permissions) &&
+					<SuisseBtn
+						className={"pop-btn custom-send ml-16"}
+						onRefresh={() => this.props.onRefresh()}
+						title={okBtnTitle || "pay"}
+						loading={isButtonLoad}
+						autoDisable={true}
+						onClick={() => this.props.onClick()}
+					/>}</div></div>
 				</div>
 			</>
 		);

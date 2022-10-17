@@ -239,7 +239,7 @@ border-radius: 5px;}
 .cryptosummary-container{max-height: calc(100vh - 106px);}
 .auto-scroll{overflow-y: auto; padding-right: 10px;}
 .auto-scroll::-webkit-scrollbar-thumb{background-color: var(--bgDark1);}
-.crypto-list-tabs .ant-list-item, .wallet-list .ant-list-item{border-color: var(--borderLight);}
+.ant-list-split .ant-list-item:last-child .crypto-list-tabs .ant-list-item, .wallet-list .ant-list-item{border-color: var(--borderLight);}
 .wallet-list .ant-list-item:hover, .wallet-list .ant-list-item.select, .addCryptoList li.select{background-color: var(--bgBlu);}
 .wallet-list li a, .crypto-list li a{display: inline-flex; align-items: center;flex-grow: 1; padding: 0px 5px;}
 .wallet-list h4{margin-bottom: 0;}
@@ -827,7 +827,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .tlv-header .mobile-logo {padding-left: 0px;}
     /* .enter-val-container.swap-com input{width: 65%;} */
     .custom-radio-btn.buysell-toggle.crypto-toggle{text-align: left !important;}
-    .ant-drawer-body{padding: 16px;}
+    .ant-drawer-body{padding: 16px;}    
 }
 @media (min-width : 414px) {
     .footer-links a{margin-right: 16px;}
@@ -1483,9 +1483,11 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;width:
 .loading-btn{margin: 0 auto;} 
 .new-add .loading-btn + button{position:absolute; right:142px !important;}
 .bg-box{padding: 24px;border-radius: 0;}
-.pop-btn.custom-send{width: 300px !important;}
+.pop-btn.custom-send{width: 245px !important;}
 .btn-content{justify-content: right;}
 .pop-btn.withdraw-popcancel{width: 150px; height: 46px;  border: transparent; color: var(--textYellow); background-color: transparent;}
 .pop-btn.withdraw-popcancel:hover{border: 1px solid #f2f2f2 !important;}
 .pop-btn.withdraw-popcancel span{color: var(--textYellow); font-weight: 400;}
 .code-lbl{margin-left: 14px !important;}
+.ant-list-split .ant-list-item{border-bottom: 1px solid var(--borderLight) !important;}
+.file-label.add-lbl{width: 165px; text-align: center;}

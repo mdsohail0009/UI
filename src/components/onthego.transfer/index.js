@@ -296,15 +296,15 @@ class OnthegoFundTransfer extends Component {
         const { filterObj, pastPayees, payeesLoading, isVarificationLoader, isVerificationEnable,isPhMail,isShowGreyButton,isAuthMail } = this.state;
         const steps = {
             selectcurrency: <React.Fragment>
-                <div className="mb-8 mt-8">
+                <div className="mt-8">
                     <Title
-                        className='sub-heading'>Send from your Suissebase FIAT Wallet</Title>
+                        className='sub-heading code-lbl'>Send from your Suissebase FIAT Wallet</Title>
                 </div>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     {/* <Text className="fs-14 mb-8 text-white d-block fw-200">
                         Search For Beneficiary *
                     </Text> */}
-                    <Search placeholder="Search Currency" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="text-center mt-12" />
+                    <Search placeholder="Search Currency" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="text-center mb-16" />
                 </Col>
                 <List
                     itemLayout="horizontal"
@@ -335,9 +335,9 @@ class OnthegoFundTransfer extends Component {
                 />
             </React.Fragment>,
             enteramount: <>
-                <div className="mb-8 mt-8">
+                <div className="mt-8">
                     <Title
-                        className='sub-heading'>Send Fiat</Title>
+                        className='sub-heading code-lbl'>Send Fiat</Title>
                 </div>
                 {isVarificationLoader && <Loader />}
                 {!isVarificationLoader && 
@@ -462,9 +462,9 @@ class OnthegoFundTransfer extends Component {
                     </Form>}</>,
             addressselection: <React.Fragment>
                 {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
-                <div className="mb-8 mt-8">
+                <div className="mt-8">
                     <Title
-                        className='sub-heading'>Who are you sending money to?</Title>
+                        className='sub-heading code-lbl'>Who are you sending money to?</Title>
                 </div>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 
@@ -848,16 +848,24 @@ class OnthegoFundTransfer extends Component {
                                 <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} />
                             </Col>
                            {this.state.permissions?.Send && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                                <div className="text-center mt-36 create-account">
+                                <div className="text-right mt-36 create-account">
                                     <Form.Item className="mb-0 mt-16">
+                                    <Translate
+                                        content="cancel"
+                                        component={Button}
+                                        onClick={() => this.onCancel()}
+                                        type="text"
+                                        size="large"
+                                        className="text-white-30 fw-400 pop-cancel custom-send mb-12"
+                                    />
                                         <Button
                                             htmlType="button"
                                             onClick={() => { this.saveWithdrawdata(); }}
                                             size="large"
                                             block
-                                            className="pop-btn px-24"
+                                            className="pop-btn ml-24 custom-send"
                                            // style={(isPhMail&&!this.state.verifyData?.phBtn&&!this.state.verifyData?.emailBtn)||(isShowGreyButton&&!this.state.verifyData?.phBtn&&!this.state.verifyData?.authBtn)||(isAuthMail&&!this.state.verifyData?.emailBtn&&!this.state.verifyData?.authBtn)||(!this.state.verifyData?.phBtn&&!this.state.verifyData?.emailBtn&&!this.state.verifyData?.authBtn) &&{backgroundColor:'#ccc',borderColor:'#3d3d3d'}}
-                                              style ={{backgroundColor: !isShowGreyButton  &&'#ccc',borderColor: !isShowGreyButton  &&'#3d3d3d'}}
+                                            //   style ={{backgroundColor: !isShowGreyButton  &&'#ccc',borderColor: !isShowGreyButton  &&'#3d3d3d'}}
                                            loading={this.state.isBtnLoading} >
                                             Confirm & Continue
                                         </Button>

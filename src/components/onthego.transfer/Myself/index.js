@@ -292,7 +292,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 </Form.Item>
             </Col>} */}
             </Row>
-            <Translate style={{ fontSize: 18,color: "white" }}
+            <Translate style={{ fontSize: 14,color: "white" }}
                     content="Beneficiary_Details"
                     component={Paragraph}
                     className="mt-24 text-captz px-4 text-white fw-600"
@@ -346,7 +346,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             </Row>
         </div>
 
-        <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
+        <h2 style={{ fontSize: 14,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
         {currency == 'EUR' && <Row gutter={[8, 8]} >
         {currency == 'EUR' && <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
             <div className="custom-btn-error">

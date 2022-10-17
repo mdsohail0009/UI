@@ -138,11 +138,11 @@ class AddressBook extends Component {
 			filter: true,
 			width: 300,
 			customCell: (props) => (
-				<td>
+				<td className="d-flex">
 					<div className="gridLink" onClick={() => this.addressFiatView(props)}>
 					{props?.dataItem?.whiteListName}
 					</div>
-					<Text className="file-label ml-8 fs-12">
+					<Text className="file-label ml-8 fs-12 add-lbl">
 						{this.addressTypeNames(props?.dataItem?.addressType)}
 					</Text>
 				</td>
