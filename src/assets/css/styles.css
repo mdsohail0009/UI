@@ -1026,6 +1026,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .address-icons{list-style: none; padding-left: 0; margin-bottom: 0; display: flex;}
     .add-custom.ant-row{flex-flow: initial !important;}
     .login-user .header-logo{flex-grow: 1;}
+    .dash-mobile-list ul{max-height: 787px;overflow: auto;}
 }
 @media (min-width: 992px){
     .tlv-header{display: flex}
@@ -1080,7 +1081,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .coin-details.right{min-height: 705px;}
     .lg-fontsize{font-size: 12px !important;}
     .side-drawer.custom-drawer-width .ant-drawer-content-wrapper{width:865px !important;}
-    .side-drawer.custom-fait-sidedrawer .ant-drawer-content-wrapper{width:750px !important;}
+    .side-drawer.custom-fait-sidedrawer .ant-drawer-content-wrapper{width:50% !important;}
 }
 @media (min-width: 1400px){
 

@@ -232,7 +232,7 @@ class YourPortfolio extends Component {
               </div>
             </div> */}
             <List
-              className="mobile-list"
+              className="mobile-list dash-mobile-list"
               itemLayout="horizontal"
               dataSource={cryptoPortFolios.data}
               loading={cryptoPortFolios.loading}
