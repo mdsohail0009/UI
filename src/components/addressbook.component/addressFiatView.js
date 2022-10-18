@@ -148,7 +148,8 @@ const AddressFiatView = (props) => {
 														{fiatAddress?.transferType === " " ||
 															fiatAddress?.transferType === null
 															? "-"
-															: fiatAddress?.transferType.toUpperCase()}
+															: (fiatAddress?.transferType == "internationalIBAN") && "INTERNATIONAL IBAN" ||
+															fiatAddress?.transferType.toUpperCase()}
 
 													</div>}
 												</div>
@@ -487,7 +488,7 @@ const AddressFiatView = (props) => {
 															</Title>
 														</Col>}
 														{/* {item.line1 && */}
-														 {item.walletCode!='EUR'&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
+														 {(item.walletCode!='EUR'&& fiatAddress?.transferType != "internationalIBAN")&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
 															Bank Address 1
 															</Text>
@@ -500,7 +501,7 @@ const AddressFiatView = (props) => {
 														</Col>}
 														{/* // } */}
 														{/* {item.line2 &&  */}
-														{item.walletCode!='EUR'&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
+														{(item.walletCode!='EUR'&& fiatAddress?.transferType != "internationalIBAN")&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
 															Bank Address 2
 															</Text>

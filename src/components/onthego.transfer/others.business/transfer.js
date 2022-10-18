@@ -70,7 +70,11 @@ class BusinessTransfer extends Component {
 
     }
     submitPayee = async (values) => {
-        debugger
+        // if (values?.iban &&!/^[A-Za-z0-9]+$/.test(values?.iban)) {
+        //     this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true});
+        //     this.form.current?.validateFields(["iban"], this.validateIbanType)
+        //     return;
+        // }
         let { details, selectedTab,isEdit,isSelectedId, ibanDetails } = this.state;
         let _obj = { ...details, ...values };
         _obj.payeeAccountModels[0].currencyType = "Fiat";
@@ -115,7 +119,7 @@ class BusinessTransfer extends Component {
         }
     }
     handleTabChange = (key) => {
-        this.setState({ ...this.state, selectedTab: key,errorMessage:null });this.form.current.resetFields();
+        this.setState({ ...this.state, selectedTab: key,errorMessage:null, ibanDetails: {} });this.form.current.resetFields();
     }
     handleIbanChange = async ({ target: { value,isNext } }) => {
         this.setState({ ...this.state, enteredIbanData: value, isShowValid: false});
