@@ -864,8 +864,7 @@ class OnthegoFundTransfer extends Component {
                                             size="large"
                                             block
                                             className="pop-btn ml-24 custom-send"
-                                           // style={(isPhMail&&!this.state.verifyData?.phBtn&&!this.state.verifyData?.emailBtn)||(isShowGreyButton&&!this.state.verifyData?.phBtn&&!this.state.verifyData?.authBtn)||(isAuthMail&&!this.state.verifyData?.emailBtn&&!this.state.verifyData?.authBtn)||(!this.state.verifyData?.phBtn&&!this.state.verifyData?.emailBtn&&!this.state.verifyData?.authBtn) &&{backgroundColor:'#ccc',borderColor:'#3d3d3d'}}
-                                            //   style ={{backgroundColor: !isShowGreyButton  &&'#ccc',borderColor: !isShowGreyButton  &&'#3d3d3d'}}
+                                             style ={{backgroundColor: !isShowGreyButton  &&'#ccc',borderColor: !isShowGreyButton  &&'#3d3d3d'}}
                                            loading={this.state.isBtnLoading} >
                                             Confirm & Continue
                                         </Button>
