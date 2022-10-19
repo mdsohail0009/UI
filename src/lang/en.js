@@ -282,7 +282,7 @@ export default {
 	beneficiary_Bank_address: "Beneficiary Bank Address",
 	bank_Reference_No: "Bank Reference No",
 	Fifth_Avenue: "%(value)s",
-	reference: "Reference",
+	reference: "Customer ID",
 	reference_hint_text:
 		"Important: This code helps us in identifying your deposit. Please include the reference code when submitting the wire transfer to us.",
 	desposite_text:
@@ -380,7 +380,7 @@ export default {
 	AfterValue: "After Value",
 	TotalAmount: "Total Amount",
 	AmountInUsd: "Amount In Usd",
-	ReferenceId: "Reference Id",
+	ReferenceId: "Customer ID",
 	Select: "Select",
 	space: " ",
 	menu_swap1: "Swap ",
@@ -406,7 +406,7 @@ export default {
 	MiddleName: "Middle Name",
 	LastName: "Last Name",
 	Birthday: "Birthday",
-	ReferenceCode: "Reference Code",
+	ReferenceCode: "Customer ID",
 	ContactInfo: "Contact Info",
 	EmailAddress: "Email Address",
 	PhoneNumber: "Phone Number",
