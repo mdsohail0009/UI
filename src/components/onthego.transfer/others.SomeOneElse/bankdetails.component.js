@@ -96,7 +96,6 @@ class PayeeBankDetails extends Component {
         }
     };
     renderAddress = (transferType) => {
-        debugger
         const _templates = {
             sepa: <>
             <>

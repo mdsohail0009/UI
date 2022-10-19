@@ -367,7 +367,7 @@ const AddressFiatView = (props) => {
 																	: item.bankType}
 															</Title>
 														</Col>}
-														{item?.accountNumber && <Col xs={24} md={24} lg={14} xl={8} xxl={4}>
+														{(item?.accountNumber && fiatAddress?.transferType != "internationalIBAN")&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
 																Bank Account Number / IBAN
 															</Text>

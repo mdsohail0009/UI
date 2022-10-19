@@ -28,7 +28,8 @@ class BusinessTransfer extends Component {
         iBanValid: false,
          ibanDetails: {},
         isValidateLoading: false,
-        ibanDetailsLoading: false
+        ibanDetailsLoading: false,
+        isValidateMsg: false
     };
     componentDidMount() {
         this.loadDetails();
@@ -70,12 +71,23 @@ class BusinessTransfer extends Component {
 
     }
     submitPayee = async (values) => {
-        // if (values?.iban &&!/^[A-Za-z0-9]+$/.test(values?.iban)) {
-        //     this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true});
-        //     this.form.current?.validateFields(["iban"], this.validateIbanType)
-        //     return;
-        // }
-        let { details, selectedTab,isEdit,isSelectedId, ibanDetails } = this.state;
+        let { details, selectedTab,isEdit,isSelectedId, ibanDetails, isValidateMsg } = this.state;
+        this.setState({ ...this.state, errorMessage: null});
+        if(!values.iban  || values.iban &&!/^[A-Za-z0-9]+$/.test(values.iban)) {
+            this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true, isValidateMsg: true});
+            this.form.current?.validateFields(["iban"], this.validateIbanType)
+            return;
+        }
+        if(values.iban?.length < 10){
+            this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true, isValidateMsg: true});
+            this.form.current?.validateFields(["iban"], this.validateIbanType)
+            return;
+        }
+        if(!isValidateMsg && (!ibanDetails || Object.keys(ibanDetails).length == 0)) {
+            this.setState({ ...this.state, errorMessage: "please validate IBAN", isLoading: false, isBtnLoading: false });;
+            this.useDivRef.current.scrollIntoView()
+            return;
+        }
         let _obj = { ...details, ...values };
         _obj.payeeAccountModels[0].currencyType = "Fiat";
         _obj.payeeAccountModels[0].walletCode = "USD";
@@ -137,7 +149,7 @@ class BusinessTransfer extends Component {
             }
         }
         else{
-            this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false, enteredIbanData: value, isShowValid: false, isValidateLoading: false})
+            this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false, enteredIbanData: value, isShowValid: false, isValidateLoading: false, ibanDetails: {} })
         }
     }
     onIbanValidate = (e) => {
@@ -145,7 +157,7 @@ class BusinessTransfer extends Component {
         let value = e ? e: this.form.current?.getFieldValue('iban');
         if (value?.length > 10) {
             if (value &&!/^[A-Za-z0-9]+$/.test(value)) {
-                this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true});
+                this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true, isValidateMsg: true, errorMessage: null});
                 this.form.current?.validateFields(["iban"], this.validateIbanType)
             }
             else {
@@ -154,7 +166,7 @@ class BusinessTransfer extends Component {
             }
         }
         else {
-            this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true});
+            this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true, isValidateMsg: true, errorMessage: null});
             this.form.current?.validateFields(["iban"], this.validateIbanType)
         }
     }
