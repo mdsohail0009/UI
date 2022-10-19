@@ -140,6 +140,7 @@ class AddressDocumnet extends Component {
                                 let obj=Object.assign([],files)
                                 let {filesList}=this.state
                                 filesList.splice(this.state.selectedFileIdx, 1);
+                                obj.splice(this.state.selectedFileIdx, 1);
                                 this.setState({ ...this.state, filesList, showDeleteModal: false });
                                 docs.details=Object.assign([],obj)
                                 this.props?.onDocumentsChange(docs);
