@@ -1,4 +1,4 @@
-import { apiClient, ipRegistry } from "./";
+import { apiClient, ipRegistry ,bankClient} from "./";
 import { ApiControllers } from "./config";
 import counterpart from "counterpart";
 import { store } from "../store";
@@ -107,6 +107,11 @@ const downloadKyc = (Customerid) => {
 const updateSecurity = (obj) => {
 	return apiClient.put(ApiControllers.master + "UpdateSecurity", obj);
 };
+const getCustomerBankDetails = (customerId)=>{
+
+    return bankClient.get(ApiControllers.bank + `GetAccountBalanceByCustomerId/${customerId}`);
+
+}
 
 const encryptValue = (msg, key) => {
 	msg = typeof msg == "string" ? msg : JSON.stringify(msg);
@@ -159,7 +164,19 @@ const getInfoVal = (id, type) => {
 const getReferalDetails = (customerId) =>{
 	return apiClient.get(ApiControllers.partner + `getReferralDetails/customer/${customerId}`);
 }
-
+const getPayeeLu = (customerId,currency) => {
+    return apiClient.get(
+        ApiControllers.addressbook + `PayeeLu/${customerId}/${currency}`
+    );
+};
+const saveTransferData=(obj)=>{
+	return apiClient.post(ApiControllers.addressbook+'payee',obj)
+}
+const getRecipientData=(customerId,type,addressbookId)=>{
+	return apiClient.get(
+        ApiControllers.addressbook + `payee/Withdraw/Favourite/${addressbookId}/${customerId}/${type}`
+    );
+}
 let apicalls = {
 	getportfolio,
 	getCryptos,
@@ -190,6 +207,6 @@ let apicalls = {
 	getVerificationFields,
 	twofactor,
 	getInfoVal,
-	getReferalDetails
+	getReferalDetails,getPayeeLu,saveTransferData,getRecipientData,getCustomerBankDetails
 };
 export default apicalls;

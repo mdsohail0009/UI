@@ -15,7 +15,7 @@ import success from '../../assets/images/success.png';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import apicalls from '../../api/apiCalls';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
-
+import OnthegoFundTransfer from '../onthego.transfer';
 const LinkValue = (props) => {
   return (
     <Translate className="textpure-yellow text-underline c-pointer"
@@ -39,7 +39,7 @@ class FaitDeposit extends Component {
      BankInfo: null, 
      depObj: { currency: null, BankName: null, Amount: null },
     tabValue: 1, Loader: false, isTermsAgreed: false, errorMessage: null, showSuccessMsg: false,
-    bankLoader:false
+    bankLoader: false
   }
   componentDidMount() {
     this.props.fiatRef(this)
@@ -118,7 +118,6 @@ class FaitDeposit extends Component {
     }
   }
   isErrorDispaly = (objValue) => {
-    debugger
     if (objValue.data && typeof objValue.data === "string") {
       return objValue.data;
     } else if (
@@ -138,16 +137,15 @@ class FaitDeposit extends Component {
     for (var k in currencyLu) {
       if (currencyLu[k].walletCode === e) {
         if (currencyLu[k].bankDetailModel?.length === 1) {
-          debugger
           this.setState({ ...this.state, Loader: true })
           let reqdepositObj = await requestDepositFiat(currencyLu[k].bankDetailModel[0].bankId, this.props.member?.id);
           if (reqdepositObj.ok === true) {
             this.setState({
               ...this.state, fiatDepEur: e === "EUR", BankInfo: reqdepositObj.data, BankDetails: [], depObj: depObj, Loader: false, isTermsAgreed: false
             });
-          }else{
+          } else {
             this.setState({
-              ...this.state,  Loader: false,errorMessage:this.isErrorDispaly(reqdepositObj)
+              ...this.state, Loader: false, errorMessage: this.isErrorDispaly(reqdepositObj)
             });
           }
         } else {
@@ -171,7 +169,7 @@ class FaitDeposit extends Component {
           this.setState({
             ...this.state, fiatDepEur: e === "EUR", BankInfo: reqdepositObj.data, depObj: depObj, bankLoader: false, isTermsAgreed: false
           });
-        }else{
+        } else {
           this.setState({ ...this.state, bankLoader: false })
         }
       }
@@ -241,7 +239,9 @@ class FaitDeposit extends Component {
           <Translate content="withdraw" component={Radio.Button} value={2} />
         </Radio.Group></div>}
         {faitdeposit ?
-          <SellToggle onDrawerClose={this.props.oncloseClick}/>
+          <div className='mt-16'>
+           <OnthegoFundTransfer  ontheGoType={"Onthego"}/>
+         </div>
           : <> {this.state.Loader && <Loader />}
 
             {!this.state.Loader && <Form layout="vertical" initialValues={{ ...depObj }} ref={this.formRef} onFinish={(values) => this.ConfirmDeposit(values)}><div className="suisfiat-container auto-scroll"><div ref={this.myRef}></div>
@@ -315,8 +315,8 @@ class FaitDeposit extends Component {
                       
                     </div>
                     {/* <Text className="text-white-30 fs-14">A/C </Text> */}
-                    {BankInfo.currencyCode == "USD" &&   <Text className="text-white-30 fs-14">Beneficiary Account No. </Text> }
-                    {BankInfo.currencyCode == "EUR" &&   <Text className="text-white-30 fs-14">Beneficiary IBAN No. </Text> }
+                    {BankInfo.currencyCode == "USD" && <Text className="text-white-30 fs-14">Beneficiary Account No. </Text>}
+                    {BankInfo.currencyCode == "EUR" && <Text className="text-white-30 fs-14">Beneficiary IBAN No. </Text>}
                     <CopyToClipboard text={BankInfo.accountNumber} options={{ format: 'text/plain' }}>
                     <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="mb-0 fs-18 fw-400 text-yellow fw-500" >{BankInfo.accountNumber}</Text>
                      </CopyToClipboard>

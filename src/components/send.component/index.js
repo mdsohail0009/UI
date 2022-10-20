@@ -105,7 +105,8 @@ class SendReceive extends Component {
             closable={true}
             visible={this.props.showDrawer}
             closeIcon={null}
-            className="side-drawer"
+            className="side-drawer w-50p"
+            style={{width:"50%"}}
         >
             {this.renderContent()}
         </Drawer>);

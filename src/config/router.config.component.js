@@ -27,14 +27,15 @@ const AddressFiatView = React.lazy(() => import("../components/addressbook.compo
 const AddressCryptoView = React.lazy(() => import("../components/addressbook.component/addressCryptoView"))
 const RewardCard = React.lazy(() => import("../components/cards.component"));
 const AccessDenied = React.lazy(() => import("../components/shared/permissions/access.denied"));
-const InternalTransfer = React.lazy(() => import("../components/internalTransfer.component/internalTransfer"))
+const InternalTransfer = React.lazy(() => import("../components/internalTransfer.component/internalTransfer"));
+const AddressBook = React.lazy(() => import("../components/addressbook.component"));
 class RouteConfig extends Component {
-  // componentDidMount() {
-  //   this.checkPermissions(window.location.pathname || "/cockpit");
-  //   this.props.history.listen((location) => {
-  //     this.checkPermissions(location.pathname)
-  //   })
-  // }
+  componentDidMount() {
+    this.checkPermissions(window.location.pathname || "/cockpit");
+    this.props.history.listen((location) => {
+      this.checkPermissions(location.pathname)
+    })
+  }
   checkPermissions(pathname) {
     pathname = pathname.includes("/payments/") ? "/payments" : pathname;  // temporary fix perminent fix will be in next sprint --subbareddy
     if (this.props.menuItems.featurePermissions?.[KEY_URL_MAP[pathname]] && pathname != "/userprofile" && pathname != "/accessdenied") {
@@ -58,12 +59,12 @@ class RouteConfig extends Component {
         <ReactRoute path="/sumsub" component={SumSub} />
         <ReactRoute path="/notkyc" component={NotKyc} />
         <ReactRoute path="/onboading" component={OnBoarding} />
-        <ReactRoute path="/userprofile/:key?" component={UserProfile} />
+        <ReactRoute path="/userprofile/:key?/:type?" component={UserProfile} />
         <ReactRoute path='/documents' component={RequestedDocs} />
         <ReactRoute path='/cases' component={CaseDocs} />
         <ReactRoute path='/docnotices' component={DocNotices} />
         <ReactRoute path='/enabletwofactor' component={TwoFactor} />
-        <ReactRoute path='/addressFiatView/:id' component={AddressFiatView} />
+        <ReactRoute path='/addressFiatView/:id?/:type' component={AddressFiatView} />
         <ReactRoute path='/addressCryptoView/:id' component={AddressCryptoView} />
         <Route path='/coindetails/:coinName' component={CoinDetails} />
         <ReactRoute path="/silent_redirect" component={SignInSilent} />
@@ -83,6 +84,8 @@ class RouteConfig extends Component {
           )}
         />
         <ReactRoute path="/internaltransfer" component={InternalTransfer} exact />
+        <ReactRoute path="/addressbook" component={AddressBook} exact />
+
         <ReactRoute path="/" component={Dashboard} exact />
       </React.Suspense>
     </Switch>

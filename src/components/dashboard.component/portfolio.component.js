@@ -179,7 +179,7 @@ class Portfolio extends Component {
                             <td
                               colSpan="8"
                               className="p-16 text-center"
-                              style={{ color: "white", width: 300 }}
+                              style={{width: 300 }}
                             >
                              No transaction details available
                             </td>

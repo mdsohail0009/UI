@@ -372,7 +372,7 @@ class PaymentsView extends Component {
                 <div className="main-container">
                     <Title className="basicinfo mb-16">Add Beneficiary Details</Title>
                     <div className="box basic-info">
-                        <Translate
+                        <Translate style={{ fontSize: 18}}
                             content="Beneficiary_Details"
                             component={Paragraph}
                             className="mb-16 fs-20 text-white fw-500"
@@ -523,7 +523,7 @@ class PaymentsView extends Component {
                                             }
                                         ]}
                                     >
-                                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Bank_account')} />
+                                        <Input className="cust-input"  maxLength={50} placeholder={apiCalls.convertLocalLang('Bank_account')} />
                                     </Form.Item>
                                 </Col>
                                 <Col xl={8}>
@@ -605,7 +605,7 @@ class PaymentsView extends Component {
                                                 className="mb-16 fs-14 text-white fw-500 text-upper"
                                             >Please provide your identity proof</Paragraph>
                                             <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
-                                                className="upload mt-16"
+                                                className="upload mt-4"
                                                 multiple={false}
                                                 action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                                                 showUploadList={false}
@@ -640,7 +640,7 @@ class PaymentsView extends Component {
                                                 className="mb-16 fs-14 text-white fw-500 text-upper"
                                             >Please provide your address proof</Paragraph>
                                             <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
-                                                className="upload mt-16"
+                                                className="upload mt-4"
                                                 multiple={false}
                                                 action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                                                 showUploadList={false}
@@ -674,7 +674,7 @@ class PaymentsView extends Component {
                                                 className="mb-16 fs-14 text-white fw-500 text-upper"
                                             >Please provide your address proof</Paragraph>
                                             <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
-                                                className="upload mt-16"
+                                                className="upload mt-4"
                                                 multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                                                 showUploadList={false}
                                                 beforeUpload={(props) => { this.beforeUpload(props) }}

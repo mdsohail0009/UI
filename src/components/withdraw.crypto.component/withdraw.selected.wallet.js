@@ -18,7 +18,9 @@ import SelectCrypto from "../addressbook.component/selectCrypto";
 import apiCalls from "../../api/apiCalls";
 import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
 import Loader from '../../Shared/loader';
+import CryptoTransfer from "../onthego.transfer/crypto.transfer"
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService';
+import { handleNewExchangeAPI } from "../send.component/api";
 
 const { Paragraph, Text } = Typography;
 
@@ -45,7 +47,9 @@ class CryptoWithDrawWallet extends Component {
             cryptoFiat: false,
             isVerificationMethodsChecked: true,
             propsData: {},
-            isVerificationLoading: true
+            isVerificationLoading: true,
+            showFuntransfer:false,
+            errorMsg:null
         }
     }
     async checkVerification() {
@@ -65,10 +69,10 @@ class CryptoWithDrawWallet extends Component {
         const isVerified = await this.checkVerification();
         if (isVerified) {
             if (this.props.sendReceive.withdrawCryptoObj) {
-                this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.withdrawCryptoObj?.totalValue, localValue: 0 })
+                this.eleRef.current?.handleConvertion({ cryptoValue: this.props.sendReceive?.withdrawCryptoObj?.totalValue, localValue: 0 })
                 this.setState({ ...this.state, walletAddress: this.props.sendReceive.withdrawCryptoObj.toWalletAddress, amountPercentageType: this.props.sendReceive.withdrawCryptoObj.amounttype });
             } else {
-                this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 })
+                this.eleRef.current?.handleConvertion({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 })
             }
             this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 2 }))
             this.props.dispatch(setSubTitle(apicalls.convertLocalLang('wallet_address')));
@@ -154,7 +158,7 @@ class CryptoWithDrawWallet extends Component {
             this.props.changeStep('step8');
         } else {
             this.setState({
-                ...this.state, visible: true, errorWorning: null
+                ...this.state, visible: true, errorWorning: null, showFuntransfer: true
                 // , selection: [],
                 // isCheck: false,
             });
@@ -228,10 +232,32 @@ class CryptoWithDrawWallet extends Component {
             "amounttype": this.state.amountPercentageType,
             "CustomerRemarks": this.state.customerRemarks
         }
+        const response = await handleNewExchangeAPI({
+			customerId: this.props?.userProfile?.id,
+			amount: obj.totalValue,
+			address: obj.toWalletAddress,
+			coin: obj.walletCode,
+		});
+		if (response.ok) {
+            this.props.dispatch(setWithdrawcrypto(obj))
+            this.props.changeStep('withdraw_crpto_summary');
+		} else {
+			this.setState({ ...this.state, loading: false,errorMsg:this.isErrorDispaly(response) });
+            this.myRef.current.scrollIntoView()
+		}
         //this.props.dispatch(setSubTitle(apicalls.convertLocalLang('withdrawSummary')));
-        this.props.dispatch(setWithdrawcrypto(obj))
-        this.props.changeStep('withdraw_crpto_summary');
+       
     }
+    isErrorDispaly = (objValue) => {
+		if (objValue.data && typeof objValue.data === "string") {
+			return objValue.data;
+		} else if (objValue.originalError && typeof objValue.originalError.message === "string"
+		) {
+			return objValue.originalError.message;
+		} else {
+			return "Something went wrong please try again!";
+		}
+	};
     renderModalContent = () => {
         if (!this.props?.sendReceive?.cryptoWithdraw?.selectedWallet) { return null }
         const { walletAddress, CryptoAmnt, confirmationStep } = this.state;
@@ -301,6 +327,11 @@ class CryptoWithDrawWallet extends Component {
         }
 
     }
+
+    handleModalClose=(childData)=>{
+        this.setState({ ...this.state, showFuntransfer: childData })
+    }
+
     render() {
         const { Text } = Typography;
         const { cryptoWithdraw: { selectedWallet } } = this.props.sendReceive;
@@ -315,7 +346,7 @@ class CryptoWithDrawWallet extends Component {
                 message="Verification alert !"
                 description={<Text>Without verifications you can't send. Please select send verifications from <a onClick={() => {
                     this.props.onDrawerClose();
-                    this.props.history.push("/userprofile?key=2")
+                    this.props.history.push("/userprofile/2")
                 }}>security section</a></Text>}
                 type="warning"
                 showIcon
@@ -326,6 +357,15 @@ class CryptoWithDrawWallet extends Component {
             <div ref={this.myRef}>
                 <div> {this.state.error != null && <Alert type="error"
                     description={this.state.error} onClose={() => this.setState({ ...this.state, error: null })} showIcon />}
+                    {this.state.errorMsg && (
+                        <Alert
+                            className="mb-12"
+                            showIcon
+                            description={this.state.errorMsg}
+                            closable={false}
+                            type="error"
+                        />
+                    )}
 
                     <Card className="crypto-card select mb-36" bordered={false}>
 
@@ -392,6 +432,14 @@ class CryptoWithDrawWallet extends Component {
                                 </Tooltip>
                             </div>
                         </Form.Item>
+                        {/* <div className="text-center mt-24 mb-24 ">
+                        <Button key="back" className='ant-btn  pop-btn'   onClick={() => this.selectCrypto()} >
+                            New Transfer
+                        </Button>,
+                        <Button key="submit" type="primary" className='ant-btn  pop-btn' style={{marginLeft:"10px"}} onClick={() => this.selectCrypto("ADDRESS")}>
+                            Whitelisted Address
+                        </Button>
+                        </div> */}
                         <Form.Item
                             className="custom-forminput custom-label mb-0"
                             name="CustomerRemarks"

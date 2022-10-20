@@ -324,13 +324,14 @@ class Header extends Component {
                     className="text-white-30 fs-20 ml-16 fw-300"
                   />
                 </li>
+
               </ul>
               <Menu
                 theme="light"
                 mode="horizontal"
                 className="header-right mobile-header-right"
               >
-                {/* <Menu.Item
+                <Menu.Item
                   key="6"
                   className="notification-conunt mr-8"
                   onClick={this.showNotificationsDrawer}
@@ -344,7 +345,7 @@ class Header extends Component {
                         <span>{this.props.dashboard?.notificationCount}</span>
                       )}
                   </span>
-                </Menu.Item> */}
+                </Menu.Item>
                 <Dropdown
                   overlay={userProfileMenu}
                   trigger={["click"]}

@@ -77,7 +77,7 @@ const getFavData = (payeeId,customerId) => {
 
     return apiClient.get(
 
-        ApiControllers.addressbook + `payee/Withdraw/Favourite/${payeeId}/${customerId}`
+        ApiControllers.addressbook + `payee/Withdraw/Favourite/${payeeId}/${customerId}/1stparty`
 
     );
 };
@@ -105,9 +105,9 @@ const getBankDetails = (payeeAccountId) => {
 	);
 };
 
-const getViewData = (payeeId,customerId) => {
+const getViewData = (payeeId,customerId,type) => {
     return apiClient.get(
-        ApiControllers.addressbook + `payee/Withdraw/Favourite/${payeeId}/${customerId}`
+        ApiControllers.addressbook + `payee/Withdraw/Favourite/${payeeId}/${customerId}/${type||'myself'}`
     );
 };
 const emailCheck = (email,type) => {
