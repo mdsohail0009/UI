@@ -91,7 +91,7 @@ class BusinessTransfer extends Component {
                 }
             } else {
                 this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false, showDeclaration: true });
-                this.props.updatedHeading(true) 
+                this.props?.updatedHeading(true) 
             }
         } else {
             this.useDivRef.current.scrollIntoView()
