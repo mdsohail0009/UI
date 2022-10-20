@@ -346,7 +346,7 @@ export default {
 	AfterValue: "Pagkatapos ng Halaga",
 	TotalAmount: "Kabuuang Halaga",
 	AmountInUsd: "Halaga Sa Usd",
-	ReferenceId: "Reference Id",
+	ReferenceId: "Customer ID",
 	Select: "Pumili",
 	menu_swap1: "Tukar ",
 	Ethereum: "Ethereum",
