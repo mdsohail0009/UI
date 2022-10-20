@@ -452,7 +452,7 @@ class CryptoWithDrawWallet extends Component {
                         <div className="crypto-details d-flex">
                             <div>
                                 <span className="d-flex align-center mb-4">
-                                    <Image preview={false} src={selectedWallet.impageWhitePath} />
+                                    <Image preview={false} src={selectedWallet?.impageWhitePath} />
                                     {/* <Text className="crypto-percent">{selectedWallet?.percentage}<sup className="percent fw-700">%</sup></Text> */}
                                 </span>
                                 <Text className="fs-24 text-purewhite ml-4">{selectedWallet?.coinFullName}</Text>

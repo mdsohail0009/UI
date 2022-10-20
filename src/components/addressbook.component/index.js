@@ -160,13 +160,13 @@ class AddressBook extends Component {
 			field: "accountNumber",
 			title: apiCalls.convertLocalLang("Bank_account_iban_name"),
 			filter: true,
-			width: 250,
+			width: 270,
 		},
 		{
 			field: "routingNumber",
 			title: apiCalls.convertLocalLang("BIC_SWIFT_ABArouting_number"),
 			filter: true,
-			width: 270,
+			width: 310,
 		},
 		{
 			field: "bankName",
