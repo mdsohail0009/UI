@@ -69,6 +69,11 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             obj.id = isSelectedId ? isSelectedId : createPayeeObj.payeeAccountModels[0]?.payeeId;
         }
         setBtnLoading(true)
+        if (obj.payeeAccountModels[0].documents == null) {
+            useDivRef.current.scrollIntoView()
+            setErrorMessage('At least one document is required');setBtnLoading(false)
+
+        } else {
         let payeesave = await savePayee(obj)
         if (payeesave.ok) {
             if (props.type !== "manual") {
@@ -89,6 +94,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             setErrorMessage(isErrorDispaly(payeesave));
             useDivRef.current.scrollIntoView();
         }
+    }
 
     }
     const isErrorDispaly = (objValue) => {
@@ -125,7 +131,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                             <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
                                 setAddressOptions({ ...addressOptions, domesticType: activekey });
-                                form.current.resetFields();
+                                form.current.resetFields();setDocuments(null)
                                 // form.current.setFieldsValue({ addressType: 'someoneelse', transferType: activekey })
                             }}>
                                 <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
@@ -354,9 +360,9 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                 
                 <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
                 {console.log(documents)}
-                <AddressDocumnet documents={documents || null} onDocumentsChange={(docs) => {
+                <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
                         setDocuments(docs)
-                    }} />
+                    }} refreshData = {addressOptions?.domesticType}/>
                     <div className="text-right mt-12">
                         {/* <Button
                             className="pop-btn px-36"

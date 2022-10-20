@@ -68,13 +68,17 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].swiftRouteBICNumber = values?.swiftRouteBICNumber;
         _obj.payeeAccountModels[0].line1 = values.bankAddress1;
         _obj.payeeAccountModels[0].line2 = values.bankAddress2;
-        _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
         _obj.addressType = "otherbusiness";
         _obj.transferType = selectedTab;
         _obj.amount = this.props.amount;
         if(isEdit){
             _obj.id = isSelectedId? isSelectedId:details?.payeeId;
         }
+        if( _obj.payeeAccountModels[0].documents==null){this.useDivRef.current.scrollIntoView()
+            this.setState({ ...this.state, isLoading: false, errorMessage: 'At least one document is required', isBtnLoading: false });
+        }else{
+            _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
+            this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
         delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
         this.setState({ ...this.state, errorMessage: null, isLoading: false, isBtnLoading: true });
         const response = await savePayee(_obj);
@@ -94,8 +98,11 @@ class BusinessTransfer extends Component {
             this.setState({ ...this.state, details: { ...details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, isBtnLoading: false });
         }
     }
+}
     handleTabChange = (key) => {
-        this.setState({ ...this.state, selectedTab: key,errorMessage:null });this.form.current.resetFields();
+        let _obj = { ...this.state.details}
+        _obj.payeeAccountModels[0].documents=null
+        this.setState({ ...this.state, selectedTab: key,errorMessage:null,details:_obj});this.form.current.resetFields();
     }
     render() {
         const { isLoading, details, selectedTab, errorMessage } = this.state;
@@ -221,11 +228,11 @@ class BusinessTransfer extends Component {
                     {/* <Divider /> */}
                     <DomesticTransfer type={this.props.type} />
                     <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
-                    <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} onDocumentsChange={(docs) => {
+                    <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
-                    }} />
+                    }} refreshData ={selectedTab}/>
                     <div className="text-right mt-12">
                         {/* <Row> */}
                             {/* <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col> */}
@@ -346,11 +353,11 @@ class BusinessTransfer extends Component {
                     {/* <Divider /> */}
                     <InternationalTransfer type={this.props.type} />
                     <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
-                    <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} onDocumentsChange={(docs) => {
+                    <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
-                    }} />
+                    }} refreshData ={selectedTab}/>
                     <div className="align-center">
                         {/* <Row gutter={[16, 16]}> */}
                             {/* <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col> */}

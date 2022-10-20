@@ -139,6 +139,10 @@ class OthersBusiness extends Component {
         if(isEdit){
             _obj.id = isSelectedId ? isSelectedId : details?.payeeId;
         }
+        if( _obj.payeeAccountModels[0].documents==null){this.useDivRef.current.scrollIntoView()
+            this.setState({ ...this.state, isLoading: false, errorMessage: 'At least one document is required', isBtnLoading: false });
+        }else{
+            _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
         this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
         const response = await savePayee(_obj);
         if (response.ok) {
@@ -164,6 +168,7 @@ class OthersBusiness extends Component {
             this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, isBtnLoading: false });
            // this.useDivRef.current.scrollIntoView()
         }
+    }
 
     }
     render() {
@@ -420,7 +425,7 @@ class OthersBusiness extends Component {
                     </div>
                     <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
 
-                    <AddressDocumnet documents={this.state.details?.payeeAccountModels[0].documents} onDocumentsChange={(docs) => {
+                    <AddressDocumnet documents={this.state.details?.payeeAccountModels[0].documents} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
