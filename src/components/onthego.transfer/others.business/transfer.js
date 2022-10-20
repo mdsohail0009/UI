@@ -80,7 +80,6 @@ class BusinessTransfer extends Component {
         this.setState({ ...this.state, errorMessage: null, isLoading: false, isBtnLoading: true });
         const response = await savePayee(_obj);
         if (response.ok) {
-            debugger
             if (this.props.type != "manual") {
                 const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
                 if (confirmRes.ok) {this.useDivRef.current?.scrollIntoView()
@@ -96,7 +95,6 @@ class BusinessTransfer extends Component {
         } else {
             this.useDivRef.current.scrollIntoView()
             this.setState({ ...this.state, details: { ...details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, isBtnLoading: false });
-           
         }
     }
     handleTabChange = (key) => {
@@ -108,13 +106,13 @@ class BusinessTransfer extends Component {
             return <Loader />
         }
         if (this.state.showDeclaration) {
-            return  <div className="text-center">
+            return <div className="text-center">
                 <Image width={80} preview={false} src={alertIcon} />
                 <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
                 <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                    Please sign using link received in email to whitelist your address. `}</Text>
                 <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
-                {/* <div className="my-25"><Button onClick={() => this.props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn text-textDark">BACK</Button></div> */}
+                {/* <div className="my-25"><Button onClick={() => this.props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button></div> */}
             </div>
         }
         return <div ref={this.useDivRef}><Tabs className="cust-tabs-fait" onChange={this.handleTabChange} activeKey={selectedTab}>
