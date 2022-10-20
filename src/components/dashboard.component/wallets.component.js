@@ -12,6 +12,7 @@ import { setWithdrawfiatenaable, setWithdrawfiat, setStep } from '../../reducers
 import { setdepositCurrency, getCurrencieswithBankDetails } from '../../reducers/depositReducer';
 import BankWallets from '../bankui.component';
 import {setReceiveFiatHead} from '../../reducers/buyFiatReducer';
+import Loader from "../../Shared/loader";
 const { Title, Paragraph } = Typography;
 
 class Wallets extends Component {
@@ -131,12 +132,15 @@ class Wallets extends Component {
                 <Translate content="suissebase_subtitle" component={Paragraph} className="text-white-30 fs-16 mb-16 px-4" />
                 <Currency defaultValue={totalFiatValue} className={`fs-24 m-0 fw-600 ${totalFiatValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '54px' }} />
                 </div> */}
+                {wallets?.loading ? (
+                    <Loader />
+                ) : (
                 <List
                     itemLayout="horizontal"
                     dataSource={wallets.data}
                     bordered={false}
                     className="mobile-list"
-                    loading={wallets.loading}
+                   // loading={wallets.loading}
                     renderItem={item =>
                         <List.Item className="py-10 px-0">
                             <List.Item.Meta
@@ -161,6 +165,7 @@ class Wallets extends Component {
                     </div>
                         </List.Item>}
                 />
+        )}
                 <SuissebaseFiat showDrawer={this.state.sendReceiveDrawer} valNum={this.state.valNum} onClose={() => this.closeDrawer()} />
                 {this.state.buyFiatDrawer && <MassPayment showDrawer={this.state.buyFiatDrawer} tabData={{ tabVal: this.state.valNum, walletCode: this.state.selctedVal }} onClose={() => this.closeDrawer()} />}
                 {this.state.transactions && <TransactionsHistory
