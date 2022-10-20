@@ -84,7 +84,6 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                 props.headingUpdate(true)
                 setShowDeclartion(true)
             }
-           
         } else {
             setBtnLoading(false);
             setErrorMessage(isErrorDispaly(payeesave));
@@ -111,16 +110,16 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         {mainLoader && <Loader />}
         {!mainLoader && <>
             <div ref={useDivRef}></div>
-            {showDeclartion && <div className="text-center">
+            {showDeclartion &&<div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
                 <Image width={80} preview={false} src={alertIcon} />
                 <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
                 <Text className="text-white-30">{`Declaration form has been sent to ${props.userProfile?.email}. 
                    Please sign using link received in email to whitelist your address. `}</Text>
                 <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
                 <div className="my-25">
-                    {/* <Button onClick={() => props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn text-textDark">BACK</Button> */}
-                    </div>
-            </div>}
+                  {/* <Button onClick={() => props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button> */}
+                  </div>
+            </div></div>}
 
             {!showDeclartion && <>
                 {props.currency === "USD" && <>
