@@ -51,23 +51,23 @@ class AddressDocumnet extends Component {
                      {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
                     <Form.Item name={"files"} required rules={[{
                         validator: (_, value) => {
-                            let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
-                            // if (this.state.filesList.length == 0) {
-                            //    // this.setState({...this.state,isDocLoading:false,errorMessage:null })
-                            //     return Promise.reject("At least one document is required")
+                            // let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
+                            // // if (this.state.filesList.length == 0) {
+                            // //    // this.setState({...this.state,isDocLoading:false,errorMessage:null })
+                            // //     return Promise.reject("At least one document is required")
+                            // // }
+                            // if (value&&!fileType[value.file.type]) {
+                            //     this.setState({...this.state,isDocLoading:false,errorMessage:null })
+                            //     return Promise.reject("File is not allowed. You can upload jpg, png, jpeg and PDF  files");
                             // }
-                            if (value&&!fileType[value.file.type]) {
-                                this.setState({...this.state,isDocLoading:false,errorMessage:null })
-                                return Promise.reject("File is not allowed. You can upload jpg, png, jpeg and PDF  files");
-                            }
-                            else {
+                            // else {
                                 const isValidFiles = this.state.filesList.filter(item => (item.name || item.documentName).indexOf(".") != (item.name || item.documentName).lastIndexOf(".")).length == 0;
                                 if (isValidFiles) { return Promise.resolve(); } else {
                                     this.setState({...this.state,isDocLoading:false,errorMessage:null })
                                     return Promise.reject("File don't allow double extension");
                                 }
 
-                            }
+                            // }
                         },
 
                     }
@@ -91,7 +91,7 @@ class AddressDocumnet extends Component {
                                         docs?.details?.push(this.docDetail(file));
                                         this.props?.onDocumentsChange(docs);
                                     }else{
-                                        this.setState({ ...this.state,  isDocLoading: false});  
+                                        this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg and PDF  files" }) 
                                     }
                                 }else if(file.status ==='error'){
                                     console.log(file)
