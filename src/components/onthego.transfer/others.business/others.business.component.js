@@ -119,24 +119,25 @@ class OthersBusiness extends Component {
         }
     };
     submitPayee = async (values) => {
+        debugger
         let { details, ibanDetails,isSelectedId,isEdit, isValidateMsg } = this.state;
-        this.setState({ ...this.state, errorMessage: null});
-        if(!values.iban  || values.iban &&!/^[A-Za-z0-9]+$/.test(values.iban)) {
-            this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true, isValidateMsg: true});
-            this.form.current?.validateFields(["iban"], this.validateIbanType)
-            return;
-        }
-        if(values.iban?.length < 10){
-            this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true, isValidateMsg: true});
-            this.form.current?.validateFields(["iban"], this.validateIbanType)
-            return;
-        }
-        if(!isValidateMsg && (!ibanDetails || Object.keys(ibanDetails).length == 0)) {
-            this.setState({ ...this.state, errorMessage: "please validate IBAN", isLoading: false, isBtnLoading: false });;
-            window.scrollTo(0, 0);
-            this.useDivRef.current?.scrollIntoView();
-            return;
-        }
+        // this.setState({ ...this.state, errorMessage: null});
+        // if(!values.iban  || values.iban &&!/^[A-Za-z0-9]+$/.test(values.iban)) {
+        //     this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true, isValidateMsg: true});
+        //     this.form.current?.validateFields(["iban"], this.validateIbanType)
+        //     return;
+        // }
+        // if(values.iban?.length < 10){
+        //     this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true, isValidateMsg: true});
+        //     this.form.current?.validateFields(["iban"], this.validateIbanType)
+        //     return;
+        // }
+        // if(!isValidateMsg && (!ibanDetails || Object.keys(ibanDetails).length == 0)) {
+        //     this.setState({ ...this.state, errorMessage: "please validate IBAN", isLoading: false, isBtnLoading: false });;
+        //     window.scrollTo(0, 0);
+        //     this.useDivRef.current?.scrollIntoView();
+        //     return;
+        // }
         let _obj = { ...details, ...values };
         _obj.payeeAccountModels[0].line1 = ibanDetails.bankAddress;
         _obj.payeeAccountModels[0].city = ibanDetails?.city;

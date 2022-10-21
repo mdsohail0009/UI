@@ -62,25 +62,25 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         }
     }
     const saveTransfer = async(values) => {
-        seterrorMessage(null);
-        if(!values.iban  || values.iban &&!/^[A-Za-z0-9]+$/.test(values.iban)) {
-            setIsShowValid(true);
-            setbankDetails({});
-            form?.validateFields(["iban"], validateIbanType);
-            return;
-        }
-        if(values.iban?.length < 10){
-            setIsShowValid(true);
-            setValidIban(false); 
-            setbankDetails({});
-            form?.validateFields(["iban"], validateIbanType)
-            return;
-        }
-        if(!isValidateMsg && (!bankDetails || Object.keys(bankDetails).length == 0)) {
-            seterrorMessage("please validate IBAN");
-            useDivRef.current.scrollIntoView();
-            return;
-        }
+        // seterrorMessage(null);
+        // if(!values.iban  || values.iban &&!/^[A-Za-z0-9]+$/.test(values.iban)) {
+        //     setIsShowValid(true);
+        //     setbankDetails({});
+        //     form?.validateFields(["iban"], validateIbanType);
+        //     return;
+        // }
+        // if(values.iban?.length < 10){
+        //     setIsShowValid(true);
+        //     setValidIban(false); 
+        //     setbankDetails({});
+        //     form?.validateFields(["iban"], validateIbanType)
+        //     return;
+        // }
+        // if(!isValidateMsg && (!bankDetails || Object.keys(bankDetails).length == 0)) {
+        //     seterrorMessage("please validate IBAN");
+        //     useDivRef.current.scrollIntoView();
+        //     return;
+        // }
 		setBtnLoading(true);
         let saveObj=Object.assign({},saveTransferObj)
         saveObj.favouriteName=values.favouriteName;
