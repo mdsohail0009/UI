@@ -9,16 +9,21 @@ import { userManager } from '../authentication';
 import OnBoarding from './onboard.component';
 import CallbackPage from '../authentication/callback.component';
 import { clearUserInfo } from '../reducers/configReduser';
+import { withCookies } from 'react-cookie';
 class Layout extends Component {
     state = {
     }
     componentDidMount() {
+        let Sid = this.props.cookies.get('SID')
         if ((!this.props.user || this.props.user.expired) && !window.location.pathname.includes('callback')) {
             userManager.clearStaleState().then(()=>{
                 this.props.dispatch(clearUserInfo());
                 userManager.signinRedirect();
             });
-        }
+        }else if((this.props.user&&Sid) && this.props.user.profile.sud != Sid){
+            userManager.removeUser();
+            window.location.reload()
+          }
     }
     redirect = () =>{
         userManager.removeUser()
@@ -48,4 +53,4 @@ class Layout extends Component {
     }
 }
 
-export default ConnectStateProps(Layout);
+export default ConnectStateProps(withCookies(Layout));
