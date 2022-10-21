@@ -657,7 +657,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .upload .ant-upload-text{font-weight: 600;color: var(--textWhite30) !important;}
 .docfile{background-color:var(--bgDark);border-radius: 20px;padding: 16px;display: flex;align-items: center;margin: 12px 16px 0 0;flex: 1 0 240px;}
 .docdetails{flex: 1; margin-right: 16px;}
-.docdetails .docname{font-weight: 700;color: var(--textWhite30);text-transform: uppercase; line-height: 16px;max-width: 150px !important;}
+.docdetails .docname{font-weight: 700;color: var(--textWhite30); line-height: 16px;max-width: 150px !important;}
 .docfile-container{display: flex; flex-wrap: wrap;}
 .reply-container{display: flex;margin-bottom: 24px;}
 .reply-container .user-shortname{width: 46px; height: 46px; border-radius: 50%;background-color: #64869b;margin-right: 16px;color: #FFFFFF;font-size: 18px;text-align: center;line-height: 46px;font-weight: 500;text-transform: uppercase;}

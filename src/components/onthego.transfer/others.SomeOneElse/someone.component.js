@@ -69,25 +69,42 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             obj.id = isSelectedId ? isSelectedId : createPayeeObj.payeeAccountModels[0]?.payeeId;
         }
         setBtnLoading(true)
-        let payeesave = await savePayee(obj)
-        if (payeesave.ok) {
-            if (props.type !== "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer })
-                if (confirmRes.ok) {
-                    setBtnLoading(false);
-                    props.onContinue(confirmRes.data);
+        if (obj.payeeAccountModels[0].documents == null || obj.payeeAccountModels[0].documents && obj.payeeAccountModels[0].documents.details.length == 0) {
+            useDivRef.current.scrollIntoView()
+            setErrorMessage('At least one document is required'); setBtnLoading(false)
+
+        } else if (obj.payeeAccountModels[0].documents) {
+            let length = 0;
+            for (let k in obj.payeeAccountModels[0].documents.details){
+                if(obj.payeeAccountModels[0].documents.details[k].state=='Deleted'){
+                    length=length+1;
+                }
+            }
+            if(length==obj.payeeAccountModels[0].documents.details.length){
+                useDivRef.current.scrollIntoView()
+                setErrorMessage('At least one document is required'); setBtnLoading(false)
+            } else {
+                let payeesave = await savePayee(obj)
+                if (payeesave.ok) {
+                    if (props.type !== "manual") {
+                        const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer })
+                        if (confirmRes.ok) {
+                            setBtnLoading(false);
+                            props.onContinue(confirmRes.data);
+                        } else {
+                            setBtnLoading(false);
+                            setErrorMessage(isErrorDispaly(confirmRes));
+                            useDivRef.current.scrollIntoView();
+                        }
+                    } else {
+                        setShowDeclartion(true)
+                    }
                 } else {
                     setBtnLoading(false);
-                    setErrorMessage(isErrorDispaly(confirmRes));
+                    setErrorMessage(isErrorDispaly(payeesave));
                     useDivRef.current.scrollIntoView();
                 }
-            } else {
-                setShowDeclartion(true)
             }
-        } else {
-            setBtnLoading(false);
-            setErrorMessage(isErrorDispaly(payeesave));
-            useDivRef.current.scrollIntoView();
         }
 
     }
@@ -125,7 +142,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                             <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
                                 setAddressOptions({ ...addressOptions, domesticType: activekey });
-                                form.current.resetFields();
+                                form.current.resetFields();setDocuments(null);setErrorMessage(null)
                                 // form.current.setFieldsValue({ addressType: 'someoneelse', transferType: activekey })
                             }}>
                                 <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
@@ -354,9 +371,9 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                 
                 <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
                 {console.log(documents)}
-                <AddressDocumnet documents={documents || null} onDocumentsChange={(docs) => {
+                <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
                         setDocuments(docs)
-                    }} />
+                    }} refreshData = {addressOptions?.domesticType}/>
                     <div className="text-right mt-12">
                         {/* <Button
                             className="pop-btn px-36"
