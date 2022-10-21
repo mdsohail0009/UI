@@ -77,7 +77,7 @@ class BusinessTransfer extends Component {
         if( _obj.payeeAccountModels[0].documents==null){this.useDivRef.current.scrollIntoView()
             this.setState({ ...this.state, isLoading: false, errorMessage: 'At least one document is required', isBtnLoading: false });
         }else{
-            _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
+            _obj.payeeAccountModels[0].documents?.customerId = this.props?.userProfile?.id;
             this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
         delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
         this.setState({ ...this.state, errorMessage: null, isLoading: false, isBtnLoading: true });
