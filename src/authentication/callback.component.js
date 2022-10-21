@@ -14,7 +14,7 @@ class CallbackPage extends React.Component {
         const url = localStorage.getItem("__url");
         localStorage.removeItem("__url");
         this.props.history.push(url && url !== "/callback" ? url : "/onboading")
-        this.props.cookies.set('SID',user.profile.sub,{path:'/',domain:'.suissebase.io'})
+        this.props.cookies.set('SID',user.profile.sub,{path:'/',domain:process.env.REACT_APP_SUBDOMAIN||window.location.hostname})
     }
     render() {
         return (

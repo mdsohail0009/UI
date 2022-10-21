@@ -53,7 +53,7 @@ background-image: linear-gradient(99.09deg, var(--btnGrad1) 0%, var(--btnGrad2) 
 line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .custom-btn{border-radius: 5px;border:0;line-height: 18px;min-width:90px;height: 36px;font-weight: 300;font-size: 16px;filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25));transition: 0.5s ease;}
 .custom-btn.outline{border-color: var(--bgDarkGrey) !important;}
-.custom-btn.prime{background-image: linear-gradient(99.09deg, var(--btnGrad1), var(--btnGrad2));}
+.custom-btn.prime,.ant-btn-primary[disabled], .ant-btn-primary[disabled]:hover{background-image: linear-gradient(99.09deg, var(--btnGrad1), var(--btnGrad2));}
 .custom-btn.sec{background: transparent;background-image: none;border: 1px solid var(--btnBorder); color: var(--textWhite);}
 .custom-btn.sec:hover{background-color: var(--bgWhite);color: var(--textDark);}
 .carousel-card{background-color: var(--bgDarkYellow);border-radius: 30px;overflow: auto;max-height: 265px;}
