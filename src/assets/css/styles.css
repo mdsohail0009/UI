@@ -1472,7 +1472,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .basic-info{padding:16px;}
 /* .ant-modal-header{border-color: transparent;} */
 /* .custom-alert-width{width:900px;} */
-td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;width: 100%;}
+td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .cust-pop-up-btn .primary-btn.pop-cancel{border: transparent !important;}
 .cust-pop-up-btn .primary-btn.pop-cancel:hover{border: 1px solid var(--textYellow) !important;}
 .custom-back-btn .pop-cancel{border: transparent !important;}

@@ -139,8 +139,8 @@ class AddressBook extends Component {
 			filter: true,
 			width: 300,
 			customCell: (props) => (
-				<td className="d-flex">
-					<div className="gridLink" onClick={() => this.addressFiatView(props)}>
+				<td className="d-flex justify-content">
+					<div className="gridLink c-pointer	" onClick={() => this.addressFiatView(props)}>
 					{props?.dataItem?.whiteListName}
 					</div>
 					<Text className="file-label ml-8 fs-12 add-lbl">
@@ -233,8 +233,8 @@ class AddressBook extends Component {
 			width: 250,
 			customCell: (props) => (
 				<td>
-					<div className="gridLink" onClick={() => this.addressCryptoView(props)}>
-						{props.dataItem?.whiteListName}
+					<div>
+						<span className="gridLink c-pointer" onClick={() => this.addressCryptoView(props)}>{props.dataItem?.whiteListName}</span>
 					</div>
 					{/* <Text className="file-label ml-8 fs-12">
 						{addressName[props?.dataItem?.addressType]}
