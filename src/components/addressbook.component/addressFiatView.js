@@ -103,9 +103,7 @@ const AddressFiatView = (props) => {
 	return (
 		<>
 			<div className="main-container cust-cypto-view">
-			<Title className="basic-info p-0 basicinfo">
-							Beneficiary Bank Details
-							</Title>
+			
 				<div className="box bg-box">
 					{loading ? (
 						<Loader />
@@ -114,6 +112,9 @@ const AddressFiatView = (props) => {
 							
 							{fiatAddress && (
 								<div className="custom-alert-width">
+									<Title className="basic-info p-0 basicinfo">
+														Beneficiary Details
+														</Title>
 								<Row gutter={8}>
 									<Col xl={24} xxl={24} className="bank-view">
 										<Row className="kpi-List">
