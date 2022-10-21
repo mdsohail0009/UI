@@ -14,27 +14,29 @@ class Layout extends Component {
     state = {
     }
     componentDidMount() {
-        let Sid = this.props.cookies.get('SID')
         if ((!this.props.user || this.props.user.expired) && !window.location.pathname.includes('callback')) {
+            localStorage.setItem("__url", window.location.pathname);
             userManager.clearStaleState().then(()=>{
                 this.props.dispatch(clearUserInfo());
                 userManager.signinRedirect();
             });
-        }else if((this.props.user&&Sid) && this.props.user.profile.sud != Sid){
-            userManager.removeUser();
-            window.location.reload()
-          }
+        }
     }
     redirect = () =>{
         userManager.removeUser()
         window.open(process.env.REACT_APP_ADMIN_URL,"_self")
     }
     render() {
+        let Sid = this.props.cookies.get('SID')
         if ((!this.props.user || this.props.user.expired) && !window.location.pathname.includes('callback')) {
             return <div className="loader">Loading .....</div>
         }else if((!this.props.user || this.props.user.expired) && window.location.pathname.includes('callback')){
             return <CallbackPage />
-        }else if(this.props.user && !this.props.userProfile){
+        }else if(Sid && this.props.user && this.props.user.profile && this.props.user.profile.sub!=Sid){
+            userManager.removeUser()
+            window.location.reload()
+            return <div className="loader">Loading .....</div>
+          }else if(this.props.user && !this.props.userProfile){
             return <OnBoarding />
         }else if( this.props.userProfile && this.props.userProfile?.role==='Admin'){
             return <>{this.redirect()}</>
