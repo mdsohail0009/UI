@@ -132,7 +132,6 @@ class OthersBusiness extends Component {
         _obj.payeeAccountModels[0].walletCode = "EUR";
         _obj.payeeAccountModels[0].bankName = ibanDetails?.bankName;
         delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
-        _obj.payeeAccountModels[0].documents?.customerId = this.props?.userProfile?.id;
         _obj.addressType = "otherbusiness";
         _obj.transferType = "sepa";
         _obj.amount = this.props.amount;
@@ -142,7 +141,7 @@ class OthersBusiness extends Component {
         if( _obj.payeeAccountModels[0].documents==null){this.useDivRef.current.scrollIntoView()
             this.setState({ ...this.state, isLoading: false, errorMessage: 'At least one document is required', isBtnLoading: false });
         }else{
-            _obj.payeeAccountModels[0].documents?.customerId = this.props?.userProfile?.id;
+            _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
         this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
         const response = await savePayee(_obj);
         if (response.ok) {
