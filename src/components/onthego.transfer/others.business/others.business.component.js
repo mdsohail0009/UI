@@ -138,36 +138,48 @@ class OthersBusiness extends Component {
         if(isEdit){
             _obj.id = isSelectedId ? isSelectedId : details?.payeeId;
         }
-        if( _obj.payeeAccountModels[0].documents==null){this.useDivRef.current.scrollIntoView()
+        if (_obj.payeeAccountModels[0].documents == null || _obj.payeeAccountModels[0].documents && _obj.payeeAccountModels[0].documents.details.length == 0) {
+            this.useDivRef.current.scrollIntoView()
             this.setState({ ...this.state, isLoading: false, errorMessage: 'At least one document is required', isBtnLoading: false });
-        }else{
-            _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
-        this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
-        const response = await savePayee(_obj);
-        if (response.ok) {
-            if (this.props.type !== "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
-                if (confirmRes.ok) {
-                    this.props.onContinue(confirmRes.data);
-                    this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
-                  //  this.useDivRef.current.scrollIntoView()
-                } else {
-                    this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false, isBtnLoading: false });
-                  //  this.useDivRef.current.scrollIntoView(0,0)
-                  window.scrollTo(0, 0);
+        }else if (_obj.payeeAccountModels[0].documents) {
+            let length = 0;
+            for (let k in _obj.payeeAccountModels[0].documents.details){
+                if(_obj.payeeAccountModels[0].documents.details[k].state=='Deleted'){
+                    length=length+1;
                 }
-            } else {
-                // this.props.onContinue({ close: true, isCrypto: false });
-                this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
-                this.useDivRef.current?.scrollIntoView(0,0)
             }
+            if(length==_obj.payeeAccountModels[0].documents.details.length){
+                this.useDivRef.current.scrollIntoView()
+                this.setState({ ...this.state, isLoading: false, errorMessage: 'At least one document is required', isBtnLoading: false });
+            } else {
+                _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
+                this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
+                const response = await savePayee(_obj);
+                if (response.ok) {
+                    if (this.props.type !== "manual") {
+                        const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
+                        if (confirmRes.ok) {
+                            this.props.onContinue(confirmRes.data);
+                            this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
+                            //  this.useDivRef.current.scrollIntoView()
+                        } else {
+                            this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false, isBtnLoading: false });
+                            //  this.useDivRef.current.scrollIntoView(0,0)
+                            window.scrollTo(0, 0);
+                        }
+                    } else {
+                        // this.props.onContinue({ close: true, isCrypto: false });
+                        this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
+                        this.useDivRef.current?.scrollIntoView(0, 0)
+                    }
 
-        } else {
-            
-            this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, isBtnLoading: false });
-           // this.useDivRef.current.scrollIntoView()
+                } else {
+
+                    this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, isBtnLoading: false });
+                    // this.useDivRef.current.scrollIntoView()
+                }
+            }
         }
-    }
 
     }
     render() {

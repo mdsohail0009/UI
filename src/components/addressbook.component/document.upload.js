@@ -140,10 +140,13 @@ class AddressDocumnet extends Component {
                             onClick={() => {
                                 let { documents: docs } = this.state;
                                 let files = docs.details;
-                                for(var k in files){
-                                    if(files[k].id==this.state.selectedObj.id){
-                                        files[k].state='Deleted';
-                                        files[k].isChecked=false;
+                                for (let k in files) {
+                                    if (files[k].id == '00000000-0000-0000-0000-000000000000') {
+                                        files.splice(k, 1);
+                                    } else {
+                                        if (files[k].id == this.state.selectedObj.id) {
+                                            files[k].state = 'Deleted'
+                                        }
                                     }
                                 }
                                 let obj=Object.assign([],files)

@@ -69,32 +69,43 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             obj.id = isSelectedId ? isSelectedId : createPayeeObj.payeeAccountModels[0]?.payeeId;
         }
         setBtnLoading(true)
-        if (obj.payeeAccountModels[0].documents == null) {
+        if (obj.payeeAccountModels[0].documents == null || obj.payeeAccountModels[0].documents && obj.payeeAccountModels[0].documents.details.length == 0) {
             useDivRef.current.scrollIntoView()
-            setErrorMessage('At least one document is required');setBtnLoading(false)
+            setErrorMessage('At least one document is required'); setBtnLoading(false)
 
-        } else {
-        let payeesave = await savePayee(obj)
-        if (payeesave.ok) {
-            if (props.type !== "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer })
-                if (confirmRes.ok) {
-                    setBtnLoading(false);
-                    props.onContinue(confirmRes.data);
+        } else if (obj.payeeAccountModels[0].documents) {
+            let length = 0;
+            for (let k in obj.payeeAccountModels[0].documents.details){
+                if(obj.payeeAccountModels[0].documents.details[k].state=='Deleted'){
+                    length=length+1;
+                }
+            }
+            if(length==obj.payeeAccountModels[0].documents.details.length){
+                useDivRef.current.scrollIntoView()
+                setErrorMessage('At least one document is required'); setBtnLoading(false)
+            } else {
+                let payeesave = await savePayee(obj)
+                if (payeesave.ok) {
+                    if (props.type !== "manual") {
+                        const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer })
+                        if (confirmRes.ok) {
+                            setBtnLoading(false);
+                            props.onContinue(confirmRes.data);
+                        } else {
+                            setBtnLoading(false);
+                            setErrorMessage(isErrorDispaly(confirmRes));
+                            useDivRef.current.scrollIntoView();
+                        }
+                    } else {
+                        setShowDeclartion(true)
+                    }
                 } else {
                     setBtnLoading(false);
-                    setErrorMessage(isErrorDispaly(confirmRes));
+                    setErrorMessage(isErrorDispaly(payeesave));
                     useDivRef.current.scrollIntoView();
                 }
-            } else {
-                setShowDeclartion(true)
             }
-        } else {
-            setBtnLoading(false);
-            setErrorMessage(isErrorDispaly(payeesave));
-            useDivRef.current.scrollIntoView();
         }
-    }
 
     }
     const isErrorDispaly = (objValue) => {
