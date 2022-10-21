@@ -218,20 +218,20 @@ class OnthegoCryptoTransfer extends Component {
         }
     }
      numberValidator = async function (rule, value, callback) {
-        debugger
         if (value) {
             if (typeof value === "number") {
                 value = value.toString();
             }
-            if (
+            const reg = /.*[0-9].*/g;
+            if (value && !reg.test(value)) {
+                throw new Error("Invalid amount");
+            }
+            else if (
                 (value.indexOf(".") > -1 && value.split(".")[0].length >= 11) ||
                 (value.indexOf(".") < 0 && value.length >= 11)
             ) {
                 throw new Error("Amount exceeded");
             } 
-            // else if (value.indexOf(".") > -1 && value.split(".")[0].length == 0) {
-            //     throw new Error("Please enter amount");
-            // }
             else {
                 callback();
             }

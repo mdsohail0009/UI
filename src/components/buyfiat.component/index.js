@@ -46,7 +46,7 @@ withdrawFiatSummaryBack = () => {
 }
     renderContent = () => {
         const stepcodes = {
-            fiatdeposit: <FiatDeposit tab={this.props.tabData} fiatRef={(cd) => this.child = cd}  oncloseClick={this.closeDrawer} />,
+            fiatdeposit: <FiatDeposit tab={this.props.tabData} fiatRef={(cd) => this.child = cd}  oncloseClick={this.closeDrawer} isShowSendFiat={this.props?.isShowSendFiat}/>,
             faitsummary: <FiatSummary />,
             fiatdepositsummary: <FaitDepositSummary />,
             addcard: <AddBuyFiatCard />,

@@ -17,6 +17,7 @@ import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSu
 import { getcoinDetails } from './api';
 import {createCryptoDeposit} from "../deposit.component/api";
 import TransactionsHistory from "../transactions.history.component";
+import Loader from "../../Shared/loader";
 class YourPortfolio extends Component {
     state = {
         loading: true,
@@ -231,11 +232,14 @@ class YourPortfolio extends Component {
                     
               </div>
             </div> */}
+        {cryptoPortFolios?.loading ? (
+               <Loader />
+        ) : (
             <List
               className="mobile-list dash-mobile-list"
               itemLayout="horizontal"
               dataSource={cryptoPortFolios.data}
-              loading={cryptoPortFolios.loading}
+              //loading={cryptoPortFolios.loading}
               locale={{
                 emptyText: (
                   <Empty
@@ -330,6 +334,7 @@ class YourPortfolio extends Component {
                 </List.Item>
               )}
             />
+        )}
             <BuySell
               showDrawer={this.state.buyDrawer}
               onClose={() => this.closeDrawer()}
