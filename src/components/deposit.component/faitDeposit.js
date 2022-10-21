@@ -45,7 +45,7 @@ class FaitDeposit extends Component {
   componentDidMount() {
     this.props.fiatRef(this)
     this.props.fetchCurrencyWithBankDetails()
-    if (this.props.sendReceive.withdrawFiatEnable) {
+    if (this.props.sendReceive.withdrawFiatEnable||this.props?.isShowSendFiat) {
       getFeaturePermissionsByKeyName(`send_fiat`);
       this.handleshowTab(2);
       this.props.dispatch(setSubTitle(apicalls.convertLocalLang("withdrawFiat")));
