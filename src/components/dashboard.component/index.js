@@ -12,8 +12,6 @@ import Notices from './notices';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 import BankWallets from '../bankui.component'
 
-
-
 class Home extends Component {
     state = {
         loading: false,
@@ -72,7 +70,7 @@ class Home extends Component {
                 </Carousel> : ""}
 
                 <Row justify="center mt-16">
-                    {this.state.permissions?.Balances && <Col xs={24} md={12} xl={10}>
+                {this.state.permissions?.Balances && <Col xs={24} md={12} xl={10}>
                     <div className="markets-panel">
                         <BankWallets/>
                     </div>
@@ -83,7 +81,6 @@ class Home extends Component {
                             <YourPortfolio />
                         </div>
                     </Col>}
-
                     <Col xs={24} md={12} xl={14}>
                         {this.state.permissions.Transactions && <Portfolio
                             crypto="Bitcoin"

@@ -305,9 +305,7 @@ const Verifications = (props) => {
                 style={{ color: "black", margin: "0 auto" }}
                 onClick={() => verifyPhoneOtp()}
                 loading={phone.btnLoader}
-            >
-                <Text className={` text-yellow`} >Click here to verify</Text>
-          </Button>
+            ><Text className={` text-yellow`} >Click here to verify</Text></Button>
         ),
     };
     const email_btnList = {
@@ -334,8 +332,8 @@ const Verifications = (props) => {
         ${"c-notallowed"}`} >Verification code sent</Text></Button>
             <Tooltip
                 placement="topRight"
-                title={`Haven\'t received code ? Request new code in ${emailSeconds} seconds. The code will expire after 30mins.`}>
-                <span className="icon md info mr-8 aaa" />
+                title={`Haven\'t received code ? Request new code in ${emailSeconds} seconds. The code will expire after 5mins.`}>
+                <span className="icon md info mr-8" />
             </Tooltip>
         </>
         ),
@@ -475,7 +473,7 @@ const Verifications = (props) => {
 										onValueChange={(e) => handlephoneinputChange(e)} 
 										disabled={phone.btnName == 'get_otp' || phone.btnName == 'verified'}
 									/> */}
-                                    <div className="new-add c-pointer get-code text-yellow hy-align aa">
+                                    <div className="new-add c-pointer get-code text-yellow hy-align">
                                         {phone_btnList[phone.btnName]}
                                     </div>
                                 </div>
@@ -585,7 +583,7 @@ const Verifications = (props) => {
 										onValueChange={(e) => handleAuthenticatorinputChange(e)} 
 										disabled={authenticator.btnName == 'get_otp' || authenticator.btnName == 'verified'}
 									/> */}
-                                    <div className="new-add c-pointer get-code text-yellow hy-align bb">
+                                    <div className="new-add c-pointer get-code text-yellow hy-align">
                                         {authenticator_btnList[authenticator.btnName]}
                                     </div>
                                 </div>

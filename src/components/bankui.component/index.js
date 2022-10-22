@@ -12,13 +12,12 @@ import {
 } from "antd";
 import ConnectStateProps from "../../utils/state.connect";
 import Currency from "../shared/number.formate";
-
 import Translate from "react-translate-component";
 import Loader from "../../Shared/loader";
 import { withRouter, Link } from "react-router-dom";
 
 import apicalls from "../../api/apiCalls";
-const { Title, Paragraph } = Typography;
+const { Title } = Typography;
 
 class BankWallets extends Component {
   state = {
@@ -31,7 +30,7 @@ class BankWallets extends Component {
   }
   getCustomerAccountBalance = async () => {
     this.setState({ ...this.state, isLoading: true });
-    let response = await apicalls.getCustomerBankDetails(
+    let response = await apicalls.getAccountDetails(
       this.props.userProfile.id
     );
     if (response.ok) {
@@ -47,20 +46,31 @@ class BankWallets extends Component {
   };
 
   createAccount = (e) => {
-    if (this.props.userProfile.isBusiness) {
-      window.open(`http://localhost:3001/businessCreateAccount/${e}`);
-    } else {
-      window.open(`http://localhost:3001/createAccount/${e}`);
-    }
+      this.redirectBank(`http://localhost:3001/createAccount/${e}`);
   };
+  redirectBank = (url,type) =>{
+    if (!this.props?.userProfile?.isKYC) {
+      this.props.history.push("/notkyc");
+      return;
+  }
+  if (!this.props?.twoFA.isEnabled) {
+      this.props.history.push("/enabletwofactor");
+      return;
+  }
+  if (this.props?.userProfile?.isDocsRequested) {
+      this.props.history.push("/docnotices");
+      return;
+  }
+  window.open(url,type||'_self');
+  }
   menuBar = (item) => (
     <Menu>
       <ul className="pl-0 drpdwn-list">
         <li
           onClick={() =>
-            window.open(
+            this.redirectBank(
               process.env.REACT_APP_BANK_UI_URL + `internaltransfer`,
-              "_blank"
+              "_self"
             )
           }
         >
@@ -70,26 +80,23 @@ class BankWallets extends Component {
         </li>
         <li
           onClick={() =>
-            //window.open("http://localhost:3001/dashboard")}
-            // window.open(process.env.REACT_APP_BANK_UI_URL +`addView/${item.id}`, "_blank")}
-            this.props.history.push(`/internaltransfer`)
-          }
+            this.redirectBank(process.env.REACT_APP_BANK_UI_URL +`dashboard`, "_self")}
         >
           <Link value={5} className="c-pointer">
-            Accounts Page
+          Go To Personal Bank Account
           </Link>
         </li>
         <li
           onClick={() =>
-            window.open(
+            this.redirectBank(
               process.env.REACT_APP_BANK_UI_URL +
-                `dashboard/digitalwallet/${item.currency}`,
-              "_blank"
+                `dashboard/digitalwallet/${item.currency}/${item.id}`,
+              "_self"
             )
           }
         >
           <Link value={5} className="c-pointer">
-            SuisseBase Wallet
+          Transfer To Suissebase Digital Wallet
           </Link>
         </li>
       </ul>
@@ -137,18 +144,19 @@ class BankWallets extends Component {
                 />
                 {item.isAccountExist ? (
                   <>
-                    {item?.accountStatus?.toLowerCase() != "pending" && (
+                    {item?.accountStatus?.toLowerCase() == "approved" && (
                       <div className="crypto-btns mt-8">
                         <Translate
                           content="transfer_funds"
                           component={Button}
                           type="primary"
-                          className="custom-btn prime"
+                          className="custom-btn prime text-white" 
+                          disabled={!(item.availableBalance && item.availableBalance>0)}
                           onClick={() =>
-                            window.open(
+                            this.redirectBank(
                               process.env.REACT_APP_BANK_UI_URL +
-                                `transfer/${item.currency}`,
-                              "_blank"
+                                `dashboard/transfer/${item.currency}/${item.id}`,
+                              "_self"
                             )
                           }
                         />
@@ -159,10 +167,10 @@ class BankWallets extends Component {
                           type="primary"
                           className="custom-btn sec ml-16"
                           onClick={() =>
-                            window.open(
+                            this.redirectBank(
                               process.env.REACT_APP_BANK_UI_URL +
                                 `dashboard/receive/${item.currency}/${item.id}`,
-                              "_blank"
+                              "_self"
                             )
                           }
                         />
@@ -182,14 +190,17 @@ class BankWallets extends Component {
                         </Dropdown>
                       </div>
                     )}
-                    {item?.accountStatus?.toLowerCase() == "pending" && (
+
+                    {item?.accountStatus?.toLowerCase() != "approved" && (
                       <div className="crypto-btns mt-8">
                         <Button
                           content="Pending"
                           type="primary"
-                          className="custom-btn prime"
+                          className="custom-btn prime  text-white"
+                          style={{width:'118px'}}
+                          disabled={true}
                         >
-                          Pending
+                         {item?.accountStatus}
                         </Button>
                       </div>
                     )}
@@ -202,10 +213,10 @@ class BankWallets extends Component {
                       component={Button}
                       className="custom-btn prime"
                       onClick={() =>
-                        window.open(
+                        this.redirectBank(
                           process.env.REACT_APP_BANK_UI_URL +
                             `createAccount/${item.currency}`,
-                          "_blank"
+                          "_self"
                         )
                       }
                     />

@@ -108,10 +108,11 @@ const updateSecurity = (obj) => {
 	return apiClient.put(ApiControllers.master + "UpdateSecurity", obj);
 };
 const getCustomerBankDetails = (customerId)=>{
-
     return bankClient.get(ApiControllers.bank + `GetAccountBalanceByCustomerId/${customerId}`);
-
 }
+const getAccountDetails=(customerId)=>{
+	return bankClient.get(ApiControllers.bank + `AccountDetails/${customerId}`)
+  }
 
 const encryptValue = (msg, key) => {
 	msg = typeof msg == "string" ? msg : JSON.stringify(msg);
@@ -220,7 +221,7 @@ let apicalls = {
 	getVerificationFields,
 	twofactor,
 	getInfoVal,
-	getReferalDetails,getPayeeLu,saveTransferData,getRecipientData,getCustomerBankDetails,
+	getReferalDetails,getPayeeLu,saveTransferData,getRecipientData,getCustomerBankDetails,getAccountDetails,
 	getPayeeCryptoLu,
 	getPayeeCrypto,
 	confirmCryptoTransaction
