@@ -20,19 +20,20 @@ class BusinessTransfer extends Component {
         errorMessage: null,
         isLoading: true,
         details: {},
-        selectedTab: this.props.selectedAddress?.transferType||"domestic", isBtnLoading: false,
-        showDeclaration: false,isEdit:false,
+        selectedTab: this.props?.selectedAddress?.transferType||"domestic", isBtnLoading: false,
+        showDeclaration: false,
+        isEdit: false,
         isSelectedId: null
     };
     componentDidMount() {
         this.loadDetails();
-
     }
     loadDetails = async () => {
         this.setState({ ...this.state, errorMessage: null, isLoading: true });
         const response = await createPayee(this.props.userProfile.id, this.props.selectedAddress?.id || "", "otherbusiness");
         if (response.ok) {
-            let data = response.data;let edit=false;
+            let data = response.data;
+            let edit = false;
             if (!data?.payeeAccountModels) {
                 data.payeeAccountModels = [payeeAccountObj()];
             }
@@ -57,7 +58,6 @@ class BusinessTransfer extends Component {
 
     }
     submitPayee = async (values) => {
-        debugger
         let { details, selectedTab,isEdit,isSelectedId } = this.state;
         let _obj = { ...details, ...values };
         _obj.payeeAccountModels[0].currencyType = "Fiat";
@@ -105,6 +105,7 @@ class BusinessTransfer extends Component {
                         }
                     } else {
                         this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false, showDeclaration: true });
+                        this.props?.updatedHeading(true)
                     }
                 } else {
                     this.useDivRef.current.scrollIntoView()
@@ -130,7 +131,7 @@ class BusinessTransfer extends Component {
                 <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                    Please sign using link received in email to whitelist your address. `}</Text>
                 <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
-                <div className="my-25"><Button onClick={() => this.props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn text-textDark">BACK</Button></div>
+                {/* <div className="my-25"><Button onClick={() => this.props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button></div> */}
             </div>
         }
         return <div ref={this.useDivRef}><Tabs className="cust-tabs-fait" onChange={this.handleTabChange} activeKey={selectedTab}>
@@ -254,8 +255,8 @@ class BusinessTransfer extends Component {
                                 <Button
                                     htmlType="submit"
                                     size="large"
-                                    className="pop-btn mb-36"
-                                    style={{ minWidth: "100%" }}
+                                    className="pop-btn mb-36 px-36"
+                                    style={{ width: "300px" }}
                                     loading={this.state.isBtnLoading}>
                                     {this.props.type === "manual" && "Save"}
                                     {this.props.type !== "manual" && "Continue"}
