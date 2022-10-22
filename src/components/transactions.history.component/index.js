@@ -14,7 +14,8 @@ import { setCurrentAction } from "../../reducers/actionsReducer";
 import { getFeaturePermissionsByKey } from '../shared/permissions/permissionService';
 import { withRouter } from "react-router-dom";
 import { setSelectedFeatureMenu } from "../../reducers/feturesReducer";
-
+import NumberFormat from "react-number-format";
+import Currency from "../shared/number.formate";
 const { Option } = Select;
 class TransactionsHistory extends Component {
   constructor(props) {
@@ -77,8 +78,28 @@ class TransactionsHistory extends Component {
     },
     { field: "docType", title: "Transaction", filter: true, },
     { field: "wallet", title: "Wallet", filter: true, },
-    { field: "debit", title: "Debit", filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
-    { field: "credit", title: "Credit", filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
+    { field: "debit", title: "Value", filter: false, dataType: 'number', filterType: "numeric",
+    customCell: (props) => (
+      <td>
+        {props.dataItem?.debit&& <NumberFormat value={props.dataItem?.debit} displayType={"text"} />}
+        {props.dataItem?.credit && props.dataItem?.debit && " / "}
+        {props.dataItem?.credit&& <NumberFormat value={props.dataItem.credit} displayType={"text"}/>}
+      
+      </td>
+    ) },
+   
+    { field: "debit", title: "Sender/Beneficiary Name", filter: false,
+    customCell: (props) => (
+      <td>
+        {props.dataItem?.senderName}
+        {(props.dataItem?.senderName && props.dataItem?.beneficiryName) && " / "}
+        {props.dataItem?.beneficiryName}
+      
+      </td>
+    ) },
+
+    { field: "accountnumber", title: "Iban/ Account number", filter: false,
+     },
     { field: "state", title: "State", filter: true, },
     // { field: "fromWalletCode", title: "From Wallet Code", filter: true, width: 180, },
     // { field: "fromValue", title: "From Value", width: 150, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
