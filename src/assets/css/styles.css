@@ -827,7 +827,9 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .tlv-header .mobile-logo {padding-left: 0px;}
     /* .enter-val-container.swap-com input{width: 65%;} */
     .custom-radio-btn.buysell-toggle.crypto-toggle{text-align: left !important;}
-    .ant-drawer-body{padding: 16px;}    
+    .ant-drawer-body{padding: 16px;}
+    .btn-content{display: block; text-align: center !important;}    
+    .create-account .ant-form-item-control-input-content{text-align: center;}
 }
 @media (min-width : 414px) {
     .footer-links a{margin-right: 16px;}
@@ -1027,6 +1029,9 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .add-custom.ant-row{flex-flow: initial !important;}
     .login-user .header-logo{flex-grow: 1;}
     .dash-mobile-list ul{max-height: 787px;overflow: auto;}
+    .btn-content{display: flex !important;}
+    .pop-btn.custom-send{margin-left: 24px;} 
+    .create-account .ant-form-item-control-input-content{text-align: right;}
 }
 @media (min-width: 992px){
     .tlv-header{display: flex}
@@ -1484,7 +1489,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .loading-btn{margin: 0 auto;} 
 .new-add .loading-btn + button{position:absolute; right:142px !important;}
 .bg-box{padding: 24px;border-radius: 0;}
-.pop-btn.custom-send{width: 245px !important;}
+.pop-btn.custom-send{width: 200px !important;}
 .btn-content{justify-content: right;}
 .pop-btn.withdraw-popcancel{width: 150px; height: 46px;  border: transparent; color: var(--textYellow); background-color: transparent;}
 .pop-btn.withdraw-popcancel:hover{border: 1px solid #f2f2f2 !important;}
@@ -1493,3 +1498,6 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .ant-list-split .ant-list-item{border-bottom: 1px solid var(--borderLight) !important;}
 .file-label.add-lbl{width: 165px; text-align: center;}
 .custom-btn:hover span{color: white;}
+.pop-btn.cancel-btn{background: transparent; border: transparent; border-radius: 40px; height: 46px !important; font-weight: 700 !important;}
+.pop-btn.cancel-btn:hover{border: 1px solid var(--borderLight) !important;}
+.pop-btn.cancel-btn span{color: var(--textYellow) !important;}
