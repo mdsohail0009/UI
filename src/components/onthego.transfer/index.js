@@ -856,14 +856,14 @@ class OnthegoFundTransfer extends Component {
                                         onClick={() => this.onCancel()}
                                         type="text"
                                         size="large"
-                                        className="text-white-30 fw-400 pop-cancel custom-send mb-12"
+                                        className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn"
                                     />
                                         <Button
                                             htmlType="button"
                                             onClick={() => { this.saveWithdrawdata(); }}
                                             size="large"
                                             block
-                                            className="pop-btn ml-24 custom-send"
+                                            className="pop-btn custom-send"
                                              style ={{backgroundColor: !isShowGreyButton  &&'#ccc',borderColor: !isShowGreyButton  &&'#3d3d3d'}}
                                            loading={this.state.isBtnLoading} >
                                             Confirm & Continue

@@ -166,7 +166,7 @@ class FaitDeposit extends Component {
     depObj.BankName = e;
     depObj.Amount = null;
     for (var k in this.state.BankDetails) {
-      if (this.state.BankDetails[k].bankName === e) {
+      if (this?.state.BankDetails[k].bankName === e) {
         this.setState({ ...this.state, bankLoader: true })
         let reqdepositObj = await requestDepositFiat(this.state.BankDetails[k].bankId, this.props.member?.id);
         if (reqdepositObj.ok === true) {
@@ -313,7 +313,7 @@ class FaitDeposit extends Component {
                       {/* <span className={`coin ${depObj.currency.toLowerCase()}`} style={{ marginRight: '8px', marginTop: '15px' }} /> */}
                       <div style={{ flex: 1 }}>
                           <Translate
-                      className="fw-200 text-white-50 fs-14"
+                      className="fw-600 text-white-50 fs-14"
                       content="account_name"
                       component={Text}
                     />
@@ -323,7 +323,7 @@ class FaitDeposit extends Component {
                       component={Text}
                       with={{ value: BankInfo.accountName }} />
                           <Translate
-                      className="fw-200 text-white-50 fs-14"
+                      className="fw-600 text-white-50 fs-14"
                       content="account_address"
                       component={Text}
                     />
@@ -347,7 +347,7 @@ class FaitDeposit extends Component {
                       component={Paragraph}
                     />}
                     {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <Translate
-                      className="fw-200 text-white-50 fs-14"
+                      className="fw-600 text-white-50 fs-14"
                       content="Routing_number"
                       component={Text}
                     />}
@@ -358,7 +358,7 @@ class FaitDeposit extends Component {
                       component={Paragraph}
                     />
                     <Translate
-                      className="fw-200 text-white-50 fs-14"
+                      className="fw-600 text-white-50 fs-14"
                       content="Swift_BICcode"
                       component={Text}
                     />
@@ -371,7 +371,7 @@ class FaitDeposit extends Component {
                        />
                        </CopyToClipboard>
                     <Translate
-                      className="fw-200 text-white-50 fs-14"
+                      className="fw-600 text-white-50 fs-14"
                       content="beneficiaryBank"
                       component={Text}
                     />
@@ -381,7 +381,7 @@ class FaitDeposit extends Component {
                       component={Text}
                       with={{ value: BankInfo.bankName }} />
                     <Translate
-                      className="fw-200 text-white-50 fs-14"
+                      className="fw-600 text-white-50 fs-14"
                       content="beneficiary_Bank_address"
                       component={Text}
                     />
@@ -392,7 +392,7 @@ class FaitDeposit extends Component {
                       with={{ value: BankInfo.bankAddress }} />
                       {BankInfo.referenceNo != null && BankInfo.referenceNo != '' && 
                     <Translate
-                      className="fw-200 text-white-50 fs-14"
+                      className="fw-600 text-white-50 fs-14"
                       content="bank_Reference_No"
                       component={Text}
                     />}
