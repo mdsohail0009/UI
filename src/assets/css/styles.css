@@ -1456,7 +1456,7 @@ cust-address{margin-bottom: 0px !important;}
  .k-grid-header .k-header > .k-link{font-size: 16px;font-weight: 500;}
  .k-grid td{font-size: 14px;font-weight: 400;}
  .ant-form-item-label > label{font-weight: 500;height: 24px !important;color: var(--textWhite);font-size: 14px;text-align: left;}
- h1.sub-heading {text-transform: capitalize;padding-left:4px; padding-right:4px;font-size:14px;font-weight:500;margin-top: 36px;color:var(--textWhite);}
+ h1.sub-heading {text-transform: capitalize;padding-left:4px; padding-right:4px;font-size:18px;font-weight:500;margin-top: 36px;color:var(--textWhite);}
  .pop-btn, .confirm-btn{height: 46px;}
 h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom: 16px;padding-left:4px; padding-right:4px;}
 .box.basic-info{border-radius: 0 !important;}
