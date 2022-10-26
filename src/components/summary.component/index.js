@@ -230,18 +230,10 @@ class Summary extends Component {
 							<Translate content="refund_cancellation" component="Text" />
 						</Paragraph>
 					</div>}
-					{(okBtnTitle == "buy" && permissions) &&
-					<SuisseBtn
-						className={"pop-btn"}
-						onRefresh={() => this.props.onRefresh()}
-						title={okBtnTitle || "pay"}
-						loading={isButtonLoad}
-						autoDisable={true}
-						onClick={() => this.props.onClick()}
-					/>}
+					
 					
 
-					<div className="d-flex align-center btn-content">
+					<div className="align-center btn-content">
 					<div className="text-center mt-16">
 						<Translate
 							content="cancel"
@@ -249,13 +241,22 @@ class Summary extends Component {
 							onClick={() => this.props.onCancel()}
 							type="text"
 							size="large"
-							className="text-white-30 fw-400 pop-cancel custom-send mb-12"
+							className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn"
 						/>
 					</div>
+					{(okBtnTitle == "buy" && permissions) &&
+					<SuisseBtn
+						className={"pop-btn custom-send"}
+						onRefresh={() => this.props.onRefresh()}
+						title={okBtnTitle || "pay"}
+						loading={isButtonLoad}
+						autoDisable={true}
+						onClick={() => this.props.onClick()}
+					/>}
 					<div>
 					{(okBtnTitle == "sell" && permissions) &&
 					<SuisseBtn
-						className={"pop-btn custom-send ml-16"}
+						className={"pop-btn custom-send"}
 						onRefresh={() => this.props.onRefresh()}
 						title={okBtnTitle || "pay"}
 						loading={isButtonLoad}

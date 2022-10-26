@@ -174,11 +174,7 @@ class BusinessTransfer extends Component {
                             </Form.Item>
                         </Col>
                     </Row>
-                    <Translate 
-                        content="Beneficiary_Details"
-                        component={Paragraph}
-                        className="mb-8  text-white fw-500 mt-16 px-4" style={{ fontSize: 18 }} 
-                    />
+                    <h2 style={{ fontSize: 18,}} className="mt-16 text-captz px-4 text-white fw-600">Recipient's Details</h2>
                     {/* <Divider /> */}
                     <Row gutter={[4, 4]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -304,7 +300,7 @@ class BusinessTransfer extends Component {
                         </Col>
                     </Row>
                     
-                    <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white fw-600">Recipient's Details</h2>
+                    <h2 style={{ fontSize: 18,}} className="mt-16 text-captz px-4 text-white fw-600">Recipient's Details</h2>
                     {/* <Divider /> */}
                     <Row gutter={[12, 12]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>

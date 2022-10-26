@@ -1019,7 +1019,7 @@ class WithdrawSummary extends Component {
 									/>
 								</span>}
 							</Form.Item>
-							<div className="d-flex align-center btn-content">
+							<div className="align-center btn-content">
 							<div className="text-center mt-16">
 							<Translate
 								content="cancel"
@@ -1027,12 +1027,12 @@ class WithdrawSummary extends Component {
 								onClick={() => this.onCancel()}
 								type="text"
 								size="large"
-								className="text-white-30 fw-400 pop-cancel custom-send mb-12"
+								className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn"
 							/>
 						</div>
 
 						
-							<div>{this.state.permissions?.Send && <Button size="large" className="pop-btn ml-24 custom-send" htmlType="submit" loading={this.state.btnLoading}>
+							<div>{this.state.permissions?.Send && <Button size="large" className="pop-btn custom-send" htmlType="submit" loading={this.state.btnLoading}>
 								<Translate content="with_draw" component={Text} />
 							</Button>}</div>
 						</div>
@@ -1071,7 +1071,7 @@ class WithdrawSummary extends Component {
 										</Button>
 									</>
 								}>
-									<div>
+									<div className="text-white">
 								Are you sure you want to cancel?
 								</div>
 							</Modal>
