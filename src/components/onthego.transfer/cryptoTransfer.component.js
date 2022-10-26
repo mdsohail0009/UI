@@ -271,7 +271,7 @@ class OnthegoCryptoTransfer extends Component {
                     )}
                         <Row gutter={[16, 16]} className="align-center send-crypto-err">
                             <Col xs={24} md={24} lg={3} xl={4} xxl={4}>
-                                <Title className="fs-30 fw-400 mt-16 text-white-30 text-yellow  mb-0">
+                                <Title className="fs-30 fw-400 ml-24 text-white-30 text-yellow  mb-0 mt-4">
                                     {this.props.selectedWallet?.coin}
                                 </Title>
                             </Col>
