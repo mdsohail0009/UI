@@ -42,7 +42,7 @@ const CryptoList = forwardRef(({ coinList, isLoading, onCoinSelected, coinType, 
     }
     return (<>
         {showSearch && 
-        <Search value={searchVal} placeholder={apiCalls.convertLocalLang('searchCurrency')} addonAfter={<span className="icon md search-white" />} onChange={({ currentTarget }) => { setSearchVal(currentTarget.value); handleSearch(currentTarget.value) }} size="middle" bordered={false} className="mb-16" />}
+        <Search value={searchVal} placeholder={apiCalls.convertLocalLang('searchCurrency')} addonAfter={<span className="icon md search-white" />} onChange={({ currentTarget }) => { setSearchVal(currentTarget.value); handleSearch(currentTarget.value) }} size="middle" bordered={false} className="mb-16 text-center" />}
         <List
             itemLayout="horizontal"
             dataSource={coinListData}

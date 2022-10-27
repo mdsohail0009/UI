@@ -480,7 +480,7 @@ class OnthegoFundTransfer extends Component {
                             value={this.state.searchVal}
                         />
                     </Form.Item> */}
-                    <Search placeholder="Search for Payee" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="mt-12" />
+                    <Search placeholder="Search for Payee" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className=" text-center" />
                 </Col>
                 {this.state?.loading && <Loader />}
                 {(!this.state.loading) && <>
