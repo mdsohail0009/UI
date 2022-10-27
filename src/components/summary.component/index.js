@@ -241,12 +241,12 @@ class Summary extends Component {
 							onClick={() => this.props.onCancel()}
 							type="text"
 							size="large"
-							className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn"
+							className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn mr-8 ml-0"
 						/>
 					</div>
 					{(okBtnTitle == "buy" && permissions) &&
 					<SuisseBtn
-						className={"pop-btn custom-send"}
+						className={"pop-btn custom-send ml-0"}
 						onRefresh={() => this.props.onRefresh()}
 						title={okBtnTitle || "pay"}
 						loading={isButtonLoad}

@@ -1041,7 +1041,7 @@ class WithdrawSummary extends Component {
 								className="documentmodal-width fiat-crypto-model"
 								destroyOnClose={true}
 								title="Confirm"
-								width={350}
+								
 								visible={this.state.previewModal}
 								closeIcon={
 									<Tooltip title="Close">
@@ -1053,9 +1053,9 @@ class WithdrawSummary extends Component {
 									</Tooltip>
 								}
 								footer={
-									<>									
+									<div className="cust-pop-up-btn crypto-pop">									
 										<Button
-											className="pop-btn px-36"
+											className="primary-btn pop-cancel btn-width"
 											style={{ margin: "0 8px" }}
 											onClick={() => this.onModalCancel()}
 
@@ -1063,15 +1063,15 @@ class WithdrawSummary extends Component {
 											No
 										</Button>
 										<Button
-											className="pop-btn px-36"
+											className="primary-btn pop-btn btn-width"
 											style={{ margin: "0 8px" }}
 											onClick={() => this.onModalOk()}
 										>
 											Yes
 										</Button>
-									</>
+									</div>
 								}>
-									<div className="text-white">
+									<div className="text-white fs-16">
 								Are you sure you want to cancel?
 								</div>
 							</Modal>

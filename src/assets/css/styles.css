@@ -1410,7 +1410,7 @@ td.ant-table-column-sort{background: transparent;}
 .fund-transfer-input .ant-input-group .ant-input{border:transparent;}
 .fund-transfer-input .ant-input:focus, .ant-input-focused{box-shadow:none;}
 .fund-transfer-input .ant-input-group-addon{color:var(--textWhite);}
-.fund-circle{width: 50px;height: 50px;height: 50px;border-radius: 50%;text-align: center;padding: 15px;background-color: var(--bgDarkGrey);}
+.fund-circle{width: 50px;height: 50px;height: 50px;border-radius: 50%;text-align: center;padding: 15px;background-color: var(--bgDarkGrey30);}
 .small-text-align small{font-weight: 400; vertical-align: super;background-color: var(--bgDarkGrey);padding: 2px 6px;color: #fff;border-radius: 10px;}
 .fund-border{margin-top: 10px;padding: 10px;}
 .fund-border:hover{margin-top: 10px;padding: 10px;background-color: var(--bgBlu);border-radius: 5px;color: var(--textWhite30);}
@@ -1501,3 +1501,4 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .pop-btn.cancel-btn{background: transparent; border: transparent; border-radius: 40px; height: 46px !important; font-weight: 700 !important;}
 .pop-btn.cancel-btn:hover{border: 1px solid var(--borderLight) !important;}
 .pop-btn.cancel-btn span{color: var(--textYellow) !important;}
+.crypto-pop .btn-width{width: 150px !important;height: 46px !important;}
