@@ -10,6 +10,7 @@ import Currency from '../shared/number.formate';
 import { getSelectedCoinDetails } from '../buy.component/api'
 import apicalls from '../../api/apiCalls';
 import CryptoList from '../shared/cryptolist';
+import Translate from 'react-translate-component';
 
 class SellToggle extends Component {
     state = {
@@ -32,7 +33,7 @@ class SellToggle extends Component {
         this.setState({ ...this.state, loading: false })
     }
     render() {
-        const { Text } = Typography;
+        const { Text,Paragraph } = Typography;
         if (this.props.sellData?.memberCoins?.loading||this.state.loading) { return <Loader /> }
         return (
             <>
@@ -40,7 +41,7 @@ class SellToggle extends Component {
                     && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apicalls.convertLocalLang('No_data')} />} */}
 
                 <div className="sellcrypto-container auto-scroll">
-
+                <Translate content="sell_your_crypto_for_cash_text" component={Paragraph} className="text-white-30 fw-500 fs-14 mt-16 code-lbl" />
                     {/* {this.props.sellData?.memberCoins?.data?.map((coin, idx) => <Card key={idx} className="crypto-card mb-16 c-pointer" bordered={false} onClick={() => { this.setCoinDetailData(coin); this.props.setExchangeValue({ key: coin.coin, value: coin.oneCoinValue }); }} >
                     <div className="crypto-details d-flex">
                     <div>

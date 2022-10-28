@@ -9,6 +9,7 @@ import { createCryptoDeposit } from "../api";
 import apicalls from "../../../api/apiCalls";
 import { fetchDashboardcalls } from "../../../reducers/dashboardReducer";
 import { getFeaturePermissionsByKeyName } from '../../shared/permissions/permissionService'
+import Loader from "../../../Shared/loader";
 
 const { Title, Paragraph } = Typography;
 const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {
@@ -46,6 +47,7 @@ const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {
         }
       };
     return <>
+    {swapStore.isLoading && <Loader />}
     {errorMsg !== null && (
                 <Alert
                   type="error"
@@ -55,10 +57,13 @@ const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {
                 />
               )}
         {/* <Translate content="deposite_a_crypto" component={Title} className="text-white-30 fw-200 mb-8 custom-font mt-16" /> */}
+       {!swapStore.isLoading && <>
         <Translate content="deposite_a_cryto_txt" component={Paragraph} className="text-white fw-500 fs-14 mt-16 mb-8 px-4 text-captz code-lbl" />
         <div className="dep-withdraw auto-scroll">
             <Spin spinning={loading}><CryptoList showSearch={true} titleField={'coin'} iconField={'coin'} showValues={true} coinList={swapStore.isLoading ? [] : swapStore.MemberCoins} isLoading={swapStore.isLoading} onCoinSelected={(coin) => onCryptoCoinSelect(coin)} coinType={"swap"} /></Spin>
         </div>
+        </>
+       }
         </>
 }
 

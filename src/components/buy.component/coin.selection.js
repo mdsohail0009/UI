@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { fetchCoins, fetchSelectedCoinDetails, setCoin, setExchangeValue } from '../../reducers/buyReducer';
 import { convertCurrency } from './buySellService';
 import apiClient from "../../api/apiCalls";
+import Loader from '../../Shared/loader'
 
 class CryptoComponent extends Component {
     ref = React.createRef();
@@ -56,6 +57,7 @@ class CryptoComponent extends Component {
         const { TabPane } = Tabs;
         const { Paragraph } = Typography;
         const { coins: coinListdata } = this.props?.buyInfo;
+        if (coinListdata["All"]?.loading) { return <Loader /> }
         return (
             <>
                 {/* <div className="text-center">
@@ -89,7 +91,7 @@ class CryptoComponent extends Component {
                     </Tabs> */}
                     <CryptoList ref={this.ref} isLoading={coinListdata["All"]?.loading} showSearch={true} coinList={coinListdata["All"]?.data} coinType="All" onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
                     </> : <>
-                    <Translate content="sell_your_crypto_for_cash_text" component={Paragraph} className="text-white-30 fw-500 fs-14 mt-16 code-lbl" />
+                    {/* <Translate content="sell_your_crypto_for_cash_text" component={Paragraph} className="text-white-30 fw-500 fs-14 mt-16 code-lbl" /> */}
                     <SellToggle /></>
                 }
             </>

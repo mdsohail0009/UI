@@ -296,6 +296,8 @@ class OnthegoFundTransfer extends Component {
         const { filterObj, pastPayees, payeesLoading, isVarificationLoader, isVerificationEnable,isPhMail,isShowGreyButton,isAuthMail } = this.state;
         const steps = {
             selectcurrency: <React.Fragment>
+                {this.state.fiatWalletsLoading && <Loader />}
+                {!this.state.fiatWalletsLoading && <div>
                 <div className="mt-8">
                     <Title
                         className='sub-heading code-lbl'>Send from your Suissebase FIAT Wallet</Title>
@@ -333,6 +335,7 @@ class OnthegoFundTransfer extends Component {
                         </List.Item>
                     )}
                 />
+                </div>}
             </React.Fragment>,
             enteramount: <>
                 <div className="mt-8">
