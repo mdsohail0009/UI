@@ -20,6 +20,8 @@ import cardsReducer from '../components/cards.component/cardsReducer';
 import TransforReducer from '../reducers/tranfor.Reducer';
 import featuresReducer from '../reducers/feturesReducer';
 import currentActionReducer from '../reducers/actionsReducer';
+import { loadUser } from 'redux-oidc';
+import { userManager } from '../authentication';
 
 const persistConfig = {
     key: "root",
@@ -50,6 +52,7 @@ let store = createStore(
     reducer,
     composeWithDevTools(applyMiddleware(thunk)),
 );
+loadUser(store,userManager);
 const persistor = persistStore(store);
 
 export { store, persistor }

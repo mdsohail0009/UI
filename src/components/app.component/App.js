@@ -40,6 +40,7 @@ function App(props) {
     localStorage.setItem("__url", window.location.pathname);
     loadUser(store, userManager).then(user => {
       setLoading(false);
+      const { userConfig: { userProfileInfo } } = store.getState();
       window.$zoho = window.$zoho || {};
       window.$zoho.salesiq?.reset();
       window.$zoho.salesiq = window.$zoho.salesiq || {
@@ -48,7 +49,7 @@ function App(props) {
         ready: function () {
           window.$zoho.salesiq.chatbutton.click(function () {
             // insert your code 
-            window.$zoho.salesiq.visitor.email(user.profile.email);
+            window.$zoho.salesiq.visitor.email(userProfileInfo.email);
             window.$zoho.salesiq.visitor.name(user.profile.preferred_username);
           })
           window.$zoho.salesiq.floatbutton.coin.hidetooltip();
