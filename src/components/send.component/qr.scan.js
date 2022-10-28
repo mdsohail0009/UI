@@ -117,7 +117,7 @@ class QRScan extends Component {
                <div className="text-center f-12 mt-16 text-white custom-crypto-btns">
                     {netWorkData && netWorkData.map((network) => {
                         return <>
-                            <span className="mr-16 custom-bnt text-white-30">
+                            <span className=  {network.code == this.props?.sendReceive?.depositWallet?.network ? "mr-16 custom-bnt text-white-30" : "ant-btn ant-btn-primary custom-btn sec network" }>
                                {netWorkData.length>1 &&<a onClick={() => this.onNetworkView(network)}>
                                     <span className='fw-500'>
                                         {network.code}
