@@ -10,7 +10,7 @@ import Loader from '../../Shared/loader';
 import WAValidator from "multicoin-address-validator";
 import { validateContentRule } from "../../utils/custom.validator";
 import Translate from "react-translate-component";
-const { Text, Title } = Typography;
+const { Text, Title, Paragraph } = Typography;
 const { Option } = Select;
 
 class AddressCrypto extends Component {
@@ -196,7 +196,9 @@ class AddressCrypto extends Component {
     }
     else {
       return <>
-      
+        {this.props?.isShowheading && <div className="text-center fs-16 fw-500">
+          <Paragraph className='text-white fs-24 fw-500' >Add Crypto Address</Paragraph>
+        </div>}
         <div ref={this.useDivRef}></div>
           {errorMessage && <Alert type="error" description={errorMessage} showIcon />}
           <Form

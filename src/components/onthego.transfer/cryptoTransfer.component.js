@@ -399,7 +399,7 @@ class OnthegoCryptoTransfer extends Component {
                     </Form>}
                 </>,
                   newtransfer: <>
-                        <AddressCrypto onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1} />
+                        <AddressCrypto onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1} isShowheading= {true} />
               </>,
                addressselection: <React.Fragment>
                 <>
