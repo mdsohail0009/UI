@@ -206,7 +206,7 @@ class AddressCrypto extends Component {
             onFinish={this.submit}
              scrollToFirstError
           >
-            <Form.Item className="fw-300 mb-8 px-4 text-white-50 custom-forminput custom-label pt-8"
+            <Form.Item className="mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="saveWhiteListName"
               label="Save Whitelist Name As"
               rules={[
@@ -229,7 +229,7 @@ class AddressCrypto extends Component {
             </div>
             <Row gutter={[8, 8]}>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-            <Form.Item className="fw-300 mb-8 px-4 text-white-50 custom-forminput custom-label pt-8"
+            <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="token"
               label="Token"
               rules={[
@@ -255,7 +255,7 @@ class AddressCrypto extends Component {
             </Form.Item>
             </Col>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-            <Form.Item className="fw-300 mb-8 px-4 text-white-50 custom-forminput custom-label pt-8"
+            <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="network"
               label="Network"
               rules={[
@@ -282,7 +282,7 @@ class AddressCrypto extends Component {
             </Col>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item
-              className="fw-300 mb-8 px-4 text-white-50 custom-forminput custom-label pt-8"
+              className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="walletAddress"
               label="Wallet Address"
               required
