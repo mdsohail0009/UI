@@ -2,6 +2,7 @@ import { create, } from 'apisauce';
 import { store } from '../store';
 import CryptoJS from 'crypto-js';
 import { useHistory } from 'react-router-dom';
+import { userManager } from '../authentication';
 
 const ipRegistry = create({
     baseURL: 'https://api4.ipregistry.co'
@@ -47,17 +48,20 @@ const _encrypt = (msg, key) => {
 apiClient.axiosInstance.interceptors.request.use((config) => {
     const { oidc: { user }, userConfig: { userProfileInfo }, currentAction: { action },
         menuItems } = store.getState()
+    if (!user?.profile?.idc) {
+        userManager.signoutRedirect();
+    }
     config.headers.Authorization = `Bearer ${user.access_token}`
     if (userProfileInfo?.id) config.headers.AuthInformation = userProfileInfo?.id ? _encrypt(`{CustomerId:"${userProfileInfo?.id}", Action:"${action || "view"
         }", FeatureId:"${menuItems?.featurePermissions?.selectedScreenFeatureId}"}`, userProfileInfo.sk) : ''
     return config;
 });
 bankClient.axiosInstance.interceptors.request.use((config) => {
-
     const { oidc: { user }, userConfig: { userProfileInfo }, currentAction: { action },
-
         menuItems } = store.getState()
-
+    if (!user?.profile?.idc) {
+        userManager.signoutRedirect();
+    }
     config.headers.Authorization = `Bearer ${user.access_token}`
 
     if (userProfileInfo?.id) config.headers.AuthInformation = userProfileInfo?.id ? _encrypt(`{CustomerId:"${userProfileInfo?.id}", Action:"${action || "view"
@@ -77,4 +81,4 @@ bankClient.axiosInstance.interceptors.request.use((config) => {
 //     } else { return err; }
 
 // });
-export { apiClient, coinGekoClient, identityClient, uploadClient, ipRegistry, sumsub,bankClient }
+export { apiClient, coinGekoClient, identityClient, uploadClient, ipRegistry, sumsub, bankClient }
