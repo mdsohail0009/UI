@@ -56,6 +56,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .custom-btn.prime{background-image: linear-gradient(99.09deg, var(--btnGrad1), var(--btnGrad2));}
 .custom-btn.sec{background: transparent;background-image: none;border: 1px solid var(--btnBorder); color: var(--textWhite);}
 .custom-btn.sec:hover{background-color: var(--bgWhite);color: var(--textDark);}
+.custom-btn.sec.network{border: 1px solid #8a8ab8; padding: 8px 10px;line-height: 18px; margin-right: 5px;font-size: 12px;}
 .carousel-card{background-color: var(--bgDarkYellow);border-radius: 30px;overflow: auto;max-height: 265px;}
 .ant-carousel .slick-dots-bottom{bottom: 10px  !important;}
 .ant-carousel .slick-dots li button{background: var(--bgGrey) !important; opacity: 0.5;height: 4px;border-radius: 2px;}
