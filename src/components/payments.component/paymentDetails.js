@@ -642,6 +642,7 @@ class PaymentDetails extends Component {
                                               showUploadList={false}
                                               beforeUpload={(props) => this.beforeUpload(props)}
                                               onChange={(props) => this.handleUpload(props, item, i)}
+                                              headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
                                               disabled={
                                                 item.state === "Approved" ||
                                                 item.state === "Cancelled" ||
@@ -855,7 +856,7 @@ class PaymentDetails extends Component {
     );
   }
 }
-const connectStateToProps = ({ userConfig }) => {
-  return { userConfig: userConfig.userProfileInfo };
+const connectStateToProps = ({ userConfig, oidc }) => {
+  return { userConfig: userConfig.userProfileInfo, user: oidc.user };
 };
 export default connect(connectStateToProps, null)(PaymentDetails);
