@@ -27,16 +27,16 @@ let initialState = {
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case USER_FOUND:
-            state = { ...state, user: action.payload,isLogout:false }
+            state = { ...state, user: action.payload, isLogout: false }
             return state;
         case USER_EXPIRING:
-            break;
+            return state;
         case USER_LOG_OUT:
-            state = { user: null, profile: null,isLogout:true };
+            state = { user: null, profile: null, isLogout: true };
             return state;
         case USER_EXPIRED:
-                state = { user: null, profile: null };
-                return state;
+            state = { user: null, profile: null };
+            return state;
         case GET_PROFILE_SUCCESS:
             state = { ...state, profile: action.payload };
             return state;
