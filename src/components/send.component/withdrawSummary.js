@@ -1060,7 +1060,7 @@ class WithdrawSummary extends Component {
 											onClick={() => this.onModalCancel()}
 
 										>
-											No
+											NO
 										</Button>
 										<Button
 											className="primary-btn pop-btn btn-width"
