@@ -457,7 +457,11 @@ class AddressBook extends Component {
 		let obj = this.state.selectedObj;
 		if (!this.state.isCheck) {
 			this.setState({ ...this.state, errorWorning: "Please select the one record" });
-		} else if (
+		} 
+		// else if(obj.status == "Inactive") {
+		// 	this.setState({ ...this.state, errorWorning: "Please select Active record" });
+		// }
+		else if (
 			obj.addressState === "Approved" ||
 			obj.addressState === "Rejected" ||
 			obj.addressState === "Reject"
