@@ -139,6 +139,7 @@ class YourPortfolio extends Component {
         //     sendDrawer: true
         // })
       } else {
+        this.props.dispatch(setSendCrypto(false));
           this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
          // this.props.dispatch(setSubTitle(`${selectedObj.coinBalance ? selectedObj.coinBalance : '0'} ${selectedObj.coin}` + " " + apiCalls.convertLocalLang('available')));
           this.props.dispatch(setStep("step7"));
