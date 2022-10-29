@@ -853,14 +853,14 @@ class OnthegoFundTransfer extends Component {
                            {this.state.permissions?.Send && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="text-right mt-36 create-account">
                                     <Form.Item className="mb-0 mt-16">
-                                    <Translate
+                                    {/* <Translate
                                         content="cancel"
                                         component={Button}
                                         onClick={() => this.onCancel()}
                                         type="text"
                                         size="large"
                                         className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn"
-                                    />
+                                    /> */}
                                         <Button
                                             htmlType="button"
                                             onClick={() => { this.saveWithdrawdata(); }}

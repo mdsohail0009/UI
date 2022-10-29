@@ -14,6 +14,7 @@ import OnthegoFundTransfer from '../onthego.transfer';
 import BankWallets from '../bankui.component';
 import {setReceiveFiatHead} from '../../reducers/buyFiatReducer';
 import Loader from "../../Shared/loader";
+import { buyFiatSteps as config } from '../buyfiat.component/config';
 const { Title, Paragraph } = Typography;
 
 class Wallets extends Component {
@@ -182,9 +183,10 @@ class Wallets extends Component {
                     destroyOnClose={true}
                     title={[<div className="side-drawer-header">
                         {/* {this.renderTitle()} */}
-                        <div className="">
-                            {/* <Title className="fs-24 mb-0 fw-600 basicinfo">Fund Transfer</Title> */}
-                        </div>
+                        <span></span>
+                        <div className="text-center fs-24">
+                            <Translate className="mb-0 text-white-30 fw-600" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
+                            </div>
                         <span onClick={() => this.setState({ ...this.state, showFuntransfer: false })} className="icon md close-white c-pointer" />
                     </div>]}
                     className="side-drawer w-50p"
