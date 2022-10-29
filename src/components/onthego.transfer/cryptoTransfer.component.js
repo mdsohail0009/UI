@@ -376,7 +376,7 @@ class OnthegoCryptoTransfer extends Component {
                                                 }
 
                                             } else {
-                                                if (!_amt) {
+                                                if (!_amt && _amt != 0) {
                                                     this.enteramtForm.current.validateFields()
                                                 } else {
                                                     if (_amt === "") {
