@@ -15,7 +15,6 @@ import SelectCrypto from '../addressbook.component/selectCrypto';
 import WithdrawaCryptolLive from '../withdraw.crypto.component/withdrawLive';
 import SuccessMsg from '../withdraw.crypto.component/success';
 import SelectAddress from '../withdraw.crypto.component/selectAddress';
-import SendMoney from '../withdraw.crypto.component/sendMoney';
 import OnthegoCryptoTransfer from '../onthego.transfer/cryptoTransfer.component';
 const { Paragraph } = Typography
 class SendReceive extends Component {
@@ -58,7 +57,6 @@ class SendReceive extends Component {
             withdraw_crypto_liveness: <WithdrawaCryptolLive />,
             withdraw_crpto_summary: <WithdrawSummary onClose={() => this.closeDrawer()} onBackCLick={() => this.props.dispatch(setStep("step1"))} />,
             withdraw_crpto_success: <SuccessMsg onBackCLick={() => this.props.dispatch(setStep("step1"))} />,
-            //sendMoney: <SendMoney />
             sendMoney: <OnthegoCryptoTransfer />
 
         }
@@ -67,19 +65,6 @@ class SendReceive extends Component {
     renderTitle = () => {
         const stepcodes = {
             depositecrypto: <span />,
-            // withdraw: <span onClick={() => { this.props.dispatch(setStep("step1")); this.props.dispatch(setWithdrawcrypto(null)); this.props.dispatch(setAddress(null)) }} className="icon md lftarw-white c-pointer" />,
-            // scanner: <span onClick={() => this.props.dispatch(setStep("step4"))} className="icon md lftarw-white c-pointer" />,
-            // withdrawscan: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
-            // withdrawaddress: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
-            // verifyidentity: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
-            // withdrawsummary: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
-            // selectAddress: <span onClick={() => this.props.dispatch(setStep("withdraw_crypto_selected"))} className="icon md lftarw-white c-pointer" />,
-            // selectCrypto: <span onClick={() => this.props.dispatch(setStep("step8"))} className="icon md lftarw-white c-pointer" />,
-            // withdraw_crypto_liveness: <span onClick={() => this.props.dispatch(setStep("withdraw_crpto_summary"))} className="icon md lftarw-white c-pointer" />,
-            // // withdraw_crpto_summary: <span onClick={() => this.props.dispatch(setStep("withdraw_crypto_selected"))} className="icon md lftarw-white c-pointer" />,
-            // withdraw_crpto_summary: <span onClick={() => this.props.dispatch(setStep("step10"))} className="icon md lftarw-white c-pointer" />,
-            // withdraw_crpto_success: null,
-            // sendMoney: <span onClick={() => this.props.dispatch(setStep("withdraw_crypto_selected"))} className="icon md lftarw-white c-pointer" />,
             withdraw: <span  />,
             scanner: <span />,
             withdrawscan: <span  />,

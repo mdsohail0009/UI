@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import { Input,Drawer,Typography,Alert,Col,Row,Divider } from 'antd';
-import { favouriteFiatAddress } from '../addressbook.component/api';
 import { setAddress, setStep, setWithdrawcrypto } from '../../reducers/sendreceiveReducer';
 import oops from '../../assets/images/oops.png'
 import Loader from '../../Shared/loader';
-
 import { connect } from 'react-redux';
 import apiCalls from "../../api/apiCalls";
 import { setAddressStep} from "../../reducers/addressBookReducer";
-import CryptoTransfer from '../onthego.transfer/crypto.transfer';
-import {fetchPayees, fetchPastPayees,confirmTransaction, validateAmount } from '../onthego.transfer/api';
 import AddressCrypto from '../addressbook.component/addressCrypto';
 import SelectCrypto from '../addressbook.component/selectCrypto';
 import { processSteps as config } from "../addressbook.component/config";
@@ -18,7 +14,6 @@ const { Paragraph, Text, Title } = Typography;
 class SendMoney extends Component {
     
     state = {
-        addressLu: [],
         filterObj: [],
         loading: false,
         showFuntransfer:false,
@@ -28,7 +23,6 @@ class SendMoney extends Component {
     }
     async componentDidMount() {
         this.getPayees();
-       // this.getAddressLu();
         await this.trackevent()
     }
 
@@ -51,37 +45,12 @@ class SendMoney extends Component {
             }
     }
 
-    // validateAmt = async (step, values, loader) => {
-    //     const obj = {
-    //         CustomerId: this.props.userProfile?.id,
-    //         amount: this.props?.sendReceive?.withdrawCryptoObj.totalValue,
-    //         WalletCode: this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin
-    //     }
-    //     this.setState({ ...this.state, [loader]: true, errorMessage: null });
-    //     const res = await validateAmount(obj);
-    //     if (res.ok) {
-    //         this.setState({ ...this.state, [loader]: false, errorMessage: null }, () => this.chnageStep(step, values));
-    //     } else {
-    //         this.setState({ ...this.state, [loader]: false, errorMessage: this.isErrorDispaly(res) })
-    //     }
-
-    // }
-   
     trackevent = () => {
         apiCalls.trackEvent({
             "Type": 'User', "Action": 'Withdraw Crypto Address page view  ', "Username": this.props.userProfile.userName, "customerId": this.props.userProfile.id, "Feature": 'Withdraw Crypto', "Remarks": "Withdraw Crypto Address page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto'
         });
     }
-    // getAddressLu = async () => {
-    //     this.setState({ ...this.state, loading: true })
-    //     let customerId = this.props.userProfile.id;
-    //     let coin_code = this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coin;
-    //     let recAddress = await favouriteFiatAddress(customerId, 'crypto', coin_code)
-    //     if (recAddress.ok) {
-    //         this.setState({ ...this.state, addressLu: recAddress.data, loading: false, filterObj: recAddress.data });
-    //     }
-    //     else { this.setState({ ...this.state, loading: true }) }
-    // }
+   
     handleSearch = ({ target: { value: val } }) => {
         if (val) {
             const filterObj = this.state.payees.filter(item => item.name.toLowerCase().includes(val.toLowerCase()));
@@ -108,7 +77,6 @@ class SendMoney extends Component {
   
     selectCrypto = (type) => {
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
-        //this.props.dispatch(setSubTitle(apiCalls.convertLocalLang('send_crypto_address')));
         let obj = {
             "customerId": this.props.userProfile.id,
             "customerWalletId": id,
@@ -127,8 +95,6 @@ class SendMoney extends Component {
         } else {
             this.setState({
                 ...this.state, showFuntransfer: true, errorWorning: null
-                // , selection: [],
-                // isCheck: false,
             });
         }
     }
@@ -187,88 +153,14 @@ class SendMoney extends Component {
         return (
             <>
              {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
-             {/* <div className="mb-16">
-                    <text Paragraph
-                        className='fs-26 fw-600 text-white mb-16 mt-4 text-captz text-right'>Send Crypto</text>
-                </div> */}
               <div className="mb-16" style={{textAlign:'center'}}>
                     <text Paragraph
                         className='fs-24 fw-600 text-white mb-16 mt-4 text-captz' >Who are you sending crypto to?</text>
                 </div>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-
-                    {/* <Form.Item
-                        name="lastName"
-                        label={"Search for Payee"}
-                        colon={false}
-                    >
-                        <Search
-                            placeholder="Search for Payee" bordered={false} showSearch
-                            className=" "
-                            onChange={this.handleSearch}
-                            value={this.state.searchVal}
-                        />
-                    </Form.Item> */}
-                    {/* <Text className="fs-14 mb-8 text-white d-block fw-200">
-									Search For Beneficiary *
-								</Text> */}
-                                
                     <Search placeholder="Search For Beneficiary" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="text-center mt-12" />
                 </Col>
                 {this.state?.loading && <Loader />}
-                {/* {(!this.state.loading) && <>
-                    <Title className="fw-600 text-white px-4 mb-16 mt-16 text-captz" style={{ fontSize: '18px' }}>Address Book</Title>
-                  
-
-                    <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
-                            <><Row className="fund-border c-pointer ">
-                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">R</div></Col>
-                                <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="small-text-align">
-                                    <label className="fs-16 fw-600 text-upper text-white-30 l-height-normal">
-                                        <strong>beneficiary 100
-                                        </strong>
-                                    </label>
-                                    <div><Text className="fs-16 text-white-30 m-0">USD acc ending in 4544</Text></div>
-                                </Col>
-                                <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
-                                    <span class="icon md rarrow-white" onClick={() => this.handlePreview()}></span>
-                                </Col>
-                            </Row></>
-                    </ul>
-
-                    <Title className="fw-600 text-white px-4 mb-16 mt-16 text-captz" style={{ fontSize: '18px' }}>Past Recipients</Title>
-                  
-                    <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
-                            <><Row className="fund-border c-pointer ">
-                            <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">R</div></Col>
-                            <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="small-text-align">
-                                <label className="fs-16 fw-600 text-upper text-white-30 l-height-normal">
-                                    <strong>John's Metamask(0x...)
-                                    </strong>
-                                </label>
-                                <div><Text className="fs-16 text-white-30 m-0">USDT(ERC-20)</Text></div>
-                            </Col>
-                            <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
-                                <span class="icon md rarrow-white" onClick={() => this.handlePreview()}></span>
-                            </Col>
-                           
-                        </Row>
-                        <Row className="fund-border c-pointer ">
-                        <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">R</div></Col>
-                            <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="small-text-align">
-                                <label className="fs-16 fw-600 text-upper text-white-30 l-height-normal">
-                                    <strong>Smith Metamask(3b...)
-                                    </strong>
-                                </label>
-                                <div><Text className="fs-16 text-white-30 m-0">USDT(ERC-20)</Text></div>
-                            </Col>
-                            <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
-                                <span class="icon md rarrow-white" onClick={() => this.handlePreview()}></span>
-                            </Col>
-                            </Row></>
-                      
-                    </ul>
-                </>} */}
 
                 {(!this.state.loading) && <>
                     <Title className="fw-600 text-white px-4 mb-16 mt-16 text-captz" style={{ fontSize: '18px' }}>Address Book</Title>

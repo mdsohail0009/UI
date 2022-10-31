@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Typography, Card, Empty,Image } from 'antd';
+import { Typography, Empty } from 'antd';
 import { setSelectedSellCoin, setSellHeaderHide, setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import { setCoinWallet, updateCoinDetails } from '../../reducers/buy.reducer';   // do not remove this line time being i will check // subbareddy
 import Loader from '../../Shared/loader'
 import { getMemberCoins, updateCoinDetail } from '../../reducers/sellReducer';
 import { setCoin, setExchangeValue } from '../../reducers/buyReducer';
-import Currency from '../shared/number.formate';
 import { getSelectedCoinDetails } from '../buy.component/api'
 import apicalls from '../../api/apiCalls';
 import CryptoList from '../shared/cryptolist';
@@ -35,7 +34,7 @@ class SellToggle extends Component {
         this.setState({ ...this.state, loading: false })
     }
     render() {
-        const { Text,Paragraph } = Typography;
+        const { Paragraph } = Typography;
         if (this.props.sellData?.memberCoins?.loading||this.state.loading) { return <Loader /> }
         return (
             <>
@@ -44,24 +43,6 @@ class SellToggle extends Component {
 
                 <div className="sellcrypto-container auto-scroll">
                 <Translate content="sell_your_crypto_for_cash_text" component={Paragraph} className="text-white-30 fw-500 fs-14 mt-16 code-lbl" />
-                    {/* {this.props.sellData?.memberCoins?.data?.map((coin, idx) => <Card key={idx} className="crypto-card mb-16 c-pointer" bordered={false} onClick={() => { this.setCoinDetailData(coin); this.props.setExchangeValue({ key: coin.coin, value: coin.oneCoinValue }); }} >
-                    <div className="crypto-details d-flex">
-                    <div>
-                        <span className="d-flex align-center mb-4">
-                            <Image preview={false} src={coin.impageWhitePath}/>
-                            <div className="crypto-percent">{coin.percentage}<sup className="percent textc-white fw-700">%</sup></div>
-
-                        </span> 
-                        
-                       
-                        <Text className="fs-24 textc-white crypto-name ml-4 mt-8">{coin.coinFullName}</Text>
-                        </div>
-                            <div className="fs-16 textc-white fw-200 crypto-amount ">
-                                <Currency prefix={""} defaultValue={coin.coinBalance} suffixText={coin.coin} />
-                                <Currency prefix={"$ "} defaultValue={coin.coinValueinNativeCurrency} suffixText="" />
-                            </div>
-                        </div>
-                    </Card>)} */}
 
     <CryptoList ref={this.ref} isLoading={this.state?.loading} showSearch={true} coinList={this.props?.sellData?.memberCoins?.data} coinType="Sell" onCoinSelected={(coin) => this.setCoinDetailData(coin)} />
                 </div>
