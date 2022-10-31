@@ -4,6 +4,7 @@ const CHANGE_STEP = "changeStep"
 const SET_TAB = "setTab";
 const SET_HEADER_TAB = "setHeaderTab";
 const SET_SELL_HEADER_HIDE = "setSellHeaderHide";
+const SET_SELECTED_SELL_COIN = "setSelectedSellCoin";
 
 const setStep = (payload) => {
     return {
@@ -41,6 +42,12 @@ const setSellHeaderHide = (payload) => {
         payload
     }
 }
+const setSelectedSellCoin = (payload) => {
+    return {
+        type: SET_SELECTED_SELL_COIN,
+        payload
+    }
+}
 
 let initialState = {
     stepcode: "step1",
@@ -75,7 +82,8 @@ let initialState = {
     },
     tabKey: 1,
     headerTab:"",
-    sellHeader: null
+    sellHeader: null,
+    selectedSellCoin: null
 }
 const buySellReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -91,10 +99,12 @@ const buySellReducer = (state = initialState, action) => {
             return { ...state, headerTab: action.payload };
         case SET_SELL_HEADER_HIDE:
             return { ...state, sellHeader: action.payload };
+        case SET_SELECTED_SELL_COIN:
+                return { ...state, selectedSellCoin: action.payload };
         default:
             return state;
     }
 
 }
 export default buySellReducer;
-export { setStep, clearStep, changeStep, setTab,setHeaderTab, setSellHeaderHide }
+export { setStep, clearStep, changeStep, setTab,setHeaderTab, setSellHeaderHide, setSelectedSellCoin }

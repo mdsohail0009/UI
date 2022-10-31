@@ -458,9 +458,9 @@ class AddressBook extends Component {
 		if (!this.state.isCheck) {
 			this.setState({ ...this.state, errorWorning: "Please select the one record" });
 		} 
-		// else if(obj.status == "Inactive") {
-		// 	this.setState({ ...this.state, errorWorning: "Please select Active record" });
-		// }
+		else if(obj.status == "Inactive") {
+			this.setState({ ...this.state, errorWorning: "Record is inactive so you can't edit" });
+		}
 		else if (
 			obj.addressState === "Approved" ||
 			obj.addressState === "Rejected" ||
@@ -521,7 +521,6 @@ class AddressBook extends Component {
 		}
 	};
 	closeBuyDrawer = (obj) => {
-		debugger
 		this.props.dispatch(rejectWithdrawfiat())
 		let showCrypto = false, showFiat = false;
 		if (obj) {
@@ -608,7 +607,6 @@ class AddressBook extends Component {
 		return stepcodes[type];
 	};
 	headingChange=(data)=>{
-		debugger
 		this.setState({...this.state,showHeading:data})
 	}
 	renderContent = () => {

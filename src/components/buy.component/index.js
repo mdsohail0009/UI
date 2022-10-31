@@ -6,7 +6,7 @@ import ConnectStateProps from '../../utils/state.connect';
 import BuySummary from './buy.summary';
 import BillType from '../pay.component/payOption';
 import SelectCrypto from './buy.detail';
-import { setStep, setTab, setHeaderTab, setSellHeaderHide } from '../../reducers/buysellReducer';
+import { setStep, setTab, setHeaderTab, setSellHeaderHide, setSelectedSellCoin } from '../../reducers/buysellReducer';
 import { processSteps as config } from './config';
 import DepositFiat from '../deposit.component/depositFiat'
 import WireTransfer from '../wire.transfer.component/wireTransfer';
@@ -40,6 +40,7 @@ class BuySell extends Component {
     }
     handleBackSell = () => {
         this.props.dispatch(setSellHeaderHide(true));
+        this.props.dispatch(setSelectedSellCoin(false));
         this.props.dispatch(setStep("step1"));
     }
     renderContent = () => {
@@ -106,10 +107,10 @@ class BuySell extends Component {
         return (<Drawer
             title={[<div className="side-drawer-header">
                 {this.renderTitle()}
-                {((this.props.isTabKey && this.props.buySell?.stepcode !=="sellsuccess") || this.props.buySell?.sellHeader) && <div className="text-center fs-24">
+                {((this.props.isTabKey && this.props.buySell?.stepcode !=="sellsuccess" && !this.props.buySell?.selectedSellCoin) || this.props.buySell?.sellHeader) && <div className="text-center fs-24">
                     <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin }} className="mb-0 text-white-30 fw-600" content="sell_assets" component={Paragraph} />
                 </div>}
-                {!this.props.isTabKey && !this.props.buySell?.sellHeader&& <div className="text-center fs-16">
+                {((!this.props.isTabKey && !this.props.buySell?.sellHeader) || this.props.buySell?.selectedSellCoin)&& <div className="text-center fs-16">
                     <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin }} className="mb-0 text-white-30 fw-600" content={this.props.buySell.stepTitles[config[this.props.buySell.stepcode]]} component={Paragraph} />
                 </div>}
                 {this.renderIcon()}</div>]}

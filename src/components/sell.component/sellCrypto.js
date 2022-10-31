@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Typography, Card, Empty,Image } from 'antd';
-import { setStep } from '../../reducers/buysellReducer';
+import { setSelectedSellCoin, setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import { setCoinWallet, updateCoinDetails } from '../../reducers/buy.reducer';   // do not remove this line time being i will check // subbareddy
 import Loader from '../../Shared/loader'
@@ -29,6 +29,8 @@ class SellToggle extends Component {
         let res = await getSelectedCoinDetails(coin.coin, this.props.customer?.id);
         if (res.ok) {
             this.props.setSelectedCoin(res.data); this.props.changeStep('step10');
+            this.props.dispatch(setSelectedSellCoin(true));
+            this.props.dispatch(setSellHeaderHide(false));
         }
         this.setState({ ...this.state, loading: false })
     }
@@ -84,7 +86,8 @@ const connectDispatchToProps = dispatch => {
         },
         setExchangeValue: ({ key, value }) => {
             dispatch(setExchangeValue({ key, value }))
-        }
+        },
+        dispatch
     }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(SellToggle);
