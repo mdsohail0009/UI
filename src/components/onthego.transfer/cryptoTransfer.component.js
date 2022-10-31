@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Select, Input, Row, Col, Form, Button, Typography, Divider, Alert } from 'antd';
+import { Input, Row, Col, Form, Button, Typography, Divider, Alert } from 'antd';
 import apicalls from "../../api/apiCalls";
 import oops from '../../assets/images/oops.png';
 import NumberFormat from "react-number-format";
@@ -282,20 +282,9 @@ class OnthegoCryptoTransfer extends Component {
                                     required
                                     rules={[
                                         {
-                                            // required: true,
-                                            // message: 'Is required',
                                             type: "number",
                                             validator: this.numberValidator
                                         },
-                                        // {
-                                        //     validator: (_, value) => {
-                                        //         const reg = /.*[0-9].*/g;
-                                        //         if (value && !reg.test(value)) {
-                                        //             return Promise.reject("Invalid amount");
-                                        //         }
-                                        //         return Promise.resolve();
-                                        //     }
-                                        // }
                                     ]}
                                 >
                                     <NumberFormat
@@ -508,9 +497,6 @@ const connectStateToProps = ({ sendReceive, userConfig, menuItems, oidc }) => {
 };
 const connectDispatchToProps = dispatch => {
     return {
-        changeInternalStep: (stepcode) => {
-            // dispatch(setInternalStep(stepcode))
-        },
         changeStep: (stepcode) => {
             dispatch(setAddressStep(stepcode))
         },
