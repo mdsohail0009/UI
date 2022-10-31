@@ -31,7 +31,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
         </Text>
     );
 };
-class RequestedDocs extends Component {
+class CaseView extends Component {
     state = {
         modal: false,
         previewModal: false,
@@ -55,7 +55,7 @@ class RequestedDocs extends Component {
         errorWarning: null,
     }
     componentDidMount() {
-        this.getCaseData(QueryString.parse(this.props.location.search).id);
+        this.getCaseData(this.props?.match.params?.id);
     }
     getDocument = async (id) => {
         this.setState({ ...this.state, loading: true, error: null });
@@ -331,7 +331,7 @@ class RequestedDocs extends Component {
         }
         return <>
             <div className="main-container">
-                <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile/6" />{caseData?.documents?.customerCaseTitle}</div>
+                <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/cases" />{caseData?.documents?.customerCaseTitle}</div>
                 <div className='case-stripe'>
                     <Row gutter={[16, 16]}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8} xxl={8}>
@@ -522,4 +522,4 @@ class RequestedDocs extends Component {
 const mapStateToProps = ({ userConfig }) => {
     return { userProfileInfo: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData }
 }
-export default connect(mapStateToProps)(RequestedDocs);
+export default connect(mapStateToProps)(CaseView);
