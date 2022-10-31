@@ -234,14 +234,14 @@ class Summary extends Component {
 					
 
 					<div className="align-center btn-content">
-					<div className="text-center mt-16">
+					<div className="text-center mt-16 cust-pop-up-btn">
 						<Translate
 							content="cancel"
 							component={Button}
 							onClick={() => this.props.onCancel()}
 							type="text"
 							size="large"
-							className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn mr-8 ml-0"
+							className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn mr-8 ml-0 primary-btn pop-cancel"
 						/>
 					</div>
 					{(okBtnTitle == "buy" && permissions) &&

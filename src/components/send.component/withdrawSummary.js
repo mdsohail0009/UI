@@ -1019,7 +1019,7 @@ class WithdrawSummary extends Component {
 									/>
 								</span>}
 							</Form.Item>
-							<div className="align-center btn-content">
+							<div className="align-center btn-content cust-pop-up-btn">
 							<div className="text-center mt-16">
 							<Translate
 								content="cancel"
@@ -1027,7 +1027,7 @@ class WithdrawSummary extends Component {
 								onClick={() => this.onCancel()}
 								type="text"
 								size="large"
-								className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn"
+								className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn primary-btn pop-cancel"
 							/>
 						</div>
 
