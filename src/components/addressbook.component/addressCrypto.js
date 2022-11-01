@@ -1,4 +1,3 @@
-
 import React, { Component} from "react";
 import { Form, Typography, Input, Button, Select, Image, Alert,Row,Col } from "antd";
 import alertIcon from '../../assets/images/success.png';
@@ -65,47 +64,57 @@ class AddressCrypto extends Component {
     }
   };
   coinList = async () => {
-    let fromlist = await getCoinList("All")
-    if (fromlist.ok) {
-      this.setState({ ...this.state, coinsList: fromlist.data, isLoading: false })
+    let response = await getCoinList("All")
+    if (response.ok) {
+      this.setState({ ...this.state, coinsList: response.data, isLoading: false })
     } else {
       this.setState({ ...this.state, coinsList: [], isLoading: false })
     }
     if(this.state.cryptoData.network){
-     let val=this.state.cryptoData.token
-      this.networkList(val)
-    }else if(this.props?.sendReceive?.withdrawFiatObj?.walletCode){
-      let val=this.props?.sendReceive?.withdrawFiatObj?.walletCode
-      this.form?.current?.setFieldsValue({token:val});
-      this.networkList(val)
+      let val=this.state.cryptoData.token
+       this.networkList(val)
+     }
+    else if(this.props.sendReceive?.withdrawFiatObj?.walletCode){
+      this.form?.current?.setFieldsValue({token:this.props.sendReceive?.withdrawFiatObj?.walletCode})
+      let val=this.props.sendReceive?.withdrawFiatObj?.walletCode
+     // this.networkList(val)
+      this.handleTokenChange(val);
     }
     else if(this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !=" "
     ||this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !=null||
     this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !=undefined){
       let val=this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin
       this.form?.current?.setFieldsValue({token:val});
-      this.networkList(val)
-    }
-    
-
-  }
-  networkList = async (val) => {
-    let fromlist = await networkLu(val)
-    if (fromlist.ok) {
-      this.setState({ ...this.state, networksList: fromlist.data, isLoading: false })
-    } else {
-      this.setState({ ...this.state, networksList: [], isLoading: false })
+      //this.networkList(val)
+      this.handleTokenChange(val);
     }
   }
+  // networkList = async (val) => { //network lu also added in coins list
+  //   let fromlist = await networkLu(val)
+  //   if (fromlist.ok) {
+  //     this.setState({ ...this.state, networksList: fromlist.data, isLoading: false })
+  //   } else {
+  //     this.setState({ ...this.state, networksList: [], isLoading: false })
+  //   }
+  // }
   handleTokenChange = (value) => {
     this.form?.current?.setFieldsValue({network:null});
     this.form?.current?.validateFields(["walletAddress"], this.validateAddressType(value))
-    this.networkList(value)
+    let networkLu = [];
+    if(value) {
+      this.state.coinsList?.filter(function (item){
+        if(item.walletCode == value) {
+          networkLu = item?.network;
+        }
+      })
+    }
+    this.setState({ ...this.state, networksList: networkLu})
+    //this.networkList(value)
   };
 
-  handleNetworkChange = (value) => {
-    console.log(`selected ${value}`);
-  };
+  // handleNetworkChange = (value) => {
+  //   console.log(`selected ${value}`);
+  // };
 
   submit = async (values) => {
     let obj = {
@@ -130,8 +139,6 @@ class AddressCrypto extends Component {
     let response = await saveCryptoData(obj)
     if (response.ok) {
       this.setState({ ...this.state, isBtnLoading: false })
-     
-     
       if (window?.location?.pathname.includes('addressbook')&& this.props.type === "manual") {
         this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
         this.props.headingUpdate(true)
@@ -165,10 +172,9 @@ class AddressCrypto extends Component {
             return Promise.resolve();
           }
       } else {
-        return Promise.reject("Please select a token first ");
+        return Promise.reject("Please select a token first");
       }
-    } 
-    else {
+    } else {
       return Promise.reject('Is required');
     }
   };
@@ -196,7 +202,7 @@ class AddressCrypto extends Component {
     }
     else {
       return <>
-        {this.props?.isShowheading && <div className="text-center fs-16 fw-500">
+       {this.props?.isShowheading && <div className="text-center fs-16 fw-500">
           <Paragraph className='text-white fs-24 fw-500' >Add Crypto Address</Paragraph>
         </div>}
         <div ref={this.useDivRef}></div>
@@ -206,7 +212,7 @@ class AddressCrypto extends Component {
             className="custom-label  mb-0 fw-400"
             ref={this.form}
             onFinish={this.submit}
-             scrollToFirstError
+            scrollToFirstError
           >
             <Form.Item className="mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="saveWhiteListName"
@@ -227,7 +233,7 @@ class AddressCrypto extends Component {
               <Input className="cust-input" maxLength={100} placeholder="Save Whitelist Name As" />
             </Form.Item>
             <div className="mb-16 mt-8">
-              <Title className="sub-heading">Beneficiary Details</Title>
+            <Title className="sub-heading">Beneficiary Details</Title>
             </div>
             <Row gutter={[8, 8]}>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -269,7 +275,7 @@ class AddressCrypto extends Component {
             >
               <Select
                 className="cust-input"
-                onChange={this.handleNetworkChange}
+                //onChange={this.handleNetworkChange}
                 maxLength={100}
                 placeholder="Select Network"
                 optionFilterProp="children"
@@ -284,12 +290,11 @@ class AddressCrypto extends Component {
             </Col>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item
-              className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
+             className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="walletAddress"
               label="Wallet Address"
               required
               rules={[
-                
                 {
                   validator: this.validateAddressType,
                 },
@@ -317,7 +322,6 @@ class AddressCrypto extends Component {
               </Button>
             </Form.Item>
           </Form>
-       
       </>
     }
   };
