@@ -26,20 +26,30 @@ const LinkValue = (props) => {
 class Summary extends Component {
 	
 	state = {
-		permissions: {}
+		permissions: {},
+		buyPermissions: {},
+		sellPermissions: {}
 	};
 	
 	componentDidMount() {
 		this.permissionsInterval = setInterval(this.loadPermissions, 200);
 	}
 	loadPermissions = () => {
-		if (this.props.buySellPermissions) {
+		if (this.props.buyPermissions) {
 			clearInterval(this.permissionsInterval);
 			let _permissions = {};
-			for (let action of this.props.buySellPermissions?.actions) {
+			for (let action of this.props.buyPermissions?.actions) {
 				_permissions[action.permissionName] = action.values;
 			}
-			this.setState({ ...this.state, permissions: _permissions });
+			this.setState({ ...this.state, buyPermissions: _permissions });
+		}
+		if (this.props.sellPermissions) {
+			clearInterval(this.permissionsInterval);
+			let _permissions = {};
+			for (let action of this.props.sellPermissions?.actions) {
+				_permissions[action.permissionName] = action.values;
+			}
+			this.setState({ ...this.state, sellPermissions: _permissions });
 		}
 	}
 	render() {
@@ -192,8 +202,8 @@ class Summary extends Component {
 							component={Text}
 						/>
 					</div>
-					{(permissions) &&
-					<div className="d-flex p-16 mb-36 agree-check">
+					{permissions &&
+					<div className="d-flex p-16 mb-24 agree-check">
 						<label
 						>
 							<input
@@ -220,34 +230,46 @@ class Summary extends Component {
 							<Translate content="refund_cancellation" component="Text" />
 						</Paragraph>
 					</div>}
-					{(permissions ) &&
-					<SuisseBtn
-						className={"pop-btn"}
-						onRefresh={() => this.props.onRefresh()}
-						title={okBtnTitle || "pay"}
-						loading={isButtonLoad}
-						autoDisable={true}
-						onClick={() => this.props.onClick()}
-					/>}
+					
+					
 
-
-					<div className="text-center mt-16">
+					<div className="align-center btn-content">
+					<div className="text-center mt-16 cust-pop-up-btn">
 						<Translate
 							content="cancel"
 							component={Button}
 							onClick={() => this.props.onCancel()}
 							type="text"
 							size="large"
-							className="text-white-30 pop-cancel fw-400"
+							className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn mr-8 ml-0 primary-btn pop-cancel"
 						/>
 					</div>
+					{(okBtnTitle == "buy" && permissions) &&
+					<SuisseBtn
+						className={"pop-btn custom-send ml-0"}
+						onRefresh={() => this.props.onRefresh()}
+						title={okBtnTitle || "pay"}
+						loading={isButtonLoad}
+						autoDisable={true}
+						onClick={() => this.props.onClick()}
+					/>}
+					<div>
+					{(okBtnTitle == "sell" && permissions) &&
+					<SuisseBtn
+						className={"pop-btn custom-send"}
+						onRefresh={() => this.props.onRefresh()}
+						title={okBtnTitle || "pay"}
+						loading={isButtonLoad}
+						autoDisable={true}
+						onClick={() => this.props.onClick()}
+					/>}</div></div>
 				</div>
 			</>
 		);
 	}
 }
 const connectStateToProps = ({ menuItems }) => {
-    return { buySellPermissions: menuItems?.featurePermissions["trade"] }
+    return { buyPermissions: menuItems?.featurePermissions?.trade_buy, sellPermissions: menuItems?.featurePermissions?.trade_sell}
 }
 const connectDispatchToProps = dispatch => {
 	return {

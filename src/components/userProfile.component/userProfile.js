@@ -83,21 +83,14 @@ class UserProfile extends Component {
                     </span>} key="3">
                         {this.state.activeTab == 3 && <Settings />}
                     </TabPane>
-                    {/* <TabPane tab={<span><span className="icon lg addressbook-icon mr-16" /><Translate content="address_book" component={Tabs.TabPane.tab} /></span>} key="5">
-                        {this.state.activeTab == 5 && <AddressBook activeFiat = {this.state.activeWithdrawFiat} />}
-                    </TabPane> */}
-                    <TabPane tab={<span><span className="icon lg cases-icon mr-16" />
-                    <Translate content="case" className="f-16  mt-16" /></span>} key="6" >
-                        {this.state.activeTab == 6 && <Cases />}
-                    </TabPane>
                     <TabPane tab={<span><span className="icon lg referral-icon mr-16" />
                     <Translate content="referr" className="f-16  mt-16" /></span>} key="7" >
                         {this.state.activeTab == 7 && <Referral />}
                     </TabPane>
-                    {/* <TabPane tab={<span><span className="icon lg notification-icon mr-16" />
-                    <Translate content="notification" className="f-16  mt-16" /></span>} key="8" >
+                    <TabPane tab={<span><span className="icon lg notification-icon mr-16" style={{marginLeft:"3px"}} />
+                    <Translate content="notification"  className="f-16  mt-16"style={{marginLeft:"-5px"}} /></span>} key="8" >
                         {this.state.activeTab == 8 && <NotificationScreen />}
-                        </TabPane> */}
+                        </TabPane>
                 </Tabs>
             </div>
             <div className="main-container visible-mobile">

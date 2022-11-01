@@ -245,7 +245,7 @@ class ProfileInfo extends Component {
                 <div></div>
               </div>
             </li>
-            <li className="profileinfo">
+            {/* <li className="profileinfo">
               <div className="profile-block ">
                 <label className="mb-0 profile-label">
                   <Translate
@@ -259,7 +259,7 @@ class ProfileInfo extends Component {
                 </p>
                 <div></div>
               </div>
-            </li>
+            </li> */}
             <li className="profileinfo">
               <div className="profile-block ">
                 <label className="mb-0 profile-label">
@@ -275,7 +275,7 @@ class ProfileInfo extends Component {
                 <div></div>
               </div>
             </li></>}
-            <li className="profileinfo">
+            {/* <li className="profileinfo">
               <div className="profile-block">
                 <label className="mb-0 profile-label">
                   <Translate
@@ -284,15 +284,13 @@ class ProfileInfo extends Component {
                     className="mb-0 profile-label"
                   />
                 </label>
-                {/* {this.props.userConfig.dob != null  && ( */}
                 <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>
                   {this.props.userConfig.dob != null ? <Moment format="DD/MM/YYYY">{this.props.userConfig.dob}
                   </Moment> : "--"}
                 </p>
-                {/* )}  */}
                 <div></div>
               </div>
-            </li>
+            </li> */}
 
             <li className="profileinfo">
               <div className="profile-block">

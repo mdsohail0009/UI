@@ -1,22 +1,14 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import { withRouter, Link } from "react-router-dom";
 import {
-    Collapse,
     Layout,
     Menu,
-    Modal,
     Typography,
     Dropdown,
-    Row,
-    Col,
-    Divider,
-    Avatar,
-    Carousel,
-    Switch,
     Drawer,
     Button, Popover
 } from "antd";
-import { setHeaderTab, setStep } from "../../../reducers/buysellReducer";
+import { setHeaderTab, setStep, setSellHeaderHide } from "../../../reducers/buysellReducer";
 import Translate from "react-translate-component";
 import en from "../../../lang/en";
 import ch from "../../../lang/ch";
@@ -45,13 +37,15 @@ import {
     clearSwapData,
     setStep as swapSetStep
 } from "../../../reducers/swapReducer";
-import { setStep as byFiatSetStep } from "../../../reducers/buyFiatReducer";
+import { setStep as byFiatSetStep, setReceiveFiatHead } from "../../../reducers/buyFiatReducer";
 import {
     setStep as sendSetStep,
-    setWithdrawfiatenaable
+    setWithdrawfiat,
+    setWithdrawfiatenaable,
+    setSendCrypto
 } from "../../../reducers/sendreceiveReducer";
 import { getmemeberInfo } from "../../../reducers/configReduser";
-import { clearPermissions, fetchFeaturePermissions, fetchFeatures, setSelectedFeatureMenu, updatePermissions } from "../../../reducers/feturesReducer";
+import { clearPermissions, fetchFeatures, setSelectedFeatureMenu } from "../../../reducers/feturesReducer";
 import { readNotification as readNotifications } from "../../../notifications/api";
 import apicalls from "../../../api/apiCalls";
 import { setNotificationCount } from "../../../reducers/dashboardReducer";
@@ -66,7 +60,7 @@ const { Paragraph, Text } = Typography;
 const { Sider } = Layout;
 class MobileHeaderMenu extends Component {
     render() {
-        const { onMenuItemClick, features: { features: { data, error, loading } } } = this.props;
+        const { onMenuItemClick, features: { features: { data } } } = this.props;
         return <> <Menu
             theme="light"
             mode="vertical"
@@ -79,7 +73,7 @@ class MobileHeaderMenu extends Component {
 
             <Translate
                 content="header_title"
-                onClick={() => this.props.history.push("/cockpit")}
+                onClick={this.routeToCockpit}
                 component={Menu.Item}
                 className="list-item"
             />
@@ -116,7 +110,6 @@ class HeaderPermissionMenu extends Component {
     state = {
         visbleProfileMenu: false,
         drawerMenu: {
-            trade: false,
             balances: false,
             transactions: false,
             depositWithdraw: false,
@@ -128,7 +121,17 @@ class HeaderPermissionMenu extends Component {
             auditLogs: false,
             notifications: false,
             swap: false,
-            changePassword: false
+            changePassword: false,
+            selectedTab: false,
+            sell: false,
+            sendCryptoTab: false,
+            trade_buy: false,
+            trade_sell: false,
+            send_fiat: false,
+            send_crypto: false,
+            receive_fiat: false,
+            receive_crypto: false,
+            sendFiatTab: false
 
         },
     }
@@ -150,12 +153,19 @@ class HeaderPermissionMenu extends Component {
             this.props.history.push("/docnotices");
         }
     }
+    
     navigate = (menuKey, menuItem) => {
         if (menuItem.path === "/modal") {
-            if (menuItem.dispatchStep) {
                 switch (menuKey) {
-                    case "trade":
-                        this.props.dispatch(setStep(menuItem.dispatchStep));
+                    case "trade_buy":
+                        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: false } });
+                        this.props.dispatch(setSellHeaderHide(false));
+                        this.props.dispatch(menuItem.dispatchStep ? setStep(menuItem.dispatchStep) :setStep("step1"));
+                        break;
+                    case "trade_sell":
+                        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: true } });
+                        this.props.dispatch(setSellHeaderHide(false));
+                        this.props.dispatch(setStep("step1"));
                         break;
                     case "transfer":
                         this.props.dispatch(transforSetStep(menuItem.dispatchStep));
@@ -163,18 +173,40 @@ class HeaderPermissionMenu extends Component {
                     case "sendReceive":
                         this.props.dispatch(sendSetStep("step1"));
                         break;
-                    case "sendreceivefiat":
+                    case "send_fiat":
+                        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, send_fiat: true, sendCryptoTab: false, sendFiatTab: true } });
+                        this.props.dispatch(setWithdrawfiat(""));
+                        this.props.dispatch(byFiatSetStep("step1"));
+                        this.props.dispatch(setWithdrawfiatenaable(true));
+                        this.props.dispatch(setSendCrypto(true));
+                        this.props.dispatch(setReceiveFiatHead(false));
+                        break;
+                    case "send_crypto":
+                        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, send_crypto: true, sendCryptoTab: true, sendFiatTab: false } });
+                        this.props.dispatch(setWithdrawfiat(""));
                         this.props.dispatch(byFiatSetStep("step1"));
                         this.props.dispatch(setWithdrawfiatenaable(false));
+                        this.props.dispatch(setSendCrypto(true));
                         break;
-                    case "sendreceivecrypto":
-                        this.props.dispatch(sendSetStep("step1"));
+                    case "receive_fiat":
+                        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, receive_fiat: true, sendCryptoTab: false, sendFiatTab: false } });
+                        this.props.dispatch(setWithdrawfiat(""));
+                        this.props.dispatch(setReceiveFiatHead(true));
+                        this.props.dispatch(byFiatSetStep("step1"));
+                        this.props.dispatch(setWithdrawfiatenaable(false));
+                        this.props.dispatch(setSendCrypto(false));
+                        break;
+                    case "receive_crypto":
+                        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, receive_crypto: true, sendCryptoTab: false, sendFiatTab: false } });
+                        this.props.dispatch(setWithdrawfiat(""));
+                        this.props.dispatch(byFiatSetStep("step1"));
+                        this.props.dispatch(setWithdrawfiatenaable(false));
+                        this.props.dispatch(setSendCrypto(false));
                         break;
                     default:
                         break;
                 }
-            }
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true } });
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true, selectedTab:  menuKey === "trade_sell" ? true :false, sendCryptoTab: menuKey === "send_crypto" ? true :false, sendFiatTab: menuKey === "send_fiat" ? true :false} });
         } else if (menuItem.path) {
             this.props.history.push(menuItem.path);
         }
@@ -189,7 +221,7 @@ class HeaderPermissionMenu extends Component {
         }
     }
     onMenuItemClick = async (menuKey, menuItem) => {
-        const perIgnoreLst = ["notifications", "auditLogs"];
+        const perIgnoreLst = ["notifications", "auditLogs","cases"];
         if (perIgnoreLst.includes(menuKey)) { this.navigate(menuKey, menuItem) }
         else {
             const ignoreKycLst = ["transactions"];
@@ -231,7 +263,15 @@ class HeaderPermissionMenu extends Component {
             errorMessage: null
         });
         this.props.clearSwapfullData();
-        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [key]: false } });
+        if (key == "send") {
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, send_crypto: false, send_fiat: false, receive_fiat: false, receive_crypto: false } });
+        }
+        else if (key === "trade") {
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, "trade_buy": false, "trade_sell": false } });
+        }
+        else {
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [key]: false } });
+        }
     }
     readNotification() {
         let isRead = apicalls.encryptValue("true", this.props.userConfig?.sk);
@@ -288,8 +328,9 @@ class HeaderPermissionMenu extends Component {
                             alt={"image"}
                         />
                     )}
-                    <p className="mb-15 ml-8 profile-value" style={{ flexGrow: 12 }}>
-                        {this.props.userConfig.firstName} {this.props.userConfig.lastName}
+                    <p className="mb-15 ml-8 profile-value" style={{ flexGrow: 12, marginTop: "5px" }}>
+                        {this.props.userConfig.isBusiness ? this.props.userConfig.businessName :
+                            <>{this.props.userConfig.firstName}{" "}{" "}{this.props.userConfig.lastName}</>}
                     </p>
                     <Translate
                         content="manage_account"
@@ -366,6 +407,18 @@ class HeaderPermissionMenu extends Component {
                             </Link>
                         </li>
                         <li
+                            onClick={() => this.onMenuItemClick("cases", { key: "cases", path: "/cases" })}
+                        >
+                            <Link>
+                                <Translate
+                                    content="case"
+                                    component={Text}
+                                    className="text-white-30"
+                                />
+                                <span className="icon md rarrow-white" />
+                            </Link>
+                        </li>
+                        <li
                             onClick={() => window.open('https://suissebase.egnyte.com/ul/jnDqGI4Nxj', '_blank')}
                         >
                             <Link>
@@ -385,21 +438,23 @@ class HeaderPermissionMenu extends Component {
                             </Link>
                         </li>
                         <li onClick={() => this.clearEvents()}>
-                            <Link>
-                            <Translate
-                                content="logout"
-                                className="text-white-30"
-                                component={Text}
-                            />
+                            <Link className="text-left">
+                                <span>
+                                    <Translate
+                                        content="logout"
+                                        className="text-white-30"
+                                        component={Text}
+                                    />
+                                </span>
                             </Link>
                         </li>
                     </ul>
                 </div>
             </Menu>
         );
-        const { features: { data, error, loading } } = this.props.menuItems;
+        const { features: { data } } = this.props.menuItems;
         const { collapsed, isShowSider } = this.props;
-
+        const { send_crypto, send_fiat, receive_crypto, receive_fiat } = this.state.drawerMenu
         return <>
             <Menu
                 theme="light"
@@ -410,40 +465,43 @@ class HeaderPermissionMenu extends Component {
                     this.props.dispatch(setHeaderTab(key.key));
                 }}
             >
-                {data?.map((item, indx) => item.menuitemType === "dropdown" ? <Dropdown
-                    onClick={() =>
-                        this.setState({ ...this.state, visbleProfileMenu: false })
-                    }
-                    overlay={<Menu>
-                        <ul className="pl-0 drpdwn-list">
-                            {item?.subMenu?.map((subItem) => <li onClick={() => this.onMenuItemClick(subItem.key, subItem)}>
-                                <Link>
-                                    <Translate className="fs-20" content={subItem.content} conmponent={Text} />{" "}
-                                    <span className="icon md rarrow-white" />
-                                </Link>
-                            </li>)}
+                {data?.map((item, indx) => <React.Fragment>
+                    {item.isTab ? <Menu.Item key={item.id}>
+                        <Dropdown
+                            onClick={() =>
+                                this.setState({ ...this.state, visbleProfileMenu: false })
+                            }
+                            overlay={<Menu>
+                                <ul className="pl-0 drpdwn-list">
+                                    {item.subMenu.map(subitem => <li onClick={() => this.onMenuItemClick(subitem.key, subitem)}>
+                                        <Link value={2} className="c-pointer">
+                                            <Translate content={subitem.content} />
+                                        </Link>
+                                    </li>)}
 
-                        </ul>
-                    </Menu>}
-                    trigger={["click"]}
-                    placement="bottomCenter"
-                    arrow
-                    overlayClassName="secureDropdown depwith-drpdown"
-                    getPopupContainer={() => document.getElementById("area")}
-                >
-                    <Translate
-                        content={item.content}
-                        component={Menu.Item}
-                        key={indx}
-                        className="mr-16 fs-20"
-                    />
-                </Dropdown> : item.key === "trade" && <Translate
-                    content={item.content}
-                    component={Menu.Item}
-                    key={item.key}
-                    onClick={() => this.onMenuItemClick(item.key, item)}
-                    className="list-item fs-20"
-                />)}
+                                </ul>
+                            </Menu>}
+                            trigger={["click"]}
+                            placement="bottomCenter"
+                            arrow
+                            overlayClassName="secureDropdown depwith-drpdown"
+                            getPopupContainer={() => document.getElementById("area")}
+                        >
+                            <Translate
+                                content={item.content}
+                                component={Menu.Item}
+                                key="4"
+                                className="fs-20 custom-header"
+                            />
+                        </Dropdown>
+                    </Menu.Item> : <Menu.Item onClick={() => this.onMenuItemClick(item.key, item)}>
+
+                        <Translate content={item.content}
+                            component={Menu.Item}
+                            className="fs-20 custom-header" />
+                    </Menu.Item>}
+                </React.Fragment>)}
+
                 <Menu.Item
                     key="9"
                     className="notification-conunt"
@@ -527,12 +585,14 @@ class HeaderPermissionMenu extends Component {
                 onClose={() => this.closeDrawer("wallets")}
             />
             <BuySell
-                showDrawer={this.state.drawerMenu.trade}
+                showDrawer={this.state.drawerMenu.trade_buy || this.state.drawerMenu.trade_sell}
+                isTabKey={this.state.drawerMenu.selectedTab}
                 onClose={() => this.closeDrawer("trade")}
             />
             <SendReceive
-                showDrawer={this.state.drawerMenu.sendreceivecrypto}
-                onClose={() => this.closeDrawer("sendreceivecrypto")}
+                showDrawer={send_crypto || receive_crypto}
+                isSendTab={this.state.drawerMenu.sendCryptoTab}
+                onClose={() => this.closeDrawer("send")}
             />
             <SwapCrypto
                 swapRef={(cd) => (this.child = cd)}
@@ -545,8 +605,9 @@ class HeaderPermissionMenu extends Component {
                 onClose={() => this.closeDrawer("transfer")}
             />
             <MassPayment
-                showDrawer={this.state.drawerMenu.sendreceivefiat}
-                onClose={() => this.closeDrawer("sendreceivefiat")}
+                showDrawer={send_fiat || receive_fiat}
+                isShowSendFiat= {this.state.drawerMenu.sendFiatTab}
+                onClose={() => this.closeDrawer("send")}
             />
             {this.state.drawerMenu.transactions && (
                 <TransactionsHistory

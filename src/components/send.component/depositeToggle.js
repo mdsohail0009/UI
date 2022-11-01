@@ -19,8 +19,8 @@ class DepositeCrypto extends Component {
         activeKey: 1
     }
     componentDidMount() {
-        this.setState({ ...this.state, activeKey: this.props.sendReceive?.cryptoWithdraw?.activeKey || 1, sendReceive: true });
-        this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 1 }));
+        this.setState({ ...this.state, activeKey: this.props?.activeTab ? 2 : ((this.props?.sendReceive?.sendCryptoEnable ? this.props.sendReceive?.cryptoWithdraw?.activeKey : this.state?.activeKey ) || 1), sendReceive: true });
+        this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: this.state?.activeKey ? 2 : 1 }));
         this.props.dispatch(setSubTitle(`USD ${this.props.dashboard?.totalFiatValue}` + " " + apicalls.convertLocalLang('total_balance')));
         apicalls.trackEvent({
             "Type": 'User', "Action": 'Deposit Crypto page view', "Username": this.props.userProfile.userName, "customerId": this.props.userProfile.id, "Feature": 'Deposit Crypto', "Remarks": "Deposit Crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Crypto'
@@ -64,13 +64,13 @@ class DepositeCrypto extends Component {
         const { activeKey } = this.state
         return (
             <>
-                <div className="text-center"><Radio.Group value={this.state.activeKey}
+                {/* <div className="text-center"><Radio.Group value={this.state.activeKey}
                     onChange={this.handleBuySellToggle}
                     className="buysell-toggle crypto-toggle text-upper">
                     <Translate value={1} content="deposit" component={Radio.Button} />
                     <Translate value={2} content="withdraw" component={Radio.Button} />
                 </Radio.Group>
-                </div>
+                </div> */}
                 {activeKey === 2 && <WithdrawCrypto />}
                 {activeKey === 1 && <CryptoDeposit />}
             </>

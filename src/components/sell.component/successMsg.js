@@ -25,7 +25,7 @@ class SuccessMsg extends Component {
                     <Paragraph className="fs-14 text-white-30 fw-200"><Translate content="sucessText1" component={Text} className="fs-14 text-white-30 fw-200" /> {sd.tovalue} {sd.toWalletCode} <Translate content="sucessText2" component={Text} className="fs-14 text-white-30 fw-200" /></Paragraph>
                     {/* <Translate content="success_decr" component={Paragraph} className="fs-16 text-white-30 fw-200" /> */}
                     <Space direction="vertical" size="large">
-                        <Translate content="return_to_sell" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => this.props.changeStep("step1")} />
+                        <Translate content="return_to_sell" className="ant-btn mt-36 pop-cancel" style={{width:"150px", height:"46px"}} component={Link} onClick={() => this.props.changeStep("step1")} />
                     </Space>
                 </div>
             </>

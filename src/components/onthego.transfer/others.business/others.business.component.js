@@ -171,6 +171,7 @@ class OthersBusiness extends Component {
                         // this.props.onContinue({ close: true, isCrypto: false });
                         this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
                         this.useDivRef.current?.scrollIntoView(0, 0)
+                        this.props.headingUpdate(true)
                     }
 
                 } else {
@@ -188,16 +189,18 @@ class OthersBusiness extends Component {
             return <Loader />
         }
         if (this.state.showDeclartion) {
-            return <div className="text-center">
+            return  <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
                 <Image width={80} preview={false} src={alertIcon} />
                 <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
                 <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                    Please sign using link received in email to whitelist your address. `}</Text>
                 <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
-                <div className="my-25"><Button onClick={() => this.props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn text-textDark">BACK</Button></div>
-            </div>
+                <div className="my-25">
+                    {/* <Button onClick={() => this.props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button> */}
+                    </div>
+            </div></div>
         }
-        if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} /> }
+        if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} updatedHeading={this.props?.headingUpdate}amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} /> }
         else {
             return <><div ref={this.useDivRef}>
                 {/* <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16 text-center">SEPA Transfer</Paragraph> */}
@@ -441,7 +444,7 @@ class OthersBusiness extends Component {
                         payeeAccountModels[0].documents = docs;
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
                     }} />
-                    <div className="text-center mt-36">
+                    <div className="text-right mt-36">
                         {/* <Row gutter={[16, 16]}>
                             <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col>
                             <Col xs={12} md={12} lg={12} xl={12} xxl={12}> */}
@@ -449,7 +452,7 @@ class OthersBusiness extends Component {
                                     htmlType="submit"
                                     size="large"
                                     className="pop-btn px-36"
-                                    style={{ width:'100%' }}
+                                    //style={{ width:'100%' }}
                                     disabled={this.state.ibanDetailsLoading}
                                     loading={this.state.isBtnLoading} >
                             {this.props.type === "manual" && "Save"}

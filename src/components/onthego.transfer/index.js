@@ -18,6 +18,8 @@ import { withRouter } from "react-router-dom/cjs/react-router-dom.min";
 import { fetchMemberWallets } from "../dashboard.component/api";
 import Translate from "react-translate-component";
 import { Link } from "react-router-dom";
+import Paragraph from "antd/lib/typography/Paragraph";
+import { connect } from "react-redux";
 const { Text, Title } = Typography;
 const { Option } = Select;
 class OnthegoFundTransfer extends Component {
@@ -46,9 +48,11 @@ class OnthegoFundTransfer extends Component {
         isVarificationLoader: true,
         fiatWallets: [],
         isShowGreyButton: false,
+        permissions: {},
     }
     componentDidMount() {
         this.verificationCheck()
+        this.permissionsInterval = setInterval(this.loadPermissions, 200);
         if (!this.state.selectedCurrency) {
             this.setState({ ...this.state, fiatWalletsLoading: true });
             fetchMemberWallets(this.props?.userProfile?.id).then(res => {
@@ -64,6 +68,17 @@ class OnthegoFundTransfer extends Component {
       }
       this.getCoinDetails()
     }
+
+    loadPermissions = () => {
+		if (this.props.withdrawCryptoPermissions) {
+			clearInterval(this.permissionsInterval);
+			let _permissions = {};
+			for (let action of this.props.withdrawCryptoPermissions?.actions) {
+				_permissions[action.permissionName] = action.values;
+			}
+			this.setState({ ...this.state, permissions: _permissions });
+		}
+	}
 
     getCoinDetails=async()=>{
    let response=await getCoinwithBank()
@@ -281,10 +296,22 @@ class OnthegoFundTransfer extends Component {
         const { filterObj, pastPayees, payeesLoading, isVarificationLoader, isVerificationEnable,isPhMail,isShowGreyButton,isAuthMail } = this.state;
         const steps = {
             selectcurrency: <React.Fragment>
+                {this.state.fiatWalletsLoading && <Loader />}
+                {!this.state.fiatWalletsLoading && <div>
+                <div className="mt-8">
+                    <Title
+                        className='sub-heading code-lbl'>Send from your Suissebase FIAT Wallet</Title>
+                </div>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    {/* <Text className="fs-14 mb-8 text-white d-block fw-200">
+                        Search For Beneficiary *
+                    </Text> */}
+                    <Search placeholder="Search Currency" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="text-center mb-16" />
+                </Col>
                 <List
                     itemLayout="horizontal"
                     dataSource={this.state.fiatWallets}
-                    className="crypto-list auto-scroll wallet-list c-pointer"
+                    className="crypto-list auto-scroll wallet-list"
                     loading={this.state.fiatWalletsLoading}
                     locale={{
                         emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
@@ -308,11 +335,12 @@ class OnthegoFundTransfer extends Component {
                         </List.Item>
                     )}
                 />
+                </div>}
             </React.Fragment>,
             enteramount: <>
-                <div className="mb-16" style={{textAlign:'center'}}>
-                    <text Paragraph
-                        className='text-white fs-30 fw-600 px-4 '>Transfer Funds</text>
+                <div className="mt-8">
+                    <Title
+                        className='sub-heading code-lbl'>Send Fiat</Title>
                 </div>
                 {isVarificationLoader && <Loader />}
                 {!isVarificationLoader && 
@@ -339,7 +367,7 @@ class OnthegoFundTransfer extends Component {
                             <Row gutter={[16, 16]}>
                                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                                     <Form.Item
-                                        className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label fund-transfer-input"
+                                        className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label fund-transfer-input send-fiat-input"
                                         name="amount"
                                         label={"Enter Amount"}
                                         required
@@ -437,9 +465,9 @@ class OnthegoFundTransfer extends Component {
                     </Form>}</>,
             addressselection: <React.Fragment>
                 {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
-                <div className="mb-16" style={{textAlign:'center'}}>
-                    <text Paragraph
-                        className='fs-24 fw-600 text-white mb-16 mt-4 text-captz' >Who are you sending money to?</text>
+                <div className="mt-8">
+                    <Title
+                        className='sub-heading code-lbl'>Who are you sending money to?</Title>
                 </div>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 
@@ -455,7 +483,7 @@ class OnthegoFundTransfer extends Component {
                             value={this.state.searchVal}
                         />
                     </Form.Item> */}
-                    <Search placeholder="Search for Payee" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="mt-12" />
+                    <Search placeholder="Search for Payee" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className=" text-center" />
                 </Col>
                 {this.state?.loading && <Loader />}
                 {(!this.state.loading) && <>
@@ -464,7 +492,7 @@ class OnthegoFundTransfer extends Component {
 
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                         {(filterObj.length > 0) && filterObj?.map((item, idx) =>
-                            <>{<Row className="fund-border c-pointer " onClick={async () => {
+                            <>{<Row className="fund-border c-pointer" onClick={async () => {
                                 if (!["myself", "1stparty", 'ownbusiness'].includes(item.addressType?.toLowerCase())) {
                                     this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item, codeDetails: { ...this.state.codeDetails, ...item } }, () => this.chnageStep("reasonfortransfer"));
                                 } else {
@@ -477,12 +505,12 @@ class OnthegoFundTransfer extends Component {
                                     }
                                 }
                             }}>
-                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
-                                <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="small-text-align">
-                                    <label className="fs-16 fw-600 text-white l-height-normal text-captz">{item.name}</label>
+                                <Col xs={6} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
+                                <Col xs={14} md={24} lg={24} xl={19} xxl={19} className="small-text-align">
+                                    <label className="fs-16 fw-600 text-white l-height-normal text-captz c-pointer">{item.name}</label>
                                     {item.accountNumber && <div><Text className="fs-14 text-white-30 m-0">{this.state.selectedCurrency} account ending with {item.accountNumber?.substr(item.accountNumber.length - 4)}</Text></div>}
                                 </Col>
-                                <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
+                                <Col xs={4} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white"></span>
                                 </Col>
                             </Row>}</>
@@ -512,12 +540,12 @@ class OnthegoFundTransfer extends Component {
                                     }
                                 }
                             }}>
-                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
-                                <Col xs={24} md={24} lg={24} xl={19} xxl={19} className=" small-text-align">
-                                    <label className="fs-16 fw-600 text-white l-height-normal text-captz">{item.name}</label>
+                                <Col xs={6} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
+                                <Col xs={14} md={24} lg={24} xl={19} xxl={19} className=" small-text-align">
+                                    <label className="fs-16 fw-600 text-white l-height-normal text-captz c-pointer">{item.name}</label>
                                     <div><Text className="fs-14 text-white-30 m-0">{this.state.selectedCurrency} account ending with {item.accountNumber?.substr(item.accountNumber?.length - 4)}</Text></div>
                                 </Col>
-                                <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
+                                <Col xs={4} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white"></span>
                                 </Col>
                             </Row>
@@ -761,84 +789,91 @@ class OnthegoFundTransfer extends Component {
                             <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                 <Title className="fs-14 text-white fw-500 text-captz">Save Whitelist name as</Title>
-                                   <Title className="fs-14 fw-500 text-white text-right ">{this.state.reviewDetails?.favouriteName}</Title>
+                                   <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.favouriteName}</Title>
                                 </div>
                             </Col>
                             {this.state.reviewDetails?.name && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                     <Title className="fs-14 text-white fw-500 text-captz">Beneficiary Name</Title>
-                                    <Title className="fs-14 fw-500 text-white text-right ">{this.state.reviewDetails?.name}</Title>
+                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.name}</Title>
                                 </div>
                             </Col>}
                             {this.state.reviewDetails?.firstName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                 <Title className="fs-14 text-white fw-500 text-captz">First Name</Title>
-                                   <Title className="fs-14 fw-500 text-white text-right ">{this.state.reviewDetails?.firstName}</Title>
+                                   <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.firstName}</Title>
                                 </div>
                             </Col>}
                             {this.state.reviewDetails?.lastName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                     <Title className="fs-14 text-white fw-500 text-captz">Last Name</Title>
-                                    <Title className="fs-14 fw-500 text-white text-right ">{this.state.reviewDetails?.lastName}</Title>
+                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.lastName}</Title>
                                 </div>
                             </Col>}
                             {this.state.reviewDetails?.iban && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                     <Title className="fs-14 text-white fw-500 text-captz">IBAN </Title>
-                                    <Title className="fs-14 fw-500 text-white text-right">{this.state.reviewDetails?.iban}</Title>
+                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.iban}</Title>
                                 </div>
                             </Col>}
                             {this.state.reviewDetails?.customerRemarks && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                     <Title className="fs-14 text-white fw-500 text-captz">Reason For Transfer </Title>
-                                    <Title className="fs-14 fw-500 text-white text-right">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
+                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
                                 </div>
                             </Col>}
                             
                                 {this.state.reviewDetails?.abaRoutingCode && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                     <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                         <Title className="fs-14 text-white fw-500 text-captz">ABA Routing code</Title>
-                                        <Title className="fs-14 fw-500 text-white text-right ">{this.state.reviewDetails?.abaRoutingCode || "-"}</Title>
+                                        <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.abaRoutingCode || "-"}</Title>
                                     </div>
                                 </Col>}
                                 {this.state.reviewDetails?.swiftRouteBICNumber && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                     <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                     <Title className="fs-14 text-white fw-500 text-captz">SWIFT / BIC Code</Title>
-                                        <Title className="fs-14 fw-500 text-white text-right">{this.state.reviewDetails?.swiftRouteBICNumber || "-"}</Title>
+                                        <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.swiftRouteBICNumber || "-"}</Title>
                                     </div>
                                 </Col>}
                                 {this.state.reviewDetails?.accountNumber && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                     <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                     <Title className="fs-14 text-white fw-500 text-captz">Account Number </Title>
-                                         <Title className="fs-14 fw-500 text-white text-right">{this.state.reviewDetails?.accountNumber || "-"}</Title>
+                                         <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.accountNumber || "-"}</Title>
                                     </div>
                                 </Col>}
                             {this.state.reviewDetails?.bankName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                 <Title className="fs-14 text-white fw-500 text-captz">Bank Name </Title>
-                                    <Title className="fs-14 fw-500 text-white text-right">{this.state?.reviewDetails?.bankName || "-"}</Title>
+                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state?.reviewDetails?.bankName || "-"}</Title>
                                 </div>
                             </Col>}
                             <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} />
                             </Col>
-                            <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                                <div className="text-center mt-36 create-account">
+                           {this.state.permissions?.Send && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+                                <div className="text-right mt-36 create-account">
                                     <Form.Item className="mb-0 mt-16">
+                                    {/* <Translate
+                                        content="cancel"
+                                        component={Button}
+                                        onClick={() => this.onCancel()}
+                                        type="text"
+                                        size="large"
+                                        className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn"
+                                    /> */}
                                         <Button
                                             htmlType="button"
                                             onClick={() => { this.saveWithdrawdata(); }}
                                             size="large"
                                             block
-                                            className="pop-btn px-24"
-                                           // style={(isPhMail&&!this.state.verifyData?.phBtn&&!this.state.verifyData?.emailBtn)||(isShowGreyButton&&!this.state.verifyData?.phBtn&&!this.state.verifyData?.authBtn)||(isAuthMail&&!this.state.verifyData?.emailBtn&&!this.state.verifyData?.authBtn)||(!this.state.verifyData?.phBtn&&!this.state.verifyData?.emailBtn&&!this.state.verifyData?.authBtn) &&{backgroundColor:'#ccc',borderColor:'#3d3d3d'}}
-                                              style ={{backgroundColor: !isShowGreyButton  &&'#ccc',borderColor: !isShowGreyButton  &&'#3d3d3d'}}
+                                            className="pop-btn custom-send"
+                                             style ={{backgroundColor: !isShowGreyButton  &&'#ccc',borderColor: !isShowGreyButton  &&'#3d3d3d'}}
                                            loading={this.state.isBtnLoading} >
                                             Confirm & Continue
                                         </Button>
                                     </Form.Item>
                                 </div>
-                            </Col>
+                            </Col>}
                         </Row>
                     </Form>
                 </Spin>
@@ -852,21 +887,21 @@ class OnthegoFundTransfer extends Component {
                 }
                     onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} />
             </>,
-            declaration: <div className="text-center">
+            declaration:  <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
                 <Image width={80} preview={false} src={alertIcon} />
                 <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
                 <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                        Please sign using link received in email to whitelist your address. `}</Text>
                 <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
                 {/*<div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBOARD</Button> */}
-            </div>,
-            successpage: <div className="text-center">
+            </div></div>,
+            successpage:<div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
                 <Image width={80} preview={false} src={success} />
                 <Title level={2} className="text-white-30 my-16 mb-0">Your transaction has been processed successfully</Title>
-                {/* <Text className="text-white-30">{`Declaration form has been sent to ${"have123@yopmail.com"}. 
+                {/* <Text className="text-white-30">{`Declaration form has been sent to ${"have123@yopmail.com"} 
                    Please sign using link received in email to whitelist your address`}</Text> */}
                 {/*<div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBOARD</Button> */}
-            </div>
+            </div></div>
         }
         return steps[this.state.step];
     }
@@ -876,4 +911,21 @@ class OnthegoFundTransfer extends Component {
         </React.Fragment>
     }
 }
-export default ConnectStateProps(withRouter(OnthegoFundTransfer));
+const connectStateToProps = ({ sendReceive, userConfig, menuItems,oidc }) => {
+	return {
+		sendReceive,
+		userProfile: userConfig?.userProfileInfo,
+		trackAuditLogData: userConfig?.trackAuditLogData,
+		withdrawCryptoPermissions: menuItems?.featurePermissions?.send_fiat,
+		oidc:oidc?.user?.profile
+	};
+};
+const connectDispatchToProps = dispatch => {
+    return {
+        changeInternalStep: (stepcode) => {
+            // dispatch(setInternalStep(stepcode))
+        },
+        dispatch
+    }
+}
+export default connect(connectStateToProps,connectDispatchToProps)(withRouter(OnthegoFundTransfer));
