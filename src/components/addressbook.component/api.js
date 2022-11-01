@@ -32,7 +32,7 @@ const savePayee = (obj) => {
 	return apiClient.post(ApiControllers.addressbook + `Payee`, obj);
 };
 const getCoinList = (type) => {
-	return apiClient.get(ApiControllers.markets + `Coins/${type}`);
+	return apiClient.get(ApiControllers.markets + `Coins`);
 };
 
 const getSelectedCoinDetails = (coin_code, customerId) => {
