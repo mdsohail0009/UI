@@ -1,14 +1,15 @@
 import React, { Component} from "react";
-import { Form, Typography, Input, Button, Select, Image, Alert } from "antd";
-import alertIcon from '../../assets/images/pending.png';
+import { Form, Typography, Input, Button, Select, Image, Alert,Row,Col } from "antd";
+import alertIcon from '../../assets/images/success.png';
 import { setAddressStep } from "../../reducers/addressBookReducer";
-import { setAddress, setStep, setWithdrawcrypto } from "../../reducers/sendreceiveReducer";
+import { setAddress, setStep, setWithdrawcrypto,rejectWithdrawfiat, setSendCrypto, hideSendCrypto } from "../../reducers/sendreceiveReducer";
 import { connect } from "react-redux";
 import { getCryptoData, saveCryptoData, getCoinList, networkLu } from "./api";
 import Loader from '../../Shared/loader';
 import WAValidator from "multicoin-address-validator";
 import { validateContentRule } from "../../utils/custom.validator";
-const { Text, Title } = Typography;
+import Translate from "react-translate-component";
+const { Text, Title, Paragraph } = Typography;
 const { Option } = Select;
 
 class AddressCrypto extends Component {
@@ -34,7 +35,7 @@ class AddressCrypto extends Component {
 
   componentDidMount() {
     this.getCryptoData();
-    this.coinList();
+    // this.coinList();
   }
   getCryptoData = async () => {
     let id = this.props?.addressBookReducer?.selectedRowData?.id || "00000000-0000-0000-0000-000000000000";
@@ -47,6 +48,7 @@ class AddressCrypto extends Component {
       this.setState({ ...this.state, isLoading: false, errorMessage: this.isErrorDispaly(response) })
     }
     this.form?.current?.setFieldsValue(response.data);
+    this.coinList();
   }
 
   isErrorDispaly = (objValue) => {
@@ -68,10 +70,22 @@ class AddressCrypto extends Component {
     } else {
       this.setState({ ...this.state, coinsList: [], isLoading: false })
     }
-    if(this.props.sendReceive?.withdrawFiatObj?.walletCode){
+    if(this.state.cryptoData.network){
+      let val=this.state.cryptoData.token
+       this.networkList(val)
+     }
+    else if(this.props.sendReceive?.withdrawFiatObj?.walletCode){
       this.form?.current?.setFieldsValue({token:this.props.sendReceive?.withdrawFiatObj?.walletCode})
       let val=this.props.sendReceive?.withdrawFiatObj?.walletCode
      // this.networkList(val)
+      this.handleTokenChange(val);
+    }
+    else if(this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !=" "
+    ||this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !=null||
+    this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !=undefined){
+      let val=this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin
+      this.form?.current?.setFieldsValue({token:val});
+      //this.networkList(val)
       this.handleTokenChange(val);
     }
   }
@@ -115,7 +129,7 @@ class AddressCrypto extends Component {
       status: 1,
       adressstate: "fd",
       currencyType: "Crypto",
-      walletAddress: values.walletAddress,
+      walletAddress:  values.walletAddress.trim(),
       customerId: this.props.userProfile.id
     }
     if (this.state.cryptoData.id !== "00000000-0000-0000-0000-000000000000") {
@@ -125,16 +139,22 @@ class AddressCrypto extends Component {
     let response = await saveCryptoData(obj)
     if (response.ok) {
       this.setState({ ...this.state, isBtnLoading: false })
-      if (window?.location?.pathname.includes('addressbook')) {
+      if (window?.location?.pathname.includes('addressbook')&& this.props.type === "manual") {
         this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
+        this.props.headingUpdate(true)
       }
       else {
         let _obj = this.props.sendReceive?.withdrawCryptoObj;
-        this.props?.dispatch(setWithdrawcrypto({..._obj, toWalletAddress: values?.walletAddress,  network: values?.network, isShowDeclaration: true}));
+        this.props?.dispatch(setWithdrawcrypto({..._obj, addressBookId: response.data?.payeeAccountId || response.data?.id, toWalletAddress: values?.walletAddress,  network: values?.network, isShowDeclaration: true}));
+        this.props.dispatch(rejectWithdrawfiat());
+        this.props.dispatch(hideSendCrypto(false));
+        this.props.dispatch(setSendCrypto(true));
         this.props.changeStep('withdraw_crpto_summary');
       }
     }
     else {
+      this.setState({ ...this.state, errorMessage: response.data, loading: false });
+        this.useDivRef.current.scrollIntoView();
       this.setState({ ...this.state, isBtnLoading: false,  errorMessage: this.isErrorDispaly(response), });
     }
   }
@@ -146,13 +166,13 @@ class AddressCrypto extends Component {
         const validAddress = WAValidator.validate(address, coinType, "both");
           if (!validAddress) {
             return Promise.reject(
-              "Address is not valid, Please enter a valid address according to the coin selected"
+              "Address is not valid, Please enter a valid address according to the token selected"
             );
           } else {
             return Promise.resolve();
           }
       } else {
-        return Promise.reject("Please select a coin first");
+        return Promise.reject("Please select a token first");
       }
     } else {
       return Promise.reject('Is required');
@@ -165,32 +185,42 @@ class AddressCrypto extends Component {
       return <Loader />
     }
     if (showDeclartion) {
-      return <div className="text-center">
+      return<div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
         <Image width={80} preview={false} src={alertIcon} />
         <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully </Title>
         <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
              Please sign using link received in email to whitelist your address. `}</Text>
-        <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
-        <div className="my-25"><Button
+        <Text className="text-white-30">{`Please note that your send will only be processed once your whitelisted address has been approved`}</Text>
+       
+        {/* <div className="my-25 custom-back-btn"><Button
           onClick={this.props.onCancel}
-          style={{width:"250px"}}
-          type="primary" className="mt-36 pop-btn text-textDark">BACK</Button></div>
+          style={{width:"150px",height:"46px"}}
+          type="" className="mt-36 pop-cancel ">BACK</Button>
+          </div> */}
+      </div>
       </div>
     }
     else {
       return <>
-        <div>
+       {this.props?.isShowheading && <div className="text-center fs-16 fw-500">
+          <Paragraph className='text-white fs-24 fw-500' >Add Crypto Address</Paragraph>
+        </div>}
+        <div ref={this.useDivRef}></div>
           {errorMessage && <Alert type="error" description={errorMessage} showIcon />}
           <Form
             initialValues={cryptoData}
-            className="custom-label  mb-0"
+            className="custom-label  mb-0 fw-400"
             ref={this.form}
             onFinish={this.submit}
+            scrollToFirstError
           >
-            <Form.Item className="custom-label"
+            <Form.Item className="mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="saveWhiteListName"
               label="Save Whitelist Name As"
               rules={[
+                {whitespace: true,
+                  message: "Is required",
+                },
                 {
                   required: true,
                   message: "Is required",
@@ -203,9 +233,11 @@ class AddressCrypto extends Component {
               <Input className="cust-input" maxLength={100} placeholder="Save Whitelist Name As" />
             </Form.Item>
             <div className="mb-16 mt-8">
-              <Text className="fs-24 fw-600 text-purewhite">Beneficiary Details</Text>
+            <Title className="sub-heading">Beneficiary Details</Title>
             </div>
-            <Form.Item className="custom-label"
+            <Row gutter={[8, 8]}>
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="token"
               label="Token"
               rules={[
@@ -220,6 +252,7 @@ class AddressCrypto extends Component {
                 placeholder="Select Token"
                 optionFilterProp="children"
                 maxLength={50}
+                //disabled={this.state.cryptoData.network? true:false}
                 disabled={this.props?.sendReceive?.withdrawFiatObj?.walletCode ? true:false}>
                 {coinsList?.map((item, idx) => (
                   <Option key={idx} value={item.walletCode}>
@@ -228,7 +261,9 @@ class AddressCrypto extends Component {
                 ))}
               </Select>
             </Form.Item>
-            <Form.Item className="custom-label"
+            </Col>
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="network"
               label="Network"
               rules={[
@@ -252,8 +287,10 @@ class AddressCrypto extends Component {
                 ))}
               </Select>
             </Form.Item>
+            </Col>
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item
-              className="custom-label"
+             className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="walletAddress"
               label="Wallet Address"
               required
@@ -264,25 +301,27 @@ class AddressCrypto extends Component {
               ]}
             >
               <Input
-                className="cust-input mb-0"
+                className="cust-input"
                 maxLength={100}
 
                 placeholder="Wallet Address"
               />
             </Form.Item>
-            <Form.Item className="text-center mt-36">
+            </Col>
+            </Row>
+            <Form.Item className="text-right mt-36">
               <Button
                 htmlType="submit"
                 size="large"
-                className="pop-btn mb-36"
+                className="pop-btn mb-36 px-36"
                 loading={this.state.isBtnLoading}
-                style={{ minWidth: "100%" }}
+                style={{ width: "300px" }}
               >
-                Save
+                {this.props.type === "manual" && "Save"}
+                {this.props.type !== "manual" && <Translate content="continue" />}
               </Button>
             </Form.Item>
           </Form>
-        </div>
       </>
     }
   };
