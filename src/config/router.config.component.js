@@ -29,6 +29,7 @@ const RewardCard = React.lazy(() => import("../components/cards.component"));
 const AccessDenied = React.lazy(() => import("../components/shared/permissions/access.denied"));
 const InternalTransfer = React.lazy(() => import("../components/internalTransfer.component/internalTransfer"));
 const AddressBook = React.lazy(() => import("../components/addressbook.component"));
+const UploadMassPayments = React.lazy(() => import("../components/masspayment.component"));
 class RouteConfig extends Component {
   componentDidMount() {
     this.checkPermissions(window.location.pathname || "/cockpit");
@@ -85,6 +86,7 @@ class RouteConfig extends Component {
         />
         <ReactRoute path="/internaltransfer" component={InternalTransfer} exact />
         <ReactRoute path="/addressbook" component={AddressBook} exact />
+        <ReactRoute path="/masspayment" component={UploadMassPayments} exact />
 
         <ReactRoute path="/" component={Dashboard} exact />
       </React.Suspense>

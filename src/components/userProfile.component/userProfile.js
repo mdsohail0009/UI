@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import {addressTabUpdate} from '../../reducers/addressBookReducer'
 import { setHeaderTab } from "../../reducers/buysellReducer"
 import { withRouter } from 'react-router-dom';
+import UploadMassPayments from '../masspayment.component';
 
 const { TabPane } = Tabs;
 class UserProfile extends Component {
@@ -98,6 +99,10 @@ class UserProfile extends Component {
                     <Translate content="notification" className="f-16  mt-16" /></span>} key="8" >
                         {this.state.activeTab == 8 && <NotificationScreen />}
                         </TabPane> */}
+                    <TabPane tab={<span><span className="icon lg referral-icon mr-16" />
+                        <Translate content="masspayments" className="f-16  mt-16" /></span>} key="9" >
+                        {this.state.activeTab == 9 && <UploadMassPayments />}
+                    </TabPane>
                 </Tabs>
             </div>
             <div className="main-container visible-mobile">
@@ -128,6 +133,14 @@ class UserProfile extends Component {
                     <TabPane tab={<span><span className="icon lg referral-icon mr-16" />
                     <Translate content="referr" className="f-16  mt-16" /></span>} key="7" >
                         {this.state.activeTab == 7 && <Referral />}
+                    </TabPane>
+                     {/* <TabPane tab={<span><span className="icon lg notification-icon mr-16" />
+                    <Translate content="notification" className="f-16  mt-16" /></span>} key="8" >
+                        {this.state.activeTab == 8 && <NotificationScreen />}
+                        </TabPane> */}
+                    <TabPane tab={<span><span className="icon lg referral-icon mr-16" />
+                        <Translate content="masspayments" className="f-16  mt-16" /></span>} key="9" >
+                        {this.state.activeTab == 9 && <UploadMassPayments />}
                     </TabPane>
 
                 </Tabs>

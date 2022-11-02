@@ -667,4 +667,5 @@ export default {
   receve_funds: "Receive",
   suisse_wallets: "SuisseBase Wallet",
   validate: "Validate",
+  masspayments: "Mass Payments",
 };
