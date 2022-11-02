@@ -9,6 +9,7 @@ import {Alert} from 'antd'
 import { setSellFinalRes } from '../../reducers/sellReducer'
 import apicalls from '../../api/apiCalls';
 import { setCurrentAction } from '../../reducers/actionsReducer';
+import {setSellHeaderHide} from '../../reducers/buysellReducer';
 
 
 class SellSummary extends Component {
@@ -97,7 +98,6 @@ class SellSummary extends Component {
         }
       };
       loadPermissions = () => {
-        debugger
 		if (this.props.buySellPermissions) {
 			clearInterval(this.permissionsInterval);
 			let _permissions = {};
@@ -107,6 +107,10 @@ class SellSummary extends Component {
 			this.setState({ ...this.state, permissions: _permissions });
 		}
 	}
+    onSellCancel () {
+        this.props.dispatch(setSellHeaderHide(true));
+        this.props.changeStep('step1');
+    }
     render() {
         const { sellpreviewData } = this.state;
         const { amount, amountNativeCurrency, oneCoinValue, coin, currency } = sellpreviewData;
@@ -132,7 +136,7 @@ class SellSummary extends Component {
             error={this.state.error} 
             isButtonLoad={this.state.isLoading}
             onRefresh={() => { this.refreshPage() }}
-            onCancel={() => this.props.changeStep('step1')}
+            onCancel={() => this.onSellCancel()}
             onClick={() => this.saveSellData()}
             okBtnTitle={"sell"}
 
@@ -165,6 +169,7 @@ const connectDispatchToProps = dispatch => {
         setAction: (val) => {
 			dispatch(setCurrentAction(val))
 		  },
+          dispatch
 
     }
 }
