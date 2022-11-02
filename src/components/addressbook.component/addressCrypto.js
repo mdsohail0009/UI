@@ -99,7 +99,9 @@ class AddressCrypto extends Component {
   // }
   handleTokenChange = (value) => {
     this.form?.current?.setFieldsValue({network:null});
+    if(value) {
     this.form?.current?.validateFields(["walletAddress"], this.validateAddressType(value))
+    }
     let networkLu = [];
     if(value) {
       this.state.coinsList?.filter(function (item){

@@ -20,6 +20,7 @@ import Translate from "react-translate-component";
 import { Link } from "react-router-dom";
 import Paragraph from "antd/lib/typography/Paragraph";
 import { connect } from "react-redux";
+import { getFeaturePermissionsByKeyName } from "../shared/permissions/permissionService";
 const { Text, Title } = Typography;
 const { Option } = Select;
 class OnthegoFundTransfer extends Component {
@@ -52,6 +53,7 @@ class OnthegoFundTransfer extends Component {
     }
     componentDidMount() {
         this.verificationCheck()
+        getFeaturePermissionsByKeyName(`send_fiat`);
         this.permissionsInterval = setInterval(this.loadPermissions, 200);
         if (!this.state.selectedCurrency) {
             this.setState({ ...this.state, fiatWalletsLoading: true });
