@@ -1373,7 +1373,7 @@ input[type=number]::-webkit-outer-spin-button {
 .crypto-list-custom li {
     color: #fff;
 }
-.custom-crypto-btns .custom-bnt{background-color: transparent;border-radius: 6px;border:1px solid #ccc;padding:8px 10px;}
+.custom-crypto-btns .custom-bnt{background-image: linear-gradient(99.09deg, var(--btnGrad1), var(--btnGrad2)); border-radius: 6px;border:1px solid #ccc;padding:8px 10px;}
 .intertrans{display: flex;
     justify-content: center;
     align-items: center;
@@ -1500,10 +1500,10 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .ant-list-split .ant-list-item{border-bottom: 1px solid var(--borderLight) !important;}
 .file-label.add-lbl{width: 165px; text-align: center;}
 .custom-btn:hover span{color: white;}
+.custom-crypto-btns .custom-bnt span{color: var(--textWhite); font-weight: 400;}
 .pop-btn.cancel-btn{background: transparent; border: transparent; border-radius: 40px; height: 46px !important; font-weight: 700 !important;}
 .pop-btn.cancel-btn:hover{border: 1px solid var(--borderLight) !important;}
 .pop-btn.cancel-btn span{color: var(--textYellow) !important;}
 .crypto-pop .btn-width{width: 150px !important;height: 46px !important;}
 .sc-error{font-weight: 400 !important;}
 .crypto-blc-inpt{flex:1;}
- .custom-crypto-btns .custom-bnt span{color: var(--textWhite); font-weight: 400;}
