@@ -274,6 +274,7 @@ class YourPortfolio extends Component {
                         type="primary"
                         onClick={() => this.showSendReceiveDrawer(2, item)}
                         className="custom-btn sec"
+                        disabled={item?.amount > 0 ? false : true}
                       />
                       
                       <Dropdown overlay={this.menuBar(item)} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
