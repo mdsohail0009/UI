@@ -99,7 +99,8 @@ class AddressCrypto extends Component {
   // }
   handleTokenChange = (value) => {
     this.form?.current?.setFieldsValue({network:null});
-    if(value) {
+    let walletAddress =  this.form?.current?.getFieldValue("walletAddress");
+    if(value && walletAddress) {
     this.form?.current?.validateFields(["walletAddress"], this.validateAddressType(value))
     }
     let networkLu = [];
@@ -166,7 +167,7 @@ class AddressCrypto extends Component {
       let coinType = this.form?.current?.getFieldValue("token");
       if (coinType) {
         const validAddress = WAValidator.validate(address, coinType, "both");
-          if (!validAddress) {
+          if (!validAddress && coinType != "USDT") {
             return Promise.reject(
               "Address is not valid, Please enter a valid address according to the token selected"
             );
