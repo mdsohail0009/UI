@@ -16,6 +16,8 @@ import {
 	handleSendFetch,
 	setAddress,
 	hideSendCrypto,
+	setSendCrypto,
+	setWithdrawfiatenaable
 } from "../../reducers/sendreceiveReducer";
 
 import apiCalls from "../../api/apiCalls";
@@ -573,6 +575,15 @@ class WithdrawSummary extends Component {
 		}
 	};
 
+	onBackSend = () => {
+		debugger
+		 this.props.dispatch(hideSendCrypto(false));
+		 this.props.dispatch(setSendCrypto(true));
+		 this.props.dispatch(setWithdrawfiatenaable(true));
+		 this.props?.onBackCLick("step1"); 
+		 this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: 2 }));
+	}
+
 	fullNumber = this.props.oidc?.phone_number;
 	last4Digits = this.fullNumber?.slice(-4);
 	maskedNumber = this.last4Digits?.padStart(this.fullNumber.length, "*");
@@ -661,9 +672,12 @@ class WithdrawSummary extends Component {
 			  <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
 				   Please sign using link received in email to whitelist your address. `}</Text>
 			  <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
-			  <div className="my-25"><Button
-				onClick={() => { this.props?.onBackCLick("step1"); this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: 2 })) }}
-				type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button></div>
+			  {/* <div className="my-25"><Button
+				onClick={() => { this.onBackSend() }}
+				type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button></div> */}
+				  <Space direction="vertical" size="large">
+                        <Translate content="crypto_with_draw_success" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => { this.onBackSend() }} />
+                    </Space>
 			</div></div>
 		  }
 		  else {
