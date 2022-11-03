@@ -72,7 +72,9 @@ class AddressCrypto extends Component {
     }
     if(this.state.cryptoData.network){
       let val=this.state.cryptoData.token
-       this.networkList(val)
+      //  this.networkList(val)
+      this.handleTokenChange(val);
+      this.form?.current?.setFieldsValue({network:this.state.cryptoData.network})
      }
     else if(this.props.sendReceive?.withdrawFiatObj?.walletCode){
       this.form?.current?.setFieldsValue({token:this.props.sendReceive?.withdrawFiatObj?.walletCode})
