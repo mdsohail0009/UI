@@ -42,7 +42,8 @@ import {
     setStep as sendSetStep,
     setWithdrawfiat,
     setWithdrawfiatenaable,
-    setSendCrypto
+    setSendCrypto,
+    hideSendCrypto
 } from "../../../reducers/sendreceiveReducer";
 import { getmemeberInfo } from "../../../reducers/configReduser";
 import { clearPermissions, fetchFeatures, setSelectedFeatureMenu } from "../../../reducers/feturesReducer";
@@ -187,6 +188,7 @@ class HeaderPermissionMenu extends Component {
                         this.props.dispatch(byFiatSetStep("step1"));
                         this.props.dispatch(setWithdrawfiatenaable(false));
                         this.props.dispatch(setSendCrypto(true));
+                        this.props.dispatch(hideSendCrypto(false));
                         break;
                     case "receive_fiat":
                         this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, receive_fiat: true, sendCryptoTab: false, sendFiatTab: false } });
