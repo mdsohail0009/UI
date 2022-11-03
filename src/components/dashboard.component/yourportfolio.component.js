@@ -98,7 +98,6 @@ class YourPortfolio extends Component {
     }}
   
     showSendReceiveDrawer = async(e, value) => {
-      debugger
       let selectedObj = { ...value };
       selectedObj.coin = selectedObj.coin?.toUpperCase();
       selectedObj.coinFullName = selectedObj.coinFullName
