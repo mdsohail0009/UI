@@ -88,7 +88,7 @@ class TransactionsHistory extends Component {
       </td>
     ) },
    
-    { field: "debit", title: "Sender/Beneficiary Name", filter: false,
+    { field: "debit", title: "Sender/Beneficiary Name", filter: true, width: 260,
     customCell: (props) => (
       <td>
         {props.dataItem?.senderName}
@@ -98,7 +98,7 @@ class TransactionsHistory extends Component {
       </td>
     ) },
 
-    { field: "accountnumber", title: "Iban/ Account number", filter: false,
+    { field: "accountnumber", title: "Iban/Account number", filter: true,  width: 220,
      },
     { field: "state", title: "State", filter: true, },
     // { field: "fromWalletCode", title: "From Wallet Code", filter: true, width: 180, },
