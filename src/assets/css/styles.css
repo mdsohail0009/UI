@@ -1507,3 +1507,5 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .crypto-pop .btn-width{width: 150px !important;height: 46px !important;}
 .sc-error{font-weight: 400 !important;}
 .crypto-blc-inpt{flex:1;}
+.btn-container .pop-btn.custom-send{width: 100% !important;}
+.btn-container .sell-btc-btn{width: 100% !important;}

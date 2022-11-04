@@ -246,8 +246,8 @@ class Summary extends Component {
 					
 					
 
-					<div className="align-center btn-content">
-					<div className="text-center mt-16 cust-pop-up-btn">
+					<div className="align-center btn-content btn-container">
+					<div className="text-center mt-16 cust-pop-up-btn sell-btc-btn">
 						<Translate
 							content="cancel"
 							component={Button}
@@ -259,23 +259,23 @@ class Summary extends Component {
 					</div>
 					{(okBtnTitle == "buy" && permissions) &&
 					<SuisseBtn
-						className={"pop-btn custom-send ml-0"}
+						className={"pop-btn custom-send sell-btc-btn"}
 						onRefresh={() => this.props.onRefresh()}
 						title={okBtnTitle || "pay"}
 						loading={isButtonLoad}
 						autoDisable={true}
 						onClick={() => this.props.onClick()}
 					/>}
-					<div>
-					{(okBtnTitle == "sell" && permissions) &&
+					
+					{(okBtnTitle == "sell" && permissions) &&<div className="sell-btc-btn">
 					<SuisseBtn
-						className={"pop-btn custom-send"}
+						className={"pop-btn custom-send sell-btc-btn"}
 						onRefresh={() => this.props.onRefresh()}
 						title={okBtnTitle || "pay"}
 						loading={isButtonLoad}
 						autoDisable={true}
 						onClick={() => this.props.onClick()}
-					/>}</div></div>
+					/></div>}</div>
 				</div>
 			</>
 		);
