@@ -47,7 +47,6 @@ class UserProfile extends Component {
     }
 
     render() {
-        debugger
         const { tabPosition, activeTab } = this.state;
         if(this.props.match.params.key != activeTab){
             if(this.props.match.params.key){

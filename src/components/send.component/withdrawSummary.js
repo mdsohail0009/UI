@@ -576,10 +576,9 @@ class WithdrawSummary extends Component {
 	};
 
 	onBackSend = () => {
-		debugger
 		 this.props.dispatch(hideSendCrypto(false));
 		 this.props.dispatch(setSendCrypto(true));
-		 this.props.dispatch(setWithdrawfiatenaable(true));
+		 //this.props.dispatch(setWithdrawfiatenaable(true));
 		 this.props?.onBackCLick("step1"); 
 		 this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: 2 }));
 	}
