@@ -44,7 +44,8 @@ const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
-        }
+        },
+        dispatch,
     }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(SuccessMsg);
