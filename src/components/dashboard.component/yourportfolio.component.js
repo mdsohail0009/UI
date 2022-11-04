@@ -18,6 +18,7 @@ import { getcoinDetails } from './api';
 import {createCryptoDeposit} from "../deposit.component/api";
 import TransactionsHistory from "../transactions.history.component";
 import Loader from "../../Shared/loader";
+import { numberWithCommas } from '../../utils/service';
 class YourPortfolio extends Component {
     state = {
         loading: true,
@@ -143,7 +144,7 @@ class YourPortfolio extends Component {
           this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
          // this.props.dispatch(setSubTitle(`${selectedObj.coinBalance ? selectedObj.coinBalance : '0'} ${selectedObj.coin}` + " " + apiCalls.convertLocalLang('available')));
           this.props.dispatch(setStep("step7"));
-          this.props.dispatch(setSubTitle(` ${coin}` + " " + "balance" +" "+ ":" +" "+ `${selectedObj.coinBalance ? selectedObj.coinBalance : '0'}`+`${" "}`+`${coin}`
+          this.props.dispatch(setSubTitle(` ${coin}` + " " + "balance" +" "+ ":" +" "+ `${selectedObj.coinBalance ?  numberWithCommas(selectedObj.coinBalance) : '0'}`+`${" "}`+`${coin}`
             ));
              const response = await createCryptoDeposit({ customerId: this.props.userProfile?.id, walletCode: coin, network: selectedObj?.netWork });
              if (response.ok) {
