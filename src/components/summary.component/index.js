@@ -8,6 +8,7 @@ import Currency from "../shared/number.formate";
 import apicalls from "../../api/apiCalls";
 import { connect } from 'react-redux';
 import { setCurrentAction } from "../../reducers/actionsReducer";
+import {setSellHeaderHide, setSelectedSellCoin} from "../../reducers/buysellReducer";
 const LinkValue = (props) => {
 	return (
 		<Translate
@@ -52,6 +53,18 @@ class Summary extends Component {
 			this.setState({ ...this.state, sellPermissions: _permissions });
 		}
 	}
+	onBackSell = () => {
+		if(this.props.okBtnTitle == "buy"){ 
+			this.props.dispatch(setSellHeaderHide(false));
+			this.props.dispatch(setSelectedSellCoin(true));
+			this.props.onCancel()
+		}
+		if(this.props.okBtnTitle == "sell") {
+			this.props.dispatch(setSellHeaderHide(true));
+			this.props.dispatch(setSelectedSellCoin(false));
+			this.props.onCancel()
+		}
+    }
 	render() {
 		if (this.props?.loading) {
 			return <Loader />;
@@ -233,12 +246,12 @@ class Summary extends Component {
 					
 					
 
-					<div className="align-center btn-content">
-					<div className="text-center mt-16 cust-pop-up-btn">
+					<div className="align-center btn-content btn-container">
+					<div className="text-center mt-16 cust-pop-up-btn sell-btc-btn">
 						<Translate
 							content="cancel"
 							component={Button}
-							onClick={() => this.props.onCancel()}
+							onClick={() => { this.onBackSell() }}
 							type="text"
 							size="large"
 							className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn mr-8 ml-0 primary-btn pop-cancel"
@@ -246,23 +259,23 @@ class Summary extends Component {
 					</div>
 					{(okBtnTitle == "buy" && permissions) &&
 					<SuisseBtn
-						className={"pop-btn custom-send ml-0"}
+						className={"pop-btn custom-send sell-btc-btn"}
 						onRefresh={() => this.props.onRefresh()}
 						title={okBtnTitle || "pay"}
 						loading={isButtonLoad}
 						autoDisable={true}
 						onClick={() => this.props.onClick()}
 					/>}
-					<div>
-					{(okBtnTitle == "sell" && permissions) &&
+					
+					{(okBtnTitle == "sell" && permissions) &&<div className="sell-btc-btn">
 					<SuisseBtn
-						className={"pop-btn custom-send"}
+						className={"pop-btn custom-send sell-btc-btn"}
 						onRefresh={() => this.props.onRefresh()}
 						title={okBtnTitle || "pay"}
 						loading={isButtonLoad}
 						autoDisable={true}
 						onClick={() => this.props.onClick()}
-					/>}</div></div>
+					/></div>}</div>
 				</div>
 			</>
 		);

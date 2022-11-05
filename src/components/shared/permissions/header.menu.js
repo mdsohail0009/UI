@@ -8,7 +8,7 @@ import {
     Drawer,
     Button, Popover
 } from "antd";
-import { setHeaderTab, setStep, setSellHeaderHide } from "../../../reducers/buysellReducer";
+import { setHeaderTab, setStep, setSellHeaderHide, setSelectedSellCoin} from "../../../reducers/buysellReducer";
 import Translate from "react-translate-component";
 import en from "../../../lang/en";
 import ch from "../../../lang/ch";
@@ -42,7 +42,8 @@ import {
     setStep as sendSetStep,
     setWithdrawfiat,
     setWithdrawfiatenaable,
-    setSendCrypto
+    setSendCrypto,
+    hideSendCrypto
 } from "../../../reducers/sendreceiveReducer";
 import { getmemeberInfo } from "../../../reducers/configReduser";
 import { clearPermissions, fetchFeatures, setSelectedFeatureMenu } from "../../../reducers/feturesReducer";
@@ -160,11 +161,13 @@ class HeaderPermissionMenu extends Component {
                     case "trade_buy":
                         this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: false } });
                         this.props.dispatch(setSellHeaderHide(false));
+                        this.props.dispatch(setSelectedSellCoin(false));
                         this.props.dispatch(menuItem.dispatchStep ? setStep(menuItem.dispatchStep) :setStep("step1"));
                         break;
                     case "trade_sell":
                         this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: true } });
                         this.props.dispatch(setSellHeaderHide(false));
+                        this.props.dispatch(setSelectedSellCoin(false));
                         this.props.dispatch(setStep("step1"));
                         break;
                     case "transfer":
@@ -187,6 +190,7 @@ class HeaderPermissionMenu extends Component {
                         this.props.dispatch(byFiatSetStep("step1"));
                         this.props.dispatch(setWithdrawfiatenaable(false));
                         this.props.dispatch(setSendCrypto(true));
+                        this.props.dispatch(hideSendCrypto(false));
                         break;
                     case "receive_fiat":
                         this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, receive_fiat: true, sendCryptoTab: false, sendFiatTab: false } });

@@ -3,7 +3,7 @@ import success from '../../assets/images/success.png';
 import { Typography, Space, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import Translate from 'react-translate-component';
-import { setStep } from '../../reducers/buysellReducer';
+import { setStep, setSellHeaderHide, setSelectedSellCoin } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import apicalls from '../../api/apiCalls';
 
@@ -13,6 +13,11 @@ class SuccessMsg extends Component {
     }
     EventTrack = () => {
         apicalls.trackEvent({ "Type": 'User', "Action": 'Buy Crypto success', "Username": this.props.member.userName, "customerId": this.props.member.id, "Feature": 'Buy', "Remarks": 'Buy Crypto success', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy Crypto' });
+    }
+    onBuyCancel = () => {
+        this.props.dispatch(setSellHeaderHide(false));
+        this.props.dispatch(setSelectedSellCoin(true));
+        this.props.changeStep("step1")
     }
     render() {
         const { Title, Paragraph, Text } = Typography;
@@ -25,7 +30,7 @@ class SuccessMsg extends Component {
                     <Paragraph className="fs-14 text-white-30 fw-200"><Translate content="sucessText1" component={Text} className="fs-14 text-white-30 fw-200" /> {bd.tovalue} {bd.toWalletCode} <Translate content="sucessText2" className="fs-14 text-white-30 fw-200" component={Text} /></Paragraph>
                     {/* <Translate content="success_decr" component={Paragraph} className="fs-16 text-white-30 fw-200" /> */}
                     <Space direction="vertical" size="large">
-                        <Translate content="return_to_buy" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => this.props.changeStep("step1")} />
+                        <Translate content="return_to_buy" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => this.onBuyCancel()} />
                     </Space>
                 </div>
             </>
@@ -39,7 +44,8 @@ const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
-        }
+        },
+        dispatch,
     }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(SuccessMsg);

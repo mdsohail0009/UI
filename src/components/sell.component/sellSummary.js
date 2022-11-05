@@ -22,7 +22,6 @@ class SellSummary extends Component {
             permissions:{},
              error: { valid: true, message: null,agreeRed:true } }
     componentDidMount() {
-        debugger
         this.fetchPreviewData()
         setTimeout(() => this.setState({ ...this.state, disableConfirm: true }), 12000)
         this.EventTrack();

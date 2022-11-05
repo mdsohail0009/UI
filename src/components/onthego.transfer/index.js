@@ -340,10 +340,10 @@ class OnthegoFundTransfer extends Component {
                 </div>}
             </React.Fragment>,
             enteramount: <>
-                <div className="mt-8">
+                {/* <div className="mt-8">
                     <Title
                         className='sub-heading code-lbl'>Send Fiat</Title>
-                </div>
+                </div> */}
                 {isVarificationLoader && <Loader />}
                 {!isVarificationLoader && 
                     <Form

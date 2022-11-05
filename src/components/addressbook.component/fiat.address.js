@@ -17,7 +17,6 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onCont
 
 
    const headingChange=(data)=>{
-		debugger
 		setShowHeading(data)
 	}
     return <>

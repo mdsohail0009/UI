@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Typography, Button, Alert,Drawer, Form, Input,Modal, Tooltip, Checkbox, Image } from "antd";
+import { Typography, Button, Alert,Drawer, Form, Input,Modal, Tooltip, Checkbox, Image,Space } from "antd";
 import { connect } from "react-redux";
 import alertIcon from '../../assets/images/pending.png';
 import Translate from "react-translate-component";
@@ -16,6 +16,8 @@ import {
 	handleSendFetch,
 	setAddress,
 	hideSendCrypto,
+	setSendCrypto,
+	setWithdrawfiatenaable
 } from "../../reducers/sendreceiveReducer";
 
 import apiCalls from "../../api/apiCalls";
@@ -573,6 +575,14 @@ class WithdrawSummary extends Component {
 		}
 	};
 
+	onBackSend = () => {
+		 this.props.dispatch(hideSendCrypto(false));
+		 this.props.dispatch(setSendCrypto(true));
+		 //this.props.dispatch(setWithdrawfiatenaable(true));
+		 this.props?.onBackCLick("step1"); 
+		 this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: 2 }));
+	}
+
 	fullNumber = this.props.oidc?.phone_number;
 	last4Digits = this.fullNumber?.slice(-4);
 	maskedNumber = this.last4Digits?.padStart(this.fullNumber.length, "*");
@@ -660,10 +670,15 @@ class WithdrawSummary extends Component {
 			  <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully </Title>
 			  <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
 				   Please sign using link received in email to whitelist your address. `}</Text>
-			  <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
-			  <div className="my-25"><Button
-				onClick={() => { this.props?.onBackCLick("step1"); this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: 2 })) }}
-				type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button></div>
+			  <span className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</span>
+			  {/* <div className="my-25"><Button
+				onClick={() => { this.onBackSend() }}
+				type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button></div> */}
+				 <div className="my-25 my-16"> 
+				 <Space direction="vertical" size="large">
+                        <Translate content="crypto_with_draw_success" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => { this.onBackSend() }} />
+                    </Space>
+					</div>
 			</div></div>
 		  }
 		  else {

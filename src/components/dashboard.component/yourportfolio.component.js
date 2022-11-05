@@ -13,11 +13,12 @@ import { updateCoinDetail } from '../../reducers/sellReducer'
 import { convertCurrency } from '../buy.component/buySellService';
 import { withRouter, Link } from 'react-router-dom';
 import apiCalls from '../../api/apiCalls';
-import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle, setWithdrawfiatenaable,rejectWithdrawfiat, setWithdrawfiat,setWalletAddress, setSendCrypto } from "../../reducers/sendreceiveReducer";
+import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle, setWithdrawfiatenaable,rejectWithdrawfiat, setWithdrawfiat,setWalletAddress, setSendCrypto, hideSendCrypto } from "../../reducers/sendreceiveReducer";
 import { getcoinDetails } from './api';
 import {createCryptoDeposit} from "../deposit.component/api";
 import TransactionsHistory from "../transactions.history.component";
 import Loader from "../../Shared/loader";
+
 class YourPortfolio extends Component {
     state = {
         loading: true,
@@ -98,7 +99,6 @@ class YourPortfolio extends Component {
     }}
   
     showSendReceiveDrawer = async(e, value) => {
-      debugger
       let selectedObj = { ...value };
       selectedObj.coin = selectedObj.coin?.toUpperCase();
       selectedObj.coinFullName = selectedObj.coinFullName
@@ -141,10 +141,12 @@ class YourPortfolio extends Component {
         // })
       } else {
         this.props.dispatch(setSendCrypto(false));
+        this.props.dispatch(setWithdrawfiatenaable(false));
+        this.props.dispatch(hideSendCrypto(false));
           this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
          // this.props.dispatch(setSubTitle(`${selectedObj.coinBalance ? selectedObj.coinBalance : '0'} ${selectedObj.coin}` + " " + apiCalls.convertLocalLang('available')));
           this.props.dispatch(setStep("step7"));
-          this.props.dispatch(setSubTitle(` ${coin}` + " " + "balance" +" "+ ":" +" "+ `${selectedObj.coinBalance ? selectedObj.coinBalance : '0'}`+`${" "}`+`${coin}`
+          this.props.dispatch(setSubTitle(` ${coin}` + " " + "balance" +" "+ ":" +" "+ `${selectedObj.coinBalance ?  selectedObj.coinBalance : '0'}`+`${" "}`+`${coin}`
             ));
              const response = await createCryptoDeposit({ customerId: this.props.userProfile?.id, walletCode: coin, network: selectedObj?.netWork });
              if (response.ok) {
@@ -274,7 +276,6 @@ class YourPortfolio extends Component {
                         type="primary"
                         onClick={() => this.showSendReceiveDrawer(2, item)}
                         className="custom-btn sec"
-                        disabled={item?.amount > 0 ? false : true}
                       />
                       
                       <Dropdown overlay={this.menuBar(item)} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >

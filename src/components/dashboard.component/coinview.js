@@ -143,12 +143,13 @@ componentWillUnmount(){
             this.props.changeStep('withdraw_crypto_selected');
 
         } else {
+            this.props.dispatch(setSendCrypto(false));
             this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
             this.props.dispatch(setSubTitle(`${selectedObj.coinBalance ? selectedObj.coinBalance : '0'} ${selectedObj.coin}` + " " + apiCalls.convertLocalLang('available')));
             this.props.dispatch(setStep("step7"));
             this.props.dispatch(setSubTitle(` ${coin}` + " " + "balance" +" "+ ":" +" "+ `${selectedObj.coinBalance ? selectedObj.coinBalance : '0'}`+`${" "}`+`${coin}`
             ));
-             const response = await createCryptoDeposit({ customerId: this.props.userProfile?.id, walletCode: coin, network: selectedObj?.netWork });
+             const response = await createCryptoDeposit({ customerId: this.props.userProfile?.id, walletCode: coin, network: selectedObj?.network });
              if (response.ok) {
                 this.props.dispatch(setWalletAddress(response.data));
                 this.props.dispatch(fetchDashboardcalls(this.props.userProfile?.id));

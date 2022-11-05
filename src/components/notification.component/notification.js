@@ -37,9 +37,10 @@ class NotificationScreen extends Component {
 
   getNotificationData = async () => {
     this.setState({ ...this.state, isLoading: true });
-    let respose = await getNotifications(this.props.userConfig.id);
+    let response = await getNotifications(this.props.userConfig.id);
+    if(response.ok) {
     this.setState({ ...this.state, isLoading: false });
-    let obj = respose.data;
+    let obj = response.data;
     for (var i in obj) {
       let selectedtypes = [];
       for (let j in obj[i].notificationTypes) {
@@ -47,9 +48,13 @@ class NotificationScreen extends Component {
           selectedtypes.push(obj[i].notificationTypes[j].type);
         }
       }
-      obj[i].selectedtypes = selectedtypes;
+        obj[i].selectedtypes = selectedtypes;
     }
     this.setState({ ...this.state, notification: obj });
+  }
+  else {
+    this.setState({ ...this.state, errorMsg: this.isErrorDispaly(response), isLoading: false });
+  }
   };
 
   saveBankInfo = async () => {
