@@ -670,11 +670,11 @@ class WithdrawSummary extends Component {
 			  <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully </Title>
 			  <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
 				   Please sign using link received in email to whitelist your address. `}</Text>
-			  <Paragraph className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Paragraph>
+			  <span className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</span>
 			  {/* <div className="my-25"><Button
 				onClick={() => { this.onBackSend() }}
 				type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button></div> */}
-				 <div className="my-25"> 
+				 <div className="my-25 my-16"> 
 				 <Space direction="vertical" size="large">
                         <Translate content="crypto_with_draw_success" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => { this.onBackSend() }} />
                     </Space>
