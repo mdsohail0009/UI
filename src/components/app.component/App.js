@@ -10,8 +10,8 @@ import { reactPlugin } from "../../Shared/appinsights";
 import Notifications from "../../notifications";
 import { startConnection } from "../../utils/signalR";
 import { useThemeSwitcher } from "react-css-theme-switcher";
-// import apiCalls from '../../api/apiCalls';
-// import { updatetwofactor } from "../../reducers/configReduser";
+import apiCalls from '../../api/apiCalls';
+import { updatetwofactor } from "../../reducers/configReduser";
 
 function App(props) {
   const { switcher, themes } = useThemeSwitcher()
@@ -21,12 +21,12 @@ function App(props) {
     setTimeout(() => {
       const { userConfig: { userProfileInfo } } = store.getState();
       if (userProfileInfo?.id) {
-        // store.dispatch(updatetwofactor({ loading: true, isEnabled: false }));
-        // apiCalls.twofactor(userProfileInfo?.id).then(res => {
-        //   if (res.ok) {
-        //     store.dispatch(updatetwofactor({ loading: false, isEnabled: res.data }));
-        //   }
-        // })
+        store.dispatch(updatetwofactor({ loading: true, isEnabled: false }));
+        apiCalls.twofactor(userProfileInfo?.id).then(res => {
+          if (res.ok) {
+            store.dispatch(updatetwofactor({ loading: false, isEnabled: res.data }));
+          }
+        })
         startConnection(userProfileInfo?.id);
         switcher({ theme: userProfileInfo?.theme === 'Light Theme' ? themes.LHT : themes.DRT });
       } else {
