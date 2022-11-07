@@ -801,7 +801,7 @@ class WithdrawSummary extends Component {
 							onFinish={this.saveWithdrwal}>
 							{this.state.permissions?.Send && this.state.verifyData.isPhoneVerified == true && (
 								<Text className="fs-14 mb-8 text-white d-block fw-500 code-lbl">
-									Phone verification code *
+									Phone Verification Code *
 								</Text>
 							)}
 							{this.state.permissions?.Send && this.state.verifyData.isPhoneVerified == true && (
@@ -875,8 +875,8 @@ class WithdrawSummary extends Component {
 							)}
 							{this.state.verifyData.isPhoneVerified}
 							{this.state.permissions?.Send && this.state.verifyData.isEmailVerification == true && (
-								<Text className="fs-14 mb-8 text-white d-block fw-200">
-									Email verification code *
+								<Text className="fs-14 mb-8 text-white d-block fw-500 code-lbl">
+									Email Verification Code *
 								</Text>
 							)}
 							{this.state.permissions?.Send && this.state.verifyData.isEmailVerification == true && (
