@@ -3,6 +3,8 @@ const CLEAR_STEP = "clearStep";
 const CHANGE_STEP = "changeStep"
 const SET_TAB = "setTab";
 const SET_HEADER_TAB = "setHeaderTab";
+const SET_SELL_HEADER_HIDE = "setSellHeaderHide";
+const SET_SELECTED_SELL_COIN = "setSelectedSellCoin";
 
 const setStep = (payload) => {
     return {
@@ -34,10 +36,24 @@ const setHeaderTab = (payload) => {
         payload
     }
 }
+const setSellHeaderHide = (payload) => {
+    return {
+        type: SET_SELL_HEADER_HIDE,
+        payload
+    }
+}
+const setSelectedSellCoin = (payload) => {
+    return {
+        type: SET_SELECTED_SELL_COIN,
+        payload
+    }
+}
+
 let initialState = {
     stepcode: "step1",
     stepTitles: {
         buycrypto: "buy_assets",
+        sellcrypto: "sell_assets",
         selectcrypto: "selected_crypto",
         summary: "selected_crypto",
         billtype: "link_a_card",
@@ -65,7 +81,9 @@ let initialState = {
         wiretransfor: "select_a_method"
     },
     tabKey: 1,
-    headerTab:""
+    headerTab:"",
+    sellHeader: null,
+    selectedSellCoin: null
 }
 const buySellReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -79,10 +97,14 @@ const buySellReducer = (state = initialState, action) => {
             return { ...state, tabKey: action.payload };
         case SET_HEADER_TAB:
             return { ...state, headerTab: action.payload };
+        case SET_SELL_HEADER_HIDE:
+            return { ...state, sellHeader: action.payload };
+        case SET_SELECTED_SELL_COIN:
+                return { ...state, selectedSellCoin: action.payload };
         default:
             return state;
     }
 
 }
 export default buySellReducer;
-export { setStep, clearStep, changeStep, setTab,setHeaderTab }
+export { setStep, clearStep, changeStep, setTab,setHeaderTab, setSellHeaderHide, setSelectedSellCoin }

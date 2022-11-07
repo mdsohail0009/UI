@@ -29,6 +29,8 @@ const RewardCard = React.lazy(() => import("../components/cards.component"));
 const AccessDenied = React.lazy(() => import("../components/shared/permissions/access.denied"));
 const InternalTransfer = React.lazy(() => import("../components/internalTransfer.component/internalTransfer"));
 const AddressBook = React.lazy(() => import("../components/addressbook.component"));
+const Cases = React.lazy(()=>import("../components/case.component/cases"))
+const CaseView = React.lazy(()=>import("../components/case.component/caseView"))
 class RouteConfig extends Component {
   componentDidMount() {
     this.checkPermissions(window.location.pathname || "/cockpit");
@@ -61,7 +63,7 @@ class RouteConfig extends Component {
         <ReactRoute path="/onboading" component={OnBoarding} />
         <ReactRoute path="/userprofile/:key?/:type?" component={UserProfile} />
         <ReactRoute path='/documents' component={RequestedDocs} />
-        <ReactRoute path='/cases' component={CaseDocs} />
+        {/* <ReactRoute path='/cases' component={CaseDocs} /> */}
         <ReactRoute path='/docnotices' component={DocNotices} />
         <ReactRoute path='/enabletwofactor' component={TwoFactor} />
         <ReactRoute path='/addressFiatView/:id?/:type' component={AddressFiatView} />
@@ -71,6 +73,7 @@ class RouteConfig extends Component {
         <ReactRoute path='/cockpitCharts' component={DashboardCharts} />
         <Route path='/cards' component={RewardCard} isRoute={true} />
         <ReactRoute path='/accessdenied' component={AccessDenied} />
+        <ReactRoute path='/caseView/:id' component={CaseView} />
         <ReactRoute
           path="/payments"
           render={({ match: { url } }) => (
@@ -85,7 +88,7 @@ class RouteConfig extends Component {
         />
         <ReactRoute path="/internaltransfer" component={InternalTransfer} exact />
         <ReactRoute path="/addressbook" component={AddressBook} exact />
-
+        <ReactRoute path="/cases" component={Cases} exact />
         <ReactRoute path="/" component={Dashboard} exact />
       </React.Suspense>
     </Switch>

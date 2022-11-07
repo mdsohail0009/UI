@@ -9,6 +9,7 @@ import {Alert} from 'antd'
 import { setSellFinalRes } from '../../reducers/sellReducer'
 import apicalls from '../../api/apiCalls';
 import { setCurrentAction } from '../../reducers/actionsReducer';
+import {setSellHeaderHide} from '../../reducers/buysellReducer';
 
 
 class SellSummary extends Component {
@@ -70,6 +71,7 @@ class SellSummary extends Component {
             let res = await savesellData(obj);
             if (res.ok) {
                 this.props.sellResData(res.data);
+                //this.props.sellTitleHide(true);
                 this.props.changeStep('sellsuccess')
                 this.setState({ ...this.state, loader: false,isLoading: false, disableConfirm: false })
                 this.props.fetchDashboardData(this.props.customer.id)
@@ -104,6 +106,10 @@ class SellSummary extends Component {
 			this.setState({ ...this.state, permissions: _permissions });
 		}
 	}
+    onSellCancel () {
+        this.props.dispatch(setSellHeaderHide(true));
+        this.props.changeStep('step1');
+    }
     render() {
         const { sellpreviewData } = this.state;
         const { amount, amountNativeCurrency, oneCoinValue, coin, currency } = sellpreviewData;
@@ -129,7 +135,7 @@ class SellSummary extends Component {
             error={this.state.error} 
             isButtonLoad={this.state.isLoading}
             onRefresh={() => { this.refreshPage() }}
-            onCancel={() => this.props.changeStep('step1')}
+            onCancel={() => this.onSellCancel()}
             onClick={() => this.saveSellData()}
             okBtnTitle={"sell"}
 
@@ -140,7 +146,7 @@ class SellSummary extends Component {
 }
 
 const connectStateToProps = ({ buySell, sellInfo, userConfig,menuItems }) => {
-    return { buySell, sellData: sellInfo, customer: userConfig.userProfileInfo,buySellPermissions: menuItems?.featurePermissions["trade"], trackAuditLogData: userConfig.trackAuditLogData }
+    return { buySell, sellData: sellInfo, customer: userConfig.userProfileInfo,buySellPermissions: menuItems?.featurePermissions?.trade_sell, trackAuditLogData: userConfig.trackAuditLogData }
 }
 const connectDispatchToProps = dispatch => {
     return {
@@ -156,9 +162,13 @@ const connectDispatchToProps = dispatch => {
         sellResData: (data) => {
             dispatch(setSellFinalRes(data))
         },
+        // sellTitleHide: (val) => {
+        //     dispatch(setSellTitleHide(val))
+        // },
         setAction: (val) => {
 			dispatch(setCurrentAction(val))
 		  },
+          dispatch
 
     }
 }
