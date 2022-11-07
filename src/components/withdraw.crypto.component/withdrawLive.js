@@ -9,12 +9,11 @@ import { withDrawCrypto } from '../send.component/api';
 import { publishBalanceRfresh } from '../../utils/pubsub';
 
 const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep, dispatch, trackAuditLogData }) => {
-  const [faceCapture, setFaceCapture] = useState(false);
   const [livefacerecognization, setLivefacerecognization] = useState({});
   const [isLoding, setIsLoding] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const divRef = useRef(null);
-  useEffect(() => { setFaceCapture(false) }, []);
+  useEffect(() => { setLivefacerecognization({}) }, []);
   const saveWithdrwal = async () => {
     setErrorMessage(null);
     setIsLoding(true)
@@ -42,14 +41,13 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep, dispatch, t
     changeStep('withdraw_crpto_summary');
   }
   const confirmFaceLive = (obj) => {
-    setFaceCapture(true)
     setLivefacerecognization(obj)
   }
   return (
     <div div="divRef" ref={divRef}>
       {errorMessage != null && <Alert type='error' closable={false} message={errorMessage} showIcon />}
       <LiveNessSumsub onConfirm={confirmFaceLive} />
-      {faceCapture && <Button
+      {livefacerecognization?.verifed && <Button
         loading={isLoding}
         size="large"
         block
