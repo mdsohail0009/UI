@@ -32,8 +32,8 @@ class UploadMassPayments extends Component {
             modal: false,
             isValidFile: true,
             stateLoading: true,
-            gridUrl: process.env.REACT_APP_GRID_API + "MassPayments/GetMassPayments",
-            param: { status: "null" },
+            gridUrl: process.env.REACT_APP_GRID_API + "MassPayments/Transaction",
+            param: { customerId: this.props.userConfig?.id },
             Name: "",
             obj: {
                 id: [],
@@ -281,6 +281,7 @@ class UploadMassPayments extends Component {
     };
 
     beforeUpload = (file) => {
+        debugger
         let fileType = {
             "application/csv": true,
             "application/vnd.ms-excel": true,
@@ -322,6 +323,7 @@ class UploadMassPayments extends Component {
     };
 
     handleUpload = async ({ file }, doc) => {
+        debugger
         this.setState({
             ...this.state,
             uploadLoader: true,
