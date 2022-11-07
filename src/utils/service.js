@@ -10,6 +10,9 @@ export function newGUID() {
         return v.toString(16);
     });
 }
+export function numberWithCommas(x)  {
+    return x ? x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0;
+}
 export function getDocObj(customerId, path, docName,size, id, detailId) {
     return {
         "id": id || newGUID(),

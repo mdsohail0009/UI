@@ -1,3 +1,4 @@
+
 import React, { Component } from "react";
 import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert, message, Spin } from "antd";
 import {
@@ -20,11 +21,13 @@ import Info from "../shared/info";
 import { DownloadOutlined } from '@ant-design/icons';
 import ActionsToolbar from "../toolbar.component/actions.toolbar";
 import { fetchFeaturePermissions, setSelectedFeatureMenu } from "../../reducers/feturesReducer";
+import {rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
 import { getFeatureId } from "../shared/permissions/permissionService";
 import { setCurrentAction } from '../../reducers/actionsReducer'
 import AddressBookV2 from "../addressbook.v2/fiat.address";
 import AddressBookV3 from "../addressbook.v3";
 import AddressCommonCom from "./addressCommonCom";
+import AddressCrypto from "./addressCrypto"
 const { Paragraph, Text, Title } = Typography;
 const addressName = { "1stparty": "1st Party", "3rdparty": "3rd Party" };
 class AddressBook extends Component {
@@ -45,6 +48,7 @@ class AddressBook extends Component {
 			errorWorning: null,
 			isDownloading: false,
 			permissions: {},
+			showHeading:false,
 			obj: {
 				id: [],
 				tableName: "Common.PayeeAccounts",
@@ -135,11 +139,11 @@ class AddressBook extends Component {
 			filter: true,
 			width: 300,
 			customCell: (props) => (
-				<td>
-					<div className="gridLink" onClick={() => this.addressFiatView(props)}>
+				<td className="d-flex justify-content">
+					<div className="gridLink c-pointer	" onClick={() => this.addressFiatView(props)}>
 					{props?.dataItem?.whiteListName}
 					</div>
-					<Text className="file-label ml-8 fs-12">
+					<Text className="file-label ml-8 fs-12 add-lbl">
 						{this.addressTypeNames(props?.dataItem?.addressType)}
 					</Text>
 				</td>
@@ -156,13 +160,13 @@ class AddressBook extends Component {
 			field: "accountNumber",
 			title: apiCalls.convertLocalLang("Bank_account_iban_name"),
 			filter: true,
-			width: 250,
+			width: 270,
 		},
 		{
 			field: "routingNumber",
 			title: apiCalls.convertLocalLang("BIC_SWIFT_ABArouting_number"),
 			filter: true,
-			width: 270,
+			width: 310,
 		},
 		{
 			field: "bankName",
@@ -221,41 +225,42 @@ class AddressBook extends Component {
 				</td>
 			),
 		},
+		
 		{
-			field: "favouriteName",
-			title: apiCalls.convertLocalLang("favorite_name"),
+			field: "whiteListName",
+			title: "Save Whitelist Name As",
 			filter: true,
-			width: 300,
+			width: 250,
 			customCell: (props) => (
 				<td>
-					<div className="gridLink" onClick={() => this.addressCryptoView(props)}>
-						{props.dataItem.favouriteName}
+					<div>
+						<span className="gridLink c-pointer" onClick={() => this.addressCryptoView(props)}>{props.dataItem?.whiteListName}</span>
 					</div>
-					<Text className="file-label ml-8 fs-12">
+					{/* <Text className="file-label ml-8 fs-12">
 						{addressName[props?.dataItem?.addressType]}
-					</Text>
+					</Text> */}
 				</td>
 			),
 		},
 		{
-
-			field: "addressLable",
-			title: apiCalls.convertLocalLang("AddressLabel"),
-			filter: true,
-			width: 230,
-		},
-		{
-			field: "address",
-			title: apiCalls.convertLocalLang("address"),
-			filter: true,
-			width: 380,
-		},
-		{
 			field: "coin",
-			title: apiCalls.convertLocalLang("Coin"),
+			title: "Token",
 			filter: true,
 			width: 120,
 		},
+		{
+			field: "network",
+			title: "Network",
+			filter: true,
+			width: 120,
+		},
+		{
+			field: "address",
+			title: "Wallet Address",
+			filter: true,
+			width: 380,
+		},
+		
 		{
 			field: "addressState",
 			title: apiCalls.convertLocalLang("addressState"),
@@ -283,7 +288,7 @@ class AddressBook extends Component {
 			title: apiCalls.convertLocalLang("whitelist"),
 			filter: false,
 			width: 200,
-		},
+		}
 	];
 	async downloadDeclarationForm(dataItem) {
 		this.setState({ ...this.state, isDownloading: true, selectedDeclaration: dataItem.payeeAccountId });
@@ -295,7 +300,6 @@ class AddressBook extends Component {
 	}
 
 	handleInputChange = (prop, e) => {
-
 		this.setState({ ...this.state, errorWorning: null });
 		const rowObj = prop.dataItem;
 		const value =
@@ -453,7 +457,11 @@ class AddressBook extends Component {
 		let obj = this.state.selectedObj;
 		if (!this.state.isCheck) {
 			this.setState({ ...this.state, errorWorning: "Please select the one record" });
-		} else if (
+		} 
+		else if(obj.status == "Inactive") {
+			this.setState({ ...this.state, errorWorning: "Record is inactive so you can't edit" });
+		}
+		else if (
 			obj.addressState === "Approved" ||
 			obj.addressState === "Rejected" ||
 			obj.addressState === "Reject"
@@ -513,6 +521,7 @@ class AddressBook extends Component {
 		}
 	};
 	closeBuyDrawer = (obj) => {
+		this.props.dispatch(rejectWithdrawfiat())
 		let showCrypto = false, showFiat = false;
 		if (obj) {
 			if (obj.isCrypto)
@@ -520,7 +529,9 @@ class AddressBook extends Component {
 			else
 				showFiat = !obj?.close;
 		};
-		this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat, selectedObj: {} });
+		this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat, selectedObj: {}});
+		setTimeout(() => this.setState({ ...this.state,showHeading:false}), 2000);
+		
 		this.props.rejectCoinWallet();
 		this.props.clearFormValues();
 		this.props.clearCrypto();
@@ -528,8 +539,24 @@ class AddressBook extends Component {
 			this.gridFiatRef.current.refreshGrid();
 		} else {
 			this.gridCryptoRef.current.refreshGrid();
+			
 		}
 	};
+
+	closeCryptoDrawer=(obj)=>{
+		let showCrypto = false
+		if (obj) {
+			if (obj.isCrypto)
+				showCrypto = !obj?.close;
+			
+		};
+		this.setState({ ...this.state, visible: showCrypto, selectedObj: {} });
+		this.props.rejectCoinWallet();
+		this.props.clearFormValues();
+		this.props.clearCrypto();
+		this.gridCryptoRef.current.refreshGrid();
+		
+	}
 	backStep = () => {
 		this.props.changeStep("step1");
 	};
@@ -579,10 +606,13 @@ class AddressBook extends Component {
 		};
 		return stepcodes[type];
 	};
+	headingChange=(data)=>{
+		this.setState({...this.state,showHeading:data})
+	}
 	renderContent = () => {
 		const stepcodes = {
 			cryptoaddressbook: (<>
-				<AddressCommonCom onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1} />
+				<AddressCrypto  type= "manual" onCancel={(obj) => this.closeCryptoDrawer(obj)} headingUpdate={this.headingChange} cryptoTab={1} selectedAddress={this.state.selectedObj}/>
 			</>
 			),
 			selectcrypto: <SelectCrypto />,
@@ -629,18 +659,24 @@ class AddressBook extends Component {
 
 		return (
 			<>
-
-				<div className="box basic-info main-container">
-					<Translate
-						content="address_book"
-						component={Text}
-						className="basicinfo"
-					/>
-					<Translate
-						content="addressbook_note"
-						component={Text}
-						className="fs-14 text-yellow fw-400 mb-36 d-block"
-					/>
+			<div className="main-container">
+			<Translate
+				content="address_book"
+				component={Title}
+				className="basicinfo mb-0"
+			/>
+			<Text className="fs-16 text-white fw-500 mb-12 d-block">Note: <span className="fs-14 text-white fw-400 mb-12">Whitelisting of Crypto Address and Bank Account is required, Please add below.</span></Text>
+			{/* <Translate
+				content="note"
+				component={Text}
+				className="fs-14 text-white fw-400 mb-12 d-block"
+			/>
+			<Translate
+				content="addressbook_note"
+				component={Text}
+				className="fs-14 text-white fw-400 mb-12 d-block"
+			/> */}
+				<div className="box basic-info">
 					<div className="display-flex mb-16">
 						<Radio.Group
 							defaultValue={(this.props?.activeFiat||this.state.cryptoFiat) ? 2 : 1}
@@ -693,19 +729,21 @@ class AddressBook extends Component {
 						/>
 					)}
 				</div>
+				</div>
 
 				<Drawer
 					destroyOnClose={true}
 					title={[
 						<div className="side-drawer-header">
 							{this.renderTitle()}
-							<div className="text-center fs-16">
+							<div className="text-center fs-24">
 								<Translate
-									className="text-white-30 fw-600 text-upper mb-4"
+									className="text-white-30 fw-600 text-captz "
 									content={
+										this.state.showHeading!=true&&(
 										this.props.addressBookReducer.stepTitles[
 										config[this.props.addressBookReducer.stepcode]
-										]
+										])
 									}
 									component={Paragraph}
 								/>
@@ -772,27 +810,27 @@ class AddressBook extends Component {
 						</Tooltip>
 					}
 					footer={
-						<>
-							<Button
-								style={{ width: "100px", border: "1px solid #f2f2f2" }}
-								className=" pop-cancel"
-								onClick={this.handleCancel}>
-								No
-							</Button>
-							<Button
-								className="primary-btn pop-btn"
-								onClick={this.handleSatatuSave}
-								style={{ width: 120, height: 50 }}
-								loading={btnDisabled}>
-								{apiCalls.convertLocalLang("Yes")}
-							</Button>
-						</>
+						<div className="cust-pop-up-btn">
+						<Button
+							style={{border: "1px solid #f2f2f2",width:'150px',height: '46px' }}
+							className="primary-btn pop-cancel"
+							onClick={this.handleCancel}>
+							NO
+						</Button>
+						<Button
+							className="primary-btn pop-btn"
+							onClick={this.handleSatatuSave}
+							style={{ width: '150px', height: '46px' }}
+							loading={btnDisabled}>
+							{apiCalls.convertLocalLang("Yes")}
+						</Button>
+					</div>
 					}>
 					<p className="fs-16 mb-0">
 						{apiCalls.convertLocalLang("really_want")}{" "}
 						{this.state.selectedObj.status === "Active"
 							? apiCalls.convertLocalLang("deactivate")
-							: apiCalls.convertLocalLang("activate")}
+							: apiCalls.convertLocalLang("activate")}?
 					</p>
 				</Modal>
 				<Modal
@@ -825,11 +863,12 @@ class AddressBook extends Component {
 		);
 	}
 }
-const connectStateToProps = ({ addressBookReducer, userConfig, oidc, menuItems, }) => {
+const connectStateToProps = ({ addressBookReducer, sendReceive,userConfig, oidc, menuItems, }) => {
 	return {
 		addressBookReducer,
 		userConfig: userConfig.userProfileInfo,
 		oidc,
+		sendReceive,
 		trackLogs: userConfig.trackAuditLogData,
 		addressBookPermissions: menuItems?.featurePermissions.addressBook,
 	};

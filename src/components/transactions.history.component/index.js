@@ -88,7 +88,7 @@ class TransactionsHistory extends Component {
       </td>
     ) },
    
-    { field: "debit", title: "Sender/Beneficiary Name", filter: false,
+    { field: "debit", title: "Sender/Beneficiary Name", filter: true, width: 260,
     customCell: (props) => (
       <td>
         {props.dataItem?.senderName}
@@ -98,7 +98,7 @@ class TransactionsHistory extends Component {
       </td>
     ) },
 
-    { field: "accountnumber", title: "Iban/ Account number", filter: false,
+    { field: "accountnumber", title: "IBAN/Account Number", filter: true,  width: 220,
      },
     { field: "state", title: "State", filter: true, },
     // { field: "fromWalletCode", title: "From Wallet Code", filter: true, width: 180, },
@@ -193,7 +193,7 @@ class TransactionsHistory extends Component {
           width="100%"
           onClose={this.props.onClose}
           visible={this.props.showDrawer}
-          className="side-drawer-full custom-gridresponsive"
+          className="side-drawer-full custom-gridresponsive transctns-grid"
         >
           <div>
             <Form
@@ -248,12 +248,12 @@ class TransactionsHistory extends Component {
                 </Col>
                 <Col xs={24} sm={24} md={3} lg={3} xl={3} className="transaction_resp">
                   <Button
-                    className="pop-btn"
-                    style={{ height: 36, marginTop: "36px", marginLeft: "12px" }}
+                    className="pop-btn search-btn"
+                    style={{ height: 36, marginTop: "36px" }}
                     htmlType="submit"
                     onClick={this.handleSearch}
                   >
-                    Search
+                    Search<span className="icon sm search-angle ml-8"></span>
                   </Button>
                 </Col>
 

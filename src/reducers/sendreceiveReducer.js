@@ -15,6 +15,8 @@ const SET_WITHDRAW_FINAL_RES = "setWithdrawFinalRes";
 const SET_CRYPTO_FINAL_RES = "setCryptoFinalRes";
 const SET_WFTOTALVALUE = "setWFTotalValue";
 const CLEAR_AMOUNT = "setClearAmount";
+const SET_SEND_CRYPTO = "setSendCrypto";
+const HIDE_SEND_CRYPTO = "hideSendCrypto";
 
 const setStep = (payload) => {
   return {
@@ -46,6 +48,19 @@ const setSubTitle = (payload) => {
     payload
   };
 };
+const setSendCrypto = (payload) => {
+  return {
+    type: SET_SEND_CRYPTO,
+    payload
+  };
+};
+const hideSendCrypto = (payload) => {
+  return {
+    type: HIDE_SEND_CRYPTO,
+    payload
+  };
+};
+
 const setWithdrawfiat = (payload) => {
   return {
     type: SET_WITHDRAWFIAT,
@@ -64,6 +79,7 @@ const rejectWithdrawfiat = (payload) => {
     payload
   };
 };
+
 const setWithdrawfiatenaable = (payload) => {
   return {
     type: SET_WITHDRAWFIAT_ENABLE,
@@ -176,7 +192,9 @@ let initialState = {
   addressObj: null,
   withdrawFinalRes: {},
   cryptoFinalRes: {},
-  wFTotalValue: null
+  wFTotalValue: null,
+  sendCryptoEnable: false,
+  sendCryptoHide: false,
 };
 const sendReceiveReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -197,6 +215,7 @@ const sendReceiveReducer = (state = initialState, action) => {
     case REJECT_WITHDRAWFIAT:
       state = { ...state, withdrawFiatObj: null };
       return state;
+      
     case SET_WITHDRAWFIAT_ENABLE:
       state = { ...state, withdrawFiatEnable: action.payload };
       return state;
@@ -231,7 +250,12 @@ const sendReceiveReducer = (state = initialState, action) => {
     case CLEAR_AMOUNT:
       state={...state, wFTotalValue: null}
       return state;
-
+    case SET_SEND_CRYPTO:
+      state = { ...state, sendCryptoEnable: action.payload };
+      return state;
+      case HIDE_SEND_CRYPTO:
+        state = { ...state, sendCryptoHide: action.payload };
+        return state;
     default:
     return state;
 
@@ -256,5 +280,7 @@ export {
   setWithdrawcrypto,
   setAddress,
   setWFTotalValue,
-  setClearAmount
+  setClearAmount,
+  setSendCrypto,
+  hideSendCrypto
 };

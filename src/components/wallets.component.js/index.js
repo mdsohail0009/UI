@@ -19,7 +19,7 @@ class Wallets extends Component {
             title={[<div className="side-drawer-header">
                 <span />
                 <div className="text-center fs-16">
-                    <Translate className="mb-0 text-white-30 fw-600 text-upper" content="menu_wallets" component={Paragraph} />
+                    <Translate className="mb-0 text-white-30 fw-600" content="menu_wallets" component={Paragraph} />
                 </div>
                 <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" /></div>]}
             placement="right"

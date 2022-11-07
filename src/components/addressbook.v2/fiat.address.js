@@ -202,7 +202,7 @@ class AddressBookV2 extends Component {
                 <List
                     itemLayout="horizontal"
                     dataSource={coinListData}
-                    className="crypto-list auto-scroll wallet-list c-pointer"
+                    className="crypto-list auto-scroll wallet-list"
                     loading={loader ? loader : false}
                     locale={{
                         emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
@@ -305,7 +305,7 @@ class AddressBookV2 extends Component {
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                 <Title className="fs-14 text-white fw-400 text-captz">Save Whitelist name as</Title>
-                                <Title className="fs-14 text-white fw-500  text-right">{this.state.reviewDetails?.favouriteName}</Title>
+                                <Title className="fs-14 text-white fw-500  text-right plist-textwrap">{this.state.reviewDetails?.favouriteName}</Title>
                             </div>
                         </Col>
                         {this.state.reviewDetails?.name && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
@@ -376,21 +376,21 @@ class AddressBookV2 extends Component {
                 }
                     onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} />
             </>,
-            declaration: <div className="text-center">
+            declaration: <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
                 <Image width={80} preview={false} src={alertIcon} />
                 <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
                 <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                        Please sign using link received in email to whitelist your address. `}</Text>
                 <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
                 {/*<div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBOARD</Button> */}
-            </div>,
-            successpage: <div className="text-center">
+            </div></div>,
+            successpage: <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
                 <Image width={80} preview={false} src={success} />
                 <Title level={2} className="text-white-30 my-16 mb-0">Your transaction has been processed successfully</Title>
                 {/* <Text className="text-white-30">{`Declaration form has been sent to ${"have123@yopmail.com"}. 
                    Please sign using link received in email to whitelist your address`}</Text> */}
                 {/*<div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBOARD</Button> */}
-            </div>
+            </div></div>
         }
         return steps[this.state.step];
     }

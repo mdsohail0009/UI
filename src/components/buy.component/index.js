@@ -6,7 +6,7 @@ import ConnectStateProps from '../../utils/state.connect';
 import BuySummary from './buy.summary';
 import BillType from '../pay.component/payOption';
 import SelectCrypto from './buy.detail';
-import { setStep, setTab, setHeaderTab } from '../../reducers/buysellReducer';
+import { setStep, setTab, setHeaderTab, setSellHeaderHide, setSelectedSellCoin } from '../../reducers/buysellReducer';
 import { processSteps as config } from './config';
 import DepositFiat from '../deposit.component/depositFiat'
 import WireTransfer from '../wire.transfer.component/wireTransfer';
@@ -28,6 +28,7 @@ class BuySell extends Component {
         }
     }
     componentDidMount(){
+        this.props.dispatch(setSellHeaderHide(false));
         getFeaturePermissionsByKeyName(`trade`)
     }
     closeBuyDrawer = () => {
@@ -37,9 +38,14 @@ class BuySell extends Component {
             this.props.onClose();
         }
     }
+    handleBackSell = () => {
+        this.props.dispatch(setSellHeaderHide(true));
+        this.props.dispatch(setSelectedSellCoin(false));
+        this.props.dispatch(setStep("step1"));
+    }
     renderContent = () => {
         const stepcodes = {
-            buycrypto: <CryptoComponent />,
+            buycrypto: <CryptoComponent isTab= {this.props.isTabKey}/>,
             billtype: <BillType />,
             addcard: <AddCard />,
             depositcrypto: <DepositCrypto />,
@@ -67,7 +73,7 @@ class BuySell extends Component {
             billingaddress: <span onClick={() => this.props.dispatch(setStep("step5"))} className="icon md lftarw-white c-pointer" />,
             addressscanner: <span onClick={() => this.props.dispatch(setStep("step6"))} className="icon md lftarw-white c-pointer" />,
             depositfiat: <span onClick={() => this.props.dispatch(setStep("step5"))} className="icon md lftarw-white c-pointer" />,
-            selectedcrypto: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
+            selectedcrypto: <span  isTabKey="2" onClick={this.handleBackSell} className="icon md lftarw-white c-pointer" />,
             sellsummary: <span onClick={() => this.props.dispatch(setStep("step10"))} className="icon md lftarw-white c-pointer" />,
             successmsg: <span />,
             sellsuccessmsg: <span />,
@@ -101,10 +107,12 @@ class BuySell extends Component {
         return (<Drawer
             title={[<div className="side-drawer-header">
                 {this.renderTitle()}
-                <div className="text-center fs-16">
+                {((this.props.isTabKey && this.props.buySell?.stepcode !=="sellsuccess" && !this.props.buySell?.selectedSellCoin) || this.props.buySell?.sellHeader) && <div className="text-center fs-24">
+                    <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin }} className="mb-0 text-white-30 fw-600" content="sell_assets" component={Paragraph} />
+                </div>}
+                {((!this.props.isTabKey && !this.props.buySell?.sellHeader) || this.props.buySell?.selectedSellCoin)&& <div className="text-center fs-16">
                     <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin }} className="mb-0 text-white-30 fw-600 text-upper" content={this.props.buySell.stepTitles[config[this.props.buySell.stepcode]]} component={Paragraph} />
-                    {/* <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin, value: this.numberWithCommas(this.props.sellData?.exchangeValues[this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin]) }} className="text-white-50 mb-0 fs-14 fw-300" content={this.props.buySell.stepSubTitles[config[this.props.buySell.stepcode]]} component={Paragraph} /> */}
-                </div>
+                </div>}
                 {this.renderIcon()}</div>]}
             placement="right"
             closable={true}
