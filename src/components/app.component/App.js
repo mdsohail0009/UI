@@ -21,7 +21,6 @@ function App(props) {
     setTimeout(() => {
       const { userConfig: { userProfileInfo } } = store.getState();
       if (userProfileInfo?.id) {
-       
         apiCalls.twofactor(userProfileInfo?.id).then(res => {
           if (res.ok) {
             store.dispatch(updatetwofactor({ loading: false, isEnabled: res.data }));
