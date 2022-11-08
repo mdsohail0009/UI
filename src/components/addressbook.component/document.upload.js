@@ -4,7 +4,6 @@ import Loader from "../../Shared/loader";
 import { document } from "../onthego.transfer/api";
 import apiCalls from "../../api/apiCalls";
 import { bytesToSize } from "../../utils/service";
-import ConnectStateProps from "../../utils/state.connect";
 
 const { Dragger } = Upload;
 const { Paragraph, Text, Title } = Typography;
@@ -80,7 +79,6 @@ class AddressDocumnet extends Component {
                             beforeUpload={(props) => {
                               //  return props.name.split(".").length < 2;
                             }}
-                            headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
                             onChange={({ file }) => {
                                 this.setState({ ...this.state, isDocLoading: true });
                                 if (file.status === "done") {
@@ -169,4 +167,4 @@ class AddressDocumnet extends Component {
         </Row>
     }
 }
-export default ConnectStateProps(AddressDocumnet);
+export default AddressDocumnet;
