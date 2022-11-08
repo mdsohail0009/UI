@@ -24,8 +24,10 @@ const Verifications = (props) => {
     const fullNumber = props.auth.phone_number;
     const last4Digits = fullNumber.slice(-4);
     const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
+    const [permissions, setPermissions] = useState({});
 
     useEffect(() => {
+        loadPermissions();
         getVerifyData();
     }, []);
     useEffect(() => {
@@ -72,6 +74,16 @@ const Verifications = (props) => {
         // setAgreeRed(true);
     };
 
+   const loadPermissions = () => {
+		if (props.withdrawCryptoPermissions) {
+			let _permissions = {};
+			for (let action of props.withdrawCryptoPermissions?.actions) {
+				_permissions[action.permissionName] = action.values;
+			}
+            setPermissions(_permissions);
+		}
+	}
+
     const getVerifyData = async () => {
         props.onReviewDetailsLoading(true)
         let response = await getVerificationFields(props.userConfig.id);
@@ -100,7 +112,6 @@ const Verifications = (props) => {
     };
 
     const verifyEmailOtp = async (values) => {
-        debugger
         if(!email.code){
             setEmail({ ...email, errorMsg: 'Please enter email verification code', verified:false});
         }
@@ -159,7 +170,6 @@ const Verifications = (props) => {
         }
     };
     const verifyPhoneOtp = async () => {
-        debugger
         if(!phone.code){
             setPhone({ ...phone, errorMsg: 'Please enter phone verification code', verified: false, btnLoader: false });
         }
@@ -206,7 +216,6 @@ const Verifications = (props) => {
         }
     }
     const verifyAuthenticatorOTP = async () => {
-        debugger
         if(!authenticator.code){
             return setAuthenticator({ ...authenticator, errorMsg: 'Please enter authenticator code', verified: false, btnLoader:false });
         }
@@ -254,7 +263,7 @@ const Verifications = (props) => {
                 type="text"
                 style={{ color: "black", margin: "0 auto" }}
                 loading={phone.btnLoader}
-                onClick={() => getphoneOTP()}><Text className="text-yellow" >Click here to get code</Text></Button>
+                onClick={() => getphoneOTP()}><Text className="text-yellow getcode" >Click here to get code</Text></Button>
         ),
         resendotp: (
             <Button
@@ -267,9 +276,9 @@ const Verifications = (props) => {
         code_Sent: (<div style={{ margin: "0 auto"}} className="code-sent-tool-tip">
             <Button
                 type="text"
-                style={{ color: "black" }}
+                style={{ color: "black",margin: "0 auto" }}
             ><Text
-                className={`pl-0 ml-0 text-white-50
+                className={`pl-0 ml-0 mr-0 text-white-50
         ${"c-notallowed"}`} >Verification code sent</Text></Button>
             <Tooltip
                 placement="topRight"
@@ -305,7 +314,7 @@ const Verifications = (props) => {
                 type="text"
                 style={{ color: "black", margin: "0 auto" }}
                 loading={email.btnLoader}
-                onClick={() => sendEmailOTP()}><Text className="text-yellow" >Click here to get code</Text></Button>
+                onClick={() => sendEmailOTP()}><Text className="text-yellow getcode" >Click here to get code</Text></Button>
         ),
         resendotp: (
             <Button
@@ -418,7 +427,7 @@ const Verifications = (props) => {
                         onFinish={transferDetials}
                         autoComplete="off">
                             <>
-                        {verifyData.isPhoneVerified === true && (<>
+                        {verifyData.isPhoneVerified === true && permissions?.Send && (<>
                             <Text className="fw-500 mb-8 px-4 text-white pt-16">
                             Phone Verification Code *
                             </Text>
@@ -471,7 +480,7 @@ const Verifications = (props) => {
                             </Form.Item>
                         </>
                         )}
-                        {verifyData.isEmailVerification === true && (<>
+                        {verifyData.isEmailVerification === true && permissions?.Send && (<>
                             <Text className="fs-14 mb-8 text-white d-block fw-500">
                                 Email Verification Code *
                             </Text>
@@ -524,7 +533,7 @@ const Verifications = (props) => {
                             </Form.Item>
                         </>
                         )}
-                        {verifyData.twoFactorEnabled === true && (<>
+                        {verifyData.twoFactorEnabled === true && permissions?.Send && (<>
                             <Text className="mb-8 px-4 fw-500 text-white pt-16">
                             Authenticator Code *
                             </Text>
@@ -624,7 +633,7 @@ const Verifications = (props) => {
                         </>
                         )} */}
                         </>
-                            {liveverification.isLiveEnable &&<>
+                            {liveverification.isLiveEnable &&  permissions?.Send &&<>
                                 <LiveNessSumsub onConfirm={(data) => verifyLiveness(data)} />
                             </>}
 
@@ -636,10 +645,11 @@ const Verifications = (props) => {
     );
 };
 
-const connectStateToProps = ({ userConfig, oidc }) => {
+const connectStateToProps = ({ userConfig, oidc, menuItems }) => {
     return {
         userConfig: userConfig.userProfileInfo,
-        auth: oidc.user.profile
+        auth: oidc.user.profile,
+        withdrawCryptoPermissions: menuItems?.featurePermissions?.send_fiat,
 
     };
 };

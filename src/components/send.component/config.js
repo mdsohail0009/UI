@@ -8,6 +8,7 @@ export const sendreceiveSteps = {
   step7: "withdrawscan",
   step8: "selectAddress",
   step9: "selectCrypto",
+  step10: "sendMoney",
   withdraw_crypto_liveness: "withdraw_crypto_liveness",
   withdraw_crpto_summary:"withdraw_crpto_summary",
   withdraw_crpto_success:"withdraw_crpto_success",

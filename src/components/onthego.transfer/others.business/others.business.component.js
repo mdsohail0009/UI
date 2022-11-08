@@ -132,37 +132,54 @@ class OthersBusiness extends Component {
         _obj.payeeAccountModels[0].walletCode = "EUR";
         _obj.payeeAccountModels[0].bankName = ibanDetails?.bankName;
         delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
-        _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
         _obj.addressType = "otherbusiness";
         _obj.transferType = "sepa";
         _obj.amount = this.props.amount;
         if(isEdit){
             _obj.id = isSelectedId ? isSelectedId : details?.payeeId;
         }
-        this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
-        const response = await savePayee(_obj);
-        if (response.ok) {
-            if (this.props.type !== "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
-                if (confirmRes.ok) {
-                    this.props.onContinue(confirmRes.data);
-                    this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
-                  //  this.useDivRef.current.scrollIntoView()
-                } else {
-                    this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false, isBtnLoading: false });
-                  //  this.useDivRef.current.scrollIntoView(0,0)
-                  window.scrollTo(0, 0);
+        if (_obj.payeeAccountModels[0].documents == null || _obj.payeeAccountModels[0].documents && _obj.payeeAccountModels[0].documents.details.length == 0) {
+            this.useDivRef.current.scrollIntoView()
+            this.setState({ ...this.state, isLoading: false, errorMessage: 'At least one document is required', isBtnLoading: false });
+        }else if (_obj.payeeAccountModels[0].documents) {
+            let length = 0;
+            for (let k in _obj.payeeAccountModels[0].documents.details){
+                if(_obj.payeeAccountModels[0].documents.details[k].state=='Deleted'){
+                    length=length+1;
                 }
-            } else {
-                // this.props.onContinue({ close: true, isCrypto: false });
-                this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
-                this.useDivRef.current?.scrollIntoView(0,0)
             }
+            if(length==_obj.payeeAccountModels[0].documents.details.length){
+                this.useDivRef.current.scrollIntoView()
+                this.setState({ ...this.state, isLoading: false, errorMessage: 'At least one document is required', isBtnLoading: false });
+            } else {
+                _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
+                this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
+                const response = await savePayee(_obj);
+                if (response.ok) {
+                    if (this.props.type !== "manual") {
+                        const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
+                        if (confirmRes.ok) {
+                            this.props.onContinue(confirmRes.data);
+                            this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
+                            //  this.useDivRef.current.scrollIntoView()
+                        } else {
+                            this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false, isBtnLoading: false });
+                            //  this.useDivRef.current.scrollIntoView(0,0)
+                            window.scrollTo(0, 0);
+                        }
+                    } else {
+                        // this.props.onContinue({ close: true, isCrypto: false });
+                        this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
+                        this.useDivRef.current?.scrollIntoView(0, 0)
+                        this.props.headingUpdate(true)
+                    }
 
-        } else {
-            
-            this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, isBtnLoading: false });
-           // this.useDivRef.current.scrollIntoView()
+                } else {
+
+                    this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, isBtnLoading: false });
+                    // this.useDivRef.current.scrollIntoView()
+                }
+            }
         }
 
     }
@@ -172,16 +189,18 @@ class OthersBusiness extends Component {
             return <Loader />
         }
         if (this.state.showDeclartion) {
-            return <div className="text-center">
+            return  <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
                 <Image width={80} preview={false} src={alertIcon} />
                 <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
                 <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                    Please sign using link received in email to whitelist your address. `}</Text>
                 <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
-                <div className="my-25"><Button onClick={() => this.props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn text-textDark">BACK</Button></div>
-            </div>
+                <div className="my-25">
+                    {/* <Button onClick={() => this.props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button> */}
+                    </div>
+            </div></div>
         }
-        if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} /> }
+        if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} updatedHeading={this.props?.headingUpdate}amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} /> }
         else {
             return <><div ref={this.useDivRef}>
                 {/* <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16 text-center">SEPA Transfer</Paragraph> */}
@@ -420,12 +439,12 @@ class OthersBusiness extends Component {
                     </div>
                     <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
 
-                    <AddressDocumnet documents={this.state.details?.payeeAccountModels[0].documents} onDocumentsChange={(docs) => {
+                    <AddressDocumnet documents={this.state.details?.payeeAccountModels[0].documents} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
                     }} />
-                    <div className="text-center mt-36">
+                    <div className="text-right mt-36">
                         {/* <Row gutter={[16, 16]}>
                             <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col>
                             <Col xs={12} md={12} lg={12} xl={12} xxl={12}> */}
@@ -433,7 +452,7 @@ class OthersBusiness extends Component {
                                     htmlType="submit"
                                     size="large"
                                     className="pop-btn px-36"
-                                    style={{ width:'100%' }}
+                                    //style={{ width:'100%' }}
                                     disabled={this.state.ibanDetailsLoading}
                                     loading={this.state.isBtnLoading} >
                             {this.props.type === "manual" && "Save"}

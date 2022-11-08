@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Drawer, Typography } from 'antd';
 import Translate from 'react-translate-component';
 import ConnectStateProps from '../../utils/state.connect';
-import { handleSendFetch, setWithdrawcrypto, setStep, setSubTitle, setAddress } from '../../reducers/sendreceiveReducer';
+import { handleSendFetch, setWithdrawcrypto, setStep, setSubTitle,rejectWithdrawfiat, setAddress } from '../../reducers/sendreceiveReducer';
 import { sendreceiveSteps as config } from './config';
 import DepositeCrypto from '../send.component/depositeToggle';
 import CryptoWithDrawWallet from '../withdraw.crypto.component/withdraw.selected.wallet';
@@ -15,13 +15,15 @@ import SelectCrypto from '../addressbook.component/selectCrypto';
 import WithdrawaCryptolLive from '../withdraw.crypto.component/withdrawLive';
 import SuccessMsg from '../withdraw.crypto.component/success';
 import SelectAddress from '../withdraw.crypto.component/selectAddress';
+import OnthegoCryptoTransfer from '../onthego.transfer/cryptoTransfer.component';
 const { Paragraph } = Typography
 class SendReceive extends Component {
     state = {
 
     }
     closeDrawer = () => {
-        //this.props.dispatch(setStep("step1"));
+        this.props.dispatch(rejectWithdrawfiat())
+        this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", selectedWallet: null }));
         this.props.dispatch(setSubTitle(""))
         if (this.props.onClose) {
             this.props.onClose();
@@ -41,7 +43,7 @@ class SendReceive extends Component {
     }
     renderContent = () => {
         const stepcodes = {
-            depositecrypto: <DepositeCrypto activeTab={this.props.valNum} />,
+            depositecrypto: <DepositeCrypto activeTab={this.props?.isSendTab ? this.props?.isSendTab : this.props.valNum} />,
             withdraw: <CryptoWithDrawWallet onDrawerClose={this.closeDrawer} />,
             scanner: <ScanQR />,
             withdrawaddress: <WithdrawAddress />,
@@ -51,8 +53,9 @@ class SendReceive extends Component {
             selectAddress: <SelectAddress />,
             selectCrypto: <SelectCrypto />,
             withdraw_crypto_liveness: <WithdrawaCryptolLive />,
-            withdraw_crpto_summary: <WithdrawSummary />,
-            withdraw_crpto_success: <SuccessMsg onBackCLick={() => this.props.dispatch(setStep("step1"))} />
+            withdraw_crpto_summary: <WithdrawSummary onClose={() => this.closeDrawer()} onBackCLick={() => this.props.dispatch(setStep("step1"))} />,
+            withdraw_crpto_success: <SuccessMsg onBackCLick={() => this.props.dispatch(setStep("step1"))} />,
+            sendMoney: <OnthegoCryptoTransfer />
 
         }
         return stepcodes[config[this.props.sendReceive.stepcode]]
@@ -60,17 +63,18 @@ class SendReceive extends Component {
     renderTitle = () => {
         const stepcodes = {
             depositecrypto: <span />,
-            withdraw: <span onClick={() => { this.props.dispatch(setStep("step1")); this.props.dispatch(setWithdrawcrypto(null)); this.props.dispatch(setAddress(null)) }} className="icon md lftarw-white c-pointer" />,
-            scanner: <span onClick={() => this.props.dispatch(setStep("step4"))} className="icon md lftarw-white c-pointer" />,
-            withdrawscan: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
+            withdraw: <span  />,
+            scanner: <span />,
+            withdrawscan: <span  />,
             withdrawaddress: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             verifyidentity: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             withdrawsummary: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
-            selectAddress: <span onClick={() => this.props.dispatch(setStep("withdraw_crypto_selected"))} className="icon md lftarw-white c-pointer" />,
-            selectCrypto: <span onClick={() => this.props.dispatch(setStep("step8"))} className="icon md lftarw-white c-pointer" />,
-            withdraw_crypto_liveness: <span onClick={() => this.props.dispatch(setStep("withdraw_crpto_summary"))} className="icon md lftarw-white c-pointer" />,
-            withdraw_crpto_summary: <span onClick={() => this.props.dispatch(setStep("withdraw_crypto_selected"))} className="icon md lftarw-white c-pointer" />,
+            selectAddress: <span />,
+            selectCrypto: <span  />,
+            withdraw_crypto_liveness: <span  />,
+            withdraw_crpto_summary: <span  />,
             withdraw_crpto_success: null,
+            sendMoney: <span />
         }
         return stepcodes[config[this.props.sendReceive.stepcode]]
     }
@@ -88,6 +92,7 @@ class SendReceive extends Component {
             withdraw_crypto_liveness: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             withdraw_crpto_summary: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             withdraw_crpto_success: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
+            sendMoney:<span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
 
         }
         return stepcodes[config[this.props.sendReceive.stepcode]]
@@ -96,9 +101,12 @@ class SendReceive extends Component {
         return (<Drawer destroyOnClose={true}
             title={[<div className="side-drawer-header">
                 {this.renderTitle()}
-                <div className="text-center fs-16">
-                    <Translate className="mb-0 text-white-30 fw-600 text-upper" content={this.props.sendReceive.stepTitles[config[this.props.sendReceive.stepcode]]} component={Paragraph} />
-                    <Paragraph className="text-white-50 mb-0 fs-14 fw-300 px-8" >{this.props.sendReceive?.subTitle} {this.props.sendReceive?.selectedCoin?.coin} </Paragraph></div>
+                <div className="text-center">
+                {!this.props?.sendReceive?.sendCryptoHide && <div>
+                    <Translate className="mb-8 text-white-30 fw-600 text-captz fs-24" content={(this.props?.isSendTab || this.props?.sendReceive?.sendCryptoEnable) ? (this.props.sendReceive.stepcode == "withdraw_crpto_summary" ?  this.props.sendReceive.stepTitles[config[this.props.sendReceive.stepcode]] :"send_crypto") :  this.props.sendReceive.stepTitles[config[this.props.sendReceive.stepcode]]} component={Paragraph} />
+                    <Paragraph className="text-white-50 mb-0 fs-14 fw-300 px-8" >{this.props.sendReceive?.subTitle} {this.props.sendReceive?.selectedCoin?.coin} </Paragraph>
+                    </div> }
+                    </div>
                 {this.renderIcon()}
             </div>]}
             placement="right"

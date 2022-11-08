@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Card, Radio, Alert,Image } from 'antd';
+import { Typography, Card, Radio, Alert,Image,Select } from 'antd';
 import { setStep, setTab } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
@@ -11,7 +11,8 @@ import { updatesellsaveObject } from '../../reducers/sellReducer'
 import Currency from '../shared/number.formate';
 import apicalls from '../../api/apiCalls';
 import { convertCurrencyDuplicate } from '../buy.component/buySellService';
-
+import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
+const { Option } = Select;
 class SelectSellCrypto extends Component {
     myRef = React.createRef();
     constructor(props) {
@@ -24,9 +25,11 @@ class SelectSellCrypto extends Component {
         isSwap: true,
         errorMessage: null,
         minmaxTab: 'min',
-        isConvertionLoading: false
+        isConvertionLoading: false,
+        isShowCoinsData: false
     }
     componentDidMount() {
+        getFeaturePermissionsByKeyName(`trade_sell`)
         this.fetchdefaultMinAmntValues();
         this.props.dispatch(setTab(2));
         this.EventTrack();
@@ -128,7 +131,7 @@ class SelectSellCrypto extends Component {
                 obj.toWalletName = this.props.sellData.memberFiat.data[k].currencyCode;
             }
         }
-        this.setState({ ...this.state, sellSaveData: obj }, () => {
+        this.setState({ ...this.state, isShowCoinsData: true, sellSaveData: obj }, () => {
             this.handleConvertion();
         });
     }
@@ -170,12 +173,16 @@ class SelectSellCrypto extends Component {
             this.setState({ ...this.state, isConvertionLoading: false });
         }
     }
+    selectBuyCurrency = () => {
+        this.setState({ ...this.state, isShowCoinsData: true})
+     }
     render() {
         const { Text, Paragraph } = Typography;
         const { coinDetailData } = this.props.sellData;
         return (
             <>
                 <div ref={this.myRef}>  {this.state?.errorMessage !== null && this.state?.errorMessage !== '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="error" message={apicalls.convertLocalLang('sellCrypto')} description={this.state?.errorMessage} />}
+                <div className="selectcrypto-container">
                     {coinDetailData && <Card className="crypto-card select mb-36 d-flex" bordered={false}>
                         <div className='d-flex justify-content'>
                         <div>
@@ -193,7 +200,12 @@ class SelectSellCrypto extends Component {
                             </div>
                         </div></div>
                     </Card>}
-                    <LocalCryptoSwapperCmp
+                    
+               <div className="my-36">
+                        <Translate content="sell_select_currency" component={Paragraph} className="fw-600 mb-4 text-white-50 pt-16 fs-14 code-lbl" />
+                        <WalletList placeholder="Select Currency" onWalletSelect={(e) => this.handleWalletSelection(e)} />
+                    </div>
+            {this.state.isShowCoinsData && <div> <LocalCryptoSwapperCmp
                         cryptoAmt={this.state.CryptoAmnt}
                         localAmt={this.state.USDAmnt}
                         cryptoCurrency={coinDetailData?.coin}
@@ -206,6 +218,7 @@ class SelectSellCrypto extends Component {
                        isSwaped={this.state.isSwap}
                     />
                     <Translate content="thousandKText" component={Paragraph} className="text-center f-16 text-yellow fw-400" />
+                    <Translate content="contact_amount_text" component={Paragraph} className="text-center f-16 text-yellow fw-400" />
                     <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills" onChange={({ target: { value } }) => {
                         this.clickMinamnt(value)
                     }}>
@@ -213,11 +226,15 @@ class SelectSellCrypto extends Component {
                         <Translate value="half" content="half" component={Radio.Button} />
                         <Translate value="all" content="all" component={Radio.Button} />
                     </Radio.Group>
-                    <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50" />
-                    <WalletList isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)} />
+                    {/* <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50" />
+                    <WalletList isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)} /> */}
                     <div className="mt-24">
                         <SuisseBtn autoDisable={true} title="PreviewSell" className="pop-btn" onClick={() => { this.previewSellData() }} />
-                    </div></div>
+                    </div>
+                    </div>}
+
+                    </div>
+                    </div>
             </>
 
         )
