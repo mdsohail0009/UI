@@ -36,7 +36,6 @@ const KycDocuments = (props) => {
                     showUploadList={false}
                     beforeUpload={(props) => { this.beforeUpload(props) }}
                 //onChange={(props) => { this.handleUpload(props, doc) }}
-                headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
                 >
                     <p className="ant-upload-drag-icon">
                         <span className="icon xxxl doc-upload" />
@@ -67,7 +66,6 @@ const KycDocuments = (props) => {
                     showUploadList={false}
                     beforeUpload={(props) => { this.beforeUpload(props) }}
                 //onChange={(props) => { this.handleUpload(props, doc) }}
-                headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
                 >
                     <p className="ant-upload-drag-icon">
                         <span className="icon xxxl doc-upload" />
@@ -109,9 +107,9 @@ const KycDocuments = (props) => {
     )
 }
 
-const connectStateToProps = ({ useConfig, oidc}) => {
+const connectStateToProps = ({ useConfig }) => {
     return {
-        useConfig, user: oidc.user
+        useConfig
     }
 }
 
