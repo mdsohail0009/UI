@@ -67,12 +67,6 @@ bankClient.axiosInstance.interceptors.request.use((config) => {
     return config;
 
 });
-uploadClient.axiosInstance.interceptors.request.use((config) => {
-    const { oidc: { user }, userConfig: { userProfileInfo }, currentAction: { action },
-         } = store.getState()
-    config.headers.Authorization = `Bearer ${user.access_token}`
-    return config;
-});
 // apiClient.axiosInstance.interceptors.response.use((response) => {
 //     return response;
 // }, (err) => {
