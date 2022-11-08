@@ -109,6 +109,10 @@ class PayeeBankDetails extends Component {
                         required
                         rules={[
                             {
+                                required: true,
+                                message: apicalls.convertLocalLang("is_required"),
+                            },
+                            {
                                 validator: this.validateIbanType,
                               },
                         ]}

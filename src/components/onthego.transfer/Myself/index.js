@@ -359,6 +359,10 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 required
                 rules={[
                     {
+                        required: true,
+                        message: apiCalls.convertLocalLang("is_required"),
+                    },
+                    {
                         validator: validateIbanType,
                       },
                 ]}

@@ -321,6 +321,10 @@ class OthersBusiness extends Component {
                                 required
                                 rules={[
                                     {
+                                        required: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
                                         validator: this.validateIbanType,
                                       },
                                 ]}
