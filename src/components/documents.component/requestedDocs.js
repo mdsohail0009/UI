@@ -386,8 +386,7 @@ class RequestedDocs extends Component {
                                     closable={false}
                                     style={{ marginBottom: 0, marginTop: '16px' }}
                                 />}
-                                <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-4" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} onChange={(props) => { this.handleUpload(props, doc) }}
-                                 headers={{Authorization : `Bearer ${this.props.user.access_token}`}}>
+                                <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-4" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} onChange={(props) => { this.handleUpload(props, doc) }}>
                                     <p className="ant-upload-drag-icon">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
@@ -434,7 +433,7 @@ class RequestedDocs extends Component {
             </div></>;
     }
 }
-const mapStateToProps = ({ userConfig, oidc }) => {
-    return { userProfileInfo: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData, user: oidc.user  }
+const mapStateToProps = ({ userConfig }) => {
+    return { userProfileInfo: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData }
 }
 export default connect(mapStateToProps)(RequestedDocs);
