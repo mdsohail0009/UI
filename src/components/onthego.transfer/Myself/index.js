@@ -125,6 +125,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         }
     }
     const getBankDeails = async (e,isValid) => {
+        setbankDetails({});
         setEnteredIbanData(e);
         setIsShowValid(false);
         if(e?.length>=10&&isValid){
@@ -154,6 +155,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         }
         if(e?.length>=10&&!isValid) {
             setValidIban(true); 
+            setIsShowBankDetails(false);
             setValidateLoading(false);
            // setbankDetails({});
         } 
