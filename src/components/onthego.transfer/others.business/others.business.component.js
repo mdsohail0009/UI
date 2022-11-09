@@ -101,14 +101,16 @@ class OthersBusiness extends Component {
 
      validateIbanType = (_, value) => {
         this.setState({ ...this.state, isValidateLoading: false});
-        if (!value&&this.state.isShowValid) {
+        if ((!value&&this.state.isShowValid)||!value) {
             return Promise.reject(apiCalls.convertLocalLang("is_required"));
-        } else if (!this.state.iBanValid&&this.state.isShowValid) {
+        } else if ((!this.state.iBanValid&&this.state.isShowValid) || value?.length < 10) {
+            this.setState({ ...this.state, ibanDetails: {}});
             return Promise.reject("Please input a valid IBAN");
         } else if (
             value &&this.state.isShowValid&&
             !/^[A-Za-z0-9]+$/.test(value)
         ) {
+            this.setState({ ...this.state, ibanDetails: {}});
             return Promise.reject(
                 "Please input a valid IBAN"
             );
@@ -119,6 +121,15 @@ class OthersBusiness extends Component {
     };
     submitPayee = async (values) => {
         let { details, ibanDetails,isSelectedId,isEdit } = this.state;
+        if (Object.hasOwn(values, 'iban')) {
+            this.setState({ ...this.state, errorMessage: null });
+            if ((!ibanDetails || Object.keys(ibanDetails).length == 0)) {
+                this.setState({ ...this.state, errorMessage: "Please click validate button before saving.", isLoading: false, isBtnLoading: false });;
+                window.scrollTo(0, 0);
+                this.useDivRef.current?.scrollIntoView();
+                return;
+            }
+        }
         let _obj = { ...details, ...values };
         _obj.payeeAccountModels[0].line1 = ibanDetails.bankAddress;
         _obj.payeeAccountModels[0].city = ibanDetails?.city;
@@ -320,6 +331,10 @@ class OthersBusiness extends Component {
                                 label={"IBAN"}
                                 required
                                 rules={[
+                                    // {
+                                    //     required: true,
+                                    //     message: apiCalls.convertLocalLang("is_required"),
+                                    // },
                                     {
                                         validator: this.validateIbanType,
                                       },
@@ -330,7 +345,7 @@ class OthersBusiness extends Component {
                                     placeholder={"IBAN"}
                                     //style={{ width:'350px',display:'table-cell !important' }}
                                     onChange={this.handleIbanChange}
-                                    maxLength={50}/>
+                                    maxLength={20}/>
 
                             </Form.Item>
                             </div>

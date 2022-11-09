@@ -59,6 +59,14 @@ class BusinessTransfer extends Component {
     }
     submitPayee = async (values) => {
         let { details, selectedTab,isEdit,isSelectedId } = this.state;
+        // if (Object.hasOwn(values, 'iban')) {
+        // this.setState({ ...this.state, errorMessage: null});
+        // if ((!ibanDetails || Object.keys(ibanDetails).length == 0)) {
+        //     this.setState({ ...this.state, errorMessage: "please validate IBAN", isLoading: false, isBtnLoading: false });;
+        //     this.useDivRef.current.scrollIntoView()
+        //     return;
+        // }
+        // }
         let _obj = { ...details, ...values };
         _obj.payeeAccountModels[0].currencyType = "Fiat";
         _obj.payeeAccountModels[0].walletCode = "USD";

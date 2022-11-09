@@ -53,6 +53,7 @@ class PayeeBankDetails extends Component {
                 }
             } else {
                 this.setState({ ...this.state, IbanLoader: false, isValidIban: false, isValidateLoading: false })
+                this.props.getIbandata(null);
             }
         } else {
             this.setState({ ...this.state, enteredIbanData: ibannumber, isShowValid: false, IbanLoader: false, isValidIban: false, isValidateLoading: false })
@@ -63,6 +64,7 @@ class PayeeBankDetails extends Component {
         if (e?.length > 10) {
             if (e &&!/^[A-Za-z0-9]+$/.test(e)) {
                 this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {},isValidateLoading: true});
+                this.props.getIbandata(null);
                 this.props.form?.current?.validateFields([["payeeAccountModels","iban"]], this.validateIbanType);
             }
             else {
@@ -72,20 +74,23 @@ class PayeeBankDetails extends Component {
         }
         else {
             this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {},isValidateLoading: true});
-          this.props.form?.current?.validateFields([["payeeAccountModels","iban"]], this.validateIbanType)
+            this.props.getIbandata(null);
+            this.props.form?.current?.validateFields([["payeeAccountModels","iban"]], this.validateIbanType)
         }
     }
 
     validateIbanType = (_, value) => {
         this.setState({ ...this.state, isValidateLoading: false, isShowValid: this.state.isShowValid?this.state.isShowValid:false});
-        if (!value&&this.state.isShowValid) {
+        if ((!value&&this.state.isShowValid)||!value) {
             return Promise.reject("is required");
-        } else if (!this.state.isValidIban&&this.state.isShowValid) {
+        } else if ((!this.state.isValidIban&&this.state.isShowValid)|| value?.length < 10) {
+            this.props.getIbandata(null);
             return Promise.reject("Please input a valid IBAN");
         } else if (
             value &&this.state.isShowValid&&
             !/^[A-Za-z0-9]+$/.test(value)
         ) {
+            this.props.getIbandata(null);
             return Promise.reject(
                 "Please input a valid IBAN"
             );
@@ -108,6 +113,10 @@ class PayeeBankDetails extends Component {
                         )}
                         required
                         rules={[
+                            // {
+                            //     required: true,
+                            //     message: apicalls.convertLocalLang("is_required"),
+                            // },
                             {
                                 validator: this.validateIbanType,
                               },
@@ -121,7 +130,7 @@ class PayeeBankDetails extends Component {
                             placeholder={apicalls.convertLocalLang(
                                 "Bank_account_iban"
                             )}
-                            maxLength={50}/>
+                            maxLength={20}/>
                     </Form.Item>
                     </div>
                     </Col>
