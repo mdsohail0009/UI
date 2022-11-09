@@ -61,7 +61,7 @@ class PayeeBankDetails extends Component {
     }
 
     onIbanValidate = (e) => {
-        if (e?.length > 10) {
+        if (e?.length >= 10) {
             if (e &&!/^[A-Za-z0-9]+$/.test(e)) {
                 this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {},isValidateLoading: true});
                 this.props.getIbandata(null);
@@ -130,7 +130,7 @@ class PayeeBankDetails extends Component {
                             placeholder={apicalls.convertLocalLang(
                                 "Bank_account_iban"
                             )}
-                            maxLength={20}/>
+                            maxLength={30}/>
                     </Form.Item>
                     </div>
                     </Col>
