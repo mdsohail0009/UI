@@ -53,6 +53,14 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         }
     }
     const onSubmit = async (values) => {
+        if (Object.hasOwn(values?.payeeAccountModels, 'iban')) {
+            setErrorMessage(null);
+            if ((!bankdetails || Object.keys(bankdetails).length == 0)) {
+                useDivRef.current.scrollIntoView()
+                setErrorMessage("Please click validate button before saving.");
+                return;
+            }
+        }
         let obj = { ...createPayeeObj, ...values };
         obj.payeeAccountModels = [payeeAccountObj()];
         obj.payeeAccountModels[0] = { ...obj.payeeAccountModels[0], ...bankdetails, ...values.payeeAccountModels };

@@ -63,7 +63,16 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         }
     }
     const saveTransfer = async(values) => {
-		setBtnLoading(true);
+        setBtnLoading(true);
+        seterrorMessage(null);
+        if (Object.hasOwn(values, 'iban')) {
+            if ((!bankDetails || Object.keys(bankDetails).length == 0)) {
+                setBtnLoading(false);
+                seterrorMessage("Please click validate button before saving.");
+                useDivRef.current.scrollIntoView();
+                return;
+            }
+        }
         let saveObj=Object.assign({},saveTransferObj)
         saveObj.favouriteName=values.favouriteName;
         saveObj.payeeAccountModels[0].iban=currency=='EUR'?values.iban:null;
@@ -157,9 +166,11 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
 
     const onIbanValidate = (e) => {
         setValidateLoading(true);
+        seterrorMessage(null);
         if (e?.length > 10) {
             if (e &&!/^[A-Za-z0-9]+$/.test(e)) {
                 setIsShowValid(true);
+                setIsShowBankDetails(false);
                 setbankDetails({});
                 form?.validateFields(["iban"], validateIbanType)
             }
@@ -171,6 +182,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         else {
             setIsShowValid(true);
             setValidIban(false); 
+            setIsShowBankDetails(false);
             setbankDetails({});
             form?.validateFields(["iban"], validateIbanType)
         }
@@ -178,14 +190,18 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
 
     const validateIbanType = (_, value) => {
         setValidateLoading(false);
-        if (!value&&isShowValid) {
+        if ((!value&&isShowValid)||!value) {
             return Promise.reject(apiCalls.convertLocalLang("is_required"));
-        } else if (!validIban&&isShowValid) {
+        } else if ((!validIban&&isShowValid) || value?.length < 10) {
+            setIsShowBankDetails(false);
+            setbankDetails({})
             return Promise.reject("Please input a valid IBAN");
         } else if (
-            value &&isShowValid&&
+            (value && isShowValid)&&
             !/^[A-Za-z0-9]+$/.test(value)
         ) {
+            setIsShowBankDetails(false);
+            setbankDetails({})
             return Promise.reject(
                 "Please input a valid IBAN"
             );
@@ -358,10 +374,10 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 name="iban"
                 required
                 rules={[
-                    {
-                        required: true,
-                        message: apiCalls.convertLocalLang("is_required"),
-                    },
+                    // {
+                    //     required: true,
+                    //     message: apiCalls.convertLocalLang("is_required"),
+                    // },
                     {
                         validator: validateIbanType,
                       },
@@ -375,7 +391,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     className="cust-input"
                     placeholder='IBAN'
                     // onBlur={(e)=>getBankDeails(e)}
-                    maxLength={50}/>                      
+                    maxLength={20}/>                      
             </Form.Item>
                                         
                
