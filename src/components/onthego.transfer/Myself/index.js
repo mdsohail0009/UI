@@ -127,7 +127,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     const getBankDeails = async (e,isValid) => {
         setEnteredIbanData(e);
         setIsShowValid(false);
-        if(e?.length>10&&isValid){
+        if(e?.length>=10&&isValid){
             setValidIban(true) 
             isValid ? setIbanLoader(true) : setIbanLoader(false);
             const response = await apiCalls.getIBANData(e);
@@ -152,7 +152,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 setValidateLoading(false);
             }
         }
-        if(e?.length>10&&!isValid) {
+        if(e?.length>=10&&!isValid) {
             setValidIban(true); 
             setValidateLoading(false);
            // setbankDetails({});
@@ -167,7 +167,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     const onIbanValidate = (e) => {
         setValidateLoading(true);
         seterrorMessage(null);
-        if (e?.length > 10) {
+        if (e?.length >= 10) {
             if (e &&!/^[A-Za-z0-9]+$/.test(e)) {
                 setIsShowValid(true);
                 setIsShowBankDetails(false);
@@ -391,7 +391,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     className="cust-input"
                     placeholder='IBAN'
                     // onBlur={(e)=>getBankDeails(e)}
-                    maxLength={20}/>                      
+                    maxLength={30}/>                      
             </Form.Item>
                                         
                

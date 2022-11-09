@@ -63,7 +63,7 @@ class OthersBusiness extends Component {
     }
     handleIbanChange = async ({ target: { value,isNext } }) => {
         this.setState({ ...this.state, enteredIbanData: value, isShowValid: false});
-        if (value?.length > 10 && isNext) {
+        if (value?.length >= 10 && isNext) {
             this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true,iBanValid:true });
             const response = await fetchIBANDetails(value);
             if (response.ok) {
@@ -83,7 +83,7 @@ class OthersBusiness extends Component {
 
      onIbanValidate = (e) => {
         let value = e ? e: this.form.current?.getFieldValue('iban');
-        if (value?.length > 10) {
+        if (value?.length >= 10) {
             if (value &&!/^[A-Za-z0-9]+$/.test(value)) {
                 this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true});
                 this.form.current?.validateFields(["iban"], this.validateIbanType)
@@ -345,7 +345,7 @@ class OthersBusiness extends Component {
                                     placeholder={"IBAN"}
                                     //style={{ width:'350px',display:'table-cell !important' }}
                                     onChange={this.handleIbanChange}
-                                    maxLength={20}/>
+                                    maxLength={30}/>
 
                             </Form.Item>
                             </div>
