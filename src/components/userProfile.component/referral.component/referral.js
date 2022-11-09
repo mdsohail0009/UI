@@ -47,7 +47,7 @@ class Referral extends Component {
                     <EmailIcon size={32} round={true} />
                 </EmailShareButton>
             </Menu.Item>
-            <Menu.Item>
+            {/* <Menu.Item>
                 <TwitterShareButton url={this.state.referaldata?.referrallink||'---'} title={"Welcome to suissebase use this referral code to create an account "+(this.state.referaldata?.referralCode||'---') +(this.state.referaldata?.referralBusinesslink || '---') + ". Click the below link to continue registration"} >
                     <TwitterIcon size={32} round={true} />
                 </TwitterShareButton>
@@ -61,7 +61,7 @@ class Referral extends Component {
                 <TelegramShareButton url={this.state.referaldata?.referrallink||'---'} title={"Welcome to suissebase use this referral code to create an account "+(this.state.referaldata?.referralCode||'---') +(this.state.referaldata?.referralBusinesslink || '---') + ". Click the below link to continue registration"} >
                     <TelegramIcon size={32} round={true} />
                 </TelegramShareButton>
-            </Menu.Item>
+            </Menu.Item> */}
         </Menu>
     }
 	isErrorDispaly = (objValue) => {
