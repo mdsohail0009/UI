@@ -42,6 +42,8 @@ class TransactionsHistory extends Component {
     this.gridRef = React.createRef();
   }
 
+  
+
   componentDidMount() {
     getFeaturePermissionsByKey('transactions', this.loadInfo)
 
