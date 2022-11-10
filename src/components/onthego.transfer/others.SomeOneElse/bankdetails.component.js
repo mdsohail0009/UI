@@ -30,7 +30,6 @@ class PayeeBankDetails extends Component {
         ibannumber: null
     }
     componentDidMount(){
-        debugger
         if (this?.props?.selectedAddress?.id && this.props?.createPayeeObj) {
             if (this.props?.createPayeeObj?.payeeAccountModels[0]?.iban) {
                 this.handleIban(this.props?.createPayeeObj?.payeeAccountModels[0].iban,"true")
@@ -82,7 +81,6 @@ class PayeeBankDetails extends Component {
     }
 
     validateIbanType = (_, value) => {
-        debugger
         this.setState({ ...this.state, isValidateLoading: false, isShowValid: this.state.isShowValid?this.state.isShowValid:false});
         if ((!value&&this.state.isShowValid)||!value) {
             return Promise.reject("is required");
