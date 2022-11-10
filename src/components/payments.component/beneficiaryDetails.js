@@ -611,6 +611,7 @@ class PaymentsView extends Component {
                                                 showUploadList={false}
                                                 beforeUpload={(props) => { this.beforeUpload(props) }}
                                                 onChange={(props) => { this.handleUpload(props, "IDENTITYPROOF") }}
+                                                headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
                                             >
                                                 <p className="ant-upload-drag-icon">
                                                     <span className="icon xxxl doc-upload" />
@@ -646,6 +647,7 @@ class PaymentsView extends Component {
                                                 showUploadList={false}
                                                 beforeUpload={(props) => { this.beforeUpload(props) }}
                                                 onChange={(props) => { this.handleUpload(props, "ADDRESSPROOF") }}
+                                                headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
                                             >
                                                 <p className="ant-upload-drag-icon">
                                                     <span className="icon xxxl doc-upload" />
@@ -679,6 +681,7 @@ class PaymentsView extends Component {
                                                 showUploadList={false}
                                                 beforeUpload={(props) => { this.beforeUpload(props) }}
                                                 onChange={(props) => { this.handleUpload(props, "BANKPROOF") }}
+                                                headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
                                             >
                                                 <p className="ant-upload-drag-icon">
                                                     <span className="icon xxxl doc-upload" />
@@ -744,7 +747,7 @@ class PaymentsView extends Component {
     }
 }
 
-const connectStateToProps = ({ userConfig }) => {
-    return { userConfig: userConfig.userProfileInfo };
+const connectStateToProps = ({ userConfig, oidc }) => {
+    return { userConfig: userConfig.userProfileInfo, user: oidc.user };
 };
 export default connect(connectStateToProps, null)(PaymentsView);

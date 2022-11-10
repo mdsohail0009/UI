@@ -30,6 +30,7 @@ class PayeeBankDetails extends Component {
         ibannumber: null
     }
     componentDidMount(){
+        debugger
         if (this?.props?.selectedAddress?.id && this.props?.createPayeeObj) {
             if (this.props?.createPayeeObj?.payeeAccountModels[0]?.iban) {
                 this.handleIban(this.props?.createPayeeObj?.payeeAccountModels[0].iban,"true")
@@ -146,41 +147,7 @@ class PayeeBankDetails extends Component {
                 </Col>
                 
                  
-                {this.props.GoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
-                        name={"reasonOfTransfer"}
-                        required
-                        rules={[
-                            {
-                                required: true,
-                                message: apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                whitespace: true,
-                                message: apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                validator: validateContentRule,
-                            },
-                        ]}
-                        label={
-                            <Translate
-                                content="reasiontotransfor"
-                                component={Form.label}
-                            />
-                        }
-                    >
-                        <TextArea
-                            placeholder={apicalls.convertLocalLang(
-                                "reasiontotransfor"
-                            )}
-                            className="cust-input cust-text-area address-book-cust"
-                            autoSize={{ minRows: 1, maxRows: 2 }}
-                            maxLength={100}
-                        ></TextArea>
-                    </Form.Item>
-                </Col>}
+               
                 {/* <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
@@ -276,6 +243,41 @@ class PayeeBankDetails extends Component {
                     </div>
 
                 </Col>
+                {this.props.GoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                        name={"reasonOfTransfer"}
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message: apicalls.convertLocalLang("is_required"),
+                            },
+                            {
+                                whitespace: true,
+                                message: apicalls.convertLocalLang("is_required"),
+                            },
+                            {
+                                validator: validateContentRule,
+                            },
+                        ]}
+                        label={
+                            <Translate
+                                content="reasiontotransfor"
+                                component={Form.label}
+                            />
+                        }
+                    >
+                        <TextArea
+                            placeholder={apicalls.convertLocalLang(
+                                "reasiontotransfor"
+                            )}
+                            className="cust-input cust-text-area address-book-cust"
+                            autoSize={{ minRows: 1, maxRows: 2 }}
+                            maxLength={100}
+                        ></TextArea>
+                    </Form.Item>
+                </Col>}
             </>,
             swift: <>
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -556,12 +558,12 @@ class PayeeBankDetails extends Component {
         return _templates[transferType]
     }
     render() {
-        const { addressType, transferType, onSubmit, bankDetails = {}, emailExist = false, onCancel } = this.props;
+        const { addressType, transferType, onSubmit, bankDetails = {}, emailExist = false, onCancel, domesticType } = this.props;
         const { countries, states, isLoading } = this.state;
         
         return <>
             <Row gutter={[16, 16]} className={'pb-16'}>
-                {this.renderAddress(transferType)}
+                {this.renderAddress(domesticType == "internationalIBAN" ? "sepa" : transferType)}
             </Row>
             </>
 
