@@ -15,7 +15,6 @@ import { getFeaturePermissionsByKey } from '../shared/permissions/permissionServ
 import { withRouter } from "react-router-dom";
 import { setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 import NumberFormat from "react-number-format";
-import Currency from "../shared/number.formate";
 const { Option } = Select;
 class TransactionsHistory extends Component {
   constructor(props) {
@@ -42,7 +41,7 @@ class TransactionsHistory extends Component {
     this.gridRef = React.createRef();
   }
 
-  
+
 
   componentDidMount() {
     getFeaturePermissionsByKey('transactions', this.loadInfo)
