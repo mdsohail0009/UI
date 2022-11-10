@@ -33,7 +33,6 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     const [enteredIbanData,setEnteredIbanData] = useState(null);
     const [isShowValid,setIsShowValid] = useState(false);
     const [isValidateLoading, setValidateLoading] = useState(false);
-    const [isValidateMsg, setValidateMsg] = useState(false);
     useEffect(() => {
         getRecipientDetails()
     }, [])
@@ -44,6 +43,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             if (props.selectedAddress?.id) {
                 setLoader(false);setRecipientDetails(response.data)
                 setsaveObj(response.data)
+                props.onEdit(true);
                 setbankDetails(response.data.payeeAccountModels[0])
                 setcreateTransfer(response.data)
                 let obj=Object.assign({},response.data.payeeAccountModels[0])
@@ -55,6 +55,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 }let edit = true; props?.onEdit(edit);setIsEdit(true)
                 setIsSelectedId(response.data?.id);
             } else {
+                props.onEdit(false);
                 setRecipientDetails(response.data); setLoader(false)
             }
         } else {
@@ -62,29 +63,16 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         }
     }
     const saveTransfer = async(values) => {
-        debugger
+        setBtnLoading(true);
         seterrorMessage(null);
-        if(Object.hasOwn(values, 'iban')) {
-        if(!values.iban  || values.iban &&!/^[A-Za-z0-9]+$/.test(values.iban)) {
-            setIsShowValid(true);
-            setbankDetails({});
-            form?.validateFields(["iban"], validateIbanType);
-            return;
+        if (Object.hasOwn(values, 'iban')) {
+            if ((!bankDetails || Object.keys(bankDetails).length == 0)) {
+                setBtnLoading(false);
+                seterrorMessage("Please click validate button before saving.");
+                useDivRef.current.scrollIntoView();
+                return;
+            }
         }
-        if(values.iban?.length < 10){
-            setIsShowValid(true);
-            setValidIban(false); 
-            setbankDetails({});
-            form?.validateFields(["iban"], validateIbanType)
-            return;
-        }
-        if(!isValidateMsg && (!bankDetails || Object.keys(bankDetails).length == 0)) {
-            seterrorMessage("please validate IBAN");
-            useDivRef.current.scrollIntoView();
-            return;
-        }
-    }
-		setBtnLoading(true);
         let saveObj=Object.assign({},saveTransferObj)
         saveObj.favouriteName=values.favouriteName;
         saveObj.payeeAccountModels[0].iban= (currency=='EUR' || (addressOptions?.transferType == "internationalIBAN"||addressOptions?.tabType == "internationalIBAN")) ? values.iban : null;
@@ -130,15 +118,17 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             else {
                 setShowDeclartion(true)
             }
+            props.headingUpdate(true)
         }else{seterrorMessage(isErrorDispaly(response));
             useDivRef.current.scrollIntoView();
 		setBtnLoading(false);
         }
     }
     const getBankDeails = async (e,isValid) => {
+        setbankDetails({});
         setEnteredIbanData(e);
         setIsShowValid(false);
-        if(e?.length>10&&isValid){
+        if(e?.length>=10&&isValid){
             setValidIban(true) 
             isValid ? setIbanLoader(true) : setIbanLoader(false);
             const response = await apiCalls.getIBANData(e);
@@ -163,8 +153,9 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 setValidateLoading(false);
             }
         }
-        if(e?.length>10&&!isValid) {
+        if(e?.length>=10&&!isValid) {
             setValidIban(true); 
+            setIsShowBankDetails(false);
             setValidateLoading(false);
            // setbankDetails({});
         } 
@@ -177,11 +168,11 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
 
     const onIbanValidate = (e) => {
         setValidateLoading(true);
-        setValidateMsg(true);
         seterrorMessage(null);
-        if (e?.length > 10) {
+        if (e?.length >= 10) {
             if (e &&!/^[A-Za-z0-9]+$/.test(e)) {
                 setIsShowValid(true);
+                setIsShowBankDetails(false);
                 setbankDetails({});
                 form?.validateFields(["iban"], validateIbanType)
             }
@@ -192,7 +183,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         }
         else {
             setIsShowValid(true);
-            setValidIban(false); 
+            setValidIban(false);
+            setIsShowBankDetails(false); 
             setbankDetails({});
             form?.validateFields(["iban"], validateIbanType)
         }
@@ -200,14 +192,18 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
 
     const validateIbanType = (_, value) => {
         setValidateLoading(false);
-        if (!value&&isShowValid) {
+        if ((!value&&isShowValid)||!value) {
             return Promise.reject(apiCalls.convertLocalLang("is_required"));
-        } else if (!validIban&&isShowValid) {
+        } else if ((!validIban&&isShowValid) || value?.length < 10) {
+            setIsShowBankDetails(false);
+            setbankDetails({})
             return Promise.reject("Please input a valid IBAN");
         } else if (
-            value &&isShowValid&&
+            (value && isShowValid)&&
             !/^[A-Za-z0-9]+$/.test(value)
         ) {
+            setIsShowBankDetails(false);
+            setbankDetails({})
             return Promise.reject(
                 "Please input a valid IBAN"
             );
@@ -234,14 +230,16 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     {isLoading &&<Loader /> }
     {!isLoading &&
         <Form layout="vertical" form={form} onFinish={saveTransfer} initialValues={{createTransfer}} scrollToFirstError>
-        {showDeclartion && <div className="text-center">
+        {showDeclartion &&  <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
                 <Image width={80} preview={false} src={alertIcon} />
                 <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
                 <Text className="text-white-30">{`Declaration form has been sent to ${props.userProfile?.email}. 
                    Please sign using link received in email to whitelist your address. `}</Text>
                 <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
-                <div className="my-25"><Button onClick={() => props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn text-textDark">BACK</Button></div>
-            </div>}
+                <div className="my-25">
+                    {/* <Button onClick={() => props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button> */}
+                    </div>
+            </div></div>}
        {!showDeclartion &&<> {currency === "USD" && <>
             <Row gutter={[16, 16]}>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
@@ -316,61 +314,61 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 </Form.Item>
             </Col>} */}
             </Row>
-            <Translate style={{ fontSize: 18,color: "white" }}
+            <Translate style={{ fontSize: 14,color: "white" }}
                     content="Beneficiary_Details"
                     component={Paragraph}
                     className="mt-24 text-captz px-4 text-white fw-600"
                 />
 
-        <div className="box basic-info alert-info-custom">
+        <div className="box basic-info alert-info-custom kpi-List">
             <Row>
                 {!isBusiness && <><Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-12 fw-600 text-white">
+                <div><label className="kpi-label">
                         First name
                     </label>
-                    <div><Text className="fs-14 fw-400 text-white">{recipientDetails.firstName}</Text></div>
+                    <div><Text className="kpi-val">{recipientDetails.firstName}</Text></div></div>
 
                 </Col>
                     <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-12 fw-600 text-white">
+                    <div> <label className="kpi-label">
                             Last Name
                         </label>
-                        <div><Text className="fs-14 fw-400 text-white">{recipientDetails.lastName}</Text></div>
+                        <div><Text className="kpi-val">{recipientDetails.lastName}</Text></div></div>
 
                     </Col></>}
                 {isBusiness && <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-12 fw-600 text-white">
+                <div><label className="kpi-label">
                         Beneficiary Name
                     </label>
-                    <div><Text className="fs-14 fw-400 text-white">{recipientDetails.beneficiaryName}</Text></div>
+                    <div><Text className="kpi-val">{recipientDetails.beneficiaryName}</Text></div></div>
 
                 </Col>}
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-12 fw-600 text-white ">
+                <div> <label className="kpi-label">
                         Address Line 1
                     </label>
-                    <div><Text className="fs-14 fw-400 text-white">{recipientDetails.line1!=null?recipientDetails.line1:'-'}</Text></div>
+                    <div><Text className="kpi-val">{recipientDetails.line1!=null?recipientDetails.line1:'-'}</Text></div></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-12 fw-600 text-white ">
+                <div> <label className="kpi-label ">
                         Address Line 2
                     </label>
-                    <div><Text className="fs-14 fw-400 text-white">{recipientDetails.line2!=null?recipientDetails.line2:'-'}</Text></div>
+                    <div><Text className="kpi-val">{recipientDetails.line2!=null?recipientDetails.line2:'-'}</Text></div></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <label className="fs-12 fw-600 text-white">
+                <div><label className="kpi-label">
                        Address Line 3
                     </label>
-                    <div><Text className="fs-14 fw-400 text-white">{recipientDetails.line3!=null?recipientDetails.line3:'-'}</Text></div>
+                    <div><Text className="kpi-val">{recipientDetails.line3!=null?recipientDetails.line3:'-'}</Text></div></div>
 
                 </Col>
 
             </Row>
         </div>
 
-        <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
+        <h2 style={{ fontSize: 14,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
         {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Row gutter={[8, 8]} >
         {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
             <div className="custom-btn-error">
@@ -392,7 +390,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     className="cust-input"
                     placeholder='IBAN'
                     // onBlur={(e)=>getBankDeails(e)}
-                    maxLength={50}/>                      
+                    maxLength={30}/>                      
             </Form.Item>
                                         
                
@@ -657,12 +655,12 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 {(!validIban||!isShowBankDetails)&&<span>No bank details available</span>}
                 </Spin>
         </div>}
-        <div className="text-center mt-36">
+        <div className="text-right mt-36">
             <Button
                 htmlType="submit"
                 size="large"
                 className="pop-btn px-36"
-                style={{ width:'100%' }}
+                //style={{ width:'100%' }}
                 loading={isBtnLoading} 
             >
                                 {props.type === "manual" && "Save"}
