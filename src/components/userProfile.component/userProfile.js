@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Tabs } from 'antd'
 import ProfileInfo from './profileInfo';
 import Security from './security'
-import AddressBook from '../addressbook.component';
 import QueryString from 'query-string'
 import Settings from './settings';
 import Cases from '../case.component/cases';
@@ -10,7 +9,6 @@ import Referral from './referral.component/referral';
 import NotificationScreen from "../notification.component/notification";
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
-import {addressTabUpdate} from '../../reducers/addressBookReducer'
 import { setHeaderTab } from "../../reducers/buysellReducer"
 import { withRouter } from 'react-router-dom';
 import UploadMassPayments from '../masspayment.component';
@@ -37,11 +35,6 @@ class UserProfile extends Component {
         if (activeKey) {
             this.setState({ ...this.state, activeTab: activeKey});
         }
-        if (this.props.addressBookReducer.addressTab) {
-            this.setState({...this.state,activeTab:"5",activeWithdrawFiat: true});
-            this.props.history.push(`/userprofile/${5}/fiat`)
-            this.props.dispatch(addressTabUpdate(false));
-           }
     }
     
     handleProfile = () => {
@@ -84,19 +77,12 @@ class UserProfile extends Component {
                     </span>} key="3">
                         {this.state.activeTab == 3 && <Settings />}
                     </TabPane>
-                    {/* <TabPane tab={<span><span className="icon lg addressbook-icon mr-16" /><Translate content="address_book" component={Tabs.TabPane.tab} /></span>} key="5">
-                        {this.state.activeTab == 5 && <AddressBook activeFiat = {this.state.activeWithdrawFiat} />}
-                    </TabPane> */}
-                    <TabPane tab={<span><span className="icon lg cases-icon mr-16" />
-                    <Translate content="case" className="f-16  mt-16" /></span>} key="6" >
-                        {this.state.activeTab == 6 && <Cases />}
-                    </TabPane>
                     <TabPane tab={<span><span className="icon lg referral-icon mr-16" />
                     <Translate content="referr" className="f-16  mt-16" /></span>} key="7" >
                         {this.state.activeTab == 7 && <Referral />}
                     </TabPane>
-                    {/* <TabPane tab={<span><span className="icon lg notification-icon mr-16" />
-                    <Translate content="notification" className="f-16  mt-16" /></span>} key="8" >
+                    {/* <TabPane tab={<span><span className="icon lg notification-icon mr-16" style={{marginLeft:"3px"}} />
+                    <Translate content="notification"  className="f-16  mt-16"style={{marginLeft:"-5px"}} /></span>} key="8" >
                         {this.state.activeTab == 8 && <NotificationScreen />}
                         </TabPane> */}
                     <TabPane tab={<span><span className="icon lg referral-icon mr-16" />
@@ -123,9 +109,6 @@ class UserProfile extends Component {
                     </span>} key="3">
                         {this.state.activeTab == 3 && <Settings />}
                     </TabPane>
-                    <TabPane tab={<span><span className="icon lg addressbook-icon mr-16" /><Translate content="address_book" component={Tabs.TabPane.tab} /></span>} key="5">
-                        {this.state.activeTab == 5 && <AddressBook activeFiat={this.state.activeWithdrawFiat} />}
-                    </TabPane>
                     <TabPane tab={<span><span className="icon lg cases-icon mr-16" />
                     <Translate content="case" className="f-16  mt-16" /></span>} key="6" >
                         {this.state.activeTab == 6 && <Cases />}
@@ -134,8 +117,8 @@ class UserProfile extends Component {
                     <Translate content="referr" className="f-16  mt-16" /></span>} key="7" >
                         {this.state.activeTab == 7 && <Referral />}
                     </TabPane>
-                     {/* <TabPane tab={<span><span className="icon lg notification-icon mr-16" />
-                    <Translate content="notification" className="f-16  mt-16" /></span>} key="8" >
+                    {/* <TabPane tab={<span><span className="icon lg notification-icon mr-16" style={{marginLeft:"3px"}} />
+                    <Translate content="notification"  className="f-16  mt-16"style={{marginLeft:"-5px"}} /></span>} key="8" >
                         {this.state.activeTab == 8 && <NotificationScreen />}
                         </TabPane> */}
                     <TabPane tab={<span><span className="icon lg referral-icon mr-16" />
