@@ -30,6 +30,7 @@ class PayeeBankDetails extends Component {
         ibannumber: null
     }
     componentDidMount(){
+        debugger
         if (this?.props?.selectedAddress?.id && this.props?.createPayeeObj) {
             if (this.props?.createPayeeObj?.payeeAccountModels[0]?.iban) {
                 this.handleIban(this.props?.createPayeeObj?.payeeAccountModels[0].iban,"true")
@@ -37,14 +38,15 @@ class PayeeBankDetails extends Component {
         }
     }
     handleIban = async (ibannumber,isNext) => {
-        this.setState({ ...this.state, enteredIbanData: ibannumber, isShowValid: false});
-        if (ibannumber?.length > 10 && isNext) {
+        this.setState({ ...this.state, enteredIbanData: ibannumber, isShowValid: false, iBanDetals: null});
+        this.props.getIbandata(null);
+        if (ibannumber?.length >= 10 && isNext) {
             this.setState({ ...this.state, iBanDetals: null, IbanLoader: true, isValidIban: true })
             const ibanget = await apicalls.getIBANData(ibannumber)
             if (ibanget.ok) {
                 if (ibanget.data && (ibanget.data?.routingNumber || ibanget.data?.bankName)) {
                     const bankdetails = { bankName: ibanget.data.bankName, bic: ibanget.data.routingNumber, bankBranch: ibanget.data.branch, country: ibanget.data.country, state: ibanget.data.state, city: ibanget.data.city, postalCode: ibanget.data.zipCode, line1: ibanget.data.bankAddress }
-                    this.setState({ ...this.state, iBanDetals: bankdetails, IbanLoader: false, isValidIban: true, isShowValid: false, isValidateLoading: false })
+                    this.setState({ ...this.state, iBanDetals: bankdetails, IbanLoader: false, isValidIban: true, isShowValid: false, isValidateLoading: false, isValidCheck: true })
                     this.props.getIbandata(bankdetails);
                     this.props.form.current?.setFieldsValue({ iban: ibannumber })
                 } else {
@@ -53,6 +55,7 @@ class PayeeBankDetails extends Component {
                 }
             } else {
                 this.setState({ ...this.state, IbanLoader: false, isValidIban: false, isValidateLoading: false })
+                this.props.getIbandata(null);
             }
         } else {
             this.setState({ ...this.state, enteredIbanData: ibannumber, isShowValid: false, IbanLoader: false, isValidIban: false, isValidateLoading: false })
@@ -60,9 +63,10 @@ class PayeeBankDetails extends Component {
     }
 
     onIbanValidate = (e) => {
-        if (e?.length > 10) {
+        if (e?.length >= 10) {
             if (e &&!/^[A-Za-z0-9]+$/.test(e)) {
                 this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {},isValidateLoading: true});
+                this.props.getIbandata(null);
                 this.props.form?.current?.validateFields([["payeeAccountModels","iban"]], this.validateIbanType);
             }
             else {
@@ -72,20 +76,24 @@ class PayeeBankDetails extends Component {
         }
         else {
             this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {},isValidateLoading: true});
-          this.props.form?.current?.validateFields([["payeeAccountModels","iban"]], this.validateIbanType)
+            this.props.getIbandata(null);
+            this.props.form?.current?.validateFields([["payeeAccountModels","iban"]], this.validateIbanType)
         }
     }
 
     validateIbanType = (_, value) => {
+        debugger
         this.setState({ ...this.state, isValidateLoading: false, isShowValid: this.state.isShowValid?this.state.isShowValid:false});
-        if (!value&&this.state.isShowValid) {
+        if ((!value&&this.state.isShowValid)||!value) {
             return Promise.reject("is required");
-        } else if (!this.state.isValidIban&&this.state.isShowValid) {
+        } else if ((!this.state.isValidIban&&this.state.isShowValid)|| value?.length < 10) {
+            this.props.getIbandata(null);
             return Promise.reject("Please input a valid IBAN");
         } else if (
             value &&this.state.isShowValid&&
             !/^[A-Za-z0-9]+$/.test(value)
         ) {
+            this.props.getIbandata(null);
             return Promise.reject(
                 "Please input a valid IBAN"
             );
@@ -108,6 +116,10 @@ class PayeeBankDetails extends Component {
                         )}
                         required
                         rules={[
+                            // {
+                            //     required: true,
+                            //     message: apicalls.convertLocalLang("is_required"),
+                            // },
                             {
                                 validator: this.validateIbanType,
                               },
@@ -121,7 +133,7 @@ class PayeeBankDetails extends Component {
                             placeholder={apicalls.convertLocalLang(
                                 "Bank_account_iban"
                             )}
-                            maxLength={50}/>
+                            maxLength={30}/>
                     </Form.Item>
                     </div>
                     </Col>
@@ -135,41 +147,7 @@ class PayeeBankDetails extends Component {
                 </Col>
                 
                  
-                {this.props.GoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
-                        name={"reasonOfTransfer"}
-                        required
-                        rules={[
-                            {
-                                required: true,
-                                message: apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                whitespace: true,
-                                message: apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                validator: validateContentRule,
-                            },
-                        ]}
-                        label={
-                            <Translate
-                                content="reasiontotransfor"
-                                component={Form.label}
-                            />
-                        }
-                    >
-                        <TextArea
-                            placeholder={apicalls.convertLocalLang(
-                                "reasiontotransfor"
-                            )}
-                            className="cust-input cust-text-area address-book-cust"
-                            autoSize={{ minRows: 1, maxRows: 2 }}
-                            maxLength={100}
-                        ></TextArea>
-                    </Form.Item>
-                </Col>}
+               
                 {/* <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
@@ -265,6 +243,41 @@ class PayeeBankDetails extends Component {
                     </div>
 
                 </Col>
+                {this.props.GoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                        name={"reasonOfTransfer"}
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message: apicalls.convertLocalLang("is_required"),
+                            },
+                            {
+                                whitespace: true,
+                                message: apicalls.convertLocalLang("is_required"),
+                            },
+                            {
+                                validator: validateContentRule,
+                            },
+                        ]}
+                        label={
+                            <Translate
+                                content="reasiontotransfor"
+                                component={Form.label}
+                            />
+                        }
+                    >
+                        <TextArea
+                            placeholder={apicalls.convertLocalLang(
+                                "reasiontotransfor"
+                            )}
+                            className="cust-input cust-text-area address-book-cust"
+                            autoSize={{ minRows: 1, maxRows: 2 }}
+                            maxLength={100}
+                        ></TextArea>
+                    </Form.Item>
+                </Col>}
             </>,
             swift: <>
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -545,12 +558,12 @@ class PayeeBankDetails extends Component {
         return _templates[transferType]
     }
     render() {
-        const { addressType, transferType, onSubmit, bankDetails = {}, emailExist = false, onCancel } = this.props;
+        const { addressType, transferType, onSubmit, bankDetails = {}, emailExist = false, onCancel, domesticType } = this.props;
         const { countries, states, isLoading } = this.state;
         
         return <>
             <Row gutter={[16, 16]} className={'pb-16'}>
-                {this.renderAddress(transferType)}
+                {this.renderAddress(domesticType == "internationalIBAN" ? "sepa" : transferType)}
             </Row>
             </>
 

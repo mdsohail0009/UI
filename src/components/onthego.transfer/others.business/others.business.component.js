@@ -29,7 +29,8 @@ class OthersBusiness extends Component {
         enteredIbanData: null,
         isShowValid: false,
         isValidateLoading: false,
-        isValidCheck: false
+        isValidCheck: false,
+        isValidateMsg: false,
     };
     componentDidMount() {
         this.loadDetails();
@@ -62,8 +63,8 @@ class OthersBusiness extends Component {
         }
     }
     handleIbanChange = async ({ target: { value,isNext } }) => {
-        this.setState({ ...this.state, enteredIbanData: value, isShowValid: false});
-        if (value?.length > 10 && isNext) {
+        this.setState({ ...this.state, ibanDetails: {}, enteredIbanData: value, isShowValid: false});
+        if (value?.length >= 10 && isNext) {
             this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true,iBanValid:true });
             const response = await fetchIBANDetails(value);
             if (response.ok) {
@@ -77,15 +78,15 @@ class OthersBusiness extends Component {
             }
         }
         else{
-            this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false, enteredIbanData: value, isShowValid: false, isValidateLoading: false})
+            this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false, enteredIbanData: value, isShowValid: false, isValidateLoading: false,ibanDetails: {},})
         }
     }
 
      onIbanValidate = (e) => {
         let value = e ? e: this.form.current?.getFieldValue('iban');
-        if (value?.length > 10) {
+        if (value?.length >= 10) {
             if (value &&!/^[A-Za-z0-9]+$/.test(value)) {
-                this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true});
+                this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true, isValidateMsg: true, errorMessage: null});
                 this.form.current?.validateFields(["iban"], this.validateIbanType)
             }
             else {
@@ -94,21 +95,23 @@ class OthersBusiness extends Component {
             }
         }
         else {
-            this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true});
+            this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true, isValidateMsg: true, errorMessage: null});
             this.form.current?.validateFields(["iban"], this.validateIbanType)
         }
     }
 
      validateIbanType = (_, value) => {
         this.setState({ ...this.state, isValidateLoading: false});
-        if (!value&&this.state.isShowValid) {
+        if ((!value&&this.state.isShowValid)||!value) {
             return Promise.reject(apiCalls.convertLocalLang("is_required"));
-        } else if (!this.state.iBanValid&&this.state.isShowValid) {
+        } else if ((!this.state.iBanValid&&this.state.isShowValid) || value?.length < 10) {
+            this.setState({ ...this.state, ibanDetails: {}});
             return Promise.reject("Please input a valid IBAN");
         } else if (
             value &&this.state.isShowValid&&
             !/^[A-Za-z0-9]+$/.test(value)
         ) {
+            this.setState({ ...this.state, ibanDetails: {}});
             return Promise.reject(
                 "Please input a valid IBAN"
             );
@@ -119,6 +122,15 @@ class OthersBusiness extends Component {
     };
     submitPayee = async (values) => {
         let { details, ibanDetails,isSelectedId,isEdit } = this.state;
+        if (Object.hasOwn(values, 'iban')) {
+            this.setState({ ...this.state, errorMessage: null });
+            if ((!ibanDetails || Object.keys(ibanDetails).length == 0)) {
+                this.setState({ ...this.state, errorMessage: "Please click validate button before saving.", isLoading: false, isBtnLoading: false });;
+                window.scrollTo(0, 0);
+                this.useDivRef.current?.scrollIntoView();
+                return;
+            }
+        }
         let _obj = { ...details, ...values };
         _obj.payeeAccountModels[0].line1 = ibanDetails.bankAddress;
         _obj.payeeAccountModels[0].city = ibanDetails?.city;
@@ -132,6 +144,7 @@ class OthersBusiness extends Component {
         _obj.payeeAccountModels[0].walletCode = "EUR";
         _obj.payeeAccountModels[0].bankName = ibanDetails?.bankName;
         delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
+        _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
         _obj.addressType = "otherbusiness";
         _obj.transferType = "sepa";
         _obj.amount = this.props.amount;
@@ -153,33 +166,34 @@ class OthersBusiness extends Component {
                 this.setState({ ...this.state, isLoading: false, errorMessage: 'At least one document is required', isBtnLoading: false });
             } else {
                 _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
-                this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
-                const response = await savePayee(_obj);
-                if (response.ok) {
-                    if (this.props.type !== "manual") {
-                        const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
-                        if (confirmRes.ok) {
-                            this.props.onContinue(confirmRes.data);
-                            this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
-                            //  this.useDivRef.current.scrollIntoView()
-                        } else {
-                            this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false, isBtnLoading: false });
-                            //  this.useDivRef.current.scrollIntoView(0,0)
-                            window.scrollTo(0, 0);
-                        }
-                    } else {
-                        // this.props.onContinue({ close: true, isCrypto: false });
-                        this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
-                        this.useDivRef.current?.scrollIntoView(0, 0)
-                    }
-
+        this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
+        const response = await savePayee(_obj);
+        if (response.ok) {
+            if (this.props.type !== "manual") {
+                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
+                if (confirmRes.ok) {
+                    this.props.onContinue(confirmRes.data);
+                    this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
+                  //  this.useDivRef.current.scrollIntoView()
                 } else {
-
-                    this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, isBtnLoading: false });
-                    // this.useDivRef.current.scrollIntoView()
+                    this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false, isBtnLoading: false });
+                  //  this.useDivRef.current.scrollIntoView(0,0)
+                  window.scrollTo(0, 0);
                 }
+            } else {
+                // this.props.onContinue({ close: true, isCrypto: false });
+                this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
+                this.useDivRef.current?.scrollIntoView(0,0)
+                this.props.headingUpdate(true)
             }
+
+        } else {
+            
+            this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, isBtnLoading: false });
+           // this.useDivRef.current.scrollIntoView()
         }
+    }
+}
 
     }
     render() {
@@ -188,16 +202,18 @@ class OthersBusiness extends Component {
             return <Loader />
         }
         if (this.state.showDeclartion) {
-            return <div className="text-center">
+            return  <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
                 <Image width={80} preview={false} src={alertIcon} />
                 <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
                 <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                    Please sign using link received in email to whitelist your address. `}</Text>
                 <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
-                <div className="my-25"><Button onClick={() => this.props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn text-textDark">BACK</Button></div>
-            </div>
+                <div className="my-25">
+                    {/* <Button onClick={() => this.props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button> */}
+                    </div>
+            </div></div>
         }
-        if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} /> }
+        if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} updatedHeading={this.props?.headingUpdate} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} /> }
         else {
             return <><div ref={this.useDivRef}>
                 {/* <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16 text-center">SEPA Transfer</Paragraph> */}
@@ -327,7 +343,7 @@ class OthersBusiness extends Component {
                                     placeholder={"IBAN"}
                                     //style={{ width:'350px',display:'table-cell !important' }}
                                     onChange={this.handleIbanChange}
-                                    maxLength={50}/>
+                                    maxLength={30}/>
 
                             </Form.Item>
                             </div>
@@ -441,7 +457,7 @@ class OthersBusiness extends Component {
                         payeeAccountModels[0].documents = docs;
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
                     }} />
-                    <div className="text-center mt-36">
+                    <div className="text-right mt-36">
                         {/* <Row gutter={[16, 16]}>
                             <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col>
                             <Col xs={12} md={12} lg={12} xl={12} xxl={12}> */}
@@ -449,7 +465,7 @@ class OthersBusiness extends Component {
                                     htmlType="submit"
                                     size="large"
                                     className="pop-btn px-36"
-                                    style={{ width:'100%' }}
+                                    //style={{ width:'100%' }}
                                     disabled={this.state.ibanDetailsLoading}
                                     loading={this.state.isBtnLoading} >
                             {this.props.type === "manual" && "Save"}

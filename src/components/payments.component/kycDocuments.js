@@ -109,9 +109,9 @@ const KycDocuments = (props) => {
     )
 }
 
-const connectStateToProps = ({ useConfig, oidc}) => {
+const connectStateToProps = ({ useConfig, oidc }) => {
     return {
-        useConfig, user: oidc.user
+        useConfig,  user: oidc.user
     }
 }
 

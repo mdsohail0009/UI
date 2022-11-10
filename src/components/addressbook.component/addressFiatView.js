@@ -102,20 +102,23 @@ const AddressFiatView = (props) => {
 	);
 	return (
 		<>
-			<div className="main-container">
-				<div className="box basic-info">
+			<div className="main-container cust-cypto-view">
+			
+				<div className="box bg-box">
 					{loading ? (
 						<Loader />
 					) : (
 						<>
-							<Title className="page-title text-white">
-								BENEFICIARY DETAILS
-							</Title>
+							
 							{fiatAddress && (
+								<div className="custom-alert-width">
+									<Title className="basic-info p-0 basicinfo">
+														Beneficiary Details
+														</Title>
 								<Row gutter={8}>
 									<Col xl={24} xxl={24} className="bank-view">
 										<Row className="kpi-List">
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+											<Col xs={24} sm={24} md={12} lg={8} xxl={16}>
 												<div>
 													<label className="kpi-label">Save Whitelist Name As</label>
 													<div className=" kpi-val">
@@ -148,7 +151,8 @@ const AddressFiatView = (props) => {
 														{fiatAddress?.transferType === " " ||
 															fiatAddress?.transferType === null
 															? "-"
-															: fiatAddress?.transferType.toUpperCase()}
+															: (fiatAddress?.transferType == "internationalIBAN") && "INTERNATIONAL IBAN" ||
+															fiatAddress?.transferType.toUpperCase()}
 
 													</div>}
 												</div>
@@ -314,14 +318,14 @@ const AddressFiatView = (props) => {
 
 											
 										</Row>
-										<Title className="page-title text-white">
-											BENEFICIARY BANK DETAILS
+										<Title className="basic-info p-0 basicinfo">
+											Beneficiary Bank Details
 										</Title>
 										<Row>
 											{bankDetailes?.map((item, idx) => (
 												<><div
 													style={{
-														border: "2px dashed var(--borderGrey)",
+														border: "2px dashed var(--borderLight)",
 														padding: "12px 16px",
 														borderRadius: 10,
 														marginBottom: 16,
@@ -366,7 +370,7 @@ const AddressFiatView = (props) => {
 																	: item.bankType}
 															</Title>
 														</Col>}
-														{item?.accountNumber && <Col xs={24} md={24} lg={14} xl={8} xxl={4}>
+														{(item?.accountNumber && fiatAddress?.transferType != "internationalIBAN")&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
 																Bank Account Number / IBAN
 															</Text>
@@ -487,7 +491,7 @@ const AddressFiatView = (props) => {
 															</Title>
 														</Col>}
 														{/* {item.line1 && */}
-														 {item.walletCode!='EUR'&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
+														 {(item.walletCode!='EUR'&& fiatAddress?.transferType != "internationalIBAN")&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
 															Bank Address 1
 															</Text>
@@ -500,7 +504,7 @@ const AddressFiatView = (props) => {
 														</Col>}
 														{/* // } */}
 														{/* {item.line2 &&  */}
-														{item.walletCode!='EUR'&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
+														{(item.walletCode!='EUR'&& fiatAddress?.transferType != "internationalIBAN")&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
 															Bank Address 2
 															</Text>
@@ -559,11 +563,12 @@ const AddressFiatView = (props) => {
 										</Row>
 									</Col>
 								</Row>
+								</div>
 							)}
 							<div className="text-right mt-24">
 								<Button
 									className="pop-btn px-36"
-									style={{ margin: "0 8px" }}
+									style={{ margin: "0 8px",width:'250px' }}
 									onClick={backToAddressBook}>
 									Cancel
 								</Button>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Card, Alert, message,Image } from 'antd';
+import { Typography, Card, Alert, message,Image,Select } from 'antd';
 import WalletList from '../shared/walletList';
 import { changeStep, setTab } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
@@ -13,6 +13,8 @@ import LocalCryptoSwapperCmp from '../shared/local.crypto.swap/swap';
 import Currency from '../shared/number.formate';
 import apicalls from '../../api/apiCalls';
 import {  getPreview } from './api'
+import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
+const { Option } = Select;
 class SelectCrypto extends Component {
     myRef = React.createRef();
     swapRef = React.createRef();
@@ -20,6 +22,7 @@ class SelectCrypto extends Component {
         super(props);
         this.state = {
             buyDrawer: false,
+            isShowCoinsData: false,
             swapValues: {
                 localValue: '',
                 cryptoValue: '',
@@ -37,6 +40,7 @@ class SelectCrypto extends Component {
         }
     }
     componentDidMount() {
+        getFeaturePermissionsByKeyName(`trade_buy`)
         this.props.getCoinsList(this.props.userProfileInfo?.id);
         this.props.setTabKey();
         this.EventTrack()
@@ -91,7 +95,7 @@ class SelectCrypto extends Component {
     }
     handleWalletSelection = (walletId) => {
         const selectedWallet = this.props.buyInfo?.memberFiat?.data?.filter(item => item.id === walletId)[0];
-        this.setState({ ...this.state, selectedWallet }, () => {
+        this.setState({ ...this.state, isShowCoinsData: true, swapValues: { isSwaped: true}, selectedWallet }, () => {
             this.handleConvertion();
         });
         this.props.setWallet(selectedWallet);
@@ -119,7 +123,7 @@ class SelectCrypto extends Component {
             this.setState({...this.state,btnLoading:false})
         } else {
             this.setState({ ...this.state,errorMsg:this.isErrorDispaly(response),btnLoading:false})
-            this.divScroll.current.scrollIntoView()
+            this.divScroll?.current?.scrollIntoView()
         }
         
     }
@@ -133,6 +137,9 @@ class SelectCrypto extends Component {
 			return "Something went wrong please try again!";
 		}
 	};
+    selectBuyCurrency = () => {
+       this.setState({ ...this.state, isShowCoinsData: true})
+    }
     render() {
         if (this.props.buyInfo?.selectedCoin?.loading || !this.props.buyInfo?.selectedCoin?.data) {
             return <Loader />
@@ -170,7 +177,13 @@ class SelectCrypto extends Component {
                             </div>
                         </div></div>
                     </Card>
-                    <LocalCryptoSwapperCmp
+          
+                    <div className="my-36">
+                        <Translate content="buy_select_currency" component={Paragraph} className="fw-500 mb-4 text-white-50 pt-16 code-lbl" />
+                        <WalletList placeholder="Select Currency" onWalletSelect={(e) => this.handleWalletSelection(e)} />
+                    </div>
+            {this.state.isShowCoinsData && <div>
+                   <LocalCryptoSwapperCmp
                         localAmt={localValue}
                         cryptoAmt={cryptoValue}
                         localCurrency={this.state.selectedWallet?.currencyCode || "USD"}
@@ -184,12 +197,14 @@ class SelectCrypto extends Component {
                         isConvertionLoad={isConvertionLoading} />
 
                     <Translate content="thousandKText" component={Paragraph} className="text-center f-16 text-yellow fw-400" />
-                    <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50 pt-16" />
-                    <WalletList onWalletSelect={(e) => this.handleWalletSelection(e)} />
+                    <Translate content="contact_amount_text" component={Paragraph} className="text-center f-16 text-yellow fw-400" />
+                    {/* <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50 pt-16" />
+                    <WalletList onWalletSelect={(e) => this.handleWalletSelection(e)} /> */}
                     {/* <div className="fs-12 text-white-30 text-center mt-24"><Translate content="change_10Sec_amount" component={Paragraph} className="fs-12 text-white-30 text-center mt-24" /></div> */}
-                    <div className="mt-24">
+                    <div className="mt-24 buy-usdt-btn">
                         <SuisseBtn title="PreviewBuy" loading={this.state.btnLoading} onRefresh={() => this.refresh()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
                     </div>
+                    </div>}
                 </div>
 
             </div>

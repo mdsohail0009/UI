@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Typography, Button, Modal, Tooltip } from "antd";
 import Loader from "../../Shared/loader";
-import { getAddress, getFileURL,getFavData ,getViewData,} from "./api";
+import { getAddress, getFileURL, getFavData, getViewData, getCryptoData } from "./api";
 import { connect } from "react-redux";
 import FilePreviewer from "react-file-previewer";
 import { bytesToSize } from "../../utils/service";
-import { addressTabUpdate,setAddressStep,selectedTab} from "../../reducers/addressBookReducer";
+import { addressTabUpdate, setAddressStep, selectedTab } from "../../reducers/addressBookReducer";
 const { Title, Text } = Typography;
 const EllipsisMiddle = ({ suffixCount, children }) => {
 	const start = children?.slice(0, children.length - suffixCount).trim();
@@ -24,15 +24,15 @@ const AddressCryptoView = (props) => {
 	const [cryptoAddress, setCryptoAddress] = useState({});
 	const [previewPath, setPreviewPath] = useState(null);
 	const [previewModal, setPreviewModal] = useState(false);
-	const[bankDetailes,setBankDetailes]=useState([]);
-	
+	const [bankDetailes, setBankDetailes] = useState([]);
+
 
 	useEffect(() => {
 		loadDataAddress();
 	}, []);// eslint-disable-line react-hooks/exhaustive-deps
 	const loadDataAddress = async () => {
 		setIsLoading(true)
-		let response = await getViewData(props?.match?.params?.id,  props?.userConfig?.id);
+		let response = await getCryptoData(props?.match?.params?.id, props?.userConfig?.id);
 		if (response.ok) {
 			setCryptoAddress(response.data);
 			setBankDetailes(response.data.payeeAccountModels)
@@ -44,162 +44,180 @@ const AddressCryptoView = (props) => {
 		props?.dispatch(addressTabUpdate(false));
 	};
 
+	const docPreview = async (file) => {
+		let res = await getFileURL({ url: file.path });
+		if (res.ok) {
+			setPreviewModal(true);
+			setPreviewPath(res.data);
+		}
+	};
+	const filePreviewPath = () => {
+		return previewPath;
 
-	const iban=cryptoAddress?.bankType === "iban"? "IBAN": "Bank Account"
-	const iban1=cryptoAddress?.bankType === "iban"? "IBAN": "Bank Account Number"
-
+	};
+	const iban = cryptoAddress?.bankType === "iban" ? "IBAN" : "Bank Account"
+	const iban1 = cryptoAddress?.bankType === "iban" ? "IBAN" : "Bank Account Number"
+	const filePreviewModal = (
+		<Modal
+			className="documentmodal-width"
+			destroyOnClose={true}
+			title="Preview"
+			width={1000}
+			visible={previewModal}
+			closeIcon={
+				<Tooltip title="Close">
+					<span
+						className="icon md close-white c-pointer"
+						onClick={() => setPreviewModal(false)}
+					/>
+				</Tooltip>
+			}
+			footer={
+				<>
+					<Button
+						className="pop-btn px-36"
+						style={{ margin: "0 8px" }}
+						onClick={() => setPreviewModal(false)}>
+						Close
+					</Button>
+					<Button
+						className="pop-btn px-36"
+						style={{ margin: "0 8px" }}
+						onClick={() => window.open(previewPath, "_blank")}>
+						Download
+					</Button>
+				</>
+			}>
+			<FilePreviewer
+				hideControls={true}
+				file={{
+					url: previewPath ? filePreviewPath() : null,
+					mimeType: previewPath?.includes(".pdf") ? "application/pdf" : "",
+				}}
+			/>
+		</Modal>
+	);
 
 	return (
 		<>
-			<div className="main-container">
-				<div className="box basic-info">
+			<div className="main-container cust-cypto-view">
+			<Title className="basicinfo mb-12">
+				Beneficiary Details
+			</Title>
+				<div className="box basic-info ">
 					{loading ? (
 						<Loader />
 					) : (
 						<>
-							<Title className="page-title text-white">
-								BENEFICIARY DETAILS 
-							</Title>
+							
 							{cryptoAddress && (
+								<div className="custom-alert-width">
 								<Row gutter={8}>
 									<Col xl={24} xxl={24} className="bank-view">
 										<Row className="kpi-List">
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+											<Col xs={24} sm={24} md={12} lg={14} xxl={14}>
 												<div>
-													<label className="kpi-label">Favorite Name</label>
+													<label className="kpi-label">Save Whitelist Name As</label>
 													<div className=" kpi-val">
-														{cryptoAddress?.favouriteName === " " ||
-																		cryptoAddress?.favouriteName === null
-																		? "-"
-																		: cryptoAddress?.favouriteName}
+														{cryptoAddress?.saveWhiteListName === " " ||
+															cryptoAddress?.saveWhiteListName === null
+															? "-"
+															: cryptoAddress?.saveWhiteListName}
 													</div>
 												</div>
 											</Col>
-
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+											<Col xs={24} sm={24} md={12} lg={5} xxl={5}>
 												<div>
-													<label className="kpi-label">Name</label>
+													<label className="kpi-label">Token</label>
 													<div className=" kpi-val">
-													{cryptoAddress?.beneficiaryName === " " ||
-																		cryptoAddress?.beneficiaryName === null
-																		? "-"
-																		: cryptoAddress?.beneficiaryName}
+														{cryptoAddress?.token === " " ||
+															cryptoAddress?.token === null
+															? "-"
+															: cryptoAddress?.token}
 													</div>
 												</div>
 											</Col>
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+											<Col xs={24} sm={24} md={12} lg={5} xxl={5}>
 												<div>
-													<label className="kpi-label">Email</label>
-													<div className="kpi-val">
-														<div className=" kpi-val">
-															{cryptoAddress?.email === " " ||
-																		cryptoAddress?.email === null
-																		? "-"
-																		: cryptoAddress?.email}
-														</div>
+													<label className="kpi-label">Network</label>
+													<div className=" kpi-val">
+														{cryptoAddress?.network === " " ||
+															cryptoAddress?.network === null
+															? "-"
+															: cryptoAddress?.network}
 													</div>
 												</div>
 											</Col>
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
-													<label className="kpi-label">Phone Number</label>
-													{ <div className=" kpi-val">
-													{cryptoAddress?.phoneNo === " " ||
-																		cryptoAddress?.phoneNo === null
-																		? "-"
-																		: cryptoAddress?.phoneNo}
-													
-													</div> }
-												</div>
-											</Col>
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
-													<label className="kpi-label">Address Type</label>
-													{ <div className=" kpi-val">
-													{cryptoAddress?.addressType === " " ||
-																		cryptoAddress?.addressType === null
-																		? "-"
-																		: cryptoAddress?.addressType}
-													
-													</div> }
-												</div>
-											</Col>
-
-										</Row>
-										<Title className="page-title text-white">
-								CRYPTO ADDRESS DETAILS 
-							</Title>
-										<Row>
 											
-												{bankDetailes?.map((item, idx) => (
-													<div
-														style={{
-															border: "2px dashed var(--borderGrey)",
-															padding: "12px 16px",
-															borderRadius: 10,
-															marginBottom: 16,
-															width: "100%"
-														}}>
-														<Row gutter={[16, 16]} key={idx}>
-															<Col xs={24} md={24} lg={14} xl={4} xxl={4}>
-																<Text className="fw-300 text-white-50 fs-12">
-																	Address Label
-																</Text>
-																<Title level={5} className="m-0 mb-8 l-height-normal text-white-50 text-white-50"  >
-																	{item.label === " " ||
-																		item.label === null
-																		? "-"
-																		: item.label}
-																</Title>
-															</Col>
-															<Col xs={24} md={24} lg={14} xl={3} xxl={3}>
-																<Text className="fw-300 text-white-50 fs-12">
-																	Coin
-																</Text>
-																<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"  >
-																	{item.walletCode === " " ||
-																		item.walletCode === null
-																		? "-"
-																		: item.walletCode}
-																</Title>
-															</Col>
-															<Col xs={24} md={24} lg={14} xl={10} xxl={14}>
-																<Text className="fw-300 text-white-50 fs-12">
-																	 Address 
-																</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"  >
-																{item.walletAddress === " " ||
-																		item.walletAddress === null
-																		? "-"
-																		: item.walletAddress}
-															</Title>
-														</Col>
-														<Col xs={24} md={24} lg={14} xl={4} xxl={3}>
-																<Text className="fw-300 text-white-50 fs-12">
-																	 Address State
-																</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"  >
-																{item.addressState === " " ||
-																		item.addressState === null
-																		? "-"
-																		: item.addressState}
-															</Title>
-														</Col>
-														
-														
-														
-													</Row>
+											<Col xs={24} sm={24} md={12} lg={14} xxl={14}>
+												<div>
+													<label className="kpi-label">Wallet Address</label>
+													<div className=" kpi-val">
+														{cryptoAddress?.walletAddress === " " ||
+															cryptoAddress?.walletAddress === null
+															? "-"
+															: cryptoAddress?.walletAddress}
+													</div>
 												</div>
-											))}
-										
+											</Col>
+											<Col xs={24} sm={24} md={12} lg={5} xxl={5}>
+												<div>
+													<label className="kpi-label">Address State</label>
+													<div className=" kpi-val">
+														{cryptoAddress?.adressstate === " " ||
+															cryptoAddress?.adressstate === null
+															? "-"
+															: cryptoAddress?.adressstate}
+													</div>
+												</div>
+											</Col>
+												
 										</Row>
+										{cryptoAddress?.documents?.details.map((file) => (
+													<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+														<div
+															className="docfile mr-0 d-flex ml-8"
+															key={file.id}>
+															<span
+																className={`icon xl ${(file.documentName?.slice(-3) === "zip" &&
+																		"file") ||
+																	(file.documentName?.slice(-3) !== "zip" &&
+																		"") ||
+																	((file.documentName?.slice(-3) === "pdf" ||
+																		file.documentName?.slice(-3) === "PDF") &&
+																		"file") ||
+																	(file.documentName?.slice(-3) !== "pdf" &&
+																		file.documentName?.slice(-3) !== "PDF" &&
+																		"image")
+																	} mr-16`}
+															/>
+															<div
+																className="docdetails c-pointer"
+																onClick={() => docPreview(file)}>
+																{file.name !== null ? (
+																	<EllipsisMiddle suffixCount={4}>
+																		{file.documentName}
+																	</EllipsisMiddle>
+																) : (
+																	<EllipsisMiddle suffixCount={4}>
+																		Name
+																	</EllipsisMiddle>
+																)}
+																<span className="fs-12 text-secondary">
+																	{bytesToSize(file.remarks)}
+																</span>
+															</div>
+														</div>
+													</Col>
+												))}
 									</Col>
 								</Row>
+								</div>
 							)}
 							<div className="text-right mt-24">
 								<Button
 									className="pop-btn px-36"
-									style={{ margin: "0 8px" }}
+									style={{ margin: "0 8px",width:'250px'}}
 									onClick={backToAddressBook}>
 									Cancel
 								</Button>
@@ -208,7 +226,7 @@ const AddressCryptoView = (props) => {
 					)}
 				</div>
 			</div>
-			
+			{filePreviewModal}
 		</>
 	);
 };

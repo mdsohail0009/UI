@@ -18,7 +18,6 @@ export const convertCurrencyDuplicate = async ({ from, to, value, isCrypto, cust
     }
 }
 export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, maxPurchase, eurInUsd, gbpInUsd }) => {
-
     const validate = {
         message: null,
         valid: true
@@ -34,7 +33,7 @@ export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, m
         validate.message = apicalls.convertLocalLang('enter_wallet')
         validate.valid = false;
     }
-    else if (localValue === "0" || cryptValue == "0") {
+    else if (localValue === "0" || cryptValue == "0"|| localValue == "0") {
         validate.message = apicalls.convertLocalLang('amount_greater_zero')
         validate.valid = false;
     }

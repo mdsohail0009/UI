@@ -8,6 +8,7 @@ import Currency from "../shared/number.formate";
 import apicalls from "../../api/apiCalls";
 import { connect } from 'react-redux';
 import { setCurrentAction } from "../../reducers/actionsReducer";
+import {setSellHeaderHide, setSelectedSellCoin} from "../../reducers/buysellReducer";
 const LinkValue = (props) => {
 	return (
 		<Translate
@@ -26,22 +27,44 @@ const LinkValue = (props) => {
 class Summary extends Component {
 	
 	state = {
-		permissions: {}
+		permissions: {},
+		buyPermissions: {},
+		sellPermissions: {}
 	};
 	
 	componentDidMount() {
 		this.permissionsInterval = setInterval(this.loadPermissions, 200);
 	}
 	loadPermissions = () => {
-		if (this.props.buySellPermissions) {
+		if (this.props.buyPermissions) {
 			clearInterval(this.permissionsInterval);
 			let _permissions = {};
-			for (let action of this.props.buySellPermissions?.actions) {
+			for (let action of this.props.buyPermissions?.actions) {
 				_permissions[action.permissionName] = action.values;
 			}
-			this.setState({ ...this.state, permissions: _permissions });
+			this.setState({ ...this.state, buyPermissions: _permissions });
+		}
+		if (this.props.sellPermissions) {
+			clearInterval(this.permissionsInterval);
+			let _permissions = {};
+			for (let action of this.props.sellPermissions?.actions) {
+				_permissions[action.permissionName] = action.values;
+			}
+			this.setState({ ...this.state, sellPermissions: _permissions });
 		}
 	}
+	onBackSell = () => {
+		if(this.props.okBtnTitle == "buy"){ 
+			this.props.dispatch(setSellHeaderHide(false));
+			this.props.dispatch(setSelectedSellCoin(true));
+			this.props.onCancel()
+		}
+		if(this.props.okBtnTitle == "sell") {
+			this.props.dispatch(setSellHeaderHide(true));
+			this.props.dispatch(setSelectedSellCoin(false));
+			this.props.onCancel()
+		}
+    }
 	render() {
 		if (this.props?.loading) {
 			return <Loader />;
@@ -192,8 +215,8 @@ class Summary extends Component {
 							component={Text}
 						/>
 					</div>
-					{(permissions) &&
-					<div className="d-flex p-16 mb-36 agree-check">
+					{permissions &&
+					<div className="d-flex p-16 mb-24 agree-check">
 						<label
 						>
 							<input
@@ -220,34 +243,46 @@ class Summary extends Component {
 							<Translate content="refund_cancellation" component="Text" />
 						</Paragraph>
 					</div>}
-					{(permissions ) &&
+					
+					
+
+					<div className="align-center btn-content btn-container">
+					<div className="text-center mt-16 cust-pop-up-btn sell-btc-btn">
+						<Translate
+							content="cancel"
+							component={Button}
+							onClick={() => { this.onBackSell() }}
+							type="text"
+							size="large"
+							className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn mr-8 ml-0 primary-btn pop-cancel"
+						/>
+					</div>
+					{(okBtnTitle == "buy" && permissions) &&
 					<SuisseBtn
-						className={"pop-btn"}
+						className={"pop-btn custom-send sell-btc-btn"}
 						onRefresh={() => this.props.onRefresh()}
 						title={okBtnTitle || "pay"}
 						loading={isButtonLoad}
 						autoDisable={true}
 						onClick={() => this.props.onClick()}
 					/>}
-
-
-					<div className="text-center mt-16">
-						<Translate
-							content="cancel"
-							component={Button}
-							onClick={() => this.props.onCancel()}
-							type="text"
-							size="large"
-							className="text-white-30 pop-cancel fw-400"
-						/>
-					</div>
+					
+					{(okBtnTitle == "sell" && permissions) &&<div className="sell-btc-btn">
+					<SuisseBtn
+						className={"pop-btn custom-send sell-btc-btn"}
+						onRefresh={() => this.props.onRefresh()}
+						title={okBtnTitle || "pay"}
+						loading={isButtonLoad}
+						autoDisable={true}
+						onClick={() => this.props.onClick()}
+					/></div>}</div>
 				</div>
 			</>
 		);
 	}
 }
 const connectStateToProps = ({ menuItems }) => {
-    return { buySellPermissions: menuItems?.featurePermissions["trade"] }
+    return { buyPermissions: menuItems?.featurePermissions?.trade_buy, sellPermissions: menuItems?.featurePermissions?.trade_sell}
 }
 const connectDispatchToProps = dispatch => {
 	return {

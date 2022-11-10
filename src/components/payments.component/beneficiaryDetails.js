@@ -648,7 +648,7 @@ class PaymentsView extends Component {
                                                 beforeUpload={(props) => { this.beforeUpload(props) }}
                                                 onChange={(props) => { this.handleUpload(props, "ADDRESSPROOF") }}
                                                 headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
-                                           >
+                                            >
                                                 <p className="ant-upload-drag-icon">
                                                     <span className="icon xxxl doc-upload" />
                                                 </p>
@@ -682,7 +682,7 @@ class PaymentsView extends Component {
                                                 beforeUpload={(props) => { this.beforeUpload(props) }}
                                                 onChange={(props) => { this.handleUpload(props, "BANKPROOF") }}
                                                 headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
-                                           >
+                                            >
                                                 <p className="ant-upload-drag-icon">
                                                     <span className="icon xxxl doc-upload" />
                                                 </p>

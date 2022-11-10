@@ -9,11 +9,14 @@ import { ThemeSwitcherProvider } from 'react-css-theme-switcher';
 import IdleCmp from './authentication/idle.component';
 import { Provider } from 'react-redux';
 import { store } from './store';
+import { CookiesProvider } from 'react-cookie';
 ReactDOM.render(
   <React.StrictMode>
     <ThemeSwitcherProvider defaultTheme="DRT" themeMap={{ DRT: "./dark-theme.css", LHT: "./light-theme.css" }}>
      <Provider store={store}>
+     <CookiesProvider>
       <IdleCmp />
+      </CookiesProvider>
       </Provider>
 
     </ThemeSwitcherProvider>

@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import { CallbackComponent } from "redux-oidc";
 import { profileSuccess } from "../reducers/authReducer";
 import { userManager } from "./index";
+import { withCookies } from 'react-cookie';
 class CallbackPage extends React.Component {
     handleSuccess = (user) => {
         this.handleRedirect(user)
@@ -13,6 +14,7 @@ class CallbackPage extends React.Component {
         const url = localStorage.getItem("__url");
         localStorage.removeItem("__url");
         this.props.history.push(url && url !== "/callback" ? url : "/onboading")
+        this.props.cookies.set('SID',user.profile.sub,{path:'/',domain:process.env.REACT_APP_SUBDOMAIN||window.location.hostname})
     }
     render() {
         return (
@@ -38,4 +40,4 @@ const mapStateToProps = ({ oidc }) => {
 const mapDispatchToProps = dispatch => {
     return { updateProfile: (info) => { dispatch(profileSuccess(info)) } }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CallbackPage));
+export default connect(mapStateToProps, mapDispatchToProps)(withCookies(withRouter(CallbackPage)));

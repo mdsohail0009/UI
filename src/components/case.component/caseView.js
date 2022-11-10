@@ -25,13 +25,13 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
     const suffix = children.slice(-suffixCount).trim();
     return (
-        <Text className="mb-0 fs-14 docname c-pointer d-block"
+        <Text className="mb-0 fs-14 docnames c-pointer d-block"
             style={{ maxWidth: '100%' }} ellipsis={{ suffix }}>
             {start}
         </Text>
     );
 };
-class RequestedDocs extends Component {
+class CaseView extends Component {
     state = {
         modal: false,
         previewModal: false,
@@ -55,7 +55,7 @@ class RequestedDocs extends Component {
         errorWarning: null,
     }
     componentDidMount() {
-        this.getCaseData(QueryString.parse(this.props.location.search).id);
+        this.getCaseData(this.props?.match.params?.id);
     }
     getDocument = async (id) => {
         this.setState({ ...this.state, loading: true, error: null });
@@ -153,7 +153,9 @@ class RequestedDocs extends Component {
         item.repliedBy = `${(this.props.userProfileInfo?.isBusiness==true)?this.props.userProfileInfo?.businessName:this.props.userProfileInfo?.firstName}`;
         item.repliedDate = Mome().format("YYYY-MM-DDTHH:mm:ss");
         item.info = JSON.stringify(this.props.trackAuditLogData);
+        item.customerId=this.props.userProfileInfo.id;
         this.setState({ ...this.state, btnLoading: true });
+        
         const response = await saveDocReply(item);
         if (response.ok) {
             success('Document has been submitted');
@@ -329,7 +331,7 @@ class RequestedDocs extends Component {
         }
         return <>
             <div className="main-container">
-                <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile/6" />{caseData?.documents?.customerCaseTitle}</div>
+                <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/cases" />{caseData?.documents?.customerCaseTitle}</div>
                 <div className='case-stripe'>
                     <Row gutter={[16, 16]}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8} xxl={8}>
@@ -471,7 +473,7 @@ class RequestedDocs extends Component {
 											</div>
 										)}
                                     <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-4" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} onChange={(props) => { this.handleUpload(props, doc) }}
-                                      headers={{Authorization : `Bearer ${this.props.user.access_token}`}}>
+                                     headers={{Authorization : `Bearer ${this.props.user.access_token}`}}>
                                         <p className="ant-upload-drag-icon">
                                             <span className="icon xxxl doc-upload" />
                                         </p>
@@ -518,7 +520,7 @@ class RequestedDocs extends Component {
             </div></>;
     }
 }
-const mapStateToProps = ({ userConfig,oidc }) => {
-    return { userProfileInfo: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData,user: oidc.user }
+const mapStateToProps = ({ userConfig, oidc }) => {
+    return { userProfileInfo: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData, user: oidc.user }
 }
-export default connect(mapStateToProps)(RequestedDocs);
+export default connect(mapStateToProps)(CaseView);

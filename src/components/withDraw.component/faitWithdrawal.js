@@ -332,7 +332,7 @@ const FaitWithdrawal = ({ props,
       values["routingNumber"] = bankDetails[0].swiftRouteBICNumber || bankDetails[0].routingNumber;
       values["WalletCode"] = accountDetails[0].currencyCode;
       values["CustomerRemarks"] = values.CustomerRemarks;
-      values["Createdby"] =userConfig.userName;
+      values["createdby"]=userConfig.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig.lastName
       const response = await handleFiatConfirm(values);
       if (response.ok) {
         setBtnDisabled(false);
@@ -906,10 +906,11 @@ const FaitWithdrawal = ({ props,
         {renderModalContent()}
       </Modal>
       <Drawer
+      
         destroyOnClose={true}
         title={[<div className="side-drawer-header">
           <span />
-          <div className="text-center fs-16">
+          <div className="text-center">
             <Paragraph className="mb-0 text-white-30 fw-600 text-upper"><Translate content="AddFiatAddress" component={Paragraph} className="mb-0 text-white-30 fw-600 text-upper" /></Paragraph>
           </div>
           <span onClick={closeBuyDrawer} className="icon md close-white c-pointer" />

@@ -31,7 +31,11 @@ const WithdrawalLive = ({ userConfig, sendReceive, changeStep, dispatch, onCance
     }
   }
   const confirmFaceLive = (obj) => {
+    if(obj?.verifed){
     setFaceCapture(true)
+    }else {
+      setFaceCapture(false)
+    }
     setLivefacerecognization(obj)
   }
   if (isWithdrawSuccess) {

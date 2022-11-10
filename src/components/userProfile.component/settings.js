@@ -21,7 +21,7 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
     const [form] = Form.useForm();
     const [SettingsLu, setSettingsLu] = useState('')
     const [theme, setTheme] = useState(customer?.theme === 'Light Theme' ? true : false);
-    const [settingsObj, setSettingsObj] = useState({ customerId: '', Language: customer?.language ? customer.language : 'en', currency: customer?.currency ? customer.currency : 'USD', Theme: customer?.theme ? customer.theme : null })
+    const [settingsObj, setSettingsObj] = useState({ customerId: '', Language: customer?.language ? customer.language?.toUpperCase() : 'EN', currency: customer?.currency ? customer.currency : 'USD', Theme: customer?.theme ? customer.theme : null })
     const [errorMsg,setErrorMsg]=useState(null);
     const [isLoading,setIsLoading]=useState(false);
     useEffect(() => {
@@ -47,6 +47,7 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
         setBtnDisabled(true);
         setIsLoading(false);
         settingsObj.Theme = theme ? 'Light Theme' : 'Dark Theme';
+        settingsObj.Language = settingsObj.Language?.toLowerCase();
         settingsObj.customerId = customer?.id;
         settingsObj.info = JSON.stringify(trackAuditLogData);
         let res = await saveSettingsData(settingsObj);
@@ -84,6 +85,7 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
         setTheme(!theme)
         switcher({ theme: theme ? themes.DRT : themes.LHT });
         settingsObj.Theme = !theme ? 'Light Theme' : 'Dark Theme';
+        settingsObj.Language = settingsObj.Language?.toLowerCase();
         settingsObj.customerId = customer?.id;
         settingsObj.info = JSON.stringify(trackAuditLogData)
         let res = await saveSettingsData(settingsObj);

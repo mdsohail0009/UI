@@ -435,6 +435,6 @@ class RequestedDocs extends Component {
     }
 }
 const mapStateToProps = ({ userConfig, oidc }) => {
-    return { userProfileInfo: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData, user: oidc.user  }
+    return { userProfileInfo: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData, user: oidc.user }
 }
 export default connect(mapStateToProps)(RequestedDocs);
