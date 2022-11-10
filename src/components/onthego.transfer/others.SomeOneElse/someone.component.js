@@ -53,6 +53,14 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         }
     }
     const onSubmit = async (values) => {
+        if (Object.hasOwn(values?.payeeAccountModels, 'iban')) {
+            setErrorMessage(null);
+            if ((!bankdetails || Object.keys(bankdetails).length == 0)) {
+                useDivRef.current.scrollIntoView()
+                setErrorMessage("Please click validate button before saving.");
+                return;
+            }
+        }
         let obj = { ...createPayeeObj, ...values };
         obj.payeeAccountModels = [payeeAccountObj()];
         obj.payeeAccountModels[0] = { ...obj.payeeAccountModels[0], ...bankdetails, ...values.payeeAccountModels };
@@ -372,7 +380,6 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                  <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />}
                 
                 <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
-                {console.log(documents)}
                 <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
                         setDocuments(docs)
                     }} refreshData = {addressOptions?.domesticType}/>
