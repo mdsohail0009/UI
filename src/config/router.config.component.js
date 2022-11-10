@@ -31,6 +31,7 @@ const InternalTransfer = React.lazy(() => import("../components/internalTransfer
 const AddressBook = React.lazy(() => import("../components/addressbook.component"));
 const Cases = React.lazy(()=>import("../components/case.component/cases"))
 const CaseView = React.lazy(()=>import("../components/case.component/caseView"))
+const UploadMassPayments = React.lazy(() => import("../components/masspayment.component"));
 class RouteConfig extends Component {
   componentDidMount() {
     this.checkPermissions(window.location.pathname || "/cockpit");
@@ -89,6 +90,7 @@ class RouteConfig extends Component {
         <ReactRoute path="/internaltransfer" component={InternalTransfer} exact />
         <ReactRoute path="/addressbook" component={AddressBook} exact />
         <ReactRoute path="/cases" component={Cases} exact />
+        <ReactRoute path="/masspayment" component={UploadMassPayments} exact />
         <ReactRoute path="/" component={Dashboard} exact />
       </React.Suspense>
     </Switch>
