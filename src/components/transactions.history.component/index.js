@@ -78,28 +78,38 @@ class TransactionsHistory extends Component {
     },
     { field: "docType", title: "Transaction", filter: true, },
     { field: "wallet", title: "Wallet", filter: true, },
-    { field: "debit", title: "Value", filter: false, dataType: 'number', filterType: "numeric",
-    customCell: (props) => (
-      <td>
-        {props.dataItem?.debit&& <NumberFormat value={props.dataItem?.debit} displayType={"text"} />}
-        {props.dataItem?.credit && props.dataItem?.debit && " / "}
-        {props.dataItem?.credit&& <NumberFormat value={props.dataItem.credit} displayType={"text"}/>}
-      
-      </td>
-    ) },
-   
-    { field: "debit", title: "Sender/Beneficiary Name", filter: true, width: 260,
-    customCell: (props) => (
-      <td>
-        {props.dataItem?.senderName}
-        {(props.dataItem?.senderName && props.dataItem?.beneficiryName) && " / "}
-        {props.dataItem?.beneficiryName}
-      
-      </td>
-    ) },
+    {
+      field: "debit", title: "Value", filter: false, dataType: 'number', filterType: "numeric",
+      customCell: (props) => (
+        <td>
+          {props.dataItem?.debit && <NumberFormat value={props.dataItem?.debit} displayType={"text"} />}
+          {props.dataItem?.credit && props.dataItem?.debit && " / "}
+          {props.dataItem?.credit && <NumberFormat value={props.dataItem.credit} displayType={"text"} />}
 
-    { field: "accountnumber", title: "IBAN/Account Number", filter: true,  width: 220,
-     },
+        </td>
+      ),
+      combine: true,
+      combineFields: ["debit","credit"]
+    },
+
+    {
+      field: "senderName", title: "Sender/Beneficiary Name", filter: true, width: 260,
+
+      customCell: (props) => (
+        <td>
+          {props.dataItem?.senderName}
+          {(props.dataItem?.senderName && props.dataItem?.beneficiryName) && " / "}
+          {props.dataItem?.beneficiryName}
+
+        </td>
+      ),
+      combine: true,
+      combineFields: ["senderName", "beneficiryName"]
+    },
+
+    {
+      field: "accountnumber", title: "IBAN/Account Number", filter: true, width: 220,
+    },
     { field: "state", title: "State", filter: true, },
     // { field: "fromWalletCode", title: "From Wallet Code", filter: true, width: 180, },
     // { field: "fromValue", title: "From Value", width: 150, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
