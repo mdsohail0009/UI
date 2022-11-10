@@ -472,7 +472,8 @@ class CaseView extends Component {
 												/>
 											</div>
 										)}
-                                    <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-4" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} onChange={(props) => { this.handleUpload(props, doc) }}>
+                                    <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-4" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} onChange={(props) => { this.handleUpload(props, doc) }}
+                                     headers={{Authorization : `Bearer ${this.props.user.access_token}`}}>
                                         <p className="ant-upload-drag-icon">
                                             <span className="icon xxxl doc-upload" />
                                         </p>
@@ -519,7 +520,7 @@ class CaseView extends Component {
             </div></>;
     }
 }
-const mapStateToProps = ({ userConfig }) => {
-    return { userProfileInfo: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData }
+const mapStateToProps = ({ userConfig, oidc }) => {
+    return { userProfileInfo: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData, user: oidc.user }
 }
 export default connect(mapStateToProps)(CaseView);
