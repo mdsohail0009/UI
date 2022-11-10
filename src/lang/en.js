@@ -676,4 +676,5 @@ export default {
 	validate: "Validate",
 	sell_select_currency: "SELECT CURRENCY TO RECEIVE",
 	note:"Note",
+  masspayments: "Mass Payments",
 };
