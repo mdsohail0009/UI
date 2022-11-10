@@ -72,14 +72,14 @@ class BusinessTransfer extends Component {
     submitPayee = async (values) => {
         let { details, selectedTab,isEdit,isSelectedId, ibanDetails } = this.state;
         this.setState({ ...this.state, errorMessage: null});
-        // if (Object.hasOwn(values, 'iban')) {
-        // this.setState({ ...this.state, errorMessage: null});
-        // if ((!ibanDetails || Object.keys(ibanDetails).length == 0)) {
-        //     this.setState({ ...this.state, errorMessage: "please validate IBAN", isLoading: false, isBtnLoading: false });;
-        //     this.useDivRef.current.scrollIntoView()
-        //     return;
-        // }
-        // }
+        if (Object.hasOwn(values, 'iban')) {
+        this.setState({ ...this.state, errorMessage: null});
+        if ((!ibanDetails || Object.keys(ibanDetails).length == 0)) {
+            this.setState({ ...this.state, errorMessage: "Please click validate button before saving.", isLoading: false, isBtnLoading: false });;
+            this.useDivRef.current.scrollIntoView()
+            return;
+        }
+        }
         let _obj = { ...details, ...values };
         _obj.payeeAccountModels[0].currencyType = "Fiat";
         _obj.payeeAccountModels[0].walletCode = "USD";
@@ -148,7 +148,7 @@ class BusinessTransfer extends Component {
     }
     handleIbanChange = async ({ target: { value,isNext } }) => {
         this.setState({ ...this.state, enteredIbanData: value, isShowValid: false});
-        if (value?.length > 10 && isNext) {
+        if (value?.length >= 10 && isNext) {
             this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true,iBanValid:true });
             const response = await fetchIBANDetails(value);
             if (response.ok) {
@@ -166,9 +166,8 @@ class BusinessTransfer extends Component {
         }
     }
     onIbanValidate = (e) => {
-        debugger
         let value = e ? e: this.form.current?.getFieldValue('iban');
-        if (value?.length > 10) {
+        if (value?.length >= 10) {
             if (value &&!/^[A-Za-z0-9]+$/.test(value)) {
                 this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true, isValidateMsg: true, errorMessage: null});
                 this.form.current?.validateFields(["iban"], this.validateIbanType)
@@ -186,14 +185,16 @@ class BusinessTransfer extends Component {
 
      validateIbanType = (_, value) => {
         this.setState({ ...this.state, isValidateLoading: false});
-        if (!value&&this.state.isShowValid) {
+        if ((!value&&this.state.isShowValid)||!value) {
             return Promise.reject(apiCalls.convertLocalLang("is_required"));
-        } else if (!this.state.iBanValid&&this.state.isShowValid) {
+        } else if ((!this.state.iBanValid&&this.state.isShowValid)|| value?.length < 10) {
+            this.setState({ ...this.state, ibanDetails : {}});
             return Promise.reject("Please input a valid IBAN");
         } else if (
             value &&this.state.isShowValid&&
             !/^[A-Za-z0-9]+$/.test(value)
         ) {
+            this.setState({ ...this.state, ibanDetails : {}});
             return Promise.reject(
                 "Please input a valid IBAN"
             );
@@ -591,7 +592,7 @@ class BusinessTransfer extends Component {
                                     placeholder={"IBAN"}
                                     //style={{ width:'350px',display:'table-cell !important' }}
                                     onChange={this.handleIbanChange}
-                                    maxLength={50}/>
+                                    maxLength={30}/>
 
                             </Form.Item>
                             </div>
@@ -673,15 +674,15 @@ class BusinessTransfer extends Component {
                         payeeAccountModels[0].documents = docs;
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
                     }} />
-                    <div className="align-center">
+                    <div className="text-right mt-36">
                         {/* <Row gutter={[16, 16]}> */}
                             {/* <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col> */}
                             {/* <Col xs={24} className="text-right"> */}
                                 <Button
-                                    htmlType="submit"
-                                    size="large"
-                                    className="pop-btn mb-36"
-                                    style={{ minWidth: "100%" }}
+                                   htmlType="submit"
+                                   size="large"
+                                   className="pop-btn px-36"
+                                    //style={{ minWidth: "100%" }}
                                     loading={this.state.isBtnLoading}>
                                     {this.props.type === "manual" && "Save"}
                                     {this.props.type !== "manual" && "Continue"}
