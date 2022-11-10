@@ -53,6 +53,14 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         }
     }
     const onSubmit = async (values) => {
+        if (Object.hasOwn(values?.payeeAccountModels, 'iban')) {
+            setErrorMessage(null);
+            if ((!bankdetails || Object.keys(bankdetails).length == 0)) {
+                useDivRef.current.scrollIntoView()
+                setErrorMessage("Please click validate button before saving.");
+                return;
+            }
+        }
         let obj = { ...createPayeeObj, ...values };
         obj.payeeAccountModels = [payeeAccountObj()];
         obj.payeeAccountModels[0] = { ...obj.payeeAccountModels[0], ...bankdetails, ...values.payeeAccountModels };
@@ -68,6 +76,21 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             obj.id = isSelectedId ? isSelectedId : createPayeeObj.payeeAccountModels[0]?.payeeId;
         }
         setBtnLoading(true)
+        if (obj.payeeAccountModels[0].documents == null || obj.payeeAccountModels[0].documents && obj.payeeAccountModels[0].documents.details.length == 0) {
+            useDivRef.current.scrollIntoView()
+            setErrorMessage('At least one document is required'); setBtnLoading(false)
+
+        } else if (obj.payeeAccountModels[0].documents) {
+            let length = 0;
+            for (let k in obj.payeeAccountModels[0].documents.details){
+                if(obj.payeeAccountModels[0].documents.details[k].state=='Deleted'){
+                    length=length+1;
+                }
+            }
+            if(length==obj.payeeAccountModels[0].documents.details.length){
+                useDivRef.current.scrollIntoView()
+                setErrorMessage('At least one document is required'); setBtnLoading(false)
+            } else {
         let payeesave = await savePayee(obj)
         if (payeesave.ok) {
             if (props.type !== "manual") {
@@ -81,6 +104,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                     useDivRef.current.scrollIntoView();
                 }
             } else {
+                props.headingUpdate(true)
                 setShowDeclartion(true)
             }
         } else {
@@ -88,6 +112,8 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             setErrorMessage(isErrorDispaly(payeesave));
             useDivRef.current.scrollIntoView();
         }
+    }
+}
 
     }
     const isErrorDispaly = (objValue) => {
@@ -109,14 +135,16 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         {mainLoader && <Loader />}
         {!mainLoader && <>
             <div ref={useDivRef}></div>
-            {showDeclartion && <div className="text-center">
+            {showDeclartion &&<div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
                 <Image width={80} preview={false} src={alertIcon} />
                 <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
                 <Text className="text-white-30">{`Declaration form has been sent to ${props.userProfile?.email}. 
                    Please sign using link received in email to whitelist your address. `}</Text>
                 <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
-                <div className="my-25"><Button onClick={() => props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn text-textDark">BACK</Button></div>
-            </div>}
+                <div className="my-25">
+                {/* <Button onClick={() => props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button> */}
+                </div>
+            </div></div>}
 
             {!showDeclartion && <>
                 {props.currency === "USD" && <>
@@ -124,7 +152,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                             <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
                                 setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
-                                form.current.resetFields();
+                                form.current.resetFields();setDocuments(null);setErrorMessage(null)
                                 // form.current.setFieldsValue({ addressType: 'someoneelse', transferType: activekey })
                             }}>
                                 <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
@@ -353,10 +381,9 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                  <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />}
                 
                 <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
-                {console.log(documents)}
-                <AddressDocumnet documents={documents || null} onDocumentsChange={(docs) => {
+                <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
                         setDocuments(docs)
-                    }} />
+                    }} refreshData = {addressOptions?.domesticType}/>
                     <div className="text-right mt-12">
                         {/* <Button
                             className="pop-btn px-36"
@@ -370,7 +397,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         size="large"
                         className="pop-btn px-36 mt-36"
                         loading={btnLoading}
-                        style={{ minWidth: "100%" }}
+                        //style={{ minWidth: "100%" }}
                     // onClick={() => console.log(form.getFieldsValue())}
                     >
                         {props.type === "manual" && "Save"}
