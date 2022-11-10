@@ -91,29 +91,29 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                 useDivRef.current.scrollIntoView()
                 setErrorMessage('At least one document is required'); setBtnLoading(false)
             } else {
-                let payeesave = await savePayee(obj)
-                if (payeesave.ok) {
-                    if (props.type !== "manual") {
-                        const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer })
-                        if (confirmRes.ok) {
-                            setBtnLoading(false);
-                            props.onContinue(confirmRes.data);
-                        } else {
-                            setBtnLoading(false);
-                            setErrorMessage(isErrorDispaly(confirmRes));
-                            useDivRef.current.scrollIntoView();
-                        }
-                    } else {
-                        props.headingUpdate(true)
-                        setShowDeclartion(true)
-                    }
+        let payeesave = await savePayee(obj)
+        if (payeesave.ok) {
+            if (props.type !== "manual") {
+                const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer })
+                if (confirmRes.ok) {
+                    setBtnLoading(false);
+                    props.onContinue(confirmRes.data);
                 } else {
                     setBtnLoading(false);
-                    setErrorMessage(isErrorDispaly(payeesave));
+                    setErrorMessage(isErrorDispaly(confirmRes));
                     useDivRef.current.scrollIntoView();
                 }
+            } else {
+                props.headingUpdate(true)
+                setShowDeclartion(true)
             }
+        } else {
+            setBtnLoading(false);
+            setErrorMessage(isErrorDispaly(payeesave));
+            useDivRef.current.scrollIntoView();
         }
+    }
+}
 
     }
     const isErrorDispaly = (objValue) => {
@@ -151,12 +151,13 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                             <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
-                                setAddressOptions({ ...addressOptions, domesticType: activekey });
+                                setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
                                 form.current.resetFields();setDocuments(null);setErrorMessage(null)
                                 // form.current.setFieldsValue({ addressType: 'someoneelse', transferType: activekey })
                             }}>
                                 <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
                                 <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"} disabled={edit} ></Tabs.TabPane>
+                                <Tabs.TabPane tab="International USD IBAN" className="text-white text-captz" key={"internationalIBAN"} disabled={edit}></Tabs.TabPane>
                             </Tabs>
                         </Col>
                     </Row>

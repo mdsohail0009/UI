@@ -29,7 +29,8 @@ class OthersBusiness extends Component {
         enteredIbanData: null,
         isShowValid: false,
         isValidateLoading: false,
-        isValidCheck: false
+        isValidCheck: false,
+        isValidateMsg: false,
     };
     componentDidMount() {
         this.loadDetails();
@@ -85,7 +86,7 @@ class OthersBusiness extends Component {
         let value = e ? e: this.form.current?.getFieldValue('iban');
         if (value?.length >= 10) {
             if (value &&!/^[A-Za-z0-9]+$/.test(value)) {
-                this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true});
+                this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true, isValidateMsg: true, errorMessage: null});
                 this.form.current?.validateFields(["iban"], this.validateIbanType)
             }
             else {
@@ -94,7 +95,7 @@ class OthersBusiness extends Component {
             }
         }
         else {
-            this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true});
+            this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true, isValidateMsg: true, errorMessage: null});
             this.form.current?.validateFields(["iban"], this.validateIbanType)
         }
     }
@@ -143,6 +144,7 @@ class OthersBusiness extends Component {
         _obj.payeeAccountModels[0].walletCode = "EUR";
         _obj.payeeAccountModels[0].bankName = ibanDetails?.bankName;
         delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
+        _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
         _obj.addressType = "otherbusiness";
         _obj.transferType = "sepa";
         _obj.amount = this.props.amount;
@@ -164,34 +166,34 @@ class OthersBusiness extends Component {
                 this.setState({ ...this.state, isLoading: false, errorMessage: 'At least one document is required', isBtnLoading: false });
             } else {
                 _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
-                this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
-                const response = await savePayee(_obj);
-                if (response.ok) {
-                    if (this.props.type !== "manual") {
-                        const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
-                        if (confirmRes.ok) {
-                            this.props.onContinue(confirmRes.data);
-                            this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
-                            //  this.useDivRef.current.scrollIntoView()
-                        } else {
-                            this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false, isBtnLoading: false });
-                            //  this.useDivRef.current.scrollIntoView(0,0)
-                            window.scrollTo(0, 0);
-                        }
-                    } else {
-                        // this.props.onContinue({ close: true, isCrypto: false });
-                        this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
-                        this.useDivRef.current?.scrollIntoView(0, 0)
-                        this.props.headingUpdate(true)
-                    }
-
+        this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
+        const response = await savePayee(_obj);
+        if (response.ok) {
+            if (this.props.type !== "manual") {
+                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
+                if (confirmRes.ok) {
+                    this.props.onContinue(confirmRes.data);
+                    this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
+                  //  this.useDivRef.current.scrollIntoView()
                 } else {
-
-                    this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, isBtnLoading: false });
-                    // this.useDivRef.current.scrollIntoView()
+                    this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false, isBtnLoading: false });
+                  //  this.useDivRef.current.scrollIntoView(0,0)
+                  window.scrollTo(0, 0);
                 }
+            } else {
+                // this.props.onContinue({ close: true, isCrypto: false });
+                this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
+                this.useDivRef.current?.scrollIntoView(0,0)
+                this.props.headingUpdate(true)
             }
+
+        } else {
+            
+            this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, isBtnLoading: false });
+           // this.useDivRef.current.scrollIntoView()
         }
+    }
+}
 
     }
     render() {
@@ -211,7 +213,7 @@ class OthersBusiness extends Component {
                     </div>
             </div></div>
         }
-        if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} updatedHeading={this.props?.headingUpdate}amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} /> }
+        if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} updatedHeading={this.props?.headingUpdate} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} /> }
         else {
             return <><div ref={this.useDivRef}>
                 {/* <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16 text-center">SEPA Transfer</Paragraph> */}
@@ -331,10 +333,6 @@ class OthersBusiness extends Component {
                                 label={"IBAN"}
                                 required
                                 rules={[
-                                    // {
-                                    //     required: true,
-                                    //     message: apiCalls.convertLocalLang("is_required"),
-                                    // },
                                     {
                                         validator: this.validateIbanType,
                                       },
