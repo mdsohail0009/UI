@@ -82,7 +82,7 @@ class OthersBusiness extends Component {
             }
         }
         else{
-            this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false, enteredIbanData: value, isShowValid: false, isValidateLoading: false,ibanDetails: {},})
+            this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false, enteredIbanData: value, isShowValid: false, isValidateLoading: false,ibanDetails: {},errorMessage: null})
         }
     }
 

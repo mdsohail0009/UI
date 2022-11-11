@@ -137,6 +137,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 if(isValid&&response.data && (response.data?.routingNumber || response.data?.bankName)){
                     setValidIban(true)
                     setIsShowBankDetails(true);
+                    setValidateLoading(false);
                     setbankDetails(response.data);
                 }else{
                     setValidateLoading(false);
