@@ -127,22 +127,28 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     const getBankDeails = async (e,isValid) => {
         setbankDetails({});
         setEnteredIbanData(e);
+        seterrorMessage(null);
         setIsShowValid(false);
         if(e?.length>=10&&isValid){
             setValidIban(true) 
             isValid ? setIbanLoader(true) : setIbanLoader(false);
             const response = await apiCalls.getIBANData(e);
             if (response.ok) {
-                if(isValid){
-                    setValidateLoading(false);
-                    setIsShowBankDetails(true);
-                    setbankDetails(response.data);
-                }
                 if(isValid&&response.data && (response.data?.routingNumber || response.data?.bankName)){
                     setValidIban(true)
                     setIsShowBankDetails(true);
+                    setbankDetails(response.data);
                 }else{
-                    setValidIban(false)
+                    setValidateLoading(false);
+                     setValidIban(false)
+                    if (bankDetails && (!bankDetails?.routingNumber || !bankDetails?.bankName)) {
+                        setIsShowBankDetails(false);
+                        setIbanLoader(false)
+                        setbankDetails({})
+                        seterrorMessage("No bank details are available for this IBAN number.");
+                        useDivRef.current.scrollIntoView();
+                        return;
+                    }
                 }
               setIbanLoader(false)
             }else{

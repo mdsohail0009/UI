@@ -50,7 +50,8 @@ class PayeeBankDetails extends Component {
                     this.props.form.current?.setFieldsValue({ iban: ibannumber })
                 } else {
                     this.setState({ ...this.state, IbanLoader: false, isValidIban: false, isValidateLoading: false })
-                    this.props.getIbandata(null);
+                    const bankData = {bankName: "", routingNumber: ""}
+                    this.props.getIbandata(bankData);
                 }
             } else {
                 this.setState({ ...this.state, IbanLoader: false, isValidIban: false, isValidateLoading: false })
