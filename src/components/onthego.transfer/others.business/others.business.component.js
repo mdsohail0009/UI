@@ -167,7 +167,7 @@ class OthersBusiness extends Component {
                 this.useDivRef.current.scrollIntoView()
                 this.setState({ ...this.state, isLoading: false, errorMessage: 'At least one document is required', isBtnLoading: false });
             } else {
-                _obj.payeeAccountModels[0].documents?.customerId = this.props?.userProfile?.id;
+                _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
                 this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
                 const response = await savePayee(_obj);
                 if (response.ok) {
