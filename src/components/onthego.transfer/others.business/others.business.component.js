@@ -72,7 +72,7 @@ class OthersBusiness extends Component {
                 }else{
                     if(this.state.ibanDetails && !this.state.ibanDetails?.routingNumber|| !this.state.ibanDetails?.bankName) {
                         this.setState({ ...this.state, ibanDetails: {}, ibanDetailsLoading: false, errorMessage: null, iBanValid:false, isValidateLoading: false });
-                        this.setState({ ...this.state, errorMessage: "No bank details are available for this IBAN number.", isLoading: false, isBtnLoading: false });;
+                        this.setState({ ...this.state, errorMessage: "No bank details are available for this IBAN number", isLoading: false, isBtnLoading: false });;
                         this.useDivRef.current?.scrollIntoView();
                         return;
                     }
@@ -129,7 +129,7 @@ class OthersBusiness extends Component {
         if (Object.hasOwn(values, 'iban')) {
             this.setState({ ...this.state, errorMessage: null });
             if ((!ibanDetails || Object.keys(ibanDetails).length == 0)) {
-                this.setState({ ...this.state, errorMessage: "Please click validate button before saving.", isLoading: false, isBtnLoading: false });;
+                this.setState({ ...this.state, errorMessage: "Please click validate button before saving", isLoading: false, isBtnLoading: false });;
                 window.scrollTo(0, 0);
                 this.useDivRef.current?.scrollIntoView();
                 return;

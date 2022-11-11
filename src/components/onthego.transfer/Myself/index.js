@@ -68,7 +68,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         if (Object.hasOwn(values, 'iban')) {
             if ((!bankDetails || Object.keys(bankDetails).length == 0)) {
                 setBtnLoading(false);
-                seterrorMessage("Please click validate button before saving.");
+                seterrorMessage("Please click validate button before saving");
                 useDivRef.current.scrollIntoView();
                 return;
             }
@@ -146,7 +146,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         setIsShowBankDetails(false);
                         setIbanLoader(false)
                         setbankDetails({})
-                        seterrorMessage("No bank details are available for this IBAN number.");
+                        seterrorMessage("No bank details are available for this IBAN number");
                         useDivRef.current.scrollIntoView();
                         return;
                     }
