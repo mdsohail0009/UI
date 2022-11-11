@@ -130,7 +130,6 @@ class OthersBusiness extends Component {
             this.setState({ ...this.state, errorMessage: null });
             if ((!ibanDetails || Object.keys(ibanDetails).length == 0)) {
                 this.setState({ ...this.state, errorMessage: "Please click validate button before saving", isLoading: false, isBtnLoading: false });;
-                window.scrollTo(0, 0);
                 this.useDivRef.current?.scrollIntoView();
                 return;
             }
@@ -168,7 +167,7 @@ class OthersBusiness extends Component {
                 this.useDivRef.current.scrollIntoView()
                 this.setState({ ...this.state, isLoading: false, errorMessage: 'At least one document is required', isBtnLoading: false });
             } else {
-                _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
+                _obj.payeeAccountModels[0].documents?.customerId = this.props?.userProfile?.id;
                 this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
                 const response = await savePayee(_obj);
                 if (response.ok) {
