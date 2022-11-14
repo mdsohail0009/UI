@@ -380,7 +380,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                 {((props.selectedAddress?.id && createPayeeObj)||!props.selectedAddress?.id ) &&
                  <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />}
                 
-                <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
+                <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to prove your relationship with the benificiary. E.g. Contracts, Agreements</Paragraph>
                 <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
                         setDocuments(docs)
                     }} refreshData = {addressOptions?.domesticType}/>

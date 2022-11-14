@@ -50,7 +50,7 @@ class AddressDocumnet extends Component {
                       className="mb-8 fs-14 text-white fw-500 ml-12" 
                     >{this.props.title}</Paragraph>
                      {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
-                    <Form.Item name={"files"} required rules={[{
+                    <Form.Item name={"files"} rules={[{
                         validator: (_, value) => {
                             // let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
                             // // if (this.state.filesList.length == 0) {
