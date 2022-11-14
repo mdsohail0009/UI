@@ -57,7 +57,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             setErrorMessage(null);
             if ((!bankdetails || Object.keys(bankdetails).length == 0)) {
                 useDivRef.current.scrollIntoView()
-                setErrorMessage("Please click validate button before saving.");
+                setErrorMessage("Please click validate button before saving");
                 return;
             }
         }
@@ -129,7 +129,15 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         }
     };
     const getIbandata = (data) => {
-        setBankdetails(data);
+        setErrorMessage(null);
+        if (data && !data?.bankName) {
+            useDivRef.current.scrollIntoView()
+            setErrorMessage("No bank details are available for this IBAN number");
+            return;
+        }
+        else {
+            setBankdetails(data);
+        }
     }
     return (<React.Fragment>
         {mainLoader && <Loader />}
@@ -380,7 +388,6 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                  <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />}
                 
                 <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
-                {console.log(documents)}
                 <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
                         setDocuments(docs)
                     }} refreshData = {addressOptions?.domesticType}/>
