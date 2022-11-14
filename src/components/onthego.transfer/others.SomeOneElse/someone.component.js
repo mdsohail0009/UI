@@ -57,7 +57,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             setErrorMessage(null);
             if ((!bankdetails || Object.keys(bankdetails).length == 0)) {
                 useDivRef.current.scrollIntoView()
-                setErrorMessage("Please click validate button before saving.");
+                setErrorMessage("Please click validate button before saving");
                 return;
             }
         }
@@ -129,7 +129,15 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         }
     };
     const getIbandata = (data) => {
-        setBankdetails(data);
+        setErrorMessage(null);
+        if (data && !data?.bankName) {
+            useDivRef.current.scrollIntoView()
+            setErrorMessage("No bank details are available for this IBAN number");
+            return;
+        }
+        else {
+            setBankdetails(data);
+        }
     }
     return (<React.Fragment>
         {mainLoader && <Loader />}
