@@ -75,7 +75,7 @@ class BusinessTransfer extends Component {
         if (Object.hasOwn(values, 'iban')) {
         this.setState({ ...this.state, errorMessage: null});
         if ((!ibanDetails || Object.keys(ibanDetails).length == 0)) {
-            this.setState({ ...this.state, errorMessage: "Please click validate button before saving.", isLoading: false, isBtnLoading: false });;
+            this.setState({ ...this.state, errorMessage: "Please click validate button before saving", isLoading: false, isBtnLoading: false });;
             this.useDivRef.current.scrollIntoView()
             return;
         }
@@ -153,12 +153,12 @@ class BusinessTransfer extends Component {
             const response = await fetchIBANDetails(value);
             if (response.ok) {
                 if(response.data && (response.data?.routingNumber || response.data?.bankName)){
-                    this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:true, isValidateLoading: false });
+                    this.setState({ ...this.state, enteredIbanData: value, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:true, isValidateLoading: false });
                 }else{
                     this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:false, isValidateLoading: false });
                 }
             } else {
-                this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false, errorMessage: response.data || response.data?.message || response.originalError?.message, isValidateLoading: false });
+                this.setState({ ...this.state, enteredIbanData: value, ibanDetailsLoading: false,iBanValid:false, errorMessage: response.data || response.data?.message || response.originalError?.message, isValidateLoading: false });
             }
         }
         else{

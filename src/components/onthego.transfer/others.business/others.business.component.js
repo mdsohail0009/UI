@@ -79,7 +79,7 @@ class OthersBusiness extends Component {
                     }
                 }
             } else {
-                this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false, errorMessage: response.data || response.data?.message || response.originalError?.message, isValidateLoading: false, ibanDetails: {}});
+                this.setState({ ...this.state, enteredIbanData: value, ibanDetailsLoading: false,iBanValid:false, errorMessage: response.data || response.data?.message || response.originalError?.message, isValidateLoading: false, ibanDetails: {}});
             }
         }
         else{
