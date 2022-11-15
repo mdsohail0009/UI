@@ -108,6 +108,7 @@ class OthersBusiness extends Component {
      validateIbanType = (_, value) => {
         this.setState({ ...this.state, isValidateLoading: false});
         if ((!value&&this.state.isShowValid)||!value) {
+            this.setState({ ...this.state, iBanValid : false, ibanDetails: {}});
             return Promise.reject(apiCalls.convertLocalLang("is_required"));
         } else if ((!this.state.iBanValid&&this.state.isShowValid) || value?.length < 10) {
             this.setState({ ...this.state, ibanDetails: {}});
@@ -116,7 +117,7 @@ class OthersBusiness extends Component {
             value &&this.state.isShowValid&&
             !/^[A-Za-z0-9]+$/.test(value)
         ) {
-            this.setState({ ...this.state, ibanDetails: {}});
+            this.setState({ ...this.state, iBanValid : false, ibanDetails: {}});
             return Promise.reject(
                 "Please input a valid IBAN"
             );
@@ -359,37 +360,6 @@ class OthersBusiness extends Component {
                                 <Translate content="validate" />
                             </Button>
                         </Col>
-                       
-
-                        {this.props.ontheGoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item
-                                className="fw-300 mb-8 px-4 text-white-50 py-4 custom-forminput custom-label"
-                                name="reasonOfTransfer"
-                                required
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: apiCalls.convertLocalLang("is_required"),
-                                    },
-                                    {
-                                        whitespace: true,
-                                        message: apiCalls.convertLocalLang("is_required"),
-                                    },
-                                    {
-                                        validator: validateContentRule,
-                                    },
-                                ]}
-                                label={
-                                    "Reason For Transfer"
-                                }
-                            >
-                                <Input
-                                    className="cust-input"
-                                    placeholder={"Reason For Transfer"}
-                                    // onChange={this.handleIbanChange}
-                                    maxLength={200}/>
-                            </Form.Item>
-                        </Col>}
                          
                     </Row>
                     <div className="box basic-info alert-info-custom mt-16">
@@ -454,6 +424,35 @@ class OthersBusiness extends Component {
                         </Spin>
                        
                     </div>
+                    {this.props.ontheGoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                                className="fw-300 mb-8 px-4 text-white-50 py-4 custom-forminput custom-label"
+                                name="reasonOfTransfer"
+                                required
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        whitespace: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        validator: validateContentRule,
+                                    },
+                                ]}
+                                label={
+                                    "Reason For Transfer"
+                                }
+                            >
+                                <Input
+                                    className="cust-input"
+                                    placeholder={"Reason For Transfer"}
+                                    // onChange={this.handleIbanChange}
+                                    maxLength={200}/>
+                            </Form.Item>
+                        </Col>}
                     <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
 
                     <AddressDocumnet documents={this.state.details?.payeeAccountModels[0].documents} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {

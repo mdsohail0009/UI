@@ -131,9 +131,11 @@ class AddressDocumnet extends Component {
                 title={"Confirm delete"}
                 footer={
                     <>
+                    	<div className="cust-pop-up-btn crypto-pop">
                         <Button
-                            style={{ width: "30px", border: "1px solid #f2f2f2" }}
-                            className=" pop-cancel"
+                            //style={{ width: "30px", border: "1px solid #f2f2f2" }}
+                            style={{ margin: "0 8px" }}
+                            className="primary-btn pop-cancel btn-width"
                             onClick={() => { this.setState({ ...this.state, showDeleteModal: false }) }}>
                             No
                         </Button>
@@ -161,6 +163,7 @@ class AddressDocumnet extends Component {
                             style={{ width: 120, height: 50 }}>
                             {apiCalls.convertLocalLang("Yes")}
                         </Button>
+                        </div>
                     </>
                 }>
 

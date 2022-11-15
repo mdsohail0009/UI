@@ -23,6 +23,7 @@ const SomeoneComponent = (props) => {
     const [errorMessage, setErrorMessage] = useState('');
     const [showDeclartion, setShowDeclartion] = useState(false);
     const [intialObj, setIntialObj] = useState(false);
+    const [isTabChange,setIsTabChange] = useState(false);
     const [form] = Form.useForm();
     const useDivRef = React.useRef(null);
 const [edit,setEdit]=useState(false);
@@ -135,6 +136,10 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             setErrorMessage("No bank details are available for this IBAN number");
             return;
         }
+        else if(data) {
+            setIsTabChange(false);
+            setBankdetails(data);
+        }
         else {
             setBankdetails(data);
         }
@@ -149,9 +154,9 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                 <Text className="text-white-30">{`Declaration form has been sent to ${props.userProfile?.email}. 
                    Please sign using link received in email to whitelist your address. `}</Text>
                 <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
-                <div className="my-25">
-                {/* <Button onClick={() => props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button> */}
-                </div>
+                {/* <div className="my-25">
+                <Button onClick={() => props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button>
+                </div> */}
             </div></div>}
 
             {!showDeclartion && <>
@@ -160,7 +165,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                             <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
                                 setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
-                                form.current.resetFields();setDocuments(null);setErrorMessage(null)
+                                form.current.resetFields();setDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);
                                 // form.current.setFieldsValue({ addressType: 'someoneelse', transferType: activekey })
                             }}>
                                 <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
@@ -386,7 +391,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                 {/* <Divider /> */}
                 <Paragraph className="mb-8 fw-500 text-white px-4 mt-36" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                 {((props.selectedAddress?.id && createPayeeObj)||!props.selectedAddress?.id ) &&
-                 <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />}
+                 <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} isAddTabCange={isTabChange}/>}
                 
                 <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
                 <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {

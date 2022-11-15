@@ -144,10 +144,17 @@ class BusinessTransfer extends Component {
     handleTabChange = (key) => {
         let _obj = { ...this.state.details}
         _obj.payeeAccountModels[0].documents=null
-        this.setState({ ...this.state, selectedTab: key,errorMessage:null, ibanDetails: {} });this.form.current.resetFields();
+        this.setState({ ...this.state, selectedTab: key,errorMessage:null, ibanDetails: {}, iBanValid: false });this.form.current.resetFields();
     }
+    // handleUSDTab = () => {
+    //     debugger
+    //     let _obj = { ...this.state.details}
+    //     _obj.payeeAccountModels[0].documents=null
+    //     this.setState({ ...this.state, ibanDetails: {}, iBanValid: false });
+    //     this.form.current.resetFields();
+    // }
     handleIbanChange = async ({ target: { value,isNext } }) => {
-        this.setState({ ...this.state, enteredIbanData: value, isShowValid: false});
+        this.setState({ ...this.state, enteredIbanData: value, isShowValid: false, ibanDetails: {}});
         if (value?.length >= 10 && isNext) {
             this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true,iBanValid:true });
             const response = await fetchIBANDetails(value);
@@ -209,13 +216,14 @@ class BusinessTransfer extends Component {
             return <Loader />
         }
         if (this.state.showDeclaration) {
-            return <div className="text-center">
+            return <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
                 <Image width={80} preview={false} src={alertIcon} />
                 <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
                 <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                    Please sign using link received in email to whitelist your address. `}</Text>
                 <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
                  {/* <div className="my-25"><Button onClick={() => this.props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button></div> */}
+            </div>
             </div>
         }
         return <div ref={this.useDivRef}><Tabs className="cust-tabs-fait" onChange={this.handleTabChange} activeKey={selectedTab}>
@@ -673,7 +681,7 @@ class BusinessTransfer extends Component {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
-                    }} />
+                    }} refreshData = {selectedTab}/>
                     <div className="text-right mt-36">
                         {/* <Row gutter={[16, 16]}> */}
                             {/* <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col> */}

@@ -186,7 +186,7 @@ class PayeeBankDetails extends Component {
 
                     <div className="box basic-info alert-info-custom mt-16">
                     <Spin spinning={this.state.IbanLoader}>
-                    {this.state.isValidIban && <Row>
+                    {this.state.isValidIban && !this.props?.isAddTabCange && <Row>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                                 <label className="fs-12 fw-500 ">
                                     Bank Name
@@ -237,7 +237,7 @@ class PayeeBankDetails extends Component {
 
                             </Col>
                         </Row>}
-                        {!this.state.isValidIban&&<span>No bank details available</span>}
+                        {(!this.state.isValidIban || this.props?.isAddTabCange)&&<span>No bank details available</span>}
                         </Spin>
                     </div>
 

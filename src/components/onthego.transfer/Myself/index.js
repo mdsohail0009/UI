@@ -200,6 +200,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     const validateIbanType = (_, value) => {
         setValidateLoading(false);
         if ((!value&&isShowValid)||!value) {
+            setIsShowBankDetails(false);
             return Promise.reject(apiCalls.convertLocalLang("is_required"));
         } else if ((!validIban&&isShowValid) || value?.length < 10) {
             setIsShowBankDetails(false);
@@ -250,7 +251,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
        {!showDeclartion &&<> {currency === "USD" && <>
             <Row gutter={[16, 16]}>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
-                    <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });form.resetFields();seterrorMessage(null);setbankDetails({}) }} activeKey={addressOptions.tabType}>
+                    <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });form.resetFields();seterrorMessage(null);setbankDetails({});setValidIban(false) }} activeKey={addressOptions.tabType}>
                         <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz"  key={"domestic"} disabled={isEdit}></Tabs.TabPane>
                         <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"} disabled={isEdit}></Tabs.TabPane>
                         <Tabs.TabPane tab="International USD IBAN" className="text-white text-captz" key={"internationalIBAN"} disabled={isEdit}></Tabs.TabPane>
