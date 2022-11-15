@@ -402,8 +402,8 @@ class OnthegoFundTransfer extends Component {
                                              addonBefore={<Select  defaultValue={this.state.selectedCurrency}
                                                 onChange={(e) => this.handleCurrencyChange(e)}
                                                 placeholder="Select">
-                                                <option value="EUR">EUR</option>
                                                 <option value="USD">USD</option>
+                                                <option value="EUR">EUR</option>
                                             </Select>}
                                             onValueChange={() => {
                                                 this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount,errorMessage:'' })

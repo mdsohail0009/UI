@@ -680,7 +680,7 @@ class BusinessTransfer extends Component {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
-                    }} />
+                    }} refreshData = {selectedTab}/>
                     <div className="text-right mt-36">
                         {/* <Row gutter={[16, 16]}> */}
                             {/* <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col> */}
