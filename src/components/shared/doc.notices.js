@@ -14,7 +14,7 @@ const DocNotices = (props) => {
             {props?.dashboard?.notices?.data.length !== 0 && <Alert style={{ padding: 16 }} type="info" message={"Please submit the listed documents to proceed"} showIcon />}
             {props?.dashboard?.notices.loading === true ? <div className="text-center p-24"><Spin size="default" /></div> : <>{props?.dashboard?.notices?.data?.map(item => <Alert style={{ cursor: "pointer" }} type="error" showIcon onClick={() => props.history?.push("/cases?id=" + item.typeId)} message={item.title} description="Our Compliance Team is requesting documents in line with your recent transaction, Please click View Details. Thank you for your patience." />)}</>}
             {(props?.dashboard?.notices?.data == null || props?.dashboard?.notices?.data.length === 0) && !props?.dashboard?.notices.loading && < Result status="404"
-                title={<h4 className="text-white">No request documents, Please click bellow button to go to dashboard.</h4>}
+                title={<h4 className="text-white">No request documents, Please click below button to go to dashboard.</h4>}
                 extra={<Button className="pop-btn px-36" onClick={() => { props.dispatch(updateDocRequest(false)); props.history.push("/cockpit") }}>Go to Dashboard</Button>}
             />}
         </div>

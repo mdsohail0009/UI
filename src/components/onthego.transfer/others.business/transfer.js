@@ -144,10 +144,17 @@ class BusinessTransfer extends Component {
     handleTabChange = (key) => {
         let _obj = { ...this.state.details}
         _obj.payeeAccountModels[0].documents=null
-        this.setState({ ...this.state, selectedTab: key,errorMessage:null, ibanDetails: {} });this.form.current.resetFields();
+        this.setState({ ...this.state, selectedTab: key,errorMessage:null, ibanDetails: {}, iBanValid: false });this.form.current.resetFields();
     }
+    // handleUSDTab = () => {
+    //     debugger
+    //     let _obj = { ...this.state.details}
+    //     _obj.payeeAccountModels[0].documents=null
+    //     this.setState({ ...this.state, ibanDetails: {}, iBanValid: false });
+    //     this.form.current.resetFields();
+    // }
     handleIbanChange = async ({ target: { value,isNext } }) => {
-        this.setState({ ...this.state, enteredIbanData: value, isShowValid: false});
+        this.setState({ ...this.state, enteredIbanData: value, isShowValid: false, ibanDetails: {}});
         if (value?.length >= 10 && isNext) {
             this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true,iBanValid:true });
             const response = await fetchIBANDetails(value);
