@@ -7,7 +7,7 @@ import { bytesToSize } from "../../utils/service";
 import ConnectStateProps from "../../utils/state.connect";
 
 const { Dragger } = Upload;
-const { Paragraph, Text, Title } = Typography;
+const { Paragraph, Text } = Typography;
 const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
     const suffix = children.slice(-suffixCount).trim();
@@ -78,7 +78,6 @@ class AddressDocumnet extends Component {
                             multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                             showUploadList={false}
                             beforeUpload={(props) => {
-                              //  return props.name.split(".").length < 2;
                             }}
                             headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
                             onChange={({ file }) => {
