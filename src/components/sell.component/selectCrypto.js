@@ -38,7 +38,7 @@ class SelectSellCrypto extends Component {
         apicalls.trackEvent({ "Type": 'User', "Action": 'Sell coin page View', "Feature": 'Sell', "Remarks": "Sell Crypto coin selection view", "FullFeatureName": 'Sell Crypto', "userName": this.props.customer?.userName, id: this.props.customer?.id });
     }
     fetchdefaultMinAmntValues = async () => {
-        this.setState({ ...this.state, CryptoAmnt: this.props.sellData.coinDetailData?.withdrawMinValue });
+        this.setState({ ...this.state, CryptoAmnt: this.props.sellData.coinDetailData?.withdrawMinValue || this.props.sellData.coinDetailData?.withDrawMinValue});
     }
     setAmount = async ({ currentTarget }, fn, fnRes) => {
         this.setState({ ...this.state, [fn]: currentTarget.value })

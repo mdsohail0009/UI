@@ -84,7 +84,7 @@ class PayeeBankDetails extends Component {
     validateIbanType = (_, value) => {
         this.setState({ ...this.state, isValidateLoading: false, isShowValid: this.state.isShowValid?this.state.isShowValid:false});
         if ((!value&&this.state.isShowValid)||!value) {
-            return Promise.reject("is required");
+            return Promise.reject("Is required");
         } else if ((!this.state.isValidIban&&this.state.isShowValid)|| value?.length < 10) {
             this.props.getIbandata(null);
             return Promise.reject("Please input a valid IBAN");
@@ -115,10 +115,6 @@ class PayeeBankDetails extends Component {
                         )}
                         required
                         rules={[
-                            // {
-                            //     required: true,
-                            //     message: apicalls.convertLocalLang("is_required"),
-                            // },
                             {
                                 validator: this.validateIbanType,
                               },
@@ -139,48 +135,11 @@ class PayeeBankDetails extends Component {
                     <Col xs={24} md={10} lg={10} xl={10} xxl={10}>
                        <Button className={`pop-btn dbchart-link fs-14 fw-500`} style={{width:"150px",marginTop:"32px",height:"42px"}}
                                     loading={this.state.isValidateLoading}
-                                    onClick={() => this.onIbanValidate(this.state.enteredIbanData)} >
+                                    onClick={() => this.onIbanValidate(this.props?.isAddTabCange && null || this.state.enteredIbanData)} >
                                     <Translate content="validate" />
                                 </Button>
                          
                 </Col>
-                
-                 
-               
-                {/* <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item
-                        className="custom-forminput custom-label mb-0"
-                        name={"relation"}
-                        required
-                        rules={[
-                            {
-                                required: true,
-                                message: apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                whitespace: true,
-                                message: apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                validator: validateContentRule,
-                            },
-                        ]}
-                        label={
-                            <Translate
-                                content="relationtobenificiary"
-                                component={Form.label}
-                            />
-                        }
-                    >
-                        <Input
-                                className="cust-input"
-                                placeholder={apicalls.convertLocalLang(
-                                    "reasiontotransfor"
-                                )}
-                                maxLength="500"
-                            />
-                    </Form.Item>
-                </Col> */}
                 </>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 

@@ -398,20 +398,11 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         setDocuments(docs)
                     }} refreshData = {addressOptions?.domesticType}/>
                     <div className="text-right mt-12">
-                        {/* <Button
-                            className="pop-btn px-36"
-                            style={{ margin: "0 8px" }}
-                            onClick={() => { }}
-                        >
-                            {apicalls.convertLocalLang("cancel")}
-                        </Button> */}
                     <Button
                         htmlType="submit"
                         size="large"
                         className="pop-btn px-36 mt-36"
                         loading={btnLoading}
-                        //style={{ minWidth: "100%" }}
-                    // onClick={() => console.log(form.getFieldsValue())}
                     >
                         {props.type === "manual" && "Save"}
                         {props.type !== "manual" && <Translate content="continue" />}
