@@ -5,7 +5,6 @@ import AddressDocumnet from "../../addressbook.component/document.upload";
 import PayeeBankDetails from "./bankdetails.component";
 import { validateContentRule } from "../../../utils/custom.validator";
 import Translate from "react-translate-component";
-import { Link } from 'react-router-dom';
 import apiCalls from "../../../api/apiCalls";
 import ConnectStateProps from "../../../utils/state.connect";
 import Loader from "../../../Shared/loader";
@@ -38,7 +37,6 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             let edit = false;
             setCreatePayeeObj(createPayeeData.data);
             if (props.selectedAddress?.id) {
-                // form.current?.setFieldsValue({...createPayeeData.data,payeeAccountModels:createPayeeData.data.payeeAccountModels[0]})
                 setIntialObj({ ...createPayeeData.data, payeeAccountModels: createPayeeData.data.payeeAccountModels[0] })
                 setDocuments(createPayeeData.data.payeeAccountModels[0].documents)
                 setAddressOptions({ ...addressOptions, domesticType: createPayeeData.data.transferType });
@@ -166,7 +164,6 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                             <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
                                 setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
                                 form.current.resetFields();setDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);
-                                // form.current.setFieldsValue({ addressType: 'someoneelse', transferType: activekey })
                             }}>
                                 <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
                                 <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"} disabled={edit} ></Tabs.TabPane>

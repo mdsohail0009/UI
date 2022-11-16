@@ -245,7 +245,6 @@ class CaseView extends Component {
             this.setState({ ...this.state, docReplyObjs: replyObjs, uploadLoader: false, isSubmitting: false });
         }
         else if (file.status === 'error') {
-            // error(file.response);
             this.setState({ ...this.state, uploadLoader: false, isSubmitting: false,errorMessage:file.response,errorWarning:null })
         }
         else if (!this.state.isValidFile) {
@@ -336,35 +335,20 @@ class CaseView extends Component {
                     <Row gutter={[16, 16]}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8} xxl={8}>
                             <Translate Component={Text} content="Case_Number" className="case-lbl"/>
-                            {/* <Text className='case-lbl'>Case Number</Text> */}
                             <div className='case-val'>{caseData.caseNumber}</div>
                         </Col>
                         <Col xs={24} md={8} lg={8} xl={8} xxl={8}>
                         <Translate Component={Text} content="Case_Title" className="case-lbl"/>
-                            {/* <Text className='case-lbl'>c</Text> */}
                             <div className='case-val'>{caseData.caseTitle}</div>
                         </Col>
                         <Col xs={24} md={8} lg={8} xl={8} xxl={8}>
                         <Translate Component={Text} content="Case_State" className="case-lbl"/>
-                            {/* <Text className='case-lbl'>Case State</Text> */}
                             <div className='case-val'>{caseData.state}</div>
                         </Col>
                     </Row>
                 </div>
                 <div className='case-ribbon mb-16'>
                     <Row gutter={[16, 16]}>
-                        {/* {commonModel && Object.entries(commonModel).map(([key, value], idx) => <Col key={idx} xs={key=='description'?24:24} md={key=='description'?24:12} lg={key=='description'?24:8} xl={key=='description'?24:6} xxl={key=='description'?24:6}>
-                            <div className="ribbon-item">
-                                <span className={`icon md ${key != null ? key : 'description'}`} />
-                                <div className='ml-16' style={{flex: 1}}>
-                                    <Text className='case-lbl text-captz'>{key}</Text>
-                                    <div className='case-val'style={{wordBreak:"break-all"}}>
-                                    {(value == null || value ==" ")? '-' : (isNaN(value) ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
-                                       
-                                        </div>
-                                </div>
-                            </div>
-                        </Col>)} */}
                          {commonModel ? (
                 Object.entries(commonModel).map(([key, value], idx) => (
                   <Col
@@ -386,9 +370,6 @@ class CaseView extends Component {
                         <Text className="fw-300 text-white-50 fs-12">
                           {key}
                         </Text>
-                        {/* <div className="fw-600 text-white-30 fs-16 l-height-normal">
-                        {(value == null || value ==" ")? '-' : (isNaN(value) ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
-                        </div> */}
                                 <div className='fw-600 text-white-30 fs-16 l-height-normal'style={{wordBreak:"break-all"}} >
                                     {(value == null || value == " ") ? '-' : (isNaN(value) || (key === 'Transaction Id') ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
                                 </div>
@@ -403,8 +384,6 @@ class CaseView extends Component {
                 </div>
                 <div className="px-16">
                 <Translate Component={Text} content="remarks" className="fw-300 text-white-50 fs-12"/>
-                    {/* <Text className='fw-300 text-white-50 fs-12 '>Remarks</Text> */}
-                    {/* <div className='case-val'>{caseData.remarks ? caseData.remarks : '-'}</div> */}
                     <Title level={5} className='case-val'style={{ marginTop: '3px' }} maxLength={500} rows={4}>{caseData.remarks ? caseData.remarks : '-'}</Title>
                 </div>
                
