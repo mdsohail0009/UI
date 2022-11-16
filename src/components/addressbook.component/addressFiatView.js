@@ -118,7 +118,7 @@ const AddressFiatView = (props) => {
 								<Row gutter={8}>
 									<Col xl={24} xxl={24} className="bank-view">
 										<Row className="kpi-List">
-											<Col xs={24} sm={24} md={12} lg={8} xxl={16}>
+											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">Save Whitelist Name As</label>
 													<div className=" kpi-val">
