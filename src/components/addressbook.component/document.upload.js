@@ -133,11 +133,10 @@ class AddressDocumnet extends Component {
                     <>
                     	<div className="cust-pop-up-btn crypto-pop">
                         <Button
-                            //style={{ width: "30px", border: "1px solid #f2f2f2" }}
                             style={{ margin: "0 8px" }}
                             className="primary-btn pop-cancel btn-width"
                             onClick={() => { this.setState({ ...this.state, showDeleteModal: false }) }}>
-                            No
+                            NO
                         </Button>
                         <Button
                             className="primary-btn pop-btn"

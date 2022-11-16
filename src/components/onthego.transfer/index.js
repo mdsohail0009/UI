@@ -50,6 +50,7 @@ class OnthegoFundTransfer extends Component {
         fiatWallets: [],
         isShowGreyButton: false,
         permissions: {},
+        filtercoinsList: []
     }
     componentDidMount() {
         this.verificationCheck()
@@ -59,13 +60,13 @@ class OnthegoFundTransfer extends Component {
             this.setState({ ...this.state, fiatWalletsLoading: true });
             fetchMemberWallets(this.props?.userProfile?.id).then(res => {
                 if (res.ok) {
-                    this.setState({ ...this.state, fiatWallets: res.data, fiatWalletsLoading: false });
+                    this.setState({ ...this.state, fiatWallets: res.data, filtercoinsList: res.data, fiatWalletsLoading: false });
                 } else {
-                    this.setState({ ...this.state, fiatWallets: [], fiatWalletsLoading: false });
+                    this.setState({ ...this.state, fiatWallets: [], filtercoinsList: [], fiatWalletsLoading: false });
                 }
             });
         }
-      if(this.state.selectedCurrency){
+     if(this.state.selectedCurrency){  
         this.getPayees();
       }
       this.getCoinDetails()
@@ -115,15 +116,6 @@ class OnthegoFundTransfer extends Component {
             } else {
                 this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: false })
             }
-            // if(verfResponse.isPhoneVerified&&verfResponse.isEmailVerification) {
-            //     this.setState({ ...this.state, isPhMail: true});
-            // }
-            // if(verfResponse.isPhoneVerified&&verfResponse.twoFactorEnabled) {
-            //     this.setState({ ...this.state, isShowGreyButton: true});
-            // }
-            // if(verfResponse.twoFactorEnabled&&verfResponse.isEmailVerification) {
-            //     this.setState({ ...this.state, isAuthMail: true});
-            // }
         } else {
             this.setState({ ...this.state, isVarificationLoader: false, errorMessage: this.isErrorDispaly(verfResponse) })
         }
@@ -153,6 +145,14 @@ class OnthegoFundTransfer extends Component {
         }
         else
             this.setState({ ...this.state, filterObj: this.state.payees,searchVal: val });
+    }
+    handleFiatSearch = ({ target: { value: val } }) => {
+        if (val) {
+            const fiatWallets = this.state.filtercoinsList?.filter(item => item.walletCode.toLowerCase().includes(val.toLowerCase()));
+            this.setState({ ...this.state, fiatWallets, searchVal: val });
+        }
+        else
+            this.setState({ ...this.state, fiatWallets: this.state.filtercoinsList, searchVal: val });
     }
     saveWithdrawdata = async () => {
         this.setState({ ...this.state, isBtnLoading: true })
@@ -233,8 +233,6 @@ class OnthegoFundTransfer extends Component {
         }
     }
     changesVerification = (obj) => {
-        //this.setState({ ...this.state, verifyData: obj })
-        console.log(obj)
         if(obj.isPhoneVerification&&obj.isEmailVerification&&(obj.verifyData?.isPhoneVerified&&obj.verifyData?.isEmailVerification&&!obj.verifyData?.twoFactorEnabled)) {
             this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
         }
@@ -305,10 +303,7 @@ class OnthegoFundTransfer extends Component {
                         className='sub-heading code-lbl'>Send from your Suissebase FIAT Wallet</Title>
                 </div>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                    {/* <Text className="fs-14 mb-8 text-white d-block fw-200">
-                        Search For Beneficiary *
-                    </Text> */}
-                    <Search placeholder="Search Currency" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="text-center mb-16" />
+                    <Search placeholder="Search Currency" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleFiatSearch} size="middle" bordered={false} className="text-center mb-16" />
                 </Col>
                 <List
                     itemLayout="horizontal"
@@ -340,10 +335,6 @@ class OnthegoFundTransfer extends Component {
                 </div>}
             </React.Fragment>,
             enteramount: <>
-                {/* <div className="mt-8">
-                    <Title
-                        className='sub-heading code-lbl'>Send Fiat</Title>
-                </div> */}
                 {isVarificationLoader && <Loader />}
                 {!isVarificationLoader && 
                     <Form
