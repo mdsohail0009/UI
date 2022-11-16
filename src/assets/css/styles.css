@@ -1510,3 +1510,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .btn-container .pop-btn.custom-send{width: 100% !important;}
 .btn-container .sell-btc-btn{width: 100% !important;}
 .cust-tabs-fait .ant-tabs-nav-operations{display: none !important;}
+.pop-btn.custom-send.error{margin-left: 0 !important;}
+.error-img{margin-left: 50px; width: 300px;}
+.error-content{margin-bottom: 40px !important;}
+.error-title{margin-bottom:10px !important;}
