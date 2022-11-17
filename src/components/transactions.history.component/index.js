@@ -99,7 +99,7 @@ class TransactionsHistory extends Component {
       customCell: (props) => (
         <td>
           {props.dataItem?.senderName}
-          {(props.dataItem?.senderName && props.dataItem?.beneficiryName) && " / "}
+          {(props.dataItem?.senderName && props.dataItem?.beneficiryName) && "/"}
           {props.dataItem?.beneficiryName}
 
         </td>
