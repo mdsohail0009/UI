@@ -2,14 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Loader from "../../Shared/loader";
 import Translate from "react-translate-component";
-import {
-  Select,
-  Switch,
-  Button,
-  message,
-  Form,
-  Alert,
-} from "antd";
+import Select from "antd/lib/select";
+import Switch from "antd/lib/switch";
+import Button from "antd/lib/button";
+import { message } from "antd";
+import Form from "antd/lib/form";
+import Alert from "antd/lib/alert";
 import { getNotifications, saveNotification } from "./api";
 import { setStep } from "../../reducers/buysellReducer";
 
@@ -148,7 +146,7 @@ class NotificationScreen extends Component {
                 <Loader /></div>
               ) : (<>
                 <table className="pay-grid">
-                  <thead>
+                  <thead> 
                     <tr>
                       <th style={{ width: 200 }}>Screen </th>
                       <th style={{ width: 350 }}>Notification Type</th>

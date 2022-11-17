@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import Translate from "react-translate-component";
-import { Typography, Button, message, Dropdown,Menu, Spin, Alert, Row, Col ,Form} from 'antd';
+import Typography from "antd/lib/typography";
+import Button from "antd/lib/button";
+import { message } from "antd";
+import Dropdown from "antd/lib/dropdown";
+import Menu from "antd/lib/menu";
+import Spin from "antd/lib/spin";
+import Alert from "antd/lib/alert";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import {
-    EmailShareButton, EmailIcon,
-    FacebookShareButton, FacebookIcon,
-    TelegramShareButton, TelegramIcon,
-    TwitterShareButton, TwitterIcon,
-    WhatsappShareButton, WhatsappIcon
-} from "react-share";
+import EmailShareButton from "react-share/lib/EmailShareButton";
+import EmailIcon from "react-share/lib/EmailIcon";
+import WhatsappShareButton from "react-share/lib/WhatsappShareButton";
+import WhatsappIcon from "react-share/lib/WhatsappIcon";
 import apicalls from "../../../api/apiCalls"
 import { connect } from "react-redux";
 
@@ -21,7 +24,7 @@ class Referral extends Component {
     componentDidMount(){
         this.loadData()
     }
-    loadData = async () =>{
+    loadData = async () =>{  
         this.setState({...this.state,isLoading:true})
         const res  = await apicalls.getReferalDetails(this.props.userConfig.id);
         if(res.ok){
@@ -47,21 +50,6 @@ class Referral extends Component {
                     <EmailIcon size={32} round={true} />
                 </EmailShareButton>
             </Menu.Item>
-            {/* <Menu.Item>
-                <TwitterShareButton url={this.state.referaldata?.referrallink||'---'} title={"Welcome to suissebase use this referral code to create an account "+(this.state.referaldata?.referralCode||'---') +(this.state.referaldata?.referralBusinesslink || '---') + ". Click the below link to continue registration"} >
-                    <TwitterIcon size={32} round={true} />
-                </TwitterShareButton>
-            </Menu.Item>
-            <Menu.Item>
-                <FacebookShareButton url={this.state.referaldata?.referrallink||'---'} quote={"Welcome to suissebase use this referral code to create an account "+(this.state.referaldata?.referralCode||'---') +(this.state.referaldata?.referralBusinesslink || '---') + ". Click the below link to continue registration"} >
-                    <FacebookIcon size={32} round={true} />
-                </FacebookShareButton>
-            </Menu.Item>
-            <Menu.Item>
-                <TelegramShareButton url={this.state.referaldata?.referrallink||'---'} title={"Welcome to suissebase use this referral code to create an account "+(this.state.referaldata?.referralCode||'---') +(this.state.referaldata?.referralBusinesslink || '---') + ". Click the below link to continue registration"} >
-                    <TelegramIcon size={32} round={true} />
-                </TelegramShareButton>
-            </Menu.Item> */}
         </Menu>
     }
 	isErrorDispaly = (objValue) => {
@@ -80,6 +68,7 @@ class Referral extends Component {
         const { Text } = Typography;
 		return (
       <>
+
         {this.state.errorMsg && (
           <Alert
             type="error"
@@ -95,18 +84,11 @@ class Referral extends Component {
               className="box mb-flex contact-info coin-bal"
               style={{ padding: "0 24px" }}
             >
-              {/* <Text className="basicinfo mb-0" style={{ marginLeft: '-22px' }}>My Referral</Text> */}
               	<Translate
 						content="referr"
 						component={Text}
 						className="basicinfo"
 					/>
-              {/* <ul class="m-0 pl-0">
-						
-							<li className="fs-20 text-yellow c-pointer" onClick={()=>window.open(process.env.REACT_APP_PARTNER_UI_URL, "_blank")}>
-								Go to Partner
-							</li>
-					</ul> */}
               <Button
                 htmlType="submit"
                 size="large"
