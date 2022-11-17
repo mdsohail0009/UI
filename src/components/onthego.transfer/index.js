@@ -49,7 +49,8 @@ class OnthegoFundTransfer extends Component {
         fiatWallets: [],
         isShowGreyButton: false,
         permissions: {},
-        filtercoinsList: []
+        filtercoinsList: [],
+        searchFiatVal:""
     }
     componentDidMount() {
         this.verificationCheck()
@@ -148,10 +149,10 @@ class OnthegoFundTransfer extends Component {
     handleFiatSearch = ({ target: { value: val } }) => {
         if (val) {
             const fiatWallets = this.state.filtercoinsList?.filter(item => item.walletCode.toLowerCase().includes(val.toLowerCase()));
-            this.setState({ ...this.state, fiatWallets, searchVal: val });
+            this.setState({ ...this.state, fiatWallets, searchFiatVal: val });
         }
         else
-            this.setState({ ...this.state, fiatWallets: this.state.filtercoinsList, searchVal: val });
+            this.setState({ ...this.state, fiatWallets: this.state.filtercoinsList, searchFiatVal: val });
     }
     saveWithdrawdata = async () => {
         this.setState({ ...this.state, isBtnLoading: true })
@@ -304,7 +305,7 @@ class OnthegoFundTransfer extends Component {
                         className='sub-heading code-lbl'>Send from your Suissebase FIAT Wallet</Title>
                 </div>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Search placeholder="Search Currency" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleFiatSearch} size="middle" bordered={false} className="text-center mb-16" />
+                    <Search placeholder="Search Currency" value={this.state.searchFiatVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleFiatSearch} size="middle" bordered={false} className="text-center mb-16" />
                 </Col>
                 <List
                     itemLayout="horizontal"
