@@ -116,7 +116,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 }
             }
             else {
-                setShowDeclartion(true)
+                setShowDeclartion(true);
+                props.isHideTabs(false)
             }
             props.headingUpdate(true)
         }else{seterrorMessage(isErrorDispaly(response));

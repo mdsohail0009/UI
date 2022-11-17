@@ -12,7 +12,8 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onCont
     const addrType = selectedAddress?.addressType ? selectedAddress?.addressType?.toLowerCase() : props.userProfile?.isBusiness ? "ownbusiness" : "myself";
     const [addressOptions, setAddressOptions] = useState({ addressType: addrType, transferType: props.currency === "EUR" ? "sepa" : "domestic" });
     const [isEdit, setIsEdit] = useState(false);
-    const [showHeading,setShowHeading]=useState(false)
+    const [showHeading,setShowHeading]=useState(false);
+    const [hideTabs,setHideTabs]=useState(true)
     useEffect(() => {
     }, [])
 
@@ -21,7 +22,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onCont
 		setShowHeading(data)
 	}
     return <>
-        <Form
+         {hideTabs&&<Form
             form={form}
             onFinish={onSubmit}
             autoComplete="off"
@@ -53,19 +54,19 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onCont
                     </Col>
                 </Row>
             </Form.Item>
-        </Form>
+        </Form>}
         {(addressOptions.addressType === "ownbusiness" || addressOptions.addressType === "myself") && <MyselfNewTransfer currency={props.currency} type={props.type} onContinue={(obj) => onContinue(obj)} {...props} isBusiness={props.userProfile?.isBusiness}
           headingUpdate={headingChange}    onTheGoObj={{ amount: props.amount }} selectedAddress={selectedAddress} onEdit={(val) => {
                 setIsEdit(val);
-            }}></MyselfNewTransfer>}
+            }} isHideTabs={(value)=>setHideTabs(value)}></MyselfNewTransfer>}
         {addressOptions.addressType === "otherbusiness" && <OthersBusiness ontheGoType={props.typeOntheGo} 
          headingUpdate={headingChange} selectedAddress={selectedAddress} type={props.type} isUSDTransfer={props.currency === "USD" ? true : false} onContinue={(obj) => onContinue(obj)} amount={props.amount} onEdit={(val) => {
             setIsEdit(val);
-        }} />}
+        }} isHideTabs={(value)=>setHideTabs(value)}/>}
         {addressOptions.addressType === "individuals" && <SomeoneComponent ontheGoType={props.typeOntheGo}
          headingUpdate={headingChange}  selectedAddress={selectedAddress} addressType={addressOptions.addressType} type={props.type} currency={props.currency} onContinue={(obj) => onContinue(obj)} onTheGoObj={{ amount: props.amount }} onEdit={(val) => {
             setIsEdit(val);
-        }} />}
+        }} isHideTabs={(value)=>setHideTabs(value)}/>}
     </>
 }
 

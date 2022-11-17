@@ -185,7 +185,8 @@ class OthersBusiness extends Component {
             } else {
                 this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
                 this.useDivRef.current?.scrollIntoView(0,0)
-                this.props.headingUpdate(true)
+                this.props.headingUpdate(true);
+                this.props.isHideTabs(false);
             }
 
         } else {
