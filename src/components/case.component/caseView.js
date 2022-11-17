@@ -2,7 +2,8 @@
 import React, { Component } from 'react';
 import {
     Collapse, Button, Typography, Modal, Tooltip, Input, Upload, Spin, Empty, Alert, Row, Col,
-    Divider
+    Divider,
+    Form
 } from 'antd';
 import {
     approveDoc, getDocDetails, getDocumentReplies, saveDocReply, uuidv4, getFileURL, getCase
@@ -13,7 +14,7 @@ import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import FilePreviewer from 'react-file-previewer';
 import { Link } from 'react-router-dom';
-import { validateContent } from "../../utils/custom.validator";
+import { validateContent, validateContentRule } from "../../utils/custom.validator";
 import Translate from 'react-translate-component';
 import Mome from 'moment'
 import {  success, warning } from '../../utils/messages';
@@ -425,12 +426,27 @@ class CaseView extends Component {
                                 </div>)}
                                 {!this.state.documentReplies[doc.id]?.loading && doc.state != "Approved" && this.state.docDetails.caseState != 'Approved' && this.state.docDetails.caseState != 'Cancelled' && <><div>
                                     <Text className="fs-12 text-white-50 d-block mb-4 fw-200">Reply</Text>
-                                    <Input
+                                    <Form>
+                                        <Form.Item
+                                        name=""
+                                        rules={[
+                                            {
+                                                whitespace: true,
+                                                message: "Is required",
+                                            },
+                                            {
+                                                validator: validateContentRule,
+                                            },
+                                        ]}>
+                                        <Input
                                         onChange={({ currentTarget: { value } }) => this.handleReplymessage(value, doc)}
                                         className="cust-input"
                                         placeholder="Write your message"
                                         maxLength={200}
                                     />
+                                        </Form.Item>
+                                    </Form>
+                                    
                                     {this.state.isMessageError == doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter message</div>}
                                     {this.state.validHtmlError && <Translate Component={Text} content="please_enter_valid_content" className="fs-14 text-red" />}
                                     {this.state.errorMessage != null && <Alert

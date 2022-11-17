@@ -160,8 +160,8 @@ class Portfolio extends Component {
                                                     <>
                                                      <tr key={idx}>
                                                      <td style={{ width: "100px" }}>
-                                                            
-                                                            {item?.date ? <Moment format="DD/MM/YYYY hh:mm:ss A">{item?.date ? apiCalls.convertUTCToLocalTime(item?.date) : item?.date}</Moment> : item?.date}
+                                                            {item?.date }
+                                                            {/* <Moment format="DD/MM/YYYY hh:mm:ss A">{item?.date  ? apiCalls.convertUTCToLocalTime(item?.date ) : item?.date }</Moment> */}
                                                             </td>
                                                         
                                                         <td style={{ width: "50px" }}>{item.type}</td>
