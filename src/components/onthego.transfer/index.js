@@ -49,7 +49,8 @@ class OnthegoFundTransfer extends Component {
         fiatWallets: [],
         isShowGreyButton: false,
         permissions: {},
-        filtercoinsList: []
+        filtercoinsList: [],
+        searchFiatVal:""
     }
     componentDidMount() {
         this.verificationCheck()
@@ -148,10 +149,10 @@ class OnthegoFundTransfer extends Component {
     handleFiatSearch = ({ target: { value: val } }) => {
         if (val) {
             const fiatWallets = this.state.filtercoinsList?.filter(item => item.walletCode.toLowerCase().includes(val.toLowerCase()));
-            this.setState({ ...this.state, fiatWallets, searchVal: val });
+            this.setState({ ...this.state, fiatWallets, searchFiatVal: val });
         }
         else
-            this.setState({ ...this.state, fiatWallets: this.state.filtercoinsList, searchVal: val });
+            this.setState({ ...this.state, fiatWallets: this.state.filtercoinsList, searchFiatVal: val });
     }
     saveWithdrawdata = async () => {
         this.setState({ ...this.state, isBtnLoading: true })
@@ -235,24 +236,26 @@ class OnthegoFundTransfer extends Component {
         if(obj.isPhoneVerification&&obj.isEmailVerification&&(obj.verifyData?.isPhoneVerified&&obj.verifyData?.isEmailVerification&&!obj.verifyData?.twoFactorEnabled)) {
             this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
         }
-        if(obj.isPhoneVerification&&obj.isAuthenticatorVerification&&(obj.verifyData?.isPhoneVerified&&obj.verifyData?.twoFactorEnabled&&!obj.verifyData?.isEmailVerification)) {
+        else if(obj.isPhoneVerification&&obj.isAuthenticatorVerification&&(obj.verifyData?.isPhoneVerified&&obj.verifyData?.twoFactorEnabled&&!obj.verifyData?.isEmailVerification)) {
             this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
         }
-        if(obj.isAuthenticatorVerification&&obj.isEmailVerification&&(obj.verifyData?.twoFactorEnabled&&obj.verifyData?.isEmailVerification&&!obj.verifyData?.isPhoneVerified)) {
+        else if(obj.isAuthenticatorVerification&&obj.isEmailVerification&&(obj.verifyData?.twoFactorEnabled&&obj.verifyData?.isEmailVerification&&!obj.verifyData?.isPhoneVerified)) {
             this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
         }
-        if(obj.isPhoneVerification&&obj.isAuthenticatorVerification&&obj.isEmailVerification&&(obj.verifyData?.isPhoneVerified&&obj.verifyData?.twoFactorEnabled&&obj.verifyData?.isEmailVerification)){
+        else if(obj.isPhoneVerification&&obj.isAuthenticatorVerification&&obj.isEmailVerification&&(obj.verifyData?.isPhoneVerified&&obj.verifyData?.twoFactorEnabled&&obj.verifyData?.isEmailVerification)){
             this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
         }
-        if(obj.verifyData?.isLiveVerification&&obj.isEmailVerification&&!obj.verifyData?.isPhoneVerified&&!obj.verifyData?.twoFactorEnabled&&obj.verifyData?.isEmailVerification){
+        else if(obj.verifyData?.isLiveVerification&&obj.isEmailVerification&&!obj.verifyData?.isPhoneVerified&&!obj.verifyData?.twoFactorEnabled&&obj.verifyData?.isEmailVerification){
             this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
         }
-        if(obj.verifyData?.isLiveVerification&&obj.isPhoneVerification&&!obj.verifyData?.twoFactorEnabled&&!obj.verifyData?.isEmailVerification&&obj.verifyData?.isPhoneVerified){
+        else if(obj.verifyData?.isLiveVerification&&obj.isPhoneVerification&&!obj.verifyData?.twoFactorEnabled&&!obj.verifyData?.isEmailVerification&&obj.verifyData?.isPhoneVerified){
             this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
         }
+        else {
         if(obj.verifyData?.isLiveVerification&&obj.isAuthenticatorVerification&&!obj.verifyData?.isPhoneVerified&&!obj.verifyData?.isEmailVerification&&obj.verifyData?.twoFactorEnabled){
             this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
         }
+       }
        
     }
     isErrorDispaly = (objValue) => {
@@ -302,7 +305,7 @@ class OnthegoFundTransfer extends Component {
                         className='sub-heading code-lbl'>Send from your Suissebase FIAT Wallet</Title>
                 </div>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Search placeholder="Search Currency" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleFiatSearch} size="middle" bordered={false} className="text-center mb-16" />
+                    <Search placeholder="Search Currency" value={this.state.searchFiatVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleFiatSearch} size="middle" bordered={false} className="text-center mb-16" />
                 </Col>
                 <List
                     itemLayout="horizontal"
@@ -775,14 +778,10 @@ class OnthegoFundTransfer extends Component {
                 <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                        Please sign using link received in email to whitelist your address. `}</Text>
                 <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
-                {/*<div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBOARD</Button> */}
             </div></div>,
             successpage:<div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
                 <Image width={80} preview={false} src={success} />
                 <Title level={2} className="text-white-30 my-16 mb-0">Your transaction has been processed successfully</Title>
-                {/* <Text className="text-white-30">{`Declaration form has been sent to ${"have123@yopmail.com"} 
-                   Please sign using link received in email to whitelist your address`}</Text> */}
-                {/*<div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBOARD</Button> */}
             </div></div>
         }
         return steps[this.state.step];

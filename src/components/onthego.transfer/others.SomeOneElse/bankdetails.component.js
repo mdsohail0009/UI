@@ -366,20 +366,6 @@ class PayeeBankDetails extends Component {
                             },{
                                 validator: validateContentRule,
                             },
-                        //    {
-                        //         validator: (_, value) => {
-                        //             if (
-                        //                 value &&
-                        //                 !/^[A-Za-z0-9_.-\s]+$/.test(value)
-                        //             ) {
-                        //                 return Promise.reject(
-                        //                     "Please enter valid content"
-                        //                 );
-                        //             }else {
-                        //                 return Promise.resolve();
-                        //             }
-                        //         },
-                        //     }
                         ]}
                     >
                         <Input
@@ -408,20 +394,6 @@ class PayeeBankDetails extends Component {
                             },{
                                 validator: validateContentRule,
                             },
-                            // {
-                            //     validator: (_, value) => {
-                            //         if (
-                            //             value &&
-                            //             !/^[a-zA-Z0-9_.-\s]+$/.test(value)
-                            //         ) {
-                            //             return Promise.reject(
-                            //                 "Please enter valid content"
-                            //             );
-                            //         }else {
-                            //             return Promise.resolve();
-                            //         }
-                            //     },
-                            // }
                         ]}
                         label={
                             <Translate
@@ -445,20 +417,6 @@ class PayeeBankDetails extends Component {
                         rules={[{
                             validator: validateContentRule,
                         },
-                        //    {
-                        //         validator: (_, value) => {
-                        //             if (
-                        //                 value &&
-                        //                 !/^[a-zA-Z0-9_.-\s]+$/.test(value)
-                        //             ) {
-                        //                 return Promise.reject(
-                        //                     "Please enter valid content"
-                        //                 );
-                        //             }else {
-                        //                 return Promise.resolve();
-                        //             }
-                        //         },
-                        //     }
                         ]}
                         label={
                             <Translate

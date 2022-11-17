@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Input, Row, Col, Form, Button, Typography, Radio, Tabs, Image, Alert } from 'antd';
+import { Input, Row, Col, Form, Button, Typography, Tabs, Image, Alert } from 'antd';
 import {createPayee, payeeAccountObj, savePayee, confirmTransaction} from "../api";
 import AddressDocumnet from "../../addressbook.component/document.upload";
 import PayeeBankDetails from "./bankdetails.component";
@@ -10,7 +10,7 @@ import ConnectStateProps from "../../../utils/state.connect";
 import Loader from "../../../Shared/loader";
 import alertIcon from '../../../assets/images/pending.png';
 const { Paragraph, Text, Title } = Typography;
-const { Search, TextArea } = Input;
+const { TextArea } = Input;
 
 const SomeoneComponent = (props) => {
     const [addressOptions, setAddressOptions] = useState({ addressType: "individuals", transferType: props.currency === "EUR" ? "sepa" : "swift", domesticType: 'domestic' });
@@ -103,8 +103,9 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                     useDivRef.current.scrollIntoView();
                 }
             } else {
-                props.headingUpdate(true)
-                setShowDeclartion(true)
+                props.headingUpdate(true);
+                setShowDeclartion(true);
+                props.isHideTabs(false)
             }
         } else {
             setBtnLoading(false);
@@ -152,9 +153,6 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                 <Text className="text-white-30">{`Declaration form has been sent to ${props.userProfile?.email}. 
                    Please sign using link received in email to whitelist your address. `}</Text>
                 <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
-                {/* <div className="my-25">
-                <Button onClick={() => props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button>
-                </div> */}
             </div></div>}
 
             {!showDeclartion && <>
@@ -385,7 +383,6 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         </Col>
                     </Row>
                 </>
-                {/* <Divider /> */}
                 <Paragraph className="mb-8 fw-500 text-white px-4 mt-36" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                 {((props.selectedAddress?.id && createPayeeObj)||!props.selectedAddress?.id ) &&
                  <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} isAddTabCange={isTabChange}/>}

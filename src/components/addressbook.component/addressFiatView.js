@@ -138,7 +138,7 @@ const AddressFiatView = (props) => {
 															? "-"
 															:(fiatAddress?.addressType=="myself")&&"MY SELF"||
 															 (fiatAddress?.addressType=="individuals")&&"INDIVIDUALS"||
-															(fiatAddress?.addressType=="ownbusiness")&&"OWN BUSINESS"||
+															(fiatAddress?.addressType=="ownbusiness")&&"MY COMPANY"||
 															(fiatAddress?.addressType=="otherbusiness")&&"OTHER BUSINESS"}
 
 													</div>}
@@ -425,7 +425,7 @@ const AddressFiatView = (props) => {
 														</Col>}
 														{item?.bankBranch && <Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
-																Bank branch
+																Branch
 															</Text>
 															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
 
