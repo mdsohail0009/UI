@@ -136,10 +136,10 @@ const AddressFiatView = (props) => {
 														{fiatAddress?.addressType === " " ||
 															fiatAddress?.addressType === null
 															? "-"
-															:(fiatAddress?.addressType=="myself")&&"MY SELF"||
-															 (fiatAddress?.addressType=="individuals")&&"INDIVIDUALS"||
-															(fiatAddress?.addressType=="ownbusiness")&&"MY COMPANY"||
-															(fiatAddress?.addressType=="otherbusiness")&&"OTHER BUSINESS"}
+															:(fiatAddress?.addressType?.toLowerCase()=="myself")&&"My Self"||
+															 (fiatAddress?.addressType?.toLowerCase()=="individuals")&&"Individuals"||
+															(fiatAddress?.addressType?.toLowerCase()=="ownbusiness")&&"My Company"||
+															(fiatAddress?.addressType?.toLowerCase()=="otherbusiness")&&"Other Business"}
 
 													</div>}
 												</div>
@@ -151,7 +151,7 @@ const AddressFiatView = (props) => {
 														{fiatAddress?.transferType === " " ||
 															fiatAddress?.transferType === null
 															? "-"
-															: (fiatAddress?.transferType == "internationalIBAN") && "INTERNATIONAL USD IBAN" ||
+															: (fiatAddress?.transferType == "internationalIBAN") && "International USD IBAN" ||
 															fiatAddress?.transferType.toUpperCase()}
 
 													</div>}
