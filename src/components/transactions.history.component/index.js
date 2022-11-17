@@ -109,7 +109,7 @@ class TransactionsHistory extends Component {
     },
 
     {
-      field: "accountnumber", title: "Bank Account Number/IBAN", filter: true, width: 220,
+      field: "accountnumber", title: "Bank Account Number/IBAN", filter: true, width: 260,
     },
     { field: "state", title: "State", filter: true, },
     
