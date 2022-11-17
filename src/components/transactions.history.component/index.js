@@ -83,9 +83,9 @@ class TransactionsHistory extends Component {
       field: "debit", title: "Value", filter: false, dataType: 'number', filterType: "numeric",
       customCell: (props) => (
         <td>
-          {props.dataItem?.debit && <NumberFormat value={props.dataItem?.debit} displayType={"text"} />}
-          {props.dataItem?.credit && props.dataItem?.debit && " / "}
-          {props.dataItem?.credit && <NumberFormat value={props.dataItem.credit} displayType={"text"} />}
+          {props.dataItem?.debit && <NumberFormat value={props.dataItem?.debit} displayType={"text"} thousandSeparator={true} />}
+          {props.dataItem?.credit && props.dataItem?.debit && "/"}
+          {props.dataItem?.credit && <NumberFormat value={props.dataItem.credit} displayType={"text"} thousandSeparator={true} />}
 
         </td>
       ),
@@ -94,7 +94,7 @@ class TransactionsHistory extends Component {
     },
 
     {
-      field: "senderName", title: "Sender/Recipient Full Name", filter: true, width: 260,
+      field: "senderName", title: "Sender/Recipient Full Name",filter: true, width: 260,
 
       customCell: (props) => (
         <td>

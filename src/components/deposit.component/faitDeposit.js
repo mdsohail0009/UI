@@ -1,15 +1,13 @@
 import React, { Component, createRef } from 'react';
-import { Typography, Input, Button, Spin, Select, Radio, Form, Alert, Space, Col } from 'antd';
+import { Typography, Select, Form, Alert, Space } from 'antd';
 import { Link } from 'react-router-dom';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
-import SellToggle from '../withDraw.component/faitWithdrawal';
 import config from '../../config/config';
-import NumberFormat from 'react-number-format';
-import { getCurrencieswithBankDetails, setdepositCurrency, updatdepfiatobject, setsavefiatobject, setFiatFinalRes } from '../../reducers/depositReducer'
+import { getCurrencieswithBankDetails, setdepositCurrency, updatdepfiatobject, setsavefiatobject } from '../../reducers/depositReducer'
 import { rejectWithdrawfiat, setWithdrawfiatenaable } from '../../reducers/sendreceiveReducer';
 import { setStep, setSubTitle } from '../../reducers/buyFiatReducer';
-import { savedepositFiat, requestDepositFiat } from './api';
+import { requestDepositFiat } from './api';
 import Loader from '../../Shared/loader';
 import success from '../../assets/images/success.png';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -44,6 +42,7 @@ class FaitDeposit extends Component {
   }
   componentDidMount() {
     this.props.fiatRef(this)
+    this.setState({ ...this.state, Loader: true })
     this.props.fetchCurrencyWithBankDetails()
     if (this.props.sendReceive.withdrawFiatEnable||this.props?.isShowSendFiat) {
       getFeaturePermissionsByKeyName(`send_fiat`);
@@ -61,7 +60,6 @@ class FaitDeposit extends Component {
         this.handlFiatDep(this.props.depositInfo?.depositCurrency, this.props.depositInfo?.currenciesWithBankInfo)
       }
     }
-    //getFeaturePermissionsByKeyName(`send_fiat`);
   }
   clearfiatValues = () => {
     this.props.fetchCurrencyWithBankDetails()
@@ -90,7 +88,6 @@ class FaitDeposit extends Component {
       ...this.state,
       faitdeposit: tabKey === 2,
       tabValue: tabKey,
-      // BankDetails: [],
       BankInfo: null,
       depObj: { currency: this.props.depositInfo ? this.props.depositInfo.depositCurrency : null, BankName: null, Amount: null },
       Loader: false, isTermsAgreed: false, errorMessage: null, showSuccessMsg: false
@@ -141,15 +138,15 @@ class FaitDeposit extends Component {
     for (var k in currencyLu) {
       if (currencyLu[k].walletCode === e) {
         if (currencyLu[k].bankDetailModel?.length === 1) {
-          this.setState({ ...this.state, Loader: true })
+          this.setState({ ...this.state, bankLoader: true, BankDetails: [] })
           let reqdepositObj = await requestDepositFiat(currencyLu[k].bankDetailModel[0].bankId, this.props.member?.id);
           if (reqdepositObj.ok === true) {
             this.setState({
-              ...this.state, fiatDepEur: e === "EUR", BankInfo: reqdepositObj.data, BankDetails: [], depObj: depObj, Loader: false, isTermsAgreed: false
+              ...this.state, fiatDepEur: e === "EUR", BankInfo: reqdepositObj.data, BankDetails: [], depObj: depObj, bankLoader: false, isTermsAgreed: false
             });
           } else {
             this.setState({
-              ...this.state, Loader: false, errorMessage: this.isErrorDispaly(reqdepositObj)
+              ...this.state, bankLoader: false, errorMessage: this.isErrorDispaly(reqdepositObj)
             });
           }
         } else {
@@ -191,15 +188,6 @@ class FaitDeposit extends Component {
       this.myRef.current.scrollIntoView();
       return;
     }
-    // if ((depObj.Amount.indexOf('.') > -1 && depObj.Amount.split('.')[0].length >= 9) || (depObj.Amount.indexOf('.') < 0 && depObj.Amount.length >= 9)) {
-    //   this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('exceeded_amount') });
-    //   this.myRef.current.scrollIntoView()
-    // }
-    // else if (depObj.Amount === '.') {
-    //   this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('amount_greater_zero') }); this.myRef.current.scrollIntoView()
-
-    // }
-    // else {
       this.formRef.current.validateFields().then(async () => {
         this.setState({ ...this.state, Loader: true, errorMessage: null })
         let createObj = { "id": "00000000-0000-0000-0000-000000000000", "bankId": BankInfo.id, "currency": depObj.currency, "bankName": BankInfo.bankName, "bankAddress": BankInfo.bankAddress, "amount": parseFloat(depObj.Amount), "accountNumber": BankInfo.accountNumber, "routingNumber": BankInfo.routingNumber, "swiftorBICCode": BankInfo.networkCode, "benficiaryBankName": BankInfo.accountName, "reference": BankInfo.depReferenceNo, "benficiaryAccountAddrress": BankInfo.accountAddress, 'referenceNo': BankInfo.referenceNo }
@@ -211,7 +199,6 @@ class FaitDeposit extends Component {
 
       
       });
-    // }
   }
   onTermsChange = (chkd) => {
     this.setState({ ...this.state, isTermsAgreed: chkd })
@@ -234,24 +221,8 @@ class FaitDeposit extends Component {
     const link = <LinkValue content="terms_service" />;
     const { faitdeposit, BankInfo, depObj } = this.state;
     const { currenciesWithBankInfo } = this.props.depositInfo;
-    const { Search } = Input;
     return (
       <>
-        {/* {!this.state.showSuccessMsg && <div className="text-center"><Radio.Group
-          onChange={this.handleBuySellToggle}
-          value={this.state.tabValue}
-          className="buysell-toggle  crypto-toggle">
-          <Translate content="deposit" component={Radio.Button} value={1} />
-          <Translate content="withdraw" component={Radio.Button} value={2} />
-        </Radio.Group></div>} */}
-        {/* <Translate
-          className="mb-0 text-white-30 fs-14 fw-200 mt-16"
-          content="send_fiat_text"
-          component={Paragraph}
-        />
-        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-          <Search placeholder="Search Currency" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="text-center mt-12" />
-        </Col> */}
         {faitdeposit ?
           <div className='mt-16'>
            <OnthegoFundTransfer  ontheGoType={"Onthego"}/>
@@ -265,10 +236,6 @@ class FaitDeposit extends Component {
                 content={this.props.sendReceive.withdrawFiatEnable ?  "send_fiat_text": "receive_fiat_text"}
                 component={Paragraph}
               />}
-               <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                    {/* <Search placeholder="Search Currency" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="text-center mt-12" /> */}
-                </Col>
-               
              
               <div className="my-36">
                 {!this.state.showSuccessMsg && <Form.Item
@@ -289,7 +256,7 @@ class FaitDeposit extends Component {
                     </Select>
                   </div></Form.Item>}
                    
-                {this.state.BankInfo === null && depObj.currency !== null && this.state.BankDetails?.length === 0 && <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="bank_msg" /></Text>}
+                {this.state.BankInfo === null && depObj.currency !== null && this.state.BankDetails?.length === 0 && !this.state.bankLoader && <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="bank_msg" /></Text>}
                 {this.state.BankDetails?.length > 1 && depObj.currency !== null && <Form.Item><Translate
                   className="input-label"
                   content="BankName"
@@ -310,7 +277,6 @@ class FaitDeposit extends Component {
                   <div className="fiatdep-info">
 
                     <div className="d-flex">
-                      {/* <span className={`coin ${depObj.currency.toLowerCase()}`} style={{ marginRight: '8px', marginTop: '15px' }} /> */}
                       <div style={{ flex: 1 }}>
                           <Translate
                       className="fw-600 text-white-50 fs-14"
@@ -335,7 +301,6 @@ class FaitDeposit extends Component {
                       </div>
                       
                     </div>
-                    {/* <Text className="text-white-30 fs-14">A/C </Text> */}
                     {BankInfo.currencyCode == "USD" && <Text className="text-white-30 fs-14">Beneficiary Account No. </Text>}
                     {BankInfo.currencyCode == "EUR" && <Text className="text-white-30 fs-14">Beneficiary IBAN No. </Text>}
                     <CopyToClipboard text={BankInfo.accountNumber} options={{ format: 'text/plain' }}>
@@ -415,56 +380,18 @@ class FaitDeposit extends Component {
                     <Paragraph
                       className="fs-14 text-white-30 fw-200 l-height-normal"
                     ><span className="textpure-yellow">{apicalls.convertLocalLang('reference_hint_text')}</span> </Paragraph>
-                    {/* <Form.Item
-                      className="custom-forminput mb-36 agree"
-                      name="isAccept"
-                      valuePropName="checked"
-                      required
-                      rules={[
-                        {
-                          validator: (_, value) =>
-                            value ? Promise.resolve() : Promise.reject(new Error(apicalls.convertLocalLang('agree_termsofservice')
-                            )),
-                        },
-                      ]}
-                    >
-                      <div className="d-flex pt-16 agree-check">
-                        <label>
-                          <input type="checkbox" id="agree-check" />
-                          <span for="agree-check" />
-                        </label>
-                        <Translate
-                          content="agree_to_suissebase"
-                          with={{ link }}
-                          component={Paragraph}
-                          className="fs-14 text-white-30 ml-16 mb-4"
-                          style={{ flex: 1 }}
-                        />
-                      </div>
-                    </Form.Item> */}
 
                   </div>
                   
                 }
               </div>
 
-              {/* {this.state.BankInfo &&
-                <><Button
-                  htmlType="submit"
-                  size="large"
-                  block
-                  className="pop-btn mt-36"
-                >
-                  <Translate content="Confirm" component='Text' />
-                </Button></>} */}
             </div>
             </Form>}
             {this.state.showSuccessMsg && <div className="success-pop text-center">
               <img src={success} className="confirm-icon" alt={'success'} />
               <Translate content="success_msg" component={Title} className="text-white-30 fs-36 fw-200 mb-4" />
               <Paragraph className="fs-14 text-white-30 fw-200">0.2258 BTC and 212545 USD amount has been added to your wallets, Your order has been placed successfully</Paragraph>
-              {/* <div><Translate content="success_msg" component='Success' className="text-white-30 fs-36 fw-200 mb-4" /></div>
-              <Translate content="success_decr" component={Paragraph} className="fs-16 text-white-30 fw-200" /> */}
               <Space direction="vertical" size="large">
                 <Translate content="return_to_depositfiat" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => this.setState({ ...this.state, showSuccessMsg: false })} />
               </Space>

@@ -135,7 +135,7 @@ class Portfolio extends Component {
                                 <thead>
                                     <tr>
                                         <th style={{width: "18%"}}>Date</th>
-                                        <th style={{width: "35%"}}>Type</th>
+                                        <th style={{width: "35%"}}>Transaction</th>
                                         <th style={{width: "15%"}}>Wallet</th>
                                         <th style={{width: "15%"}}>Value</th>
                                         <th style={{width: "15%"}}>State</th>
@@ -159,9 +159,9 @@ class Portfolio extends Component {
                                                     {this.state.transactionData.length > 0 ? 
                                                     <>
                                                      <tr key={idx}>
-                                                        <td >
+                                                     <td style={{ width: "100px" }}>
                                                             
-                                                        {item?.date}
+                                                            {item?.date ? <Moment format="DD/MM/YYYY hh:mm:ss A">{item?.date ? apiCalls.convertUTCToLocalTime(item?.date) : item?.date}</Moment> : item?.date}
                                                             </td>
                                                         
                                                         <td style={{ width: "50px" }}>{item.type}</td>
