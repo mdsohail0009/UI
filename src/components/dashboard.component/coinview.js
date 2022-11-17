@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { connect } from 'react-redux';
 import { Typography, Row, Col, Spin, Radio, Image } from "antd";
@@ -195,7 +196,10 @@ componentWillUnmount(){
             <Row gutter={[24, 24]}>
                 <Col lg={14} xl={14} xxl={14}>
                     <div className="box p-24 coin-bal">
-                        {this.state.coinData  ? <><div className="d-flex align-center">
+                    {this.state.loading&& this.state.coinData ?<Spin className="text-center"/>:<>
+                        {this.state.coinData ?
+                        <> 
+                        <div className="d-flex align-center">
                             <Image preview={false} src={coinData.imagePath} />
                             <div className="summary-count ml-16">
                                 <Paragraph className="text-white-30 fs-30 mb-0 fw-500">
@@ -217,7 +221,7 @@ componentWillUnmount(){
                                 <li><div onClick={() => this.showSendReceiveDrawer(1, coinData)} value={1} className="c-pointer"><span className="icon md withdraw" /></div>RECEIVE</li>
                                 <li><div onClick={() => this.showSendReceiveDrawer(2, coinData)} value={2} className="c-pointer"><span className="icon md deposit" /></div>SEND</li>
                             </ul>
-                        </> : <div className="text-center"><Spin className="text-center"/></div>}
+                            </> : <div className="text-center"><Spin className="text-center"/></div>}</>}
                     </div>
                     <div className="box p-24 coin-details">
                         <Title component={Title} className="fs-24 fw-600 mb-36 text-white-30">{coinData?.name} ({coinData?.symbol.toUpperCase()}) Price Chart</Title>

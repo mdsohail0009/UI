@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import {
     Collapse, Button, Typography, Modal, Tooltip, Input, Upload, Spin, Empty, Alert, Row, Col,
@@ -371,7 +372,8 @@ class CaseView extends Component {
                           {key}
                         </Text>
                                 <div className='fw-600 text-white-30 fs-16 l-height-normal'style={{wordBreak:"break-all"}} >
-                                    {(value == null || value == " ") ? '-' : (isNaN(value) || (key === 'Transaction Id') ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
+                                    {(value == null || value == " "||value == "") ? '-' : (isNaN(value) || (key === 'Transaction Id'|| key === 'Bank Account number/IBAN' || key === "Bank Account Number/IBAN"
+                            || key === 'Bank Name') ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
                                 </div>
                       </div>
                     </div>

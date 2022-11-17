@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import { Row, Col, Button, Carousel } from 'antd';
 import Portfolio from './portfolio.component';
@@ -11,7 +12,6 @@ import apiCalls from '../../api/apiCalls';
 import Notices from './notices';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 import BankWallets from '../bankui.component'
-
 class Home extends Component {
     state = {
         loading: false,
@@ -62,7 +62,7 @@ class Home extends Component {
                     {notices?.map((notice, idx) => <div key={idx}>
                         <AlertConfirmation type="error" title={notice.title} showIcon description="Our Compliance Team is requesting documents in line with your recent transaction, Please click View Details. Thank you for your patience."
                             action={
-                                <Button size="small" type="text" onClick={() => this.props.history.push(`/cases?id=${notice.typeId}`)}>
+                                <Button size="small" type="text" onClick={() => this.props.history.push(`/cases/${notice.typeId}`)}>
                                     View Details
                                 </Button>
                             } />

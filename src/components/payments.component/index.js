@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { Typography, Button, Drawer, Select ,message, Alert, Spin } from 'antd';
 import {Link} from 'react-router-dom';
@@ -97,9 +98,9 @@ const Payments = (props) => {
           <Moment format="DD/MM/YYYY">{moment(new Date(prop.dataItem.createdDate), "DD/MM/YYYY")}</Moment></div></td>)
     },
     { field: "currency", title: apicalls.convertLocalLang("currency"), filter: true,width: 200, },
-    { field: "totalAmount", title: 'Total Amount', filter: true, width: 200, },
+    { field: "totalAmount", title: 'Total Amount', filter: true, width: 200,dataType: "number", filterType: "numeric" },
     { field: "approvedAmount", title: 'Approved Amount', filter: true, width: 237, },
-    { field: "count", title: 'Count', filter: true, width: 150, },
+    { field: "count", title: 'Count', filter: true, width: 150,dataType: "number", filterType: "numeric" },
     { field: "state", title: 'State', filter: true, width: 200, },
   ];
   const handleInputChange = (prop) => {
