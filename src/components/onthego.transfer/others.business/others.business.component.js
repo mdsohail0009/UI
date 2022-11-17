@@ -10,7 +10,9 @@ import ConnectStateProps from "../../../utils/state.connect";
 import Loader from "../../../Shared/loader";
 import Translate from "react-translate-component";
 import alertIcon from '../../../assets/images/pending.png';
+import apicalls from "../../../api/apiCalls";
 const { Paragraph, Text, Title } = Typography;
+const { TextArea } = Input;
 
 class OthersBusiness extends Component {
     form = React.createRef();
@@ -418,7 +420,7 @@ class OthersBusiness extends Component {
                     </div>
                     {this.props.ontheGoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="fw-300 mb-8 px-4 text-white-50 py-4 custom-forminput custom-label"
+                                className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                                 name="reasonOfTransfer"
                                 required
                                 rules={[
@@ -435,13 +437,20 @@ class OthersBusiness extends Component {
                                     },
                                 ]}
                                 label={
-                                    "Reason For Transfer"
+                                    <Translate
+                                        content="reasiontotransfor"
+                                        component={Form.label}
+                                    />
                                 }
                             >
-                                <Input
-                                    className="cust-input"
-                                    placeholder={"Reason For Transfer"}
-                                    maxLength={200}/>
+                            <TextArea
+                                placeholder={apicalls.convertLocalLang(
+                                    "reasiontotransfor"
+                                )}
+                                className="cust-input cust-text-area address-book-cust"
+                                autoSize={{ minRows: 1, maxRows: 2 }}
+                                maxLength={100}
+                            ></TextArea>
                             </Form.Item>
                         </Col>}
                     <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
