@@ -53,7 +53,7 @@ class BusinessTransfer extends Component {
             if(data.transferType== "international"){
                 this.setState({ ...this.state, selectedTab:data.transferType })
             }
-            if(data.transferType== "internationalIBAN"){
+            else if(data.transferType== "internationalIBAN"){
                 this.setState({ ...this.state, selectedTab:data.transferType })
                  this.handleIbanChange({ target: { value: data?.iban, isNext: true } });
             }
