@@ -28,9 +28,9 @@ class Wallets extends Component {
         selectedWallet: '',
         showFuntransfer: false,
     }
-    // cockpitCharts=()=>{
-    //     this.props.history.push("/cockpitCharts");
-    //   }
+    cockpitCharts=()=>{
+        this.props.history.push("/cockpitCharts");
+      }
     componentDidMount() {
         this.fetchWallets();
         this.props.dispatch(getCurrencieswithBankDetails())
@@ -120,13 +120,23 @@ class Wallets extends Component {
 
         return (
             <>
-                <Translate content="suissebase_title" component={Title} className="fs-24 fw-600 text-white mb-16 mt-4" />
+            {/* <BankWallets/> */}
+            <div className="d-flex align-center justify-content">
+                <Translate content="suissebase_title" component={Title} className="fs-24 fw-600 text-white px-4 mb-16 mt-4" />
+                <div>
+              <Button className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
+                  <Translate content="cockpit" />
+                  <span className="icon sm right-angle ml-4" />
+              </Button>
+                    
+              </div>
+              </div>
                 {/* <div style={{ display: "flex",alignItems:"baseline" }}>
 
                 <Translate content="suissebase_subtitle" component={Paragraph} className="text-white-30 fs-16 mb-16 px-4" />
                 <Currency defaultValue={totalFiatValue} className={`fs-24 m-0 fw-600 ${totalFiatValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '54px' }} />
                 </div> */}
-                   {wallets?.loading ? (
+                {wallets?.loading ? (
                     <Loader />
                 ) : (
                 <List
