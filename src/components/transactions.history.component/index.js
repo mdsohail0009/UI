@@ -94,7 +94,7 @@ class TransactionsHistory extends Component {
     },
 
     {
-      field: "senderName", title: "Sender/Recipient Full Name", filter: true, width: 260,
+      field: "senderName", title: "Sender/Recipient Full Name",filter: true, width: 260,
 
       customCell: (props) => (
         <td>
