@@ -11,6 +11,7 @@ import {
 } from "react-share";
 import apicalls from "../../../api/apiCalls"
 import { connect } from "react-redux";
+import AppConfig from "../../../utils/app_config";
 
 class Referral extends Component {
     state = {
@@ -103,7 +104,7 @@ class Referral extends Component {
 					/>
               {/* <ul class="m-0 pl-0">
 						
-							<li className="fs-20 text-yellow c-pointer" onClick={()=>window.open(process.env.REACT_APP_PARTNER_UI_URL, "_blank")}>
+							<li className="fs-20 text-yellow c-pointer" onClick={()=>window.open(AppConfig.REACT_APP_PARTNER_UI_URL, "_blank")}>
 								Go to Partner
 							</li>
 					</ul> */}
@@ -113,7 +114,7 @@ class Referral extends Component {
                 className="pop-btn"
                 style={{ marginRight: "-20px" }}
                 onClick={() =>
-                  window.open(process.env.REACT_APP_PARTNER_UI_URL, "_blank")
+                  window.open(AppConfig.REACT_APP_PARTNER_UI_URL, "_blank")
                 }
               >
                 <Translate content="Go_to_Partner" />

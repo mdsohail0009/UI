@@ -5,11 +5,12 @@ import { withRouter } from 'react-router';
 import Translate from 'react-translate-component';
 import apiCalls from "../../api/apiCalls";
 import Moment from 'react-moment';
+import AppConfig from '../../utils/app_config';
 class Cases extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            gridUrl:process.env.REACT_APP_GRID_API + `Case/GetMemebrCasesK`,
+            gridUrl:AppConfig.REACT_APP_GRID_API + `Case/GetMemebrCasesK`,
             alert: false,
             errorMessage: "",
             allDocs: false,

@@ -54,6 +54,7 @@ import { userManager } from "../../../authentication";
 import { setCurrentAction } from "../../../reducers/actionsReducer";
 import { KEY_URL_MAP } from "./config";
 import { getFeaturePermissionsByKey } from "./permissionService";
+import AppConfig from "../../../utils/app_config";
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
 counterpart.registerTranslations("my", my);
@@ -285,7 +286,7 @@ class HeaderPermissionMenu extends Component {
     }
     showCards = () => {
         window.open(
-            process.env.REACT_APP_CARDS_URL,
+            AppConfig.REACT_APP_CARDS_URL,
             "_blank"
         )
     }

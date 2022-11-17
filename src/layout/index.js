@@ -10,6 +10,7 @@ import OnBoarding from './onboard.component';
 import CallbackPage from '../authentication/callback.component';
 import { clearUserInfo } from '../reducers/configReduser';
 import { withCookies } from 'react-cookie';
+import AppConfig from '../utils/app_config';
 class Layout extends Component {
     state = {
     }
@@ -24,7 +25,7 @@ class Layout extends Component {
     }
     redirect = () =>{
         userManager.removeUser()
-        window.open(process.env.REACT_APP_ADMIN_URL,"_self")
+        window.open(AppConfig.REACT_APP_ADMIN_URL,"_self")
     }
     render() {
         let Sid = this.props.cookies.get('SID')

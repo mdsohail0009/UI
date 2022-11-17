@@ -15,6 +15,7 @@ import { getFeaturePermissionsByKey } from '../shared/permissions/permissionServ
 import { withRouter } from "react-router-dom";
 import { setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 import NumberFormat from "react-number-format";
+import AppConfig from "../../utils/app_config";
 const { Option } = Select;
 class TransactionsHistory extends Component {
   constructor(props) {
@@ -35,7 +36,7 @@ class TransactionsHistory extends Component {
       },
       tranObj: {},
       loader: true,
-      gridUrl: process.env.REACT_APP_GRID_API + `Transaction/Customers`,
+      gridUrl: AppConfig.REACT_APP_GRID_API + `Transaction/Customers`,
     };
     this.props.dispatch(setSelectedFeatureMenu(this.props.transactionsPermissions?.featureId || this.props.customer?.id));
     this.gridRef = React.createRef();

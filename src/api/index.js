@@ -1,8 +1,7 @@
 import { create, } from 'apisauce';
 import { store } from '../store';
 import CryptoJS from 'crypto-js';
-import { useHistory } from 'react-router-dom';
-
+import AppConfig from '../utils/app_config';
 const ipRegistry = create({
     baseURL: 'https://api4.ipregistry.co'
 })
@@ -10,19 +9,19 @@ const sumsub = create({
     baseURL: 'https://api.sumsub.com/'
 })
 const apiClient = create({
-    baseURL: process.env.REACT_APP_API_END_POINT
+    baseURL: AppConfig.REACT_APP_API_END_POINT
 })
 const identityClient = create({
-    baseURL: process.env.REACT_APP_AUTHORITY
+    baseURL: AppConfig.REACT_APP_AUTHORITY
 })
 const coinGekoClient = create({
-    baseURL: process.env.REACT_APP_COIN_GECO_API
+    baseURL: AppConfig.REACT_APP_COIN_GECO_API
 })
 const uploadClient = create({
-    baseURL: process.env.REACT_APP_UPLOAD_API
+    baseURL: AppConfig.REACT_APP_UPLOAD_API
 })
 const bankClient = create({
-    baseURL: process.env.REACT_APP_BANKAPI_END_POINT
+    baseURL: AppConfig.REACT_APP_BANKAPI_END_POINT
 })
 const _encrypt = (msg, key) => {
 

@@ -35,6 +35,7 @@ import apiCalls from "../api/apiCalls";
 import { setNotificationCount } from "../reducers/dashboardReducer";
 import { getmemeberInfo } from "../reducers/configReduser";
 import HeaderPermissionMenu from '../components/shared/permissions/header.menu'
+import AppConfig from "../utils/app_config";
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
 counterpart.registerTranslations("my", my);
@@ -75,11 +76,11 @@ class Header extends Component {
     var url = "";
     if (status) {
       url =
-        process.env.REACT_APP_AUTHORITY +
+        AppConfig.REACT_APP_AUTHORITY +
         "/account/login?returnUrl=/manage/EnableAuthenticator";
     } else {
       url =
-        process.env.REACT_APP_AUTHORITY +
+        AppConfig.REACT_APP_AUTHORITY +
         "/account/login?returnUrl=/manage/Disable2faWarning";
     }
     window.open(url);

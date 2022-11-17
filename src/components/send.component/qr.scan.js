@@ -16,6 +16,7 @@ import {
     WhatsappShareButton, WhatsappIcon
 } from "react-share";
 import { createCryptoDeposit } from '../deposit.component/api';
+import AppConfig from '../../utils/app_config';
 class QRScan extends Component {
     constructor(props) {
         super(props);
@@ -78,27 +79,27 @@ class QRScan extends Component {
     get shareMenu() {
         return <Menu className="share-adrs">
             <Menu.Item>
-                <WhatsappShareButton te url={process.env.REACT_APP_WEB_URL} title={`Hello, I would like to share my ${this.walletCode} address for receiving  ${this.walletAddress}. Note: Please make sure you are using the correct protocol otherwise you are risking losing the funds. I am using Suissebase. Thank you.`} >
+                <WhatsappShareButton te url={AppConfig.REACT_APP_WEB_URL} title={`Hello, I would like to share my ${this.walletCode} address for receiving  ${this.walletAddress}. Note: Please make sure you are using the correct protocol otherwise you are risking losing the funds. I am using Suissebase. Thank you.`} >
                     <WhatsappIcon size={32} round={true} />
                 </WhatsappShareButton>
             </Menu.Item>
             <Menu.Item>
-                <EmailShareButton url={process.env.REACT_APP_WEB_URL} subject={"Wallet Address"} body={`Hello, I would like to share my ${this.walletCode} address for receiving  ${this.walletAddress}. Note: Please make sure you are using the correct protocol otherwise you are risking losing the funds. I am using Suissebase. Thank you.`}  >
+                <EmailShareButton url={AppConfig.REACT_APP_WEB_URL} subject={"Wallet Address"} body={`Hello, I would like to share my ${this.walletCode} address for receiving  ${this.walletAddress}. Note: Please make sure you are using the correct protocol otherwise you are risking losing the funds. I am using Suissebase. Thank you.`}  >
                     <EmailIcon size={32} round={true} />
                 </EmailShareButton>
             </Menu.Item>
             {/* <Menu.Item>
-                <TwitterShareButton url={process.env.REACT_APP_WEB_URL} title={this.walletAddress} >
+                <TwitterShareButton url={AppConfig.REACT_APP_WEB_URL} title={this.walletAddress} >
                     <TwitterIcon size={32} round={true} />
                 </TwitterShareButton>
             </Menu.Item>
             <Menu.Item>
-                <FacebookShareButton url={process.env.REACT_APP_WEB_URL} quote={this.walletAddress} >
+                <FacebookShareButton url={AppConfig.REACT_APP_WEB_URL} quote={this.walletAddress} >
                     <FacebookIcon size={32} round={true} />
                 </FacebookShareButton>
             </Menu.Item>
             <Menu.Item>
-                <TelegramShareButton url={process.env.REACT_APP_WEB_URL} title={this.walletAddress} >
+                <TelegramShareButton url={AppConfig.REACT_APP_WEB_URL} title={this.walletAddress} >
                     <TelegramIcon size={32} round={true} />
                 </TelegramShareButton>
             </Menu.Item> */}

@@ -28,6 +28,7 @@ import AddressBookV2 from "../addressbook.v2/fiat.address";
 import AddressBookV3 from "../addressbook.v3";
 import AddressCommonCom from "./addressCommonCom";
 import AddressCrypto from "./addressCrypto"
+import AppConfig from "../../utils/app_config";
 const { Paragraph, Text, Title } = Typography;
 const addressName = { "1stparty": "1st Party", "3rdparty": "3rd Party" };
 class AddressBook extends Component {
@@ -58,8 +59,8 @@ class AddressBook extends Component {
 			},
 			customerId: this.props.userConfig.id,
 
-			gridUrlCrypto: process.env.REACT_APP_GRID_API + "Address/Crypto",
-			gridUrlFiat: process.env.REACT_APP_GRID_API + "Address/Fiat",
+			gridUrlCrypto: AppConfig.REACT_APP_GRID_API + "Address/Crypto",
+			gridUrlFiat: AppConfig.REACT_APP_GRID_API + "Address/Fiat",
 		};
 		this.gridFiatRef = React.createRef();
 		this.gridCryptoRef = React.createRef();

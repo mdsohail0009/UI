@@ -7,6 +7,7 @@ import { userNameLuSearch, getFeatureLuSearch, getAuditLogInfo } from './api';
 import moment from 'moment';
 import Translate from 'react-translate-component';
 import apicalls from '../../api/apiCalls';
+import AppConfig from "../../utils/app_config";
 
 
 const { Option } = Select;
@@ -42,7 +43,7 @@ class AuditLogs extends Component {
       },
       logRowData: null,
       timeListSpan: ["Last 1 Day", "Last One Week", "Custom"],
-      gridUrl: process.env.REACT_APP_GRID_API + "AuditLogs/Accounts",
+      gridUrl: AppConfig.REACT_APP_GRID_API + "AuditLogs/Accounts",
       featureName: ''
     };
     this.gridRef = React.createRef();

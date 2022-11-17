@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import Loader from '../../Shared/loader';
 import { warning } from '../../utils/message';
 import FilePreviewer from 'react-file-previewer';
+import AppConfig from '../../utils/app_config';
 
 const { confirm } = Modal;
 const { Option } = Select;
@@ -46,7 +47,7 @@ class PaymentDetails extends Component {
       type: this.props.match.params.type,
       state: this.props.match.params.state,
       billPaymentData: null,
-      uploadUrl: process.env.REACT_APP_UPLOAD_API + "UploadFile",
+      uploadUrl: AppConfig.REACT_APP_UPLOAD_API + "UploadFile",
       isUploading: false,
       modal: false,
       selectData: null,

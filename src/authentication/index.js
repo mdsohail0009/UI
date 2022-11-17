@@ -1,12 +1,13 @@
 import { WebStorageStateStore } from 'oidc-client';
 import { createUserManager } from 'redux-oidc';
+import AppConfig from '../utils/app_config';
 const config = {
-    authority: process.env.REACT_APP_AUTHORITY,
-    client_id: process.env.REACT_APP_CLIENT_ID,
-    redirect_uri: process.env.REACT_APP_REDIRECT_URI,
+    authority: AppConfig.REACT_APP_AUTHORITY,
+    client_id: AppConfig.REACT_APP_CLIENT_ID,
+    redirect_uri: AppConfig.REACT_APP_REDIRECT_URI,
     response_type: "id_token token",
     scope: "openid profile",
-    silent_redirect_uri: process.env.REACT_APP_SILENT_REDIRECT_URI,
+    silent_redirect_uri: AppConfig.REACT_APP_SILENT_REDIRECT_URI,
     automaticSilentRenew: true,
     userStore: new WebStorageStateStore({ store: window.localStorage })
 }

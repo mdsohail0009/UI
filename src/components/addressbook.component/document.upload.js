@@ -4,6 +4,7 @@ import Loader from "../../Shared/loader";
 import { document } from "../onthego.transfer/api";
 import apiCalls from "../../api/apiCalls";
 import { bytesToSize } from "../../utils/service";
+import AppConfig from "../../utils/app_config";
 
 const { Dragger } = Upload;
 const { Paragraph, Text, Title } = Typography;
@@ -74,7 +75,7 @@ class AddressDocumnet extends Component {
                     ]}>
                         <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                             className="upload mt-4"
-                            multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
+                            multiple={false} action={AppConfig.REACT_APP_UPLOAD_API + "UploadFile"}
                             showUploadList={false}
                             beforeUpload={(props) => {
                               //  return props.name.split(".").length < 2;

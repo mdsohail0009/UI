@@ -10,6 +10,7 @@ import apiCalls from "../../api/apiCalls";
 import { validateContentRule } from '../../utils/custom.validator'
 import { success, error } from "../../utils/message";
 import Loader from '../../Shared/loader'
+import AppConfig from '../../utils/app_config';
 
 const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
@@ -607,7 +608,7 @@ class PaymentsView extends Component {
                                             <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                                                 className="upload mt-4"
                                                 multiple={false}
-                                                action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
+                                                action={AppConfig.REACT_APP_UPLOAD_API + "UploadFile"}
                                                 showUploadList={false}
                                                 beforeUpload={(props) => { this.beforeUpload(props) }}
                                                 onChange={(props) => { this.handleUpload(props, "IDENTITYPROOF") }}
@@ -642,7 +643,7 @@ class PaymentsView extends Component {
                                             <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                                                 className="upload mt-4"
                                                 multiple={false}
-                                                action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
+                                                action={AppConfig.REACT_APP_UPLOAD_API + "UploadFile"}
                                                 showUploadList={false}
                                                 beforeUpload={(props) => { this.beforeUpload(props) }}
                                                 onChange={(props) => { this.handleUpload(props, "ADDRESSPROOF") }}
@@ -675,7 +676,7 @@ class PaymentsView extends Component {
                                             >Please provide your address proof</Paragraph>
                                             <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                                                 className="upload mt-4"
-                                                multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
+                                                multiple={false} action={AppConfig.REACT_APP_UPLOAD_API + "UploadFile"}
                                                 showUploadList={false}
                                                 beforeUpload={(props) => { this.beforeUpload(props) }}
                                                 onChange={(props) => { this.handleUpload(props, "BANKPROOF") }}

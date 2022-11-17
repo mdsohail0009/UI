@@ -12,6 +12,7 @@ import { startConnection } from "../../utils/signalR";
 import { useThemeSwitcher } from "react-css-theme-switcher";
 import apiCalls from '../../api/apiCalls';
 import { updatetwofactor } from "../../reducers/configReduser";
+import AppConfig from "../../utils/app_config";
 
 function App(props) {
   const { switcher, themes } = useThemeSwitcher()
@@ -43,7 +44,7 @@ function App(props) {
       window.$zoho = window.$zoho || {};
       window.$zoho.salesiq?.reset();
       window.$zoho.salesiq = window.$zoho.salesiq || {
-        widgetcode: process.env.REACT_APP_ZOHO_WIDGET_CODE,
+        widgetcode: AppConfig.REACT_APP_ZOHO_WIDGET_CODE,
         values: {},
         ready: function () {
           window.$zoho.salesiq.chatbutton.click(function () {
@@ -60,7 +61,7 @@ function App(props) {
       s.type = 'text/javascript';
       s.id = 'zsiqscript';
       s.defer = true;
-      s.src = process.env.REACT_APP_ZOHO_WIDGET_URL;
+      s.src = AppConfig.REACT_APP_ZOHO_WIDGET_URL;
       let t;
       t = d.getElementsByTagName('script')[0];
       t.parentNode.insertBefore(s, t);
@@ -69,7 +70,7 @@ function App(props) {
   }, [])// eslint-disable-line react-hooks/exhaustive-deps
   return (
     <OidcProvider userManager={userManager} store={store}>
-      <Router basename={process.env.PUBLIC_URL}>
+      <Router basename={AppConfig.PUBLIC_URL}>
         <AppInsightsContext.Provider value={reactPlugin}>
           <ErrorBoundary>
             {loading ? <div className="loader">Loading....</div> : <><Layout /></>}

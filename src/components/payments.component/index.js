@@ -16,6 +16,7 @@ import { getFeatureId } from "../shared/permissions/permissionService";
 import { getCurrencyLu} from './api'
 import {getFeaturePermissionsByKey} from '../shared/permissions/permissionService'
 import apicalls from '../../api/apiCalls';
+import AppConfig from '../../utils/app_config';
 
 const { Title, Text, Paragraph } = Typography;
 const { Option } = Select;
@@ -262,7 +263,7 @@ const getCurrencyLookup = async () => {
         <div className="box basic-info text-white" style={{clear:'both'}}>
           <List
             showActionBar={false}
-            url={process.env.REACT_APP_GRID_API + `MassPayments/UserPayments/${props.userConfig?.id}`}
+            url={AppConfig.REACT_APP_GRID_API + `MassPayments/UserPayments/${props.userConfig?.id}`}
                        additionalParams={{type:walletType}}
             columns={gridColumns}
             ref={gridRef}

@@ -17,6 +17,7 @@ import Loader from "../../Shared/loader";
 import { withRouter, Link } from "react-router-dom";
 
 import apicalls from "../../api/apiCalls";
+import AppConfig from "../../utils/app_config";
 const { Title } = Typography;
 
 class BankWallets extends Component {
@@ -69,7 +70,7 @@ class BankWallets extends Component {
         <li
           onClick={() =>
             this.redirectBank(
-              process.env.REACT_APP_BANK_UI_URL + `internaltransfer`,
+              AppConfig.REACT_APP_BANK_UI_URL + `internaltransfer`,
               "_self"
             )
           }
@@ -80,7 +81,7 @@ class BankWallets extends Component {
         </li>
         <li
           onClick={() =>
-            this.redirectBank(process.env.REACT_APP_BANK_UI_URL +`dashboard`, "_self")}
+            this.redirectBank(AppConfig.REACT_APP_BANK_UI_URL +`dashboard`, "_self")}
         >
           <Link value={5} className="c-pointer">
           Go To Personal Bank Account
@@ -89,7 +90,7 @@ class BankWallets extends Component {
         <li
           onClick={() =>
             this.redirectBank(
-              process.env.REACT_APP_BANK_UI_URL +
+              AppConfig.REACT_APP_BANK_UI_URL +
                 `dashboard/digitalwallet/${item.currency}/${item.id}`,
               "_self"
             )
@@ -154,7 +155,7 @@ class BankWallets extends Component {
                           disabled={!(item.availableBalance && item.availableBalance>0)}
                           onClick={() =>
                             this.redirectBank(
-                              process.env.REACT_APP_BANK_UI_URL +
+                              AppConfig.REACT_APP_BANK_UI_URL +
                                 `dashboard/transfer/${item.currency}/${item.id}`,
                               "_self"
                             )
@@ -168,7 +169,7 @@ class BankWallets extends Component {
                           className="custom-btn sec ml-16"
                           onClick={() =>
                             this.redirectBank(
-                              process.env.REACT_APP_BANK_UI_URL +
+                              AppConfig.REACT_APP_BANK_UI_URL +
                                 `dashboard/receive/${item.currency}/${item.id}`,
                               "_self"
                             )
@@ -214,7 +215,7 @@ class BankWallets extends Component {
                       className="custom-btn prime"
                       onClick={() =>
                         this.redirectBank(
-                          process.env.REACT_APP_BANK_UI_URL +
+                          AppConfig.REACT_APP_BANK_UI_URL +
                             `createAccount/${item.currency}`,
                           "_self"
                         )
