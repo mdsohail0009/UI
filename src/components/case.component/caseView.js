@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 import { validateContent } from "../../utils/custom.validator";
 import Translate from 'react-translate-component';
 import Mome from 'moment'
-import { error, success, warning } from '../../utils/messages';
+import {  success, warning } from '../../utils/messages';
 import { LoadingOutlined } from "@ant-design/icons";
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
