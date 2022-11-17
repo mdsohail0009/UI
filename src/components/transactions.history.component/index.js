@@ -99,7 +99,7 @@ class TransactionsHistory extends Component {
       customCell: (props) => (
         <td>
           {props.dataItem?.senderName}
-          {(props.dataItem?.senderName && props.dataItem?.beneficiryName) && " / "}
+          {(props.dataItem?.senderName && props.dataItem?.beneficiryName) && "/"}
           {props.dataItem?.beneficiryName}
 
         </td>
@@ -109,7 +109,7 @@ class TransactionsHistory extends Component {
     },
 
     {
-      field: "accountnumber", title: "IBAN/Account Number", filter: true, width: 220,
+      field: "accountnumber", title: "Bank Account Number/IBAN", filter: true, width: 220,
     },
     { field: "state", title: "State", filter: true, },
     

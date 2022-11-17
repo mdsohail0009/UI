@@ -8,7 +8,9 @@ import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { dashboardTransactionSub } from '../../utils/pubsub';
 import TransactionsHistory from "../transactions.history.component";
-
+import apiCalls from "../../api/apiCalls";
+import Moment from "react-moment";
+import moment from 'moment';
 class Portfolio extends Component {
     chart;
     constructor (props) {
@@ -157,8 +159,12 @@ class Portfolio extends Component {
                                                     {this.state.transactionData.length > 0 ? 
                                                     <>
                                                      <tr key={idx}>
-                                                        <td>{item?.date}</td>
-                                                        <td style={{ width: "100px" }}>{item.type}</td>
+                                                        <td >
+                                                            
+                                                        {item?.date}
+                                                            </td>
+                                                        
+                                                        <td style={{ width: "50px" }}>{item.type}</td>
                                                         <td>{item.wallet}</td>
                                                         <td>{this.getNumberVal(item)}</td>
                                                         <td>{item.state} </td>
