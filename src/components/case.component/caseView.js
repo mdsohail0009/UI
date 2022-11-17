@@ -13,7 +13,6 @@ import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import FilePreviewer from 'react-file-previewer';
 import { Link } from 'react-router-dom';
-import QueryString from 'query-string';
 import { validateContent } from "../../utils/custom.validator";
 import Translate from 'react-translate-component';
 import Mome from 'moment'
