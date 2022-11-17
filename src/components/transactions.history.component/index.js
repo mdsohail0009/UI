@@ -84,7 +84,7 @@ class TransactionsHistory extends Component {
       customCell: (props) => (
         <td>
           {props.dataItem?.debit && <NumberFormat value={props.dataItem?.debit} displayType={"text"} />}
-          {props.dataItem?.credit && props.dataItem?.debit && " / "}
+          {props.dataItem?.credit && props.dataItem?.debit && "/"}
           {props.dataItem?.credit && <NumberFormat value={props.dataItem.credit} displayType={"text"} />}
 
         </td>
