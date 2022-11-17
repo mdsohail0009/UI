@@ -52,23 +52,12 @@ class AddressDocumnet extends Component {
                      {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
                     <Form.Item name={"files"} required rules={[{
                         validator: (_, value) => {
-                            // let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
-                            // // if (this.state.filesList.length == 0) {
-                            // //    // this.setState({...this.state,isDocLoading:false,errorMessage:null })
-                            // //     return Promise.reject("At least one document is required")
-                            // // }
-                            // if (value&&!fileType[value.file.type]) {
-                            //     this.setState({...this.state,isDocLoading:false,errorMessage:null })
-                            //     return Promise.reject("File is not allowed. You can upload jpg, png, jpeg and PDF  files");
-                            // }
-                            // else {
                                 const isValidFiles = this.state.filesList.filter(item => (item.name || item.documentName).indexOf(".") != (item.name || item.documentName).lastIndexOf(".")).length == 0;
                                 if (isValidFiles) { return Promise.resolve(); } else {
                                     this.setState({...this.state,isDocLoading:false,errorMessage:null })
                                     return Promise.reject("File don't allow double extension");
                                 }
 
-                            // }
                         },
 
                     }
@@ -143,7 +132,7 @@ class AddressDocumnet extends Component {
                                 let { documents: docs } = this.state;
                                 let files = docs.details;
                                 for(var k in files){
-                                    if(files[k].id==this.state.selectedObj.id){
+                                    if(files[k].id==this.state.selectedObj?.id){
                                         files[k].state='Deleted';
                                         files[k].isChecked=false;
                                     }
@@ -153,6 +142,11 @@ class AddressDocumnet extends Component {
                                 filesList.splice(this.state.selectedFileIdx, 1);
                                 if(!this.state?.isEdit){
                                     obj.splice(this.state.selectedFileIdx, 1);
+                                }
+                                for (var l in files) {
+                                    if (files[l].id == "00000000-0000-0000-0000-000000000000" && this.state?.isEdit) {
+                                        obj.splice(this.state.selectedFileIdx, 1);
+                                    }
                                 }
                                 this.setState({ ...this.state, filesList, showDeleteModal: false });
                                 docs.details=Object.assign([],obj)
