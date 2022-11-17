@@ -58,6 +58,7 @@ class PayeeBankDetails extends Component {
                 this.props.getIbandata(null);
             }
         } else {
+            this.props.form.current?.setFieldsValue({ iban: ibannumber })
             this.setState({ ...this.state, enteredIbanData: ibannumber, isShowValid: false, IbanLoader: false, isValidIban: false, isValidateLoading: false })
         }
     }
@@ -135,7 +136,7 @@ class PayeeBankDetails extends Component {
                     <Col xs={24} md={10} lg={10} xl={10} xxl={10}>
                        <Button className={`pop-btn dbchart-link fs-14 fw-500`} style={{width:"150px",marginTop:"32px",height:"42px"}}
                                     loading={this.state.isValidateLoading}
-                                    onClick={() => this.onIbanValidate(this.props?.isAddTabCange && null || this.state.enteredIbanData)} >
+                                    onClick={() => this.onIbanValidate(this.props?.form.current?.getFieldValue(["payeeAccountModels","iban"]))} >
                                     <Translate content="validate" />
                                 </Button>
                          

@@ -113,14 +113,14 @@ const AddressFiatView = (props) => {
 							{fiatAddress && (
 								<div className="custom-alert-width">
 									<Title className="basic-info p-0 basicinfo">
-														Beneficiary Details
+									Recipient Details
 														</Title>
 								<Row gutter={8}>
 									<Col xl={24} xxl={24} className="bank-view">
 										<Row className="kpi-List">
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
-													<label className="kpi-label">Save Whitelist Name As</label>
+													<label className="kpi-label">Whitelist Name</label>
 													<div className=" kpi-val">
 														{fiatAddress?.favouriteName === " " ||
 															fiatAddress?.favouriteName === null
@@ -136,10 +136,10 @@ const AddressFiatView = (props) => {
 														{fiatAddress?.addressType === " " ||
 															fiatAddress?.addressType === null
 															? "-"
-															:(fiatAddress?.addressType=="myself")&&"MY SELF"||
-															 (fiatAddress?.addressType=="individuals")&&"INDIVIDUALS"||
-															(fiatAddress?.addressType=="ownbusiness")&&"MY COMPANY"||
-															(fiatAddress?.addressType=="otherbusiness")&&"OTHER BUSINESS"}
+															:(fiatAddress?.addressType?.toLowerCase()=="myself")&&"My Self"||
+															 (fiatAddress?.addressType?.toLowerCase()=="individuals")&&"Individuals"||
+															(fiatAddress?.addressType?.toLowerCase()=="ownbusiness")&&"My Company"||
+															(fiatAddress?.addressType?.toLowerCase()=="otherbusiness")&&"Other Business"}
 
 													</div>}
 												</div>
@@ -151,7 +151,7 @@ const AddressFiatView = (props) => {
 														{fiatAddress?.transferType === " " ||
 															fiatAddress?.transferType === null
 															? "-"
-															: (fiatAddress?.transferType == "internationalIBAN") && "INTERNATIONAL IBAN" ||
+															: (fiatAddress?.transferType == "internationalIBAN") && "International USD IBAN" ||
 															fiatAddress?.transferType.toUpperCase()}
 
 													</div>}
@@ -312,7 +312,7 @@ const AddressFiatView = (props) => {
 											
 										</Row>
 										<Title className="basic-info p-0 basicinfo">
-											Beneficiary Bank Details
+										  Recipient Bank Details
 										</Title>
 										<Row>
 											{bankDetailes?.map((item, idx) => (

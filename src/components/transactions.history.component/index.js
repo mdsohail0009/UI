@@ -94,7 +94,7 @@ class TransactionsHistory extends Component {
     },
 
     {
-      field: "senderName", title: "Sender/Beneficiary Name", filter: true, width: 260,
+      field: "senderName", title: "Sender/Recipient Full Name", filter: true, width: 260,
 
       customCell: (props) => (
         <td>
@@ -112,14 +112,7 @@ class TransactionsHistory extends Component {
       field: "accountnumber", title: "IBAN/Account Number", filter: true, width: 220,
     },
     { field: "state", title: "State", filter: true, },
-    // { field: "fromWalletCode", title: "From Wallet Code", filter: true, width: 180, },
-    // { field: "fromValue", title: "From Value", width: 150, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
-    // { field: "toWalletCode", title: "To Wallet Code", filter: true, width: 150 },
-    // { field: "toValue", title: "To Value", width: 150, filter: true, footerCell: true, dataType: 'number', filterType: "numeric"},
-    // { field: "fromValueBefore", title: "From Before Value", width: 180, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
-    // { field: "fromValueAfter", title: "From After Value", width: 180, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
-    // { field: "toValueBefore", title: "To Before Value", width: 180, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
-    // { field: "toValueAfter", title: "To After Value", width: 150, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
+    
 
 
   ]
