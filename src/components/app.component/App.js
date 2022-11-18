@@ -35,7 +35,7 @@ function App(props) {
     }, 2000)
 
   }
-
+console.log(process.env)
   useEffect(() => {
     localStorage.setItem("__url", window.location.pathname);
     loadUser(store, userManager).then(user => {
