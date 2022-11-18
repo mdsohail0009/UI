@@ -8,7 +8,9 @@ const config = {
     scope: "openid profile",
     silent_redirect_uri: process.env.REACT_APP_SILENT_REDIRECT_URI,
     automaticSilentRenew: true,
-    userStore: new WebStorageStateStore({ store: window.localStorage })
+    silentRequestTimeout :30000,
+    userStore: new WebStorageStateStore({ store: window.localStorage }),
+    
 }
 const userManager = createUserManager(config);
 export { userManager }

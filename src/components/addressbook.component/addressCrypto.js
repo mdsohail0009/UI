@@ -1,10 +1,10 @@
 import React, { Component} from "react";
 import { Form, Typography, Input, Button, Select, Image, Alert,Row,Col } from "antd";
-import alertIcon from '../../assets/images/success.png';
+import alertIcon from '../../assets/images/pending.png';
 import { setAddressStep } from "../../reducers/addressBookReducer";
 import { setAddress, setStep, setWithdrawcrypto,rejectWithdrawfiat, setSendCrypto, hideSendCrypto } from "../../reducers/sendreceiveReducer";
 import { connect } from "react-redux";
-import { getCryptoData, saveCryptoData, getCoinList, networkLu } from "./api";
+import { getCryptoData, saveCryptoData, getCoinList } from "./api";
 import Loader from '../../Shared/loader';
 import WAValidator from "multicoin-address-validator";
 import { validateContentRule } from "../../utils/custom.validator";
@@ -35,7 +35,6 @@ class AddressCrypto extends Component {
 
   componentDidMount() {
     this.getCryptoData();
-    // this.coinList();
   }
   getCryptoData = async () => {
     let id = this.props?.addressBookReducer?.selectedRowData?.id || "00000000-0000-0000-0000-000000000000";
@@ -72,12 +71,12 @@ class AddressCrypto extends Component {
     }
     if(this.state.cryptoData.network){
       let val=this.state.cryptoData.token
-       this.networkList(val)
+      this.handleTokenChange(val);
+      this.form?.current?.setFieldsValue({network:this.state.cryptoData.network})
      }
     else if(this.props.sendReceive?.withdrawFiatObj?.walletCode){
       this.form?.current?.setFieldsValue({token:this.props.sendReceive?.withdrawFiatObj?.walletCode})
       let val=this.props.sendReceive?.withdrawFiatObj?.walletCode
-     // this.networkList(val)
       this.handleTokenChange(val);
     }
     else if(this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !=" "
@@ -85,18 +84,10 @@ class AddressCrypto extends Component {
     this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !=undefined){
       let val=this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin
       this.form?.current?.setFieldsValue({token:val});
-      //this.networkList(val)
       this.handleTokenChange(val);
     }
   }
-  // networkList = async (val) => { //network lu also added in coins list
-  //   let fromlist = await networkLu(val)
-  //   if (fromlist.ok) {
-  //     this.setState({ ...this.state, networksList: fromlist.data, isLoading: false })
-  //   } else {
-  //     this.setState({ ...this.state, networksList: [], isLoading: false })
-  //   }
-  // }
+ 
   handleTokenChange = (value) => {
     this.form?.current?.setFieldsValue({network:null});
     let walletAddress =  this.form?.current?.getFieldValue("walletAddress");
@@ -112,12 +103,7 @@ class AddressCrypto extends Component {
       })
     }
     this.setState({ ...this.state, networksList: networkLu})
-    //this.networkList(value)
   };
-
-  // handleNetworkChange = (value) => {
-  //   console.log(`selected ${value}`);
-  // };
 
   submit = async (values) => {
     let obj = {
@@ -255,8 +241,7 @@ class AddressCrypto extends Component {
                 placeholder="Select Token"
                 optionFilterProp="children"
                 maxLength={50}
-                //disabled={this.state.cryptoData.network? true:false}
-                disabled={this.props?.sendReceive?.withdrawFiatObj?.walletCode ? true:false}>
+                disabled={(this.props?.sendReceive?.withdrawFiatObj?.walletCode ||this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin) ? true:false}>
                 {coinsList?.map((item, idx) => (
                   <Option key={idx} value={item.walletCode}>
                     {item.walletCode}
@@ -278,7 +263,6 @@ class AddressCrypto extends Component {
             >
               <Select
                 className="cust-input"
-                //onChange={this.handleNetworkChange}
                 maxLength={100}
                 placeholder="Select Network"
                 optionFilterProp="children"

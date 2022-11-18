@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Typography, Button, Alert,Drawer, Form, Input,Modal, Tooltip, Checkbox, Image } from "antd";
+import { Typography, Button, Alert,Drawer, Form, Input,Modal, Tooltip, Checkbox, Image,Space } from "antd";
 import { connect } from "react-redux";
 import alertIcon from '../../assets/images/pending.png';
 import Translate from "react-translate-component";
@@ -16,6 +16,8 @@ import {
 	handleSendFetch,
 	setAddress,
 	hideSendCrypto,
+	setSendCrypto,
+	setWithdrawfiatenaable
 } from "../../reducers/sendreceiveReducer";
 
 import apiCalls from "../../api/apiCalls";
@@ -573,6 +575,14 @@ class WithdrawSummary extends Component {
 		}
 	};
 
+	onBackSend = () => {
+		 this.props.dispatch(hideSendCrypto(false));
+		 this.props.dispatch(setSendCrypto(true));
+		 //this.props.dispatch(setWithdrawfiatenaable(true));
+		 this.props?.onBackCLick("step1"); 
+		 this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: 2 }));
+	}
+
 	fullNumber = this.props.oidc?.phone_number;
 	last4Digits = this.fullNumber?.slice(-4);
 	maskedNumber = this.last4Digits?.padStart(this.fullNumber.length, "*");
@@ -660,10 +670,15 @@ class WithdrawSummary extends Component {
 			  <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully </Title>
 			  <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
 				   Please sign using link received in email to whitelist your address. `}</Text>
-			  <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
-			  <div className="my-25"><Button
-				onClick={() => { this.props?.onBackCLick("step1"); this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: 2 })) }}
-				type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button></div>
+			  <span className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</span>
+			  {/* <div className="my-25"><Button
+				onClick={() => { this.onBackSend() }}
+				type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button></div> */}
+				 <div className="my-25 my-16"> 
+				 <Space direction="vertical" size="large">
+                        <Translate content="crypto_with_draw_success" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => { this.onBackSend() }} />
+                    </Space>
+					</div>
 			</div></div>
 		  }
 		  else {
@@ -786,7 +801,7 @@ class WithdrawSummary extends Component {
 							onFinish={this.saveWithdrwal}>
 							{this.state.permissions?.Send && this.state.verifyData.isPhoneVerified == true && (
 								<Text className="fs-14 mb-8 text-white d-block fw-500 code-lbl">
-									Phone verification code *
+									Phone Verification Code *
 								</Text>
 							)}
 							{this.state.permissions?.Send && this.state.verifyData.isPhoneVerified == true && (
@@ -848,7 +863,7 @@ class WithdrawSummary extends Component {
 												loading={this.state.phoneVerifyLoading}
 												style={{ color: "black", margin: "0 auto" }}
 												onClick={this.getOtpVerification}
-												disabled={this.state.verifyPhone == true}>
+												disabled={this.state.verifyPhone == true||this.state.verifyTextotp == true}>
 												{verifyOtpText[this.state.verifyOtpText]}
 												{this.state.verifyTextotp == true && (
 													<span className="icon md greenCheck" />
@@ -860,8 +875,8 @@ class WithdrawSummary extends Component {
 							)}
 							{this.state.verifyData.isPhoneVerified}
 							{this.state.permissions?.Send && this.state.verifyData.isEmailVerification == true && (
-								<Text className="fs-14 mb-8 text-white d-block fw-200">
-									Email verification code *
+								<Text className="fs-14 mb-8 text-white d-block fw-500 code-lbl">
+									Email Verification Code *
 								</Text>
 							)}
 							{this.state.permissions?.Send && this.state.verifyData.isEmailVerification == true && (
@@ -921,7 +936,7 @@ class WithdrawSummary extends Component {
 												style={{ color: "black", margin: "0 auto" }}
 												loading={this.state.emailVerifyLoading}
 												onClick={(e) => this.getEmailVerification(e)}
-												disabled={this.state.verifyEmail == true}>
+												disabled={this.state.verifyEmail == true||this.state.verifyEmailOtp == true}>
 												{verifyText[this.state.verifyText]}
 												{this.state.verifyEmailOtp == true && (
 													<span className="icon md greenCheck" />
@@ -989,7 +1004,8 @@ class WithdrawSummary extends Component {
 												type="text"
 												loading={this.state.faLoading}
 												style={{ color: "black", margin: "0 auto" }}
-												onClick={this.getAuthenticator}>
+												onClick={this.getAuthenticator}
+												disabled={this.state.verifyAuthCode}>
 												{this.state.verifyAuthCode ? (
 													<span className="icon md greenCheck" />
 												) : (

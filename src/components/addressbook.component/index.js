@@ -14,7 +14,7 @@ import { processSteps as config } from "./config";
 import List from "../grid.component";
 import { activeInactive, downloadDeclForm } from "./api";
 import SelectCrypto from "./selectCrypto";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import apiCalls from "../../api/apiCalls";
 import Info from "../shared/info";
@@ -24,12 +24,10 @@ import { fetchFeaturePermissions, setSelectedFeatureMenu } from "../../reducers/
 import {rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
 import { getFeatureId } from "../shared/permissions/permissionService";
 import { setCurrentAction } from '../../reducers/actionsReducer'
-import AddressBookV2 from "../addressbook.v2/fiat.address";
 import AddressBookV3 from "../addressbook.v3";
-import AddressCommonCom from "./addressCommonCom";
 import AddressCrypto from "./addressCrypto"
 const { Paragraph, Text, Title } = Typography;
-const addressName = { "1stparty": "1st Party", "3rdparty": "3rd Party" };
+
 class AddressBook extends Component {
 	constructor(props) {
 		super(props);
@@ -49,6 +47,7 @@ class AddressBook extends Component {
 			isDownloading: false,
 			permissions: {},
 			showHeading:false,
+			hideFiatHeading: false,
 			obj: {
 				id: [],
 				tableName: "Common.PayeeAccounts",
@@ -135,7 +134,7 @@ class AddressBook extends Component {
 		{
 
 			field: "whiteListName",
-			title: "Save Whitelist Name As",
+			title: "Whitelist Name",
 			filter: true,
 			width: 300,
 			customCell: (props) => (
@@ -228,7 +227,7 @@ class AddressBook extends Component {
 		
 		{
 			field: "whiteListName",
-			title: "Save Whitelist Name As",
+			title: "Whitelist Name",
 			filter: true,
 			width: 250,
 			customCell: (props) => (
@@ -236,9 +235,6 @@ class AddressBook extends Component {
 					<div>
 						<span className="gridLink c-pointer" onClick={() => this.addressCryptoView(props)}>{props.dataItem?.whiteListName}</span>
 					</div>
-					{/* <Text className="file-label ml-8 fs-12">
-						{addressName[props?.dataItem?.addressType]}
-					</Text> */}
 				</td>
 			),
 		},
@@ -530,7 +526,7 @@ class AddressBook extends Component {
 				showFiat = !obj?.close;
 		};
 		this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat, selectedObj: {}});
-		setTimeout(() => this.setState({ ...this.state,showHeading:false}), 2000);
+		setTimeout(() => this.setState({ ...this.state,showHeading:false,hideFiatHeading:false}), 2000);
 		
 		this.props.rejectCoinWallet();
 		this.props.clearFormValues();
@@ -599,7 +595,7 @@ class AddressBook extends Component {
 	};
 	addressTypeNames = (type) => {
 		const stepcodes = {
-			"ownbusiness": "Own Business",
+			"ownbusiness": "My Company",
 			"individuals": "Individuals",
 			"otherbusiness": "Other Business",
 			"myself": "Myself"
@@ -608,6 +604,9 @@ class AddressBook extends Component {
 	};
 	headingChange=(data)=>{
 		this.setState({...this.state,showHeading:data})
+	}
+	isFiatHeading =(data)=>{
+		this.setState({...this.state,hideFiatHeading:data})
 	}
 	renderContent = () => {
 		const stepcodes = {
@@ -666,16 +665,6 @@ class AddressBook extends Component {
 				className="basicinfo mb-0"
 			/>
 			<Text className="fs-16 text-white fw-500 mb-12 d-block">Note: <span className="fs-14 text-white fw-400 mb-12">Whitelisting of Crypto Address and Bank Account is required, Please add below.</span></Text>
-			{/* <Translate
-				content="note"
-				component={Text}
-				className="fs-14 text-white fw-400 mb-12 d-block"
-			/>
-			<Translate
-				content="addressbook_note"
-				component={Text}
-				className="fs-14 text-white fw-400 mb-12 d-block"
-			/> */}
 				<div className="box basic-info">
 					<div className="display-flex mb-16">
 						<Radio.Group
@@ -775,7 +764,7 @@ class AddressBook extends Component {
 							<div className="text-center fs-16">
 								<Paragraph className="mb-0 text-white-30 fw-600 text-upper">
 									<Translate
-										content="AddFiatAddress"
+										content={this.state.hideFiatHeading !=true && "AddFiatAddress"}
 										component={Paragraph}
 										className="mb-0 text-white-30 fw-600 text-upper"
 									/>
@@ -792,7 +781,7 @@ class AddressBook extends Component {
 					visible={this.state.fiatDrawer}
 					closeIcon={null}
 					className="side-drawer w-50p">
-					<AddressBookV3 type="manual" isFiat={this.state.cryptoFiat} selectedAddress={this.state.selectedObj} onContinue={(obj) => this.closeBuyDrawer(obj)} />
+					<AddressBookV3 type="manual" isFiat={this.state.cryptoFiat} selectedAddress={this.state.selectedObj} onContinue={(obj) => this.closeBuyDrawer(obj)} isFiatHeadUpdate={this.isFiatHeading}/>
 				</Drawer>
 				<Modal
 					title={

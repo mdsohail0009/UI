@@ -1,7 +1,9 @@
+
 import React, { Component } from 'react';
 import {
     Collapse, Button, Typography, Modal, Tooltip, Input, Upload, Spin, Empty, Alert, Row, Col,
-    Divider
+    Divider,
+    Form
 } from 'antd';
 import {
     approveDoc, getDocDetails, getDocumentReplies, saveDocReply, uuidv4, getFileURL, getCase
@@ -12,11 +14,10 @@ import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import FilePreviewer from 'react-file-previewer';
 import { Link } from 'react-router-dom';
-import QueryString from 'query-string';
-import { validateContent } from "../../utils/custom.validator";
+import { validateContent, validateContentRule } from "../../utils/custom.validator";
 import Translate from 'react-translate-component';
 import Mome from 'moment'
-import { error, success, warning } from '../../utils/messages';
+import { success, warning } from '../../utils/messages';
 import { LoadingOutlined } from "@ant-design/icons";
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
@@ -51,7 +52,7 @@ class CaseView extends Component {
         caseData: {},
         commonModel: {},
         assignedTo: [],
-        btnLoading:false,
+        btnLoading: false,
         errorWarning: null,
     }
     componentDidMount() {
@@ -114,7 +115,7 @@ class CaseView extends Component {
             "documentDetailId": doc.id,
             "status": "Approved"
         });
-        this.setState({ ...this.state, isMessageError: null,errorWarning:null });
+        this.setState({ ...this.state, isMessageError: null, errorWarning: null });
         if (response.ok) {
             success('Document has been approved');
             this.loadDocReplies(doc.id);
@@ -132,6 +133,8 @@ class CaseView extends Component {
         this.setState({ ...this.state, docDetails: { ...this.state.docDetails, details: docDetails } });
     }
     docReject = async (doc) => {
+        debugger
+       
         let item = this.isDocExist(this.state.docReplyObjs, doc.id);
         this.setState({ ...this.state, isMessageError: null });
         if (!validateContent(item?.reply)) {
@@ -142,32 +145,34 @@ class CaseView extends Component {
             return;
         }
         const itemPath = function () {
+            debugger
             if (item.path) {
                 return typeof (item.path) === "object" ? JSON.stringify(item.path) : item.path;
             } else {
                 return item.path;
             }
-        };
-        item.path = itemPath();
+        };   
+        this.setState({ ...this.state, btnLoading: true });
+        item.path = itemPath()
         item.status = "Submitted";
-        item.repliedBy = `${(this.props.userProfileInfo?.isBusiness==true)?this.props.userProfileInfo?.businessName:this.props.userProfileInfo?.firstName}`;
+        item.repliedBy = `${(this.props.userProfileInfo?.isBusiness == true) ? this.props.userProfileInfo?.businessName : this.props.userProfileInfo?.firstName}`;
         item.repliedDate = Mome().format("YYYY-MM-DDTHH:mm:ss");
         item.info = JSON.stringify(this.props.trackAuditLogData);
-        item.customerId=this.props.userProfileInfo.id;
-        this.setState({ ...this.state, btnLoading: true });
+        item.customerId = this.props.userProfileInfo.id;
         
+         
         const response = await saveDocReply(item);
         if (response.ok) {
             success('Document has been submitted');
             this.updateDocRepliesStatus(doc, "Submitted");
             this.loadDocReplies(doc.id)
-            this.setState({errorWarning:null })
+            this.setState({ errorWarning: null })
         } else {
-            warning(response.data);
+            // warning(response.data);
         }
         let objs = [...this.state.docReplyObjs];
         objs = objs.filter(obj => obj.docunetDetailId !== doc.id);
-        this.setState({ ...this.state, docReplyObjs: objs, btnLoading: false, isMessageError: null});
+        this.setState({ ...this.state, docReplyObjs: objs, btnLoading: false, isMessageError: null });
         document.getElementsByClassName(`${doc.id.replace(/-/g, "")}`).value = "";
     }
     deleteDocument = async (doc, idx, isAdd) => {
@@ -209,14 +214,14 @@ class CaseView extends Component {
             "isCustomer": true
         }
     }
- antIcon = (
-		<LoadingOutlined
-			style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
-			spin
-		/>
-	  );
+    antIcon = (
+        <LoadingOutlined
+            style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
+            spin
+        />
+    );
     handleUpload = ({ file }, doc) => {
-    this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null })
+        this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null })
         if (file.status === "done" && this.state.isValidFile) {
             let replyObjs = [...this.state.docReplyObjs];
             let item = this.isDocExist(replyObjs, doc.id);
@@ -245,21 +250,20 @@ class CaseView extends Component {
             this.setState({ ...this.state, docReplyObjs: replyObjs, uploadLoader: false, isSubmitting: false });
         }
         else if (file.status === 'error') {
-            // error(file.response);
-            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false,errorMessage:file.response,errorWarning:null })
+            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false, errorMessage: file.response, errorWarning: null })
         }
         else if (!this.state.isValidFile) {
             this.setState({ ...this.state, uploadLoader: false, isSubmitting: false });
         }
     }
     beforeUpload = (file) => {
-  this.setState({ ...this.state, errorWarning:null })
-   let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
+        this.setState({ ...this.state, errorWarning: null })
+        let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
         if (fileType[file.type]) {
-            this.setState({ ...this.state, isValidFile: true,errorWarning:null })
+            this.setState({ ...this.state, isValidFile: true, errorWarning: null })
             return true
         } else {
-       this.setState({ ...this.state, isValidFile: false,errorWarning:"File is not allowed. You can upload jpg, png, jpeg and PDF  files"})
+            this.setState({ ...this.state, isValidFile: false, errorWarning: "File is not allowed. You can upload jpg, png, jpeg and PDF  files" })
             return Upload.LIST_IGNORE;
         }
     }
@@ -323,7 +327,7 @@ class CaseView extends Component {
             warning('Data not getting from the server!');
         }
     }
-    
+
     render() {
         const { caseData, commonModel } = this.state;
         if (this.state.loading) {
@@ -335,79 +339,59 @@ class CaseView extends Component {
                 <div className='case-stripe'>
                     <Row gutter={[16, 16]}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8} xxl={8}>
-                            <Translate Component={Text} content="Case_Number" className="case-lbl"/>
-                            {/* <Text className='case-lbl'>Case Number</Text> */}
+                            <Translate Component={Text} content="Case_Number" className="case-lbl" />
                             <div className='case-val'>{caseData.caseNumber}</div>
                         </Col>
                         <Col xs={24} md={8} lg={8} xl={8} xxl={8}>
-                        <Translate Component={Text} content="Case_Title" className="case-lbl"/>
-                            {/* <Text className='case-lbl'>c</Text> */}
+                            <Translate Component={Text} content="Case_Title" className="case-lbl" />
                             <div className='case-val'>{caseData.caseTitle}</div>
                         </Col>
                         <Col xs={24} md={8} lg={8} xl={8} xxl={8}>
-                        <Translate Component={Text} content="Case_State" className="case-lbl"/>
-                            {/* <Text className='case-lbl'>Case State</Text> */}
+                            <Translate Component={Text} content="Case_State" className="case-lbl" />
                             <div className='case-val'>{caseData.state}</div>
                         </Col>
                     </Row>
                 </div>
                 <div className='case-ribbon mb-16'>
                     <Row gutter={[16, 16]}>
-                        {/* {commonModel && Object.entries(commonModel).map(([key, value], idx) => <Col key={idx} xs={key=='description'?24:24} md={key=='description'?24:12} lg={key=='description'?24:8} xl={key=='description'?24:6} xxl={key=='description'?24:6}>
-                            <div className="ribbon-item">
-                                <span className={`icon md ${key != null ? key : 'description'}`} />
-                                <div className='ml-16' style={{flex: 1}}>
-                                    <Text className='case-lbl text-captz'>{key}</Text>
-                                    <div className='case-val'style={{wordBreak:"break-all"}}>
-                                    {(value == null || value ==" ")? '-' : (isNaN(value) ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
-                                       
+                        {commonModel ? (
+                            Object.entries(commonModel).map(([key, value], idx) => (
+                                <Col
+                                    key={idx}
+                                    xs={key == "Decription" ? 24 : 24}
+                                    sm={key == "Decription" ? 24 : 12}
+                                    md={key == "Decription" ? 24 : 12}
+                                    lg={key == "Decription" ? 24 : 8}
+                                    xl={key == "Decription" ? 24 : 8}
+                                    xxl={key == "Decription" ? 24 : 6}
+                                >
+                                    <div className="ribbon-item">
+                                        <span
+                                            className={`icon md ${key === null ? "Decription" : ((key == "Currency" && value == "EUR") ? "EURS" : (key == "Amount" ? 'Currency' : (key == "Currency" && value == "USD") ? "USDS" : key))
+                                                }`}
+                                        />
+                                        <div className="ml-16" style={{ flex: 1 }}>
+                                            <Text className="fw-300 text-white-50 fs-12">
+                                                {key}
+                                            </Text>
+                                            <div className='fw-600 text-white-30 fs-16 l-height-normal' style={{ wordBreak: "break-all" }} >
+                                                {(value == null || value == " " || value == "") ? '-' : (isNaN(value) || (key === 'Transaction Id' || key === 'Bank Account number/IBAN' || key === "Bank Account Number/IBAN" || key === "Wallet Address"
+                                                    || key === 'Bank Name') ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
+                                            </div>
                                         </div>
-                                </div>
-                            </div>
-                        </Col>)} */}
-                         {commonModel ? (
-                Object.entries(commonModel).map(([key, value], idx) => (
-                  <Col
-                    key={idx}
-                    xs={key == "Decription" ? 24 : 24}
-                    sm={key == "Decription" ? 24 : 12}
-                    md={key == "Decription" ? 24 : 12}
-                    lg={key == "Decription" ? 24 : 8}
-                    xl={key == "Decription" ? 24 : 8}
-                    xxl={key == "Decription" ? 24 : 6}
-                  >
-                    <div className="ribbon-item">
-                      <span
-                        className={`icon md ${
-                            key === null ? "Decription" : ((key == "Currency"&&value =="EUR")? "EURS" : (key == "Amount" ? 'Currency': (key == "Currency"&&value =="USD")? "USDS" :key))
-                        }`}
-                      />
-                      <div className="ml-16" style={{ flex: 1 }}>
-                        <Text className="fw-300 text-white-50 fs-12">
-                          {key}
-                        </Text>
-                        {/* <div className="fw-600 text-white-30 fs-16 l-height-normal">
-                        {(value == null || value ==" ")? '-' : (isNaN(value) ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
-                        </div> */}
-                                <div className='fw-600 text-white-30 fs-16 l-height-normal'style={{wordBreak:"break-all"}} >
-                                    {(value == null || value == " ") ? '-' : (isNaN(value) || (key === 'Transaction Id') ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
-                                </div>
-                      </div>
-                    </div>
-                  </Col>
-                ))
-              ) : (
-                <Loader />
-              )}
+                                    </div>
+                                </Col>
+                            ))
+                        ) : (
+                            <Loader />
+                        )}
                     </Row>
                 </div>
                 <div className="px-16">
-                <Translate Component={Text} content="remarks" className="fw-300 text-white-50 fs-12"/>
-                    {/* <Text className='fw-300 text-white-50 fs-12 '>Remarks</Text> */}
-                    {/* <div className='case-val'>{caseData.remarks ? caseData.remarks : '-'}</div> */}
-                    <Title level={5} className='case-val'style={{ marginTop: '3px' }} maxLength={500} rows={4}>{caseData.remarks ? caseData.remarks : '-'}</Title>
+                    <Translate Component={Text} content="remarks" className="fw-300 text-white-50 fs-12" />
+                    <Title level={5} className='case-val' style={{ marginTop: '3px' }} maxLength={500} rows={4}>{caseData.remarks ? caseData.remarks : '-'}</Title>
                 </div>
-               
+
                 <Divider />
                 {!this.state.docDetails?.details || this.state.docDetails?.details.length === 0 && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No documents available" /></div>}
                 <div className="bank-view">
@@ -416,7 +400,7 @@ class CaseView extends Component {
 
                             this.setState({
                                 ...this.state,
-                                collapse: !this.state.collapse, errorMessage:null,errorWarning:null
+                                collapse: !this.state.collapse, errorMessage: null, errorWarning: null
                             });
                             if (key) {
                                 this.loadDocReplies(doc.id);
@@ -443,62 +427,99 @@ class CaseView extends Component {
                                         </div>
                                     </div>
                                 </div>)}
-                                {!this.state.documentReplies[doc.id]?.loading && doc.state != "Approved" && this.state.docDetails.caseState != 'Approved' && this.state.docDetails.caseState != 'Cancelled' && <><div>
-                                    <Text className="fs-12 text-white-50 d-block mb-4 fw-200">Reply</Text>
-                                    <Input
-                                        onChange={({ currentTarget: { value } }) => this.handleReplymessage(value, doc)}
-                                        className="cust-input"
-                                        placeholder="Write your message"
-                                        maxLength={200}
-                                    />
-                                    {this.state.isMessageError == doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter message</div>}
-                                    {this.state.validHtmlError && <Translate Component={Text} content="please_enter_valid_content" className="fs-14 text-red" />}
-                                    {this.state.errorMessage != null && <Alert
-                                        description={this.state.errorMessage}
-                                        type="error"
-                                        showIcon
-                                        closable={false}
-                                        style={{ marginBottom: 0, marginTop: '16px' }}
-                                    />}
-                                    	{this.state.errorWarning !== undefined && this.state.errorWarning !== null && (
-											<div style={{ width: '100%' }}>
-												<Alert
-													className="w-100 mb-16"
-													type="warning"
-													description={this.state.errorWarning}
-													showIcon
+                                {!this.state.documentReplies[doc.id]?.loading && doc.state != "Approved" && this.state.docDetails.caseState != 'Approved' && this.state.docDetails.caseState != 'Cancelled' &&
+                                    <>
+                                        <Form
+                                            onFinish={() => this.docReject(doc)}
+                                        >
+                                            <div>
+                                                    <Form.Item
+                                                     className="fs-12 text-white-50 d-block mb-4 fw-200"
+                                                        name=""
+                                                       label="Reply"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: "Is required"
+                                                              },
+                                                              {
+                                                                whitespace: true,
+                                                                message: "Is required"
+                                                              },
+                                                            {
+                                                                validator: validateContentRule,
+                                                            },
+                                                        ]}>
+                                                        <Input
+                                                            onChange={({ currentTarget: { value } }) => this.handleReplymessage(value, doc)}
+                                                            className="cust-input"
+                                                            placeholder="Write your message"
+                                                            maxLength={200}
+                                                        />
+                                                    </Form.Item>
+                                              
+
+                                                {this.state.isMessageError == doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter message</div>}
+                                                {/* {this.state.validHtmlError && <Translate Component={Text} content="please_enter_valid_content" className="fs-14 text-red" />} */}
+                                                {this.state.errorMessage != null && <Alert
+                                                    description={this.state.errorMessage}
+                                                    type="error"
+                                                    showIcon
                                                     closable={false}
                                                     style={{ marginBottom: 0, marginTop: '16px' }}
-												/>
-											</div>
-										)}
-                                    <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-4" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} onChange={(props) => { this.handleUpload(props, doc) }}>
-                                        <p className="ant-upload-drag-icon">
-                                            <span className="icon xxxl doc-upload" />
-                                        </p>
-                                        <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
-                                        <p className="ant-upload-hint text-secondary fs-12">
-                                            PNG, JPG,JPEG and PDF files are allowed
-                                        </p>
-                                    </Dragger>
-                                    {this.state.uploadLoader && <Loader />}
-                                </div>
-                                    <div className="docfile-container">
-                                        {this.getUploadedFiles(doc.id)?.path?.map((file, idx1) => <div key={idx1} className="docfile">
-                                            <span className={`icon xl ${(file.filename.slice(-3) === "zip" ? "file" : "") || (file.filename.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
-                                            <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
-                                                <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>
-                                                <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
+                                                />}
+                                                {this.state.errorWarning !== undefined && this.state.errorWarning !== null && (
+                                                    <div style={{ width: '100%' }}>
+                                                        <Alert
+                                                            className="w-100 mb-16"
+                                                            type="warning"
+                                                            description={this.state.errorWarning}
+                                                            showIcon
+                                                            closable={false}
+                                                            style={{ marginBottom: 0, marginTop: '16px' }}
+                                                        />
+                                                    </div>
+                                                )}
+                                                <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-4" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} onChange={(props) => { this.handleUpload(props, doc) }}
+                                                    headers={{ Authorization: `Bearer ${this.props.user.access_token}` }}>
+                                                    <p className="ant-upload-drag-icon">
+                                                        <span className="icon xxxl doc-upload" />
+                                                    </p>
+                                                    <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
+                                                    <p className="ant-upload-hint text-secondary fs-12">
+                                                        PNG, JPG,JPEG and PDF files are allowed
+                                                    </p>
+                                                </Dragger>
+                                                {this.state.uploadLoader && <Loader />}
                                             </div>
-                                            <span className="icon md close c-pointer" onClick={() => this.deleteDocument(this.getUploadedFiles(doc.id), idx1, true)} />
-                                        </div>)}
-                                    </div>
-                                    <div className="text-center my-36">
+                                            <div className="docfile-container">
+                                                {this.getUploadedFiles(doc.id)?.path?.map((file, idx1) => <div key={idx1} className="docfile">
+                                                    <span className={`icon xl ${(file.filename.slice(-3) === "zip" ? "file" : "") || (file.filename.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
+                                                    <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
+                                                        <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>
+                                                        <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
+                                                    </div>
+                                                    <span className="icon md close c-pointer" onClick={() => this.deleteDocument(this.getUploadedFiles(doc.id), idx1, true)} />
+                                                </div>)}
+                                            </div>
+                                            {/* <div className="text-center my-36">
                                         <Button className="pop-btn px-36" onClick={() => this.docReject(doc)} loading={this.state.btnLoading}>
 
                                         Submit</Button>
-                                    </div>
-                                </>}
+                                    </div> */}
+                                            <Form.Item className="text-center my-36">
+                                                <Button
+                                                    htmlType="submit"
+                                                    size="large"
+                                                    className="pop-btn mb-36 px-36"
+                                                    loading={this.state.btnLoading}
+                                                    style={{ width: "300px" }}
+                                                >
+                                                    Submit
+                                                </Button>
+                                            </Form.Item> 
+                                        </Form>
+                                    </>}
                             </Panel>
                         </Collapse>)}
                 </div>
@@ -519,7 +540,7 @@ class CaseView extends Component {
             </div></>;
     }
 }
-const mapStateToProps = ({ userConfig }) => {
-    return { userProfileInfo: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData }
+const mapStateToProps = ({ userConfig, oidc }) => {
+    return { userProfileInfo: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData, user: oidc.user }
 }
 export default connect(mapStateToProps)(CaseView);

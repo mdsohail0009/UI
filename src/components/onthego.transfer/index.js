@@ -21,14 +21,11 @@ import FiatAddress from '../addressbook.component/fiat.address'
 import alertIcon from '../../assets/images/pending.png'
 import success from '../../assets/images/success.png'
 import NumberFormat from 'react-number-format'
-import ConnectStateProps from '../../utils/state.connect'
 import {
   fetchPayees,
   getCoinwithBank,
   fetchPastPayees,
   confirmTransaction,
-  updatePayee,
-  document,
   saveWithdraw,
   validateAmount,
 } from './api'
@@ -86,6 +83,8 @@ class OnthegoFundTransfer extends Component {
     fiatWallets: [],
     isShowGreyButton: false,
     permissions: {},
+    filtercoinsList: [],
+    searchFiatVal: '',
   }
   componentDidMount() {
     this.verificationCheck()
@@ -98,12 +97,14 @@ class OnthegoFundTransfer extends Component {
           this.setState({
             ...this.state,
             fiatWallets: res.data,
+            filtercoinsList: res.data,
             fiatWalletsLoading: false,
           })
         } else {
           this.setState({
             ...this.state,
             fiatWallets: [],
+            filtercoinsList: [],
             fiatWalletsLoading: false,
           })
         }
@@ -185,15 +186,6 @@ class OnthegoFundTransfer extends Component {
           isVerificationEnable: false,
         })
       }
-      // if(verfResponse.isPhoneVerified&&verfResponse.isEmailVerification) {
-      //     this.setState({ ...this.state, isPhMail: true});
-      // }
-      // if(verfResponse.isPhoneVerified&&verfResponse.twoFactorEnabled) {
-      //     this.setState({ ...this.state, isShowGreyButton: true});
-      // }
-      // if(verfResponse.twoFactorEnabled&&verfResponse.isEmailVerification) {
-      //     this.setState({ ...this.state, isAuthMail: true});
-      // }
     } else {
       this.setState({
         ...this.state,
@@ -242,6 +234,19 @@ class OnthegoFundTransfer extends Component {
         ...this.state,
         filterObj: this.state.payees,
         searchVal: val,
+      })
+  }
+  handleFiatSearch = ({ target: { value: val } }) => {
+    if (val) {
+      const fiatWallets = this.state.filtercoinsList?.filter((item) =>
+        item.walletCode.toLowerCase().includes(val.toLowerCase()),
+      )
+      this.setState({ ...this.state, fiatWallets, searchFiatVal: val })
+    } else
+      this.setState({
+        ...this.state,
+        fiatWallets: this.state.filtercoinsList,
+        searchFiatVal: val,
       })
   }
   saveWithdrawdata = async () => {
@@ -343,8 +348,6 @@ class OnthegoFundTransfer extends Component {
     }
   }
   changesVerification = (obj) => {
-    //this.setState({ ...this.state, verifyData: obj })
-    console.log(obj)
     if (
       obj.isPhoneVerification &&
       obj.isEmailVerification &&
@@ -353,8 +356,7 @@ class OnthegoFundTransfer extends Component {
       !obj.verifyData?.twoFactorEnabled
     ) {
       this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj })
-    }
-    if (
+    } else if (
       obj.isPhoneVerification &&
       obj.isAuthenticatorVerification &&
       obj.verifyData?.isPhoneVerified &&
@@ -362,8 +364,7 @@ class OnthegoFundTransfer extends Component {
       !obj.verifyData?.isEmailVerification
     ) {
       this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj })
-    }
-    if (
+    } else if (
       obj.isAuthenticatorVerification &&
       obj.isEmailVerification &&
       obj.verifyData?.twoFactorEnabled &&
@@ -371,8 +372,7 @@ class OnthegoFundTransfer extends Component {
       !obj.verifyData?.isPhoneVerified
     ) {
       this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj })
-    }
-    if (
+    } else if (
       obj.isPhoneVerification &&
       obj.isAuthenticatorVerification &&
       obj.isEmailVerification &&
@@ -381,8 +381,7 @@ class OnthegoFundTransfer extends Component {
       obj.verifyData?.isEmailVerification
     ) {
       this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj })
-    }
-    if (
+    } else if (
       obj.verifyData?.isLiveVerification &&
       obj.isEmailVerification &&
       !obj.verifyData?.isPhoneVerified &&
@@ -390,8 +389,7 @@ class OnthegoFundTransfer extends Component {
       obj.verifyData?.isEmailVerification
     ) {
       this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj })
-    }
-    if (
+    } else if (
       obj.verifyData?.isLiveVerification &&
       obj.isPhoneVerification &&
       !obj.verifyData?.twoFactorEnabled &&
@@ -399,15 +397,20 @@ class OnthegoFundTransfer extends Component {
       obj.verifyData?.isPhoneVerified
     ) {
       this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj })
-    }
-    if (
-      obj.verifyData?.isLiveVerification &&
-      obj.isAuthenticatorVerification &&
-      !obj.verifyData?.isPhoneVerified &&
-      !obj.verifyData?.isEmailVerification &&
-      obj.verifyData?.twoFactorEnabled
-    ) {
-      this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj })
+    } else {
+      if (
+        obj.verifyData?.isLiveVerification &&
+        obj.isAuthenticatorVerification &&
+        !obj.verifyData?.isPhoneVerified &&
+        !obj.verifyData?.isEmailVerification &&
+        obj.verifyData?.twoFactorEnabled
+      ) {
+        this.setState({
+          ...this.state,
+          isShowGreyButton: true,
+          verifyData: obj,
+        })
+      }
     }
   }
   isErrorDispaly = (objValue) => {
@@ -452,6 +455,7 @@ class OnthegoFundTransfer extends Component {
     this.setState({ ...this.state, selectedCurrency: e })
   }
 
+  fiatHeading = (data) => {}
   keyDownHandler = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault()
@@ -524,14 +528,11 @@ class OnthegoFundTransfer extends Component {
                 </Title>
               </div>
               <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                {/* <Text className="fs-14 mb-8 text-white d-block fw-200">
-                        Search For Beneficiary *
-                    </Text> */}
                 <Search
                   placeholder="Search Currency"
-                  value={this.state.searchVal}
+                  value={this.state.searchFiatVal}
                   addonAfter={<span className="icon md search-white" />}
-                  onChange={this.handleSearch}
+                  onChange={this.handleFiatSearch}
                   size="middle"
                   bordered={false}
                   className="text-center mb-16"
@@ -593,9 +594,6 @@ class OnthegoFundTransfer extends Component {
       ),
       enteramount: (
         <>
-          <div className="mt-8">
-            <Title className="sub-heading code-lbl">Send Fiat</Title>
-          </div>
           {isVarificationLoader && <Loader />}
           {!isVarificationLoader && (
             <Form
@@ -604,7 +602,6 @@ class OnthegoFundTransfer extends Component {
               ref={this.enteramtForm}
               onFinish={this.amountnext}
               scrollToFirstError
-              onSubmit={this.submitHandler}
             >
               {!isVerificationEnable && (
                 <Alert
@@ -669,15 +666,14 @@ class OnthegoFundTransfer extends Component {
                           allowNegative={false}
                           thousandSeparator={','}
                           onKeyDown={this.keyDownHandler}
-                          //addonBefore={this.state.selectedCurrency}
                           addonBefore={
                             <Select
                               defaultValue={this.state.selectedCurrency}
                               onChange={(e) => this.handleCurrencyChange(e)}
                               placeholder="Select"
                             >
-                              <option value="EUR">EUR</option>
                               <option value="USD">USD</option>
+                              <option value="EUR">EUR</option>
                             </Select>
                           }
                           onValueChange={() => {
@@ -700,10 +696,8 @@ class OnthegoFundTransfer extends Component {
                           The amount must be greater than EUR 50
                         </div>
                       )}
-                      {/*  */}
                     </Col>
                   </Row>
-
                   <Row gutter={[16, 16]} className="mt-16">
                     <Col
                       xs={24}
@@ -770,18 +764,6 @@ class OnthegoFundTransfer extends Component {
             </Title>
           </div>
           <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-            {/* <Form.Item
-                        name="lastName"
-                        label={"Search for Payee"}
-                        colon={false}
-                    >
-                        <Search
-                            placeholder="Search for Payee" bordered={false} showSearch
-                            className=" "
-                            onChange={this.handleSearch}
-                            value={this.state.searchVal}
-                        />
-                    </Form.Item> */}
             <Search
               placeholder="Search for Payee"
               value={this.state.searchVal}
@@ -1085,6 +1067,7 @@ class OnthegoFundTransfer extends Component {
             autoComplete="off"
             initialValues={this.state.codeDetails}
             ref={this.reasonForm}
+            onSubmit={this.submitHandler}
           >
             {this.state.errorMessage && (
               <Alert
@@ -1131,60 +1114,7 @@ class OnthegoFundTransfer extends Component {
                 }
               />
             </React.Fragment>
-            {/* {this.state.selectedCurrency === "USD" && <Tabs className="cust-tabs-fait" activeKey={this.state.selectedTab} onChange={(key) => this.setState({ ...this.state, selectedTab: key })}>
-                        <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"}>
-                            <Row gutter={[16, 16]}>
-                                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                                    <Form.Item
-                                        className="custom-forminput custom-label mb-0"
-                                        name="abaRoutingCode"
-                                        label={"ABA Routing COde"}
-                                        required
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message:
-                                                    apicalls.convertLocalLang("is_required"),
-                                            }
-                                        ]}
-                                    >
-                                        <Input
-                                            className="cust-input "
-                                            placeholder={"ABA Routing Code"}
-                                            maxLength="500"
-                                        />
-                                    </Form.Item>
-
-                                </Col>
-                            </Row>
-                        </Tabs.TabPane>
-                        <Tabs.TabPane tab="International USD Swift" key={"international"} className="text-white">
-                            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Form.Item
-                                    className="custom-forminput custom-label mb-0"
-                                    name="swiftRouteBICNumber"
-                                    label={"Swift / BIC Code"}
-                                    required
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message:
-                                                apicalls.convertLocalLang("is_required"),
-                                        }
-                                    ]}
-                                >
-                                    <Input
-                                        className="cust-input "
-                                        placeholder={"Swift / BIC Code"}
-                                        maxLength="500"
-                                    />
-                                </Form.Item>
-
-                            </Col>
-                        </Tabs.TabPane>
-                    </Tabs>} */}
             <Row gutter={[16, 16]}>
-              {/* <Col xs={24} md={6} lg={6} xl={6} xxl={6}></Col> */}
               <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item className="text-center">
                   <Button
@@ -1195,10 +1125,6 @@ class OnthegoFundTransfer extends Component {
                     style={{ width: '100%' }}
                     onClick={() => {
                       let validateFileds = []
-                      // if (this.state.selectedCurrency === "USD") {
-                      //     const code = this.state?.selectedTab === "domestic" ? "abaRoutingCode" : "swiftRouteBICNumber";
-                      //     validateFileds.push(code);
-                      // }
                       if (
                         !['myself', '1stparty', 'ownbusiness'].includes(
                           this.state.selectedPayee.addressType?.toLowerCase(),
@@ -1226,10 +1152,6 @@ class OnthegoFundTransfer extends Component {
                             isInternational: null,
                             documents: this.state.codeDetails?.documents,
                           }
-                          // updatePayee(obj)
-                          //     .then(async (response) => {
-                          //         this.setState({ ...this.state, loading: true, errorMessage: null });
-                          //         if (response.ok) {
                           const res = await confirmTransaction({
                             payeeId: this.state.selectedPayee.id,
                             reasonOfTransfer: fieldValues.reasionOfTransfer,
@@ -1259,10 +1181,6 @@ class OnthegoFundTransfer extends Component {
                                 res.originalError.message,
                             })
                           }
-                          //     } else {
-                          //         this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, ...fieldValues }, loading: false, errorMessage: response.data?.message || response.data || response.originalError.message });
-                          //     }
-                          // })
                         })
                         .catch(() => {})
                     }}
@@ -1271,7 +1189,6 @@ class OnthegoFundTransfer extends Component {
                   </Button>
                 </Form.Item>
               </Col>
-              {/* <Col xs={24} md={6} lg={6} xl={6} xxl={6}></Col> */}
             </Row>
           </Form>
         </React.Fragment>
@@ -1291,8 +1208,6 @@ class OnthegoFundTransfer extends Component {
               onFinish={this.transferDetials}
               autoComplete="off"
             >
-              {/* <div className="text-center"> <text Paragraph
-                        className='text-white fs-24 fw-600 mb-16 px-4 '>Review Details Of Transfer</text></div> */}
               {this.state.errorMessage && (
                 <Alert
                   type="error"
@@ -1314,10 +1229,6 @@ class OnthegoFundTransfer extends Component {
                     >
                       Transfer details
                     </Text>
-
-                    {/* <div><Link >Edit
-                                </Link>
-                                </div> */}
                   </div>
                 </Col>
                 {'  '}
@@ -1361,12 +1272,6 @@ class OnthegoFundTransfer extends Component {
                     </Title>
                   </div>
                 </Col>
-                {/* <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400  ">Total we will convert</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500   text-right"></Title>
-                            </div>
-                        </Col> */}
                 <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                   <div
                     className="pay-list py-4"
@@ -1385,12 +1290,6 @@ class OnthegoFundTransfer extends Component {
                     </Title>
                   </div>
                 </Col>
-                {/* <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400  ">Description</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500   text-right">Bike</Title>
-                            </div>
-                        </Col> */}
               </Row>
 
               <Row gutter={24} className=" text-white mt-36">
@@ -1405,10 +1304,6 @@ class OnthegoFundTransfer extends Component {
                     >
                       Recipient details
                     </Text>
-
-                    {/* <div><Link >Change
-                                </Link>
-                                </div> */}
                   </div>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
@@ -1572,14 +1467,6 @@ class OnthegoFundTransfer extends Component {
                   <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                     <div className="text-right mt-36 create-account">
                       <Form.Item className="mb-0 mt-16">
-                        {/* <Translate
-                                        content="cancel"
-                                        component={Button}
-                                        onClick={() => this.onCancel()}
-                                        type="text"
-                                        size="large"
-                                        className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn"
-                                    /> */}
                         <Button
                           htmlType="button"
                           onClick={() => {
@@ -1616,6 +1503,7 @@ class OnthegoFundTransfer extends Component {
                 this.chnageStep('reviewdetails')
               })
             }}
+            fiatHeadingUpdate={this.fiatHeading}
             onAddressOptionsChange={(value) =>
               this.setState({ ...this.state, addressOptions: value })
             }
@@ -1634,7 +1522,6 @@ class OnthegoFundTransfer extends Component {
             <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                        Please sign using link received in email to whitelist your address. `}</Text>
             <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
-            {/*<div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBOARD</Button> */}
           </div>
         </div>
       ),
@@ -1646,9 +1533,6 @@ class OnthegoFundTransfer extends Component {
             <Title level={2} className="text-white-30 my-16 mb-0">
               Your transaction has been processed successfully
             </Title>
-            {/* <Text className="text-white-30">{`Declaration form has been sent to ${"have123@yopmail.com"} 
-                   Please sign using link received in email to whitelist your address`}</Text> */}
-            {/*<div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBOARD</Button> */}
           </div>
         </div>
       ),

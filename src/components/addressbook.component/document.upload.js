@@ -4,9 +4,10 @@ import Loader from "../../Shared/loader";
 import { document } from "../onthego.transfer/api";
 import apiCalls from "../../api/apiCalls";
 import { bytesToSize } from "../../utils/service";
+import ConnectStateProps from "../../utils/state.connect";
 
 const { Dragger } = Upload;
-const { Paragraph, Text, Title } = Typography;
+const { Paragraph, Text } = Typography;
 const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
     const suffix = children.slice(-suffixCount).trim();
@@ -51,23 +52,12 @@ class AddressDocumnet extends Component {
                      {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
                     <Form.Item name={"files"} required rules={[{
                         validator: (_, value) => {
-                            // let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
-                            // // if (this.state.filesList.length == 0) {
-                            // //    // this.setState({...this.state,isDocLoading:false,errorMessage:null })
-                            // //     return Promise.reject("At least one document is required")
-                            // // }
-                            // if (value&&!fileType[value.file.type]) {
-                            //     this.setState({...this.state,isDocLoading:false,errorMessage:null })
-                            //     return Promise.reject("File is not allowed. You can upload jpg, png, jpeg and PDF  files");
-                            // }
-                            // else {
                                 const isValidFiles = this.state.filesList.filter(item => (item.name || item.documentName).indexOf(".") != (item.name || item.documentName).lastIndexOf(".")).length == 0;
                                 if (isValidFiles) { return Promise.resolve(); } else {
                                     this.setState({...this.state,isDocLoading:false,errorMessage:null })
                                     return Promise.reject("File don't allow double extension");
                                 }
 
-                            // }
                         },
 
                     }
@@ -77,8 +67,8 @@ class AddressDocumnet extends Component {
                             multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                             showUploadList={false}
                             beforeUpload={(props) => {
-                              //  return props.name.split(".").length < 2;
                             }}
+                            headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
                             onChange={({ file }) => {
                                 this.setState({ ...this.state, isDocLoading: true });
                                 if (file.status === "done") {
@@ -129,24 +119,22 @@ class AddressDocumnet extends Component {
                 title={"Confirm delete"}
                 footer={
                     <>
+                    	<div className="cust-pop-up-btn crypto-pop">
                         <Button
-                            style={{ width: "30px", border: "1px solid #f2f2f2" }}
-                            className=" pop-cancel"
+                            style={{ margin: "0 8px" }}
+                            className="primary-btn pop-cancel btn-width"
                             onClick={() => { this.setState({ ...this.state, showDeleteModal: false }) }}>
-                            No
+                            NO
                         </Button>
                         <Button
                             className="primary-btn pop-btn"
                             onClick={() => {
                                 let { documents: docs } = this.state;
                                 let files = docs.details;
-                                for (let k in files) {
-                                    if (files[k].id == '00000000-0000-0000-0000-000000000000') {
-                                        files.splice(k, 1);
-                                    } else {
-                                        if (files[k].id == this.state.selectedObj.id) {
-                                            files[k].state = 'Deleted'
-                                        }
+                                for(var k in files){
+                                    if(files[k].id==this.state.selectedObj?.id){
+                                        files[k].state='Deleted';
+                                        files[k].isChecked=false;
                                     }
                                 }
                                 let obj=Object.assign([],files)
@@ -155,6 +143,11 @@ class AddressDocumnet extends Component {
                                 if(!this.state?.isEdit){
                                     obj.splice(this.state.selectedFileIdx, 1);
                                 }
+                                for (var l in files) {
+                                    if (files[l].id == "00000000-0000-0000-0000-000000000000" && this.state?.isEdit) {
+                                        obj.splice(this.state.selectedFileIdx, 1);
+                                    }
+                                }
                                 this.setState({ ...this.state, filesList, showDeleteModal: false });
                                 docs.details=Object.assign([],obj)
                                 this.props?.onDocumentsChange(docs);
@@ -162,6 +155,7 @@ class AddressDocumnet extends Component {
                             style={{ width: 120, height: 50 }}>
                             {apiCalls.convertLocalLang("Yes")}
                         </Button>
+                        </div>
                     </>
                 }>
 
@@ -170,4 +164,4 @@ class AddressDocumnet extends Component {
         </Row>
     }
 }
-export default AddressDocumnet;
+export default ConnectStateProps(AddressDocumnet);

@@ -314,7 +314,7 @@ const Verifications = (props) => {
                 type="text"
                 style={{ color: "black", margin: "0 auto" }}
                 loading={email.btnLoader}
-                onClick={() => sendEmailOTP()}><Text className="text-yellow" >Click here to get code</Text></Button>
+                onClick={() => sendEmailOTP()}><Text className="text-yellow getcode" >Click here to get code</Text></Button>
         ),
         resendotp: (
             <Button
@@ -555,7 +555,7 @@ const Verifications = (props) => {
                                 rules={[
                                     {
                                         required: true,
-                                        message: "is required",
+                                        message: "Is required",
                                     },
                                 ]}
                             >

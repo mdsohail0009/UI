@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Typography, Button, Modal, Tooltip } from "antd";
 import Loader from "../../Shared/loader";
-import { getAddress, getFileURL, getFavData, getViewData, } from "./api";
+import {  getFileURL, getViewData, } from "./api";
 import { connect } from "react-redux";
 import FilePreviewer from "react-file-previewer";
 import { bytesToSize } from "../../utils/service";
-import { addressTabUpdate, setAddressStep, selectedTab } from "../../reducers/addressBookReducer";
+import { addressTabUpdate, setAddressStep } from "../../reducers/addressBookReducer";
 const { Title, Text } = Typography;
 const EllipsisMiddle = ({ suffixCount, children }) => {
 	const start = children?.slice(0, children.length - suffixCount).trim();
@@ -113,14 +113,14 @@ const AddressFiatView = (props) => {
 							{fiatAddress && (
 								<div className="custom-alert-width">
 									<Title className="basic-info p-0 basicinfo">
-														Beneficiary Details
+									Recipient Details
 														</Title>
 								<Row gutter={8}>
 									<Col xl={24} xxl={24} className="bank-view">
 										<Row className="kpi-List">
-											<Col xs={24} sm={24} md={12} lg={8} xxl={16}>
+											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
-													<label className="kpi-label">Save Whitelist Name As</label>
+													<label className="kpi-label">Whitelist Name</label>
 													<div className=" kpi-val">
 														{fiatAddress?.favouriteName === " " ||
 															fiatAddress?.favouriteName === null
@@ -136,10 +136,10 @@ const AddressFiatView = (props) => {
 														{fiatAddress?.addressType === " " ||
 															fiatAddress?.addressType === null
 															? "-"
-															:(fiatAddress?.addressType=="myself")&&"MY SELF"||
-															 (fiatAddress?.addressType=="individuals")&&"INDIVIDUALS"||
-															(fiatAddress?.addressType=="ownbusiness")&&"OWN BUSINESS"||
-															(fiatAddress?.addressType=="otherbusiness")&&"OTHER BUSINESS"}
+															:(fiatAddress?.addressType?.toLowerCase()=="myself")&&"My Self"||
+															 (fiatAddress?.addressType?.toLowerCase()=="individuals")&&"Individuals"||
+															(fiatAddress?.addressType?.toLowerCase()=="ownbusiness")&&"My Company"||
+															(fiatAddress?.addressType?.toLowerCase()=="otherbusiness")&&"Other Business"}
 
 													</div>}
 												</div>
@@ -151,7 +151,8 @@ const AddressFiatView = (props) => {
 														{fiatAddress?.transferType === " " ||
 															fiatAddress?.transferType === null
 															? "-"
-															: fiatAddress?.transferType.toUpperCase()}
+															: (fiatAddress?.transferType == "internationalIBAN") && "International USD IBAN" ||
+															fiatAddress?.transferType.toUpperCase()}
 
 													</div>}
 												</div>
@@ -240,7 +241,6 @@ const AddressFiatView = (props) => {
 													</div>}
 												</div>
 											</Col>
-											{/* {fiatAddress?.line2 && */}
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">Address Line 2</label>
@@ -251,8 +251,6 @@ const AddressFiatView = (props) => {
 															: fiatAddress?.line2}</div>}
 												</div>
 											</Col>
-											{/* // }
-											// {fiatAddress?.line3 && */}
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">Address Line 3</label>
@@ -263,10 +261,6 @@ const AddressFiatView = (props) => {
 															: fiatAddress?.line3}</div>}
 												</div>
 											</Col>
-											{/* // } */}
-
-
-
 
 											{fiatAddress?.country && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
@@ -318,7 +312,7 @@ const AddressFiatView = (props) => {
 											
 										</Row>
 										<Title className="basic-info p-0 basicinfo">
-											Beneficiary Bank Details
+										  Recipient Bank Details
 										</Title>
 										<Row>
 											{bankDetailes?.map((item, idx) => (
@@ -369,7 +363,7 @@ const AddressFiatView = (props) => {
 																	: item.bankType}
 															</Title>
 														</Col>}
-														{item?.accountNumber && <Col xs={24} md={24} lg={14} xl={8} xxl={4}>
+														{(item?.accountNumber && fiatAddress?.transferType != "internationalIBAN")&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
 																Bank Account Number / IBAN
 															</Text>
@@ -431,7 +425,7 @@ const AddressFiatView = (props) => {
 														</Col>}
 														{item?.bankBranch && <Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
-																Bank branch
+																Branch
 															</Text>
 															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
 
@@ -489,8 +483,7 @@ const AddressFiatView = (props) => {
 																	: item.postalCode}
 															</Title>
 														</Col>}
-														{/* {item.line1 && */}
-														 {item.walletCode!='EUR'&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
+														 {(item.walletCode!='EUR'&& fiatAddress?.transferType != "internationalIBAN")&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
 															Bank Address 1
 															</Text>
@@ -501,9 +494,7 @@ const AddressFiatView = (props) => {
 																	: item.line1}
 															</Title>
 														</Col>}
-														{/* // } */}
-														{/* {item.line2 &&  */}
-														{item.walletCode!='EUR'&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
+														{(item.walletCode!='EUR'&& fiatAddress?.transferType != "internationalIBAN")&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
 															Bank Address 2
 															</Text>
@@ -514,9 +505,6 @@ const AddressFiatView = (props) => {
 																	: item.line2}
 															</Title>
 														</Col>}
-														{/* } */}
-														
-
 													</Row>
 												</div>
 												{item?.documents?.details.map((file) => (

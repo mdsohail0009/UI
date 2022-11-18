@@ -30,7 +30,7 @@ const authReducer = (state = initialState, action) => {
             state = { ...state, user: action.payload,isLogout:false }
             return state;
         case USER_EXPIRING:
-            break;
+            return state;
         case USER_LOG_OUT:
             state = { user: null, profile: null,isLogout:true };
             return state;
