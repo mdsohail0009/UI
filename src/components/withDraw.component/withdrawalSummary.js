@@ -680,7 +680,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 											 loading={phoneVerifyLoading}
 											style={{color:"black", margin:"0 auto"}}
 											onClick={getOtpVerification}
-											disabled={verifyPhone === true}>
+											disabled={verifyPhone === true || verifyTextotp}>
 											{verifyOtp[verifyOtpText]}
 											{verifyTextotp === true && (
 												<span className="icon md greenCheck" />
@@ -753,7 +753,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 												type="text"
 												loading={emailVerifyLoading}
 												onClick={(e) => getEmailVerification(e)}
-												disabled={verifyEmail === true}>
+												disabled={verifyEmail === true || verifyEmailOtp === true}>
 												{verifyText[verifyEmailText]}
 												{verifyEmailOtp === true && (
 													<span className="icon md greenCheck" />
@@ -767,7 +767,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 						)}
 						{permissions?.withdraw  && verifyData.twoFactorEnabled == true && (
 							<Text className="fs-14 mb-8 text-white d-block fw-200">
-								Authenticator Codeddd *
+								Authenticator Code *
 							</Text>
 						)}
 						{permissions?.withdraw  && verifyData.twoFactorEnabled == true && (
@@ -820,7 +820,8 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 											type="text"
 											loading={authLoading}
 											style={{color:"black", margin:"0 auto"}}
-											onClick={getAuthenticator}>
+											onClick={getAuthenticator}
+											disabled={authDisable||verifyAuthCode}>
 											{verifyAuthCode ? (
 												<span className="icon md greenCheck"  />
 											) : (
