@@ -20,6 +20,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onCont
 
    const headingChange=(data)=>{
 		setShowHeading(data)
+        props?.fiatHeadingUpdate(data);
 	}
     return <>
          {hideTabs&&<Form
