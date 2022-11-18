@@ -152,7 +152,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
           required
           rules={[
             {
-              validator(rule, value) {
+              validator(_, value) {
                 if (!value) {
                   return Promise.reject(
                     apiClient.convertLocalLang('new_pass_word_msg')
@@ -167,7 +167,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
                     "Please enter valid content"
                   )
                 } else {
-                  return Promise.resolve();
+                  return  validateContentRule(_, value)
 
                 }
               },
