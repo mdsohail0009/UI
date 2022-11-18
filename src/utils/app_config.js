@@ -22,7 +22,5 @@ const config = {
     REACT_APP_BANKAPI_END_POINT: process.env.REACT_APP_BANKAPI_END_POINT,
     REACT_APP_SUBDOMAIN: process.env.REACT_APP_SUBDOMAIN
 }
-debugger
 const AppConfig = process.env.NODE_ENV === "development" ? config : window.AppConfig;
-console.log(process.env)
 export default AppConfig
