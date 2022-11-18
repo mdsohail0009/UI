@@ -200,8 +200,10 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
             {
               required: true,
               message: apiClient.convertLocalLang('confirm_pass_word_msg'),
-
             },
+            {
+              validator: validateContentRule
+          },
             ({ getFieldValue }) => ({
               validator(rule, value) {
                 if (!value || getFieldValue("Password") === value) {
