@@ -63,7 +63,6 @@ class SelectSellCrypto extends Component {
         }
     }
     previewSellData() {
-       
         this.setState({ ...this.state, errorMessage: '' })
         let obj = Object.assign({}, this.state.sellSaveData);
         let { withdrawMinValue, gbpInUsd, eurInUsd } = this.props.sellData.coinDetailData;
@@ -94,8 +93,8 @@ class SelectSellCrypto extends Component {
             return;
         }
         else if (this.state.CryptoAmnt > this.props.sellData.coinDetailData.coinBalance) {
-            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('available_balance_less') })
-            this.myRef.current.scrollIntoView();
+           this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('insufficientFunds') })
+           this.myRef.current.scrollIntoView();
             return;
         } else if (parseFloat(this.state.CryptoAmnt) < withdrawMinValue) {
             this.myRef.current.scrollIntoView();
