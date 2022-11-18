@@ -143,11 +143,11 @@ class AddressDocumnet extends Component {
                                 if(!this.state?.isEdit){
                                     obj.splice(this.state.selectedFileIdx, 1);
                                 }
-                                for (var l in files) {
-                                    if (files[l].id == "00000000-0000-0000-0000-000000000000" && this.state?.isEdit) {
+                                files?.map((file, indx) =>{
+                                    if (file.id == "00000000-0000-0000-0000-000000000000"&& indx == this.state.selectedFileIdx  && this.state?.isEdit) {
                                         obj.splice(this.state.selectedFileIdx, 1);
                                     }
-                                }
+                                })
                                 this.setState({ ...this.state, filesList, showDeleteModal: false });
                                 docs.details=Object.assign([],obj)
                                 this.props?.onDocumentsChange(docs);
