@@ -293,6 +293,10 @@ class OnthegoFundTransfer extends Component {
     handleCurrencyChange =(e) => {
         this.setState({ ...this.state, selectedCurrency: e});
     }
+
+    fiatHeading =(data)=>{
+      
+	}
  
     renderStep = (step) => {
         const { filterObj, pastPayees, payeesLoading, isVarificationLoader, isVerificationEnable,isPhMail,isShowGreyButton,isAuthMail } = this.state;
@@ -769,7 +773,8 @@ class OnthegoFundTransfer extends Component {
                         this.chnageStep("reviewdetails")
                     })
                 }
-                }
+                } 
+                fiatHeadingUpdate={this.fiatHeading}
                     onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} />
             </>,
             declaration:  <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
