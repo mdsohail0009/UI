@@ -410,7 +410,7 @@ class CaseView extends Component {
                             accordion className="accordian mb-24 mb-togglespace "
                             defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
                             <Panel header={doc.documentName} key={idx + 1} extra={doc.state ? (<span className={`${doc.state ? doc.state.toLowerCase() + " staus-lbl" : ""}`}>{doc.state}</span>) : ""}>
-                                {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>}
+                                {/* {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>} */}
                                 {this.state.documentReplies[doc.id]?.data?.map((reply, ix) => <div key={ix} className="reply-container">
                                     <div className="user-shortname">{reply?.repliedBy?.slice(0, 2)}</div>
                                     <div className="reply-body">
@@ -427,7 +427,7 @@ class CaseView extends Component {
                                         </div>
                                     </div>
                                 </div>)}
-                                {!this.state.documentReplies[doc.id]?.loading && doc.state != "Approved" && this.state.docDetails.caseState != 'Approved' && this.state.docDetails.caseState != 'Cancelled' &&
+                                {(!this.state.documentReplies[doc.id]?.loading && doc.state != "Approved" && this.state.docDetails.caseState != 'Approved' && this.state.docDetails.caseState != 'Cancelled')&&
                                     <>
                                         <Form
                                             onFinish={() => this.docReject(doc)}
@@ -460,7 +460,6 @@ class CaseView extends Component {
                                               
 
                                                 {this.state.isMessageError == doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter message</div>}
-                                                {/* {this.state.validHtmlError && <Translate Component={Text} content="please_enter_valid_content" className="fs-14 text-red" />} */}
                                                 {this.state.errorMessage != null && <Alert
                                                     description={this.state.errorMessage}
                                                     type="error"
@@ -502,11 +501,7 @@ class CaseView extends Component {
                                                     <span className="icon md close c-pointer" onClick={() => this.deleteDocument(this.getUploadedFiles(doc.id), idx1, true)} />
                                                 </div>)}
                                             </div>
-                                            {/* <div className="text-center my-36">
-                                        <Button className="pop-btn px-36" onClick={() => this.docReject(doc)} loading={this.state.btnLoading}>
-
-                                        Submit</Button>
-                                    </div> */}
+                        
                                             <Form.Item className="text-center my-36">
                                                 <Button
                                                     htmlType="submit"
@@ -520,6 +515,19 @@ class CaseView extends Component {
                                             </Form.Item> 
                                         </Form>
                                     </>}
+                                     {this.state.documentReplies[doc.id]?.loading ? <div className="text-center"><Spin size="large" /></div>:
+                                     <> 
+                                   
+                                    {((!this.state?.documentReplies[doc.id]?.data ||
+                                        this.state?.documentReplies[doc.id]?.data?.length == 0)&&(( doc.state == "Approved" || this.state.docDetails.caseState == 'Approved' || this.state.docDetails.caseState == 'Cancelled'))
+                                        ) && (
+                                            <Empty
+                                                 image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                                description="No documents submitted"
+                                            />
+                                        )}
+                                        </>} 
+                                    
                             </Panel>
                         </Collapse>)}
                 </div>
