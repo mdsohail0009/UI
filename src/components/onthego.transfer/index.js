@@ -605,21 +605,32 @@ class OnthegoFundTransfer extends Component {
                                         }
                                         this.reasonForm.current.validateFields(validateFileds).then(async () => {
                                             const fieldValues = this.reasonForm.current.getFieldsValue();
-                                            this.setState({ ...this.state, loading: true, errorMessage: null });
-                                            const obj = {
-                                                "payeeId": this.state.selectedPayee.id,
-                                                "customerId": this.props.userProfile.id,
-                                                "reasonOfTransfer": fieldValues?.reasionOfTransfer,
-                                                "routingNumber": fieldValues?.abaRoutingCode,
-                                                "isInternational": null,
-                                                "documents": this.state.codeDetails?.documents
+                                            if(!fieldValues.files && !this.state.codeDetails?.documents) {
+                                                this.setState({ ...this.state, isLoading: false, errorMessage: "At least one document is required" });
+                                                this.reasonForm.current?.scrollIntoView();
                                             }
-                                            const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasionOfTransfer, amount: this.state.amount, documents: this.state.codeDetails?.documents });
-                                            if (res.ok) {
-                                                this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => {    this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails")});
-                                            } else {
-                                                this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, ...fieldValues }, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
+                                            else if (this.state.codeDetails?.documents && this.state.codeDetails?.documents?.details?.length == 0) {
+                                                   this.setState({ ...this.state, isLoading: false, errorMessage: "At least one document is required" });
+                                                   this.reasonForm.current?.scrollIntoView();
                                             }
+                                            else {
+                                                this.setState({ ...this.state, loading: true, errorMessage: null });
+                                                const obj = {
+                                                    "payeeId": this.state.selectedPayee.id,
+                                                    "customerId": this.props.userProfile.id,
+                                                    "reasonOfTransfer": fieldValues?.reasionOfTransfer,
+                                                    "routingNumber": fieldValues?.abaRoutingCode,
+                                                    "isInternational": null,
+                                                    "documents": this.state.codeDetails?.documents
+                                                }
+                                                const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasionOfTransfer, amount: this.state.amount, documents: this.state.codeDetails?.documents });
+                                                if (res.ok) {
+                                                    this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => {    this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails")});
+                                                } else {
+                                                    this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, ...fieldValues }, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
+                                                }
+                                            }
+                                            
 
                                         }).catch(() => { });
                                     }}
