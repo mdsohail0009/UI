@@ -59,10 +59,10 @@ class Home extends Component {
                         } />
                 </div>}
                 {this.props.dashboard.notices.loading === false ? <Carousel className="docreq-slider" autoplay={true}>
-                    {notices?.map((notice, idx) => <div key={idx}>
+                    {notices?.map((notice, idx) => <div key={idx} className="notify-alerticon">
                         <AlertConfirmation type="error" title={notice.title} showIcon description="Our Compliance Team is requesting documents in line with your recent transaction, Please click View Details. Thank you for your patience."
                             action={
-                                <Button size="small" type="text" onClick={() => this.props.history.push(`/caseView/${notice.typeId}`)}>
+                                <Button className='notify-viewbtn' size="small" type="text" onClick={() => this.props.history.push(`/caseView/${notice.typeId}`)}>
                                     View Details
                                 </Button>
                             } />

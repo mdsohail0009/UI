@@ -434,7 +434,7 @@ class CaseView extends Component {
                                         >
                                             <div>
                                                     <Form.Item
-                                                     className="fs-12 text-white-50 d-block mb-4 fw-200"
+                                                     className="fs-12 text-white-50 d-block mb-12 fw-200"
                                                         name=""
                                                        label="Reply"
                                                         rules={[
@@ -492,7 +492,7 @@ class CaseView extends Component {
                                                 {this.state.uploadLoader && <Loader />}
                                             </div>
                                             <div className="docfile-container">
-                                                {this.getUploadedFiles(doc.id)?.path?.map((file, idx1) => <div key={idx1} className="docfile">
+                                                {this.getUploadedFiles(doc.id)?.path?.map((file, idx1) => <div key={idx1} className="docfile uploaddoc-margin">
                                                     <span className={`icon xl ${(file.filename.slice(-3) === "zip" ? "file" : "") || (file.filename.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                                     <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
                                                         <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>
