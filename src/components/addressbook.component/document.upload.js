@@ -98,8 +98,8 @@ class AddressDocumnet extends Component {
                             </p>
                         </Dragger>
                     </Form.Item>
-                    {this.state?.filesList?.map((file, indx) => <div className="docfile">
-                        {(file.status === "done" || file.status == true) && <>
+                    {this.state?.filesList?.map((file, indx) => <div>
+                        {((file.status === "done" || file.status == true)&& file.state !='Deleted') && <> <div className="docfile">
                             <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "":(file.documentName?.slice(-3) === "zip" ? "file" : "")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                             <div className="docdetails">
                                 <EllipsisMiddle suffixCount={6}>{file.name || file.documentName}</EllipsisMiddle>
@@ -109,7 +109,7 @@ class AddressDocumnet extends Component {
                                 this.setState({ ...this.state, showDeleteModal: true, selectedFileIdx: indx,selectedObj:file })
 
                             }} />
-                        </>}
+                        </div></>}
                     </div>)}
                     {this.state.isDocLoading && <Loader />}
                 </div>
@@ -139,13 +139,14 @@ class AddressDocumnet extends Component {
                                 }
                                 let obj=Object.assign([],files)
                                 let {filesList}=this.state
-                                filesList.splice(this.state.selectedFileIdx, 1);
                                 if(!this.state?.isEdit){
+                                    filesList.splice(this.state.selectedFileIdx, 1);
                                     obj.splice(this.state.selectedFileIdx, 1);
                                 }
                                 files?.map((file, indx) =>{
-                                    if (file.id == "00000000-0000-0000-0000-000000000000"&& indx == this.state.selectedFileIdx  && this.state?.isEdit) {
-                                        obj.splice(this.state.selectedFileIdx, 1);
+                                    if (file.id == "00000000-0000-0000-0000-000000000000"&& indx == this.state.selectedFileIdx &&  file.state != "Deleted"  && this.state?.isEdit) {
+                                        filesList.splice(indx, 1);
+                                        obj.splice(indx, 1);
                                     }
                                 })
                                 this.setState({ ...this.state, filesList, showDeleteModal: false });
