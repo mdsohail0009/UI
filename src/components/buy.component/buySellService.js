@@ -49,14 +49,16 @@ export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, m
         if (cryptValue < minPurchase) {
             validate.valid = false;
             validate.message = apicalls.convertLocalLang('purchase_min') + " " + minPurchase + ". " + "Please contact support for more details."
-        } else if (cryptValue > maxPurchase) {
-            validate.valid = false;
-            validate.message = apicalls.convertLocalLang('purchase_max') + " " + maxPurchase + ". " + "Please contact support for higher amounts."
-        }
-        else if (parseFloat(localValue) > maxPurchaseAmt) {
+        } 
+        else if (parseFloat(localValue) > maxPurchaseAmt || cryptValue > maxPurchaseAmt) {
             validate.valid = false;
             validate.message = apicalls.convertLocalLang('purchase_max') + " " + maxAmtMessage + ". " + "Please contact support for higher amounts."
         }
+        else if (cryptValue > maxPurchase) {
+            validate.valid = false;
+            validate.message = apicalls.convertLocalLang('purchase_max') + " " + maxPurchase + ". " + "Please contact support for higher amounts."
+        }
+       
     }
     return validate;
 }
