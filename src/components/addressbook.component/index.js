@@ -598,7 +598,7 @@ class AddressBook extends Component {
 			"ownbusiness": "My Company",
 			"individuals": "Individuals",
 			"otherbusiness": "Other Business",
-			"myself": "Myself"
+			"myself": "My Self"
 		};
 		return stepcodes[type];
 	};
