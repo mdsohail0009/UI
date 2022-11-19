@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { Form, Row, Col, Typography, Select, AutoComplete, Input, Tabs, Button,Alert,Spin,Image } from 'antd'
+import { Form, Row, Col, Typography, Select, Input, Tabs, Button,Alert,Spin,Image } from 'antd'
 import Translate from "react-translate-component";
 import apiCalls from "../../../api/apiCalls"
 import { validateContentRule } from "../../../utils/custom.validator";
@@ -63,17 +63,26 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         }
     }
     const saveTransfer = async(values) => {
-		setBtnLoading(true);
+        setBtnLoading(true);
+        seterrorMessage(null);
+        if (Object.hasOwn(values, 'iban')) {
+            if ((!bankDetails || Object.keys(bankDetails).length == 0)) {
+                setBtnLoading(false);
+                seterrorMessage("Please click validate button before saving");
+                useDivRef.current.scrollIntoView();
+                return;
+            }
+        }
         let saveObj=Object.assign({},saveTransferObj)
         saveObj.favouriteName=values.favouriteName;
-        saveObj.payeeAccountModels[0].iban=currency=='EUR'?values.iban:null;
+        saveObj.payeeAccountModels[0].iban= (currency=='EUR' || (addressOptions?.transferType == "internationalIBAN"||addressOptions?.tabType == "internationalIBAN")) ? values.iban : null;
         saveObj.payeeAccountModels[0].accountNumber=currency=='USD'?values.accountNumber:null;
         saveObj.payeeAccountModels[0].abaRoutingCode=values.abaRoutingCode?values.abaRoutingCode:null;
         saveObj.payeeAccountModels[0].swiftRouteBICNumber=values.swiftRouteBICNumber?values.swiftRouteBICNumber:null;
         saveObj.payeeAccountModels[0].line1=currency=='USD'?values.line1:null;
         saveObj.payeeAccountModels[0].line2=currency=='USD'?values.line2:null;
         saveObj.payeeAccountModels[0].state=bankDetails.state?bankDetails.state:null;
-        saveObj.payeeAccountModels[0].bankName=currency=='EUR'?bankDetails.bankName:values.bankName;
+        saveObj.payeeAccountModels[0].bankName=(currency=='EUR' || addressOptions?.tabType == "internationalIBAN")?bankDetails.bankName:values.bankName;
         saveObj.payeeAccountModels[0].bic=bankDetails.routingNumber?bankDetails.routingNumber:null;
         saveObj.payeeAccountModels[0].branch=bankDetails.branch?bankDetails.branch:null;
         saveObj.payeeAccountModels[0].country=bankDetails.country?bankDetails.country:null;
@@ -107,7 +116,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 }
             }
             else {
-                setShowDeclartion(true)
+                setShowDeclartion(true);
+                props.isHideTabs(false)
             }
             props.headingUpdate(true)
         }else{seterrorMessage(isErrorDispaly(response));
@@ -116,23 +126,31 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         }
     }
     const getBankDeails = async (e,isValid) => {
+        setbankDetails({});
         setEnteredIbanData(e);
+        seterrorMessage(null);
         setIsShowValid(false);
-        if(e?.length>10&&isValid){
+        if(e?.length>=10&&isValid){
             setValidIban(true) 
             isValid ? setIbanLoader(true) : setIbanLoader(false);
             const response = await apiCalls.getIBANData(e);
             if (response.ok) {
-                if(isValid){
-                    setValidateLoading(false);
-                    setIsShowBankDetails(true);
-                    setbankDetails(response.data);
-                }
                 if(isValid&&response.data && (response.data?.routingNumber || response.data?.bankName)){
                     setValidIban(true)
                     setIsShowBankDetails(true);
+                    setValidateLoading(false);
+                    setbankDetails(response.data);
                 }else{
-                    setValidIban(false)
+                    setValidateLoading(false);
+                     setValidIban(false)
+                    if (bankDetails && (!bankDetails?.routingNumber || !bankDetails?.bankName)) {
+                        setIsShowBankDetails(false);
+                        setIbanLoader(false)
+                        setbankDetails({})
+                        seterrorMessage("No bank details are available for this IBAN number");
+                        useDivRef.current.scrollIntoView();
+                        return;
+                    }
                 }
               setIbanLoader(false)
             }else{
@@ -143,23 +161,20 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 setValidateLoading(false);
             }
         }
-        if(e?.length>10&&!isValid) {
+        if(e?.length>=10&&!isValid) {
             setValidIban(true); 
+            setIsShowBankDetails(false);
             setValidateLoading(false);
-           // setbankDetails({});
         } 
-        // else{
-        //     setValidIban(false)
-        //     setbankDetails({})
-        // }
-        
     }
 
     const onIbanValidate = (e) => {
         setValidateLoading(true);
-        if (e?.length > 10) {
+        seterrorMessage(null);
+        if (e?.length >= 10) {
             if (e &&!/^[A-Za-z0-9]+$/.test(e)) {
                 setIsShowValid(true);
+                setIsShowBankDetails(false);
                 setbankDetails({});
                 form?.validateFields(["iban"], validateIbanType)
             }
@@ -170,7 +185,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         }
         else {
             setIsShowValid(true);
-            setValidIban(false); 
+            setValidIban(false);
+            setIsShowBankDetails(false); 
             setbankDetails({});
             form?.validateFields(["iban"], validateIbanType)
         }
@@ -178,14 +194,19 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
 
     const validateIbanType = (_, value) => {
         setValidateLoading(false);
-        if (!value&&isShowValid) {
+        if ((!value&&isShowValid)||!value) {
+            setIsShowBankDetails(false);
             return Promise.reject(apiCalls.convertLocalLang("is_required"));
-        } else if (!validIban&&isShowValid) {
+        } else if ((!validIban&&isShowValid) || value?.length < 10) {
+            setIsShowBankDetails(false);
+            setbankDetails({})
             return Promise.reject("Please input a valid IBAN");
         } else if (
-            value &&isShowValid&&
+            (value && isShowValid)&&
             !/^[A-Za-z0-9]+$/.test(value)
         ) {
+            setIsShowBankDetails(false);
+            setbankDetails({})
             return Promise.reject(
                 "Please input a valid IBAN"
             );
@@ -225,9 +246,10 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
        {!showDeclartion &&<> {currency === "USD" && <>
             <Row gutter={[16, 16]}>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
-                    <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });form.resetFields();seterrorMessage(null) }} activeKey={addressOptions.tabType}>
+                    <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });form.resetFields();seterrorMessage(null);setbankDetails({});setValidIban(false); setEnteredIbanData(null) }} activeKey={addressOptions.tabType}>
                         <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz"  key={"domestic"} disabled={isEdit}></Tabs.TabPane>
                         <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"} disabled={isEdit}></Tabs.TabPane>
+                        <Tabs.TabPane tab="International USD IBAN" className="text-white text-captz" key={"internationalIBAN"} disabled={isEdit}></Tabs.TabPane>
                     </Tabs>
                 </Col>
             </Row>
@@ -268,33 +290,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     />
             </Form.Item>
         </Col>
-            {/* {currency == 'EUR' && !isBusiness && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                <Form.Item
-                    className="custom-forminput custom-label mb-0"
-                    name="iban"
-                    required
-                    rules={[
-                        {
-                            validator: (_, value) => {
-                                if (!value) {
-                                    return Promise.reject(apiCalls.convertLocalLang("is_required"));
-                                } else if (!validIban) {
-                                    return Promise.reject("Invalid Iban");
-                                } else {
-                                    return Promise.resolve();
-                                }
-                            },
-                        },
-                    ]}
-                    label='IBAN'
-                >
-                    <Input
-                        className="cust-input"
-                        placeholder='IBAN'
-                        onChange={(e)=>getBankDeails(e)}/>
-                </Form.Item>
-            </Col>} */}
-            </Row>
+    </Row>
             <Translate style={{ fontSize: 14,color: "white" }}
                     content="Beneficiary_Details"
                     component={Paragraph}
@@ -306,8 +302,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 {!isBusiness && <><Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                 <div><label className="kpi-label">
                         First name
-                    </label><div>
-                    <Text className=" kpi-val">{recipientDetails.firstName}</Text></div></div>
+                    </label>
+                    <div><Text className="kpi-val">{recipientDetails.firstName}</Text></div></div>
 
                 </Col>
                     <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
@@ -350,8 +346,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         </div>
 
         <h2 style={{ fontSize: 14,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
-        {currency == 'EUR' && <Row gutter={[8, 8]} >
-        {currency == 'EUR' && <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
+        {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Row gutter={[8, 8]} >
+        {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
             <div className="custom-btn-error">
             <Form.Item
                 className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
@@ -370,27 +366,23 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 <Input
                     className="cust-input"
                     placeholder='IBAN'
-                    // onBlur={(e)=>getBankDeails(e)}
-                    maxLength={50}/>                      
+                    maxLength={30}/>                      
             </Form.Item>
                                         
                
             </div>
         </Col>}
-        {currency == 'EUR' &&<Col xs={24} md={10} lg={10} xl={10} xxl={10}>
+        {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') &&<Col xs={24} md={10} lg={10} xl={10} xxl={10}>
             <Button className={`pop-btn dbchart-link fs-14 fw-500`} style={{width:"150px",marginTop:"32px",height:"42px"}}
                 loading={isValidateLoading}
                 onClick={() => onIbanValidate(enteredIbanData)} >
                 <Translate content="validate" />
             </Button>      
         </Col>}
-
-                        
-                           
-                        
         </Row>}
+
         <Row gutter={[8, 8]}>
-            {currency == 'USD' && <> <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+            {(currency == 'USD' && addressOptions.tabType !== 'internationalIBAN')  && <> <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
                     className="fw-300 mb-8 px-4 text-white-50  custom-forminput custom-label pt-8"
                     name="accountNumber"
@@ -499,21 +491,6 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             {
                                 validator: validateContentRule
                             }
-                            // {
-                            //     validator:
-                            //      (_, value) => {
-                            //         if (
-                            //             value &&
-                            //             !/^[a-zA-Z0-9_.-\s]+$/.test(value)
-                            //         ) {
-                            //             return Promise.reject(
-                            //                 "Please enter valid content"
-                            //             );
-                            //         }else {
-                            //             return Promise.resolve();
-                            //         }
-                            //     },
-                            // }
                         ]}>
                         <Input
                             className="cust-input"
@@ -536,20 +513,6 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             }, {
                                 validator: validateContentRule,
                             },
-                            // {
-                            //     validator: (_, value) => {
-                            //         if (
-                            //             value &&
-                            //             !/^[a-zA-Z0-9_.-\s]+$/.test(value)
-                            //         ) {
-                            //             return Promise.reject(
-                            //                 "Please enter valid content"
-                            //             );
-                            //         }else {
-                            //             return Promise.resolve();
-                            //         }
-                            //     },
-                            // }
                         ]}>
                         <TextArea
                             placeholder={'Bank Address 1'}
@@ -567,20 +530,6 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         rules={[ {
                             validator: validateContentRule,
                         },
-                            // {
-                            //     validator: (_, value) => {
-                            //         if (
-                            //             value &&
-                            //             !/^[a-zA-Z0-9_.-\s]+$/.test(value)
-                            //         ) {
-                            //             return Promise.reject(
-                            //                 "Please enter valid content"
-                            //             );
-                            //         }else {
-                            //             return Promise.resolve();
-                            //         }
-                            //     },
-                            // }
                         ]}>
                        
                         <TextArea
@@ -592,7 +541,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     </Form.Item>
                 </Col></>}
         </Row>
-        {currency == 'EUR' && <div className="box basic-info alert-info-custom mt-16">
+        {(currency == 'EUR' || addressOptions.tabType == 'internationalIBAN') && <div className="box basic-info alert-info-custom mt-16">
             <Spin spinning={ibanLoading}>
             {validIban&&isShowBankDetails&&<Row>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
@@ -641,14 +590,12 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 htmlType="submit"
                 size="large"
                 className="pop-btn px-36"
-                // style={{ width:'100%' }}
-                loading={isBtnLoading} 
-            >
-                                {props.type === "manual" && "Save"}
-                                {props.type !== "manual" && <Translate content="continue" />}
-                
+                loading={isBtnLoading} >
+                {props.type === "manual" && "Save"}
+                {props.type !== "manual" && <Translate content="continue" />}
             </Button>
-        </div></>}
+        </div>
+        </>}
         </>}
         </Form>}
     </>

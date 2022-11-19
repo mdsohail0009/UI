@@ -12,7 +12,7 @@ import { setWithdrawfiatenaable, setWithdrawfiat, setStep } from '../../reducers
 import { setdepositCurrency, getCurrencieswithBankDetails } from '../../reducers/depositReducer'
 import OnthegoFundTransfer from '../onthego.transfer';
 import BankWallets from '../bankui.component';
-import {setReceiveFiatHead} from '../../reducers/buyFiatReducer';
+import {setReceiveFiatHead, setSendFiatHead} from '../../reducers/buyFiatReducer';
 import Loader from "../../Shared/loader";
 import { buyFiatSteps as config } from '../buyfiat.component/config';
 const { Title, Paragraph } = Typography;
@@ -60,6 +60,7 @@ class Wallets extends Component {
 
         if (e === 2) {
             this.props.dispatch(setReceiveFiatHead(false));
+            this.props.dispatch(setSendFiatHead(false));
             // this.props.dispatch(setWithdrawfiatenaable(true))
             // this.props.dispatch(setWithdrawfiat({ walletCode: value }))
             this.setState({ ...this.setState, showFuntransfer: true, selectedCurrency:value })
@@ -184,9 +185,10 @@ class Wallets extends Component {
                     title={[<div className="side-drawer-header">
                         {/* {this.renderTitle()} */}
                         <span></span>
-                        <div className="text-center fs-24">
+                        {!this.props.buyFiat?.sendFiatHeader && <div className="text-center fs-24">
                             <Translate className="mb-0 text-white-30 fw-600" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
                             </div>
+                        }
                         <span onClick={() => this.setState({ ...this.state, showFuntransfer: false })} className="icon md close-white c-pointer" />
                     </div>]}
                     className="side-drawer w-50p"
