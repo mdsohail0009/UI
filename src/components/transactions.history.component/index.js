@@ -15,6 +15,7 @@ import { getFeaturePermissionsByKey } from '../shared/permissions/permissionServ
 import { withRouter } from "react-router-dom";
 import { setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 import NumberFormat from "react-number-format";
+import Moment from "react-moment";
 const { Option } = Select;
 class TransactionsHistory extends Component {
   constructor(props) {
@@ -76,6 +77,14 @@ class TransactionsHistory extends Component {
   gridColumns = [
     {
       field: "date", title: "Date", filter: true, filterType: "date", locked: true, width: 210,
+      customCell: (props) => (
+        <>
+         
+            {props.dataItem?.date ? <Moment format="DD/MM/YYYY hh:mm:ss A">{ props.dataItem?.date}</Moment> : props.dataItem?.date}
+
+        
+        </>
+      )
     },
     { field: "docType", title: "Transaction", filter: true, },
     { field: "wallet", title: "Wallet", filter: true, },
