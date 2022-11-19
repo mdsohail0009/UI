@@ -8,7 +8,9 @@ import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { dashboardTransactionSub } from '../../utils/pubsub';
 import TransactionsHistory from "../transactions.history.component";
-
+import apiCalls from "../../api/apiCalls";
+import Moment from "react-moment";
+import moment from 'moment';
 class Portfolio extends Component {
     chart;
     constructor (props) {
@@ -133,7 +135,7 @@ class Portfolio extends Component {
                                 <thead>
                                     <tr>
                                         <th style={{width: "18%"}}>Date</th>
-                                        <th style={{width: "35%"}}>Type</th>
+                                        <th style={{width: "35%"}}>Transaction</th>
                                         <th style={{width: "15%"}}>Wallet</th>
                                         <th style={{width: "15%"}}>Value</th>
                                         <th style={{width: "15%"}}>State</th>
@@ -157,8 +159,12 @@ class Portfolio extends Component {
                                                     {this.state.transactionData.length > 0 ? 
                                                     <>
                                                      <tr key={idx}>
-                                                        <td>{item?.date}</td>
-                                                        <td style={{ width: "100px" }}>{item.type}</td>
+                                                     <td style={{ width: "100px" }}>
+                                                            {item?.date }
+                                                            {/* <Moment format="DD/MM/YYYY hh:mm:ss A">{item?.date  ? apiCalls.convertUTCToLocalTime(item?.date ) : item?.date }</Moment> */}
+                                                            </td>
+                                                        
+                                                        <td style={{ width: "50px" }}>{item.type}</td>
                                                         <td>{item.wallet}</td>
                                                         <td>{this.getNumberVal(item)}</td>
                                                         <td>{item.state} </td>
