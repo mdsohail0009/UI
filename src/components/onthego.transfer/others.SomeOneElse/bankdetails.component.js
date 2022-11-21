@@ -3,16 +3,10 @@ import { Row, Col, Form, Input, Typography, Button, Spin } from 'antd';
 import apicalls from "../../../api/apiCalls";
 import { validateContentRule } from "../../../utils/custom.validator";
 import Translate from "react-translate-component";
-import { LoadingOutlined } from "@ant-design/icons";
 
 const {  Text } = Typography;
 const { TextArea } = Input;
-const antIcon = (
-    <LoadingOutlined
-        style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
-        spin
-    />
-);
+
 class PayeeBankDetails extends Component {
     state = {
         emailExist: false,
@@ -98,7 +92,7 @@ class PayeeBankDetails extends Component {
             );
         }
         else {
-            return Promise.resolve();
+            return validateContentRule(_,value);
         }
     };
     renderAddress = (transferType) => {
@@ -115,10 +109,7 @@ class PayeeBankDetails extends Component {
                         )}
                         required
                         rules={[
-                            // {
-                            //     required: true,
-                            //     message: apicalls.convertLocalLang("is_required"),
-                            // },
+                            
                             {
                                 validator: this.validateIbanType,
                               },
@@ -146,81 +137,14 @@ class PayeeBankDetails extends Component {
                 </Col>
                 
                  
-                {this.props.GoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
-                        name={"reasonOfTransfer"}
-                        required
-                        rules={[
-                            {
-                                required: true,
-                                message: apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                whitespace: true,
-                                message: apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                validator: validateContentRule,
-                            },
-                        ]}
-                        label={
-                            <Translate
-                                content="reasiontotransfor"
-                                component={Form.label}
-                            />
-                        }
-                    >
-                        <TextArea
-                            placeholder={apicalls.convertLocalLang(
-                                "reasiontotransfor"
-                            )}
-                            className="cust-input cust-text-area address-book-cust"
-                            autoSize={{ minRows: 1, maxRows: 2 }}
-                            maxLength={100}
-                        ></TextArea>
-                    </Form.Item>
-                </Col>}
-                {/* <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item
-                        className="custom-forminput custom-label mb-0"
-                        name={"relation"}
-                        required
-                        rules={[
-                            {
-                                required: true,
-                                message: apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                whitespace: true,
-                                message: apicalls.convertLocalLang("is_required"),
-                            },
-                            {
-                                validator: validateContentRule,
-                            },
-                        ]}
-                        label={
-                            <Translate
-                                content="relationtobenificiary"
-                                component={Form.label}
-                            />
-                        }
-                    >
-                        <Input
-                                className="cust-input"
-                                placeholder={apicalls.convertLocalLang(
-                                    "reasiontotransfor"
-                                )}
-                                maxLength="500"
-                            />
-                    </Form.Item>
-                </Col> */}
+              
+             
                 </>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 
                     <div className="box basic-info alert-info-custom mt-16">
                     <Spin spinning={this.state.IbanLoader}>
-                    {this.state.isValidIban && <Row>
+                    {this.state.isValidIban && !this.props?.isAddTabCange && <Row>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                                 <label className="fs-12 fw-500 ">
                                     Bank Name
@@ -271,11 +195,46 @@ class PayeeBankDetails extends Component {
 
                             </Col>
                         </Row>}
-                        {!this.state.isValidIban&&<span>No bank details available</span>}
+                        {(!this.state.isValidIban || this.props?.isAddTabCange)&&<span>No bank details available</span>}
                         </Spin>
                     </div>
 
                 </Col>
+                {this.props.GoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                        name={"reasonOfTransfer"}
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message: apicalls.convertLocalLang("is_required"),
+                            },
+                            {
+                                whitespace: true,
+                                message: apicalls.convertLocalLang("is_required"),
+                            },
+                            {
+                                validator: validateContentRule,
+                            },
+                        ]}
+                        label={
+                            <Translate
+                                content="reasiontotransfor"
+                                component={Form.label}
+                            />
+                        }
+                    >
+                        <TextArea
+                            placeholder={apicalls.convertLocalLang(
+                                "reasiontotransfor"
+                            )}
+                            className="cust-input cust-text-area address-book-cust"
+                            autoSize={{ minRows: 1, maxRows: 2 }}
+                            maxLength={100}
+                        ></TextArea>
+                    </Form.Item>
+                </Col>}
             </>,
             swift: <>
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -299,7 +258,7 @@ class PayeeBankDetails extends Component {
                                             "Invalid Account Number"
                                         );
                                     }else {
-                                        return Promise.resolve();
+                                        return validateContentRule(_, value)
                                     }
                                 },
                             }
@@ -337,7 +296,7 @@ class PayeeBankDetails extends Component {
                                             "Invalid Swift / BIC Code"
                                         );
                                     }else {
-                                        return Promise.resolve();
+                                        return validateContentRule(_, value);
                                     }
                                 },
                             }
@@ -374,7 +333,7 @@ class PayeeBankDetails extends Component {
                                             "Invalid ABA Routing Code"
                                         );
                                     }else {
-                                        return Promise.resolve();
+                                        return validateContentRule(_, value);
                                     }
                                 },
                             }
@@ -406,20 +365,7 @@ class PayeeBankDetails extends Component {
                             },{
                                 validator: validateContentRule,
                             },
-                        //    {
-                        //         validator: (_, value) => {
-                        //             if (
-                        //                 value &&
-                        //                 !/^[A-Za-z0-9_.-\s]+$/.test(value)
-                        //             ) {
-                        //                 return Promise.reject(
-                        //                     "Please enter valid content"
-                        //                 );
-                        //             }else {
-                        //                 return Promise.resolve();
-                        //             }
-                        //         },
-                        //     }
+                       
                         ]}
                     >
                         <Input
@@ -448,20 +394,7 @@ class PayeeBankDetails extends Component {
                             },{
                                 validator: validateContentRule,
                             },
-                            // {
-                            //     validator: (_, value) => {
-                            //         if (
-                            //             value &&
-                            //             !/^[a-zA-Z0-9_.-\s]+$/.test(value)
-                            //         ) {
-                            //             return Promise.reject(
-                            //                 "Please enter valid content"
-                            //             );
-                            //         }else {
-                            //             return Promise.resolve();
-                            //         }
-                            //     },
-                            // }
+                         
                         ]}
                         label={
                             <Translate
@@ -485,20 +418,7 @@ class PayeeBankDetails extends Component {
                         rules={[{
                             validator: validateContentRule,
                         },
-                        //    {
-                        //         validator: (_, value) => {
-                        //             if (
-                        //                 value &&
-                        //                 !/^[a-zA-Z0-9_.-\s]+$/.test(value)
-                        //             ) {
-                        //                 return Promise.reject(
-                        //                     "Please enter valid content"
-                        //                 );
-                        //             }else {
-                        //                 return Promise.resolve();
-                        //             }
-                        //         },
-                        //     }
+                   
                         ]}
                         label={
                             <Translate
@@ -556,12 +476,12 @@ class PayeeBankDetails extends Component {
         return _templates[transferType]
     }
     render() {
-        const { addressType, transferType, onSubmit, bankDetails = {}, emailExist = false, onCancel } = this.props;
+        const {  transferType = {}, emailExist = false, onCancel, domesticType } = this.props;
         const { countries, states, isLoading } = this.state;
         
         return <>
             <Row gutter={[16, 16]} className={'pb-16'}>
-                {this.renderAddress(transferType)}
+            {this.renderAddress(domesticType == "internationalIBAN" ? "sepa" : transferType)}
             </Row>
             </>
 

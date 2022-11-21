@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Button, Form, Input, Alert, Tooltip, Row, Col, Checkbox, Modal, message } from "antd";
+import { Typography, Button, Form, Input, Alert, Tooltip } from "antd";
 import { getCode, getVerification, sendEmail, verifyEmailCode, getAuthenticator, getVerificationFields } from "./api";
 import { connect } from 'react-redux';
 import LiveNessSumsub from '../../sumSub.component/liveness'
@@ -71,7 +71,6 @@ const Verifications = (props) => {
     };
 
     const transferDetials = async (values) => {
-        // setAgreeRed(true);
     };
 
    const loadPermissions = () => {
@@ -107,7 +106,6 @@ const Verifications = (props) => {
         startemailTimer(emailData, 'emailSeconds')
         } else {
             setEmail({ ...email, errorMsg: isErrorDispaly(response), showRuleMsg: '',btnLoader:false })
-            // useOtpRef.current.scrollIntoView(0, 0);
         }
     };
 
@@ -126,7 +124,6 @@ const Verifications = (props) => {
             setEmail({ ...email, errorMsg: 'Invalid email verification code', verified: false, btnLoader:false });
             updateverifyObj(false, 'isEmailVerification')
         } else {
-            // useOtpRef.current.scrollIntoView(0, 0);
             setEmail({ ...email, errorMsg: 'Invalid email verification code', btnLoader:false });
             updateverifyObj(false, 'isEmailVerification')
         }
@@ -142,13 +139,7 @@ const Verifications = (props) => {
         }
     };
 
-    const handleSendOtp = (val) => {
-        // setVerifyEmailText("verifyTextBtn");
-        // setTooltipEmail(false);
-        // setEmailText(null);
-        // setVerify(true);
-        // setDisableSave(false);
-    };
+    
 
     const getphoneOTP = async (val) => {
         setPhone({ ...phone, errorMsg: '', showRuleMsg: '', btnLoader:true })
@@ -159,7 +150,6 @@ const Verifications = (props) => {
         startphoneTimer(phoneData, 'phoneSeconds')
         } else {
             setPhone({ ...phone, errorMsg: isErrorDispaly(response), showRuleMsg: '', btnLoader:false })
-            // useOtpRef.current.scrollIntoView(0, 0);
         }
     };
     const handlephoneinputChange = (e) => {
@@ -184,7 +174,6 @@ const Verifications = (props) => {
                 setPhone({ ...phone, errorMsg: 'Invalid phone verification code', verified: false, btnLoader: false });
                 updateverifyObj(false, 'isPhoneVerification')
             } else {
-                // useOtpRef.current.scrollIntoView(0, 0);
                 setPhone({ ...phone, errorMsg: 'Invalid phone verification code', verified: false, btnLoader: false });
                 updateverifyObj(false, 'isPhoneVerification')
             }
@@ -230,7 +219,6 @@ const Verifications = (props) => {
             setAuthenticator({ ...authenticator, errorMsg: 'Invalid authenticator verification code', verified: false, btnLoader:false });
             updateverifyObj(false, 'isAuthenticatorVerification')
         } else {
-            // useOtpRef.current.scrollIntoView(0, 0);
             setAuthenticator({ ...authenticator, errorMsg: 'Invalid authenticator verification code', btnLoader:false });
             updateverifyObj(false, 'isAuthenticatorVerification')
         }
@@ -416,7 +404,6 @@ const Verifications = (props) => {
             />
             )}
             {isLoading ? (<>
-                {/* <Loader /> */}
             </>
             ) : (
                 <>
@@ -446,11 +433,11 @@ const Verifications = (props) => {
                                         </Text>
                                     </div>
                                 }
-                                
+                               
                             >
                                 <div className="p-relative d-flex align-center">
                                 <Input
-                                            type="text"
+                                            type="number"
 
                                             className="cust-input custom-add-select mb-0"
                                             placeholder={"Enter code"}
@@ -461,18 +448,7 @@ const Verifications = (props) => {
                                             onChange={(e) => handlephoneinputChange(e)}
                                         />
                                    
-                                    {/* <NumberFormat
-										customInput={Input}
-										thousandSeparator={false}
-										prefix={""}
-										decimalScale={0}
-										allowNegative={false}
-										className="cust-input custom-add-select mb-0"
-										placeholder={"Enter code"}
-										style={{ width: "100%" }}
-										onValueChange={(e) => handlephoneinputChange(e)} 
-										disabled={phone.btnName == 'get_otp' || phone.btnName == 'verified'}
-									/> */}
+                                   
                                     <div className="new-add c-pointer get-code text-yellow hy-align">
                                         {phone_btnList[phone.btnName]}
                                     </div>
@@ -503,7 +479,7 @@ const Verifications = (props) => {
                             >
                                 <div className="p-relative d-flex align-center">
                                 <Input
-                                            type="text"
+                                            type="number"
 
                                             className="cust-input custom-add-select mb-0"
                                             placeholder={"Enter code"}
@@ -514,18 +490,7 @@ const Verifications = (props) => {
                                             onChange={(e) => handleEmailinputChange(e)}
                                         />
                                     
-                                    {/* <NumberFormat
-										customInput={Input}
-										thousandSeparator={false}
-										prefix={""}
-										decimalScale={0}
-										allowNegative={false}
-										className="cust-input custom-add-select mb-0"
-										placeholder={"Enter code"}
-										style={{ width: "100%" }}
-										onValueChange={(e) => handleEmailinputChange(e)}
-										disabled={email.btnName == 'get_otp' || email.btnName == 'verified'}
-									/> */}
+                               
                                     <div className="new-add c-pointer get-code text-yellow hy-align">
                                         {email_btnList[email.btnName]}
                                     </div>
@@ -561,7 +526,7 @@ const Verifications = (props) => {
                             >
                                 <div className="p-relative d-flex align-center">
                                 <Input
-                                            type="text"
+                                            type="number"
 
                                             className="cust-input custom-add-select mb-0"
                                             placeholder={"Enter code"}
@@ -571,18 +536,7 @@ const Verifications = (props) => {
                                             disabled={authenticator.btnName == 'get_otp' || authenticator.btnName == 'verified'}
                                             onChange={(e) => handleAuthenticatorinputChange(e)}
                                         />                                    
-                                    {/* <NumberFormat
-										customInput={Input}
-										thousandSeparator={false}
-										prefix={""}
-										decimalScale={0}
-										allowNegative={false}
-										className="cust-input custom-add-select mb-0"
-										placeholder={"Enter code"}
-										style={{ width: "100%" }}
-										onValueChange={(e) => handleAuthenticatorinputChange(e)} 
-										disabled={authenticator.btnName == 'get_otp' || authenticator.btnName == 'verified'}
-									/> */}
+                                    
                                     <div className="new-add c-pointer get-code text-yellow hy-align">
                                         {authenticator_btnList[authenticator.btnName]}
                                     </div>
@@ -590,48 +544,7 @@ const Verifications = (props) => {
                             </Form.Item>
                         </>
                         )}
-                         {/* {verifyData.isLiveVerification === true && (<>
-                            <Text className="mb-8 px-4 fw-300 text-white-50 pt-16">
-                            Live Verification *
-                            </Text>
-                            <Form.Item
-                                name="emailCode"
-                                className="input-label otp-verify"
-                                extra={
-                                    <div>
-                                        <Text
-                                            className="fs-12 text-red-colr fw-600"
-                                            style={{ float: "right" }}>
-                                            {liveverification.errorMsg}
-                                        </Text>
-                                    </div>
-                                }
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: "is required",
-                                    },
-                                ]}
-                            >
-                                <div className="p-relative d-flex align-center">
-                                <Input
-                                            type="text"
-
-                                            className="cust-input custom-add-select mb-0"
-                                            placeholder={"Live verificaion"}
-                                            maxLength={6}
-
-                                            style={{ width: "100%" }}
-                                            disabled={true}
-                                            // onChange={(e) => handleAuthenticatorinputChange(e)}
-                                        />
-                                    <div className="new-add c-pointer get-code text-yellow hy-align">
-                                        {liveVerificaion_btnList[liveverification.btnName]}
-                                    </div>
-                                </div>
-                            </Form.Item>
-                        </>
-                        )} */}
+                        
                         </>
                             {liveverification.isLiveEnable &&  permissions?.Send &&<>
                                 <LiveNessSumsub onConfirm={(data) => verifyLiveness(data)} />
@@ -656,7 +569,6 @@ const connectStateToProps = ({ userConfig, oidc, menuItems }) => {
 const connectDispatchToProps = dispatch => {
     return {
         changeInternalStep: (stepcode) => {
-            // dispatch(setInternalStep(stepcode))
         },
         dispatch
     }

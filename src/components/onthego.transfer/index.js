@@ -20,6 +20,7 @@ import Translate from "react-translate-component";
 import { Link } from "react-router-dom";
 import Paragraph from "antd/lib/typography/Paragraph";
 import { connect } from "react-redux";
+import { validateContentRule } from "../../utils/custom.validator";
 import { getFeaturePermissionsByKeyName } from "../shared/permissions/permissionService";
 const { Text, Title } = Typography;
 const { Option } = Select;
@@ -115,15 +116,7 @@ class OnthegoFundTransfer extends Component {
             } else {
                 this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: false })
             }
-            // if(verfResponse.isPhoneVerified&&verfResponse.isEmailVerification) {
-            //     this.setState({ ...this.state, isPhMail: true});
-            // }
-            // if(verfResponse.isPhoneVerified&&verfResponse.twoFactorEnabled) {
-            //     this.setState({ ...this.state, isShowGreyButton: true});
-            // }
-            // if(verfResponse.twoFactorEnabled&&verfResponse.isEmailVerification) {
-            //     this.setState({ ...this.state, isAuthMail: true});
-            // }
+            
         } else {
             this.setState({ ...this.state, isVarificationLoader: false, errorMessage: this.isErrorDispaly(verfResponse) })
         }
@@ -233,8 +226,8 @@ class OnthegoFundTransfer extends Component {
         }
     }
     changesVerification = (obj) => {
-        //this.setState({ ...this.state, verifyData: obj })
-        console.log(obj)
+
+        
         if(obj.isPhoneVerification&&obj.isEmailVerification&&(obj.verifyData?.isPhoneVerified&&obj.verifyData?.isEmailVerification&&!obj.verifyData?.twoFactorEnabled)) {
             this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
         }
@@ -305,9 +298,7 @@ class OnthegoFundTransfer extends Component {
                         className='sub-heading code-lbl'>Send from your Suissebase FIAT Wallet</Title>
                 </div>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                    {/* <Text className="fs-14 mb-8 text-white d-block fw-200">
-                        Search For Beneficiary *
-                    </Text> */}
+                   
                     <Search placeholder="Search Currency" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="text-center mb-16" />
                 </Col>
                 <List
@@ -340,10 +331,7 @@ class OnthegoFundTransfer extends Component {
                 </div>}
             </React.Fragment>,
             enteramount: <>
-                {/* <div className="mt-8">
-                    <Title
-                        className='sub-heading code-lbl'>Send Fiat</Title>
-                </div> */}
+               
                 {isVarificationLoader && <Loader />}
                 {!isVarificationLoader && 
                     <Form
@@ -398,12 +386,11 @@ class OnthegoFundTransfer extends Component {
                                             displayType="input"
                                             allowNegative={false}
                                             thousandSeparator={","}
-                                             //addonBefore={this.state.selectedCurrency}
                                              addonBefore={<Select  defaultValue={this.state.selectedCurrency}
                                                 onChange={(e) => this.handleCurrencyChange(e)}
                                                 placeholder="Select">
-                                                <option value="EUR">EUR</option>
                                                 <option value="USD">USD</option>
+                                                <option value="EUR">EUR</option>
                                             </Select>}
                                             onValueChange={() => {
                                                 this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount,errorMessage:'' })
@@ -451,7 +438,6 @@ class OnthegoFundTransfer extends Component {
                                             }else{
                                                 if(!_amt){
                                                     this.enteramtForm.current.validateFields()
-                                                   // this.setState({ ...this.state, errorMessage:'Please enter amount'})
                                                 }else{
                                                     this.setState({ ...this.state, errorMessage:'Amount must be greater than zero'})
                                                 }
@@ -473,18 +459,7 @@ class OnthegoFundTransfer extends Component {
                 </div>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 
-                    {/* <Form.Item
-                        name="lastName"
-                        label={"Search for Payee"}
-                        colon={false}
-                    >
-                        <Search
-                            placeholder="Search for Payee" bordered={false} showSearch
-                            className=" "
-                            onChange={this.handleSearch}
-                            value={this.state.searchVal}
-                        />
-                    </Form.Item> */}
+                   
                     <Search placeholder="Search for Payee" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className=" text-center" />
                 </Col>
                 {this.state?.loading && <Loader />}
@@ -557,7 +532,6 @@ class OnthegoFundTransfer extends Component {
                             <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
                             <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
                             <p className="fs-16 text-white-30 fw-200 mb-0"> {'You have no past recipients'} </p>
-                            {/* <a onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</a> */}
                         </div>}
                     </ul>
                 </>}
@@ -586,7 +560,10 @@ class OnthegoFundTransfer extends Component {
                                         required: true,
                                         message:
                                             apicalls.convertLocalLang("is_required"),
-                                    }
+                                    },
+                                    {
+                                        validator: validateContentRule,
+                                    },
                                 ]}
                             >
                                 <Input
@@ -604,60 +581,8 @@ class OnthegoFundTransfer extends Component {
                             this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, documents } })
                         }} title={"Please upload supporting docs to explain relationship with beneficiary*"} />
                     </React.Fragment>
-                    {/* {this.state.selectedCurrency === "USD" && <Tabs className="cust-tabs-fait" activeKey={this.state.selectedTab} onChange={(key) => this.setState({ ...this.state, selectedTab: key })}>
-                        <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"}>
-                            <Row gutter={[16, 16]}>
-                                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                                    <Form.Item
-                                        className="custom-forminput custom-label mb-0"
-                                        name="abaRoutingCode"
-                                        label={"ABA Routing COde"}
-                                        required
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message:
-                                                    apicalls.convertLocalLang("is_required"),
-                                            }
-                                        ]}
-                                    >
-                                        <Input
-                                            className="cust-input "
-                                            placeholder={"ABA Routing Code"}
-                                            maxLength="500"
-                                        />
-                                    </Form.Item>
-
-                                </Col>
-                            </Row>
-                        </Tabs.TabPane>
-                        <Tabs.TabPane tab="International USD Swift" key={"international"} className="text-white">
-                            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Form.Item
-                                    className="custom-forminput custom-label mb-0"
-                                    name="swiftRouteBICNumber"
-                                    label={"Swift / BIC Code"}
-                                    required
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message:
-                                                apicalls.convertLocalLang("is_required"),
-                                        }
-                                    ]}
-                                >
-                                    <Input
-                                        className="cust-input "
-                                        placeholder={"Swift / BIC Code"}
-                                        maxLength="500"
-                                    />
-                                </Form.Item>
-
-                            </Col>
-                        </Tabs.TabPane>
-                    </Tabs>} */}
+                  
                     <Row gutter={[16, 16]}>
-                        {/* <Col xs={24} md={6} lg={6} xl={6} xxl={6}></Col> */}
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item className="text-center">
                                 <Button
@@ -668,10 +593,7 @@ class OnthegoFundTransfer extends Component {
                                     style={{ width: "100%" }}
                                     onClick={() => {
                                         let validateFileds = [];
-                                        // if (this.state.selectedCurrency === "USD") {
-                                        //     const code = this.state?.selectedTab === "domestic" ? "abaRoutingCode" : "swiftRouteBICNumber";
-                                        //     validateFileds.push(code);
-                                        // }
+                                       
                                         if (!["myself", "1stparty", "ownbusiness"].includes(this.state.selectedPayee.addressType?.toLowerCase())) {
                                             validateFileds = validateFileds.concat(["reasionOfTransfer", "files"]);
                                         }
@@ -686,20 +608,14 @@ class OnthegoFundTransfer extends Component {
                                                 "isInternational": null,
                                                 "documents": this.state.codeDetails?.documents
                                             }
-                                            // updatePayee(obj)
-                                            //     .then(async (response) => {
-                                            //         this.setState({ ...this.state, loading: true, errorMessage: null });
-                                            //         if (response.ok) {
+                                            
                                             const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasionOfTransfer, amount: this.state.amount, documents: this.state.codeDetails?.documents });
                                             if (res.ok) {
                                                 this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => this.chnageStep("reviewdetails"));
                                             } else {
                                                 this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, ...fieldValues }, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
                                             }
-                                            //     } else {
-                                            //         this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, ...fieldValues }, loading: false, errorMessage: response.data?.message || response.data || response.originalError.message });
-                                            //     }
-                                            // })
+                                         
 
                                         }).catch(() => { });
                                     }}
@@ -708,7 +624,6 @@ class OnthegoFundTransfer extends Component {
                                 </Button>
                             </Form.Item>
                         </Col>
-                        {/* <Col xs={24} md={6} lg={6} xl={6} xxl={6}></Col> */}
                     </Row>
                 </Form>
             </React.Fragment>,
@@ -724,8 +639,7 @@ class OnthegoFundTransfer extends Component {
                         ref={this.formRef}
                         onFinish={this.transferDetials}
                         autoComplete="off">
-                        {/* <div className="text-center"> <text Paragraph
-                        className='text-white fs-24 fw-600 mb-16 px-4 '>Review Details Of Transfer</text></div> */}
+                        
                         {this.state.errorMessage && <Alert type="error" showIcon closable={false} description={this.state.errorMessage} />}
 
                         <Row gutter={24}>
@@ -733,9 +647,7 @@ class OnthegoFundTransfer extends Component {
                                 <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                     <Text className="fw-600 text-white mt-4 text-captz"style={{ fontSize: '18px' }}>Transfer details</Text>
 
-                                    {/* <div><Link >Edit
-                                </Link>
-                                </div> */}
+                                   
                                 </div>
                             </Col>
                             {"  "}
@@ -756,12 +668,7 @@ class OnthegoFundTransfer extends Component {
                                         thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
                                 </div>
                             </Col>
-                            {/* <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400  ">Total we will convert</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500   text-right"></Title>
-                            </div>
-                        </Col> */}
+                           
                             <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                 <Title className="fs-14 text-white fw-500 text-captz">Withdrawal amount</Title>
@@ -770,12 +677,7 @@ class OnthegoFundTransfer extends Component {
                                         thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
                                 </div>
                             </Col>
-                            {/* <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                <Title className="mb-4 fs-10 text-white fw-400  ">Description</Title>
-                                <Title className="mb-4 fs-10 text-white fw-500   text-right">Bike</Title>
-                            </div>
-                        </Col> */}
+                          
                         </Row>
 
                         <Row gutter={24} className=" text-white mt-36">
@@ -783,9 +685,7 @@ class OnthegoFundTransfer extends Component {
                                 <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                     <Text className="fw-600 text-white mb-0 mt-4 text-captz" style={{ fontSize: '18px' }}>Recipient details</Text>
 
-                                    {/* <div><Link >Change
-                                </Link>
-                                </div> */}
+                                    
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
@@ -855,14 +755,7 @@ class OnthegoFundTransfer extends Component {
                            {this.state.permissions?.Send && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="text-right mt-36 create-account">
                                     <Form.Item className="mb-0 mt-16">
-                                    {/* <Translate
-                                        content="cancel"
-                                        component={Button}
-                                        onClick={() => this.onCancel()}
-                                        type="text"
-                                        size="large"
-                                        className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn"
-                                    /> */}
+                                   
                                         <Button
                                             htmlType="button"
                                             onClick={() => { this.saveWithdrawdata(); }}
@@ -895,14 +788,11 @@ class OnthegoFundTransfer extends Component {
                 <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                        Please sign using link received in email to whitelist your address. `}</Text>
                 <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
-                {/*<div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBOARD</Button> */}
             </div></div>,
             successpage:<div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
                 <Image width={80} preview={false} src={success} />
                 <Title level={2} className="text-white-30 my-16 mb-0">Your transaction has been processed successfully</Title>
-                {/* <Text className="text-white-30">{`Declaration form has been sent to ${"have123@yopmail.com"} 
-                   Please sign using link received in email to whitelist your address`}</Text> */}
-                {/*<div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBOARD</Button> */}
+              
             </div></div>
         }
         return steps[this.state.step];
@@ -925,7 +815,6 @@ const connectStateToProps = ({ sendReceive, userConfig, menuItems,oidc }) => {
 const connectDispatchToProps = dispatch => {
     return {
         changeInternalStep: (stepcode) => {
-            // dispatch(setInternalStep(stepcode))
         },
         dispatch
     }

@@ -140,10 +140,7 @@ class OnthegoCryptoTransfer extends Component {
             this.setState({ ...this.state, errorMsg: null, error: apicalls.convertLocalLang('amount_min') + " " + withdrawMinValue });
             this.myRef.current.scrollIntoView();
         } 
-        // else if (amt > withdrawMaxValue) {
-        //     this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_max') + " " + withdrawMaxValue });
-        //     this.myRef.current.scrollIntoView();
-        // } 
+        
         else if (amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
             this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('insufficient_balance') });
             this.myRef.current.scrollIntoView();
@@ -347,10 +344,7 @@ class OnthegoCryptoTransfer extends Component {
                                                     this.setState({ ...this.state, errorMsg: null, error: apicalls.convertLocalLang('amount_min') + " " + this.props.selectedWallet?.withdrawMinValue });
                                                     this.myRef.current.scrollIntoView();
                                                 } 
-                                                // else if (_amt > this.props.selectedWallet?.withdrawMaxValue) {
-                                                //     this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_max') + " " + this.props.selectedWallet?.withdrawMaxValue });
-                                                //     this.myRef.current.scrollIntoView();
-                                                // } 
+                                               
                                                 else if (_amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
                                                     this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('insufficient_balance') });
                                                     this.myRef.current.scrollIntoView();

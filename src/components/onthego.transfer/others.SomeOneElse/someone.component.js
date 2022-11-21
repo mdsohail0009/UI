@@ -5,13 +5,12 @@ import AddressDocumnet from "../../addressbook.component/document.upload";
 import PayeeBankDetails from "./bankdetails.component";
 import { validateContentRule } from "../../../utils/custom.validator";
 import Translate from "react-translate-component";
-import { Link } from 'react-router-dom';
 import apiCalls from "../../../api/apiCalls";
 import ConnectStateProps from "../../../utils/state.connect";
 import Loader from "../../../Shared/loader";
 import alertIcon from '../../../assets/images/pending.png';
 const { Paragraph, Text, Title } = Typography;
-const { Search, TextArea } = Input;
+const {  TextArea } = Input;
 
 const SomeoneComponent = (props) => {
     const [addressOptions, setAddressOptions] = useState({ addressType: "individuals", transferType: props.currency === "EUR" ? "sepa" : "swift", domesticType: 'domestic' });
@@ -37,7 +36,6 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             let edit = false;
             setCreatePayeeObj(createPayeeData.data);
             if (props.selectedAddress?.id) {
-                // form.current?.setFieldsValue({...createPayeeData.data,payeeAccountModels:createPayeeData.data.payeeAccountModels[0]})
                 setIntialObj({ ...createPayeeData.data, payeeAccountModels: createPayeeData.data.payeeAccountModels[0] })
                 setDocuments(createPayeeData.data.payeeAccountModels[0].documents)
                 setAddressOptions({ ...addressOptions, domesticType: createPayeeData.data.transferType });
@@ -150,7 +148,6 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                    Please sign using link received in email to whitelist your address. `}</Text>
                 <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
                 <div className="my-25">
-                {/* <Button onClick={() => props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button> */}
                 </div>
             </div></div>}
 
@@ -161,7 +158,6 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                             <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
                                 setAddressOptions({ ...addressOptions, domesticType: activekey });
                                 form.current.resetFields();setDocuments(null);setErrorMessage(null)
-                                // form.current.setFieldsValue({ addressType: 'someoneelse', transferType: activekey })
                             }}>
                                 <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
                                 <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"} disabled={edit} ></Tabs.TabPane>
@@ -382,7 +378,6 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         </Col>
                     </Row>
                 </>
-                {/* <Divider /> */}
                 <Paragraph className="mb-8 fw-500 text-white px-4 mt-36" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                 {((props.selectedAddress?.id && createPayeeObj)||!props.selectedAddress?.id ) &&
                  <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />}
@@ -392,20 +387,12 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         setDocuments(docs)
                     }} refreshData = {addressOptions?.domesticType}/>
                     <div className="text-right mt-12">
-                        {/* <Button
-                            className="pop-btn px-36"
-                            style={{ margin: "0 8px" }}
-                            onClick={() => { }}
-                        >
-                            {apicalls.convertLocalLang("cancel")}
-                        </Button> */}
+                       
                     <Button
                         htmlType="submit"
                         size="large"
                         className="pop-btn px-36 mt-36"
                         loading={btnLoading}
-                        //style={{ minWidth: "100%" }}
-                    // onClick={() => console.log(form.getFieldsValue())}
                     >
                         {props.type === "manual" && "Save"}
                         {props.type !== "manual" && <Translate content="continue" />}
