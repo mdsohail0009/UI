@@ -2,6 +2,7 @@ const SET_STEP = "setStep";
 const CLEAR_STEP = "clearStep";
 const SET_SUB_TITLE = "setSubTitle";
 const SET_RECEIVE_FIAT_HEADER = "setReceiveFiatHead";
+const SET_SEND_FIAT_HEADER = "setSendFiatHead";
 const setStep = (payload) => {
     return {
         type: SET_STEP,
@@ -23,6 +24,12 @@ const setSubTitle = (payload) => {
   const setReceiveFiatHead = (payload) => {
     return {
       type: SET_RECEIVE_FIAT_HEADER,
+      payload
+    };
+  };
+  const setSendFiatHead = (payload) => {
+    return {
+      type: SET_SEND_FIAT_HEADER,
       payload
     };
   };
@@ -52,7 +59,8 @@ let initialState = {
         addAddress: null,
         withdrawfaitsummary: null
     },
-    receiveFiatHeader: null
+    receiveFiatHeader: null,
+    sendFiatHeader: null
 
 }
 const BuyFiatReducer = (state = initialState, action) => {
@@ -62,11 +70,13 @@ const BuyFiatReducer = (state = initialState, action) => {
         case CLEAR_STEP:
             return { ...state, stepcode: action.payload };
         case SET_RECEIVE_FIAT_HEADER:
-            return { ...state, receiveFiatHeader: action.payload }
+            return { ...state, receiveFiatHeader: action.payload };
+        case SET_SEND_FIAT_HEADER:
+            return { ...state, sendFiatHeader: action.payload }
         default:
             return state;
     }
 
 }
 export default BuyFiatReducer;
-export { setStep, clearStep, setSubTitle, setReceiveFiatHead }
+export { setStep, clearStep, setSubTitle, setReceiveFiatHead, setSendFiatHead }

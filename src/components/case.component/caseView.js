@@ -410,7 +410,7 @@ class CaseView extends Component {
                             accordion className="accordian mb-24 mb-togglespace "
                             defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
                             <Panel header={doc.documentName} key={idx + 1} extra={doc.state ? (<span className={`${doc.state ? doc.state.toLowerCase() + " staus-lbl" : ""}`}>{doc.state}</span>) : ""}>
-                                {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>}
+                                {/* {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>} */}
                                 {this.state.documentReplies[doc.id]?.data?.map((reply, ix) => <div key={ix} className="reply-container">
                                     <div className="user-shortname">{reply?.repliedBy?.slice(0, 2)}</div>
                                     <div className="reply-body">
@@ -427,14 +427,14 @@ class CaseView extends Component {
                                         </div>
                                     </div>
                                 </div>)}
-                                {!this.state.documentReplies[doc.id]?.loading && doc.state != "Approved" && this.state.docDetails.caseState != 'Approved' && this.state.docDetails.caseState != 'Cancelled' &&
+                                {(!this.state.documentReplies[doc.id]?.loading && doc.state != "Approved" && this.state.docDetails.caseState != 'Approved' && this.state.docDetails.caseState != 'Cancelled')&&
                                     <>
                                         <Form
                                             onFinish={() => this.docReject(doc)}
                                         >
                                             <div>
                                                     <Form.Item
-                                                     className="fs-12 text-white-50 d-block mb-4 fw-200"
+                                                     className="fs-12 text-white-50 d-block mb-12 fw-200"
                                                         name=""
                                                        label="Reply"
                                                         rules={[
@@ -460,7 +460,6 @@ class CaseView extends Component {
                                               
 
                                                 {this.state.isMessageError == doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter message</div>}
-                                                {/* {this.state.validHtmlError && <Translate Component={Text} content="please_enter_valid_content" className="fs-14 text-red" />} */}
                                                 {this.state.errorMessage != null && <Alert
                                                     description={this.state.errorMessage}
                                                     type="error"
@@ -493,7 +492,7 @@ class CaseView extends Component {
                                                 {this.state.uploadLoader && <Loader />}
                                             </div>
                                             <div className="docfile-container">
-                                                {this.getUploadedFiles(doc.id)?.path?.map((file, idx1) => <div key={idx1} className="docfile">
+                                                {this.getUploadedFiles(doc.id)?.path?.map((file, idx1) => <div key={idx1} className="docfile uploaddoc-margin">
                                                     <span className={`icon xl ${(file.filename.slice(-3) === "zip" ? "file" : "") || (file.filename.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                                     <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
                                                         <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>
@@ -502,11 +501,7 @@ class CaseView extends Component {
                                                     <span className="icon md close c-pointer" onClick={() => this.deleteDocument(this.getUploadedFiles(doc.id), idx1, true)} />
                                                 </div>)}
                                             </div>
-                                            {/* <div className="text-center my-36">
-                                        <Button className="pop-btn px-36" onClick={() => this.docReject(doc)} loading={this.state.btnLoading}>
-
-                                        Submit</Button>
-                                    </div> */}
+                        
                                             <Form.Item className="text-center my-36">
                                                 <Button
                                                     htmlType="submit"
@@ -520,6 +515,19 @@ class CaseView extends Component {
                                             </Form.Item> 
                                         </Form>
                                     </>}
+                                     {this.state.documentReplies[doc.id]?.loading ? <div className="text-center"><Spin size="large" /></div>:
+                                     <> 
+                                   
+                                    {((!this.state?.documentReplies[doc.id]?.data ||
+                                        this.state?.documentReplies[doc.id]?.data?.length == 0)&&(( doc.state == "Approved" || this.state.docDetails.caseState == 'Approved' || this.state.docDetails.caseState == 'Cancelled'))
+                                        ) && (
+                                            <Empty
+                                                 image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                                description="No documents submitted"
+                                            />
+                                        )}
+                                        </>} 
+                                    
                             </Panel>
                         </Collapse>)}
                 </div>

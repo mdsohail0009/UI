@@ -47,7 +47,7 @@ class FaitDeposit extends Component {
     if (this.props.sendReceive.withdrawFiatEnable||this.props?.isShowSendFiat) {
       getFeaturePermissionsByKeyName(`send_fiat`);
       this.handleshowTab(2);
-      this.props.dispatch(setSubTitle(apicalls.convertLocalLang("withdrawFiat")));
+     this.props.dispatch(setSubTitle(apicalls.convertLocalLang("withdrawFiat")));
     } else {
       getFeaturePermissionsByKeyName(`receive_fiat`);
       this.handleshowTab(1);

@@ -20,6 +20,7 @@ import { Link } from "react-router-dom";
 import Paragraph from "antd/lib/typography/Paragraph";
 import { connect } from "react-redux";
 import { getFeaturePermissionsByKeyName } from "../shared/permissions/permissionService";
+import { setSendFiatHead, setSubTitle } from "../../reducers/buyFiatReducer";
 const { Text, Title } = Typography;
 const { Option } = Select;
 class OnthegoFundTransfer extends Component {
@@ -220,6 +221,7 @@ class OnthegoFundTransfer extends Component {
 
             const saveRes = await saveWithdraw(obj)
             if (saveRes.ok) {
+                this.props.dispatch(setSendFiatHead(true));
                 this.chnageStep(this.state.isNewTransfer ? "declaration" : "successpage")
                 this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id))
                 this.props.dispatch(fetchMarketCoinData(true))
@@ -484,7 +486,7 @@ class OnthegoFundTransfer extends Component {
                                     this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item, codeDetails: { ...this.state.codeDetails, ...item } });
                                     const res = await confirmTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount });
                                     if (res.ok) {
-                                        this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => this.chnageStep("reviewdetails"));
+                                        this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails")});
                                     } else {
                                         this.setState({ ...this.state, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
                                     }
@@ -519,7 +521,7 @@ class OnthegoFundTransfer extends Component {
                                     this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item });
                                     const res = await confirmTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount });
                                     if (res.ok) {
-                                        this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => this.chnageStep("reviewdetails"));
+                                        this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails")});
                                     } else {
                                         this.setState({ ...this.state, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
                                     }
@@ -603,21 +605,32 @@ class OnthegoFundTransfer extends Component {
                                         }
                                         this.reasonForm.current.validateFields(validateFileds).then(async () => {
                                             const fieldValues = this.reasonForm.current.getFieldsValue();
-                                            this.setState({ ...this.state, loading: true, errorMessage: null });
-                                            const obj = {
-                                                "payeeId": this.state.selectedPayee.id,
-                                                "customerId": this.props.userProfile.id,
-                                                "reasonOfTransfer": fieldValues?.reasionOfTransfer,
-                                                "routingNumber": fieldValues?.abaRoutingCode,
-                                                "isInternational": null,
-                                                "documents": this.state.codeDetails?.documents
+                                            if(!fieldValues.files && !this.state.codeDetails?.documents) {
+                                                this.setState({ ...this.state, isLoading: false, errorMessage: "At least one document is required" });
+                                                this.reasonForm.current?.scrollIntoView();
                                             }
-                                            const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasionOfTransfer, amount: this.state.amount, documents: this.state.codeDetails?.documents });
-                                            if (res.ok) {
-                                                this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => this.chnageStep("reviewdetails"));
-                                            } else {
-                                                this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, ...fieldValues }, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
+                                            else if (this.state.codeDetails?.documents && this.state.codeDetails?.documents?.details?.length == 0) {
+                                                   this.setState({ ...this.state, isLoading: false, errorMessage: "At least one document is required" });
+                                                   this.reasonForm.current?.scrollIntoView();
                                             }
+                                            else {
+                                                this.setState({ ...this.state, loading: true, errorMessage: null });
+                                                const obj = {
+                                                    "payeeId": this.state.selectedPayee.id,
+                                                    "customerId": this.props.userProfile.id,
+                                                    "reasonOfTransfer": fieldValues?.reasionOfTransfer,
+                                                    "routingNumber": fieldValues?.abaRoutingCode,
+                                                    "isInternational": null,
+                                                    "documents": this.state.codeDetails?.documents
+                                                }
+                                                const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasionOfTransfer, amount: this.state.amount, documents: this.state.codeDetails?.documents });
+                                                if (res.ok) {
+                                                    this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => {    this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails")});
+                                                } else {
+                                                    this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, ...fieldValues }, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
+                                                }
+                                            }
+                                            
 
                                         }).catch(() => { });
                                     }}
@@ -656,7 +669,7 @@ class OnthegoFundTransfer extends Component {
                                     <Title className="fs-14 text-white fw-500 text-upper text-right">
                                         <NumberFormat
                                             value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
-                                            thousandSeparator={true} displayType={"text"}  decimalPlaces={2}/> {`${this.state.reviewDetails?.walletCode}`}</Title>
+                                            thousandSeparator={true} displayType={"text"}  decimalScale={2}/> {`${this.state.reviewDetails?.walletCode}`}</Title>
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
@@ -664,7 +677,7 @@ class OnthegoFundTransfer extends Component {
                                 <Title className="fs-14 text-white fw-500 text-captz">Total fees</Title>
                                     <Title className="fs-14 text-white fw-500 text-upper text-right"><NumberFormat
                                         value={`${(this.state.reviewDetails?.comission)}`}
-                                        thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
+                                        thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
@@ -770,6 +783,7 @@ class OnthegoFundTransfer extends Component {
             newtransfer: <>
                 <FiatAddress typeOntheGo={this.props?.ontheGoType} currency={this.state.selectedCurrency} amount={this.state.amount} onContinue={(obj) => {
                     this.setState({ ...this.state, reviewDetails: obj }, () => {
+                        this.props.dispatch(setSendFiatHead(true));
                         this.chnageStep("reviewdetails")
                     })
                 }
