@@ -156,7 +156,6 @@ class HeaderPermissionMenu extends Component {
     }
     
     navigate = (menuKey, menuItem) => {
-        debugger
         if (menuItem.path === "/modal") {
                 switch (menuKey) {
                     case "trade_buy":
