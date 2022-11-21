@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
-import {
-  Form,
-  Row,
-  Col,
-  Typography,
-  Input,
-  Tabs,
-  Button,
-  Alert,
-  Spin,
-  Image
-} from "antd";
+import Form from "antd/lib/form";
+import Row from "antd/lib/row";
+import Col from "antd/lib/col";
+import Typography from "antd/lib/typography";
+import Input from "antd/lib/input";
+import Tabs from "antd/lib/tabs";
+import Button from "antd/lib/button";
+import Alert from "antd/lib/alert";
+import Image from "antd/lib/image";
+import Spin from "antd/lib/spin";
 import Translate from "react-translate-component";
 import apiCalls from "../../../api/apiCalls";
 import { validateContentRule } from "../../../utils/custom.validator";
@@ -667,7 +665,6 @@ const MyselfNewTransfer = ({ currency, isBusiness, onTheGoObj, ...props }) => {
                               className="fw-300 mb-8 px-4 text-white-50  custom-forminput custom-label pt-8"
                               name="accountNumber"
                               label="Account Number"
-                              required
                               rules={[
                                 {
                                   required: true,

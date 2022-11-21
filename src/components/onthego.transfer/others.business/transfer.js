@@ -1,5 +1,13 @@
-import { Alert, Tabs } from "antd";
-import { Form, Row, Col, Typography, Input, Button, Image, Spin } from "antd";
+import Form from "antd/lib/form";
+import Row from "antd/lib/row";
+import Col from "antd/lib/col";
+import Typography from "antd/lib/typography";
+import Input from "antd/lib/input";
+import Tabs from "antd/lib/tabs";
+import Button from "antd/lib/button";
+import Alert from "antd/lib/alert";
+import Image from "antd/lib/image";
+import Spin from "antd/lib/spin";
 import React, { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
 import Loader from "../../../Shared/loader";
@@ -46,7 +54,6 @@ class BusinessTransfer extends Component {
                 const accountDetails = data.payeeAccountModels[0];
                 data = { ...data, ...accountDetails, line1: data.line1, line2: data.line2, line3: data.line3, bankAddress1: accountDetails.line1, bankAddress2: accountDetails.line2 };
                 delete data["documents"];
-                // this.handleIbanChange({ target: { value: data?.iban } });
                  edit = true;
             }
             if(data.transferType== "international"){
@@ -88,7 +95,7 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].swiftRouteBICNumber = values?.swiftRouteBICNumber;
         _obj.payeeAccountModels[0].line1 = selectedTab == "internationalIBAN" ? ibanDetails?.bankAddress : values.bankAddress1;
         _obj.payeeAccountModels[0].line2 = values.bankAddress2;
-        _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
+       // _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
         _obj.addressType = "otherbusiness";
         _obj.transferType = selectedTab;
         _obj.amount = this.props.amount;

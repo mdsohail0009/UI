@@ -1,4 +1,12 @@
-import { Form, Row, Col, Typography, Input, Button, Alert, Image, Spin } from "antd";
+import Form from "antd/lib/form";
+import Row from "antd/lib/row";
+import Col from "antd/lib/col";
+import Typography from "antd/lib/typography";
+import Input from "antd/lib/input";
+import Button from "antd/lib/button";
+import Alert from "antd/lib/alert";
+import Image from "antd/lib/image";
+import Spin from "antd/lib/spin";
 import React, { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
 import { validateContentRule } from "../../../utils/custom.validator";
@@ -148,7 +156,7 @@ class OthersBusiness extends Component {
         _obj.payeeAccountModels[0].walletCode = "EUR";
         _obj.payeeAccountModels[0].bankName = ibanDetails?.bankName;
         delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
-        _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
+     //   _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
         _obj.addressType = "otherbusiness";
         _obj.transferType = "sepa";
         _obj.amount = this.props.amount;
@@ -470,3 +478,10 @@ class OthersBusiness extends Component {
     }
 }
 export default ConnectStateProps(OthersBusiness);
+
+
+
+
+
+
+

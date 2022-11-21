@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { Form, Row, Col, Radio } from 'antd';
+import Form from "antd/lib/form";
+import Row from "antd/lib/row";
+import Col from "antd/lib/col";
+import Radio from "antd/lib/radio";
 import { useForm } from "antd/lib/form/Form";
 import ConnectStateProps from "../../utils/state.connect";
 import OthersBusiness from "../onthego.transfer/others.business/others.business.component";
@@ -43,13 +46,10 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onCont
                             disabled={isEdit}
                         >
                             <Radio.Button
-                           // disabled={props?.selectedAddress?.id !== "00000000-0000-0000-0000-000000000000" && props?.selectedAddress?.addressType !== "ownbusiness"?true:false}
                             className="custom-btn sec mt-8" value={props.userProfile?.isBusiness ? "ownbusiness" : "myself"}>{props.userProfile?.isBusiness ? "My Company" : "My Self"}</Radio.Button>
                             <Radio.Button
-                                  // disabled={props?.selectedAddress?.id !== "00000000-0000-0000-0000-000000000000" && props?.selectedAddress?.addressType !== "someoneelse"?true:false}
                                 className="custom-btn sec mt-8" value="individuals">INDIVIDUALS</Radio.Button>
                             <Radio.Button
-                             //  disabled={props?.selectedAddress?.id !== "00000000-0000-0000-0000-000000000000" && props?.selectedAddress?.addressType !== "business"?true:false}
                                 className="custom-btn sec mt-8" value="otherbusiness">OTHER BUSINESS</Radio.Button>
                         </Radio.Group>)}
                     </Col>

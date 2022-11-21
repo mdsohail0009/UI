@@ -1,31 +1,38 @@
 import React, { useState, useEffect } from "react";
-import {
-  Form, Typography, Input, Button, Alert, Spin, message, Select, Checkbox, Tooltip, Upload, Modal,
-  Radio, Row, Col, AutoComplete, Dropdown, Menu, Space, Cascader, InputNumber, Image, Tabs, Table, Drawer
-} from "antd";
+import Form from 'antd/lib/form';
+import Typography from "antd/lib/typography";
+import Input from "antd/lib/input";
+import Button from "antd/lib/button";
+import Alert from "antd/lib/alert";
+import Spin from "antd/lib/spin";
+import  message  from "antd/lib/message";
+import Select from "antd/lib/select";
+import Checkbox from "antd/lib/checkbox";
+import Tooltip from "antd/lib/tooltip";
+import Modal from "antd/lib/modal";
+import Radio from "antd/lib/radio";
+import Row from "antd/lib/row";
+import Col from "antd/lib/col";
+import { AutoComplete } from "antd";
+import Image from "antd/lib/image";
+import  Drawer  from "antd/lib/drawer";
 import { LoadingOutlined } from "@ant-design/icons";
-import { setStep, setHeaderTab } from "../../reducers/buysellReducer";
+import {setHeaderTab } from "../../reducers/buysellReducer";
 import Translate from "react-translate-component";
 import { connect } from "react-redux";
 import {
-  getPayeeLu, getFavData, saveAddressBook, getBankDetails,
-  getBankDetailLu, uuidv4, getCoinList, emailCheck
+  getPayeeLu, getFavData, saveAddressBook,
+   uuidv4, getCoinList
 } from "./api";
 import { getCountryStateLu } from "../../api/apiServer";
 import Loader from "../../Shared/loader";
 import apiCalls from "../../api/apiCalls";
-import apicalls from "../../api/apiCalls";
 import { Link } from "react-router-dom";
-import { bytesToSize } from "../../utils/service";
 import { validateContentRule } from "../../utils/custom.validator";
 import { addressTabUpdate, fetchAddressCrypto, setAddressStep } from "../../reducers/addressBookReducer";
 import WAValidator from "multicoin-address-validator";
-import NumberFormat from "react-number-format";
 import success from "../../assets/images/success.png";
-import AddressDocumnet from "./document.upload";
 import BankDetails from "./bank.details";
-import CryptoAdress from "./crypto.address";
-const { TabPane } = Tabs;
 const { Text, Paragraph, Title } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
@@ -61,31 +68,16 @@ const AddressCommonCom = (props) => {
   const [errorMsg, setErrorMsg] = useState(null);
   const [errorWarning, setErrorWarning] = useState(null);
   const [isEdit, setEdit] = useState(false);
-  const [emailExist, setEmailExist] = useState(false);
-  const [uploadAdress, setUploadAddress] = useState(false);
-  const [uploadIdentity, setUploadIdentity] = useState(false);
-  const [addressState, setAddressState] = useState(null);
-  const [addressFile, setAdressFile] = useState(null);
-  const [identityFile, setIdentityFile] = useState(null);
-  const [declarationFile, setDeclarationFile] = useState(null);
-  const [isUploading, setUploading] = useState(false);
-  const [previewModal, setPreviewModal] = useState(false);
-  const [bankType, setBankType] = useState("");
+   const [emailExist, setEmailExist] = useState(false);
   const [PayeeLu, setPayeeLu] = useState([]);
-  const [bankDetail, setBankDetail] = useState([])
-  const [screen, setScreen] = useState(props.data)
   const [editBankDetsils, setEditBankDetails] = useState(false)
   const [bankObj, setBankObj] = useState({})
-  const [bankChange, SetBankChange] = useState(null)
   const [coinDetails, setCoinDetails] = useState([])
   const [country, setCountry] = useState([])
-  const [state, setState] = useState([]);
-  const [ibanValue, setIbanValue] = useState(null)
   const [favouriteDetails, setFavouriteDetails] = useState({})
   const [deleteItem, setDeleteItem] = useState()
   const [agreeRed, setAgreeRed] = useState(true)
   const [bilPay, setBilPay] = useState(null);
-  const [newStates, setNewStates] = useState([]);
   const [isSignRequested, setSignRequested] = useState(false);
   const [recrdStatus, setRecrdStatus] = useState(null);
   const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType: "sepa" });
@@ -95,7 +87,6 @@ const AddressCommonCom = (props) => {
     handleCountryChange(data?.payeeAccountCountry);
     setIsCryptoModalVisible(true);
     setBankObj(data)
-    SetBankChange(data?.bankType);
     if (props?.addressBookReducer?.cryptoTab == true) {
       form.setFieldsValue({
         toCoin: data.walletCode,
@@ -152,11 +143,6 @@ const AddressCommonCom = (props) => {
       getFavs("00000000-0000-0000-0000-000000000000", props?.userConfig?.id)
     }
     payeeLuData()
-    if (props?.addressBookReducer?.selectedRowData?.id) {
-      bankDetailsLu(props?.addressBookReducer?.selectedRowData?.id, props?.userConfig?.id)
-    } else {
-      bankDetailsLu("00000000-0000-0000-0000-000000000000", props?.userConfig?.id)
-    }
     selectCoin()
     getCountry();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -180,7 +166,6 @@ const AddressCommonCom = (props) => {
   };
   const handleOk = () => {
     setIsModalVisible(false);
-   // setEditBankDetails(false)
   };
   
   const handleCryptoOk = () => {
@@ -216,8 +201,6 @@ const AddressCommonCom = (props) => {
   const handleCancel = () => {
     setIsCryptoModalVisible(false);
     bankDetailForm.resetFields();
-    SetBankChange("BankAccount");
-    setNewStates([]);
   };
 
   const radioChangeHandler = (e) => {
@@ -228,18 +211,11 @@ const AddressCommonCom = (props) => {
 
       payeeLuData(props?.userConfig?.id, withdraeTab, true);
       getFavs("00000000-0000-0000-0000-000000000000", props?.userConfig?.id)
-      // setIsLoading(false);
     }
     setIsLoading(false);
     setAgreeRed(true);
     setErrorMsg(null);
     setErrorWarning(null);
-    setUploading(false);
-    setUploadAddress(false);
-    setUploadIdentity(false);
-    setIdentityFile(null);
-    setAdressFile(null);
-    setDeclarationFile(null);
     setModalData([]);
     form.resetFields();
     setCryptoAddress(null);
@@ -254,7 +230,6 @@ const AddressCommonCom = (props) => {
         phoneNo: props?.userConfig.phoneNo,
         email: props?.userConfig.email,
       });
-      setBankType("bank");
       setSelectParty(false);
     } else {
       form.setFieldsValue({
@@ -262,14 +237,15 @@ const AddressCommonCom = (props) => {
         beneficiaryAccountName: null,
         bankType: "bank",
       });
-      setBankType("bank");
       setSelectParty(true);
     }
   };
-  const payeeLuData = async (id, tabName, type) => {
+  const payeeLuData = async (type) => {
     let response = await getPayeeLu(props?.userConfig?.id, withdraeTab, (type == true || type == false) ? type : true);
     if (response.ok) {
       setPayeeLu(response.data)
+    }else {
+      setErrorMsg(isErrorDispaly(response));
     }
 
   }
@@ -281,16 +257,6 @@ const AddressCommonCom = (props) => {
 
     }
 
-  }
-
-  const bankDetailsLu = async (id, customerId) => {
-    // setIsLoading(true)
-    // let response = await getBankDetailLu(id, customerId)
-    // if (response.ok) {
-    //   let obj = response.data;
-    //   setBankDetail(obj)
-    // }
-    // setIsLoading(false)
   }
   const getFavs = async (id, customerId) => {
     let response = await getFavData(id, customerId)
@@ -314,20 +280,11 @@ const AddressCommonCom = (props) => {
     let code = e;
     form.setFieldsValue({ "state": null });
     let states = country?.filter((item) => item.name?.toLowerCase() === code.toLowerCase());
-    setState(states[0]?.stateLookUp);
-  }
-  const handleState = (e) => {
-  }
-  const handleStateChange = () => {
-
   }
   const getCountry = async () => {
     let response = await getCountryStateLu();
     if (response.ok) {
       setCountry(response.data);
-      let state = form.getFieldValue("country");
-      let states = response.data?.filter((item) => item.name.toLowerCase());
-      setState(states[0]?.stateLookUp);
     }
   }
   const isErrorDispaly = (objValue) => {
@@ -390,20 +347,12 @@ const AddressCommonCom = (props) => {
         }
       }
     } else {
-      //bankmodalData.push(obj)
-      // if(bankmodalData.lenth !==0){
-      //   useDivRef.current.scrollIntoView();
-      //   setErrorMsg("Cannot add more than one Crypto address details");
-      // }else{
         setModalData([obj])
-      // }
       
       setRecrdStatus(obj?.recordStatus);
     }
     setIsCryptoModalVisible(false);
     bankDetailForm.resetFields();
-    SetBankChange("BankAccount");
-    setNewStates([]);
   }
   const handleDeleteCancel = () => {
     setIsModalDelete(false)
@@ -424,14 +373,6 @@ const AddressCommonCom = (props) => {
     setDeleteItem(item)
 
   }
-  const handleBankChange = (e) => {
-    SetBankChange(e)
-    bankDetailForm.setFieldsValue({
-      IBAN: "", accountNumber: "", swiftCode: "", bankName: "", payeeAccountCountry: null, payeeAccountState: null,
-      payeeAccountCity: null, payeeAccountPostalCode: null
-    })
-    setNewStates([]);
-  }
 
   const savewithdrawal = async (values) => {
     setIsLoading(false);
@@ -446,18 +387,11 @@ const AddressCommonCom = (props) => {
     }
     values["type"] = type;
     values["info"] = JSON.stringify(props?.trackAuditLogData);
-    values["addressState"] = addressState;
     let Id = "00000000-0000-0000-0000-000000000000";
     let favaddrId = props?.addressBookReducer?.selectedRowData
       ? favouriteDetails.id
       : Id;
     let namecheck = values.favouriteName;
-    // let responsecheck = await favouriteNameCheck(
-    //   props?.userConfig?.id,
-    //   namecheck,
-    //   withdraeTab,
-    //   favaddrId
-    // );
     if (!values.isAgree) {
       setBtnDisabled(false);
       useDivRef.current.scrollIntoView();
@@ -518,43 +452,6 @@ const AddressCommonCom = (props) => {
     }
   };
 
-  const handleIban = (e) => {
-    setIbanValue(e)
-    getIbanData(e)
-  }
-
-  const getIbanData = async (Val) => {
-    bankDetailForm.setFieldsValue({
-      bankName: "",
-      bankAddress: "",
-      payeeAccountState: null,
-      payeeAccountCountry: null,
-      payeeAccountPostalCode: "",
-      swiftCode: "",
-    });
-
-
-    if (Val && Val.length > 14) {
-      let response = await apiCalls.getIBANData(Val);
-      if (response.ok) {
-        const oldVal = bankDetailForm.getFieldValue();
-        bankDetailForm.setFieldsValue({
-          swiftCode: response.data.routingNumber || oldVal.routingNumber,
-          bankName: response.data.bankName || oldVal.bankName,
-          bankAddress: response.data.bankAddress || oldVal.bankAddress,
-          payeeAccountPostalCode: response.data.zipCode || oldVal.zipCode,
-          payeeAccountState: response.data.state || oldVal.state,
-          payeeAccountCountry: response.data.country || oldVal.country,
-        });
-        handleCountryChange(response.data.country);
-      }
-    } else {
-      bankDetailForm.setFieldsValue({
-        country: ""
-      })
-    }
-  };
-
   const selectCoin = async () => {
     let response = await getCoinList("All");
     if (response.ok) {
@@ -565,17 +462,7 @@ const AddressCommonCom = (props) => {
     bankDetailForm.setFieldsValue({ "payeeAccountState": null });
     let Country = countryValues ? countryValues : country;
     let states = Country?.filter((item) => item.name?.toLowerCase() === code?.toLowerCase());
-    setNewStates(states[0]?.stateLookUp);
   }
-  // const handleCountry = (code,countryValues) => {
-  //  form.setFieldsValue({"state":null});
-  //   let Country = countryValues ? countryValues : country;
-  //   let states = Country?.filter((item) => item.name === code);
-  //   setState(states[0]?.stateLookUp);
-  // }
-
-
-
   const antIcon = (
     <LoadingOutlined
       style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
@@ -588,7 +475,6 @@ const AddressCommonCom = (props) => {
       <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully</Title>
       <Text className="text-white-30">{`Declaration form has been sent to ${props?.userConfig?.email}. 
 				 Please sign using link received in email to whitelist your address`}</Text>
-      {/*<div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBOARD</Button> */}
     </div></div>
 
   }
@@ -844,7 +730,6 @@ const AddressCommonCom = (props) => {
                   >
                     <Translate
                     content={props?.cryptoTab == 2 ? "bankAddress" : (withdraeTab == "Fiat" ? "bankAddress" : "cryptoAddress")}
-                   // content={props?.cryptoTab == 2 ? "cryptoAddress" : "bankAddress"}
                     component={Text}
                    
                   />
@@ -936,11 +821,6 @@ const AddressCommonCom = (props) => {
                         required
 
                         rules={[
-                          // {
-                          //   required: true,
-                          //   //message: 'Is required',
-                          //   whitespace: true,
-                          // },
                           {
                             validator: validateAddressType,
                           },
@@ -1051,9 +931,6 @@ const AddressCommonCom = (props) => {
                         ]}
                       >
                         <AutoComplete
-                          onChange={(e) => {
-                            // handleChange(e)
-                          }}
                           maxLength={20}
                           className="cust-input"
                           placeholder={apiCalls.convertLocalLang("favorite_name")}
@@ -1259,13 +1136,7 @@ const AddressCommonCom = (props) => {
                             component={Form.label}
                           />
                         }
-                      >
-                        {/* <TextArea
-                        placeholder="Address Line1"
-                        className="cust-input  cust-text-area"
-                        autoSize={{ minRows: 2, maxRows: 2 }}
-                        maxLength={100}
-                      ></TextArea> */}
+                      >                  
                         <TextArea
                           placeholder={apiCalls.convertLocalLang("Address_Line1")}
                           className="cust-input cust-text-area address-book-cust"
@@ -1279,21 +1150,7 @@ const AddressCommonCom = (props) => {
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                       <Form.Item
                         className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
-                        name="line2"
-                        // required
-                        // rules={[
-                        //   {
-                        //     required: true,
-                        //     message: apiCalls.convertLocalLang("is_required"),
-                        //   },
-                        //   {
-                        //     whitespace: true,
-                        //     message: apiCalls.convertLocalLang("is_required"),
-                        //   },
-                        //   {
-                        //     validator: validateContentRule,
-                        //   },
-                        // ]}
+                        name="line2"                  
                         label={
                           <Translate
                             content="Address_Line2"
@@ -1314,21 +1171,7 @@ const AddressCommonCom = (props) => {
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                       <Form.Item
                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
-                        name="line2"
-                        // required
-                        // rules={[
-                        //   {
-                        //     required: true,
-                        //     message: apiCalls.convertLocalLang("is_required"),
-                        //   },
-                        //   {
-                        //     whitespace: true,
-                        //     message: apiCalls.convertLocalLang("is_required"),
-                        //   },
-                        //   {
-                        //     validator: validateContentRule,
-                        //   },
-                        // ]}
+                        name="line2"                    
                         label={
                           <Translate
                             content="Address_Line3"
@@ -1386,33 +1229,7 @@ const AddressCommonCom = (props) => {
                         </Select>
                       </Form.Item>
                     </Col>
-                  )}
-                  {/* {withdraeTab === "Fiat" && (
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                      <Form.Item
-                        className="custom-forminput custom-label mb-0"
-                        name="state"
-                        label={
-                          <Translate content="state" component={Form.label} />
-                        }
-                      >
-                        <Select
-                          showSearch
-                          placeholder={apiCalls.convertLocalLang("select_state")}
-                          className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
-                          dropdownClassName="select-drpdwn"
-                          onChange={(e) => handleState(e)}
-                          bordered={false}
-                        >
-                          {state?.map((item, indx) => (
-                            <Option key={indx} value={item.name}>
-                              {item.name}
-                            </Option>
-                          ))}
-                        </Select>
-                      </Form.Item>
-                    </Col>
-                  )} */}
+                  )}              
                   {withdraeTab === "Fiat" && (
                     <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                       <Form.Item
@@ -1506,7 +1323,6 @@ const AddressCommonCom = (props) => {
                   </Col>
 
                 </Row>}
-              {/* {(props?.cryptoTab == 1) && <CryptoAdress />} */}
 
               {bankmodalData?.map((item, indx) => {
                 if (item.recordStatus !== "Deleted") {
@@ -1686,8 +1502,7 @@ const AddressCommonCom = (props) => {
                   htmlType="submit"
                   size="large"
                   className="pop-btn mb-36"
-                  loading={btnDisabled}
-                  // style={{ minWidth: "100%" }}
+                  loading={btnDisabled}               
                 >
                   {isLoading && <Spin indicator={antIcon} />}{" "}
                   <Translate content="Save_btn_text" />

@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Typography, Button, Modal, Tooltip } from "antd";
+import Row from "antd/lib/row";
+import Col from "antd/lib/col";
+import Typography from "antd/lib/typography";
+import Button from "antd/lib/button";
+import Modal from "antd/lib/modal";
+import Tooltip from "antd/lib/tooltip";
 import Loader from "../../Shared/loader";
-import { getAddress, getFileURL, getFavData, getViewData, } from "./api";
+import Alert from "antd/lib/alert";
+import {getFileURL, getViewData, } from "./api";
 import { connect } from "react-redux";
 import FilePreviewer from "react-file-previewer";
 import { bytesToSize } from "../../utils/service";
-import { addressTabUpdate, setAddressStep, selectedTab } from "../../reducers/addressBookReducer";
+import { addressTabUpdate, setAddressStep} from "../../reducers/addressBookReducer";
 const { Title, Text } = Typography;
 const EllipsisMiddle = ({ suffixCount, children }) => {
 	const start = children?.slice(0, children.length - suffixCount).trim();
@@ -42,7 +48,6 @@ const AddressFiatView = (props) => {
 	const backToAddressBook = () => {
 		props?.history?.push("/addressbook?key=2");
 		props?.dispatch(addressTabUpdate(true));
-
 	};
 
 	const docPreview = async (file) => {
@@ -54,12 +59,9 @@ const AddressFiatView = (props) => {
 	};
 	const filePreviewPath = () => {
 		return previewPath;
-
 	};
-
 	const iban = fiatAddress?.bankType === "iban" ? "IBAN" : "Bank Account"
 	const iban1 = fiatAddress?.bankType === "iban" ? "IBAN" : "Bank Account Number"
-
 	const filePreviewModal = (
 		<Modal
 			className="documentmodal-width"
@@ -101,7 +103,7 @@ const AddressFiatView = (props) => {
 		</Modal>
 	);
 	return (
-		<>
+		<>	  
 			<div className="main-container cust-cypto-view">
 			
 				<div className="box bg-box">
@@ -240,7 +242,6 @@ const AddressFiatView = (props) => {
 													</div>}
 												</div>
 											</Col>
-											{/* {fiatAddress?.line2 && */}
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">Address Line 2</label>
@@ -251,8 +252,6 @@ const AddressFiatView = (props) => {
 															: fiatAddress?.line2}</div>}
 												</div>
 											</Col>
-											{/* // }
-											// {fiatAddress?.line3 && */}
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">Address Line 3</label>
@@ -263,11 +262,6 @@ const AddressFiatView = (props) => {
 															: fiatAddress?.line3}</div>}
 												</div>
 											</Col>
-											{/* // } */}
-
-
-
-
 											{fiatAddress?.country && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">Country</label>
@@ -488,8 +482,7 @@ const AddressFiatView = (props) => {
 																	? "-"
 																	: item.postalCode}
 															</Title>
-														</Col>}
-														{/* {item.line1 && */}
+														</Col>}			
 														 {item.walletCode!='EUR'&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
 															Bank Address 1
@@ -501,8 +494,6 @@ const AddressFiatView = (props) => {
 																	: item.line1}
 															</Title>
 														</Col>}
-														{/* // } */}
-														{/* {item.line2 &&  */}
 														{item.walletCode!='EUR'&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
 															Bank Address 2
@@ -514,9 +505,7 @@ const AddressFiatView = (props) => {
 																	: item.line2}
 															</Title>
 														</Col>}
-														{/* } */}
-														
-
+													
 													</Row>
 												</div>
 												{item?.documents?.details.map((file) => (

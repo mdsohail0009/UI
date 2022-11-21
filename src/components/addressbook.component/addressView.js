@@ -1,5 +1,8 @@
 import React, {useEffect, useState } from 'react';
-import { Row, Col, Typography,Button } from 'antd';
+import Row from 'antd/lib/row';
+import Col from 'antd/lib/col';
+import Typography from 'antd/lib/typography';
+import Button from 'antd/lib/button';
 import {getAddress,} from "./api";
 import { connect } from 'react-redux';
 
@@ -18,16 +21,13 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 };
 const AddressFiatView=(props)=> {
     const [fiatAddress, setFiatAddress] = useState({});
-
   useEffect(() => {
 		loadDataAddress();
 	}, []);
     const loadDataAddress = async () => {
         setIsLoading(true)
         let response = await getAddress(props.match.params.id, 'fiat');
-        if (response.ok) {
-     
-    
+        if (response.ok) {    
         if(response.data.addressType === "3rdparty"){
             setSelectParty(true);
         }
@@ -56,9 +56,7 @@ const backToAddressBook = () => {
   props?.history?.push('/userprofile');
 };
 
-
     return (<>
-      
       <Title className="page-title">BENEFICIARY BANK DETAILS VIEW</Title>
       {fiatAddress && <Row gutter={8}>
         <Col xl={24} xxl={24} className="bank-view">
@@ -182,7 +180,6 @@ const backToAddressBook = () => {
 								<span className={`icon xl file mr-16`} />
 								<div
 									className="docdetails c-pointer"
-									// onClick={() => docPreview(file)}
                   >
 									{file.name !== null ? (
 										<EllipsisMiddle suffixCount={4}>

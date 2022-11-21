@@ -1,5 +1,18 @@
 import React, { Component } from "react";
-import {Select,Input, Row, Col, Form, Button, Typography, List, Divider, Image, Alert, Spin, Empty } from 'antd';
+import Select from "antd/lib/select";
+import Form from "antd/lib/form";
+import Row from "antd/lib/row";
+import Col from "antd/lib/col";
+import Typography from "antd/lib/typography";
+import Input from "antd/lib/input";
+import Tabs from "antd/lib/tabs";
+import Button from "antd/lib/button";
+import Alert from "antd/lib/alert";
+import Image from "antd/lib/image";
+import Spin from "antd/lib/spin";
+import List from "antd/lib/list";
+import Divider from "antd/lib/divider";
+import Empty from "antd/lib/empty";
 import apicalls from "../../api/apiCalls";
 import AddressDocumnet from "../addressbook.component/document.upload";
 import oops from '../../assets/images/oops.png'

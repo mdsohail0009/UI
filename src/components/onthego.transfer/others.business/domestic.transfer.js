@@ -1,6 +1,9 @@
 import { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
-import { Form, Row, Col, Input } from "antd";
+import Form from "antd/lib/form";
+import Row from "antd/lib/row";
+import Col from "antd/lib/col";
+import Input from "antd/lib/input";
 import { validateContentRule } from "../../../utils/custom.validator";
 const { TextArea } = Input;
 class DomesticTransfer extends Component {

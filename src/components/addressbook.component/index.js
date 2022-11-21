@@ -1,6 +1,14 @@
 
 import React, { Component } from "react";
-import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert, message, Spin } from "antd";
+import Typography from "antd/lib/typography";
+import { Drawer } from "antd";
+import Button from "antd/lib/button";
+import Radio from "antd/lib/radio";
+import Tooltip from "antd/lib/tooltip";
+import Modal from "antd/lib/modal";
+import Alert from "antd/lib/alert";
+import { message } from "antd";
+import Spin from "antd/lib/spin";
 import {
 	setAddressStep,
 	rejectCoin,
@@ -24,12 +32,9 @@ import { fetchFeaturePermissions, setSelectedFeatureMenu } from "../../reducers/
 import {rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
 import { getFeatureId } from "../shared/permissions/permissionService";
 import { setCurrentAction } from '../../reducers/actionsReducer'
-import AddressBookV2 from "../addressbook.v2/fiat.address";
 import AddressBookV3 from "../addressbook.v3";
-import AddressCommonCom from "./addressCommonCom";
 import AddressCrypto from "./addressCrypto"
 const { Paragraph, Text, Title } = Typography;
-const addressName = { "1stparty": "1st Party", "3rdparty": "3rd Party" };
 class AddressBook extends Component {
 	constructor(props) {
 		super(props);
@@ -49,6 +54,7 @@ class AddressBook extends Component {
 			isDownloading: false,
 			permissions: {},
 			showHeading:false,
+			mdlerror:null,
 			obj: {
 				id: [],
 				tableName: "Common.PayeeAccounts",
@@ -93,8 +99,6 @@ class AddressBook extends Component {
 				FullFeatureName: "Address Book",
 			});
 		}
-
-
 	}
 	loadPermissions = () => {
 		if (this.props.addressBookPermissions) {
@@ -236,9 +240,6 @@ class AddressBook extends Component {
 					<div>
 						<span className="gridLink c-pointer" onClick={() => this.addressCryptoView(props)}>{props.dataItem?.whiteListName}</span>
 					</div>
-					{/* <Text className="file-label ml-8 fs-12">
-						{addressName[props?.dataItem?.addressType]}
-					</Text> */}
 				</td>
 			),
 		},
@@ -296,6 +297,8 @@ class AddressBook extends Component {
 		if (response.ok) {
 			window.open(response.data, "_blank");
 			this.setState({ ...this.state, isDownloading: false, selectedDeclaration: null });
+		} else {
+			this.setState({...this.state,errorMsg:this.isErrorDispaly(response)})
 		}
 	}
 
@@ -325,11 +328,11 @@ class AddressBook extends Component {
 			errorWorning: null
 		});
 	};
-	statusUpdate = () => {
+	statusUpdate = () => {	
 		if (!this.state.isCheck) {
 			this.setState({ ...this.state, errorWorning: "Please select the one record" });
 		} else {
-			this.setState({ modal: true });
+			this.setState({ modal: true,mdlerror:null });
 		}
 	};
 	handleCancel = (e) => {
@@ -342,11 +345,11 @@ class AddressBook extends Component {
 		if (this.state.cryptoFiat) {
 			this.gridFiatRef.current.refreshGrid();
 		} else {
-			this.gridCryptoRef.current.refreshGrid();
+			this.gridCryptoRef.current.refreshGriawaitd();
 		}
 	};
 	handleSatatuSave = async () => {
-		this.setState({ ...this.state, isLoading: true, btnDisabled: true });
+		this.setState({ ...this.state, isLoading: true, btnDisabled: true});
 		let statusObj = this.state.obj;
 		statusObj.id.push(this.state.selectedObj.payeeAccountId);
 		statusObj.modifiedBy = this.props.oidc.user.profile.unique_name;
@@ -355,7 +358,6 @@ class AddressBook extends Component {
 		} else {
 			statusObj.status.push("InActive")
 		}
-		// statusObj.status.push(this.state.selectedObj.status);
 		statusObj.type = this.state.cryptoFiat ? "fiat" : "crypto";
 		statusObj.info = JSON.stringify(this.props.trackLogs);
 		let response = await activeInactive(statusObj);
@@ -391,11 +393,11 @@ class AddressBook extends Component {
 		} else {
 			this.setState({
 				...this.state,
-				modal: false,
+				modal: true,
 				selection: [],
 				isCheck: false,
 				btnDisabled: false,
-				errorWorning: response.data,
+				mdlerror:this.isErrorDispaly(response),				
 				obj: {
 					id: [],
 					tableName: "Common.PayeeAccounts",
@@ -652,13 +654,28 @@ class AddressBook extends Component {
 		};
 		this[actions[key]]();
 	};
-
+ isErrorDispaly = (objValue) => {
+  if (objValue.data && typeof objValue.data === "string") {
+    return objValue.data;
+  } else if (
+    objValue.originalError &&
+    typeof objValue.originalError.message === "string"
+  ) {
+    return objValue.originalError.message;
+  } else {
+    return "Something went wrong please try again!";
+  }
+  };
 	render() {
 		const { cryptoFiat, gridUrlCrypto, gridUrlFiat, customerId, btnDisabled } =
 			this.state;
 
 		return (
 			<>
+		
+			{this.state.errorMsg != undefined && this.state.errorMsg != null && (
+            <Alert className="w-100 mb-16" type="error" showIcon description={this.state.errorMsg} />
+          )}
 			<div className="main-container">
 			<Translate
 				content="address_book"
@@ -666,16 +683,6 @@ class AddressBook extends Component {
 				className="basicinfo mb-0"
 			/>
 			<Text className="fs-16 text-white fw-500 mb-12 d-block">Note: <span className="fs-14 text-white fw-400 mb-12">Whitelisting of Crypto Address and Bank Account is required, Please add below.</span></Text>
-			{/* <Translate
-				content="note"
-				component={Text}
-				className="fs-14 text-white fw-400 mb-12 d-block"
-			/>
-			<Translate
-				content="addressbook_note"
-				component={Text}
-				className="fs-14 text-white fw-400 mb-12 d-block"
-			/> */}
 				<div className="box basic-info">
 					<div className="display-flex mb-16">
 						<Radio.Group
@@ -794,7 +801,7 @@ class AddressBook extends Component {
 					className="side-drawer w-50p">
 					<AddressBookV3 type="manual" isFiat={this.state.cryptoFiat} selectedAddress={this.state.selectedObj} onContinue={(obj) => this.closeBuyDrawer(obj)} />
 				</Drawer>
-				<Modal
+				<Modal				
 					title={
 						this.state.selectedObj.status === "Active"
 							? apiCalls.convertLocalLang("confirm_deactivate")
@@ -826,6 +833,7 @@ class AddressBook extends Component {
 						</Button>
 					</div>
 					}>
+						{this.state.mdlerror != undefined && this.state.mdlerror != null && <Alert type="error" className="mb-16" showIcon  description={this.state.mdlerror} />}
 					<p className="fs-16 mb-0">
 						{apiCalls.convertLocalLang("really_want")}{" "}
 						{this.state.selectedObj.status === "Active"
