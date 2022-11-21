@@ -33,7 +33,8 @@ class InternationalTransfer extends Component {
                                         "Invalid Account Number"
                                     );
                                 }else {
-                                    return Promise.resolve();
+                                    // return Promise.resolve();
+                                    return validateContentRule(_, value);
                                 }
                             },
                         }
@@ -71,7 +72,8 @@ class InternationalTransfer extends Component {
                                         "Invalid Swift / BIC Code"
                                     );
                                 }else {
-                                    return Promise.resolve();
+                                    // return Promise.resolve();
+                                    return validateContentRule(_, value)
                                 }
                             },
                         }
