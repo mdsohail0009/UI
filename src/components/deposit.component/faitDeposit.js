@@ -225,7 +225,7 @@ class FaitDeposit extends Component {
       <>
         {faitdeposit ?
           <div className='mt-16'>
-           <OnthegoFundTransfer  ontheGoType={"Onthego"}/>
+           <OnthegoFundTransfer  ontheGoType={"Onthego"} onClosePopup={this.props?.oncloseClick}/>
          </div>
           : <> {this.state.Loader && <Loader />}
 
