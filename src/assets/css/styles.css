@@ -57,7 +57,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .custom-btn.sec{background: transparent;background-image: none;border: 1px solid var(--btnBorder); color: var(--textWhite);}
 .custom-btn.sec:hover{background-image: linear-gradient(99.09deg, var(--btnGrad1), var(--btnGrad2));color: var(--textWhite);}
 .custom-btn.sec.network{border: 1px solid #8a8ab8; padding: 8px 10px;line-height: 18px; margin-right: 5px;font-size: 12px;}
-.carousel-card{background-color: var(--bgDarkYellow);border-radius: 30px;overflow: auto;max-height: 265px;}
+.carousel-card{background-color: var(--bgDarkYellow);border-radius: 30px;height: 170px;}
 .ant-carousel .slick-dots-bottom{bottom: 10px  !important;}
 .ant-carousel .slick-dots li button{background: var(--bgGrey) !important; opacity: 0.5;height: 4px;border-radius: 2px;}
 .ant-carousel .slick-dots li.slick-active button{background: var(--bgGrey) !important; opacity: 1;}
@@ -1071,6 +1071,8 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .common-withdraow.withdraw-crypto{margin-right: 0px;}
     .common-withdraow.withdraw-crypto input[type=text]{font-size: 22px !important;}
     .transctns-grid .search-btn{margin-left: 12px !important;}
+    .bill-grid .k-grid-header table{width: 1255px !important;}
+    .bill-grid .k-grid-content table{width: 1254px !important;}
 }
 @media (min-width: 1200px){
     .custom-font{font-size:28px !important;}
@@ -1472,7 +1474,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .custom-header span {padding: 6px 10px;}
 .ant-menu-item:active, .ant-menu-submenu-title:active{background-color: transparent;}
 .custom-declaraton{height: calc(100vh - 200px);align-items: center;display: flex;justify-content: center;}
-.pop-cancel span{color:var(--textYellow);}
+.pop-cancel span{color:var(--textYellow);text-transform: uppercase;font-weight: 700;}
 /* .pop-btn{width: 300px;} */
 .custom-declaraton .declaration-content{width: 600px;}
 .side-drawer .side-drawer-header{align-items: flex-start;}
@@ -1518,3 +1520,6 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .error-title{margin-bottom:10px !important;}
 .notify-viewbtn{margin-bottom: 10px;}
 .uploaddoc-margin{margin: 12px 10px 0 0;}
+.bill-pop .bill-cancel{border: transparent !important;}
+.bill-pop .bill-cancel:hover{border: 1px solid var(--textYellow) !important;}
+.carousel-card .carosel-content{height:100px; overflow-y: auto;}
