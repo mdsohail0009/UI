@@ -37,7 +37,7 @@ class Cases extends Component {
           },
         {field: "caseNumber",title: apiCalls.convertLocalLang("Case_Number"),filter: true, width: 240,},
 		{field: "customerCaseTitle",title: apiCalls.convertLocalLang("title"),filter: true,width: 450},
-		{field: "state",title:apiCalls.convertLocalLang("state"),filter: true,width: 240,},
+		{field: "state",title:apiCalls.convertLocalLang("state"),filter: true,width: 275,},
 	];
      viewCase = ({dataItem}) => {
 		this.props.history.push(`/caseView/${dataItem.id}`);

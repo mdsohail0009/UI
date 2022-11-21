@@ -208,6 +208,7 @@ const getCurrencyLookup = async () => {
           )}
         <div className="box basic-info text-white" style={{clear:'both'}}>
           <List
+           className="bill-grid"
             showActionBar={false}
             url={process.env.REACT_APP_GRID_API + `MassPayments/UserPayments/${props.userConfig?.id}`}
                        additionalParams={{type:walletType}}

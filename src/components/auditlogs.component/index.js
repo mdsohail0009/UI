@@ -264,6 +264,7 @@ class AuditLogs extends Component {
                     htmlType="submit"
                     onClick={this.handleSearch}
                   ><Translate content="search" />
+                  <span class="icon sm search-angle ml-8"></span>
                   </Button>
                 </Col>
               </Row>
