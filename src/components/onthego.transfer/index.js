@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Select,Input, Row, Col, Form, Button, Typography, List, Divider, Image, Alert, Spin, Empty } from 'antd';
+import { Select, Input, Row, Col, Form, Button, Typography, List, Divider, Image, Alert, Spin, Empty } from 'antd';
 import apicalls from "../../api/apiCalls";
 import AddressDocumnet from "../addressbook.component/document.upload";
 import oops from '../../assets/images/oops.png'
@@ -7,7 +7,7 @@ import FiatAddress from "../addressbook.component/fiat.address";
 import alertIcon from '../../assets/images/pending.png';
 import success from '../../assets/images/success.png';
 import NumberFormat from "react-number-format";
-import { fetchPayees,getCoinwithBank, fetchPastPayees, confirmTransaction, saveWithdraw, validateAmount } from "./api";
+import { fetchPayees, getCoinwithBank, fetchPastPayees, confirmTransaction, saveWithdraw, validateAmount } from "./api";
 import Loader from "../../Shared/loader";
 import Search from "antd/lib/input/Search";
 import Verifications from "./verification.component/verifications"
@@ -17,12 +17,10 @@ import { withRouter } from "react-router-dom/cjs/react-router-dom.min";
 import { fetchMemberWallets } from "../dashboard.component/api";
 import Translate from "react-translate-component";
 import { Link } from "react-router-dom";
-import Paragraph from "antd/lib/typography/Paragraph";
 import { connect } from "react-redux";
 import { getFeaturePermissionsByKeyName } from "../shared/permissions/permissionService";
-import { setSendFiatHead, setSubTitle } from "../../reducers/buyFiatReducer";
+import { setSendFiatHead } from "../../reducers/buyFiatReducer";
 const { Text, Title } = Typography;
-const { Option } = Select;
 class OnthegoFundTransfer extends Component {
     enteramtForm = React.createRef();
     reasonForm = React.createRef();
@@ -51,7 +49,7 @@ class OnthegoFundTransfer extends Component {
         isShowGreyButton: false,
         permissions: {},
         filtercoinsList: [],
-        searchFiatVal:""
+        searchFiatVal: ""
     }
     componentDidMount() {
         this.verificationCheck()
@@ -67,28 +65,28 @@ class OnthegoFundTransfer extends Component {
                 }
             });
         }
-     if(this.state.selectedCurrency){  
-        this.getPayees();
-      }
-      this.getCoinDetails()
+        if (this.state.selectedCurrency) {
+            this.getPayees();
+        }
+        this.getCoinDetails()
     }
 
     loadPermissions = () => {
-		if (this.props.withdrawCryptoPermissions) {
-			clearInterval(this.permissionsInterval);
-			let _permissions = {};
-			for (let action of this.props.withdrawCryptoPermissions?.actions) {
-				_permissions[action.permissionName] = action.values;
-			}
-			this.setState({ ...this.state, permissions: _permissions });
-		}
-	}
+        if (this.props.withdrawCryptoPermissions) {
+            clearInterval(this.permissionsInterval);
+            let _permissions = {};
+            for (let action of this.props.withdrawCryptoPermissions?.actions) {
+                _permissions[action.permissionName] = action.values;
+            }
+            this.setState({ ...this.state, permissions: _permissions });
+        }
+    }
 
-    getCoinDetails=async()=>{
-   let response=await getCoinwithBank()
-   if(response.ok){
-    let obj=response.data
-   }
+    getCoinDetails = async () => {
+        let response = await getCoinwithBank()
+        if (response.ok) {
+            let obj = response.data
+        }
     }
     getPayees() {
         fetchPayees(this.props.userProfile.id, this.state.selectedCurrency).then((response) => {
@@ -122,7 +120,7 @@ class OnthegoFundTransfer extends Component {
         }
     }
     chnageStep = (step, values) => {
-        this.setState({ ...this.state, step, onTheGoObj: values  });
+        this.setState({ ...this.state, step, onTheGoObj: values });
         if (step === 'newtransfer') {
             this.setState({ ...this.state, step, isNewTransfer: true, onTheGoObj: values });
         }
@@ -130,13 +128,14 @@ class OnthegoFundTransfer extends Component {
     amountnext = (values) => {
         let _amt = values.amount;
         _amt = _amt.replace(/,/g, "");
-        if(_amt>0){
-        this.setState({ ...this.state, amount: _amt }, () => this.validateAmt(_amt, "newtransfer", values, "newtransferLoader"))
-        }else{
-            if(!_amt){
-                this.setState({ ...this.state, errorMessage:''});
-            }else{
-            this.setState({ ...this.state, errorMessage:'Amount must be greater than zero'});}
+        if (_amt > 0) {
+            this.setState({ ...this.state, amount: _amt }, () => this.validateAmt(_amt, "newtransfer", values, "newtransferLoader"))
+        } else {
+            if (!_amt) {
+                this.setState({ ...this.state, errorMessage: '' });
+            } else {
+                this.setState({ ...this.state, errorMessage: 'Amount must be greater than zero' });
+            }
         }
     }
     handleSearch = ({ target: { value: val } }) => {
@@ -145,7 +144,7 @@ class OnthegoFundTransfer extends Component {
             this.setState({ ...this.state, filterObj, searchVal: val });
         }
         else
-            this.setState({ ...this.state, filterObj: this.state.payees,searchVal: val });
+            this.setState({ ...this.state, filterObj: this.state.payees, searchVal: val });
     }
     handleFiatSearch = ({ target: { value: val } }) => {
         if (val) {
@@ -235,30 +234,30 @@ class OnthegoFundTransfer extends Component {
         }
     }
     changesVerification = (obj) => {
-        if(obj.isPhoneVerification&&obj.isEmailVerification&&(obj.verifyData?.isPhoneVerified&&obj.verifyData?.isEmailVerification&&!obj.verifyData?.twoFactorEnabled)) {
-            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
+        if (obj.isPhoneVerification && obj.isEmailVerification && (obj.verifyData?.isPhoneVerified && obj.verifyData?.isEmailVerification && !obj.verifyData?.twoFactorEnabled)) {
+            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
         }
-        else if(obj.isPhoneVerification&&obj.isAuthenticatorVerification&&(obj.verifyData?.isPhoneVerified&&obj.verifyData?.twoFactorEnabled&&!obj.verifyData?.isEmailVerification)) {
-            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
+        else if (obj.isPhoneVerification && obj.isAuthenticatorVerification && (obj.verifyData?.isPhoneVerified && obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isEmailVerification)) {
+            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
         }
-        else if(obj.isAuthenticatorVerification&&obj.isEmailVerification&&(obj.verifyData?.twoFactorEnabled&&obj.verifyData?.isEmailVerification&&!obj.verifyData?.isPhoneVerified)) {
-            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
+        else if (obj.isAuthenticatorVerification && obj.isEmailVerification && (obj.verifyData?.twoFactorEnabled && obj.verifyData?.isEmailVerification && !obj.verifyData?.isPhoneVerified)) {
+            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
         }
-        else if(obj.isPhoneVerification&&obj.isAuthenticatorVerification&&obj.isEmailVerification&&(obj.verifyData?.isPhoneVerified&&obj.verifyData?.twoFactorEnabled&&obj.verifyData?.isEmailVerification)){
-            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
+        else if (obj.isPhoneVerification && obj.isAuthenticatorVerification && obj.isEmailVerification && (obj.verifyData?.isPhoneVerified && obj.verifyData?.twoFactorEnabled && obj.verifyData?.isEmailVerification)) {
+            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
         }
-        else if(obj.verifyData?.isLiveVerification&&obj.isEmailVerification&&!obj.verifyData?.isPhoneVerified&&!obj.verifyData?.twoFactorEnabled&&obj.verifyData?.isEmailVerification){
-            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
+        else if (obj.verifyData?.isLiveVerification && obj.isEmailVerification && !obj.verifyData?.isPhoneVerified && !obj.verifyData?.twoFactorEnabled && obj.verifyData?.isEmailVerification) {
+            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
         }
-        else if(obj.verifyData?.isLiveVerification&&obj.isPhoneVerification&&!obj.verifyData?.twoFactorEnabled&&!obj.verifyData?.isEmailVerification&&obj.verifyData?.isPhoneVerified){
-            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
+        else if (obj.verifyData?.isLiveVerification && obj.isPhoneVerification && !obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isEmailVerification && obj.verifyData?.isPhoneVerified) {
+            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
         }
         else {
-        if(obj.verifyData?.isLiveVerification&&obj.isAuthenticatorVerification&&!obj.verifyData?.isPhoneVerified&&!obj.verifyData?.isEmailVerification&&obj.verifyData?.twoFactorEnabled){
-            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj});
+            if (obj.verifyData?.isLiveVerification && obj.isAuthenticatorVerification && !obj.verifyData?.isPhoneVerified && !obj.verifyData?.isEmailVerification && obj.verifyData?.twoFactorEnabled) {
+                this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
+            }
         }
-       }
-       
+
     }
     isErrorDispaly = (objValue) => {
         if (objValue.data && typeof objValue.data === "string") {
@@ -292,59 +291,59 @@ class OnthegoFundTransfer extends Component {
 
     }
 
-    handleCurrencyChange =(e) => {
-        this.setState({ ...this.state, selectedCurrency: e});
+    handleCurrencyChange = (e) => {
+        this.setState({ ...this.state, selectedCurrency: e });
     }
 
-    fiatHeading =(data)=>{
-      
-	}
- 
+    fiatHeading = (data) => {
+
+    }
+
     renderStep = (step) => {
-        const { filterObj, pastPayees, payeesLoading, isVarificationLoader, isVerificationEnable,isPhMail,isShowGreyButton,isAuthMail } = this.state;
+        const { filterObj, pastPayees, payeesLoading, isVarificationLoader, isVerificationEnable, isPhMail, isShowGreyButton, isAuthMail } = this.state;
         const steps = {
             selectcurrency: <React.Fragment>
                 {this.state.fiatWalletsLoading && <Loader />}
                 {!this.state.fiatWalletsLoading && <div>
-                <div className="mt-8">
-                    <Title
-                        className='sub-heading code-lbl'>Send from your Suissebase FIAT Wallet</Title>
-                </div>
-                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Search placeholder="Search Currency" value={this.state.searchFiatVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleFiatSearch} size="middle" bordered={false} className="text-center mb-16" />
-                </Col>
-                <List
-                    itemLayout="horizontal"
-                    dataSource={this.state.fiatWallets}
-                    className="crypto-list auto-scroll wallet-list"
-                    loading={this.state.fiatWalletsLoading}
-                    locale={{
-                        emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
-                            <Translate content="No_data" />
-                        } />
-                    }}
-                    renderItem={item => (
+                    <div className="mt-8">
+                        <Title
+                            className='sub-heading code-lbl'>Send from your Suissebase FIAT Wallet</Title>
+                    </div>
+                    <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Search placeholder="Search Currency" value={this.state.searchFiatVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleFiatSearch} size="middle" bordered={false} className="text-center mb-16" />
+                    </Col>
+                    <List
+                        itemLayout="horizontal"
+                        dataSource={this.state.fiatWallets}
+                        className="crypto-list auto-scroll wallet-list"
+                        loading={this.state.fiatWalletsLoading}
+                        locale={{
+                            emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
+                                <Translate content="No_data" />
+                            } />
+                        }}
+                        renderItem={item => (
 
-                        <List.Item onClick={() => this.setState({ ...this.state, selectedCurrency: item.walletCode }, () => {this.getPayees(); this.chnageStep("enteramount")})}>
-                            <Link>
-                                <List.Item.Meta
-                                    avatar={<Image preview={false} src={item.imagePath} />}
+                            <List.Item onClick={() => this.setState({ ...this.state, selectedCurrency: item.walletCode }, () => { this.getPayees(); this.chnageStep("enteramount") })}>
+                                <Link>
+                                    <List.Item.Meta
+                                        avatar={<Image preview={false} src={item.imagePath} />}
 
-                                    title={<div className="wallet-title">{item.walletCode}</div>}
-                                />
-                                <><div className="text-right coin-typo">
-                                    <NumberFormat value={item.amount} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={item.walletCode == 'USD' ? '$' : '€'} renderText={(value, props) => <div {...props} >{value}</div>} />
+                                        title={<div className="wallet-title">{item.walletCode}</div>}
+                                    />
+                                    <><div className="text-right coin-typo">
+                                        <NumberFormat value={item.amount} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={item.walletCode == 'USD' ? '$' : '€'} renderText={(value, props) => <div {...props} >{value}</div>} />
 
-                                </div></>
-                            </Link>
-                        </List.Item>
-                    )}
-                />
+                                    </div></>
+                                </Link>
+                            </List.Item>
+                        )}
+                    />
                 </div>}
             </React.Fragment>,
             enteramount: <>
                 {isVarificationLoader && <Loader />}
-                {!isVarificationLoader && 
+                {!isVarificationLoader &&
                     <Form
                         autoComplete="off"
                         initialValues={{ amount: "" }}
@@ -352,11 +351,14 @@ class OnthegoFundTransfer extends Component {
                         onFinish={this.amountnext}
                         scrollToFirstError
                     >
-                       {!isVerificationEnable &&
+                        {!isVerificationEnable &&
                             <Alert
                                 message="Verification alert !"
                                 description={<Text>Without verifications you can't send. Please select send verifications from <a onClick={() => {
-                                    this.props.history.push("/userprofile/2")
+                                    this.props.history.push("/userprofile/2");
+                                    if (this.props?.onClosePopup) {
+                                        this.props?.onClosePopup();
+                                    }
                                 }}>security section</a></Text>}
                                 type="warning"
                                 showIcon
@@ -375,7 +377,7 @@ class OnthegoFundTransfer extends Component {
                                         rules={[
                                             {
                                                 required: true,
-                                                message:'Is required',
+                                                message: 'Is required',
                                             },
                                             {
                                                 validator: (_, value) => {
@@ -397,17 +399,17 @@ class OnthegoFundTransfer extends Component {
                                             displayType="input"
                                             allowNegative={false}
                                             thousandSeparator={","}
-                                             addonBefore={<Select  defaultValue={this.state.selectedCurrency}
+                                            addonBefore={<Select defaultValue={this.state.selectedCurrency}
                                                 onChange={(e) => this.handleCurrencyChange(e)}
                                                 placeholder="Select">
                                                 <option value="USD">USD</option>
                                                 <option value="EUR">EUR</option>
                                             </Select>}
                                             onValueChange={() => {
-                                                this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount,errorMessage:'' })
+                                                this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: '' })
                                             }}
                                         />
-                                      
+
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -422,7 +424,7 @@ class OnthegoFundTransfer extends Component {
                                             style={{ width: '100%' }}
                                             loading={this.state.newtransferLoader}
                                             disabled={this.state.addressLoader}
-                                       >
+                                        >
                                             New Transfer
                                         </Button>
                                     </Form.Item>
@@ -430,29 +432,29 @@ class OnthegoFundTransfer extends Component {
                                 <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
                                     <Form.Item className="text-center">
                                         <Button
-                                           htmlType="button"
+                                            htmlType="button"
                                             size="large"
                                             className="pop-btn mb-36"
-                                            style={{ width: '100% '}}
+                                            style={{ width: '100% ' }}
                                             loading={this.state.addressLoader}
                                             disabled={this.state.newtransferLoader}
                                             onClick={() => {
                                                 let _amt = this.enteramtForm.current.getFieldsValue().amount;
                                                 _amt = _amt.replace(/,/g, "");
-                                                if(_amt>0){
-                                                this.setState({ ...this.state, isNewTransfer: false, amount: _amt,onTheGoObj:this.enteramtForm.current.getFieldsValue() }, () => {
-                                                    this.enteramtForm.current.validateFields().then(() => this.validateAmt(_amt, "addressselection", this.enteramtForm.current.getFieldsValue(), "addressLoader"))
-                                                        .catch(error => {
+                                                if (_amt > 0) {
+                                                    this.setState({ ...this.state, isNewTransfer: false, amount: _amt, onTheGoObj: this.enteramtForm.current.getFieldsValue() }, () => {
+                                                        this.enteramtForm.current.validateFields().then(() => this.validateAmt(_amt, "addressselection", this.enteramtForm.current.getFieldsValue(), "addressLoader"))
+                                                            .catch(error => {
 
-                                                        });
-                                                })
-                                            }else{
-                                                if(!_amt){
-                                                    this.enteramtForm.current.validateFields()
-                                                }else{
-                                                    this.setState({ ...this.state, errorMessage:'Amount must be greater than zero'})
+                                                            });
+                                                    })
+                                                } else {
+                                                    if (!_amt) {
+                                                        this.enteramtForm.current.validateFields()
+                                                    } else {
+                                                        this.setState({ ...this.state, errorMessage: 'Amount must be greater than zero' })
+                                                    }
                                                 }
-                                            }
                                             }}
                                         >
                                             Address book
@@ -486,7 +488,7 @@ class OnthegoFundTransfer extends Component {
                                     this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item, codeDetails: { ...this.state.codeDetails, ...item } });
                                     const res = await confirmTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount });
                                     if (res.ok) {
-                                        this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails")});
+                                        this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
                                     } else {
                                         this.setState({ ...this.state, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
                                     }
@@ -521,7 +523,7 @@ class OnthegoFundTransfer extends Component {
                                     this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item });
                                     const res = await confirmTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount });
                                     if (res.ok) {
-                                        this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails")});
+                                        this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
                                     } else {
                                         this.setState({ ...this.state, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
                                     }
@@ -549,9 +551,9 @@ class OnthegoFundTransfer extends Component {
 
             </React.Fragment>,
             reasonfortransfer: <React.Fragment>
-                <div className="mb-16" style={{textAlign:'center'}}>
+                <div className="mb-16" style={{ textAlign: 'center' }}>
                     <text Paragraph
-                        className='text-white fs-30 fw-600 px-4 mb-16 mt-4'style={{ fontSize: '18px ' }}>Transfer Details</text>
+                        className='text-white fs-30 fw-600 px-4 mb-16 mt-4' style={{ fontSize: '18px ' }}>Transfer Details</text>
                 </div>
                 <Form
                     autoComplete="off"
@@ -559,7 +561,7 @@ class OnthegoFundTransfer extends Component {
                     ref={this.reasonForm}
                 >
                     {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
-                    <React.Fragment><Row gutter={[16, 16]} style={{marginBottom:16}}>
+                    <React.Fragment><Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="fw-300 mb-4 text-white-50 py-4 custom-forminput custom-label"
@@ -605,13 +607,13 @@ class OnthegoFundTransfer extends Component {
                                         }
                                         this.reasonForm.current.validateFields(validateFileds).then(async () => {
                                             const fieldValues = this.reasonForm.current.getFieldsValue();
-                                            if(!fieldValues.files && !this.state.codeDetails?.documents) {
+                                            if (!fieldValues.files && !this.state.codeDetails?.documents) {
                                                 this.setState({ ...this.state, isLoading: false, errorMessage: "At least one document is required" });
                                                 this.reasonForm.current?.scrollIntoView();
                                             }
                                             else if (this.state.codeDetails?.documents && this.state.codeDetails?.documents?.details?.length == 0) {
-                                                   this.setState({ ...this.state, isLoading: false, errorMessage: "At least one document is required" });
-                                                   this.reasonForm.current?.scrollIntoView();
+                                                this.setState({ ...this.state, isLoading: false, errorMessage: "At least one document is required" });
+                                                this.reasonForm.current?.scrollIntoView();
                                             }
                                             else {
                                                 this.setState({ ...this.state, loading: true, errorMessage: null });
@@ -625,12 +627,12 @@ class OnthegoFundTransfer extends Component {
                                                 }
                                                 const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasionOfTransfer, amount: this.state.amount, documents: this.state.codeDetails?.documents });
                                                 if (res.ok) {
-                                                    this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => {    this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails")});
+                                                    this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
                                                 } else {
                                                     this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, ...fieldValues }, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
                                                 }
                                             }
-                                            
+
 
                                         }).catch(() => { });
                                     }}
@@ -659,22 +661,22 @@ class OnthegoFundTransfer extends Component {
                         <Row gutter={24}>
                             <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                    <Text className="fw-600 text-white mt-4 text-captz"style={{ fontSize: '18px' }}>Transfer details</Text>
+                                    <Text className="fw-600 text-white mt-4 text-captz" style={{ fontSize: '18px' }}>Transfer details</Text>
                                 </div>
                             </Col>
                             {"  "}
                             <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                <Title className="fs-14 text-white fw-500 text-captz">How much you will receive</Title>
+                                    <Title className="fs-14 text-white fw-500 text-captz">How much you will receive</Title>
                                     <Title className="fs-14 text-white fw-500 text-upper text-right">
                                         <NumberFormat
                                             value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
-                                            thousandSeparator={true} displayType={"text"}  decimalScale={2}/> {`${this.state.reviewDetails?.walletCode}`}</Title>
+                                            thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                <Title className="fs-14 text-white fw-500 text-captz">Total fees</Title>
+                                    <Title className="fs-14 text-white fw-500 text-captz">Total fees</Title>
                                     <Title className="fs-14 text-white fw-500 text-upper text-right"><NumberFormat
                                         value={`${(this.state.reviewDetails?.comission)}`}
                                         thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
@@ -682,7 +684,7 @@ class OnthegoFundTransfer extends Component {
                             </Col>
                             <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                <Title className="fs-14 text-white fw-500 text-captz">Withdrawal amount</Title>
+                                    <Title className="fs-14 text-white fw-500 text-captz">Withdrawal amount</Title>
                                     <Title className="fs-14 text-white fw-500 text-upper text-right"><NumberFormat
                                         value={`${(this.state.reviewDetails?.requestedAmount)}`}
                                         thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
@@ -698,8 +700,8 @@ class OnthegoFundTransfer extends Component {
                             </Col>
                             <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                <Title className="fs-14 text-white fw-500 text-captz">Save Whitelist name as</Title>
-                                   <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.favouriteName}</Title>
+                                    <Title className="fs-14 text-white fw-500 text-captz">Save Whitelist name as</Title>
+                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.favouriteName}</Title>
                                 </div>
                             </Col>
                             {this.state.reviewDetails?.name && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
@@ -710,8 +712,8 @@ class OnthegoFundTransfer extends Component {
                             </Col>}
                             {this.state.reviewDetails?.firstName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                <Title className="fs-14 text-white fw-500 text-captz">First Name</Title>
-                                   <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.firstName}</Title>
+                                    <Title className="fs-14 text-white fw-500 text-captz">First Name</Title>
+                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.firstName}</Title>
                                 </div>
                             </Col>}
                             {this.state.reviewDetails?.lastName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
@@ -732,35 +734,35 @@ class OnthegoFundTransfer extends Component {
                                     <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
                                 </div>
                             </Col>}
-                            
-                                {this.state.reviewDetails?.abaRoutingCode && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                                    <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                        <Title className="fs-14 text-white fw-500 text-captz">ABA Routing code</Title>
-                                        <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.abaRoutingCode || "-"}</Title>
-                                    </div>
-                                </Col>}
-                                {this.state.reviewDetails?.swiftRouteBICNumber && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                                    <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
+
+                            {this.state.reviewDetails?.abaRoutingCode && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+                                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
+                                    <Title className="fs-14 text-white fw-500 text-captz">ABA Routing code</Title>
+                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.abaRoutingCode || "-"}</Title>
+                                </div>
+                            </Col>}
+                            {this.state.reviewDetails?.swiftRouteBICNumber && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+                                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                     <Title className="fs-14 text-white fw-500 text-captz">SWIFT / BIC Code</Title>
-                                        <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.swiftRouteBICNumber || "-"}</Title>
-                                    </div>
-                                </Col>}
-                                {this.state.reviewDetails?.accountNumber && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                                    <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
+                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.swiftRouteBICNumber || "-"}</Title>
+                                </div>
+                            </Col>}
+                            {this.state.reviewDetails?.accountNumber && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+                                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                     <Title className="fs-14 text-white fw-500 text-captz">Account Number </Title>
-                                         <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.accountNumber || "-"}</Title>
-                                    </div>
-                                </Col>}
+                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.accountNumber || "-"}</Title>
+                                </div>
+                            </Col>}
                             {this.state.reviewDetails?.bankName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                <Title className="fs-14 text-white fw-500 text-captz">Bank Name </Title>
+                                    <Title className="fs-14 text-white fw-500 text-captz">Bank Name </Title>
                                     <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state?.reviewDetails?.bankName || "-"}</Title>
                                 </div>
                             </Col>}
                             <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} />
                             </Col>
-                           {this.state.permissions?.Send && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+                            {this.state.permissions?.Send && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                                 <div className="text-right mt-36 create-account">
                                     <Form.Item className="mb-0 mt-16">
                                         <Button
@@ -769,8 +771,8 @@ class OnthegoFundTransfer extends Component {
                                             size="large"
                                             block
                                             className="pop-btn custom-send"
-                                             style ={{backgroundColor: !isShowGreyButton  &&'#ccc',borderColor: !isShowGreyButton  &&'#3d3d3d'}}
-                                           loading={this.state.isBtnLoading} >
+                                            style={{ backgroundColor: !isShowGreyButton && '#ccc', borderColor: !isShowGreyButton && '#3d3d3d' }}
+                                            loading={this.state.isBtnLoading} >
                                             Confirm & Continue
                                         </Button>
                                     </Form.Item>
@@ -787,18 +789,18 @@ class OnthegoFundTransfer extends Component {
                         this.chnageStep("reviewdetails")
                     })
                 }
-                } 
-                fiatHeadingUpdate={this.fiatHeading}
+                }
+                    fiatHeadingUpdate={this.fiatHeading}
                     onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} />
             </>,
-            declaration:  <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
+            declaration: <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
                 <Image width={80} preview={false} src={alertIcon} />
                 <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
                 <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                        Please sign using link received in email to whitelist your address. `}</Text>
                 <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
             </div></div>,
-            successpage:<div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
+            successpage: <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
                 <Image width={80} preview={false} src={success} />
                 <Title level={2} className="text-white-30 my-16 mb-0">Your transaction has been processed successfully</Title>
             </div></div>
@@ -811,14 +813,14 @@ class OnthegoFundTransfer extends Component {
         </React.Fragment>
     }
 }
-const connectStateToProps = ({ sendReceive, userConfig, menuItems,oidc }) => {
-	return {
-		sendReceive,
-		userProfile: userConfig?.userProfileInfo,
-		trackAuditLogData: userConfig?.trackAuditLogData,
-		withdrawCryptoPermissions: menuItems?.featurePermissions?.send_fiat,
-		oidc:oidc?.user?.profile
-	};
+const connectStateToProps = ({ sendReceive, userConfig, menuItems, oidc }) => {
+    return {
+        sendReceive,
+        userProfile: userConfig?.userProfileInfo,
+        trackAuditLogData: userConfig?.trackAuditLogData,
+        withdrawCryptoPermissions: menuItems?.featurePermissions?.send_fiat,
+        oidc: oidc?.user?.profile
+    };
 };
 const connectDispatchToProps = dispatch => {
     return {
@@ -828,4 +830,4 @@ const connectDispatchToProps = dispatch => {
         dispatch
     }
 }
-export default connect(connectStateToProps,connectDispatchToProps)(withRouter(OnthegoFundTransfer));
+export default connect(connectStateToProps, connectDispatchToProps)(withRouter(OnthegoFundTransfer));
