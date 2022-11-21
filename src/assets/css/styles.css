@@ -1091,6 +1091,8 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .lg-fontsize{font-size: 12px !important;}
     .side-drawer.custom-drawer-width .ant-drawer-content-wrapper{width:865px !important;}
     .side-drawer.custom-fait-sidedrawer .ant-drawer-content-wrapper{width:50% !important;}
+    .notify-alerticon .ant-alert-icon{margin: 0px 15px 45px 0px !important;}
+    .btn-container{padding-right: 20px;}
 }
 @media (min-width: 1400px){
 
@@ -1516,6 +1518,8 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .error-img{margin-left: 50px; width: 300px;}
 .error-content{margin-bottom: 40px !important;}
 .error-title{margin-bottom:10px !important;}
+.notify-viewbtn{margin-bottom: 10px;}
+.uploaddoc-margin{margin: 12px 10px 0 0;}
 .bill-pop .bill-cancel{border: transparent !important;}
 .bill-pop .bill-cancel:hover{border: 1px solid var(--textYellow) !important;}
 .carousel-card .carosel-content{height:100px; overflow-y: auto;}

@@ -16,6 +16,7 @@ import { withRouter } from "react-router-dom";
 import { setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 import NumberFormat from "react-number-format";
 import Moment from "react-moment";
+import moment from "moment/moment";
 const { Option } = Select;
 class TransactionsHistory extends Component {
   constructor(props) {
@@ -80,7 +81,7 @@ class TransactionsHistory extends Component {
       customCell: (props) => (
         <>
          
-            {props.dataItem?.date ? <Moment format="DD/MM/YYYY hh:mm:ss A">{ props.dataItem?.date}</Moment> : props.dataItem?.date}
+            {props.dataItem?.date ? <>{ moment.utc(props.dataItem?.date).local().format("DD/MM/YYYY hh:mm:ss A")}</> : props.dataItem?.date}
 
         
         </>
