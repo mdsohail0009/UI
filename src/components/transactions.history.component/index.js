@@ -15,7 +15,6 @@ import { getFeaturePermissionsByKey } from '../shared/permissions/permissionServ
 import { withRouter } from "react-router-dom";
 import { setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 import NumberFormat from "react-number-format";
-import Moment from "react-moment";
 import moment from "moment/moment";
 const { Option } = Select;
 class TransactionsHistory extends Component {
