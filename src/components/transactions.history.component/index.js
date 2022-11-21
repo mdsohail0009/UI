@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import {
-  Drawer,
-  Typography,
-  Button,
-  Row, Col, Select, Form
-} from "antd";
+import Typography from "antd/lib/typography";
+import Button from "antd/lib/button";
+import Drawer  from "antd/lib/drawer";
+import Row from "antd/lib/row";
+import Col from 'antd/lib/col';
+import Select from "antd/lib/select";
+import Form from "antd/lib/form";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
@@ -52,7 +53,6 @@ class TransactionsHistory extends Component {
     this.permissionsInterval = setInterval(this.loadPermissions, 200);
     this.TransactionSearch();
     this.transactionCurrency();
-    //this.setState({...this.state, searchObj: {...this.state.searchObj, currency: this.props?.selectWallet || "All"}})
   }
 
   loadPermissions = () => {
@@ -68,8 +68,7 @@ class TransactionsHistory extends Component {
           this.props.history.push("/accessdenied");
         }
       });
-      // () => { this.gridRef.current?.refreshGrid(); }
-      //);
+    
 
     }
   }
@@ -112,14 +111,6 @@ class TransactionsHistory extends Component {
       field: "accountnumber", title: "IBAN/Account Number", filter: true, width: 220,
     },
     { field: "state", title: "State", filter: true, },
-    // { field: "fromWalletCode", title: "From Wallet Code", filter: true, width: 180, },
-    // { field: "fromValue", title: "From Value", width: 150, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
-    // { field: "toWalletCode", title: "To Wallet Code", filter: true, width: 150 },
-    // { field: "toValue", title: "To Value", width: 150, filter: true, footerCell: true, dataType: 'number', filterType: "numeric"},
-    // { field: "fromValueBefore", title: "From Before Value", width: 180, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
-    // { field: "fromValueAfter", title: "From After Value", width: 180, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
-    // { field: "toValueBefore", title: "To Before Value", width: 180, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
-    // { field: "toValueAfter", title: "To After Value", width: 150, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
 
 
   ]
@@ -159,7 +150,7 @@ class TransactionsHistory extends Component {
       this.setState({ ...this.state, searchObj: { ...this.state.searchObj, currency: searchVal || "All" } })
     }
   };
-  handleSearch = (values) => {
+  handleSearch = () => {
     let { searchObj } = this.state;
     this.setState({ ...this.state, searchObj },
       () => { this.gridRef.current?.refreshGrid(); }
@@ -181,7 +172,7 @@ class TransactionsHistory extends Component {
 
   render() {
     const { Title } = Typography;
-    const { customerData, typeData, doctypeData, currenyData, gridUrl, searchObj } = this.state;
+    const {  typeData, doctypeData, currenyData, gridUrl, searchObj } = this.state;
     const options1 = typeData.map((d) => (
       <Option key={d.value} value={d.name}>{d.name}</Option>
     ));
@@ -196,7 +187,6 @@ class TransactionsHistory extends Component {
         <Drawer
           title={[<div className="side-drawer-header">
             <Translate content="menu_transactions_history" component={Title} className="fs-26 fw-400 mb-0 text-white-30" />
-
             <span onClick={this.props.onClose} className="icon md close-white c-pointer" />
           </div>]}
           placement="right"
@@ -232,7 +222,6 @@ class TransactionsHistory extends Component {
                   <Form.Item className="input-label mb-0" label="Wallet" colon={false}>
                     <Select
                       value={this.state.searchObj.currency}
-                      // defaultValue={this.state.searchObj.currency}
                       className="cust-input w-100 bgwhite"
                       dropdownClassName="select-drpdwn"
                       showSearch

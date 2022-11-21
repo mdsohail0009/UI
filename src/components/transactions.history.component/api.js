@@ -9,4 +9,3 @@ const getTransactionCurrency = () => {
 }
 export  { getTransactionSearch,getTransactionCurrency}
 
-//https://apiuat.suissebase.ch/api/v1/Transaction/Accounts/Types
