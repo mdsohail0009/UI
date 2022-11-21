@@ -309,9 +309,7 @@ class CaseView extends Component {
     filePreviewPath() {
         if (this.state.previewPath.includes(".pdf")) {
             return this.state.previewPath;
-        } else {
-            return this.state.previewPath;
-        }
+        } 
     }
     getCaseData = async (id) => {
         this.setState({ ...this.state, loading: true });
@@ -368,8 +366,8 @@ class CaseView extends Component {
                          {commonModel ? (
                 Object.entries(commonModel).map(([key, value], idx) => (
                   <Col
-                    key={idx}
-                    xs={key == "Decription" ? 24 : 24}
+                    key={idx}   
+                    xs={24}
                     sm={key == "Decription" ? 24 : 12}
                     md={key == "Decription" ? 24 : 12}
                     lg={key == "Decription" ? 24 : 8}
