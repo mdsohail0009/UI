@@ -210,7 +210,7 @@ class HeaderPermissionMenu extends Component {
                         this.props.dispatch(setSendCrypto(false));
                         break;
                     case "personal_bank_account":
-                        window.open(process.env.REACT_APP_BANK_UI_URL+'dashboard/receive')
+                        window.open(process.env.REACT_APP_BANK_UI_URL+'dashboard/receive','_self')
                     default:
                         break;
                 }
