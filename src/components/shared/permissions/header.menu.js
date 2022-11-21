@@ -156,6 +156,7 @@ class HeaderPermissionMenu extends Component {
     }
     
     navigate = (menuKey, menuItem) => {
+        debugger
         if (menuItem.path === "/modal") {
                 switch (menuKey) {
                     case "trade_buy":
@@ -208,6 +209,8 @@ class HeaderPermissionMenu extends Component {
                         this.props.dispatch(setWithdrawfiatenaable(false));
                         this.props.dispatch(setSendCrypto(false));
                         break;
+                    case "personal_bank_account":
+                        window.open(process.env.REACT_APP_BANK_UI_URL+'dashboard/receive')
                     default:
                         break;
                 }
