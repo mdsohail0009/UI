@@ -104,7 +104,7 @@ const Verifications = (props) => {
         if (response.ok) {
         let emailData = { ...email, errorMsg: '', btnName: 'code_Sent', requestType: 'Resend', showRuleMsg: `Enter 6 digit code sent to your Email Id`,btnLoader:false }
         setEmail(emailData)
-        startemailTimer(emailData, 'emailSeconds')
+        startemailTimer('emailSeconds')
         } else {
             setEmail({ ...email, errorMsg: isErrorDispaly(response), showRuleMsg: '',btnLoader:false })
             // useOtpRef.current.scrollIntoView(0, 0);
@@ -156,7 +156,7 @@ const Verifications = (props) => {
         if (response.ok) {
         let phoneData = { ...phone, errorMsg: '', btnName: 'code_Sent', requestType: 'Resend', showRuleMsg: `Enter 6 digit code sent to ${maskedNumber}`, btnLoader:false }
         setPhone(phoneData)
-        startphoneTimer(phoneData, 'phoneSeconds')
+        startphoneTimer('phoneSeconds')
         } else {
             setPhone({ ...phone, errorMsg: isErrorDispaly(response), showRuleMsg: '', btnLoader:false })
             // useOtpRef.current.scrollIntoView(0, 0);
