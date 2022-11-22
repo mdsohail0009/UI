@@ -213,7 +213,6 @@ class YourPortfolio extends Component {
          
            <div  className="portfolio-title mb-8">
            <div className='portfolio-data' >
-            <h1>Hello world</h1>
             <Translate
               content="your_portfolio"
               component={Title}
