@@ -833,13 +833,14 @@ class PaymentDetails extends Component {
           className="payments-modal"
           footer={[
             <>
+            <div className='cust-pop-up-btn crypto-pop bill-pop'>
               <Button
-                className="pop-cancel"
+                className="pop-cancel btn-width  bill-cancel"
                 onClick={this.handleCancel}>Cancel</Button>
-              <Button className="pop-btn px-36"
+              <Button className="pop-btn px-36 btn-width"
                 // className="primary-btn pop-btn"
 
-                onClick={() => this.deleteDetials(this.state.selectData, this.state.paymentsData)}>Ok</Button>
+                onClick={() => this.deleteDetials(this.state.selectData, this.state.paymentsData)}>Ok</Button></div>
             </>
           ]}
         >

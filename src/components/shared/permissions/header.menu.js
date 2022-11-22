@@ -37,7 +37,7 @@ import {
     clearSwapData,
     setStep as swapSetStep
 } from "../../../reducers/swapReducer";
-import { setStep as byFiatSetStep, setReceiveFiatHead } from "../../../reducers/buyFiatReducer";
+import { setStep as byFiatSetStep, setReceiveFiatHead, setSendFiatHead } from "../../../reducers/buyFiatReducer";
 import {
     setStep as sendSetStep,
     setWithdrawfiat,
@@ -183,6 +183,7 @@ class HeaderPermissionMenu extends Component {
                         this.props.dispatch(setWithdrawfiatenaable(true));
                         this.props.dispatch(setSendCrypto(true));
                         this.props.dispatch(setReceiveFiatHead(false));
+                        this.props.dispatch(setSendFiatHead(false));
                         break;
                     case "send_crypto":
                         this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, send_crypto: true, sendCryptoTab: true, sendFiatTab: false } });
@@ -207,6 +208,8 @@ class HeaderPermissionMenu extends Component {
                         this.props.dispatch(setWithdrawfiatenaable(false));
                         this.props.dispatch(setSendCrypto(false));
                         break;
+                    case "personal_bank_account":
+                        window.open(process.env.REACT_APP_BANK_UI_URL+'dashboard/receive','_self')
                     default:
                         break;
                 }

@@ -48,12 +48,12 @@ export function withState(WrappedGrid) {
             // });
         }
         numberWithCommas(x) {
-            x= (typeof x)=='string'?x:x.toString();
+            x = (typeof x) == 'string' ? x : x.toString();
             var arParts = x.split('.');
             var intPart = parseInt(arParts[0]).toLocaleString();
             var decPart = (arParts.length > 1 ? arParts[1] : '');
-            
-            return '' + intPart + (decPart?('.' + decPart):'');
+
+            return '' + intPart + (decPart ? ('.' + decPart) : '');
         }
         // numberWithCommas(x) {
         //     return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
@@ -61,9 +61,9 @@ export function withState(WrappedGrid) {
         refreshGrid() {
             this.fetchData(this.state.dataState);
         }
-    //     componentWillUnmount() {
-    //         this.exportSubscriber.unsubscribe();
-    //   }
+        //     componentWillUnmount() {
+        //         this.exportSubscriber.unsubscribe();
+        //   }
         loadingPanel = (
             <div className="k-loading-mask">
                 <span className="k-loading-text">Loading</span>
@@ -79,36 +79,43 @@ export function withState(WrappedGrid) {
                         title="Export Excel"
                         className="k-button k-button-md k-rounded-md k-button-solid  mt-16 mb-16 mr-16 search-btn primary-btn excel-btn"
                         onClick={() => {
+                            const getCombineFieldValue = (dataItem, fields) => {
+                               
+                                return dataItem[fields[0]] && dataItem[fields[1]] ? `${dataItem[fields[0]]} / ${dataItem[fields[1]]}` : (dataItem[fields[0]] || dataItem[fields[1]]);
+                            }
                             if (this.excelRef) {
                                 if (this.excelRef?.current.save) {
                                     let workbook = this.excelRef.current.workbookOptions(); // get the workbook.
                                     workbook.sheets[0].rows.map((item, index) => {
                                         if (item.type === "data") {
                                             for (const i in this.props.columns) {
-                                                    const idx = this.props.columns.length === item.cells.length ? i : (i - 1);
-                                                    if (this.props.columns[i].filterType === "date") {
+                                                const idx = this.props.columns.length === item.cells.length ? i : (i - 1);
+                                                if (this.props.columns[i].filterType === "date") {
                                                     if (item.cells[idx].value)
-                                                    item.cells[idx].value =moment( item.cells[idx].value).format("DD/MM/YYYY hh:mm a")
+                                                        item.cells[idx].value = moment(item.cells[idx].value).format("DD/MM/YYYY hh:mm a")
                                                 }
                                                 if (this.props.columns[i].filterType === "numeric") {
                                                     if (item.cells[idx].value)
                                                         item.cells[idx].value = this.numberWithCommas(item.cells[idx].value);
-                                                        item.cells[idx].textAlign="right";
-                                                    }
+                                                    item.cells[idx].textAlign = "right";
+                                                }
+                                                if (this.props.columns[i]?.combine) {
+                                                    item.cells[idx].value = getCombineFieldValue(this.excelRef?.current.props.data[index-1], this.props.columns[i].combineFields)
+                                                }
                                             }
                                         }
                                     });
                                     this.excelRef.current.save(workbook);
-                               }
-                    // this.excelRef.save(workbook);
+                                }
+                                // this.excelRef.save(workbook);
                             }
-                            
+
                         }}
                     >
                         Export Excel
                     </button>
                     </div>}
-                    { this.props.showExcelExport ? <ExcelExport data={this.state.data} ref={this.excelRef} fileName = {this.props?.excelFileName}>
+                    {this.props.showExcelExport ? <ExcelExport data={this.state.data} ref={this.excelRef} fileName={this.props?.excelFileName}>
 
                         <WrappedGrid
                             sortable={true}
@@ -174,11 +181,11 @@ export function withState(WrappedGrid) {
             });
             return ((salt.toString()) + (iv.toString()) + (encrypted.toString()));
         }
-        
-        fetchData=(dataState) => {
+
+        fetchData = (dataState) => {
             if (dataState.filter) {
                 dataState.filter.filters?.map((item) => {
-                  return item.filters?.map((value) => {
+                    return item.filters?.map((value) => {
                         if (value.operator === "gte" || value.operator === "gt" || value.operator === "lte" || value.operator === "lt") {
                             value.value = value.value ? ((value.operator === 'lte' || value.operator === "gt") ? new Date(moment(value.value).format('YYYY-MM-DDT23:59:59')) : new Date(moment(value.value).format('YYYY-MM-DDT00:00:00'))) : null;
                         }
@@ -187,7 +194,7 @@ export function withState(WrappedGrid) {
             }
             this.setState({ ...this.state, isLoading: true })
             const { oidc: { user }, userConfig: { userProfileInfo }, currentAction: { action },
-            menuItems } = store.getState();
+                menuItems } = store.getState();
             let queryStr = `${toDataSourceRequestString(dataState)}`; // Serialize the state.
             const hasGroups = dataState.group && dataState.group.length;
             if (this.props.additionalParams) {
@@ -200,18 +207,22 @@ export function withState(WrappedGrid) {
                 queryStr = '?' + queryStr
             }
             const base_url = this.props.url;
-            const init = { method: 'GET', accept: 'application/json', headers: { "Authorization": `Bearer ${user.access_token}`,
-            "AuthInformation": userProfileInfo?.id ? this._encrypt(`{CustomerId:"${userProfileInfo?.id}", Action:"${action || "view"
-        }", FeatureId:"${menuItems?.featurePermissions?.selectedScreenFeatureId}"}`, userProfileInfo.sk) : '' } };
+            const init = {
+                method: 'GET', accept: 'application/json', headers: {
+                    "Authorization": `Bearer ${user.access_token}`,
+                    "AuthInformation": userProfileInfo?.id ? this._encrypt(`{CustomerId:"${userProfileInfo?.id}", Action:"${action || "view"
+                        }", FeatureId:"${menuItems?.featurePermissions?.selectedScreenFeatureId}"}`, userProfileInfo.sk) : ''
+                }
+            };
 
             fetch(`${base_url}${queryStr}`, init)
-                .then(response =>{
-					if (response.status === 401) {
-						return { data:null, total:null, unauthorized:401, message:'Unauthorized' }
-					} else {
-						return response.json()
-					}
-				})
+                .then(response => {
+                    if (response.status === 401) {
+                        return { data: null, total: null, unauthorized: 401, message: 'Unauthorized' }
+                    } else {
+                        return response.json()
+                    }
+                })
                 .then(({ data, total }) => {
                     this.setState({
                         data: hasGroups ? translateDataSourceResultGroups(data) : data,

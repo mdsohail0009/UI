@@ -104,20 +104,6 @@ class DomesticTransfer extends Component {
                         {
                             validator: validateContentRule,
                         },
-                        // {
-                        //     validator: (_, value) => {
-                        //         if (
-                        //             value &&
-                        //             !/^[A-Za-z0-9_.-\s]+$/.test(value)
-                        //         ) {
-                        //             return Promise.reject(
-                        //                 "Please enter valid content"
-                        //             );
-                        //         }else {
-                        //             return Promise.resolve();
-                        //         }
-                        //     },
-                        // }
                     ]}
                 >
                     <Input
@@ -128,33 +114,6 @@ class DomesticTransfer extends Component {
                 </Form.Item>
             </Col>
             
-            {/* <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                <Form.Item
-                    className="custom-forminput custom-label mb-0"
-                    name="relation"
-                    label={"Relationship to beneficiary"}
-                    required
-                    rules={[
-                        {
-                            required: true,
-                            message: apiCalls.convertLocalLang("is_required"),
-                        },
-                        {
-                            whitespace: true,
-                            message: apiCalls.convertLocalLang("is_required"),
-                        },
-                        {
-                            validator: validateContentRule,
-                        },
-                    ]}
-                >
-                    <Input
-                        className="cust-input"
-                        placeholder={"Relationship to beneficiary"}
-                    />
-
-                </Form.Item>
-            </Col> */}
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                     className="fw-300 mb-4 text-white-50 py-4 custom-forminput custom-label"
@@ -172,20 +131,6 @@ class DomesticTransfer extends Component {
                         {
                             validator: validateContentRule,
                         },
-                    //    {
-                    //         validator: (_, value) => {
-                    //             if (
-                    //                 value &&
-                    //                 !/^[a-zA-Z0-9_.-\s]+$/.test(value)
-                    //             ) {
-                    //                 return Promise.reject(
-                    //                     "Please enter valid content"
-                    //                 );
-                    //             }else {
-                    //                 return Promise.resolve();
-                    //             }
-                    //         },
-                    //     }
                     ]}
                     label={
                         "Bank Address 1"
@@ -207,20 +152,6 @@ class DomesticTransfer extends Component {
                         {
                             validator: validateContentRule,
                         },
-                        // {
-                        //     validator: (_, value) => {
-                        //         if (
-                        //             value &&
-                        //             !/^[a-zA-Z0-9_.-\s]+$/.test(value)
-                        //         ) {
-                        //             return Promise.reject(
-                        //                 "Please enter valid content"
-                        //             );
-                        //         }else {
-                        //             return Promise.resolve();
-                        //         }
-                        //     },
-                        // }
                     ]}
                     label={
                         "Bank Address 2"

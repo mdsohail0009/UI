@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { Typography, Button, Drawer, Select ,message, Alert, Spin } from 'antd';
 import {Link} from 'react-router-dom';
@@ -45,7 +46,7 @@ const Payments = (props) => {
   };
   const loadInfo = () =>{
     getCurrencyLookup();
-    // props.dispatch(fetchFeaturePermissions(getFeatureId(`/payments`), props.userConfig.id))
+    
     if (props?.match?.path === `/payments`) {
       let key = "1"
       props.dispatch(setHeaderTab(key));
@@ -97,9 +98,9 @@ const Payments = (props) => {
           <Moment format="DD/MM/YYYY">{moment(new Date(prop.dataItem.createdDate), "DD/MM/YYYY")}</Moment></div></td>)
     },
     { field: "currency", title: apicalls.convertLocalLang("currency"), filter: true,width: 200, },
-    { field: "totalAmount", title: 'Total Amount', filter: true, width: 200, },
+    { field: "totalAmount", title: 'Total Amount', filter: true, width: 200,dataType: "number", filterType: "numeric" },
     { field: "approvedAmount", title: 'Approved Amount', filter: true, width: 237, },
-    { field: "count", title: 'Count', filter: true, width: 150, },
+    { field: "count", title: 'Count', filter: true, width: 150,dataType: "number", filterType: "numeric" },
     { field: "state", title: 'State', filter: true, width: 200, },
   ];
   const handleInputChange = (prop) => {
@@ -169,34 +170,11 @@ const getCurrencyLookup = async () => {
         <div className='bill_payment mb-16'> 
           
           <Title className="basicinfo mb-0"><span onClick={() => props.history?.push("/cockpit")} className='icon md c-pointer back mr-8'></span><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
-          {/* <div className="cust-btns mb-d-none">
-            <Button
-              className="pop-btn px-24"
-              style={{ margin: "0 8px", height: 40 }}
-              onClick={showNewBenificiary}
-            >
-              Add Beneficiary
-            </Button>
-            <Button
-              className="pop-btn px-24"
-              style={{ margin: "0 8px", height: 40 }}
-              onClick={addPayment}
-            >
-              Add Bill Payment
-            </Button>
-            <Button
-              className="pop-btn px-24"
-              style={{ margin: "0 8px", height: 40 }}
-              onClick={paymentsEdit}
-            >
-              Edit Bill Payment
-            </Button>
-          </div> */}
+         
           <Select
                   className="cust-input cust-disable"
                   placeholder="Select Currency"
                   onChange={(e) => handleCurrencyChange(e)}
-                  // defaultValue={"All"}
                   style={{ width: 280 }}
                   dropdownClassName="select-drpdwn"
                   bordered={false}
@@ -217,38 +195,7 @@ const getCurrencyLookup = async () => {
           <span className="mb-right">
           <ActionsToolbar featureKey="billpayments" onActionClick={(key) => onActionClick(key)}/>
           </span>
-          {/* <div className="cust-btns visible-mobile mb-16" style={{float:'right'}}>
-            <ul
-              className="address-icons"
-              style={{
-                listStyle: "none",
-                paddingLeft: 0,
-                marginBottom: 0,
-                display: "flex",
-              }}>
-              <li onClick={showNewBenificiary} className="mr-16">
-                <Tooltip
-                  placement="topRight"
-                  title="Add Beneficiary">
-                  <Link className="icon lg beneficiary-icon  mr-0"></Link>
-                </Tooltip>
-              </li>
-              <li onClick={addPayment} className="mr-16">
-                <Tooltip
-                  placement="topRight"
-                  title="Add Bill Payment">
-                  <Link className="icon lg add-icon mr-0"></Link>
-                </Tooltip>
-              </li>
-              <li onClick={paymentsEdit}>
-                <Tooltip
-                  placement="topRight"
-                  title="Edit Bill Payment">
-                  <Link className="icon lg edit-icon mr-0"></Link>
-                </Tooltip>
-              </li>
-            </ul>
-          </div> */}
+          
         </div>
         {errorWarning !== null && (
             <Alert
@@ -261,6 +208,7 @@ const getCurrencyLookup = async () => {
           )}
         <div className="box basic-info text-white" style={{clear:'both'}}>
           <List
+           className="bill-grid"
             showActionBar={false}
             url={process.env.REACT_APP_GRID_API + `MassPayments/UserPayments/${props.userConfig?.id}`}
                        additionalParams={{type:walletType}}
