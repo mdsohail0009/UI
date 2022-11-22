@@ -589,7 +589,7 @@ class OnthegoFundTransfer extends Component {
                             let { documents } = this.state.codeDetails;
                             documents = docs;
                             this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, documents } })
-                        }} title={"Please upload supporting docs to explain relationship with beneficiary*"} />
+                        }} title={"Please upload supporting docs to explain relationship with beneficiary"} />
                     </React.Fragment>
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -607,15 +607,6 @@ class OnthegoFundTransfer extends Component {
                                         }
                                         this.reasonForm.current.validateFields(validateFileds).then(async () => {
                                             const fieldValues = this.reasonForm.current.getFieldsValue();
-                                            if (!fieldValues.files && !this.state.codeDetails?.documents) {
-                                                this.setState({ ...this.state, isLoading: false, errorMessage: "At least one document is required" });
-                                                this.reasonForm.current?.scrollIntoView();
-                                            }
-                                            else if (this.state.codeDetails?.documents && this.state.codeDetails?.documents?.details?.length == 0) {
-                                                this.setState({ ...this.state, isLoading: false, errorMessage: "At least one document is required" });
-                                                this.reasonForm.current?.scrollIntoView();
-                                            }
-                                            else {
                                                 this.setState({ ...this.state, loading: true, errorMessage: null });
                                                 const obj = {
                                                     "payeeId": this.state.selectedPayee.id,
@@ -631,8 +622,6 @@ class OnthegoFundTransfer extends Component {
                                                 } else {
                                                     this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, ...fieldValues }, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
                                                 }
-                                            }
-
 
                                         }).catch(() => { });
                                     }}
