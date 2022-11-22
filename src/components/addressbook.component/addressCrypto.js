@@ -98,7 +98,7 @@ class AddressCrypto extends Component {
     if(value) {
       this.state.coinsList?.filter(function (item){
         if(item.walletCode == value) {
-          networkLu = item?.network;
+        return networkLu = item?.network;
         }
       })
     }

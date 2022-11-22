@@ -91,7 +91,6 @@ class OnthegoCryptoTransfer extends Component {
     }
 
     handlePreview = (item) => {
-        debugger
         let obj = this.props.sendReceive.withdrawCryptoObj;
         this.props.dispatch(setWithdrawcrypto({ ...obj, toWalletAddress: item.walletAddress, addressBookId: item.id, network: item.network, isShowDeclaration: false }))
         this.props.changeStep('withdraw_crpto_summary');
