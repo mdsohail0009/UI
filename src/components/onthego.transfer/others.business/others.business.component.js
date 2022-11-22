@@ -453,7 +453,7 @@ class OthersBusiness extends Component {
                             ></TextArea>
                             </Form.Item>
                         </Col>}
-                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
+                        <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to prove your relationship with the benificiary. E.g. Contracts, Agreements</Paragraph>
 
                     <AddressDocumnet documents={this.state.details?.payeeAccountModels[0].documents} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
