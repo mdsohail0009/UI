@@ -133,8 +133,6 @@ class CaseView extends Component {
         this.setState({ ...this.state, docDetails: { ...this.state.docDetails, details: docDetails } });
     }
     docReject = async (doc) => {
-        debugger
-       
         let item = this.isDocExist(this.state.docReplyObjs, doc.id);
         this.setState({ ...this.state, isMessageError: null });
         if (!validateContent(item?.reply)) {
@@ -145,7 +143,6 @@ class CaseView extends Component {
             return;
         }
         const itemPath = function () {
-            debugger
             if (item.path) {
                 return typeof (item.path) === "object" ? JSON.stringify(item.path) : item.path;
             } else {
