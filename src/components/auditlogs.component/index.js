@@ -1,7 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Drawer, Row, Col, Select, Button, Alert, Form, DatePicker, Modal, Tooltip, Input, Typography ,Empty} from "antd";
+import  Drawer  from "antd/lib/drawer";
+import Row from "antd/lib/row";
+import Col from "antd/lib/col";
+import Select from "antd/lib/select";
+import Button from "antd/lib/button";
+import Alert from "antd/lib/alert";
+import Form from "antd/lib/form";
+import DatePicker from "antd/lib/date-picker";
+import Modal from "antd/lib/modal";
+import Tooltip from "antd/lib/tooltip";
+import Input from "antd/lib/input";
+import Typography from "antd/lib/typography";
+import Empty from "antd/lib/empty";
 import List from "../grid.component";
+
 import Loader from '../../Shared/loader'
 import { userNameLuSearch, getFeatureLuSearch, getAuditLogInfo } from './api';
 import moment from 'moment';
@@ -35,8 +48,6 @@ class AuditLogs extends Component {
         timeSpan: "Last 1 Day",
         userId: this.props.userProfile?.id,
         feature: "All Features",
-       // admin: "user",
-       // user: "user",
         fromdate: '',
         todate: '',
       },
@@ -179,8 +190,8 @@ class AuditLogs extends Component {
   render() {
     const { gridUrl, searchObj, featureData, timeListSpan, moreAuditLogs, logRowData, isLoading } = this.state;
 
-    const options3 = timeListSpan.map((d) => (
-      <Option key={d} value={d}>{d}</Option>
+    const options3 = timeListSpan.map((d,idx) => (
+      <Option key={idx} value={d}>{d}</Option>
     ));
 
     return (
@@ -214,8 +225,7 @@ class AuditLogs extends Component {
                   >
                     <Select
                       className="cust-input mb-0 custom-search"
-                      dropdownClassName="select-drpdwn"
-                      //showSearch
+                      dropdownClassName="select-drpdwn"         
                       defaultValue="Last 1 Day"
                       onChange={(e) => this.handleTimeSpan(e, 'timeSpan')}
                       placeholder="Time Span"

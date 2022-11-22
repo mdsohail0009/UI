@@ -1,7 +1,12 @@
 import React, { Component } from "react";
-import { Typography, Button, Upload, message, Tooltip, Spin,Alert } from "antd";
+import  message from "antd/lib/message";
+import Typography from "antd/lib/typography";
+import Button from "antd/lib/button";
+import Upload from "antd/lib/upload";
+import Tooltip from "antd/lib/tooltip";
+import Spin from "antd/lib/spin";
+import Alert from "antd/lib/alert";
 import { connect } from "react-redux";
-import Moment from "react-moment";
 import { uploadClient } from "../../api";
 import { ProfileImageSave } from "../../api/apiServer";
 import { getmemeberInfo,getIpRegisteryData } from "../../reducers/configReduser";
@@ -245,21 +250,7 @@ class ProfileInfo extends Component {
                 <div></div>
               </div>
             </li>
-            {/* <li className="profileinfo">
-              <div className="profile-block ">
-                <label className="mb-0 profile-label">
-                  <Translate
-                    content="MiddleName"
-                    component={Text}
-                    className="mb-0 profile-label"
-                  />
-                </label>
-                <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>
-                  {this.props.userConfig.middleName || "--"}
-                </p>
-                <div></div>
-              </div>
-            </li> */}
+            
             <li className="profileinfo">
               <div className="profile-block ">
                 <label className="mb-0 profile-label">
@@ -275,22 +266,7 @@ class ProfileInfo extends Component {
                 <div></div>
               </div>
             </li></>}
-            {/* <li className="profileinfo">
-              <div className="profile-block">
-                <label className="mb-0 profile-label">
-                  <Translate
-                    content="Birthday"
-                    component={Text}
-                    className="mb-0 profile-label"
-                  />
-                </label>
-                <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>
-                  {this.props.userConfig.dob != null ? <Moment format="DD/MM/YYYY">{this.props.userConfig.dob}
-                  </Moment> : "--"}
-                </p>
-                <div></div>
-              </div>
-            </li> */}
+           
 
             <li className="profileinfo">
               <div className="profile-block">
