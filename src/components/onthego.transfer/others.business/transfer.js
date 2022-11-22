@@ -1,5 +1,5 @@
 import { Alert, Tabs } from "antd";
-import { Form, Row, Col, AutoComplete, Select, Divider, Typography, Input, Button, Image, Spin } from "antd";
+import { Form, Row, Col, Select, Divider, Typography, Input, Button, Image, Spin } from "antd";
 import React, { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
 import Loader from "../../../Shared/loader";
@@ -14,6 +14,7 @@ import Translate from "react-translate-component";
 import alertIcon from '../../../assets/images/pending.png';
 const { Option } = Select;
 const { Paragraph, Title, Text } = Typography;
+const { TextArea } = Input;
 class BusinessTransfer extends Component {
     form = React.createRef();useDivRef=React.createRef()
     state = {
@@ -47,13 +48,12 @@ class BusinessTransfer extends Component {
                 const accountDetails = data.payeeAccountModels[0];
                 data = { ...data, ...accountDetails, line1: data.line1, line2: data.line2, line3: data.line3, bankAddress1: accountDetails.line1, bankAddress2: accountDetails.line2 };
                 delete data["documents"];
-                // this.handleIbanChange({ target: { value: data?.iban } });
                  edit = true;
             }
             if(data.transferType== "international"){
                 this.setState({ ...this.state, selectedTab:data.transferType })
             }
-            if(data.transferType== "internationalIBAN"){
+            else if(data.transferType== "internationalIBAN"){
                 this.setState({ ...this.state, selectedTab:data.transferType })
                  this.handleIbanChange({ target: { value: data?.iban, isNext: true } });
             }
@@ -72,14 +72,14 @@ class BusinessTransfer extends Component {
     submitPayee = async (values) => {
         let { details, selectedTab,isEdit,isSelectedId, ibanDetails } = this.state;
         this.setState({ ...this.state, errorMessage: null});
-        // if (Object.hasOwn(values, 'iban')) {
-        // this.setState({ ...this.state, errorMessage: null});
-        // if ((!ibanDetails || Object.keys(ibanDetails).length == 0)) {
-        //     this.setState({ ...this.state, errorMessage: "please validate IBAN", isLoading: false, isBtnLoading: false });;
-        //     this.useDivRef.current.scrollIntoView()
-        //     return;
-        // }
-        // }
+        if (Object.hasOwn(values, 'iban')) {
+        this.setState({ ...this.state, errorMessage: null});
+        if ((!ibanDetails || Object.keys(ibanDetails).length == 0)) {
+            this.setState({ ...this.state, errorMessage: "Please click validate button before saving", isLoading: false, isBtnLoading: false });;
+            this.useDivRef.current.scrollIntoView()
+            return;
+        }
+        }
         let _obj = { ...details, ...values };
         _obj.payeeAccountModels[0].currencyType = "Fiat";
         _obj.payeeAccountModels[0].walletCode = "USD";
@@ -89,7 +89,6 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].swiftRouteBICNumber = values?.swiftRouteBICNumber;
         _obj.payeeAccountModels[0].line1 = selectedTab == "internationalIBAN" ? ibanDetails?.bankAddress : values.bankAddress1;
         _obj.payeeAccountModels[0].line2 = values.bankAddress2;
-        _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
         _obj.addressType = "otherbusiness";
         _obj.transferType = selectedTab;
         _obj.amount = this.props.amount;
@@ -144,21 +143,22 @@ class BusinessTransfer extends Component {
     handleTabChange = (key) => {
         let _obj = { ...this.state.details}
         _obj.payeeAccountModels[0].documents=null
-        this.setState({ ...this.state, selectedTab: key,errorMessage:null, ibanDetails: {} });this.form.current.resetFields();
+        this.setState({ ...this.state, selectedTab: key,errorMessage:null, ibanDetails: {}, iBanValid: false, enteredIbanData: null });this.form.current.resetFields();
     }
+   
     handleIbanChange = async ({ target: { value,isNext } }) => {
-        this.setState({ ...this.state, enteredIbanData: value, isShowValid: false});
-        if (value?.length > 10 && isNext) {
+        this.setState({ ...this.state, enteredIbanData: value, isShowValid: false, ibanDetails: {}});
+        if (value?.length >= 10 && isNext) {
             this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true,iBanValid:true });
             const response = await fetchIBANDetails(value);
             if (response.ok) {
                 if(response.data && (response.data?.routingNumber || response.data?.bankName)){
-                    this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:true, isValidateLoading: false });
+                    this.setState({ ...this.state, enteredIbanData: value, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:true, isValidateLoading: false });
                 }else{
                     this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:false, isValidateLoading: false });
                 }
             } else {
-                this.setState({ ...this.state, ibanDetailsLoading: false,iBanValid:false, errorMessage: response.data || response.data?.message || response.originalError?.message, isValidateLoading: false });
+                this.setState({ ...this.state, enteredIbanData: value, ibanDetailsLoading: false,iBanValid:false, errorMessage: response.data || response.data?.message || response.originalError?.message, isValidateLoading: false });
             }
         }
         else{
@@ -166,9 +166,8 @@ class BusinessTransfer extends Component {
         }
     }
     onIbanValidate = (e) => {
-        debugger
         let value = e ? e: this.form.current?.getFieldValue('iban');
-        if (value?.length > 10) {
+        if (value?.length >= 10) {
             if (value &&!/^[A-Za-z0-9]+$/.test(value)) {
                 this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true, isValidateMsg: true, errorMessage: null});
                 this.form.current?.validateFields(["iban"], this.validateIbanType)
@@ -186,14 +185,16 @@ class BusinessTransfer extends Component {
 
      validateIbanType = (_, value) => {
         this.setState({ ...this.state, isValidateLoading: false});
-        if (!value&&this.state.isShowValid) {
+        if ((!value&&this.state.isShowValid)||!value) {
             return Promise.reject(apiCalls.convertLocalLang("is_required"));
-        } else if (!this.state.iBanValid&&this.state.isShowValid) {
+        } else if ((!this.state.iBanValid&&this.state.isShowValid)|| value?.length < 10) {
+            this.setState({ ...this.state, ibanDetails : {}});
             return Promise.reject("Please input a valid IBAN");
         } else if (
             value &&this.state.isShowValid&&
             !/^[A-Za-z0-9]+$/.test(value)
         ) {
+            this.setState({ ...this.state, ibanDetails : {}});
             return Promise.reject(
                 "Please input a valid IBAN"
             );
@@ -208,13 +209,14 @@ class BusinessTransfer extends Component {
             return <Loader />
         }
         if (this.state.showDeclaration) {
-            return <div className="text-center">
+            return <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
                 <Image width={80} preview={false} src={alertIcon} />
                 <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
                 <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                    Please sign using link received in email to whitelist your address. `}</Text>
                 <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
                  {/* <div className="my-25"><Button onClick={() => this.props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button></div> */}
+            </div>
             </div>
         }
         return <div ref={this.useDivRef}><Tabs className="cust-tabs-fait" onChange={this.handleTabChange} activeKey={selectedTab}>
@@ -328,20 +330,15 @@ class BusinessTransfer extends Component {
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
                     }} refreshData ={selectedTab}/>
                     <div className="text-right mt-12">
-                        {/* <Row> */}
-                            {/* <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col> */}
-                            {/* <Col xs={24} className="text-right"> */}
                                 <Button
                                     htmlType="submit"
                                     size="large"
                                     className="pop-btn mb-36 px-36"
-                                    style={{ width: "300px" }}
+                                    //style={{ width: "300px" }}
                                     loading={this.state.isBtnLoading}>
                                     {this.props.type === "manual" && "Save"}
                                     {this.props.type !== "manual" && "Continue"}
                                 </Button>
-                            {/* </Col>
-                        </Row> */}
                     </div>
                 </Form></div>
             </Tabs.TabPane>
@@ -452,21 +449,15 @@ class BusinessTransfer extends Component {
                         payeeAccountModels[0].documents = docs;
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
                     }} refreshData ={selectedTab}/>
-                    <div className="align-center">
-                        {/* <Row gutter={[16, 16]}> */}
-                            {/* <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col> */}
-                            {/* <Col xs={24} className="text-right"> */}
+                    <div className="text-right mt-12">
                                 <Button
                                     htmlType="submit"
                                     size="large"
-                                    className="pop-btn mb-36"
-                                    style={{ minWidth: "100%" }}
+                                    className="pop-btn px-36"
                                     loading={this.state.isBtnLoading}>
                                     {this.props.type === "manual" && "Save"}
                                     {this.props.type !== "manual" && "Continue"}
                                 </Button>
-                            {/* </Col>
-                        </Row> */}
                     </div>
                 </Form></div>
 
@@ -591,7 +582,7 @@ class BusinessTransfer extends Component {
                                     placeholder={"IBAN"}
                                     //style={{ width:'350px',display:'table-cell !important' }}
                                     onChange={this.handleIbanChange}
-                                    maxLength={50}/>
+                                    maxLength={30}/>
 
                             </Form.Item>
                             </div>
@@ -667,27 +658,51 @@ class BusinessTransfer extends Component {
                         </Spin>
                        
                     </div>
-                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to prove your relationship with the benificiary. E.g. Contracts, Agreements</Paragraph>
-                    <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} onDocumentsChange={(docs) => {
+                        {this.props?.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
+                                name="reasonOfTransfer"
+                                required
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        whitespace: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        validator: validateContentRule,
+                                    },
+                                ]}
+                                label={
+                                    "Reason For Transfer"
+                                }
+                            >
+                                <TextArea
+                                    placeholder={"Reason For Transfer"}
+                                    className="cust-input cust-text-area address-book-cust"
+                                    autoSize={{ minRows: 1, maxRows: 1 }}
+                                    maxLength={200}
+                                ></TextArea>
+                            </Form.Item>
+                        </Col>}
+                        <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to prove your relationship with the benificiary. E.g. Contracts, Agreements</Paragraph>
+                    <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
-                    }} />
-                    <div className="align-center">
-                        {/* <Row gutter={[16, 16]}> */}
-                            {/* <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col> */}
-                            {/* <Col xs={24} className="text-right"> */}
+                    }} refreshData = {selectedTab}/>
+                    <div className="text-right mt-36">
                                 <Button
-                                    htmlType="submit"
-                                    size="large"
-                                    className="pop-btn mb-36"
-                                    style={{ minWidth: "100%" }}
+                                   htmlType="submit"
+                                   size="large"
+                                   className="pop-btn px-36"
                                     loading={this.state.isBtnLoading}>
                                     {this.props.type === "manual" && "Save"}
                                     {this.props.type !== "manual" && "Continue"}
                                 </Button>
-                            {/* </Col>
-                        </Row> */}
                     </div>
                 </Form></div>
 
