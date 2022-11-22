@@ -101,9 +101,6 @@ class YourPortfolio extends Component {
     showSendReceiveDrawer = async(e, value) => {
       let selectedObj = { ...value };
       selectedObj.coin = selectedObj.coin?.toUpperCase();
-      selectedObj.coinFullName = selectedObj?.coinFullName //chg:- return question marks
-      selectedObj.id = selectedObj?.id;  //chg:- return question marks
-      selectedObj.withdrawMinValue = selectedObj?.withdrawMinValue  //chg:- return question marks
       this.props.dispatch(fetchWithDrawWallets({ customerId: this.props?.userProfile?.id }));
       this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
       this.props.dispatch(setSubTitle(apiCalls.convertLocalLang("wallet_address")));
@@ -216,6 +213,7 @@ class YourPortfolio extends Component {
          
            <div  className="portfolio-title mb-8">
            <div className='portfolio-data' >
+            <h1>Hello world</h1>
             <Translate
               content="your_portfolio"
               component={Title}
