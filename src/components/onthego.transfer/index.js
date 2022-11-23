@@ -20,6 +20,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getFeaturePermissionsByKeyName } from "../shared/permissions/permissionService";
 import { setSendFiatHead } from "../../reducers/buyFiatReducer";
+import { validateContentRule } from "../../utils/custom.validator";
 const { Text, Title } = Typography;
 class OnthegoFundTransfer extends Component {
     enteramtForm = React.createRef();
@@ -233,31 +234,28 @@ class OnthegoFundTransfer extends Component {
             }
         }
     }
-    changesVerification = (obj) => {
-        if (obj.isPhoneVerification && obj.isEmailVerification && (obj.verifyData?.isPhoneVerified && obj.verifyData?.isEmailVerification && !obj.verifyData?.twoFactorEnabled)) {
-            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-        }
-        else if (obj.isPhoneVerification && obj.isAuthenticatorVerification && (obj.verifyData?.isPhoneVerified && obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isEmailVerification)) {
-            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-        }
-        else if (obj.isAuthenticatorVerification && obj.isEmailVerification && (obj.verifyData?.twoFactorEnabled && obj.verifyData?.isEmailVerification && !obj.verifyData?.isPhoneVerified)) {
-            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-        }
-        else if (obj.isPhoneVerification && obj.isAuthenticatorVerification && obj.isEmailVerification && (obj.verifyData?.isPhoneVerified && obj.verifyData?.twoFactorEnabled && obj.verifyData?.isEmailVerification)) {
-            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-        }
-        else if (obj.verifyData?.isLiveVerification && obj.isEmailVerification && !obj.verifyData?.isPhoneVerified && !obj.verifyData?.twoFactorEnabled && obj.verifyData?.isEmailVerification) {
-            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-        }
-        else if (obj.verifyData?.isLiveVerification && obj.isPhoneVerification && !obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isEmailVerification && obj.verifyData?.isPhoneVerified) {
-            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-        }
-        else {
-            if (obj.verifyData?.isLiveVerification && obj.isAuthenticatorVerification && !obj.verifyData?.isPhoneVerified && !obj.verifyData?.isEmailVerification && obj.verifyData?.twoFactorEnabled) {
-                this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-            }
-        }
+    getVerificationCount = (obj) => {
+        const verificationMethods = ["isPhoneVerification","isEmailVerification","isAuthenticatorVerification"];
+        let verificationCount = 0;
+        verificationMethods.forEach(item => {
+            if (obj[item]) { verificationCount++ }
+        });
+        return verificationCount;
+    }
 
+    getVerifiedCount = (obj) => {
+        const verificationMethods = ["isPhoneVerified","isEmailVerification","twoFactorEnabled","isLiveVerification"];
+        let verifiedCount = 0;
+        verificationMethods.forEach(item => {
+            if (obj[item]) { verifiedCount++ }
+        });
+        return verifiedCount;
+    }
+
+    changesVerification = (obj) => {
+        if(this.getVerificationCount(obj) === this.getVerifiedCount(obj.verifyData)){
+            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
+        }
     }
     isErrorDispaly = (objValue) => {
         if (objValue.data && typeof objValue.data === "string") {
@@ -573,7 +571,10 @@ class OnthegoFundTransfer extends Component {
                                         required: true,
                                         message:
                                             apicalls.convertLocalLang("is_required"),
-                                    }
+                                    },
+                                    {
+                                        validator: validateContentRule,
+                                    },
                                 ]}
                             >
                                 <Input
