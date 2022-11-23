@@ -320,10 +320,7 @@ const connectStateToProps = ({ sendReceive, userConfig, addressBookReducer }) =>
 const connectDispatchToProps = dispatch => {
   return {
     changeStep: (stepcode) => {
-      dispatch(setAddressStep(stepcode))
-    },
-    changeStep: (stepcode) => {
-      dispatch(setStep(stepcode))
+      dispatch(setAddressStep(stepcode));dispatch(setStep(stepcode))
     },
     SelectedAddress: (addressObj) => {
       dispatch(setAddress(addressObj));
