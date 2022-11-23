@@ -80,6 +80,7 @@ export function withState(WrappedGrid) {
                         className="k-button k-button-md k-rounded-md k-button-solid  mt-16 mb-16 mr-16 search-btn primary-btn excel-btn"
                         onClick={() => {
                             const getCombineFieldValue = (dataItem, fields) => {
+                               
                                 return dataItem[fields[0]] && dataItem[fields[1]] ? `${dataItem[fields[0]]} / ${dataItem[fields[1]]}` : (dataItem[fields[0]] || dataItem[fields[1]]);
                             }
                             if (this.excelRef) {

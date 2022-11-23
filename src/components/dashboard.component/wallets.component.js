@@ -12,7 +12,7 @@ import { setWithdrawfiatenaable, setWithdrawfiat, setStep } from '../../reducers
 import { setdepositCurrency, getCurrencieswithBankDetails } from '../../reducers/depositReducer'
 import OnthegoFundTransfer from '../onthego.transfer';
 import BankWallets from '../bankui.component';
-import {setReceiveFiatHead} from '../../reducers/buyFiatReducer';
+import {setReceiveFiatHead, setSendFiatHead} from '../../reducers/buyFiatReducer';
 import Loader from "../../Shared/loader";
 import { buyFiatSteps as config } from '../buyfiat.component/config';
 const { Title, Paragraph } = Typography;
@@ -28,9 +28,9 @@ class Wallets extends Component {
         selectedWallet: '',
         showFuntransfer: false,
     }
-    // cockpitCharts=()=>{
-    //     this.props.history.push("/cockpitCharts");
-    //   }
+    cockpitCharts=()=>{
+        this.props.history.push("/cockpitCharts");
+      }
     componentDidMount() {
         this.fetchWallets();
         this.props.dispatch(getCurrencieswithBankDetails())
@@ -60,6 +60,7 @@ class Wallets extends Component {
 
         if (e === 2) {
             this.props.dispatch(setReceiveFiatHead(false));
+            this.props.dispatch(setSendFiatHead(false));
             // this.props.dispatch(setWithdrawfiatenaable(true))
             // this.props.dispatch(setWithdrawfiat({ walletCode: value }))
             this.setState({ ...this.setState, showFuntransfer: true, selectedCurrency:value })
@@ -120,13 +121,23 @@ class Wallets extends Component {
 
         return (
             <>
-                <Translate content="suissebase_title" component={Title} className="fs-24 fw-600 text-white mb-16 mt-4" />
+            {/* <BankWallets/> */}
+            <div className="d-flex align-center justify-content">
+                <Translate content="suissebase_title" component={Title} className="fs-24 fw-600 text-white px-4 mb-16 mt-4" />
+                <div>
+              <Button className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
+                  <Translate content="cockpit" />
+                  <span className="icon sm right-angle ml-4" />
+              </Button>
+                    
+              </div>
+              </div>
                 {/* <div style={{ display: "flex",alignItems:"baseline" }}>
 
                 <Translate content="suissebase_subtitle" component={Paragraph} className="text-white-30 fs-16 mb-16 px-4" />
                 <Currency defaultValue={totalFiatValue} className={`fs-24 m-0 fw-600 ${totalFiatValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '54px' }} />
                 </div> */}
-                   {wallets?.loading ? (
+                {wallets?.loading ? (
                     <Loader />
                 ) : (
                 <List
@@ -174,15 +185,16 @@ class Wallets extends Component {
                     title={[<div className="side-drawer-header">
                         {/* {this.renderTitle()} */}
                         <span></span>
-                        <div className="text-center fs-24">
+                        {!this.props.buyFiat?.sendFiatHeader && <div className="text-center fs-24">
                             <Translate className="mb-0 text-white-30 fw-600" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
                             </div>
+                        }
                         <span onClick={() => this.setState({ ...this.state, showFuntransfer: false })} className="icon md close-white c-pointer" />
                     </div>]}
                     className="side-drawer w-50p"
                     visible={this.state.showFuntransfer}
                 >
-                    <OnthegoFundTransfer selectedCurrency={this.state.selectedCurrency} ontheGoType={"Onthego"} />
+                    <OnthegoFundTransfer selectedCurrency={this.state.selectedCurrency} ontheGoType={"Onthego"} onClosePopup={() => this.setState({ ...this.state, showFuntransfer: false })}  />
                 </Drawer>
             </>
         );
