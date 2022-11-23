@@ -804,7 +804,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
 .icon.md.EURS{background-position: -269px -102px;}
 .icon.md.USDS{background-position: -213px -102px;}
 .visible-flex{display: flex; justify-content: space-between;align-items: center;}
-.addressbook-grid .cust-list div{position: unset !important;}
+.addressbook-grid .cust-list>div{position: unset !important;}
 @media (min-width: 320px){
     .tlv-header{padding: 8px 8px !important;}
     .header-dropdown{margin-right: 24px;}

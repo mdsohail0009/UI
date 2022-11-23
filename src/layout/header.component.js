@@ -382,7 +382,7 @@ class Header extends Component {
                 </Dropdown>
               </Menu>
             </div>
-            <HeaderPermissionMenu collapsed={this.state.collapsed} isShowSider={this.state.isShowSider} />
+            <HeaderPermissionMenu collapsed={this.state.collapsed} isShowSider={this.state.isShowSider} routeToCockpit={this.routeToCockpit} />
 
           </div>
         </Layout>

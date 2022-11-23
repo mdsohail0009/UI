@@ -76,7 +76,7 @@ class MobileHeaderMenu extends Component {
 
             <Translate
                 content="header_title"
-                onClick={this.routeToCockpit}
+                onClick={this.props.routeToCockpit}
                 component={Menu.Item}
                 className="list-item"
             />
@@ -575,7 +575,7 @@ class HeaderPermissionMenu extends Component {
                 collapsed={collapsed}
                 collapsedWidth={0}
                 className={` ${collapsed ? '' : "sideropen"}`}>
-                <MobileHeaderMenu onMenuItemClick={this.onMenuItemClick} features={this.props.menuItems} dispatch={this.props.dispatch} />
+                <MobileHeaderMenu onMenuItemClick={this.onMenuItemClick} routeToCockpit={this.props.routeToCockpit} features={this.props.menuItems} dispatch={this.props.dispatch} />
             </Sider>}
             {this.state.drawerMenu.notifications && (
                 <Notifications
