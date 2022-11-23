@@ -1,31 +1,25 @@
 import React, { useState, useEffect } from "react";
 import {
-  Form, Typography, Input, Button, Alert, Spin, message, Select, Checkbox, Tooltip, Upload, Modal,
-  Radio, Row, Col, AutoComplete, Dropdown, Menu, Space, Cascader, InputNumber, Image, Tabs, Table, Drawer
+  Form, Typography, Input, Button, Alert, Spin, message, Select, Checkbox, Tooltip, Modal,
+  Radio, Row, Col, AutoComplete,  Image, Tabs, Drawer
 } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-import { setStep, setHeaderTab } from "../../reducers/buysellReducer";
+import { setHeaderTab } from "../../reducers/buysellReducer";
 import Translate from "react-translate-component";
 import { connect } from "react-redux";
 import {
-  getPayeeLu, getFavData, saveAddressBook, getBankDetails,
-  getBankDetailLu, uuidv4, getCoinList, emailCheck
+  getPayeeLu, getFavData, saveAddressBook,
+   uuidv4, getCoinList
 } from "./api";
 import { getCountryStateLu } from "../../api/apiServer";
 import Loader from "../../Shared/loader";
 import apiCalls from "../../api/apiCalls";
-import apicalls from "../../api/apiCalls";
 import { Link } from "react-router-dom";
-import { bytesToSize } from "../../utils/service";
 import { validateContentRule } from "../../utils/custom.validator";
 import { addressTabUpdate, fetchAddressCrypto, setAddressStep } from "../../reducers/addressBookReducer";
 import WAValidator from "multicoin-address-validator";
-import NumberFormat from "react-number-format";
 import success from "../../assets/images/success.png";
-import AddressDocumnet from "./document.upload";
 import BankDetails from "./bank.details";
-import CryptoAdress from "./crypto.address";
-const { TabPane } = Tabs;
 const { Text, Paragraph, Title } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
@@ -61,19 +55,12 @@ const AddressCommonCom = (props) => {
   const [errorMsg, setErrorMsg] = useState(null);
   const [errorWarning, setErrorWarning] = useState(null);
   const [isEdit, setEdit] = useState(false);
-  const [emailExist, setEmailExist] = useState(false);
-  const [uploadAdress, setUploadAddress] = useState(false);
-  const [uploadIdentity, setUploadIdentity] = useState(false);
-  const [addressState, setAddressState] = useState(null);
-  const [addressFile, setAdressFile] = useState(null);
+  const [emailExist] = useState(false);
   const [identityFile, setIdentityFile] = useState(null);
   const [declarationFile, setDeclarationFile] = useState(null);
   const [isUploading, setUploading] = useState(false);
-  const [previewModal, setPreviewModal] = useState(false);
   const [bankType, setBankType] = useState("");
   const [PayeeLu, setPayeeLu] = useState([]);
-  const [bankDetail, setBankDetail] = useState([])
-  const [screen, setScreen] = useState(props.data)
   const [editBankDetsils, setEditBankDetails] = useState(false)
   const [bankObj, setBankObj] = useState({})
   const [bankChange, SetBankChange] = useState(null)
@@ -235,10 +222,7 @@ const AddressCommonCom = (props) => {
     setErrorMsg(null);
     setErrorWarning(null);
     setUploading(false);
-    setUploadAddress(false);
-    setUploadIdentity(false);
     setIdentityFile(null);
-    setAdressFile(null);
     setDeclarationFile(null);
     setModalData([]);
     form.resetFields();

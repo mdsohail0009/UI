@@ -1,7 +1,6 @@
 import { create, } from 'apisauce';
 import { store } from '../store';
 import CryptoJS from 'crypto-js';
-import { useHistory } from 'react-router-dom';
 
 const ipRegistry = create({
     baseURL: 'https://api4.ipregistry.co'
@@ -68,7 +67,7 @@ bankClient.axiosInstance.interceptors.request.use((config) => {
 
 });
 uploadClient.axiosInstance.interceptors.request.use((config) => {
-    const { oidc: { user }, userConfig: { userProfileInfo }, currentAction: { action },
+    const { oidc: { user }, userConfig: {  }, currentAction: {  },
          } = store.getState()
     config.headers.Authorization = `Bearer ${user.access_token}`
     return config;

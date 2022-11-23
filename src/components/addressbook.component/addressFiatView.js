@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Typography, Button, Modal, Tooltip } from "antd";
 import Loader from "../../Shared/loader";
-import { getAddress, getFileURL, getFavData, getViewData, } from "./api";
+import { getFileURL, getViewData, } from "./api";
 import { connect } from "react-redux";
 import FilePreviewer from "react-file-previewer";
 import { bytesToSize } from "../../utils/service";
-import { addressTabUpdate, setAddressStep, selectedTab } from "../../reducers/addressBookReducer";
+import { addressTabUpdate, setAddressStep } from "../../reducers/addressBookReducer";
 const { Title, Text } = Typography;
 const EllipsisMiddle = ({ suffixCount, children }) => {
 	const start = children?.slice(0, children.length - suffixCount).trim();
@@ -57,8 +57,7 @@ const AddressFiatView = (props) => {
 
 	};
 
-	const iban = fiatAddress?.bankType === "iban" ? "IBAN" : "Bank Account"
-	const iban1 = fiatAddress?.bankType === "iban" ? "IBAN" : "Bank Account Number"
+
 
 	const filePreviewModal = (
 		<Modal

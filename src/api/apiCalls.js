@@ -1,7 +1,6 @@
 import { apiClient, ipRegistry ,bankClient} from "./";
 import { ApiControllers } from "./config";
 import counterpart from "counterpart";
-import { store } from "../store";
 import CryptoJS from "crypto-js";
 
 const getportfolio = (memID) => {
@@ -30,24 +29,7 @@ const updateKyc = (userid) => {
 	return apiClient.put(ApiControllers.customers + `${userid}/KYC`);
 };
 const trackEvent = (obj) => {
-	// const {
-	// 	userConfig: { userProfileInfo, trackAuditLogData },
-	// } = store.getState();
-	// let trackObj = {
-	// 	id: "00000000-0000-0000-0000-000000000000",
-	// 	date: "",
-	// 	type: obj.Type,
-	// 	featurePath: obj.FullFeatureName,
-	// 	username: obj.userName,
-	// 	customerId: userProfileInfo?.id,
-	// 	feature: obj.Feature,
-	// 	action: obj.Action,
-	// 	remarks: obj.Remarks,
-	// 	ipAddress: trackAuditLogData?.Ip,
-	// 	countryName: trackAuditLogData?.Location?.countryName,
-	// 	info: JSON.stringify(trackAuditLogData),
-	// };
-	// return apiClient.post(ApiControllers.master + `Auditlogs`, trackObj);
+	
 };
 
 const getIpRegistery = () => {

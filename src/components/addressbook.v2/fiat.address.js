@@ -1,16 +1,12 @@
 import React, { Component } from "react";
-import { Input, Row, Col, Form, Button, Typography, List, Divider, Image, Select, Tabs, Alert,Empty } from 'antd';
+import {  Row, Col, Form, Button, Typography, List,  Image, Alert,Empty } from 'antd';
 import apicalls from "../../api/apiCalls";
-import AddressDocumnet from "../addressbook.component/document.upload";
-import oops from '../../assets/images/oops.png'
 import FiatAddress from "../addressbook.component/fiat.address";
 import alertIcon from '../../assets/images/pending.png';
 import success from '../../assets/images/success.png';
 import NumberFormat from "react-number-format";
 import ConnectStateProps from "../../utils/state.connect";
-import { fetchPayees, fetchPastPayees, confirmTransaction, updatePayee, document, saveWithdraw, validateAmount } from "../onthego.transfer/api";
-import Loader from "../../Shared/loader";
-import Search from "antd/lib/input/Search";
+import { fetchPayees, fetchPastPayees, saveWithdraw, validateAmount } from "../onthego.transfer/api";
 import Verifications from "../onthego.transfer/verification.component/verifications"
 import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboardReducer';
 import {fetchMemberWallets} from '../dashboard.component/api'
@@ -196,7 +192,7 @@ class AddressBookV2 extends Component {
         )
     }
     renderStep = (step) => {
-        const { filterObj, pastPayees, payeesLoading,coinListData,loader } = this.state;
+        const { coinListData,loader } = this.state;
         const steps = {
             currencySelection: <React.Fragment>
                 <List
