@@ -384,11 +384,9 @@ class CaseView extends Component {
                         <Text className="fw-300 text-white-50 fs-12">
                           {key}
                         </Text>
-                        {/* <div className="fw-600 text-white-30 fs-16 l-height-normal">
-                        {(value == null || value ==" ")? '-' : (isNaN(value) ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
-                        </div> */}
-                                <div className='fw-600 text-white-30 fs-16 l-height-normal'style={{wordBreak:"break-all"}} >
-                                    {(value == null || value == " ") ? '-' : (isNaN(value) || (key === 'Transaction Id') ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
+                                <div className='fw-600 text-white-30 fs-16 l-height-normal' style={{ wordBreak: "break-all" }} >
+                                    {(value == null || value == " " || value == "") ? '-' : (isNaN(value) || (key === 'Transaction Id' || key === 'Bank Account number/IBAN' || key === "Bank Account Number/IBAN" || key === "Wallet Address"
+                                        || key === 'Bank Name') ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
                                 </div>
                       </div>
                     </div>
