@@ -44,12 +44,8 @@ class OnthegoCryptoTransfer extends Component {
         permissions: {},
         isVerificationLoading: false,
         addressLu: [],
-        filterObj: [],
         loading: false,
         showFuntransfer:false,
-        pastPayees: [],
-        payeesLoading: true,
-        selectedPayee: {},
     }
     componentDidMount() {
        this.enteramtForm?.current?.setFieldsValue({amount:this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue});
@@ -497,9 +493,10 @@ const connectStateToProps = ({ sendReceive, userConfig, menuItems, oidc }) => {
 };
 const connectDispatchToProps = dispatch => {
     return {
-        changeStep: (stepcode) => {
-            dispatch(setAddressStep(stepcode))
-        },
+        // commented due to sonar issue
+        // changeStep: (stepcode) => {
+            // dispatch(setAddressStep(stepcode))
+        // },
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
         },

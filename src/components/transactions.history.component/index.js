@@ -78,12 +78,12 @@ class TransactionsHistory extends Component {
     {
       field: "date", title: "Date", filter: true, filterType: "date", locked: true, width: 210,
       customCell: (props) => (
-        <>
+        <td>
          
             {props.dataItem?.date ? <>{ moment.utc(props.dataItem?.date).local().format("DD/MM/YYYY hh:mm:ss A")}</> : props.dataItem?.date}
 
         
-        </>
+        </td>
       )
     },
     { field: "docType", title: "Transaction", filter: true, },

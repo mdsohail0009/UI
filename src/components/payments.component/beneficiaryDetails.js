@@ -520,6 +520,9 @@ class PaymentsView extends Component {
                                             {
                                                 pattern: /^[A-Za-z0-9]+$/,
                                                 message: 'Invalid account number'
+                                            },
+                                            {
+                                                validator: validateContentRule
                                             }
                                         ]}
                                     >
@@ -540,6 +543,9 @@ class PaymentsView extends Component {
                                             {
                                                 pattern: /^[A-Za-z0-9]+$/,
                                                 message: 'Invalid BIC/SWIFT/Routing number'
+                                            },
+                                            {
+                                                validator: validateContentRule
                                             }
                                         ]}
                                     >

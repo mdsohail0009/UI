@@ -35,7 +35,8 @@ class DomesticTransfer extends Component {
                                         "Invalid Account Number"
                                     );
                                 }else {
-                                    return Promise.resolve();
+                                    // return Promise.resolve();
+                                    return validateContentRule(_, value);
                                 }
                             },
                         }
@@ -73,7 +74,8 @@ class DomesticTransfer extends Component {
                                         "Invalid ABA Routing Code"
                                     );
                                 }else {
-                                    return Promise.resolve();
+                                    // return Promise.resolve();
+                                    return validateContentRule(_, value);
                                 }
                             },
                         }
