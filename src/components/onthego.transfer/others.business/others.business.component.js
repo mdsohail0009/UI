@@ -1,4 +1,4 @@
-import { Form, Row, Col, Divider, Typography, Input, Button, Alert, Image, Spin } from "antd";
+import { Form, Row, Col,Typography, Input, Button, Alert, Image, Spin } from "antd";
 import React, { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
 import { validateContentRule } from "../../../utils/custom.validator";
@@ -73,7 +73,7 @@ class OthersBusiness extends Component {
                 }else{
                     if(this.state.ibanDetails && !this.state.ibanDetails?.routingNumber|| !this.state.ibanDetails?.bankName) {
                         this.setState({ ...this.state, ibanDetails: {}, ibanDetailsLoading: false, errorMessage: null, iBanValid:false, isValidateLoading: false });
-                        this.setState({ ...this.state, errorMessage: "No bank details are available for this IBAN number", isLoading: false, isBtnLoading: false });;
+                        this.setState({ ...this.state, errorMessage: "No bank details are available for this IBAN number", isLoading: false, isBtnLoading: false });
                         this.useDivRef.current?.scrollIntoView();
                         return;
                     }
@@ -131,7 +131,7 @@ class OthersBusiness extends Component {
         if (Object.hasOwn(values, 'iban')) {
             this.setState({ ...this.state, errorMessage: null });
             if ((!ibanDetails || Object.keys(ibanDetails).length == 0)) {
-                this.setState({ ...this.state, errorMessage: "Please click validate button before saving", isLoading: false, isBtnLoading: false });;
+                this.setState({ ...this.state, errorMessage: "Please click validate button before saving", isLoading: false, isBtnLoading: false });
                 this.useDivRef.current?.scrollIntoView();
                 return;
             }
@@ -179,23 +179,17 @@ class OthersBusiness extends Component {
                 if (confirmRes.ok) {
                     this.props.onContinue(confirmRes.data);
                     this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
-                  //  this.useDivRef.current.scrollIntoView()
                 } else {
                     this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false, isBtnLoading: false });
-                  //  this.useDivRef.current.scrollIntoView(0,0)
                   window.scrollTo(0, 0);
                 }
-            } else {
-                // this.props.onContinue({ close: true, isCrypto: false });
+            } else {              
                 this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
                 this.useDivRef.current?.scrollIntoView(0,0)
                 this.props.headingUpdate(true)
             }
-
-        } else {
-            
+        } else {            
             this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, isBtnLoading: false });
-           // this.useDivRef.current.scrollIntoView()
         }
     }
 }
@@ -214,14 +208,12 @@ class OthersBusiness extends Component {
                    Please sign using link received in email to whitelist your address. `}</Text>
                 <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
                 <div className="my-25">
-                    {/* <Button onClick={() => this.props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button> */}
                     </div>
             </div></div>
         }
         if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} updatedHeading={this.props?.headingUpdate} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} /> }
         else {
             return <><div ref={this.useDivRef}>
-                {/* <Paragraph className="mb-16 fs-14 text-white fw-500 mt-16 text-center">SEPA Transfer</Paragraph> */}
                 <h2 className="text-white fw-600" style={{ fontSize: 18, textAlign: 'center' }}>SEPA Transfer</h2>
                 {this.state.isLoading && <Loader />}
                 {this.state.errorMessage && <Alert type="error" showIcon closable={false} description={this.state.errorMessage} />}
@@ -266,8 +258,7 @@ class OthersBusiness extends Component {
                         content="Beneficiary_Details"
                         component={Paragraph}
                         className="mb-8 text-white fw-500 mt-16"
-                    />
-                    {/* <Divider /> */}
+                    />                  
                     <Row gutter={[12, 12]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
@@ -327,8 +318,6 @@ class OthersBusiness extends Component {
                         <RecipientAddress />
                     </Row>
                     <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
-                    
-                    {/* <Divider /> */}
                     <Row gutter={[16, 16]}>
                    <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
                        <div className=" custom-btn-error">
@@ -345,8 +334,7 @@ class OthersBusiness extends Component {
                             >
                                 <Input
                                     className="cust-input"
-                                    placeholder={"IBAN"}
-                                    //style={{ width:'350px',display:'table-cell !important' }}
+                                    placeholder={"IBAN"}                                  
                                     onChange={this.handleIbanChange}
                                     maxLength={30}/>
 
@@ -449,7 +437,6 @@ class OthersBusiness extends Component {
                                 <Input
                                     className="cust-input"
                                     placeholder={"Reason For Transfer"}
-                                    // onChange={this.handleIbanChange}
                                     maxLength={200}/>
                             </Form.Item>
                         </Col>}
@@ -461,22 +448,16 @@ class OthersBusiness extends Component {
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
                     }} />
                     <div className="text-right mt-36">
-                        {/* <Row gutter={[16, 16]}>
-                            <Col xs={12} md={12} lg={12} xl={12} xxl={12}></Col>
-                            <Col xs={12} md={12} lg={12} xl={12} xxl={12}> */}
                                 <Button
                                     htmlType="submit"
                                     size="large"
                                     className="pop-btn px-36"
-                                    //style={{ width:'100%' }}
                                     disabled={this.state.ibanDetailsLoading}
                                     loading={this.state.isBtnLoading} >
                             {this.props.type === "manual" && "Save"}
                             {this.props.type !== "manual" && "Continue"}
                                     
                                 </Button>
-                            {/* </Col>
-                        </Row> */}
                     </div>
                 </Form>}</div>
             </>;

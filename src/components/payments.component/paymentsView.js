@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getPaymentsData,getBankData,getFileURL } from './api';
-import { Typography, Button, Spin,message,Alert,Popover,Tooltip,Modal } from 'antd';
+import { Typography, Button, Spin,message,Popover,Tooltip,Modal } from 'antd';
 import Translate from 'react-translate-component';
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
@@ -69,7 +69,7 @@ class PaymentsView extends Component {
     }
   };
   popOverContent = () => {
-    const { moreBankInfo, tooltipLoad,isloading } = this.state;
+    const { moreBankInfo,isloading } = this.state;
     if (!isloading) {
       return <Spin />;
     } else {

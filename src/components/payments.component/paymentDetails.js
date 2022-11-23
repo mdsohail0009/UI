@@ -5,10 +5,7 @@ import { getCurrencyLu, getPaymentsData, savePayments, getBankData, creatPayment
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 import Loader from '../../Shared/loader';
-import { warning } from '../../utils/message';
 import FilePreviewer from 'react-file-previewer';
-
-const { confirm } = Modal;
 const { Option } = Select;
 const { Title, Text, Paragraph } = Typography;
 const EllipsisMiddle = ({ suffixCount, children }) => {
@@ -71,7 +68,7 @@ class PaymentDetails extends Component {
 
   handleCurrencyChange = async (val) => {
     this.setState({ ...this.state, currency: val, paymentsData: [], errorMessage: null, errorWarning: null,loading:true });
-    if ((this.state.currency = val)) {
+    if ((this.state.currency == val)) {
       let response = await getPaymentsData(
         "00000000-0000-0000-0000-000000000000",
         this.props.userConfig?.id,
@@ -384,20 +381,16 @@ class PaymentDetails extends Component {
     }
   };
   popOverContent = () => {
-    const { moreBankInfo, tooltipLoad,isloading, currency } = this.state;
+    const { moreBankInfo,isloading} = this.state;
     if (!isloading) {
       return <Spin />;
     } else {
       return (
         <div className="more-popover">
-          {/* <Text className="lbl text-white">Bank Label</Text>
-          <Text className="val text-white">{moreBankInfo?.bankLabel}</Text> */}
           {this.state.currency == "USD" &&<Text className="lbl text-white">BIC/SWIFT/ABARouting Number</Text>}
           {this.state.currency == "USD" &&<Text className="val text-white">{moreBankInfo?.routingNumber}</Text>}
           {this.state.currency == "USD" && <Text className="lbl text-white">Bank Address</Text>}
           {this.state.currency == "USD" && <Text className="val text-white">{moreBankInfo?.beneficiaryAccountAddress}</Text>}
-          {/* <Text className="lbl text-white">Beneficiary Account Name</Text>
-          <Text className="val text-white">{moreBankInfo?.beneficiaryAccountName}</Text> */}
           {this.state.currency == "EUR" && <Text className="lbl text-white">Country</Text>}
           {this.state.currency == "EUR" && <Text className="val text-white">{moreBankInfo?.country}</Text>}
           {this.state.currency == "EUR" && <Text className="lbl text-white">State</Text>}
@@ -743,7 +736,7 @@ class PaymentDetails extends Component {
                         {(this.props.match.params.id ===
                           "00000000-0000-0000-0000-000000000000" || this.props.match.params.state === "Submitted" || this.props.match.params.state === "Pending"|| this.props.match.params.state == "Approved"|| this.props.match.params.state == "Cancelled") && <>
                             <td></td>
-                            {/* <td></td> */}
+                          
                           </>
                         }
                         {(this.props.match.params.id !== "00000000-0000-0000-0000-000000000000"|| this.props.match.params.state == "Approved"|| this.props.match.params.state == "Cancelled") && <>
@@ -827,8 +820,7 @@ class PaymentDetails extends Component {
         <Modal title="Delete Payment"
           destroyOnClose={true}
           closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.handleCancel} /></Tooltip>}
-          // closable={false}
-          // closeIcon={false}
+         
           visible={this.state.modal}
           className="payments-modal"
           footer={[
@@ -837,8 +829,7 @@ class PaymentDetails extends Component {
                 className="pop-cancel"
                 onClick={this.handleCancel}>Cancel</Button>
               <Button className="pop-btn px-36"
-                // className="primary-btn pop-btn"
-
+              
                 onClick={() => this.deleteDetials(this.state.selectData, this.state.paymentsData)}>Ok</Button>
             </>
           ]}
