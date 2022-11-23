@@ -676,7 +676,7 @@ class AddressBook extends Component {
 				component={Text}
 				className="fs-14 text-white fw-400 mb-12 d-block"
 			/> */}
-				<div className="box basic-info">
+				<div className="box basic-info addressbook-grid">
 					<div className="display-flex mb-16">
 						<Radio.Group
 							defaultValue={(this.props?.activeFiat||this.state.cryptoFiat) ? 2 : 1}
