@@ -7,7 +7,7 @@ import { bytesToSize } from "../../utils/service";
 import ConnectStateProps from "../../utils/state.connect";
 
 const { Dragger } = Upload;
-const { Paragraph, Text, Title } = Typography;
+const { Paragraph, Text } = Typography;
 const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
     const suffix = children.slice(-suffixCount).trim();
@@ -52,23 +52,12 @@ class AddressDocumnet extends Component {
                      {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
                     <Form.Item name={"files"} required rules={[{
                         validator: (_, value) => {
-                            // let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
-                            // // if (this.state.filesList.length == 0) {
-                            // //    // this.setState({...this.state,isDocLoading:false,errorMessage:null })
-                            // //     return Promise.reject("At least one document is required")
-                            // // }
-                            // if (value&&!fileType[value.file.type]) {
-                            //     this.setState({...this.state,isDocLoading:false,errorMessage:null })
-                            //     return Promise.reject("File is not allowed. You can upload jpg, png, jpeg and PDF  files");
-                            // }
-                            // else {
                                 const isValidFiles = this.state.filesList.filter(item => (item.name || item.documentName).indexOf(".") != (item.name || item.documentName).lastIndexOf(".")).length == 0;
                                 if (isValidFiles) { return Promise.resolve(); } else {
                                     this.setState({...this.state,isDocLoading:false,errorMessage:null })
                                     return Promise.reject("File don't allow double extension");
                                 }
 
-                            // }
                         },
 
                     }
@@ -78,7 +67,6 @@ class AddressDocumnet extends Component {
                             multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                             showUploadList={false}
                             beforeUpload={(props) => {
-                              //  return props.name.split(".").length < 2;
                             }}
                             headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
                             onChange={({ file }) => {
@@ -110,18 +98,18 @@ class AddressDocumnet extends Component {
                             </p>
                         </Dragger>
                     </Form.Item>
-                    {this.state?.filesList?.map((file, indx) => <div className="docfile">
-                        {(file.status === "done" || file.status == true) && <>
+                    {this.state?.filesList?.map((file, indx) => <div>
+                        {((file.status === "done" || file.status == true)&& file.state !='Deleted') && <> <div className="docfile">
                             <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "":(file.documentName?.slice(-3) === "zip" ? "file" : "")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                             <div className="docdetails">
                                 <EllipsisMiddle suffixCount={6}>{file.name || file.documentName}</EllipsisMiddle>
-                                <span className="fs-12 text-secondary">{file.size ? bytesToSize(file.size) : ""}</span>
+                                <span className="fs-12 text-secondary">{(file.size || file?.remarks) ? bytesToSize(file.size || file?.remarks) : ""}</span>
                             </div>
                             <span className="icon md close c-pointer" onClick={() => {
                                 this.setState({ ...this.state, showDeleteModal: true, selectedFileIdx: indx,selectedObj:file })
 
                             }} />
-                        </>}
+                        </div></>}
                     </div>)}
                     {this.state.isDocLoading && <Loader />}
                 </div>
@@ -133,11 +121,10 @@ class AddressDocumnet extends Component {
                     <>
                     	<div className="cust-pop-up-btn crypto-pop">
                         <Button
-                            //style={{ width: "30px", border: "1px solid #f2f2f2" }}
                             style={{ margin: "0 8px" }}
                             className="primary-btn pop-cancel btn-width"
                             onClick={() => { this.setState({ ...this.state, showDeleteModal: false }) }}>
-                            No
+                            NO
                         </Button>
                         <Button
                             className="primary-btn pop-btn"
@@ -145,17 +132,23 @@ class AddressDocumnet extends Component {
                                 let { documents: docs } = this.state;
                                 let files = docs.details;
                                 for(var k in files){
-                                    if(files[k].id==this.state.selectedObj.id){
+                                    if(files[k].id==this.state.selectedObj?.id){
                                         files[k].state='Deleted';
                                         files[k].isChecked=false;
                                     }
                                 }
                                 let obj=Object.assign([],files)
                                 let {filesList}=this.state
-                                filesList.splice(this.state.selectedFileIdx, 1);
                                 if(!this.state?.isEdit){
+                                    filesList.splice(this.state.selectedFileIdx, 1);
                                     obj.splice(this.state.selectedFileIdx, 1);
                                 }
+                                files?.map((file, indx) =>{
+                                    if (file.id == "00000000-0000-0000-0000-000000000000"&& indx == this.state.selectedFileIdx &&  file.state != "Deleted"  && this.state?.isEdit) {
+                                        filesList.splice(indx, 1);
+                                        obj.splice(indx, 1);
+                                    }
+                                })
                                 this.setState({ ...this.state, filesList, showDeleteModal: false });
                                 docs.details=Object.assign([],obj)
                                 this.props?.onDocumentsChange(docs);
