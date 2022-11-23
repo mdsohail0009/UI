@@ -15,6 +15,7 @@ import { getFeaturePermissionsByKey } from '../shared/permissions/permissionServ
 import { withRouter } from "react-router-dom";
 import { setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 import NumberFormat from "react-number-format";
+import moment from "moment/moment";
 const { Option } = Select;
 class TransactionsHistory extends Component {
   constructor(props) {
@@ -76,6 +77,14 @@ class TransactionsHistory extends Component {
   gridColumns = [
     {
       field: "date", title: "Date", filter: true, filterType: "date", locked: true, width: 210,
+      customCell: (props) => (
+        <td>
+         
+            {props.dataItem?.date ? <>{ moment.utc(props.dataItem?.date).local().format("DD/MM/YYYY hh:mm:ss A")}</> : props.dataItem?.date}
+
+        
+        </td>
+      )
     },
     { field: "docType", title: "Transaction", filter: true, },
     { field: "wallet", title: "Wallet", filter: true, },
@@ -83,9 +92,9 @@ class TransactionsHistory extends Component {
       field: "debit", title: "Value", filter: false, dataType: 'number', filterType: "numeric",
       customCell: (props) => (
         <td>
-          {props.dataItem?.debit && <NumberFormat value={props.dataItem?.debit} displayType={"text"} />}
-          {props.dataItem?.credit && props.dataItem?.debit && " / "}
-          {props.dataItem?.credit && <NumberFormat value={props.dataItem.credit} displayType={"text"} />}
+          {props.dataItem?.debit && <NumberFormat value={props.dataItem?.debit} displayType={"text"} thousandSeparator={true} />}
+          {props.dataItem?.credit && props.dataItem?.debit && "/"}
+          {props.dataItem?.credit && <NumberFormat value={props.dataItem.credit} displayType={"text"} thousandSeparator={true} />}
 
         </td>
       ),
@@ -94,12 +103,12 @@ class TransactionsHistory extends Component {
     },
 
     {
-      field: "senderName", title: "Sender/Beneficiary Name", filter: true, width: 260,
+      field: "senderName", title: "Sender/Recipient Full Name", width: 260,
 
       customCell: (props) => (
         <td>
           {props.dataItem?.senderName}
-          {(props.dataItem?.senderName && props.dataItem?.beneficiryName) && " / "}
+          {(props.dataItem?.senderName && props.dataItem?.beneficiryName) && "/"}
           {props.dataItem?.beneficiryName}
 
         </td>
@@ -109,17 +118,10 @@ class TransactionsHistory extends Component {
     },
 
     {
-      field: "accountnumber", title: "IBAN/Account Number", filter: true, width: 220,
+      field: "accountnumber", title: "Bank Account Number/IBAN", filter: true, width: 260,
     },
     { field: "state", title: "State", filter: true, },
-    // { field: "fromWalletCode", title: "From Wallet Code", filter: true, width: 180, },
-    // { field: "fromValue", title: "From Value", width: 150, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
-    // { field: "toWalletCode", title: "To Wallet Code", filter: true, width: 150 },
-    // { field: "toValue", title: "To Value", width: 150, filter: true, footerCell: true, dataType: 'number', filterType: "numeric"},
-    // { field: "fromValueBefore", title: "From Before Value", width: 180, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
-    // { field: "fromValueAfter", title: "From After Value", width: 180, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
-    // { field: "toValueBefore", title: "To Before Value", width: 180, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
-    // { field: "toValueAfter", title: "To After Value", width: 150, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
+    
 
 
   ]
