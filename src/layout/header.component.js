@@ -35,6 +35,7 @@ import apiCalls from "../api/apiCalls";
 import { setNotificationCount } from "../reducers/dashboardReducer";
 import { getmemeberInfo } from "../reducers/configReduser";
 import HeaderPermissionMenu from '../components/shared/permissions/header.menu';
+import { clearPermissions } from "../reducers/feturesReducer";
 import { handleHeaderProfileMenuClick } from "../utils/pubsub";
 import Notifications from "../notifications";
 
@@ -87,6 +88,7 @@ class Header extends Component {
     window.open(url);
   };
   trackEvent() {
+    this.props.dispatch(clearPermissions());
     window.$zoho?.salesiq?.chat.complete();
     window.$zoho?.salesiq?.reset();
     // this.props.dispatch(clearUserInfo());
