@@ -882,7 +882,8 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .display-flex{display: block; text-align: center;}
     .theme-switch{width: auto;}
     .profile-label{width: 150px;}
-    .address-icons{list-style: none; padding-left: 0; margin-bottom: 12px; margin-top: 12px; display: flex;margin-bottom: 12px !important; } 
+    .address-icons{list-style: none; padding-left: 0; margin-top: 12px; display: flex;margin-bottom: 12px !important; }
+    /* margin-bottom: 12px commented due to sonar issues  */
     .address-clear{clear: both; margin-top: 12px;}
     .customaudit-select .selectcustom-input{margin-left:0 !important}
     .customaudit-select .custom-btn{width: 100%;}
@@ -1416,7 +1417,8 @@ td.ant-table-column-sort{background: transparent;}
 .fund-transfer-input .ant-input-group .ant-input{border:transparent;}
 .fund-transfer-input .ant-input:focus, .ant-input-focused{box-shadow:none;}
 .fund-transfer-input .ant-input-group-addon{color:var(--textWhite);}
-.fund-circle{width: 50px;height: 50px;height: 50px;border-radius: 50%;text-align: center;padding: 15px;background-color: var(--bgDarkGrey30);}
+.fund-circle{width: 50px;height: 50px;border-radius: 50%;text-align: center;padding: 15px;background-color: var(--bgDarkGrey30);}
+/* height: 50px;= removed due to sonar bug */
 .small-text-align small{font-weight: 400; vertical-align: super;background-color: var(--bgDarkGrey);padding: 2px 6px;color: #fff;border-radius: 10px;}
 .fund-border{margin-top: 10px;padding: 10px;}
 .fund-border:hover{margin-top: 10px;padding: 10px;background-color: var(--bgBlu);border-radius: 5px;color: var(--textWhite30);}
@@ -1488,7 +1490,8 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .cust-pop-up-btn .primary-btn.pop-cancel:hover{border: 1px solid var(--textYellow) !important;}
 .custom-back-btn .pop-cancel{border: transparent !important;}
 .custom-back-btn .pop-cancel:hover{border: 1px solid #f2f2f2 !important;}
-.custom-alert-width{width:800px;margin: auto;padding: 8px 10px;background-color:var(--bgDark) !important;border-radius: 15px;color: var(--textWhite);border-color: var(--borderGrey) !important;padding:24px;}
+.custom-alert-width{width:800px;margin: auto;padding: 8px 10px;background-color:var(--bgDark) !important;border-radius: 15px;color: var(--textWhite);border-color: var(--borderGrey) !important;}
+/* padding:24px - commented because of sonar bug issue */
 .cust-cypto-view{width: 900px;margin: auto;}
 .ant-select-arrow .anticon{display: none;}
 .ant-select-arrow{width: 20px;height: 20px;background-position: -351px -5px;transform: scale(0.9);}

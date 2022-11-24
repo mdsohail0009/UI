@@ -3,6 +3,7 @@ import { Button, Spin, Upload, Typography, Form, Input } from 'antd';
 import { connect } from 'react-redux';
 import { LoadingOutlined } from '@ant-design/icons';
 import { setStep } from '../../reducers/paymentsReducer';
+import { validateContentRule } from '../../utils/custom.validator'
 import Translate from 'react-translate-component';
 
 const { Dragger } = Upload;
@@ -90,6 +91,11 @@ const KycDocuments = (props) => {
                 <Form.Item
                     label="Remarks"
                     className="input-label"
+                    rules={[
+                        {
+                            validator: validateContentRule
+                        }
+                    ]}
                 >
                     <TextArea className='cust-input' rows={4} placeholder="Remarks">
                     </TextArea>
