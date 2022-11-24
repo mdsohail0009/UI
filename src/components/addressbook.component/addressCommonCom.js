@@ -411,7 +411,7 @@ const AddressCommonCom = (props) => {
     setIsModalDelete(false)
     setEditBankDetails(false)
     for (let i=0;i< bankmodalData.length;i++) {
-      if (deleteItem&&bankmodalData[i].id == deleteItem?.id) {
+      if (deleteItem!=null&&deleteItem!=undefined&&bankmodalData[i].id == deleteItem?.id) {
         if (bankmodalData[i].recordStatus == "Added") {
           bankmodalData.splice(i, 1)
         } else { bankmodalData[i].recordStatus = "Deleted" }
@@ -420,7 +420,7 @@ const AddressCommonCom = (props) => {
   }
   const handleDelete = (item) => {
     setIsModalDelete(true);
-    setDeleteItem(item)
+    if (item!=null&&item!=undefined){setDeleteItem(item)}
 
   }
   const handleBankChange = (e) => {
