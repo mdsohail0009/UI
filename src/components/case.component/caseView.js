@@ -308,11 +308,7 @@ class CaseView extends Component {
         return parseFloat((bytes / Math.pow(k, i)).toFixed()) + ' ' + sizes[i];
     }
     filePreviewPath() {
-        if (this.state.previewPath.includes(".pdf")) {
-            return this.state.previewPath;
-        } else {
-            return this.state.previewPath;
-        }
+        return this.state.previewPath;
     }
     getCaseData = async (id) => {
         this.setState({ ...this.state, loading: true });
