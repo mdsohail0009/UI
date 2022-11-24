@@ -68,7 +68,7 @@ class OnthegoFundTransfer extends Component {
         if (this.state.selectedCurrency) {
             this.getPayees();
         }
-        this.getCoinDetails()
+      //  this.getCoinDetails()
     }
 
     loadPermissions = () => {
