@@ -665,7 +665,7 @@ class AddressBook extends Component {
 				className="basicinfo mb-0"
 			/>
 			<Text className="fs-16 text-white fw-500 mb-12 d-block">Note: <span className="fs-14 text-white fw-400 mb-12">Whitelisting of Crypto Address and Bank Account is required, Please add below.</span></Text>
-				<div className="box basic-info">
+				<div className="box basic-info addressbook-grid">
 					<div className="display-flex mb-16">
 						<Radio.Group
 							defaultValue={(this.props?.activeFiat||this.state.cryptoFiat) ? 2 : 1}
@@ -764,7 +764,7 @@ class AddressBook extends Component {
 							<div className="text-center fs-16">
 								<Paragraph className="mb-0 text-white-30 fw-600 text-upper">
 									<Translate
-										content={this.state.hideFiatHeading !=true && "AddFiatAddress"}
+									content={this.state.hideFiatHeading !=true && "AddFiatAddress"}
 										component={Paragraph}
 										className="mb-0 text-white-30 fw-600 text-upper"
 									/>
