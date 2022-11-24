@@ -55,6 +55,7 @@ import { setCurrentAction } from "../../../reducers/actionsReducer";
 import { KEY_URL_MAP } from "./config";
 import { getFeaturePermissionsByKey } from "./permissionService";
 import { headerSubscriber } from "../../../utils/pubsub";
+
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
 counterpart.registerTranslations("my", my);
@@ -75,7 +76,7 @@ class MobileHeaderMenu extends Component {
 
             <Translate
                 content="header_title"
-                onClick={this.routeToCockpit}
+                onClick={this.props.routeToCockpit}
                 component={Menu.Item}
                 className="list-item"
             />
@@ -141,7 +142,7 @@ class HeaderPermissionMenu extends Component {
         this.props.dispatch(fetchFeatures(this.props.userConfig.appId || "178A3680-3B6F-44AD-9EF2-69EA040C16CC", this.props.userConfig.id));
         this.menuClickSub = headerSubscriber.subscribe(({ menuitem, menuKey }) => this.onMenuItemClick(menuitem, menuKey));
     }
-    componentWillUnmount(){
+    componentWillUnmount() {
         this.menuClickSub.unsubscribe();
     }
     userProfile() {
@@ -167,7 +168,7 @@ class HeaderPermissionMenu extends Component {
                     this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: false } });
                     this.props.dispatch(setSellHeaderHide(false));
                     this.props.dispatch(setSelectedSellCoin(false));
-                    this.props.dispatch(menuItem.dispatchStep ? setStep(menuItem.dispatchStep) : setStep("step1"));
+                    this.props.dispatch(menuItem.dispatchStep ? setStep(menuItem.dispatchStep) :setStep("step1"));
                     break;
                 case "trade_sell":
                     this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: true } });
@@ -213,12 +214,12 @@ class HeaderPermissionMenu extends Component {
                     this.props.dispatch(setWithdrawfiatenaable(false));
                     this.props.dispatch(setSendCrypto(false));
                     break;
-                case "personal_bank_account":
-                    window.open(process.env.REACT_APP_BANK_UI_URL + 'dashboard/receive', '_self')
+                    case "personal_bank_account":
+                        window.open(process.env.REACT_APP_BANK_UI_URL+'dashboard/receive','_self')
                 default:
                     break;
             }
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true, selectedTab: menuKey === "trade_sell" ? true : false, sendCryptoTab: menuKey === "send_crypto" ? true : false, sendFiatTab: menuKey === "send_fiat" ? true : false } });
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true, selectedTab:  menuKey === "trade_sell" ? true : false, sendCryptoTab: menuKey === "send_crypto" ? true :false, sendFiatTab: menuKey === "send_fiat" ? true : false } });
         } else if (menuItem.path) {
             this.props.history.push(menuItem.path);
         }
@@ -233,7 +234,7 @@ class HeaderPermissionMenu extends Component {
         }
     }
     onMenuItemClick = async (menuKey, menuItem) => {
-        const perIgnoreLst = ["notifications", "auditLogs", "cases"];
+        const perIgnoreLst = ["notifications", "auditLogs","cases"];
         if (perIgnoreLst.includes(menuKey)) { this.navigate(menuKey, menuItem) }
         else {
             const ignoreKycLst = ["transactions"];
@@ -577,7 +578,7 @@ class HeaderPermissionMenu extends Component {
                 collapsed={collapsed}
                 collapsedWidth={0}
                 className={` ${collapsed ? '' : "sideropen"}`}>
-                <MobileHeaderMenu onMenuItemClick={this.onMenuItemClick} features={this.props.menuItems} dispatch={this.props.dispatch} />
+                <MobileHeaderMenu onMenuItemClick={this.onMenuItemClick} routeToCockpit={this.props.routeToCockpit} features={this.props.menuItems} dispatch={this.props.dispatch} />
             </Sider>}
             {this.state.drawerMenu.notifications && (
                 <Notifications
@@ -618,7 +619,7 @@ class HeaderPermissionMenu extends Component {
             />
             <MassPayment
                 showDrawer={send_fiat || receive_fiat}
-                isShowSendFiat={this.state.drawerMenu.sendFiatTab}
+                isShowSendFiat= {this.state.drawerMenu.sendFiatTab}
                 onClose={() => this.closeDrawer("send")}
             />
             {this.state.drawerMenu.transactions && (

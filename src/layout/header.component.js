@@ -34,9 +34,11 @@ import { readNotification as readNotifications } from "../notifications/api";
 import apiCalls from "../api/apiCalls";
 import { setNotificationCount } from "../reducers/dashboardReducer";
 import { getmemeberInfo } from "../reducers/configReduser";
-import HeaderPermissionMenu from '../components/shared/permissions/header.menu'
+import HeaderPermissionMenu from '../components/shared/permissions/header.menu';
 import { clearPermissions } from "../reducers/feturesReducer";
 import { handleHeaderProfileMenuClick } from "../utils/pubsub";
+import Notifications from "../notifications";
+
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
 counterpart.registerTranslations("my", my);
@@ -61,14 +63,13 @@ class Header extends Component {
       cardsDetails: false,
       billingAddress: false,
       initLoading: true,
-      Visibleprofilemenu: false,
       collapsed: true,
+      showNotificationsDrawer: false
     };
     this.userProfile = this.userProfile.bind(this);
   }
   userProfile() {
     this.props.history.push("/userprofile");
-    this.setState({ ...this.state, Visibleprofilemenu: false });
     if (this.props.oidc.user.profile?.sub) {
       this.props.getmemeberInfoa(this.props.oidc.user.profile.sub);
     }
@@ -281,7 +282,7 @@ class Header extends Component {
     return (
       <>
         <Layout className="layout">
-          <menuHeader className="tlv-header" id="area">
+          <div className="tlv-header" id="area">
             <div className="login-user">
               <ul className="header-logo pl-0">
                 <li className="visible-mobile pr-24 p-relative" onClick={this.showToggle}>
@@ -336,7 +337,7 @@ class Header extends Component {
                 <Menu.Item
                   key="6"
                   className="notification-conunt mr-8"
-                  onClick={this.showNotificationsDrawer}
+                  onClick={() => this.setState({ ...this.state, showNotificationsDrawer: true })}
                 >
                   <span
                     className="icon md bell ml-4 p-relative"
@@ -349,8 +350,8 @@ class Header extends Component {
                   </span>
                 </Menu.Item>
                 <Dropdown
+                   trigger={["click"]}
                   overlay={userProfileMenu}
-                  trigger={["click"]}
                   placement="topRight"
                   arrow
                   overlayClassName="secureDropdown"
@@ -383,9 +384,9 @@ class Header extends Component {
                 </Dropdown>
               </Menu>
             </div>
-            <HeaderPermissionMenu collapsed={this.state.collapsed} isShowSider={this.state.isShowSider} />
+            <HeaderPermissionMenu collapsed={this.state.collapsed} isShowSider={this.state.isShowSider} routeToCockpit={this.routeToCockpit} />
 
-          </menuHeader>
+          </div>
         </Layout>
         <Drawer
           title={[
@@ -420,6 +421,12 @@ class Header extends Component {
             }}
           />
         </Drawer>
+        {this.state.showNotificationsDrawer && (
+          <Notifications
+            showDrawer={this.state.showNotificationsDrawer}
+            onClose={() => this.setState({ ...this.state, showNotificationsDrawer: false })}
+          />
+        )}
       </>
     );
   }
