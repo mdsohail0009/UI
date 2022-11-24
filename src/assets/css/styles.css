@@ -792,7 +792,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
 .icon.md.Email{background-position:-127px -71px;}
 .icon.md.Name{background-position:-212px -70px;}
 .icon.md.Currency{background-position:-428px -70px;}
-.icon.md.Bank.Name{background-position:-458px -71px;}
+.icon.md.Bank.Name{background-position:-457px -71px;}
 .icon.md.Date{background-position:-481px -36px;}
 .icon.md.Amount{background-position:-185px -102px;}
 .icon.md.description, .icon.md.Alert.Description{background-position:-156px -70px;}
@@ -1527,3 +1527,19 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .bill-pop .bill-cancel{border: transparent !important;}
 .bill-pop .bill-cancel:hover{border: 1px solid var(--textYellow) !important;}
 .carousel-card .carosel-content{height:100px; overflow-y: auto;}
+.icon.md.To.Wallet{	background-position: -325px -101px;}
+.icon.md.From.Wallet{	background-position: -325px -101px;}
+.icon.md.To.Value{background-position: -694px -135px;}
+.icon.md.From.Value{background-position: -694px -135px;}
+.icon.md.Provider.Commission{background-position: -549px -101px;}
+.icon.md.Network{background-position: -325px -101px;}
+.icon.md.Wallet.Address{background-position: -325px -101px;}
+.icon.md.State{background-position: -636px -135px;}
+.icon.md.Bank.Account{background-position: -457px -70px;}
+.icon.md.Wallet.Code{background-position: -325px -101px;}
+.icon.md.Amount{background-position: -428px -70px;}
+.icon.md.Coin{background-position: -325px -101px;}
+.icon.md.Requested.Crypto{background-position: -428px -70px;}
+.icon.md.Deposited.Coins{background-position: -428px -70px;}
+.icon.md.Country.of.Residence{background-position: -436px -101px;}
+.icon.md.Customer.ID{background-position: -126px -102px}
