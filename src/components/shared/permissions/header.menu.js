@@ -8,7 +8,7 @@ import {
     Drawer,
     Button, Popover
 } from "antd";
-import { setHeaderTab, setStep, setSellHeaderHide, setSelectedSellCoin} from "../../../reducers/buysellReducer";
+import { setHeaderTab, setStep, setSellHeaderHide, setSelectedSellCoin } from "../../../reducers/buysellReducer";
 import Translate from "react-translate-component";
 import en from "../../../lang/en";
 import ch from "../../../lang/ch";
