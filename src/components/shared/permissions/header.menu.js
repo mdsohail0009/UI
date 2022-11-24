@@ -54,6 +54,8 @@ import { userManager } from "../../../authentication";
 import { setCurrentAction } from "../../../reducers/actionsReducer";
 import { KEY_URL_MAP } from "./config";
 import { getFeaturePermissionsByKey } from "./permissionService";
+import { headerSubscriber } from "../../../utils/pubsub";
+
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
 counterpart.registerTranslations("my", my);
@@ -74,7 +76,7 @@ class MobileHeaderMenu extends Component {
 
             <Translate
                 content="header_title"
-                onClick={this.routeToCockpit}
+                onClick={this.props.routeToCockpit}
                 component={Menu.Item}
                 className="list-item"
             />
@@ -138,6 +140,10 @@ class HeaderPermissionMenu extends Component {
     }
     componentDidMount() {
         this.props.dispatch(fetchFeatures(this.props.userConfig.appId || "178A3680-3B6F-44AD-9EF2-69EA040C16CC", this.props.userConfig.id));
+        this.menuClickSub = headerSubscriber.subscribe(({ menuitem, menuKey }) => this.onMenuItemClick(menuitem, menuKey));
+    }
+    componentWillUnmount() {
+        this.menuClickSub.unsubscribe();
     }
     userProfile() {
         this.props.history.push("/userprofile");
@@ -154,66 +160,66 @@ class HeaderPermissionMenu extends Component {
             this.props.history.push("/docnotices");
         }
     }
-    
+
     navigate = (menuKey, menuItem) => {
         if (menuItem.path === "/modal") {
-                switch (menuKey) {
-                    case "trade_buy":
-                        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: false } });
-                        this.props.dispatch(setSellHeaderHide(false));
-                        this.props.dispatch(setSelectedSellCoin(false));
-                        this.props.dispatch(menuItem.dispatchStep ? setStep(menuItem.dispatchStep) :setStep("step1"));
-                        break;
-                    case "trade_sell":
-                        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: true } });
-                        this.props.dispatch(setSellHeaderHide(false));
-                        this.props.dispatch(setSelectedSellCoin(false));
-                        this.props.dispatch(setStep("step1"));
-                        break;
-                    case "transfer":
-                        this.props.dispatch(transforSetStep(menuItem.dispatchStep));
-                        break;
-                    case "sendReceive":
-                        this.props.dispatch(sendSetStep("step1"));
-                        break;
-                    case "send_fiat":
-                        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, send_fiat: true, sendCryptoTab: false, sendFiatTab: true } });
-                        this.props.dispatch(setWithdrawfiat(""));
-                        this.props.dispatch(byFiatSetStep("step1"));
-                        this.props.dispatch(setWithdrawfiatenaable(true));
-                        this.props.dispatch(setSendCrypto(true));
-                        this.props.dispatch(setReceiveFiatHead(false));
-                        this.props.dispatch(setSendFiatHead(false));
-                        break;
-                    case "send_crypto":
-                        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, send_crypto: true, sendCryptoTab: true, sendFiatTab: false } });
-                        this.props.dispatch(setWithdrawfiat(""));
-                        this.props.dispatch(byFiatSetStep("step1"));
-                        this.props.dispatch(setWithdrawfiatenaable(false));
-                        this.props.dispatch(setSendCrypto(true));
-                        this.props.dispatch(hideSendCrypto(false));
-                        break;
-                    case "receive_fiat":
-                        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, receive_fiat: true, sendCryptoTab: false, sendFiatTab: false } });
-                        this.props.dispatch(setWithdrawfiat(""));
-                        this.props.dispatch(setReceiveFiatHead(true));
-                        this.props.dispatch(byFiatSetStep("step1"));
-                        this.props.dispatch(setWithdrawfiatenaable(false));
-                        this.props.dispatch(setSendCrypto(false));
-                        break;
-                    case "receive_crypto":
-                        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, receive_crypto: true, sendCryptoTab: false, sendFiatTab: false } });
-                        this.props.dispatch(setWithdrawfiat(""));
-                        this.props.dispatch(byFiatSetStep("step1"));
-                        this.props.dispatch(setWithdrawfiatenaable(false));
-                        this.props.dispatch(setSendCrypto(false));
-                        break;
+            switch (menuKey) {
+                case "trade_buy":
+                    this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: false } });
+                    this.props.dispatch(setSellHeaderHide(false));
+                    this.props.dispatch(setSelectedSellCoin(false));
+                    this.props.dispatch(menuItem.dispatchStep ? setStep(menuItem.dispatchStep) :setStep("step1"));
+                    break;
+                case "trade_sell":
+                    this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: true } });
+                    this.props.dispatch(setSellHeaderHide(false));
+                    this.props.dispatch(setSelectedSellCoin(false));
+                    this.props.dispatch(setStep("step1"));
+                    break;
+                case "transfer":
+                    this.props.dispatch(transforSetStep(menuItem.dispatchStep));
+                    break;
+                case "sendReceive":
+                    this.props.dispatch(sendSetStep("step1"));
+                    break;
+                case "send_fiat":
+                    this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, send_fiat: true, sendCryptoTab: false, sendFiatTab: true } });
+                    this.props.dispatch(setWithdrawfiat(""));
+                    this.props.dispatch(byFiatSetStep("step1"));
+                    this.props.dispatch(setWithdrawfiatenaable(true));
+                    this.props.dispatch(setSendCrypto(true));
+                    this.props.dispatch(setReceiveFiatHead(false));
+                    this.props.dispatch(setSendFiatHead(false));
+                    break;
+                case "send_crypto":
+                    this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, send_crypto: true, sendCryptoTab: true, sendFiatTab: false } });
+                    this.props.dispatch(setWithdrawfiat(""));
+                    this.props.dispatch(byFiatSetStep("step1"));
+                    this.props.dispatch(setWithdrawfiatenaable(false));
+                    this.props.dispatch(setSendCrypto(true));
+                    this.props.dispatch(hideSendCrypto(false));
+                    break;
+                case "receive_fiat":
+                    this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, receive_fiat: true, sendCryptoTab: false, sendFiatTab: false } });
+                    this.props.dispatch(setWithdrawfiat(""));
+                    this.props.dispatch(setReceiveFiatHead(true));
+                    this.props.dispatch(byFiatSetStep("step1"));
+                    this.props.dispatch(setWithdrawfiatenaable(false));
+                    this.props.dispatch(setSendCrypto(false));
+                    break;
+                case "receive_crypto":
+                    this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, receive_crypto: true, sendCryptoTab: false, sendFiatTab: false } });
+                    this.props.dispatch(setWithdrawfiat(""));
+                    this.props.dispatch(byFiatSetStep("step1"));
+                    this.props.dispatch(setWithdrawfiatenaable(false));
+                    this.props.dispatch(setSendCrypto(false));
+                    break;
                     case "personal_bank_account":
                         window.open(process.env.REACT_APP_BANK_UI_URL+'dashboard/receive','_self')
-                    default:
-                        break;
-                }
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true, selectedTab:  menuKey === "trade_sell" ? true :false, sendCryptoTab: menuKey === "send_crypto" ? true :false, sendFiatTab: menuKey === "send_fiat" ? true :false} });
+                default:
+                    break;
+            }
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true, selectedTab:  menuKey === "trade_sell" ? true : false, sendCryptoTab: menuKey === "send_crypto" ? true :false, sendFiatTab: menuKey === "send_fiat" ? true : false } });
         } else if (menuItem.path) {
             this.props.history.push(menuItem.path);
         }
@@ -572,7 +578,7 @@ class HeaderPermissionMenu extends Component {
                 collapsed={collapsed}
                 collapsedWidth={0}
                 className={` ${collapsed ? '' : "sideropen"}`}>
-                <MobileHeaderMenu onMenuItemClick={this.onMenuItemClick} features={this.props.menuItems} dispatch={this.props.dispatch} />
+                <MobileHeaderMenu onMenuItemClick={this.onMenuItemClick} routeToCockpit={this.props.routeToCockpit} features={this.props.menuItems} dispatch={this.props.dispatch} />
             </Sider>}
             {this.state.drawerMenu.notifications && (
                 <Notifications
