@@ -8,7 +8,7 @@ import {
     Drawer,
     Button, Popover
 } from "antd";
-import { setHeaderTab, setStep, setSellHeaderHide, setSelectedSellCoin } from "../../../reducers/buysellReducer";
+import { setHeaderTab, setStep, setSellHeaderHide, setSelectedSellCoin} from "../../../reducers/buysellReducer";
 import Translate from "react-translate-component";
 import en from "../../../lang/en";
 import ch from "../../../lang/ch";
@@ -37,7 +37,7 @@ import {
     clearSwapData,
     setStep as swapSetStep
 } from "../../../reducers/swapReducer";
-import { setStep as byFiatSetStep, setReceiveFiatHead } from "../../../reducers/buyFiatReducer";
+import { setStep as byFiatSetStep, setReceiveFiatHead, setSendFiatHead } from "../../../reducers/buyFiatReducer";
 import {
     setStep as sendSetStep,
     setWithdrawfiat,
@@ -168,7 +168,7 @@ class HeaderPermissionMenu extends Component {
                     this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: false } });
                     this.props.dispatch(setSellHeaderHide(false));
                     this.props.dispatch(setSelectedSellCoin(false));
-                    this.props.dispatch(menuItem.dispatchStep ? setStep(menuItem.dispatchStep) : setStep("step1"));
+                    this.props.dispatch(menuItem.dispatchStep ? setStep(menuItem.dispatchStep) :setStep("step1"));
                     break;
                 case "trade_sell":
                     this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: true } });
@@ -189,6 +189,7 @@ class HeaderPermissionMenu extends Component {
                     this.props.dispatch(setWithdrawfiatenaable(true));
                     this.props.dispatch(setSendCrypto(true));
                     this.props.dispatch(setReceiveFiatHead(false));
+                    this.props.dispatch(setSendFiatHead(false));
                     break;
                 case "send_crypto":
                     this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, send_crypto: true, sendCryptoTab: true, sendFiatTab: false } });
@@ -213,10 +214,12 @@ class HeaderPermissionMenu extends Component {
                     this.props.dispatch(setWithdrawfiatenaable(false));
                     this.props.dispatch(setSendCrypto(false));
                     break;
+                    case "personal_bank_account":
+                        window.open(process.env.REACT_APP_BANK_UI_URL+'dashboard/receive','_self')
                 default:
                     break;
             }
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true, selectedTab: menuKey === "trade_sell" ? true : false, sendCryptoTab: menuKey === "send_crypto" ? true : false, sendFiatTab: menuKey === "send_fiat" ? true : false } });
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true, selectedTab:  menuKey === "trade_sell" ? true : false, sendCryptoTab: menuKey === "send_crypto" ? true :false, sendFiatTab: menuKey === "send_fiat" ? true : false } });
         } else if (menuItem.path) {
             this.props.history.push(menuItem.path);
         }
@@ -231,7 +234,7 @@ class HeaderPermissionMenu extends Component {
         }
     }
     onMenuItemClick = async (menuKey, menuItem) => {
-        const perIgnoreLst = ["notifications", "auditLogs", "cases"];
+        const perIgnoreLst = ["notifications", "auditLogs","cases"];
         if (perIgnoreLst.includes(menuKey)) { this.navigate(menuKey, menuItem) }
         else {
             const ignoreKycLst = ["transactions"];
@@ -616,7 +619,7 @@ class HeaderPermissionMenu extends Component {
             />
             <MassPayment
                 showDrawer={send_fiat || receive_fiat}
-                isShowSendFiat={this.state.drawerMenu.sendFiatTab}
+                isShowSendFiat= {this.state.drawerMenu.sendFiatTab}
                 onClose={() => this.closeDrawer("send")}
             />
             {this.state.drawerMenu.transactions && (
