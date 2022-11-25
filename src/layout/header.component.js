@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { 
+import {
   Layout,
   Menu,
   Typography,
@@ -34,7 +34,10 @@ import { readNotification as readNotifications } from "../notifications/api";
 import apiCalls from "../api/apiCalls";
 import { setNotificationCount } from "../reducers/dashboardReducer";
 import { getmemeberInfo } from "../reducers/configReduser";
-import HeaderPermissionMenu from '../components/shared/permissions/header.menu'
+import HeaderPermissionMenu from '../components/shared/permissions/header.menu';
+import { handleHeaderProfileMenuClick } from "../utils/pubsub";
+import Notifications from "../notifications";
+
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
 counterpart.registerTranslations("my", my);
@@ -59,14 +62,13 @@ class Header extends Component {
       cardsDetails: false,
       billingAddress: false,
       initLoading: true,
-      Visibleprofilemenu: false,
       collapsed: true,
+      showNotificationsDrawer: false
     };
     this.userProfile = this.userProfile.bind(this);
   }
   userProfile() {
     this.props.history.push("/userprofile");
-    this.setState({ ...this.state, Visibleprofilemenu: false });
     if (this.props.oidc.user.profile?.sub) {
       this.props.getmemeberInfoa(this.props.oidc.user.profile.sub);
     }
@@ -122,6 +124,9 @@ class Header extends Component {
   showToggle = () => {
     this.setState({ ...this.state, collapsed: !this.state.collapsed, isShowSider: true })
   }
+  onMenuItemClick = (menuitem, menuKey) => {
+    handleHeaderProfileMenuClick(menuitem, menuKey);
+  }
   render() {
     const userProfileMenu = (
       <Menu>
@@ -148,8 +153,9 @@ class Header extends Component {
               alt={"image"}
             />
           )}
-          <p className="mb-15 ml-8 profile-value" style={{ flexGrow: 12 }}>
-            {this.props.userConfig.firstName} {this.props.userConfig.lastName}
+          <p className="mb-15 ml-8 profile-value" style={{ flexGrow: 12, marginTop: "5px" }}>
+            {this.props.userConfig.isBusiness ? this.props.userConfig.businessName :
+              <>{this.props.userConfig.firstName}{" "}{" "}{this.props.userConfig.lastName}</>}
           </p>
           <Translate
             content="manage_account"
@@ -160,21 +166,21 @@ class Header extends Component {
             onClick={() => this.userProfile()}
           />
           <ul className="pl-0 drpdwn-list">
-          <li
-                            onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/modal" })}
-                        >
-                            <Link>
-                                <Translate
-                                    content="menu_transactions_history"
-                                    component={Text}
-                                    className="text-white-30"
-                                />
-                                <span className="icon md rarrow-white" />
-                            </Link>
-                        </li>
+            <li
+              onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/modal" })}
+            >
+              <Link>
+                <Translate
+                  content="menu_transactions_history"
+                  component={Text}
+                  className="text-white-30"
+                />
+                <span className="icon md rarrow-white" />
+              </Link>
+            </li>
             <li
             >
-              <Popover placement="left" content={<><div className="iban-hov" onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/6120197cdc204d9ddb882e4d")}>
+              <Popover placement="left" content={<><div onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/6120197cdc204d9ddb882e4d")}>
                 <Link>
                   <Translate
                     content="personal_account"
@@ -182,7 +188,7 @@ class Header extends Component {
                     className="text-white-30" key="1"
                   />
                 </Link><span className="icon c-pointer md rarrow-white ml-12" /></div>
-                <div className="iban-hov" onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/611b3ed20414885a6fc64fa7")}>
+                <div onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/611b3ed20414885a6fc64fa7")}>
                   <Link>
                     <Translate
                       content="business_account"
@@ -202,11 +208,35 @@ class Header extends Component {
               </Popover>
             </li>
             <li
-              onClick={() => this.showAuditLogsDrawer()}
+              onClick={() => this.onMenuItemClick("auditLogs", { key: "auditLogs", path: "/modal" })}
             >
               <Link>
                 <Translate
                   content="AuditLogs"
+                  component={Text}
+                  className="text-white-30"
+                />
+                <span className="icon md rarrow-white" />
+              </Link>
+            </li>
+            <li
+              onClick={() => this.onMenuItemClick("addressbook", { key: "addressbook", path: "/addressbook" })}
+            >
+              <Link>
+                <Translate
+                  content="address_book"
+                  component={Text}
+                  className="text-white-30"
+                />
+                <span className="icon md rarrow-white" />
+              </Link>
+            </li>
+            <li
+              onClick={() => this.onMenuItemClick("cases", { key: "cases", path: "/cases" })}
+            >
+              <Link>
+                <Translate
+                  content="case"
                   component={Text}
                   className="text-white-30"
                 />
@@ -232,27 +262,17 @@ class Header extends Component {
                 <span className="icon md rarrow-white" />
               </Link>
             </li>
-            <li>
-              
-                <Translate
-                  content="logout"
-                  className="text-white-30"
-                  component={Link}
-                />
-             
-            </li>      
-            {/* <li
-              onClick={() => this.showAuditLogsDrawer()}
-            >
-              <Link>
-                <Translate
-                  content="AuditLogs"
-                  component={Text}
-                  className="text-white-30"
-                />
-                <span className="icon md rarrow-white" />
+            <li onClick={() => this.clearEvents()}>
+              <Link className="text-left">
+                <span>
+                  <Translate
+                    content="logout"
+                    className="text-white-30"
+                    component={Text}
+                  />
+                </span>
               </Link>
-            </li>        */}
+            </li>
           </ul>
         </div>
       </Menu>
@@ -260,32 +280,13 @@ class Header extends Component {
     return (
       <>
         <Layout className="layout">
-          <menuHeader className="tlv-header" id="area">
+          <div className="tlv-header" id="area">
             <div className="login-user">
               <ul className="header-logo pl-0">
                 <li className="visible-mobile pr-24 p-relative" onClick={this.showToggle}>
                   {this.state.collapsed ?
                     <span className="icon lg hamburg " /> : <span className="icon md close-white " />}
                 </li>
-                {/* <li className="toggle-space">
-                  <Dropdown overlay={(
-                    <div className="secureDropdown">
-            <Menu className="drpdwn-list">
-              <Menu.Item key="0" className="mb-0 mt-0">
-                   <a className="text-white-30">Exchange</a> 
-              </Menu.Item>
-              <Menu.Item key="1" className="mb-0 mt-0">
-                    <a className="text-white-30"> Partner</a> 
-              </Menu.Item>
-              <Menu.Item key="2" className="mb-0 mt-0">
-                    <a className="text-white-30"> Bank</a> 
-              </Menu.Item>
-            </Menu></div>
-          )}
-           trigger={['click']}>
-                      <a className="ant-dropdown-link" onClick={e => e.preventDefault()}><span className="icon lg app-menu"></span></a>
-                  </Dropdown>
-                </li> */}
                 <li className="mobile-logo">
                   {
                     <img
@@ -334,7 +335,7 @@ class Header extends Component {
                 <Menu.Item
                   key="6"
                   className="notification-conunt mr-8"
-                  onClick={this.showNotificationsDrawer}
+                  onClick={() => this.setState({ ...this.state, showNotificationsDrawer: true })}
                 >
                   <span
                     className="icon md bell ml-4 p-relative"
@@ -347,8 +348,8 @@ class Header extends Component {
                   </span>
                 </Menu.Item>
                 <Dropdown
+                   trigger={["click"]}
                   overlay={userProfileMenu}
-                  trigger={["click"]}
                   placement="topRight"
                   arrow
                   overlayClassName="secureDropdown"
@@ -381,9 +382,9 @@ class Header extends Component {
                 </Dropdown>
               </Menu>
             </div>
-            <HeaderPermissionMenu collapsed={this.state.collapsed} isShowSider={this.state.isShowSider} />
-           
-          </menuHeader>
+            <HeaderPermissionMenu collapsed={this.state.collapsed} isShowSider={this.state.isShowSider} routeToCockpit={this.routeToCockpit} />
+
+          </div>
         </Layout>
         <Drawer
           title={[
@@ -418,6 +419,12 @@ class Header extends Component {
             }}
           />
         </Drawer>
+        {this.state.showNotificationsDrawer && (
+          <Notifications
+            showDrawer={this.state.showNotificationsDrawer}
+            onClose={() => this.setState({ ...this.state, showNotificationsDrawer: false })}
+          />
+        )}
       </>
     );
   }
