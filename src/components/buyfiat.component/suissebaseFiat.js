@@ -28,7 +28,7 @@ class SuissebaseFiat extends Component {
     }
     renderContent = () => {
         const stepcodes = {
-            fiatdeposit: <FaitDeposit fiatRef={(cd) => this.child = cd} onClosePopup={this.closeDrawer}/>,
+            fiatdeposit: <FaitDeposit fiatRef={(cd) => this.child = cd} />,
             faitsummary: < FaitdepositSummary />,
             selectcurrency: < SelectCurrency />,
             withdrwalfiatsummary: < WithdrawalSummary />,
