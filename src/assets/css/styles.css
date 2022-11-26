@@ -1059,7 +1059,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .visible-mobile{display: none;}
     .profileinfo{padding: 32px 0;}
     .custom-toggle{margin-left: 12px !important;}
-    .mobile-ml-8{margin-left: 8px;}
+    .mobile-ml-8{margin-left: 4.5px;}
     .mobile-headerview{display: block;}
     .visible-mobile,.sideropen{display: none;}
     /* .full-screenable-node{width: 760px;} */
