@@ -1503,7 +1503,8 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .pop-btn.withdraw-popcancel span{color: var(--textYellow); font-weight: 400;}
 .code-lbl{margin-left: 14px !important;}
 .ant-list-split .ant-list-item{border-bottom: 1px solid var(--borderLight) !important;}
-.file-label.add-lbl{width: 165px; text-align: center;}
+.file-label.add-lbl{width: 140px; text-align: center;}
+.gridlink-data{max-width:130px ;}
 .custom-btn:hover span{color: white;}
 .custom-crypto-btns .custom-bnt span{color: var(--textWhite); font-weight: 400;}
 .pop-btn.cancel-btn{background: transparent; border: transparent; border-radius: 40px; height: 46px !important; font-weight: 700 !important;}
@@ -1524,3 +1525,4 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .bill-pop .bill-cancel{border: transparent !important;}
 .bill-pop .bill-cancel:hover{border: 1px solid var(--textYellow) !important;}
 .carousel-card .carosel-content{height:100px; overflow-y: auto;}
+.dashb-btmtable table tbody .ant-table-placeholder{background: none;}
