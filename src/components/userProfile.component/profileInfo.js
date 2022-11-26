@@ -189,7 +189,7 @@ class ProfileInfo extends Component {
             </li>}
           </ul>
         </div>
-        <div className="box basic-info">
+        <div className="box basic-info basicprofile-info">
           <Title className="basicinfo mb-0">
             {" "}
             <Translate

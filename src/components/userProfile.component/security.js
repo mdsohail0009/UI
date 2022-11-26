@@ -181,7 +181,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
         />
       )}
 
-      <div className="box basic-info">
+      <div className="box basic-info basicprofile-info">
         <Translate
           content="TwoFactorAuthentication"
           component={Title}
@@ -311,7 +311,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
         <Changepassword onSubmit={() => setisChangepassword(false)} />
       </Drawer>
 
-      <div className="box basic-info">
+      <div className="box basic-info basicprofile-info">
         <Translate
           content="withdraw_verification"
           component={Title}

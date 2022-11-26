@@ -352,7 +352,7 @@ class OnthegoFundTransfer extends Component {
                         scrollToFirstError
                     >
                         {!isVerificationEnable &&
-                            <Alert
+                            <Alert 
                                 message="Verification alert !"
                                 description={<Text>Without verifications you can't send. Please select send verifications from <a onClick={() => {
                                     this.props.history.push("/userprofile/2");
