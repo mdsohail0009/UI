@@ -504,7 +504,7 @@ class OnthegoFundTransfer extends Component {
                                 </Col>
                             </Row>}</>
                         )}
-                        {(!filterObj.length > 0) && <div className="success-pop text-center" style={{ marginTop: '20px' }}>
+                        {(!filterObj.length > 0) && <div className="success-pop text-center" style={{ marginTop: '0px' }}>
                             <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
                             <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
                             <p className="fs-16 text-white-30 fw-200 mb-0"> {apicalls.convertLocalLang('address_available')} </p>
