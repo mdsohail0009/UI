@@ -3,24 +3,28 @@
         "docType":"Transaction Type",
         "date":"Date",
         "wallet":"Wallet",
-        "state":"State"
+        "state":"State",
+        "Value":["debit","credit"]
     },
     "Sell":{
         "docType":"Transaction Type",
         "date":"Date",
         "wallet":"Wallet",
-        "state":"State"
+        "state":"State",
+        "Value":["debit","credit"]
     },
     "Deposit":{
         "docType":"Transaction Type",
         "date":"Date",
         "wallet":"Wallet",
-        "state":"State"
+        "state":"State",
+        "Value":["debit","credit"]
     },
     "Withdraw":{
         "docType":"Transaction Type",
         "date":"Date",
         "wallet":"Wallet",
-        "state":"State"
+        "state":"State",
+        "Value":["debit","credit"]
     }
 }
