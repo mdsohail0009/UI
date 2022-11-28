@@ -1,13 +1,58 @@
 import React, { Component } from 'react';
-import {
-    Typography, Button,Col,Modal,Tooltip,Alert
-  } from "antd";
-  import moment from "moment/moment";
+import { Typography, Button,Col,Modal,Tooltip,Alert,message} from "antd";
+import moment from "moment/moment";
+import {downloadTransaction } from './api';
+import TransactionSlip from "./transactionSlip.json";
 class TransactionSlips extends Component {
- 
+  constructor(props) {
+    super(props);
+    this.state = {
+      downloadError:"",
+      isLoading:false,
+    }
+  }
+  handleDownload=async ()=>{
+    const {modalData}=this.props;
+    this.setState({ ...this.state,isLoading:true,downloadError:"" })
+    if(modalData?.state!=="Approved"){
+      this.setState({ ...this.state,isLoading:false,downloadError:"Please download approve status only " })
+    }else{
+    let response = await downloadTransaction(modalData?.id,modalData?.docType);
+      if (response.ok) {
+        this.setState({ ...this.state,downloadError:"",isLoading:false })
+        window.open(response.data,'_blank')
+        message.success({ content: "Downloaded successfully", className: 'custom-msg',duration:3 });
+    }else{
+      console.log("data")
+      this.setState({ ...this.state,downloadError:this.isErrorDispaly(response.data),isLoading:false })
+    }
+  }
+  }
+  transactionModal=(data)=>{
+    this.setState({ ...this.state, showModal:true,modalData:data ,
+      isLoading:false  })
+  }
+  handleModalCancel=()=>{
+    this.setState({ ...this.state,downloadError:"",isLoading:false })
+    this.props?.handleCancel();
+  }
+  isErrorDispaly = (objValue) => {
+    if (objValue.data && typeof objValue.data === "string") {
+      return objValue.data;
+    } else if (
+      objValue.originalError &&
+      typeof objValue.originalError.message === "string"
+    ) {
+      return objValue.originalError.message;
+    } else {
+      return "Something went wrong please try again!";
+    }
+  };
   render() {
     const { Title } = Typography;
-    const {transactionSlipData,modalData,showModal,isLoading,downloadError,handleDownload,handleCancel}=this.props;
+    const {downloadError}=this.state;
+    const {modalData,showModal}=this.props;
+    const transactionSlipData=TransactionSlip[modalData?.docType]
     return (
       <>
        <Modal
@@ -16,7 +61,7 @@ class TransactionSlips extends Component {
                       <Tooltip title="Close">
                         <span
                           className="icon md close-white c-pointer"
-                          onClick={() => handleCancel()}
+                          onClick={() => this.handleModalCancel()}
                         />
                       </Tooltip>
           
@@ -25,12 +70,12 @@ class TransactionSlips extends Component {
                         <>
                             <Button style={{ width: 100 }}
                                 className=" pop-cancel"
-                                onClick={()=>handleCancel()}
+                                onClick={()=>this.handleModalCancel()}
                                 
                                 >Cancel</Button>
                             <Button className="primary-btn pop-btn"
-                               loading={isLoading}
-                                onClick={()=>handleDownload()}
+                               loading={this.state.isLoading}
+                                onClick={()=>this.handleDownload()}
                                 > Download </Button>
                         </>
                     ]} >
