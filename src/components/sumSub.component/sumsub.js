@@ -8,12 +8,18 @@ import success from '../../assets/images/success.png';
 import AccountStatus from '../../utils/account.status';
 
 class SumSub extends Component {
-    state = { loading: true, sumSubConfirm: false }
+    state = { loading: true, sumSubConfirm: false, isAccountApproved: this.props.userConfig?.customerState !== "Approved" }
     componentDidMount() {
-        if (this.props.userConfig.isKYC && this.props.customerState === "Approved") {
+        if (this.props.userConfig.isKYC && this.state.isAccountApproved) {
             this.props.history.push("/cockpit")
+        } else {
+            if (!this.props.userConfig?.isKYC) {
+                this.launchWebSdk();
+            }else{
+                this.setState({...this.state,loading:false})
+            }
         }
-        this.launchWebSdk();
+
 
     }
     launchWebSdk = async () => {
@@ -58,7 +64,8 @@ class SumSub extends Component {
         return (
             <>
                 {this.state.loading && <div className="loader">Loading .....</div>}
-                {(this.state.sumSubConfirm === true) ? (this.userConfig?.customerState == "Approved" ? <AccountStatus /> : <>({sumSubConfirms})</>) : (<div id="sumsub-websdk-container"></div>)}
+                {!this.state.loading && this.props?.userConfig?.isKYC && !this.state.isAccountApproved && <AccountStatus />}
+                {(this.state.sumSubConfirm === true) ? <>({sumSubConfirms})</> : (<div id="sumsub-websdk-container"></div>)}
                 {/* <div id="sumsub-websdk-container"></div> */}
             </>
         );

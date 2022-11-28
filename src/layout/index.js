@@ -27,7 +27,6 @@ class Layout extends Component {
         window.open(process.env.REACT_APP_ADMIN_URL,"_self")
     }
     render() {
-        let Sid = this.props.cookies.get('SID')
         if ((!this.props.user || this.props.user.expired) && !window.location.pathname.includes('callback')) {
             return <div className="loader">Loading .....</div>
         }else if((!this.props.user || this.props.user.expired) && window.location.pathname.includes('callback')){

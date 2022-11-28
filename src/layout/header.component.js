@@ -113,12 +113,17 @@ class Header extends Component {
     });
   }
   routeToHome = () => {
-    this.props.dispatch(setHeaderTab(''));
-    this.props.history.push("/cockpit");
+    this.routeToCockpit();
   };
   routeToCockpit = () => {
     this.props.dispatch(setHeaderTab(''));
-    this.props.userConfig.isKYC ? this.props.history.push("/cockpit") : this.props.history.push("/notkyc")
+    if (!this.props.userConfig?.isKYC) {
+      this.props.history.push("/notkyc");
+    } else if (this.props.userConfig?.customerState === "Approved") {
+      this.props.history.push("/sumsub");
+    } else {
+      this.props.history.push("/cockpit");
+    }
     this.setState({ ...this.state, collapsed: true, isShowSider: false })
   }
   showToggle = () => {
@@ -348,7 +353,7 @@ class Header extends Component {
                   </span>
                 </Menu.Item>
                 <Dropdown
-                   trigger={["click"]}
+                  trigger={["click"]}
                   overlay={userProfileMenu}
                   placement="topRight"
                   arrow
