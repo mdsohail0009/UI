@@ -1039,7 +1039,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .changepwd-btn{display: flex !important;}
     .changepwd-btn div{width: 210px !important;}
     .basicprofile-info{padding: 24px !important;}
-    
+
 }
 @media (min-width: 992px){
     .tlv-header{display: flex}
@@ -1552,3 +1552,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .dashb-btmtable table tbody .ant-table-placeholder{background: none;}
 .pwdbtn-cancel.pop-btn.cancel-btn:hover{border: 1px solid var(--textYellow) !important;}
 .selcerpto-list{padding-right: 10px;}
+.wallet-info{padding: 16px 0;font-size: 16px;display: flex;justify-content: space-between;}
+.wallet-info span{font-size: 16px;color: var(--textWhite30);font-weight: 600;}
+.wallet-info>span:first-child{font-size: 14px;color: var(--textWhite50);font-weight: 200;}
+.selectcustom-input .ant-form-item-label > label::after{content: none !important;}
