@@ -1524,3 +1524,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .bill-pop .bill-cancel{border: transparent !important;}
 .bill-pop .bill-cancel:hover{border: 1px solid var(--textYellow) !important;}
 .carousel-card .carosel-content{height:100px; overflow-y: auto;}
+.wallet-info{padding: 16px 0;font-size: 16px;display: flex;justify-content: space-between;}
+.wallet-info span{font-size: 16px;color: var(--textWhite30);font-weight: 600;}
+.wallet-info>span:first-child{font-size: 14px;color: var(--textWhite50);font-weight: 200;}
+.selectcustom-input .ant-form-item-label > label::after{content: none !important;}

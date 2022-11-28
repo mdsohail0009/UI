@@ -637,5 +637,8 @@ export default {
 	contact_amount_text: "Mifandraisa amin'ny tohan-kevitra amin'ny vola ambony kokoa.",
 	buy_your_crypto_for_cash_text: "Mividiana mora foana ny crypto amin'ny poketranao.",
 	validate: "E-manan-kery",
-	sell_select_currency: "MIFIDY VOLA Hraisina"
+	sell_select_currency: "MIFIDY VOLA Hraisina",
+	transactions_history: "Kasaysayan ng mga Transaksyon",
+	transaction:"Transaksyon",
+
 };

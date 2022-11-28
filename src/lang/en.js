@@ -676,4 +676,7 @@ export default {
 	validate: "Validate",
 	sell_select_currency: "SELECT CURRENCY TO RECEIVE",
 	note:"Note",
+	transactions_history: "Transactions History",
+	transaction:"Transaction",
+	
 };

@@ -615,5 +615,7 @@ export default {
 	contact_amount_text: "請聯繫支持人員獲取更高的金額.",
 	buy_your_crypto_for_cash_text: "輕鬆購買加密貨幣直接到您的錢包",
 	validate: "驗證",
-	sell_select_currency: "選擇要接收的貨幣"
+	sell_select_currency: "選擇要接收的貨幣",
+	transactions_history: "交易紀錄",
+	transaction:"交易",
 };
