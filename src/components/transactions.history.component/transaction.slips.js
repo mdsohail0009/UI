@@ -55,7 +55,6 @@ class TransactionSlips extends Component {
   getCombinedValues = (lst) => {
     const obj = { ...this.props?.modalData };
     let _value = "";
-    debugger
     for (let key of lst) {
       _value += _value === "" ? (obj[key]) ? numberWithCommas(obj[key]) : "" : ((obj[key] && _value) ? `/${numberWithCommas(obj[key])}` : "");
     }
