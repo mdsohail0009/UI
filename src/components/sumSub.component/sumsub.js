@@ -5,18 +5,19 @@ import { connect } from 'react-redux';
 import { userInfo, getmemeberInfo } from '../../reducers/configReduser';
 import { withRouter } from 'react-router-dom';
 import success from '../../assets/images/success.png';
+import AccountStatus from '../../utils/account.status';
 
 class SumSub extends Component {
-    state = { loading: true,sumSubConfirm:false }
+    state = { loading: true, sumSubConfirm: false }
     componentDidMount() {
-        if (this.props.userConfig.isKYC) {
+        if (this.props.userConfig.isKYC && this.props.customerState === "Approved") {
             this.props.history.push("/cockpit")
         }
         this.launchWebSdk();
 
     }
     launchWebSdk = async () => {
-        apicalls.sumsubacesstoken(this.props.userConfig.userId,this.props.userConfig.isBusiness? "SuisseBase_KYB_Flow":"SuisseBase_KYC_Flow").then((res) => {
+        apicalls.sumsubacesstoken(this.props.userConfig.userId, this.props.userConfig.isBusiness ? "SuisseBase_KYB_Flow" : "SuisseBase_KYC_Flow").then((res) => {
             let snsWebSdkInstance = snsWebSdk.init(
                 res.data.token,
                 () => res.data.token
@@ -33,17 +34,17 @@ class SumSub extends Component {
                     }
                 }).onMessage((type, payload) => {
                     // console.log('onMessage', type, payload)
-                    if(type==='idCheck.onResize'){
-                        window.scrollTo(0,0)
+                    if (type === 'idCheck.onResize') {
+                        window.scrollTo(0, 0)
                     }
-                    if (type === 'idCheck.applicantStatus' && payload.reviewStatus === "completed"){
-                        this.setState({sumSubConfirm:true})
-                         apicalls.updateKyc(this.props.userConfig.userId).then((res) => {
-                        this.props.getmemeberInfoa(this.props.user.profile.sub)
-                        this.props.history.push("/cockpit")
-                    })
+                    if (type === 'idCheck.applicantStatus' && payload.reviewStatus === "completed") {
+                        this.setState({ sumSubConfirm: true })
+                        apicalls.updateKyc(this.props.userConfig.userId).then((res) => {
+                            this.props.getmemeberInfoa(this.props.user.profile.sub)
+                            this.props.history.push("/cockpit")
+                        })
                     }
-                   
+
                 }).build()
             snsWebSdkInstance.launch('#sumsub-websdk-container')
             this.setState({ loading: false })
@@ -51,13 +52,13 @@ class SumSub extends Component {
     }
 
     render() {
-        const sumSubConfirms=<div className='sumSub-confirm text-white text-center'><img src={success} className="confirm-icon" alt={"success"} /><br/>
-        <span className='sumSub-review'>Verification Completed,</span>
-        <p className='p-0' style={{wordBreak: 'break-all'}}>After Sumsub completed, Please refresh the page or reLogin</p></div>
+        const sumSubConfirms = <div className='sumSub-confirm text-white text-center'><img src={success} className="confirm-icon" alt={"success"} /><br />
+            <span className='sumSub-review'>Verification Completed,</span>
+            <p className='p-0' style={{ wordBreak: 'break-all' }}>After Sumsub completed, Please refresh the page or reLogin</p></div>
         return (
             <>
                 {this.state.loading && <div className="loader">Loading .....</div>}
-                {(this.state.sumSubConfirm===true)?<>({sumSubConfirms})</>:(<div id="sumsub-websdk-container"></div>)}
+                {(this.state.sumSubConfirm === true) ? (this.userConfig?.customerState == "Approved" ? <AccountStatus /> : <>({sumSubConfirms})</>) : (<div id="sumsub-websdk-container"></div>)}
                 {/* <div id="sumsub-websdk-container"></div> */}
             </>
         );
