@@ -3,21 +3,18 @@ import {
   Drawer,
   Typography,
   Button,
-  Row, Col, Select, Form,Modal,DatePicker,Tooltip,Alert,Input,message
-} from "antd";
+  Row, Col, Select, Form,Modal,DatePicker,Tooltip,Alert,Input,message} from "antd";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
 import List from "../grid.component";
-import { getTransactionSearch, getTransactionCurrency,downloadTransaction } from './api';
+import { getTransactionSearch, getTransactionCurrency } from './api';
 import { setCurrentAction } from "../../reducers/actionsReducer";
 import { getFeaturePermissionsByKey } from '../shared/permissions/permissionService';
 import { withRouter } from "react-router-dom";
 import { setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 import NumberFormat from "react-number-format";
 import moment from "moment/moment";
-import TransactionSlip from "./transactionSlip.json"
-import apicalls from '../../api/apiCalls';
 import TransactionSlips from "./transaction.slips";
 import TransactionTimeSpan from "./transactionTimeSpan";
 const { Option } = Select;
@@ -29,7 +26,6 @@ class TransactionsHistory extends Component {
     this.state = {
       isLoading: false,
       customerData: [],
-      typeData: [],
       doctypeData: [],
       currenyData: [],
       permissions: {},
@@ -59,7 +55,7 @@ class TransactionsHistory extends Component {
       gridUrl: process.env.REACT_APP_GRID_API + `Transaction/Customers`,
       showModal:false,
       modalData:{},
-      transactionSlipData:null,
+      modalPoupData:{},
       downloadError:"",
     };
     this.props.dispatch(setSelectedFeatureMenu(this.props.transactionsPermissions?.featureId || this.props.customer?.id));
@@ -155,7 +151,6 @@ class TransactionsHistory extends Component {
     let response = await getTransactionSearch();
     if (response.ok) {
       this.setState({
-        typeData: response.data.types,
         doctypeData: response.data.docTypes,
         statusData:response.data.status
       });
@@ -270,22 +265,6 @@ transactionModal=(data)=>{
   this.setState({ ...this.state, showModal:true,modalData:data ,
     isLoading:false  })
 }
-handleDownload=async ()=>{
-  const {modalData}=this.state;
-  this.setState({ ...this.state,isLoading:true,downloadError:"" })
-  if(this.state.modalData.state!=="Approved"){
-    this.setState({ ...this.state,isLoading:false,downloadError:"Without status approved you can't download" })
-  }else{
-  let response = await downloadTransaction(modalData.docId,modalData.docType);
-    if (response.ok) {
-      this.setState({ ...this.state,downloadError:"",isLoading:false })
-      window.open(response.data,'_blank')
-      message.success({ content: "Downloaded successfully", className: 'custom-msg',duration:3 });
-  }else{
-    this.setState({ ...this.state,downloadError:this.isErrorDispaly(response.data),isLoading:false })
-  }
-}
-}
 handleCancel=()=>{
   this.setState({ ...this.state, showModal:false,downloadError:"" })
 }
@@ -304,7 +283,7 @@ isErrorDispaly = (objValue) => {
 
   render() {
     const { Title } = Typography;
-    const { typeData, doctypeData, currenyData, gridUrl, searchObj,showModal,modalData,timeListSpan,transactionSlipData,statusData,isLoading,downloadError } = this.state;
+    const {  doctypeData, currenyData, gridUrl, searchObj,showModal,modalData,timeListSpan,statusData,isLoading,downloadError } = this.state;
 
     const options2 = doctypeData.map((d) => (
       <Option key={d.value} value={d.name}>{d.name}</Option>
@@ -349,7 +328,6 @@ isErrorDispaly = (objValue) => {
                     <Select
                       className="cust-input mb-0 custom-search"
                       dropdownClassName="select-drpdwn"
-                      //showSearch
                       defaultValue="Last 1 Day"
                       onChange={(e) => this.handleTimeSpan(e, 'timeSpan')}
                       placeholder="Time Span"
@@ -432,9 +410,8 @@ isErrorDispaly = (objValue) => {
           />
         </Drawer>
 
-                <TransactionSlips showModal={showModal} transactionSlipData={TransactionSlip[modalData?.docType]} modalData={modalData} isLoading={isLoading} downloadError={downloadError} handleCancel={this.handleCancel} handleDownload={this.handleDownload}/>
-
-                 <TransactionTimeSpan modal={this.state.modal} handleDateCancel={this.handleDateCancel} handleDateChange={this.handleDateChange} handleOk={this.handleOk} formDateRef={this.formDateRef} message={this.state?.message} searchObj={searchObj}/>
+                <TransactionSlips showModal={showModal}  modalData={modalData} isLoading={isLoading} handleCancel={this.handleCancel} />
+                <TransactionTimeSpan modal={this.state.modal} handleDateCancel={this.handleDateCancel} handleDateChange={this.handleDateChange} handleOk={this.handleOk} formDateRef={this.formDateRef} message={this.state?.message} searchObj={searchObj}/>
       </>
 
     );
