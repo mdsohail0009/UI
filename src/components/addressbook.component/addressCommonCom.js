@@ -82,7 +82,7 @@ const AddressCommonCom = (props) => {
   const [state, setState] = useState([]);
   const [ibanValue, setIbanValue] = useState(null)
   const [favouriteDetails, setFavouriteDetails] = useState({})
-  const [deleteItem, setDeleteItem] = useState()
+  const [deleteItem, setDeleteItem] = useState({})
   const [agreeRed, setAgreeRed] = useState(true)
   const [bilPay, setBilPay] = useState(null);
   const [newStates, setNewStates] = useState([]);
@@ -415,6 +415,8 @@ const AddressCommonCom = (props) => {
         if (bankmodalData[i].recordStatus == "Added") {
           bankmodalData.splice(i, 1)
         } else { bankmodalData[i].recordStatus = "Deleted" }
+      }else{
+        bankmodalData[i].recordStatus=''
       }
     }
   }
