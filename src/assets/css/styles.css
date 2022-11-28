@@ -792,7 +792,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
 .icon.md.Email{background-position:-127px -71px;}
 .icon.md.Name{background-position:-212px -70px;}
 .icon.md.Currency{background-position:-428px -70px;}
-.icon.md.Bank.Name{background-position:-458px -71px;}
+.icon.md.Bank.Name{background-position:-457px -71px;}
 .icon.md.Date{background-position:-481px -36px;}
 .icon.md.Amount{background-position:-185px -102px;}
 .icon.md.description, .icon.md.Alert.Description{background-position:-156px -70px;}
@@ -883,7 +883,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .display-flex{display: block; text-align: center;}
     .theme-switch{width: auto;}
     .profile-label{width: 150px;}
-    .address-icons{list-style: none; padding-left: 0; margin-bottom: 12px; margin-top: 12px; display: flex;margin-bottom: 12px !important; } 
+    .address-icons{list-style: none; padding-left: 0; margin-top: 12px; display: flex;margin-bottom: 12px !important; }
     .address-clear{clear: both; margin-top: 12px;}
     .customaudit-select .selectcustom-input{margin-left:0 !important}
     .customaudit-select .custom-btn{width: 100%;}
@@ -917,6 +917,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .k-pager-wrap{margin-left: -11px;}
     .k-dropdown-wrap{margin-right: -8px;}
     .transctns-grid table col{width: 120px !important;}
+    .changepwd-btn div{margin: 20px 0px !important;}
     /* .ant-popover.ant-popover-placement-left {left: 176px !important;} */
 }
 @media (max-width: 1024px){
@@ -1035,6 +1036,10 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .btn-content{display: flex !important;}
     .pop-btn.custom-send{margin-left: 24px;} 
     .create-account .ant-form-item-control-input-content{text-align: right;}
+    .changepwd-btn{display: flex !important;}
+    .changepwd-btn div{width: 210px !important;}
+    .basicprofile-info{padding: 24px !important;}
+
 }
 @media (min-width: 992px){
     .tlv-header{display: flex}
@@ -1059,7 +1064,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .visible-mobile{display: none;}
     .profileinfo{padding: 32px 0;}
     .custom-toggle{margin-left: 12px !important;}
-    .mobile-ml-8{margin-left: 8px;}
+    .mobile-ml-8{margin-left: 4.5px;}
     .mobile-headerview{display: block;}
     .visible-mobile,.sideropen{display: none;}
     /* .full-screenable-node{width: 760px;} */
@@ -1133,6 +1138,9 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .minmax.custom-minmax{position: relative;right:-332px !important;top:-11px;width:100px;}
     .side-drawer.custom-drawer-width .ant-drawer-content-wrapper{width: 1094px !important;}
     .lg-fontsize{font-size: 14px !important;}
+    .cases-grid-view{text-align: center;}
+    .cases-grid-view .k-grid .k-grid-header table{width: 1254px !important;}
+    .cases-grid-view .k-grid-container .k-grid-table{width: 1254px !important;}
 }
 
 @media (min-width: 1500){
@@ -1417,7 +1425,7 @@ td.ant-table-column-sort{background: transparent;}
 .fund-transfer-input .ant-input-group .ant-input{border:transparent;}
 .fund-transfer-input .ant-input:focus, .ant-input-focused{box-shadow:none;}
 .fund-transfer-input .ant-input-group-addon{color:var(--textWhite);}
-.fund-circle{width: 50px;height: 50px;height: 50px;border-radius: 50%;text-align: center;padding: 15px;background-color: var(--bgDarkGrey30);}
+.fund-circle{width: 50px;height: 50px;border-radius: 50%;text-align: center;padding: 15px;background-color: var(--bgDarkGrey30);}
 .small-text-align small{font-weight: 400; vertical-align: super;background-color: var(--bgDarkGrey);padding: 2px 6px;color: #fff;border-radius: 10px;}
 .fund-border{margin-top: 10px;padding: 10px;}
 .fund-border:hover{margin-top: 10px;padding: 10px;background-color: var(--bgBlu);border-radius: 5px;color: var(--textWhite30);}
@@ -1489,7 +1497,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .cust-pop-up-btn .primary-btn.pop-cancel:hover{border: 1px solid var(--textYellow) !important;}
 .custom-back-btn .pop-cancel{border: transparent !important;}
 .custom-back-btn .pop-cancel:hover{border: 1px solid #f2f2f2 !important;}
-.custom-alert-width{width:800px;margin: auto;padding: 8px 10px;background-color:var(--bgDark) !important;border-radius: 15px;color: var(--textWhite);border-color: var(--borderGrey) !important;padding:24px;}
+.custom-alert-width{width:800px;margin: auto;padding: 8px 10px;background-color:var(--bgDark) !important;border-radius: 15px;color: var(--textWhite);border-color: var(--borderGrey) !important;}
 .cust-cypto-view{width: 900px;margin: auto;}
 .ant-select-arrow .anticon{display: none;}
 .ant-select-arrow{width: 20px;height: 20px;background-position: -351px -5px;transform: scale(0.9);}
@@ -1503,7 +1511,8 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .pop-btn.withdraw-popcancel span{color: var(--textYellow); font-weight: 400;}
 .code-lbl{margin-left: 14px !important;}
 .ant-list-split .ant-list-item{border-bottom: 1px solid var(--borderLight) !important;}
-.file-label.add-lbl{width: 165px; text-align: center;}
+.file-label.add-lbl{width: 140px; text-align: center;}
+.gridlink-data{max-width:130px ;}
 .custom-btn:hover span{color: white;}
 .custom-crypto-btns .custom-bnt span{color: var(--textWhite); font-weight: 400;}
 .pop-btn.cancel-btn{background: transparent; border: transparent; border-radius: 40px; height: 46px !important; font-weight: 700 !important;}
@@ -1524,6 +1533,25 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .bill-pop .bill-cancel{border: transparent !important;}
 .bill-pop .bill-cancel:hover{border: 1px solid var(--textYellow) !important;}
 .carousel-card .carosel-content{height:100px; overflow-y: auto;}
+.icon.md.To.Wallet{	background-position: -325px -101px;}
+.icon.md.From.Wallet{	background-position: -325px -101px;}
+.icon.md.To.Value{background-position: -694px -135px;}
+.icon.md.From.Value{background-position: -694px -135px;}
+.icon.md.Provider.Commission{background-position: -549px -101px;}
+.icon.md.Network{background-position: -325px -101px;}
+.icon.md.Wallet.Address{background-position: -325px -101px;}
+.icon.md.State{background-position: -636px -135px;}
+.icon.md.Bank.Account{background-position: -457px -70px;}
+.icon.md.Wallet.Code{background-position: -325px -101px;}
+.icon.md.Amount{background-position: -428px -70px;}
+.icon.md.Coin{background-position: -325px -101px;}
+.icon.md.Requested.Crypto{background-position: -428px -70px;}
+.icon.md.Deposited.Coins{background-position: -428px -70px;}
+.icon.md.Country.of.Residence{background-position: -436px -101px;}
+.icon.md.Customer.ID{background-position: -126px -102px}
+.dashb-btmtable table tbody .ant-table-placeholder{background: none;}
+.pwdbtn-cancel.pop-btn.cancel-btn:hover{border: 1px solid var(--textYellow) !important;}
+.selcerpto-list{padding-right: 10px;}
 .wallet-info{padding: 16px 0;font-size: 16px;display: flex;justify-content: space-between;}
 .wallet-info span{font-size: 16px;color: var(--textWhite30);font-weight: 600;}
 .wallet-info>span:first-child{font-size: 14px;color: var(--textWhite50);font-weight: 200;}
