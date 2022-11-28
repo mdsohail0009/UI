@@ -632,5 +632,8 @@ export default {
     receive_fiat_text: "Mandraisa ao amin'ny Suissebase FIAT Wallet",
 	contact_amount_text: "Mifandraisa amin'ny tohan-kevitra amin'ny vola ambony kokoa.",
 	validate: "E-manan-kery",
-	sell_select_currency: "MIFIDY VOLA Hraisina"
+	sell_select_currency: "MIFIDY VOLA Hraisina",
+	transactions_history: "Kasaysayan ng mga Transaksyon",
+	transaction:"Transaksyon",
+
 };

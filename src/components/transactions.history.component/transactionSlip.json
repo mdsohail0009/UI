@@ -1,0 +1,26 @@
+{
+    "Buy":{
+        "docType":"Transaction Type",
+        "date":"Date",
+        "wallet":"Wallet",
+        "state":"State"
+    },
+    "Sell":{
+        "docType":"Transaction Type",
+        "date":"Date",
+        "wallet":"Wallet",
+        "state":"State"
+    },
+    "Deposit":{
+        "docType":"Transaction Type",
+        "date":"Date",
+        "wallet":"Wallet",
+        "state":"State"
+    },
+    "Withdraw":{
+        "docType":"Transaction Type",
+        "date":"Date",
+        "wallet":"Wallet",
+        "state":"State"
+    }
+}
