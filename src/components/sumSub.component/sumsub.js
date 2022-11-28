@@ -8,7 +8,7 @@ import success from '../../assets/images/success.png';
 import AccountStatus from '../../utils/account.status';
 
 class SumSub extends Component {
-    state = { loading: true, sumSubConfirm: false, isAccountApproved: this.props.userConfig?.customerState !== "Approved" }
+    state = { loading: true, sumSubConfirm: false, isAccountApproved: this.props.userConfig?.customerState === "Approved" }
     componentDidMount() {
         if (this.props.userConfig.isKYC && this.state.isAccountApproved) {
             this.props.history.push("/cockpit")

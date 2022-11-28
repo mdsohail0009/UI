@@ -112,7 +112,6 @@ class HeaderPermissionMenu extends Component {
 
     state = {
         visbleProfileMenu: false,
-        isAccountAccproved: this.userConfig?.customerState === "Approved",
         drawerMenu: {
             balances: false,
             transactions: false,
@@ -154,14 +153,14 @@ class HeaderPermissionMenu extends Component {
         }
     }
     showDocRequestError() {
-        if (!this.props.twoFA?.isEnabled) {
+        if (this.props.userConfig?.customerState !== "Approved") {
+            this.props.history.push("/sumsub");
+        }
+        else if (!this.props.twoFA?.isEnabled) {
             this.props.history.push("/enabletwofactor");
         }
         else if (this.props?.userConfig?.isDocsRequested) {
             this.props.history.push("/docnotices");
-        }
-        else if (this.props.userConfig?.customerState !== "Approved") {
-            this.props.history.push("/sumsub");
         }
     }
 
@@ -238,7 +237,6 @@ class HeaderPermissionMenu extends Component {
         }
     }
     onMenuItemClick = async (menuKey, menuItem) => {
-        debugger
         const perIgnoreLst = ["notifications", "auditLogs", "cases"];
         if (perIgnoreLst.includes(menuKey)) { this.navigate(menuKey, menuItem) }
         else {
@@ -255,7 +253,7 @@ class HeaderPermissionMenu extends Component {
                 }
 
             } else {
-                const isKyc = !this.props.userConfig.isKYC || this.props?.userConfig?.customerState !== "Approved";
+                const isKyc = !this.props.userConfig.isKYC;
                 if (isKyc) {
                     this.props.history.push("/notkyc");
                 } else {
