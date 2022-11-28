@@ -3,6 +3,7 @@ import { Typography, Button, Col, Modal, Tooltip, Alert, message } from "antd";
 import moment from "moment/moment";
 import { downloadTransaction } from './api';
 import TransactionSlip from "./transactionSlip.json";
+import { numberWithCommas } from '../../utils/service';
 class TransactionSlips extends Component {
   constructor(props) {
     super(props);
@@ -54,8 +55,9 @@ class TransactionSlips extends Component {
   getCombinedValues = (lst) => {
     const obj = { ...this.props?.modalData };
     let _value = "";
+    debugger
     for (let key of lst) {
-      _value += _value === "" ? (obj[key]) ? obj[key] : "" : ((obj[key] && _value) ? `/${(obj[key])}` : "");
+      _value += _value === "" ? (obj[key]) ? numberWithCommas(obj[key]) : "" : ((obj[key] && _value) ? `/${numberWithCommas(obj[key])}` : "");
     }
     return _value;
 
@@ -64,7 +66,7 @@ class TransactionSlips extends Component {
     const { Title } = Typography;
     const { downloadError } = this.state;
     const { modalData, showModal } = this.props;
-    const transactionSlipData = TransactionSlip[modalData?.docType]
+    const transactionSlipData = TransactionSlip[modalData?.copyType]
     return (
       <>
         <Modal
@@ -85,10 +87,12 @@ class TransactionSlips extends Component {
                 onClick={() => this.handleModalCancel()}
 
               >Cancel</Button>
+             {modalData?.state==="Approved" &&
               <Button className="primary-btn pop-btn"
                 loading={this.state.isLoading}
                 onClick={() => this.handleDownload()}
               > Download </Button>
+             }
             </>
           ]} >
           <>
