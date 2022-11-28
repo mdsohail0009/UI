@@ -81,10 +81,10 @@ class UserProfile extends Component {
                         <Translate content="referr" className="f-16  mt-16" /></span>} key="7" >
                         {this.state.activeTab == 7 && <Referral />}
                     </TabPane>
-                    <TabPane tab={<span><span className="icon lg notification-icon mr-16" style={{marginLeft:"3px"}} />
+                    {/* <TabPane tab={<span><span className="icon lg notification-icon mr-16" style={{marginLeft:"3px"}} />
                     <Translate content="notification"  className="f-16  mt-16"style={{marginLeft:"-5px"}} /></span>} key="8" >
                         {this.state.activeTab == 8 && <NotificationScreen />}
-                        </TabPane>
+                        </TabPane> */}
                 </Tabs>
             </div>
             <div className="main-container visible-mobile">
