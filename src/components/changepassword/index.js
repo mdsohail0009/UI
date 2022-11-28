@@ -225,25 +225,29 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
           />
         </Form.Item>
 
-        <div style={{ marginTop: '50px' }} className="">
+        <div style={{ marginTop: '' }} className="changepwd-btn align-center btn-content btn-container">
+          <div classname="text-center mt-16 cust-pop-up-btn sell-btc-btn">
+          <Button
+            htmlType="button"
+            size="medium"
+            block
+            className="pwdbtn-cancel text-white-30 fw-400 pop-btn custom-send  cancel-btn mr-8 ml-0 primary-btn pop-cancel"
+            onClick={() => onSubmit()}>
+            <Translate content="cancel" />
+          </Button>
+          </div>
+          <div classname="sell-btc-btn">
           <Button
             // loading={changePasswordResponse.isLoading}
             htmlType="submit"
             size="large"
             block
-            className="pop-btn"
+            className="pwdbtn-submit pop-btn custom-send sell-btc-btn"
             loading={btnDisabled}
           >{changePasswordResponse.isLoading && <Spin indicator={antIcon} />}{" "}
             <Translate content="Save_btn_text" />
           </Button>
-          <Button
-            htmlType="button"
-            size="medium"
-            block
-            className="pwd-popup pop-cancel fs-14"
-            onClick={() => onSubmit()}>
-            <Translate content="cancel" />
-          </Button>
+          </div>
         </div>
       </Form>
     </div>

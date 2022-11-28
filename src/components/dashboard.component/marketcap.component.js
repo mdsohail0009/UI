@@ -76,7 +76,7 @@ const MarketCap = ({ member }) => {
                     </div>
                 </div>
                 <Search placeholder={apiCalls.convertLocalLang('searchCurrency')} value={searchVal} addonAfter={<span className="icon md search-white" />} onChange={(value) => onSearch(value)} size="middle" bordered={false} className="grey-search mt-12" />
-                <div className='box dash-info basic-info responsive_table bg-none mt-8'>
+                <div className='box dash-info basic-info responsive_table bg-none mt-8 dashb-btmtable'>
                 
                 
                 <Table  locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }} sortDirections={["ascend", "descend"]} style={{ background: "daryGrey" }} scroll={{ y: '' }} pagination={false} columns={infoColumns} dataSource={marketCaps} loading={isLoading} className="pay-grid view mb-view" />

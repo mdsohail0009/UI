@@ -139,7 +139,7 @@ class AddressBook extends Component {
 			width: 300,
 			customCell: (props) => (
 				<td className="d-flex justify-content">
-					<div className="gridLink c-pointer	" onClick={() => this.addressFiatView(props)}>
+					<div className="gridLink c-pointer	gridlink-data" onClick={() => this.addressFiatView(props)}>
 					{props?.dataItem?.whiteListName}
 					</div>
 					<Text className="file-label ml-8 fs-12 add-lbl">

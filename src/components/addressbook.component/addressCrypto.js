@@ -302,7 +302,7 @@ class AddressCrypto extends Component {
                 size="large"
                 className="pop-btn mb-36 px-36"
                 loading={this.state.isBtnLoading}
-                style={{ width: "300px" }}
+                style={{ width: "150px" }}
               >
                 {this.props.type === "manual" && "Save"}
                 {this.props.type !== "manual" && <Translate content="continue" />}
