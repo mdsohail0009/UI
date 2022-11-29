@@ -24,7 +24,6 @@ class TransactionSlips extends Component {
         window.open(response.data, '_blank')
         message.success({ content: "Downloaded successfully", className: 'custom-msg', duration: 3 });
       } else {
-        console.log("data")
         this.setState({ ...this.state, downloadError: this.isErrorDispaly(response.data), isLoading: false })
       }
     }

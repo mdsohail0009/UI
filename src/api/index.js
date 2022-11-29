@@ -71,4 +71,5 @@ uploadClient.axiosInstance.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${user.access_token}`
     return config;
 });
+
 export { apiClient, coinGekoClient, identityClient, uploadClient, ipRegistry, sumsub, bankClient }

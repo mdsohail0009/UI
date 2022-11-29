@@ -121,7 +121,7 @@ class Header extends Component {
     this.props.dispatch(setHeaderTab(''));
     if (!this.props.userConfig?.isKYC) {
       this.props.history.push("/notkyc");
-    } else if (this.props.userConfig?.customerState === "Approved") {
+    } else if (this.props.userConfig?.customerState !== "Approved") {
       this.props.history.push("/sumsub");
     } else {
       this.props.history.push("/cockpit");
