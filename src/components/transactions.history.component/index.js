@@ -336,7 +336,7 @@ isErrorDispaly = (objValue) => {
                     </Select>
                   </Form.Item>
                 </Col>
-                {this?.state?.isCustomDate ? <Col xs={24} sm={24} md={7} className="px-8 transaction_resp">
+                {this?.state?.isCustomDate ? <Col xs={24} sm={24} md={7} lg={7} xl={6} className="px-8 transaction_resp">
                   <Form.Item
                     name="selectedTimespan"
                     className="input-label selectcustom-input mb-0"
