@@ -5,6 +5,7 @@ import SignInSilent from '../authentication/signinSilent';
 import { connect } from 'react-redux';
 import ErrorPage from '../components/internalTransfer.component/errorpage';
 import { KEY_URL_MAP } from '../components/shared/permissions/config';
+import SecurityLogin from '../authentication/temp.security';
 const Dashboard = React.lazy(() => import('../components/dashboard.component'));
 const CallbackPage = React.lazy(() => import('../authentication/callback.component'));
 const Login = React.lazy(() => import('../authentication/login.component'));
@@ -93,6 +94,8 @@ class RouteConfig extends Component {
         <ReactRoute path="/internaltransfer" component={InternalTransfer} exact />
         <ReactRoute path="/addressbook" component={AddressBook} exact />
         <ReactRoute path="/cases" component={Cases} exact />
+        <ReactRoute path="/relogin" component={SecurityLogin} exact />
+
         <ReactRoute path="/" component={Dashboard} exact />
         {/* <ReactRoute path="/error" component={ErrorPage} exact /> */}
       </React.Suspense>

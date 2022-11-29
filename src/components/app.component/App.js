@@ -12,7 +12,7 @@ import { startConnection } from "../../utils/signalR";
 import { useThemeSwitcher } from "react-css-theme-switcher";
 import apiCalls from '../../api/apiCalls';
 import { updatetwofactor } from "../../reducers/configReduser";
-
+import SecurityLogin from "../../authentication/temp.security";
 function App(props) {
   const { switcher, themes } = useThemeSwitcher()
   const [loading, setLoading] = useState(true);
@@ -71,9 +71,11 @@ function App(props) {
     <OidcProvider userManager={userManager} store={store}>
       <Router basename={process.env.PUBLIC_URL}>
         <AppInsightsContext.Provider value={reactPlugin}>
-          <ErrorBoundary>
-            {loading ? <div className="loader">Loading....</div> : <><Layout /></>}
-          </ErrorBoundary>
+          <SecurityLogin>
+            <ErrorBoundary>
+              {loading ? <div className="loader">Loading....</div> : <><Layout /></>}
+            </ErrorBoundary>
+          </SecurityLogin>
         </AppInsightsContext.Provider>
         <Notifications showDrawer={showNotifications} onClose={() => setNotifications(false)} />
       </Router>
