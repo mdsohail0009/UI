@@ -374,7 +374,7 @@ isErrorDispaly = (objValue) => {
                   </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={7} lg={7} xl={6} className="px-8 transaction_resp">
-                  <Form.Item name="status" className="input-label mb-0" label="Status" colon={false}>
+                  <Form.Item name="state" className="input-label mb-0" label="State" colon={false}>
                     <Select
                       defaultValue="All"
                       className="cust-input w-100 bgwhite"
