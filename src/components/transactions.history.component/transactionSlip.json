@@ -3,28 +3,46 @@
         "docType":"Transaction Type",
         "date":"Date",
         "wallet":"Wallet",
-        "state":"State",
-        "Value":["debit","credit"]
+        "Amount":["debit","credit"],
+        "state":"State"
     },
     "Sell":{
         "docType":"Transaction Type",
         "date":"Date",
         "wallet":"Wallet",
-        "state":"State",
-        "Value":["debit","credit"]
+        "Amount":["debit","credit"],
+        "state":"State"
     },
-    "Deposit":{
+    "Deposit Crypto":{
         "docType":"Transaction Type",
         "date":"Date",
         "wallet":"Wallet",
-        "state":"State",
-        "Value":["debit","credit"]
+        "Amount":["debit","credit"],
+        "state":"State"
     },
-    "Withdraw":{
+    "Withdraw Crypto":{
         "docType":"Transaction Type",
         "date":"Date",
         "wallet":"Wallet",
-        "state":"State",
-        "Value":["debit","credit"]
+        "Amount":["debit","credit"],
+        "state":"State"
+    },
+    "Withdraw Fiat":{
+        "docType":"Transaction Type",
+        "date":"Date",
+        "wallet":"Wallet",
+        "Amount":["debit","credit"],
+        "beneficiryName":"Sender/Recipient Full Name ",
+        "accountnumber":"Bank Account Number/IBAN ",
+        "state":"State"
+    },
+    "Deposit Fiat":{
+        "docType":"Transaction Type",
+        "date":"Date",
+        "wallet":"Wallet",
+        "Amount":["debit","credit"],
+        "senderName":"Sender/Recipient Full Name ",
+        "accountnumber":"Bank Account Number/IBAN ",
+        "state":"State"
     }
 }

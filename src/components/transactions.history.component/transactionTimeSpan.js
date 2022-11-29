@@ -47,7 +47,7 @@ const TransactionTimeSpan=(props)=> {
 
                   <Form.Item
                     name="todate"
-                    className="input-label"
+                    className="input-label mt-12"
                     style={{ marginLeft: 0 }}
                     label={<Translate content="End_Date" component={Form.label} className=" ml-8" />}
                     rules={[

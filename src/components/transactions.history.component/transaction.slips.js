@@ -3,6 +3,7 @@ import { Typography, Button, Col, Modal, Tooltip, Alert, message } from "antd";
 import moment from "moment/moment";
 import { downloadTransaction } from './api';
 import TransactionSlip from "./transactionSlip.json";
+import { numberWithCommas } from '../../utils/service';
 class TransactionSlips extends Component {
   constructor(props) {
     super(props);
@@ -55,7 +56,7 @@ class TransactionSlips extends Component {
     const obj = { ...this.props?.modalData };
     let _value = "";
     for (let key of lst) {
-      _value += _value === "" ? (obj[key]) ? obj[key] : "" : ((obj[key] && _value) ? `/${(obj[key])}` : "");
+      _value += _value === "" ? (obj[key]) ? numberWithCommas(obj[key]) : "" : ((obj[key] && _value) ? `/${numberWithCommas(obj[key])}` : "");
     }
     return _value;
 
@@ -64,7 +65,7 @@ class TransactionSlips extends Component {
     const { Title } = Typography;
     const { downloadError } = this.state;
     const { modalData, showModal } = this.props;
-    const transactionSlipData = TransactionSlip[modalData?.docType]
+    const transactionSlipData = TransactionSlip[modalData?.copyType]
     return (
       <>
         <Modal
@@ -85,10 +86,12 @@ class TransactionSlips extends Component {
                 onClick={() => this.handleModalCancel()}
 
               >Cancel</Button>
+             {modalData?.state==="Approved" &&
               <Button className="primary-btn pop-btn"
                 loading={this.state.isLoading}
                 onClick={() => this.handleDownload()}
               > Download </Button>
+             }
             </>
           ]} >
           <>
@@ -98,7 +101,7 @@ class TransactionSlips extends Component {
               <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                 <div className="pay-list py-4" style={{ alignItems: 'baseline' }} key={key}>
                   <Title className="fs-14 text-white fw-400 text-captz">{typeof transactionSlipData[key] === "object" ? key : transactionSlipData[key]}</Title>
-                  <Title className="fs-14 text-white fw-500  text-right plist-textwrap">
+                  <Title className="fs-14 text-white fw-500  text-right trn-sumtext">
                     {(modalData[key] === null || modalData[key] === " ") ? '-' : (transactionSlipData[key] === 'Date') ? moment.utc(modalData[key]).local().format("DD/MM/YYYY hh:mm:ss A") : (typeof transactionSlipData[key] === "object") ? `${this.getCombinedValues(transactionSlipData[key])}` : modalData[key]}
                   </Title>
                 </div>
