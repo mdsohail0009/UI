@@ -20,7 +20,8 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getFeaturePermissionsByKeyName } from "../shared/permissions/permissionService";
 import { setSendFiatHead } from "../../reducers/buyFiatReducer";
-const { Text, Title } = Typography;
+import {validateContentRule} from '../../utils/custom.validator'
+const { Text, Title } = Typography; 
 class OnthegoFundTransfer extends Component {
     enteramtForm = React.createRef();
     reasonForm = React.createRef();
@@ -573,7 +574,10 @@ class OnthegoFundTransfer extends Component {
                                         required: true,
                                         message:
                                             apicalls.convertLocalLang("is_required"),
-                                    }
+                                    },
+                                    {
+                                        validator: validateContentRule,
+                                    },
                                 ]}
                             >
                                 <Input
