@@ -101,13 +101,13 @@ class FaitDeposit extends Component {
         if (currencyLu[k].walletCode === this.props.depositInfo?.depositCurrency) {
           if (currencyLu[k].bankDetailModel?.length === 1) {
             this.setState({ ...this.state, Loader: true })
-            let reqdepositObj = await requestDepositFiat(currencyLu[k].bankDetailModel[0].bankId, this.props.member?.id);
-            if (reqdepositObj.ok === true) {
-              this.setState({
-                ...this.state, fiatDepEur: this.props.depositInfo?.depositCurrency === "EUR", BankInfo: reqdepositObj.data, BankDetails: [], Loader: false, isTermsAgreed: false, faitdeposit: tabKey === 2,
-                tabValue: tabKey,
-              });
-            }
+            // let reqdepositObj = await requestDepositFiat(currencyLu[k].bankDetailModel[0].bankId, this.props.member?.id);
+            // if (reqdepositObj.ok === true) {
+            //   this.setState({
+            //     ...this.state, fiatDepEur: this.props.depositInfo?.depositCurrency === "EUR", BankInfo: reqdepositObj.data, BankDetails: [], Loader: false, isTermsAgreed: false, faitdeposit: tabKey === 2,
+            //     tabValue: tabKey,
+            //   });
+            // }
           } else {
             this.setState({
               ...this.state, fiatDepEur: this.props.depositInfo?.depositCurrency === "EUR", BankDetails: currencyLu[k].bankDetailModel, BankInfo: null, isTermsAgreed: false, faitdeposit: tabKey === 2,
@@ -413,7 +413,7 @@ const connectDispatchToProps = dispatch => {
       dispatch(setStep(stepcode))
     },
     fetchCurrencyWithBankDetails: () => {
-      dispatch(getCurrencieswithBankDetails())
+      // dispatch(getCurrencieswithBankDetails())
     },
     dispatch
   }
