@@ -106,6 +106,7 @@ class DomesticTransfer extends Component {
                         {
                             validator: validateContentRule,
                         },
+                   
                     ]}
                 >
                     <Input
@@ -116,6 +117,7 @@ class DomesticTransfer extends Component {
                 </Form.Item>
             </Col>
             
+          
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                     className="fw-300 mb-4 text-white-50 py-4 custom-forminput custom-label"
@@ -133,6 +135,7 @@ class DomesticTransfer extends Component {
                         {
                             validator: validateContentRule,
                         },
+                   
                     ]}
                     label={
                         "Bank Address 1"
@@ -154,6 +157,7 @@ class DomesticTransfer extends Component {
                         {
                             validator: validateContentRule,
                         },
+                     
                     ]}
                     label={
                         "Bank Address 2"
