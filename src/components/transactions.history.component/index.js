@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
 import List from "../grid.component";
-import { getTransactionSearch, getTransactionCurrency } from './api';
+import { getTransactionSearch, getTransactionCurrency,transactionsView } from './api';
 import { setCurrentAction } from "../../reducers/actionsReducer";
 import { getFeaturePermissionsByKey } from '../shared/permissions/permissionService';
 import { withRouter } from "react-router-dom";
@@ -57,6 +57,7 @@ class TransactionsHistory extends Component {
       modalData:{},
       modalPoupData:{},
       downloadError:"",
+      viewData:{},
     };
     this.props.dispatch(setSelectedFeatureMenu(this.props.transactionsPermissions?.featureId || this.props.customer?.id));
     this.gridRef = React.createRef();
@@ -261,9 +262,14 @@ class TransactionsHistory extends Component {
       this.formDateRef.current.resetFields();
     }
   }
-transactionModal=(data)=>{
+transactionModal= async (data)=>{
   this.setState({ ...this.state, showModal:true,modalData:data ,
     isLoading:false  })
+    let response = await transactionsView(data.id,data.docType);
+    if(response.ok){
+      this.setState({ ...this.state, showModal:true,viewData:response.data ,
+        isLoading:false  })
+    }
 }
 handleCancel=()=>{
   this.setState({ ...this.state, showModal:false,downloadError:"" })
@@ -283,7 +289,7 @@ isErrorDispaly = (objValue) => {
 
   render() {
     const { Title } = Typography;
-    const {  doctypeData, currenyData, gridUrl, searchObj,showModal,modalData,timeListSpan,statusData,isLoading,downloadError } = this.state;
+    const {  doctypeData, currenyData, gridUrl, searchObj,showModal,modalData,timeListSpan,statusData,isLoading,viewData } = this.state;
 
     const options2 = doctypeData.map((d) => (
       <Option key={d.value} value={d.name}>{d.name}</Option>
@@ -321,9 +327,9 @@ isErrorDispaly = (objValue) => {
               <Row >
               <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
               <Form.Item
-                    name="Date"
+                    name="timeSpan"
                     className="input-label selectcustom-input mb-0"
-                    label={<Translate content="TimeSpan" component={Form.label} className="input-label selectcustom-input mb-0" />}
+                    label={<Translate content="Date" component={Form.label} className="input-label selectcustom-input mb-0" />}
                   >
                     <Select
                       className="cust-input mb-0 custom-search"
@@ -340,7 +346,7 @@ isErrorDispaly = (objValue) => {
                   <Form.Item
                     name="selectedTimespan"
                     className="input-label selectcustom-input mb-0 cust-label"
-                    label="Selected timespan"
+                    label="Selected date"
                   >
                     <Input disabled placeholder="DD/MM/YYYY" className="cust-input cust-adon mb-0" addonAfter={<i className="icon md date-white c-pointer" onClick={(e) => { this.datePopup(e, 'searchObj') }} />} />
                   </Form.Item>
@@ -410,7 +416,7 @@ isErrorDispaly = (objValue) => {
           />
         </Drawer>
 
-                <TransactionSlips showModal={showModal}  modalData={modalData} isLoading={isLoading} handleCancel={this.handleCancel} />
+                <TransactionSlips showModal={showModal}  modalData={modalData} isLoading={isLoading} handleCancel={this.handleCancel} viewData={viewData} />
                 <TransactionTimeSpan modal={this.state.modal} handleDateCancel={this.handleDateCancel} handleDateChange={this.handleDateChange} handleOk={this.handleOk} formDateRef={this.formDateRef} message={this.state?.message} searchObj={searchObj}/>
       </>
 
