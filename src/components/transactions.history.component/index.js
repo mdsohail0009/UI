@@ -301,7 +301,7 @@ isErrorDispaly = (objValue) => {
       <>
         <Drawer
           title={[<div className="side-drawer-header">
-            <Translate content="transaction" component={Title} className="fs-26 fw-400 mb-0 text-white-30" />
+            <Translate content="transactions_history" component={Title} className="fs-26 fw-400 mb-0 text-white-30" />
             <span onClick={this.props.onClose} className="icon md close-white c-pointer" />
           </div>]}
           placement="right"
@@ -321,7 +321,7 @@ isErrorDispaly = (objValue) => {
               <Row >
               <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
               <Form.Item
-                    name="timeSpan"
+                    name="Date"
                     className="input-label selectcustom-input mb-0"
                     label={<Translate content="TimeSpan" component={Form.label} className="input-label selectcustom-input mb-0" />}
                   >
@@ -346,20 +346,6 @@ isErrorDispaly = (objValue) => {
                   </Form.Item>
                 </Col> : ""}
                 <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
-                  <Form.Item className="input-label mb-0 cust-label" label="Wallet" colon={false}>
-                    <Select
-                      value={this.state.searchObj.currency}
-                      className="cust-input w-100 bgwhite"
-                      dropdownClassName="select-drpdwn"
-                      showSearch
-                      onChange={(e) => this.handleChange(e, "currency")}
-                      placeholder="Select Wallet"
-                    >
-                      {options3}
-                    </Select>
-                  </Form.Item>
-                </Col>
-                <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
                   <Form.Item name="docType" className="input-label mb-0 cust-label" label="Transaction Type" colon={false}>
                     <Select
                       defaultValue="All"
@@ -370,6 +356,20 @@ isErrorDispaly = (objValue) => {
                       placeholder="Select Doc Type"
                     >
                       {options2}
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
+                  <Form.Item className="input-label mb-0 cust-label" label="Wallet" colon={false}>
+                    <Select
+                      value={this.state.searchObj.currency}
+                      className="cust-input w-100 bgwhite"
+                      dropdownClassName="select-drpdwn"
+                      showSearch
+                      onChange={(e) => this.handleChange(e, "currency")}
+                      placeholder="Select Wallet"
+                    >
+                      {options3}
                     </Select>
                   </Form.Item>
                 </Col>
