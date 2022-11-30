@@ -16,11 +16,17 @@
         "state":"Status"
     },
     "Deposit Crypto":{
+        "date":"Date and Time",
         "docType":"Transaction Type",
-        "date":"Date",
-        "wallet":"Wallet",
         "amount":"Amount",
-        "state":"State"
+        "wallet":"Asset",
+        "newAssetBalance":"New Asset Balance",
+        "network":"Network",
+        "address":"Address",
+        "hashId":"Hash",
+        "sbFee":"SB Fee ",
+        "sourceWallet":"Source Wallet",
+        "state":"Status"
     },
     "Withdraw Crypto":{
         "date":"Date and Time",
@@ -46,13 +52,15 @@
         "state":"Status"
     },
     "Deposit Fiat":{
-        "docType":"Transaction Type",
         "transactionId":"Transaction Id",
-        "date":"Date",
-        "wallet":"Wallet",
-        "Amount":["debit","credit"],
-        "senderName":"Sender/Recipient Full Name ",
-        "accountnumber":"Bank Account Number/IBAN ",
-        "state":"State"
+        "date":"Date and Time",
+        "docType":"Transaction Type",
+        "amount":"Amount",
+        "sbFee":"SB Fee",
+        "senderName":"Sender Name",
+        "bankName":"Sender's Bank Account  ",
+        "beneficiaryName":"Beneficiary’s Name ",
+        "beneficiaryIBAN":"Beneficiary IBAN ",
+        "state":"Status"
     }
 }
