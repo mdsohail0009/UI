@@ -6,6 +6,7 @@ const { TextArea } = Input;
 class DomesticTransfer extends Component {
     componentDidMount() {
        
+       // this.setState({ ...this.state, documents: this.props?.documents || document(), filesList: this.props?.documents ? [...this.props?.documents?.details] : [] })
     }
     render() {
         return <Row gutter={[8, 8]}>
@@ -34,6 +35,7 @@ class DomesticTransfer extends Component {
                                         "Invalid Account Number"
                                     );
                                 }else {
+                                    // return Promise.resolve();
                                     return validateContentRule(_, value);
                                 }
                             },
@@ -72,6 +74,7 @@ class DomesticTransfer extends Component {
                                         "Invalid ABA Routing Code"
                                     );
                                 }else {
+                                    // return Promise.resolve();
                                     return validateContentRule(_, value);
                                 }
                             },
