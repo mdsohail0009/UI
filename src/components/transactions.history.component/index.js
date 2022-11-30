@@ -319,7 +319,7 @@ isErrorDispaly = (objValue) => {
               ref={this.formRef}
             >
               <Row >
-              <Col xs={24} sm={24} md={7} lg={7} xl={6} className="px-8 transaction_resp">
+              <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
               <Form.Item
                     name="timeSpan"
                     className="input-label selectcustom-input mb-0"
@@ -336,17 +336,17 @@ isErrorDispaly = (objValue) => {
                     </Select>
                   </Form.Item>
                 </Col>
-                {this?.state?.isCustomDate ? <Col xs={24} sm={24} md={7} lg={7} xl={6} className="px-8 transaction_resp">
+                {this?.state?.isCustomDate ? <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
                   <Form.Item
                     name="selectedTimespan"
-                    className="input-label selectcustom-input mb-0"
+                    className="input-label selectcustom-input mb-0 cust-label"
                     label="Selected timespan"
                   >
                     <Input disabled placeholder="DD/MM/YYYY" className="cust-input cust-adon mb-0" addonAfter={<i className="icon md date-white c-pointer" onClick={(e) => { this.datePopup(e, 'searchObj') }} />} />
                   </Form.Item>
                 </Col> : ""}
-                <Col xs={24} sm={24} md={7} lg={7} xl={6} className="px-8 transaction_resp">
-                  <Form.Item className="input-label mb-0" label="Wallet" colon={false}>
+                <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
+                  <Form.Item className="input-label mb-0 cust-label" label="Wallet" colon={false}>
                     <Select
                       value={this.state.searchObj.currency}
                       className="cust-input w-100 bgwhite"
@@ -359,11 +359,11 @@ isErrorDispaly = (objValue) => {
                     </Select>
                   </Form.Item>
                 </Col>
-                <Col xs={24} sm={24} md={7} lg={7} xl={6} className="px-8 transaction_resp">
-                  <Form.Item name="docType" className="input-label mb-0" label="Transaction Type" colon={false}>
+                <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
+                  <Form.Item name="docType" className="input-label mb-0 cust-label" label="Transaction Type" colon={false}>
                     <Select
                       defaultValue="All"
-                      className="cust-input w-100 bgwhite"
+                      className="cust-input w-100 bgwhite c-pointer"
                       dropdownClassName="select-drpdwn"
                       showSearch
                       onChange={(e) => this.handleChange(e, "docType")}
@@ -373,8 +373,8 @@ isErrorDispaly = (objValue) => {
                     </Select>
                   </Form.Item>
                 </Col>
-                <Col xs={24} sm={24} md={7} lg={7} xl={6} className="px-8 transaction_resp">
-                  <Form.Item name="state" className="input-label mb-0" label="State" colon={false}>
+                <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
+                  <Form.Item name="state" className="input-label mb-0 cust-label" label="State" colon={false}>
                     <Select
                       defaultValue="All"
                       className="cust-input w-100 bgwhite"
