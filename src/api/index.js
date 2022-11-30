@@ -1,7 +1,6 @@
 import { create, } from 'apisauce';
 import { store } from '../store';
 import CryptoJS from 'crypto-js';
-import { useHistory } from 'react-router-dom';
 const ipRegistry = create({
     baseURL: 'https://api4.ipregistry.co'
 })
@@ -72,14 +71,5 @@ uploadClient.axiosInstance.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${user.access_token}`
     return config;
 });
-// apiClient.axiosInstance.interceptors.response.use((response) => {
-//     return response;
-// }, (err) => {
-//     console.log(err);
-//     if (err.status === "401") {
-//         const navigate = useHistory();
-//         navigate.push("/accessdenied");
-//     } else { return err; }
 
-// });
 export { apiClient, coinGekoClient, identityClient, uploadClient, ipRegistry, sumsub, bankClient }
