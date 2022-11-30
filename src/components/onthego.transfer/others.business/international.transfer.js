@@ -33,6 +33,7 @@ class InternationalTransfer extends Component {
                                         "Invalid Account Number"
                                     );
                                 }else {
+                                    // return Promise.resolve();
                                     return validateContentRule(_, value);
                                 }
                             },
@@ -71,6 +72,7 @@ class InternationalTransfer extends Component {
                                         "Invalid Swift / BIC Code"
                                     );
                                 }else {
+                                    // return Promise.resolve();
                                     return validateContentRule(_, value)
                                 }
                             },
@@ -101,7 +103,6 @@ class InternationalTransfer extends Component {
                         },{
                             validator: validateContentRule,
                         },
-                  
                     ]}
                 >
                     <Input
@@ -111,7 +112,6 @@ class InternationalTransfer extends Component {
 
                 </Form.Item>
             </Col>
-           
            
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
@@ -129,7 +129,6 @@ class InternationalTransfer extends Component {
                         },{
                             validator: validateContentRule,
                         },
-                   
                     ]}
                     label={
                         "Bank Address 1"
@@ -151,7 +150,6 @@ class InternationalTransfer extends Component {
                         {
                             validator: validateContentRule,
                         },
-                      
                     ]}
                     label={
                         "Bank Address 2"
