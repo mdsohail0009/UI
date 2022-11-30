@@ -45,7 +45,8 @@ class SumSub extends Component {
                     if (type === 'idCheck.applicantStatus' && payload.reviewStatus === "completed") {
                         this.setState({ sumSubConfirm: true })
                         apicalls.updateKyc(this.props.userConfig.userId).then((res) => {
-                            this.props.getmemeberInfoa(this.props.user.profile.sub)
+                            this.props.getmemeberInfoa(this.props.user.profile.sub);
+                            this.setState({ sumSubConfirm: this.state.isAccountApproved });
                             if (this.state.isAccountApproved) { this.props.history.push("/cockpit"); }
 
                         })
