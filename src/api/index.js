@@ -1,7 +1,7 @@
 import { create, } from 'apisauce';
 import { store } from '../store';
 import CryptoJS from 'crypto-js';
-
+import { useHistory } from 'react-router-dom';
 const ipRegistry = create({
     baseURL: 'https://api4.ipregistry.co'
 })
@@ -82,4 +82,4 @@ uploadClient.axiosInstance.interceptors.request.use((config) => {
 //     } else { return err; }
 
 // });
-export { apiClient, coinGekoClient, identityClient, uploadClient, ipRegistry, sumsub,bankClient }
+export { apiClient, coinGekoClient, identityClient, uploadClient, ipRegistry, sumsub, bankClient }
