@@ -10,4 +10,8 @@ const getTransactionCurrency = () => {
 const downloadTransaction=(id,type)=>{
     return apiClient.get(ApiControllers.transaction + `Transaction/${id}/${type}`);  
 }
-export  { getTransactionSearch,getTransactionCurrency,downloadTransaction}
+const transactionsView=(id,type)=>{
+    return apiClient.get(ApiControllers.transaction + `TemplatesTranction/${id}/${type}`)
+}
+export  { getTransactionSearch,getTransactionCurrency,downloadTransaction,transactionsView}
+
