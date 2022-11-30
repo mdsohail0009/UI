@@ -1,7 +1,7 @@
 {
     "Buy":{
         "date":"Date and Time",
-        "docType":"Transaction Type",
+        "type":"Transaction Type",
         "sbFee":"SB Fee",
         "wallet":"Asset",
         "newAssetBalance":"New Asset Balance",
@@ -9,7 +9,7 @@
     },
     "Sell":{
         "date":"Date and Time",
-        "docType":"Transaction Type",
+        "type":"Transaction Type",
         "sbFee":"SB Fee",
         "wallet":"Asset",
         "newAssetBalance":"New Asset Balance",
@@ -17,7 +17,7 @@
     },
     "Deposit Crypto":{
         "date":"Date and Time",
-        "docType":"Transaction Type",
+        "type":"Transaction Type",
         "amount":"Amount",
         "wallet":"Asset",
         "newAssetBalance":"New Asset Balance",
@@ -30,7 +30,7 @@
     },
     "Withdraw Crypto":{
         "date":"Date and Time",
-        "docType":"Transaction Type",
+        "type":"Transaction Type",
         "amount":"Amount",
         "wallet":"Asset",
         "newAssetBalance":"New Asset Balance",
@@ -43,7 +43,7 @@
     "Withdraw Fiat":{
         "transactionId":"Transaction Id",
         "date":"Date and Time",
-        "docType":"Transaction Type",
+        "type":"Transaction Type",
         "amount":"Amount",
         "sbFee":"SB Fee ",
         "senderName":"Sender Name",
@@ -54,7 +54,7 @@
     "Deposit Fiat":{
         "transactionId":"Transaction Id",
         "date":"Date and Time",
-        "docType":"Transaction Type",
+        "type":"Transaction Type",
         "amount":"Amount",
         "sbFee":"SB Fee",
         "senderName":"Sender Name",

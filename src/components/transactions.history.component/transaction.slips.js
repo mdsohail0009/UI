@@ -58,11 +58,9 @@ class TransactionSlips extends Component {
 
   }
   hashUrl=(value)=>{
-    debugger
     const obj = { ...this.props?.viewData };
-    console.log(obj?.hashId)
     if(value){
-     return <><a href={process.env.REACT_APP_AUTHORITY+ "/account/login?returnUrl=/manage/EnableAuthenticator"}>2FA Enable</a></>
+     return <><a href={obj?.hashId}>{obj?.hashId}</a></>
     }
   }
   render() {
