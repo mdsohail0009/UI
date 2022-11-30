@@ -103,20 +103,7 @@ class DomesticTransfer extends Component {
                         {
                             validator: validateContentRule,
                         },
-                        // {
-                        //     validator: (_, value) => {
-                        //         if (
-                        //             value &&
-                        //             !/^[A-Za-z0-9_.-\s]+$/.test(value)
-                        //         ) {
-                        //             return Promise.reject(
-                        //                 "Please enter valid content"
-                        //             );
-                        //         }else {
-                        //             return Promise.resolve();
-                        //         }
-                        //     },
-                        // }
+                   
                     ]}
                 >
                     <Input
