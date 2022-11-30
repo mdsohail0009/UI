@@ -633,7 +633,7 @@ export default {
 	contact_amount_text: "Mifandraisa amin'ny tohan-kevitra amin'ny vola ambony kokoa.",
 	validate: "E-manan-kery",
 	sell_select_currency: "MIFIDY VOLA Hraisina",
-	transactions_history: "Kasaysayan ng mga Transaksyon",
+	transactions_history: "Kasaysayan ng Transaksyon",
 	transaction:"Transaksyon",
 
 };
