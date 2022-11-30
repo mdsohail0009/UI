@@ -75,7 +75,7 @@ class BusinessTransfer extends Component {
         if (Object.hasOwn(values, 'iban')) {
         this.setState({ ...this.state, errorMessage: null});
         if ((!ibanDetails || Object.keys(ibanDetails).length == 0)) {
-            this.setState({ ...this.state, errorMessage: "Please click validate button before saving", isLoading: false, isBtnLoading: false });;
+            this.setState({ ...this.state, errorMessage: "Please click validate button before saving", isLoading: false, isBtnLoading: false });
             this.useDivRef.current.scrollIntoView()
             return;
         }
@@ -89,6 +89,8 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].swiftRouteBICNumber = values?.swiftRouteBICNumber;
         _obj.payeeAccountModels[0].line1 = selectedTab == "internationalIBAN" ? ibanDetails?.bankAddress : values.bankAddress1;
         _obj.payeeAccountModels[0].line2 = values.bankAddress2;
+        _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
+
         _obj.addressType = "otherbusiness";
         _obj.transferType = selectedTab;
         _obj.amount = this.props.amount;
@@ -330,6 +332,7 @@ class BusinessTransfer extends Component {
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
                     }} refreshData ={selectedTab}/>
                     <div className="text-right mt-12">
+
                                 <Button
                                     htmlType="submit"
                                     size="large"
@@ -339,6 +342,7 @@ class BusinessTransfer extends Component {
                                     {this.props.type === "manual" && "Save"}
                                     {this.props.type !== "manual" && "Continue"}
                                 </Button>
+
                     </div>
                 </Form></div>
             </Tabs.TabPane>
@@ -453,7 +457,8 @@ class BusinessTransfer extends Component {
                                 <Button
                                     htmlType="submit"
                                     size="large"
-                                    className="pop-btn px-36"
+                                    className="pop-btn mb-36"
+                                    style={{ minWidth: "100%" }}
                                     loading={this.state.isBtnLoading}>
                                     {this.props.type === "manual" && "Save"}
                                     {this.props.type !== "manual" && "Continue"}
