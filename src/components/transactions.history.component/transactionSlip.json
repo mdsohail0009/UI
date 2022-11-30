@@ -2,7 +2,7 @@
     "Buy":{
         "date":"Date and Time",
         "type":"Transaction Type",
-        "sbFee":"SB Fee",
+        "amount":"Amount",
         "wallet":"Asset",
         "newAssetBalance":"New Asset Balance",
         "state":"Status"
@@ -10,7 +10,7 @@
     "Sell":{
         "date":"Date and Time",
         "type":"Transaction Type",
-        "sbFee":"SB Fee",
+        "amount":"Amount",
         "wallet":"Asset",
         "newAssetBalance":"New Asset Balance",
         "state":"Status"

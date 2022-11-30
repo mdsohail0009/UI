@@ -57,12 +57,6 @@ class TransactionSlips extends Component {
     return _value;
 
   }
-  hashUrl=(value)=>{
-    const obj = { ...this.props?.viewData };
-    if(value){
-     return <><a href={obj?.hashId}>{obj?.hashId}</a></>
-    }
-  }
   render() {
     const { Title } = Typography;
     const { downloadError } = this.state;
