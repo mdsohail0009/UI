@@ -638,7 +638,7 @@ export default {
 	buy_your_crypto_for_cash_text: "Mividiana mora foana ny crypto amin'ny poketranao.",
 	validate: "E-manan-kery",
 	sell_select_currency: "MIFIDY VOLA Hraisina",
-	transactions_history: "Kasaysayan ng mga Transaksyon",
+	transactions_history: "Kasaysayan ng Transaksyon",
 	transaction:"Transaksyon",
 
 };
