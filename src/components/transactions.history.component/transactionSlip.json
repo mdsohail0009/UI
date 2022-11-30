@@ -1,17 +1,19 @@
 {
     "Buy":{
+        "date":"Date and Time",
         "docType":"Transaction Type",
-        "date":"Date",
-        "wallet":"Wallet",
-        "Amount":["debit","credit"],
-        "state":"State"
+        "sbFee":"SB Fee",
+        "wallet":"Asset",
+        "newAssetBalance":"New Asset Balance",
+        "state":"Status"
     },
     "Sell":{
+        "date":"Date and Time",
         "docType":"Transaction Type",
-        "date":"Date",
-        "wallet":"Wallet",
-        "Amount":["debit","credit"],
-        "state":"State"
+        "sbFee":"SB Fee",
+        "wallet":"Asset",
+        "newAssetBalance":"New Asset Balance",
+        "state":"Status"
     },
     "Deposit Crypto":{
         "docType":"Transaction Type",
@@ -38,6 +40,7 @@
     },
     "Deposit Fiat":{
         "docType":"Transaction Type",
+        "transactionId":"Transaction Id",
         "date":"Date",
         "wallet":"Wallet",
         "Amount":["debit","credit"],
