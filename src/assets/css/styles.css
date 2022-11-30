@@ -1507,7 +1507,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .file-label.add-lbl{width: 165px; text-align: center;}
 .custom-btn:hover span{color: white;}
 .custom-crypto-btns .custom-bnt span{color: var(--textWhite); font-weight: 400;}
-.pop-btn.cancel-btn{background: transparent; border: transparent; border-radius: 40px; height: 46px !important; font-weight: 700 !important;}
+.pop-btn.cancel-btn{background: transparent; border: 1px solid transparent; border-radius: 40px; height: 46px !important; font-weight: 700 !important;}
 .pop-btn.cancel-btn:hover{border: 1px solid var(--borderLight) !important;}
 .pop-btn.cancel-btn span{color: var(--textYellow) !important;}
 .crypto-pop .btn-width{width: 150px !important;height: 46px !important;}
@@ -1533,3 +1533,5 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .security-text{font-size: 22px !important;font-weight: 700 !important;line-height: 1.29 !important;color: var(--textWhite)!important;text-align: center;}
 .primary-btn.pop-cancel:hover{border: 1px solid var(--textYellow) !important;}
 .transaction_resp .cust-label label{margin-left: 12px;}
+.transaction_resp .cust-label .ant-select-selection-item{cursor: pointer !important;}
+.pay-list.transaction-details h1{flex: 1; word-break: break-all;}

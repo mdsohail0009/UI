@@ -75,7 +75,7 @@ const TransactionTimeSpan=(props)=> {
                 </div>
                 <Form.Item className="mb-0">
                   <div className="text-right">
-                    <Button type="button" className="c-pointer text-center ant-btn-lg text-white-30 pop-cancel fw-400 text-captz text-center mr-36" onClick={handleDateCancel} ><span><Translate content="cancel" /></span></Button>
+                    <Button type="button" className="c-pointer text-center text-white-30 fw-400 mr-8 cancel-btn pop-btn" onClick={handleDateCancel} ><span><Translate content="cancel" /></span></Button>
                     <Button type="button" style={{ width: 100 }} key="submit" className="c-pointer pop-btn ant-btn px-24" htmlType="submit"><span><Translate content="ok" /></span></Button>
                   </div>
                 </Form.Item>

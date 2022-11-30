@@ -81,7 +81,7 @@ class TransactionSlips extends Component {
           footer={[
             <>
               <Button style={{ width: 100 }}
-                className=" pop-cancel"
+                className=" pop-cancel cancel-btn pop-btn"
                 onClick={() => this.handleModalCancel()}
 
               >Cancel</Button>
@@ -98,7 +98,7 @@ class TransactionSlips extends Component {
 
             {transactionSlipData && Object?.keys(transactionSlipData)?.map((key) => <>
               <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                <div className="pay-list py-4" style={{ alignItems: 'baseline' }} key={key}>
+                <div className="pay-list py-4 transaction-details" style={{ alignItems: 'baseline' }} key={key}>
                   <Title className="fs-14 text-white fw-400 text-captz">{typeof transactionSlipData[key] === "object" ? key : transactionSlipData[key]}</Title>
                   <Title className="fs-14 text-white fw-500  text-right trn-sumtext">
                     {(modalData[key] === null || modalData[key] === " ") ? '-' : (transactionSlipData[key] === 'Date') ? moment.utc(modalData[key]).local().format("DD/MM/YYYY hh:mm:ss A") : (typeof transactionSlipData[key] === "object") ? `${this.getCombinedValues(transactionSlipData[key])}` : modalData[key]}
