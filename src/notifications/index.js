@@ -146,8 +146,5 @@ const Notifications = ({
     </>
   );
 };
-// const connectStateToProps = ({ userConfig }) => {
-//   return { userConfig: userConfig.userProfileInfo };
-// };
 
 export default ConnectStateProps(Notifications);

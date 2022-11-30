@@ -1,6 +1,6 @@
-import React, { Component, useEffect, useState } from 'react';
-import { Typography, Button, Input, Alert, Spin,Image,Row,Select,Col, Form } from 'antd';
-import { gettransforLu, getCurrencyLu, getcurrencyBalance, saveTransfor } from './api';
+import React, { useEffect, useState } from 'react';
+import { Button, Input, Alert, Spin, Select,Col, Form } from 'antd';
+import { gettransforLu, getCurrencyLu, getcurrencyBalance } from './api';
 import { connect } from 'react-redux';
 import Translate from "react-translate-component";  
 import apiCalls from '../../api/apiCalls'

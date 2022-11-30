@@ -10,9 +10,6 @@ import apicalls from '../../api/apiCalls';
 import { getNetworkLu } from './api';
 import {
     EmailShareButton, EmailIcon,
-    FacebookShareButton, FacebookIcon,
-    TelegramShareButton, TelegramIcon,
-    TwitterShareButton, TwitterIcon,
     WhatsappShareButton, WhatsappIcon
 } from "react-share";
 import { createCryptoDeposit } from '../deposit.component/api';

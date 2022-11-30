@@ -431,7 +431,7 @@ const AddressCommonCom = (props) => {
     }
     values["type"] = type;
     values["info"] = JSON.stringify(props?.trackAuditLogData);
-    values["addressState"] = addressState;
+    // values["addressState"] = addressState;
     let Id = "00000000-0000-0000-0000-000000000000";
     let favaddrId = props?.addressBookReducer?.selectedRowData
       ? favouriteDetails.id

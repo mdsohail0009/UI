@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { fetchCurrConvertionValue, saveSwapData, fetchCurrConvertionCommisionValue } from '../../components/swap.component/api';
 import Summary from '../summary.component';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
-import { appInsights } from "../../Shared/appinsights";
 import Loader from '../../Shared/loader';
 import apiCalls from '../../api/apiCalls';
 
@@ -105,9 +104,6 @@ class SwapSummary extends Component {
                 this.props.changeStep('confirm');
                 this.setState({ ...this.state, loader: false, isLoading: false })
                 this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id))
-                // appInsights.trackEvent({
-                //     name: 'Swap', properties: { "Type": 'User', "Action": 'Save swap', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Swap', "Remarks": (obj.fromValue + " " + obj.fromWalletName + " to " + obj.toValue + " " + obj.toWalletName), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Swap Crypto' }
-                // });
             } else {
                 
                 this.setState({ ...this.state, loader: false, isLoading: false, errorMessage: res.error || res.data })

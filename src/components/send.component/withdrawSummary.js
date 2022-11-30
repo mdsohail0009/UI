@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Typography, Button, Alert,Drawer, Form, Input,Modal, Tooltip, Checkbox, Image,Space } from "antd";
+import { Typography, Button, Alert, Form, Input,Modal, Tooltip, Checkbox, Image,Space } from "antd";
 import { connect } from "react-redux";
 import alertIcon from '../../assets/images/pending.png';
 import Translate from "react-translate-component";
@@ -17,7 +17,6 @@ import {
 	setAddress,
 	hideSendCrypto,
 	setSendCrypto,
-	setWithdrawfiatenaable
 } from "../../reducers/sendreceiveReducer";
 
 import apiCalls from "../../api/apiCalls";
@@ -26,7 +25,7 @@ import { Link } from "react-router-dom";
 import NumberFormat from "react-number-format";
 import { setCurrentAction } from "../../reducers/actionsReducer";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import apicalls from '../../api/apiCalls';
+ 
 
 const { Text, Title } = Typography;
 
@@ -200,7 +199,7 @@ class WithdrawSummary extends Component {
 	}
 	handleNewExchangeRate = async () => {
 		this.setState({ ...this.state, loading: true });
-		const { totalValue, walletCode, toWalletAddress, addressBookId, network, isShowDeclaration } =
+		const { totalValue, walletCode, toWalletAddress, addressBookId, network } =
 			this.props.sendReceive?.withdrawCryptoObj;
 		let _obj = { ...this.props.sendReceive?.withdrawCryptoObj };
 		let withdrawObj = {
@@ -578,7 +577,6 @@ class WithdrawSummary extends Component {
 	onBackSend = () => {
 		 this.props.dispatch(hideSendCrypto(false));
 		 this.props.dispatch(setSendCrypto(true));
-		 //this.props.dispatch(setWithdrawfiatenaable(true));
 		 this.props?.onBackCLick("step1"); 
 		 this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: 2 }));
 	}
@@ -590,9 +588,6 @@ class WithdrawSummary extends Component {
 	address = this.props.sendReceive.withdrawCryptoObj?.toWalletAddress;
 	firstAddress = this.address?.slice(0, 4);
 	lastAddress = this.address?.slice(-4);
-	renderIcon=()=>{
-
-	}
 
 
 	render() {
@@ -780,7 +775,7 @@ class WithdrawSummary extends Component {
 								component={Text}
 							/>
 								<CopyToClipboard text={this.props.sendReceive.withdrawCryptoObj?.toWalletAddress} options={{ format: 'text/plain' }}>
-									<Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="mb-0 fs-18 fw-400 text-white fw-500" >{this.props.sendReceive.withdrawCryptoObj?.toWalletAddress?.length>0?this.props.sendReceive.withdrawCryptoObj?.toWalletAddress.substring(0,4)+`................`+this.props.sendReceive.withdrawCryptoObj?.toWalletAddress.slice(-4):"-"}</Text>
+									<Text copyable={{ tooltips: [apiCalls.convertLocalLang('copy'), apiCalls.convertLocalLang('copied')] }} className="mb-0 fs-18 fw-400 text-white fw-500" >{this.props.sendReceive.withdrawCryptoObj?.toWalletAddress?.length>0?this.props.sendReceive.withdrawCryptoObj?.toWalletAddress.substring(0,4)+`................`+this.props.sendReceive.withdrawCryptoObj?.toWalletAddress.slice(-4):"-"}</Text>
 								</CopyToClipboard>
 						</div>
 						<div className="pay-list fs-14">
@@ -1005,7 +1000,7 @@ class WithdrawSummary extends Component {
 												loading={this.state.faLoading}
 												style={{ color: "black", margin: "0 auto" }}
 												onClick={this.getAuthenticator}
-												disabled={this.state.verifyAuthCode}>
+											    disabled={this.state.verifyAuthCode}>
 												{this.state.verifyAuthCode ? (
 													<span className="icon md greenCheck" />
 												) : (
