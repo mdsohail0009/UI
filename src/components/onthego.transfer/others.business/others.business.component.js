@@ -421,7 +421,7 @@ class OthersBusiness extends Component {
                     </div>
                     {this.props.ontheGoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="fw-300 mb-8 px-4 text-white-50 py-4 custom-forminput custom-label "
+                                className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                                 name="reasonOfTransfer"
                                 required
                                 rules={[
