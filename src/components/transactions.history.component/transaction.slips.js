@@ -16,9 +16,6 @@ class TransactionSlips extends Component {
   handleDownload = async () => {
     const { modalData } = this.props;
     this.setState({ ...this.state, isLoading: true, downloadError: "" })
-    if (modalData?.state !== "Approved") {
-      this.setState({ ...this.state, isLoading: false, downloadError: "Please download approve status only " })
-    } else {
       let response = await downloadTransaction(modalData?.id, modalData?.docType);
       if (response.ok) {
         this.setState({ ...this.state, downloadError: "", isLoading: false })
@@ -27,7 +24,6 @@ class TransactionSlips extends Component {
       } else {
         this.setState({ ...this.state, downloadError: this.isErrorDispaly(response.data), isLoading: false })
       }
-    }
   }
   transactionModal = (data) => {
     this.setState({
@@ -61,6 +57,14 @@ class TransactionSlips extends Component {
     return _value;
 
   }
+  hashUrl=(value)=>{
+    debugger
+    const obj = { ...this.props?.viewData };
+    console.log(obj?.hashId)
+    if(value){
+     return <><a href={process.env.REACT_APP_AUTHORITY+ "/account/login?returnUrl=/manage/EnableAuthenticator"}>2FA Enable</a></>
+    }
+  }
   render() {
     const { Title } = Typography;
     const { downloadError } = this.state;
@@ -86,7 +90,7 @@ class TransactionSlips extends Component {
                 onClick={() => this.handleModalCancel()}
 
               >Cancel</Button>
-             {modalData?.state==="Approved" &&
+             {(viewData?.state==="Approved" || viewData?.state==="Approved (Sent)") &&
               <Button className="primary-btn pop-btn"
                 loading={this.state.isLoading}
                 onClick={() => this.handleDownload()}
@@ -102,7 +106,7 @@ class TransactionSlips extends Component {
                 <div className="pay-list py-4 transaction-details" style={{ alignItems: 'baseline' }} key={key}>
                   <Title className="fs-14 text-white fw-400 text-captz">{typeof transactionSlipData[key] === "object" ? key : transactionSlipData[key]}</Title>
                   <Title className="fs-14 text-white fw-500  text-right trn-sumtext">
-                    {(viewData[key] === null || viewData[key] === " ") ? '-' : (transactionSlipData[key] === 'Date') ? moment.utc(viewData[key]).local().format("DD/MM/YYYY hh:mm:ss A") : (typeof transactionSlipData[key] === "object") ? `${this.getCombinedValues(transactionSlipData[key])}` : viewData[key]}
+                    {(viewData[key] === null || viewData[key] === "") ? '-' : (transactionSlipData[key] === 'Date') ? moment.utc(viewData[key]).local().format("DD/MM/YYYY hh:mm:ss A") : (typeof transactionSlipData[key] === "object") ? `${this.getCombinedValues(transactionSlipData[key])}` : viewData[key]}
                   </Title>
                 </div>
               </Col></>)}
