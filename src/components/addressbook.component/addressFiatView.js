@@ -57,7 +57,8 @@ const AddressFiatView = (props) => {
 
 	};
 
-
+	const iban = fiatAddress?.bankType === "iban" ? "IBAN" : "Bank Account"
+	const iban1 = fiatAddress?.bankType === "iban" ? "IBAN" : "Bank Account Number"
 
 	const filePreviewModal = (
 		<Modal
@@ -260,6 +261,7 @@ const AddressFiatView = (props) => {
 															: fiatAddress?.line3}</div>}
 												</div>
 											</Col>
+
 											{fiatAddress?.country && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">Country</label>
@@ -503,7 +505,7 @@ const AddressFiatView = (props) => {
 																	: item.line2}
 															</Title>
 														</Col>}
-														
+
 
 													</Row>
 												</div>
