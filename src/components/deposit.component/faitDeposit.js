@@ -42,6 +42,7 @@ class FaitDeposit extends Component {
   }
   componentDidMount() {
     this.props.fiatRef(this)
+    this.setState({ ...this.state, Loader: true })
     this.props.fetchCurrencyWithBankDetails()
     if (this.props.sendReceive.withdrawFiatEnable||this.props?.isShowSendFiat) {
       getFeaturePermissionsByKeyName(`send_fiat`);
@@ -100,13 +101,13 @@ class FaitDeposit extends Component {
         if (currencyLu[k].walletCode === this.props.depositInfo?.depositCurrency) {
           if (currencyLu[k].bankDetailModel?.length === 1) {
             this.setState({ ...this.state, Loader: true })
-            let reqdepositObj = await requestDepositFiat(currencyLu[k].bankDetailModel[0].bankId, this.props.member?.id);
-            if (reqdepositObj.ok === true) {
-              this.setState({
-                ...this.state, fiatDepEur: this.props.depositInfo?.depositCurrency === "EUR", BankInfo: reqdepositObj.data, BankDetails: [], Loader: false, isTermsAgreed: false, faitdeposit: tabKey === 2,
-                tabValue: tabKey,
-              });
-            }
+            // let reqdepositObj = await requestDepositFiat(currencyLu[k].bankDetailModel[0].bankId, this.props.member?.id);
+            // if (reqdepositObj.ok === true) {
+            //   this.setState({
+            //     ...this.state, fiatDepEur: this.props.depositInfo?.depositCurrency === "EUR", BankInfo: reqdepositObj.data, BankDetails: [], Loader: false, isTermsAgreed: false, faitdeposit: tabKey === 2,
+            //     tabValue: tabKey,
+            //   });
+            // }
           } else {
             this.setState({
               ...this.state, fiatDepEur: this.props.depositInfo?.depositCurrency === "EUR", BankDetails: currencyLu[k].bankDetailModel, BankInfo: null, isTermsAgreed: false, faitdeposit: tabKey === 2,
@@ -137,15 +138,15 @@ class FaitDeposit extends Component {
     for (var k in currencyLu) {
       if (currencyLu[k].walletCode === e) {
         if (currencyLu[k].bankDetailModel?.length === 1) {
-          this.setState({ ...this.state, Loader: true })
+          this.setState({ ...this.state, bankLoader: true, BankDetails: [] })
           let reqdepositObj = await requestDepositFiat(currencyLu[k].bankDetailModel[0].bankId, this.props.member?.id);
           if (reqdepositObj.ok === true) {
             this.setState({
-              ...this.state, fiatDepEur: e === "EUR", BankInfo: reqdepositObj.data, BankDetails: [], depObj: depObj, Loader: false, isTermsAgreed: false
+              ...this.state, fiatDepEur: e === "EUR", BankInfo: reqdepositObj.data, BankDetails: [], depObj: depObj, bankLoader: false, isTermsAgreed: false
             });
           } else {
             this.setState({
-              ...this.state, Loader: false, errorMessage: this.isErrorDispaly(reqdepositObj)
+              ...this.state, bankLoader: false, errorMessage: this.isErrorDispaly(reqdepositObj)
             });
           }
         } else {
@@ -187,7 +188,6 @@ class FaitDeposit extends Component {
       this.myRef.current.scrollIntoView();
       return;
     }
-   
       this.formRef.current.validateFields().then(async () => {
         this.setState({ ...this.state, Loader: true, errorMessage: null })
         let createObj = { "id": "00000000-0000-0000-0000-000000000000", "bankId": BankInfo.id, "currency": depObj.currency, "bankName": BankInfo.bankName, "bankAddress": BankInfo.bankAddress, "amount": parseFloat(depObj.Amount), "accountNumber": BankInfo.accountNumber, "routingNumber": BankInfo.routingNumber, "swiftorBICCode": BankInfo.networkCode, "benficiaryBankName": BankInfo.accountName, "reference": BankInfo.depReferenceNo, "benficiaryAccountAddrress": BankInfo.accountAddress, 'referenceNo': BankInfo.referenceNo }
@@ -223,10 +223,9 @@ class FaitDeposit extends Component {
     const { currenciesWithBankInfo } = this.props.depositInfo;
     return (
       <>
-       
         {faitdeposit ?
           <div className='mt-16'>
-           <OnthegoFundTransfer  ontheGoType={"Onthego"}/>
+           <OnthegoFundTransfer  ontheGoType={"Onthego"} onClosePopup={this.props?.oncloseClick}/>
          </div>
           : <> {this.state.Loader && <Loader />}
 
@@ -237,9 +236,6 @@ class FaitDeposit extends Component {
                 content={this.props.sendReceive.withdrawFiatEnable ?  "send_fiat_text": "receive_fiat_text"}
                 component={Paragraph}
               />}
-               <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                </Col>
-               
              
               <div className="my-36">
                 {!this.state.showSuccessMsg && <Form.Item
@@ -260,7 +256,7 @@ class FaitDeposit extends Component {
                     </Select>
                   </div></Form.Item>}
                    
-                {this.state.BankInfo === null && depObj.currency !== null && this.state.BankDetails?.length === 0 && <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="bank_msg" /></Text>}
+                {this.state.BankInfo === null && depObj.currency !== null && this.state.BankDetails?.length === 0 && !this.state.bankLoader && <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="bank_msg" /></Text>}
                 {this.state.BankDetails?.length > 1 && depObj.currency !== null && <Form.Item><Translate
                   className="input-label"
                   content="BankName"
@@ -384,21 +380,18 @@ class FaitDeposit extends Component {
                     <Paragraph
                       className="fs-14 text-white-30 fw-200 l-height-normal"
                     ><span className="textpure-yellow">{apicalls.convertLocalLang('reference_hint_text')}</span> </Paragraph>
-                   
 
                   </div>
                   
                 }
               </div>
 
-              
             </div>
             </Form>}
             {this.state.showSuccessMsg && <div className="success-pop text-center">
               <img src={success} className="confirm-icon" alt={'success'} />
               <Translate content="success_msg" component={Title} className="text-white-30 fs-36 fw-200 mb-4" />
               <Paragraph className="fs-14 text-white-30 fw-200">0.2258 BTC and 212545 USD amount has been added to your wallets, Your order has been placed successfully</Paragraph>
-           
               <Space direction="vertical" size="large">
                 <Translate content="return_to_depositfiat" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => this.setState({ ...this.state, showSuccessMsg: false })} />
               </Space>
@@ -420,7 +413,7 @@ const connectDispatchToProps = dispatch => {
       dispatch(setStep(stepcode))
     },
     fetchCurrencyWithBankDetails: () => {
-      dispatch(getCurrencieswithBankDetails())
+      // dispatch(getCurrencieswithBankDetails())
     },
     dispatch
   }
