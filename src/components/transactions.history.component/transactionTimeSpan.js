@@ -33,7 +33,7 @@ const TransactionTimeSpan=(props)=> {
                     name="fromdate"
                     className="input-label"
                     style={{ marginLeft: 0 }}
-                    label={<Translate content="Start_Date" component={Form.label} className="ml-8" />}
+                    label="From Date"
                     rules={[
                       { required: true, message: "Is required" }
                     ]}
@@ -49,13 +49,14 @@ const TransactionTimeSpan=(props)=> {
                     name="todate"
                     className="input-label mt-12"
                     style={{ marginLeft: 0 }}
-                    label={<Translate content="End_Date" component={Form.label} className=" ml-8" />}
+                    label="To Date"
+                    // {<Translate content="End_Date" component={Form.label} className=" ml-8" />}
                     rules={[
                       { required: true, message: apicalls.convertLocalLang('is_required') }, {
                         type: "date", validator: async (rule, value, callback) => {
                           if (value) {
                             if (new Date(value) < moment(searchObj.fromdate).format('DD/MM/YYYY')) {
-                              throw new Error("Start date must be less than or equal to the end date.")
+                              throw new Error("From date must be less than or equal to the to date.")
                             } else {
                               callback();
                             }

@@ -31,7 +31,7 @@ class TransactionsHistory extends Component {
       permissions: {},
       value: "",
       statusData:[],
-      timeListSpan: ["Last 1 Day", "Last One Week", "Custom"],
+      timeListSpan: ["All", "Custom"],
       modal: false,
       selectedTimespan: "",
       timeSpanfromdate: "",
@@ -46,7 +46,7 @@ class TransactionsHistory extends Component {
         customerId: this.props.customer?.id,
         currency: this.props?.selectWallet || "All",
         status:"All",
-        timeSpan: "Last 1 Day",
+        timeSpan: "All",
         fromdate: "",
         todate: "",
       },
@@ -58,6 +58,7 @@ class TransactionsHistory extends Component {
       modalPoupData:{},
       downloadError:"",
       viewData:{},
+      viewLoader:false,
     };
     this.props.dispatch(setSelectedFeatureMenu(this.props.transactionsPermissions?.featureId || this.props.customer?.id));
     this.gridRef = React.createRef();
@@ -238,7 +239,7 @@ class TransactionsHistory extends Component {
     let { selectedTimespan, timeSpanfromdate, timeSpantodate, customFromdata, customTodate } = this.state;
 
     if (new Date(moment(values.fromdate).format('MM/DD/YYYY')).getTime() > new Date(moment(values.todate).format('MM/DD/YYYY')).getTime()) {
-      this.setState({ ...this.state, message: 'Start date must be less than or equal to the end date.' })
+      this.setState({ ...this.state, message: 'From date must be less than or equal to the to date.' })
       return
     }
     customFromdata = values.fromdate;
@@ -257,18 +258,18 @@ class TransactionsHistory extends Component {
     if (customFromdata && customTodate) {
       this.setState({ modal: false,  message: '' });
     } else {
-      this.setState({ ...this.state, searchObj: { ...searchObj, timeSpan: "Last 1 Day", fromdate: '', todate: '' }, modal: false, isCustomDate: false, message: '' });
-      this.formRef.current.setFieldsValue({ ...searchObj, timeSpan: "Last 1 Day", fromdate: '', todate: '' })
+      this.setState({ ...this.state, searchObj: { ...searchObj, timeSpan: "All", fromdate: '', todate: '' }, modal: false, isCustomDate: false, message: '' });
+      this.formRef.current.setFieldsValue({ ...searchObj, timeSpan: "All", fromdate: '', todate: '' })
       this.formDateRef.current.resetFields();
     }
   }
 transactionModal= async (data)=>{
-  this.setState({ ...this.state, showModal:true,modalData:data ,
+  this.setState({ ...this.state, showModal:true,modalData:data,viewLoader:true ,
     isLoading:false  })
     let response = await transactionsView(data.id,data.docType);
     if(response.ok){
       this.setState({ ...this.state, showModal:true,viewData:response.data ,
-        isLoading:false  })
+        isLoading:false,viewLoader:false  })
     }
 }
 handleCancel=()=>{
@@ -334,7 +335,7 @@ isErrorDispaly = (objValue) => {
                     <Select
                       className="cust-input mb-0 custom-search"
                       dropdownClassName="select-drpdwn"
-                      defaultValue="Last 1 Day"
+                      defaultValue="All"
                       onChange={(e) => this.handleTimeSpan(e, 'timeSpan')}
                       placeholder="Time Span"
                     >
@@ -346,7 +347,7 @@ isErrorDispaly = (objValue) => {
                   <Form.Item
                     name="selectedTimespan"
                     className="input-label selectcustom-input mb-0 cust-label"
-                    label="Selected date"
+                    label="From - To Dates"
                   >
                     <Input disabled placeholder="DD/MM/YYYY" className="cust-input cust-adon mb-0" addonAfter={<i className="icon md date-white c-pointer" onClick={(e) => { this.datePopup(e, 'searchObj') }} />} />
                   </Form.Item>
@@ -416,7 +417,7 @@ isErrorDispaly = (objValue) => {
           />
         </Drawer>
 
-                <TransactionSlips showModal={showModal}  modalData={modalData} isLoading={isLoading} handleCancel={this.handleCancel} viewData={viewData} />
+                <TransactionSlips showModal={showModal}  modalData={modalData} isLoading={isLoading} handleCancel={this.handleCancel} viewData={viewData} loader={this.state.viewLoader} />
                 <TransactionTimeSpan modal={this.state.modal} handleDateCancel={this.handleDateCancel} handleDateChange={this.handleDateChange} handleOk={this.handleOk} formDateRef={this.formDateRef} message={this.state?.message} searchObj={searchObj}/>
       </>
 
