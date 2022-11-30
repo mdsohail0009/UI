@@ -49,7 +49,7 @@ class AuditLogs extends Component {
   }
   componentDidMount = async () => {
     this.auditlogsTrack();
-    setTimeout(() => this.gridRef?.current?.refreshGrid(), 200);
+    //setTimeout(() => this.gridRef?.current?.refreshGrid(), 200);             -- code commneted for duplicate calls issue
 
 
     this.TransactionFeatureSearch(this.props.userProfile?.userName);
@@ -244,8 +244,7 @@ class AuditLogs extends Component {
                       defaultValue="All Features"
                       className="cust-input mb-0"
                       dropdownClassName="select-drpdwn"
-                      onChange={(e) => this.TransactionFeatureSearch(e, "feature")}
-                      onChange={(e) => this.handleChange(e, 'feature')}
+                      onChange={(e) => {this.TransactionFeatureSearch(e, "feature");this.handleChange(e, 'feature');}}
                     >
                       <Option value="All Features">All Features</Option>
                       {featureData?.map((item, idx) => {
@@ -264,6 +263,7 @@ class AuditLogs extends Component {
                     htmlType="submit"
                     onClick={this.handleSearch}
                   ><Translate content="search" />
+                  <span class="icon sm search-angle ml-8"></span>
                   </Button>
                 </Col>
               </Row>

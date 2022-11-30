@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Typography, Radio, message, Spin,Button } from 'antd';
+import { Typography, message, Spin,Button } from 'antd';
 import Translate from 'react-translate-component';
 import { getData } from './api';
 import NumberFormat from 'react-number-format';
 import Loader from '../../Shared/loader';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { dashboardTransactionSub } from '../../utils/pubsub';
 import TransactionsHistory from "../transactions.history.component";
 
@@ -24,7 +24,6 @@ class Portfolio extends Component {
             loading: true,
             transactionData: []
         }
-        // this.gridRef = React.createRef();
     }
     getTransactionData = async () => {
         this.setState({ ...this.state, loading: true });
@@ -52,14 +51,12 @@ class Portfolio extends Component {
           return (
             <>
               <NumberFormat
-                // style={{ color: "white" }}
                 value={list[0]}
                 decimalSeparator="."
                 displayType={"text"}
                 thousandSeparator={true}
               />/
               <NumberFormat
-                // style={{ color: "white" }}
                 value={list[1]}
                 decimalSeparator="."
                 displayType={"text"}
@@ -70,7 +67,6 @@ class Portfolio extends Component {
         } else {
           return (
             <NumberFormat
-            //   style={{ color: "white" }}
               value={item.value}
               decimalSeparator="."
               displayType={"text"}
@@ -92,17 +88,7 @@ class Portfolio extends Component {
         return (
             <div className="mb-16">
                 <div className='mb-12 mt-4'>
-                    <Translate content="menu_transactions_history" className="basicinfo" />
-                    {/* <span>
-                       <Translate
-                        content="search"
-                        component={Button}
-                        type="primary"
-                        className="dbchart-link fs-14 fw-500"
-                        onClick={()=> this.transactionDrawer()}
-                      />
-                       <span className="icon sm search-angle ml-4" />
-                       </span>  */}
+                    <Translate content="transactions_history" className="basicinfo" />
                     <Button
                         onClick={() => this.transactionDrawer()}
                         className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}}
@@ -110,12 +96,6 @@ class Portfolio extends Component {
                            <Translate content="search" />
                         <span className="icon sm search-angle ml-8"></span>
                     </Button>
-                     {/* <div onClick={() => this.transactionDrawer()} className="dbchart-link fs-14 fw-500 c-pointer">
-                       
-                        <Translate content="search" />
-                        <span className="icon sm search-angle ml-4" />
-                      
-                    </div> */}
                        {this.state.transactions &&
                        <TransactionsHistory
                         showDrawer={this.state.transactions}
@@ -157,8 +137,11 @@ class Portfolio extends Component {
                                                     {this.state.transactionData.length > 0 ? 
                                                     <>
                                                      <tr key={idx}>
-                                                        <td>{item?.date}</td>
-                                                        <td style={{ width: "100px" }}>{item.type}</td>
+                                                     <td style={{ width: "100px" }}>
+                                                            {item?.date }
+                                                            </td>
+                                                        
+                                                        <td style={{ width: "50px" }}>{item.type}</td>
                                                         <td>{item.wallet}</td>
                                                         <td>{this.getNumberVal(item)}</td>
                                                         <td>{item.state} </td>

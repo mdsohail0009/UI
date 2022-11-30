@@ -492,7 +492,7 @@ const Verifications = (props) => {
                                 rules={[
                                     {
                                         required: true,
-                                        message: "is required",
+                                        message: "Is required",
                                     },
                                 ]}
                             >

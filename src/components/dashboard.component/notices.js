@@ -36,7 +36,7 @@ const Notices = () => {
     }
     return <Carousel autoplay className="mb-16">
         {notices.map((notice, indx) => <div key={indx} className="p-28 carousel-card">
-            <div className="fs-16 text-black mb-24" dangerouslySetInnerHTML={{__html: notice.notice}}></div>
+            <div className="fs-16 text-black mb-24 carosel-content" dangerouslySetInnerHTML={{__html: notice.notice}}></div>
         </div>)}
     </Carousel>
 }

@@ -12,6 +12,7 @@ import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboa
 import {fetchMemberWallets} from '../dashboard.component/api'
 import Translate from 'react-translate-component';
 import { Link } from 'react-router-dom';
+import { setSendFiatHead } from "../../reducers/buyFiatReducer";
 
 const { Text, Title } = Typography;
 
@@ -143,6 +144,7 @@ class AddressBookV2 extends Component {
 
             const saveRes = await saveWithdraw(obj)
             if (saveRes.ok) {
+                this.props.dispatch(setSendFiatHead(true));
                 this.chnageStep(this.state.isNewTransfer ? "declaration" : "successpage")
                 this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id))
                 this.props.dispatch(fetchMarketCoinData(true))
@@ -157,7 +159,6 @@ class AddressBookV2 extends Component {
     }
     changesVerification = (obj) => {
         this.setState({ ...this.state, verifyData: obj,phBtn:obj.phBtn,emailBtn:obj.emailBtn,authBtn:obj.authBtn })
-        console.log(obj)
     }
     isErrorDispaly = (objValue) => {
         if (objValue.data && typeof objValue.data === "string") {
@@ -234,18 +235,12 @@ class AddressBookV2 extends Component {
                     ref={this.formRef}
                     onFinish={this.transferDetials}
                     autoComplete="off">
-                    {/* <div className="text-center"> <text Paragraph
-                        className='text-white fs-24 fw-600 mb-16 px-4 '>Review Details Of Transfer</text></div> */}
                     {this.state.errorMessage && <Alert type="error" showIcon closable={false} description={this.state.errorMessage} />}
 
                     <Row gutter={24}>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Text className="fw-600 text-white px-4 mb-16 mt-4 text-captz" style={{ fontSize: '18px' }}>Transfer details</Text>
-
-                                {/* <div><Link >Edit
-                                </Link>
-                                </div> */}
                             </div>
                         </Col>
                         {"  "}
@@ -255,7 +250,7 @@ class AddressBookV2 extends Component {
                                 <Title className="fs-14 text-white fw-500 text-upper text-right">
                                     <NumberFormat
                                         value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
-                                        thousandSeparator={true} displayType={"text"} decimalPlaces={2}/> {`${this.state.reviewDetails?.walletCode}`}</Title>
+                                        thousandSeparator={true} displayType={"text"}  decimalScale={2}/> {`${this.state.reviewDetails?.walletCode}`}</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
@@ -263,7 +258,7 @@ class AddressBookV2 extends Component {
                                 <Title className="fs-14 text-white fw-400 text-captz">Total fees</Title>
                                 <Title className="fs-14 text-white fw-500 text-upper text-right"><NumberFormat
                                     value={`${(this.state.reviewDetails?.comission)}`}
-                                    thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
+                                    thousandSeparator={true} displayType={"text"}  decimalScale={2}/> {`${this.state.reviewDetails?.walletCode}`}</Title>
                             </div>
                         </Col>
                         {/* <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
@@ -366,7 +361,8 @@ class AddressBookV2 extends Component {
             newtransfer: <>
                 <FiatAddress currency={this.props.selectedCurrency||this.state.currency} amount={this.state.amount} onContinue={(obj) => {
                     this.setState({ ...this.state, reviewDetails: obj }, () => {
-                        this.chnageStep("reviewdetails")
+                        this.props.dispatch(setSendFiatHead(true));
+                        this.chnageStep("reviewdetails");
                     })
                 }
                 }

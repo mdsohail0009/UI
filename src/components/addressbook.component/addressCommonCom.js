@@ -69,7 +69,7 @@ const AddressCommonCom = (props) => {
   const [state, setState] = useState([]);
   const [ibanValue, setIbanValue] = useState(null)
   const [favouriteDetails, setFavouriteDetails] = useState({})
-  const [deleteItem, setDeleteItem] = useState()
+  const [deleteItem, setDeleteItem] = useState({})
   const [agreeRed, setAgreeRed] = useState(true)
   const [bilPay, setBilPay] = useState(null);
   const [newStates, setNewStates] = useState([]);
@@ -394,17 +394,19 @@ const AddressCommonCom = (props) => {
   const handleDeleteModal = () => {
     setIsModalDelete(false)
     setEditBankDetails(false)
-    for (let i in bankmodalData) {
-      if (bankmodalData[i].id == deleteItem?.id) {
+    for (let i=0;i< bankmodalData.length;i++) {
+      if (deleteItem!=null&&deleteItem!=undefined&&bankmodalData[i].id == deleteItem?.id) {
         if (bankmodalData[i].recordStatus == "Added") {
           bankmodalData.splice(i, 1)
         } else { bankmodalData[i].recordStatus = "Deleted" }
+      }else{
+        bankmodalData[i].recordStatus=''
       }
     }
   }
   const handleDelete = (item) => {
     setIsModalDelete(true);
-    setDeleteItem(item)
+    if (item!=null&&item!=undefined){setDeleteItem(item)}
 
   }
   const handleBankChange = (e) => {

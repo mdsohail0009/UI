@@ -38,7 +38,7 @@ class SellToggle extends Component {
         return (
             <>
 
-                <div className="sellcrypto-container auto-scroll">
+                <div className="sellcrypto-container">
                 <Translate content="sell_your_crypto_for_cash_text" component={Paragraph} className="text-white-30 fw-500 fs-14 mt-16 code-lbl" />
 
     <CryptoList ref={this.ref} isLoading={this.state?.loading} showSearch={true} coinList={this.props?.sellData?.memberCoins?.data} coinType="Sell" onCoinSelected={(coin) => this.setCoinDetailData(coin)} />

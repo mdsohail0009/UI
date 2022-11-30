@@ -119,7 +119,7 @@ withdrawFiatSummaryBack = () => {
                                <Translate className="text-white-50 mb-0 fs-14 fw-300" content={this.props.buyFiat.stepSubTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
                                </>
                             }
-                            {!this.props.buyFiat?.receiveFiatHeader && <>
+                            {!this.props.buyFiat?.receiveFiatHeader && !this.props.buyFiat?.sendFiatHeader&& <>
                             <Translate className="mb-0 text-white-30 fw-600" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
                             <Translate className="text-white-50 mb-0 fs-14 fw-300" content={this.props.buyFiat.stepSubTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
                             </>

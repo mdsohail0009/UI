@@ -669,4 +669,7 @@ export default {
 	contact_amount_text: "Please contact support for higher amounts.",
 	validate: "Validate",
 	sell_select_currency: "SELECT CURRENCY TO RECEIVE",
+	transactions_history: "Transactions History",
+	transaction:"Transaction",
+	
 };

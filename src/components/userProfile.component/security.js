@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Typography, Switch, Drawer, Button,  Form, Input, Alert, Row, Col,Spin } from "antd";
 import Translate from "react-translate-component";
@@ -180,7 +181,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
         />
       )}
 
-      <div className="box basic-info">
+      <div className="box basic-info basicprofile-info">
         <Translate
           content="TwoFactorAuthentication"
           component={Title}
@@ -228,11 +229,11 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
           </li>
         </ul>
       </div>
-      <div className="box contact-info c-pointer">
+      <div className="box contact-info ">
         <Translate
           content="change_pass_word"
           component={Title}
-          className="basicinfo mb-0 c-pointer"
+          className="basicinfo mb-0 "
         />
         <Translate
           content="Choose_a_unique_pass_word_to_protect_your_account"
@@ -310,7 +311,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
         <Changepassword onSubmit={() => setisChangepassword(false)} />
       </Drawer>
 
-      <div className="box basic-info">
+      <div className="box basic-info basicprofile-info">
         <Translate
           content="withdraw_verification"
           component={Title}

@@ -114,7 +114,7 @@ const AddressCryptoView = (props) => {
 										<Row className="kpi-List">
 											<Col xs={24} sm={24} md={12} lg={14} xxl={14}>
 												<div>
-													<label className="kpi-label">Save Whitelist Name As</label>
+													<label className="kpi-label">Whitelist Name</label>
 													<div className=" kpi-val">
 														{cryptoAddress?.saveWhiteListName === " " ||
 															cryptoAddress?.saveWhiteListName === null

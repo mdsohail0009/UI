@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import { Row, Col, Button, Carousel } from 'antd';
 import Portfolio from './portfolio.component';
@@ -10,7 +11,7 @@ import YourPortfolio from '../dashboard.component/yourportfolio.component';
 import apiCalls from '../../api/apiCalls';
 import Notices from './notices';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
-
+import BankWallets from '../bankui.component'
 class Home extends Component {
     state = {
         loading: false,
@@ -58,10 +59,10 @@ class Home extends Component {
                         } />
                 </div>}
                 {this.props.dashboard.notices.loading === false ? <Carousel className="docreq-slider" autoplay={true}>
-                    {notices?.map((notice, idx) => <div key={idx}>
+                    {notices?.map((notice, idx) => <div key={idx} className="notify-alerticon">
                         <AlertConfirmation type="error" title={notice.title} showIcon description="Our Compliance Team is requesting documents in line with your recent transaction, Please click View Details. Thank you for your patience."
                             action={
-                                <Button size="small" type="text" onClick={() => this.props.history.push(`/cases?id=${notice.typeId}`)}>
+                                <Button className='notify-viewbtn' size="small" type="text" onClick={() => this.props.history.push(`/caseView/${notice.typeId}`)}>
                                     View Details
                                 </Button>
                             } />
@@ -69,14 +70,21 @@ class Home extends Component {
                 </Carousel> : ""}
 
                 <Row justify="center mt-16">
-                    {this.state.permissions?.Balances && <Col xs={24} md={12} xl={10}>
+                     <Col xs={24} md={12} xl={10}>
+                        {this.state.permissions?.Bank &&
+                            <div className="markets-panel">
+                                <BankWallets/>
+                            </div>
+                        }
+                        {this.state.permissions?.Balances &&<>
                         <div className="markets-panel mb-16 markets-line">
                             <Wallets />
                         </div>
                         <div className="markets-panel">
                             <YourPortfolio />
                         </div>
-                    </Col>}
+                        </>}
+                    </Col>
                     <Col xs={24} md={12} xl={14}>
                         {this.state.permissions.Transactions && <Portfolio
                             crypto="Bitcoin"

@@ -76,10 +76,11 @@ export function withState(WrappedGrid) {
                 <div style={{ position: 'relative' }}>
                     {this.state.isLoading && this.loadingPanel}
                     {this.props.showExcelExport && <div className='text-right'> <button
-                        title="Export Excel"
+                        title={this.props?.exExportTitle || "Export Excel"}
                         className="k-button k-button-md k-rounded-md k-button-solid  mt-16 mb-16 mr-16 search-btn primary-btn excel-btn"
                         onClick={() => {
                             const getCombineFieldValue = (dataItem, fields) => {
+                               
                                 return dataItem[fields[0]] && dataItem[fields[1]] ? `${dataItem[fields[0]]} / ${dataItem[fields[1]]}` : (dataItem[fields[0]] || dataItem[fields[1]]);
                             }
                             if (this.excelRef) {
@@ -111,7 +112,7 @@ export function withState(WrappedGrid) {
 
                         }}
                     >
-                        Export Excel
+                       {this.props?.exExportTitle || "Export Excel"}
                     </button>
                     </div>}
                     {this.props.showExcelExport ? <ExcelExport data={this.state.data} ref={this.excelRef} fileName={this.props?.excelFileName}>

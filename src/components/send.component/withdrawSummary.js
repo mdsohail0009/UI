@@ -838,11 +838,11 @@ class WithdrawSummary extends Component {
 											onValueChange={(e) => this.handleChange(e.value)}
 											disabled={this.state.inputDisable}
 										/>
-										<div className="new-add c-pointer get-code text-yellow hy-align">
+										<div className="new-add get-code text-yellow hy-align">
 											{!this.state.verifyTextotp && (
 												<Button
 													type="text"
-													className="loading-btn"
+													className="loading-btn c-pointer"
 													loading={this.state.phoneLoading}
 													style={{ color: "black" }}
 													onClick={this.getOTP}
@@ -855,15 +855,15 @@ class WithdrawSummary extends Component {
 													placement="topRight"
 													title={`Haven\'t received code? Request new code in ${seconds} seconds. The code will expire after 30mins.`}>
 
-													<span className="icon md info mr-16" />
+													<span className="icon md info mr-16 c-pointer" />
 												</Tooltip>
 											)}
 											<Button
-												type="text"
+												type="text" className=""
 												loading={this.state.phoneVerifyLoading}
 												style={{ color: "black", margin: "0 auto" }}
 												onClick={this.getOtpVerification}
-												disabled={this.state.verifyPhone == true}>
+												disabled={this.state.verifyPhone == true||this.state.verifyTextotp == true}>
 												{verifyOtpText[this.state.verifyOtpText]}
 												{this.state.verifyTextotp == true && (
 													<span className="icon md greenCheck" />
@@ -936,7 +936,7 @@ class WithdrawSummary extends Component {
 												style={{ color: "black", margin: "0 auto" }}
 												loading={this.state.emailVerifyLoading}
 												onClick={(e) => this.getEmailVerification(e)}
-												disabled={this.state.verifyEmail == true}>
+												disabled={this.state.verifyEmail == true||this.state.verifyEmailOtp == true}>
 												{verifyText[this.state.verifyText]}
 												{this.state.verifyEmailOtp == true && (
 													<span className="icon md greenCheck" />
@@ -999,12 +999,13 @@ class WithdrawSummary extends Component {
 											style={{ width: "100%" }}
 											disabled={this.state.inputAuthDisable == true}
 										/>
-										<div className="new-add c-pointer get-code text-yellow hy-align" >
+										<div className="new-add get-code text-yellow hy-align" >
 											<Button
-												type="text"
+												type="text" className=" "
 												loading={this.state.faLoading}
 												style={{ color: "black", margin: "0 auto" }}
-												onClick={this.getAuthenticator}>
+												onClick={this.getAuthenticator}
+												disabled={this.state.verifyAuthCode}>
 												{this.state.verifyAuthCode ? (
 													<span className="icon md greenCheck" />
 												) : (
