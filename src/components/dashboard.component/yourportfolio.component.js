@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { List, Button, Typography, Empty,Dropdown, Menu, Space } from 'antd';
+import { List, Button, Typography, Empty, Image,Dropdown, Menu, Space } from 'antd';
 import Translate from 'react-translate-component';
 import BuySell from '../buy.component';
 import SendReceive from '../send.component'
-import { fetchYourPortfoliodata,fetchMarketCoinData } from '../../reducers/dashboardReducer';
+import ConnectStateProps from '../../utils/state.connect';
+import { fetchYourPortfoliodata,fetchMarketCoinData,fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import Currency from '../shared/number.formate';
 import { fetchSelectedCoinDetails, setExchangeValue, setCoin } from '../../reducers/buyReducer';
 import { setStep, setSellHeaderHide } from '../../reducers/buysellReducer';
@@ -139,12 +140,14 @@ class YourPortfolio extends Component {
         this.props.dispatch(setWithdrawfiatenaable(false));
         this.props.dispatch(hideSendCrypto(false));
           this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
+        
           this.props.dispatch(setStep("step7"));
           this.props.dispatch(setSubTitle(` ${coin}` + " " + "balance" +" "+ ":" +" "+ `${selectedObj.coinBalance ?  selectedObj.coinBalance : '0'}`+`${" "}`+`${coin}`
             ));
-            const response = await createCryptoDeposit({ customerId: this.props.userProfile?.id, walletCode: coin, network: selectedObj?.netWork });
+             const response = await createCryptoDeposit({ customerId: this.props.userProfile?.id, walletCode: coin, network: selectedObj?.netWork });
              if (response.ok) {
                 this.props.dispatch(setWalletAddress(response.data));
+               // this.props.dispatch(fetchDashboardcalls(this.props.userProfile?.id));
              }
 
           this.setState({
@@ -177,7 +180,9 @@ class YourPortfolio extends Component {
      menuBar = (item) => (
       <Menu>
           <ul className="pl-0 drpdwn-list">
-            
+              {/* <li  onClick={() =>  this.showSendReceiveDrawer(1, item)}>
+                  <Link value={1} className="c-pointer">Receive</Link>
+              </li> */}
               <li onClick={() => this.showBuyDrawer(item, "buy")}>
                   <Link  value={2} className="c-pointer">
                   <Translate content="buy" />
@@ -200,10 +205,11 @@ class YourPortfolio extends Component {
     render() {
         const { Title, Text } = Typography;
         const { cryptoPortFolios } = this.props.dashboard
-        const { totalCryptoValue } = this.props.dashboard.portFolio.data;
+        const { totalCryptoValue, totalFiatValue } = this.props.dashboard.portFolio.data;
+        const { coinData } = this.state;
         return (
-          <div className="portfolio-list">
-         
+          <div className="" style={{borderTop:'1px solid #c2c2c2'}}>
+{/*            
            <div  className="portfolio-title mb-8">
            <div className='portfolio-data' >
             <Translate
@@ -214,21 +220,26 @@ class YourPortfolio extends Component {
             <Currency prefix={"$"} defaultValue={totalCryptoValue}  className={`text-white-30 fs-16 m-0 ${totalCryptoValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '18px' }} />
             </div>
               <div>
-             
-              <Button className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
+              <Link to="/cockpitCharts" className="dbchart-link fs-14 fw-500">
+                <Translate content="cockpit" />
+                <span className="icon sm right-angle ml-4" />
+              </Link>
+
+               <Button className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
                   <Translate content="cockpit" />
                   <span className="icon sm right-angle ml-4" />
-              </Button>
+              </Button> 
                     
               </div>
-            </div>
-            {cryptoPortFolios?.loading ? (
+            </div> */}
+        {cryptoPortFolios?.loading ? (
                <Loader />
         ) : (
             <List
               className="mobile-list dash-mobile-list"
               itemLayout="horizontal"
               dataSource={cryptoPortFolios.data}
+              //loading={cryptoPortFolios.loading}
               locale={{
                 emptyText: (
                   <Empty
@@ -243,7 +254,12 @@ class YourPortfolio extends Component {
                   extra={
                     <div className='crypto-btns'>
                       
-                     
+                      {/* <Translate
+                        content="sell"
+                        component={Button}
+                        className="custom-btn sec ml-16"
+                        onClick={() => this.showBuyDrawer(item, "sell")}
+                      /> */}
                         <Translate
                         content="deposit"
                         component={Button}
@@ -262,13 +278,18 @@ class YourPortfolio extends Component {
                         <a onClick={e => e.preventDefault()}>
                           <Space>
                           <span class="icon md menu-bar ml-4 p-relative"></span>
+                          {/* <DownOutlined /> */}
                         </Space>
                       </a>
                     </Dropdown>
-                    
+                     {/* <span class="icon md bell ml-4 p-relative"></span> */}
+                     {/* <Dropdown overlay={this.depostWithdrawMenu} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
+                     <span class="icon md bell ml-4 p-relative"></span>
+                    </Dropdown> */}
                     </div>
                   }
                 >
+                  {/* to={"/coindetails/" + item.coinFullName.toLowerCase()} */}
                   <List.Item.Meta
                     avatar={
                       <span
@@ -306,7 +327,10 @@ class YourPortfolio extends Component {
                       </div>
                     }
                   />
-                 
+                  {/* <div className='text-right fs-20 text-white'>
+                                <Currency defaultValue={item.coinBalance} type={"text"} prefix={""} />
+                                <Currency defaultValue={item.coinValueinNativeCurrency} type={"text"} className={`fs-16 ${item.coinValueinNativeCurrency > 0 ? "text-green" : "text-red"}`} />
+                            </div> */}
                 </List.Item>
               )}
             />
@@ -341,3 +365,4 @@ const connectDispatchToProps = dispatch => {
 }
 
 export default connect(connectStateToProps, connectDispatchToProps)(withRouter(YourPortfolio));
+//export default ConnectStateProps(withRouter(YourPortfolio));
