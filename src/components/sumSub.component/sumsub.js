@@ -15,8 +15,8 @@ class SumSub extends Component {
         } else {
             if (!this.props.userConfig?.isKYC) {
                 this.launchWebSdk();
-            }else{
-                this.setState({...this.state,loading:false})
+            } else {
+                this.setState({ ...this.state, loading: false })
             }
         }
 
@@ -46,7 +46,8 @@ class SumSub extends Component {
                         this.setState({ sumSubConfirm: true })
                         apicalls.updateKyc(this.props.userConfig.userId).then((res) => {
                             this.props.getmemeberInfoa(this.props.user.profile.sub)
-                            this.props.history.push("/cockpit")
+                            if (this.state.isAccountApproved) { this.props.history.push("/cockpit"); }
+
                         })
                     }
 
