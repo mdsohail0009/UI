@@ -157,7 +157,11 @@ class BusinessTransfer extends Component {
                 if(response.data && (response.data?.routingNumber || response.data?.bankName)){
                     this.setState({ ...this.state, enteredIbanData: value, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:true, isValidateLoading: false });
                 }else{
-                    this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:false, isValidateLoading: false });
+                    if(this.state.ibanDetails && !this.state.ibanDetails?.routingNumber|| !this.state.ibanDetails?.bankName) {
+                        this.setState({ ...this.state, errorMessage: "No bank details are available for this IBAN number", enteredIbanData: value, ibanDetails:{}, ibanDetailsLoading: false,  iBanValid:false, isValidateLoading: false });
+                        this.useDivRef.current?.scrollIntoView();
+                        return;
+                    }
                 }
             } else {
                 this.setState({ ...this.state, enteredIbanData: value, ibanDetailsLoading: false,iBanValid:false, errorMessage: response.data || response.data?.message || response.originalError?.message, isValidateLoading: false });
