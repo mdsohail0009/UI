@@ -41,26 +41,24 @@
         "state":"Status"
     },
     "Withdraw Fiat":{
-        "transactionId":"Transaction Id",
         "date":"Date and Time",
         "type":"Transaction Type",
         "amount":"Amount",
         "sbFee":"SB Fee ",
-        "senderName":"Sender Name",
-        "beneficiaryName":"Sender/Recipient Full Name ",
-        "beneficiaryIBAN":"Bank Account Number/IBAN ",
+        "senderName":"Sender's Name",
+        "beneficiaryName":"Beneficiary's Name",
+        "beneficiaryIBAN":"Beneficiary IBAN/ Account Number",
         "state":"Status"
     },
     "Deposit Fiat":{
-        "transactionId":"Transaction Id",
         "date":"Date and Time",
         "type":"Transaction Type",
         "amount":"Amount",
         "sbFee":"SB Fee",
-        "senderName":"Sender Name",
+        "senderName":"Sender's Name ",
         "bankName":"Sender's Bank Account  ",
         "beneficiaryName":"Beneficiary’s Name ",
-        "beneficiaryIBAN":"Beneficiary IBAN ",
+        "beneficiaryIBAN":"Beneficiary IBAN/ Account Number ",
         "state":"Status"
     }
 }
