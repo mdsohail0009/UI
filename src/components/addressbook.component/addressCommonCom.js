@@ -82,7 +82,7 @@ const AddressCommonCom = (props) => {
   const [state, setState] = useState([]);
   const [ibanValue, setIbanValue] = useState(null)
   const [favouriteDetails, setFavouriteDetails] = useState({})
-  const [deleteItem, setDeleteItem] = useState()
+  const [deleteItem, setDeleteItem] = useState({})
   const [agreeRed, setAgreeRed] = useState(true)
   const [bilPay, setBilPay] = useState(null);
   const [newStates, setNewStates] = useState([]);
@@ -353,9 +353,8 @@ const AddressCommonCom = (props) => {
       walletCode: values.walletCode,
       accountNumber: values.accountNumber || values.IBAN,
       bankType: values.bankType || "Bank Account",
-      swiftRouteBICNumber: null,
       swiftCode: values.swiftCode,
-      swiftRouteBICNumber: values.swiftCode,
+      swiftRouteBICNumber: values.swiftCode?values.swiftCode:null,
       bankName: values.bankName,
       addressType: values.addressType,
       line1: props?.addressBookReducer?.cryptoTab == true ? values.PayeeAccountLine1 : values.line1,
@@ -411,17 +410,19 @@ const AddressCommonCom = (props) => {
   const handleDeleteModal = () => {
     setIsModalDelete(false)
     setEditBankDetails(false)
-    for (let i in bankmodalData) {
-      if (bankmodalData[i].id == deleteItem.id) {
+    for (let i=0;i< bankmodalData.length;i++) {
+      if (deleteItem!=null&&deleteItem!=undefined&&bankmodalData[i].id == deleteItem?.id) {
         if (bankmodalData[i].recordStatus == "Added") {
           bankmodalData.splice(i, 1)
         } else { bankmodalData[i].recordStatus = "Deleted" }
+      }else{
+        bankmodalData[i].recordStatus=''
       }
     }
   }
   const handleDelete = (item) => {
     setIsModalDelete(true);
-    setDeleteItem(item)
+    if (item!=null&&item!=undefined){setDeleteItem(item)}
 
   }
   const handleBankChange = (e) => {
@@ -467,20 +468,6 @@ const AddressCommonCom = (props) => {
 
     else {
       setBtnDisabled(true);
-      values["favouriteName"] = namecheck;
-      values["fullName"] = values.fullName;
-      values["email"] = values.email;
-      values["phoneNo"] = values.phoneNo;
-      values["addressType"] = values.addressType;
-      values["line1"] = values.line1;
-      values["line2"] = values.line2;
-      values["city"] = values.city;
-      values["state"] = values.state;
-      values["country"] = values.country;
-      values["postalCode"] = values.postalCode;
-      values["digitalSignId"] = values.digitalSignId;
-      values["isDigitallySigned"] = values.isDigitallySigned;
-      values["id"] = favaddrId;
       let saveObj = Object.assign({}, values);
       saveObj.payeeAccountModels = bankmodalData
       if (withdraeTab === "Crypto")

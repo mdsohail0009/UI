@@ -7,6 +7,11 @@ const getTransactionSearch = () => {
 const getTransactionCurrency = () => {
     return apiClient.get(ApiControllers.common + `CurrencyLU`);
 }
-export  { getTransactionSearch,getTransactionCurrency}
+const downloadTransaction=(id,type)=>{
+    return apiClient.get(ApiControllers.transaction + `Transaction/${id}/${type}`);  
+}
+const transactionsView=(id,type)=>{
+    return apiClient.get(ApiControllers.transaction + `TemplatesTranction/${id}/${type}`)
+}
+export  { getTransactionSearch,getTransactionCurrency,downloadTransaction,transactionsView}
 
-//https://apiuat.suissebase.ch/api/v1/Transaction/Accounts/Types

@@ -98,7 +98,7 @@ class Wallets extends Component {
                 </li>
                 <li onClick={() => this.showTransactionDrawer(item)}>
                     <Link value={4} className="c-pointer">
-                    <Translate content="menu_transactions_history" />
+                    <Translate content="transactions_history" />
                     </Link>
                 </li>
                 <li onClick={() => this.showSendReceiveDrawer(5, item)}>
@@ -122,7 +122,7 @@ class Wallets extends Component {
         return (
             <>
             {/* <BankWallets/> */}
-            <div className="d-flex align-center justify-content">
+            <div className="d-flex justify-content">
                 <Translate content="suissebase_title" component={Title} className="fs-24 fw-600 text-white px-4 mb-16 mt-4" />
                 <div>
               <Button className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >

@@ -47,12 +47,12 @@ const NewFiatAddress = (props) => {
       FullFeatureName: "Withdraw Fiat",
     });
   };
-const screen=()=>{
+  const screen=()=>{
   setstate("Fiat")
 }
   return (
     <>
-      <AddressCommonCom  data={screen()}/>
+      <AddressCommonCom  data={()=>screen()}/>
     </>
   );
 };
