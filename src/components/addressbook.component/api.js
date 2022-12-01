@@ -111,7 +111,7 @@ const getViewData = (payeeId,customerId,type) => {
     );
 };
 const emailCheck = (email,type) => {
-    if(type=='user'){
+    if(type==='user'){
         return apiClient.get(ApiControllers.customers + 'IsExist/'+email+'/UserName');
     }else{
         return apiClient.get(ApiControllers.customers +'IsExist/'+email+'/Email');

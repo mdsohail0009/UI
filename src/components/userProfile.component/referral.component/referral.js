@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import Translate from "react-translate-component";
+<<<<<<< HEAD
 import { Typography, Button, message, Dropdown,Menu, Spin, Alert} from 'antd';
+=======
+import { Typography, Button, message, Dropdown,Menu, Spin, Alert } from 'antd';
+>>>>>>> 2bd195f842dcd1d380a0268ff7555e2b5c96966d
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import {
     EmailShareButton, EmailIcon,
