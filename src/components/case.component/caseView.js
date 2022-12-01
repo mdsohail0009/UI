@@ -149,13 +149,14 @@ class CaseView extends Component {
                 return item.path;
             }
         };   
+        this.setState({ ...this.state, btnLoading: true });
         item.path = itemPath();
         item.status = "Submitted";
         item.repliedBy = `${(this.props.userProfileInfo?.isBusiness==true)?this.props.userProfileInfo?.businessName:this.props.userProfileInfo?.firstName}`;
         item.repliedDate = Mome().format("YYYY-MM-DDTHH:mm:ss");
         item.info = JSON.stringify(this.props.trackAuditLogData);
         item.customerId=this.props.userProfileInfo.id;
-        this.setState({ ...this.state, btnLoading: true });
+      
 
          
         const response = await saveDocReply(item);
