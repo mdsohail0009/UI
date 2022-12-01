@@ -176,7 +176,7 @@ class Header extends Component {
             >
               <Link>
                 <Translate
-                  content="menu_transactions_history"
+                  content="transactions_history"
                   component={Text}
                   className="text-white-30"
                 />
