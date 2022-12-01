@@ -47,7 +47,7 @@
         "sbFee":"SB Fee ",
         "senderName":"Sender's Name",
         "beneficiaryName":"Beneficiary's Name",
-        "beneficiaryIBAN":"Beneficiary IBAN/ Account Number",
+        "beneficiaryIBAN":"Benificiary Account Number/IBAN",
         "state":"Status"
     },
     "Deposit Fiat":{
@@ -58,7 +58,7 @@
         "senderName":"Sender's Name ",
         "bankName":"Sender's Bank Account  ",
         "beneficiaryName":"Beneficiary’s Name ",
-        "beneficiaryIBAN":"Beneficiary IBAN/ Account Number ",
+        "beneficiaryIBAN":"Benificiary Account Number/IBAN",
         "state":"Status"
     }
 }
