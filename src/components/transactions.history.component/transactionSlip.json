@@ -36,7 +36,6 @@
         "newAssetBalance":"New Asset Balance",
         "network":"Network",
         "address":"Address",
-        "hashId":"Hash",
         "sbFee":"SB Fee ",
         "state":"Status"
     },
