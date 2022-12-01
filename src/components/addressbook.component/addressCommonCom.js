@@ -76,6 +76,7 @@ const AddressCommonCom = (props) => {
   const [isSignRequested, setSignRequested] = useState(false);
   const [recrdStatus, setRecrdStatus] = useState(null);
   const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType: "sepa" });
+  const addressState = null;
   const handleshowModal = (item) => {
     setEditBankDetails(true)
     let data = bankmodalData.find((items) => items.id == item.id)

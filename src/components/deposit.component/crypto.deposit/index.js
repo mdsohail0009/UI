@@ -6,14 +6,15 @@ import { getMemberCoins } from "../../../reducers/swapReducer";
 import ConnectStateProps from "../../../utils/state.connect";
 import CryptoList from "../../shared/cryptolist"
 import { createCryptoDeposit } from "../api";
-import apicalls from "../../../api/apiCalls";
+
 import { fetchDashboardcalls } from "../../../reducers/dashboardReducer";
 import { getFeaturePermissionsByKeyName } from '../../shared/permissions/permissionService'
 import Loader from "../../../Shared/loader";
 
-const { Title, Paragraph } = Typography;
+const {  Paragraph } = Typography;
 const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {
-    useEffect(() => { fetchMemberCoins(); getFeaturePermissionsByKeyName(`send_crypto`)}, []);
+    useEffect(() => { fetchMemberCoins();
+       getFeaturePermissionsByKeyName(`send_crypto`)}, []);
     const [errorMsg,seterrorMsg] = useState(null)
     const [loading,setLoading] = useState(null)
     const fetchMemberCoins = () => {

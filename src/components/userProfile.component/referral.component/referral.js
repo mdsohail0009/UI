@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import Translate from "react-translate-component";
-import { Typography, Button, message, Dropdown,Menu, Spin, Alert, Row, Col ,Form} from 'antd';
+import { Typography, Button, message, Dropdown,Menu, Spin, Alert} from 'antd';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import {
     EmailShareButton, EmailIcon,
-    FacebookShareButton, FacebookIcon,
-    TelegramShareButton, TelegramIcon,
-    TwitterShareButton, TwitterIcon,
     WhatsappShareButton, WhatsappIcon
 } from "react-share";
 import apicalls from "../../../api/apiCalls"
