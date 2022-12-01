@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   Form, Typography, Input, Button, Alert, Spin, message, Select, Checkbox, Tooltip, Modal,
-  Radio, Row, Col, AutoComplete,  Image, Tabs, Drawer
+  Radio, Row, Col, AutoComplete,  Image, Drawer
 } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { setHeaderTab } from "../../reducers/buysellReducer";
@@ -78,12 +78,12 @@ const AddressCommonCom = (props) => {
   const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType: "sepa" });
   const handleshowModal = (item) => {
     setEditBankDetails(true)
-    let data = bankmodalData.find((items) => items.id == item.id)
+    let data = bankmodalData.find((items) => items.id === item.id)
     handleCountryChange(data?.payeeAccountCountry);
     setIsCryptoModalVisible(true);
     setBankObj(data)
     SetBankChange(data?.bankType);
-    if (props?.addressBookReducer?.cryptoTab == true) {
+    if (props?.addressBookReducer?.cryptoTab === true) {
       form.setFieldsValue({
         toCoin: data.walletCode,
         toWalletAddress: data.walletAddress,
@@ -152,10 +152,10 @@ const AddressCommonCom = (props) => {
       ? props?.userConfig.businessName
       : props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
   };
-  const withdraeTab = bilPay ? "Fiat" : (props?.cryptoTab == 1 ? "Crypto" : "Fiat");
+  const withdraeTab = bilPay ? "Fiat" : (props?.cryptoTab === 1 ? "Crypto" : "Fiat");
 
   const showModal = () => {
-    if(bankmodalData.length==1){
+    if(bankmodalData.length===1){
       useDivRef.current.scrollIntoView();
         setErrorMsg("Cannot add more than one Crypto address details");
     }else{
@@ -251,7 +251,7 @@ const AddressCommonCom = (props) => {
     }
   };
   const payeeLuData = async (id, tabName, type) => {
-    let response = await getPayeeLu(props?.userConfig?.id, withdraeTab, (type == true || type == false) ? type : true);
+    let response = await getPayeeLu(props?.userConfig?.id, withdraeTab, (type === true || type === false) ? type : true);
     if (response.ok) {
       setPayeeLu(response.data)
     }
@@ -300,16 +300,12 @@ const AddressCommonCom = (props) => {
     let states = country?.filter((item) => item.name?.toLowerCase() === code.toLowerCase());
     setState(states[0]?.stateLookUp);
   }
-  const handleState = (e) => {
-  }
-  const handleStateChange = () => {
 
-  }
   const getCountry = async () => {
     let response = await getCountryStateLu();
     if (response.ok) {
       setCountry(response.data);
-      let state = form.getFieldValue("country");
+      form.getFieldValue("country");
       let states = response.data?.filter((item) => item.name.toLowerCase());
       setState(states[0]?.stateLookUp);
     }
@@ -333,7 +329,7 @@ const AddressCommonCom = (props) => {
       payeeId: uuidv4(),
       label: values.label,
       currencyType: withdraeTab,
-      walletAddress: (props?.addressBookReducer?.cryptoTab == true && !bilPay) ? values.walletAddress.trim() : values.walletAddress,
+      walletAddress: (props?.addressBookReducer?.cryptoTab === true && !bilPay) ? values.walletAddress.trim() : values.walletAddress,
       walletCode: values.walletCode,
       accountNumber: values.accountNumber || values.IBAN,
       bankType: values.bankType || "Bank Account",
@@ -341,8 +337,8 @@ const AddressCommonCom = (props) => {
       swiftRouteBICNumber: values.swiftCode?values.swiftCode:null,
       bankName: values.bankName,
       addressType: values.addressType,
-      line1: props?.addressBookReducer?.cryptoTab == true ? values.PayeeAccountLine1 : values.line1,
-      line2: props?.addressBookReducer?.cryptoTab == true ? values.PayeeAccountLine2 : values.line1,
+      line1: props?.addressBookReducer?.cryptoTab === true ? values.PayeeAccountLine1 : values.line1,
+      line2: props?.addressBookReducer?.cryptoTab === true ? values.PayeeAccountLine2 : values.line1,
       payeeAccountCity: values.payeeAccountCity,
       payeeAccountState: values.payeeAccountState,
       payeeAccountCountry: values.payeeAccountCountry,
@@ -357,14 +353,14 @@ const AddressCommonCom = (props) => {
       addressState: null,
       inputScore: 0,
       outputScore: 0,
-      recordStatus: editBankDetsils == true ? (recrdStatus ? recrdStatus : "Modified") : "Added",
+      recordStatus: editBankDetsils === true ? (recrdStatus ? recrdStatus : "Modified") : "Added",
     }
-    if (editBankDetsils == true) {
+    if (editBankDetsils === true) {
       obj.id = bankObj.id
       obj.payeeId = bankObj.payeeId
       for (let i in bankmodalData) {
-        if (bankmodalData[i].id == obj.id) {
-          obj.recordStatus = obj.recordStatus != "Added" && obj.recordStatus != "Deleted" ? "Modified" : obj.recordStatus;
+        if (bankmodalData[i].id === obj.id) {
+          obj.recordStatus = obj.recordStatus !== "Added" && obj.recordStatus !== "Deleted" ? "Modified" : obj.recordStatus;
           obj.modifiedBy = props?.userConfig.firstName + props?.userConfig.lastName
           obj.status = 1
           obj.addressState = props?.addressBookReducer?.selectedRowData?.addressState
@@ -395,8 +391,8 @@ const AddressCommonCom = (props) => {
     setIsModalDelete(false)
     setEditBankDetails(false)
     for (let i=0;i< bankmodalData.length;i++) {
-      if (deleteItem!=null&&deleteItem!=undefined&&bankmodalData[i].id == deleteItem?.id) {
-        if (bankmodalData[i].recordStatus == "Added") {
+      if (deleteItem!=null&&deleteItem!==undefined&&bankmodalData[i].id === deleteItem?.id) {
+        if (bankmodalData[i].recordStatus === "Added") {
           bankmodalData.splice(i, 1)
         } else { bankmodalData[i].recordStatus = "Deleted" }
       }else{
@@ -406,16 +402,8 @@ const AddressCommonCom = (props) => {
   }
   const handleDelete = (item) => {
     setIsModalDelete(true);
-    if (item!=null&&item!=undefined){setDeleteItem(item)}
+    if (item!==null&&item!==undefined){setDeleteItem(item)}
 
-  }
-  const handleBankChange = (e) => {
-    SetBankChange(e)
-    bankDetailForm.setFieldsValue({
-      IBAN: "", accountNumber: "", swiftCode: "", bankName: "", payeeAccountCountry: null, payeeAccountState: null,
-      payeeAccountCity: null, payeeAccountPostalCode: null
-    })
-    setNewStates([]);
   }
 
   const savewithdrawal = async (values) => {
@@ -456,7 +444,7 @@ const AddressCommonCom = (props) => {
       saveObj.payeeAccountModels = bankmodalData
       if (withdraeTab === "Crypto")
         saveObj.documents = cryptoAddress?.documents;
-        saveObj.TransferType=props?.cryptoTab == 1&&"Crypto"
+        saveObj.TransferType=props?.cryptoTab === 1&&"Crypto"
       let response = await saveAddressBook(saveObj);
       setAgreeRed(true);
       if (response.ok) {
@@ -595,7 +583,7 @@ const AddressCommonCom = (props) => {
               autoComplete="off"
               initialValues={cryptoAddress}
             >
-              {(props?.cryptoTab == 1) &&
+              {(props?.cryptoTab === 1) &&
               <>
              
              <Form.Item
@@ -714,7 +702,7 @@ const AddressCommonCom = (props) => {
                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                      <Form.Item
                        className="custom-forminput custom-label mb-0"
-                       name={props?.userConfig.isBusiness==true?"beneficiaryName":"firstName"}
+                       name={props?.userConfig.isBusiness===true?"beneficiaryName":"firstName"}
                        required
                        rules={[
                          {
@@ -802,7 +790,7 @@ const AddressCommonCom = (props) => {
                     <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
 
                       <Translate
-                        content={props?.cryptoTab == 1 ? "cryptoAddressDetails" : "Beneficiary_BankDetails"}
+                        content={props?.cryptoTab === 1 ? "cryptoAddressDetails" : "Beneficiary_BankDetails"}
                         component={Paragraph}
                         className="mb-16 mt-24 fs-14 text-aqua fw-500 text-upper"
                       />
@@ -814,7 +802,7 @@ const AddressCommonCom = (props) => {
                     className="pop-btn mb-36 mt-24"
                   >
                     <Translate
-                    content={props?.cryptoTab == 2 ? "bankAddress" : (withdraeTab == "Fiat" ? "bankAddress" : "cryptoAddress")}
+                    content={props?.cryptoTab === 2 ? "bankAddress" : (withdraeTab === "Fiat" ? "bankAddress" : "cryptoAddress")}
                    // content={props?.cryptoTab == 2 ? "cryptoAddress" : "bankAddress"}
                     component={Text}
                    
@@ -824,7 +812,7 @@ const AddressCommonCom = (props) => {
 
                 </Col>
                 <Modal
-                  title={apiCalls.convertLocalLang((props?.cryptoTab == 1) && "cryptoAddress")}
+                  title={apiCalls.convertLocalLang((props?.cryptoTab === 1) && "cryptoAddress")}
                   visible={isCryptoModalVisible}
                   onOk={handleCryptoOk}
                   width={800}
@@ -845,7 +833,7 @@ const AddressCommonCom = (props) => {
                 >
 
 
-                  {props?.cryptoTab == 1 &&
+                  {props?.cryptoTab === 1 &&
                     <Form
                       form={bankDetailForm}
                       initialValues={cryptoAddress}
@@ -945,7 +933,7 @@ const AddressCommonCom = (props) => {
                  </>
               }
 
-               {(props?.cryptoTab == 2 || withdraeTab == "Fiat") && <>
+               {(props?.cryptoTab === 2 || withdraeTab === "Fiat") && <>
               <Form.Item
                 name="addressType"
 
@@ -993,7 +981,7 @@ const AddressCommonCom = (props) => {
                 </Row>
               </Form.Item>
             </>}
-              { (props?.cryptoTab == 2 && addressOptions.addressType === "myself") && <>
+              { (props?.cryptoTab === 2 && addressOptions.addressType === "myself") && <>
                 <Form>
                   <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -1056,7 +1044,7 @@ const AddressCommonCom = (props) => {
                     </Col>
                   </Row>
                 </div></>}
-              {(props?.cryptoTab == 2 || addressOptions.addressType !== "myself") && <React.Fragment>
+              {(props?.cryptoTab === 2 || addressOptions.addressType !== "myself") && <React.Fragment>
                 <Translate
                   content="Beneficiary_Details"
                   component={Paragraph}
@@ -1448,13 +1436,13 @@ const AddressCommonCom = (props) => {
                   )}
                 </Row>
               </React.Fragment>}
-              {(props?.cryptoTab == 2 || withdraeTab == "Fiat") && (addressOptions.addressType == "myself" ||
-                addressOptions.addressType == "individuals" || addressOptions.addressType == "buissiness") &&
+              {(props?.cryptoTab === 2 || withdraeTab === "Fiat") && (addressOptions.addressType === "myself" ||
+                addressOptions.addressType === "individuals" || addressOptions.addressType === "buissiness") &&
                 <Row gutter={[16, 16]}>
                   <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Translate
                       content={
-                        props?.cryptoTab == 1
+                        props?.cryptoTab === 1
                           ? "cryptoAddressDetails"
                           : "Beneficiary_BankDetails"
                       }
@@ -1468,7 +1456,7 @@ const AddressCommonCom = (props) => {
                     >
                       <Translate
                         content={
-                          (props?.cryptoTab == 2 || withdraeTab == "Fiat") && "bankAddress"
+                          (props?.cryptoTab === 2 || withdraeTab === "Fiat") && "bankAddress"
                         }
                         component={Text}
                       />
@@ -1495,7 +1483,7 @@ const AddressCommonCom = (props) => {
                           borderRadius: "20px",
                         }}
                       >
-                        {(props?.cryptoTab == 2 || withdraeTab == "Fiat") ? (
+                        {(props?.cryptoTab === 2 || withdraeTab === "Fiat") ? (
                           <Col
                             className="mb-0"
                             xs={20}

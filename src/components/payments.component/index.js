@@ -33,7 +33,7 @@ const Payments = (props) => {
     props.history.push(`/payments/${prop.dataItem.id}/view`)
   };
   const paymentsEdit = () => {
-    if (selection.length == 0) {
+    if (selection.length === 0) {
       setErrorWarning("Please select the record");
     } else {
       props.history.push(`/payments/${selectedObj}/${setSelectData.currency}/${setSelectData.state}/edit`)
@@ -52,7 +52,7 @@ const Payments = (props) => {
   }
   useEffect(() => {
     if(props.billpaymentsPermission){
-      let viewPermission = props.billpaymentsPermission.actions.filter((item)=>item.permissionName == 'view')[0];
+      let viewPermission = props.billpaymentsPermission.actions.filter((item)=>item.permissionName === 'view')[0];
       if(!viewPermission.values){
         props.history.push('/accessdenied')
       }

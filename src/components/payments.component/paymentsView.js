@@ -64,7 +64,7 @@ class PaymentsView extends Component {
       };
      handleVisibleChange = () => {
     this.setState({ ...this.state, visible: false });
-    if(this.state.visible== false){
+    if(this.state.visible=== false){
       this.setState({ ...this.state, isloading: false });
     }
   };

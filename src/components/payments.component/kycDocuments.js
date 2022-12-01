@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Spin, Upload, Typography, Form, Input } from 'antd';
 import { connect } from 'react-redux';
 import { LoadingOutlined } from '@ant-design/icons';

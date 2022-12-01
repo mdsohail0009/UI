@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Typography, Button, Upload, message, Tooltip, Spin, Alert } from "antd";
 import { connect } from "react-redux";
-import Moment from "react-moment";
 import { uploadClient } from "../../api";
 import { ProfileImageSave } from "../../api/apiServer";
 import { getmemeberInfo, getIpRegisteryData } from "../../reducers/configReduser";
