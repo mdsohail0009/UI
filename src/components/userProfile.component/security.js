@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Typography, Switch, Drawer, Button,  Form, Input, Alert, Row, Col,Spin } from "antd";
 import Translate from "react-translate-component";
@@ -194,7 +195,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
         <ul className="user-list pl-0">
           <li className="profileinfo">
             <div className="profile-block">
-              <label className="mb-0 profile-label">
+              <label className="mb-0 profile-label ">
                 <Translate
                   content="FA_tag"
                   component={Paragraph.label}
@@ -228,11 +229,11 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
           </li>
         </ul>
       </div>
-      <div className="box contact-info">
+      <div className="box contact-info ">
         <Translate
           content="change_pass_word"
           component={Title}
-          className="basicinfo mb-0"
+          className="basicinfo mb-0 "
         />
         <Translate
           content="Choose_a_unique_pass_word_to_protect_your_account"
@@ -242,11 +243,11 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
         <ul className="user-list pl-0">
           <li className="profileinfo c-pointer" onClick={() => showDrawer()}>
             <div className="profile-block">
-              <label className="mb-0 profile-label">
+              <label className="mb-0 profile-label c-pointer">
                 <Translate
                   content="Password"
                   component={Paragraph.label}
-                  className="mb-0 profile-label"
+                  className="mb-0 profile-label c-pointer"
                 />
               </label>
               <div style={{ flexGrow: 12 }}>
@@ -316,26 +317,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
           component={Title}
           className="basicinfo mb-0"
         />
-        <Paragraph className="basic-decs">
-        <Translate
-          content="Please_select"
-          component={Text}
-          className="text-white"
-        /> {" "}
-        {/* <Text className="text-yellow fw-700">  */}
-         <Translate
-          content="at_least_2"
-          component={Text}
-          className="text-yellow fw-700"
-        /> {" "}
-        {/* {" "}at least 2 </Text> */}
-        <Translate
-          content="verification_options"
-          component={Text}
-          className="text-white"
-        /> {" "}
-         {/* of the Send verification options below. */}
-         </Paragraph>
+        <Paragraph className="basic-decs">Please select <Text className="text-yellow fw-700">at least 2 </Text> of the Send verification options below.</Paragraph>
        
         <Form>
           <Row gutter={[16, 16]}>

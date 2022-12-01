@@ -62,7 +62,7 @@ class AuditLogs extends Component {
     { field: "feature", title: apicalls.convertLocalLang('Features'), filter: true, width: 360 },
     { field: "action", title: apicalls.convertLocalLang('Action'), width: 360, filter: true },
     { field: "description", title: "Description", filter: true, width: 620 },
-    // { field: "", title: "", width: 100, customCell: (props) => (<td><Tooltip title="View More"><div className="icon md info c-pointer" onClick={() => this.showMoreAuditLogs(props)}></div></Tooltip></td>) },
+    { field: "", title: "", width: 100, customCell: (props) => (<td><Tooltip title="More Info"><div className="icon md info c-pointer" onClick={() => this.showMoreAuditLogs(props)}></div></Tooltip></td>) },
   ]
   showMoreAuditLogs = (e) => {
     this.fetchAuditLoginfo(e.dataItem.id, e);
@@ -260,10 +260,11 @@ class AuditLogs extends Component {
                 <Col xs={24} sm={24} md={3} className="px-8">
                   <Button
                     type="primary"
-                    className="primary-btn px-24 search-btn ant-btn-lg custom-btn prime mt-16 mb-8"
+                    className="primary-btn px-24 search-btn ant-btn-lg prime mt-16 mb-8 ant-btn pop-btn"
                     htmlType="submit"
                     onClick={this.handleSearch}
                   ><Translate content="search" />
+                  <span class="icon sm search-angle ml-8"></span>
                   </Button>
                 </Col>
               </Row>
@@ -400,7 +401,7 @@ class AuditLogs extends Component {
             </div>
             <div className="coin-info">
               <Text>Device Version</Text>
-              <Text>{logRowData?.deviceType?.version}</Text>
+              <Text>{logRowData?.deviceType?.version?.replace("null","")}</Text>
             </div></>}
 
         </Drawer>

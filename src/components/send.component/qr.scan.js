@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, message, Dropdown, Menu, Button } from 'antd';
+import { Typography, message, Dropdown, Menu, Button, Alert } from 'antd';
 import { setStep, setWalletAddress } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
@@ -15,13 +15,15 @@ import {
     TwitterShareButton, TwitterIcon,
     WhatsappShareButton, WhatsappIcon
 } from "react-share";
+import { createCryptoDeposit } from '../deposit.component/api';
 class QRScan extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            error: '',
+            error: null,
             netWorkData: [],
-            isnetworktrigger:false
+            isnetworktrigger:false,
+            isLoading: false
         }
     }
     success = () => {
@@ -42,7 +44,6 @@ class QRScan extends Component {
     getNetworkObj = async () => {
         this.setState({isnetworktrigger:true});
         const response = await getNetworkLu(this.props?.sendReceive?.depositWallet?.walletCode);
-        console.log("HHHHHHHHH", response)
         if (response.ok) {
             this.setState({ netWorkData: response.data });
         } else {
@@ -50,18 +51,39 @@ class QRScan extends Component {
         }
     }
 
+    onNetworkView = async (netWork) => {
+        this.setState({...this.state, isLoading: true})
+        const response = await createCryptoDeposit({customerId: this.props.userProfile?.id,walletCode:this.props?.sendReceive?.depositWallet?.walletCode, network: netWork?.code});
+        if (response.ok) {
+            this.setState({...this.state, error: null, isLoading: false})
+            this.props.dispatch(setWalletAddress(response.data));
+        } else {
+            this.setState({...this.state, error: response.data, isLoading: false });
+        }
+    }
+
     get walletAddress() {
         return this.props?.sendReceive?.depositWallet?.walletAddress
+    }
+    get walletCode() {
+        let selectedWalletCode = this.props?.sendReceive?.depositWallet?.walletCode;
+        if((selectedWalletCode === "USDT" || selectedWalletCode === "ETH" || selectedWalletCode === "USDC") && this.props?.sendReceive?.depositWallet?.network ){
+            return this.props?.sendReceive?.depositWallet?.walletCode + " " + "(" + this.props?.sendReceive?.depositWallet?.network  + ")";
+        }
+        else {
+            return this.props?.sendReceive?.depositWallet?.walletCode;
+        }
+
     }
     get shareMenu() {
         return <Menu className="share-adrs">
             <Menu.Item>
-                <WhatsappShareButton te url={process.env.REACT_APP_WEB_URL} title={`Hello, I would like to share with my ${this.props?.sendReceive?.depositWallet?.walletCode} address for receive ${this.walletAddress}.Note:(Please make sure you are using the correct protocol otherwise you are risking of loosing the funds).I am using Suissebase. Thank you.`} >
+                <WhatsappShareButton te url={process.env.REACT_APP_WEB_URL} title={`Hello, I would like to share my ${this.walletCode} address for receiving  ${this.walletAddress}. Note: Please make sure you are using the correct protocol otherwise you are risking losing the funds. I am using Suissebase. Thank you.`} >
                     <WhatsappIcon size={32} round={true} />
                 </WhatsappShareButton>
             </Menu.Item>
             <Menu.Item>
-                <EmailShareButton url={process.env.REACT_APP_WEB_URL} subject={"Wallet Address"} body={`Hello, I would like to share with my ${this.props?.sendReceive?.depositWallet?.walletCode} address for receive ${this.walletAddress}.Note:(Please make sure you are using the correct protocol otherwise you are risking of loosing the funds).I am using Suissebase. Thank you.`}  >
+                <EmailShareButton url={process.env.REACT_APP_WEB_URL} subject={"Wallet Address"} body={`Hello, I would like to share my ${this.walletCode} address for receiving  ${this.walletAddress}. Note: Please make sure you are using the correct protocol otherwise you are risking losing the funds. I am using Suissebase. Thank you.`}  >
                     <EmailIcon size={32} round={true} />
                 </EmailShareButton>
             </Menu.Item>
@@ -84,19 +106,35 @@ class QRScan extends Component {
     }
     render() {
         const { Paragraph, Text } = Typography;
-        if (!this.props?.sendReceive?.depositWallet?.walletAddress) {
+        if (!this.props?.sendReceive?.depositWallet?.walletAddress || this.state.isLoading) {
             return <Loader />
         }
         const {netWorkData, isnetworktrigger}=this.state;
         if(netWorkData.length<1 && !isnetworktrigger && this.props?.sendReceive?.depositWallet){
             this.getNetworkObj()
         }
-        return (
+        return ( <>
+        {this.state.error !== null && (
+                <Alert
+                  type="error"
+                  description={this.state.error}
+                  //onClose={() => seterrorMsg(null)}
+                  showIcon
+                />
+              )}
+        
             <div>
                <div className="text-center f-12 mt-16 text-white custom-crypto-btns">
                     {netWorkData && netWorkData.map((network) => {
                         return <>
-                            <span className="mr-16 custom-bnt text-white-30 ">{network.code}</span>
+                            <span className=  {network.code == this.props?.sendReceive?.depositWallet?.network ? "mr-16 custom-bnt text-white-30" : "ant-btn ant-btn-primary custom-btn sec network" }>
+                               {netWorkData.length>1 &&<a onClick={() => this.onNetworkView(network)}>
+                                    <span className='fw-500'>
+                                        {network.code}
+                                        </span>
+                                </a>}
+                                {netWorkData.length == 1 &&  `${network.code}`}
+                            </span>
                         </>
                     })}
                 </div>
@@ -134,6 +172,7 @@ class QRScan extends Component {
                         className="mt-36 text-upper share-btn fw-600 fs-14" block>{apicalls.convertLocalLang('button')}</Button>
                 </Dropdown>
             </div>
+            </>
         )
     }
 }

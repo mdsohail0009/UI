@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Input, Row, Col, Form, Button, Typography, Radio, Tabs, Image, Alert } from 'antd';
+import { Input, Row, Col, Form, Button, Typography, Tabs, Image, Alert } from 'antd';
 import {createPayee, payeeAccountObj, savePayee, confirmTransaction} from "../api";
 import AddressDocumnet from "../../addressbook.component/document.upload";
 import PayeeBankDetails from "./bankdetails.component";
 import { validateContentRule } from "../../../utils/custom.validator";
 import Translate from "react-translate-component";
-import { Link } from 'react-router-dom';
 import apiCalls from "../../../api/apiCalls";
 import ConnectStateProps from "../../../utils/state.connect";
 import Loader from "../../../Shared/loader";
 import alertIcon from '../../../assets/images/pending.png';
 const { Paragraph, Text, Title } = Typography;
-const { Search, TextArea } = Input;
+const { TextArea } = Input;
 
 const SomeoneComponent = (props) => {
     const [addressOptions, setAddressOptions] = useState({ addressType: "individuals", transferType: props.currency === "EUR" ? "sepa" : "swift", domesticType: 'domestic' });
@@ -23,6 +22,7 @@ const SomeoneComponent = (props) => {
     const [errorMessage, setErrorMessage] = useState('');
     const [showDeclartion, setShowDeclartion] = useState(false);
     const [intialObj, setIntialObj] = useState(false);
+    const [isTabChange,setIsTabChange] = useState(false);
     const [form] = Form.useForm();
     const useDivRef = React.useRef(null);
 const [edit,setEdit]=useState(false);
@@ -37,7 +37,6 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             let edit = false;
             setCreatePayeeObj(createPayeeData.data);
             if (props.selectedAddress?.id) {
-                // form.current?.setFieldsValue({...createPayeeData.data,payeeAccountModels:createPayeeData.data.payeeAccountModels[0]})
                 setIntialObj({ ...createPayeeData.data, payeeAccountModels: createPayeeData.data.payeeAccountModels[0] })
                 setDocuments(createPayeeData.data.payeeAccountModels[0].documents)
                 setAddressOptions({ ...addressOptions, domesticType: createPayeeData.data.transferType });
@@ -53,7 +52,14 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         }
     }
     const onSubmit = async (values) => {
-        debugger
+        if (Object.hasOwn(values?.payeeAccountModels, 'iban')) {
+            setErrorMessage(null);
+            if ((!bankdetails || Object.keys(bankdetails).length == 0)) {
+                useDivRef.current.scrollIntoView()
+                setErrorMessage("Please click validate button before saving");
+                return;
+            }
+        }
         let obj = { ...createPayeeObj, ...values };
         obj.payeeAccountModels = [payeeAccountObj()];
         obj.payeeAccountModels[0] = { ...obj.payeeAccountModels[0], ...bankdetails, ...values.payeeAccountModels };
@@ -69,6 +75,21 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             obj.id = isSelectedId ? isSelectedId : createPayeeObj.payeeAccountModels[0]?.payeeId;
         }
         setBtnLoading(true)
+        if (obj.payeeAccountModels[0].documents == null || obj.payeeAccountModels[0].documents && obj.payeeAccountModels[0].documents.details.length == 0) {
+            useDivRef.current.scrollIntoView()
+            setErrorMessage('At least one document is required'); setBtnLoading(false)
+
+        } else if (obj.payeeAccountModels[0].documents) {
+            let length = 0;
+            for (let k in obj.payeeAccountModels[0].documents.details){
+                if(obj.payeeAccountModels[0].documents.details[k].state=='Deleted'){
+                    length=length+1;
+                }
+            }
+            if(length==obj.payeeAccountModels[0].documents.details.length){
+                useDivRef.current.scrollIntoView()
+                setErrorMessage('At least one document is required'); setBtnLoading(false)
+            } else {
         let payeesave = await savePayee(obj)
         if (payeesave.ok) {
             if (props.type !== "manual") {
@@ -82,13 +103,17 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                     useDivRef.current.scrollIntoView();
                 }
             } else {
-                setShowDeclartion(true)
+                props.headingUpdate(true);
+                setShowDeclartion(true);
+                props.isHideTabs(false)
             }
         } else {
             setBtnLoading(false);
             setErrorMessage(isErrorDispaly(payeesave));
             useDivRef.current.scrollIntoView();
         }
+    }
+}
 
     }
     const isErrorDispaly = (objValue) => {
@@ -104,32 +129,43 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         }
     };
     const getIbandata = (data) => {
-        setBankdetails(data);
+        setErrorMessage(null);
+        if (data && !data?.bankName) {
+            useDivRef.current.scrollIntoView()
+            setErrorMessage("No bank details are available for this IBAN number");
+            return;
+        }
+        else if(data) {
+            setIsTabChange(false);
+            setBankdetails(data);
+        }
+        else {
+            setBankdetails(data);
+        }
     }
     return (<React.Fragment>
         {mainLoader && <Loader />}
         {!mainLoader && <>
             <div ref={useDivRef}></div>
-            {showDeclartion && <div className="text-center">
+            {showDeclartion &&<div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
                 <Image width={80} preview={false} src={alertIcon} />
                 <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
                 <Text className="text-white-30">{`Declaration form has been sent to ${props.userProfile?.email}. 
                    Please sign using link received in email to whitelist your address. `}</Text>
                 <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
-                <div className="my-25"><Button onClick={() => props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn text-textDark">BACK</Button></div>
-            </div>}
+            </div></div>}
 
             {!showDeclartion && <>
                 {props.currency === "USD" && <>
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                             <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
-                                setAddressOptions({ ...addressOptions, domesticType: activekey });
-                                form.current.resetFields();
-                                // form.current.setFieldsValue({ addressType: 'someoneelse', transferType: activekey })
+                                setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
+                                form.current.resetFields();setDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);
                             }}>
                                 <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
                                 <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"} disabled={edit} ></Tabs.TabPane>
+                                <Tabs.TabPane tab="International USD IBAN" className="text-white text-captz" key={"internationalIBAN"} disabled={edit}></Tabs.TabPane>
                             </Tabs>
                         </Col>
                     </Row>
@@ -347,31 +383,20 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         </Col>
                     </Row>
                 </>
-                {/* <Divider /> */}
                 <Paragraph className="mb-8 fw-500 text-white px-4 mt-36" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                 {((props.selectedAddress?.id && createPayeeObj)||!props.selectedAddress?.id ) &&
-                 <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} />}
+                 <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} isAddTabCange={isTabChange}/>}
                 
                 <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
-                {console.log(documents)}
-                <AddressDocumnet documents={documents || null} onDocumentsChange={(docs) => {
+                <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
                         setDocuments(docs)
-                    }} />
+                    }} refreshData = {addressOptions?.domesticType}/>
                     <div className="text-right mt-12">
-                        {/* <Button
-                            className="pop-btn px-36"
-                            style={{ margin: "0 8px" }}
-                            onClick={() => { }}
-                        >
-                            {apicalls.convertLocalLang("cancel")}
-                        </Button> */}
                     <Button
                         htmlType="submit"
                         size="large"
                         className="pop-btn px-36 mt-36"
                         loading={btnLoading}
-                        style={{ minWidth: "100%" }}
-                    // onClick={() => console.log(form.getFieldsValue())}
                     >
                         {props.type === "manual" && "Save"}
                         {props.type !== "manual" && <Translate content="continue" />}

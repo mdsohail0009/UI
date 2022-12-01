@@ -23,13 +23,16 @@ class AddressBookV3 extends Component {
             }
         });
     }
+    fiatHeading =(data)=>{
+        this.props?.isFiatHeadUpdate(data);
+	}
     render() {
         if (!this.state.currency) {
             return <React.Fragment>
                 <List
                     itemLayout="horizontal"
                     dataSource={this.state.fiatWallets}
-                    className="crypto-list auto-scroll wallet-list c-pointer"
+                    className="crypto-list auto-scroll wallet-list"
                     loading={this.state.fiatWalletsLoading}
                     locale={{
                         emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
@@ -56,7 +59,7 @@ class AddressBookV3 extends Component {
             </React.Fragment>
         }
         else if (this.props.isFiat)
-            return <FiatAddress selectedAddress={this.props.selectedAddress} currency={this.state.currency} onAddressOptionsChange={() => { }} type={this.props.type} onContinue={this.props?.onContinue} />
+            return <FiatAddress selectedAddress={this.props.selectedAddress} currency={this.state.currency} onAddressOptionsChange={() => { }} type={this.props.type} onContinue={this.props?.onContinue} fiatHeadingUpdate={this.fiatHeading}/>
         else
             return <SelectCrypto />
     }

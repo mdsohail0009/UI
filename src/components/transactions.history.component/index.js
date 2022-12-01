@@ -15,7 +15,7 @@ import { getFeaturePermissionsByKey } from '../shared/permissions/permissionServ
 import { withRouter } from "react-router-dom";
 import { setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 import NumberFormat from "react-number-format";
-import Currency from "../shared/number.formate";
+import moment from "moment/moment";
 const { Option } = Select;
 class TransactionsHistory extends Component {
   constructor(props) {
@@ -41,6 +41,8 @@ class TransactionsHistory extends Component {
     this.props.dispatch(setSelectedFeatureMenu(this.props.transactionsPermissions?.featureId || this.props.customer?.id));
     this.gridRef = React.createRef();
   }
+
+
 
   componentDidMount() {
     getFeaturePermissionsByKey('transactions', this.loadInfo)
@@ -75,40 +77,51 @@ class TransactionsHistory extends Component {
   gridColumns = [
     {
       field: "date", title: "Date", filter: true, filterType: "date", locked: true, width: 210,
+      customCell: (props) => (
+        <td>
+         
+            {props.dataItem?.date ? <>{ moment.utc(props.dataItem?.date).local().format("DD/MM/YYYY hh:mm:ss A")}</> : props.dataItem?.date}
+
+        
+        </td>
+      )
     },
     { field: "docType", title: "Transaction", filter: true, },
     { field: "wallet", title: "Wallet", filter: true, },
-    { field: "debit", title: "Value", filter: false, dataType: 'number', filterType: "numeric",
-    customCell: (props) => (
-      <td>
-        {props.dataItem?.debit&& <NumberFormat value={props.dataItem?.debit} displayType={"text"} />}
-        {props.dataItem?.credit && props.dataItem?.debit && " / "}
-        {props.dataItem?.credit&& <NumberFormat value={props.dataItem.credit} displayType={"text"}/>}
-      
-      </td>
-    ) },
-   
-    { field: "debit", title: "Sender/Beneficiary Name", filter: false,
-    customCell: (props) => (
-      <td>
-        {props.dataItem?.senderName}
-        {(props.dataItem?.senderName && props.dataItem?.beneficiryName) && " / "}
-        {props.dataItem?.beneficiryName}
-      
-      </td>
-    ) },
+    {
+      field: "debit", title: "Value", filter: false, dataType: 'number', filterType: "numeric",
+      customCell: (props) => (
+        <td>
+          {props.dataItem?.debit && <NumberFormat value={props.dataItem?.debit} displayType={"text"} thousandSeparator={true} />}
+          {props.dataItem?.credit && props.dataItem?.debit && "/"}
+          {props.dataItem?.credit && <NumberFormat value={props.dataItem.credit} displayType={"text"} thousandSeparator={true} />}
 
-    { field: "accountnumber", title: "Iban/ Account number", filter: false,
-     },
+        </td>
+      ),
+      combine: true,
+      combineFields: ["debit","credit"]
+    },
+
+    {
+      field: "senderName", title: "Sender/Recipient Full Name", width: 260,
+
+      customCell: (props) => (
+        <td>
+          {props.dataItem?.senderName}
+          {(props.dataItem?.senderName && props.dataItem?.beneficiryName) && "/"}
+          {props.dataItem?.beneficiryName}
+
+        </td>
+      ),
+      combine: true,
+      combineFields: ["senderName", "beneficiryName"]
+    },
+
+    {
+      field: "accountnumber", title: "Bank Account Number/IBAN", filter: true, width: 260,
+    },
     { field: "state", title: "State", filter: true, },
-    // { field: "fromWalletCode", title: "From Wallet Code", filter: true, width: 180, },
-    // { field: "fromValue", title: "From Value", width: 150, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
-    // { field: "toWalletCode", title: "To Wallet Code", filter: true, width: 150 },
-    // { field: "toValue", title: "To Value", width: 150, filter: true, footerCell: true, dataType: 'number', filterType: "numeric"},
-    // { field: "fromValueBefore", title: "From Before Value", width: 180, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
-    // { field: "fromValueAfter", title: "From After Value", width: 180, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
-    // { field: "toValueBefore", title: "To Before Value", width: 180, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
-    // { field: "toValueAfter", title: "To After Value", width: 150, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
+    
 
 
   ]
@@ -193,7 +206,7 @@ class TransactionsHistory extends Component {
           width="100%"
           onClose={this.props.onClose}
           visible={this.props.showDrawer}
-          className="side-drawer-full custom-gridresponsive"
+          className="side-drawer-full custom-gridresponsive transctns-grid"
         >
           <div>
             <Form
@@ -248,12 +261,12 @@ class TransactionsHistory extends Component {
                 </Col>
                 <Col xs={24} sm={24} md={3} lg={3} xl={3} className="transaction_resp">
                   <Button
-                    className="pop-btn"
-                    style={{ height: 36, marginTop: "36px", marginLeft: "12px" }}
+                    className="pop-btn search-btn"
+                    style={{ height: 36, marginTop: "36px" }}
                     htmlType="submit"
                     onClick={this.handleSearch}
                   >
-                    Search
+                    Search<span className="icon sm search-angle ml-8"></span>
                   </Button>
                 </Col>
 

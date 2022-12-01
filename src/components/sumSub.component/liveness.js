@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { userInfo, getmemeberInfo } from '../../reducers/configReduser';
 import { withRouter } from 'react-router-dom';
 import Loader from "../../Shared/loader";
-import eroor from '../../assets/images/pending.png';
+import eroor from '../../assets/images/pending-1.png';
 
 
 class LiveNessSumsub extends Component {

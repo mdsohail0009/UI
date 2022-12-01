@@ -1,16 +1,23 @@
 import React, { Component } from "react";
 
-import { Typography, Button, Alert,Drawer, Form, Input,Modal, Tooltip, Checkbox } from "antd";
+import { Typography, Button, Alert,Drawer, Form, Input,Modal, Tooltip, Checkbox, Image,Space } from "antd";
 import { connect } from "react-redux";
+import alertIcon from '../../assets/images/pending.png';
 import Translate from "react-translate-component";
 import Loader from "../../Shared/loader";
 import Currency from "../shared/number.formate";
+import { withRouter } from 'react-router';
 import { handleNewExchangeAPI, withDrawCrypto } from "../send.component/api";
 import { fetchDashboardcalls } from "../../reducers/dashboardReducer";
 import {
 	setCryptoFinalRes, setStep,
 	setSubTitle,
 	setWithdrawcrypto,
+	handleSendFetch,
+	setAddress,
+	hideSendCrypto,
+	setSendCrypto,
+	setWithdrawfiatenaable
 } from "../../reducers/sendreceiveReducer";
 
 import apiCalls from "../../api/apiCalls";
@@ -18,6 +25,11 @@ import { publishBalanceRfresh } from "../../utils/pubsub";
 import { Link } from "react-router-dom";
 import NumberFormat from "react-number-format";
 import { setCurrentAction } from "../../reducers/actionsReducer";
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import apicalls from '../../api/apiCalls';
+
+const { Text, Title } = Typography;
+
 class WithdrawSummary extends Component {
 	state = {
 		onTermsChange: false,
@@ -39,7 +51,7 @@ class WithdrawSummary extends Component {
 		showtext: true,
 		timeInterval: "",
 		count: 120,
-		loading: false,
+		loading: true,
 		comission: null,
 		emailText: "get_email",
 		tooltipVisible: false,
@@ -81,7 +93,8 @@ class WithdrawSummary extends Component {
 		btnLoading: false,
 		agreeRed: true,
 		permissions: {},
-		previewModal:false
+		previewModal:false,
+		showDeclartion: false,
 	};
 
 	useDivRef = React.createRef();
@@ -172,30 +185,37 @@ class WithdrawSummary extends Component {
 	};
 	onCancel = () => {
 		this.setState({...this.state,previewModal:true})
-		this.props.dispatch(setWithdrawcrypto(null));
-		//this.props.changeStep('withdraw_crpto_cancel_confirm');
-		//this.props.changeStep("step1");
 	};
 	onModalCancel=()=>{
 		this.setState({...this.state,previewModal:false})
 	}
 	onModalOk=()=>{
-		this.props.changeStep('withdraw_crypto_selected');
+		this.setState({...this.state,previewModal:false})
+        if (this.props.onClose) {
+            this.props.onClose();
+        }
+		this.props.dispatch(setWithdrawcrypto(null))
+        this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 1 }));
+        this.props.dispatch(setAddress(null))
 	}
 	handleNewExchangeRate = async () => {
 		this.setState({ ...this.state, loading: true });
-		const { totalValue, walletCode, toWalletAddress } =
-			this.props.sendReceive.withdrawCryptoObj;
-		let _obj = { ...this.props.sendReceive.withdrawCryptoObj };
-		const response = await handleNewExchangeAPI({
+		const { totalValue, walletCode, toWalletAddress, addressBookId, network, isShowDeclaration } =
+			this.props.sendReceive?.withdrawCryptoObj;
+		let _obj = { ...this.props.sendReceive?.withdrawCryptoObj };
+		let withdrawObj = {
 			customerId: this.props?.userProfile?.id,
-			amount: totalValue,
+			addressBookId: addressBookId,
+			coinAmount: totalValue,
 			address: toWalletAddress,
 			coin: walletCode,
-		});
+			network: network,
+		}
+		const response = await handleNewExchangeAPI(withdrawObj);
 		if (response.ok) {
 			_obj["comission"] = response.data?.comission;
 			_obj.totalValue = response?.data?.amount;
+			_obj.memberWalletId = response?.data?.memberWalletId;
 			this.props?.dispatch(setWithdrawcrypto(_obj));
 			this.setState({
 				...this.state,
@@ -499,17 +519,6 @@ class WithdrawSummary extends Component {
 					return;
 				}
 			}
-			// if (
-			// 	this.state.verifyData.isPhoneVerified == "" &&
-			// 	this.state.verifyData.isEmailVerification == "" &&
-			// 	this.state.verifyData.twoFactorEnabled == ""
-			// ) {
-			// 	this.setState({
-			// 		...this.state,
-			// 		errorMsg:
-			// 			"Without Verifications you can't withdraw. Please select withdraw verifications from security section", btnLoading: false
-			// 	});
-			// }
 			if (this.props.userProfile.isBusiness || !this.state.verifyData?.isLiveVerification) {
 				let saveObj = this.props.sendReceive.withdrawCryptoObj;
 				let trackAuditLogData = this.props.trackAuditLogData;
@@ -519,13 +528,25 @@ class WithdrawSummary extends Component {
 				saveObj.Createdby=this.props.userProfile.userName;
 				let withdrawal = await withDrawCrypto(saveObj);
 				if (withdrawal.ok) {
-					this.setState({ ...this.state, btnLoading: false })
-					this.props.dispatch(setCryptoFinalRes(withdrawal.data));
-					this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
-					this.props.dispatch(setWithdrawcrypto(null));
-					this.props.dispatch(setSubTitle(""));
-					this.props.changeStep("withdraw_crpto_success");
-					publishBalanceRfresh("success");
+					if(saveObj?.isShowDeclaration) {
+						this.props.dispatch(hideSendCrypto(true));
+						this.props.dispatch(setCryptoFinalRes(withdrawal.data));
+						this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
+						this.props.dispatch(setWithdrawcrypto(null));
+						this.props.dispatch(setSubTitle(""));
+						this.setState({ ...this.state, errorMsg: null, isBtnLoading: false, showDeclartion: true });
+						publishBalanceRfresh("success");
+					}
+					else {
+						this.setState({ ...this.state, btnLoading: false })
+						this.props.dispatch(hideSendCrypto(true));
+						this.props.dispatch(setCryptoFinalRes(withdrawal.data));
+						this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
+						this.props.dispatch(setWithdrawcrypto(null));
+						this.props.dispatch(setSubTitle(""));
+						this.props.changeStep("withdraw_crpto_success");
+						publishBalanceRfresh("success");
+					}
 				}
 
 				else {
@@ -541,17 +562,6 @@ class WithdrawSummary extends Component {
 				);
 				this.props.changeStep("withdraw_crypto_liveness");
 			}
-			//  else {
-			// 	this.props.dispatch(
-			// 		setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
-			// 	);
-			// 	this.props.changeStep("withdraw_crypto_liveness");
-			// }
-			// this.setState({ 
-			// 	...this.state,
-			// 	errorMsg:
-			// 		"We can not process this request, Since commission is more than or equal to requested amount",
-			// });
 		}
 	};
 	isErrorDispaly = (objValue) => {
@@ -564,6 +574,14 @@ class WithdrawSummary extends Component {
 			return "Something went wrong please try again!";
 		}
 	};
+
+	onBackSend = () => {
+		 this.props.dispatch(hideSendCrypto(false));
+		 this.props.dispatch(setSendCrypto(true));
+		 //this.props.dispatch(setWithdrawfiatenaable(true));
+		 this.props?.onBackCLick("step1"); 
+		 this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: 2 }));
+	}
 
 	fullNumber = this.props.oidc?.phone_number;
 	last4Digits = this.fullNumber?.slice(-4);
@@ -579,7 +597,7 @@ class WithdrawSummary extends Component {
 
 	render() {
 		const { Paragraph, Text } = Typography;
-		const { seconds, disable, textDisable, seconds2, agreeRed } = this.state;
+		const { seconds, disable, textDisable, seconds2, agreeRed, showDeclartion } = this.state;
 		const link = <this.LinkValue content="terms_service" />;
 
 		const btnList = {
@@ -646,6 +664,24 @@ class WithdrawSummary extends Component {
 		if (this.state.loading) {
 			return <Loader />;
 		}
+		if (showDeclartion) {
+			return <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
+			  <Image width={80} preview={false} src={alertIcon} />
+			  <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully </Title>
+			  <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
+				   Please sign using link received in email to whitelist your address. `}</Text>
+			  <span className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</span>
+			  {/* <div className="my-25"><Button
+				onClick={() => { this.onBackSend() }}
+				type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button></div> */}
+				 <div className="my-25 my-16"> 
+				 <Space direction="vertical" size="large">
+                        <Translate content="crypto_with_draw_success" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => { this.onBackSend() }} />
+                    </Space>
+					</div>
+			</div></div>
+		  }
+		  else {
 		return (
 			<>
 				<div ref={this.useDivRef}></div>
@@ -664,7 +700,7 @@ class WithdrawSummary extends Component {
 				) : (
 					<div className="auto-scroll">
 						<div
-							className="fs-36 text-white-30 fw-200 text-center"
+							className="fs-36 text-white-30 fw-500 text-center"
 							style={{ lineHeight: "36px" }}>
 							<Currency
 								prefix={""}
@@ -677,7 +713,7 @@ class WithdrawSummary extends Component {
 								}
 							/>{" "}
 						</div>
-						<div className="text-white-50 fw-400 text-center fs-14 mb-16">
+						<div className="text-white-50 fw-500 text-center fs-14 mb-16">
 							<Currency
 								defaultValue={this.state.usdAmount}
 								prefix={""}
@@ -688,7 +724,7 @@ class WithdrawSummary extends Component {
 						</div>
 						<div className="pay-list fs-14">
 							<Translate
-								className="fw-400 text-white"
+								className="fw-500 text-white"
 								content="exchange_rate"
 								component={Text}
 							/>
@@ -696,20 +732,20 @@ class WithdrawSummary extends Component {
 								defaultValue={this.state.OneusdAmount}
 								decimalPlaces={8}
 								prefix={""}
-								className="fw-400 text-white-30"
+								className="fw-500 text-white-30"
 								prefixText={`1 ${this.props.sendReceive.withdrawCryptoObj?.walletCode
 									} = ${"USD"}`}
 							/>
 						</div>
 						<div className="pay-list fs-14">
 							<Translate
-								className="fw-400 text-white"
+								className="fw-500 text-white"
 								content="amount"
 								component={Text}
 							/>
 							<Currency
 								prefix={""}
-								className={"text-white"}
+								className={"text-white fw-500"}
 								decimalPlaces={8}
 								defaultValue={
 									this.props.sendReceive.withdrawCryptoObj?.totalValue
@@ -721,12 +757,12 @@ class WithdrawSummary extends Component {
 						</div>
 						<div className="pay-list fs-14">
 							<Translate
-								className="fw-400 text-white"
+								className="fw-500 text-white"
 								content="WithdrawalFee"
 								component={Text}
 							/>
 							<Text
-								className="fw-400 text-white"
+								className="fw-500 text-white"
 								style={{
 									width: "250px",
 									textOverflow: "ellipsis",
@@ -739,12 +775,22 @@ class WithdrawSummary extends Component {
 						</div>
 						<div className="pay-list fs-14">
 							<Translate
-								className="fw-400 text-white"
+								className="fw-500 text-white"
 								content="address"
 								component={Text}
 							/>
-							<Text className="fw-400 text-white">
-								{this.firstAddress + "................" + this.lastAddress}
+								<CopyToClipboard text={this.props.sendReceive.withdrawCryptoObj?.toWalletAddress} options={{ format: 'text/plain' }}>
+									<Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="mb-0 fs-18 fw-400 text-white fw-500" >{this.props.sendReceive.withdrawCryptoObj?.toWalletAddress?.length>0?this.props.sendReceive.withdrawCryptoObj?.toWalletAddress.substring(0,4)+`................`+this.props.sendReceive.withdrawCryptoObj?.toWalletAddress.slice(-4):"-"}</Text>
+								</CopyToClipboard>
+						</div>
+						<div className="pay-list fs-14">
+							<Translate
+								className="fw-500 text-white"
+								content="network"
+								component={Text}
+							/>
+							<Text className="fw-500 text-white">
+							{this.props.sendReceive.withdrawCryptoObj?.network || '-'}
 							</Text>
 						</div>
 						<Form
@@ -753,12 +799,12 @@ class WithdrawSummary extends Component {
 							autoComplete="off"
 							form={this.form}
 							onFinish={this.saveWithdrwal}>
-							{this.state.permissions?.withdraw && this.state.verifyData.isPhoneVerified == true && (
-								<Text className="fs-14 mb-8 text-white d-block fw-200">
-									Phone verification code *
+							{this.state.permissions?.Send && this.state.verifyData.isPhoneVerified == true && (
+								<Text className="fs-14 mb-8 text-white d-block fw-500 code-lbl">
+									Phone Verification Code *
 								</Text>
 							)}
-							{this.state.permissions?.withdraw && this.state.verifyData.isPhoneVerified == true && (
+							{this.state.permissions?.Send && this.state.verifyData.isPhoneVerified == true && (
 								<Form.Item
 									name="code"
 									className="input-label otp-verify"
@@ -792,10 +838,11 @@ class WithdrawSummary extends Component {
 											onValueChange={(e) => this.handleChange(e.value)}
 											disabled={this.state.inputDisable}
 										/>
-										<div className="new-add c-pointer get-code text-yellow hy-align">
+										<div className="new-add get-code text-yellow hy-align">
 											{!this.state.verifyTextotp && (
 												<Button
 													type="text"
+													className="loading-btn c-pointer"
 													loading={this.state.phoneLoading}
 													style={{ color: "black" }}
 													onClick={this.getOTP}
@@ -808,15 +855,15 @@ class WithdrawSummary extends Component {
 													placement="topRight"
 													title={`Haven\'t received code? Request new code in ${seconds} seconds. The code will expire after 30mins.`}>
 
-													<span className="icon md info mr-8" />
+													<span className="icon md info mr-16 c-pointer" />
 												</Tooltip>
 											)}
 											<Button
-												type="text"
+												type="text" className="c-pointer"
 												loading={this.state.phoneVerifyLoading}
 												style={{ color: "black", margin: "0 auto" }}
 												onClick={this.getOtpVerification}
-												disabled={this.state.verifyPhone == true}>
+												disabled={this.state.verifyPhone == true||this.state.verifyTextotp == true}>
 												{verifyOtpText[this.state.verifyOtpText]}
 												{this.state.verifyTextotp == true && (
 													<span className="icon md greenCheck" />
@@ -827,12 +874,12 @@ class WithdrawSummary extends Component {
 								</Form.Item>
 							)}
 							{this.state.verifyData.isPhoneVerified}
-							{this.state.permissions?.withdraw && this.state.verifyData.isEmailVerification == true && (
-								<Text className="fs-14 mb-8 text-white d-block fw-200">
-									Email verification code *
+							{this.state.permissions?.Send && this.state.verifyData.isEmailVerification == true && (
+								<Text className="fs-14 mb-8 text-white d-block fw-500 code-lbl">
+									Email Verification Code *
 								</Text>
 							)}
-							{this.state.permissions?.withdraw && this.state.verifyData.isEmailVerification == true && (
+							{this.state.permissions?.Send && this.state.verifyData.isEmailVerification == true && (
 								<Form.Item
 									name="emailCode"
 									className="input-label otp-verify"
@@ -889,7 +936,7 @@ class WithdrawSummary extends Component {
 												style={{ color: "black", margin: "0 auto" }}
 												loading={this.state.emailVerifyLoading}
 												onClick={(e) => this.getEmailVerification(e)}
-												disabled={this.state.verifyEmail == true}>
+												disabled={this.state.verifyEmail == true||this.state.verifyEmailOtp == true}>
 												{verifyText[this.state.verifyText]}
 												{this.state.verifyEmailOtp == true && (
 													<span className="icon md greenCheck" />
@@ -901,12 +948,12 @@ class WithdrawSummary extends Component {
 									</div>
 								</Form.Item>
 							)}
-							{this.state.permissions?.withdraw && this.state.verifyData.twoFactorEnabled == true && (
-								<Text className="fs-14 mb-8 text-white d-block fw-200">
-									Authenticator Codesss *
+							{this.state.permissions?.Send && this.state.verifyData.twoFactorEnabled == true && (
+								<Text className="fs-14 mb-8 text-white d-block fw-500 code-lbl">
+									Authenticator Code *
 								</Text>
 							)}
-							{this.state.permissions?.withdraw && this.state.verifyData.twoFactorEnabled == true && (
+							{this.state.permissions?.Send && this.state.verifyData.twoFactorEnabled == true && (
 								<Form.Item
 									name="authenticator"
 									className="input-label otp-verify"
@@ -952,12 +999,13 @@ class WithdrawSummary extends Component {
 											style={{ width: "100%" }}
 											disabled={this.state.inputAuthDisable == true}
 										/>
-										<div className="new-add c-pointer get-code text-yellow hy-align" >
+										<div className="new-add get-code text-yellow hy-align" >
 											<Button
-												type="text"
+												type="text" className=" c-pointer"
 												loading={this.state.faLoading}
 												style={{ color: "black", margin: "0 auto" }}
-												onClick={this.getAuthenticator}>
+												onClick={this.getAuthenticator}
+												disabled={this.state.verifyAuthCode}>
 												{this.state.verifyAuthCode ? (
 													<span className="icon md greenCheck" />
 												) : (
@@ -970,12 +1018,12 @@ class WithdrawSummary extends Component {
 							)}
 
 							<Form.Item
-								className="custom-forminput mb-36 agree"
+								className="custom-forminput mb-36 agree send-crypto-sumry"
 								name="isAccept"
 								valuePropName="checked"
 								required
 							>
-								{this.state.permissions?.withdraw && <span className="d-flex">
+								{this.state.permissions?.Send && <span className="d-flex">
 									<Checkbox className={`ant-custumcheck ${!agreeRed ? "check-red" : " "}`} />
 									<span className="withdraw-check"></span>
 									<Translate
@@ -987,26 +1035,29 @@ class WithdrawSummary extends Component {
 									/>
 								</span>}
 							</Form.Item>
-							{this.state.permissions?.withdraw && <Button size="large" block className="pop-btn" htmlType="submit" loading={this.state.btnLoading}>
-								<Translate content="with_draw" component={Text} />
-							</Button>}
-
-						</Form>
-						<div className="text-center mt-16">
+							<div className="align-center btn-content cust-pop-up-btn">
+							<div className="text-center mt-16">
 							<Translate
 								content="cancel"
 								component={Button}
 								onClick={() => this.onCancel()}
 								type="text"
 								size="large"
-								className="text-white-30 pop-cancel fw-400"
+								className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn primary-btn pop-cancel"
 							/>
 						</div>
+
+						
+							<div>{this.state.permissions?.Send && <Button size="large" className="pop-btn custom-send" htmlType="submit" loading={this.state.btnLoading}>
+								<Translate content="with_draw" component={Text} />
+							</Button>}</div>
+						</div>
+						</Form>
 							<Modal
-								className="documentmodal-width"
+								className="documentmodal-width fiat-crypto-model"
 								destroyOnClose={true}
 								title="Confirm"
-								width={350}
+								
 								visible={this.state.previewModal}
 								closeIcon={
 									<Tooltip title="Close">
@@ -1018,61 +1069,35 @@ class WithdrawSummary extends Component {
 									</Tooltip>
 								}
 								footer={
-									<>
+									<div className="cust-pop-up-btn crypto-pop">									
 										<Button
-											className="pop-btn px-36"
+											className="primary-btn pop-cancel btn-width"
 											style={{ margin: "0 8px" }}
 											onClick={() => this.onModalCancel()}
 
 										>
-											No
+											NO
 										</Button>
 										<Button
-											className="pop-btn px-36"
+											className="primary-btn pop-btn btn-width"
 											style={{ margin: "0 8px" }}
 											onClick={() => this.onModalOk()}
 										>
 											Yes
 										</Button>
-									</>
+									</div>
 								}>
-									<div style={{color:"white"}}>
+									<div className="text-white fs-16">
 								Are you sure you want to cancel?
-								Your address details will not be saved
 								</div>
 							</Modal>
-		{/* <Drawer
-                        destroyOnClose={true}
-                        title={[
-                            <div >
-                               
-                                <div className="text-center fs-16">
-                                    
-									<div>
-									Are you sure you want to cancel?
-									Your address details will not be saved
-									</div>
-									<span
-										onClick={() => this.onModalCancel()}
-										className="icon md close-white c-pointer"
-									/>
-                                </div>
-                                
-                            </div>,
-                        ]}
-                        placement="right"
-                        closable={true}
-                        visible={this.state.previewModal}
-                        closeIcon={null}
-                        className="side-drawer w-50p">
-                        
-                    </Drawer> */}
 					
 					</div>
 				)}
 				
 			</>
 		);
+	   }
 	}
 }
 
@@ -1081,7 +1106,7 @@ const connectStateToProps = ({ sendReceive, userConfig, menuItems,oidc }) => {
 		sendReceive,
 		userProfile: userConfig.userProfileInfo,
 		trackAuditLogData: userConfig.trackAuditLogData,
-		withdrawCryptoPermissions: menuItems?.featurePermissions?.sendreceivecrypto,
+		withdrawCryptoPermissions: menuItems?.featurePermissions?.send_crypto,
 		oidc:oidc.user?.profile
 	};
 };
@@ -1101,4 +1126,4 @@ const connectDispatchToProps = (dispatch) => {
 export default connect(
 	connectStateToProps,
 	connectDispatchToProps
-)(WithdrawSummary);
+)(withRouter(WithdrawSummary));

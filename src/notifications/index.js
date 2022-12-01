@@ -6,6 +6,7 @@ import Moment from "react-moment";
 import { setNotificationCount } from "../reducers/dashboardReducer";
 import Translate from "react-translate-component";
 import apiCalls from "../api/apiCalls";
+import Loader from "../Shared/loader";
 
 const { Text } = Typography;
 const Notifications = ({
@@ -82,7 +83,8 @@ const Notifications = ({
         {!loading && error && (
           <Alert type="error" description={error} showIcon />
         )}
-        <List
+        {loading && <Loader />}
+         {!loading && <><List
           itemLayout="vertical"
           size="large"
           className="notifications-list"
@@ -138,6 +140,8 @@ const Notifications = ({
             </List.Item>
           ))}
         </List>
+        </>
+         }
       </Drawer>
     </>
   );

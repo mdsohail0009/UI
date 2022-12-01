@@ -11,6 +11,10 @@ import TransactionsHistory from "../transactions.history.component";
 import { setWithdrawfiatenaable, setWithdrawfiat, setStep } from '../../reducers/sendreceiveReducer'
 import { setdepositCurrency, getCurrencieswithBankDetails } from '../../reducers/depositReducer'
 import OnthegoFundTransfer from '../onthego.transfer';
+import BankWallets from '../bankui.component';
+import {setReceiveFiatHead, setSendFiatHead} from '../../reducers/buyFiatReducer';
+import Loader from "../../Shared/loader";
+import { buyFiatSteps as config } from '../buyfiat.component/config';
 const { Title, Paragraph } = Typography;
 
 class Wallets extends Component {
@@ -24,6 +28,9 @@ class Wallets extends Component {
         selectedWallet: '',
         showFuntransfer: false,
     }
+    cockpitCharts=()=>{
+        this.props.history.push("/cockpitCharts");
+      }
     componentDidMount() {
         this.fetchWallets();
         this.props.dispatch(getCurrencieswithBankDetails())
@@ -52,11 +59,13 @@ class Wallets extends Component {
         }
 
         if (e === 2) {
-            debugger
+            this.props.dispatch(setReceiveFiatHead(false));
+            this.props.dispatch(setSendFiatHead(false));
             // this.props.dispatch(setWithdrawfiatenaable(true))
             // this.props.dispatch(setWithdrawfiat({ walletCode: value }))
             this.setState({ ...this.setState, showFuntransfer: true, selectedCurrency:value })
         } else if (e === 1) {
+            this.props.dispatch(setReceiveFiatHead(true));
             this.props.dispatch(setWithdrawfiatenaable(false))
             this.props.dispatch(setdepositCurrency(value))
             this.setState({
@@ -69,10 +78,10 @@ class Wallets extends Component {
                 })
     
             })
-        } else if (e === 3) {
+        }else if(e===3){
             this.props.history.push(`/payments/${value.walletCode}`)
-        } else {
-            this.props.history.push(`/internaltransfer`);
+        }else {
+            this.props.history.push(`/internaltransfer`)
         }
         
     }
@@ -112,31 +121,43 @@ class Wallets extends Component {
 
         return (
             <>
-                <Translate content="suissebase_title" component={Title} className="fs-24 fw-600 text-white mb-16 mt-4" />
+            {/* <BankWallets/> */}
+            <div className="d-flex align-center justify-content">
+                <Translate content="suissebase_title" component={Title} className="fs-24 fw-600 text-white px-4 mb-16 mt-4" />
+                <div>
+              <Button className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
+                  <Translate content="cockpit" />
+                  <span className="icon sm right-angle ml-4" />
+              </Button>
+                    
+              </div>
+              </div>
                 {/* <div style={{ display: "flex",alignItems:"baseline" }}>
 
                 <Translate content="suissebase_subtitle" component={Paragraph} className="text-white-30 fs-16 mb-16 px-4" />
                 <Currency defaultValue={totalFiatValue} className={`fs-24 m-0 fw-600 ${totalFiatValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '54px' }} />
                 </div> */}
+                {wallets?.loading ? (
+                    <Loader />
+                ) : (
                 <List
                     itemLayout="horizontal"
                     dataSource={wallets.data}
                     bordered={false}
                     className="mobile-list"
-                    loading={wallets.loading}
+                    //loading={wallets.loading}
                     renderItem={item =>
                         <List.Item className="py-10 px-0">
                             <List.Item.Meta
                                 avatar={<Image preview={false} src={item.imagePath} />}
-                                title={<div className="fs-16 fw-600 text-white-30 l-height-normal">{item.walletCode}</div>}
-                                description={<Currency className="fs-14 text-white-30 m-0" defaultValue={item.amount} prefix={(item?.walletCode == "USD" ? "$" : null) || (item?.walletCode == "GBP" ? "£" : null) || (item?.walletCode == "EUR" ? "€" : null)} decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />}
+                                title={<div className="fs-16 fw-600 text-upper text-white-30 l-height-normal">{item.walletCode}</div>}
+                                description={<Currency className="fs-16 text-white-30 m-0" defaultValue={Math.abs(item.amount) > 999999 ? Math.sign(item.amount)*((Math.abs(item.amount)/1000000).toFixed(1)) : Math.sign(item.amount)*Math.abs(item.amount)} suffixText={Math.abs(item.amount) > 999999?"M":null} prefix={(item?.walletCode == "USD" ? "$" : null) || (item?.walletCode == "GBP" ? "£" : null) || (item?.walletCode == "EUR" ? "€" : null)} decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />}
                             />
                             <div className="crypto-btns">
                                 <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
                                 <Translate content="withdraw" onClick={() => { this.showSendReceiveDrawer(2, item.walletCode) }} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} />
                                 {/* <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
                                 <Translate content="withdraw" onClick={() => this.showSendReceiveDrawer(2, item.walletCode)} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} /> */}
-                            </div>
                             <Dropdown 
                             overlay={this.menuBar(item)}
                              trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
@@ -147,8 +168,10 @@ class Wallets extends Component {
                         </Space>
                       </a>
                     </Dropdown>
+                    </div>
                         </List.Item>}
                 />
+                )}
                 <SuissebaseFiat showDrawer={this.state.sendReceiveDrawer} valNum={this.state.valNum} onClose={() => this.closeDrawer()} />
                 {this.state.buyFiatDrawer && <MassPayment showDrawer={this.state.buyFiatDrawer} tabData={{ tabVal: this.state.valNum, walletCode: this.state.selctedVal }} onClose={() => this.closeDrawer()} />}
                 {this.state.transactions && <TransactionsHistory
@@ -161,15 +184,17 @@ class Wallets extends Component {
                     destroyOnClose={true}
                     title={[<div className="side-drawer-header">
                         {/* {this.renderTitle()} */}
-                        <div className="">
-                            {/* <Title className="fs-24 mb-0 fw-600 basicinfo">Fund Transfer</Title> */}
-                        </div>
+                        <span></span>
+                        {!this.props.buyFiat?.sendFiatHeader && <div className="text-center fs-24">
+                            <Translate className="mb-0 text-white-30 fw-600" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
+                            </div>
+                        }
                         <span onClick={() => this.setState({ ...this.state, showFuntransfer: false })} className="icon md close-white c-pointer" />
                     </div>]}
                     className="side-drawer w-50p"
                     visible={this.state.showFuntransfer}
                 >
-                    <OnthegoFundTransfer selectedCurrency={this.state.selectedCurrency} ontheGoType={"Onthego"} />
+                    <OnthegoFundTransfer selectedCurrency={this.state.selectedCurrency} ontheGoType={"Onthego"} onClosePopup={() => this.setState({ ...this.state, showFuntransfer: false })}  />
                 </Drawer>
             </>
         );

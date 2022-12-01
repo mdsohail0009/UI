@@ -21,7 +21,6 @@ function App(props) {
     setTimeout(() => {
       const { userConfig: { userProfileInfo } } = store.getState();
       if (userProfileInfo?.id) {
-        // store.dispatch(updatetwofactor({ loading: true, isEnabled: false }));
         apiCalls.twofactor(userProfileInfo?.id).then(res => {
           if (res.ok) {
             store.dispatch(updatetwofactor({ loading: false, isEnabled: res.data }));
@@ -40,6 +39,7 @@ function App(props) {
     localStorage.setItem("__url", window.location.pathname);
     loadUser(store, userManager).then(user => {
       setLoading(false);
+      store.dispatch(updatetwofactor({ loading: true, isEnabled: false }));
       window.$zoho = window.$zoho || {};
       window.$zoho.salesiq?.reset();
       window.$zoho.salesiq = window.$zoho.salesiq || {
@@ -64,8 +64,7 @@ function App(props) {
       let t;
       t = d.getElementsByTagName('script')[0];
       t.parentNode.insertBefore(s, t);
-
-    })
+    });
     connectToHub();
   }, [])// eslint-disable-line react-hooks/exhaustive-deps
   return (

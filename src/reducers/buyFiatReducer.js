@@ -1,5 +1,8 @@
 const SET_STEP = "setStep";
 const CLEAR_STEP = "clearStep";
+const SET_SUB_TITLE = "setSubTitle";
+const SET_RECEIVE_FIAT_HEADER = "setReceiveFiatHead";
+const SET_SEND_FIAT_HEADER = "setSendFiatHead";
 const setStep = (payload) => {
     return {
         type: SET_STEP,
@@ -12,6 +15,24 @@ const clearStep = (payload) => {
         payload
     }
 }
+const setSubTitle = (payload) => {
+    return {
+      type: SET_SUB_TITLE,
+      payload
+    };
+  };
+  const setReceiveFiatHead = (payload) => {
+    return {
+      type: SET_RECEIVE_FIAT_HEADER,
+      payload
+    };
+  };
+  const setSendFiatHead = (payload) => {
+    return {
+      type: SET_SEND_FIAT_HEADER,
+      payload
+    };
+  };
 let initialState = {
     stepcode: "step1",
     stepTitles: {
@@ -21,7 +42,7 @@ let initialState = {
         addcard: 'link_newcard',
         selectwallet: 'withdraw',
         billingaddress: 'change_billing_address',
-        fiatdeposit: 'Fiat_deposit',
+        fiatdeposit: 'withdrawFiat',
         addAddress: 'fiatAddress',
         withdrwalfiatsummary: 'withdraw_fiat_summary',
         withdrwlive: 'withdraw_live',
@@ -37,7 +58,9 @@ let initialState = {
         fiatdeposit: null,
         addAddress: null,
         withdrawfaitsummary: null
-    }
+    },
+    receiveFiatHeader: null,
+    sendFiatHeader: null
 
 }
 const BuyFiatReducer = (state = initialState, action) => {
@@ -46,10 +69,14 @@ const BuyFiatReducer = (state = initialState, action) => {
             return { ...state, stepcode: action.payload };
         case CLEAR_STEP:
             return { ...state, stepcode: action.payload };
+        case SET_RECEIVE_FIAT_HEADER:
+            return { ...state, receiveFiatHeader: action.payload };
+        case SET_SEND_FIAT_HEADER:
+            return { ...state, sendFiatHeader: action.payload }
         default:
             return state;
     }
 
 }
 export default BuyFiatReducer;
-export { setStep, clearStep }
+export { setStep, clearStep, setSubTitle, setReceiveFiatHead, setSendFiatHead }

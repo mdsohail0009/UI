@@ -22,7 +22,7 @@ class Cases extends Component {
             field: "createdDate",
             // title: "Date",
             title: apiCalls.convertLocalLang("Date"),
-            width: 125,
+            width: 200,
             filter: true,
             filterType: "date",
             customCell: (props) => (
@@ -35,12 +35,12 @@ class Cases extends Component {
               </td>
             )
           },
-        {field: "caseNumber",title: apiCalls.convertLocalLang("Case_Number"),filter: true, width: 200,},
+        {field: "caseNumber",title: apiCalls.convertLocalLang("Case_Number"),filter: true, width: 240,},
 		{field: "customerCaseTitle",title: apiCalls.convertLocalLang("title"),filter: true,width: 450},
-		{field: "state",title:apiCalls.convertLocalLang("state"),filter: true,width: 200,},
+		{field: "state",title:apiCalls.convertLocalLang("state"),filter: true,width: 275,},
 	];
      viewCase = ({dataItem}) => {
-		this.props.history.push("/cases?id=" + dataItem.id);
+		this.props.history.push(`/caseView/${dataItem.id}`);
 	};
 
     handleAllDocuments = e => {
@@ -53,11 +53,13 @@ class Cases extends Component {
         const { gridUrl } = this.state;
 
         return (<>
+        <div className="main-container">
             <div className="box basic-info">
-                <Translate content="case" className="basicinfo" />
-                <div className="mt-16">
-                    <List url={gridUrl} ref={this.gridRef} columns={this.columnGrid} additionalParams={{ "customerId": this.props.userProfileInfo?.id }} />
+                <Translate content="case" className="basicinfo mb-12 d-block" />
+                <div className="display-flex mb-16">
+                    <List className="address-clear" url={gridUrl} ref={this.gridRef} columns={this.columnGrid} additionalParams={{ "customerId": this.props.userProfileInfo?.id }} />
                 </div>
+            </div>
             </div>
         </>
         );

@@ -108,10 +108,11 @@ const updateSecurity = (obj) => {
 	return apiClient.put(ApiControllers.master + "UpdateSecurity", obj);
 };
 const getCustomerBankDetails = (customerId)=>{
-
     return bankClient.get(ApiControllers.bank + `GetAccountBalanceByCustomerId/${customerId}`);
-
 }
+const getAccountDetails=(customerId)=>{
+	return bankClient.get(ApiControllers.bank + `AccountDetails/${customerId}`)
+  }
 
 const encryptValue = (msg, key) => {
 	msg = typeof msg == "string" ? msg : JSON.stringify(msg);
@@ -177,6 +178,32 @@ const getRecipientData=(customerId,type,addressbookId)=>{
         ApiControllers.addressbook + `payee/Withdraw/Favourite/${addressbookId}/${customerId}/${type}`
     );
 }
+const getPayeeCryptoLu = (customerId,currency) => {
+	return apiClient.get(
+		ApiControllers.addressbook + `PayeeCryptoLu/${customerId}/${currency}`
+	);
+};
+const getPayeeCrypto = (customerId,currency) => {
+	return apiClient.get(
+		ApiControllers.addressbook + `PayeeCrypto/${customerId}/${currency}`
+	);
+};
+const confirmCryptoTransaction = (obj) => {
+    return apiClient.post(ApiControllers.withdraw + `/Crypto/Confirm`, obj);
+}
+const convertUTCToLocalTime = (dateString) => {
+	let date = new Date(dateString);
+	const milliseconds = Date.UTC(
+		date.getFullYear(),
+		date.getMonth(),
+		date.getDate(),
+		date.getHours(),
+		date.getMinutes(),
+		date.getSeconds()
+	);
+	const localTime = new Date(milliseconds);
+	return ;
+};
 let apicalls = {
 	getportfolio,
 	getCryptos,
@@ -207,6 +234,10 @@ let apicalls = {
 	getVerificationFields,
 	twofactor,
 	getInfoVal,
-	getReferalDetails,getPayeeLu,saveTransferData,getRecipientData,getCustomerBankDetails
+	getReferalDetails,getPayeeLu,saveTransferData,getRecipientData,getCustomerBankDetails,getAccountDetails,
+	getPayeeCryptoLu,
+	getPayeeCrypto,
+	confirmCryptoTransaction,
+	convertUTCToLocalTime
 };
 export default apicalls;

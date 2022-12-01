@@ -16,6 +16,7 @@ import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboa
 import {fetchMemberWallets} from '../dashboard.component/api'
 import Translate from 'react-translate-component';
 import { Link } from 'react-router-dom';
+import { setSendFiatHead } from "../../reducers/buyFiatReducer";
 
 const { Text, Title } = Typography;
 
@@ -147,6 +148,7 @@ class AddressBookV2 extends Component {
 
             const saveRes = await saveWithdraw(obj)
             if (saveRes.ok) {
+                this.props.dispatch(setSendFiatHead(true));
                 this.chnageStep(this.state.isNewTransfer ? "declaration" : "successpage")
                 this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id))
                 this.props.dispatch(fetchMarketCoinData(true))
@@ -202,7 +204,7 @@ class AddressBookV2 extends Component {
                 <List
                     itemLayout="horizontal"
                     dataSource={coinListData}
-                    className="crypto-list auto-scroll wallet-list c-pointer"
+                    className="crypto-list auto-scroll wallet-list"
                     loading={loader ? loader : false}
                     locale={{
                         emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
@@ -238,18 +240,12 @@ class AddressBookV2 extends Component {
                     ref={this.formRef}
                     onFinish={this.transferDetials}
                     autoComplete="off">
-                    {/* <div className="text-center"> <text Paragraph
-                        className='text-white fs-24 fw-600 mb-16 px-4 '>Review Details Of Transfer</text></div> */}
                     {this.state.errorMessage && <Alert type="error" showIcon closable={false} description={this.state.errorMessage} />}
 
                     <Row gutter={24}>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
                                 <Text className="fw-600 text-white px-4 mb-16 mt-4 text-captz" style={{ fontSize: '18px' }}>Transfer details</Text>
-
-                                {/* <div><Link >Edit
-                                </Link>
-                                </div> */}
                             </div>
                         </Col>
                         {"  "}
@@ -259,7 +255,7 @@ class AddressBookV2 extends Component {
                                 <Title className="fs-14 text-white fw-500 text-upper text-right">
                                     <NumberFormat
                                         value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
-                                        thousandSeparator={true} displayType={"text"} decimalPlaces={2}/> {`${this.state.reviewDetails?.walletCode}`}</Title>
+                                        thousandSeparator={true} displayType={"text"}  decimalScale={2}/> {`${this.state.reviewDetails?.walletCode}`}</Title>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
@@ -267,7 +263,7 @@ class AddressBookV2 extends Component {
                                 <Title className="fs-14 text-white fw-400 text-captz">Total fees</Title>
                                 <Title className="fs-14 text-white fw-500 text-upper text-right"><NumberFormat
                                     value={`${(this.state.reviewDetails?.comission)}`}
-                                    thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
+                                    thousandSeparator={true} displayType={"text"}  decimalScale={2}/> {`${this.state.reviewDetails?.walletCode}`}</Title>
                             </div>
                         </Col>
                         {/* <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
@@ -305,7 +301,7 @@ class AddressBookV2 extends Component {
                         <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                             <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
                                 <Title className="fs-14 text-white fw-400 text-captz">Save Whitelist name as</Title>
-                                <Title className="fs-14 text-white fw-500  text-right">{this.state.reviewDetails?.favouriteName}</Title>
+                                <Title className="fs-14 text-white fw-500  text-right plist-textwrap">{this.state.reviewDetails?.favouriteName}</Title>
                             </div>
                         </Col>
                         {this.state.reviewDetails?.name && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
@@ -370,27 +366,28 @@ class AddressBookV2 extends Component {
             newtransfer: <>
                 <FiatAddress currency={this.props.selectedCurrency||this.state.currency} amount={this.state.amount} onContinue={(obj) => {
                     this.setState({ ...this.state, reviewDetails: obj }, () => {
-                        this.chnageStep("reviewdetails")
+                        this.props.dispatch(setSendFiatHead(true));
+                        this.chnageStep("reviewdetails");
                     })
                 }
                 }
                     onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} />
             </>,
-            declaration: <div className="text-center">
+            declaration: <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
                 <Image width={80} preview={false} src={alertIcon} />
                 <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
                 <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                        Please sign using link received in email to whitelist your address. `}</Text>
                 <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
                 {/*<div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBOARD</Button> */}
-            </div>,
-            successpage: <div className="text-center">
+            </div></div>,
+            successpage: <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
                 <Image width={80} preview={false} src={success} />
                 <Title level={2} className="text-white-30 my-16 mb-0">Your transaction has been processed successfully</Title>
                 {/* <Text className="text-white-30">{`Declaration form has been sent to ${"have123@yopmail.com"}. 
                    Please sign using link received in email to whitelist your address`}</Text> */}
                 {/*<div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBOARD</Button> */}
-            </div>
+            </div></div>
         }
         return steps[this.state.step];
     }
