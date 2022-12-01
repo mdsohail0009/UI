@@ -1,48 +1,64 @@
 {
     "Buy":{
-        "docType":"Transaction Type",
-        "date":"Date",
-        "wallet":"Wallet",
-        "Amount":["debit","credit"],
-        "state":"State"
+        "date":"Date and Time",
+        "type":"Transaction Type",
+        "amount":"Amount",
+        "wallet":"Asset",
+        "newAssetBalance":"New Asset Balance",
+        "state":"Status"
     },
     "Sell":{
-        "docType":"Transaction Type",
-        "date":"Date",
-        "wallet":"Wallet",
-        "Amount":["debit","credit"],
-        "state":"State"
+        "date":"Date and Time",
+        "type":"Transaction Type",
+        "amount":"Amount",
+        "wallet":"Asset",
+        "newAssetBalance":"New Asset Balance",
+        "state":"Status"
     },
     "Deposit Crypto":{
-        "docType":"Transaction Type",
-        "date":"Date",
-        "wallet":"Wallet",
-        "Amount":["debit","credit"],
-        "state":"State"
+        "date":"Date and Time",
+        "type":"Transaction Type",
+        "amount":"Amount",
+        "wallet":"Asset",
+        "newAssetBalance":"New Asset Balance",
+        "network":"Network",
+        "address":"Address",
+        "hashId":"Hash",
+        "sbFee":"SB Fee ",
+        "sourceWallet":"Source Wallet",
+        "state":"Status"
     },
     "Withdraw Crypto":{
-        "docType":"Transaction Type",
-        "date":"Date",
-        "wallet":"Wallet",
-        "Amount":["debit","credit"],
-        "state":"State"
+        "date":"Date and Time",
+        "type":"Transaction Type",
+        "amount":"Amount",
+        "wallet":"Asset",
+        "newAssetBalance":"New Asset Balance",
+        "network":"Network",
+        "address":"Address",
+        "hashId":"Hash",
+        "sbFee":"SB Fee ",
+        "state":"Status"
     },
     "Withdraw Fiat":{
-        "docType":"Transaction Type",
-        "date":"Date",
-        "wallet":"Wallet",
-        "Amount":["debit","credit"],
-        "beneficiryName":"Sender/Recipient Full Name ",
-        "accountnumber":"Bank Account Number/IBAN ",
-        "state":"State"
+        "date":"Date and Time",
+        "type":"Transaction Type",
+        "amount":"Amount",
+        "sbFee":"SB Fee ",
+        "senderName":"Sender's Name",
+        "beneficiaryName":"Beneficiary's Name",
+        "beneficiaryIBAN":"Beneficiary IBAN/ Account Number",
+        "state":"Status"
     },
     "Deposit Fiat":{
-        "docType":"Transaction Type",
-        "date":"Date",
-        "wallet":"Wallet",
-        "Amount":["debit","credit"],
-        "senderName":"Sender/Recipient Full Name ",
-        "accountnumber":"Bank Account Number/IBAN ",
-        "state":"State"
+        "date":"Date and Time",
+        "type":"Transaction Type",
+        "amount":"Amount",
+        "sbFee":"SB Fee",
+        "senderName":"Sender's Name ",
+        "bankName":"Sender's Bank Account  ",
+        "beneficiaryName":"Beneficiary’s Name ",
+        "beneficiaryIBAN":"Beneficiary IBAN/ Account Number ",
+        "state":"Status"
     }
 }

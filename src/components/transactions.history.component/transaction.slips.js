@@ -4,6 +4,7 @@ import moment from "moment/moment";
 import { downloadTransaction } from './api';
 import TransactionSlip from "./transactionSlip.json";
 import { numberWithCommas } from '../../utils/service';
+import Loader from '../../Shared/loader';
 class TransactionSlips extends Component {
   constructor(props) {
     super(props);
@@ -15,9 +16,6 @@ class TransactionSlips extends Component {
   handleDownload = async () => {
     const { modalData } = this.props;
     this.setState({ ...this.state, isLoading: true, downloadError: "" })
-    if (modalData?.state !== "Approved") {
-      this.setState({ ...this.state, isLoading: false, downloadError: "Please download approve status only " })
-    } else {
       let response = await downloadTransaction(modalData?.id, modalData?.docType);
       if (response.ok) {
         this.setState({ ...this.state, downloadError: "", isLoading: false })
@@ -26,7 +24,6 @@ class TransactionSlips extends Component {
       } else {
         this.setState({ ...this.state, downloadError: this.isErrorDispaly(response.data), isLoading: false })
       }
-    }
   }
   transactionModal = (data) => {
     this.setState({
@@ -63,7 +60,7 @@ class TransactionSlips extends Component {
   render() {
     const { Title } = Typography;
     const { downloadError } = this.state;
-    const { modalData, showModal } = this.props;
+    const { modalData, showModal,viewData,loader } = this.props;
     const transactionSlipData = TransactionSlip[modalData?.copyType]
     return (
       <>
@@ -79,29 +76,29 @@ class TransactionSlips extends Component {
 
           }
           footer={[
-            <>
+            <>{!loader&&<>
               <Button style={{ width: 100 }}
-                className=" pop-cancel"
+                className=" pop-cancel cancel-btn pop-btn"
                 onClick={() => this.handleModalCancel()}
 
               >Cancel</Button>
-             {modalData?.state==="Approved" &&
+             {(viewData?.state==="Approved" || viewData?.state==="Approved (Sent)") &&
               <Button className="primary-btn pop-btn"
                 loading={this.state.isLoading}
                 onClick={() => this.handleDownload()}
               > Download </Button>
-             }
+             }</>}
             </>
           ]} >
           <>
             {downloadError && <Alert showIcon type="error" description={downloadError} closable={false} />}
-
-            {transactionSlipData && Object?.keys(transactionSlipData)?.map((key) => <>
+             {loader && <Loader/>}
+            {!loader&&transactionSlipData && Object?.keys(transactionSlipData)?.map((key) => <>
               <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                <div className="pay-list py-4" style={{ alignItems: 'baseline' }} key={key}>
-                  <Title className="fs-14 text-white fw-400 text-captz">{typeof transactionSlipData[key] === "object" ? key : transactionSlipData[key]}</Title>
+                <div className="pay-list py-4 transaction-details" style={{ alignItems: 'baseline' }} key={key}>
+                  <Title className="fs-14 text-white fw-400">{typeof transactionSlipData[key] === "object" ? key : transactionSlipData[key]}</Title>
                   <Title className="fs-14 text-white fw-500  text-right trn-sumtext">
-                    {(modalData[key] === null || modalData[key] === " ") ? '-' : (transactionSlipData[key] === 'Date') ? moment.utc(modalData[key]).local().format("DD/MM/YYYY hh:mm:ss A") : (typeof transactionSlipData[key] === "object") ? `${this.getCombinedValues(transactionSlipData[key])}` : modalData[key]}
+                    {(viewData[key] === null || viewData[key] === "") ? '-' : (transactionSlipData[key] === 'Date') ? moment.utc(viewData[key]).local().format("DD/MM/YYYY hh:mm:ss A") : (typeof transactionSlipData[key] === "object") ? `${this.getCombinedValues(transactionSlipData[key])}` : viewData[key]}
                   </Title>
                 </div>
               </Col></>)}

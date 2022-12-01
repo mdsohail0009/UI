@@ -109,7 +109,7 @@ class ProfileInfo extends Component {
       this.setState({ ...this.state, Loader: false, errorMessage: "Please complete KYC/KYB" });
 
     } else if (this.props?.userConfig?.customerState !== "Approved") {
-      this.setState({ ...this.state, Loader: false, errorMessage: "Your aprroval is in pending state" });
+      this.setState({ ...this.state, Loader: false, errorMessage: "Your account approval is in progress state" });
     }
     else {
       this.setState({ ...this.state, fileLoader: true });

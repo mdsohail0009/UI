@@ -1516,8 +1516,8 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .gridlink-data{max-width:130px ;}
 .custom-btn:hover span{color: white;}
 .custom-crypto-btns .custom-bnt span{color: var(--textWhite); font-weight: 400;}
-.pop-btn.cancel-btn{background: transparent; border: transparent; border-radius: 40px; height: 46px !important; font-weight: 700 !important;}
-.pop-btn.cancel-btn:hover{border: 1px solid var(--borderLight) !important;}
+.pop-btn.cancel-btn{background: transparent; border: 1px solid transparent; border-radius: 40px; height: 46px !important; font-weight: 700 !important;}
+.pop-btn.cancel-btn:hover{border: 1px solid var(--textYellow)!important;}
 .pop-btn.cancel-btn span{color: var(--textYellow) !important;}
 .crypto-pop .btn-width{width: 150px !important;height: 46px !important;}
 .sc-error{font-weight: 400 !important;}
@@ -1560,3 +1560,6 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .security-login{background: var(--bgGrey);color: var(--black);padding: 50px 40px 16px;margin: 80px auto;border-radius: 14px;width: 500px;height: 350px;}
 .security-text{font-size: 22px !important;font-weight: 700 !important;line-height: 1.29 !important;color: var(--textWhite)!important;text-align: center;}
 .primary-btn.pop-cancel:hover{border: 1px solid var(--textYellow) !important;}
+.transaction_resp .cust-label label{margin-left: 12px;}
+.transaction_resp .cust-label .ant-select-selection-item{cursor: pointer !important;}
+.pay-list.transaction-details h1{flex: 1; word-break: break-all;}

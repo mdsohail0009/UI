@@ -608,6 +608,6 @@ export default {
 	contact_amount_text: "請聯繫支持人員獲取更高的金額.",
 	validate: "驗證",
 	sell_select_currency: "選擇要接收的貨幣",
-	transactions_history: "交易紀錄",
+	transactions_history: "交易記錄",
 	transaction:"交易",
 };
