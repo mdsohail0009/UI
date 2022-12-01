@@ -163,7 +163,6 @@ class AddressBookV2 extends Component {
     }
     changesVerification = (obj) => {
         this.setState({ ...this.state, verifyData: obj,phBtn:obj.phBtn,emailBtn:obj.emailBtn,authBtn:obj.authBtn })
-        console.log(obj)
     }
     isErrorDispaly = (objValue) => {
         if (objValue.data && typeof objValue.data === "string") {

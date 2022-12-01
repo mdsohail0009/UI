@@ -84,7 +84,6 @@ class AddressDocumnet extends Component {
                                         this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg and PDF  files" }) 
                                     }
                                 }else if(file.status ==='error'){
-                                    console.log(file)
                                     this.setState({ ...this.state, isDocLoading: false,errorMessage:file?.response });
                                 }
                             }}

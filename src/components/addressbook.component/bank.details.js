@@ -505,8 +505,6 @@ class BankDetails extends Component {
         const { countries, states, isLoading } = this.state;
         
         return <>
-            {console.log(this.props.domesticType)}
-            {console.log(this.props.transferType)}
             <Row gutter={[16, 16]} className={'pb-16'}>
                 {this.renderAddress(transferType)}
             </Row>
