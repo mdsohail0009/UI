@@ -132,7 +132,26 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .k-grid-content{margin-right: -12px;}
 .k-grid-header{padding-right: 0;}
 .k-grid tbody tr:hover, .k-grid tbody tr.k-state-hover{background-color: var( --bgDarkGrey) !important;}
-.k-pager-wrap{color: var(--textWhite);background-color: transparent;}/*Kendo End*/
+.k-pager-wrap{color: var(--textWhite);background-color: transparent;}
+/*Kendo End*/
+/*Modal start*/
+.ant-modal-content{border-radius: 24px;}
+.ant-modal-header{border-radius: 24px 24px 0 0;padding: 16px 24px;border-color: var(--borderGrey);}
+.ant-modal-header, .ant-modal-content{background-color: var(--bgGrey);}
+.ant-modal-title{font-size: 24px; line-height: 34px;color: var(--textWhite30);text-transform:capitalize;}
+.ant-modal-body p{font-size: 16px;color: var(--textWhite50);font-weight: 400;}
+.ant-modal-footer{padding:16px 24px;border-color: transparent;}
+.cust-adon .ant-input-group, .cust-adon .ant-input-group .ant-input:focus, .cust-adon .ant-input, .cust-adon .ant-input-group-addon{border: none !important;box-shadow: none;padding: 0;background: transparent;}
+.cust-adon .ant-input{line-height: 45px !important;height: 47px !important;background-color: transparent !important; padding:0 1px !important;margin-bottom:0}
+/* .ant-drawer{z-index: 999 !important;} */
+.ant-modal-confirm-btns button:first-child{background-color: transparent;border: none;color: var(--textWhite30);}
+.ant-modal-confirm-btns button:nth-child(2){background-color: var(--bgYellow) !important;border: none;color: var(--textDark);border-radius: 16px;padding: 4px 30px}
+.ant-modal-confirm-btns button:first-child:hover{color: var(--textYellow);}
+.ant-picker-input > input, .ant-form-item-label > label{color: var(--textWhite);}
+.search-bg{border: 1px solid rgba(0,0,0,.08);color: #313c46 !important;background-color: var(--bgDarkGrey) !important;padding: 15px 10px;}
+.anticon-copy svg, .anticon-check svg{color: var(--textYellow);}
+/*Modal End*/
+
 /* Dashboard start */
 .ant-list-split .ant-list-item{background: rgb(255, 255, 255 ,0.15);border-radius: 13px;margin-bottom: 10px;padding: 14px 20px !important;}
 .db-titles{font-weight: 700 !important;color:rgb(255 255 255 / 60%) !important;font-size: 22px !important;}
