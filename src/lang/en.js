@@ -3,7 +3,7 @@ export default {
 	user_type: "%(lable)s",
 	Portfolio_title: "Crypto Portfolio",
 	your_portfolio: "Crypto Balances",
-	suissebase_title: "Suissebase Fiat Wallet",
+	suissebase_title: "Crypto Balances",
 	suissebase_subtitle: "Fiat Balances",
 	markets_title: "Markets",
 	markets_subtitle: "Trade your crypto into any currency",
@@ -671,5 +671,6 @@ export default {
 	sell_select_currency: "SELECT CURRENCY TO RECEIVE",
 	transactions_history: "Transaction History",
 	transaction:"Transaction",
+	fait_walets:"Suissebase Fiat Wallets"
 	
 };

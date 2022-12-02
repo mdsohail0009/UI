@@ -57,7 +57,10 @@ body, h1, h2, h3, h4, h5, h6, a, p div{font-family: 'Lato', sans-serif !importan
 
 /*----Margin Utilities----*/
 .m-0{margin: 0 !important;}
+/*Header start*/
+.tlv-header{background-color:#08090E;position: fixed; z-index: 9999; width: 100%;}
 
+/*Header End*/
 /*Common css start*/
 .text-white{color: #FFFFFF;}
 body{background: #000000 url(../images/dark-bg2.0.svg) no-repeat top center;}
@@ -141,11 +144,13 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .drpdwn-list{list-style: none;}
 .drpdwn-list li{font-size: 14px; padding: 0 22px; transition: 0.3s ease;cursor: pointer;}
 .drpdwn-list li a{color: var(--textWhite);display: flex; align-items: center; padding: 10px 0 10px 10px;}
+.crypto-card-design{display: flex;justify-content: space-between;}
+.listitems-design{display: block;float: left;width: 370px;margin-right: 16px;border-bottom: 0 !important;}
+.listitems-design:nth-child(even) {margin-right: 0;}
+.crypto-wallet-style{margin-bottom: 28px;}
+.fait-wallet-style{margin-top: 28px;}
 /* Dashboard end */
-/*Header start*/
-.tlv-header{background-color:#08090E;position: fixed; z-index: 9999; width: 100%;}
 
-/*Header End*/
 
 /*Buy drawer start*/
 

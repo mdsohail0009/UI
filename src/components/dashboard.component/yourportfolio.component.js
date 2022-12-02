@@ -232,6 +232,7 @@ class YourPortfolio extends Component {
                     
               </div>
             </div> */}
+            <Translate content="fait_walets" component={Title} className="db-titles" />
         {cryptoPortFolios?.loading ? (
                <Loader />
         ) : (
@@ -250,7 +251,7 @@ class YourPortfolio extends Component {
               }}
               renderItem={(item) => (
                 <List.Item
-                  className=""
+                  className="listitems-design"
                   extra={
                     <div className='crypto-btns'>
                       
@@ -274,14 +275,7 @@ class YourPortfolio extends Component {
                         className="custom-btn sec"
                       />
                       
-                      <Dropdown overlay={this.menuBar(item)} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
-                        <a onClick={e => e.preventDefault()}>
-                          <Space>
-                          <span class="icon md menu-bar ml-4 p-relative"></span>
-                          {/* <DownOutlined /> */}
-                        </Space>
-                      </a>
-                    </Dropdown>
+                     
                      {/* <span class="icon md bell ml-4 p-relative"></span> */}
                      {/* <Dropdown overlay={this.depostWithdrawMenu} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
                      <span class="icon md bell ml-4 p-relative"></span>
@@ -302,7 +296,8 @@ class YourPortfolio extends Component {
                       />
                     }
                     title={
-                      <div className="mr-16">
+                      <div className="mr-16 crypto-card-design">
+                        <div>
                         <div style={{ display: "flex", alignItems: "center" }}>
                           <Text className="fs-16 fw-600 text-upper text-white">
                             {item.coin}
@@ -324,6 +319,17 @@ class YourPortfolio extends Component {
                           type={"text"}
                           prefix={""}
                         />
+                        </div>
+                        <div>
+                        <Dropdown overlay={this.menuBar(item)} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
+                        <a onClick={e => e.preventDefault()}>
+                          <Space>
+                          <span class="icon md menu-bar ml-4 p-relative"></span>
+                          {/* <DownOutlined /> */}
+                        </Space>
+                      </a>
+                    </Dropdown>
+                        </div>
                       </div>
                     }
                   />

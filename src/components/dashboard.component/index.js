@@ -77,10 +77,10 @@ class Home extends Component {
                             </div>
                         }
                         {this.state.permissions?.Balances &&<>
-                        <div className="markets-panel mb-16 markets-line crypto-wallet-style">
+                        <div className="markets-panel markets-line crypto-wallet-style">
                             <Wallets />
                         </div>
-                        <div className="markets-panel">
+                        <div className="markets-panel fait-wallet-style">
                             <YourPortfolio />
                         </div>
                         </>}
