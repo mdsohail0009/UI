@@ -122,8 +122,8 @@ class Wallets extends Component {
         return (
             <>
             {/* <BankWallets/> */}
-            <div className="d-flex justify-content">
-                <Translate content="suissebase_title" component={Title} className="fs-24 fw-600 text-white px-4 mb-16 mt-4" />
+            <div className="d-flex align-center justify-content">
+                <Translate content="suissebase_title" component={Title} className="db-titles" />
                 <div>
               <Button className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
                   <Translate content="cockpit" />
@@ -147,7 +147,7 @@ class Wallets extends Component {
                     className="mobile-list"
                     //loading={wallets.loading}
                     renderItem={item =>
-                        <List.Item className="py-10 px-0">
+                        <List.Item className="">
                             <List.Item.Meta
                                 avatar={<Image preview={false} src={item.imagePath} />}
                                 title={<div className="fs-16 fw-600 text-upper text-white-30 l-height-normal">{item.walletCode}</div>}

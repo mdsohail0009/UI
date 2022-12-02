@@ -70,14 +70,14 @@ class Home extends Component {
                 </Carousel> : ""}
 
                 <Row justify="center mt-16">
-                     <Col xs={24} md={12} xl={10}>
+                <Col xs={24} md={12} xl={10}>
                         {this.state.permissions?.Bank &&
                             <div className="markets-panel">
                                 <BankWallets/>
                             </div>
                         }
                         {this.state.permissions?.Balances &&<>
-                        <div className="markets-panel mb-16 markets-line">
+                        <div className="markets-panel mb-16 markets-line crypto-wallet-style">
                             <Wallets />
                         </div>
                         <div className="markets-panel">

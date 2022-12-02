@@ -107,7 +107,7 @@ class BankWallets extends Component {
     const { wallets } = this.props.dashboard;
     return (
       <>
-        <Title className="fs-24 fw-600 mb-16 text-white px-4">
+        <Title className="db-titles">
           Personal Bank Accounts
         </Title>
         {this.state.isLoading ? (
@@ -144,7 +144,7 @@ class BankWallets extends Component {
                 {item.isAccountExist ? (
                   <>
                     {item?.accountStatus?.toLowerCase() == "approved" && (
-                      <div className="crypto-btns mt-8">
+                      <div className="crypto-btns">
                         <Translate
                           content="transfer_funds"
                           component={Button}
@@ -191,7 +191,7 @@ class BankWallets extends Component {
                     )}
 
                     {item?.accountStatus?.toLowerCase() != "approved" && (
-                      <div className="crypto-btns mt-8">
+                      <div className="crypto-btns">
                         <Button
                           content="Pending"
                           type="primary"
@@ -205,7 +205,7 @@ class BankWallets extends Component {
                     )}
                   </>
                 ) : (
-                  <div className="crypto-btns mt-8">
+                  <div className="crypto-btns">
                     <Translate
                       content="createnow"
                       type="primary"

@@ -88,7 +88,7 @@ class Portfolio extends Component {
         return (
             <div className="mb-16">
                 <div className='mb-12 mt-4'>
-                    <Translate content="transactions_history" className="basicinfo" />
+                    <Translate content="transactions_history" className="basicinfo db-titles" />
                     <Button
                         onClick={() => this.transactionDrawer()}
                         className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}}

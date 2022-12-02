@@ -107,15 +107,15 @@ class Summary extends Component {
 					/>
 				)}
 
-				<div className="cryptosummary-container">
+				<div className="cryptosummary-container">					
 					<div
-						className="fs-36 text-white-30 fw-200 text-center"
-						style={{ lineHeight: "36px" }}>
+						className="cust-coin-value"
+						>
 						<Currency
-							prefix={""}
+							prefix={coin}
 							decimalPlaces={decimalPlaces}
 							defaultValue={amount}
-							suffixText={coin}
+							suffixText={""}
 						/>{" "}
 					</div>
 					{showEstimated && (
@@ -129,6 +129,7 @@ class Summary extends Component {
 							/>
 						</div>
 					)}
+					<div className="cust-summary-new">
 					<div className="pay-list fs-14">
 						<Translate
 							className="fw-400 text-white"
@@ -207,10 +208,10 @@ class Summary extends Component {
 							/>
 						</div>
 					)}
-
-					<div className="text-center my-16">
+				</div>
+					<div className="cust-summary-text">
 						<Translate
-							className="fs-12 fw-200 text-white"
+							className="text-style"
 							content="final_Amount"
 							component={Text}
 						/>
@@ -234,7 +235,7 @@ class Summary extends Component {
 							style={{ flex: 1 }}>
 							<Translate content="agree_sell" component="Paragraph" />{" "}
 							<a
-								className="textpure-yellow"
+								className="terms-link"
 								href="https://www.iubenda.com/terms-and-conditions/42856099"
 								target="_blank">
 								<Translate content="terms" component="Text" />
@@ -246,17 +247,7 @@ class Summary extends Component {
 					
 					
 
-					<div className="align-center btn-content btn-container">
-					<div className="text-center mt-16 cust-pop-up-btn sell-btc-btn">
-						<Translate
-							content="cancel"
-							component={Button}
-							onClick={() => { this.onBackSell() }}
-							type="text"
-							size="large"
-							className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn mr-8 ml-0 primary-btn pop-cancel"
-						/>
-					</div>
+					<div className="">
 					{(okBtnTitle == "buy" && permissions) &&
 					<SuisseBtn
 						className={"pop-btn custom-send sell-btc-btn"}
@@ -266,6 +257,16 @@ class Summary extends Component {
 						autoDisable={true}
 						onClick={() => this.props.onClick()}
 					/>}
+					
+					<SuisseBtn
+					title="cancel"
+							content="cancel"
+							component={Button}
+							onClick={() => { this.onBackSell() }}
+							type="text"
+							size="large"
+							className="cust-cancel-btn"
+						/>
 					
 					{(okBtnTitle == "sell" && permissions) &&<div className="sell-btc-btn">
 					<SuisseBtn
