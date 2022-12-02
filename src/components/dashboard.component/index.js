@@ -69,8 +69,8 @@ class Home extends Component {
                     </div>)}
                 </Carousel> : ""}
 
-                <Row justify="center mt-16">
-                <Col xs={24} md={12} xl={10}>
+                <Row justify="center mt-16" gutter={[16,16]}>
+                <Col xs={24} md={12} xl={15}>
                         {this.state.permissions?.Bank &&
                             <div className="markets-panel">
                                 <BankWallets/>
@@ -84,14 +84,15 @@ class Home extends Component {
                             <YourPortfolio />
                         </div>
                         </>}
-                    </Col>
-                    <Col xs={24} md={12} xl={14}>
                         {this.state.permissions.Transactions && <Portfolio
                             crypto="Bitcoin"
                             crypto_value='0.00'
                             crypto_usd="0.00 BTC"
                             crypto_stock="0.0%" />}
-                        {this.state.permissions.Notices && <Notices />}
+                        {/* {this.state.permissions.Notices && <Notices />} */}
+                        
+                    </Col>
+                    <Col xs={24} md={12} xl={9}>
                         {this.state.permissions.Markets && <div className="markets-panel mr-0">
                             <MarketCap />
                         </div>}
