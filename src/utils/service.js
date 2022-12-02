@@ -10,10 +10,10 @@ export function newGUID() {
         return v.toString(16);
     });
 }
-export function numberWithCommas(x)  {
+export function numberWithCommas(x) {
     return x ? x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0;
 }
-export function getDocObj(customerId, path, docName,size, id, detailId) {
+export function getDocObj(customerId, path, docName, size, id, detailId) {
     return {
         "id": id || newGUID(),
         "transactionId": null,
@@ -38,5 +38,14 @@ export function getDocObj(customerId, path, docName,size, id, detailId) {
                 "Path": path
             }
         ]
+    }
+}
+
+export function checkCustomerState(config) {
+    const hasProp = config.hasOwnProperty("customerState");
+    if ((hasProp && config.customerState === "Approved") || !hasProp) {
+        return true;
+    } else {
+        return false;
     }
 }
