@@ -898,7 +898,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .ribbon-item{border-right: 0 !important;}
     .transaction_resp .pop-btn{width: 100%; margin-top: 20px !important;margin-bottom: 16px;}
     .transaction_resp{ padding:0 15px}
-    .transaction_resp .input-label{margin-left: 0 !important;}
+    .transaction_resp .input-label{margin-left: 0 ;}
     .search-bg{margin-top: 16px; border-radius: 10px;}
     .customaudit-select{margin-bottom: 16px;}
     .footer-links{text-align: center;}
@@ -913,11 +913,15 @@ font-size: 12px;font-weight: 500;height: 20px;}
         max-height: calc(100vh - 270px);
     }
     .code-sent-tool-tip{display: flex;}
-    .k-pager-sizes.k-label{margin-left: -6px;}
+    .k-pager-sizes.k-label{margin-left: 5px;}
     .k-pager-wrap{margin-left: -11px;}
     .k-dropdown-wrap{margin-right: -8px;}
-    .transctns-grid table col{width: 120px !important;}
+    .transctns-grid table col{width: 120px;}
     /* .ant-popover.ant-popover-placement-left {left: 176px !important;} */
+    .date-mobile{margin-left: 12px !important;}
+    .transaction-grid table col{width: 250px !important;}
+    .transaction-grid .k-pager-wrap.k-pager.k-widget.k-grid-pager{overflow: auto;}
+    .transaction-grid .k-pager-wrap .k-pager-numbers.k-reset li:not(:first-child){display: none;}
 }
 @media (max-width: 1024px){
     .custom-gridresponsive .ant-drawer-body{word-wrap: unset !important;}
@@ -1133,6 +1137,8 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .minmax.custom-minmax{position: relative;right:-332px !important;top:-11px;width:100px;}
     .side-drawer.custom-drawer-width .ant-drawer-content-wrapper{width: 1094px !important;}
     .lg-fontsize{font-size: 14px !important;}
+    .transaction-grid .k-grid-header .k-grid-header-wrap table{width: 1874px !important;}
+    .transaction-grid .k-grid-container .k-grid-content table{width: 1874px !important;}
 }
 
 @media (min-width: 1500){
@@ -1535,3 +1541,5 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .transaction_resp .cust-label label{margin-left: 12px;}
 .transaction_resp .cust-label .ant-select-selection-item{cursor: pointer !important;}
 .pay-list.transaction-details h1{flex: 1; word-break: break-all;}
+.ant-alert-info .ant-alert-icon{color: #ff4d4f;}
+.ant-alert-info{background-color: #fff2f0; border: 1px solid #ffccc7;}
