@@ -346,7 +346,7 @@ isErrorDispaly = (objValue) => {
                 {this?.state?.isCustomDate ? <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
                   <Form.Item
                     name="selectedTimespan"
-                    className="input-label selectcustom-input mb-0 cust-label"
+                    className="input-label selectcustom-input mb-0 cust-label mt-4"
                     label="From - To Dates"
                   >
                     <Input disabled placeholder="DD/MM/YYYY" className="cust-input cust-adon mb-0" addonAfter={<i className="icon md date-white c-pointer" onClick={(e) => { this.datePopup(e, 'searchObj') }} />} />
