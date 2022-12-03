@@ -925,6 +925,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .transaction-grid table col{width: 250px !important;}
     .transaction-grid .k-pager-wrap.k-pager.k-widget.k-grid-pager{overflow: auto;}
     .transaction-grid .k-pager-wrap .k-pager-numbers.k-reset li:not(:first-child){display: none;}
+    .transaction-type{margin-top: 8px !important;}
 }
 @media (max-width: 1024px){
     .custom-gridresponsive .ant-drawer-body{word-wrap: unset !important;}
