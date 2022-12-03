@@ -9,6 +9,7 @@ import DefaultUser from "../../assets/images/defaultuser.jpg";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
 import Loader from "../../Shared/loader";
+import { checkCustomerState } from "../../utils/service";
 
 class ProfileInfo extends Component {
   state = { Image: null, Loader: false, fileLoader: false, errorMessage: null };
@@ -108,7 +109,7 @@ class ProfileInfo extends Component {
     if (!this.props?.userConfig?.isKYC) {
       this.setState({ ...this.state, Loader: false, errorMessage: "Please complete KYC/KYB" });
 
-    } else if (this.props?.userConfig?.customerState !== "Approved") {
+    } else if (!checkCustomerState(this.props?.userConfig)) {
       this.setState({ ...this.state, Loader: false, errorMessage: "Your account approval is in progress state" });
     }
     else {
