@@ -228,7 +228,7 @@ class AuditLogs extends Component {
                 {this?.state?.isCustomDate ? <Col xs={24} sm={24} md={7} className="px-8">
                   <Form.Item
                     name="selectedTimespan"
-                    className="input-label selectcustom-input mb-0"
+                    className="input-label selectcustom-input mb-0 transaction-type"
                     label="Selected timespan"
                   >
                     <Input disabled placeholder="DD/MM/YYYY" className="cust-input cust-adon mb-0" addonAfter={<i className="icon md date-white c-pointer" onClick={(e) => { this.datePopup(e, 'searchObj') }} />} />
@@ -237,7 +237,7 @@ class AuditLogs extends Component {
                 <Col xs={24} sm={24} md={7} className="px-8">
                   <Form.Item
                     name="feature"
-                    className="input-label selectcustom-input mb-0"
+                    className="input-label selectcustom-input mb-0 transaction-type"
                     label={<Translate content="Features" component={Form.label} className="input-label selectcustom-input mb-0" />}
                   >
                     <Select
