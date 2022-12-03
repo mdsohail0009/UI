@@ -103,7 +103,7 @@ class TransactionsHistory extends Component {
         </td>
       )
     },
-    { field: "docType", title: "Type", filter: true,
+    { field: "docType", title: "Type", filter: true,width: 260,
     customCell: (props) => (
       <td className="d-flex justify-content">
       <div className="gridLink c-pointer	" onClick={() => this.transactionModal(props?.dataItem)}>
@@ -111,9 +111,9 @@ class TransactionsHistory extends Component {
       </div>
     </td>
     ), },
-    { field: "wallet", title: "Wallet", filter: true, },
+    { field: "wallet", title: "Wallet", filter: true,width: 260, },
     {
-      field: "debit", title: "Value", filter: false, dataType: 'number', filterType: "numeric",
+      field: "debit", title: "Value", filter: false, dataType: 'number', filterType: "numeric",width: 260,
       customCell: (props) => (
         <td>
           {props.dataItem?.debit && <NumberFormat value={props.dataItem?.debit} displayType={"text"} thousandSeparator={true} />}
@@ -144,7 +144,7 @@ class TransactionsHistory extends Component {
     {
       field: "accountnumber", title: "Bank Account Number/IBAN", filter: true, width: 260,
     },
-    { field: "state", title: "State", filter: true, },
+    { field: "state", title: "State", filter: true, width: 260,},
     
 
 
@@ -330,7 +330,7 @@ isErrorDispaly = (objValue) => {
               <Form.Item
                     name="timeSpan"
                     className="input-label selectcustom-input mb-0"
-                    label={<Translate content="Date" component={Form.label} className="input-label selectcustom-input mb-0" />}
+                    label={<Translate content="Date" component={Form.label} className="input-label selectcustom-input mb-0 date-mobile" />}
                   >
                     <Select
                       className="cust-input mb-0 custom-search"
@@ -346,14 +346,14 @@ isErrorDispaly = (objValue) => {
                 {this?.state?.isCustomDate ? <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
                   <Form.Item
                     name="selectedTimespan"
-                    className="input-label selectcustom-input mb-0 cust-label"
+                    className="input-label selectcustom-input mb-0 cust-label mt-4"
                     label="From - To Dates"
                   >
                     <Input disabled placeholder="DD/MM/YYYY" className="cust-input cust-adon mb-0" addonAfter={<i className="icon md date-white c-pointer" onClick={(e) => { this.datePopup(e, 'searchObj') }} />} />
                   </Form.Item>
                 </Col> : ""}
                 <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
-                  <Form.Item name="docType" className="input-label mb-0 cust-label" label="Transaction Type" colon={false}>
+                  <Form.Item name="docType" className="input-label mb-0 cust-label mt-4" label="Transaction Type" colon={false}>
                     <Select
                       defaultValue="All"
                       className="cust-input w-100 bgwhite c-pointer"
@@ -409,6 +409,7 @@ isErrorDispaly = (objValue) => {
             </Form>
           </div>
           <List
+          className="transaction-grid"
             url={gridUrl} additionalParams={searchObj} ref={this.gridRef}
             columns={this.gridColumns}
             showExcelExport={this.state.permissions?.ExcelExport}
