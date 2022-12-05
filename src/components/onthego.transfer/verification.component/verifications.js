@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Button, Form, Input, Alert, Tooltip,message} from "antd";
+import { Typography, Button, Form, Input, Alert, Tooltip} from "antd";
 import { getCode, getVerification, sendEmail, verifyEmailCode, getAuthenticator, getVerificationFields } from "./api";
 import { connect } from 'react-redux';
 import LiveNessSumsub from '../../sumSub.component/liveness'
@@ -28,17 +28,17 @@ const Verifications = (props) => {
     useEffect(() => {
         loadPermissions();
         getVerifyData();
-    }, []);
+    }, []);//eslint-disable-line react-hooks/exhaustive-deps
     useEffect(() => {
-        if(phoneSeconds==0 && phone.btnName=='code_Sent'){
+        if(phoneSeconds===0 && phone.btnName==='code_Sent'){
             setPhone({ ...phone, btnName: 'resendotp', code: '' });
         }
-    }, [phoneSeconds]);
+    }, [phoneSeconds]);//eslint-disable-line react-hooks/exhaustive-deps
     useEffect(() => {
-        if(emailSeconds==0 && email.btnName=='code_Sent'){
+        if(emailSeconds===0 && email.btnName==='code_Sent'){
             setEmail({ ...email, btnName: 'resendotp', code: '' });
         }
-    }, [emailSeconds]);
+    }, [emailSeconds]);//eslint-disable-line react-hooks/exhaustive-deps
 
     let timeInterval;
     let count = 30;
@@ -193,11 +193,11 @@ const Verifications = (props) => {
     };
 
     const updateverifyObj = (val, name) => {
-        if (name == 'isEmailVerification') {
+        if (name === 'isEmailVerification') {
             props.onchangeData({ verifyData: verifyData,phBtn:phbtnColor, isEmailVerification: val, isAuthenticatorVerification: authenticator.verified, isPhoneVerification: phone.verified })
-        } else if (name == 'isPhoneVerification') {
+        } else if (name === 'isPhoneVerification') {
             props.onchangeData({ verifyData: verifyData,emailBtn:emailbtnColor, isEmailVerification: email.verified, isAuthenticatorVerification: authenticator.verified, isPhoneVerification: val })
-        } else if (name == 'isAuthenticatorVerification') {
+        } else if (name === 'isAuthenticatorVerification') {
             props.onchangeData({ verifyData: verifyData,authBtn:authbtnColor, isEmailVerification: email.verified, isAuthenticatorVerification: val, isPhoneVerification: phone.verified })
         }
     }
@@ -231,11 +231,11 @@ const Verifications = (props) => {
         }
     };
 
-    const verifyLiveVerification = () =>{
-        setLiveverification({...liveverification,isLiveEnable:true})
-    }
+    // const verifyLiveVerification = () =>{
+    //     setLiveverification({...liveverification,isLiveEnable:true})
+    // }
     const verifyLiveness = (data) =>{
-        if(data.verifed==true){
+        if(data.verifed===true){
             setLiveverification({ ...liveverification, errorMsg: '', verified: true, btnName:'verified', btnLoader:false,isLiveEnable:false });
         }else{
             setLiveverification({ ...liveverification, errorMsg: 'Verification faild', verified: false, btnLoader:false });
@@ -317,7 +317,7 @@ const Verifications = (props) => {
         ${"c-notallowed"}`} >Verification code sent</Text></Button>
             <Tooltip
                 placement="topRight"
-                title={`Haven\'t received code ? Request new code in ${emailSeconds} seconds. The code will expire after 5mins.`}>
+                title={`Haven't received code ? Request new code in ${emailSeconds} seconds. The code will expire after 5mins.`}>
                 <span className="icon md info mr-8" />
             </Tooltip>
         </>
@@ -416,7 +416,7 @@ const Verifications = (props) => {
                                             maxLength={6}
 
                                             style={{ width: "100%" }}
-                                            disabled={phone.btnName == 'get_otp' || phone.btnName == 'verified'}
+                                            disabled={phone.btnName === 'get_otp' || phone.btnName === 'verified'}
                                             onChange={(e) => handlephoneinputChange(e)}
                                         />
                                    
@@ -458,7 +458,7 @@ const Verifications = (props) => {
                                             maxLength={6}
 
                                             style={{ width: "100%" }}
-                                            disabled={email.btnName == 'get_otp' || email.btnName == 'verified'}
+                                            disabled={email.btnName === 'get_otp' || email.btnName === 'verified'}
                                             onChange={(e) => handleEmailinputChange(e)}
                                         />
                                     
@@ -505,7 +505,7 @@ const Verifications = (props) => {
                                             maxLength={6}
 
                                             style={{ width: "100%" }}
-                                            disabled={authenticator.btnName == 'get_otp' || authenticator.btnName == 'verified'}
+                                            disabled={authenticator.btnName === 'get_otp' || authenticator.btnName === 'verified'}
                                             onChange={(e) => handleAuthenticatorinputChange(e)}
                                         />                                    
                                   

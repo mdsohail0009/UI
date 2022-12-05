@@ -14,12 +14,12 @@ const setTransforObj = (payload) => {
         payload
     }
 }
-const clearStep = (payload) => {
-    return {
-        type: CLEAR_STEP,
-        payload
-    }
-}
+// const clearStep = (payload) => {
+//     return {
+//         type: CLEAR_STEP,
+//         payload
+//     }
+// }
 
 
 

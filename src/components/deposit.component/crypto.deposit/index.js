@@ -14,7 +14,7 @@ import Loader from "../../../Shared/loader";
 const {  Paragraph } = Typography;
 const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {
     useEffect(() => { fetchMemberCoins();
-       getFeaturePermissionsByKeyName(`send_crypto`)}, []);
+       getFeaturePermissionsByKeyName(`send_crypto`)}, []);;//eslint-disable-line react-hooks/exhaustive-deps
     const [errorMsg,seterrorMsg] = useState(null)
     const [loading,setLoading] = useState(null)
     const fetchMemberCoins = () => {
@@ -29,7 +29,7 @@ const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {
             dispatch(setWalletAddress(response.data));
             dispatch(fetchDashboardcalls(userProfile?.id));
             dispatch(setStep("step7"));
-            dispatch(setSubTitle(` ${coin.coin}` + " " + "balance" +" "+ ":" +" "+ `${coin.coinBalance ? coin.coinBalance : '0'}`+`${" "}`+`${coin.coin}`));
+            dispatch(setSubTitle(` ${coin.coin} +" " + "balance" +" "+ ":" +" "+ ${coin.coinBalance ? coin.coinBalance : '0'}+${" "}+${coin.coin}`));
         }else{
             seterrorMsg(isErrorDispaly(response))
         }

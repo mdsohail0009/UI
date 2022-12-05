@@ -11,8 +11,8 @@ import { connect } from "react-redux";
 import { validateCryptoAmount } from '../onthego.transfer/api';
 import { setStep, setSubTitle, setWithdrawcrypto, setAddress, hideSendCrypto } from '../../reducers/sendreceiveReducer';
 import AddressCrypto from "../addressbook.component/addressCrypto";
-import { setAddressStep} from "../../reducers/addressBookReducer";
 import {rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
+import { Link } from "react-router-dom";
 
 const { Text, Title } = Typography;
 
@@ -122,13 +122,13 @@ class OnthegoCryptoTransfer extends Component {
         this.setState({ ...this.state, error: null });
         let amt = values.amount;
         amt = typeof amt == "string" ? amt?.replace(/,/g, "") : amt;
-        const { withdrawMaxValue, withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
+        const { withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null });
         if (amt === "") {
             this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('enter_amount') });
             this.myRef.current.scrollIntoView();
         }
-        else if (amt == 0) {
+        else if (amt === 0) {
             this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_greater_zero') });
             this.myRef.current.scrollIntoView();
         }
@@ -189,7 +189,7 @@ class OnthegoCryptoTransfer extends Component {
         const res = await validateCryptoAmount(validObj);
         if (res.ok) {
             this.props.dispatch(setSubTitle(""));
-            type == "addressSelection" ?  this.setState({ ...this.state, loading: false, [loader]: false, errorMsg: null }, () => this.props.chnageStep(type,values)): 
+            type === "addressSelection" ?  this.setState({ ...this.state, loading: false, [loader]: false, errorMsg: null }, () => this.props.chnageStep(type,values)): 
             this.setState({
                 ...this.state, visible: true, errorWorning: null, errorMsg: null, [loader]: false, showFuntransfer: true
             },() => this.chnageStep(type, values));
@@ -232,7 +232,7 @@ class OnthegoCryptoTransfer extends Component {
                 callback();
             }
         }
-        else if(value == 0 && typeof value === "number") {
+        else if(value === 0 && typeof value === "number") {
             callback();
         }
         else if(!value) {
@@ -241,7 +241,7 @@ class OnthegoCryptoTransfer extends Component {
     };
 
     renderStep = (step) => {
-        const { filterObj, pastPayees, payeesLoading, isVarificationLoader, isVerificationEnable,isPhMail,isShowGreyButton,isAuthMail } = this.state;
+        const { filterObj, pastPayees } = this.state;
         const steps = {
             enteramount: <>
             {this.state.isVerificationLoading  && <Loader />}
@@ -361,14 +361,14 @@ class OnthegoCryptoTransfer extends Component {
                                                 }
 
                                             } else {
-                                                if (!_amt && _amt != 0) {
+                                                if (!_amt && _amt !== 0) {
                                                     this.enteramtForm.current.validateFields()
                                                 } else {
                                                     if (_amt === "") {
                                                         this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('enter_amount') });
                                                         this.myRef.current.scrollIntoView();
                                                     }
-                                                    else if (this.state.CryptoAmnt == "0" || _amt == 0) {
+                                                    else if (this.state.CryptoAmnt === "0" || _amt === 0) {
                                                         this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_greater_zero') });
                                                         this.myRef.current.scrollIntoView();
                                                     }
@@ -430,7 +430,7 @@ class OnthegoCryptoTransfer extends Component {
                             <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
                             <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
                             <p className="fs-16 text-white-30 fw-200 mb-0"> {apicalls.convertLocalLang('address_available')} </p>
-                            <a onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</a>
+                            <Link onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</Link>
                         </div>}
                     </ul>
 

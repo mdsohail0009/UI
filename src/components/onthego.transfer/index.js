@@ -86,7 +86,7 @@ class OnthegoFundTransfer extends Component {
     getCoinDetails = async () => {
         let response = await getCoinwithBank()
         if (response.ok) {
-            let obj = response.data
+            //let obj = response.data
         }
     }
     getPayees() {
@@ -189,9 +189,9 @@ class OnthegoFundTransfer extends Component {
                 }
             }
             if (
-                this.state.verifyData.verifyData.isPhoneVerified == "" &&
-                this.state.verifyData.verifyData.isEmailVerification == "" &&
-                this.state.verifyData.verifyData.twoFactorEnabled == ""
+                this.state.verifyData.verifyData.isPhoneVerified === "" &&
+                this.state.verifyData.verifyData.isEmailVerification === "" &&
+                this.state.verifyData.verifyData.twoFactorEnabled === ""
             ) {
                 this.setState({
                     ...this.state,
@@ -301,7 +301,7 @@ class OnthegoFundTransfer extends Component {
     }
 
     renderStep = (step) => {
-        const { filterObj, pastPayees, payeesLoading, isVarificationLoader, isVerificationEnable, isPhMail, isShowGreyButton, isAuthMail } = this.state;
+        const { filterObj, pastPayees,  isVarificationLoader, isVerificationEnable, isShowGreyButton } = this.state;
         const steps = {
             selectcurrency: <React.Fragment>
                 {this.state.fiatWalletsLoading && <Loader />}
@@ -333,7 +333,7 @@ class OnthegoFundTransfer extends Component {
                                         title={<div className="wallet-title">{item.walletCode}</div>}
                                     />
                                     <><div className="text-right coin-typo">
-                                        <NumberFormat value={item.amount} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={item.walletCode == 'USD' ? '$' : '€'} renderText={(value, props) => <div {...props} >{value}</div>} />
+                                        <NumberFormat value={item.amount} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={item.walletCode === 'USD' ? '$' : '€'} renderText={(value, props) => <div {...props} >{value}</div>} />
 
                                     </div></>
                                 </Link>
@@ -355,12 +355,12 @@ class OnthegoFundTransfer extends Component {
                         {!isVerificationEnable &&
                             <Alert 
                                 message="Verification alert !"
-                                description={<Text>Without verifications you can't send. Please select send verifications from <a onClick={() => {
+                                description={<Text>Without verifications you can't send. Please select send verifications from <Link onClick={() => {
                                     this.props.history.push("/userprofile/2");
                                     if (this.props?.onClosePopup) {
                                         this.props?.onClosePopup();
                                     }
-                                }}>security section</a></Text>}
+                                }}>security section</Link></Text>}
                                 type="warning"
                                 showIcon
                                 closable={false}
@@ -509,7 +509,7 @@ class OnthegoFundTransfer extends Component {
                             <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
                             <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
                             <p className="fs-16 text-white-30 fw-200 mb-0"> {apicalls.convertLocalLang('address_available')} </p>
-                            <a onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</a>
+                            <Link onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</Link>
                         </div>}
                     </ul>
 
