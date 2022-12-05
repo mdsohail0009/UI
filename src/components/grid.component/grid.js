@@ -48,11 +48,15 @@ export function withState(WrappedGrid) {
             // });
         }
         numberWithCommas(x) {
+            if(!x){
+                return ''
+            }else if((typeof x) === 'string'){
+               return x 
+            }
             x = (typeof x) == 'string' ? x : x.toString();
             var arParts = x.split('.');
             var intPart = parseInt(arParts[0]).toLocaleString();
             var decPart = (arParts.length > 1 ? arParts[1] : '');
-
             return '' + intPart + (decPart ? ('.' + decPart) : '');
         }
         // numberWithCommas(x) {
@@ -80,7 +84,12 @@ export function withState(WrappedGrid) {
                         className="k-button k-button-md k-rounded-md k-button-solid  mt-16 mb-16 mr-16 search-btn primary-btn excel-btn"
                         onClick={() => {
                             const getCombineFieldValue = (dataItem, fields) => {
-                               
+                                for (const i in this.props.columns) {
+                                if(this.props.columns[i].filterType === "numeric"){
+                                    dataItem[fields[0]] = this.numberWithCommas(dataItem[fields[0]])
+                                    dataItem[fields[1]] = this.numberWithCommas(dataItem[fields[1]])
+                                   }
+                                }
                                 return dataItem[fields[0]] && dataItem[fields[1]] ? `${dataItem[fields[0]]} / ${dataItem[fields[1]]}` : (dataItem[fields[0]] || dataItem[fields[1]]);
                             }
                             if (this.excelRef) {

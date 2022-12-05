@@ -41,7 +41,7 @@ const TransactionTimeSpan=(props)=> {
                     <DatePicker
                       format={"DD/MM/YYYY"}
                       placeholder={apicalls.convertLocalLang('Select_Date')}
-                      onChange={(e) => handleDateChange(e, 'fromdate')}
+                      onValueChange={(e) => handleDateChange(e, 'fromdate')}
                       className="cust-input mb-0" style={{ width: '100%' }} />
                   </Form.Item>
 
@@ -68,7 +68,7 @@ const TransactionTimeSpan=(props)=> {
                     <DatePicker
                       className="cust-input mb-0"
                       placeholder={apicalls.convertLocalLang('Select_Date')}
-                      onChange={(e) => handleDateChange(e, 'todate')}
+                      onValueChange={(e) => handleDateChange(e, 'todate')}
                       format={"DD/MM/YYYY"}
                       style={{ width: '100%' }}
                     />
