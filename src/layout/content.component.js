@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Layout } from 'antd'
 import RouteConfig from '../config/router.config.component';
-import { Alert, Space, Button } from "antd";
+import { Alert } from "antd";
 import ConnectStateProps from '../utils/state.connect';
 
 const { Content: AntContent } = Layout;
@@ -13,15 +13,15 @@ class Content extends Component {
     return <AntContent className="sidebar-push">
       {this.props.serviceWReducer?.isUpdateAvailable && <Alert
         message="App Update"
-        description="New app updates available. Please refresh for seemless experience"
+        description="New app updates available. Please close all browser tabs & re-open app for seemless experience"
         type="warning"
-        action={
-          <Space direction="vertical">
-            <Button size="small" type="primary" className='primary-btn pop-btn' onClick={()=>window.location.reload()}>
-              Refresh
-            </Button>
-          </Space>
-        }
+      // action={
+      //   <Space direction="vertical">
+      //     <Button size="small" type="primary" className='primary-btn pop-btn' onClick={()=>window.location.reload()}>
+      //       Refresh
+      //     </Button>
+      //   </Space>
+      // }
       />}
       <RouteConfig />
     </AntContent>
