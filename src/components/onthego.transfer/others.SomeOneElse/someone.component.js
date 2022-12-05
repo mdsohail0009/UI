@@ -378,11 +378,16 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                 {((props.selectedAddress?.id && createPayeeObj)||!props.selectedAddress?.id ) &&
                  <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} isAddTabCange={isTabChange}/>}
                 
-                <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
-                <AddressDocumnet documents={documents?.transfer || null} editDocument={edit} onDocumentsChange={(docs) => {
-                        let temp = {...documents, "transfer": docs}
-                        setDocuments(temp)
-                    }} refreshData = {addressOptions?.domesticType}/>
+                {props.type !== "manual" && 
+                (<React.Fragment>
+                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
+                    <AddressDocumnet documents={documents?.transfer || null} editDocument={edit} onDocumentsChange={(docs) => {
+                            let temp = {...documents, "transfer": docs}
+                            setDocuments(temp)
+                        }} refreshData = {addressOptions?.domesticType}/>
+                </React.Fragment>)
+                }
+
                     <div className="text-right mt-12">
                     <Button
                         htmlType="submit"

@@ -328,12 +328,16 @@ class BusinessTransfer extends Component {
                     <Paragraph className="mb-8 px-4 text-white fw-500 mt-36" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                     {/* <Divider /> */}
                     <DomesticTransfer type={this.props.type} />
-                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
-                    <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents?.transfer || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
-                        let { payeeAccountModels } = this.state.details;
-                        payeeAccountModels[0].documents.transfer = docs;
-                        this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
-                    }} refreshData ={selectedTab}/>
+                    {this.props.type !== "manual" && 
+                        (<React.Fragment>
+                            <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
+                            <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents?.transfer || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
+                                let { payeeAccountModels } = this.state.details;
+                                payeeAccountModels[0].documents.transfer = docs;
+                                this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
+                            }} refreshData ={selectedTab}/>
+                        </React.Fragment>)
+                    }
                     <div className="text-right mt-12">
 
                                 <Button
@@ -459,12 +463,16 @@ class BusinessTransfer extends Component {
                     <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
                     {/* <Divider /> */}
                     <InternationalTransfer type={this.props.type} />
-                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
-                    <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents?.transfer || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
-                        let { payeeAccountModels } = this.state.details;
-                        payeeAccountModels[0].documents.transfer = docs;
-                        this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
-                    }} refreshData ={selectedTab}/>
+                    {this.props.type !== "manual" && 
+                        (<React.Fragment>
+                            <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
+                            <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents?.transfer || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
+                                let { payeeAccountModels } = this.state.details;
+                                payeeAccountModels[0].documents.transfer = docs;
+                                this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
+                            }} refreshData ={selectedTab}/>
+                        </React.Fragment>)
+                    }
                     <div className="text-right mt-12">
                                 <Button
                                     htmlType="submit"
@@ -714,12 +722,16 @@ class BusinessTransfer extends Component {
                                 ></TextArea>
                             </Form.Item>
                         </Col>}
-                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
-                    <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents?.transfer || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
-                        let { payeeAccountModels } = this.state.details;
-                        payeeAccountModels[0].documents.transfer = docs;
-                        this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
-                    }} refreshData ={selectedTab}/>
+                    {this.props.type !== "manual" && 
+                        (<React.Fragment>
+                            <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
+                            <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents?.transfer || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
+                                let { payeeAccountModels } = this.state.details;
+                                payeeAccountModels[0].documents.transfer = docs;
+                                this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
+                            }} refreshData ={selectedTab}/>
+                        </React.Fragment>)
+                    }
                     <div className="text-right mt-36">
                                 <Button
                                    htmlType="submit"

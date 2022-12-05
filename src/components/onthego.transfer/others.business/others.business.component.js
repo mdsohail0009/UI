@@ -457,12 +457,16 @@ class OthersBusiness extends Component {
                             ></TextArea>
                             </Form.Item>
                         </Col>}
-                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
-                    <AddressDocumnet documents={this.state.details?.payeeAccountModels[0].documents?.transfer || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
-                        let { payeeAccountModels } = this.state.details;
-                        payeeAccountModels[0].documents.transfer = docs;
-                        this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
-                    }} />
+                        {this.props.type !== "manual" && 
+                        (<React.Fragment>
+                            <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
+                            <AddressDocumnet documents={this.state.details?.payeeAccountModels[0].documents?.transfer || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
+                                let { payeeAccountModels } = this.state.details;
+                                payeeAccountModels[0].documents.transfer = docs;
+                                this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
+                            }} />
+                        </React.Fragment>)
+                        }
                     <div className="text-right mt-36">
                         <Button
                             htmlType="submit"
