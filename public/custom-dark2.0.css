@@ -69,7 +69,7 @@
     --red: #FF6F6F;
 
 
-    --lightThemeIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/user-light-theme-icons.svg);
+    --lightThemeIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/user-dark-theme2.0.svg);
     --cryptoIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/light-crypto-icons.svg);
     --logo: url(../../assets/images/logo-color.png);
 }

@@ -59,7 +59,13 @@ body, h1, h2, h3, h4, h5, h6, a, p div{font-family: 'Lato', sans-serif !importan
 .m-0{margin: 0 !important;}
 /*Header start*/
 .tlv-header{background-color:#08090E;position: fixed; z-index: 9999; width: 100%;}
-
+.tlv-header ul{background-color: transparent; border-bottom: 0;}
+.tlv-header ul li{font-weight: 500;}
+.tlv-header .main-menu li{border-radius: 5px;}
+.tlv-header .main-menu li.ant-menu-item-selected, .tlv-header .main-menu li:hover{background-color: var(--primary) !important; color: var(--textWhite) !important;}
+.tlv-header li::after, .tlv-header li:hover:after{border: none !important;}
+.tlv-header ul li .cp-link{padding: 6px 10px;margin-right: 8px;}
+.tlv-header ul li .cp-link:hover{background-image: linear-gradient(99.09deg, var(--btnGrad1), var(--btnGrad2)); color: var(--textPureWhite) !important;filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25));border-radius: 5px;}
 /*Header End*/
 
 /*profile css start*/

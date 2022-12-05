@@ -5,7 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.css';
 import './assets/css/styles.css';
 import './assets/css/custom-styles.css';
-import './assets/css/framework.css';
+// import './assets/css/framework.css';
 import { ThemeSwitcherProvider } from 'react-css-theme-switcher';
 import IdleCmp from './authentication/idle.component';
 import { Provider } from 'react-redux';
@@ -13,7 +13,7 @@ import { store } from './store';
 import { CookiesProvider } from 'react-cookie';
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeSwitcherProvider defaultTheme="DRT" themeMap={{ DRT: "./custom-dark2.0.css", LHT: "./light-theme.css" }}>
+    <ThemeSwitcherProvider defaultTheme="DRT" themeMap={{ DRT: "./custom-dark2.0.css", LHT: "./custom-light2.0.css" }}>
      <Provider store={store}>
      <CookiesProvider>
       <IdleCmp />
