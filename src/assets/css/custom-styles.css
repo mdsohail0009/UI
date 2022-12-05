@@ -187,7 +187,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .drpdwn-list li{font-size: 14px; padding: 0 22px; transition: 0.3s ease;cursor: pointer;}
 .drpdwn-list li a{color: var(--textWhite);display: flex; align-items: center; padding: 10px 0 10px 10px;}
 .crypto-card-design{display: flex;justify-content: space-between;}
-.listitems-design{border-radius: 13px;margin-bottom: 10px;padding: 14px 20px !important;display: block;float: left;width: 370px;margin-right: 16px;border-bottom: 0 !important;background: linear-gradient(180deg, #88C351 -167.81%, #000000 100%) !important;}
+.listitems-design{border-radius: 13px;margin-bottom: 10px;padding: 14px 20px !important;display: block;float: left;margin-right: 16px;border-bottom: 0 !important;background: linear-gradient(180deg, #88C351 -167.81%, #000000 100%) !important;}
 .listitems-design:nth-child(even) {margin-right: 0;background: linear-gradient(180deg, #627EEA -115.75%, #000000 100%) !important;}
 /* .crypto-wallet-style{margin-bottom: 28px;}
 .fait-wallet-style{margin-top: 28px;} */
@@ -252,6 +252,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .visible-mobile, .sideropen{display: none;}
     .bill-grid .k-grid-header table{width: 1255px !important;}
     .bill-grid .k-grid-content table{width: 1254px !important;}
+    .listitems-design{width: 344px;}
 }
 @media (min-width: 1024px){
 
@@ -260,6 +261,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 
 }
 @media (min-width: 1400px){
+    .listitems-design{width: 370px;}
 
 }
 @media (max-width: 991.98px){
