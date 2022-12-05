@@ -322,7 +322,7 @@ class HeaderPermissionMenu extends Component {
         const userProfileMenu = (
             <Menu>
                 <div className="profile-dropdown">
-                    {this.props.userConfig?.imageURL != null && (
+                    {/* {this.props.userConfig?.imageURL != null && (
                         <img
                             src={
                                 this.props.userConfig?.imageURL
@@ -343,11 +343,11 @@ class HeaderPermissionMenu extends Component {
                             className="user-profile"
                             alt={"image"}
                         />
-                    )}
-                    <p className="mb-15 ml-8 profile-value" style={{ flexGrow: 12, marginTop: "5px" }}>
+                    )} */}
+                    {/* <p className="mb-15 ml-8 profile-value" style={{ flexGrow: 12, marginTop: "5px" }}>
                         {this.props.userConfig.isBusiness ? this.props.userConfig.businessName :
                             <>{this.props.userConfig.firstName}{" "}{" "}{this.props.userConfig.lastName}</>}
-                    </p>
+                    </p> */}
                     <Translate
                         content="manage_account"
                         component={Button}

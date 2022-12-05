@@ -13,7 +13,7 @@ import { store } from './store';
 import { CookiesProvider } from 'react-cookie';
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeSwitcherProvider defaultTheme="DRT" themeMap={{ DRT: "./dark-theme.css", LHT: "./light-theme.css" }}>
+    <ThemeSwitcherProvider defaultTheme="DRT" themeMap={{ DRT: "./custom-dark2.0.css", LHT: "./light-theme.css" }}>
      <Provider store={store}>
      <CookiesProvider>
       <IdleCmp />

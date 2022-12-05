@@ -1,4 +1,53 @@
 :root {
+
+    --bgDark: #0E0E2C;
+    --bgDark1: #0E0E2C;
+    --bgDarkGrey:#313C46;
+    --bgDarkGrey-95:rgba(49,60,70,0.75);
+    --bgGrey: #515A64;
+    --bgGreen: #389738;
+    --bgDarkGreen: #4DB205;
+    --bgDarkRed: #FF2400;
+    --bgBlack: #000000;
+    --bgYellow: #FFDB1A;
+    --bgDarkYellow:#e0bb02;
+    --bgWhite: #FFFFFF;
+    --bgWhiteSpin: #FFFFFF;
+    --bgWhite30:#FAFCFE;
+    --bgOrient: #1E526E;
+    --bgOrient1: #1E526E;
+    --bgGloom: #243540;
+    --bgBlue: #1E90FF;
+    --bgSwapFrom: #1B4156;
+    --bgSwapTo: #1E526E;
+    --bgPitch1: #1B4156;
+    --bgBlu: #296281;
+    --bgOrion: #13132B;
+    --textPureWhite: #FFFFFF;
+    --textWhite: #FFFFFF;
+    --textWhite30: #FAFCFE;
+    --textWhite50: #EEF2F5;
+    --textSecondary: #9797AA;
+    --textDark: #0E0E2C;
+    --textGreen: #4DB205;
+    --textYellow: #FFDB1A;
+    --textDefautlYlw: #FFDB1A;
+    --textRed: #FF2400;
+    --textAqua: #2AAECC;
+    --textpurple:#5C5C77;
+    --textDarkGreen: #4DB205;
+    --textError: #FF2400;
+    --btnGrad1: #B30F1E;
+    --btnGrad2: #0038FF;
+    --btnBorder: #5C5C77;
+    --borderGrey: #313C46;
+    --borderLight: #9797AA;
+    --borderDark: #2d2d2d;
+    --bgCircle: #19B06C;
+    --bgDarkGrey30:#313C46;
+
+
+
    --black: #FFFFFF;
     --primary: #E8E9EE;
     --secondary: #08090E;
