@@ -481,6 +481,14 @@ class HeaderPermissionMenu extends Component {
                     this.props.dispatch(setHeaderTab(key.key));
                 }}
             >
+                <Menu.Item>
+                    <Translate
+                        content="header_title"
+                        onClick={this.routeToCockpit}
+                        component={Text}
+                        className="text-white c-pointer cp-link mb-d-none"
+                    /> 
+                </Menu.Item>
                 {data?.map((item, indx) => <React.Fragment>
                     {item.isTab ? <Menu.Item key={item.id}>
                         <Dropdown
@@ -517,7 +525,24 @@ class HeaderPermissionMenu extends Component {
                             className="fs-20 custom-header" />
                     </Menu.Item>}
                 </React.Fragment>)}
-
+</Menu>
+<Menu
+                theme="light"
+                mode="horizontal"
+                className="header-right mobile-headerview" 
+                 selectedKeys={[this.props.buySell?.headerTab]}
+                onSelect={(key) => {
+                    this.props.dispatch(setHeaderTab(key.key));
+                }}>
+                <Menu.Item key="13"> 
+USD
+                </Menu.Item>  
+                <Menu.Item key="14"><Text className="pipeline">|</Text> 
+English
+                </Menu.Item>  
+                <Menu.Item key="15"> <Text className="pipeline">|</Text>
+                <span className="icon md theme-icon" /> Light Mode
+                </Menu.Item> 
                 <Menu.Item
                     key="9"
                     className="notification-conunt"

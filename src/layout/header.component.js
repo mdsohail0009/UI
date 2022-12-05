@@ -313,14 +313,14 @@ class Header extends Component {
                   }
                 </li>
 
-                <li className="mobile-user ml-8">
+                {/* <li className="mobile-user ml-8">
                   <Translate
                     content="header_title"
                     onClick={this.routeToCockpit}
                     component={Text}
-                    className="text-white-30 fs-20 c-pointer cp-link mb-d-none"
+                    className="text-white fs-20 c-pointer cp-link mb-d-none"
                   />
-                  {/* <Text className="text-white-30 fs-24 ">|</Text>
+                  <Text className="text-white-30 fs-24 ">|</Text>
                   <Translate
                     content="user_type"
                     with={{
@@ -330,8 +330,8 @@ class Header extends Component {
                     }}
                     component={Text}
                     className="text-white-30 fs-20 ml-16 fw-300"
-                  /> */}
-                </li>
+                  />
+                </li> */}
 
               </ul>
               <Menu
