@@ -98,7 +98,7 @@ class AddressCrypto extends Component {
     if(value) {
       this.state.coinsList?.filter(function (item){
         if(item.walletCode == value) {
-          networkLu = item?.network;
+        return networkLu = item?.network;
         }
       })
     }
@@ -302,7 +302,7 @@ class AddressCrypto extends Component {
                 size="large"
                 className="pop-btn mb-36 px-36"
                 loading={this.state.isBtnLoading}
-                style={{ width: "300px" }}
+                style={{ width: "150px" }}
               >
                 {this.props.type === "manual" && "Save"}
                 {this.props.type !== "manual" && <Translate content="continue" />}
@@ -320,10 +320,7 @@ const connectStateToProps = ({ sendReceive, userConfig, addressBookReducer }) =>
 const connectDispatchToProps = dispatch => {
   return {
     changeStep: (stepcode) => {
-      dispatch(setAddressStep(stepcode))
-    },
-    changeStep: (stepcode) => {
-      dispatch(setStep(stepcode))
+      dispatch(setAddressStep(stepcode));dispatch(setStep(stepcode))
     },
     SelectedAddress: (addressObj) => {
       dispatch(setAddress(addressObj));

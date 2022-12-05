@@ -52,7 +52,7 @@ class CaseView extends Component {
         caseData: {},
         commonModel: {},
         assignedTo: [],
-        btnLoading: false,
+        btnLoading:false,
         errorWarning: null,
     }
     componentDidMount() {
@@ -115,7 +115,7 @@ class CaseView extends Component {
             "documentDetailId": doc.id,
             "status": "Approved"
         });
-        this.setState({ ...this.state, isMessageError: null, errorWarning: null });
+        this.setState({ ...this.state, isMessageError: null,errorWarning:null });
         if (response.ok) {
             success('Document has been approved');
             this.loadDocReplies(doc.id);
@@ -150,26 +150,27 @@ class CaseView extends Component {
             }
         };   
         this.setState({ ...this.state, btnLoading: true });
-        item.path = itemPath()
+        item.path = itemPath();
         item.status = "Submitted";
-        item.repliedBy = `${(this.props.userProfileInfo?.isBusiness == true) ? this.props.userProfileInfo?.businessName : this.props.userProfileInfo?.firstName}`;
+        item.repliedBy = `${(this.props.userProfileInfo?.isBusiness==true)?this.props.userProfileInfo?.businessName:this.props.userProfileInfo?.firstName}`;
         item.repliedDate = Mome().format("YYYY-MM-DDTHH:mm:ss");
         item.info = JSON.stringify(this.props.trackAuditLogData);
-        item.customerId = this.props.userProfileInfo.id;
-        
+        item.customerId=this.props.userProfileInfo.id;
+      
+
          
         const response = await saveDocReply(item);
         if (response.ok) {
             success('Document has been submitted');
             this.updateDocRepliesStatus(doc, "Submitted");
             this.loadDocReplies(doc.id)
-            this.setState({ errorWarning: null })
+            this.setState({errorWarning:null })
         } else {
-            // warning(response.data);
+            warning(response.data);
         }
         let objs = [...this.state.docReplyObjs];
         objs = objs.filter(obj => obj.docunetDetailId !== doc.id);
-        this.setState({ ...this.state, docReplyObjs: objs, btnLoading: false, isMessageError: null });
+        this.setState({ ...this.state, docReplyObjs: objs, btnLoading: false, isMessageError: null});
         document.getElementsByClassName(`${doc.id.replace(/-/g, "")}`).value = "";
     }
     deleteDocument = async (doc, idx, isAdd) => {
@@ -211,14 +212,14 @@ class CaseView extends Component {
             "isCustomer": true
         }
     }
-    antIcon = (
-        <LoadingOutlined
+ antIcon = (
+       <LoadingOutlined
             style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
             spin
         />
-    );
+        );
     handleUpload = ({ file }, doc) => {
-        this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null })
+    this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null })
         if (file.status === "done" && this.state.isValidFile) {
             let replyObjs = [...this.state.docReplyObjs];
             let item = this.isDocExist(replyObjs, doc.id);
@@ -247,20 +248,20 @@ class CaseView extends Component {
             this.setState({ ...this.state, docReplyObjs: replyObjs, uploadLoader: false, isSubmitting: false });
         }
         else if (file.status === 'error') {
-            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false, errorMessage: file.response, errorWarning: null })
+            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false,errorMessage:file.response,errorWarning:null })
         }
         else if (!this.state.isValidFile) {
             this.setState({ ...this.state, uploadLoader: false, isSubmitting: false });
         }
     }
     beforeUpload = (file) => {
-        this.setState({ ...this.state, errorWarning: null })
-        let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
+  this.setState({ ...this.state, errorWarning:null })
+   let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
         if (fileType[file.type]) {
-            this.setState({ ...this.state, isValidFile: true, errorWarning: null })
+            this.setState({ ...this.state, isValidFile: true,errorWarning:null })
             return true
         } else {
-            this.setState({ ...this.state, isValidFile: false, errorWarning: "File is not allowed. You can upload jpg, png, jpeg and PDF  files" })
+       this.setState({ ...this.state, isValidFile: false,errorWarning:"File is not allowed. You can upload jpg, png, jpeg and PDF  files"})
             return Upload.LIST_IGNORE;
         }
     }
@@ -308,11 +309,7 @@ class CaseView extends Component {
         return parseFloat((bytes / Math.pow(k, i)).toFixed()) + ' ' + sizes[i];
     }
     filePreviewPath() {
-        if (this.state.previewPath.includes(".pdf")) {
-            return this.state.previewPath;
-        } else {
-            return this.state.previewPath;
-        }
+        return this.state.previewPath;
     }
     getCaseData = async (id) => {
         this.setState({ ...this.state, loading: true });
@@ -351,32 +348,45 @@ class CaseView extends Component {
                 </div>
                 <div className='case-ribbon mb-16'>
                     <Row gutter={[16, 16]}>
-                        {commonModel ? (
-                            Object.entries(commonModel).map(([key, value], idx) => (
-                                <Col
-                                    key={idx}
-                                    xs={key == "Decription" ? 24 : 24}
-                                    sm={key == "Decription" ? 24 : 12}
-                                    md={key == "Decription" ? 24 : 12}
-                                    lg={key == "Decription" ? 24 : 8}
-                                    xl={key == "Decription" ? 24 : 8}
-                                    xxl={key == "Decription" ? 24 : 6}
-                                >
-                                    <div className="ribbon-item">
-                                        <span
-                                            className={`icon md ${key === null ? "Decription" : ((key == "Currency" && value == "EUR") ? "EURS" : (key == "Amount" ? 'Currency' : (key == "Currency" && value == "USD") ? "USDS" : key))
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                         {commonModel ? (
+                Object.entries(commonModel).map(([key, value], idx) => (
+                  <Col
+                    key={idx}
+                    xs={24}
+                    sm={key == "Decription" ? 24 : 12}
+                    md={key == "Decription" ? 24 : 12}
+                    lg={key == "Decription" ? 24 : 8}
+                    xl={key == "Decription" ? 24 : 8}
+                    xxl={key == "Decription" ? 24 : 6}
+                  >
+                    <div className="ribbon-item">
+                      <span
+                        className={`icon md 
+                            ${key === null ? "Decription" : ((key == "Currency" && value == "EUR") ? "EURS" : (key == "Amount" ? 'Currency' : (key == "Currency" && value == "USD") ? "USDS" : key))
                                                 }`}
                                         />
                                         <div className="ml-16" style={{ flex: 1 }}>
-                                            <Text className="fw-300 text-white-50 fs-12">
-                                                {key}
-                                            </Text>
-                                            <div className='fw-600 text-white-30 fs-16 l-height-normal' style={{ wordBreak: "break-all" }} >
-                                                {(value == null || value == " " || value == "") ? '-' : (isNaN(value) || (key === 'Transaction Id' || key === 'Bank Account number/IBAN' || key === "Bank Account Number/IBAN" || key === "Wallet Address"
-                                                    || key === 'Bank Name') ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
-                                            </div>
-                                        </div>
-                                    </div>
+                        <Text className="fw-300 text-white-50 fs-12">
+                          {key}
+                        </Text>
+                                <div className='fw-600 text-white-30 fs-16 l-height-normal' style={{ wordBreak: "break-all" }} >
+                                    {(value == null || value == " " || value == "") ? '-' : (isNaN(value) || (key === 'Transaction Id' || key === 'Bank Account number/IBAN' || key === "Bank Account Number/IBAN" || key === "Wallet Address"
+                                        || key === 'Bank Name') ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
+                                </div>
+                      </div>
+                    </div>
                                 </Col>
                             ))
                         ) : (
@@ -397,7 +407,7 @@ class CaseView extends Component {
 
                             this.setState({
                                 ...this.state,
-                                collapse: !this.state.collapse, errorMessage: null, errorWarning: null
+                                collapse: !this.state.collapse, errorMessage:null,errorWarning:null
                             });
                             if (key) {
                                 this.loadDocReplies(doc.id);

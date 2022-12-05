@@ -20,7 +20,6 @@ const  TransforSummary = ({userProfile,onClose, transforObj,dispatch}) =>{
     const saveTransfordata = async (values) => {
         if (onCheked) {
             setBtnLoader(true)
-            console.log(values)
             const res = await saveTransfor(values);
             if (res.ok) {
                 dispatch(setStepcode('tranforsuccess'))

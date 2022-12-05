@@ -8,7 +8,7 @@ import {
     Drawer,
     Button, Popover
 } from "antd";
-import { setHeaderTab, setStep, setSellHeaderHide, setSelectedSellCoin} from "../../../reducers/buysellReducer";
+import { setHeaderTab, setStep, setSellHeaderHide, setSelectedSellCoin } from "../../../reducers/buysellReducer";
 import Translate from "react-translate-component";
 import en from "../../../lang/en";
 import ch from "../../../lang/ch";
@@ -153,7 +153,10 @@ class HeaderPermissionMenu extends Component {
         }
     }
     showDocRequestError() {
-        if (!this.props.twoFA?.isEnabled) {
+        if (this.props.userConfig?.customerState !== "Approved") {
+            this.props.history.push("/sumsub");
+        }
+        else if (!this.props.twoFA?.isEnabled) {
             this.props.history.push("/enabletwofactor");
         }
         else if (this.props?.userConfig?.isDocsRequested) {
@@ -168,7 +171,7 @@ class HeaderPermissionMenu extends Component {
                     this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: false } });
                     this.props.dispatch(setSellHeaderHide(false));
                     this.props.dispatch(setSelectedSellCoin(false));
-                    this.props.dispatch(menuItem.dispatchStep ? setStep(menuItem.dispatchStep) :setStep("step1"));
+                    this.props.dispatch(menuItem.dispatchStep ? setStep(menuItem.dispatchStep) : setStep("step1"));
                     break;
                 case "trade_sell":
                     this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: true } });
@@ -214,12 +217,12 @@ class HeaderPermissionMenu extends Component {
                     this.props.dispatch(setWithdrawfiatenaable(false));
                     this.props.dispatch(setSendCrypto(false));
                     break;
-                    case "personal_bank_account":
-                        window.open(process.env.REACT_APP_BANK_UI_URL+'dashboard/receive','_self')
+                case "personal_bank_account":
+                    window.open(process.env.REACT_APP_BANK_UI_URL + 'dashboard/receive', '_self')
                 default:
                     break;
             }
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true, selectedTab:  menuKey === "trade_sell" ? true : false, sendCryptoTab: menuKey === "send_crypto" ? true :false, sendFiatTab: menuKey === "send_fiat" ? true : false } });
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true, selectedTab: menuKey === "trade_sell" ? true : false, sendCryptoTab: menuKey === "send_crypto" ? true : false, sendFiatTab: menuKey === "send_fiat" ? true : false } });
         } else if (menuItem.path) {
             this.props.history.push(menuItem.path);
         }
@@ -234,11 +237,11 @@ class HeaderPermissionMenu extends Component {
         }
     }
     onMenuItemClick = async (menuKey, menuItem) => {
-        const perIgnoreLst = ["notifications", "auditLogs","cases"];
+        const perIgnoreLst = ["notifications", "auditLogs", "cases"];
         if (perIgnoreLst.includes(menuKey)) { this.navigate(menuKey, menuItem) }
         else {
             const ignoreKycLst = ["transactions"];
-            if ((this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled) || ignoreKycLst.includes(menuItem.key)) {
+            if ((this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled && this.props.userConfig?.customerState === "Approved") || ignoreKycLst.includes(menuItem.key)) {
                 if (!this.props.menuItems.featurePermissions[menuItem.key]) {
                     getFeaturePermissionsByKey(menuItem.key, (data) => {
                         if (data.ok) {
@@ -359,7 +362,7 @@ class HeaderPermissionMenu extends Component {
                         >
                             <Link>
                                 <Translate
-                                    content="menu_transactions_history"
+                                    content="transactions_history"
                                     component={Text}
                                     className="text-white-30"
                                 />
@@ -619,7 +622,7 @@ class HeaderPermissionMenu extends Component {
             />
             <MassPayment
                 showDrawer={send_fiat || receive_fiat}
-                isShowSendFiat= {this.state.drawerMenu.sendFiatTab}
+                isShowSendFiat={this.state.drawerMenu.sendFiatTab}
                 onClose={() => this.closeDrawer("send")}
             />
             {this.state.drawerMenu.transactions && (

@@ -1,4 +1,4 @@
-import { Form, Row, Col, Typography, Input, Button, Alert, Image, Spin } from "antd";
+import { Form, Row, Col,Typography, Input, Button, Alert, Image, Spin } from "antd";
 import React, { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
 import { validateContentRule } from "../../../utils/custom.validator";
@@ -76,7 +76,7 @@ class OthersBusiness extends Component {
                 }else{
                     if(this.state.ibanDetails && !this.state.ibanDetails?.routingNumber|| !this.state.ibanDetails?.bankName) {
                         this.setState({ ...this.state, ibanDetails: {}, ibanDetailsLoading: false, errorMessage: null, iBanValid:false, isValidateLoading: false });
-                        this.setState({ ...this.state, errorMessage: "No bank details are available for this IBAN number", isLoading: false, isBtnLoading: false });;
+                        this.setState({ ...this.state, errorMessage: "No bank details are available for this IBAN number", isLoading: false, isBtnLoading: false });
                         this.useDivRef.current?.scrollIntoView();
                         return;
                     }
@@ -134,7 +134,7 @@ class OthersBusiness extends Component {
         if (Object.hasOwn(values, 'iban')) {
             this.setState({ ...this.state, errorMessage: null });
             if ((!ibanDetails || Object.keys(ibanDetails).length == 0)) {
-                this.setState({ ...this.state, errorMessage: "Please click validate button before saving", isLoading: false, isBtnLoading: false });;
+                this.setState({ ...this.state, errorMessage: "Please click validate button before saving", isLoading: false, isBtnLoading: false });
                 this.useDivRef.current?.scrollIntoView();
                 return;
             }
@@ -152,6 +152,7 @@ class OthersBusiness extends Component {
         _obj.payeeAccountModels[0].walletCode = "EUR";
         _obj.payeeAccountModels[0].bankName = ibanDetails?.bankName;
         delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
+        _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
         _obj.addressType = "otherbusiness";
         _obj.transferType = "sepa";
         _obj.amount = this.props.amount;
