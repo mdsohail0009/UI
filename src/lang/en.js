@@ -509,7 +509,7 @@ export default {
 	total_supply: "Total Supply",
 	full_screen: "Full screen",
 	reload: "Reload",
-	cockpit: "Details",
+	cockpit: "View All",
 	settings_msg: "Settings saved successfully",
 	notification_msg: "No notifications available",
 	bank_msg: "Bank details not available",
