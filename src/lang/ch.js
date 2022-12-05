@@ -294,7 +294,7 @@ export default {
 	send_crypto: "發送加密貨幣",
 	remarks: "評論",
 	userName: "行进",
-	manage_account: "加密存款/取款",
+	manage_account: "个人账户",
 	withdrawCrypto: "提取加密",
 	withdrawFiat: "提現法幣",
 	fiatAddress: "法定地址",

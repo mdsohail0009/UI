@@ -324,7 +324,7 @@ export default {
 	state: "State",
 	zipcode: "Zip code",
 	userName: "User Name",
-	manage_account: "Manage your Account",
+	manage_account: "Personal Account",
 	Deposit_success: "Receive Success",
 	return_to_depositfiat: "Back to Receive Fiat",
 	withdrawCrypto: "Send Crypto",
