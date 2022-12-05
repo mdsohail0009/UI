@@ -75,7 +75,17 @@ body, h1, h2, h3, h4, h5, h6, a, p div{font-family: 'Lato', sans-serif !importan
 .profile-dropdown .user-profile{width:112px;height: 112px; border-radius: 50%;display: block;margin: 0 auto;}
 .profile-dropdown {text-align: center;padding:12px 34px;}
 .profile-dropdown .drpdwn-list{padding-top: 0px; padding-left: 0; padding-right: 0; margin-left: -35px; margin-right: -35px;}
-.profile-btn, .profile-btn:hover, .profile-btn:active, .profile-btn:focus{background: transparent;border: 1px solid var(--green) !important;height: 27px;border-radius: 8px;color: var(--green); font-size: 12px;width: 127px;text-align: left;}
+.profile-btn, .profile-btn:hover, .profile-btn:active, .profile-btn:focus{    background: transparent;
+    border: 1px solid var(--green) !important;
+    height: 27px;
+    border-radius: 8px;
+    color: var(--green);
+    font-size: 14px;
+    width: 127px;
+    font-weight: 500;
+    text-align: center;display: flex;
+    align-items: center;
+    padding: 6px 10px;}
 .profile-info{width: 180px;height: 180px;padding: 5px;border-radius: 50%; margin: 0 auto 24px;background-image: linear-gradient(128deg, var(--bgDark1) 50%, var(--bgDark1) 50%); position: relative;}
 .profile-info .user-profile{width:100%;height: 100%; border-radius: 50%;padding: 6px;background-color: var(--bgDarkGrey);object-fit: cover;}
 .profile-info .img-upld{position: absolute;right: -5px;bottom: 20px;background-color: var(--bgYellow);border-color: var(--bgYellow);}
@@ -186,7 +196,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* Dashboard start */
 .ant-list-split .ant-list-item.cytpo-list-style{background: rgb(255, 255, 255 ,0.15);border-radius: 13px;margin-bottom: 10px;padding: 14px 20px !important;border-bottom:0;}
 .db-titles{font-weight: 700 !important;color:rgb(255 255 255 / 60%) !important;font-size: 22px !important;}
-.secureDropdown .ant-dropdown-menu{background-color: #4E505A;box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.35);border-radius: 10px;min-width: 300px; max-width: 300px; padding: 24px 0;}
+.secureDropdown .ant-dropdown-menu{background-color: #4E505A;box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.35);border-radius: 10px;min-width: 239px; max-width: 239px; padding: 24px 0;}
 .depwith-drpdown .ant-dropdown-menu{min-width: 173px !important; max-width: 173px !important;}
 .drpdwn-list li:hover{background-color: rgb(255, 255, 255,0.15);}
 .secureDropdown .ant-dropdown-arrow{display:none;}
