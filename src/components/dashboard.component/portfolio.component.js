@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, message, Spin,Button } from 'antd';
+import { message, Spin,Button } from 'antd';
 import Translate from 'react-translate-component';
 import { getData } from './api';
 import NumberFormat from 'react-number-format';
@@ -82,9 +82,8 @@ class Portfolio extends Component {
         this.setState({transactions: false});
     }
     render() {
-        const { Title } = Typography;
 
-        const { gridUrl, loading } = this.state;
+        const { loading } = this.state;
         return (
             <div className="mb-16">
                 <div className='mb-12 mt-4'>

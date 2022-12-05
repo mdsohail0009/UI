@@ -9,6 +9,7 @@ import {
 	clearValues,
 	clearCryptoValues,
 } from "../../reducers/addressBookReducer";
+import { Link } from "react-router-dom";
 import Translate from "react-translate-component";
 import { processSteps as config } from "./config";
 import List from "../grid.component";
@@ -189,10 +190,10 @@ class AddressBook extends Component {
 			field: "isWhitelisted",
 			customCell: (props) => (
 				<td>
-					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <><a onClick={() => {
+					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <><Link onClick={() => {
 						if (!this.state.isDownloading)
 							this.downloadDeclarationForm(props?.dataItem);
-					}} ><DownloadOutlined /></a> Whitelisted</>}
+					}} ><DownloadOutlined /></Link> Whitelisted</>}
 					{!props.dataItem?.isWhitelisted && "Not whitelisted"}
 					{this.state.isDownloading && this.state.selectedDeclaration === props?.dataItem.payeeAccountId && <Spin size="small" />}
 				</td>
@@ -273,10 +274,10 @@ class AddressBook extends Component {
 			field: "isWhitelisted",
 			customCell: (props) => (
 				<td>
-					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <> <a onClick={() => {
+					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <> <Link onClick={() => {
 						if (!this.state.isDownloading)
 							this.downloadDeclarationForm(props?.dataItem);
-					}} ><DownloadOutlined /></a> Whitelisted</>}
+					}} ><DownloadOutlined /></Link> Whitelisted</>}
 					{!props.dataItem?.isWhitelisted && "Not whitelisted"}
 					{this.state.isDownloading && this.state.selectedDeclaration === props?.dataItem.payeeAccountId && <Spin size="small" />}
 				</td>

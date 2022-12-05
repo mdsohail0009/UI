@@ -100,6 +100,7 @@ class AddressCrypto extends Component {
         if(item.walletCode === value) {
         return networkLu = item?.network;
         }
+         return false;
       })
     }
     this.setState({ ...this.state, networksList: networkLu})
@@ -311,7 +312,7 @@ class AddressCrypto extends Component {
           </Form>
       </>
     }
-  };
+  }
 
 }
 const connectStateToProps = ({ sendReceive, userConfig, addressBookReducer }) => {

@@ -56,9 +56,6 @@ const AddressCommonCom = (props) => {
   const [errorWarning, setErrorWarning] = useState(null);
   const [isEdit, setEdit] = useState(false);
   const [emailExist] = useState(false);
-  const [identityFile, setIdentityFile] = useState(null);
-  const [declarationFile, setDeclarationFile] = useState(null);
-  const [isUploading, setUploading] = useState(false);
   const [bankType, setBankType] = useState("");
   const [PayeeLu, setPayeeLu] = useState([]);
   const [editBankDetsils, setEditBankDetails] = useState(false)
@@ -222,9 +219,8 @@ const AddressCommonCom = (props) => {
     setAgreeRed(true);
     setErrorMsg(null);
     setErrorWarning(null);
-    setUploading(false);
-    setIdentityFile(null);
-    setDeclarationFile(null);
+  
+  
     setModalData([]);
     form.resetFields();
     setCryptoAddress(null);
@@ -370,13 +366,8 @@ const AddressCommonCom = (props) => {
         }
       }
     } else {
-      //bankmodalData.push(obj)
-      // if(bankmodalData.lenth !==0){
-      //   useDivRef.current.scrollIntoView();
-      //   setErrorMsg("Cannot add more than one Crypto address details");
-      // }else{
         setModalData([obj])
-      // }
+      
       
       setRecrdStatus(obj?.recordStatus);
     }
@@ -527,13 +518,6 @@ const AddressCommonCom = (props) => {
     let states = Country?.filter((item) => item.name?.toLowerCase() === code?.toLowerCase());
     setNewStates(states[0]?.stateLookUp);
   }
-  // const handleCountry = (code,countryValues) => {
-  //  form.setFieldsValue({"state":null});
-  //   let Country = countryValues ? countryValues : country;
-  //   let states = Country?.filter((item) => item.name === code);
-  //   setState(states[0]?.stateLookUp);
-  // }
-
 
 
   const antIcon = (
@@ -1347,32 +1331,6 @@ const AddressCommonCom = (props) => {
                       </Form.Item>
                     </Col>
                   )}
-                  {/* {withdraeTab === "Fiat" && (
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                      <Form.Item
-                        className="custom-forminput custom-label mb-0"
-                        name="state"
-                        label={
-                          <Translate content="state" component={Form.label} />
-                        }
-                      >
-                        <Select
-                          showSearch
-                          placeholder={apiCalls.convertLocalLang("select_state")}
-                          className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
-                          dropdownClassName="select-drpdwn"
-                          onChange={(e) => handleState(e)}
-                          bordered={false}
-                        >
-                          {state?.map((item, indx) => (
-                            <Option key={indx} value={item.name}>
-                              {item.name}
-                            </Option>
-                          ))}
-                        </Select>
-                      </Form.Item>
-                    </Col>
-                  )} */}
                   {withdraeTab === "Fiat" && (
                     <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                       <Form.Item
@@ -1466,7 +1424,6 @@ const AddressCommonCom = (props) => {
                   </Col>
 
                 </Row>}
-              {/* {(props?.cryptoTab == 1) && <CryptoAdress />} */}
 
               {bankmodalData?.map((item, indx) => {
                 if (item.recordStatus !== "Deleted") {
@@ -1593,6 +1550,9 @@ const AddressCommonCom = (props) => {
                       </div>
                     </Row>
                   );
+                }
+                else{
+                  <></>;
                 }
               })}
 

@@ -142,7 +142,7 @@ class AddressDocumnet extends Component {
                                     filesList.splice(this.state.selectedFileIdx, 1);
                                     obj.splice(this.state.selectedFileIdx, 1);
                                 }
-                                files?.map((file, indx) =>{
+                                files?.forEach((file, indx) =>{
                                     if (file.id === "00000000-0000-0000-0000-000000000000"&& indx === this.state.selectedFileIdx &&  file.state !== "Deleted"  && this.state?.isEdit) {
                                         filesList.splice(indx, 1);
                                         obj.splice(indx, 1);

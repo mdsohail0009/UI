@@ -713,6 +713,9 @@ class PaymentDetails extends Component {
                                 </>
                               );
                             }
+                            else{
+                              return <></>;
+                            }
                           })}
                         </tbody>
                       ) : (

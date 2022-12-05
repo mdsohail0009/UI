@@ -59,13 +59,13 @@ const Payments = (props) => {
     }else{
       getFeaturePermissionsByKey('billpayments',loadInfo)
     }
-  }, [props.billpaymentsPermission])
+  }, [props.billpaymentsPermission]);//eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     getFeaturePermissionsByKey('billpayments',loadInfo)
-  }, [])
+  }, []);//eslint-disable-line react-hooks/exhaustive-deps
   useEffect(()=>{
     gridRef.current?.refreshGrid();
-  },[walletType])
+  },[walletType]);;//eslint-disable-line react-hooks/exhaustive-deps
   const gridColumns = [
     {
       field: "",

@@ -70,24 +70,7 @@ class CryptoComponent extends Component {
                 </div> */}
                 {this.props.buySell.tabKey === 1 && !this.props.isTab ? <>
                     <Translate content="buy_your_crypto_for_cash_text" component={Paragraph} className="text-white-30 fw-500 fs-14 mt-16 text-left code-lbl" />
-                    {/* <Tabs className="crypto-list-tabs" onChange={(key) => {
-                        const types = {
-                            1: "All", 2: "Gainers", 3: "Losers"
-                        };
-                        apiClient.trackEvent({ "Type": 'User', "Action": `Buy ${types[key]} coins page view`, "Username": this.props.member?.userName, "customerId": this.props.member?.id, "Feature": 'Buy', "Remarks": `Buy ${types[key]} coins page view`, "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy Crypto' });
-                        this.props.dispatch(fetchCoins(types[key]));
-                        this.ref.current.clearSearch();
-                    }}>
-                        <TabPane tab={<Translate content="tabs_All" component={Tabs.TabPane.tab} className="custom-font fw-400 fs-16" ></Translate>} key="1">
-                            <CryptoList ref={this.ref} isLoading={coinListdata["All"]?.loading} showSearch={true} coinList={coinListdata["All"]?.data} coinType="All" onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
-                        </TabPane>
-                        <TabPane tab={<Translate content="gainers" component={Tabs.TabPane.tab} className="custom-font fw-400 fs-16" ></Translate>} key="2">
-                            <CryptoList ref={this.ref} coinType="Gainers" showSearch={true} isLoading={coinListdata["Gainers"]?.loading} coinList={coinListdata["Gainers"]?.data} onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
-                        </TabPane>
-                        <TabPane tab={<Translate content="losers" component={Tabs.TabPane.tab} className="custom-font fw-400 fs-16" ></Translate>} key="3">
-                            <CryptoList ref={this.ref} coinType="Losers" showSearch={true} isLoading={coinListdata["Losers"]?.loading} coinList={coinListdata["Losers"]?.data} onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
-                        </TabPane>
-                    </Tabs> */}
+                    
                     <CryptoList ref={this.ref} isLoading={coinListdata["All"]?.loading} showSearch={true} coinList={coinListdata["All"]?.data} coinType="All" onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
                     </> : <>
                     {/* <Translate content="sell_your_crypto_for_cash_text" component={Paragraph} className="text-white-30 fw-500 fs-14 mt-16 code-lbl" /> */}

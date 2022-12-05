@@ -150,7 +150,7 @@ class ProfileInfo extends Component {
                       : DefaultUser
                   }
                   className="user-profile"
-                  alt={"image"}
+                  alt="profile"
                 />
               )}
               {this.props.userConfig.imageURL == null && (
@@ -161,7 +161,7 @@ class ProfileInfo extends Component {
                       : DefaultUser
                   }
                   className="user-profile"
-                  alt={"image"}
+                  alt="profile"
                 />
               )}
               <Upload

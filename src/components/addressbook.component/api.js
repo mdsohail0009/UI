@@ -48,11 +48,11 @@ const getAddress = (addreddId) => {
 		ApiControllers.addressbook + `Withdraw/Favourite/${addreddId}`
 	);
 };
-const getPayee = ({payeeId}) => {
-	return apiClient.get(
-		ApiControllers.addressbook + `payee/Withdraw/Favourite/${{payeeId}}`
-	);
-};
+// const getPayee = ({payeeId}) => {
+// 	return apiClient.get(
+// 		ApiControllers.addressbook + `payee/Withdraw/Favourite/${{payeeId}}`
+// 	);
+// };
 const getFileURL = (obj) => {
 	return apiClient.post(ApiControllers.customers + `FetchFile`, obj);
 };

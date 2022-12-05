@@ -1,8 +1,8 @@
 
 import React, { useEffect } from "react";
-import Translate from "react-translate-component";
+// import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import AddressCommonCom from "./addressCommonCom";
 // const LinkValue = (props) => {
 //   return (
