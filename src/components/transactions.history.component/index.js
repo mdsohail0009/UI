@@ -3,7 +3,7 @@ import {
   Drawer,
   Typography,
   Button,
-  Row, Col, Select, Form,Modal,DatePicker,Tooltip,Alert,Input,message} from "antd";
+  Row, Col, Select, Form,Input} from "antd";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
@@ -183,13 +183,13 @@ class TransactionsHistory extends Component {
   handleChange = (value, prop) => {
     var val = "";
     let { customerData, searchObj } = this.state;
-    if (prop == "customerId") {
-      let index = customerData.findIndex(function (o) { return o.name == value; });
+    if (prop === "customerId") {
+      let index = customerData.findIndex(function (o) { return o.name === value; });
       val = customerData[index].id;
     }
-    searchObj[prop] = prop == "customerId" ? val : value;
+    searchObj[prop] = prop === "customerId" ? val : value;
     this.setState({ ...this.state, searchObj });
-    if (prop == "currency") {
+    if (prop === "currency") {
       const searchVal = `${value ? value : "All"}`;
       this.setState({ ...this.state, searchObj: { ...this.state.searchObj, currency: searchVal || "All" } })
     }
@@ -283,7 +283,7 @@ isErrorDispaly = (objValue) => {
 
   render() {
     const { Title } = Typography;
-    const {  doctypeData, currenyData, gridUrl, searchObj,showModal,modalData,timeListSpan,statusData,isLoading,downloadError } = this.state;
+    const {  doctypeData, currenyData, gridUrl, searchObj,showModal,modalData,timeListSpan,statusData,isLoading } = this.state;
 
     const options2 = doctypeData.map((d) => (
       <Option key={d.value} value={d.name}>{d.name}</Option>

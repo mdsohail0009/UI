@@ -24,6 +24,7 @@ import { handleNewExchangeAPI } from "../send.component/api";
 import { validateCryptoAmount } from '../onthego.transfer/api';
 
 import OnthegoCryptoTransfer from '../onthego.transfer/cryptoTransfer.component';
+import { Link } from 'react-router-dom';
 
 const { Paragraph } = Typography;
 
@@ -424,10 +425,10 @@ class CryptoWithDrawWallet extends Component {
         if (!this.state.isVerificationMethodsChecked) {
             return <Alert
                 message="Verification alert !"
-                description={<Text>Without verifications you can't send. Please select send verifications from <a onClick={() => {
+                description={<Text>Without verifications you can't send. Please select send verifications from <Link onClick={() => {
                     this.props.onDrawerClose();
                     this.props.history.push("/userprofile/2")
-                }}>security section</a></Text>}
+                }}>security section</Link></Text>}
                 type="warning"
                 showIcon
                 closable={false}

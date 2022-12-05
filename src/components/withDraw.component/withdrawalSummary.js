@@ -145,7 +145,7 @@ const WithdrawalFiatSummary = ({
 		withdrawSummayTrack();
 		getVerifyData();
 		loadPermessions();
-	}, []);
+	}, []);//eslint-disable-line react-hooks/exhaustive-deps
 
 	const loadPermessions = () => {
 		if (withdrawFiatPermissions) {

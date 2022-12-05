@@ -219,6 +219,7 @@ class HeaderPermissionMenu extends Component {
                         break;
                         case "personal_bank_account":
                     window.open(process.env.REACT_APP_BANK_UI_URL + 'dashboard/receive', '_self')
+                    break;
                     default:
                         break;
                 }
@@ -279,7 +280,7 @@ class HeaderPermissionMenu extends Component {
             errorMessage: null
         });
         this.props.clearSwapfullData();
-        if (key == "send") {
+        if (key === "send") {
             this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, send_crypto: false, send_fiat: false, receive_fiat: false, receive_crypto: false } });
         }
         else if (key === "trade") {
@@ -528,7 +529,7 @@ class HeaderPermissionMenu extends Component {
                         onClick={() => this.readNotification()}
                     >
                         {this.props.dashboard?.notificationCount != null &&
-                            this.props.dashboard?.notificationCount != 0 && (
+                            this.props.dashboard?.notificationCount !== 0 && (
                                 <span>{this.props.dashboard?.notificationCount}</span>
                             )}
                     </span>

@@ -22,14 +22,14 @@ import {
   updateReceiveCoinDetails,
   updateSwapdata,
   clearSwapData,
-  setStep as swapSetStep
+  //setStep 
 } from "../reducers/swapReducer";
 import { connect } from "react-redux";
 import DefaultUser from "../assets/images/defaultuser.jpg";
-import { setHeaderTab, setStep } from "../reducers/buysellReducer";
-import {
-  setStep as sendSetStep,
-} from "../reducers/sendreceiveReducer";
+import { setHeaderTab} from "../reducers/buysellReducer";
+// import {
+//   setStep as sendSetStep,
+// } from "../reducers/sendreceiveReducer";
 import { readNotification as readNotifications } from "../notifications/api";
 import apiCalls from "../api/apiCalls";
 import { setNotificationCount } from "../reducers/dashboardReducer";
@@ -109,7 +109,7 @@ class Header extends Component {
     this.trackEvent();
   }
   readNotification() {
-    let isRead = apiCalls.encryptValue("true", this.props.userConfig?.sk);
+    //let isRead = apiCalls.encryptValue("true", this.props.userConfig?.sk);
     readNotifications(this.props.userConfig.id).then(() => {
       this.props.dispatch(setNotificationCount(0));
     });
@@ -349,7 +349,7 @@ class Header extends Component {
                     onClick={() => this.readNotification()}
                   >
                     {this.props.dashboard?.notificationCount != null &&
-                      this.props.dashboard?.notificationCount != 0 && (
+                      this.props.dashboard?.notificationCount !== 0 && (
                         <span>{this.props.dashboard?.notificationCount}</span>
                       )}
                   </span>

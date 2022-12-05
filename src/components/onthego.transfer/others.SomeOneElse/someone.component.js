@@ -29,7 +29,7 @@ const [edit,setEdit]=useState(false);
 const [isSelectedId,setIsSelectedId] = useState(null);
     useEffect(() => {
         getpayeeCreate();
-    }, [])
+    }, []);//eslint-disable-line react-hooks/exhaustive-deps
     const getpayeeCreate = async () => {
         setMailLoader(true);
         const createPayeeData = await createPayee(props.userProfile.id, props.selectedAddress?.id || "", addressOptions.addressType);
@@ -54,7 +54,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
     const onSubmit = async (values) => {
         if (Object.hasOwn(values?.payeeAccountModels, 'iban')) {
             setErrorMessage(null);
-            if ((!bankdetails || Object.keys(bankdetails).length == 0)) {
+            if ((!bankdetails || Object.keys(bankdetails).length === 0)) {
                 useDivRef.current.scrollIntoView()
                 setErrorMessage("Please click validate button before saving");
                 return;
@@ -75,18 +75,18 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             obj.id = isSelectedId ? isSelectedId : createPayeeObj.payeeAccountModels[0]?.payeeId;
         }
         setBtnLoading(true)
-        if (obj.payeeAccountModels[0].documents == null || obj.payeeAccountModels[0].documents && obj.payeeAccountModels[0].documents.details.length == 0) {
+        if (obj.payeeAccountModels[0].documents === null || obj.payeeAccountModels[0].documents && obj.payeeAccountModels[0].documents.details.length === 0) {
             useDivRef.current.scrollIntoView()
             setErrorMessage('At least one document is required'); setBtnLoading(false)
 
         } else if (obj.payeeAccountModels[0].documents) {
             let length = 0;
             for (let k in obj.payeeAccountModels[0].documents.details){
-                if(obj.payeeAccountModels[0].documents.details[k].state=='Deleted'){
+                if(obj.payeeAccountModels[0].documents.details[k].state==='Deleted'){
                     length=length+1;
                 }
             }
-            if(length==obj.payeeAccountModels[0].documents.details.length){
+            if(length===obj.payeeAccountModels[0].documents.details.length){
                 useDivRef.current.scrollIntoView()
                 setErrorMessage('At least one document is required'); setBtnLoading(false)
             } else {
@@ -170,7 +170,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         </Col>
                     </Row>
                 </>}
-                {props.currency == 'EUR' && <h2 className="text-white fw-600" style={{ fontSize: 18, textAlign: 'center'}}>SEPA Transfer</h2>}
+                {props.currency === 'EUR' && <h2 className="text-white fw-600" style={{ fontSize: 18, textAlign: 'center'}}>SEPA Transfer</h2>}
                 {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
             <Form
                 ref={form}

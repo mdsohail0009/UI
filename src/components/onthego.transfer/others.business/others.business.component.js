@@ -132,7 +132,7 @@ class OthersBusiness extends Component {
         let { details, ibanDetails,isSelectedId,isEdit } = this.state;
         if (Object.hasOwn(values, 'iban')) {
             this.setState({ ...this.state, errorMessage: null });
-            if ((!ibanDetails || Object.keys(ibanDetails).length == 0)) {
+            if ((!ibanDetails || Object.keys(ibanDetails).length === 0)) {
                 this.setState({ ...this.state, errorMessage: "Please click validate button before saving", isLoading: false, isBtnLoading: false });
                 this.useDivRef.current?.scrollIntoView();
                 return;
@@ -158,17 +158,17 @@ class OthersBusiness extends Component {
         if(isEdit){
             _obj.id = isSelectedId ? isSelectedId : details?.payeeId;
         }
-        if (_obj.payeeAccountModels[0].documents == null || _obj.payeeAccountModels[0].documents && _obj.payeeAccountModels[0].documents.details.length == 0) {
+        if (_obj.payeeAccountModels[0].documents === null || _obj.payeeAccountModels[0].documents && _obj.payeeAccountModels[0].documents.details.length === 0) {
             this.useDivRef.current.scrollIntoView()
             this.setState({ ...this.state, isLoading: false, errorMessage: 'At least one document is required', isBtnLoading: false });
         }else if (_obj.payeeAccountModels[0].documents) {
             let length = 0;
             for (let k in _obj.payeeAccountModels[0].documents.details){
-                if(_obj.payeeAccountModels[0].documents.details[k].state=='Deleted'){
+                if(_obj.payeeAccountModels[0].documents.details[k].state==='Deleted'){
                     length=length+1;
                 }
             }
-            if(length==_obj.payeeAccountModels[0].documents.details.length){
+            if(length===_obj.payeeAccountModels[0].documents.details.length){
                 this.useDivRef.current.scrollIntoView()
                 this.setState({ ...this.state, isLoading: false, errorMessage: 'At least one document is required', isBtnLoading: false });
             } else {
@@ -419,7 +419,7 @@ class OthersBusiness extends Component {
                         </Spin>
                        
                     </div>
-                    {this.props.ontheGoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    {this.props.ontheGoType === "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                                 name="reasonOfTransfer"
