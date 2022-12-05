@@ -88,7 +88,7 @@ class Portfolio extends Component {
         return (
             <div className="mb-16">
                 <div className='mb-12 mt-4'>
-                    <Translate content="menu_transactions_history" className="basicinfo" />
+                    <Translate content="transactions_history" className="basicinfo" />
                     <Button
                         onClick={() => this.transactionDrawer()}
                         className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}}
@@ -113,7 +113,7 @@ class Portfolio extends Component {
                                 <thead>
                                     <tr>
                                         <th style={{width: "18%"}}>Date</th>
-                                        <th style={{width: "35%"}}>Transaction</th>
+                                        <th style={{width: "35%"}}>Type</th>
                                         <th style={{width: "15%"}}>Wallet</th>
                                         <th style={{width: "15%"}}>Value</th>
                                         <th style={{width: "15%"}}>State</th>

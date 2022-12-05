@@ -3,40 +3,62 @@ import {
   Drawer,
   Typography,
   Button,
-  Row, Col, Select, Form
-} from "antd";
+  Row, Col, Select, Form,Modal,DatePicker,Tooltip,Alert,Input,message} from "antd";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
 import List from "../grid.component";
-import { getTransactionSearch, getTransactionCurrency } from './api';
+import { getTransactionSearch, getTransactionCurrency,transactionsView } from './api';
 import { setCurrentAction } from "../../reducers/actionsReducer";
 import { getFeaturePermissionsByKey } from '../shared/permissions/permissionService';
 import { withRouter } from "react-router-dom";
 import { setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 import NumberFormat from "react-number-format";
 import moment from "moment/moment";
+import TransactionSlips from "./transaction.slips";
+import TransactionTimeSpan from "./transactionTimeSpan";
 const { Option } = Select;
 class TransactionsHistory extends Component {
+  formRef = React.createRef();
+  formDateRef = React.createRef();
   constructor(props) {
     super(props);
     this.state = {
       isLoading: false,
       customerData: [],
-      typeData: [],
       doctypeData: [],
       currenyData: [],
       permissions: {},
       value: "",
+      statusData:[],
+      timeListSpan: ["All", "Custom"],
+      modal: false,
+      selectedTimespan: "",
+      timeSpanfromdate: "",
+      timeSpantodate: "",
+      customFromdata: "",
+      customTodate: "",
+      isCustomDate: false,
+      message:"",
       searchObj: {
         type: "All",
         docType: "All",
         customerId: this.props.customer?.id,
-        currency: this.props?.selectWallet || "All"
+        currency: this.props?.selectWallet || "All",
+        status:"All",
+        timeSpan: "All",
+        fromdate: "",
+        todate: "",
       },
       tranObj: {},
       loader: true,
       gridUrl: process.env.REACT_APP_GRID_API + `Transaction/Customers`,
+      showModal:false,
+      modalData:{},
+      modalPoupData:{},
+      downloadError:"",
+      viewData:{},
+      viewLoader:false,
     };
     this.props.dispatch(setSelectedFeatureMenu(this.props.transactionsPermissions?.featureId || this.props.customer?.id));
     this.gridRef = React.createRef();
@@ -46,14 +68,12 @@ class TransactionsHistory extends Component {
 
   componentDidMount() {
     getFeaturePermissionsByKey('transactions', this.loadInfo)
-
   }
 
   loadInfo = () => {
     this.permissionsInterval = setInterval(this.loadPermissions, 200);
     this.TransactionSearch();
     this.transactionCurrency();
-    //this.setState({...this.state, searchObj: {...this.state.searchObj, currency: this.props?.selectWallet || "All"}})
   }
 
   loadPermissions = () => {
@@ -69,9 +89,6 @@ class TransactionsHistory extends Component {
           this.props.history.push("/accessdenied");
         }
       });
-      // () => { this.gridRef.current?.refreshGrid(); }
-      //);
-
     }
   }
   gridColumns = [
@@ -86,7 +103,14 @@ class TransactionsHistory extends Component {
         </td>
       )
     },
-    { field: "docType", title: "Transaction", filter: true, },
+    { field: "docType", title: "Type", filter: true,
+    customCell: (props) => (
+      <td className="d-flex justify-content">
+      <div className="gridLink c-pointer	" onClick={() => this.transactionModal(props?.dataItem)}>
+      {props?.dataItem?.docType}
+      </div>
+    </td>
+    ), },
     { field: "wallet", title: "Wallet", filter: true, },
     {
       field: "debit", title: "Value", filter: false, dataType: 'number', filterType: "numeric",
@@ -129,8 +153,8 @@ class TransactionsHistory extends Component {
     let response = await getTransactionSearch();
     if (response.ok) {
       this.setState({
-        typeData: response.data.types,
         doctypeData: response.data.docTypes,
+        statusData:response.data.status
       });
     }
   };
@@ -147,6 +171,17 @@ class TransactionsHistory extends Component {
       });
     }
   };
+  handleTimeSpan = (val, id) => {
+    let { searchObj } = this.state;
+    searchObj[id] = val;
+    if (val === "Custom") {
+      this.setState({ ...this.state, modal: true, isCustomDate: true, searchObj: searchObj })
+      this.formRef.current.setFieldsValue({ ...this.state, selectedTimespan: null });
+    } else {
+      this.setState({ ...this.state, searchObj: { ...searchObj, fromdate: '', todate: '' }, isCustomDate: false, customFromdata: "", customTodate: "" });
+
+    }
+  }
   handleChange = (value, prop) => {
     var val = "";
     let { customerData, searchObj } = this.state;
@@ -161,8 +196,18 @@ class TransactionsHistory extends Component {
       this.setState({ ...this.state, searchObj: { ...this.state.searchObj, currency: searchVal || "All" } })
     }
   };
-  handleSearch = (values) => {
-    let { searchObj } = this.state;
+  handleDateChange = (prop, val) => {
+    let { searchObj, customFromdata, customTodate } = this.state;
+    searchObj[val] = new Date(prop);
+    this.setState({ ...this.state, searchObj, fromdate: customFromdata, todate: customTodate });
+
+  };
+  handleSearch = () => {
+    let { searchObj, timeSpanfromdate, timeSpantodate } = this.state;
+    if (searchObj.timeSpan === "Custom") {
+      searchObj.fromdate = moment(timeSpanfromdate).format('MM-DD-YYYY');
+      searchObj.todate = moment(timeSpantodate).format('MM-DD-YYYY');
+    }
     this.setState({ ...this.state, searchObj },
       () => { this.gridRef.current?.refreshGrid(); }
     );
@@ -180,25 +225,90 @@ class TransactionsHistory extends Component {
 
   };
 
+  datePopup = () => {
+    let { searchObj, timeSpanfromdate, timeSpantodate, customFromdata, customTodate } = this.state;
+    searchObj.fromdate = new Date(timeSpanfromdate)
+    searchObj.fromdate = new Date(timeSpantodate)
+    searchObj.fromdate = moment(timeSpanfromdate).format('DD/MM/YYYY');
+    searchObj.todate = moment(timeSpantodate).format('DD/MM/YYYY');
+    this.formDateRef.current.setFieldsValue({ fromdate: customFromdata, todate: customTodate })
+    this.setState({ ...this.state, modal: true, searchObj });
+  }
+
+  handleOk = (values) => {
+    let { selectedTimespan, timeSpanfromdate, timeSpantodate, customFromdata, customTodate } = this.state;
+
+    if (new Date(moment(values.fromdate).format('MM/DD/YYYY')).getTime() > new Date(moment(values.todate).format('MM/DD/YYYY')).getTime()) {
+      this.setState({ ...this.state, message: 'From date must be less than or equal to the to date.' })
+      return
+    }
+    customFromdata = values.fromdate;
+    customTodate = values.todate;
+    values.fromdate = values.fromdate.format('MM/DD/YYYY');
+    values.todate =values.todate.format('MM/DD/YYYY');
+    timeSpanfromdate = values.fromdate;
+    timeSpantodate = values.todate;
+    selectedTimespan = moment(timeSpanfromdate).format('DD/MM/YYYY') + " - " + moment(timeSpantodate).format('DD/MM/YYYY');
+    this.formRef.current.setFieldsValue({ ...this.state, selectedTimespan });
+    this.setState({ ...this.state, selectedTimespan, timeSpanfromdate, timeSpantodate, customFromdata, customTodate, modal: false, message: '' });
+    this.formDateRef.current.resetFields();
+  };
+  handleDateCancel = e => {
+    let { searchObj, customFromdata, customTodate } = this.state;
+    if (customFromdata && customTodate) {
+      this.setState({ modal: false,  message: '' });
+    } else {
+      this.setState({ ...this.state, searchObj: { ...searchObj, timeSpan: "All", fromdate: '', todate: '' }, modal: false, isCustomDate: false, message: '' });
+      this.formRef.current.setFieldsValue({ ...searchObj, timeSpan: "All", fromdate: '', todate: '' })
+      this.formDateRef.current.resetFields();
+    }
+  }
+transactionModal= async (data)=>{
+  this.setState({ ...this.state, showModal:true,modalData:data,viewLoader:true ,
+    isLoading:false  })
+    let response = await transactionsView(data.id,data.docType);
+    if(response.ok){
+      this.setState({ ...this.state, showModal:true,viewData:response.data ,
+        isLoading:false,viewLoader:false  })
+    }
+}
+handleCancel=()=>{
+  this.setState({ ...this.state, showModal:false,downloadError:"" })
+}
+isErrorDispaly = (objValue) => {
+  if (objValue.data && typeof objValue.data === "string") {
+    return objValue.data;
+  } else if (
+    objValue.originalError &&
+    typeof objValue.originalError.message === "string"
+  ) {
+    return objValue.originalError.message;
+  } else {
+    return "Something went wrong please try again!";
+  }
+};
 
   render() {
     const { Title } = Typography;
-    const { customerData, typeData, doctypeData, currenyData, gridUrl, searchObj } = this.state;
-    const options1 = typeData.map((d) => (
-      <Option key={d.value} value={d.name}>{d.name}</Option>
-    ));
+    const {  doctypeData, currenyData, gridUrl, searchObj,showModal,modalData,timeListSpan,statusData,isLoading,viewData } = this.state;
+
     const options2 = doctypeData.map((d) => (
       <Option key={d.value} value={d.name}>{d.name}</Option>
     ));
     const options3 = currenyData?.map((d) => (
       <Option key={d.code} value={d.code}>{d.code}</Option>
     ));
+    const options4 = timeListSpan.map((d) => (
+      <Option key={d} value={d}>{d}</Option>
+    ));
+    const options5 = statusData?.map((d) => (
+      <Option key={d.code} value={d.code}>{d.code}</Option>
+    ));
     return (
       <>
         <Drawer
           title={[<div className="side-drawer-header">
-            <Translate content="menu_transactions_history" component={Title} className="fs-26 fw-400 mb-0 text-white-30" />
-
+            <Translate content="transactions_history" component={Title} className="fs-26 fw-400 mb-0 text-white-30" />
             <span onClick={this.props.onClose} className="icon md close-white c-pointer" />
           </div>]}
           placement="right"
@@ -213,28 +323,53 @@ class TransactionsHistory extends Component {
               initialValues={this.state.customerData}
               className="ant-advanced-search-form form form-bg search-bg pt-8"
               autoComplete="off"
+              ref={this.formRef}
             >
               <Row >
-
-                <Col xs={24} sm={24} md={7} lg={7} xl={6} className="px-8 transaction_resp">
-                  <Form.Item name="type" className="input-label mb-0" label="Type" colon={false}>
+              <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
+              <Form.Item
+                    name="timeSpan"
+                    className="input-label selectcustom-input mb-0"
+                    label={<Translate content="Date" component={Form.label} className="input-label selectcustom-input mb-0" />}
+                  >
                     <Select
-                      defaultValue="All"
-                      className="cust-input w-100 bgwhite"
+                      className="cust-input mb-0 custom-search"
                       dropdownClassName="select-drpdwn"
-                      showSearch
-                      onChange={(e) => this.handleChange(e, "type")}
-                      placeholder="Select Type"
+                      defaultValue="All"
+                      onChange={(e) => this.handleTimeSpan(e, 'timeSpan')}
+                      placeholder="Time Span"
                     >
-                      {options1}
+                      {options4}
                     </Select>
                   </Form.Item>
                 </Col>
-                <Col xs={24} sm={24} md={7} lg={7} xl={6} className="px-8 transaction_resp">
-                  <Form.Item className="input-label mb-0" label="Wallet" colon={false}>
+                {this?.state?.isCustomDate ? <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
+                  <Form.Item
+                    name="selectedTimespan"
+                    className="input-label selectcustom-input mb-0 cust-label"
+                    label="From - To Dates"
+                  >
+                    <Input disabled placeholder="DD/MM/YYYY" className="cust-input cust-adon mb-0" addonAfter={<i className="icon md date-white c-pointer" onClick={(e) => { this.datePopup(e, 'searchObj') }} />} />
+                  </Form.Item>
+                </Col> : ""}
+                <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
+                  <Form.Item name="docType" className="input-label mb-0 cust-label" label="Transaction Type" colon={false}>
+                    <Select
+                      defaultValue="All"
+                      className="cust-input w-100 bgwhite c-pointer"
+                      dropdownClassName="select-drpdwn"
+                      showSearch
+                      onChange={(e) => this.handleChange(e, "docType")}
+                      placeholder="Select Doc Type"
+                    >
+                      {options2}
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
+                  <Form.Item className="input-label mb-0 cust-label" label="Wallet" colon={false}>
                     <Select
                       value={this.state.searchObj.currency}
-                      // defaultValue={this.state.searchObj.currency}
                       className="cust-input w-100 bgwhite"
                       dropdownClassName="select-drpdwn"
                       showSearch
@@ -245,17 +380,17 @@ class TransactionsHistory extends Component {
                     </Select>
                   </Form.Item>
                 </Col>
-                <Col xs={24} sm={24} md={7} lg={7} xl={6} className="px-8 transaction_resp">
-                  <Form.Item name="docType" className="input-label mb-0" label="Transaction" colon={false}>
+                <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
+                  <Form.Item name="state" className="input-label mb-0 cust-label" label="State" colon={false}>
                     <Select
                       defaultValue="All"
                       className="cust-input w-100 bgwhite"
                       dropdownClassName="select-drpdwn"
                       showSearch
-                      onChange={(e) => this.handleChange(e, "docType")}
-                      placeholder="Select Doc Type"
+                      onChange={(e) => this.handleChange(e, "status")}
+                      placeholder="Select Status"
                     >
-                      {options2}
+                      {options5}
                     </Select>
                   </Form.Item>
                 </Col>
@@ -277,9 +412,13 @@ class TransactionsHistory extends Component {
             url={gridUrl} additionalParams={searchObj} ref={this.gridRef}
             columns={this.gridColumns}
             showExcelExport={this.state.permissions?.ExcelExport}
-            excelFileName={'All Transactions'}
+            excelFileName={'Transaction History'}
+            exExportTitle={"Download Transaction History"}
           />
         </Drawer>
+
+                <TransactionSlips showModal={showModal}  modalData={modalData} isLoading={isLoading} handleCancel={this.handleCancel} viewData={viewData} loader={this.state.viewLoader} />
+                <TransactionTimeSpan modal={this.state.modal} handleDateCancel={this.handleDateCancel} handleDateChange={this.handleDateChange} handleOk={this.handleOk} formDateRef={this.formDateRef} message={this.state?.message} searchObj={searchObj}/>
       </>
 
     );

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Typography, Button, Modal, Tooltip } from "antd";
 import Loader from "../../Shared/loader";
-import {  getFileURL, getViewData, } from "./api";
+import { getFileURL, getViewData, } from "./api";
 import { connect } from "react-redux";
 import FilePreviewer from "react-file-previewer";
 import { bytesToSize } from "../../utils/service";
@@ -312,7 +312,7 @@ const AddressFiatView = (props) => {
 											
 										</Row>
 										<Title className="basic-info p-0 basicinfo">
-										  Recipient Bank Details
+										   Recipient Bank Details
 										</Title>
 										<Row>
 											{bankDetailes?.map((item, idx) => (
@@ -425,7 +425,7 @@ const AddressFiatView = (props) => {
 														</Col>}
 														{item?.bankBranch && <Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
-																Branch
+															Branch
 															</Text>
 															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
 
@@ -505,6 +505,8 @@ const AddressFiatView = (props) => {
 																	: item.line2}
 															</Title>
 														</Col>}
+
+
 													</Row>
 												</div>
 												{item?.documents?.details.map((file) => (
