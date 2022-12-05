@@ -251,7 +251,7 @@ class YourPortfolio extends Component {
               }}
               renderItem={(item) => (
                 <List.Item
-                  className="listitems-design"
+                  className="cytpo-list-style"
                   extra={
                     <div className='crypto-btns'>
                       
@@ -275,7 +275,16 @@ class YourPortfolio extends Component {
                         className="custom-btn sec"
                       />
                       
-                     
+                    
+                        <Dropdown overlay={this.menuBar(item)} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
+                        <a onClick={e => e.preventDefault()}>
+                          <Space>
+                          <span class="icon md menu-bar ml-4 p-relative"></span>
+                          {/* <DownOutlined /> */}
+                        </Space>
+                      </a>
+                    </Dropdown>
+                        
                      {/* <span class="icon md bell ml-4 p-relative"></span> */}
                      {/* <Dropdown overlay={this.depostWithdrawMenu} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
                      <span class="icon md bell ml-4 p-relative"></span>
@@ -302,16 +311,8 @@ class YourPortfolio extends Component {
                           <Text className="fs-16 fw-600 text-upper text-white">
                             {item.coin}
                           </Text>
-                          <Text className="fs-14 px-8 text-secondary">|</Text>
-                          <Currency
-                            defaultValue={item.coinValueinNativeCurrency}
-                            type={"text"}
-                            className={`lg-fontsize ${
-                              item.coinValueinNativeCurrency > 0
-                                ? "text-green"
-                                : "text-red"
-                            }`}
-                          />
+                          {/* <Text className="fs-14 px-8 text-secondary">|</Text> */}
+                          
                         </div>
                         <Currency
                           defaultValue={item.coinBalance}
@@ -320,16 +321,15 @@ class YourPortfolio extends Component {
                           prefix={""}
                         />
                         </div>
-                        <div>
-                        <Dropdown overlay={this.menuBar(item)} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
-                        <a onClick={e => e.preventDefault()}>
-                          <Space>
-                          <span class="icon md menu-bar ml-4 p-relative"></span>
-                          {/* <DownOutlined /> */}
-                        </Space>
-                      </a>
-                    </Dropdown>
-                        </div>
+                        <Currency
+                            defaultValue={item.coinValueinNativeCurrency}
+                            type={"text"}
+                            className={`lg-fontsize ${
+                              item.coinValueinNativeCurrency > 0
+                                ? "text-green"
+                                : "text-red"
+                            }`}
+                          />
                       </div>
                     }
                   />

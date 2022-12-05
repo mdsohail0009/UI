@@ -125,9 +125,9 @@ class Wallets extends Component {
             <div className="d-flex align-center justify-content">
                 <Translate content="suissebase_title" component={Title} className="db-titles" />
                 <div>
-              <Button className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
+              <Button className="dbchart-link" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
                   <Translate content="cockpit" />
-                  <span className="icon sm right-angle ml-4" />
+                  {/* <span className="icon sm right-angle ml-4" /> */}
               </Button>
                     
               </div>
@@ -147,13 +147,13 @@ class Wallets extends Component {
                     className="mobile-list"
                     //loading={wallets.loading}
                     renderItem={item =>
-                        <List.Item className="">
+                        <List.Item className="listitems-design">
                             <List.Item.Meta
                                 avatar={<Image preview={false} src={item.imagePath} />}
                                 title={<div className="fs-16 fw-600 text-upper text-white-30 l-height-normal">{item.walletCode}</div>}
                                 description={<Currency className="fs-16 text-white-30 m-0" defaultValue={Math.abs(item.amount) > 999999 ? Math.sign(item.amount)*((Math.abs(item.amount)/1000000).toFixed(1)) : Math.sign(item.amount)*Math.abs(item.amount)} suffixText={Math.abs(item.amount) > 999999?"M":null} prefix={(item?.walletCode == "USD" ? "$" : null) || (item?.walletCode == "GBP" ? "£" : null) || (item?.walletCode == "EUR" ? "€" : null)} decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />}
                             />
-                            <div className="crypto-btns">
+                            <div className="crypto-btns crypto-btn-top">
                                 <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
                                 <Translate content="withdraw" onClick={() => { this.showSendReceiveDrawer(2, item.walletCode) }} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} />
                                 {/* <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />

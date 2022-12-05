@@ -74,7 +74,7 @@ body{background: #000000 url(../images/dark-bg2.0.svg) no-repeat top center;}
 .cust-input, .expiry-input, .cust-input .ant-input{background: #151519c4;border: 1px solid rgba(255, 255, 255, 0.4);border-radius: 5px;text-align: left;}
 .ant-select-dropdown{background-color:#55555B;border-radius: 5px;}
 .select-drpdwn .ant-select-item:hover, .select-drpdwn .ant-select-item.ant-select-item-option-active, .select-drpdwn .ant-select-item.ant-select-item-option-selected, .select-drpdwn .ant-select-item.ant-select-item-option-active.ant-select-item-option-selected{background-color: #000000;}
-.dbchart-link{color: #fff!important;display: inline-block;background-color: var(--bgYellow); padding: 0 12px;margin-left: 8px;border-radius: 12px;line-height: 24px;}
+/* .dbchart-link{color: #fff!important;display: inline-block;background-color: var(--bgYellow); padding: 0 12px;margin-left: 8px;border-radius: 12px;line-height: 24px;} */
 /* .custom-header span{font-size: 18px;color: #FFFFFF;opacity: 0.7;font-weight: 600;}
 .custom-header span:hover{color: #FFFFFF;opacity: 1;}
 .ant-menu-item:active, .ant-menu-submenu-title:active{font-weight: 700;} */
@@ -83,6 +83,7 @@ body{background: #000000 url(../images/dark-bg2.0.svg) no-repeat top center;}
 .side-drawer .ant-drawer-content-wrapper{width: 524px !important;}
 .ant-drawer-wrapper-body{padding-top:90px;}
 .ant-layout{background: none;}
+.ant-btn{background-color: transparent;}
 /*Common css End*/
 
 /*Coin Selection End*/
@@ -153,7 +154,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /*Modal End*/
 
 /* Dashboard start */
-.ant-list-split .ant-list-item{background: rgb(255, 255, 255 ,0.15);border-radius: 13px;margin-bottom: 10px;padding: 14px 20px !important;}
+.ant-list-split .ant-list-item.cytpo-list-style{background: rgb(255, 255, 255 ,0.15);border-radius: 13px;margin-bottom: 10px;padding: 14px 20px !important;border-bottom:0;}
 .db-titles{font-weight: 700 !important;color:rgb(255 255 255 / 60%) !important;font-size: 22px !important;}
 .secureDropdown .ant-dropdown-menu{background-color: #4E505A;box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.35);border-radius: 10px;min-width: 300px; max-width: 300px; padding: 24px 0;}
 .depwith-drpdown .ant-dropdown-menu{min-width: 173px !important; max-width: 173px !important;}
@@ -164,10 +165,14 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .drpdwn-list li{font-size: 14px; padding: 0 22px; transition: 0.3s ease;cursor: pointer;}
 .drpdwn-list li a{color: var(--textWhite);display: flex; align-items: center; padding: 10px 0 10px 10px;}
 .crypto-card-design{display: flex;justify-content: space-between;}
-.listitems-design{display: block;float: left;width: 370px;margin-right: 16px;border-bottom: 0 !important;}
-.listitems-design:nth-child(even) {margin-right: 0;}
-.crypto-wallet-style{margin-bottom: 28px;}
-.fait-wallet-style{margin-top: 28px;}
+.listitems-design{border-radius: 13px;margin-bottom: 10px;padding: 14px 20px !important;display: block;float: left;width: 370px;margin-right: 16px;border-bottom: 0 !important;background: linear-gradient(180deg, #88C351 -167.81%, #000000 100%) !important;}
+.listitems-design:nth-child(even) {margin-right: 0;background: linear-gradient(180deg, #627EEA -115.75%, #000000 100%) !important;}
+/* .crypto-wallet-style{margin-bottom: 28px;}
+.fait-wallet-style{margin-top: 28px;} */
+.crypto-btn-top{margin-top: 28px;}
+.ant-btn.dbchart-link{background-color: transparent;border: 0;}
+.dbchart-link span{color: #1AFD90;}
+.market-panel-newstyle{clear: both;margin-top: 36px;}
 /* Dashboard end */
 
 
