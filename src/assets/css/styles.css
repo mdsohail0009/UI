@@ -1365,7 +1365,7 @@ input[type=number]::-webkit-outer-spin-button {
 .crypto-card .ant-card-body{width: 100%;}
 .custom-spin .ant-spin-dot-spin{width: 2rem;height: 2rem;}
 .custom-spin .ant-spin-dot-spin i{width: 16px;height: 16px;}
-.ant-dropdown.secureDropdown{z-index: 995;}
+.ant-dropdown.secureDropdown{z-index: 995; width: 239px;}
 .list-dot{list-style: initial;margin-bottom: 4px !important;}
 .minmax.custom-minmax{position: relative;right:13px;top:-70px;text-align: right;}
 .new-add .ant-btn:hover{border-color: transparent !important;outline: none !important;}
