@@ -67,7 +67,7 @@ body, h1, h2, h3, h4, h5, h6, a, p div{font-family: 'Lato', sans-serif !importan
 .profile-dropdown .user-profile{width:112px;height: 112px; border-radius: 50%;display: block;margin: 0 auto;}
 .profile-dropdown {text-align: center;padding:12px 34px;}
 .profile-dropdown .drpdwn-list{padding-top: 0px; padding-left: 0; padding-right: 0; margin-left: -35px; margin-right: -35px;}
-.profile-btn, .profile-btn:hover, .profile-btn:active, .profile-btn:focus{background: transparent;border: 1px solid var(--green);height: 27px;border-radius: 8px;color: var(--green); font-size: 12px;padding: 10px 14px;width: 127px;}
+.profile-btn, .profile-btn:hover, .profile-btn:active, .profile-btn:focus{background: transparent;border: 1px solid var(--green) !important;height: 27px;border-radius: 8px;color: var(--green); font-size: 12px;width: 127px;text-align: left;}
 .profile-info{width: 180px;height: 180px;padding: 5px;border-radius: 50%; margin: 0 auto 24px;background-image: linear-gradient(128deg, var(--bgDark1) 50%, var(--bgDark1) 50%); position: relative;}
 .profile-info .user-profile{width:100%;height: 100%; border-radius: 50%;padding: 6px;background-color: var(--bgDarkGrey);object-fit: cover;}
 .profile-info .img-upld{position: absolute;right: -5px;bottom: 20px;background-color: var(--bgYellow);border-color: var(--bgYellow);}
