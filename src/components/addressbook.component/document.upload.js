@@ -50,7 +50,7 @@ class AddressDocumnet extends Component {
                       className="mb-8 fs-14 text-white fw-500 ml-12" 
                     >{this.props.title}</Paragraph>
                      {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
-                    <Form.Item name={"files"} required rules={[{
+                    <Form.Item name={"files"} rules={[{
                         validator: (_, value) => {
                                 const isValidFiles = this.state.filesList.filter(item => (item.name || item.documentName).indexOf(".") != (item.name || item.documentName).lastIndexOf(".")).length == 0;
                                 if (isValidFiles) { return Promise.resolve(); } else {

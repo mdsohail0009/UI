@@ -707,7 +707,7 @@ saveWithdrawdata = async () => {
                             let { documents } = this.state.codeDetails;
                             documents = docs;
                             this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, documents } })
-                        }} title={"Please upload supporting docs to explain relationship with beneficiary"} />
+                        }} title={"Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements"} />
             </React.Fragment>
             <Row gutter={[16, 16]}>
               <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
