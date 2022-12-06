@@ -1012,7 +1012,6 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .right-panel{padding: 0 60px;}
     /* .tlv-header{padding: 24px 32px !important;} */
     .summary-count{display: inline-block;vertical-align: top;}
-    .markets-panel{margin-right: 40px;}
     .tlv-header .main-menu li{margin: 0 4px;}
     .sidebar-push{margin: 100px 0 0;}
     .header-right, .portfolio-list .ant-list-split .ant-list-item{display: block;flex-grow: 1;flex-shrink: 1;text-align: right;}
