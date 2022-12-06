@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
 import List from "../grid.component";
-import { getTransactionSearch, getTransactionCurrency } from './api';
+import { getTransactionSearch, getTransactionCurrency,transactionsView } from './api';
 import { setCurrentAction } from "../../reducers/actionsReducer";
 import { getFeaturePermissionsByKey } from '../shared/permissions/permissionService';
 import { withRouter } from "react-router-dom";
@@ -31,7 +31,7 @@ class TransactionsHistory extends Component {
       permissions: {},
       value: "",
       statusData:[],
-      timeListSpan: ["Last 1 Day", "Last One Week", "Custom"],
+      timeListSpan: ["All", "Custom"],
       modal: false,
       selectedTimespan: "",
       timeSpanfromdate: "",
@@ -46,7 +46,7 @@ class TransactionsHistory extends Component {
         customerId: this.props.customer?.id,
         currency: this.props?.selectWallet || "All",
         status:"All",
-        timeSpan: "Last 1 Day",
+        timeSpan: "All",
         fromdate: "",
         todate: "",
       },
@@ -57,6 +57,8 @@ class TransactionsHistory extends Component {
       modalData:{},
       modalPoupData:{},
       downloadError:"",
+      viewData:{},
+      viewLoader:false,
     };
     this.props.dispatch(setSelectedFeatureMenu(this.props.transactionsPermissions?.featureId || this.props.customer?.id));
     this.gridRef = React.createRef();
@@ -101,7 +103,7 @@ class TransactionsHistory extends Component {
         </td>
       )
     },
-    { field: "docType", title: "Type", filter: true,
+    { field: "docType", title: "Type", filter: true,width: 260,
     customCell: (props) => (
       <td className="d-flex justify-content">
       <div className="gridLink c-pointer	" onClick={() => this.transactionModal(props?.dataItem)}>
@@ -109,9 +111,9 @@ class TransactionsHistory extends Component {
       </div>
     </td>
     ), },
-    { field: "wallet", title: "Wallet", filter: true, },
+    { field: "wallet", title: "Wallet", filter: true,width: 260, },
     {
-      field: "debit", title: "Value", filter: false, dataType: 'number', filterType: "numeric",
+      field: "debit", title: "Value", filter: false, dataType: 'number', filterType: "numeric",width: 260,
       customCell: (props) => (
         <td>
           {props.dataItem?.debit && <NumberFormat value={props.dataItem?.debit} displayType={"text"} thousandSeparator={true} />}
@@ -142,7 +144,7 @@ class TransactionsHistory extends Component {
     {
       field: "accountnumber", title: "Bank Account Number/IBAN", filter: true, width: 260,
     },
-    { field: "state", title: "State", filter: true, },
+    { field: "state", title: "State", filter: true, width: 260,},
     
 
 
@@ -237,7 +239,7 @@ class TransactionsHistory extends Component {
     let { selectedTimespan, timeSpanfromdate, timeSpantodate, customFromdata, customTodate } = this.state;
 
     if (new Date(moment(values.fromdate).format('MM/DD/YYYY')).getTime() > new Date(moment(values.todate).format('MM/DD/YYYY')).getTime()) {
-      this.setState({ ...this.state, message: 'Start date must be less than or equal to the end date.' })
+      this.setState({ ...this.state, message: 'From date must be less than or equal to the to date.' })
       return
     }
     customFromdata = values.fromdate;
@@ -256,15 +258,21 @@ class TransactionsHistory extends Component {
     if (customFromdata && customTodate) {
       this.setState({ modal: false,  message: '' });
     } else {
-      this.setState({ ...this.state, searchObj: { ...searchObj, timeSpan: "Last 1 Day", fromdate: '', todate: '' }, modal: false, isCustomDate: false, message: '' });
-      this.formRef.current.setFieldsValue({ ...searchObj, timeSpan: "Last 1 Day", fromdate: '', todate: '' })
+      this.setState({ ...this.state, searchObj: { ...searchObj, timeSpan: "All", fromdate: '', todate: '' }, modal: false, isCustomDate: false, message: '' });
+      this.formRef.current.setFieldsValue({ ...searchObj, timeSpan: "All", fromdate: '', todate: '' })
       this.formDateRef.current.resetFields();
     }
   }
-transactionModal=(data)=>{
-  this.setState({ ...this.state, showModal:true,modalData:data ,
+transactionModal=async(data)=>{
+  this.setState({ ...this.state, showModal:true,modalData:data,viewLoader:true ,
     isLoading:false  })
-}
+    let response = await transactionsView(data.id,data.docType);
+    if(response.ok){
+      this.setState({ ...this.state, showModal:true,viewData:response.data ,
+        isLoading:false,viewLoader:false  })
+    }
+  }
+
 handleCancel=()=>{
   this.setState({ ...this.state, showModal:false,downloadError:"" })
 }
@@ -283,7 +291,7 @@ isErrorDispaly = (objValue) => {
 
   render() {
     const { Title } = Typography;
-    const {  doctypeData, currenyData, gridUrl, searchObj,showModal,modalData,timeListSpan,statusData,isLoading } = this.state;
+    const {  doctypeData, currenyData, gridUrl, searchObj,showModal,modalData,timeListSpan,statusData,isLoading,viewData } = this.state;
 
     const options2 = doctypeData.map((d) => (
       <Option key={d.value} value={d.name}>{d.name}</Option>
@@ -301,7 +309,7 @@ isErrorDispaly = (objValue) => {
       <>
         <Drawer
           title={[<div className="side-drawer-header">
-            <Translate content="transaction" component={Title} className="fs-26 fw-400 mb-0 text-white-30" />
+            <Translate content="transactions_history" component={Title} className="fs-26 fw-400 mb-0 text-white-30" />
             <span onClick={this.props.onClose} className="icon md close-white c-pointer" />
           </div>]}
           placement="right"
@@ -319,16 +327,16 @@ isErrorDispaly = (objValue) => {
               ref={this.formRef}
             >
               <Row >
-              <Col xs={24} sm={24} md={7} lg={7} xl={6} className="px-8 transaction_resp">
+              <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
               <Form.Item
                     name="timeSpan"
                     className="input-label selectcustom-input mb-0"
-                    label={<Translate content="TimeSpan" component={Form.label} className="input-label selectcustom-input mb-0" />}
+                    label={<Translate content="Date" component={Form.label} className="input-label selectcustom-inputdate-mobile" />}
                   >
                     <Select
                       className="cust-input mb-0 custom-search"
                       dropdownClassName="select-drpdwn"
-                      defaultValue="Last 1 Day"
+                      defaultValue="All"
                       onChange={(e) => this.handleTimeSpan(e, 'timeSpan')}
                       placeholder="Time Span"
                     >
@@ -336,17 +344,31 @@ isErrorDispaly = (objValue) => {
                     </Select>
                   </Form.Item>
                 </Col>
-                {this?.state?.isCustomDate ? <Col xs={24} sm={24} md={7} lg={7} xl={6} className="px-8 transaction_resp">
+                {this?.state?.isCustomDate ? <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
                   <Form.Item
                     name="selectedTimespan"
-                    className="input-label selectcustom-input mb-0"
-                    label="Selected timespan"
+                    className="input-label selectcustom-input cust-label transaction-type"
+                    label="From - To Dates"
                   >
                     <Input disabled placeholder="DD/MM/YYYY" className="cust-input cust-adon mb-0" addonAfter={<i className="icon md date-white c-pointer" onClick={(e) => { this.datePopup(e, 'searchObj') }} />} />
                   </Form.Item>
                 </Col> : ""}
-                <Col xs={24} sm={24} md={7} lg={7} xl={6} className="px-8 transaction_resp">
-                  <Form.Item className="input-label mb-0" label="Wallet" colon={false}>
+                <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
+                  <Form.Item name="docType" className="input-label cust-label transaction-type" label="Transaction Type" colon={false}>
+                    <Select
+                      defaultValue="All"
+                      className="cust-input w-100 bgwhite c-pointer"
+                      dropdownClassName="select-drpdwn"
+                      showSearch
+                      onChange={(e) => this.handleChange(e, "docType")}
+                      placeholder="Select Doc Type"
+                    >
+                      {options2}
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
+                  <Form.Item className="input-label cust-label transaction-type" label="Wallet" colon={false}>
                     <Select
                       value={this.state.searchObj.currency}
                       className="cust-input w-100 bgwhite"
@@ -359,22 +381,8 @@ isErrorDispaly = (objValue) => {
                     </Select>
                   </Form.Item>
                 </Col>
-                <Col xs={24} sm={24} md={7} lg={7} xl={6} className="px-8 transaction_resp">
-                  <Form.Item name="docType" className="input-label mb-0" label="Transaction Type" colon={false}>
-                    <Select
-                      defaultValue="All"
-                      className="cust-input w-100 bgwhite"
-                      dropdownClassName="select-drpdwn"
-                      showSearch
-                      onChange={(e) => this.handleChange(e, "docType")}
-                      placeholder="Select Doc Type"
-                    >
-                      {options2}
-                    </Select>
-                  </Form.Item>
-                </Col>
-                <Col xs={24} sm={24} md={7} lg={7} xl={6} className="px-8 transaction_resp">
-                  <Form.Item name="state" className="input-label mb-0" label="State" colon={false}>
+                <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
+                  <Form.Item name="state" className="input-label cust-label transaction-type" label="State" colon={false}>
                     <Select
                       defaultValue="All"
                       className="cust-input w-100 bgwhite"
@@ -402,6 +410,7 @@ isErrorDispaly = (objValue) => {
             </Form>
           </div>
           <List
+          className="transaction-grid"
             url={gridUrl} additionalParams={searchObj} ref={this.gridRef}
             columns={this.gridColumns}
             showExcelExport={this.state.permissions?.ExcelExport}
@@ -410,7 +419,7 @@ isErrorDispaly = (objValue) => {
           />
         </Drawer>
 
-                <TransactionSlips showModal={showModal}  modalData={modalData} isLoading={isLoading} handleCancel={this.handleCancel} />
+                <TransactionSlips showModal={showModal}  modalData={modalData} isLoading={isLoading} handleCancel={this.handleCancel} viewData={viewData} loader={this.state.viewLoader} />
                 <TransactionTimeSpan modal={this.state.modal} handleDateCancel={this.handleDateCancel} handleDateChange={this.handleDateChange} handleOk={this.handleOk} formDateRef={this.formDateRef} message={this.state?.message} searchObj={searchObj}/>
       </>
 
