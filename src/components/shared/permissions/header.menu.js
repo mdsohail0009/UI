@@ -364,7 +364,7 @@ class HeaderPermissionMenu extends Component {
                                 <Translate
                                     content="transactions_history"
                                     component={Text}
-                                    className="text-white-30"
+                                    className="text-white"
                                 />
                                 <span className="icon md rarrow-white" />
                             </Link>
@@ -376,7 +376,7 @@ class HeaderPermissionMenu extends Component {
                                     <Translate
                                         content="personal_account"
                                         component={Text}
-                                        className="text-white-30" key="1"
+                                        className="text-white" key="1"
                                     />
                                 </Link><span className="icon c-pointer md rarrow-white ml-12" /></div>
                                 <div onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/611b3ed20414885a6fc64fa7")}>
@@ -384,14 +384,14 @@ class HeaderPermissionMenu extends Component {
                                         <Translate
                                             content="business_account"
                                             component={Text}
-                                            className="text-white-30" key="1"
+                                            className="text-white" key="1"
                                         />
                                     </Link><span className="icon c-pointer md rarrow-white ml-12" /></div></>} >
                                 <Link>
                                     <Translate
                                         content="get_your_own_iban"
                                         component={Text}
-                                        className="text-white-30"
+                                        className="text-white"
                                     />
                                     <span className="icon md rarrow-white" />
                                 </Link>
@@ -405,7 +405,7 @@ class HeaderPermissionMenu extends Component {
                                 <Translate
                                     content="AuditLogs"
                                     component={Text}
-                                    className="text-white-30"
+                                    className="text-white"
                                 />
                                 <span className="icon md rarrow-white" />
                             </Link>
@@ -417,7 +417,7 @@ class HeaderPermissionMenu extends Component {
                                 <Translate
                                     content="address_book"
                                     component={Text}
-                                    className="text-white-30"
+                                    className="text-white"
                                 />
                                 <span className="icon md rarrow-white" />
                             </Link>
@@ -429,7 +429,7 @@ class HeaderPermissionMenu extends Component {
                                 <Translate
                                     content="case"
                                     component={Text}
-                                    className="text-white-30"
+                                    className="text-white"
                                 />
                                 <span className="icon md rarrow-white" />
                             </Link>
@@ -442,12 +442,12 @@ class HeaderPermissionMenu extends Component {
                                     <Translate
                                         content="upload_documents"
                                         component={Text}
-                                        className="d-block text-white-30"
+                                        className="d-block text-white"
                                     />
                                     <Translate
                                         content='compliance'
                                         component={Text}
-                                        className="text-white-30"
+                                        className="text-white"
                                     />
                                 </span>
                                 <span className="icon md rarrow-white" />
@@ -458,7 +458,7 @@ class HeaderPermissionMenu extends Component {
                                 <span>
                                     <Translate
                                         content="logout"
-                                        className="text-white-30"
+                                        className="text-white"
                                         component={Text}
                                     />
                                 </span>
@@ -534,11 +534,9 @@ class HeaderPermissionMenu extends Component {
                 onSelect={(key) => {
                     this.props.dispatch(setHeaderTab(key.key));
                 }}>
-                <Menu.Item key="13"> 
-USD
+                <Menu.Item key="13"> USD
                 </Menu.Item>  
-                <Menu.Item key="14"><Text className="pipeline">|</Text> 
-English
+                <Menu.Item key="14"><Text className="pipeline">|</Text> English
                 </Menu.Item>  
                 <Menu.Item key="15"> <Text className="pipeline">|</Text>
                 <span className="icon md theme-icon" /> Light Mode

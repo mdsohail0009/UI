@@ -12,6 +12,7 @@ import apiCalls from '../../api/apiCalls';
 import Notices from './notices';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 import BankWallets from '../bankui.component'
+import SbCard from './sbCard';
 class Home extends Component {
     state = {
         loading: false,
@@ -94,6 +95,7 @@ class Home extends Component {
                         
                     </Col>
                     <Col xs={24} md={12} xl={9}>
+                        <SbCard />
                         {this.state.permissions.Markets && <div className="markets-panel mr-0">
                             <MarketCap />
                         </div>}

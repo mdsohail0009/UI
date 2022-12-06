@@ -214,7 +214,12 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .dbchart-link span{color: #1AFD90;}
 .market-panel-newstyle{clear: both;margin-top: 36px;}
 .markets-head{color: var(--black) !important;font-size: 22px !important;font-weight: 700 !important;margin-bottom: 8px !important;}
+.icon-space{margin-left: 12px;margin-bottom: 8px;}
 .pipeline{color: var(--tableText);margin-right: 10px;}
+.sb-card{background: linear-gradient(116.55deg, #79001C 18.81%, #0E0411 61.78%, #203386 86.7%);border-radius: 20px;padding: 30px;margin-bottom: 16px;}
+.sb-text{color: var(--sbCardText);letter-spacing: 5px;font-weight: 700;font-size: 24px;}
+.sb-accounts{padding: 2px;}
+.cardlogo-height{margin-bottom: 100px;}
 /* Dashboard end */
 
 
