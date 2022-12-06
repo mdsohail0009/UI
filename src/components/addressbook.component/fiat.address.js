@@ -35,7 +35,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onCont
             >
                 <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                    {showHeading!=true&&(
+                    {showHeading!==true&&(
                         <Radio.Group
                             defaultValue={addressOptions.addressType}
                             className="mb-16 custom-radio-btn buysell-toggle crypto-toggle"

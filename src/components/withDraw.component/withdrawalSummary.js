@@ -10,7 +10,7 @@ import Loader from "../../Shared/loader";
 import { fetchDashboardcalls } from "../../reducers/dashboardReducer";
 import {
 	rejectWithdrawfiat,
-	setWithdrawfiatenaable,
+	
 	setWithdrawFinalRes,
 } from "../../reducers/sendreceiveReducer";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -76,9 +76,9 @@ const WithdrawalFiatSummary = ({
 	const [isAuthenticatorVerification, setIsAuthenticatorVerification] =useState(false);
     const [isLoading,setIsLoading]=useState(false);
 	const[permissions,setPermessions] = useState({});
-const [authenticatorCodeVerificationStage,setauthenticatorCodeVerificationStage]=useState('Verify')
-const [phoneCodeVerificationStage,setPhoneCodeVerificationStage]=useState('getPhoneCode')
-const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getEmailCode')
+// const [authenticatorCodeVerificationStage,setauthenticatorCodeVerificationStage]=useState('Verify')
+// const [phoneCodeVerificationStage,setPhoneCodeVerificationStage]=useState('getPhoneCode')
+// const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getEmailCode')
 	const btnList = {
 		get_otp: (
 			<Translate className="pl-0 ml-0 text-yellow-50" content="get_code" />
@@ -145,7 +145,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 		withdrawSummayTrack();
 		getVerifyData();
 		loadPermessions();
-	}, []);
+	}, []);//eslint-disable-line react-hooks/exhaustive-deps
 
 	const loadPermessions = () => {
 		if (withdrawFiatPermissions) {
@@ -612,12 +612,12 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 						onFinish={saveWithdrwal}
 						
 						autoComplete="off">
-						{permissions?.withdraw  && verifyData.isPhoneVerified == true && (
+						{permissions?.withdraw  && verifyData.isPhoneVerified === true && (
 							<Text className="fs-14 mb-8 text-white d-block fw-200">
 								Phone verification code *
 							</Text>
 						)}
-						{permissions?.withdraw  && verifyData.isPhoneVerified == true && (
+						{permissions?.withdraw  && verifyData.isPhoneVerified === true && (
 							<Form.Item
 								name="code"
 								className="input-label otp-verify"
@@ -671,7 +671,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 										{tooltipVisible === true && (
 											<Tooltip
 												placement="topRight"
-												title={`Haven\'t received code ? Request new code in ${seconds} seconds. The code will expire after 30mins.`}>
+												title={`Haven't received code ? Request new code in ${seconds} seconds. The code will expire after 30mins.`}>
 												<span className="icon md info mr-8" />
 											</Tooltip>
 										)}
@@ -741,14 +741,14 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 												{isResend && emailBtn[emailText]}
 											</Button>
 										)}
-										{tooltipEmail == true && (
+										{tooltipEmail === true && (
 											<Tooltip
 												placement="topRight"
-												title={`Haven\'t received code? Request new code in ${seconds2} seconds. The code will expire after 5mins.`}>
+												title={`Haven't received code? Request new code in ${seconds2} seconds. The code will expire after 5mins.`}>
 												<span className="icon md info mr-8" />
 											</Tooltip>
 										)}
-										{verify == true && (
+										{verify === true && (
 											<Button
 												type="text"
 												loading={emailVerifyLoading}
@@ -765,12 +765,12 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 									</div>
 							</Form.Item>
 						)}
-						{permissions?.withdraw  && verifyData.twoFactorEnabled == true && (
+						{permissions?.withdraw  && verifyData.twoFactorEnabled === true && (
 							<Text className="fs-14 mb-8 text-white d-block fw-200">
 								Authenticator Code *
 							</Text>
 						)}
-						{permissions?.withdraw  && verifyData.twoFactorEnabled == true && (
+						{permissions?.withdraw  && verifyData.twoFactorEnabled === true && (
 							<Form.Item
 								name="authenticator"
 								className="input-label otp-verify "
@@ -813,7 +813,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 									maxLength={6}
 									onChange={(e) => handleAuthenticator(e)}
 									style={{ width: "100%" }}
-									disabled={authDisable == true}
+									disabled={authDisable === true}
 								/>
 								<div className="new-add c-pointer get-code text-yellow hy-align" >
 										<Button

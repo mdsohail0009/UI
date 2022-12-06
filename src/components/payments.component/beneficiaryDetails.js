@@ -77,8 +77,6 @@ class PaymentsView extends Component {
         this.setState({ loading: false })
     }
 
-    handleChange = () => { }
-
     getPaymentsViewData = async (code) => {
         this.setState({ ...this.state, loading: true });
         let response = await getPaymentsData(this.props.match.params.id, this.props.userConfig?.userId, code);
@@ -130,7 +128,7 @@ class PaymentsView extends Component {
             this.setState({ ...this.state, previewModal: true, previewPath: res.data });
         }
         this.setState({ ...this.state, loading: false });
-        // warning(res.data)
+        
     }
 
     DownloadUpdatedFile = async () => {

@@ -9,6 +9,7 @@ import {
 	clearValues,
 	clearCryptoValues,
 } from "../../reducers/addressBookReducer";
+import { Link } from "react-router-dom";
 import Translate from "react-translate-component";
 import { processSteps as config } from "./config";
 import List from "../grid.component";
@@ -189,12 +190,12 @@ class AddressBook extends Component {
 			field: "isWhitelisted",
 			customCell: (props) => (
 				<td>
-					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration != props?.dataItem.payeeAccountId) && <><a onClick={() => {
+					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <><Link onClick={() => {
 						if (!this.state.isDownloading)
 							this.downloadDeclarationForm(props?.dataItem);
-					}} ><DownloadOutlined /></a> Whitelisted</>}
+					}} ><DownloadOutlined /></Link> Whitelisted</>}
 					{!props.dataItem?.isWhitelisted && "Not whitelisted"}
-					{this.state.isDownloading && this.state.selectedDeclaration == props?.dataItem.payeeAccountId && <Spin size="small" />}
+					{this.state.isDownloading && this.state.selectedDeclaration === props?.dataItem.payeeAccountId && <Spin size="small" />}
 				</td>
 			),
 			title: apiCalls.convertLocalLang("whitelist"),
@@ -273,12 +274,12 @@ class AddressBook extends Component {
 			field: "isWhitelisted",
 			customCell: (props) => (
 				<td>
-					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration != props?.dataItem.payeeAccountId) && <> <a onClick={() => {
+					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <> <Link onClick={() => {
 						if (!this.state.isDownloading)
 							this.downloadDeclarationForm(props?.dataItem);
-					}} ><DownloadOutlined /></a> Whitelisted</>}
+					}} ><DownloadOutlined /></Link> Whitelisted</>}
 					{!props.dataItem?.isWhitelisted && "Not whitelisted"}
-					{this.state.isDownloading && this.state.selectedDeclaration == props?.dataItem.payeeAccountId && <Spin size="small" />}
+					{this.state.isDownloading && this.state.selectedDeclaration === props?.dataItem.payeeAccountId && <Spin size="small" />}
 				</td>
 			),
 			title: apiCalls.convertLocalLang("whitelist"),
@@ -346,7 +347,7 @@ class AddressBook extends Component {
 		let statusObj = this.state.obj;
 		statusObj.id.push(this.state.selectedObj.payeeAccountId);
 		statusObj.modifiedBy = this.props.oidc.user.profile.unique_name;
-		if (this.state.selectedObj.status == "Active") {
+		if (this.state.selectedObj.status === "Active") {
 			statusObj.status.push("Active")
 		} else {
 			statusObj.status.push("InActive")
@@ -454,7 +455,7 @@ class AddressBook extends Component {
 		if (!this.state.isCheck) {
 			this.setState({ ...this.state, errorWorning: "Please select the one record" });
 		} 
-		else if(obj.status == "Inactive") {
+		else if(obj.status === "Inactive") {
 			this.setState({ ...this.state, errorWorning: "Record is inactive so you can't edit" });
 		}
 		else if (
@@ -729,7 +730,7 @@ class AddressBook extends Component {
 								<Translate
 									className="text-white-30 fw-600 text-captz "
 									content={
-										this.state.showHeading!=true&&(
+										this.state.showHeading!==true&&(
 										this.props.addressBookReducer.stepTitles[
 										config[this.props.addressBookReducer.stepcode]
 										])
@@ -764,7 +765,7 @@ class AddressBook extends Component {
 							<div className="text-center fs-16">
 								<Paragraph className="mb-0 text-white-30 fw-600 text-upper">
 									<Translate
-									content={this.state.hideFiatHeading !=true && "AddFiatAddress"}
+									content={this.state.hideFiatHeading !==true && "AddFiatAddress"}
 										component={Paragraph}
 										className="mb-0 text-white-30 fw-600 text-upper"
 									/>

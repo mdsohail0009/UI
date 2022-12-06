@@ -1,4 +1,4 @@
-import { apiClient, ipRegistry } from "../../api";
+import { apiClient } from "../../api";
 import { ApiControllers } from "../../api/config"
 
 

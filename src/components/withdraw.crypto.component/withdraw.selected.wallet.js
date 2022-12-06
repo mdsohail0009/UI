@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { Typography, Button, Drawer, Card, Input, Radio, Alert, Row, Col, Form, Modal, Tooltip, Image } from 'antd';
+import { Typography, Button, Drawer, Card, Input,  Alert, Row, Col, Form, Modal, Image } from 'antd';
 import { handleSendFetch, setStep, setSubTitle, setWithdrawcrypto, setAddress,rejectWithdrawfiat, hideSendCrypto } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import {
@@ -8,24 +8,25 @@ import {
 } from "../../reducers/addressBookReducer";
 import Translate from 'react-translate-component';
 import Currency from '../shared/number.formate';
-import LocalCryptoSwap from '../shared/local.crypto.swap';
+
 import SuccessMsg from './success';
 import apicalls from '../../api/apiCalls';
-import { validateContent, validateContentRule } from '../../utils/custom.validator';
+import { validateContent} from '../../utils/custom.validator';
 import { processSteps as config } from "../addressbook.component/config";
 import AddressCrypto from "../addressbook.component/addressCrypto";
 import SelectCrypto from "../addressbook.component/selectCrypto";
 import apiCalls from "../../api/apiCalls";
 import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
 import Loader from '../../Shared/loader';
-import CryptoTransfer from "../onthego.transfer/crypto.transfer"
+
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService';
 import { handleNewExchangeAPI } from "../send.component/api";
 import { validateCryptoAmount } from '../onthego.transfer/api';
-import NumberFormat from "react-number-format";
-import OnthegoCryptoTransfer from '../onthego.transfer/cryptoTransfer.component';
 
-const { Paragraph, Text,Title } = Typography;
+import OnthegoCryptoTransfer from '../onthego.transfer/cryptoTransfer.component';
+import { Link } from 'react-router-dom';
+
+const { Paragraph } = Typography;
 
 class CryptoWithDrawWallet extends Component {
     enteramtForm = React.createRef();
@@ -64,7 +65,7 @@ class CryptoWithDrawWallet extends Component {
         let minVerifications = 0;
         if (verfResponse.ok) {
             for (let verifMethod in verfResponse.data) {
-                if (["isEmailVerification", "isPhoneVerified", "twoFactorEnabled", "isLiveVerification"].includes(verifMethod) && verfResponse.data[verifMethod] == true) {
+                if (["isEmailVerification", "isPhoneVerified", "twoFactorEnabled", "isLiveVerification"].includes(verifMethod) && verfResponse.data[verifMethod] === true) {
                     minVerifications = minVerifications + 1;
                 }
             }
@@ -164,7 +165,7 @@ class CryptoWithDrawWallet extends Component {
         this.props.dispatch(setWithdrawcrypto(obj))
         this.props.dispatch(setSubTitle(apicalls.convertLocalLang('wallet_address')));
         this.setState({ ...this.state, loading: true, newtransferLoader: true  })
-        if (type == "ADDRESS") {
+        if (type === "ADDRESS") {
             this.props.changeStep('step8');
             this.props.dispatch(setSubTitle(""))
         }
@@ -177,14 +178,14 @@ class CryptoWithDrawWallet extends Component {
     amountNext = async (values) => {
         this.setState({ ...this.state, error: null });
         let amt = values.amount;
-        amt = typeof amt == "string" ? amt?.replace(/,/g, "") : amt;
+        amt = typeof amt === "string" ? amt?.replace(/,/g, "") : amt;
         const { withdrawMaxValue, withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null });
         if (amt === "") {
             this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('enter_amount') });
             this.myRef.current.scrollIntoView();
         }
-        else if (this.state.CryptoAmnt === "0" || amt == 0) {
+        else if (this.state.CryptoAmnt === "0" || amt === 0) {
             this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_greater_zero') });
             this.myRef.current.scrollIntoView();
         }
@@ -230,7 +231,7 @@ class CryptoWithDrawWallet extends Component {
             const res = await validateCryptoAmount(validObj);
             if (res.ok) {
                 this.props.dispatch(setSubTitle(""));
-                type == "addressSelection" ?  this.setState({ ...this.state, loading: false, [loader]: false, errorMsg: null }, () => this.props.changeStep('step10')): 
+                type === "addressSelection" ?  this.setState({ ...this.state, loading: false, [loader]: false, errorMsg: null }, () => this.props.changeStep('step10')): 
                 this.setState({
                     ...this.state, visible: true, errorWorning: null, errorMsg: null, [loader]: false, showFuntransfer: true
                 });
@@ -424,10 +425,10 @@ class CryptoWithDrawWallet extends Component {
         if (!this.state.isVerificationMethodsChecked) {
             return <Alert
                 message="Verification alert !"
-                description={<Text>Without verifications you can't send. Please select send verifications from <a onClick={() => {
+                description={<Text>Without verifications you can't send. Please select send verifications from <Link onClick={() => {
                     this.props.onDrawerClose();
                     this.props.history.push("/userprofile/2")
-                }}>security section</a></Text>}
+                }}>security section</Link></Text>}
                 type="warning"
                 showIcon
                 closable={false}

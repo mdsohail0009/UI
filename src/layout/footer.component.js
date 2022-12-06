@@ -20,7 +20,7 @@ function Footer({ customer }) {
     const { status } = useThemeSwitcher();
     useEffect(() => {
         counterpart.setLocale(customer?.language ? customer?.language : 'en');
-    }, [])
+    }, []);//eslint-disable-line react-hooks/exhaustive-deps
     if (status === 'loading') {
         return <div>Loading styles...</div>;
     }

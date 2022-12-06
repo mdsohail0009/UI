@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { setCurrentAction } from '../../reducers/actionsReducer';
 class ActionsToolbar extends Component {
     render() {
-        const { featureKey, onActionClick, menuItems, screenName } = this.props;
+        const { featureKey, onActionClick, menuItems } = this.props;
         return (
             <>
                 {menuItems?.featurePermissions?.loading && <Spin />}

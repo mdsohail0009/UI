@@ -1,19 +1,15 @@
 
 import React, { useEffect, useState } from 'react';
-import { Typography, Button, Drawer, Select ,message, Alert, Spin } from 'antd';
-import {Link} from 'react-router-dom';
+import { Typography, Drawer, Select ,message, Alert, Spin } from 'antd';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
 import moment from 'moment';
-import { warning } from '../../utils/messages'
 import List from "../grid.component";
 import BeneficiaryDrawer from './beneficiaryDrawer';
 import AddressCommonCom from "../addressbook.component/addressCommonCom";
 import { setHeaderTab } from "../../reducers/buysellReducer"
 import ActionsToolbar from "../toolbar.component/actions.toolbar";
-import { fetchFeaturePermissions } from "../../reducers/feturesReducer";
-import { getFeatureId } from "../shared/permissions/permissionService";
 import { getCurrencyLu} from './api'
 import {getFeaturePermissionsByKey} from '../shared/permissions/permissionService'
 import apicalls from '../../api/apiCalls';
@@ -37,7 +33,7 @@ const Payments = (props) => {
     props.history.push(`/payments/${prop.dataItem.id}/view`)
   };
   const paymentsEdit = () => {
-    if (selection.length == 0) {
+    if (selection.length === 0) {
       setErrorWarning("Please select the record");
     } else {
       props.history.push(`/payments/${selectedObj}/${setSelectData.currency}/${setSelectData.state}/edit`)
@@ -56,20 +52,20 @@ const Payments = (props) => {
   }
   useEffect(() => {
     if(props.billpaymentsPermission){
-      let viewPermission = props.billpaymentsPermission.actions.filter((item)=>item.permissionName == 'view')[0];
+      let viewPermission = props.billpaymentsPermission.actions.filter((item)=>item.permissionName === 'view')[0];
       if(!viewPermission.values){
         props.history.push('/accessdenied')
       }
     }else{
       getFeaturePermissionsByKey('billpayments',loadInfo)
     }
-  }, [props.billpaymentsPermission])
+  }, [props.billpaymentsPermission]);//eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     getFeaturePermissionsByKey('billpayments',loadInfo)
-  }, [])
+  }, []);//eslint-disable-line react-hooks/exhaustive-deps
   useEffect(()=>{
     gridRef.current?.refreshGrid();
-  },[walletType])
+  },[walletType]);;//eslint-disable-line react-hooks/exhaustive-deps
   const gridColumns = [
     {
       field: "",
