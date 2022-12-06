@@ -111,7 +111,7 @@ class SelectCrypto extends Component {
             this.myRef.current.scrollIntoView();
             return;
         }
-        if((localValue == 0 && cryptoValue == 0)){
+        if((localValue === 0 && cryptoValue === 0)){
             this.setState({ ...this.state, error: "We can not process this request, Since commission is more than or equal to requested amount" });
 
         }

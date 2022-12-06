@@ -21,7 +21,7 @@ function Footer({ customer }) {
     useEffect(() => {
         counterpart.setLocale(customer?.language ? customer?.language : 'en');
     }, [])
-    if (status == 'loading') {
+    if (status === 'loading') {
         return <div>Loading styles...</div>;
     }
 
