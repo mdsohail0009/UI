@@ -1,5 +1,5 @@
 import { Alert, Tabs } from "antd";
-import { Form, Row, Col, Select, Divider, Typography, Input, Button, Image, Spin } from "antd";
+import { Form, Row, Col, Typography, Input, Button, Image, Spin } from "antd";
 import React, { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
 import Loader from "../../../Shared/loader";
@@ -12,7 +12,7 @@ import DomesticTransfer from "./domestic.transfer";
 import InternationalTransfer from "./international.transfer";
 import Translate from "react-translate-component";
 import alertIcon from '../../../assets/images/pending.png';
-const { Option } = Select;
+//const { Option } = Select;
 const { Paragraph, Title, Text } = Typography;
 const { TextArea } = Input;
 class BusinessTransfer extends Component {
@@ -50,10 +50,10 @@ class BusinessTransfer extends Component {
                 delete data["documents"];
                  edit = true;
             }
-            if(data.transferType== "international"){
+            if(data.transferType=== "international"){
                 this.setState({ ...this.state, selectedTab:data.transferType })
             }
-            else if(data.transferType== "internationalIBAN"){
+            else if(data.transferType=== "internationalIBAN"){
                 this.setState({ ...this.state, selectedTab:data.transferType })
                  this.handleIbanChange({ target: { value: data?.iban, isNext: true } });
             }
@@ -74,7 +74,7 @@ class BusinessTransfer extends Component {
         this.setState({ ...this.state, errorMessage: null});
         if (Object.hasOwn(values, 'iban')) {
         this.setState({ ...this.state, errorMessage: null});
-        if ((!ibanDetails || Object.keys(ibanDetails).length == 0)) {
+        if ((!ibanDetails || Object.keys(ibanDetails).length === 0)) {
             this.setState({ ...this.state, errorMessage: "Please click validate button before saving", isLoading: false, isBtnLoading: false });
             this.useDivRef.current.scrollIntoView()
             return;
@@ -84,10 +84,10 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].currencyType = "Fiat";
         _obj.payeeAccountModels[0].walletCode = "USD";
         _obj.payeeAccountModels[0].accountNumber = values?.accountNumber;
-        _obj.payeeAccountModels[0].bankName = selectedTab == "internationalIBAN" ? ibanDetails?.bankName :  values?.bankName;
+        _obj.payeeAccountModels[0].bankName = selectedTab === "internationalIBAN" ? ibanDetails?.bankName :  values?.bankName;
         _obj.payeeAccountModels[0].abaRoutingCode = values?.abaRoutingCode;
         _obj.payeeAccountModels[0].swiftRouteBICNumber = values?.swiftRouteBICNumber;
-        _obj.payeeAccountModels[0].line1 = selectedTab == "internationalIBAN" ? ibanDetails?.bankAddress : values.bankAddress1;
+        _obj.payeeAccountModels[0].line1 = selectedTab === "internationalIBAN" ? ibanDetails?.bankAddress : values.bankAddress1;
         _obj.payeeAccountModels[0].line2 = values.bankAddress2;
         _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
 
@@ -104,17 +104,17 @@ class BusinessTransfer extends Component {
         if(isEdit){
             _obj.id = isSelectedId? isSelectedId:details?.payeeId;
         }
-        if (_obj.payeeAccountModels[0].documents == null || _obj.payeeAccountModels[0].documents && _obj.payeeAccountModels[0].documents.details.length == 0) {
+        if (_obj.payeeAccountModels[0].documents === null || _obj.payeeAccountModels[0].documents && _obj.payeeAccountModels[0].documents.details.length === 0) {
             this.useDivRef.current.scrollIntoView()
             this.setState({ ...this.state, isLoading: false, errorMessage: 'At least one document is required', isBtnLoading: false });
         } else if (_obj.payeeAccountModels[0].documents) {
             let length = 0;
             for (let k in _obj.payeeAccountModels[0].documents.details) {
-                if (_obj.payeeAccountModels[0].documents.details[k].state == 'Deleted') {
+                if (_obj.payeeAccountModels[0].documents.details[k].state === 'Deleted') {
                     length = length + 1;
                 }
             }
-            if (length == _obj.payeeAccountModels[0].documents.details.length) {
+            if (length === _obj.payeeAccountModels[0].documents.details.length) {
                 this.useDivRef.current.scrollIntoView()
                 this.setState({ ...this.state, isLoading: false, errorMessage: 'At least one document is required', isBtnLoading: false });
             } else {
@@ -124,7 +124,7 @@ class BusinessTransfer extends Component {
         this.setState({ ...this.state, errorMessage: null, isLoading: false, isBtnLoading: true });
         const response = await savePayee(_obj);
         if (response.ok) {
-            if (this.props.type != "manual") {
+            if (this.props.type !== "manual") {
                 const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
                 if (confirmRes.ok) {this.useDivRef.current.scrollIntoView()
                     this.props.onContinue(confirmRes.data);

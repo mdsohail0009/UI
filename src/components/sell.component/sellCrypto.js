@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Empty } from 'antd';
+import { Typography} from 'antd';
 import { setSelectedSellCoin, setSellHeaderHide, setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import { setCoinWallet, updateCoinDetails } from '../../reducers/buy.reducer';   // do not remove this line time being i will check // subbareddy
@@ -7,7 +7,6 @@ import Loader from '../../Shared/loader'
 import { getMemberCoins, updateCoinDetail } from '../../reducers/sellReducer';
 import { setCoin, setExchangeValue } from '../../reducers/buyReducer';
 import { getSelectedCoinDetails } from '../buy.component/api'
-import apicalls from '../../api/apiCalls';
 import CryptoList from '../shared/cryptolist';
 import Translate from 'react-translate-component';
 
@@ -38,8 +37,6 @@ class SellToggle extends Component {
         if (this.props.sellData?.memberCoins?.loading||this.state.loading) { return <Loader /> }
         return (
             <>
-                {/* {!this.props?.sellData?.memberCoins?.loading && (!this.props.sellData?.memberCoins?.data || this.props.sellData?.memberCoins?.data?.length == 0)
-                    && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apicalls.convertLocalLang('No_data')} />} */}
 
                 <div className="sellcrypto-container">
                 <Translate content="sell_your_crypto_for_cash_text" component={Paragraph} className="text-white-30 fw-500 fs-14 mt-16 code-lbl" />

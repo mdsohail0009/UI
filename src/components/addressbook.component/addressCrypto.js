@@ -79,9 +79,9 @@ class AddressCrypto extends Component {
       let val=this.props.sendReceive?.withdrawFiatObj?.walletCode
       this.handleTokenChange(val);
     }
-    else if(this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !=" "
+    else if(this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !==" "
     ||this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !=null||
-    this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !=undefined){
+    this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !==undefined){
       let val=this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin
       this.form?.current?.setFieldsValue({token:val});
       this.handleTokenChange(val);
@@ -97,9 +97,10 @@ class AddressCrypto extends Component {
     let networkLu = [];
     if(value) {
       this.state.coinsList?.filter(function (item){
-        if(item.walletCode == value) {
+        if(item.walletCode === value) {
         return networkLu = item?.network;
         }
+         return false;
       })
     }
     this.setState({ ...this.state, networksList: networkLu})
@@ -153,7 +154,7 @@ class AddressCrypto extends Component {
       let coinType = this.form?.current?.getFieldValue("token");
       if (coinType) {
         const validAddress = WAValidator.validate(address, coinType, "both");
-          if (!validAddress && coinType != "USDT") {
+          if (!validAddress && coinType !== "USDT") {
             return Promise.reject(
               "Address is not valid, Please enter a valid address according to the token selected"
             );
@@ -311,7 +312,7 @@ class AddressCrypto extends Component {
           </Form>
       </>
     }
-  };
+  }
 
 }
 const connectStateToProps = ({ sendReceive, userConfig, addressBookReducer }) => {

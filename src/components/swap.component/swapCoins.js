@@ -77,7 +77,7 @@ class SwapCoins extends Component {
                     if (res.ok) {
                         let { config: { url } } = res;
                         const _val = url.split("/");
-                        if (_val[5] == this.state.fromValue) { // this need to changed when parametrs change happen
+                        if (_val[5] === this.state.fromValue) { // this need to changed when parametrs change happen
                             this.setState({ ...this.state, receiveValue: res.data, errorMessage: null, loadingToValue: false })
                             this.props.updateSwapdataobj({ ...this.state, receiveValue: res.data })
                         }

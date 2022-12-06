@@ -247,7 +247,7 @@ class AuditLogs extends Component {
                       onChange={(e) => {this.TransactionFeatureSearch(e, "feature");this.handleChange(e, 'feature');}}
                     >
                       <Option value="All Features">All Features</Option>
-                      {featureData?.map((item, idx) => {
+                      {featureData?.forEach((item, idx) => {
                         if (item.groupName === "User Features") {
                           return <Option key={idx} value={item.name}>{item.name}</Option>
                         }

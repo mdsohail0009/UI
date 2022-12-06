@@ -1,10 +1,10 @@
 import React, { Component, createRef } from 'react';
-import { Typography,  Select,  Form, Alert, Space, Col } from 'antd';
+import { Typography,  Select,  Form, Alert, Space} from 'antd';
 import { Link } from 'react-router-dom';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import config from '../../config/config';
-import { getCurrencieswithBankDetails, setdepositCurrency, updatdepfiatobject, setsavefiatobject } from '../../reducers/depositReducer'
+import {  setdepositCurrency, updatdepfiatobject, setsavefiatobject } from '../../reducers/depositReducer'
 import { rejectWithdrawfiat, setWithdrawfiatenaable } from '../../reducers/sendreceiveReducer';
 import { setStep, setSubTitle } from '../../reducers/buyFiatReducer';
 import {  requestDepositFiat } from './api';
@@ -15,15 +15,15 @@ import apicalls from '../../api/apiCalls';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 import OnthegoFundTransfer from '../onthego.transfer';
 
-const LinkValue = (props) => {
-  return (
-    <Translate className="textpure-yellow text-underline c-pointer"
-      content={props.content}
-      component={Link}
-      onClick={() => window.open("https://www.iubenda.com/terms-and-conditions/42856099", '_blank')}
-    />
-  )
-}
+// const LinkValue = (props) => {
+//   return (
+//     <Translate className="textpure-yellow text-underline c-pointer"
+//       content={props.content}
+//       component={Link}
+//       onClick={() => window.open("https://www.iubenda.com/terms-and-conditions/42856099", '_blank')}
+//     />
+//   )
+// }
 const { Option } = Select;
 class FaitDeposit extends Component {
   formRef = createRef();
@@ -76,7 +76,7 @@ class FaitDeposit extends Component {
   }
   handleBuySellToggle = e => {
     this.handleshowTab(e.target.value)
-    if (e.target.value == 1) {
+    if (e.target.value === 1) {
       this.props.fetchCurrencyWithBankDetails()
       this.props.dispatch(rejectWithdrawfiat())
       this.props.dispatch(setWithdrawfiatenaable(false))
@@ -218,7 +218,7 @@ class FaitDeposit extends Component {
 
   render() {
     const { Paragraph, Text, Title } = Typography;
-    const link = <LinkValue content="terms_service" />;
+    // const link = <LinkValue content="terms_service" />;
     const { faitdeposit, BankInfo, depObj } = this.state;
     const { currenciesWithBankInfo } = this.props.depositInfo;
     return (
@@ -301,22 +301,22 @@ class FaitDeposit extends Component {
                       </div>
                       
                     </div>
-                    {BankInfo.currencyCode == "USD" && <Text className="text-white-30 fs-14">Beneficiary Account No. </Text>}
-                    {BankInfo.currencyCode == "EUR" && <Text className="text-white-30 fs-14">Beneficiary IBAN No. </Text>}
+                    {BankInfo.currencyCode === "USD" && <Text className="text-white-30 fs-14">Beneficiary Account No. </Text>}
+                    {BankInfo.currencyCode === "EUR" && <Text className="text-white-30 fs-14">Beneficiary IBAN No. </Text>}
                     <CopyToClipboard text={BankInfo.accountNumber} options={{ format: 'text/plain' }}>
                     <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="mb-0 fs-18 fw-400 text-yellow fw-500" >{BankInfo.accountNumber}</Text>
                      </CopyToClipboard>
-                    {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <Translate
+                    {BankInfo.routingNumber !== null && BankInfo.routingNumber !== '' && <Translate
                       className="mt-36 fs-20 text-white fw-500 text-upper"
                       content="for_Domestic_wires"
                       component={Paragraph}
                     />}
-                    {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <Translate
+                    {BankInfo.routingNumber !==null && BankInfo.routingNumber !== '' && <Translate
                       className="fw-600 text-white-50 fs-14"
                       content="Routing_number"
                       component={Text}
                     />}
-                    {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <CopyToClipboard text={BankInfo.routingNumber} options={{ format: 'text/plain' }}><Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 d-block">{BankInfo.routingNumber}</Text></CopyToClipboard>}
+                    {BankInfo.routingNumber !== null && BankInfo.routingNumber !== '' && <CopyToClipboard text={BankInfo.routingNumber} options={{ format: 'text/plain' }}><Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 d-block">{BankInfo.routingNumber}</Text></CopyToClipboard>}
                     <Translate
                       className="mt-24 fs-20 text-white fw-500 text-upper"
                       content="for_international_wires"
@@ -355,13 +355,13 @@ class FaitDeposit extends Component {
                       content="signature_bank"
                       component={Text}
                       with={{ value: BankInfo.bankAddress }} />
-                      {BankInfo.referenceNo != null && BankInfo.referenceNo != '' && 
+                      {BankInfo.referenceNo !== null && BankInfo.referenceNo !== '' && 
                     <Translate
                       className="fw-600 text-white-50 fs-14"
                       content="bank_Reference_No"
                       component={Text}
                     />}
-                    {BankInfo.referenceNo != null && BankInfo.referenceNo != '' &&
+                    {BankInfo.referenceNo !== null && BankInfo.referenceNo !== '' &&
                     <Text className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24">{BankInfo.referenceNo}</Text>}
                     
                     {BankInfo.depReferenceNo !== '' && <div className="crypto-address mb-36 mx-0">

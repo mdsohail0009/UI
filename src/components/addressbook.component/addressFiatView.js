@@ -33,7 +33,7 @@ const AddressFiatView = (props) => {
 	const loadDataAddress = async () => {
 		setIsLoading(true)
 		let response = await getViewData(props?.match?.params?.id, props?.userConfig?.id, props?.match?.params?.type);
-		if (response.ok) {
+		if (response.ok) {	
 			setFiatAddress(response.data);
 			setBankDetailes(response.data.payeeAccountModels)
 		}
@@ -57,8 +57,8 @@ const AddressFiatView = (props) => {
 
 	};
 
-	const iban = fiatAddress?.bankType === "iban" ? "IBAN" : "Bank Account"
-	const iban1 = fiatAddress?.bankType === "iban" ? "IBAN" : "Bank Account Number"
+	// const iban = fiatAddress?.bankType === "iban" ? "IBAN" : "Bank Account"
+	// const iban1 = fiatAddress?.bankType === "iban" ? "IBAN" : "Bank Account Number"
 
 	const filePreviewModal = (
 		<Modal
@@ -136,10 +136,10 @@ const AddressFiatView = (props) => {
 														{fiatAddress?.addressType === " " ||
 															fiatAddress?.addressType === null
 															? "-"
-															:(fiatAddress?.addressType?.toLowerCase()=="myself")&&"My Self"||
-															 (fiatAddress?.addressType?.toLowerCase()=="individuals")&&"Individuals"||
-															(fiatAddress?.addressType?.toLowerCase()=="ownbusiness")&&"My Company"||
-															(fiatAddress?.addressType?.toLowerCase()=="otherbusiness")&&"Other Business"}
+															:((fiatAddress?.addressType?.toLowerCase()==="myself")&&"My Self")||
+															 ((fiatAddress?.addressType?.toLowerCase()==="individuals")&&"Individuals")||
+															((fiatAddress?.addressType?.toLowerCase()==="ownbusiness")&&"My Company")||
+															((fiatAddress?.addressType?.toLowerCase()==="otherbusiness")&&"Other Business")}
 
 													</div>}
 												</div>
@@ -151,7 +151,7 @@ const AddressFiatView = (props) => {
 														{fiatAddress?.transferType === " " ||
 															fiatAddress?.transferType === null
 															? "-"
-															: (fiatAddress?.transferType == "internationalIBAN") && "International USD IBAN" ||
+															: ((fiatAddress?.transferType === "internationalIBAN") && "International USD IBAN") ||
 															fiatAddress?.transferType.toUpperCase()}
 
 													</div>}
@@ -363,7 +363,7 @@ const AddressFiatView = (props) => {
 																	: item.bankType}
 															</Title>
 														</Col>}
-														{(item?.accountNumber && fiatAddress?.transferType != "internationalIBAN")&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
+														{(item?.accountNumber && fiatAddress?.transferType !== "internationalIBAN")&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
 																Bank Account Number / IBAN
 															</Text>
@@ -483,7 +483,7 @@ const AddressFiatView = (props) => {
 																	: item.postalCode}
 															</Title>
 														</Col>}
-														 {(item.walletCode!='EUR'&& fiatAddress?.transferType != "internationalIBAN")&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
+														 {(item.walletCode!=='EUR'&& fiatAddress?.transferType !== "internationalIBAN")&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
 															Bank Address 1
 															</Text>
@@ -494,7 +494,7 @@ const AddressFiatView = (props) => {
 																	: item.line1}
 															</Title>
 														</Col>}
-														{(item.walletCode!='EUR'&& fiatAddress?.transferType != "internationalIBAN")&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
+														{(item.walletCode!=='EUR'&& fiatAddress?.transferType !== "internationalIBAN")&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
 															Bank Address 2
 															</Text>

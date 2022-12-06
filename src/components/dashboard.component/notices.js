@@ -8,7 +8,7 @@ const Notices = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState({ hasError: false, message: null });
     const [notices, setNotices] = useState([]);
-    useEffect(() => { fetchNotices(); }, []);
+    useEffect(() => { fetchNotices(); }, []);//eslint-disable-line react-hooks/exhaustive-deps
     const fetchNotices = async () => {
         const response = await getNotices();
         if (response.ok) {
