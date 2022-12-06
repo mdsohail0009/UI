@@ -119,7 +119,7 @@ class BankWallets extends Component {
             //bordered={false}
             className="mobile-list custom-fund-buttons mb-36"
             renderItem={(item) => (
-              <List.Item className="py-10 px-0">
+              <List.Item className="cytpo-list-style">
                 <List.Item.Meta
                   avatar={<Image preview={false} src={item.imagePath} />}
                   title={
