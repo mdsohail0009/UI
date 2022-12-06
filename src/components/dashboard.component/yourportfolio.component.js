@@ -179,7 +179,7 @@ class YourPortfolio extends Component {
 }
      menuBar = (item) => (
       <Menu>
-          <ul className="pl-0 drpdwn-list">
+          <ul className="drpdwn-list">
               {/* <li  onClick={() =>  this.showSendReceiveDrawer(1, item)}>
                   <Link value={1} className="c-pointer">Receive</Link>
               </li> */}
@@ -232,7 +232,8 @@ class YourPortfolio extends Component {
                     
               </div>
             </div> */}
-            <Translate content="fait_walets" component={Title} className="db-titles" />
+            
+            <Translate content="suissebase_title" component={Title} className="db-titles" />
         {cryptoPortFolios?.loading ? (
                <Loader />
         ) : (
@@ -324,7 +325,7 @@ class YourPortfolio extends Component {
                         <Currency
                             defaultValue={item.coinValueinNativeCurrency}
                             type={"text"}
-                            className={`lg-fontsize ${
+                            className={`lg-fontsize custlist-align ${
                               item.coinValueinNativeCurrency > 0
                                 ? "text-green"
                                 : "text-red"

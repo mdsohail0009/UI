@@ -172,7 +172,7 @@ class Header extends Component {
             className="profile-btn"
             onClick={() => this.userProfile()}
           />
-          <ul className="pl-0 drpdwn-list">
+          <ul className="drpdwn-list">
             <li
               onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/modal" })}
             >

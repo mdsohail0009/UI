@@ -85,16 +85,16 @@ class Portfolio extends Component {
         const { Title } = Typography;
 
         const { gridUrl, loading } = this.state;
-        return (
-            <div className="mb-16">
-                <div className='mb-12 mt-4'>
+        return (<>
+            <div className='market-panel-newstyle'></div>
+                <div className="">
                     <Translate content="transactions_history" className="basicinfo db-titles" />
                     <Button
                         onClick={() => this.transactionDrawer()}
-                        className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}}
+                        className="pop-btn dbchart-link" style={{ height: 36,}}
                         >
-                           <Translate content="search" />
-                        <span className="icon sm search-angle ml-8"></span>
+                           {/* <Translate content="search" /> */}
+                        <span className="icon sm search-angle"></span>
                     </Button>
                        {this.state.transactions &&
                        <TransactionsHistory
@@ -104,7 +104,7 @@ class Portfolio extends Component {
                         }}
                     />
                        }
-                       </div>
+                      
                    
                     <div>
 
@@ -174,7 +174,7 @@ class Portfolio extends Component {
                         </div>
                     </div>
             </div>
-        );
+            </> );
     }
 }
 

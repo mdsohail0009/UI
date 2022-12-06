@@ -90,7 +90,7 @@ class Wallets extends Component {
     }
     menuBar = (item) => (
         <Menu>
-            <ul className="pl-0 drpdwn-list">
+            <ul className="drpdwn-list">
                 <li onClick={() => this.showSendReceiveDrawer(3, item)}>
                     <Link value={3} className="c-pointer">
                     <Translate content="menu_payments" />
@@ -122,8 +122,8 @@ class Wallets extends Component {
         return (
             <>
             {/* <BankWallets/> */}
-            <div className="d-flex align-center justify-content">
-                <Translate content="suissebase_title" component={Title} className="db-titles" />
+            <div className="fait-wallets-style">
+            <Translate content="fait_walets" component={Title} className="db-titles" />
                 <div>
               <Button className="dbchart-link" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
                   <Translate content="cockpit" />

@@ -64,7 +64,7 @@ class BankWallets extends Component {
   }
   menuBar = (item) => (
     <Menu>
-      <ul className="pl-0 drpdwn-list">
+      <ul className="drpdwn-list">
         <li
           onClick={() =>
             this.redirectBank(

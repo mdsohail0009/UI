@@ -87,7 +87,7 @@ class MobileHeaderMenu extends Component {
                     key={indx}
                     className="mr-16"
                 /><Menu>
-                        <ul className="pl-0 drpdwn-list">
+                        <ul className="drpdwn-list">
                             {item?.subMenu?.map((subItem) => <li onClick={() => onMenuItemClick(subItem.key, subItem)}>
                                 <Link>
                                     <Translate content={subItem.content} conmponent={Text} />{" "}
@@ -356,7 +356,7 @@ class HeaderPermissionMenu extends Component {
                         className="profile-btn"
                         onClick={() => this.userProfile()}
                     />
-                    <ul className="pl-0 drpdwn-list">
+                    <ul className="drpdwn-list">
                         <li
                             onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/modal" })}
                         >
@@ -496,7 +496,7 @@ class HeaderPermissionMenu extends Component {
                                 this.setState({ ...this.state, visbleProfileMenu: false })
                             }
                             overlay={<Menu>
-                                <ul className="pl-0 drpdwn-list">
+                                <ul className="drpdwn-list">
                                     {item.subMenu.map(subitem => <li onClick={() => this.onMenuItemClick(subitem.key, subitem)}>
                                         <Link value={2} className="c-pointer">
                                             <Translate content={subitem.content} />
