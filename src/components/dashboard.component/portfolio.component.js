@@ -91,7 +91,7 @@ class Portfolio extends Component {
                     <div className='trans-align'>
                     <div className='transaction-title'>
                     <Translate component={Title} content="transactions_history" className="basicinfo db-titles" />
-                        <span className="icon lg search-angle"></span></div>
+                        <span className="icon lg search-angle icon-space"></span></div>
                     <Button className="dbchart-link"  onClick={() => this.transactionDrawer()}>
                         <Translate content="cockpit" />
                     </Button></div>
@@ -105,10 +105,10 @@ class Portfolio extends Component {
                        }
                       
                    
-                    <div>
+                    <div className='transaction-custom-table'>
 
-                        <div className="box dash-info basic-info responsive_table bg-none mb-0 ">
-                            <table className='pay-grid view mb-view'  style={{width: "100%"}}>
+                        <div className="responsive_table db-ts-grid">
+                            <table className='pay-grid view mb-view '  style={{width: "100%"}}>
                                 <thead>
                                     <tr>
                                         <th style={{width: "18%"}}>Date</th>

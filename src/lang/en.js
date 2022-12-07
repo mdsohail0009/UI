@@ -671,6 +671,8 @@ export default {
 	sell_select_currency: "SELECT CURRENCY TO RECEIVE",
 	transactions_history: "Transaction History",
 	transaction:"Transaction",
-	fait_walets:"Suissebase Fiat Wallets"
+	fait_walets:"Suissebase Fiat Wallets",
+	sb_card_title:"Your card",
+	Dashboard:"Dashboard",
 	
 };

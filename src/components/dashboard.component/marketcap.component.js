@@ -62,13 +62,13 @@ const MarketCap = ({ member }) => {
     }
 
     return <>
-        <div>
-            <div className="full-screenable-node " style={{ overflow: "hidden", height: "100%", background: "daryGrey"}}>
+        {/* <div> */}
+            <div className="full-screenable-node marketcap-mt" style={{ overflow: "hidden", height: "100%", background: "daryGrey"}}>
 
-                <div className="d-flex mt-8">
+                <div className="d-flex">
                     <div className="d-flex align-center">
-                        <Translate content="markets_title" component={Title} className="markets-head" />
-                        <span className='icon md search-white icon-space'></span>
+                        <Translate content="markets_title" component={Title} className="db-titles" />
+                        <span className='icon-space icon lg search-angle'></span>
                         {/* <Translate content="markets_subtitle" component={Paragraph} className="text-white-50 fs-16 mb-0 l-height-normal" /> */}
                     </div>
                     {/* <div className="market-actions">
@@ -77,7 +77,7 @@ const MarketCap = ({ member }) => {
                     </div> */}
                 </div>
                 {/* <Search placeholder={apiCalls.convertLocalLang('searchCurrency')} value={searchVal} addonAfter={<span className="icon md search-white" />} onChange={(value) => onSearch(value)} size="middle" bordered={false} className="grey-search mt-12" /> */}
-                <div className='box dash-info basic-info responsive_table bg-none mt-8 dashb-btmtable'>
+                <div className='bash-market-table responsive_table bg-none dashb-btmtable'>
                 
                 
                 <Table  locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }} sortDirections={["ascend", "descend"]} style={{ background: "daryGrey" }} scroll={{ y: '' }} pagination={false} columns={infoColumns} dataSource={marketCaps} loading={isLoading} className="pay-grid view mb-view" />
@@ -116,7 +116,7 @@ const MarketCap = ({ member }) => {
                     </div>
                 </div>
             </Drawer>
-        </div>
+        {/* </div> */}
     </>
 
 }

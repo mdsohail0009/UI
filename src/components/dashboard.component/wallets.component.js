@@ -150,24 +150,27 @@ class Wallets extends Component {
                         <List.Item className="listitems-design">
                             <List.Item.Meta
                                 avatar={<Image preview={false} src={item.imagePath} />}
-                                title={<div className="fs-16 fw-600 text-upper text-white l-height-normal">{item.walletCode}</div>}
-                                description={<Currency className="fs-16 text-white m-0" defaultValue={Math.abs(item.amount) > 999999 ? Math.sign(item.amount)*((Math.abs(item.amount)/1000000).toFixed(1)) : Math.sign(item.amount)*Math.abs(item.amount)} suffixText={Math.abs(item.amount) > 999999?"M":null} prefix={(item?.walletCode == "USD" ? "$" : null) || (item?.walletCode == "GBP" ? "£" : null) || (item?.walletCode == "EUR" ? "€" : null)} decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />}
+                                title={<><div className='crypto-curr-align'><div><div className="coin-style">{item.walletCode}</div>
+                            <Currency className="currency-style" defaultValue={Math.abs(item.amount) > 999999 ? Math.sign(item.amount)*((Math.abs(item.amount)/1000000).toFixed(1)) : Math.sign(item.amount)*Math.abs(item.amount)} suffixText={Math.abs(item.amount) > 999999?"M":null} prefix={(item?.walletCode == "USD" ? "$" : null) || (item?.walletCode == "GBP" ? "£" : null) || (item?.walletCode == "EUR" ? "€" : null)} decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />
+                            </div>
+                                <Dropdown 
+                                overlay={this.menuBar(item)}
+                                 trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
+                            <a onClick={e => e.preventDefault()}>
+                              <Space>
+                              <span class="icon md menu-bar ml-4 p-relative"></span>
+                              {/* <DownOutlined /> */}
+                            </Space>
+                          </a>
+                        </Dropdown></div></>}
+                                // description={}
                             />
                             <div className="crypto-btns crypto-btn-top">
                                 <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
                                 <Translate content="withdraw" onClick={() => { this.showSendReceiveDrawer(2, item.walletCode) }} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} />
                                 {/* <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
                                 <Translate content="withdraw" onClick={() => this.showSendReceiveDrawer(2, item.walletCode)} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} /> */}
-                            <Dropdown 
-                            overlay={this.menuBar(item)}
-                             trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
-                        <a onClick={e => e.preventDefault()}>
-                          <Space>
-                          <span class="icon md menu-bar ml-4 p-relative"></span>
-                          {/* <DownOutlined /> */}
-                        </Space>
-                      </a>
-                    </Dropdown>
+                           
                     </div>
                         </List.Item>}
                 />

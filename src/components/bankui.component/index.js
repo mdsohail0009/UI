@@ -123,13 +123,13 @@ class BankWallets extends Component {
                 <List.Item.Meta
                   avatar={<Image preview={false} src={item.imagePath} />}
                   title={
-                    <div className="fs-16 fw-600 text-upper text-white l-height-normal">
+                    <div className="coin-style">
                       {item.currency}
                     </div>
                   }
                   description={
                     <Currency
-                      className="fs-16 text-white m-0"
+                      className="currency-style"
                       defaultValue={item.availableBalance}
                       prefix={
                         (item?.currency == "USD" ? "$" : null) ||

@@ -1,11 +1,12 @@
 
 import React, { Component } from 'react';
-import { Row, Col, Button, Carousel } from 'antd';
+import { Row, Col, Button, Carousel,Typography, } from 'antd';
 import Portfolio from './portfolio.component';
 import MarketCap from './marketcap.component';
 import AlertConfirmation from '../shared/alertconfirmation';
 import { connect } from 'react-redux';
 import { fetchNotices } from '../../reducers/dashboardReducer';
+import Translate from 'react-translate-component';
 import Wallets from '../dashboard.component/wallets.component';
 import YourPortfolio from '../dashboard.component/yourportfolio.component';
 import apiCalls from '../../api/apiCalls';
@@ -13,6 +14,7 @@ import Notices from './notices';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 import BankWallets from '../bankui.component'
 import SbCard from './sbCard';
+const { Title, Paragraph } = Typography;
 class Home extends Component {
     state = {
         loading: false,
@@ -70,6 +72,7 @@ class Home extends Component {
                     </div>)}
                 </Carousel> : ""}
 
+            <Translate content="Dashboard" component={Title} className="db-main-title" />
                 <Row justify="center mt-16" gutter={[16,16]}>
                 <Col xs={24} md={12} xl={15}>
                         {this.state.permissions?.Bank &&
@@ -96,7 +99,7 @@ class Home extends Component {
                     </Col>
                     <Col xs={24} md={12} xl={9}>
                         <SbCard />
-                        {this.state.permissions.Markets && <div className="markets-panel mr-0">
+                        {this.state.permissions.Markets && <div className="">
                             <MarketCap />
                         </div>}
                     </Col>

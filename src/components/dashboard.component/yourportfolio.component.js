@@ -309,7 +309,7 @@ class YourPortfolio extends Component {
                       <div className="mr-16 crypto-card-design">
                         <div>
                         <div style={{ display: "flex", alignItems: "center" }}>
-                          <Text className="fs-16 fw-600 text-upper text-white">
+                          <Text className="coin-style">
                             {item.coin}
                           </Text>
                           {/* <Text className="fs-14 px-8 text-secondary">|</Text> */}
@@ -317,7 +317,7 @@ class YourPortfolio extends Component {
                         </div>
                         <Currency
                           defaultValue={item.coinBalance}
-                          className="text-white fs-18 text-left"
+                          className="coinbal-style"
                           type={"text"}
                           prefix={""}
                         />
