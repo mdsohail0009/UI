@@ -7,12 +7,12 @@ import Moment from 'react-moment';
 import moment from 'moment';
 import List from "../grid.component";
 import BeneficiaryDrawer from './beneficiaryDrawer';
-import AddressCommonCom from "../addressbook.component/addressCommonCom";
 import { setHeaderTab } from "../../reducers/buysellReducer"
 import ActionsToolbar from "../toolbar.component/actions.toolbar";
 import { getCurrencyLu} from './api'
 import {getFeaturePermissionsByKey} from '../shared/permissions/permissionService'
 import apicalls from '../../api/apiCalls';
+import AddressbookV3 from '../addressbook.v3';
 
 const { Title, Text, Paragraph } = Typography;
 const { Option } = Select;
@@ -21,7 +21,6 @@ const Payments = (props) => {
   
   const [beneficiaryDrawer, setBeneficiaryDrawer] = useState(false);
   const [beneficiaryDetails, setBeneficiaryDetails] = useState(false);
-  const [checkRadio, setCheckRadio] = useState(false);
   const [selection, setSelection] = useState([]);
   const [selectedObj, setSelectedObj] = useState()
   const [setSelectData, setSetSelectData] = useState({})
@@ -29,6 +28,8 @@ const Payments = (props) => {
   const [ currencylu,setCurrencylu]=useState([]);
   const [walletType,setWalletType]=useState(props.match.params.code);
   const [loading,setLoading] = useState(true)
+  const [cryptoFiat ,setCryptoFiat]=useState(true);
+  const [hideFiatHeading,setHideFiatHeading]=useState(false);
   const paymentsView = (prop) => {
     props.history.push(`/payments/${prop.dataItem.id}/view`)
   };
@@ -125,7 +126,6 @@ const Payments = (props) => {
   }
 
   const showNewBenificiary = () => {
-    setCheckRadio(true);
     setBeneficiaryDetails(true);
   }
   const closeBuyDrawer = () => {
@@ -157,6 +157,10 @@ const getCurrencyLookup = async () => {
     };
   actions[key]();
   };
+ const isFiatHeading =(data)=>{
+		// this.setState({...this.state,hideFiatHeading:data})
+    setHideFiatHeading(data)
+	}
   if(loading){
     return <div className='custom-spin text-center mt-36'><Spin loading={true}></Spin></div>
   }else{
@@ -222,7 +226,9 @@ const getCurrencyLookup = async () => {
           title={[<div className="side-drawer-header">
             <span />
             <div className="text-center fs-24">
-              <Paragraph className="mb-0 text-white-30 fw-600"><Translate content="AddFiatAddress" component={Paragraph} className="mb-0 text-white-30 fw-600" /></Paragraph>
+              <Paragraph className="mb-0 text-white-30 fw-600 text-upper">
+                <Translate content="AddFiatAddress" component={Paragraph} className="mb-0 text-white-30 fw-600 text-upper" />
+                </Paragraph>
             </div>
             <span onClick={closeBuyDrawer} className="icon md close-white c-pointer" />
           </div>]}
@@ -233,7 +239,7 @@ const getCurrencyLookup = async () => {
           className=" side-drawer w-50p"
           size="large"
         >
-          <AddressCommonCom checkThirdParty={checkRadio} onCancel={() => closeBuyDrawer()} props={props} />
+          <AddressbookV3 type="manual" isFiat={cryptoFiat} onCancel={() => closeBuyDrawer()} props={props} isFiatHeadUpdate={isFiatHeading}/>
         </Drawer>
       </div>
     </>
