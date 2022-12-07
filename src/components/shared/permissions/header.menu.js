@@ -26,6 +26,7 @@ import TransactionsHistory from "../../transactions.history.component";
 import AuditLogs from "../../auditlogs.component";
 import Notifications from "../../../notifications";
 import Wallets from "../../wallets.component.js";
+import Batchpayments from "../../batchpayment.component";
 // Action Steps
 import {
     setStepcode as transforSetStep
@@ -483,6 +484,8 @@ class HeaderPermissionMenu extends Component {
                     this.props.dispatch(setHeaderTab(key.key));
                 }}
             >
+                <Menu.Item key="12" ><Link to="/batchpayment">Batch Payments</Link></Menu.Item>
+
                 {data?.map((item, indx) => <React.Fragment>
                     {item.isTab ? <Menu.Item key={item.id}>
                         <Dropdown
