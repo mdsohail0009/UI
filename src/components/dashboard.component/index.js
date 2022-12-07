@@ -14,6 +14,7 @@ import Notices from './notices';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 import BankWallets from '../bankui.component'
 import SbCard from './sbCard';
+import Iban from './ibanAccounts';
 const { Title, Paragraph } = Typography;
 class Home extends Component {
     state = {
@@ -99,9 +100,11 @@ class Home extends Component {
                     </Col>
                     <Col xs={24} md={12} xl={9}>
                         <SbCard />
+                        <Iban/>
                         {this.state.permissions.Markets && <div className="">
                             <MarketCap />
                         </div>}
+                       
                     </Col>
                 </Row>
             </div >

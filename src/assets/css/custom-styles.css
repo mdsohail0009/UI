@@ -244,6 +244,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .db-main-title{font-weight: 800 !important;font-size: 32px !important;color: #FFFFFF !important;margin-bottom: 56px !important;}
 .marketcap-mt{margin-top: 56px;}
 .crypto-curr-align{display: flex;justify-content: space-between;}
+.iban-list .ant-list-item-meta{display:block;}
 /* Dashboard end */
 
 /*Buy drawer start*/
@@ -321,6 +322,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 }
 @media (min-width: 1400px){
     .listitems-design{width: 406px;}
+    .listitems-design.iban-style{width: 238px;}
 
 }
 @media (max-width: 991.98px){
