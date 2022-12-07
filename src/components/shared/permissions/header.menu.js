@@ -55,6 +55,7 @@ import { setCurrentAction } from "../../../reducers/actionsReducer";
 import { KEY_URL_MAP } from "./config";
 import { getFeaturePermissionsByKey } from "./permissionService";
 import { headerSubscriber } from "../../../utils/pubsub";
+import { checkCustomerState } from "../../../utils/service";
 
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
@@ -153,7 +154,7 @@ class HeaderPermissionMenu extends Component {
         }
     }
     showDocRequestError() {
-        if (this.props.userConfig?.customerState !== "Approved") {
+        if (!checkCustomerState(this.props.userConfig)) {
             this.props.history.push("/sumsub");
         }
         else if (!this.props.twoFA?.isEnabled) {
@@ -241,7 +242,7 @@ class HeaderPermissionMenu extends Component {
         if (perIgnoreLst.includes(menuKey)) { this.navigate(menuKey, menuItem) }
         else {
             const ignoreKycLst = ["transactions"];
-            if ((this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled && this.props.userConfig?.customerState === "Approved") || ignoreKycLst.includes(menuItem.key)) {
+            if ((this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled && checkCustomerState(this.props.userConfig)) || ignoreKycLst.includes(menuItem.key)) {
                 if (!this.props.menuItems.featurePermissions[menuItem.key]) {
                     getFeaturePermissionsByKey(menuItem.key, (data) => {
                         if (data.ok) {

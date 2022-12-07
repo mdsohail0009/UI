@@ -546,7 +546,7 @@ class CaseView extends Component {
                     destroyOnClose={true}
                     closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.docPreviewClose} /></Tooltip>}
                     footer={<>
-                        <Button type="primary" onClick={this.docPreviewClose} className="text-center text-white-30 pop-cancel fw-400 mr-36">Close</Button>
+                        <Button type="primary" onClick={this.docPreviewClose} className="doc-cancelbtn text-center text-white-30 pop-cancel fw-400 mr-8 pop-btn px-36 ">Close</Button>
                         <Button className="pop-btn px-36" onClick={() => this.fileDownload()}>Download</Button>
                     </>}
                 >

@@ -6,9 +6,10 @@ import { userInfo, getmemeberInfo } from '../../reducers/configReduser';
 import { withRouter } from 'react-router-dom';
 import success from '../../assets/images/success.png';
 import AccountStatus from '../../utils/account.status';
+import { checkCustomerState } from '../../utils/service';
 
 class SumSub extends Component {
-    state = { loading: true, sumSubConfirm: false, isAccountApproved: this.props.userConfig?.customerState === "Approved" }
+    state = { loading: true, sumSubConfirm: false, isAccountApproved: checkCustomerState(this.props.userConfig) }
     componentDidMount() {
         if (this.props.userConfig.isKYC && this.state.isAccountApproved) {
             this.props.history.push("/cockpit")

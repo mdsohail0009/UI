@@ -38,6 +38,7 @@ import HeaderPermissionMenu from '../components/shared/permissions/header.menu';
 import { clearPermissions } from "../reducers/feturesReducer";
 import { handleHeaderProfileMenuClick } from "../utils/pubsub";
 import Notifications from "../notifications";
+import { checkCustomerState } from "../utils/service";
 
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
@@ -121,7 +122,7 @@ class Header extends Component {
     this.props.dispatch(setHeaderTab(''));
     if (!this.props.userConfig?.isKYC) {
       this.props.history.push("/notkyc");
-    } else if (this.props.userConfig?.customerState !== "Approved") {
+    } else if (checkCustomerState(this.props.userConfig)) {
       this.props.history.push("/sumsub");
     } else {
       this.props.history.push("/cockpit");
