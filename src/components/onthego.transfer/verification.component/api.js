@@ -27,9 +27,9 @@ const getAuthenticator = (Code, customerId) => {
 		ApiControllers.master + `VerifyAuthenticator/${Code}/${customerId}`
 	);
 };
-const getVerificationFields = (customerId) => {
+const getVerificationFields = () => {
 	return apiClient.get(
-		ApiControllers.master + `Verificationfields/${customerId}`
+		ApiControllers.master + `Verificationfields`
 	);
 };
 

@@ -94,10 +94,10 @@ const fetchYourPortfoliodata = (customer_id) => {
         }
     }
 }
-const fetchNotices = (customer_id) => {
+const fetchNotices = () => {
     return async dispatch => {
         dispatch(handleNotices({ data: [], loading: true }));
-        const response = await getDashboardNotices(customer_id);
+        const response = await getDashboardNotices();
         if (response.ok) {
             dispatch(handleNotices({ data: response.data, loading: false }));
         } else {

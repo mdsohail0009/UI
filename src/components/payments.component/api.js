@@ -11,8 +11,8 @@ const savePayments = (obj) => {
 const updatePayments = (obj) => {
     return apiClient.put(ApiControllers.massPayment + "UpdateUserpayments", obj);
 }
-const getPaymentsData = (id, customerId,currency) => {
-    return apiClient.get(ApiControllers.massPayment + `payments/${id}/${customerId}/${currency}`);
+const getPaymentsData = (id,currency) => {
+    return apiClient.get(ApiControllers.massPayment + `payments/${id}/${currency}`);
 }
 const getBankData = (addressId) => {
     return apiClient.get(ApiControllers.massPayment + `BankDetails/${addressId}`);

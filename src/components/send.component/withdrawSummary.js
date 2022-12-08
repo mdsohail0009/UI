@@ -229,9 +229,7 @@ class WithdrawSummary extends Component {
 		}
 	};
 	getVerifyData = async () => {
-		let response = await apiCalls.getVerificationFields(
-			this.props.userProfile.id
-		);
+		let response = await apiCalls.getVerificationFields();
 		if (response.ok) {
 			this.setState({ ...this.state, verifyData: response.data });
 			if (!(response.data.isEmailVerification || response.data.isPhoneVerification || response.data.twoFactorEnabled || response.data.isLiveVerification)) {

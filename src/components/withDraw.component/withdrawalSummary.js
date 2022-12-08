@@ -306,7 +306,7 @@ const WithdrawalFiatSummary = ({
 	const maskedNumber = last4Digits?.padStart(fullNumber.length, "*");
 
 	const getVerifyData = async () => {
-		let response = await apiCalls.getVerificationFields(userConfig.id);
+		let response = await apiCalls.getVerificationFields();
 		if (response.ok) {
 			setVerifyData(response.data);
 			if (!(response.data.isEmailVerification || response.data.isPhoneVerification || response.data.twoFactorEnabled || response.data.isLiveVerification)) {

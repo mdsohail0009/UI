@@ -83,8 +83,8 @@ const getVerification = (AccountId, code) => {
 	);
 };
 
-const downloadKyc = (Customerid) => {
-	return apiClient.get(ApiControllers.customers + `DownloadFile/${Customerid}`);
+const downloadKyc = () => {
+	return apiClient.get(ApiControllers.customers + `DownloadFile`);
 };
 const updateSecurity = (obj) => {
 	return apiClient.put(ApiControllers.master + "UpdateSecurity", obj);
@@ -130,13 +130,13 @@ const getAuthenticator = (Code, customerId) => {
 		ApiControllers.master + `VerifyAuthenticator/${Code}/${customerId}`
 	);
 };
-const getVerificationFields = (customerId) => {
+const getVerificationFields = () => {
 	return apiClient.get(
-		ApiControllers.master + `Verificationfields/${customerId}`
+		ApiControllers.master + `Verificationfields`
 	);
 };
-const twofactor = (id) => {
-	return apiClient.get(ApiControllers.customers + `twofactor/${id}`);
+const twofactor = () => {
+	return apiClient.get(ApiControllers.customers + `twofactor`);
 };
 
 const getInfoVal = (id, type) => {

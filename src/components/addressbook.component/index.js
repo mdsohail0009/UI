@@ -706,7 +706,7 @@ class AddressBook extends Component {
 							ref={this.gridFiatRef}
 							key={gridUrlFiat}
 							url={gridUrlFiat}
-							additionalParams={{ customerId: customerId }}
+							//additionalParams={{ customerId: customerId }}
 						/>
 					) : (
 						<List
@@ -715,7 +715,7 @@ class AddressBook extends Component {
 							key={gridUrlCrypto}
 							ref={this.gridCryptoRef}
 							url={gridUrlCrypto}
-							additionalParams={{ customerId: customerId }}
+							//additionalParams={{ customerId: customerId }}
 						/>
 					)}
 				</div>

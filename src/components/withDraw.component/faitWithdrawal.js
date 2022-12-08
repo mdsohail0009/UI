@@ -109,7 +109,7 @@ const FaitWithdrawal = ({ props,
   const [isVerificationMethodsChecked, setIsVerificationMethodsChecked] = useState(true);
   const [isVerificationLoading, setVerificationLoading] = useState(true);
   const checkVerification = async () => {
-    const verfResponse = await apicalls.getVerificationFields(userConfig.id);
+    const verfResponse = await apicalls.getVerificationFields();
     let minVerifications = 0;
     if (verfResponse.ok) {
       for (let verifMethod in verfResponse.data) {
@@ -216,7 +216,6 @@ const FaitWithdrawal = ({ props,
   const getAddressLu = async (obj, e) => {
     let selectedFiat = obj.currencyCode;
     let recAddress = await favouriteFiatAddress(
-      userConfig.id,
       "fiat",
       selectedFiat
     );

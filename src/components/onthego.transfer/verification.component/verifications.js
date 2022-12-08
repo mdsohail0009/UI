@@ -84,7 +84,7 @@ const Verifications = (props) => {
 
     const getVerifyData = async () => {
         props.onReviewDetailsLoading(true)
-        let response = await getVerificationFields(props.userConfig.id);
+        let response = await getVerificationFields();
         if (response.ok) {
             setVerifyData(response.data);
             props.onReviewDetailsLoading(false)
