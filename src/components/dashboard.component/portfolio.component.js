@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, message, Spin,Button } from 'antd';
+import { Typography, message, Spin,Button,Image,  } from 'antd';
 import Translate from 'react-translate-component';
 import { getData } from './api';
 import NumberFormat from 'react-number-format';
@@ -111,9 +111,10 @@ class Portfolio extends Component {
                             <table className='pay-grid view mb-view '  style={{width: "100%"}}>
                                 <thead>
                                     <tr>
-                                        <th style={{width: "18%"}}>Date</th>
-                                        <th style={{width: "35%"}}>Type</th>
+                                        {/* <th></th> */}
                                         <th style={{width: "15%"}}>Wallet</th>
+                                        {/* <th style={{width: "35%"}}>Type</th> */}
+                                        <th style={{width: "18%"}}>Date</th>
                                         <th style={{width: "15%"}}>Value</th>
                                         <th style={{width: "15%"}}>State</th>
                                     </tr>
@@ -136,12 +137,14 @@ class Portfolio extends Component {
                                                     {this.state.transactionData.length > 0 ? 
                                                     <>
                                                      <tr key={idx}>
+                                                        {/* <td><Image preview={false} src={item.imagePath} /></td> */}
+                                                     <td><div className='ts-wallet'><Title className='ts-coin'>{item.wallet}</Title><Title className='ts-type'>{item.type}</Title></div></td>
                                                      <td style={{ width: "100px" }}>
-                                                            {item?.date }
+                                                     <div className='ts-tbdate'><Title className='ts-date'>{item?.date }</Title></div>
                                                             </td>
                                                         
-                                                        <td style={{ width: "50px" }}>{item.type}</td>
-                                                        <td>{item.wallet}</td>
+                                                        {/* <td style={{ width: "50px" }}>{item.type}</td> */}
+                                                        
                                                         <td>{this.getNumberVal(item)}</td>
                                                         <td>{item.state} </td>
                                                     </tr>

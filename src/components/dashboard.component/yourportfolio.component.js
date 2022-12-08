@@ -280,7 +280,7 @@ class YourPortfolio extends Component {
                         <Dropdown overlay={this.menuBar(item)} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
                         <a onClick={e => e.preventDefault()}>
                           <Space>
-                          <span class="icon md menu-bar ml-4 p-relative"></span>
+                          <span class="icon lg menu-bar p-relative"></span>
                           {/* <DownOutlined /> */}
                         </Space>
                       </a>

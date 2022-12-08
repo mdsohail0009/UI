@@ -53,7 +53,7 @@ class SuissebaseFiat extends Component {
                         <div className="side-drawer-header">
                             {this.renderTitle()}
                             <div className="text-center fs-14">
-                                <Translate className="mb-0 text-white-30 fw-600 text-upper" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
+                                <Translate className="" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
                                 <Translate className="text-white-50 mb-0 fw-300" content={this.props.buyFiat.stepSubTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
                             </div>
                             {this.renderIcon()}

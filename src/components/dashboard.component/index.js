@@ -100,10 +100,10 @@ class Home extends Component {
                     </Col>
                     <Col xs={24} md={12} xl={9}>
                         <SbCard />
-                        <Iban/>
-                        {this.state.permissions.Markets && <div className="">
+                       <div className='marketcap-mt'> <Iban/></div>
+                        {this.state.permissions.Markets && 
                             <MarketCap />
-                        </div>}
+                       }
                        
                     </Col>
                 </Row>

@@ -66,7 +66,7 @@ class SwapCrypto extends Component {
         return (<Drawer
             title={[<div className="side-drawer-header">
                 {this.renderTitle()}
-                <div className="text-center fs-16 dd">
+                <div className="text-center fs-16">
                     <Translate className="text-white-30 fw-600 text-upper mb-4" content={this.props.swapStore.stepTitles[config[this.props.swapStore.stepcode]]} component={Paragraph} />
                     <Translate className="text-white-50 mb-0 fw-300 fs-14 swap-subtitlte" content={this.props.swapStore.stepSubTitles[config[this.props.swapStore.stepcode]]} component={Paragraph} /></div>
                 {this.renderIcon()}</div>]}

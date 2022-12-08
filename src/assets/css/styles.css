@@ -14,8 +14,8 @@
 .ant-alert{border-radius: 10px;margin-bottom: 16px;}
 .ant-alert-message{font-size: 18px !important;font-weight: 700;color: var(--textDark) !important;line-height: normal;}
 .ant-alert-description{font-size: 16px !important;color: var(--textSecondary) !important;}
-.ant-input-search .ant-input-group input{background-color: var(--bgDarkGrey) !important; height: 38px; border-radius: 30px; color: var(--textWhite30); padding-left: 18px;}
-.ant-input-search .ant-input-group .ant-input-group-addon {background-color: var(--bgDarkGrey) !important; border-radius: 0 30px 30px 0;}
+/* .ant-input-search .ant-input-group input{background-color: var(--bgDarkGrey) !important; height: 38px; border-radius: 30px; color: var(--textWhite30); padding-left: 18px;} */
+/* .ant-input-search .ant-input-group .ant-input-group-addon {background-color: var(--bgDarkGrey) !important; border-radius: 0 30px 30px 0;} */
 .grey-search.ant-input-search .ant-input-group input, .grey-search.ant-input-search .ant-input-group .ant-input-group-addon{background-color: var(--bgGrey) !important;}
 .ant-input-search .ant-input-group-addon .ant-btn{background-color: transparent; border: none; width: 42px;box-shadow: none;}
 .ant-dropdown-arrow{width: 10px; height: 10px; background-color: var(--bgGloom);top: 5px !important;}
@@ -1069,7 +1069,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .main-container{max-width: 1400px; }
     .mega-menu{max-width: 1320px;}
     .side-drawer .ant-drawer-content-wrapper{width: 510px !important;}
-    .side-drawer .ant-drawer-body{padding: 16px;}
+    /* .side-drawer .ant-drawer-body{padding: 16px;} */
     .side-drawer .side-drawer-header{padding: 15px 0px 15px 0px;}
     .crypto-list-tabs .crypto-list{max-height: calc(100vh - 350px); overflow-y: auto; padding-right: 10px;}
     .sellcrypto-container{max-height: calc(100vh - 230px);}

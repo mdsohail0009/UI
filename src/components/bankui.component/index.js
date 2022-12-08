@@ -183,7 +183,7 @@ class BankWallets extends Component {
                         >
                           <a onClick={(e) => e.preventDefault()}>
                             <Space>
-                              <span class="icon md menu-bar ml-4 p-relative"></span>
+                              <span class="icon lg menu-bar p-relative"></span>
                             </Space>
                           </a>
                         </Dropdown>

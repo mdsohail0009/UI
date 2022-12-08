@@ -762,11 +762,11 @@ class AddressBook extends Component {
 						<div className="side-drawer-header">
 							<span />
 							<div className="text-center fs-16">
-								<Paragraph className="mb-0 text-white-30 fw-600 text-upper">
+								<Paragraph className="drawer-maintitle">
 									<Translate
 									content={this.state.hideFiatHeading !=true && "AddFiatAddress"}
 										component={Paragraph}
-										className="mb-0 text-white-30 fw-600 text-upper"
+										className=""
 									/>
 								</Paragraph>
 							</div>
