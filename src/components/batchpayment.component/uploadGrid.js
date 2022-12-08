@@ -35,12 +35,12 @@ const BatchpaymentView = (props) => {
         { field: "uploadedDocuments", title: 'Uploaded Documents', filter: true, width: 200, },
         { field: "supportingDocument", title: 'Supporting Document', filter: true, width: 200,
             customCell: (prop) => (
-            <td className='text-center'><div className="gridLink text-center" ><Button className='pop-btn px-16' onClick={showUploadModal}>Upload</Button>
+            <td className='text-center'><div className="gridLink text-center" ><Button className='pop-btn px-36' onClick={showUploadModal}>Upload</Button>
               </div></td>)
         },
       ];
     return (
-        <>
+        < div className='main-container'>
             <Title className="basicinfo "><span className='icon md c-pointer back mr-8' /><Text className="basicinfo">XXX Payments / USD</Text></Title>
             <div className="box basic-info text-white" style={{ clear: 'both' }}>
                 <List
@@ -111,7 +111,7 @@ const BatchpaymentView = (props) => {
                     </div>
                 </>
             </Modal>
-        </>
+        </div>
     )
 
 }
