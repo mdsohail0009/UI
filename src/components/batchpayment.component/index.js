@@ -83,7 +83,7 @@ const [open, setOpen] = useState(false);
                       <Title className="basicinfo mb-0"><span className='icon md c-pointer back mr-8' /><Translate content="batch_payments" component={Text} className="basicinfo" /></Title>
                   </div>
                   <div className='batch-actions'>
-                      <span className='icon md c-pointer add-icon' onClick={addBatchPayment}></span>
+                      <span className='icon md c-pointer add-icon' onClick={() => addBatchPayment()}></span>
                       <span className='icon md c-pointer procced-icon'></span>
                       <span className='icon md c-pointer delete-icon'></span>
                   </div>
@@ -101,7 +101,7 @@ const [open, setOpen] = useState(false);
               <AddBatchPayment
                   showDrawer={isAddBatchDrawer}
                   onClose={() => closeDrawer()}
-              />
+              />           
           </div>       
       )
 }
@@ -116,3 +116,4 @@ const connectDispatchToProps = dispatch => {
 }
 
 export default connect(connectStateToProps, connectDispatchToProps)(Batchpayments);
+				

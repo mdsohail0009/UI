@@ -636,4 +636,5 @@ export default {
 	transactions_history: "Kasaysayan ng Transaksyon",
 	transaction:"Transaksyon",
 	batch_payments: "Batch Payments",
+	bathch_payments_preview: "Hamarino azafady ny saha alohan'ny hanaiky",
 };
