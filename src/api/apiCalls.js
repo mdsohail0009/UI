@@ -144,8 +144,8 @@ const getInfoVal = (id, type) => {
 		ApiControllers.deposit + `GetScoreChainInfo/${id}/${type}`
 	);
 };
-const getReferalDetails = (customerId) =>{
-	return apiClient.get(ApiControllers.partner + `getReferralDetails/customer/${customerId}`);
+const getReferalDetails = () =>{
+	return apiClient.get(ApiControllers.partner + `getReferralDetails/customer`);
 }
 const getPayeeLu = (customerId,currency) => {
     return apiClient.get(

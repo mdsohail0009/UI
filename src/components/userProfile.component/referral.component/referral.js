@@ -20,7 +20,7 @@ class Referral extends Component {
     }
     loadData = async () =>{
         this.setState({...this.state,isLoading:true})
-        const res  = await apicalls.getReferalDetails(this.props.userConfig.id);
+        const res  = await apicalls.getReferalDetails();
         if(res.ok){
             this.setState({...this.state,referaldata:res.data,isLoading:false,errorMsg:null})
         }else{
