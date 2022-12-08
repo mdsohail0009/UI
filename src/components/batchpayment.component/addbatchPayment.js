@@ -129,7 +129,6 @@ class AddBatchPayment extends Component {
             visible={this.props.showDrawer}
             closeIcon={null}
             className="side-drawer w-50p"
-            style={{width:"50%"}}
         >
             { !this.state.isCoinsListHide && <>
             <div className="mt-8">
