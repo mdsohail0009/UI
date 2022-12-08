@@ -161,7 +161,7 @@ class SelectCrypto extends Component {
                 {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="error" message={apicalls.convertLocalLang('buy_crypto')} description={this.state.error?.message} />}
                 <div className="selectcrypto-container">
                     <Card className="crypto-card select mb-36" bordered={false}>
-                    <div className='d-flex justify-content'>
+                    <div className=''>
                         {/* <div> */}
                         {/* <div className="d-flex align-center mb-4">
                             <Image preview={false} src={impageWhitePath}/>
@@ -174,17 +174,7 @@ class SelectCrypto extends Component {
                             <div className="crypto-amount">
                                <div className="crypto-details"><span className='buycoin-style'>{coin }</span> <Currency prefix={'' } defaultValue={coinBalance} suffixText={""} className='buycoin-style marginL' /></div>
                                 {/* <NumberFormat value={coinFullName} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props}>{value}</div>} /> */}
-                            </div>
-                        {/* </div> */}
-                        
-                        </div>
-                    </Card>
-          
-                    <div className="my-36">
-                        <Translate content="buy_select_currency" component={Paragraph} className="label-style" />
-                        <WalletList placeholder="Select Currency" onWalletSelect={(e) => this.handleWalletSelection(e)} />
-                    </div>
-            {this.state.isShowCoinsData && <div>
+                                {this.state.isShowCoinsData && <div>
                    <LocalCryptoSwapperCmp
                         localAmt={localValue}
                         cryptoAmt={cryptoValue}
@@ -207,6 +197,17 @@ class SelectCrypto extends Component {
                         <SuisseBtn title="PreviewBuy" loading={this.state.btnLoading} onRefresh={() => this.refresh()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
                     </div>
                     </div>}
+                            </div>
+                        {/* </div> */}
+                        
+                        </div>
+                    </Card>
+          
+                    <div className="my-36">
+                        <Translate content="buy_select_currency" component={Paragraph} className="label-style" />
+                        <WalletList placeholder="Select Currency" onWalletSelect={(e) => this.handleWalletSelection(e)} />
+                    </div>
+           
                 </div>
 
             </div>

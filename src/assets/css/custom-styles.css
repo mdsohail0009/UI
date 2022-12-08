@@ -277,6 +277,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .crypto-list .ant-list-item, .wallet-list .ant-list-item{margin-top: 15px;}
 .search-style{color: var(--menuFont);font-weight: 600;font-size: 18px;margin-bottom: 2px !important;text-transform: capitalize;}
 .buycoin-style{font-weight: 500;font-size: 50px;color: var(--white);}
+.coin-entryval{display: flex;align-items: center;}
 .marginL{margin-left: 8px;}
 
 /*Buy drawer End*/
