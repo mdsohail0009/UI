@@ -11,7 +11,6 @@ import PaymentAddress from './paymentAddress';
 const { Title,Paragraph } = Typography
 class AddBatchPayment extends Component {
     state = {
-        step: "selectcurrency",
         fiatWalletsLoading: false,
         fiatWallets: [],
         filtercoinsList: [],
@@ -38,87 +37,13 @@ class AddBatchPayment extends Component {
             this.props.onClose();
         }
     }
-    changeStep = (step) => {
-        this.setState({ ...this.state, step });
-    }
     uploadExcel=()=>{
         this.setState({ ...this.state, showModal:true});
     }
 
-    // renderStep = (step) => {
-    //     const steps = {
-    //         selectcurrency: (
-    //           <React.Fragment>
-    //             <Drawer destroyOnClose={true}
-    //         title={[<div className="side-drawer-header">
-    //             <div className="text-center">
-    //             <div>Batch Payments</div>
-    //             </div>
-    //             <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />
-               
-    //         </div>]}
-            
-    //         placement="right"
-    //         closable={true}
-    //         visible={this.props.showDrawer}
-    //         closeIcon={null}
-    //         className="side-drawer w-50p"
-    //         style={{width:"50%"}}
-    //     >
-    //         <div className="mt-8">
-    //             <Title
-    //                 className='sub-heading code-lbl'>Make payments</Title>
-    //         </div>
-    //         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-    //             <Search placeholder="Search Currency" value={this.state.searchFiatVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleFiatSearch} size="middle" bordered={false} className="text-center mb-16" />
-    //         </Col>
-    //         <List
-    //             itemLayout="horizontal"
-    //             dataSource={this.state.fiatWallets}
-    //             className="crypto-list auto-scroll wallet-list"
-    //             loading={this.state.fiatWalletsLoading}
-    //             locale={{
-    //                 emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
-    //                     <Translate content="No_data" />
-    //                 } />
-    //             }}
-    //             renderItem={item => (
-    //                 <List.Item onClick={() => this.setState({ ...this.state, selectedCurrency: item.walletCode }, () => { this.changeStep("multiaddress")})}>
-    //                 <Link>
-    //                   <List.Item.Meta
-    //                     avatar={<Image preview={false} src={item.imagePath} />}
-
-    //                     title={<div className="wallet-title">{item.walletCode}</div>}
-    //                   />
-    //                    <><div className="text-right coin-typo">
-    //                                     <NumberFormat value={item.amount} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={item.walletCode == 'USD' ? '$' : '€'} renderText={(value, props) => <div {...props} >{value}</div>} />
-
-    //                                 </div></>
-    //                 </Link>
-    //               </List.Item>
-    //             )}
-    //           />
-    //           <PaymentAddress ></PaymentAddress>
-    //     </Drawer>
-    //             </React.Fragment>
-    //         ),
-    //         multiaddress: (
-    //         <React.Fragment>
-    //              <div className="text-center">
-    //             <div>Upload</div>
-    //             </div>
-    //         </React.Fragment>
-    //         )
-    //     }
-    //     return steps[this.state.step];
-    // }
-   
     render() {
-    //     return <React.Fragment>
-    //     {this.renderStep()}
-    // </React.Fragment>
         return (
-           
+           <div>
         <Drawer destroyOnClose={true}
             title={[<div className="side-drawer-header">
                 <div className="text-center">
@@ -181,21 +106,22 @@ class AddBatchPayment extends Component {
               </div>
               </>}
         </Drawer>
-
-        );
-        <Modal
-                    title="Session timedout alert" visible={this.state.showModal}
+                <Modal
+                     visible={this.state.showModal}
                     closable={false}
                     closeIcon={false}
                     footer={[
                         <>
-              
                             <Button className="primary-btn pop-btn"
                                 style={{ width: 100, height: 50 }}
                                 onClick={() => { }}>Next</Button>
                         </>
                     ]} >
                 </Modal>
+        </div>
+
+        );
+       
     }
 }
 const connectStateToProps = ({ sendReceive, userConfig }) => {
