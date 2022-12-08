@@ -111,7 +111,7 @@ class Header extends Component {
   }
   readNotification() {
     //let isRead = apiCalls.encryptValue("true", this.props.userConfig?.sk);
-    readNotifications(this.props.userConfig.id).then(() => {
+    readNotifications().then(() => {
       this.props.dispatch(setNotificationCount(0));
     });
   }

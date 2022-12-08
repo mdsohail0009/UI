@@ -104,7 +104,7 @@ class OnthegoFundTransfer extends Component {
   }
   verificationCheck = async () => {
     this.setState({ ...this.state, isVarificationLoader: true })
-    const verfResponse = await getVerificationFields(this.props.userProfile.id);
+    const verfResponse = await getVerificationFields();
     let minVerifications = 0;
     if (verfResponse.ok) {
       for (let verifMethod in verfResponse.data) {
