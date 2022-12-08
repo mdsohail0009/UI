@@ -72,14 +72,14 @@ const getdailypnl = (customer_id, days) => {
 	return apiClient.get(ApiControllers.dashboard + `DailyPNL/${customer_id}/${days}`);
 };
 
-const getCode = (AccountId, isResendOTP) => {
+const getCode = ( isResendOTP) => {
 	return apiClient.get(
-		ApiControllers.master + `SendOTP/${AccountId}/${isResendOTP}`
+		ApiControllers.master + `SendOTP/${isResendOTP}`
 	);
 };
-const getVerification = (AccountId, code) => {
+const getVerification = ( code) => {
 	return apiClient.get(
-		ApiControllers.master + `OTPVerification/${AccountId}/${code}`
+		ApiControllers.master + `OTPVerification/${code}`
 	);
 };
 
@@ -114,15 +114,15 @@ const encryptValue = (msg, key) => {
 	});
 	return salt.toString() + iv.toString() + encrypted.toString();
 };
-const sendEmail = (AccountId, isResendOTP) => {
+const sendEmail = (isResendOTP) => {
 	return apiClient.get(
-		ApiControllers.master + `SendEmailOTP/${AccountId}/${isResendOTP}`
+		ApiControllers.master + `SendEmailOTP/${isResendOTP}`
 	);
 };
 
-const verifyEmail = (AccountId, code) => {
+const verifyEmail = ( code) => {
 	return apiClient.get(
-		ApiControllers.master + `EmailOTPVerification/${AccountId}/${code}`
+		ApiControllers.master + `EmailOTPVerification/${code}`
 	);
 };
 const getAuthenticator = (Code, customerId) => {
@@ -144,8 +144,8 @@ const getInfoVal = (id, type) => {
 		ApiControllers.deposit + `GetScoreChainInfo/${id}/${type}`
 	);
 };
-const getReferalDetails = (customerId) =>{
-	return apiClient.get(ApiControllers.partner + `getReferralDetails/customer/${customerId}`);
+const getReferalDetails = () =>{
+	return apiClient.get(ApiControllers.partner + `getReferralDetails/customer`);
 }
 const getPayeeLu = (customerId,currency) => {
     return apiClient.get(

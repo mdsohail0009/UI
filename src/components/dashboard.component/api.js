@@ -21,8 +21,8 @@ const getPortfolioGraph = (memId, type) => {
 const getCoinChatData = (coinName, currency, days) => {
     return coinGekoClient.get(`coins/${coinName}/market_chart?vs_currency=${currency}&days=${days}`);
 }
-const getData = (customer_id) => {
-    return apiClient.get(ApiControllers.transaction + `Customers/Dashboard/${customer_id}`);
+const getData = () => {
+    return apiClient.get(ApiControllers.transaction + `Customers/Dashboard`);
 }
 const getNotices = () => {
     return apiClient.get(ApiControllers.customers + 'Dashboard/Notice');

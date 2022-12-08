@@ -322,7 +322,7 @@ const WithdrawalFiatSummary = ({
 	};
 
 	const getEmail = async (val) => {
-		let response = await apiCalls.sendEmail(userConfig.id, type);
+		let response = await apiCalls.sendEmail(type);
 		if (response.ok) {
 			setEmailText("sentVerification");
 			setEmailDisable(false);
@@ -355,7 +355,7 @@ const WithdrawalFiatSummary = ({
 	const getEmailVerification = async (values) => {
 		setValidData(true);
 		setEmailVerifyLoading(true)
-		let response = await apiCalls.verifyEmail(userConfig.id, emailCode);
+		let response = await apiCalls.verifyEmail(emailCode);
 		if (response.ok) {
 			setEmailDisable(true);
 			setEmailVerifyLoading(false)
@@ -398,7 +398,7 @@ const WithdrawalFiatSummary = ({
 	};
 
 	const getOTP = async (val) => {
-		let response = await apiCalls.getCode(userConfig.id, types);
+		let response = await apiCalls.getCode(types);
 		if (response.ok) {
 			setMsg(null);
 			setTooltipVisible(true);
@@ -432,7 +432,7 @@ const WithdrawalFiatSummary = ({
 	const getOtpVerification = async () => {
 		setValidData(true);
 		setPhoneVerifyLoading(true)
-		let response = await apiCalls.getVerification(userConfig.id, otpCode);
+		let response = await apiCalls.getVerification(otpCode);
 		if (response.ok) {
 			setMsg(null)
 			// clearTimeout(cleartime);
