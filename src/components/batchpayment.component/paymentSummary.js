@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Col, List, Empty, Image, Button, Modal, Form, Input } from 'antd';
+import { Drawer, Typography, Col, List, Empty, Image, Button, Modal, Form, Input,Tooltip } from 'antd';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
-
+import pending from '../../assets/images/pending.png'
 const { Title, Paragraph, Text } = Typography
 
 class paymentSummary extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-		  
+		  showDeclaration: false,
 		}
+	}
+	showDeclaration=()=>{	
+		this.setState({ ...this.state, showDeclaration:true}); 
+	}
+	goDashboard=()=>{
+		this.props.history.push('/cockpit')
 	}
 
 
@@ -157,10 +163,39 @@ class paymentSummary extends Component {
 							<Button
 								className="primary-btn pop-btn btn-width"
 								style={{ margin: "0 8px" }}
+								onClick={this.showDeclaration}
 							>
 								Continue
 							</Button>
 						</div>
+						<Modal
+                     visible={this.state.showDeclaration}
+                     Title="Payment"
+                     closeIcon={
+                        <Tooltip title="Close">
+                          <span
+                            className="icon md close-white c-pointer"
+                            onClick={() => this.handleCancel()}
+                          />
+                        </Tooltip>
+                      }
+                      destroyOnClose={true}
+                   
+                    footer={ <Button className="primary-btn pop-btn"
+                    style={{ width: 100, height: 50 }}
+                    onClick={() => this.setState({ ...this.state, showModal: false, paymentPreview: true }, () => { })}>cancel</Button>}>
+                        <>
+						<div className='text-center text-white p-24'>
+                     <img src={pending}/>
+                        <Title className='text-white'>Declaration form sent!</Title>
+                        <Paragraph className='text-white'>We sent declaration form to: 
+                        Your@emailaddress.com. Please sign using the link
+                        received in email to whitelist your address. Note that
+                        your payments will only be processed once your
+                       whitelisted address has been approved. </Paragraph>
+              </div>
+                        </>
+                </Modal>
 					</Form>
 				</div>
 				</Modal>

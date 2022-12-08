@@ -110,7 +110,7 @@ border-radius: 5px;}
 .icon.md.lose{background-position: -271px -2px;}
 .icon.md.gain{background-position: -302px -2px;}
 .icon.md.downarrow{background-position: -59px -2px;}
-.icon.md.close-white{background-position: -170px 0;}
+.icon.md.close-white{background-position: -170px 0 !important;}
 .icon.md.date-white{background-position: -480px -37px;}
 .icon.md.search-white{background-position: -197px 0;}
 .icon.md.load{background-position: -242px 0;float: right; margin-top: 2px;}
@@ -786,7 +786,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
 .batch-actions span{margin-left: 16px;}
 .makepayment-section{line-height: 3 !important;}
 .masspay-popup{width: 720px !important;}
-
+.ant-modal-close-x .ant-modal-close-icon svg{display: none;}
 /** masspayments end**/
 /*-- Cases--*/
 .case-stripe{border: 1px dashed var(--borderLight); padding: 16px 20px; border-radius: 16px; margin-bottom: 16px}
