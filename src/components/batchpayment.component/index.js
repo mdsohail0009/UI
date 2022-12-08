@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Typography,Drawer,Space,Button } from 'antd';
 import { connect } from 'react-redux';
+import Translate from 'react-translate-component';
 import List from "../grid.component";
 import AddBatchPayment from './addbatchPayment';
 
@@ -73,11 +74,16 @@ const [open, setOpen] = useState(false);
     setIsAddBatchDrawer(false);
     }
       return (
-        <>
-              <div className='batch-actions'>
-                  <span className='icon md c-pointer add-icon mx-12' onClick={addBatchPayment}></span>
-                  <span className='icon md c-pointer add-icon mx-12'></span>
-                  <span className='icon md c-pointer delete-icon mx-12'></span>
+          <div className='main-container'>
+              <div className='d-flex justify-content mb-16'>
+                  <div>
+                      <Title className="basicinfo mb-0"><span className='icon md c-pointer back mr-8' /><Translate content="batch_payments" component={Text} className="basicinfo" /></Title>
+                  </div>
+                  <div className='batch-actions'>
+                      <span className='icon md c-pointer add-icon' onClick={addBatchPayment}></span>
+                      <span className='icon md c-pointer procced-icon'></span>
+                      <span className='icon md c-pointer delete-icon'></span>
+                  </div>
               </div>
               <div className="box basic-info text-white" style={{ clear: 'both' }}>
                   <List
@@ -93,7 +99,7 @@ const [open, setOpen] = useState(false);
                   showDrawer={isAddBatchDrawer}
                   onClose={() => closeDrawer()}
               />
-        </>       
+          </div>       
       )
 }
 

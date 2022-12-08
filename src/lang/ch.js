@@ -610,4 +610,5 @@ export default {
 	sell_select_currency: "選擇要接收的貨幣",
 	transactions_history: "交易記錄",
 	transaction:"交易",
+	batch_payments: "批量付款",
 };
