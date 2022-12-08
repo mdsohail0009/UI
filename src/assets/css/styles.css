@@ -785,7 +785,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
 .batch-actions{text-align: right;margin-bottom: 16px;}
 .batch-actions span{margin-left: 16px;}
 .makepayment-section{line-height: 3 !important;}
-.masspay-popup{width: 720px !important;}
+.masspay-popup{width: 620px !important;}
 .ant-modal-close-x .ant-modal-close-icon svg{display: none;}
 .uploadxcel-btn{margin-top: 50px !important;}
 /* .send-address .ant-drawer-body{display: flex !important; justify-content: center !important; align-items: center !important;} */

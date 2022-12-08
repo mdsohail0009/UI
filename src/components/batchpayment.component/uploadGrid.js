@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Typography,Drawer,Space,Button,Modal,Upload } from 'antd';
+import { Typography,Drawer,Space,Button,Modal,Upload,Tooltip } from 'antd';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import List from "../grid.component";
@@ -41,7 +41,7 @@ const BatchpaymentView = (props) => {
       ];
     return (
         <>
-            <Title className="basicinfo mb-0"><span className='icon md c-pointer back mr-8' /><Translate content="batch_payments" component={Text} className="basicinfo" /></Title>
+            <Title className="basicinfo "><span className='icon md c-pointer back mr-8' /><Text className="basicinfo">XXX Payments / USD</Text></Title>
             <div className="box basic-info text-white" style={{ clear: 'both' }}>
                 <List
                     className="bill-grid"
@@ -54,10 +54,18 @@ const BatchpaymentView = (props) => {
             </div>
             <Modal className='masspay-popup'
                 visible={uplaodModal}
-                title={<div className='d-flex justify-content'><div>Supporting Documents</div><div><span className="icon md close-white" /></div></div>}
+                title="Supporting Documents"
+                // title={<div className='d-flex justify-content'><div>Supporting Documents</div><div><span className="icon md close-white" /></div></div>}
                 closable={true}
-                closeIcon={false}
-                footer={<div><Button className='pop-btn px-16' >Upload</Button></div>}>
+                closeIcon={
+                    <Tooltip title="Close">
+                      <span
+                        className="icon md close-white c-pointer"
+                       
+                      />
+                    </Tooltip>
+                  }
+                footer={<div><Button className='pop-btn custom-send sell-btc-btn' >Upload</Button></div>}>
                 
                 <>
                     <div className='my-16'>

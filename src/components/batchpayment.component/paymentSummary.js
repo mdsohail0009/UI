@@ -12,33 +12,40 @@ class paymentSummary extends Component {
 		super(props);
 		this.state = {
 		  showDeclaration: false,
+          summaryModal:true,
 		}
+        
 	}
 	showDeclaration=()=>{	
 		this.setState({ ...this.state, showDeclaration:true}); 
 	}
 	goDashboard=()=>{
-		this.props.history.push('/cockpit')
+		this.props.history.push('/cockpit');
 	}
-
+	handleBack=()=>{
+		this.props.history.push('/cockpit');
+	}
+    handleCancel=()=>{
+        this.setState({ ...this.state, summaryModal:false,});
+        
+    }
 
 	render() {
 		return (<>
 			<div>
-			<Drawer
+			<Drawer destroyOnClose={true}
           title={[<div className="side-drawer-header">
             {/* <Translate content="bathch_payments_preview" component={Title} className="fs-26 fw-400 mb-0 text-white-30" /> */}
             <span onClick={this.props.onClose} className="icon md close-white c-pointer" />
           </div>]}
           placement="right"
-          closable={false}
-          width="100%"
+		  closable={true}
           onClose={this.props.onClose}
           visible={this.props.showDrawer}
-          className="side-drawer-full custom-gridresponsive transctns-grid"
+		  className="side-drawer w-50p"
         >
 				<div >
-					<div className='text-center'>
+				<div className='text-center'>
 						<Title className='mb-8 text-white-30 fw-600 text-captz fs-24'>Payment Summary</Title>
 					</div>
 					<div>
@@ -160,6 +167,7 @@ class paymentSummary extends Component {
 							<Button
 								className="primary-btn pop-cancel btn-width"
 								style={{ margin: "0 8px" }}
+								onClick={this.handleBack}
 							>
 								Back
 							</Button>

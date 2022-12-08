@@ -12,6 +12,7 @@ import pending from '../../assets/images/pending.png'
 const { Title,Paragraph } = Typography
 class AddBatchPayment extends Component {
     state = {
+        selectedCurrency : "USD",
         fiatWalletsLoading: false,
         fiatWallets: [],
         filtercoinsList: [],
@@ -88,7 +89,8 @@ class AddBatchPayment extends Component {
                     } />
                 }}
                 renderItem={item => (
-                    <List.Item onClick={() => this.setState({ ...this.state, selectedCurrency: item.walletCode, isCoinsListHide: true }, () => { })}>
+                    <List.Item onClick={
+                        () => this.setState({ ...this.state, selectedCurrency: item.walletCode, isCoinsListHide: true }, () => { })}>
                     <Link>
                       <List.Item.Meta
                         avatar={<Image preview={false} src={item.imagePath} />}
@@ -108,8 +110,8 @@ class AddBatchPayment extends Component {
               <div>
                
                 <div className='text-center makepayment-section'>
-            <Title className='text-white fs-24 fw-500'>Send USD to Multiple Address</Title>
-            <Button className='pop-btn px-36 uploadxcel-btn'onClick={this.uploadExcel}>Upload Excel</Button>
+            <Title className='text-white fs-24 fw-500'>Send {this.state.selectedCurrency} to Multiple Address</Title>
+            <Button className='pop-btn mt-24'onClick={this.uploadExcel}>Upload Excel</Button>
             <Paragraph className='text-white-30 '>To download the excel, <a className='fw-700'> click here</a></Paragraph>
             <Button className='pop-btn px-36'onClick={this.selectWhitelist}>Select from Whitelisted Addresses</Button>
             </div>
