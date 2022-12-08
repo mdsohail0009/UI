@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { Drawer, Typography, Col, List,Empty, Image,Button,Modal} from 'antd';
 import Translate from 'react-translate-component';
-import ConnectStateProps from '../../utils/state.connect';
 import { connect } from 'react-redux';
 import Search from "antd/lib/input/Search";
 import { fetchMemberWallets } from "../dashboard.component/api";
 import NumberFormat from "react-number-format";
 import { Link } from "react-router-dom";
-import PaymentAddress from './paymentAddress';
 import { withRouter } from "react-router-dom";
-const { Title,Paragraph,Text } = Typography
+import PaymentPreview from './paymentPreview';
+const { Title,Paragraph } = Typography
 class AddBatchPayment extends Component {
     state = {
         fiatWalletsLoading: false,
@@ -18,6 +17,7 @@ class AddBatchPayment extends Component {
         searchFiatVal: "",
         isCoinsListHide: false,
         showModal: false,
+        paymentPreview: false
 
     }
 
@@ -34,6 +34,7 @@ class AddBatchPayment extends Component {
 
     
     closeDrawer = () => {
+        this.setState({ ...this.state, paymentPreview: false,showModal:false});
         if (this.props.onClose) {
             this.props.onClose();
         }
@@ -52,7 +53,7 @@ class AddBatchPayment extends Component {
             title={[<div className="side-drawer-header">
                 <span></span>
                 <div className="text-center">
-                <div>Batch Payments</div>
+                <div className='text-white fs-24 fw-500'>Batch Payments</div>
                 </div>
                 <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />
                
@@ -116,7 +117,7 @@ class AddBatchPayment extends Component {
                     closable={false}
                     closeIcon={false}
                     footer={null}
-                   
+
                     >
                     
                         <>
@@ -124,11 +125,18 @@ class AddBatchPayment extends Component {
                             <Paragraph className='text-white fs-18'>Document has been successfully uploaded.</Paragraph>
                             <Button className="primary-btn pop-btn"
                                 style={{ width: 100, height: 50 }}
-                                onClick={() => { }}>Next</Button>
+                                onClick={() => this.setState({ ...this.state, showModal: false, paymentPreview: true }, () => { })}>Next</Button>
                         </div>
                         </>
-                    
                 </Modal>
+                {this.state.paymentPreview &&
+                       <PaymentPreview
+                        showDrawer={this.state.paymentPreview}
+                        onClose={() => {
+                            this.closeDrawer();
+                        }}
+                    />
+                       }
         </div>
 
         );
