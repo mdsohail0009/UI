@@ -16,6 +16,9 @@ class paymentSummary extends Component {
 	showDeclaration=()=>{	
 		this.setState({ ...this.state, showDeclaration:true}); 
 	}
+	goDashboard=()=>{
+		this.props.history.push('/cockpit')
+	}
 
 
 	render() {
@@ -182,7 +185,7 @@ class paymentSummary extends Component {
                    
                     footer={ <Button className="primary-btn pop-btn"
                     style={{ width: 100, height: 50 }}
-                    onClick={() => this.setState({ ...this.state, showModal: false, paymentPreview: true }, () => { })}>Next</Button>}>
+                    onClick={() => this.setState({ ...this.state, showModal: false, paymentPreview: true }, () => { })}>cancel</Button>}>
                         <>
 						<div className='text-center text-white p-24'>
                      <img src={pending}/>

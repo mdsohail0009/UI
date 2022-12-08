@@ -118,7 +118,7 @@ class AddBatchPayment extends Component {
         </Drawer>
                 <Modal
                      visible={this.state.showModal}
-                     Title="Payment"
+                     title="upload excel"
                      closeIcon={
                         <Tooltip title="Close">
                           <span
