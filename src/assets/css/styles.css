@@ -780,7 +780,10 @@ font-size: 12px;font-weight: 500;height: 20px;}
 .zsiq_flt_rel{width: 50px !important; height: 50px !important;bottom: 8px;right: -10px;}
 .zsiq_theme1 .siqico-chat:before{font-size: 20px !important; line-height: 50px !important;}
 .ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector, .ant-radio-disabled + span{color: var(--textWhite30);}
+/** masspayments end**/
+.batch-actions{text-align: right;}
 
+/** masspayments end**/
 /*-- Cases--*/
 .case-stripe{border: 1px dashed var(--borderLight); padding: 16px 20px; border-radius: 16px; margin-bottom: 16px}
 .case-lbl{font-weight: 300; font-size: 12px; color: var(--textWhite50);}

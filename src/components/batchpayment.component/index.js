@@ -74,25 +74,26 @@ const [open, setOpen] = useState(false);
     }
       return (
         <>
-        <span className='icon sm add mx-12'  onClick={addBatchPayment}></span>
-        <span className='icon sm add  mx-12'></span>
-        <span className='icon sm add'></span>
-<div className="box basic-info text-white" style={{clear:'both'}}>
-          <List
-           className="bill-grid"
-            showActionBar={false}
-            url={process.env.REACT_APP_GRID_API + `MassPayments/UserPayments/${props.userConfig?.id}`}
-            additionalParams={{type:"All"}}
-            columns={gridColumns}
-            ref={gridRef}
-          />
-        </div>
-        <AddBatchPayment
-                showDrawer={isAddBatchDrawer}
-                onClose={() => closeDrawer()}
-            />
-        </>
-        
+              <div className='batch-actions'>
+                  <span className='icon md c-pointer add-icon mx-12' onClick={addBatchPayment}></span>
+                  <span className='icon md c-pointer add-icon mx-12'></span>
+                  <span className='icon md c-pointer delete-icon mx-12'></span>
+              </div>
+              <div className="box basic-info text-white" style={{ clear: 'both' }}>
+                  <List
+                      className="bill-grid"
+                      showActionBar={false}
+                      url={process.env.REACT_APP_GRID_API + `MassPayments/UserPayments/${props.userConfig?.id}`}
+                      additionalParams={{ type: "All" }}
+                      columns={gridColumns}
+                      ref={gridRef}
+                  />
+              </div>
+              <AddBatchPayment
+                  showDrawer={isAddBatchDrawer}
+                  onClose={() => closeDrawer()}
+              />
+        </>       
       )
 }
 
