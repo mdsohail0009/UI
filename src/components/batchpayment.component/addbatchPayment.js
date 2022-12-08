@@ -8,7 +8,7 @@ import { fetchMemberWallets } from "../dashboard.component/api";
 import NumberFormat from "react-number-format";
 import { Link } from "react-router-dom";
 import PaymentAddress from './paymentAddress';
-const { Title,Paragraph } = Typography
+const { Title,Paragraph,Text } = Typography
 class AddBatchPayment extends Component {
     state = {
         step: "selectcurrency",
@@ -117,8 +117,10 @@ class AddBatchPayment extends Component {
            
         <Drawer destroyOnClose={true}
             title={[<div className="side-drawer-header">
+                 <span></span>
                 <div className="text-center">
-                <div>Batch Payments</div>
+                   
+                <div><Text className='mb-8 text-white-30 fw-600 text-captz fs-24'>Batch Payments</Text></div>
                 </div>
                 <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />
                

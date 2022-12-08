@@ -98,7 +98,7 @@ const [open, setOpen] = useState(false);
               <AddBatchPayment
                   showDrawer={isAddBatchDrawer}
                   onClose={() => closeDrawer()}
-              />
+              />           
           </div>       
       )
 }
@@ -113,3 +113,4 @@ const connectDispatchToProps = dispatch => {
 }
 
 export default connect(connectStateToProps, connectDispatchToProps)(Batchpayments);
+				
