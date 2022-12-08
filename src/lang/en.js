@@ -671,5 +671,6 @@ export default {
 	sell_select_currency: "SELECT CURRENCY TO RECEIVE",
 	transactions_history: "Transaction History",
 	transaction:"Transaction",
+	batch_payments: "Batch Payments"
 	
 };

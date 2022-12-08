@@ -635,5 +635,5 @@ export default {
 	sell_select_currency: "MIFIDY VOLA Hraisina",
 	transactions_history: "Kasaysayan ng Transaksyon",
 	transaction:"Transaksyon",
-
+	batch_payments: "Batch Payments",
 };
