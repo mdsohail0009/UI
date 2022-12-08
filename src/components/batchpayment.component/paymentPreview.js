@@ -15,6 +15,7 @@ import { withRouter } from "react-router-dom";
 import { setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 import NumberFormat from "react-number-format";
 import moment from "moment/moment";
+import PaymentSummary from "./paymentSummary";
 
 const { Option } = Select;
 class paymentPreview extends Component {
@@ -58,6 +59,7 @@ class paymentPreview extends Component {
       downloadError:"",
       viewData:{},
       viewLoader:false,
+      paymentSummary: false,
     };
     this.props.dispatch(setSelectedFeatureMenu(this.props.transactionsPermissions?.featureId || this.props.customer?.id));
     this.gridRef = React.createRef();
@@ -324,13 +326,21 @@ isErrorDispaly = (objValue) => {
             columns={this.gridColumns}
           />
                 <div className="text-right mt-12">
-                    <Button className="primary-btn pop-btn mr-12"
+                    <Button className="primary-btn pop-btn mr012"
                         style={{ width: 100, height: 50 }}
                         onClick={() => this.setState({ ...this.state, }, () => { })}>Back</Button>
                     <Button className="primary-btn pop-btn"
                         style={{ width: 100, height: 50 }}
-                        onClick={() => this.setState({ ...this.state, }, () => { })}>Confirm</Button>
+                        onClick={() => this.setState({ ...this.state, paymentSummary: true}, () => { })}>Confirm</Button>
                 </div>
+                {this.state.paymentSummary &&
+                       <PaymentSummary
+                        showDrawer={this.state.paymentSummary}
+                        onClose={() => {
+                            this.closeDrawer();
+                        }}
+                    />
+                       }
         </Drawer>
 
       </>
