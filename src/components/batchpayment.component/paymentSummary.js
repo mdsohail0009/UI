@@ -34,7 +34,8 @@ class paymentSummary extends Component {
 		return (<>
 			<div>
 			<Drawer destroyOnClose={true}
-          title={[<div className="side-drawer-header"><span></span><Title className='mb-8 text-white-30 fw-600 text-captz fs-24'>Payment Summary</Title>
+            title={[<div className="side-drawer-header"><span></span>
+			{!this.state.showDeclaration &&<Title className='mb-8 text-white-30 fw-600 text-captz fs-24'>Payment Summary</Title>}
             {/* <Translate content="bathch_payments_preview" component={Title} className="fs-26 fw-400 mb-0 text-white-30" /> */}
             <span onClick={this.props.onClose} className="icon md close-white c-pointer" />
           </div>]}
@@ -44,8 +45,9 @@ class paymentSummary extends Component {
           visible={this.props.showDrawer}
 		  className="side-drawer w-50p"
         >
-				<div >
-				
+				<div>
+				{!this.state.showDeclaration && <>
+				<div>
 					<div>
 						<Title className='sub-heading text-center mt-0'>Transfer Details</Title>
 					</div>
@@ -177,61 +179,25 @@ class paymentSummary extends Component {
 								Continue
 							</Button>
 						</div>
-						<Modal
-                     visible={this.state.showDeclaration}
-                     Title="Payment"
-                     closeIcon={
-                        <Tooltip title="Close">
-                          <span
-                            className="icon md close-white c-pointer"
-                            onClick={() => this.handleCancel()}
-                          />
-                        </Tooltip>
-                      }
-                      destroyOnClose={true}
-                   
-                    footer={ <Button className="primary-btn pop-btn"
-                    style={{ width: 100, height: 50 }}
-                    onClick={this.goDashboard}>cancel</Button>}>
-                        <>
-						<div className='text-center text-white p-24'>
-                     <img src={pending}/>
-                        <Title className='text-white'>Declaration form sent!</Title>
-                        <Paragraph className='text-white'>We sent declaration form to: 
-                        Your@emailaddress.com. Please sign using the link
-                        received in email to whitelist your address. Note that
-                        your payments will only be processed once your
-                       whitelisted address has been approved. </Paragraph>
-              </div>
-                        </>
-                </Modal>
+						</Form>
+						</div> 
+						</>}
+						{this.state.showDeclaration && <>
+							<div className='text-center text-white p-24'>
+								<img src={pending} />
+								<Title className='text-white'>Declaration form sent!</Title>
+								<Paragraph className='text-white'>We sent declaration form to:
+									Your@emailaddress.com. Please sign using the link
+									received in email to whitelist your address. Note that
+									your payments will only be processed once your
+									whitelisted address has been approved. </Paragraph>
+							</div>
+							<Button className="primary-btn pop-btn"
+								style={{ width: 100, height: 50 }}
+								onClick={() => {this.props.history.push('/cockpit') }}>close</Button>
+						</>}
 
-				{/* <Modal
-                     visible={this.state.showSuccess}
-                     Title="Payment"
-                     closeIcon={
-                        <Tooltip title="Close">
-                          <span
-                            className="icon md close-white c-pointer"
-                            onClick={() => this.handleCancel()}
-                          />
-                        </Tooltip>
-                      }
-                      destroyOnClose={true}
-                   
-                    footer={ <Button className="primary-btn pop-btn"
-                    style={{ width: 100, height: 50 }}
-                    onClick={() => this.setState({ ...this.state, showModal: false, paymentPreview: true }, () => { })}>cancel</Button>}>
-                        <>
-						<div className='text-center text-white p-24'>
-                     <img src={success}/>
-                        <Title className='text-white'>Declaration form sent!</Title>
-                        <Paragraph className='text-white'>Your transaction has been processed successfully<br>Thank you. </Paragraph>
-              </div>
-                        </>
-                </Modal> */}
-					</Form>
-				</div>
+					</div>
 				</Drawer>
 			</div>
 		</>
