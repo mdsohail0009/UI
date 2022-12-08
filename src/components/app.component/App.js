@@ -13,6 +13,7 @@ import { useThemeSwitcher } from "react-css-theme-switcher";
 import apiCalls from '../../api/apiCalls';
 import { updatetwofactor } from "../../reducers/configReduser";
 import SecurityLogin from "../../authentication/temp.security";
+import ConnectStateProps from "../../utils/state.connect";
 function App(props) {
   const { switcher, themes } = useThemeSwitcher()
   const [loading, setLoading] = useState(true);
@@ -73,7 +74,8 @@ function App(props) {
         <AppInsightsContext.Provider value={reactPlugin}>
           <SecurityLogin>
             <ErrorBoundary>
-              {loading ? <div className="loader">Loading....</div> : <><Layout /></>}
+              {loading ? <div className="loader">Loading....</div> : <>
+                <Layout /></>}
             </ErrorBoundary>
           </SecurityLogin>
         </AppInsightsContext.Provider>
@@ -83,4 +85,4 @@ function App(props) {
   );
 }
 
-export default App;
+export default ConnectStateProps(App);
