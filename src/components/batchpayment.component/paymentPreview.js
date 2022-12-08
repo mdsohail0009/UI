@@ -321,15 +321,15 @@ isErrorDispaly = (objValue) => {
           className="side-drawer-full custom-gridresponsive transctns-grid"
         >
           <List
-          className="transaction-grid"
+          className="transaction-grid mt-16"
             url={gridUrl} additionalParams={searchObj} ref={this.gridRef}
             columns={this.gridColumns}
           />
                 <div className="text-right mt-12">
-                    <Button className="primary-btn pop-btn mr012"
+                    <Button className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn mr-8 ml-0 primary-btn pop-cancel"
                         style={{ width: 100, height: 50 }}
                         onClick={() => this.setState({ ...this.state, }, () => { })}>Back</Button>
-                    <Button className="primary-btn pop-btn"
+                    <Button className="pop-btn custom-send sell-btc-btn ml-8"
                         style={{ width: 100, height: 50 }}
                         onClick={() => this.setState({ ...this.state, paymentSummary: true}, () => { })}>Confirm</Button>
                 </div>
