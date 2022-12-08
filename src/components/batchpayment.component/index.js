@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Typography } from 'antd';
 import { connect } from 'react-redux';
 import List from "../grid.component";
+import AddBatchPayment from './addbatchPayment';
 
 const { Title, Text, Paragraph } = Typography;
 const Batchpayments = (props) => {
   const gridRef = React.createRef();
-  debugger
+  const [isAddBatchDrawer, setIsAddBatchDrawer] = useState(false);
     const gridColumns = [
         {
           field: "",
@@ -30,9 +31,6 @@ const Batchpayments = (props) => {
         },
         {
           field: "fileName", title: "File Name", filter: true, filterType: "date",width: 200,
-        //   customCell: (prop) => (
-        //     <td><div className="gridLink" onClick={() => paymentsView(prop)}>
-        //       <Moment format="DD/MM/YYYY">{moment(new Date(prop.dataItem.createdDate), "DD/MM/YYYY")}</Moment></div></td>)
         },
         { field: "dateCreated", title: "Date created", filter: true,width: 200, },
         { field: "currency", title: 'Currency', filter: true, width: 200,dataType: "number", filterType: "numeric" },
@@ -40,13 +38,16 @@ const Batchpayments = (props) => {
         { field: "numberOfTransactions", title: 'Number of Transactions', filter: true, width: 150,dataType: "number", filterType: "numeric" },
         { field: "state", title: 'State', filter: true, width: 200, },
       ];
-    // const gridRef = React.createRef();
-    // useEffect(()=>{
-    //     gridRef.current?.refreshGrid();
-    //   },[walletType]);;//eslint-disable-line react-hooks/exhaustive-deps
+    
+    const addBatchPayment = () => {
+      setIsAddBatchDrawer(true);
+    }
+    const closeDrawer = () => {
+    setIsAddBatchDrawer(false);
+    }
       return (
         <>
-        <span className='icon sm add mx-12'></span>
+        <span className='icon sm add mx-12'  onClick={addBatchPayment}></span>
         <span className='icon sm add  mx-12'></span>
         <span className='icon sm add'></span>
 <div className="box basic-info text-white" style={{clear:'both'}}>
@@ -59,7 +60,12 @@ const Batchpayments = (props) => {
             ref={gridRef}
           />
         </div>
+        <AddBatchPayment
+                showDrawer={isAddBatchDrawer}
+                onClose={() => closeDrawer()}
+            />
         </>
+        
       )
 }
 
