@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Col, List,Empty, Image,Button} from 'antd';
+import { Drawer, Typography, Col, List,Empty, Image,Button,Modal} from 'antd';
 import Translate from 'react-translate-component';
 import ConnectStateProps from '../../utils/state.connect';
 import { connect } from 'react-redux';
@@ -17,6 +17,7 @@ class AddBatchPayment extends Component {
         filtercoinsList: [],
         searchFiatVal: "",
         isCoinsListHide: false,
+        showModal: false,
 
     }
 
@@ -39,6 +40,9 @@ class AddBatchPayment extends Component {
     }
     changeStep = (step) => {
         this.setState({ ...this.state, step });
+    }
+    uploadExcel=()=>{
+        this.setState({ ...this.state, showModal:true});
     }
 
     // renderStep = (step) => {
@@ -118,7 +122,7 @@ class AddBatchPayment extends Component {
         <Drawer destroyOnClose={true}
             title={[<div className="side-drawer-header">
                 <div className="text-center">
-                <div>Batch Payments</div>
+                <div className='text-white fs-24 fw-500'>Batch Payments</div>
                 </div>
                 <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />
                
@@ -170,14 +174,28 @@ class AddBatchPayment extends Component {
                
                 <div className='text-center makepayment-section'>
             <Title className='text-white-30 fs-20'>Send USD to Multiple Address</Title>
-            <Button className='pop-btn'>Upload Excel</Button>
+            <Button className='pop-btn'onClick={this.uploadExcel}>Upload Excel</Button>
             <Paragraph className='text-white-30 '>To download the excel, <a className='fw-700'> click here</a></Paragraph>
             <Button className='pop-btn'>Select from Whitelisted Addresses</Button>
             </div>
               </div>
               </>}
         </Drawer>
+
         );
+        <Modal
+                    title="Session timedout alert" visible={this.state.showModal}
+                    closable={false}
+                    closeIcon={false}
+                    footer={[
+                        <>
+              
+                            <Button className="primary-btn pop-btn"
+                                style={{ width: 100, height: 50 }}
+                                onClick={() => { }}>Next</Button>
+                        </>
+                    ]} >
+                </Modal>
     }
 }
 const connectStateToProps = ({ sendReceive, userConfig }) => {
