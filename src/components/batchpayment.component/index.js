@@ -20,6 +20,9 @@ const [open, setOpen] = useState(false);
   const onClose = () => {
     setOpen(false);
   };
+  const viewMode = () => {
+    props.history.push("/batchpaymentview")
+  }
   const gridRef = React.createRef();
   const [isAddBatchDrawer, setIsAddBatchDrawer] = useState(false);
     const gridColumns = [
@@ -46,7 +49,7 @@ const [open, setOpen] = useState(false);
         {
           field: "fileName", title: "File Name", filter: true, filterType: "date",width: 200,
           customCell: (prop) => (
-            <td><div className="gridLink" >XXX Payments
+            <td><div className="gridLink" onClick={viewMode} >XXX Payments
               
               </div></td>) 
         },
