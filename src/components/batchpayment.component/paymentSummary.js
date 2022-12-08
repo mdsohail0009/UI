@@ -11,7 +11,9 @@ class paymentSummary extends Component {
 		super(props);
 		this.state = {
 		  showDeclaration: false,
+          summaryModal:true,
 		}
+        
 	}
 	showDeclaration=()=>{	
 		this.setState({ ...this.state, showDeclaration:true}); 
@@ -19,27 +21,32 @@ class paymentSummary extends Component {
 	goDashboard=()=>{
 		this.props.history.push('/cockpit')
 	}
-
+    handleCancel=()=>{
+        this.setState({ ...this.state, summaryModal:false,});
+        
+    }
 
 	render() {
 		return (<>
 			<div>
-			<Modal
-          title={[<div className="side-drawer-header">
-            {/* <Translate content="bathch_payments_preview" component={Title} className="fs-26 fw-400 mb-0 text-white-30" /> */}
-            <span></span><div className='text-center'><Title className='mb-8 text-white-30 fw-600 text-captz fs-24'>Payment Summary</Title></div><span onClick={this.props.onClose} className="icon md close-white c-pointer" />
-          </div>]}
-          placement="right"
-          closable={false}
-          width="100%"
-          onClose={this.props.onClose}
-          visible={this.props.showDrawer}
-          className="side-drawer-full custom-gridresponsive transctns-grid"
-        >
+			<Modal className='masspay-popup'
+                visible={true}
+                title={<div className='d-flex justify-content'>Payment Summary</div>}
+                closeIcon={
+                    <Tooltip title="Close">
+                      <span
+                        className="icon md close-white c-pointer"
+                        onClick={() => this.handleCancel()}
+                      />
+                    </Tooltip>
+                  }
+                  destroyOnClose={true}
+                footer={null}>
+                
 				<div >
 					
 					<div>
-						<Title className='sub-heading text-center mb-16'>Transfer Details</Title>
+						<Title className='sub-heading text-center '>Transfer Details</Title>
 					</div>
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'> Payment</label></div>
