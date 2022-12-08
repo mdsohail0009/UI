@@ -785,6 +785,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
 .batch-actions{text-align: right;margin-bottom: 16px;}
 .batch-actions span{margin-left: 16px;}
 .makepayment-section{line-height: 3 !important;}
+.masspay-popup{width: 720px !important;}
 
 /** masspayments end**/
 /*-- Cases--*/

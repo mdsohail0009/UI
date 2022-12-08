@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Typography,Drawer,Space,Button } from 'antd';
+import { Typography,Drawer,Space,Button,Modal } from 'antd';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import List from "../grid.component";
 
 const { Title, Text, Paragraph } = Typography;
 const BatchpaymentView = (props) => {
+    const [uplaodModal, setUploadModal] = useState(false);
+    const showUploadModal = () =>{
+        setUploadModal(true);
+    }
     const gridRef = React.createRef();
     const gridColumns = [
         {
@@ -30,7 +34,7 @@ const BatchpaymentView = (props) => {
         { field: "uploadedDocuments", title: 'Uploaded Documents', filter: true, width: 200, },
         { field: "supportingDocument", title: 'Supporting Document', filter: true, width: 200,
             customCell: (prop) => (
-            <td className='text-center'><div className="gridLink text-center" ><Button className='pop-btn px-16'>Upload</Button>
+            <td className='text-center'><div className="gridLink text-center" ><Button className='pop-btn px-16' onClick={showUploadModal}>Upload</Button>
               </div></td>)
         },
       ];
@@ -47,6 +51,19 @@ const BatchpaymentView = (props) => {
                     ref={gridRef}
                 />
             </div>
+            <Modal className='masspay-popup'
+                visible={uplaodModal}
+                title="dxfg"
+                closable={true}
+                closeIcon={false}
+                footer={<div></div>}>
+                
+                <>
+                    <div className='text-center p-16'>
+                       
+                    </div>
+                </>
+            </Modal>
         </>
     )
 
