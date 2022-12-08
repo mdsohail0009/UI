@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Col, List,Empty, Image,Button,Modal} from 'antd';
+import { Drawer, Typography, Col, List,Empty, Image,Button,Modal,Tooltip} from 'antd';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import Search from "antd/lib/input/Search";
@@ -45,6 +45,9 @@ class AddBatchPayment extends Component {
     }
     selectWhitelist=()=>{
         this.props.history.push('/payments/00000000-0000-0000-0000-000000000000/add') 
+    }
+    handleCancel=()=>{
+        this.setState({ ...this.state, showModal:false});
     }
 
     render() {
@@ -115,15 +118,24 @@ class AddBatchPayment extends Component {
         </Drawer>
                 <Modal
                      visible={this.state.showModal}
-                    closable={false}
-                    closeIcon={false}
-                    footer={null}>
+                     Title="Payment"
+                     closeIcon={
+                        <Tooltip title="Close">
+                          <span
+                            className="icon md close-white c-pointer"
+                            onClick={() => this.handleCancel()}
+                          />
+                        </Tooltip>
+                      }
+                      destroyOnClose={true}
+                   
+                    footer={ <Button className="primary-btn pop-btn"
+                    style={{ width: 100, height: 50 }}
+                    onClick={() => this.setState({ ...this.state, showModal: false, paymentPreview: true }, () => { })}>Next</Button>}>
                         <>
-                        <div className='text-center p-16'>
+                        <div className='text-center pt-16'>
                             <Paragraph className='text-white fs-18'>Document has been successfully uploaded.</Paragraph>
-                            <Button className="primary-btn pop-btn"
-                                style={{ width: 100, height: 50 }}
-                                onClick={() => this.setState({ ...this.state, showModal: false, paymentPreview: true }, () => { })}>Next</Button>
+                           
                         </div>
                         </>
                 </Modal>
