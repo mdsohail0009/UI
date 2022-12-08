@@ -4,6 +4,7 @@ import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 import pending from '../../assets/images/pending.png'
+import success from '../../assets/images/success.png'
 const { Title, Paragraph, Text } = Typography
 
 class paymentSummary extends Component {
@@ -185,7 +186,7 @@ class paymentSummary extends Component {
                    
                     footer={ <Button className="primary-btn pop-btn"
                     style={{ width: 100, height: 50 }}
-                    onClick={() => this.setState({ ...this.state, showModal: false, paymentPreview: true }, () => { })}>cancel</Button>}>
+                    onClick={this.goDashboard}>cancel</Button>}>
                         <>
 						<div className='text-center text-white p-24'>
                      <img src={pending}/>
@@ -198,6 +199,31 @@ class paymentSummary extends Component {
               </div>
                         </>
                 </Modal>
+
+				{/* <Modal
+                     visible={this.state.showSuccess}
+                     Title="Payment"
+                     closeIcon={
+                        <Tooltip title="Close">
+                          <span
+                            className="icon md close-white c-pointer"
+                            onClick={() => this.handleCancel()}
+                          />
+                        </Tooltip>
+                      }
+                      destroyOnClose={true}
+                   
+                    footer={ <Button className="primary-btn pop-btn"
+                    style={{ width: 100, height: 50 }}
+                    onClick={() => this.setState({ ...this.state, showModal: false, paymentPreview: true }, () => { })}>cancel</Button>}>
+                        <>
+						<div className='text-center text-white p-24'>
+                     <img src={success}/>
+                        <Title className='text-white'>Declaration form sent!</Title>
+                        <Paragraph className='text-white'>Your transaction has been processed successfully<br>Thank you. </Paragraph>
+              </div>
+                        </>
+                </Modal> */}
 					</Form>
 				</div>
 				</Drawer>

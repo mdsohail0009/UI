@@ -76,11 +76,14 @@ const [open, setOpen] = useState(false);
     const closeDrawer = () => {
     setIsAddBatchDrawer(false);
     }
+   const gotoDashboard=()=>{
+      props.history.push('/cockpit')
+    }
       return (
           <div className='main-container'>
               <div className='d-flex justify-content mb-16'>
                   <div>
-                      <Title className="basicinfo mb-0"><span className='icon md c-pointer back mr-8' /><Translate content="batch_payments" component={Text} className="basicinfo" /></Title>
+                      <Title className="basicinfo mb-0"><span className='icon md c-pointer back mr-8' onClick={gotoDashboard}></span><Translate content="batch_payments" component={Text} className="basicinfo" /></Title>
                   </div>
                   <div className='batch-actions'>
                       <span className='icon md c-pointer add-icon' onClick={() => addBatchPayment()}></span>
