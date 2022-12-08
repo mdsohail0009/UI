@@ -107,7 +107,7 @@ class AddBatchPayment extends Component {
               />
               </>}
               {this.state.isCoinsListHide && <>
-              <div>
+              <div className='drawer-content'>
                
                 <div className='text-center makepayment-section'>
             <Title className='text-white fs-24 fw-500'>Send {this.state.selectedCurrency} to Multiple Address</Title>
