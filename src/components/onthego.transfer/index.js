@@ -761,7 +761,8 @@ class OnthegoFundTransfer extends Component {
                                             block
                                             className="pop-btn custom-send"
                                             style={{ backgroundColor: !isShowGreyButton && '#ccc', borderColor: !isShowGreyButton && '#3d3d3d' }}
-                                            loading={this.state.isBtnLoading} >
+                                            loading={this.state.isBtnLoading}
+                                            disabled={!isShowGreyButton&&true} >
                                             Confirm & Continue
                                         </Button>
                                     </Form.Item>
