@@ -6,7 +6,6 @@ import List from "../grid.component";
 const { Title, Text, Paragraph } = Typography;
 const Batchpayments = (props) => {
   const gridRef = React.createRef();
-  debugger
     const gridColumns = [
         {
           field: "",
@@ -30,15 +29,26 @@ const Batchpayments = (props) => {
         },
         {
           field: "fileName", title: "File Name", filter: true, filterType: "date",width: 200,
-        //   customCell: (prop) => (
-        //     <td><div className="gridLink" onClick={() => paymentsView(prop)}>
-        //       <Moment format="DD/MM/YYYY">{moment(new Date(prop.dataItem.createdDate), "DD/MM/YYYY")}</Moment></div></td>)
+          customCell: (prop) => (
+            <td><div className="gridLink" >XXX Payments
+              
+              </div></td>)  
         },
         { field: "dateCreated", title: "Date created", filter: true,width: 200, },
-        { field: "currency", title: 'Currency', filter: true, width: 200,dataType: "number", filterType: "numeric" },
-        { field: "status", title: 'Status', filter: true, width: 237, },
-        { field: "numberOfTransactions", title: 'Number of Transactions', filter: true, width: 150,dataType: "number", filterType: "numeric" },
-        { field: "state", title: 'State', filter: true, width: 200, },
+        { field: "currency", title: 'Currency', filter: true, width: 150,dataType: "number", filterType: "numeric" },
+        { field: "status", title: 'Status', filter: true, width: 150, },
+        { field: "numberOfTransactions", title: 'Number of Transactions', filter: true, width: 200,dataType: "number", filterType: "numeric", 
+           customCell: (prop) => (<td><div className="gridLink" >50 </div></td>) 
+        },
+        { field: "validTransactions", title: 'Valid Transactions', filter: true, width: 200, },
+        { field: "invalidTransactions", title: 'Invalid Transactions', filter: true, width: 200,
+            customCell: (prop) => (
+            <td><div className="gridLink" >10
+              </div></td>)
+        },
+        { field: "pendingTransactions", title: 'Pending Transactions', filter: true, width: 200, },
+        { field: "approvedTransactions", title: 'Approved Transactions', filter: true, width: 200, },
+        { field: "rejectedTransactions", title: 'Rejected Transactions', filter: true, width: 200, },
       ];
     // const gridRef = React.createRef();
     // useEffect(()=>{
@@ -49,16 +59,16 @@ const Batchpayments = (props) => {
         <span className='icon sm add mx-12'></span>
         <span className='icon sm add  mx-12'></span>
         <span className='icon sm add'></span>
-<div className="box basic-info text-white" style={{clear:'both'}}>
-          <List
-           className="bill-grid"
-            showActionBar={false}
-            url={process.env.REACT_APP_GRID_API + `MassPayments/UserPayments/${props.userConfig?.id}`}
-            additionalParams={{type:"All"}}
-            columns={gridColumns}
-            ref={gridRef}
-          />
-        </div>
+              <div className="box basic-info text-white" style={{ clear: 'both' }}>
+                  <List
+                      className="bill-grid"
+                      showActionBar={false}
+                      url={process.env.REACT_APP_GRID_API + `MassPayments/UserPayments/${props.userConfig?.id}`}
+                      additionalParams={{ type: "All" }}
+                      columns={gridColumns}
+                      ref={gridRef}
+                  />
+              </div>
         </>
       )
 }
