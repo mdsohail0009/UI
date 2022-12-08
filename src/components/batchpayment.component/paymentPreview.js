@@ -323,8 +323,8 @@ isErrorDispaly = (objValue) => {
             url={gridUrl} additionalParams={searchObj} ref={this.gridRef}
             columns={this.gridColumns}
           />
-                <div className="text-center">
-                    <Button className="primary-btn pop-btn"
+                <div className="text-right mt-12">
+                    <Button className="primary-btn pop-btn mr-12"
                         style={{ width: 100, height: 50 }}
                         onClick={() => this.setState({ ...this.state, }, () => { })}>Back</Button>
                     <Button className="primary-btn pop-btn"
