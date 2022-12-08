@@ -289,6 +289,9 @@ isErrorDispaly = (objValue) => {
     return "Something went wrong please try again!";
   }
 };
+closeDrawer = () => {
+  this.setState({ ...this.state, paymentSummary:false})
+}
 
   render() {
     const { Title } = Typography;
@@ -328,7 +331,7 @@ isErrorDispaly = (objValue) => {
                 <div className="text-right mt-12">
                     <Button className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn mr-8 ml-0 primary-btn pop-cancel"
                         style={{ width: 100, height: 50 }}
-                        onClick={() => this.setState({ ...this.state, }, () => { })}>Back</Button>
+                        onClick={() => this.props.history.push('/cockpit')}>Back</Button>
                     <Button className="pop-btn custom-send sell-btc-btn ml-8"
                         style={{ width: 100, height: 50 }}
                         onClick={() => this.setState({ ...this.state, paymentSummary: true}, () => { })}>Confirm</Button>
