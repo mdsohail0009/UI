@@ -139,7 +139,7 @@ class FaitDeposit extends Component {
       if (currencyLu[k].walletCode === e) {
         if (currencyLu[k].bankDetailModel?.length === 1) {
           this.setState({ ...this.state, bankLoader: true, BankDetails: [] })
-          let reqdepositObj = await requestDepositFiat(currencyLu[k].bankDetailModel[0].bankId, this.props.member?.id);
+          let reqdepositObj = await requestDepositFiat(currencyLu[k].bankDetailModel[0].bankId);
           if (reqdepositObj.ok === true) {
             this.setState({
               ...this.state, fiatDepEur: e === "EUR", BankInfo: reqdepositObj.data, BankDetails: [], depObj: depObj, bankLoader: false, isTermsAgreed: false
@@ -165,7 +165,7 @@ class FaitDeposit extends Component {
     for (var k in this.state.BankDetails) {
       if (this?.state.BankDetails[k].bankName === e) {
         this.setState({ ...this.state, bankLoader: true })
-        let reqdepositObj = await requestDepositFiat(this.state.BankDetails[k].bankId, this.props.member?.id);
+        let reqdepositObj = await requestDepositFiat(this.state.BankDetails[k].bankId);
         if (reqdepositObj.ok === true) {
           this.setState({
             ...this.state, fiatDepEur: e === "EUR", BankInfo: reqdepositObj.data, depObj: depObj, bankLoader: false, isTermsAgreed: false
