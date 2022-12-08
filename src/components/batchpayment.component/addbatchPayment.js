@@ -173,8 +173,8 @@ class AddBatchPayment extends Component {
               <div>
                
                 <div className='text-center makepayment-section'>
-            <Title className='text-white-30 fs-20'>Send USD to Multiple Address</Title>
-            <Button className='pop-btn'onClick={this.uploadExcel}>Upload Excel</Button>
+            <Title className='text-white fs-24 fw-500'>Send USD to Multiple Address</Title>
+            <Button className='pop-btn mt-24'onClick={this.uploadExcel}>Upload Excel</Button>
             <Paragraph className='text-white-30 '>To download the excel, <a className='fw-700'> click here</a></Paragraph>
             <Button className='pop-btn'>Select from Whitelisted Addresses</Button>
             </div>
