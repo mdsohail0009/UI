@@ -34,7 +34,7 @@ class AddBatchPayment extends Component {
 
     
     closeDrawer = () => {
-        this.setState({ ...this.state, paymentPreview: false,showModal:false});
+        this.setState({ ...this.state, paymentPreview: false,showModal:false,isCoinsListHide: false});
         if (this.props.onClose) {
             this.props.onClose();
         }
@@ -53,7 +53,7 @@ class AddBatchPayment extends Component {
             title={[<div className="side-drawer-header">
                 <span></span>
                 <div className="text-center">
-                <div className='text-white fs-24 fw-500'>Batch Payments</div>
+                {!this.state.isCoinsListHide && <> <div className='text-white fs-24 fw-500'>Batch Payments</div> </>}
                 </div>
                 <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />
                
@@ -116,10 +116,7 @@ class AddBatchPayment extends Component {
                      visible={this.state.showModal}
                     closable={false}
                     closeIcon={false}
-                    footer={null}
-
-                    >
-                    
+                    footer={null}>
                         <>
                         <div className='text-center p-16'>
                             <Paragraph className='text-white fs-18'>Document has been successfully uploaded.</Paragraph>
