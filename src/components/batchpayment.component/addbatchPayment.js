@@ -50,6 +50,7 @@ class AddBatchPayment extends Component {
            <div>
         <Drawer destroyOnClose={true}
             title={[<div className="side-drawer-header">
+                <span></span>
                 <div className="text-center">
                 <div className='text-white fs-24 fw-500'>Batch Payments</div>
                 </div>
@@ -115,11 +116,12 @@ class AddBatchPayment extends Component {
                     closable={false}
                     closeIcon={false}
                     footer={null}
+                   
                     >
                     
                         <>
-                        <div className='text-center'>
-                            <Paragraph className='text-white'>Document has been successfully uploaded.</Paragraph>
+                        <div className='text-center p-16'>
+                            <Paragraph className='text-white fs-18'>Document has been successfully uploaded.</Paragraph>
                             <Button className="primary-btn pop-btn"
                                 style={{ width: 100, height: 50 }}
                                 onClick={() => { }}>Next</Button>
