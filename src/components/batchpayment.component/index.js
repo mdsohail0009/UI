@@ -1,11 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { Typography } from 'antd';
+import { Typography,Drawer,Space,Button } from 'antd';
 import { connect } from 'react-redux';
 import List from "../grid.component";
+import AddBatchPayment from './addbatchPayment';
 
 const { Title, Text, Paragraph } = Typography;
+
 const Batchpayments = (props) => {
+ 
+const [open, setOpen] = useState(false);
+  const [placement, setPlacement] = useState('right');
+  const showDrawer = () => {
+    setOpen(true);
+  };
+  const onChange = (e) => {
+    setPlacement(e.target.value);
+  };
+  const onClose = () => {
+    setOpen(false);
+  };
   const gridRef = React.createRef();
+  const [isAddBatchDrawer, setIsAddBatchDrawer] = useState(false);
     const gridColumns = [
         {
           field: "",
@@ -32,7 +47,7 @@ const Batchpayments = (props) => {
           customCell: (prop) => (
             <td><div className="gridLink" >XXX Payments
               
-              </div></td>)  
+              </div></td>) 
         },
         { field: "dateCreated", title: "Date created", filter: true,width: 200, },
         { field: "currency", title: 'Currency', filter: true, width: 150,dataType: "number", filterType: "numeric" },
@@ -50,26 +65,34 @@ const Batchpayments = (props) => {
         { field: "approvedTransactions", title: 'Approved Transactions', filter: true, width: 200, },
         { field: "rejectedTransactions", title: 'Rejected Transactions', filter: true, width: 200, },
       ];
-    // const gridRef = React.createRef();
-    // useEffect(()=>{
-    //     gridRef.current?.refreshGrid();
-    //   },[walletType]);;//eslint-disable-line react-hooks/exhaustive-deps
+    
+    const addBatchPayment = () => {
+      setIsAddBatchDrawer(true);
+    }
+    const closeDrawer = () => {
+    setIsAddBatchDrawer(false);
+    }
       return (
         <>
-        <span className='icon sm add mx-12'></span>
+        <span className='icon sm add mx-12'  onClick={addBatchPayment}></span>
         <span className='icon sm add  mx-12'></span>
         <span className='icon sm add'></span>
-              <div className="box basic-info text-white" style={{ clear: 'both' }}>
-                  <List
-                      className="bill-grid"
-                      showActionBar={false}
-                      url={process.env.REACT_APP_GRID_API + `MassPayments/UserPayments/${props.userConfig?.id}`}
-                      additionalParams={{ type: "All" }}
-                      columns={gridColumns}
-                      ref={gridRef}
-                  />
-              </div>
+<div className="box basic-info text-white" style={{clear:'both'}}>
+          <List
+           className="bill-grid"
+            showActionBar={false}
+            url={process.env.REACT_APP_GRID_API + `MassPayments/UserPayments/${props.userConfig?.id}`}
+            additionalParams={{type:"All"}}
+            columns={gridColumns}
+            ref={gridRef}
+          />
+        </div>
+        <AddBatchPayment
+                showDrawer={isAddBatchDrawer}
+                onClose={() => closeDrawer()}
+            />
         </>
+        
       )
 }
 
