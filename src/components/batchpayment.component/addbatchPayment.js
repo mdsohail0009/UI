@@ -8,6 +8,7 @@ import NumberFormat from "react-number-format";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import PaymentPreview from './paymentPreview';
+import pending from '../../assets/images/pending.png'
 const { Title,Paragraph } = Typography
 class AddBatchPayment extends Component {
     state = {
