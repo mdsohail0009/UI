@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Col, List,Empty, Image} from 'antd';
+import { Drawer, Typography, Col, List,Empty, Image,Button} from 'antd';
 import Translate from 'react-translate-component';
 import ConnectStateProps from '../../utils/state.connect';
 import { connect } from 'react-redux';
@@ -8,7 +8,7 @@ import { fetchMemberWallets } from "../dashboard.component/api";
 import NumberFormat from "react-number-format";
 import { Link } from "react-router-dom";
 import PaymentAddress from './paymentAddress';
-const { Title } = Typography
+const { Title,Paragraph } = Typography
 class AddBatchPayment extends Component {
     state = {
         step: "selectcurrency",
@@ -168,7 +168,13 @@ class AddBatchPayment extends Component {
               </>}
               {this.state.isCoinsListHide && <>
               <div>
-                Upload Payments
+               
+                <div className='text-center makepayment-section'>
+            <Title className='text-white-30 fs-20'>Send USD to Multiple Address</Title>
+            <Button className='pop-btn'>Upload Excel</Button>
+            <Paragraph className='text-white-30 '>To download the excel, <a className='fw-700'> click here</a></Paragraph>
+            <Button className='pop-btn'>Select from Whitelisted Addresses</Button>
+            </div>
               </div>
               </>}
         </Drawer>
