@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import List from "../grid.component";
 import AddBatchPayment from './addbatchPayment';
+import PaymentPreview from './paymentPreview';
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -25,6 +26,7 @@ const [open, setOpen] = useState(false);
   }
   const gridRef = React.createRef();
   const [isAddBatchDrawer, setIsAddBatchDrawer] = useState(false);
+  const [isProceedBatchPayment, setProceedBatchPayment] = useState(false);
     const gridColumns = [
         {
           field: "",
@@ -73,8 +75,12 @@ const [open, setOpen] = useState(false);
     const addBatchPayment = () => {
       setIsAddBatchDrawer(true);
     }
+    const proceedBatchPayment = () => {
+      setProceedBatchPayment(true);
+    }
     const closeDrawer = () => {
     setIsAddBatchDrawer(false);
+    setProceedBatchPayment(false);
     }
    const gotoDashboard=()=>{
       props.history.push('/cockpit')
@@ -87,7 +93,7 @@ const [open, setOpen] = useState(false);
                   </div>
                   <div className='batch-actions'>
                       <span className='icon md c-pointer add-icon' onClick={() => addBatchPayment()}></span>
-                      <span className='icon md c-pointer procced-icon'></span>
+                      <span className='icon md c-pointer procced-icon' onClick={() => proceedBatchPayment()}></span>
                       <span className='icon md c-pointer delete-icon'></span>
                   </div>
               </div>
@@ -104,7 +110,15 @@ const [open, setOpen] = useState(false);
               <AddBatchPayment
                   showDrawer={isAddBatchDrawer}
                   onClose={() => closeDrawer()}
-              />           
+              />   
+              {isProceedBatchPayment && 
+              <PaymentPreview 
+              showDrawer={isProceedBatchPayment}
+              onClose={() => {
+                  closeDrawer();
+              }}
+              ></PaymentPreview>
+              }        
           </div>       
       )
 }

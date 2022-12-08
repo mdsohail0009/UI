@@ -45,7 +45,7 @@ class AddBatchPayment extends Component {
         this.setState({ ...this.state, showModal:true});
     }
     selectWhitelist=()=>{
-        this.props.history.push('/payments/00000000-0000-0000-0000-000000000000/add') 
+        this.props.history.push(`/payments/${this.state.selectedCurrency}`) 
     }
     handleCancel=()=>{
         this.setState({ ...this.state, showModal:false});
