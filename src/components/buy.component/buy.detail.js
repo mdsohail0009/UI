@@ -162,24 +162,26 @@ class SelectCrypto extends Component {
                 <div className="selectcrypto-container">
                     <Card className="crypto-card select mb-36" bordered={false}>
                     <div className='d-flex justify-content'>
-                        <div>
-                        <span className="d-flex align-center mb-4">
+                        {/* <div> */}
+                        {/* <div className="d-flex align-center mb-4">
                             <Image preview={false} src={impageWhitePath}/>
                             <Text className="crypto-percent text-purewhite">{percentage}<sup className="percent text-purewhite">%</sup></Text>
-                        </span>
-                        <Text className="fs-24 text-purewhite crypto-name ml-4">{coinFullName}</Text>
-                        </div>
-                        <div className="crypto-details">
+                        </div> */}
+                        {/* <Text className="fs-24 text-purewhite crypto-name ml-4">{coinFullName}</Text> */}
+                        {/* </div> */}
+                        {/* <div > */}
                             
-                            <div className="fs-16 text-purewhite fw-200 crypto-amount">
-                                <Currency prefix={""} defaultValue={coinBalance} suffixText={coin} />
-                                <NumberFormat value={coinFullName} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props}>{value}</div>} />
+                            <div className="crypto-amount">
+                               <div className="crypto-details"><span className='buycoin-style'>{coin }</span> <Currency prefix={'' } defaultValue={coinBalance} suffixText={""} className='buycoin-style marginL' /></div>
+                                {/* <NumberFormat value={coinFullName} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props}>{value}</div>} /> */}
                             </div>
-                        </div></div>
+                        {/* </div> */}
+                        
+                        </div>
                     </Card>
           
                     <div className="my-36">
-                        <Translate content="buy_select_currency" component={Paragraph} className="fw-500 mb-4 text-white-50 pt-16 code-lbl" />
+                        <Translate content="buy_select_currency" component={Paragraph} className="label-style" />
                         <WalletList placeholder="Select Currency" onWalletSelect={(e) => this.handleWalletSelection(e)} />
                     </div>
             {this.state.isShowCoinsData && <div>
@@ -196,8 +198,8 @@ class SelectCrypto extends Component {
                         }}
                         isConvertionLoad={isConvertionLoading} />
 
-                    <Translate content="thousandKText" component={Paragraph} className="text-center f-16 text-yellow fw-400 mb-0" />
-                    <Translate content="contact_amount_text" component={Paragraph} className="text-center f-16 text-yellow fw-400 mb-4" />
+                    <Translate content="thousandKText" component={Paragraph} className="" />
+                    <Translate content="contact_amount_text" component={Paragraph} className="" />
                     {/* <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50 pt-16" />
                     <WalletList onWalletSelect={(e) => this.handleWalletSelection(e)} /> */}
                     {/* <div className="fs-12 text-white-30 text-center mt-24"><Translate content="change_10Sec_amount" component={Paragraph} className="fs-12 text-white-30 text-center mt-24" /></div> */}

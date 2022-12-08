@@ -70,7 +70,7 @@ class CryptoComponent extends Component {
                     </Radio.Group>
                 </div> */}
                 {this.props.buySell.tabKey === 1 && !this.props.isTab ? <>
-                    <Translate content="buy_your_crypto_for_cash_text" component={Paragraph} className="search-style" />
+                    <Translate content="buy_your_crypto_for_cash_text" component={Paragraph} className="label-style" />
                     {/* <Tabs className="crypto-list-tabs" onChange={(key) => {
                         const types = {
                             1: "All", 2: "Gainers", 3: "Losers"

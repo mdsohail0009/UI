@@ -50,6 +50,7 @@
 
     --black: #000000 ;
     --primary: #E8E9EE;
+    --white:#FFFFFF;
     --secondary: #08090E;
     --faitGradGreen: linear-gradient(180deg, #88C351 -167.81%, #000000 100%);
     --faitGradeBlue:linear-gradient(180deg, #627EEA -115.75%, #000000 100%);
@@ -60,7 +61,7 @@
     --drawerBG:#3C3C42;
     --drawerMask:#00000095;
     --drawerList:rgba(255, 255, 255, 0.1);
-    --inputBg:rgba(21, 21, 25, 0.6);
+    --searchBg:rgba(21, 21, 25, 0.6);
     --grid:rgba(0,0,0,0.4);
     --marketTitle:rgba(255, 255, 255 ,0.6);
     --cardBG: rgba(255, 255, 255 ,0.15);
@@ -80,6 +81,9 @@
     --iconBg: #3C3C3C;
     --red: #FF6F6F;
     --placeholders:rgba(255, 255, 255 ,0.5);
+    --coinBg:rgba(255, 255, 255, 0.2);
+    --drpdwnHover:rgba(255, 255, 255 ,0.15);
+    --inputBg:rgba(21, 21, 25,0.4);
 
 
     --lightThemeIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/user-dark-theme2.0.svg);

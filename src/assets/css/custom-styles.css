@@ -109,7 +109,8 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 
 /*Common css start*/
 .text-white{color: #FFFFFF;}
-body{background: var( --black) url(../images/dark-bg2.0.svg) no-repeat top center;}
+body{background: var(--bodyBg) }
+/* url(../images/dark-bg2.0.svg) no-repeat top center; */
 .loader{background-color: #000000;position: fixed;top: 0; right: 0; bottom: 0; left: 0;display: flex; align-items: center;font-size: 36px;color: var(--textWhite);justify-content: center;}
 .side-drawer .ant-drawer-mask, .side-drawer-full .ant-drawer-mask{background: var(--drawerMask);}
 .side-drawer .ant-drawer-body, .side-drawer .ant-drawer-header{background-color: var(--drawerBG);}
@@ -117,9 +118,9 @@ body{background: var( --black) url(../images/dark-bg2.0.svg) no-repeat top cente
 /* .ant-input-search .ant-input-group .ant-input-group-addon{background-color: var(--inputBg) !important;border-radius: 0 10px 10px 0;border:0 !important;border-left: 0 !important;} */
 /* .ant-input-search .ant-input-group input{border-radius:10px;background-color: var(--inputBg) !important;border: 1px solid var(--subText) !important;border-right: 0 !important;} */
 /* .ant-input-search .ant-input:hover, .ant-input-search .ant-input:focus{} */
-.cust-input, .expiry-input, .cust-input .ant-input{background: #151519c4;border: 1px solid rgba(255, 255, 255, 0.4);border-radius: 5px;text-align: left;}
-.ant-select-dropdown{background-color:#55555B;border-radius: 5px;}
-.select-drpdwn .ant-select-item:hover, .select-drpdwn .ant-select-item.ant-select-item-option-active, .select-drpdwn .ant-select-item.ant-select-item-option-selected, .select-drpdwn .ant-select-item.ant-select-item-option-active.ant-select-item-option-selected{background-color: #000000;}
+.cust-input, .expiry-input, .cust-input .ant-input{background: var( --inputBg);border: 1px solid var(--subText);border-radius: 5px;text-align: left;}
+.ant-select-dropdown{background-color:var(--profileMenu);border-radius: 5px;}
+.select-drpdwn .ant-select-item:hover, .select-drpdwn .ant-select-item.ant-select-item-option-active, .select-drpdwn .ant-select-item.ant-select-item-option-selected, .select-drpdwn .ant-select-item.ant-select-item-option-active.ant-select-item-option-selected{background-color: var(--drpdwnHover);}
 /* .dbchart-link{color: #fff!important;display: inline-block;background-color: var(--bgYellow); padding: 0 12px;margin-left: 8px;border-radius: 12px;line-height: 24px;} */
 /* .custom-header span{font-size: 18px;color: #FFFFFF;opacity: 0.7;font-weight: 600;}
 .custom-header span:hover{color: #FFFFFF;opacity: 1;}
@@ -145,9 +146,15 @@ body{background: var( --black) url(../images/dark-bg2.0.svg) no-repeat top cente
 .coinbal-style{font-weight: 400;font-size: 16px;color:var(--coinPrice);}
 .ant-table-thead th.ant-table-column-has-sorters:hover{background:var(--grid);}
 .ant-input-group-addon{background-color:transparent ;}
-.cust-search .ant-input-affix-wrapper{background-color: var(--inputBg) !important;border: 1px solid var(--subText) !important;border-radius: 10px !important;height: 48px;}
+.cust-search .ant-input-affix-wrapper{background-color: var(--searchBg) !important;border: 1px solid var(--subText) !important;border-radius: 10px !important;height: 48px;}
 .cust-search::placeholder{color: var(--placeholders);font-weight: 400;font-size: 16px;}
 .cust-search .ant-input{color: var(--primary);font-weight: 400;font-size: 16px;}
+.drawer-list-font{font-weight: 700;font-size: 16px;color: var(--coinBal);}
+.drawer-coin .ant-image, .crypto-curr-align .ant-image, .listitems-design .ant-image, .cytpo-list-style .ant-image{border: 4px solid var(--coinBg);border-radius: 100%;}
+.drawer-coin .ant-image-img, .crypto-curr-align .ant-image-img, .listitems-design .ant-image-img, .cytpo-list-style .ant-image-img{background-color: var(--coinBg);border-radius: 100%;}
+.label-style{color: var(--subText); font-weight: 400;font-size: 14px;margin-bottom: 2px !important;text-transform: capitalize;}
+.ant-card.crypto-card{background: none;}
+.ant-select-item .ant-select-option-active, .ant-select-item-option-content, .ant-select-selection-item{color:var(--menuFont) ;}
 /*Common css End*/
 
 /*Coin Selection End*/
@@ -158,7 +165,7 @@ body{background: var( --black) url(../images/dark-bg2.0.svg) no-repeat top cente
 
 /*Coin Selection End*/
 /* button styles start */
-.select-drpdwn .ant-select-item:hover, .select-drpdwn .ant-select-item.ant-select-item-option-active, .select-drpdwn .ant-select-item.ant-select-item-option-selected, .select-drpdwn .ant-select-item.ant-select-item-option-active.ant-select-item-option-selected, .ant-select-item-option-selected:not(.ant-select-item-option-disabled), .ant-select-item-option-active:not(.ant-select-item-option-disabled){background-color: #000000;}
+.select-drpdwn .ant-select-item:hover, .select-drpdwn .ant-select-item.ant-select-item-option-active, .select-drpdwn .ant-select-item.ant-select-item-option-selected, .select-drpdwn .ant-select-item.ant-select-item-option-active.ant-select-item-option-selected, .ant-select-item-option-selected:not(.ant-select-item-option-disabled), .ant-select-item-option-active:not(.ant-select-item-option-disabled){background-color: var(--drpdwnHover)}
 .btn-dropdown button, .pop-btn{background-color: #3653E4; border-color: #3653E4; border-radius: 5px;height: 42px;font-weight: 600; transition: 0.3s ease;font-size: 16px;color: #FFFFFF;}
 .btn-dropdown button, .pop-btn:hover, .pop-btn:focus, .pop-btn:active{background-color:#7087FF;color: #FFFFFF;border-color: #7087FF;}
 .custom-btn.prime, .ant-btn-primary[disabled], .ant-btn-primary[disabled]:hover{background-color: #3653E4;font-weight:600;font-size: 15px;color: #FFFFFF;}
@@ -220,14 +227,14 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* Dashboard start */
 .ant-list-split .ant-list-item.cytpo-list-style{background: var(--cardBG);border-radius: 13px;margin-bottom: 10px;padding: 14px 20px !important;border-bottom:0;}
 .db-titles{font-weight: 700 !important;color:var(--dbTitle) !important;font-size: 22px !important;}
-.secureDropdown .ant-dropdown-menu{background-color: #4E505A;box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.35);border-radius: 10px;min-width: 239px; max-width: 239px; padding: 24px 0;}
+.secureDropdown .ant-dropdown-menu{background-color: var(--profileMenu);box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.35);border-radius: 10px;min-width: 239px; max-width: 239px; padding: 24px 0;}
 .depwith-drpdown .ant-dropdown-menu{min-width: 173px !important; max-width: 173px !important;}
-.drpdwn-list li:hover{background-color: rgb(255, 255, 255,0.15);}
+.drpdwn-list li:hover{background-color: var(--drpdwnHover);}
 .secureDropdown .ant-dropdown-arrow{display:none;}
 .secureDropdown .ant-dropdown-arrow{border-color: var(--bgGloom) !important;}
 .drpdwn-list{list-style: none;}
 .drpdwn-list li{font-size: 14px; padding: 0 22px; transition: 0.3s ease;cursor: pointer;}
-.drpdwn-list li a{color: var(--textWhite);display: flex; align-items: center; padding: 10px 0 10px 10px;}
+.drpdwn-list li a{color: var(--menuFont);display: flex; align-items: center; padding: 10px 0 10px 10px;}
 .crypto-card-design{display: flex;align-items: center;}
 .custlist-align{margin-left: 26px;}
 .listitems-design{border-radius: 13px;margin-bottom: 10px;padding: 14px 20px !important;display: block;width:356px;float: left;margin-right: 16px;border-bottom: 0 !important;background: var(--faitGradGreen) !important;}
@@ -265,10 +272,12 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* Dashboard end */
 
 /*Buy drawer start*/
-.drawer-maintitle{font-weight: 800;font-size: 26px;color: var(--menuFont);}
+.drawer-maintitle{font-weight: 800;font-size: 26px;color: var(--menuFont);text-transform: capitalize;}
 .crypto-list.auto-scroll.wallet-list{margin-top: 30px;}
 .crypto-list .ant-list-item, .wallet-list .ant-list-item{margin-top: 15px;}
 .search-style{color: var(--menuFont);font-weight: 600;font-size: 18px;margin-bottom: 2px !important;text-transform: capitalize;}
+.buycoin-style{font-weight: 500;font-size: 50px;color: var(--white);}
+.marginL{margin-left: 8px;}
 
 /*Buy drawer End*/
 /* --Payments Start--*/
