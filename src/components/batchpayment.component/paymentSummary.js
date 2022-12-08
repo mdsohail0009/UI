@@ -33,7 +33,7 @@ class paymentSummary extends Component {
 		return (<>
 			<div>
 			<Drawer destroyOnClose={true}
-          title={[<div className="side-drawer-header">
+          title={[<div className="side-drawer-header"><span></span><Title className='mb-8 text-white-30 fw-600 text-captz fs-24'>Payment Summary</Title>
             {/* <Translate content="bathch_payments_preview" component={Title} className="fs-26 fw-400 mb-0 text-white-30" /> */}
             <span onClick={this.props.onClose} className="icon md close-white c-pointer" />
           </div>]}
@@ -44,11 +44,9 @@ class paymentSummary extends Component {
 		  className="side-drawer w-50p"
         >
 				<div >
-				<div className='text-center'>
-						<Title className='mb-8 text-white-30 fw-600 text-captz fs-24'>Payment Summary</Title>
-					</div>
+				
 					<div>
-						<Title className='sub-heading text-center mb-16'>Transfer Details</Title>
+						<Title className='sub-heading text-center mt-0'>Transfer Details</Title>
 					</div>
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'> Payment</label></div>
@@ -71,7 +69,7 @@ class paymentSummary extends Component {
 						<div><Text className='fw-500 text-white-30'>4,400 USD</Text></div>
 					</div>
 
-					<div> <Title className='sub-heading my-16'>Recipients Details</Title></div>
+					<div> <Title className='sub-heading p-0 mt-24'>Recipients Details</Title></div>
 
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'>File Name</label></div>
