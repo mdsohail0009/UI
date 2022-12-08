@@ -8,6 +8,7 @@ import { fetchMemberWallets } from "../dashboard.component/api";
 import NumberFormat from "react-number-format";
 import { Link } from "react-router-dom";
 import PaymentAddress from './paymentAddress';
+import { withRouter } from "react-router-dom";
 const { Title,Paragraph } = Typography
 class AddBatchPayment extends Component {
     state = {
@@ -39,6 +40,9 @@ class AddBatchPayment extends Component {
     }
     uploadExcel=()=>{
         this.setState({ ...this.state, showModal:true});
+    }
+    selectWhitelist=()=>{
+        this.props.history.push('/payments/00000000-0000-0000-0000-000000000000/add') 
     }
 
     render() {
@@ -101,7 +105,7 @@ class AddBatchPayment extends Component {
             <Title className='text-white fs-24 fw-500'>Send USD to Multiple Address</Title>
             <Button className='pop-btn mt-24'onClick={this.uploadExcel}>Upload Excel</Button>
             <Paragraph className='text-white-30 '>To download the excel, <a className='fw-700'> click here</a></Paragraph>
-            <Button className='pop-btn'>Select from Whitelisted Addresses</Button>
+            <Button className='pop-btn'onClick={this.selectWhitelist}>Select from Whitelisted Addresses</Button>
             </div>
               </div>
               </>}
@@ -110,13 +114,18 @@ class AddBatchPayment extends Component {
                      visible={this.state.showModal}
                     closable={false}
                     closeIcon={false}
-                    footer={[
+                    footer={null}
+                    >
+                    
                         <>
+                        <div className='text-center'>
+                            <Paragraph className='text-white'>Document has been successfully uploaded.</Paragraph>
                             <Button className="primary-btn pop-btn"
                                 style={{ width: 100, height: 50 }}
                                 onClick={() => { }}>Next</Button>
+                        </div>
                         </>
-                    ]} >
+                    
                 </Modal>
         </div>
 
@@ -132,4 +141,4 @@ const connectDispatchToProps = dispatch => {
         dispatch
     }
 }
-export default connect(connectStateToProps, connectDispatchToProps)(AddBatchPayment);
+export default connect(connectStateToProps, connectDispatchToProps)(withRouter(AddBatchPayment));
