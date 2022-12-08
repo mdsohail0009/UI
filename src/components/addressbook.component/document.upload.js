@@ -23,7 +23,8 @@ class AddressDocumnet extends Component {
         documents: {}, showDeleteModal: false, isDocLoading: false,selectedObj:{},errorMessage:null
     }
     componentDidMount() {
-        this.setState({ ...this.state, documents: this.props?.documents || document(), isEdit: this.props?.editDocument, filesList: this.props?.documents ? [...this.props?.documents?.details] : [],refreshData:this.props?.refreshData })
+        let propsDocument = JSON.stringify(this.props?.documents) == JSON.stringify({'transfer': '', 'payee': ''}) ? null : this.props?.documents
+        this.setState({ ...this.state, documents: propsDocument || document(), isEdit: this.props?.editDocument, filesList: propsDocument ? [...this.props?.documents?.details] : [],refreshData:this.props?.refreshData })
     }
     docDetail = (doc) => {
         return {
@@ -41,7 +42,8 @@ class AddressDocumnet extends Component {
   
     render() {
         if(this.props.refreshData != this.state.refreshData){
-            this.setState({ ...this.state, documents: this.props?.documents || document(), filesList: this.props?.documents ? [...this.props?.documents?.details] : [], refreshData:this.props.refreshData })
+            let propsDocument = JSON.stringify(this.props?.documents) == JSON.stringify({'transfer': '', 'payee': ''}) ? null : this.props?.documents
+            this.setState({ ...this.state, errorMessage: null, documents: propsDocument || document(), filesList: propsDocument ? [...this.props?.documents?.details] : [], refreshData:this.props.refreshData })
         }
         return <Row >
             <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="text-left">

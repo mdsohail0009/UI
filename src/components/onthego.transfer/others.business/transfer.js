@@ -90,7 +90,6 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].swiftRouteBICNumber = values?.swiftRouteBICNumber;
         _obj.payeeAccountModels[0].line1 = selectedTab == "internationalIBAN" ? ibanDetails?.bankAddress : values.bankAddress1;
         _obj.payeeAccountModels[0].line2 = values.bankAddress2;
-        _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
 
         _obj.addressType = "otherbusiness";
         _obj.transferType = selectedTab;
@@ -111,9 +110,11 @@ class BusinessTransfer extends Component {
         this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
         delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
         this.setState({ ...this.state, errorMessage: null, isLoading: false, isBtnLoading: true });
+
         let temp = JSON.parse(JSON.stringify(_obj))
         temp.payeeAccountModels[0].documents = _obj.payeeAccountModels[0]?.documents?.payee
-        const response = await savePayee(temp);  
+        
+        const response = await savePayee(this.state.isEdit ? _obj : temp);      
 
         if (response.ok) {
             if (this.props.type != "manual") {
@@ -316,9 +317,13 @@ class BusinessTransfer extends Component {
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
-                            <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents.payee || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
+                            <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
                                 let { payeeAccountModels } = this.state.details;
-                                payeeAccountModels[0].documents.payee = docs;
+                                if(this.state.isEdit){
+                                    payeeAccountModels[0].documents = docs;
+                                } else{
+                                    payeeAccountModels[0].documents.payee = docs;
+                                }
                                 this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
                             }} refreshData ={selectedTab}/>
                         </ Col>
@@ -331,7 +336,7 @@ class BusinessTransfer extends Component {
                     {this.props.type !== "manual" && 
                         (<React.Fragment>
                             <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
-                            <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents?.transfer || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
+                            <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
                                 let { payeeAccountModels } = this.state.details;
                                 payeeAccountModels[0].documents.transfer = docs;
                                 this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
@@ -452,9 +457,13 @@ class BusinessTransfer extends Component {
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
-                            <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents?.payee || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
+                            <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
                                 let { payeeAccountModels } = this.state.details;
-                                payeeAccountModels[0].documents.payee = docs;
+                                if(this.state.isEdit){
+                                    payeeAccountModels[0].documents = docs;
+                                } else{
+                                    payeeAccountModels[0].documents.payee = docs;
+                                }
                                 this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
                             }} refreshData ={selectedTab}/>
                         </ Col>
@@ -466,7 +475,7 @@ class BusinessTransfer extends Component {
                     {this.props.type !== "manual" && 
                         (<React.Fragment>
                             <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
-                            <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents?.transfer || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
+                            <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
                                 let { payeeAccountModels } = this.state.details;
                                 payeeAccountModels[0].documents.transfer = docs;
                                 this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
@@ -585,9 +594,13 @@ class BusinessTransfer extends Component {
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
-                            <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents?.payee || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
+                            <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
                                 let { payeeAccountModels } = this.state.details;
-                                payeeAccountModels[0].documents.payee = docs;
+                                if(this.state.isEdit){
+                                    payeeAccountModels[0].documents = docs;
+                                } else{
+                                    payeeAccountModels[0].documents.payee = docs;
+                                }
                                 this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
                             }} refreshData ={selectedTab}/>
                         </ Col>
@@ -725,7 +738,7 @@ class BusinessTransfer extends Component {
                     {this.props.type !== "manual" && 
                         (<React.Fragment>
                             <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
-                            <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents?.transfer || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
+                            <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
                                 let { payeeAccountModels } = this.state.details;
                                 payeeAccountModels[0].documents.transfer = docs;
                                 this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })

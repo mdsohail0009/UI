@@ -295,7 +295,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
-                            <AddressDocumnet documents={documents?.payee || null} editDocument={edit} onDocumentsChange={(docs) => {
+                            <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
                                     let temp = {...documents, "payee": docs}
                                     setDocuments(temp)
                                 }} refreshData = {addressOptions?.domesticType}/>
@@ -381,7 +381,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                 {props.type !== "manual" && 
                 (<React.Fragment>
                     <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
-                    <AddressDocumnet documents={documents?.transfer || null} editDocument={edit} onDocumentsChange={(docs) => {
+                    <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
                             let temp = {...documents, "transfer": docs}
                             setDocuments(temp)
                         }} refreshData = {addressOptions?.domesticType}/>
