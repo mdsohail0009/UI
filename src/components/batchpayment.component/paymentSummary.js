@@ -192,9 +192,10 @@ class paymentSummary extends Component {
 									your payments will only be processed once your
 									whitelisted address has been approved. </Paragraph>
 							</div>
+							<div className='text-center'>
 							<Button className="primary-btn pop-btn"
 								style={{ width: 100, height: 50 }}
-								onClick={() => {this.props.history.push('/cockpit') }}>close</Button>
+								onClick={() => {this.props.history.push('/cockpit') }}>close</Button></div>
 						</>}
 
 					</div>
