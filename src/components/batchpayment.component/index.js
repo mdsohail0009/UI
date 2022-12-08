@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Typography,List } from 'antd';
+import { Typography } from 'antd';
+import { connect } from 'react-redux';
+import List from "../grid.component";
 
 const { Title, Text, Paragraph } = Typography;
 const Batchpayments = (props) => {
+  const gridRef = React.createRef();
+  debugger
     const gridColumns = [
         {
           field: "",
@@ -25,15 +29,15 @@ const Batchpayments = (props) => {
           )
         },
         {
-          field: "createdDate", title: "sd", filter: true, filterType: "date",width: 200,
+          field: "fileName", title: "File Name", filter: true, filterType: "date",width: 200,
         //   customCell: (prop) => (
         //     <td><div className="gridLink" onClick={() => paymentsView(prop)}>
         //       <Moment format="DD/MM/YYYY">{moment(new Date(prop.dataItem.createdDate), "DD/MM/YYYY")}</Moment></div></td>)
         },
-        { field: "currency", title: "sd", filter: true,width: 200, },
-        { field: "totalAmount", title: 'Total Amount', filter: true, width: 200,dataType: "number", filterType: "numeric" },
-        { field: "approvedAmount", title: 'Approved Amount', filter: true, width: 237, },
-        { field: "count", title: 'Count', filter: true, width: 150,dataType: "number", filterType: "numeric" },
+        { field: "dateCreated", title: "Date created", filter: true,width: 200, },
+        { field: "currency", title: 'Currency', filter: true, width: 200,dataType: "number", filterType: "numeric" },
+        { field: "status", title: 'Status', filter: true, width: 237, },
+        { field: "numberOfTransactions", title: 'Number of Transactions', filter: true, width: 150,dataType: "number", filterType: "numeric" },
         { field: "state", title: 'State', filter: true, width: 200, },
       ];
     // const gridRef = React.createRef();
@@ -42,16 +46,30 @@ const Batchpayments = (props) => {
     //   },[walletType]);;//eslint-disable-line react-hooks/exhaustive-deps
       return (
         <>
+        <span className='icon sm add mx-12'></span>
+        <span className='icon sm add  mx-12'></span>
+        <span className='icon sm add'></span>
 <div className="box basic-info text-white" style={{clear:'both'}}>
           <List
            className="bill-grid"
             showActionBar={false}
             url={process.env.REACT_APP_GRID_API + `MassPayments/UserPayments/${props.userConfig?.id}`}
+            additionalParams={{type:"All"}}
             columns={gridColumns}
-            // ref={gridRef}
+            ref={gridRef}
           />
         </div>
         </>
       )
 }
-export default Batchpayments;
+
+const connectStateToProps = ({ userConfig }) => {
+  return { userConfig: userConfig.userProfileInfo };
+};
+const connectDispatchToProps = dispatch => {
+  return {
+    dispatch
+  }
+}
+
+export default connect(connectStateToProps, connectDispatchToProps)(Batchpayments);
