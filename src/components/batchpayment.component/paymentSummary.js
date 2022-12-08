@@ -18,10 +18,10 @@ class paymentSummary extends Component {
 	render() {
 		return (<>
 			<div>
-			<Drawer
+			<Modal
           title={[<div className="side-drawer-header">
             {/* <Translate content="bathch_payments_preview" component={Title} className="fs-26 fw-400 mb-0 text-white-30" /> */}
-            <span onClick={this.props.onClose} className="icon md close-white c-pointer" />
+            <span></span><div className='text-center'><Title className='mb-8 text-white-30 fw-600 text-captz fs-24'>Payment Summary</Title></div><span onClick={this.props.onClose} className="icon md close-white c-pointer" />
           </div>]}
           placement="right"
           closable={false}
@@ -31,9 +31,7 @@ class paymentSummary extends Component {
           className="side-drawer-full custom-gridresponsive transctns-grid"
         >
 				<div >
-					<div className='text-center'>
-						<Title className='mb-8 text-white-30 fw-600 text-captz fs-24'>Payment Summary</Title>
-					</div>
+					
 					<div>
 						<Title className='sub-heading text-center mb-16'>Transfer Details</Title>
 					</div>
@@ -165,7 +163,7 @@ class paymentSummary extends Component {
 						</div>
 					</Form>
 				</div>
-				</Drawer>
+				</Modal>
 			</div>
 		</>
 		)
