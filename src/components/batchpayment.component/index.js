@@ -1,10 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { Typography } from 'antd';
+import { Typography,Drawer,Space,Button } from 'antd';
 import { connect } from 'react-redux';
 import List from "../grid.component";
-
 const { Title, Text, Paragraph } = Typography;
+
 const Batchpayments = (props) => {
+ 
+const [open, setOpen] = useState(false);
+  const [placement, setPlacement] = useState('right');
+  const showDrawer = () => {
+    setOpen(true);
+  };
+  const onChange = (e) => {
+    setPlacement(e.target.value);
+  };
+  const onClose = () => {
+    setOpen(false);
+  };
   const gridRef = React.createRef();
   debugger
     const gridColumns = [
@@ -46,7 +58,7 @@ const Batchpayments = (props) => {
     //   },[walletType]);;//eslint-disable-line react-hooks/exhaustive-deps
       return (
         <>
-        <span className='icon sm add mx-12'></span>
+        <span className='icon sm add mx-12'onClick={showDrawer}></span>
         <span className='icon sm add  mx-12'></span>
         <span className='icon sm add'></span>
 <div className="box basic-info text-white" style={{clear:'both'}}>
