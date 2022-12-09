@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 import { validateContentRule } from "../../utils/custom.validator";
 import { addressTabUpdate, fetchAddressCrypto, setAddressStep } from "../../reducers/addressBookReducer";
 import WAValidator from "multicoin-address-validator";
-import success from "../../assets/images/success.png";
+import success from "../../assets/images/success.svg";
 import BankDetails from "./bank.details";
 const { Text, Paragraph, Title } = Typography;
 const { Option } = Select;

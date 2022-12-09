@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import success from '../../assets/images/success.png';
+import success from '../../assets/images/success.svg';
 import { Typography, Space, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import Translate from 'react-translate-component';
@@ -26,8 +26,8 @@ class SuccessMsg extends Component {
             <>
                 <div className="success-pop text-center">
                     <img src={success} className="confirm-icon" alt={"success"} />
-                    <Translate content="success_msg" component={Title} className="text-white-30 fs-36 fw-200 mb-4" />
-                    <Paragraph className="fs-14 text-white-30 fw-200"><Translate content="sucessText1" component={Text} className="fs-14 text-white-30 fw-200" /> {bd.tovalue} {bd.toWalletCode} <Translate content="sucessText2" className="fs-14 text-white-30 fw-200" component={Text} /></Paragraph>
+                    <Translate content="success_msg" component={Title} className="" />
+                    <Paragraph className=""><Translate content="sucessText1" component={Text} className="" /> {bd.tovalue} {bd.toWalletCode} <Translate content="sucessText2" className="fs-14 text-white-30 fw-200" component={Text} /></Paragraph>
                     {/* <Translate content="success_decr" component={Paragraph} className="fs-16 text-white-30 fw-200" /> */}
                     <Space direction="vertical" size="large">
                         <Translate content="return_to_buy" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => this.onBuyCancel()} />

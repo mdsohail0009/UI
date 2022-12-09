@@ -172,8 +172,8 @@ body{background: var(--bodyBg) }
 .custom-btn.prime:hover,.ant-btn-primary[disabled], .ant-btn-primary[disabled]:hover{background-color: #7087FF;}
 .custom-btn.sec{background: transparent;background-image: none;border: 1px solid var(--subText); color: var(--textWhite);margin-left: 16px;}
 .custom-btn.sec:hover{background-color: #3653E4;}
-.cust-cancel-btn{border: 1px solid rgba(255, 255, 255, 0.6);border-radius: 5px;height: 42px;background-color: transparent;color: #ffffff;font-weight: 600;transition: 0.3s ease;font-size: 16px;margin-top: 16px;}
-.cust-cancel-btn.ant-btn:hover, .cust-cancel-btn.ant-btn:focus, .cust-cancel-btn.ant-btn:active{border: 1px solid #CCC3FF;border-radius: 5px;height: 42px;background-color: transparent;color: #ffffff;font-weight: 600;transition: 0.3s ease;font-size: 16px;}
+.cust-cancel-btn{border: 1px solid var(--inputBorder);border-radius: 5px;height: 42px;background-color: transparent;color:var(--white);font-weight: 600;transition: 0.3s ease;font-size: 16px;margin-top: 16px;}
+.cust-cancel-btn.ant-btn:hover, .cust-cancel-btn.ant-btn:focus, .cust-cancel-btn.ant-btn:active{border: 1px solid #CCC3FF;border-radius: 5px;height: 42px;background-color: transparent;color: var(--white);font-weight: 600;transition: 0.3s ease;font-size: 16px;}
 /* button styles end */
 /*Kendo start*/
 .k-grid-header .k-header > .k-link{font-size: 16px;font-weight: 500;}
@@ -329,14 +329,25 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /*--Zoho end--*/
 
 /* summary start */
-.cust-summary-new{background: rgba(255, 255, 255, 0.1);border-radius: 13px;padding-left: 20px;padding-right: 20px;padding-bottom: 46px;padding-top: 26px;}
+.cust-summary-new{background: var(--drawerList);border-radius: 13px;padding-left: 20px;padding-right: 20px;padding-bottom: 46px;padding-top: 26px;}
 .pay-list:last-child{border:0;padding-bottom: 0;}
 .pay-list{padding: 12px 0;}
 .cust-coin-value{font-weight: 500;font-size: 45px;text-align: center;color: #FFFFFF;}
 .cust-summary-text{text-align: left;margin-top: 16px;}
-.text-style{font-weight: 400;font-size: 16px;color:rgb(255,255, 255,0.7);}
-.terms-link{color:#CCC3FF !important;}
+.text-style{font-weight: 400 !important;font-size: 16px !important;color:var(--checksub) !important;margin-top: 36px !important;height: 106px;}
+.terms-link{color:var(--termsText) !important;font-weight: 700;}
 .faitcurrency-style{font-weight: 700;font-size: 16px;color: var(--white);text-align: center;margin-bottom: 30px;}
+.summary-liststyle{font-weight: 700;font-size: 16px;color: var(--coinBal);}
+.summarybal{font-weight: 400;font-size: 16px;color:var(--coinBal);}
+.cust-agreecheck{font-weight: 400;font-size: 14px;color: var( --checkText);}
+.agree-check label{height: 34px;margin-right: 14px;}
+.agree-check input[type=checkbox]{display: none;}
+.agree-check input[type=checkbox]+span{background: var(--lightThemeIcons);background-position:-115px -513px;transform:scale(1.5);display: inline-block;width: 34px;height: 34px;vertical-align: text-top;cursor: pointer;}
+.agree-check input[type=checkbox]:checked+span{background: var(--lightThemeIcons);background-position:-153px -513px;border-color: transparent !important;}
+.agree-check input[type=checkbox]+span:hover{background-position:-190.5px -513px;}
+.agree-check input[type=checkbox]:checked+span:hover{background-position:-153px -513px;}
+.pay-list{padding: 16px 0; border-bottom: 1px solid var(--borderColor);}
+.cryptosummary-container{max-height: calc(100vh - 76px);}
 /* summary end */
 
 /*@media start*/

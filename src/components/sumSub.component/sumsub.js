@@ -4,7 +4,7 @@ import apicalls from '../../api/apiCalls';
 import { connect } from 'react-redux';
 import { userInfo, getmemeberInfo } from '../../reducers/configReduser';
 import { withRouter } from 'react-router-dom';
-import success from '../../assets/images/success.png';
+import success from '../../assets/images/success.svg';
 import AccountStatus from '../../utils/account.status';
 
 class SumSub extends Component {

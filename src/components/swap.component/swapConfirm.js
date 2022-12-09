@@ -18,7 +18,7 @@ class SwapConfirm extends Component {
             <>
                 {!this.state.success ? <div className="success-pop text-center confitm-pop">
                     <img src={confirm} className="confirm-icon" />
-                    <Translate content="confirm_msg" component={Title} className="text-white-30 fs-36 fw-200 mb-4" />
+                    <Translate content="confirm_msg" component={Title} className="" />
                 </div> :
                     <SuccessMsg />
                 }
