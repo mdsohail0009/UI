@@ -672,6 +672,9 @@ saveWithdrawdata = async () => {
                     label={"Reason For Transfer"}
                     required
                     rules={[
+                      {whitespace: true,
+                        message: "Is required",
+                      },
                       {
                         required: true,
                         message:
