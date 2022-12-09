@@ -240,7 +240,7 @@ class AddBatchPayment extends Component {
             title={[<div className="side-drawer-header">
                 <span></span>
                 <div className="text-center">
-                {!this.state.isCoinsListHide && <> <div className='text-white fs-24 fw-500'>Batch Payments</div> </>}
+                {!this.state.isCoinsListHide && <> <div className='text-white fs-24 fw-500'>Batch Payment</div> </>}
                 </div>
                 {!this.state.isCoinsListHide &&<span onClick={this.closeDrawer} className="icon md close-white c-pointer" />}
                 {this.state.isCoinsListHide &&<span onClick={this.uploadCancel} className="icon md close-white c-pointer" />}
@@ -256,7 +256,7 @@ class AddBatchPayment extends Component {
             { !this.state.isCoinsListHide && <>
             <div className="mt-8">
                 <Title
-                    className='sub-heading code-lbl'>Make payments</Title>
+                    className='sub-heading code-lbl'>Make Payments</Title>
             </div>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Search placeholder="Search Currency" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="text-center mb-16" />
@@ -311,8 +311,8 @@ class AddBatchPayment extends Component {
                                 >
                                        <Button className='pop-btn mt-24'>Upload Excel</Button>
                                 </Upload>{" "}
-            <Paragraph className='text-white-30 '>To download the excel, <a className='fw-700'> click here</a></Paragraph>
-            <Button className='pop-btn px-36'onClick={this.selectWhitelist}>Select from Whitelisted Addresses</Button>
+            <Paragraph className='text-white-30'>To download the excel, <a className='fw-700'> click here</a></Paragraph>
+            <Button className='pop-btn px-36' onClick={this.selectWhitelist}>Select from Whitelisted Addresses</Button>
                                 
             </div>
               </div>
@@ -320,7 +320,7 @@ class AddBatchPayment extends Component {
         </Drawer>
                 <Modal
                      visible={this.state.showModal}
-                     title="upload excel"
+                     title="upload success"
                      closeIcon={
                         <Tooltip title="Close">
                           <span
@@ -336,7 +336,7 @@ class AddBatchPayment extends Component {
                     onClick={() => this.setState({ ...this.state, showModal: false, paymentPreview: true }, () => { })}>Next</Button>}>
                         <>
                         <div className='text-center pt-16'>
-                            <Paragraph className='text-white fs-18'>Document has been successfully uploaded.</Paragraph>
+                            <Paragraph className='text-white fs-18'>Document has been successfully uploaded</Paragraph>
                            
                         </div>
                         </>
