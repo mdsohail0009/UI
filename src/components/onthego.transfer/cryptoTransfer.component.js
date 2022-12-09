@@ -13,6 +13,7 @@ import { setStep, setSubTitle, setWithdrawcrypto, setAddress, hideSendCrypto } f
 import AddressCrypto from "../addressbook.component/addressCrypto";
 import { setAddressStep} from "../../reducers/addressBookReducer";
 import {rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
+import { Link } from "react-router-dom";
 
 const { Text, Title } = Typography;
 
@@ -52,7 +53,7 @@ class OnthegoCryptoTransfer extends Component {
         this.permissionsInterval = setInterval(this.loadPermissions, 200);
         if (!this.state.selectedCurrency) {
             this.setState({ ...this.state, fiatWalletsLoading: true });
-            fetchMemberWallets(this.props?.userProfile?.id).then(res => {
+            fetchMemberWallets().then(res => {
                 if (res.ok) {
                     this.setState({ ...this.state, fiatWallets: res.data, fiatWalletsLoading: false });
                 } else {
@@ -65,7 +66,7 @@ class OnthegoCryptoTransfer extends Component {
 
     getPayees = async () => {
         this.setState({ ...this.state, loading: true })
-        let response = await apicalls.getPayeeCryptoLu(this.props.userProfile.id, this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin);
+        let response = await apicalls.getPayeeCryptoLu(this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin);
         if (response.ok) {
             this.setState({ ...this.state, loading: false, payeesLoading: false, filterObj: response.data, payees: response.data });
         }
@@ -73,7 +74,7 @@ class OnthegoCryptoTransfer extends Component {
             this.setState({ ...this.state, loading: false, payeesLoading: false, filterObj: [] });
         }
 
-        let res = await apicalls.getPayeeCrypto(this.props.userProfile.id, this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin);
+        let res = await apicalls.getPayeeCrypto( this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin);
         if (res.ok) {
             this.setState({ ...this.state, loading: false, pastPayees: res.data });
         }
@@ -128,7 +129,7 @@ class OnthegoCryptoTransfer extends Component {
             this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('enter_amount') });
             this.myRef.current.scrollIntoView();
         }
-        else if (amt == 0) {
+        else if (amt === 0) {
             this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_greater_zero') });
             this.myRef.current.scrollIntoView();
         }
@@ -189,7 +190,7 @@ class OnthegoCryptoTransfer extends Component {
         const res = await validateCryptoAmount(validObj);
         if (res.ok) {
             this.props.dispatch(setSubTitle(""));
-            type == "addressSelection" ?  this.setState({ ...this.state, loading: false, [loader]: false, errorMsg: null }, () => this.props.chnageStep(type,values)): 
+            type === "addressSelection" ?  this.setState({ ...this.state, loading: false, [loader]: false, errorMsg: null }, () => this.props.chnageStep(type,values)): 
             this.setState({
                 ...this.state, visible: true, errorWorning: null, errorMsg: null, [loader]: false, showFuntransfer: true
             },() => this.chnageStep(type, values));
@@ -232,7 +233,7 @@ class OnthegoCryptoTransfer extends Component {
                 callback();
             }
         }
-        else if(value == 0 && typeof value === "number") {
+        else if(value === 0 && typeof value === "number") {
             callback();
         }
         else if(!value) {
@@ -327,12 +328,12 @@ class OnthegoCryptoTransfer extends Component {
     }
   }
 
-  renderStep = (step) => {
-    const { filterObj, pastPayees, payeesLoading, isVarificationLoader, isVerificationEnable,isPhMail,isShowGreyButton,isAuthMail } = this.state;
-    const steps = {
-      enteramount: (
-        <>
-          {this.state.isVerificationLoading  && <Loader />}
+    renderStep = (step) => {
+        const { filterObj, pastPayees } = this.state;
+        const steps = {
+            enteramount: <>
+            {this.state.isVerificationLoading  && <Loader />}
+            {this.state.isVerificationLoading  && <Loader />}
           {!this.state.isVerificationLoading  && 
             <Form
               autoComplete="off"
@@ -400,24 +401,24 @@ class OnthegoCryptoTransfer extends Component {
                                     </button>
                   </div>
                 </Col>
-              </Row>
-              <Row gutter={[16, 4]} className="text-center mt-24 mb-24">
-              <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
-                  <Form.Item className="text-center">
-                    <Button
-                      htmlType="submit"
-                      size="large"
-                      className="pop-btn mb-36"
-                      style={{ width: '100%' }}
-                      loading={this.state.newtransferLoader}
-                    >
-                      New Transfer
-                    </Button>
-                  </Form.Item>
-                </Col>
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
-                  <Form.Item className="text-center">
-                    <Button
+                        </Row>
+                        <Row gutter={[16, 4]} className="text-center mt-24 mb-24">
+                            <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
+                                <Form.Item className="text-center">
+                                    <Button
+                                        htmlType="submit"
+                                        size="large"
+                                        className="pop-btn mb-36"
+                                        style={{ width: '100%' }}
+                                        loading={this.state.newtransferLoader}
+                                    >
+                                        New Transfer
+                                    </Button>
+                                </Form.Item>
+                            </Col>
+                            <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
+                                <Form.Item className="text-center">
+                                <Button
                       htmlType="button"
                       size="large"
                       className="pop-btn mb-36"
@@ -426,139 +427,135 @@ class OnthegoCryptoTransfer extends Component {
                       disabled={this.state.newtransferLoader}
                       onClick={this.goToAddressBook}
                     >
-                      Address Book
-                    </Button>
-                  </Form.Item>
-                </Col>
-              </Row>
-            </Form>
-          }
-        </>
-      ),
-      newtransfer: (
-        <>
-          <AddressCrypto onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1} isShowheading= {true} />
-        </>
-      ),
-      addressselection: (<React.Fragment>
-          <>
-          {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
-          <div className="mb-16" style={{textAlign:'center'}}>
-                    <text Paragraph
+                     Address Book
+                   </Button>
+                 </Form.Item>
+                            </Col>
+                        </Row>
+                    </Form>
+                    }
+                </>,
+                  newtransfer: (<>
+                        <AddressCrypto onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1} isShowheading= {true} />
+              </>),
+               addressselection: <React.Fragment>
+                <>
+             {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
+              <div className="mb-16" style={{textAlign:'center'}}>
+                <text Paragraph
                         className='fs-24 fw-600 text-white mb-16 mt-4 text-captz' >Who are you sending crypto to?</text>
                 </div>
-            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-            <Search placeholder="Search For Beneficiary" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="text-center mt-12" />
-            </Col>
-            {this.state?.loading && <Loader />}
-            {(!this.state.loading) && <>
-                 <Title className="fw-600 text-white px-4 mb-16 mt-16 text-captz" style={{ fontSize: '18px' }}>Address Book</Title>
-                <Divider className="cust-divide" />
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Search placeholder="Search For Beneficiary" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="text-center mt-12" />
+                </Col>
+                {this.state?.loading && <Loader />}
+                {(!this.state.loading) && <>
+                    <Title className="fw-600 text-white px-4 mb-16 mt-16 text-captz" style={{ fontSize: '18px' }}>Address Book</Title>
+                    <Divider className="cust-divide" />
 
-                <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
-                {(filterObj.length > 0) && filterObj?.map((item, idx) =>
+                    <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
+                        {(filterObj.length > 0) && filterObj?.map((item, idx) =>
                             <>{<Row className="fund-border c-pointer " onClick={async () => {
                                 if (!["myself", "1stparty", 'ownbusiness'].includes(item.addressType?.toLowerCase())) {
                                     this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item, codeDetails: { ...this.state.codeDetails, ...item } }, () => {this.handlePreview(item)});
-                              } else {
-                                this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item, codeDetails: { ...this.state.codeDetails, ...item } });
-                                const res = await apicalls.confirmCryptoTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount });
-                                if (!res.ok) {
-                                    this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => {this.handlePreview(item)});
                                 } else {
-                                    this.setState({ ...this.state, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
+                                    this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item, codeDetails: { ...this.state.codeDetails, ...item } });
+                                    const res = await apicalls.confirmCryptoTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount });
+                                    if (!res.ok) {
+                                        this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => {this.handlePreview(item)});
+                                    } else {
+                                        this.setState({ ...this.state, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
+                                    }
                                 }
-                              }
                             }}>
-                           <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name?.charAt(0).toUpperCase()}</div></Col>
-                           <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="small-text-align">
-                           <label className="fs-16 fw-600 text-white l-height-normal c-pointer">{item?.name} ({item.walletAddress?.length > 0 ? item.walletAddress.substring(0,4)+ `......`+ item.walletAddress.slice(-4):""})</label>
-                           {item.walletAddress && <div><Text className="fs-14 text-white-30 m-0">{item.walletCode} ({item.network})</Text></div>}
-                            </Col>
-                            <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
-                              <span class="icon md rarrow-white"></span>
-                            </Col>
+                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name?.charAt(0).toUpperCase()}</div></Col>
+                                <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="small-text-align">
+                                    <label className="fs-16 fw-600 text-white l-height-normal c-pointer">{item?.name} ({item.walletAddress?.length > 0 ? item.walletAddress.substring(0,4)+ `......`+ item.walletAddress.slice(-4):""})</label>
+                                    {item.walletAddress && <div><Text className="fs-14 text-white-30 m-0">{item.walletCode} ({item.network})</Text></div>}
+                                </Col>
+                                <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
+                                    <span class="icon md rarrow-white"></span>
+                                </Col>
                             </Row>}</>
-                    )}
-                  {(!filterObj.length > 0) && <div className="success-pop text-center" style={{ marginTop: '0px' }}>
+                        )}
+                        {(!filterObj.length > 0) && <div className="success-pop text-center" style={{ marginTop: '0px' }}>
                             <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
                             <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
                             <p className="fs-16 text-white-30 fw-200 mb-0"> {apicalls.convertLocalLang('address_available')} </p>
-                            <a onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</a>
+                            <Link onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</Link>
                         </div>}
-                </ul>
+                    </ul>
 
-                <Title className="fw-600 text-white px-4 mb-16 mt-16 text-captz" style={{ fontSize: '18px' }}>Past Recipients</Title>
-                <Divider className="cust-divide" />
-                <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
-                {(pastPayees.length > 0) && pastPayees?.map((item, idx) =>
-                     <Row className="fund-border c-pointer" onClick={async () => {
-                        if (!["myself", "1stparty", "ownbusiness"].includes(item.addressType?.toLowerCase())) {
-                            this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item }, () => {this.handlePreview(item)})
-                          } else {
-                            this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item });
-                            const res = await apicalls.confirmCryptoTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount });
-                            if (res.ok) {
-                                this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => {this.handlePreview(item)});
-                            } else {
-                                this.setState({ ...this.state, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
-                            }
-                          }
-                        }}>
-                        <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name?.charAt(0).toUpperCase()}</div></Col>
-                        <Col xs={24} md={24} lg={24} xl={19} xxl={19} className=" small-text-align">
-                        <label className="fs-16 fw-600 text-white l-height-normal c-pointer">{item?.name} ({item.walletAddress?.length > 0 ? item.walletAddress.substring(0,4)+ `......`+ item.walletAddress.slice(-4):""})</label>
-                        <div><Text className="fs-14 text-white-30 m-0">{item?.walletCode} ({item.network})</Text></div>
-                        </Col>
-                        <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
-                          <span class="icon md rarrow-white"></span>
-                        </Col>
-                      </Row>
+                    <Title className="fw-600 text-white px-4 mb-16 mt-16 text-captz" style={{ fontSize: '18px' }}>Past Recipients</Title>
+                    <Divider className="cust-divide" />
+                    <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
+                        {(pastPayees.length > 0) && pastPayees?.map((item, idx) =>
+                            <Row className="fund-border c-pointer" onClick={async () => {
+                                if (!["myself", "1stparty", "ownbusiness"].includes(item.addressType?.toLowerCase())) {
+                                    this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item }, () => {this.handlePreview(item)})
+                                } else {
+                                    this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item });
+                                    const res = await apicalls.confirmCryptoTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount });
+                                    if (res.ok) {
+                                        this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => {this.handlePreview(item)});
+                                    } else {
+                                        this.setState({ ...this.state, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
+                                    }
+                                }
+                            }}>
+                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name?.charAt(0).toUpperCase()}</div></Col>
+                                <Col xs={24} md={24} lg={24} xl={19} xxl={19} className=" small-text-align">
+                                    <label className="fs-16 fw-600 text-white l-height-normal c-pointer">{item?.name} ({item.walletAddress?.length > 0 ? item.walletAddress.substring(0,4)+ `......`+ item.walletAddress.slice(-4):""})</label>
+                                    <div><Text className="fs-14 text-white-30 m-0">{item?.walletCode} ({item.network})</Text></div>
+                                </Col>
+                                <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
+                                    <span class="icon md rarrow-white"></span>
+                                </Col>
+                            </Row>
 
-                    )}
-                  {(!pastPayees.length > 0) && <div className="success-pop text-center" style={{ marginTop: '20px' }}>
+                        )}
+                        {(!pastPayees.length > 0) && <div className="success-pop text-center" style={{ marginTop: '20px' }}>
                             <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
                             <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
                             <p className="fs-16 text-white-30 fw-200 mb-0"> {'You have no past recipients'} </p>
                         </div>}
-                </ul>
-              </>}
-          </>
-        </React.Fragment>
-      ),
+                    </ul>
+                </>}
+             </>  
+               </React.Fragment>
+        }
+        return steps[this.state.step];
     }
-    return steps[this.state.step];
-  }
-  render() {
-    return <React.Fragment>
-        {this.renderStep()}
-    </React.Fragment>
-}
+    render() {
+        return <React.Fragment>
+            {this.renderStep()}
+        </React.Fragment>
+    }
 
 }
 
 const connectStateToProps = ({ sendReceive, userConfig, menuItems, oidc }) => {
-  return {
-    sendReceive,
-    userProfile: userConfig?.userProfileInfo,
-    trackAuditLogData: userConfig?.trackAuditLogData,
-    withdrawCryptoPermissions: menuItems?.featurePermissions?.send_fiat,
-    oidc: oidc?.user?.profile
-  };
+    return {
+        sendReceive,
+        userProfile: userConfig?.userProfileInfo,
+        trackAuditLogData: userConfig?.trackAuditLogData,
+        withdrawCryptoPermissions: menuItems?.featurePermissions?.send_fiat,
+        oidc: oidc?.user?.profile
+    };
 };
 const connectDispatchToProps = dispatch => {
-  return {
-    // commented due to sonar issue
+    return {
+        // commented due to sonar issue
         // changeStep: (stepcode) => {
             // dispatch(setAddressStep(stepcode))
         // },
-    changeStep: (stepcode) => {
-      dispatch(setStep(stepcode))
-    },
-    clearAddress: (stepcode) => {
-      dispatch(setAddress(stepcode))
-    },
-    dispatch
-  }
+        changeStep: (stepcode) => {
+            dispatch(setStep(stepcode))
+        },
+        clearAddress: (stepcode) => {
+            dispatch(setAddress(stepcode))
+        },
+        dispatch
+    }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(withRouter(OnthegoCryptoTransfer));
