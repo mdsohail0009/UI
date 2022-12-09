@@ -53,7 +53,7 @@ const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "U
             renderText={(value, props) => (
               <div
                 {...props}
-                className="fs-14 text-white-30 text-center d-block"
+                className="swap-text-sub"
               >
                 {value} {isSwaped ? localCurrency : cryptoCurrency}{" "}
                 {isConvertionLoad && <Spin size="small" />}
