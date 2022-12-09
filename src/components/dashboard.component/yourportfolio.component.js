@@ -297,7 +297,7 @@ class YourPortfolio extends Component {
                   <List.Item.Meta
                     avatar={
                       <span
-                        className={`coin c-pointer ${item.coin}`}
+                        className={`crypto-icon c-pointer ${item.coin}`}
                         onClick={() =>
                           this.props.history.push(
                             "/coindetails/" + item.coinFullName.toLowerCase()
