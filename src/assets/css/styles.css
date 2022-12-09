@@ -913,7 +913,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .mobile-headerview{margin-top: 15px;}
     .mobile-headerview li{margin: 0 34px}
     .mobile-headerview li:nth-of-type(6), .mobile-headerview li:nth-of-type(7){display: none;} 
-    .login-user{width: 100%;padding: 8px 0;}   
+     
     .crypto_btns{display: flex; width: 100%; margin-top: 16px;}
     .hidden-mobile{display: none;}
     .profileinfo{padding: 15px 0;}
@@ -922,18 +922,13 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .visible-mobile .user-list .ant-tabs-nav{width: auto;}
     .mobile-mb-16{margin-bottom: 16px;}
     .bill_payment{display: block;}
-    .sideropen{margin-left: -16px;padding: 12px;margin-top: 5px;border-radius: 0;min-height: 100vh;
-        /* border-top-right-radius: 6px;border-bottom-right-radius: 6px; */
-        
-    }
+ 
     .coin-bal{display: block !important;}
     .coin-bal ul{ margin-top: 16px !important; text-align: center;}
     .wallet-mb{display: inline-block !important;}
     .mb-list .ant-list-item{display: flex !important;}
     .tlv-header .ant-layout-sider{min-height: 100vh;}
-    .sideropen .ant-menu-vertical,.ant-menu-vertical{border-right: 0 !important;}
-    .sideropen .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected{background-color: transparent;}
-    .sideropen .list-item.ant-menu-item-selected .ant-menu-title-content{min-width: 150px !important; padding: 8px 5px 8px 5px !important}
+
    .portfolio-data{display: block}
    .portfolio-list h1{padding: 0 0 6px;}
    .portfolio-list ul li{display: block !important;}
