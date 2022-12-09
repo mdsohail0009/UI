@@ -29,10 +29,10 @@ const [edit,setEdit]=useState(false);
 const [isSelectedId,setIsSelectedId] = useState(null);
     useEffect(() => {
         getpayeeCreate();
-    }, [])
+    }, []);//eslint-disable-line react-hooks/exhaustive-deps
     const getpayeeCreate = async () => {
         setMailLoader(true);
-        const createPayeeData = await createPayee(props.userProfile.id, props.selectedAddress?.id || "", addressOptions.addressType);
+        const createPayeeData = await createPayee( props.selectedAddress?.id || "", addressOptions.addressType);
         if (createPayeeData.ok) {
             let edit = false;
             setCreatePayeeObj(createPayeeData.data);
@@ -54,7 +54,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
     const onSubmit = async (values) => {
         if (Object.hasOwn(values?.payeeAccountModels, 'iban')) {
             setErrorMessage(null);
-            if ((!bankdetails || Object.keys(bankdetails).length == 0)) {
+            if ((!bankdetails || Object.keys(bankdetails).length === 0)) {
                 useDivRef.current.scrollIntoView()
                 setErrorMessage("Please click validate button before saving");
                 return;
@@ -64,7 +64,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         obj.payeeAccountModels = [payeeAccountObj()];
         obj.payeeAccountModels[0] = { ...obj.payeeAccountModels[0], ...bankdetails, ...values.payeeAccountModels };
         obj.payeeAccountModels[0].currencyType = "Fiat";
-        obj.payeeAccountModels[0].documents = documents?.payee;
+        obj.payeeAccountModels[0].documents = documents;
         obj.payeeAccountModels[0].walletCode = props.currency;
         if (props.selectedAddress?.id) { obj.payeeAccountModels[0].id = createPayeeObj.payeeAccountModels[0].id; }
         obj['customerId'] = props.userProfile.id;
@@ -75,11 +75,25 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             obj.id = isSelectedId ? isSelectedId : createPayeeObj.payeeAccountModels[0]?.payeeId;
         }
         setBtnLoading(true)
-        
+        if (obj.payeeAccountModels[0].documents === null || obj.payeeAccountModels[0].documents && obj.payeeAccountModels[0].documents.details.length === 0) {
+            useDivRef.current.scrollIntoView()
+            setErrorMessage('At least one document is required'); setBtnLoading(false)
+
+        } else if (obj.payeeAccountModels[0].documents) {
+            let length = 0;
+            for (let k in obj.payeeAccountModels[0].documents.details){
+                if(obj.payeeAccountModels[0].documents.details[k].state==='Deleted'){
+                    length=length+1;
+                }
+            }
+            if(length===obj.payeeAccountModels[0].documents.details.length){
+                useDivRef.current.scrollIntoView()
+                setErrorMessage('At least one document is required'); setBtnLoading(false)
+            } else {
         let payeesave = await savePayee(obj)
         if (payeesave.ok) {
             if (props.type !== "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer, documents: documents?.transfer })
+                const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer })
                 if (confirmRes.ok) {
                     setBtnLoading(false);
                     props.onContinue(confirmRes.data);
@@ -98,6 +112,8 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             setErrorMessage(isErrorDispaly(payeesave));
             useDivRef.current.scrollIntoView();
         }
+    }
+}
 
     }
     const isErrorDispaly = (objValue) => {
@@ -154,7 +170,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         </Col>
                     </Row>
                 </>}
-                {props.currency == 'EUR' && <h2 className="text-white fw-600" style={{ fontSize: 18, textAlign: 'center'}}>SEPA Transfer</h2>}
+                {props.currency === 'EUR' && <h2 className="text-white fw-600" style={{ fontSize: 18, textAlign: 'center'}}>SEPA Transfer</h2>}
                 {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
             <Form
                 ref={form}
@@ -294,7 +310,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
+                        <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
                             <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
                                     let temp = {...documents, "payee": docs}
                                     setDocuments(temp)
@@ -387,7 +403,6 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         }} refreshData = {addressOptions?.domesticType}/>
                 </React.Fragment>)
                 }
-
                     <div className="text-right mt-12">
                     <Button
                         htmlType="submit"
