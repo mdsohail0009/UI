@@ -9,8 +9,8 @@ const getportfolio = () => {
 const getCryptos = () => {
 	return apiClient.get(ApiControllers.buySell + "Coins");
 };
-const getMember = (customerid) => {
-	return apiClient.get(ApiControllers.customers + `${customerid}/App/Exchange`);
+const getMember = () => {
+	return apiClient.get(ApiControllers.customers + `App/Exchange`);
 };
 const sumsubacesstoken = (userid, flow) => {
 return apiClient.get(
@@ -147,17 +147,17 @@ const getInfoVal = (id, type) => {
 const getReferalDetails = () =>{
 	return apiClient.get(ApiControllers.partner + `getReferralDetails/customer`);
 }
-const getPayeeLu = (customerId,currency) => {
+const getPayeeLu = (currency) => {
     return apiClient.get(
-        ApiControllers.addressbook + `PayeeLu/${customerId}/${currency}`
+        ApiControllers.addressbook + `PayeeLu/${currency}`
     );
 };
 const saveTransferData=(obj)=>{
 	return apiClient.post(ApiControllers.addressbook+'payee',obj)
 }
-const getRecipientData=(customerId,type,addressbookId)=>{
+const getRecipientData=(addressbookId,type)=>{
 	return apiClient.get(
-        ApiControllers.addressbook + `payee/Withdraw/Favourite/${addressbookId}/${customerId}/${type}`
+        ApiControllers.addressbook + `payee/Withdraw/Favorite/${addressbookId}/${type}`
     );
 }
 const getPayeeCryptoLu = (currency) => {
@@ -165,9 +165,9 @@ const getPayeeCryptoLu = (currency) => {
 		ApiControllers.addressbook + `PayeeCryptoLu/${currency}`
 	);
 };
-const getPayeeCrypto = (customerId,currency) => {
+const getPayeeCrypto = (currency) => {
 	return apiClient.get(
-		ApiControllers.addressbook + `PayeeCrypto/${customerId}/${currency}`
+		ApiControllers.addressbook + `PayeeCrypto/${currency}`
 	);
 };
 const confirmCryptoTransaction = (obj) => {

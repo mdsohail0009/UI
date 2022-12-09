@@ -65,9 +65,9 @@ const getInfoVal = (id, type) => {
 const downloadDeclForm=(addr_id)=>{
 	return apiClient.get(ApiControllers.addressbook+`DownloadDocument/${addr_id}`);
 }
-const getPayeeLu = (customerId,type,is1stParty) => {
+const getPayeeLu = (type,is1stParty) => {
     return apiClient.get(
-        ApiControllers.addressbook + `PayeeLu/${customerId}/${type}/${is1stParty}`
+        ApiControllers.addressbook + `PayeeLu/${type}/${is1stParty}`
     );
 };
 
@@ -94,9 +94,9 @@ const getNewAddress = (payeeId) => {
 		ApiControllers.addressbook + `payee/Withdraw/Favourite/${payeeId}`
 	);
 };
-const getBankDetailLu = (payeeId,customerId) => {
+const getBankDetailLu = (payeeId) => {
     return apiClient.get(
-        ApiControllers.addressbook + `PayeeAccountLu/${payeeId}/${customerId}`
+        ApiControllers.addressbook + `PayeeAccountLu/${payeeId}`
     );
 };
 const getBankDetails = (payeeAccountId) => {
@@ -105,9 +105,9 @@ const getBankDetails = (payeeAccountId) => {
 	);
 };
 
-const getViewData = (payeeId,customerId,type) => {
+const getViewData = (payeeId,type) => {
     return apiClient.get(
-        ApiControllers.addressbook + `payee/Withdraw/Favourite/${payeeId}/${customerId}/${type||'myself'}`
+        ApiControllers.addressbook + `payee/Withdraw/Favorite/${payeeId}/${type||'myself'}`
     );
 };
 const emailCheck = (email,type) => {
@@ -118,9 +118,9 @@ const emailCheck = (email,type) => {
     }
 }
 
-const getCryptoData = (id,customerId) => {
+const getCryptoData = (id) => {
 	return apiClient.get(
-		ApiControllers.addressbook + `Crypto/${id}/${customerId}`
+		ApiControllers.addressbook + `Crypto/${id}`
 	);
 };
 

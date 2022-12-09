@@ -91,12 +91,12 @@ class OnthegoFundTransfer extends Component {
     }
   }
   getPayees() {
-    fetchPayees(this.props.userProfile.id, this.state.selectedCurrency).then((response) => {
+    fetchPayees( this.state.selectedCurrency).then((response) => {
         if (response.ok) {
             this.setState({ ...this.state, payeesLoading: false, filterObj: response.data, payees: response.data });
         }
     });
-    fetchPastPayees(this.props.userProfile.id, this.state.selectedCurrency).then((response) => {
+    fetchPastPayees(this.state.selectedCurrency).then((response) => {
       if (response.ok) {
         this.setState({ ...this.state, pastPayees: response.data });
       }

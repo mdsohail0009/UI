@@ -58,8 +58,8 @@ class AddressBook extends Component {
 			},
 			customerId: this.props.userConfig.id,
 
-			gridUrlCrypto: process.env.REACT_APP_GRID_API + "Address/Crypto",
-			gridUrlFiat: process.env.REACT_APP_GRID_API + "Address/Fiat",
+			gridUrlCrypto: process.env.REACT_APP_GRID_API + "Address/AddressCrypto",
+			gridUrlFiat: process.env.REACT_APP_GRID_API + "Address/AddressFiat",
 		};
 		this.gridFiatRef = React.createRef();
 		this.gridCryptoRef = React.createRef();

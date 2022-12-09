@@ -413,7 +413,7 @@ const FaitWithdrawal = ({ props,
     }
   };
   const getAccountdetails = async () => {
-    let response = await getAccountHolder(userConfig.id, "Fiat")
+    let response = await getAccountHolder( "Fiat")
     setAccountHolder(response.data)
   }
   const handleAccountChange = (e) => {
