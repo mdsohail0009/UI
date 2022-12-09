@@ -1,8 +1,8 @@
 import { apiClient } from '../../api';
 import { ApiControllers } from '../../api/config'
 
-const getCurrencyLu = (customer_id) => {
-    return apiClient.get(ApiControllers.wallets + `Fiat/${customer_id}`);
+const getCurrencyLu = () => {
+    return apiClient.get(ApiControllers.wallets + `Fiat`);
 }
 
 const savePayments = (obj) => {

@@ -1,7 +1,7 @@
 import { apiClient } from "../../api";
 import { ApiControllers } from "../../api/config";
-const getCryptoWithDrawWallets = ({ customerId }) => {
-    return apiClient.get(ApiControllers.wallets + `Crypto/${customerId}`)
+const getCryptoWithDrawWallets = () => {
+    return apiClient.get(ApiControllers.wallets + `Crypto`)
 }
 const withDrawCrypto = (obj) => {
     return apiClient.post(ApiControllers.withdraw + `Withdraw/Crypto`, obj)

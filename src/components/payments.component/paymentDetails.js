@@ -87,7 +87,7 @@ class PaymentDetails extends Component {
     }
   };
   getCurrencyLookup = async () => {
-    let response = await getCurrencyLu(this.props.userConfig?.id);
+    let response = await getCurrencyLu();
     if (response.ok) {
       this.setState({ ...this.state, currencylu: response.data });
     } else {
