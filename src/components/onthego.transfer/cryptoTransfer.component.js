@@ -214,7 +214,7 @@ class OnthegoCryptoTransfer extends Component {
             this.enteramtForm?.current?.setFieldsValue({amount:this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue});
         }
     }
-    numberValidator = async function (rule, value, callback) {
+     numberValidator = async function (rule, value, callback) {
         if (value) {
             if (typeof value === "number") {
                 value = value.toString();

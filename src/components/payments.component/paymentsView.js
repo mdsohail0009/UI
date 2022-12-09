@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getPaymentsData,getBankData,getFileURL } from './api';
-import { Typography, Button, Spin,message,Alert,Popover,Tooltip,Modal } from 'antd';
+import { Typography, Button, Spin,message,Popover,Tooltip,Modal } from 'antd';
 import Translate from 'react-translate-component';
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
@@ -40,7 +40,7 @@ class PaymentsView extends Component {
      }
     getPaymentsViewData = async () => {
         this.setState({ ...this.state, loading: true });
-        let response = await getPaymentsData(this.props.match.params.id, this.props.userConfig?.userId,this.state.currency);
+        let response = await getPaymentsData(this.props.match.params.id,this.state.currency);
         if (response.ok) {
             this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false });
         }else {
@@ -64,12 +64,12 @@ class PaymentsView extends Component {
       };
      handleVisibleChange = () => {
     this.setState({ ...this.state, visible: false });
-    if(this.state.visible== false){
+    if(this.state.visible=== false){
       this.setState({ ...this.state, isloading: false });
     }
   };
   popOverContent = () => {
-    const { moreBankInfo, tooltipLoad,isloading } = this.state;
+    const { moreBankInfo,isloading } = this.state;
     if (!isloading) {
       return <Spin />;
     } else {

@@ -5,10 +5,7 @@ import { getCurrencyLu, getPaymentsData, savePayments, getBankData, creatPayment
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 import Loader from '../../Shared/loader';
-import { warning } from '../../utils/message';
 import FilePreviewer from 'react-file-previewer';
-
-const { confirm } = Modal;
 const { Option } = Select;
 const { Title, Text, Paragraph } = Typography;
 const EllipsisMiddle = ({ suffixCount, children }) => {
@@ -71,10 +68,9 @@ class PaymentDetails extends Component {
 
   handleCurrencyChange = async (val) => {
     this.setState({ ...this.state, currency: val, paymentsData: [], errorMessage: null, errorWarning: null,loading:true });
-    if ((this.state.currency = val)) {
+    if ((this.state.currency === val)) {
       let response = await getPaymentsData(
         "00000000-0000-0000-0000-000000000000",
-        this.props.userConfig?.id,
         this.state.currency
       );
       if (response.ok) {
@@ -91,7 +87,7 @@ class PaymentDetails extends Component {
     }
   };
   getCurrencyLookup = async () => {
-    let response = await getCurrencyLu(this.props.userConfig?.id);
+    let response = await getCurrencyLu();
     if (response.ok) {
       this.setState({ ...this.state, currencylu: response.data });
     } else {
@@ -105,7 +101,6 @@ class PaymentDetails extends Component {
     if (this.props.match.params.id === "00000000-0000-0000-0000-000000000000") {
       let response = await getPaymentsData(
         "00000000-0000-0000-0000-000000000000",
-        this.props.userConfig?.id,
         this.state.currency
       );
       if (response.ok) {
@@ -379,33 +374,29 @@ class PaymentDetails extends Component {
   };
   handleVisibleChange = () => {
     this.setState({ ...this.state, visible: false });
-    if(this.state.visible== false){
+    if(this.state.visible=== false){
       this.setState({ ...this.state, isloading: false });
     }
   };
   popOverContent = () => {
-    const { moreBankInfo, tooltipLoad,isloading, currency } = this.state;
+    const { moreBankInfo,isloading} = this.state;
     if (!isloading) {
       return <Spin />;
     } else {
       return (
         <div className="more-popover">
-          {/* <Text className="lbl text-white">Bank Label</Text>
-          <Text className="val text-white">{moreBankInfo?.bankLabel}</Text> */}
-          {this.state.currency == "USD" &&<Text className="lbl text-white">BIC/SWIFT/ABARouting Number</Text>}
-          {this.state.currency == "USD" &&<Text className="val text-white">{moreBankInfo?.routingNumber}</Text>}
-          {this.state.currency == "USD" && <Text className="lbl text-white">Bank Address</Text>}
-          {this.state.currency == "USD" && <Text className="val text-white">{moreBankInfo?.beneficiaryAccountAddress}</Text>}
-          {/* <Text className="lbl text-white">Beneficiary Account Name</Text>
-          <Text className="val text-white">{moreBankInfo?.beneficiaryAccountName}</Text> */}
-          {this.state.currency == "EUR" && <Text className="lbl text-white">Country</Text>}
-          {this.state.currency == "EUR" && <Text className="val text-white">{moreBankInfo?.country}</Text>}
-          {this.state.currency == "EUR" && <Text className="lbl text-white">State</Text>}
-          {this.state.currency == "EUR" &&<Text className="val text-white">{moreBankInfo?.state}</Text>}
-          {this.state.currency == "EUR" &&<Text className="lbl text-white">City</Text>}
-          {this.state.currency == "EUR" &&<Text className="val text-white">{moreBankInfo?.city}</Text>}
-          {this.state.currency == "EUR" &&<Text className="lbl text-white">Postal Code</Text>}
-          {this.state.currency == "EUR" &&<Text className="val text-white">{moreBankInfo?.postalCode}</Text>}
+          {this.state.currency === "USD" &&<Text className="lbl text-white">BIC/SWIFT/ABARouting Number</Text>}
+          {this.state.currency === "USD" &&<Text className="val text-white">{moreBankInfo?.routingNumber}</Text>}
+          {this.state.currency === "USD" && <Text className="lbl text-white">Bank Address</Text>}
+          {this.state.currency === "USD" && <Text className="val text-white">{moreBankInfo?.beneficiaryAccountAddress}</Text>}
+          {this.state.currency === "EUR" && <Text className="lbl text-white">Country</Text>}
+          {this.state.currency === "EUR" && <Text className="val text-white">{moreBankInfo?.country}</Text>}
+          {this.state.currency === "EUR" && <Text className="lbl text-white">State</Text>}
+          {this.state.currency === "EUR" &&<Text className="val text-white">{moreBankInfo?.state}</Text>}
+          {this.state.currency === "EUR" &&<Text className="lbl text-white">City</Text>}
+          {this.state.currency === "EUR" &&<Text className="val text-white">{moreBankInfo?.city}</Text>}
+          {this.state.currency === "EUR" &&<Text className="lbl text-white">Postal Code</Text>}
+          {this.state.currency === "EUR" &&<Text className="val text-white">{moreBankInfo?.postalCode}</Text>}
         </div>
       );
     }
@@ -515,7 +506,7 @@ class PaymentDetails extends Component {
                       {paymentsData?.length > 0 ? (
                         <tbody className="mb-0">
                           {paymentsData?.map((item, i) => {
-                            if (item.recordStatus != 'Deleted') {
+                            if (item.recordStatus !== 'Deleted') {
                               return (
                                 <>
                                   <tr
@@ -720,6 +711,9 @@ class PaymentDetails extends Component {
                                 </>
                               );
                             }
+                            else{
+                              return <></>;
+                            }
                           })}
                         </tbody>
                       ) : (
@@ -741,12 +735,12 @@ class PaymentDetails extends Component {
                     <tfoot>
                       <tr>
                         {(this.props.match.params.id ===
-                          "00000000-0000-0000-0000-000000000000" || this.props.match.params.state === "Submitted" || this.props.match.params.state === "Pending"|| this.props.match.params.state == "Approved"|| this.props.match.params.state == "Cancelled") && <>
+                          "00000000-0000-0000-0000-000000000000" || this.props.match.params.state === "Submitted" || this.props.match.params.state === "Pending"|| this.props.match.params.state === "Approved"|| this.props.match.params.state === "Cancelled") && <>
                             <td></td>
-                            {/* <td></td> */}
+                          
                           </>
                         }
-                        {(this.props.match.params.id !== "00000000-0000-0000-0000-000000000000"|| this.props.match.params.state == "Approved"|| this.props.match.params.state == "Cancelled") && <>
+                        {(this.props.match.params.id !== "00000000-0000-0000-0000-000000000000"|| this.props.match.params.state === "Approved"|| this.props.match.params.state === "Cancelled") && <>
                         <td></td>
                         </> }
                         <td></td>
@@ -827,8 +821,7 @@ class PaymentDetails extends Component {
         <Modal title="Delete Payment"
           destroyOnClose={true}
           closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.handleCancel} /></Tooltip>}
-          // closable={false}
-          // closeIcon={false}
+         
           visible={this.state.modal}
           className="payments-modal"
           footer={[

@@ -16,6 +16,7 @@ import WithdrawalSummary from '../withDraw.component/withdrawalSummary';
 import WithdrawalLive from '../withDraw.component/withdrawLive';
 import WithdrawalSuccess from '../withDraw.component/withdrwSuccess';
 import ConfirmMsg from './confirmMsg';
+import { Link } from 'react-router-dom';
 
 class MassPayment extends Component {
     state = {
@@ -82,8 +83,8 @@ withdrawFiatSummaryBack = () => {
         const menu = (
             <Menu>
                 <ul className="drpdwn-list pl-0">
-                    <li onClick={() => this.props.dispatch(setStep("step1"))}><a>Withdraw</a></li>
-                    <li onClick={() => this.props.dispatch(setStep("step1"))}><a>Fiat</a></li>
+                    <li onClick={() => this.props.dispatch(setStep("step1"))}><Link>Withdraw</Link></li>
+                    <li onClick={() => this.props.dispatch(setStep("step1"))}><Link>Fiat</Link></li>
                 </ul>
             </Menu>
         );
@@ -93,7 +94,7 @@ withdrawFiatSummaryBack = () => {
             fiatdepositsummary: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             addcard: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             selectwallet: <Dropdown overlay={menu} overlayClassName="secureDropdown" arrow>
-                <a className="pop-drpdwn-toogle" onClick={e => e.preventDefault()}><span className="icon md h-more" /></a>
+                <Link className="pop-drpdwn-toogle" onClick={e => e.preventDefault()}><span className="icon md h-more" /></Link>
             </Dropdown>,
 
             billingaddress: <sapn />,

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Typography, Button, Modal, Tooltip } from "antd";
 import Loader from "../../Shared/loader";
-import { getAddress, getFileURL, getFavData, getViewData, getCryptoData } from "./api";
+import { getFileURL, getCryptoData } from "./api";
 import { connect } from "react-redux";
 import FilePreviewer from "react-file-previewer";
 import { bytesToSize } from "../../utils/service";
-import { addressTabUpdate, setAddressStep, selectedTab } from "../../reducers/addressBookReducer";
+import { addressTabUpdate} from "../../reducers/addressBookReducer";
 const { Title, Text } = Typography;
 const EllipsisMiddle = ({ suffixCount, children }) => {
 	const start = children?.slice(0, children.length - suffixCount).trim();
@@ -24,7 +24,6 @@ const AddressCryptoView = (props) => {
 	const [cryptoAddress, setCryptoAddress] = useState({});
 	const [previewPath, setPreviewPath] = useState(null);
 	const [previewModal, setPreviewModal] = useState(false);
-	const [bankDetailes, setBankDetailes] = useState([]);
 
 
 	useEffect(() => {
@@ -32,10 +31,9 @@ const AddressCryptoView = (props) => {
 	}, []);// eslint-disable-line react-hooks/exhaustive-deps
 	const loadDataAddress = async () => {
 		setIsLoading(true)
-		let response = await getCryptoData(props?.match?.params?.id, props?.userConfig?.id);
+		let response = await getCryptoData(props?.match?.params?.id);
 		if (response.ok) {
 			setCryptoAddress(response.data);
-			setBankDetailes(response.data.payeeAccountModels)
 		}
 		setIsLoading(false)
 	};
@@ -55,8 +53,7 @@ const AddressCryptoView = (props) => {
 		return previewPath;
 
 	};
-	const iban = cryptoAddress?.bankType === "iban" ? "IBAN" : "Bank Account"
-	const iban1 = cryptoAddress?.bankType === "iban" ? "IBAN" : "Bank Account Number"
+	
 	const filePreviewModal = (
 		<Modal
 			className="documentmodal-width"

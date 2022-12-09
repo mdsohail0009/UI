@@ -52,7 +52,7 @@ const fetchFeatures = (app_id, customer_id) => {
                     item.subMenu = menu.filter(menuItem => menuItem.parentId === item.id);
                 }
             }
-            const _cockpit = menu.find(item => (item.key == "cockpit" || item.path == "/cockpit"));
+            const _cockpit = menu.find(item => (item.key === "cockpit" || item.path === "/cockpit"));
             menu = menu.filter(item => (!item.parentId && !["cockpit", "balances", "addressbook", "billpayments", "transactions"].includes(item.key)));
             dispatch(setData({ data: menu, error: null, key: "features", loading: false, originalData: response.data }));
             if (_cockpit && window.location.pathname?.includes('cockpit')) {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Card, Alert, message,Image,Select } from 'antd';
+import { Typography, Card, Alert, message,Image } from 'antd';
 import WalletList from '../shared/walletList';
 import { changeStep, setTab } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
@@ -14,7 +14,7 @@ import Currency from '../shared/number.formate';
 import apicalls from '../../api/apiCalls';
 import {  getPreview } from './api'
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
-const { Option } = Select;
+
 class SelectCrypto extends Component {
     myRef = React.createRef();
     swapRef = React.createRef();
@@ -83,7 +83,7 @@ class SelectCrypto extends Component {
             const { data: value, config: { url } } = response;
             const _obj = url.split("CryptoFiatConverter")[1].split("/");
             const _val = isSwaped ? cryptoValue : localValue;
-            if (_obj[4] == _val || _obj[4] == 0) {
+            if (_obj[4] === _val || _obj[4] === 0) {
                 if (!isSwaped) {
                     _cryptoValue = value || 0;
                 } else { _nativeValue = value || 0; }
@@ -111,12 +111,12 @@ class SelectCrypto extends Component {
             this.myRef.current.scrollIntoView();
             return;
         }
-        if((localValue == 0 && cryptoValue == 0)){
+        if((localValue === 0 && cryptoValue === 0)){
             this.setState({ ...this.state, error: "We can not process this request, Since commission is more than or equal to requested amount" });
 
         }
         this.setState({...this.state,btnLoading:true})
-        const response = await getPreview({ coin, currency: this.state.selectedWallet.currencyCode, amount:(isSwaped ? cryptoValue : localValue), isCrypto:!isSwaped, customer_id:this.props?.userProfileInfo.id });
+        const response = await getPreview({ coin, currency: this.state.selectedWallet.currencyCode, amount:(isSwaped ? cryptoValue : localValue), isCrypto:!isSwaped });
         if (response.ok) {
             this.props.preview(this.state.selectedWallet, coin, (isSwaped ? cryptoValue : localValue), !isSwaped, this.props?.userProfileInfo.id);
             this.props.setStep('step3');
