@@ -290,7 +290,7 @@ class Header extends Component {
           <div className="tlv-header" id="area">
             <div className="login-user">
               <ul className="header-logo pl-0">
-                <li className="visible-mobile pr-24 p-relative" onClick={this.showToggle}>
+                <li className="visible-mobile p-relative" onClick={this.showToggle}>
                   {this.state.collapsed ?
                     <span className="icon lg hamburg " /> : <span className="icon md close-white " />}
                 </li>
