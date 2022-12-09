@@ -426,7 +426,7 @@ const FaitWithdrawal = ({ props,
     setBankDetails([])
     let data = accountHolder.find((item) => item.name == e)
     setAccountHolderDetails(data)
-    AccountWallet(userConfig.id)
+    AccountWallet()
     if (e !== data.name) {
       form.setFieldsValue({ currencyCode: " " })
       // setBankDetails(null)
@@ -434,8 +434,8 @@ const FaitWithdrawal = ({ props,
 
     }
   }
-  const AccountWallet = async (AccountId) => {
-    let response = await getAccountWallet(AccountId)
+  const AccountWallet = async () => {
+    let response = await getAccountWallet()
     if (response.ok) {
       setAccountCurrency(response.data)
     }

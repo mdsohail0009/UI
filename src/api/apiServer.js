@@ -35,8 +35,8 @@ export const getAccountHolder=(customerId,type)=>{
     return apiClient.get(ApiControllers.addressbook + `WithdrawPayeeLu/${customerId}/${type}`);
 }
 
-export const getAccountWallet=(AccountId)=>{
-    return apiClient.get(ApiControllers.wallets + `Fiat/${AccountId}`);
+export const getAccountWallet=()=>{
+    return apiClient.get(ApiControllers.wallets + `Fiat`);
 }
 
 export const getAccountBankDetails=(payeeId,currency)=>{

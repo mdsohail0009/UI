@@ -3,8 +3,8 @@ import { ApiControllers } from "./config";
 import counterpart from "counterpart";
 import CryptoJS from "crypto-js";
 
-const getportfolio = (memID) => {
-	return apiClient.get(ApiControllers.wallets + `Crypto/${memID}`);
+const getportfolio = () => {
+	return apiClient.get(ApiControllers.wallets + `Crypto`);
 };
 const getCryptos = () => {
 	return apiClient.get(ApiControllers.buySell + "Coins");
@@ -160,9 +160,9 @@ const getRecipientData=(customerId,type,addressbookId)=>{
         ApiControllers.addressbook + `payee/Withdraw/Favourite/${addressbookId}/${customerId}/${type}`
     );
 }
-const getPayeeCryptoLu = (customerId,currency) => {
+const getPayeeCryptoLu = (currency) => {
 	return apiClient.get(
-		ApiControllers.addressbook + `PayeeCryptoLu/${customerId}/${currency}`
+		ApiControllers.addressbook + `PayeeCryptoLu/${currency}`
 	);
 };
 const getPayeeCrypto = (customerId,currency) => {

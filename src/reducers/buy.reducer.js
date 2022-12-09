@@ -109,7 +109,7 @@ const fetchPreview = ({ coin, wallet, amount }) => {
 const getMemberCoins = (customer_id) => {
     return dispatch => {
         dispatch(fetchMemberCoins());
-        getportfolio(customer_id).then(
+        getportfolio().then(
             (response) => {
                 if (response.ok) {
                     dispatch(fetchMemberCoinsSuccess(response.data, 'MemberCoins'));

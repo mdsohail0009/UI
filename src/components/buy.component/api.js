@@ -1,12 +1,12 @@
 import { apiClient } from '../../api';
 import { ApiControllers } from '../../api/config';
-const getportfolio = (customer_id) => {
+const getportfolio = () => {
     return apiClient.get(ApiControllers.wallets + 'Crypto');
 }
 const getCryptos = () => {
     return apiClient.get(ApiControllers.buySell + 'Coins');
 }
-const getMemberfiat = (customer_id) => {
+const getMemberfiat = () => {
     return apiClient.get(ApiControllers.wallets + 'Fiat');
 }
 const getSellamnt = (Value, coin, isCrypto, customer_id, screenName, currencyCode) => {

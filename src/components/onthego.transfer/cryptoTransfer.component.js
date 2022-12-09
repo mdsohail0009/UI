@@ -65,7 +65,7 @@ class OnthegoCryptoTransfer extends Component {
 
     getPayees = async () => {
         this.setState({ ...this.state, loading: true })
-        let response = await apicalls.getPayeeCryptoLu(this.props.userProfile.id, this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin);
+        let response = await apicalls.getPayeeCryptoLu(this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin);
         if (response.ok) {
             this.setState({ ...this.state, loading: false, payeesLoading: false, filterObj: response.data, payees: response.data });
         }
