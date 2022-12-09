@@ -35,8 +35,8 @@ const trackEvent = (obj) => {
 const getIpRegistery = () => {
 	return ipRegistry.get("/?key=hb9lsmlhafyn1s1s");
 };
-const sellMemberCrypto = (memID) => {
-	return apiClient.get(ApiControllers.wallets + memID);
+const sellMemberCrypto = () => {
+	return apiClient.get(ApiControllers.wallets);
 };
 const convertLocalLang = (key) => {
 	return counterpart.translate(key);
