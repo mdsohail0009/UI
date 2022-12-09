@@ -28,7 +28,7 @@ const WithdrawalSuccess = ({ changeStep, dispatch, userProfileInfo, sendReceive,
         <>
             <div className="success-pop text-center mb-24">
                 <img src={success} className="confirm-icon" alt={"success"} />
-                <Translate content="success_msg" component={Title} className="text-white-30 fs-36 fw-200 mb-4" />
+                <Translate content="success_msg" component={Title} className="" />
                 <Paragraph className="fs-14 text-white-30 fw-200"><Translate content="sucessText1" component={Text} className="fs-14 text-white-30 fw-200" /> {fd.totalValue} {fd.walletCode} <Translate content="sucessText3" component={Text} className="fs-14 text-white-30 fw-200" /></Paragraph>
                 <Link onClick={() => goBack()} className="f-16 mt-16 text-underline text-white-30">{apiCalls.convertLocalLang('Back_to_Withdrawfiat')}</Link>
             </div>

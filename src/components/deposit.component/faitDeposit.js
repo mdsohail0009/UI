@@ -390,7 +390,7 @@ class FaitDeposit extends Component {
             </Form>}
             {this.state.showSuccessMsg && <div className="success-pop text-center">
               <img src={success} className="confirm-icon" alt={'success'} />
-              <Translate content="success_msg" component={Title} className="text-white-30 fs-36 fw-200 mb-4" />
+              <Translate content="success_msg" component={Title} className="" />
               <Paragraph className="fs-14 text-white-30 fw-200">0.2258 BTC and 212545 USD amount has been added to your wallets, Your order has been placed successfully</Paragraph>
               <Space direction="vertical" size="large">
                 <Translate content="return_to_depositfiat" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => this.setState({ ...this.state, showSuccessMsg: false })} />
