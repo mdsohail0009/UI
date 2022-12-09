@@ -53,7 +53,7 @@ class Home extends Component {
     render() {
         const { data: notices } = this.props.dashboard?.notices;
         return (
-            <div className="main-container">
+            <div className="main-container dashbord-space">
                 {this.props?.twoFA && ((!this.props?.twoFA?.isEnabled) && (!this.props?.twoFA?.loading)) && <div>
                     <AlertConfirmation type="error" title={"2FA"} showIcon description="Please enable two-factor authentication (2FA) by clicking on user profile in the top right hand corner and navigating to “Manage Your Account” > “Security” or by clicking on Enable 2FA."
                         action={
@@ -76,20 +76,21 @@ class Home extends Component {
             <Translate content="Dashboard" component={Title} className="db-main-title" />
                 <Row justify="center mt-16" gutter={[16,16]}>
                 <Col xs={24} md={12} xl={15}>
-                        {this.state.permissions?.Bank &&
+                        
+                        {this.state.permissions?.Balances &&<>
                             <div className="markets-panel">
+                                <YourPortfolio />
+                            </div>
+                        
+                            <div className="markets-panel markets-line">    
+                                <Wallets />
+                            </div>                     
+                        </>}
+                        {this.state.permissions?.Bank &&
+                            <div className="markets-panel ac-topspace">
                                 <BankWallets/>
                             </div>
                         }
-                        {this.state.permissions?.Balances &&<>
-                            <div className="markets-panel">
-                            <YourPortfolio />
-                        </div>
-                        
-                        <div className="markets-panel markets-line">    
-                            <Wallets />
-                            </div>                     
-                        </>}
                         {this.state.permissions.Transactions && <Portfolio
                             crypto="Bitcoin"
                             crypto_value='0.00'

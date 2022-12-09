@@ -1031,7 +1031,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .mobile-headerview{display: block;}
     .visible-mobile,.sideropen{display: none;}
     /* .full-screenable-node{width: 760px;} */
-    .full-screenable-node{width: 100%;}
+    .full-screenable-node{width: 482px;overflow: auto;}
     .portfolio-list h1{padding: 16px 0 16px;}
     .portfolio-data{display: flex;align-items: baseline;}
     .portfolio-title{align-items: baseline;}

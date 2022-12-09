@@ -63,7 +63,7 @@ const MarketCap = ({ member }) => {
 
     return <>
         <div className='market-panel-newstyle'></div>
-            <div className="full-screenable-node marketcap-mt" style={{ overflow: "hidden",background: "daryGrey"}}>
+            <div className="full-screenable-node marketcap-mt" >
 
                 <div className="d-flex">
                     <div className="d-flex align-center">

@@ -246,21 +246,22 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .dbchart-link span{color: var(--viewAll);font-size: 18px;font-weight: 500;}
 .market-panel-newstyle{clear: both;}
 /* .markets-head{color: var(--black) !important;font-size: 22px !important;font-weight: 700 !important;margin-bottom: 8px !important;} */
-.icon-space{margin-left: 12px;margin-bottom: 8px;}
+.icon-space{margin-left: 12px;margin-bottom: 12px;}
 .pipeline{color: var(--tableText);margin-right: 10px;}
-.sb-card{background: var(--sbCard);border-radius: 20px;padding: 30px;margin-bottom: 16px;}
+.sb-card{background: var(--sbCard);border-radius: 20px;padding: 30px;margin-bottom: 16px;width: 482px;}
 .sb-text{color: var(--sbCardText);letter-spacing: 5px;font-weight: 700;font-size: 24px;}
 .sb-accounts{padding: 2px;}
-.cardlogo-height{margin-bottom: 100px;opacity: 0.6;}
+.cardlogo-height{margin-bottom: 109px;opacity: 0.6;}
 .transaction-panel, .crypto-style{margin-top: 50px;}
 .transaction-title{display: flex;align-items: center;}
 .trans-align{display: flex;align-items: center;justify-content: space-between;}
 .bash-market-table{background-color: var(--cardBG);border-top-left-radius: 20px;padding-bottom:16px;border-top-right-radius: 20px;border-bottom-left-radius: 20px;border-bottom-right-radius: 20px;}
 .ant-table-container table > thead > tr:first-child th:last-child{border-top-right-radius: 20px;}
-.db-main-title{font-weight: 800 !important;font-size: 32px !important;color: var(--primary) !important;margin-bottom: 56px !important;}
-.marketcap-mt{margin-top: 56px;}
+.db-main-title{font-weight: 800 !important;font-size: 32px !important;color: var(--primary) !important;margin-bottom: 40px !important;}
+.marketcap-mt{margin-top: 46px;}
 .crypto-curr-align{display: flex;justify-content: space-between;align-items: center;}
 .iban-list .ant-list-item-meta{display:block;}
+.iban-list .ant-list-items{display: flex;}
 .ts-wallet .ts-coin{font-weight: 500;font-size: 14px;color: var(--tablesub);margin-bottom: 4px;}
 .ts-wallet .ts-type{font-weight: 400;font-size: 14px;color: var(--tableInner);margin: 0 !important;}
 .ts-tbdate .ts-date{font-weight: 400;font-size: 14px;color: var(--tableText);margin: 0 !important;}
@@ -269,6 +270,8 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .listitems-design.iban-style{background: var(--cardBG) !important;}
 .bash-market-table .ant-table-column-sorters .ant-table-column-title{color: var(--marketTitle);font-weight: 700;font-size: 16px;}
 .bash-market-table .ant-table-column-sorters .ant-table-column-sorter{color: var(--marketTitle);}
+.dashbord-space{padding-top: 0px !important;}
+.ac-topspace{padding: 10px;}
 /* Dashboard end */
 
 /*Buy drawer start*/
@@ -344,6 +347,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .visible-mobile, .sideropen{display: none;}
     .bill-grid .k-grid-header table{width: 1255px !important;}
     .bill-grid .k-grid-content table{width: 1254px !important;}
+    .listitems-design.iban-style{width: 233px !important;}
     .listitems-design{width: 356px;}
 }
 @media (min-width: 1024px){

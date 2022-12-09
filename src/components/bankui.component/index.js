@@ -106,8 +106,8 @@ class BankWallets extends Component {
     const { Title, Text } = Typography;
     const { wallets } = this.props.dashboard;
     return (
-      <>
-        <Title className="db-titles">
+      <><div className='market-panel-newstyle'></div>
+        <Title className="db-titles crypto-style">
           Personal Bank Accounts
         </Title>
         {this.state.isLoading ? (

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, List, Button, Image, Dropdown, Space, Menu, Drawer, Tooltip } from 'antd';
+import { Typography, List, Button, Image, Dropdown, Space, Menu, Drawer, Tooltip,Row,Col } from 'antd';
 import Translate from 'react-translate-component';
 import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
 import { fetchMemberWalletsData, fetchPortfolioData } from '../../reducers/dashboardReducer';
@@ -140,42 +140,42 @@ class Iban extends Component {
                 {wallets?.loading ? (
                     <Loader />
                 ) : (
-                <List
-                    itemLayout="horizontal"
-                    dataSource={wallets.data}
-                    bordered={false}
-                    className="mobile-list iban-list"
-                    //loading={wallets.loading}
-                    renderItem={item =>
-                        <List.Item className="listitems-design iban-style">
-                            <List.Item.Meta
-                                avatar={<><div className='crypto-curr-align'><div><Image preview={false} src={item.imagePath}/></div>
-                                <Dropdown 
-                                overlay={this.menuBar(item)}
-                                 trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
-                            <a onClick={e => e.preventDefault()}>
-                              <Space>
-                              <span class="icon lg menu-bar  p-relative"></span>
-                              {/* <DownOutlined /> */}
-                            </Space>
-                          </a>
-                        </Dropdown>
-                        </div>    </>}
-                                title={<><div className="coin-style">{item.walletCode}</div>
-                            <Currency className="currency-style" defaultValue={Math.abs(item.amount) > 999999 ? Math.sign(item.amount)*((Math.abs(item.amount)/1000000).toFixed(1)) : Math.sign(item.amount)*Math.abs(item.amount)} suffixText={Math.abs(item.amount) > 999999?"M":null} prefix={(item?.walletCode == "USD" ? "$" : null) || (item?.walletCode == "GBP" ? "£" : null) || (item?.walletCode == "EUR" ? "€" : null)} decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />
-                            
-                              </>}
-                                // description={}
-                            />
-                            <div className="crypto-btns crypto-btn-top">
-                                <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
-                                <Translate content="withdraw" onClick={() => { this.showSendReceiveDrawer(2, item.walletCode) }} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} />
-                                {/* <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
+                        <List
+                            itemLayout="horizontal"
+                            dataSource={wallets.data}
+                            bordered={false}
+                            className="mobile-list iban-list"
+                            //loading={wallets.loading}
+                            renderItem={item =>
+                                <List.Item className="listitems-design iban-style">
+                                    <List.Item.Meta
+                                        avatar={<><div className='crypto-curr-align'><div><Image preview={false} src={item.imagePath} /></div>
+                                            <Dropdown
+                                                overlay={this.menuBar(item)}
+                                                trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
+                                                <a onClick={e => e.preventDefault()}>
+                                                    <Space>
+                                                        <span class="icon lg menu-bar  p-relative"></span>
+                                                        {/* <DownOutlined /> */}
+                                                    </Space>
+                                                </a>
+                                            </Dropdown>
+                                        </div>    </>}
+                                        title={<><div className="coin-style">{item.walletCode}</div>
+                                            <Currency className="currency-style" defaultValue={Math.abs(item.amount) > 999999 ? Math.sign(item.amount) * ((Math.abs(item.amount) / 1000000).toFixed(1)) : Math.sign(item.amount) * Math.abs(item.amount)} suffixText={Math.abs(item.amount) > 999999 ? "M" : null} prefix={(item?.walletCode == "USD" ? "$" : null) || (item?.walletCode == "GBP" ? "£" : null) || (item?.walletCode == "EUR" ? "€" : null)} decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />
+
+                                        </>}
+                                    // description={}
+                                    />
+                                    <div className="crypto-btns crypto-btn-top d-flex">
+                                        <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
+                                        <Translate content="withdraw" onClick={() => { this.showSendReceiveDrawer(2, item.walletCode) }} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} />
+                                        {/* <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
                                 <Translate content="withdraw" onClick={() => this.showSendReceiveDrawer(2, item.walletCode)} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} /> */}
-                           
-                    </div>
-                        </List.Item>}
-                />
+
+                                    </div>
+                                </List.Item>}
+                        />
                 )}
                 <SuissebaseFiat showDrawer={this.state.sendReceiveDrawer} valNum={this.state.valNum} onClose={() => this.closeDrawer()} />
                 {this.state.buyFiatDrawer && <MassPayment showDrawer={this.state.buyFiatDrawer} tabData={{ tabVal: this.state.valNum, walletCode: this.state.selctedVal }} onClose={() => this.closeDrawer()} />}
