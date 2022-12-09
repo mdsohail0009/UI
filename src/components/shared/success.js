@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import success from '../../assets/images/success.png';
+import success from '../../assets/images/success.svg';
 import { Typography, Space, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import Translate from 'react-translate-component';

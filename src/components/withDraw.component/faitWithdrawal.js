@@ -21,7 +21,7 @@ import {
   getCountryStateLu,
   getStateLookup, getAccountHolder, getAccountWallet, getAccountBankDetails
 } from "../../api/apiServer";
-import success from "../../assets/images/success.png";
+import success from "../../assets/images/success.svg";
 import { fetchDashboardcalls } from "../../reducers/dashboardReducer";
 import { handleFavouritAddress } from "../../reducers/addressBookReducer";
 import {

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buyFiatReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
-import success from '../../assets/images/success.png';
+import success from '../../assets/images/success.svg';
 import { setdepositCurrency } from '../../reducers/depositReducer';
 import apiCalls from "../../api/apiCalls";
 

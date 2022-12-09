@@ -230,7 +230,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .verify-container{max-height: calc(100vh - 140px);}
 .dep-withdraw{max-height: calc(100vh - 265px);}
 .selectcrypto-container{max-height: calc(100vh - 101px);}
-.cryptosummary-container{max-height: calc(100vh - 106px);}
+/* .cryptosummary-container{max-height: calc(100vh - 106px);} */
 .auto-scroll{overflow-y: auto; padding-right: 10px;}
 .auto-scroll::-webkit-scrollbar-thumb{background-color: var(--bgDark1);}
 .ant-list-split .ant-list-item:last-child .crypto-list-tabs .ant-list-item, .wallet-list .ant-list-item{border-color: var(--borderLight);}
@@ -356,7 +356,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .coin.md.mastercard-white{background-position: -83px -1055px;width: 54px !important;height: 35px !important;}
 .coin.credit-white{background-position: -488px -2px;box-shadow: none;}
 .coin.deposit-white{background-position: -542px 0;box-shadow: none;}
-.pay-list{padding: 16px 0; border-bottom: 1px solid var(--borderLight);}
+/* .pay-list{padding: 16px 0; border-bottom: 1px solid var(--borderLight);} */
 .expiry-input{width: 200px;}
 .expiry-input input{width: 50px; padding: 0 4px;height: 50px;}
 .cust-input, .expiry-input,.cust-input .ant-input{background: transparent;border-radius: 30px;height: 50px;border: 1px solid var(--borderLight);color: var(--textWhite30); text-align: center;margin-bottom: 6px;font-size: 16px;padding: 0 16px !important; }
@@ -404,10 +404,10 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .find-wallet .ant-select-arrow{color: var(--bgWhite); margin-right: 5px;}
 .ant-checkbox-checked .ant-checkbox-inner{border: 1px solid var(--bgDarkYellow);border-color: var(--bgDarkYellow);background-color: var(--bgDarkYellow);}
 .ant-checkbox-wrapper:hover .ant-checkbox-inner, .ant-checkbox:hover .ant-checkbox-inner, .ant-checkbox-input:focus + .ant-checkbox-inner, .ant-checkbox-checked::after{border: 1px solid var(--textSecondary);border-color: var(--textSecondary);}
-.agree-check input[type=checkbox]{display: none;}
+/* .agree-check input[type=checkbox]{display: none;}
 .agree-check input[type=checkbox]+span{display: inline-block;width: 34px;height: 34px;vertical-align: text-top;cursor: pointer;border: 1px solid var(--borderLight)}
-.agree-check input[type=checkbox]:checked+span{background: var(--lightThemeIcons);background-position: -33px -109px;border-color: transparent !important;}
-.agree-check label{height: 34px;}
+.agree-check input[type=checkbox]:checked+span{background: var(--lightThemeIcons);background-position: -33px -109px;border-color: transparent !important;} */
+/* .agree-check label{height: 34px;} */
 .ant-select-arrow{color: var(--textWhite);right:16px; top: 24px;}
 .custom-switch{border-bottom: none;}
 .agree .ant-form-item-explain-error{text-align: left;}

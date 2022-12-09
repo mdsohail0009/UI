@@ -35,6 +35,11 @@
      --coinBg:rgba(107, 107, 107, 0.15);
      --drpdwnHover:rgba(116, 118, 125,0.3);;
      --inputBg:#FFFFFF;
+     --checkText:#74767D;
+     --checksub:rgba(8, 9, 14 ,0.7);
+     --borderColor:rgba(8, 9, 14, 0.2);
+     --termsText:#4E54FB;
+     --inputBorder:#74767D;
  
      --lightThemeIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/user-light-theme2.0.svg);
      --cryptoIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/light-crypto-icons.svg);

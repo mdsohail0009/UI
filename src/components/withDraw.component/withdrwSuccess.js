@@ -5,7 +5,7 @@ import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import { rejectWithdrawfiat, setWithdrawfiatenaable ,setClearAmount} from '../../reducers/sendreceiveReducer';
-import success from '../../assets/images/success.png';
+import success from '../../assets/images/success.svg';
 import apiCalls from '../../api/apiCalls';
 
 const WithdrawalSuccess = ({ changeStep, dispatch, userProfileInfo, sendReceive,amountReset }) => {

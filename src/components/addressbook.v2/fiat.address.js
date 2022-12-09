@@ -3,7 +3,7 @@ import {  Row, Col, Form, Button, Typography, List,  Image, Alert,Empty } from '
 import apicalls from "../../api/apiCalls";
 import FiatAddress from "../addressbook.component/fiat.address";
 import alertIcon from '../../assets/images/pending.png';
-import success from '../../assets/images/success.png';
+import success from '../../assets/images/success.svg';
 import NumberFormat from "react-number-format";
 import ConnectStateProps from "../../utils/state.connect";
 import { fetchPayees, fetchPastPayees, saveWithdraw, validateAmount } from "../onthego.transfer/api";

@@ -9,7 +9,7 @@ import { rejectWithdrawfiat, setWithdrawfiatenaable } from '../../reducers/sendr
 import { setStep, setSubTitle } from '../../reducers/buyFiatReducer';
 import {  requestDepositFiat } from './api';
 import Loader from '../../Shared/loader';
-import success from '../../assets/images/success.png';
+import success from '../../assets/images/success.svg';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import apicalls from '../../api/apiCalls';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'

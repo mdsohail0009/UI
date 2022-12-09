@@ -5,7 +5,7 @@ import AddressDocumnet from "../addressbook.component/document.upload";
 import oops from '../../assets/images/oops.png'
 import FiatAddress from "../addressbook.component/fiat.address";
 import alertIcon from '../../assets/images/pending.png';
-import success from '../../assets/images/success.png';
+import success from '../../assets/images/success.svg';
 import NumberFormat from "react-number-format";
 import { fetchPayees, getCoinwithBank, fetchPastPayees, confirmTransaction, saveWithdraw, validateAmount } from "./api";
 import Loader from "../../Shared/loader";
