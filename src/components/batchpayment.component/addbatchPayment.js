@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Col, List,Empty, Image,Button,Modal,Tooltip} from 'antd';
+import { Drawer, Typography, Col, List,Empty, Image,Button,Modal,Tooltip,Upload, message} from 'antd';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import Search from "antd/lib/input/Search";
@@ -9,17 +9,22 @@ import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import PaymentPreview from './paymentPreview';
 import pending from '../../assets/images/pending.png'
+import { store } from "../../store";
+import apiCalls from "../../api/apiCalls";
+import CryptoJS from "crypto-js";
 const { Title,Paragraph } = Typography
 class AddBatchPayment extends Component {
     state = {
         selectedCurrency : "USD",
         fiatWalletsLoading: false,
         fiatWallets: [],
-        filtercoinsList: [],
-        searchFiatVal: "",
+        paymentCoinsList: [],
+        searchVal: "",
         isCoinsListHide: false,
         showModal: false,
-        paymentPreview: false
+        paymentPreview: false,
+        isValidFile: true,
+        uploadLoader: false,
 
     }
 
@@ -27,23 +32,199 @@ class AddBatchPayment extends Component {
           this.setState({ ...this.state, fiatWalletsLoading: true });
           fetchMemberWallets(this.props?.userProfile?.id).then(res => {
             if (res.ok) {
-                this.setState({ ...this.state, fiatWallets: res.data, filtercoinsList: res.data, fiatWalletsLoading: false });
+                this.setState({ ...this.state, fiatWallets: res.data, paymentCoinsList: res.data, fiatWalletsLoading: false });
             } else {
-                this.setState({ ...this.state, fiatWallets: [], filtercoinsList: [], fiatWalletsLoading: false });
+                this.setState({ ...this.state, fiatWallets: [], paymentCoinsList: [], fiatWalletsLoading: false });
             }
           });
       }
 
+    handleSearch = ({ target: { value: val } }) => {
+        if (val) {
+            const fiatWallets = this.state.paymentCoinsList?.filter(item => item.walletCode.toLowerCase().includes(val.toLowerCase()));
+            this.setState({ ...this.state, fiatWallets, searchVal: val });
+        }
+        else
+            this.setState({ ...this.state, fiatWallets: this.state.paymentCoinsList, searchVal: val });
+    }
     
-    closeDrawer = () => {
+    closeDrawer = (isPreviewBack) => {
         this.setState({ ...this.state, paymentPreview: false,showModal:false,isCoinsListHide: false});
         if (this.props.onClose) {
-            this.props.onClose();
+            this.props.onClose(isPreviewBack);
         }
     }
-    uploadExcel=()=>{
-        this.setState({ ...this.state, showModal:true});
+    uploadCancel = () => {
+        this.setState({ ...this.state, isCoinsListHide: false});
     }
+    _encrypt(msg, key) {
+        msg = typeof msg === "object" ? JSON.stringify(msg) : msg;
+        var salt = CryptoJS.lib.WordArray.random(128 / 8);
+        key = CryptoJS.PBKDF2(key, salt, {
+            keySize: 256 / 32,
+            iterations: 10
+        });
+        var iv = CryptoJS.lib.WordArray.random(128 / 8);
+        var encrypted = CryptoJS.AES.encrypt(msg, key, {
+            iv: iv,
+            padding: CryptoJS.pad.Pkcs7,
+            mode: CryptoJS.mode.CBC
+        });
+        return salt.toString() + iv.toString() + encrypted.toString();
+    }
+    beforeUpload = (file) => {
+        let fileType = {
+            "application/csv": true,
+            "application/vnd.ms-excel": true,
+            "text/csv": true
+        };
+        if (fileType[file.type]) {
+            this.setState({ ...this.state, isValidFile: true });
+            return true;
+        } else {
+            message.error({
+                content: `File is not allowed. You can upload only csv files`,
+                className: "custom-msg"
+            });
+            this.setState({ ...this.state, isValidFile: false });
+            return Upload.LIST_IGNORE;
+        }
+    };
+    // isDocExist(lstObj, id) {
+    //     const lst = lstObj.filter((obj) => {
+    //         return obj.docunetDetailId === id;
+    //     });
+    //     return lst[0];
+    // }
+    handleUpload = async ({ file }, doc) => {
+        this.setState({
+            ...this.state,
+            uploadLoader: true,
+            errorMessage: null,
+            docReplyObjs: [],
+            //showModal: true
+        });
+        // if (file.status !== "done" && this.state.isValidFile) {
+        //     let replyObjs = [...this.state.docReplyObjs];
+        //     let item = this.isDocExist(replyObjs, doc?.id);
+        //     let obj;
+        //     if (item) {
+        //         obj = item;
+        //         const ObjPath = (function () {
+        //             if (obj.path === "string") {
+        //                 return JSON.parse(obj.path);
+        //             } else {
+        //                 return obj.path ? obj.path : [];
+        //             }
+        //         })();
+        //         obj.path = obj.path && typeof ObjPath;
+        //         obj.path.push({
+        //             filename: file.name,
+        //             path: file.response,
+        //             size: file.size
+        //         });
+        //         replyObjs = this.uopdateReplyObj(obj, replyObjs);
+        //     } else {
+        //         obj = this.messageObject(doc?.id);
+        //         obj.path.push({
+        //             filename: file.name,
+        //             path: file.response,
+        //             size: file.size
+        //         });
+        //         replyObjs.push(obj);
+        //     }
+        //     this.setState({
+        //         ...this.state,
+        //         uploadLoader: false,
+        //         docReplyObjs: replyObjs
+        //     });
+        // } else if (file.status === "error") {
+        //     message.error({ content: `${file.response}`, className: "custom-msg" });
+        //     this.setState({ ...this.state, uploadLoader: false });
+        // } 
+       if (!this.state.isValidFile) {
+            this.setState({
+                ...this.state,
+                uploadLoader: false,
+                showModal: false
+            });
+        }
+        else {
+            this.setState({
+                ...this.state,
+                showModal: true
+            });
+        }
+        this.setState({
+            ...this.state,
+            uploadLoader: false,
+            path: file.status === "done" ? file.response : null
+        });
+    };
+    // uploadExcel=()=>{
+    //     this.setState({ ...this.state, showModal:true});
+    //         const _currentScreen = window.location.pathname.split("/")[1];
+    //         const {
+    //             oidc: { user },
+    //             userConfig: { userProfileInfo },
+    //             //permissions: { currentScreen }
+    //         } = store.getState();
+    //         const Authorization = `Bearer ${user.access_token}`;
+    //         const Authentication = this._encrypt(
+    //             `{CustomerId:"${userProfileInfo?.id}",Action:"view", PermissionKey:"${this.props.pKey || _currentScreen 
+    //             }"}`,
+    //             userProfileInfo.sk
+    //         );
+    //         this.setState(
+    //             {
+    //                 ...this.state,
+    //                 modal: true,
+    //                 headers: {
+    //                     Authorization: Authorization,
+    //                     AuthInformation: Authentication
+    //                 }
+    //             },
+    //             () => {
+    //                 this.setState({
+    //                     ...this.state,
+    //                     stateLoading: true,
+    //                     headers: {
+    //                         Authorization: Authorization,
+    //                         AuthInformation: Authentication
+    //                     }
+    //                 });
+    //                 setTimeout(
+    //                     () =>
+    //                         this.setState({
+    //                             ...this.state,
+    //                             stateLoading: false,
+    //                             headers: {
+    //                                 Authorization: Authorization,
+    //                                 AuthInformation: Authentication
+    //                             }
+    //                         }),
+    //                     1000
+    //                 );
+    
+    //                 // setTimeout(
+    //                 //     () =>
+    //                 //         this.formref.current.setFieldsValue({
+    //                 //             ...this.state
+    //                 //         }),
+    //                 //     1000
+    //                 // );
+    //             }
+    //         );
+    //         apiCalls.trackEvent({
+    //             Action: "Upload MassPayment page ",
+    //             Feature: "Upload MassPayments",
+    //             Remarks: "Upload MassPayment page ",
+    //             FullFeatureName: "Upload MassPayments ",
+    //             userName: this.props.userProfile.userName,
+    //             id: this.props.userProfile.id
+    //         });
+        
+    // }
     selectWhitelist=()=>{
         this.props.history.push(`/payments/${this.state.selectedCurrency}`) 
     }
@@ -52,6 +233,7 @@ class AddBatchPayment extends Component {
     }
 
     render() {
+        const { gridUrl, param, headers } = this.state;
         return (
            <div className='send-address'>
         <Drawer destroyOnClose={true}
@@ -60,7 +242,8 @@ class AddBatchPayment extends Component {
                 <div className="text-center">
                 {!this.state.isCoinsListHide && <> <div className='text-white fs-24 fw-500'>Batch Payments</div> </>}
                 </div>
-                <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />
+                {!this.state.isCoinsListHide &&<span onClick={this.closeDrawer} className="icon md close-white c-pointer" />}
+                {this.state.isCoinsListHide &&<span onClick={this.uploadCancel} className="icon md close-white c-pointer" />}
                
             </div>]}
             
@@ -76,7 +259,7 @@ class AddBatchPayment extends Component {
                     className='sub-heading code-lbl'>Make payments</Title>
             </div>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                <Search placeholder="Search Currency" value={this.state.searchFiatVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleFiatSearch} size="middle" bordered={false} className="text-center mb-16" />
+                <Search placeholder="Search Currency" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="text-center mb-16" />
             </Col>
             <List
                 itemLayout="horizontal"
@@ -111,9 +294,26 @@ class AddBatchPayment extends Component {
                
                 <div className='text-center makepayment-section'>
             <Title className='text-white fs-24 fw-500'>Send {this.state.selectedCurrency} to Multiple Address</Title>
-            <Button className='pop-btn mt-24'onClick={this.uploadExcel}>Upload Excel</Button>
+            {/* <Button className='pop-btn mt-24'onClick={this.uploadExcel}>Upload Excel</Button> */}
+            <Upload
+                                    accept=".xlsx, .xls, .csv"
+                                    multiple="false"
+                                    onChange={(props) => this.handleUpload(props)}
+                                    beforeUpload={(props) => {
+                                        this.beforeUpload(props);
+                                    }}
+                                    showUploadList={false}
+                                    action={
+                                        process.env.REACT_APP_API_END_POINT +
+                                        "/api/v1/ImportExcel/UploadAttachedFile"
+                                    }
+                                    headers={headers}
+                                >
+                                       <Button className='pop-btn mt-24'>Upload Excel</Button>
+                                </Upload>{" "}
             <Paragraph className='text-white-30 '>To download the excel, <a className='fw-700'> click here</a></Paragraph>
             <Button className='pop-btn px-36'onClick={this.selectWhitelist}>Select from Whitelisted Addresses</Button>
+                                
             </div>
               </div>
               </>}
@@ -145,7 +345,7 @@ class AddBatchPayment extends Component {
                        <PaymentPreview
                         showDrawer={this.state.paymentPreview}
                         onClose={() => {
-                            this.closeDrawer();
+                            this.closeDrawer("true");
                         }}
                     />
                        }

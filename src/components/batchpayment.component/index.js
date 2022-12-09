@@ -52,13 +52,12 @@ const [open, setOpen] = useState(false);
           field: "fileName", title: "File Name", filter: true, filterType: "date",width: 200,
           customCell: (prop) => (
             <td><div className="gridLink" onClick={viewMode} >XXX Payments
-              
               </div></td>) 
         },
         { field: "dateCreated", title: "Date created", filter: true,width: 200, },
         { field: "currency", title: 'Currency', filter: true, width: 150,dataType: "number", filterType: "numeric" },
         { field: "status", title: 'Status', filter: true, width: 150, },
-        { field: "numberOfTransactions", title: 'Number of Transactions', filter: true, width: 200,dataType: "number", filterType: "numeric", 
+        { field: "numberOfTransactions", title: 'Number of Transactions', filter: true, width: 240,dataType: "number", filterType: "numeric", 
            customCell: (prop) => (<td><div className="gridLink" >50 </div></td>) 
         },
         { field: "validTransactions", title: 'Valid Transactions', filter: true, width: 200, },
@@ -67,9 +66,9 @@ const [open, setOpen] = useState(false);
             <td><div className="gridLink" >10
               </div></td>)
         },
-        { field: "pendingTransactions", title: 'Pending Transactions', filter: true, width: 200, },
-        { field: "approvedTransactions", title: 'Approved Transactions', filter: true, width: 200, },
-        { field: "rejectedTransactions", title: 'Rejected Transactions', filter: true, width: 200, },
+        { field: "pendingTransactions", title: 'Pending Transactions', filter: true, width: 220, },
+        { field: "approvedTransactions", title: 'Approved Transactions', filter: true, width: 240, },
+        { field: "rejectedTransactions", title: 'Rejected Transactions', filter: true, width: 220, },
       ];
     
     const addBatchPayment = () => {
@@ -78,8 +77,13 @@ const [open, setOpen] = useState(false);
     const proceedBatchPayment = () => {
       setProceedBatchPayment(true);
     }
-    const closeDrawer = () => {
-    setIsAddBatchDrawer(false);
+    const closeDrawer = (isPreviewBack) => {
+      if(isPreviewBack == "true") {
+        setIsAddBatchDrawer(true);
+      }
+      else {
+        setIsAddBatchDrawer(false);
+      }
     setProceedBatchPayment(false);
     }
    const gotoDashboard=()=>{
@@ -109,13 +113,13 @@ const [open, setOpen] = useState(false);
               </div>
               <AddBatchPayment
                   showDrawer={isAddBatchDrawer}
-                  onClose={() => closeDrawer()}
+                  onClose={(isPreviewBack) => closeDrawer(isPreviewBack)}
               />   
               {isProceedBatchPayment && 
               <PaymentPreview 
               showDrawer={isProceedBatchPayment}
-              onClose={() => {
-                  closeDrawer();
+              onClose={(isPreviewBack) => {
+                  closeDrawer(isPreviewBack);
               }}
               ></PaymentPreview>
               }        

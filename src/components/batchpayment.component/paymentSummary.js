@@ -159,7 +159,7 @@ class paymentSummary extends Component {
 							<Button
 								className="primary-btn pop-cancel btn-width"
 								style={{ margin: "0 8px" }}
-								onClick={this.handleBack}
+								onClick={this.props.onClose}
 							>
 								Back
 							</Button>

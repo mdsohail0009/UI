@@ -331,7 +331,8 @@ closeDrawer = () => {
                 <div className="text-right mt-12">
                     <Button className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn mr-8 ml-0 primary-btn pop-cancel"
                         style={{ width: 100, height: 50 }}
-                        onClick={() => this.props.history.push('/cockpit')}>Back</Button>
+                        // onClick={() => this.props.history.push('/cockpit')}
+                        onClick={this.props.onClose}>Back</Button>
                     <Button className="pop-btn custom-send sell-btc-btn ml-8"
                         style={{ width: 100, height: 50 }}
                         onClick={() => this.setState({ ...this.state, paymentSummary: true}, () => { })}>Confirm</Button>
