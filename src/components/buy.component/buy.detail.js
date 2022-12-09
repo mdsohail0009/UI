@@ -192,16 +192,16 @@ class SelectCrypto extends Component {
                         }}
                         isConvertionLoad={isConvertionLoading} />
 
-                    <Translate content="thousandKText" component={Paragraph} className="" />
-                    <Translate content="contact_amount_text" component={Paragraph} className="" />
+                    <Translate content="thousandKText" component={Paragraph} className="buy-paragraph" />
+                    <Translate content="contact_amount_text" component={Paragraph} className="buy-paragraph" />
                     {/* <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50 pt-16" />
                     <WalletList onWalletSelect={(e) => this.handleWalletSelection(e)} /> */}
                     {/* <div className="fs-12 text-white-30 text-center mt-24"><Translate content="change_10Sec_amount" component={Paragraph} className="fs-12 text-white-30 text-center mt-24" /></div> */}
-                    <div className="mt-16 buy-usdt-btn">
+                    <div className="buy-usdt-btn">
                         <SuisseBtn title="PreviewBuy" loading={this.state.btnLoading} onRefresh={() => this.refresh()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
                     </div>
                     </div>}
-                    <div className="my-36">
+                    <div className="select-currency">
                         <Translate content="buy_select_currency" component={Paragraph} className="label-style" />
                         <WalletList placeholder="Select Currency" onWalletSelect={(e) => this.handleWalletSelection(e)} />
                     </div>

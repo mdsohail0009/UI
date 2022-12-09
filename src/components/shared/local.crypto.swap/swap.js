@@ -11,7 +11,7 @@ const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "U
     return (
       <div className="p-relative">
         <div className="enter-val-container swap-com">
-          <Text className="fs-30 fw-400 text-white-30 text-yellow mr-4">
+          <Text className="crycoin-bal">
             {!isSwaped ? localCurrency : cryptoCurrency}
           </Text>
           <NumberFormat
@@ -20,11 +20,12 @@ const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "U
             maxLength={25}
             customInput={Input}
             thousandSeparator={true}
-            prefix={isSwaped ? "" : symbols[localCurrency]}
+            suffix={isSwaped ? "" : symbols[localCurrency]}
             decimalScale={isSwaped ? 8 : 2}
             autoComplete="off"
             placeholder="0.00"
             bordered={false}
+            // prefix={!isSwaped ? localCurrency : cryptoCurrency}
             // style={{
             //   lineHeight: "48px",
             //   fontSize: 30,
@@ -33,7 +34,7 @@ const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "U
             // }}
            
             onKeyPress={(e) => {
-              e.currentTarget.style.fontSize = "30px";
+              e.currentTarget.style.fontSize = "24px";
             }}
             value={isSwaped ? cryptoAmt : localAmt}
             onValueChange={({ value }) => {
