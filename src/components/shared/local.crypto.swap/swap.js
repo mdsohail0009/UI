@@ -16,7 +16,7 @@ const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "U
           </Text>
           <NumberFormat
             id="amtInput"
-            className="fw-400 text-white-30 text-center enter-val p-0"
+            className="inputfont-style"
             maxLength={25}
             customInput={Input}
             thousandSeparator={true}
@@ -25,12 +25,12 @@ const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "U
             autoComplete="off"
             placeholder="0.00"
             bordered={false}
-            style={{
-              lineHeight: "48px",
-              fontSize: 30,
-              paddingRight: "40px !important",
-              marginBottom: 0
-            }}
+            // style={{
+            //   lineHeight: "48px",
+            //   fontSize: 30,
+            //   paddingRight: "40px !important",
+            //   marginBottom: 0
+            // }}
            
             onKeyPress={(e) => {
               e.currentTarget.style.fontSize = "30px";

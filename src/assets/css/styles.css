@@ -231,7 +231,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .dep-withdraw{max-height: calc(100vh - 265px);}
 .selectcrypto-container{max-height: calc(100vh - 101px);}
 /* .cryptosummary-container{max-height: calc(100vh - 106px);} */
-.auto-scroll{overflow-y: auto; padding-right: 10px;}
+/* .auto-scroll{overflow-y: auto; padding-right: 10px;} */
 .auto-scroll::-webkit-scrollbar-thumb{background-color: var(--bgDark1);}
 .ant-list-split .ant-list-item:last-child .crypto-list-tabs .ant-list-item, .wallet-list .ant-list-item{border-color: var(--borderLight);}
 .wallet-list .ant-list-item:hover, .wallet-list .ant-list-item.select, .addCryptoList li.select{background-color: var(--bgBlu);}
@@ -267,7 +267,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .crypto-card-top{display: flex;justify-content: space-between;align-items: flex-start;}
 .textc-white{color:var(--textPureWhite);}
 /* .enter-val-container{display: flex; align-items: flex-start;} */
-.crypto-details{display: flex;justify-content: space-between;align-items: center;}
+/* .crypto-details{display: flex;justify-content: space-between;align-items: center;} */
 /* .crypto-details .crypto-amount{text-align: right;font-size: 16px;font-weight: 200;color: #FFFFFF;} */
 /* .enter-val{width: auto;border: 1px solid var(--borderLight) !important;border-radius: 24px;margin-left: 4px;} */
 .val-updown{position: absolute;right: 0;top: 0;width: 40px;height: 40px;border-radius: 15px;background-color: var(--bgDark);text-align: center;line-height: 38px;}
@@ -776,7 +776,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .header-right{display: block;}
     .mobile-header-right{display: block;float: right;}
     .sidebar-push{margin: 62px 0 0;}
-    .side-drawer .ant-drawer-content-wrapper{width: 95% !important;}
+    /* .side-drawer .ant-drawer-content-wrapper{width: 95% !important;} */
     .buysell-toggle{ margin: 0 auto 0px !important;}
     .crypto-percent{font-size: 26px;color: #FFFFFF;}
     .ant-typography.crypto-percent{margin-left: -8px;}
