@@ -2,22 +2,21 @@ import { Input, Spin } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import React, { useState } from 'react';
 import NumberFormat from 'react-number-format';
-const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "USD", cryptoCurrency, onChange, isConvertionLoad, isSwaped }) => {
+const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "USD", cryptoCurrency, onChange, isConvertionLoad, isSwaped, onCurrencySwap }) => {
     const [symbols] = useState({
         "EUR": "€",
         "USD": "$",
         "GBP": "£"
     });
     return (
-      <div className="">
+      <div className="p-relative">
         <div className="enter-val-container swap-com">
-          <div className='coin-entryval'>
-          <Text className="">
+          <Text className="fs-30 fw-400 text-white-30 text-yellow mr-4">
             {!isSwaped ? localCurrency : cryptoCurrency}
           </Text>
           <NumberFormat
             id="amtInput"
-            className="enter-val"
+            className="fw-400 text-white-30 text-center enter-val p-0"
             maxLength={25}
             customInput={Input}
             thousandSeparator={true}
@@ -26,12 +25,12 @@ const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "U
             autoComplete="off"
             placeholder="0.00"
             bordered={false}
-            // style={{
-            //   lineHeight: "48px",
-            //   fontSize: 30,
-            //   paddingRight: "40px !important",
-            //   marginBottom: 0
-            // }}
+            style={{
+              lineHeight: "48px",
+              fontSize: 30,
+              paddingRight: "40px !important",
+              marginBottom: 0
+            }}
            
             onKeyPress={(e) => {
               e.currentTarget.style.fontSize = "30px";
@@ -43,7 +42,6 @@ const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "U
             autoFocus
             allowNegative={false}
           />
-          </div>
         </div>
         <>
           <NumberFormat
@@ -54,13 +52,16 @@ const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "U
             renderText={(value, props) => (
               <div
                 {...props}
-                className=""
+                className="fs-14 text-white-30 text-center d-block"
               >
                 {value} {isSwaped ? localCurrency : cryptoCurrency}{" "}
                 {isConvertionLoad && <Spin size="small" />}
               </div>
             )}
           />
+            <span className="val-updown c-pointer" onClick={onCurrencySwap} disabled={isConvertionLoad}>
+              <span className="icon md swaparrow" />
+            </span>
         </>
       </div>
     );

@@ -119,7 +119,7 @@ class Summary extends Component {
 						/>{" "}
 					</div>
 					{showEstimated && (
-						<div className="text-white-50 fw-400 text-center fs-14 mb-16">
+						<div className="faitcurrency-style">
 							<Currency
 								defaultValue={amountNativeCurrency}
 								prefix={""}
