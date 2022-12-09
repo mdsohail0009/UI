@@ -6,22 +6,37 @@ import {
    Select} from "antd";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
-import { setCurrentAction } from "../../reducers/actionsReducer";
 import { withRouter } from "react-router-dom";
 import PaymentSummary from "./paymentSummary";
-import { Spreadsheet } from '@progress/kendo-spreadsheet-react-wrapper';
+//import { Spreadsheet } from '@progress/kendo-spreadsheet-react-wrapper';
+import Spreadsheet from "react-spreadsheet";
+
 
 const { Option } = Select;
 class paymentPreview extends Component {
-  formRef = React.createRef();
-  formDateRef = React.createRef();
   constructor(props) {
     super(props);
     this.state = {
       modal: false,
       showModal:false,
       paymentSummary: false,
-      initialRender: true
+      data: [
+        [{ value: "A" }, { value: "A" },{ value: "A" }, { value: "A" },{ value: "A" }, { value: "A" },{ value: "A" }, { value: "A" },{ value: "A" }, { value: "A" },{ value: "A" }, { value: "A" },{ value: "A" }, { value: "A" },],
+        [{ value: "B" }, { value: "B" }],
+        [{ value: "C" }, { value: "C" }],
+        [{ value: "D" }, { value: "D" }],
+        [{ value: "E" }, { value: "E" }],
+        [{ value: "F" }, { value: "F" }],
+        [{ value: "G" }, { value: "G" }],
+        [{ value: "H" }, { value: "H" }],
+        [{ value: "I" }, { value: "I" }],
+        [{ value: "J" }, { value: "J" }],
+        [{ value: "K" }, { value: "K" }],
+        [{ value: "L" }, { value: "L" }],
+        [{ value: "M" }, { value: "M" }],
+        [{ value: "N" }, { value: "N" }],
+
+      ]
     };
   }
 
@@ -38,9 +53,17 @@ closeDrawer = () => {
     debugger
     return (
       <>
+      {/* <div>
+    <h4>SpreadSheet - GeeksforGeeks</h4>
+    <Spreadsheet data={this.state.data} />
+  </div>  */}
         <Drawer
           title={[<div className="side-drawer-header">
-            <Translate content="bathch_payments_preview" component={Title} className="fs-26 fw-400 mb-0 text-white-30" />
+            <span></span>
+             <div className="text-center">
+                <div className='text-white fs-24 fw-500'>Preview</div>
+                </div>
+           
             <span onClick={this.props.onClose} className="icon md close-white c-pointer" />
           </div>]}
           placement="right"
@@ -50,18 +73,10 @@ closeDrawer = () => {
           visible={this.props.showDrawer}
           className="side-drawer-full custom-gridresponsive transctns-grid"
         >
+           <Translate content="bathch_payments_preview" component={Title} className="fs-26 fw-400 mb-0 text-white-30" />
           <div>
-        <Spreadsheet
-          render={(e) => {
-            var height = window.innerHeight;
-            e.sender.element.innerHeight(height);
-            e.sender.element.innerWidth(500);
-            if (this.state.initialRender) {
-              this.state.initialRender = false
-              e.sender.refresh()
-            }
-          }} />
-      </div>
+            <Spreadsheet data={this.state.data} />
+          </div>
                 <div className="text-right mt-12">
                     <Button className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn mr-8 ml-0 primary-btn pop-cancel"
                         style={{ width: 100, height: 50 }}
@@ -91,9 +106,6 @@ const connectStateToProps = ({ userConfig }) => {
 };
 const connectDispatchToProps = dispatch => {
   return {
-    setAction: (val) => {
-      dispatch(setCurrentAction(val))
-    },
     dispatch
   }
 }
