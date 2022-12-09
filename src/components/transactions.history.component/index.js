@@ -182,7 +182,6 @@ class TransactionsHistory extends Component {
     }
   }
   handleChange = (value, prop) => {
-    debugger
     var val = "";
     let { customerData, searchObj } = this.state;
     if (prop === "customerId") {
