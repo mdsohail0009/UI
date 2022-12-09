@@ -47,29 +47,29 @@ const getIBANData = (ibannumber) => {
 	);
 };
 
-const getdshKpis = (customer_id) => {
-	return apiClient.get(ApiControllers.dashboard + `KPI/${customer_id}`);
+const getdshKpis = () => {
+	return apiClient.get(ApiControllers.dashboard + `KPI/User`);
 };
-const getdshcumulativePnl = (customer_id, days) => {
+const getdshcumulativePnl = (Days) => {
 	return apiClient.get(
-		ApiControllers.dashboard + `CumulativePNL/${customer_id}/${days}`
+		ApiControllers.dashboard + `CumulativePNL/User/${Days}`
 	);
 };
-const getAssetNetwroth = (customer_id, days) => {
+const getAssetNetwroth = (Days) => {
 	return apiClient.get(
-		ApiControllers.dashboard + `AssetsNetWorth/${customer_id}/${days}`
+		ApiControllers.dashboard + `AssetsNetWorth/User/${Days}`
 	);
 };
-const getAssetAllowcation = (customer_id, days) => {
+const getAssetAllowcation = (Days) => {
 	return apiClient.get(
-		ApiControllers.dashboard + `AssetAllocation/${customer_id}/${days}`
+		ApiControllers.dashboard + `AssetAllocation/User/${Days}`
 	);
 };
-const getprofits = (customer_id, days) => {
-	return apiClient.get(ApiControllers.dashboard + `Profits/${customer_id}/${days}`);
+const getprofits = (Days) => {
+	return apiClient.get(ApiControllers.dashboard + `Profits/User/${Days}`);
 };
-const getdailypnl = (customer_id, days) => {
-	return apiClient.get(ApiControllers.dashboard + `DailyPNL/${customer_id}/${days}`);
+const getdailypnl = (Days) => {
+	return apiClient.get(ApiControllers.dashboard + `DailyPNL/User/${Days}`);
 };
 
 const getCode = ( isResendOTP) => {

@@ -41,19 +41,19 @@ const fetchMarketCoinData =(payload) => {
         payload
     }
 }
-const fetchDashboardcalls = (customer_id) => {
+const fetchDashboardcalls = () => {
   publishTransactionRefresh()
     return async (dispatch) => {
-        dispatch(fetchMemberWalletsData(customer_id))
-        dispatch(fetchPortfolioData(customer_id))
-        dispatch(fetchYourPortfoliodata(customer_id))
+        dispatch(fetchMemberWalletsData())
+        dispatch(fetchPortfolioData())
+        dispatch(fetchYourPortfoliodata())
 
     }
 }
-const fetchMemberWalletsData = (customer_id) => {
+const fetchMemberWalletsData = () => {
     return async (dispatch) => {
         dispatch(fetchDetailData({ key: "wallets", loading: true, data: [] }));
-        const response = await fetchMemberWallets(customer_id);
+        const response = await fetchMemberWallets();
         if (response.ok) {
             dispatch(setDetailData({ key: "wallets", loading: false, data: response.data }));
         } else {
@@ -61,10 +61,10 @@ const fetchMemberWalletsData = (customer_id) => {
         }
     }
 }
-const fetchPortfolioData = (customer_id) => {
+const fetchPortfolioData = () => {
     return async (dispatch) => {
         dispatch(fetchDetailData({ key: "portFolio", loading: true, data: {} }));
-        const response = await fetchPortfolio(customer_id);
+        const response = await fetchPortfolio();
         if (response.ok) {
             dispatch(setDetailData({ key: "portFolio", loading: false, data: response.data }));
         } else {
@@ -83,10 +83,10 @@ const fetchGraphInfo = (customer_id, type) => {
         }
     }
 }
-const fetchYourPortfoliodata = (customer_id) => {
+const fetchYourPortfoliodata = () => {
     return async (dispatch) => {
         dispatch(fetchDetailData({ key: "cryptoPortFolios", loading: true, data: [] }));
-        const response = await fetchYourPortfolio(customer_id);
+        const response = await fetchYourPortfolio();
         if (response.ok) {
             dispatch(setDetailData({ key: "cryptoPortFolios", loading: false, data: response.data }));
         } else {

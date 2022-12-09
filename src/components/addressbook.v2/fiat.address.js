@@ -52,7 +52,7 @@ class AddressBookV2 extends Component {
                 this.setState({ ...this.state, pastPayees: response.data });
             }
         });
-        fetchMemberWallets(this.props.userProfile.id).then((response) => {
+        fetchMemberWallets().then((response) => {
             if (response.ok) {
                 this.setState({ ...this.state, coinListData: response.data,loader:false });
             }

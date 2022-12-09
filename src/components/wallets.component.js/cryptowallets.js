@@ -23,7 +23,7 @@ class CryptoWallets extends Component {
     }
     loadCryptos = () => {
         if (this.props.userProfile) {
-            this.props.dispatch(fetchYourPortfoliodata(this.props.userProfile.id));
+            this.props.dispatch(fetchYourPortfoliodata());
         }
     }
     showBuyDrawer = (item, key) => {
