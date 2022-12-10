@@ -188,7 +188,7 @@ class BusinessTransfer extends Component {
             value &&this.state.isShowValid&&
             !/^[A-Za-z0-9]+$/.test(value)
         ) {
-            this.setState({ ...this.state, ibanDetails : {}});
+            this.setState({ ...this.state,ibanDetails:{}});
             return Promise.reject(
                 "Please input a valid IBAN"
             );
