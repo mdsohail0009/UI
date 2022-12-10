@@ -9,7 +9,7 @@ const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "U
         "GBP": "£"
     });
     return (
-      <div className="p-relative">
+      <div className="p-relative enrty-field-style">
         <div className="enter-val-container swap-com">
           <Text className="crycoin-bal">
             {!isSwaped ? localCurrency : cryptoCurrency}

@@ -447,7 +447,7 @@ class CryptoWithDrawWallet extends Component {
                         />
                     )}
 
-{!this.state.isHideCard && <Card className="crypto-card select mb-36" bordered={false}>
+{!this.state.isHideCard && <Card className="crypto-card select " bordered={false}>
 
                         <div className="crypto-details d-flex">
                             <div>

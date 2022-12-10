@@ -160,7 +160,7 @@ class SelectCrypto extends Component {
                     )}
                 {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="error" message={apicalls.convertLocalLang('buy_crypto')} description={this.state.error?.message} />}
                 <div className="selectcrypto-container">
-                    <Card className="crypto-card select mb-36" bordered={false}>
+                    <Card className="crypto-card select " bordered={false}>
                     {/* <div className=''> */}
                         {/* <div> */}
                         {/* <div className="d-flex align-center mb-4">

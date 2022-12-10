@@ -280,6 +280,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .buy-usdt-btn .pop-btn{margin-top: 16px;margin-bottom: 16px;}
 .select-currency{margin-top: 36px;}
 .swap-text-sub{text-align: center;font-weight: 700;font-size: 16px;color: var(--coinBal);}
+.enrty-field-style{margin-bottom: 56px;}
 /*Buy drawer End*/
 /* --Payments Start--*/
 .pay-grid thead th{padding: 8px;width: 250px; color: var(--textWhite30);font-weight: 500;text-align: left;font-size: 16px;}

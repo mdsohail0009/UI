@@ -182,7 +182,7 @@ class SelectSellCrypto extends Component {
             <>
                 <div ref={this.myRef}>  {this.state?.errorMessage !== null && this.state?.errorMessage !== '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="error" message={apicalls.convertLocalLang('sellCrypto')} description={this.state?.errorMessage} />}
                 <div className="selectcrypto-container">
-                    {coinDetailData && <Card className="crypto-card select mb-36 d-flex" bordered={false}>
+                    {coinDetailData && <Card className="crypto-card select d-flex" bordered={false}>
                         <div className='d-flex justify-content'>
                         <div>
                             <span className="d-flex align-center mb-4">
