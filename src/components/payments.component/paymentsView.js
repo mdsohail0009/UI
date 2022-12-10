@@ -107,7 +107,7 @@ class PaymentsView extends Component {
             <>
              <div ref={this.useDivRef}></div>
                 <div className="main-container">
-                    <Title className="basicinfo mb-16"><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
+                    <Title className="basicinfo mb-16"><span onClick={() => this.props.history?.push(`/payments/${this.state.currency}`)} className='icon md c-pointer back mr-8'></span><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
                     <div className="box basic-info responsive_table bg-none">
                         <table className='pay-grid view mb-view'>
                             <thead>
