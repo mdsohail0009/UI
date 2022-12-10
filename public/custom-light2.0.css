@@ -41,6 +41,10 @@
      --termsText:#4E54FB;
      --inputBorder:#74767D;
      --balInput:#08090E;
+     --radioFill:rgba(92, 97, 255, 0.1);
+     --radioBorderfill:rgba(92, 97, 255, 0.1);
+     --radioOutlinefill:rgba(255, 255, 255,0.3);
+     --radioBg:#FFFFFF;
  
      --lightThemeIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/user-light-theme2.0.svg);
      --cryptoIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/light-crypto-icons.svg);

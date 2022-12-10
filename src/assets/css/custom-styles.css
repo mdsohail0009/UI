@@ -263,7 +263,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .ac-topspace{padding-top: 10px;}
 /* Dashboard end */
 
-/*Buy drawer start*/
+/*Buy/sell drawer start*/
 .drawer-maintitle{font-weight: 800;font-size: 26px;color: var(--menuFont);text-transform: capitalize;}
 .crypto-list.auto-scroll.wallet-list{margin-top: 30px;}
 .crypto-list .ant-list-item, .wallet-list .ant-list-item{margin-top: 15px;}
@@ -277,11 +277,19 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .inputfont-style{font-weight: 700;font-size: 16px;color: var(--coinBal);width: 197px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .buy-paragraph{color: var(--checksub);font-weight: 500;font-size: 16px;text-align: center;margin-bottom: 0 !important;}
 .crycoin-bal{font-weight: 400 !important;font-size: 16px !important;color: var(--coinPrice) !important;}
-.buy-usdt-btn .pop-btn{margin-top: 16px;margin-bottom: 16px;}
+.buy-usdt-btn .pop-btn, .sell-btn-style{margin-top: 16px;margin-bottom: 16px;}
 .select-currency{margin-top: 36px;}
 .swap-text-sub{text-align: center;font-weight: 700;font-size: 16px;color: var(--coinBal);}
 .enrty-field-style{margin-bottom: 56px;}
-/*Buy drawer End*/
+.sellcrypto-style{color:var(--coinPrice);font-weight: 400;font-size: 16px;}
+.sellbal-style{font-weight: 700;font-size: 16px;color: var(--balInput);}
+.round-pills{width: 100%;text-align: center;}
+.round-pills .ant-radio-button-wrapper{background: var(--radioBg);height: 36px;border-radius: 10px;min-width: 60px; line-height: 34px;color: var(--coinPrice);border:1px solid rgba(0, 0, 0, 0.3);;font-size: 16px;font-weight: 500;margin: 0 16px 16px 0;text-align: center;}
+.round-pills .ant-radio-button-wrapper-checked, .default-radio .ant-radio-button-wrapper-checked, .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled), .ant-radio-button-wrapper-checked:not([class*=' ant-radio-button-wrapper-disabled']).ant-radio-button-wrapper:first-child, .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{background-color: var(--radioFill) !important; color:var(--balInput) !important;font-size: 16px;font-weight:500;border: 2px solid var(--radioBorderfill);}
+.round-pills .ant-radio-button-wrapper::before, .default-radio .ant-radio-button-wrapper::before{content: none;}
+.val-updown{position: absolute;right: 0;top: 0;width: 40px;height: 40px;border-radius: 15px;background-color: var(--radioFill);text-align: center;line-height: 38px;}
+.val-updown:hover .swaparrow, .swap-updown:hover .swaparrow{transform: rotate(180deg);transition: 0.5s;background-position: -237px -35px;}
+/*Buy/sell drawer End*/
 /* --Payments Start--*/
 .pay-grid thead th{padding: 8px;width: 250px; color: var(--textWhite30);font-weight: 500;text-align: left;font-size: 16px;}
 .pay-grid thead th:last-child{width: 500px;}

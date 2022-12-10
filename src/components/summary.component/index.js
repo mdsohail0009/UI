@@ -258,6 +258,16 @@ class Summary extends Component {
 						onClick={() => this.props.onClick()}
 					/>}
 					
+					{(okBtnTitle == "sell" && permissions) &&<div className="sell-btc-btn">
+					<SuisseBtn
+						className={"pop-btn custom-send sell-btc-btn"}
+						onRefresh={() => this.props.onRefresh()}
+						title={okBtnTitle || "pay"}
+						loading={isButtonLoad}
+						autoDisable={true}
+						onClick={() => this.props.onClick()}
+					/></div>}
+					
 					<SuisseBtn
 					title="cancel"
 							content="cancel"
@@ -268,15 +278,7 @@ class Summary extends Component {
 							className="cust-cancel-btn"
 						/>
 					
-					{(okBtnTitle == "sell" && permissions) &&<div className="sell-btc-btn">
-					<SuisseBtn
-						className={"pop-btn custom-send sell-btc-btn"}
-						onRefresh={() => this.props.onRefresh()}
-						title={okBtnTitle || "pay"}
-						loading={isButtonLoad}
-						autoDisable={true}
-						onClick={() => this.props.onClick()}
-					/></div>}</div>
+					</div>
 				</div>
 			</>
 		);

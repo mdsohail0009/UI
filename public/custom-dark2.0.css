@@ -90,6 +90,10 @@
     --termsText:#CCC3FF;
     --inputBorder:rgba(255, 255, 255, 0.6);
     --balInput:#FAFCFE;
+    --radioFill:rgba(92, 97, 255, 0.35);
+    --radioBorderfill:#CCC3FF;
+    --radioOutlinefill:rgba(255, 255, 255, 0.1);
+    --radioBg:rgba(255, 255, 255 ,0.15);
 
     --lightThemeIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/user-dark-theme2.0.svg);
     --cryptoIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/light-crypto-icons.svg);
