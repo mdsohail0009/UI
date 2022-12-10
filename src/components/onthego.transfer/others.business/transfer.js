@@ -37,9 +37,9 @@ class BusinessTransfer extends Component {
     }
     loadDetails = async () => {
         this.setState({ ...this.state, errorMessage: null, isLoading: true });
-        const response = await createPayee(this.props.userProfile.id, this.props.selectedAddress?.id || "", "otherbusiness");
-        if (response.ok) {
-            let data = response.data;
+       // const response = await createPayee(this.props.userProfile.id, this.props.selectedAddress?.id || "", "otherbusiness");
+        // if (response.ok) {
+            let data = this.props.transferData;
             let edit=false;
             if (!data?.payeeAccountModels) {
                 data.payeeAccountModels = [payeeAccountObj()];
@@ -61,13 +61,13 @@ class BusinessTransfer extends Component {
             else{
                 this.setState({ ...this.state, selectedTab:"domestic" })  
             }
-            const ibanDetails = response.data?.payeeAccountModels[0] || {}
-            this.setState({ ...this.state, errorMessage: null, details: data,isEdit:edit, isSelectedId:  response.data?.id, ibanDetails}, () => {
+            const ibanDetails = this.props.transferData?.payeeAccountModels[0] || {}
+            this.setState({ ...this.state, errorMessage: null, details: data,isEdit:edit, isSelectedId:  this.props.transferData.id, ibanDetails}, () => {
                 this.setState({ ...this.state, isLoading: false })
             });
-        } else {
-            this.setState({ ...this.state, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, details: {} });
-        }
+        //} else {
+            //this.setState({ ...this.state, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, details: {} });
+       // }
 
     }
     submitPayee = async (values) => {

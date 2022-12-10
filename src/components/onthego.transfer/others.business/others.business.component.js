@@ -33,6 +33,7 @@ class OthersBusiness extends Component {
         isValidateLoading: false,
         isValidCheck: false,
         isValidateMsg: false,
+        objData:{}
     };
     componentDidMount() {
         this.loadDetails();
@@ -43,6 +44,7 @@ class OthersBusiness extends Component {
         if (response.ok) {
             let edit=false;
             let data = response.data;
+            this.setState({ ...this.state, objData: data });
             if (!data?.payeeAccountModels) {
                 data.payeeAccountModels = [payeeAccountObj()];
                 data.payeeAccountModels[0].documents = {"transfer": "", "payee": ""}
@@ -207,7 +209,7 @@ class OthersBusiness extends Component {
                     </div>
             </div></div>
         }
-        if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} updatedHeading={this.props?.headingUpdate} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} /> }
+        if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} transferData={this.state.objData} updatedHeading={this.props?.headingUpdate} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} /> }
         else {
             return <><div ref={this.useDivRef}>
                 <h2 className="text-white fw-600" style={{ fontSize: 18, textAlign: 'center' }}>SEPA Transfer</h2>
