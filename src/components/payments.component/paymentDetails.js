@@ -68,7 +68,6 @@ class PaymentDetails extends Component {
 
   handleCurrencyChange = async (val) => {
     this.setState({ ...this.state, currency: val, paymentsData: [], errorMessage: null, errorWarning: null,loading:true });
-    
     if ((this.state.currency = val)) { //don't add === here
       let response = await getPaymentsData(
         "00000000-0000-0000-0000-000000000000",
