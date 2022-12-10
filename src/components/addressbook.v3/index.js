@@ -15,7 +15,7 @@ class AddressBookV3 extends Component {
     }
     componentDidMount() {
         this.setState({ ...this.state, fiatWalletsLoading: true });
-        fetchMemberWallets(this.props?.userProfile?.id).then(res => {
+        fetchMemberWallets().then(res => {
             if (res.ok) {
                 this.setState({ ...this.state, fiatWallets: res.data, fiatWalletsLoading: false });
             } else {

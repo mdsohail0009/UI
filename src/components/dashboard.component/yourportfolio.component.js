@@ -32,7 +32,7 @@ class YourPortfolio extends Component {
     loadCoinDetailData = async () => {
       this.setState({ ...this.state, loading: true})
       this.props.dispatch(fetchMarketCoinData(false))
-      const response = await getcoinDetails(this.props.match.params?.coinName,this.props.userProfile?.id);
+      const response = await getcoinDetails(this.props.match.params?.coinName);
       if (response.ok) {
           this.setState({ ...this.state, coinData: response.data },
           )
@@ -41,7 +41,7 @@ class YourPortfolio extends Component {
   }
     loadCryptos = () => {
         if (this.props.userProfile) {
-            this.props.dispatch(fetchYourPortfoliodata(this.props.userProfile.id));
+            this.props.dispatch(fetchYourPortfoliodata());
         }
     }
     cockpitCharts=()=>{

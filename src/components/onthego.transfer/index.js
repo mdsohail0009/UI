@@ -59,7 +59,7 @@ class OnthegoFundTransfer extends Component {
     this.permissionsInterval = setInterval(this.loadPermissions, 200);
     if (!this.state.selectedCurrency) {
       this.setState({ ...this.state, fiatWalletsLoading: true });
-      fetchMemberWallets(this.props?.userProfile?.id).then(res => {
+      fetchMemberWallets().then(res => {
         if (res.ok) {
             this.setState({ ...this.state, fiatWallets: res.data, filtercoinsList: res.data, fiatWalletsLoading: false });
         } else {
@@ -91,12 +91,12 @@ class OnthegoFundTransfer extends Component {
     }
   }
   getPayees() {
-    fetchPayees(this.props.userProfile.id, this.state.selectedCurrency).then((response) => {
+    fetchPayees( this.state.selectedCurrency).then((response) => {
         if (response.ok) {
             this.setState({ ...this.state, payeesLoading: false, filterObj: response.data, payees: response.data });
         }
     });
-    fetchPastPayees(this.props.userProfile.id, this.state.selectedCurrency).then((response) => {
+    fetchPastPayees(this.state.selectedCurrency).then((response) => {
       if (response.ok) {
         this.setState({ ...this.state, pastPayees: response.data });
       }
@@ -104,7 +104,7 @@ class OnthegoFundTransfer extends Component {
   }
   verificationCheck = async () => {
     this.setState({ ...this.state, isVarificationLoader: true })
-    const verfResponse = await getVerificationFields(this.props.userProfile.id);
+    const verfResponse = await getVerificationFields();
     let minVerifications = 0;
     if (verfResponse.ok) {
       for (let verifMethod in verfResponse.data) {

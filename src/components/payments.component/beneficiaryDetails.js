@@ -79,7 +79,7 @@ class PaymentsView extends Component {
 
     getPaymentsViewData = async (code) => {
         this.setState({ ...this.state, loading: true });
-        let response = await getPaymentsData(this.props.match.params.id, this.props.userConfig?.userId, code);
+        let response = await getPaymentsData(this.props.match.params.id, code);
         if (response.ok) {
             this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false });
         } else {

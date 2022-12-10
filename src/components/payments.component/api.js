@@ -1,8 +1,8 @@
 import { apiClient } from '../../api';
 import { ApiControllers } from '../../api/config'
 
-const getCurrencyLu = (customer_id) => {
-    return apiClient.get(ApiControllers.wallets + `Fiat/${customer_id}`);
+const getCurrencyLu = () => {
+    return apiClient.get(ApiControllers.wallets + `Fiat`);
 }
 
 const savePayments = (obj) => {
@@ -11,8 +11,8 @@ const savePayments = (obj) => {
 const updatePayments = (obj) => {
     return apiClient.put(ApiControllers.massPayment + "UpdateUserpayments", obj);
 }
-const getPaymentsData = (id, customerId,currency) => {
-    return apiClient.get(ApiControllers.massPayment + `payments/${id}/${customerId}/${currency}`);
+const getPaymentsData = (id,currency) => {
+    return apiClient.get(ApiControllers.massPayment + `payments/${id}/${currency}`);
 }
 const getBankData = (addressId) => {
     return apiClient.get(ApiControllers.massPayment + `BankDetails/${addressId}`);

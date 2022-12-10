@@ -71,7 +71,6 @@ class PaymentDetails extends Component {
     if ((this.state.currency === val)) {
       let response = await getPaymentsData(
         "00000000-0000-0000-0000-000000000000",
-        this.props.userConfig?.id,
         this.state.currency
       );
       if (response.ok) {
@@ -88,7 +87,7 @@ class PaymentDetails extends Component {
     }
   };
   getCurrencyLookup = async () => {
-    let response = await getCurrencyLu(this.props.userConfig?.id);
+    let response = await getCurrencyLu();
     if (response.ok) {
       this.setState({ ...this.state, currencylu: response.data });
     } else {
@@ -102,7 +101,6 @@ class PaymentDetails extends Component {
     if (this.props.match.params.id === "00000000-0000-0000-0000-000000000000") {
       let response = await getPaymentsData(
         "00000000-0000-0000-0000-000000000000",
-        this.props.userConfig?.id,
         this.state.currency
       );
       if (response.ok) {

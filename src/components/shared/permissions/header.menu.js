@@ -293,7 +293,7 @@ class HeaderPermissionMenu extends Component {
     }
     readNotification() {
         apicalls.encryptValue("true", this.props.userConfig?.sk);
-        readNotifications(this.props.userConfig.id).then(() => {
+        readNotifications().then(() => {
             this.props.dispatch(setNotificationCount(0));
         });
     }

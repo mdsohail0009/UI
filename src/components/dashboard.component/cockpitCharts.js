@@ -29,30 +29,30 @@ class CockpitCharts extends Component {
     cokpitKpiTrack = () => {
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Cockpit KPI page view', "Username": this.props.userProfileInfo?.userName, "customerId": this.props.userProfileInfo?.id, "Feature": 'Cockpit', "Remarks": 'Cockpit KPI page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Cockpit' });
     }
-    loadDashboards = async (days) => {
+    loadDashboards = async (Days) => {
         this.setState({ ...this.state, cumulativePNL: null, profits: null, dailyPnl: null, assetnetWorth: null, assetAlloction: null })
         await Promise.all([
-            apiCalls.getdshcumulativePnl(this.props.userConfig.id, days).then(_response => {
+            apiCalls.getdshcumulativePnl(Days).then(_response => {
                 if (_response.ok) {
                     this.setState({ ...this.state, cumulativePNL: _response.data })
                 }
             }),
-            apiCalls.getprofits(this.props.userConfig.id, days).then(_res => {
+            apiCalls.getprofits(Days).then(_res => {
                 if (_res.ok) {
                     this.setState({ ...this.state, profits: _res.data })
                 }
             }),
-            apiCalls.getdailypnl(this.props.userConfig.id, days).then(_dailyPnlres => {
+            apiCalls.getdailypnl(Days).then(_dailyPnlres => {
                 if (_dailyPnlres.ok) {
                     this.setState({ ...this.state, dailyPnl: _dailyPnlres.data })
                 }
             }),
-            apiCalls.getAssetNetwroth(this.props.userConfig.id, days).then(assetnetWorthres => {
+            apiCalls.getAssetNetwroth(Days).then(assetnetWorthres => {
                 if (assetnetWorthres.ok) {
                     this.setState({ ...this.state, assetnetWorth: assetnetWorthres.data })
                 }
             }),
-            apiCalls.getAssetAllowcation(this.props.userConfig.id, days).then(assetAlloctionres => {
+            apiCalls.getAssetAllowcation(Days).then(assetAlloctionres => {
                 if (assetAlloctionres.ok) {
                     this.setState({ ...this.state, assetAlloction: assetAlloctionres.data })
                 }
@@ -67,7 +67,7 @@ class CockpitCharts extends Component {
     }
     loadKpis = async () => {
         this.setState({...this.state,isLoading:true})
-        let response = await apiCalls.getdshKpis(this.props?.userConfig?.id);
+        let response = await apiCalls.getdshKpis();
         if (response.ok) {
             this.setState({ ...this.state, kpis: response.data })
             this.setState({...this.state,isLoading:false})

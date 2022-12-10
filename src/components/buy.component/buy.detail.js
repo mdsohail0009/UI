@@ -116,7 +116,7 @@ class SelectCrypto extends Component {
 
         }
         this.setState({...this.state,btnLoading:true})
-        const response = await getPreview({ coin, currency: this.state.selectedWallet.currencyCode, amount:(isSwaped ? cryptoValue : localValue), isCrypto:!isSwaped, customer_id:this.props?.userProfileInfo.id });
+        const response = await getPreview({ coin, currency: this.state.selectedWallet.currencyCode, amount:(isSwaped ? cryptoValue : localValue), isCrypto:!isSwaped });
         if (response.ok) {
             this.props.preview(this.state.selectedWallet, coin, (isSwaped ? cryptoValue : localValue), !isSwaped, this.props?.userProfileInfo.id);
             this.props.setStep('step3');

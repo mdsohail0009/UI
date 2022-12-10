@@ -32,7 +32,7 @@ const updatetwofactor = (payload) => {
 const clearUserInfo = () => {
     return { type: CLEAR_USER_INFO, payload: null }
 }
-const getmemeberInfo = (userid) => {
+const getmemeberInfo = () => {
     return async (dispatch) => {
         // let twofa;
         // apiCalls.twofactor(userid).then(res => {
@@ -40,7 +40,7 @@ const getmemeberInfo = (userid) => {
         //         twofa = res.data;
         //     }
         // });
-        apiCalls.getMember(userid).then((res) => {
+        apiCalls.getMember().then((res) => {
             if (res.ok) {
                 dispatch(userInfo(res.data));
                 dispatch(setNotificationCount(res.data?.unReadCount))

@@ -38,7 +38,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     }, []);//eslint-disable-line react-hooks/exhaustive-deps
     const getRecipientDetails = async () => {
         setLoader(true)
-        const response = await apiCalls.getRecipientData(props.userConfig.id, isBusiness ? 'OwnBusiness' : 'MySelf', props.selectedAddress?.id || "00000000-0000-0000-0000-000000000000");
+        const response = await apiCalls.getRecipientData( props.selectedAddress?.id || "00000000-0000-0000-0000-000000000000",isBusiness ? 'OwnBusiness' : 'MySelf');
         if (response.ok) {
             if (props.selectedAddress?.id) {
                 setLoader(false);setRecipientDetails(response.data)

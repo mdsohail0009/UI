@@ -1,25 +1,25 @@
 import { apiClient} from "../../../api"
 import{ApiControllers} from '../../../api/config';
 
-const getCode = (AccountId, isResendOTP) => {
+const getCode = ( isResendOTP) => {
 	return apiClient.get(
-		ApiControllers.master + `SendOTP/${AccountId}/${isResendOTP}`
+		ApiControllers.master + `SendOTP/${isResendOTP}`
 	);
 };
-const getVerification = (AccountId, code) => {
+const getVerification = ( code) => {
 	return apiClient.get(
-		ApiControllers.master + `OTPVerification/${AccountId}/${code}`
+		ApiControllers.master + `OTPVerification/${code}`
 	);
 };
-const sendEmail = (AccountId, isResendOTP) => {
+const sendEmail = ( isResendOTP) => {
 	return apiClient.get(
-		ApiControllers.master + `SendEmailOTP/${AccountId}/${isResendOTP}`
+		ApiControllers.master + `SendEmailOTP/${isResendOTP}`
 	);
 };
 
-const verifyEmailCode = (AccountId, code) => {
+const verifyEmailCode = ( code) => {
 	return apiClient.get(
-		ApiControllers.master + `EmailOTPVerification/${AccountId}/${code}`
+		ApiControllers.master + `EmailOTPVerification/${code}`
 	);
 };
 const getAuthenticator = (Code, customerId) => {
@@ -27,9 +27,9 @@ const getAuthenticator = (Code, customerId) => {
 		ApiControllers.master + `VerifyAuthenticator/${Code}/${customerId}`
 	);
 };
-const getVerificationFields = (customerId) => {
+const getVerificationFields = () => {
 	return apiClient.get(
-		ApiControllers.master + `Verificationfields/${customerId}`
+		ApiControllers.master + `Verificationfields`
 	);
 };
 
