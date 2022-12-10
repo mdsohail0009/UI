@@ -115,10 +115,10 @@ class PaymentDetails extends Component {
         message.destroy();
         this.setState({
           ...this.state,
-          errorMessage: response.data,
+          errorMessage: this.isErrorDispaly(response),
           loading: false,
         });
-        this.useDivRef.current.scrollIntoView();
+        this.useDivRef.current.scrollIntoView(0,0);
       }
     } else {
       let response = await creatPayment(this.props.match.params.id);
@@ -138,10 +138,10 @@ class PaymentDetails extends Component {
         message.destroy();
         this.setState({
           ...this.state,
-          errorMessage: response.data,
+          errorMessage: this.isErrorDispaly(response),
           loading: false,
         });
-        this.useDivRef.current.scrollIntoView();
+        this.useDivRef.current.scrollIntoView(0,0);
       }
     }
   };
