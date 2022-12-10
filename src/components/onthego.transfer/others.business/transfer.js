@@ -37,8 +37,7 @@ class BusinessTransfer extends Component {
     }
     loadDetails = async () => {
         this.setState({ ...this.state, errorMessage: null, isLoading: true });
-       // const response = await createPayee(this.props.userProfile.id, this.props.selectedAddress?.id || "", "otherbusiness");
-        // if (response.ok) {
+       
             let data = this.props.transferData;
             let edit=false;
             if (!data?.payeeAccountModels) {
@@ -65,9 +64,7 @@ class BusinessTransfer extends Component {
             this.setState({ ...this.state, errorMessage: null, details: data,isEdit:edit, isSelectedId:  this.props.transferData.id, ibanDetails}, () => {
                 this.setState({ ...this.state, isLoading: false })
             });
-        //} else {
-            //this.setState({ ...this.state, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, details: {} });
-       // }
+       
 
     }
     submitPayee = async (values) => {
