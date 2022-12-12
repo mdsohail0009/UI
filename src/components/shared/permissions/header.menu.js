@@ -136,7 +136,8 @@ class HeaderPermissionMenu extends Component {
             send_crypto: false,
             receive_fiat: false,
             receive_crypto: false,
-            sendFiatTab: false
+            sendFiatTab: false,
+            batchPayment: false
 
         },
     }
@@ -167,7 +168,7 @@ class HeaderPermissionMenu extends Component {
     }
     
     navigate = (menuKey, menuItem) => {
-        if (menuItem.path === "/modal") {
+        if (menuItem.path === "/modal" && menuKey !== "batchpayment") {
                 switch (menuKey) {
                     case "trade_buy":
                         this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: false } });
@@ -226,7 +227,11 @@ class HeaderPermissionMenu extends Component {
                         break;
                 }
             this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true, selectedTab: menuKey === "trade_sell" ? true : false, sendCryptoTab: menuKey === "send_crypto" ? true : false, sendFiatTab: menuKey === "send_fiat" ? true : false } });
-        } else if (menuItem.path) {
+        } 
+        else if(menuKey === "batchpayment") {
+            this.props.history.push("/batchpayment");
+        }
+        else if (menuItem.path) {
             this.props.history.push(menuItem.path);
         }
     }
@@ -240,8 +245,8 @@ class HeaderPermissionMenu extends Component {
         }
     }
     onMenuItemClick = async (menuKey, menuItem) => {
-        const perIgnoreLst = ["notifications", "auditLogs", "cases"];
-        if (perIgnoreLst.includes(menuKey)) { this.navigate(menuKey, menuItem) }
+        const perIgnoreLst = ["notifications", "auditLogs", "cases","Batch_Payment"];
+        if (perIgnoreLst.includes(menuKey)) { this.navigate(menuKey === "Batch_Payment" ? "batchpayment" :menuKey, menuItem) }
         else {
             const ignoreKycLst = ["transactions"];
             if ((this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled && checkCustomerState(this.props.userConfig)) || ignoreKycLst.includes(menuItem.key)) {
@@ -484,7 +489,7 @@ class HeaderPermissionMenu extends Component {
                     this.props.dispatch(setHeaderTab(key.key));
                 }}
             >
-                <Menu.Item key="12" className="custom-header"><Link to="/batchpayment" className="batch-list">Batch Payments</Link></Menu.Item>
+                {/* <Menu.Item key="12" className="custom-header"><Link to="/batchpayment" className="batch-list">Batch Payments</Link></Menu.Item> */}
 
                 {data?.map((item, indx) => <React.Fragment>
                     {item.isTab ? <Menu.Item key={item.id}>

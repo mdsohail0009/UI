@@ -671,7 +671,8 @@ export default {
 	sell_select_currency: "SELECT CURRENCY TO RECEIVE",
 	transactions_history: "Transaction History",
 	transaction:"Transaction",
-	batch_payments: "Batch Payments",
+	batch_payments: "Batch Payment",
 	bathch_payments_preview: "Please confirm the field before acknowledging",
+	tab_BatchPayment: "Batch Payment"
 	
 };

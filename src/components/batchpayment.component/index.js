@@ -105,7 +105,7 @@ const [open, setOpen] = useState(false);
                   <List
                       className="bill-grid"
                       showActionBar={false}
-                      url={process.env.REACT_APP_GRID_API + `/MassPayments/BatchPayments`}
+                      url={process.env.REACT_APP_GRID_API + `MassPayments/BatchPayments`}
                       columns={gridColumns}
                       ref={gridRef}
                   />

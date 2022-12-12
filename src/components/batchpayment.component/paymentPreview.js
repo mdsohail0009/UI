@@ -3,6 +3,8 @@ import {
   Drawer,
   Typography,
   Button,
+  Modal,
+  Tooltip,
    Select} from "antd";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
@@ -11,7 +13,7 @@ import PaymentSummary from "./paymentSummary";
 //import { Spreadsheet } from '@progress/kendo-spreadsheet-react-wrapper';
 import Spreadsheet from "react-spreadsheet";
 
-
+const { Paragraph } = Typography
 const { Option } = Select;
 class paymentPreview extends Component {
   constructor(props) {
@@ -20,21 +22,23 @@ class paymentPreview extends Component {
       modal: false,
       showModal:false,
       paymentSummary: false,
+      insufficientModal: false,
       data: [
-        [{ value: "A" }, { value: "A" },{ value: "A" }, { value: "A" },{ value: "A" }, { value: "A" },{ value: "A" }, { value: "A" },{ value: "A" }, { value: "A" },{ value: "A" }, { value: "A" },{ value: "A" }, { value: "A" },],
-        [{ value: "B" }, { value: "B" }],
-        [{ value: "C" }, { value: "C" }],
-        [{ value: "D" }, { value: "D" }],
-        [{ value: "E" }, { value: "E" }],
-        [{ value: "F" }, { value: "F" }],
-        [{ value: "G" }, { value: "G" }],
-        [{ value: "H" }, { value: "H" }],
-        [{ value: "I" }, { value: "I" }],
-        [{ value: "J" }, { value: "J" }],
-        [{ value: "K" }, { value: "K" }],
-        [{ value: "L" }, { value: "L" }],
-        [{ value: "M" }, { value: "M" }],
-        [{ value: "N" }, { value: "N" }],
+        [{ value: "File Name" }, { value: "Relationship to Benficiary" },{ value: "Address Line1" }, { value: "Transfer Type" },{ value: "Amount in USD" }, { value: "Account Number/IBAN" },{ value: "ABA Routing/Swift/BIC Code" }, { value: "Bank Name" },{ value: "Bank Address" }, { value: "Reason For Transfer" }],
+        [{ value: "" }, { value: "" }],
+        [{ value: "" }, { value: "" }],
+        [{ value: "" }, { value: "" }],
+        [{ value: "" }, { value: "" }],
+        [{ value: "" }, { value: "" }],
+        [{ value: "" }, { value: "" }],
+        [{ value: "" }, { value: "" }],
+        [{ value: "" }, { value: "" }],
+        [{ value: "" }, { value: "" }],
+        [{ value: "" }, { value: "" }],
+        [{ value: "" }, { value: "" }],
+        [{ value: "" }, { value: "" }],
+        [{ value: "" }, { value: "" }],
+        [{ value: "" }, { value: "" }],
 
       ]
     };
@@ -84,8 +88,36 @@ closeDrawer = () => {
                         onClick={this.props.onClose}>Back</Button>
                     <Button className="pop-btn custom-send sell-btc-btn ml-8"
                         style={{ width: 100, height: 50 }}
-                        onClick={() => this.setState({ ...this.state, paymentSummary: true}, () => { })}>Confirm</Button>
+                        onClick={() => this.setState({ ...this.state, paymentSummary: false, insufficientModal: true}, () => { })}>Confirm</Button>
                 </div>
+                <Modal
+                     visible={this.state.insufficientModal}
+                     title="Insufficient Balance"
+                     closeIcon={
+                        <Tooltip title="Close">
+                          <span
+                            className="icon md close-white c-pointer"
+                            onClick={() => this.handleCancel()}
+                          />
+                        </Tooltip>
+                      }
+                      destroyOnClose={true}
+                   
+                    footer={ <Button className="primary-btn pop-btn"
+                    style={{ width: 100, height: 50 }}
+                    onClick={() => { this.props.history.push('/cockpit') }}>Return</Button>}>
+                        <>
+                        <div className='text-center pt-16'>
+                            <Paragraph className='text-white fs-18'><div>You do not have enough balance.</div>
+                            <div>Total amount including fees: USD X, XXX.XX</div>
+                            <div> Balance available: USD X,XXX.XX</div>
+                            <div> Shortfall: USD X,XXX.XX</div>
+                            <div> Please top up.</div>
+                            <div>   A draft has been saved.</div>
+                            </Paragraph>
+                        </div>
+                        </>
+                </Modal>
                 {this.state.paymentSummary &&
                        <PaymentSummary
                         showDrawer={this.state.paymentSummary}

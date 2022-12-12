@@ -25,6 +25,7 @@ class AddBatchPayment extends Component {
         paymentPreview: false,
         isValidFile: true,
         uploadLoader: false,
+        uploadErrorModal: false
 
     }
 
@@ -49,7 +50,7 @@ class AddBatchPayment extends Component {
     }
     
     closeDrawer = (isPreviewBack) => {
-        this.setState({ ...this.state, paymentPreview: false,showModal:false,isCoinsListHide: false});
+        this.setState({ ...this.state, paymentPreview: false,showModal:false,isCoinsListHide: false,uploadErrorModal: false});
         if (this.props.onClose) {
             this.props.onClose(isPreviewBack);
         }
@@ -82,10 +83,10 @@ class AddBatchPayment extends Component {
             this.setState({ ...this.state, isValidFile: true });
             return true;
         } else {
-            message.error({
-                content: `File is not allowed. You can upload only csv files`,
-                className: "custom-msg"
-            });
+            // message.error({
+            //     content: `File is not allowed. You can upload only csv files`,
+            //     className: "custom-msg"
+            // });
             this.setState({ ...this.state, isValidFile: false });
             return Upload.LIST_IGNORE;
         }
@@ -146,13 +147,15 @@ class AddBatchPayment extends Component {
             this.setState({
                 ...this.state,
                 uploadLoader: false,
-                showModal: false
+                showModal: false,
+                uploadErrorModal: true
             });
         }
         else {
             this.setState({
                 ...this.state,
-                showModal: true
+                showModal: true,
+                uploadErrorModal: false
             });
         }
         this.setState({
@@ -294,7 +297,6 @@ class AddBatchPayment extends Component {
                
                 <div className='text-center makepayment-section'>
             <Title className='text-white fs-24 fw-500'>Send {this.state.selectedCurrency} to Multiple Address</Title>
-            {/* <Button className='pop-btn mt-24'onClick={this.uploadExcel}>Upload Excel</Button> */}
             <Upload
                                     accept=".xlsx, .xls, .csv"
                                     multiple="false"
@@ -340,6 +342,29 @@ class AddBatchPayment extends Component {
                            
                         </div>
                         </>
+                </Modal>
+                <Modal
+                    visible={this.state.uploadErrorModal}
+                    title="Incorrect Fields"
+                    closeIcon={
+                        <Tooltip title="Close">
+                            <span
+                                className="icon md close-white c-pointer"
+                                onClick={() => this.handleCancel()}
+                            />
+                        </Tooltip>
+                    }
+                    destroyOnClose={true}
+                    footer={<div className=''>
+                        <Button className="primary-btn pop-btn"  onClick={this.closeDrawer}>View and make changes</Button>
+                    </div>}>
+                    <>
+                        <div className='text-center pt-16'>
+                            <Paragraph className='text-white fs-18'>Excel has been uploaded.
+                                We have detected x errors out of the y transactions requested.</Paragraph>
+                            <Button className="primary-btn pop-btn"  onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false, paymentPreview: true }, () => { })}>Proceed with 90 transactions</Button>
+                        </div>
+                    </>
                 </Modal>
                 {this.state.paymentPreview &&
                        <PaymentPreview

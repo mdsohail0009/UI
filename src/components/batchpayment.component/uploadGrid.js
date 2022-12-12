@@ -26,14 +26,14 @@ const BatchpaymentView = (props) => {
         { field: "whitelistName", title: "Whitelist Name", filter: true, filterType: "date",width: 200,},
         { field: "beneficiaryName", title: "Beneficiary Name", filter: true,width: 200, },
         { field: "whitelistStatus", title: 'Whitelist Status', filter: true, width: 200,dataType: "number", filterType: "numeric", customCell: (prop) => (<td className='text-center'>Whitelisted</td>) },
-        { field: "AccountNumber/IBAN", title: 'Account Number/IBAN', filter: true, width: 200, },
-        { field: "numberOfTransactions", title: 'Number of Transactions', filter: true, width: 200,dataType: "number", filterType: "numeric",},
+        { field: "AccountNumber/IBAN", title: 'Account Number/IBAN', filter: true, width: 250, },
+        { field: "numberOfTransactions", title: 'Number of Transactions', filter: true, width: 250,dataType: "number", filterType: "numeric",},
         { field: "Amount", title: 'Amount', filter: true, width: 200, },
         { field: "transactionStatus", title: 'Transaction Status', filter: true, width: 200,
         customCell: (prop) => (<td className='text-center'>Pending</td>)
     },
-        { field: "uploadedDocuments", title: 'Uploaded Documents', filter: true, width: 200, },
-        { field: "supportingDocument", title: 'Supporting Document', filter: true, width: 200,
+        { field: "uploadedDocuments", title: 'Uploaded Documents', filter: true, width: 220, },
+        { field: "supportingDocument", title: 'Supporting Document', filter: true, width: 240,
             customCell: (prop) => (
             <td className='text-center'><div className="gridLink text-center" ><Button className='pop-btn px-36' onClick={showUploadModal}>Upload</Button>
               </div></td>)
@@ -41,13 +41,12 @@ const BatchpaymentView = (props) => {
       ];
     return (
         < div className='main-container'>
-            <Title className="basicinfo "><span className='icon md c-pointer back mr-8' /><Text className="basicinfo">XXX Payments / USD</Text></Title>
+            <Title className="basicinfo "><span className='icon md c-pointer back mr-8' onClick={() => props.history.push('/batchpayment')}/><Text className="basicinfo">XXX Payments / USD</Text></Title>
             <div className="box basic-info text-white" style={{ clear: 'both' }}>
                 <List
                     className="bill-grid"
                     showActionBar={false}
-                    url={process.env.REACT_APP_GRID_API + `MassPayments/UserPayments/${props.userConfig?.id}`}
-                    additionalParams={{ type: "All" }}
+                    url={process.env.REACT_APP_GRID_API + `MassPayments/BatchPayments`}
                     columns={gridColumns}
                     ref={gridRef}
                 />
@@ -61,11 +60,11 @@ const BatchpaymentView = (props) => {
                     <Tooltip title="Close">
                       <span
                         className="icon md close-white c-pointer"
-                       
+                        onClick={() => setUploadModal(false) }
                       />
                     </Tooltip>
                   }
-                footer={<div><Button className='pop-btn custom-send sell-btc-btn' >Upload</Button></div>}>
+                footer={<div><Button className='pop-btn custom-send sell-btc-btn' onClick={() => setUploadModal(false) }>Upload</Button></div>}>
                 
                 <>
                     <div className='my-16'>
