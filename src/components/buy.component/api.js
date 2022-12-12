@@ -21,8 +21,8 @@ const savesellData = (obj) => {
 const getCoins = (type) => {
     return apiClient.get(ApiControllers.markets + `Coins/${type}`);
 }
-const getSelectedCoinDetails = (coin_code, customer_id) => {
-    return apiClient.get(ApiControllers.buySell + `${customer_id}/Coins/${coin_code}`)
+const getSelectedCoinDetails = (coin_code) => {
+    return apiClient.get(ApiControllers.buySell + `Coins/${coin_code}`)
 }
 const fetchCurrencyConvertionValue = ({ from, to, value, isCrypto, customer_id, screenName }) => {
     return apiClient.get(ApiControllers.master + `CryptoFiatConverter/${customer_id}/${from}/${to}/${value}/${isCrypto}/${screenName||null}`);
