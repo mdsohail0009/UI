@@ -30,6 +30,7 @@ class SellSummary extends Component {
         });
     }
     async fetchPreviewData() {
+        debugger
         let res = await getSellPreviewData(this.props.sellData.sellsaveObject);
         if (res.ok) {
             this.setState({ sellpreviewData: res.data, loader: false, disableConfirm: false })

@@ -73,10 +73,10 @@ const fetchCoins = (type) => {
 
     }
 }
-const fetchSelectedCoinDetails = (coin, customer_id) => {
+const fetchSelectedCoinDetails = (coin) => {
     return async (dispatch) => {
         dispatch(handleFetch({ key: "selectedCoin", loading: true, data: null }));
-        const response = await getSelectedCoinDetails(coin, customer_id);
+        const response = await getSelectedCoinDetails(coin);
         if (response.ok) {
             dispatch(handleFetch({ key: "selectedCoin", loading: false, data: response.data }));
         } else {
@@ -95,10 +95,10 @@ const fetchMemberFiat = (customer_id) => {
         }
     }
 }
-const fetchPreview = ({ coin, wallet, amount, customer_id }) => {
+const fetchPreview = ({ coin, wallet, amount }) => {
     return async (dispatch) => {
         dispatch(handleFetch({ key: "previewDetails", loading: true, data: null }));
-        const response = await getPreview({ coin, currency: wallet.currencyCode, amount, customer_id });
+        const response = await getPreview({ coin, currency: wallet.currencyCode, amount });
         if (response.ok) {
             dispatch(handleFetch({ key: "previewDetails", loading: false, data: response.data }));
         } else {
@@ -109,7 +109,7 @@ const fetchPreview = ({ coin, wallet, amount, customer_id }) => {
 const getMemberCoins = (customer_id) => {
     return dispatch => {
         dispatch(fetchMemberCoins());
-        getportfolio(customer_id).then(
+        getportfolio().then(
             (response) => {
                 if (response.ok) {
                     dispatch(fetchMemberCoinsSuccess(response.data, 'MemberCoins'));

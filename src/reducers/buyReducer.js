@@ -34,10 +34,10 @@ const fetchCoins = (type) => {
         }
     }
 }
-const fetchSelectedCoinDetails = (coin, member_id) => {
+const fetchSelectedCoinDetails = (coin) => {
     return async (dispatch) => {
         dispatch(handleFetch({ key: "selectedCoin", loading: true, data: null }));
-        const response = await getSelectedCoinDetails(coin, member_id);
+        const response = await getSelectedCoinDetails(coin);
         if (response.ok) {
             dispatch(handleFetch({ key: "selectedCoin", loading: false, data: response.data }));
         } else {
@@ -51,11 +51,11 @@ const setExchangeValue = (payload) => {
         payload
     }
 }
-const fetchPreview = ({ coin, wallet, amount, isCrypto = false, customer_id }) => {
+const fetchPreview = ({ coin, wallet, amount, isCrypto = false }) => {
     return async (dispatch) => {
         dispatch(handleFetch({ key: "previewDetails", loading: true, data: null }));
 
-        const response = await getPreview({ coin, currency: wallet.currencyCode, amount, isCrypto, customer_id });
+        const response = await getPreview({ coin, currency: wallet.currencyCode, amount, isCrypto });
         if (response.ok) {
             dispatch(handleFetch({ key: "previewDetails", loading: false, data: response.data }));
             dispatch(setExchangeValue({ key: coin, value: response.data?.oneCoinValue }));

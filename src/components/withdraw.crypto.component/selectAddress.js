@@ -28,9 +28,8 @@ class SelectAddress extends Component {
     }
     getAddressLu = async () => {
         this.setState({ ...this.state, loading: true })
-        let customerId = this.props.userProfile.id;
         let coin_code = this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coin;
-        let recAddress = await favouriteFiatAddress(customerId, 'crypto', coin_code)
+        let recAddress = await favouriteFiatAddress('crypto', coin_code)
         if (recAddress.ok) {
             this.setState({ ...this.state, addressLu: recAddress.data, loading: false, filterObj: recAddress.data });
         }

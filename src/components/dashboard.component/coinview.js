@@ -45,7 +45,7 @@ componentWillUnmount(){
     loadCoinDetailData = async () => {
         this.setState({ ...this.state, loading: true})
         this.props.dispatch(fetchMarketCoinData(false))
-        const response = await getcoinDetails(this.props.match.params?.coinName,this.props.userProfile?.id);
+        const response = await getcoinDetails(this.props.match.params?.coinName);
         if (response.ok) {
             this.setState({ ...this.state, coinData: response.data },
                  () => {this.coinChartData(1); }

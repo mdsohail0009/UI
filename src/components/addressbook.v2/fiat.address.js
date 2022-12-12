@@ -42,17 +42,17 @@ class AddressBookV2 extends Component {
         verifyData: null, isBtnLoading: false,loader:true,currency:null
     }
     componentDidMount() {
-        fetchPayees(this.props.userProfile.id, this.props.selectedCurrency).then((response) => {
+        fetchPayees( this.props.selectedCurrency).then((response) => {
             if (response.ok) {
                 this.setState({ ...this.state, payeesLoading: false, filterObj: response.data, payees: response.data });
             }
         });
-        fetchPastPayees(this.props.userProfile.id, this.props.selectedCurrency).then((response) => {
+        fetchPastPayees(this.props.selectedCurrency).then((response) => {
             if (response.ok) {
                 this.setState({ ...this.state, pastPayees: response.data });
             }
         });
-        fetchMemberWallets(this.props.userProfile.id).then((response) => {
+        fetchMemberWallets().then((response) => {
             if (response.ok) {
                 this.setState({ ...this.state, coinListData: response.data,loader:false });
             }

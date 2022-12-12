@@ -39,7 +39,7 @@ class AddressCrypto extends Component {
   getCryptoData = async () => {
     let id = this.props?.addressBookReducer?.selectedRowData?.id || "00000000-0000-0000-0000-000000000000";
     this.setState({ ...this.state, isLoading: true })
-    let response = await getCryptoData(id, this.props.userProfile?.id);
+    let response = await getCryptoData(id);
     if (response.ok) {
       this.setState({ ...this.state, cryptoData: response.data, isLoading: false })
     }

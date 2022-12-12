@@ -247,8 +247,8 @@ const AddressCommonCom = (props) => {
       setSelectParty(true);
     }
   };
-  const payeeLuData = async (id, tabName, type) => {
-    let response = await getPayeeLu(props?.userConfig?.id, withdraeTab, (type === true || type === false) ? type : true);
+  const payeeLuData = async (tabName, type) => {
+    let response = await getPayeeLu( withdraeTab, (type === true || type === false) ? type : true);
     if (response.ok) {
       setPayeeLu(response.data)
     }

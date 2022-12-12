@@ -27,7 +27,7 @@ class Portfolio extends Component {
     }
     getTransactionData = async () => {
         this.setState({ ...this.state, loading: true });
-        let response = await getData(this.props.userProfileInfo?.id);
+        let response = await getData();
         if (response.ok) {
             this.setState({ ...this.state, transactionData: response.data, loading: false });
         } else {

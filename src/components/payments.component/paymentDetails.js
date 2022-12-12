@@ -68,10 +68,9 @@ class PaymentDetails extends Component {
 
   handleCurrencyChange = async (val) => {
     this.setState({ ...this.state, currency: val, paymentsData: [], errorMessage: null, errorWarning: null,loading:true });
-    if ((this.state.currency === val)) {
+    if ((this.state.currency = val)) { //don't add === here
       let response = await getPaymentsData(
         "00000000-0000-0000-0000-000000000000",
-        this.props.userConfig?.id,
         this.state.currency
       );
       if (response.ok) {
@@ -88,7 +87,7 @@ class PaymentDetails extends Component {
     }
   };
   getCurrencyLookup = async () => {
-    let response = await getCurrencyLu(this.props.userConfig?.id);
+    let response = await getCurrencyLu();
     if (response.ok) {
       this.setState({ ...this.state, currencylu: response.data });
     } else {
@@ -102,7 +101,6 @@ class PaymentDetails extends Component {
     if (this.props.match.params.id === "00000000-0000-0000-0000-000000000000") {
       let response = await getPaymentsData(
         "00000000-0000-0000-0000-000000000000",
-        this.props.userConfig?.id,
         this.state.currency
       );
       if (response.ok) {
@@ -117,10 +115,10 @@ class PaymentDetails extends Component {
         message.destroy();
         this.setState({
           ...this.state,
-          errorMessage: response.data,
+          errorMessage: this.isErrorDispaly(response),
           loading: false,
         });
-        this.useDivRef.current.scrollIntoView();
+        this.useDivRef.current.scrollIntoView(0,0);
       }
     } else {
       let response = await creatPayment(this.props.match.params.id);
@@ -140,10 +138,10 @@ class PaymentDetails extends Component {
         message.destroy();
         this.setState({
           ...this.state,
-          errorMessage: response.data,
+          errorMessage: this.isErrorDispaly(response),
           loading: false,
         });
-        this.useDivRef.current.scrollIntoView();
+        this.useDivRef.current.scrollIntoView(0,0);
       }
     }
   };
@@ -416,13 +414,7 @@ class PaymentDetails extends Component {
         <div ref={this.useDivRef}></div>
         <div className="main-container">
           <div className="mb-16">
-            <Title className="basicinfo mb-0">
-              <Translate
-                content="menu_payments"
-                component={Text}
-                className="basicinfo"
-              />
-            </Title>
+             <Title className="basicinfo mb-0"><span onClick={() => this.props.history?.push(`/payments/${this.state.currency}`)} className='icon md c-pointer back mr-8'></span><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
           </div>
           <div className="box basic-info text-white">
             {this.state.errorMessage && (

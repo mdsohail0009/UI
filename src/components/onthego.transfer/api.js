@@ -4,9 +4,9 @@ import { ApiControllers } from "../../api/config";
 const fetchIBANDetails = (iban) => {
     return apiClient.get(ApiControllers.master + `GetIBANAccountDetails?ibanNumber=${iban}`)
 }
-const createPayee = (account_id, addr_book_id, address_type) => {
+const createPayee = ( addr_book_id, address_type) => {
     addr_book_id = addr_book_id || "00000000-0000-0000-0000-000000000000";
-    return apiClient.get(ApiControllers.addressbook + `payee/Withdraw/Favourite/${addr_book_id}/${account_id}/${address_type}`)
+    return apiClient.get(ApiControllers.addressbook + `payee/Withdraw/Favorite/${addr_book_id}/${address_type}`)
 }
 const getCoinwithBank=()=>{
     return apiClient.get(ApiControllers.withdraw + `Withdraw/CurrencyWithBank`)
@@ -64,11 +64,11 @@ const savePayee = (obj) => {
 const confirmTransaction = (obj) => {
     return apiClient.post(ApiControllers.withdraw + `/Fiat/Confirm`, obj);
 }
-const fetchPayees = (customer_id, currency) => {
-    return apiClient.get(ApiControllers.addressbook + `PayeeLu/${customer_id}/${currency}`);
+const fetchPayees = ( currency) => {
+    return apiClient.get(ApiControllers.addressbook + `PayeeLu/${currency}`);
 }
-const fetchPastPayees = (customer_id, currency) => {
-    return apiClient.get(ApiControllers.addressbook + `Payee/${customer_id}/${currency}`);
+const fetchPastPayees = ( currency) => {
+    return apiClient.get(ApiControllers.addressbook + `Payee/${currency}`);
 }
 const updatePayee = (obj) => {
     return apiClient.post(ApiControllers.addressbook + `UpdatePayee`, obj);

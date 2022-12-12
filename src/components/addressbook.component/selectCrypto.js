@@ -62,7 +62,7 @@ const connectDispatchToProps = dispatch => {
             dispatch(setAddressStep(stepcode))
         },
         getCoinDetails: (coin, memid) => {
-            dispatch(fetchSelectedCoinDetails(coin, memid));
+            dispatch(fetchSelectedCoinDetails(coin,memid));
         },
         setSelectedCoin: (coinWallet) => {
             dispatch(setAddressCoin(coinWallet));

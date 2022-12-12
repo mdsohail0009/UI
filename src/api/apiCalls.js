@@ -3,14 +3,14 @@ import { ApiControllers } from "./config";
 import counterpart from "counterpart";
 import CryptoJS from "crypto-js";
 
-const getportfolio = (memID) => {
-	return apiClient.get(ApiControllers.wallets + `Crypto/${memID}`);
+const getportfolio = () => {
+	return apiClient.get(ApiControllers.wallets + `Crypto`);
 };
 const getCryptos = () => {
 	return apiClient.get(ApiControllers.buySell + "Coins");
 };
-const getMember = (customerid) => {
-	return apiClient.get(ApiControllers.customers + `${customerid}/App/Exchange`);
+const getMember = () => {
+	return apiClient.get(ApiControllers.customers + `App/Exchange`);
 };
 const sumsubacesstoken = (userid, flow) => {
 return apiClient.get(
@@ -35,8 +35,8 @@ const trackEvent = (obj) => {
 const getIpRegistery = () => {
 	return ipRegistry.get("/?key=hb9lsmlhafyn1s1s");
 };
-const sellMemberCrypto = (memID) => {
-	return apiClient.get(ApiControllers.wallets + memID);
+const sellMemberCrypto = () => {
+	return apiClient.get(ApiControllers.wallets);
 };
 const convertLocalLang = (key) => {
 	return counterpart.translate(key);
@@ -47,44 +47,44 @@ const getIBANData = (ibannumber) => {
 	);
 };
 
-const getdshKpis = (customer_id) => {
-	return apiClient.get(ApiControllers.dashboard + `KPI/${customer_id}`);
+const getdshKpis = () => {
+	return apiClient.get(ApiControllers.dashboard + `KPI/User`);
 };
-const getdshcumulativePnl = (customer_id, days) => {
+const getdshcumulativePnl = (Days) => {
 	return apiClient.get(
-		ApiControllers.dashboard + `CumulativePNL/${customer_id}/${days}`
+		ApiControllers.dashboard + `CumulativePNL/User/${Days}`
 	);
 };
-const getAssetNetwroth = (customer_id, days) => {
+const getAssetNetwroth = (Days) => {
 	return apiClient.get(
-		ApiControllers.dashboard + `AssetsNetWorth/${customer_id}/${days}`
+		ApiControllers.dashboard + `AssetsNetWorth/User/${Days}`
 	);
 };
-const getAssetAllowcation = (customer_id, days) => {
+const getAssetAllowcation = (Days) => {
 	return apiClient.get(
-		ApiControllers.dashboard + `AssetAllocation/${customer_id}/${days}`
+		ApiControllers.dashboard + `AssetAllocation/User/${Days}`
 	);
 };
-const getprofits = (customer_id, days) => {
-	return apiClient.get(ApiControllers.dashboard + `Profits/${customer_id}/${days}`);
+const getprofits = (Days) => {
+	return apiClient.get(ApiControllers.dashboard + `Profits/User/${Days}`);
 };
-const getdailypnl = (customer_id, days) => {
-	return apiClient.get(ApiControllers.dashboard + `DailyPNL/${customer_id}/${days}`);
+const getdailypnl = (Days) => {
+	return apiClient.get(ApiControllers.dashboard + `DailyPNL/User/${Days}`);
 };
 
-const getCode = (AccountId, isResendOTP) => {
+const getCode = ( isResendOTP) => {
 	return apiClient.get(
-		ApiControllers.master + `SendOTP/${AccountId}/${isResendOTP}`
+		ApiControllers.master + `SendOTP/${isResendOTP}`
 	);
 };
-const getVerification = (AccountId, code) => {
+const getVerification = ( code) => {
 	return apiClient.get(
-		ApiControllers.master + `OTPVerification/${AccountId}/${code}`
+		ApiControllers.master + `OTPVerification/${code}`
 	);
 };
 
-const downloadKyc = (Customerid) => {
-	return apiClient.get(ApiControllers.customers + `DownloadFile/${Customerid}`);
+const downloadKyc = () => {
+	return apiClient.get(ApiControllers.customers + `DownloadFile`);
 };
 const updateSecurity = (obj) => {
 	return apiClient.put(ApiControllers.master + "UpdateSecurity", obj);
@@ -114,15 +114,15 @@ const encryptValue = (msg, key) => {
 	});
 	return salt.toString() + iv.toString() + encrypted.toString();
 };
-const sendEmail = (AccountId, isResendOTP) => {
+const sendEmail = (isResendOTP) => {
 	return apiClient.get(
-		ApiControllers.master + `SendEmailOTP/${AccountId}/${isResendOTP}`
+		ApiControllers.master + `SendEmailOTP/${isResendOTP}`
 	);
 };
 
-const verifyEmail = (AccountId, code) => {
+const verifyEmail = ( code) => {
 	return apiClient.get(
-		ApiControllers.master + `EmailOTPVerification/${AccountId}/${code}`
+		ApiControllers.master + `EmailOTPVerification/${code}`
 	);
 };
 const getAuthenticator = (Code, customerId) => {
@@ -130,13 +130,13 @@ const getAuthenticator = (Code, customerId) => {
 		ApiControllers.master + `VerifyAuthenticator/${Code}/${customerId}`
 	);
 };
-const getVerificationFields = (customerId) => {
+const getVerificationFields = () => {
 	return apiClient.get(
-		ApiControllers.master + `Verificationfields/${customerId}`
+		ApiControllers.master + `Verificationfields`
 	);
 };
-const twofactor = (id) => {
-	return apiClient.get(ApiControllers.customers + `twofactor/${id}`);
+const twofactor = () => {
+	return apiClient.get(ApiControllers.customers + `twofactor`);
 };
 
 const getInfoVal = (id, type) => {
@@ -144,30 +144,30 @@ const getInfoVal = (id, type) => {
 		ApiControllers.deposit + `GetScoreChainInfo/${id}/${type}`
 	);
 };
-const getReferalDetails = (customerId) =>{
-	return apiClient.get(ApiControllers.partner + `getReferralDetails/customer/${customerId}`);
+const getReferalDetails = () =>{
+	return apiClient.get(ApiControllers.partner + `getReferralDetails/customer`);
 }
-const getPayeeLu = (customerId,currency) => {
+const getPayeeLu = (currency) => {
     return apiClient.get(
-        ApiControllers.addressbook + `PayeeLu/${customerId}/${currency}`
+        ApiControllers.addressbook + `PayeeLu/${currency}`
     );
 };
 const saveTransferData=(obj)=>{
 	return apiClient.post(ApiControllers.addressbook+'payee',obj)
 }
-const getRecipientData=(customerId,type,addressbookId)=>{
+const getRecipientData=(addressbookId,type)=>{
 	return apiClient.get(
-        ApiControllers.addressbook + `payee/Withdraw/Favourite/${addressbookId}/${customerId}/${type}`
+        ApiControllers.addressbook + `payee/Withdraw/Favorite/${addressbookId}/${type}`
     );
 }
-const getPayeeCryptoLu = (customerId,currency) => {
+const getPayeeCryptoLu = (currency) => {
 	return apiClient.get(
-		ApiControllers.addressbook + `PayeeCryptoLu/${customerId}/${currency}`
+		ApiControllers.addressbook + `PayeeCryptoLu/${currency}`
 	);
 };
-const getPayeeCrypto = (customerId,currency) => {
+const getPayeeCrypto = (currency) => {
 	return apiClient.get(
-		ApiControllers.addressbook + `PayeeCrypto/${customerId}/${currency}`
+		ApiControllers.addressbook + `PayeeCrypto/${currency}`
 	);
 };
 const confirmCryptoTransaction = (obj) => {
