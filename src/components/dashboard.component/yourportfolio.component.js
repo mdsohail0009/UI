@@ -232,8 +232,14 @@ class YourPortfolio extends Component {
                     
               </div>
             </div> */}
-            
+            <div className='fait-wallets-style m-0'>
             <Translate content="suissebase_title" component={Title} className="db-titles" />
+            
+              <Button className="dbchart-link" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
+                  <Translate content="cockpit" />
+              </Button>
+                    
+              </div>
                 {cryptoPortFolios?.loading ? (
                <Loader />
         ) : (
