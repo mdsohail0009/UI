@@ -68,7 +68,7 @@ class paymentSummary extends Component {
 
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'>File Name</label></div>
-						<div><Text className='fw-500 text-white-30'>xxx Payments</Text></div>
+						<div><Text className='fw-500 text-white-30'>EURBatchPayment</Text></div>
 					</div>
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'>Number of Recipients</label></div>

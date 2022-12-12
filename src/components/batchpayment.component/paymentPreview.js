@@ -83,7 +83,8 @@ closeDrawer = () => {
                         onClick={this.props.onClose}>Back</Button>
                     <Button className="pop-btn custom-send sell-btc-btn ml-8"
                         style={{ width: 100, height: 50 }}
-                        onClick={() => this.setState({ ...this.state, paymentSummary: true, insufficientModal: false}, () => { })}>Confirm</Button>
+                        onClick={() => this.setState({ ...this.state, paymentSummary: false, insufficientModal: true}, () => { })}>Confirm</Button>
+                
                 </div>
                 <Modal
                      visible={this.state.insufficientModal}
@@ -104,9 +105,9 @@ closeDrawer = () => {
                         <>
                         <div className='text-center pt-16'>
                             <Paragraph className='text-white fs-18'><div>You do not have enough balance.</div>
-                            <div>Total amount including fees: USD X, XXX.XX</div>
-                            <div> Balance available: USD X,XXX.XX</div>
-                            <div> Shortfall: USD X,XXX.XX</div>
+                            <div>Total amount including fees: EUR X, XXX.XX</div>
+                            <div> Balance available: EUR X,XXX.XX</div>
+                            <div> Shortfall: EUR X,XXX.XX</div>
                             <div> Please top up.</div>
                             <div>   A draft has been saved.</div>
                             </Paragraph>

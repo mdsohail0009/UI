@@ -55,7 +55,7 @@ const [open, setOpen] = useState(false);
             <td><div className="gridLink" onClick={viewMode} >{props?.dataItem?.fileName}
               </div></td>) 
         },
-        { field: "createdDate", title: "Date created", filter: true, filterType: "date", width: 200, 
+        { field: "createdDate", title: "Date Created", filter: true, filterType: "date", width: 200, 
         customCell: (props) => (
           <td>
               {props.dataItem?.createdDate ? <>{ moment.utc(props.dataItem?.createdDate).local().format("DD/MM/YYYY hh:mm:ss A")}</> : props.dataItem?.createdDate}
