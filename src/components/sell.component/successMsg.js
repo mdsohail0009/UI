@@ -24,7 +24,10 @@ class SuccessMsg extends Component {
         const { sellFinalRes: sd } = this.props.sellInfo;
         return (
             <>
-                <div className="success-pop text-center">
+            <div className='custom-declaraton'>
+
+            
+                <div className="success-pop text-center declaration-content">
                     <img src={success} className="confirm-icon" alt={"success"} />
                     <Translate content="success_msg" component={Title} className="success-title" />
                     <Paragraph className="successsubtext"><Translate content="sucessText1" component={Text} className="successsubtext" /> {sd.tovalue} {sd.toWalletCode} <Translate content="sucessText2" component={Text} className="successsubtext" /></Paragraph>
@@ -33,6 +36,7 @@ class SuccessMsg extends Component {
                         <Translate content="return_to_sell" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => this.onSellCancel()} />
                     </Space> */}
                     <Translate content="return_to_sell" component={Button} onClick={() => this.onSellCancel()}  size="large"className="cust-cancel-btn"/>
+                </div>
                 </div>
             </>
         );

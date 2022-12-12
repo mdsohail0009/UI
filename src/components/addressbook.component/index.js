@@ -761,7 +761,7 @@ class AddressBook extends Component {
 					title={[
 						<div className="side-drawer-header">
 							<span />
-							<div className="text-center fs-16">
+							<div className="text-center">
 								<Paragraph className="drawer-maintitle">
 									<Translate
 									content={this.state.hideFiatHeading !=true && "AddFiatAddress"}

@@ -81,7 +81,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .profile-dropdown .user-profile{width:112px;height: 112px; border-radius: 50%;display: block;margin: 0 auto;}
 .profile-dropdown {text-align: center;padding:12px 34px;}
 .profile-dropdown .drpdwn-list{padding-top: 0px; padding-left: 0; padding-right: 0; margin-left: -35px; margin-right: -35px;}
-.profile-btn, .profile-btn:hover, .profile-btn:active, .profile-btn:focus{    background: transparent;
+.profile-btn, .profile-btn:hover, .profile-btn:active, .profile-btn:focus{background: transparent;
     border: 1px solid var(--green) !important;
     height: 27px;
     border-radius: 8px;
@@ -164,7 +164,7 @@ body{background:var(--bodyBg);}
 .custom-btn.prime:hover,.ant-btn-primary[disabled], .ant-btn-primary[disabled]:hover{background-color: #7087FF;}
 .custom-btn.sec{background: transparent;background-image: none;border: 1px solid var(--subText); color: var(--textWhite);margin-left: 16px;}
 .custom-btn.sec:hover{background-color: #3653E4;}
-.cust-cancel-btn{border: 1px solid var(--inputBorder);border-radius: 5px;height: 42px;background-color: transparent;color:var(--white);font-weight: 600;transition: 0.3s ease;font-size: 16px;margin-top: 16px;width:100%;}
+.cust-cancel-btn{border: 1px solid var(--inputBorder);border-radius: 5px;height: 42px;background-color: transparent;color:var(--white);font-weight: 600;transition: 0.3s ease;font-size: 16px;width:100%;margin-bottom: 20px;}
 .cust-cancel-btn.ant-btn:hover, .cust-cancel-btn.ant-btn:focus, .cust-cancel-btn.ant-btn:active{border: 1px solid #CCC3FF;border-radius: 5px;height: 42px;background-color: transparent;color: var(--white);font-weight: 600;transition: 0.3s ease;font-size: 16px;}
 /* button styles end */
 /*Kendo start*/
@@ -173,7 +173,7 @@ body{background:var(--bodyBg);}
 .ant-form-item-label > label{font-weight: 500;height: 24px !important;color: var(--textWhite);font-size: 14px;text-align: left;}
 h1.sub-heading {text-transform: capitalize;padding-left:4px; padding-right:4px;font-size:18px;font-weight:500;margin-top: 36px;color:var(--textWhite);}
 h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom: 16px;padding-left:4px; padding-right:4px;}
-.pop-btn, .confirm-btn{height: 46px;}
+.pop-btn, .confirm-btn{height: 46px;margin-bottom: 20px;}
 .box.basic-info{border-radius: 0 !important;}
 .sidebar-push{padding:30px 16px 24px;}
 .k-grid-header .k-header > .k-link{padding: 8px;margin: 0;}
@@ -272,14 +272,14 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .marginL{margin-left: 8px;}
 .crypto-details{display: flex;justify-content: center;align-items: center;}
 .auto-scroll{overflow-y: auto;}
-.enter-val-container.swap-com{display: flex;align-items: center;justify-content: center;}
-.inputfont-style{font-weight: 700;font-size: 16px;color: var(--coinBal);width: 70px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
+.enter-val-container.swap-com{display: flex;align-items: center;justify-content: center;margin-bottom: 4px;}
+.inputfont-style{font-weight: 700;font-size: 16px;color: var(--coinBal);white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .buy-paragraph{color: var(--checksub);font-weight: 500;font-size: 16px;text-align: center;margin-bottom: 0 !important;}
 .crycoin-bal{font-weight: 400 !important;font-size: 16px !important;color: var(--coinPrice) !important;}
 .buy-usdt-btn .pop-btn, .sell-btn-style{margin-top: 16px;margin-bottom: 16px;}
-.select-currency{margin-top: 36px;}
+.select-currency{margin-top: 12px;height: 264px;}
 .swap-text-sub{text-align: center;font-weight: 700;font-size: 16px;color: var(--coinBal);}
-.enrty-field-style{margin-bottom: 56px;}
+.enrty-field-style{margin-bottom: 12px;}
 .sellcrypto-style{color:var(--coinPrice);font-weight: 400;font-size: 16px;}
 .sellbal-style{font-weight: 700;font-size: 16px;color: var(--balInput);}
 .round-pills{width: 100%;text-align: center;}
@@ -334,7 +334,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .pay-list{padding: 12px 0;}
 .cust-coin-value{font-weight: 500;font-size: 45px;text-align: center;color: var(--white);}
 .cust-summary-text{text-align: left;margin-top: 16px;}
-.text-style{font-weight: 400 !important;font-size: 16px !important;color:var(--checksub) !important;margin-top: 36px !important;height: 106px;}
+.text-style{font-weight: 400 !important;font-size: 16px !important;color:var(--checksub) !important;margin-top: 16px !important;height: 106px;}
 .terms-link{color:var(--termsText) !important;font-weight: 700;}
 .faitcurrency-style{font-weight: 700;font-size: 16px;color: var(--white);text-align: center;margin-bottom: 30px;}
 .summary-liststyle{font-weight: 700;font-size: 16px;color: var(--coinBal);}
@@ -347,10 +347,17 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .agree-check input[type=checkbox]+span:hover{background-position:-190.5px -513px;}
 .agree-check input[type=checkbox]:checked+span:hover{background-position:-153px -513px;}
 .pay-list{padding: 16px 0; border-bottom: 1px solid var(--borderColor);}
+/* summary end */
+
+/* success start */
 .cryptosummary-container{max-height: calc(100vh - 0px);}
 .success-title{font-weight: 800 !important;font-size: 26px !important;color: var(--white) !important;}
-.successsubtext{font-weight: 500;font-size: 16px;color: var(--coinPrice);height:192px;}
-/* summary end */
+.successsubtext{font-weight: 500;font-size: 16px;color: var(--coinPrice);height: 330px;}
+.custom-declaraton{height: calc(100vh - 225px);align-items: center;display: flex;justify-content: center;}
+.pop-cancel span{color:var(--textYellow);text-transform: uppercase;font-weight: 700;}
+.custom-declaraton .declaration-content{width: 600px;}
+.side-drawer .side-drawer-header{align-items: flex-start;}
+/* success end */
 
 /* crypto-coins */
   .crypto-icon{background: url(../images/cryptoicons.svg)  no-repeat; height: 28px; width: 28px; display: inline-block; }
@@ -367,6 +374,15 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .tlv-header{height: 90px !important;}
     .header-logo{padding-left: 0 !important;}
     .visible-mobile{padding-left: 16px !important;}
+    .agree-check input[type=checkbox]+span{background-position: -115px -519px;}
+    .agree-check input[type=checkbox]:checked+span:hover{background-position: -153px -519px;}
+    .agree-check input[type=checkbox]:checked+span:hover{background-position:-153px -519px;}
+    .agree-check input[type=checkbox]:checked+span{background-position:-153px -519px;}
+    .agree-check input[type=checkbox]+span:hover{background-position: -190.5px -519px;}
+    .text-style{height: 230px;margin-top: 16px !important;}
+    .successsubtext{height: 400px;}
+    .round-pills .ant-radio-button-wrapper{line-height: 30px;}
+    .select-currency{height: 400px;}
     
 }
 @media (min-width: 992px){
@@ -378,10 +394,19 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .side-drawer .ant-drawer-content-wrapper{width: 524px !important;}
     .buycoin-style{font-size: 50px;}
     .cryptosummary-container{max-height: calc(100vh - 76px);}
-    .successsubtext{height:230px;}
+    /* .successsubtext{height:230px;} */
     .auto-scroll{overflow-y: auto;padding-right: 10px;}
-   
+    .agree-check input[type=checkbox]+span {background-position: -115px -513px;}   
+    .agree-check input[type=checkbox]+span{background: var(--lightThemeIcons);background-position:-115px -513px;transform:scale(1.5);display: inline-block;width: 34px;height: 34px;vertical-align: text-top;cursor: pointer;}
+    .agree-check input[type=checkbox]:checked+span{background: var(--lightThemeIcons);background-position:-153px -513px;border-color: transparent !important;}
+    .agree-check input[type=checkbox]+span:hover{background-position:-190.5px -513px;}
+    .agree-check input[type=checkbox]:checked+span:hover{background-position:-153px -513px;}
+    .successsubtext{height: 130px;}
+    .text-style{margin-top: 36px !important;}
+    .select-currency {height: 122px;}
+    .text-style{height: 106px;}
 }
+
 @media (min-width: 1024px){
 
 }
@@ -393,6 +418,9 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .listitems-design{width: 406px;}
     .listitems-design.iban-style{width: 238px;}
     .side-drawer .ant-drawer-body{padding: 16px 30px;}
+    .agree-check{height: calc(100vh - 646px);}
+    .successsubtext{height: calc(100vh - 592px);}
+    .select-currency {height: calc(100vh - 590px);}
     
 }
 @media (max-width: 991.98px){

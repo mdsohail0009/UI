@@ -217,7 +217,7 @@ class Summary extends Component {
 						/>
 					</div>
 					{permissions &&
-					<div className="d-flex p-16 mb-24 agree-check">
+					<div className="d-flex agree-check">
 						<label
 						>
 							<input

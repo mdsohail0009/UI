@@ -11,12 +11,12 @@ const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "U
     return (
       <div className="p-relative enrty-field-style">
         <div className="enter-val-container swap-com">
-          <Text className="crycoin-bal">
+        {/* <div className="crycoin-bal">
             {!isSwaped ? localCurrency : cryptoCurrency}
-          </Text>
+          </div> */}
           <NumberFormat
             id="amtInput"
-            className="inputfont-style"
+            className="inputfont-style text-center"
             maxLength={25}
             customInput={Input}
             thousandSeparator={true}
@@ -25,7 +25,8 @@ const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "U
             autoComplete="off"
             placeholder="0.00"
             bordered={false}
-            // prefix={!isSwaped ? localCurrency : cryptoCurrency}
+            contenteditable="true"
+            prefix={!isSwaped ?localCurrency : cryptoCurrency}
             // style={{
             //   lineHeight: "48px",
             //   fontSize: 30,
@@ -35,7 +36,6 @@ const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "U
            
             onKeyPress={(e) => {
               e.currentTarget.style.fontSize = "24px";
-              e.currentTarget.style.width="400px";
             }}
             value={isSwaped ? cryptoAmt : localAmt}
             onValueChange={({ value }) => {
@@ -61,6 +61,7 @@ const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "U
               </div>
             )}
           />
+           
             <span className="val-updown c-pointer" onClick={onCurrencySwap} disabled={isConvertionLoad}>
               <span className="icon md swaparrow" />
             </span>
