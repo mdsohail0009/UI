@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { dashboardTransactionSub } from '../../utils/pubsub';
 import TransactionsHistory from "../transactions.history.component";
+import apiCalls from '../../api/apiCalls';
+import { getcoinDetails } from './api';
 
 class Portfolio extends Component {
     chart;
@@ -111,7 +113,7 @@ class Portfolio extends Component {
                             <table className='pay-grid view mb-view '  style={{width: "100%"}}>
                                 <thead>
                                     <tr>
-                                        {/* <th></th> */}
+                                        <th style={{width: "5%"}}></th>
                                         <th style={{width: "15%"}}>Wallet</th>
                                         {/* <th style={{width: "35%"}}>Type</th> */}
                                         <th style={{width: "18%"}}>Date</th>
@@ -137,7 +139,7 @@ class Portfolio extends Component {
                                                     {this.state.transactionData.length > 0 ? 
                                                     <>
                                                      <tr key={idx}>
-                                                        {/* <td><Image preview={false} src={item.imagePath} /></td> */}
+                                                        <td style={{ width: "100px" }}><span className={`crypto-icon c-pointer ${item.coin}`}></span></td>
                                                      <td><div className='ts-wallet'><Title className='ts-coin'>{item.wallet}</Title><Title className='ts-type'>{item.type}</Title></div></td>
                                                      <td style={{ width: "100px" }}>
                                                      <div className='ts-tbdate'><Title className='ts-date'>{item?.date }</Title></div>

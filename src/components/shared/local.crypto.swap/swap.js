@@ -35,6 +35,7 @@ const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "U
            
             onKeyPress={(e) => {
               e.currentTarget.style.fontSize = "24px";
+              e.currentTarget.style.width="400px";
             }}
             value={isSwaped ? cryptoAmt : localAmt}
             onValueChange={({ value }) => {
