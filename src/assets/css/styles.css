@@ -276,7 +276,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .enter-val input::placeholder{color: var(--textWhite30);}
 .billing-address{border: 1px solid var(--borderLight);border-radius: 30px; padding: 28px 40px;}
 .scanner-img{width: 170px; height: 170px; margin: 30px auto 50px; padding: 10px;background-color: var(--bgWhite);border-radius: 6px;}
-.crypto-address{padding: 8px;border: 1px solid var(--borderLight);border-radius: 12px;position: relative;}
+/* .crypto-address{padding: 8px;border: 1px solid var(--borderLight);border-radius: 12px;position: relative;} */
 .recomnd-tag{background-color: var(--bgBlue);border-radius: 3px; padding: 1px 5px;}
 /* Sell */
 .default-radio{display: flex !important; justify-content: flex-start !important;margin-bottom: 16px;}
@@ -1046,7 +1046,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .side-drawer .ant-drawer-body{padding: 0 20px 20px 20px;}
     .portfolio-list .mobile-list{height: 1087px;max-height: 1087px; overflow: auto;}
     .markets-panel .custom-table .ant-table-body{height: 900px !important;}
-    .crypto-address .walletadrs{font-size: 12px;}
+    /* .crypto-address .walletadrs{font-size: 12px;} */
     .trade-legends{display: flex; justify-content: space-between;}
     .portfolio-list .ant-list-split .ant-list-item a + div{min-width: 170px;}
     .portfolio-list .ant-list-split .ant-list-item{display: flex;}
@@ -1089,7 +1089,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .pay-list{padding: 16px 0;}
     .crypto-container {max-height: calc(100vh - 325px);}
     .custom-crypto-address .fs-12{font-size: 14px !important;}
-    .crypto-address .walletadrs{font-size: 14px; margin-top: 6px;}
+    /* .crypto-address .walletadrs{font-size: 14px; margin-top: 6px;} */
     .addbook-height{max-height: calc(100vh - 112px);}
     .pop-btn-46{height:46px;}
     .minmax.custom-minmax{position: relative;right:-332px !important;top:-11px;width:100px;}
@@ -1119,8 +1119,8 @@ font-size: 12px;font-weight: 500;height: 20px;}
 main.ant-layout-content{min-height: calc(100vh - 220px);}
 .notkyc{top: 0; right: 0; bottom: 0; left: 0;display: flex; align-items: center;font-size: 36px;color: var(--textWhite);background-color: var(--bgDarkGrey);justify-content: center;margin-top: 150px;text-align: center;}
 .crypto-address.custom-crypto-address{padding: 8px 10px;}
-.crypto-address .ant-typography-copy svg{color: var(--textYellow);}
-.crypto-address .custom-display{position: absolute;top: 6px;right: 8px;}
+/* .crypto-address .ant-typography-copy svg{color: var(--textYellow);} */
+/* .crypto-address .custom-display{position: absolute;top: 6px;right: 8px;} */
 .crypto-address.custom-crypto-address .ant-typography-expand, .crypto-address .ant-typography-edit, .crypto-address .ant-typography-copy{font-size:18px;margin-left:0px;}
 .share-adrs{display: flex;justify-content: center;padding: 0;border-radius: 10px;background-color: var(--bgDarkGrey);}
 .share-adrs li{padding: 16px 20px 10px;}

@@ -216,7 +216,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .ant-modal-confirm-btns button:first-child:hover{color: var(--textYellow);}
 .ant-picker-input > input, .ant-form-item-label > label{color: var(--textWhite);}
 .search-bg{border: 1px solid rgba(0,0,0,.08);color: #313c46 !important;background-color: var(--bgDarkGrey) !important;padding: 15px 10px;}
-.anticon-copy svg, .anticon-check svg{color: var(--textYellow);}
+.anticon-copy svg, .anticon-check svg{color: var(--subText);}
 /*Modal End*/
 
 /* Dashboard start */
@@ -274,7 +274,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .coin-entryval{display: flex;align-items: center;}
 .marginL{margin-left: 8px;}
 .crypto-details{display: flex;justify-content: center;align-items: center;}
-.auto-scroll{overflow-y: auto;}
+/* .auto-scroll{overflow-y: auto;} */
 .enter-val-container.swap-com{display: flex;align-items: center;justify-content: center;margin-bottom: 4px;}
 .inputfont-style{font-weight: 700;font-size: 16px;color: var(--coinBal);white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .buy-paragraph{color: var(--checksub);font-weight: 500;font-size: 16px;text-align: center;margin-bottom: 0 !important;}
@@ -294,6 +294,13 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /*Buy/sell drawer End*/
 /* receive fait start */
 .drawer-subtext{font-weight: 700;font-size: 18px;color: var(--tablesub);}
+.fait-title{font-weight: 500 !important;font-size: 14px !important;color: var(--subText) !important;}
+.fait-subtext{display: block !important;font-size: 16px !important;font-weight: 500 !important;color: var(--white) !important;}
+.fait-box{margin-top: 12px;}
+.fait-maintext{font-weight: 700;font-size: 18px;color: var(--tablesub);margin-bottom: 16px !important;margin-top: 16px;}
+.refer-text{font-weight: 400;font-size: 16px;color: var(--tableText);}
+.walletadrs{font-weight: 700;font-size: 16px;color: var(--coinPrice);}
+.custom-display{margin-left: 12px;}
 /* receive fait end */
 /* --Payments Start--*/
 .pay-grid thead th{padding: 8px;width: 250px; color: var(--textWhite30);font-weight: 500;text-align: left;font-size: 16px;}
@@ -401,7 +408,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .buycoin-style{font-size: 50px;}
     .cryptosummary-container{max-height: calc(100vh - 76px);}
     /* .successsubtext{height:230px;} */
-    .auto-scroll{overflow-y: auto;padding-right: 10px;}
+    /* .auto-scroll{overflow-y: auto;padding-right: 10px;} */
     .agree-check input[type=checkbox]+span {background-position: -115px -513px;}   
     .agree-check input[type=checkbox]+span{background: var(--lightThemeIcons);background-position:-115px -513px;transform:scale(1.5);display: inline-block;width: 34px;height: 34px;vertical-align: text-top;cursor: pointer;}
     .agree-check input[type=checkbox]:checked+span{background: var(--lightThemeIcons);background-position:-153px -513px;border-color: transparent !important;}
