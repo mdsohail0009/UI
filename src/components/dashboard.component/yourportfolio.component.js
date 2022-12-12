@@ -301,7 +301,7 @@ class YourPortfolio extends Component {
                 >
                   {/* to={"/coindetails/" + item.coinFullName.toLowerCase()} */}
                   <List.Item.Meta
-                    avatar={
+                    avatar={<div className='crypto-bg'>
                       <span
                         className={`crypto-icon c-pointer ${item.coin}`}
                         onClick={() =>
@@ -310,6 +310,7 @@ class YourPortfolio extends Component {
                           )
                         }
                       />
+                      </div>
                     }
                     title={
                       <div className="mr-16 crypto-card-design">
