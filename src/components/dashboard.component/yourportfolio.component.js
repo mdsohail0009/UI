@@ -232,8 +232,14 @@ class YourPortfolio extends Component {
                     
               </div>
             </div> */}
-            
+            <div className='fait-wallets-style m-0'>
             <Translate content="suissebase_title" component={Title} className="db-titles" />
+            
+              <Button className="dbchart-link" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
+                  <Translate content="cockpit" />
+              </Button>
+                    
+              </div>
                 {cryptoPortFolios?.loading ? (
                <Loader />
         ) : (
@@ -295,7 +301,7 @@ class YourPortfolio extends Component {
                 >
                   {/* to={"/coindetails/" + item.coinFullName.toLowerCase()} */}
                   <List.Item.Meta
-                    avatar={
+                    avatar={<div className='crypto-bg'>
                       <span
                         className={`crypto-icon c-pointer ${item.coin}`}
                         onClick={() =>
@@ -304,6 +310,7 @@ class YourPortfolio extends Component {
                           )
                         }
                       />
+                      </div>
                     }
                     title={
                       <div className="mr-16 crypto-card-design">

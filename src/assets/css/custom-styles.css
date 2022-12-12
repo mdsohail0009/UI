@@ -142,8 +142,11 @@ body{background:var(--bodyBg);}
 .cust-search::placeholder{color: var(--placeholders);font-weight: 400;font-size: 16px;}
 .cust-search .ant-input{color: var(--primary);font-weight: 400;font-size: 16px;}
 .drawer-list-font{font-weight: 700;font-size: 16px;color: var(--coinBal);}
-.drawer-coin .ant-image, .crypto-curr-align .ant-image, .listitems-design .ant-image, .cytpo-list-style .ant-image{border: 4px solid var(--coinBg);border-radius: 100%;}
-.drawer-coin .ant-image-img, .crypto-curr-align .ant-image-img, .listitems-design .ant-image-img, .cytpo-list-style .ant-image-img{background-color: var(--coinBg);border-radius: 100%;}
+.drawer-coin .ant-image, .crypto-curr-align .ant-image, .listitems-design .ant-image, .cytpo-list-style .ant-image, .crypto-bg{border: 4px solid var(--coinBg);border-radius: 100%;}
+.drawer-coin .ant-image-img, .crypto-curr-align .ant-image-img, .listitems-design .ant-image-img, .cytpo-list-style .ant-image-img, .crypto-bg{background-color: var(--coinBg);border-radius: 100%;}
+.crypto-bg{width: 50px;
+    height: 50px;
+}
 .label-style{color: var(--subText); font-weight: 400;font-size: 14px;margin-bottom: 2px !important;text-transform: capitalize;}
 .ant-card.crypto-card{background: none;}
 .ant-select-item .ant-select-option-active, .ant-select-item-option-content, .ant-select-selection-item{color:var(--menuFont) ;}
@@ -361,10 +364,10 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 
 /* crypto-coins */
   .crypto-icon{background: url(../images/cryptoicons.svg)  no-repeat; height: 28px; width: 28px; display: inline-block; }
-  .crypto-icon.BTC{background-position: -40px -75px; transform: scale(1.5);}
-  .crypto-icon.ETH{background-position: -249px -110px; transform: scale(1.5);}
-  .crypto-icon.USDT{background-position: -5px -261px; transform: scale(1.5);}
-  .crypto-icon.USDC{background-position: -458px -224px; transform: scale(1.5);}
+  .crypto-icon.BTC{background-position: -33px -68px; transform: scale(1.5);width: 40px;height: 40px;}
+  .crypto-icon.ETH{background-position: -242px -104px; transform: scale(1.5);width: 40px;height: 40px;}
+  .crypto-icon.USDT{background-position: 2px -255px; transform: scale(1.5);width: 40px;height: 40px;}
+  .crypto-icon.USDC{background-position: -452px -217px; transform: scale(1.5);width: 40px;height: 40px;}
   .dash-mobile-list .ant-list-item-meta{align-items: center;}
 /* crypto-coins end   */
 
