@@ -31,13 +31,15 @@ class PaymentsView extends Component {
     componentDidMount() {
         this.getPaymentsViewData();
     }
-    addressTypeNames = (type) =>{
-       const stepcodes = {
-                  "1stparty" : "1st Party",
-                  "3rdparty" : "3rd Party",
-         }
-         return stepcodes[type]
-     }
+    addressTypeNames = (type) => {
+      const stepcodes = {
+        "ownbusiness": "My Company",
+        "individuals": "Individuals",
+        "otherbusiness": "Other Business",
+        "myself": "My Self"
+      };
+      return stepcodes[type];
+    };
     getPaymentsViewData = async () => {
         this.setState({ ...this.state, loading: true });
         let response = await getPaymentsData(this.props.match.params.id,this.state.currency);

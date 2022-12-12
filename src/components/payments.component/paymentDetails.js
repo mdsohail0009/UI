@@ -352,12 +352,14 @@ class PaymentDetails extends Component {
     return this.state.previewPath;
   }
   addressTypeNames = (type) => {
-    const stepcodes = {
-      "1stparty": "1st Party",
-      "3rdparty": "3rd Party",
-    }
-    return stepcodes[type]
-  }
+		const stepcodes = {
+			"ownbusiness": "My Company",
+			"individuals": "Individuals",
+			"otherbusiness": "Other Business",
+			"myself": "My Self"
+		};
+		return stepcodes[type];
+	};
   moreInfoPopover = async (id) => {
     this.setState({...this.state,isloading:true});
     let response = await getBankData(id);
@@ -825,8 +827,6 @@ class PaymentDetails extends Component {
                 className="pop-cancel btn-width  bill-cancel"
                 onClick={this.handleCancel}>Cancel</Button>
               <Button className="pop-btn px-36 btn-width"
-                // className="primary-btn pop-btn"
-
                 onClick={() => this.deleteDetials(this.state.selectData, this.state.paymentsData)}>Ok</Button></div>
             </>
           ]}
