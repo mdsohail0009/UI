@@ -35,7 +35,7 @@ class Home extends Component {
                 _permissions[action.permissionName] = action.values;
             }
             this.setState({ ...this.state, permissions: _permissions });
-            if(_permissions.view!=true){
+            if(_permissions.view!==true){
                 this.props.history.push(`/accessdenied`)
             }
         }

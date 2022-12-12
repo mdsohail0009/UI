@@ -136,7 +136,7 @@ componentWillUnmount(){
             this.showDocsError();
             return;
         }
-        if (e == 2) {
+        if (e === 2) {
             this.props.dispatch(setWithdrawfiatenaable(true))
             this.props.dispatch(setSendCrypto(true));
             this.props.dispatch(setWithdrawfiat({ walletCode: coin }))
@@ -146,10 +146,10 @@ componentWillUnmount(){
         } else {
             this.props.dispatch(setSendCrypto(false));
             this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
-            this.props.dispatch(setSubTitle(`${selectedObj.coinBalance ? selectedObj.coinBalance : '0'} ${selectedObj.coin}` + " " + apiCalls.convertLocalLang('available')));
+            this.props.dispatch(setSubTitle(`${selectedObj.coinBalance ? selectedObj.coinBalance : '0'} ${selectedObj.coin} + " " + apiCalls.convertLocalLang('available')`));
             this.props.dispatch(setStep("step7"));
-            this.props.dispatch(setSubTitle(` ${coin}` + " " + "balance" +" "+ ":" +" "+ `${selectedObj.coinBalance ? selectedObj.coinBalance : '0'}`+`${" "}`+`${coin}`
-            ));
+            this.props.dispatch(setSubTitle(` ${coin} + " " + "balance" +" "+ ":" +" "+ ${selectedObj.coinBalance ? selectedObj.coinBalance : '0'}+${" "}+${coin}
+            `));
              const response = await createCryptoDeposit({ customerId: this.props.userProfile?.id, walletCode: coin, network: selectedObj?.network });
              if (response.ok) {
                 this.props.dispatch(setWalletAddress(response.data));

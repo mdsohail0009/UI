@@ -87,7 +87,7 @@ class OnthegoFundTransfer extends Component {
   getCoinDetails = async () => {
     let response = await getCoinwithBank()
     if (response.ok) {
-      let obj = response.data
+      //let obj = response.data
     }
   }
   getPayees() {
@@ -190,9 +190,9 @@ saveWithdrawdata = async () => {
             }
         }
         if (
-            this.state.verifyData.verifyData.isPhoneVerified == "" &&
-            this.state.verifyData.verifyData.isEmailVerification == "" &&
-            this.state.verifyData.verifyData.twoFactorEnabled == ""
+          this.state.verifyData.verifyData.isPhoneVerified === "" &&
+          this.state.verifyData.verifyData.isEmailVerification === "" &&
+          this.state.verifyData.verifyData.twoFactorEnabled === ""
         ) {
             this.setState({
                 ...this.state,
@@ -346,7 +346,7 @@ saveWithdrawdata = async () => {
   }
 
   renderStep = (step) => {
-    const { filterObj, pastPayees, payeesLoading, isVarificationLoader, isVerificationEnable, isPhMail, isShowGreyButton, isAuthMail } = this.state;
+    const { filterObj, pastPayees, isVarificationLoader, isVerificationEnable, isPhMail, isShowGreyButton, isAuthMail } = this.state;
     const steps = {
       selectcurrency: (
         <React.Fragment>
@@ -403,18 +403,18 @@ saveWithdrawdata = async () => {
               scrollToFirstError
             >
               {!isVerificationEnable && (
-                <Alert
+                  <Alert 
                   message="Verification alert !"
-                  description={<Text>Without verifications you can't send. Please select send verifications from <a onClick={() => {
-                                    this.props.history.push("/userprofile/2");
-                                    if (this.props?.onClosePopup) {
-                                        this.props?.onClosePopup();
-                                    }
-                                }}>security section</a></Text>}
+                  description={<Text>Without verifications you can't send. Please select send verifications from <Link onClick={() => {
+                      this.props.history.push("/userprofile/2");
+                      if (this.props?.onClosePopup) {
+                          this.props?.onClosePopup();
+                      }
+                  }}>security section</Link></Text>}
                   type="warning"
                   showIcon
                   closable={false}
-                />
+              />
               )}
               {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
               {isVerificationEnable && (
@@ -589,7 +589,7 @@ saveWithdrawdata = async () => {
                             <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
                             <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
                             <p className="fs-16 text-white-30 fw-200 mb-0"> {apicalls.convertLocalLang('address_available')} </p>
-                            <a onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</a>
+                            <Link onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</Link>
                         </div>}
               </ul>
 

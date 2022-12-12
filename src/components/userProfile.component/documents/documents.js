@@ -7,7 +7,6 @@ class Documents extends Component {
         super(props);
         this.state = {
             isLoading: false,
-            // gridUrl: process.env.REACT_APP_GRID_API + "Transaction/TransactionHistoryk"
         }
         this.gridRef = React.createRef();
     }
@@ -20,12 +19,10 @@ class Documents extends Component {
         { field: "status", title: "Status", filter: true, width: 200 }
     ]
     render() {
-        const { gridUrl } = this.state;
         return <>
             <div className="box basic-info">
             <Translate content="Documents" className="f-16 text-white-30 mt-16 "  />
                 <Link to="/requesteddocs/">Documents View</Link>
-                {/* <List url={gridUrl} ref={this.gridRef} columns={this.gridColumns} /> */}
                 <List
                     showActionBar={true}
                     onActionClick={(key) => this.onActionClick(key)}

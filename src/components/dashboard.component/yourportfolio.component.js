@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { List, Button, Typography, Empty, Image,Dropdown, Menu, Space } from 'antd';
+import { List, Button, Typography, Empty,Dropdown, Menu, Space } from 'antd';
 import Translate from 'react-translate-component';
 import BuySell from '../buy.component';
 import SendReceive from '../send.component'
-import ConnectStateProps from '../../utils/state.connect';
-import { fetchYourPortfoliodata,fetchMarketCoinData,fetchDashboardcalls } from '../../reducers/dashboardReducer';
+import { fetchYourPortfoliodata,fetchMarketCoinData } from '../../reducers/dashboardReducer';
 import Currency from '../shared/number.formate';
 import { fetchSelectedCoinDetails, setExchangeValue, setCoin } from '../../reducers/buyReducer';
 import { setStep, setSellHeaderHide } from '../../reducers/buysellReducer';
@@ -36,7 +35,6 @@ class YourPortfolio extends Component {
       const response = await getcoinDetails(this.props.match.params?.coinName,this.props.userProfile?.id);
       if (response.ok) {
           this.setState({ ...this.state, coinData: response.data },
-              //  () => {this.coinChartData(1); }
           )
       }
       this.setState({ ...this.state, loading: false})
@@ -126,7 +124,7 @@ class YourPortfolio extends Component {
           this.showDocsError();
           return;
       }
-      if (e == 2) {
+      if (e === 2) {
           this.props.dispatch(setWithdrawfiatenaable(true))
           this.props.dispatch(setWithdrawfiat({ walletCode: coin }))
           this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
@@ -141,10 +139,10 @@ class YourPortfolio extends Component {
         this.props.dispatch(setWithdrawfiatenaable(false));
         this.props.dispatch(hideSendCrypto(false));
           this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
-         // this.props.dispatch(setSubTitle(`${selectedObj.coinBalance ? selectedObj.coinBalance : '0'} ${selectedObj.coin}` + " " + apiCalls.convertLocalLang('available')));
+        
           this.props.dispatch(setStep("step7"));
-          this.props.dispatch(setSubTitle(` ${coin}` + " " + "balance" +" "+ ":" +" "+ `${selectedObj.coinBalance ?  selectedObj.coinBalance : '0'}`+`${" "}`+`${coin}`
-            ));
+          this.props.dispatch(setSubTitle(` ${coin} + " " + "balance" +" "+ ":" +" "+ ${selectedObj.coinBalance ?  selectedObj.coinBalance : '0'}+${" "}+${coin}
+            )`));
              const response = await createCryptoDeposit({ customerId: this.props.userProfile?.id, walletCode: coin, network: selectedObj?.netWork });
              if (response.ok) {
                 this.props.dispatch(setWalletAddress(response.data));
@@ -204,10 +202,8 @@ class YourPortfolio extends Component {
       </Menu>
   )
     render() {
-        const { Title, Text } = Typography;
+        const { Text } = Typography;
         const { cryptoPortFolios } = this.props.dashboard
-        const { totalCryptoValue, totalFiatValue } = this.props.dashboard.portFolio.data;
-        const { coinData } = this.state;
         return (
           <div className="" style={{borderTop:'1px solid #c2c2c2'}}>
 {/*            
@@ -276,12 +272,12 @@ class YourPortfolio extends Component {
                       />
                       
                       <Dropdown overlay={this.menuBar(item)} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
-                        <a onClick={e => e.preventDefault()}>
+                        <Link onClick={e => e.preventDefault()}>
                           <Space>
                           <span class="icon md menu-bar ml-4 p-relative"></span>
                           {/* <DownOutlined /> */}
                         </Space>
-                      </a>
+                      </Link>
                     </Dropdown>
                      {/* <span class="icon md bell ml-4 p-relative"></span> */}
                      {/* <Dropdown overlay={this.depostWithdrawMenu} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >

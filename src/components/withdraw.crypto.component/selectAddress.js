@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import apicalls from '../../api/apiCalls';
 import { setAddressStep} from "../../reducers/addressBookReducer";
 import CryptoTransfer from '../onthego.transfer/crypto.transfer';
-const { Paragraph, Text } = Typography;
+const { Paragraph} = Typography;
 class SelectAddress extends Component {
     state = {
         addressLu: [],
@@ -68,7 +68,7 @@ class SelectAddress extends Component {
         }
         this.props.dispatch(setWithdrawcrypto(obj))
         this.setState({ ...this.state, loading: true })
-        if (type == "ADDRESS") {
+        if (type === "ADDRESS") {
             this.props.changeStep('step8');
         } else {
             this.setState({

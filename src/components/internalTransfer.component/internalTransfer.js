@@ -1,8 +1,8 @@
 import React from "react"
 import comingsoon from '../../assets/images/comingsoon.png'
-import {Typography,Image } from "antd";
+import {Typography} from "antd";
 
-const { Paragraph, Text } = Typography;
+const { Text } = Typography;
 
 const InternalTransfer = () => {
 

@@ -1,16 +1,12 @@
 import React from 'react'
-import {
-    Form, Typography, Input, Button,Alert, Spin, message, Select, Checkbox, Tooltip, Upload, Modal,
-    Radio, Row, Col, AutoComplete, Dropdown, Menu, Space, Cascader, InputNumber, Image, Tabs, Table, Drawer
-} from "antd";
-
+import {Form, Typography, Input, Button, Select, Radio, Row, Col} from "antd";
 import apiCalls from "../../api/apiCalls";
 import { validateContentRule } from "../../utils/custom.validator";
-import { setAddress, setStep, setWithdrawcrypto } from '../../reducers/sendreceiveReducer';
+import {  setStep} from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
-import Translate from "react-translate-component";
+//import Translate from "react-translate-component";
 const { Option } = Select;
-const { Paragraph, Text } = Typography;
+const { Paragraph } = Typography;
 const CryptoTransfer = (props) => {
     const [form] = Form.useForm();
     const savewithdrawalCryptoDetails=()=>{
