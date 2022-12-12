@@ -73,10 +73,10 @@ const fetchCoins = (type) => {
 
     }
 }
-const fetchSelectedCoinDetails = (coin) => {
+const fetchSelectedCoinDetails = (coin, customer_id) => {
     return async (dispatch) => {
         dispatch(handleFetch({ key: "selectedCoin", loading: true, data: null }));
-        const response = await getSelectedCoinDetails(coin);
+        const response = await getSelectedCoinDetails(coin, customer_id);
         if (response.ok) {
             dispatch(handleFetch({ key: "selectedCoin", loading: false, data: response.data }));
         } else {
