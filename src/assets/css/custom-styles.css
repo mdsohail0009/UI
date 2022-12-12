@@ -237,7 +237,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .market-panel-newstyle{clear: both;}
 .icon-space{margin-left: 12px;margin-bottom: 12px;}
 .pipeline{color: var(--tableText);margin-right: 10px;}
-.sb-card{background: var(--sbCard);border-radius: 20px;padding: 30px;margin-bottom: 16px;width: 482px;}
+.sb-card{background: var(--sbCard);border-radius: 20px;padding: 30px;margin-bottom: 16px;}
 .sb-text{color: var(--sbCardText);letter-spacing: 5px;font-weight: 700;font-size: 24px;}
 .sb-accounts{padding: 2px;}
 .cardlogo-height{margin-bottom: 109px;opacity: 0.6;}
@@ -250,7 +250,6 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .marketcap-mt{margin-top: 46px;}
 .crypto-curr-align{display: flex;justify-content: space-between;align-items: center;}
 .iban-list .ant-list-item-meta{display:block;}
-.iban-list .ant-list-items{display: flex;}
 .ts-wallet .ts-coin{font-weight: 500;font-size: 14px;color: var(--tablesub);margin-bottom: 4px;}
 .ts-wallet .ts-type{font-weight: 400;font-size: 14px;color: var(--tableInner);margin: 0 !important;}
 .ts-tbdate .ts-date{font-weight: 400;font-size: 14px;color: var(--tableText);margin: 0 !important;}
@@ -387,13 +386,13 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 
 }
 @media (min-width: 1200px){
-
+    .sb-card{width: 482px;}
 }
 @media (min-width: 1400px){
     .listitems-design{width: 406px;}
     .listitems-design.iban-style{width: 238px;}
     .side-drawer .ant-drawer-body{padding: 16px 30px;}
-
+    .iban-list .ant-list-items{display: flex;}
 }
 @media (max-width: 991.98px){
     .visible-mobile .ant-tabs-top > .ant-tabs-nav::before{border-bottom: 0 !important;}
