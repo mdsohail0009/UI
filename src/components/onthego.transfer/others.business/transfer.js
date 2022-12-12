@@ -1,5 +1,5 @@
 import { Alert, Tabs } from "antd";
-import { Form, Row, Col, Select, Divider, Typography, Input, Button, Image, Spin } from "antd";
+import { Form, Row, Col, Typography, Input, Button, Image, Spin } from "antd";
 import React, { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
 import Loader from "../../../Shared/loader";
@@ -12,7 +12,7 @@ import DomesticTransfer from "./domestic.transfer";
 import InternationalTransfer from "./international.transfer";
 import Translate from "react-translate-component";
 import alertIcon from '../../../assets/images/pending.png';
-const { Option } = Select;
+//const { Option } = Select;
 const { Paragraph, Title, Text } = Typography;
 const { TextArea } = Input;
 class BusinessTransfer extends Component {
@@ -50,10 +50,10 @@ class BusinessTransfer extends Component {
                 delete data["documents"];
                  edit = true;
             }
-            if(data.transferType== "international"){
+            if(data.transferType=== "international"){
                 this.setState({ ...this.state, selectedTab:data.transferType })
             }
-            else if(data.transferType== "internationalIBAN"){
+            else if(data.transferType=== "internationalIBAN"){
                 this.setState({ ...this.state, selectedTab:data.transferType })
                  this.handleIbanChange({ target: { value: data?.iban, isNext: true } });
             }
@@ -72,7 +72,7 @@ class BusinessTransfer extends Component {
         this.setState({ ...this.state, errorMessage: null});
         if (Object.hasOwn(values, 'iban')) {
         this.setState({ ...this.state, errorMessage: null});
-        if ((!ibanDetails || Object.keys(ibanDetails).length == 0)) {
+        if ((!ibanDetails || Object.keys(ibanDetails).length === 0)) {
             this.setState({ ...this.state, errorMessage: "Please click validate button before saving", isLoading: false, isBtnLoading: false });
             this.useDivRef.current.scrollIntoView()
             return;
@@ -82,10 +82,10 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].currencyType = "Fiat";
         _obj.payeeAccountModels[0].walletCode = "USD";
         _obj.payeeAccountModels[0].accountNumber = values?.accountNumber;
-        _obj.payeeAccountModels[0].bankName = selectedTab == "internationalIBAN" ? ibanDetails?.bankName :  values?.bankName;
+        _obj.payeeAccountModels[0].bankName = selectedTab === "internationalIBAN" ? ibanDetails?.bankName :  values?.bankName;
         _obj.payeeAccountModels[0].abaRoutingCode = values?.abaRoutingCode;
         _obj.payeeAccountModels[0].swiftRouteBICNumber = values?.swiftRouteBICNumber;
-        _obj.payeeAccountModels[0].line1 = selectedTab == "internationalIBAN" ? ibanDetails?.bankAddress : values.bankAddress1;
+        _obj.payeeAccountModels[0].line1 = selectedTab === "internationalIBAN" ? ibanDetails?.bankAddress : values.bankAddress1;
         _obj.payeeAccountModels[0].line2 = values.bankAddress2;
 
         _obj.addressType = "otherbusiness";
@@ -104,17 +104,17 @@ class BusinessTransfer extends Component {
         if (_obj.payeeAccountModels[0].documents) {
             _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
         }
-        this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
+                this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
         delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
         this.setState({ ...this.state, errorMessage: null, isLoading: false, isBtnLoading: true });
 
         let temp = JSON.parse(JSON.stringify(_obj))
         temp.payeeAccountModels[0].documents = _obj.payeeAccountModels[0]?.documents?.payee
         
-        const response = await savePayee(this.state.isEdit ? _obj : temp);      
-
+        const response = await savePayee(this.state.isEdit ? _obj : temp);   
+        
         if (response.ok) {
-            if (this.props.type != "manual") {
+            if (this.props.type !== "manual") {
                 const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer, documents: _obj.payeeAccountModels[0]?.documents?.transfer })
                 if (confirmRes.ok) {this.useDivRef.current.scrollIntoView()
                     this.props.onContinue(confirmRes.data);
@@ -332,12 +332,12 @@ class BusinessTransfer extends Component {
                     <DomesticTransfer type={this.props.type} />
                     {this.props.type !== "manual" && 
                         (<React.Fragment>
-                            <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
-                            <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
-                                let { payeeAccountModels } = this.state.details;
-                                payeeAccountModels[0].documents.transfer = docs;
-                                this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
-                            }} refreshData ={selectedTab}/>
+                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
+                    <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
+                        let { payeeAccountModels } = this.state.details;
+                        payeeAccountModels[0].documents.transfer = docs;
+                        this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
+                    }} refreshData ={selectedTab}/>
                         </React.Fragment>)
                     }
                     <div className="text-right mt-12">
@@ -732,7 +732,7 @@ class BusinessTransfer extends Component {
                                 ></TextArea>
                             </Form.Item>
                         </Col>}
-                    {this.props.type !== "manual" && 
+                        {this.props.type !== "manual" && 
                         (<React.Fragment>
                             <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
                             <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
