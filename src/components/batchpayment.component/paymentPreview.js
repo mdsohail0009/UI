@@ -57,10 +57,6 @@ closeDrawer = () => {
     debugger
     return (
       <>
-      {/* <div>
-    <h4>SpreadSheet - GeeksforGeeks</h4>
-    <Spreadsheet data={this.state.data} />
-  </div>  */}
         <Drawer
           title={[<div className="side-drawer-header">
             <span></span>
@@ -84,11 +80,10 @@ closeDrawer = () => {
                 <div className="text-right mt-12">
                     <Button className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn mr-8 ml-0 primary-btn pop-cancel"
                         style={{ width: 100, height: 50 }}
-                        // onClick={() => this.props.history.push('/cockpit')}
                         onClick={this.props.onClose}>Back</Button>
                     <Button className="pop-btn custom-send sell-btc-btn ml-8"
                         style={{ width: 100, height: 50 }}
-                        onClick={() => this.setState({ ...this.state, paymentSummary: false, insufficientModal: true}, () => { })}>Confirm</Button>
+                        onClick={() => this.setState({ ...this.state, paymentSummary: true, insufficientModal: false}, () => { })}>Confirm</Button>
                 </div>
                 <Modal
                      visible={this.state.insufficientModal}
@@ -97,7 +92,7 @@ closeDrawer = () => {
                         <Tooltip title="Close">
                           <span
                             className="icon md close-white c-pointer"
-                            onClick={() => this.handleCancel()}
+                            onClick={() =>  this.setState({ ...this.state, paymentSummary: false, insufficientModal: false}, () => { })}
                           />
                         </Tooltip>
                       }

@@ -23,12 +23,12 @@ const BatchpaymentView = (props) => {
             </td>
           )
         },
-        { field: "whitelistName", title: "Whitelist Name", filter: true, filterType: "date",width: 200,},
-        { field: "beneficiaryName", title: "Beneficiary Name", filter: true,width: 200, },
+        { field: "whitelistName", title: "Whitelist Name", filter: true, filterType: "date",width: 200, customCell: (prop) => (<td className='text-center'>a</td>)},
+        { field: "beneficiaryName", title: "Beneficiary Name", filter: true,width: 200, customCell: (prop) => (<td className='text-center'>Name</td>) },
         { field: "whitelistStatus", title: 'Whitelist Status', filter: true, width: 200,dataType: "number", filterType: "numeric", customCell: (prop) => (<td className='text-center'>Whitelisted</td>) },
-        { field: "AccountNumber/IBAN", title: 'Account Number/IBAN', filter: true, width: 250, },
+        { field: "AccountNumber/IBAN", title: 'Account Number/IBAN', filter: true, width: 250, customCell: (prop) => (<td className='text-center'>3434523253345</td>) },
         { field: "numberOfTransactions", title: 'Number of Transactions', filter: true, width: 250,dataType: "number", filterType: "numeric",},
-        { field: "Amount", title: 'Amount', filter: true, width: 200, },
+        { field: "Amount", title: 'Amount', filter: true, width: 200, customCell: (prop) => (<td className='text-center'>10,000</td>) },
         { field: "transactionStatus", title: 'Transaction Status', filter: true, width: 200,
         customCell: (prop) => (<td className='text-center'>Pending</td>)
     },
@@ -41,7 +41,7 @@ const BatchpaymentView = (props) => {
       ];
     return (
         < div className='main-container'>
-            <Title className="basicinfo "><span className='icon md c-pointer back mr-8' onClick={() => props.history.push('/batchpayment')}/><Text className="basicinfo">XXX Payments / USD</Text></Title>
+            <Title className="basicinfo "><span className='icon md c-pointer back mr-8' onClick={() => props.history.push('/batchpayment')}/><Text className="basicinfo">EURBatch Payments / EUR</Text></Title>
             <div className="box basic-info text-white" style={{ clear: 'both' }}>
                 <List
                     className="bill-grid"

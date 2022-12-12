@@ -5,6 +5,7 @@ import Translate from 'react-translate-component';
 import List from "../grid.component";
 import AddBatchPayment from './addbatchPayment';
 import PaymentPreview from './paymentPreview';
+import moment from "moment/moment";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -50,25 +51,32 @@ const [open, setOpen] = useState(false);
         },
         {
           field: "fileName", title: "File Name", filter: true, width: 200,
-          customCell: (prop) => (
-            <td><div className="gridLink" onClick={viewMode} >XXX Payments
+          customCell: (props) => (
+            <td><div className="gridLink" onClick={viewMode} >{props?.dataItem?.fileName}
               </div></td>) 
         },
-        { field: "dateCreated", title: "Date created", filter: true, filterType: "date", width: 200, },
+        { field: "createdDate", title: "Date created", filter: true, filterType: "date", width: 200, 
+        customCell: (props) => (
+          <td>
+              {props.dataItem?.createdDate ? <>{ moment.utc(props.dataItem?.createdDate).local().format("DD/MM/YYYY hh:mm:ss A")}</> : props.dataItem?.createdDate}
+          
+          </td>
+        )
+      },
         { field: "currency", title: 'Currency', filter: true, width: 150,dataType: "number", filterType: "numeric" },
         { field: "status", title: 'Status', filter: true, width: 150, },
         { field: "numberOfTransactions", title: 'Number of Transactions', filter: true, width: 240,dataType: "number", filterType: "numeric", 
-           customCell: (prop) => (<td><div className="gridLink" >50 </div></td>) 
+           customCell: (props) => (<td><div className="gridLink" >{props?.dataItem?.numberOfTransactions} </div></td>) 
         },
-        { field: "validTransactions", title: 'Valid Transactions', filter: true, dataType: "number", filterType: "numeric", width: 200, },
-        { field: "invalidTransactions", title: 'Invalid Transactions', filter: true, dataType: "number", filterType: "numeric", width: 200,
-            customCell: (prop) => (
-            <td><div className="gridLink" >10
+        { field: "validTransactionCount", title: 'Valid Transactions', filter: true, dataType: "number", filterType: "numeric", width: 200, },
+        { field: "invalidTransactionCount", title: 'Invalid Transactions', filter: true, dataType: "number", filterType: "numeric", width: 200,
+            customCell: (props) => (
+            <td><div className="gridLink" >{props?.dataItem?.invalidTransactionCount}
               </div></td>)
         },
-        { field: "pendingTransactions", title: 'Pending Transactions', filter: true, dataType: "number", filterType: "numeric", width: 220, },
-        { field: "approvedTransactions", title: 'Approved Transactions', filter: true, dataType: "number", filterType: "numeric", width: 240, },
-        { field: "rejectedTransactions", title: 'Rejected Transactions', filter: true, dataType: "number", filterType: "numeric", width: 220, },
+        { field: "pendingTransactionCount", title: 'Pending Transactions', filter: true, dataType: "number", filterType: "numeric", width: 220, },
+        { field: "approvedTransactionCount", title: 'Approved Transactions', filter: true, dataType: "number", filterType: "numeric", width: 240, },
+        { field: "rejectedTransactionCount", title: 'Rejected Transactions', filter: true, dataType: "number", filterType: "numeric", width: 220, },
       ];
     
     const addBatchPayment = () => {

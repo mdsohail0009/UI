@@ -350,19 +350,25 @@ class AddBatchPayment extends Component {
                         <Tooltip title="Close">
                             <span
                                 className="icon md close-white c-pointer"
-                                onClick={() => this.handleCancel()}
+                                onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false }, () => { })}
                             />
                         </Tooltip>
                     }
                     destroyOnClose={true}
-                    footer={<div className=''>
-                        <Button className="primary-btn pop-btn"  onClick={this.closeDrawer}>View and make changes</Button>
-                    </div>}>
+                    // footer={<div className=''>
+                    //     <Button className="primary-btn pop-btn"  onClick={this.closeDrawer}>View and make changes</Button>
+                    // </div>}
+                    footer={null}
+                    >
                     <>
                         <div className='text-center pt-16'>
-                            <Paragraph className='text-white fs-18'>Excel has been uploaded.
-                                We have detected x errors out of the y transactions requested.</Paragraph>
-                            <Button className="primary-btn pop-btn"  onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false, paymentPreview: true }, () => { })}>Proceed with 90 transactions</Button>
+                            <Paragraph className='text-white fs-18'>
+                            <div>Excel has been uploaded.</div>
+                            <div>We have detected 10 errors out of</div>
+                            <div>the 100 transactions requested.</div></Paragraph>
+                           <div> <Button className="primary-btn pop-btn"  onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false, paymentPreview: true }, () => { })}>Proceed with 90 transactions</Button></div>
+                            <br></br>
+                            <div><Button className="primary-btn pop-btn"  onClick={this.closeDrawer}>View and make changes</Button></div>
                         </div>
                     </>
                 </Modal>
