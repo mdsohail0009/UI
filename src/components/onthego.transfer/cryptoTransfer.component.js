@@ -12,7 +12,6 @@ import { validateCryptoAmount } from '../onthego.transfer/api';
 import { setStep, setSubTitle, setWithdrawcrypto, setAddress, hideSendCrypto } from '../../reducers/sendreceiveReducer';
 import AddressCrypto from "../addressbook.component/addressCrypto";
 import {rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
-import { Link } from "react-router-dom";
 
 const { Text, Title } = Typography;
 
@@ -122,7 +121,7 @@ class OnthegoCryptoTransfer extends Component {
         this.setState({ ...this.state, error: null });
         let amt = values.amount;
         amt = typeof amt == "string" ? amt?.replace(/,/g, "") : amt;
-        const { withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
+        const { withdrawMaxValue, withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null });
         if (amt === "") {
             this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('enter_amount') });
@@ -240,10 +239,98 @@ class OnthegoCryptoTransfer extends Component {
         }
     };
 
+    
+  keyDownHandler = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      this.goToAddressBook()
+    }
+  }
+  submitHandler = (e) => {
+    e.preventDefault()
+  }
+
+  goToAddressBook = () => {
+    let _amt = this.enteramtForm.current.getFieldsValue().amount
+    _amt = typeof _amt == 'string' ? _amt.replace(/,/g, '') : _amt
+    this.setState({ ...this.state, errorMsg: null, error: null })
+    if (_amt > 0) {
+      if (_amt < this.props.selectedWallet?.withdrawMinValue) {
+        this.setState({
+          ...this.state,
+          errorMsg: null,
+          error:
+            apicalls.convertLocalLang('amount_min') +
+            ' ' +
+            this.props.selectedWallet?.withdrawMinValue,
+        })
+        this.myRef.current.scrollIntoView()
+      }
+      // else if (_amt > this.props.selectedWallet?.withdrawMaxValue) {
+      //     this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_max') + " " + this.props.selectedWallet?.withdrawMaxValue });
+      //     this.myRef.current.scrollIntoView();
+      // }
+      else if (
+        _amt >
+        this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance
+      ) {
+        this.setState({
+          ...this.state,
+          errorMsg: null,
+          error: ' ' + apicalls.convertLocalLang('insufficient_balance'),
+        })
+        this.myRef.current.scrollIntoView()
+      } else {
+        this.setState(
+          {
+            ...this.state,
+            isNewTransfer: false,
+            amount: _amt,
+            onTheGoObj: this.enteramtForm.current.getFieldsValue(),
+          },
+          () => {
+            this.enteramtForm.current
+              .validateFields()
+              .then(() =>
+                this.validateAmt(
+                  _amt,
+                  'addressselection',
+                  this.enteramtForm.current.getFieldsValue(),
+                  'addressLoader',
+                ),
+              )
+              .catch((error) => {})
+          },
+        )
+      }
+    } else {
+      if (!_amt && _amt != 0) {
+        this.enteramtForm.current.validateFields()
+      } else {
+        if (_amt === '') {
+          this.setState({
+            ...this.state,
+            errorMsg: null,
+            error: ' ' + apicalls.convertLocalLang('enter_amount'),
+          })
+          this.myRef.current.scrollIntoView()
+        } else if (this.state.CryptoAmnt == '0' || _amt == 0) {
+          this.setState({
+            ...this.state,
+            errorMsg: null,
+            error: ' ' + apicalls.convertLocalLang('amount_greater_zero'),
+          })
+          this.myRef.current.scrollIntoView()
+        }
+      }
+    }
+  }
+
     renderStep = (step) => {
         const { filterObj, pastPayees } = this.state;
         const steps = {
-            enteramount: <>
+            enteramount: (
+                <>
             {this.state.isVerificationLoading  && <Loader />}
             {!this.state.isVerificationLoading  && 
                     <Form
@@ -252,6 +339,7 @@ class OnthegoCryptoTransfer extends Component {
                         ref={this.enteramtForm}
                         onFinish={this.amountNext}
                         scrollToFirstError
+                        onSubmit={this.submitHandler}
                     >
                         <div ref={this.myRef}></div>
              {this.state.error != null && <Alert type="error"
@@ -292,6 +380,7 @@ class OnthegoCryptoTransfer extends Component {
                                         displayType="input"
                                         allowNegative={false}
                                         thousandSeparator={true}
+                                        onKeyDown={this.keyDownHandler}
                                         addonBefore={this.state.selectedCurrency}
                                         onValueChange={() => {
                                             this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: null,error: null })
@@ -334,59 +423,23 @@ class OnthegoCryptoTransfer extends Component {
                                         style={{ width: '100% ' }}
                                         loading={this.state.addressLoader}
                                         disabled={this.state.newtransferLoader}
-                                        onClick={() => {
-                                            let _amt = this.enteramtForm.current.getFieldsValue().amount;
-                                            _amt = typeof _amt == "string" ? _amt.replace(/,/g, "") : _amt;
-                                            this.setState({ ...this.state, errorMsg: null, error: null});
-                                            if (_amt > 0) {
-                                                if (_amt < this.props.selectedWallet?.withdrawMinValue) {
-                                                    this.setState({ ...this.state, errorMsg: null, error: apicalls.convertLocalLang('amount_min') + " " + this.props.selectedWallet?.withdrawMinValue });
-                                                    this.myRef.current.scrollIntoView();
-                                                } 
-                                                // else if (_amt > this.props.selectedWallet?.withdrawMaxValue) {
-                                                //     this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_max') + " " + this.props.selectedWallet?.withdrawMaxValue });
-                                                //     this.myRef.current.scrollIntoView();
-                                                // } 
-                                                else if (_amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
-                                                    this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('insufficient_balance') });
-                                                    this.myRef.current.scrollIntoView();
-                                                }
-                                                else {
-                                                    this.setState({ ...this.state, isNewTransfer: false, amount: _amt, onTheGoObj: this.enteramtForm.current.getFieldsValue() }, () => {
-                                                        this.enteramtForm.current.validateFields().then(() => this.validateAmt(_amt, "addressselection", this.enteramtForm.current.getFieldsValue(), "addressLoader"))
-                                                            .catch(error => {
-
-                                                            });
-                                                    })
-                                                }
-
-                                            } else {
-                                                if (!_amt && _amt !== 0) {
-                                                    this.enteramtForm.current.validateFields()
-                                                } else {
-                                                    if (_amt === "") {
-                                                        this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('enter_amount') });
-                                                        this.myRef.current.scrollIntoView();
-                                                    }
-                                                    else if (this.state.CryptoAmnt === "0" || _amt === 0) {
-                                                        this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_greater_zero') });
-                                                        this.myRef.current.scrollIntoView();
-                                                    }
-                                                }
-                                            }
-                                        }}
+                                        onClick={this.goToAddressBook}
                                     >
                                         Address Book
                                     </Button>
                                 </Form.Item>
                             </Col>
                         </Row>
-                    </Form>}
-                </>,
-                  newtransfer: <>
+                    </Form>
+                    }
+                </>
+                ),
+                  newtransfer: (
+                   <>
                         <AddressCrypto onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1} isShowheading= {true} />
-              </>,
-               addressselection: <React.Fragment>
+              </>
+              ),
+                addressselection: (<React.Fragment>
                 <>
              {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
               <div className="mb-16" style={{textAlign:'center'}}>
@@ -430,7 +483,7 @@ class OnthegoCryptoTransfer extends Component {
                             <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
                             <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
                             <p className="fs-16 text-white-30 fw-200 mb-0"> {apicalls.convertLocalLang('address_available')} </p>
-                            <Link onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</Link>
+                            <a onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</a>
                         </div>}
                     </ul>
 
@@ -471,6 +524,7 @@ class OnthegoCryptoTransfer extends Component {
                 </>}
              </>  
                </React.Fragment>
+                ),
         }
         return steps[this.state.step];
     }
