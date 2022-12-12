@@ -23,7 +23,8 @@ class AddressDocumnet extends Component {
         documents: {}, showDeleteModal: false, isDocLoading: false,selectedObj:{},errorMessage:null
     }
     componentDidMount() {
-        this.setState({ ...this.state, documents: this.props?.documents || document(), isEdit: this.props?.editDocument, filesList: this.props?.documents ? [...this.props?.documents?.details] : [],refreshData:this.props?.refreshData })
+        let propsDocument = JSON.stringify(this.props?.documents) == JSON.stringify({'transfer': '', 'payee': ''}) ? null : this.props?.documents
+        this.setState({ ...this.state, documents: propsDocument || document(), isEdit: this.props?.editDocument, filesList: propsDocument ? [...this.props?.documents?.details] : [],refreshData:this.props?.refreshData })
     }
     docDetail = (doc) => {
         return {
@@ -41,7 +42,8 @@ class AddressDocumnet extends Component {
   
     render() {
         if(this.props.refreshData !== this.state.refreshData){
-            this.setState({ ...this.state, documents: this.props?.documents || document(), filesList: this.props?.documents ? [...this.props?.documents?.details] : [], refreshData:this.props.refreshData })
+            let propsDocument = JSON.stringify(this.props?.documents) == JSON.stringify({'transfer': '', 'payee': ''}) ? null : this.props?.documents
+            this.setState({ ...this.state, errorMessage: null, documents: propsDocument || document(), filesList: propsDocument ? [...this.props?.documents?.details] : [], refreshData:this.props.refreshData })
         }
         return <Row >
             <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="text-left">
@@ -50,7 +52,7 @@ class AddressDocumnet extends Component {
                       className="mb-8 fs-14 text-white fw-500 ml-12" 
                     >{this.props.title}</Paragraph>
                      {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
-                    <Form.Item name={"files"} required rules={[{
+                    <Form.Item name={"files"} rules={[{
                         validator: (_, value) => {
                                 const isValidFiles = this.state.filesList.filter(item => (item.name || item.documentName).indexOf(".") !== (item.name || item.documentName).lastIndexOf(".")).length === 0;
                                 if (isValidFiles) { return Promise.resolve(); } else {
@@ -142,7 +144,7 @@ class AddressDocumnet extends Component {
                                     filesList.splice(this.state.selectedFileIdx, 1);
                                     obj.splice(this.state.selectedFileIdx, 1);
                                 }
-                                files?.forEach((file, indx) =>{
+                                files?.map((file, indx) =>{
                                     if (file.id === "00000000-0000-0000-0000-000000000000"&& indx === this.state.selectedFileIdx &&  file.state !== "Deleted"  && this.state?.isEdit) {
                                         filesList.splice(indx, 1);
                                         obj.splice(indx, 1);
