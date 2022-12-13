@@ -217,8 +217,8 @@ class SelectSellCrypto extends Component {
                         isConvertionLoad={this.state.isConvertionLoading}
                        isSwaped={this.state.isSwap}
                     />
-                    <Translate content="thousandKText" component={Paragraph} className="text-center f-16 text-yellow fw-400" />
-                    <Translate content="contact_amount_text" component={Paragraph} className="text-center f-16 text-yellow fw-400" />
+                    <Translate content="thousandKText" component={Paragraph} className="text-center f-16 text-yellow fw-400 mb-0" />
+                    <Translate content="contact_amount_text" component={Paragraph} className="text-center f-16 text-yellow fw-400 " />
                     <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills" onChange={({ target: { value } }) => {
                         this.clickMinamnt(value)
                     }}>

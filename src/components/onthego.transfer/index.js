@@ -702,13 +702,12 @@ saveWithdrawdata = async () => {
             </React.Fragment>
             <Row gutter={[16, 16]}>
               <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                <Form.Item className="text-center">
+                <Form.Item className="text-right">
                   <Button
                     htmlType="button"
                     size="large"
-                    className="pop-btn mb-36 mt-36"
+                    className="pop-btn mb-36 mt-36 px-36"
                     loading={this.state.loading}
-                    style={{ width: "100%" }}
                     onClick={() => {
                         let validateFileds = [];
                         if (!["myself", "1stparty", "ownbusiness"].includes(this.state.selectedPayee.addressType?.toLowerCase())) {

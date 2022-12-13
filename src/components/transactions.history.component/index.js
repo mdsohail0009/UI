@@ -130,7 +130,7 @@ class TransactionsHistory extends Component {
       field: "senderName", title: "Sender/Recipient Full Name", width: 260,
 
       customCell: (props) => (
-        <td>
+        <td className="text-overflow">
           {props.dataItem?.senderName}
           {(props.dataItem?.senderName && props.dataItem?.beneficiryName) && "/"}
           {props.dataItem?.beneficiryName}
@@ -143,6 +143,12 @@ class TransactionsHistory extends Component {
 
     {
       field: "accountnumber", title: "Bank Account Number/IBAN", filter: true, width: 260,
+      customCell: (props) => (
+        <td className="text-overflow">
+          {props.dataItem?.accountnumber}
+
+        </td>
+      ),
     },
     { field: "state", title: "State", filter: true, width: 260,},
     
@@ -344,7 +350,7 @@ isErrorDispaly = (objValue) => {
                     </Select>
                   </Form.Item>
                 </Col>
-                {this?.state?.isCustomDate ? <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
+                {this?.state?.isCustomDate ? <Col xs={24} sm={24} md={7} lg={7} xl={5} className="transaction_resp">
                   <Form.Item
                     name="selectedTimespan"
                     className="input-label selectcustom-input cust-label transaction-type"

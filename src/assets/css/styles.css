@@ -1522,7 +1522,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .code-lbl{margin-left: 14px !important;}
 .ant-list-split .ant-list-item{border-bottom: 1px solid var(--borderLight) !important;}
 .file-label.add-lbl{width: 140px; text-align: center;}
-.gridlink-data{max-width:130px ;}
+.gridlink-data{min-width:130px ;}
 .custom-btn:hover span{color: white;}
 .custom-crypto-btns .custom-bnt span{color: var(--textWhite); font-weight: 400;}
 .pop-btn.cancel-btn{background: transparent; border: 1px solid transparent; border-radius: 40px; height: 46px !important; font-weight: 700 !important;}
@@ -1574,3 +1574,4 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .pay-list.transaction-details h1{flex: 1; word-break: break-all;}
 .ant-alert-info .ant-alert-icon{color: #ff4d4f;}
 .ant-alert-info{background-color: #fff2f0; border: 1px solid #ffccc7;}
+.text-overflow{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
