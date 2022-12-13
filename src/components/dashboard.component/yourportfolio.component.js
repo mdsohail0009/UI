@@ -329,6 +329,7 @@ class YourPortfolio extends Component {
                           prefix={""}
                         />
                         </div>
+                        <div className='price-val'>
                         <Currency
                             defaultValue={item.coinValueinNativeCurrency}
                             type={"text"}
@@ -338,6 +339,12 @@ class YourPortfolio extends Component {
                                 : "text-red"
                             }`}
                           />
+                          <span className={`icon sm ${
+                              item.coinValueinNativeCurrency > 0
+                                ? "valupp-icon"
+                                : "valdown-icon"
+                            }`} />
+                            </div>
                       </div>
                     }
                   />

@@ -11,6 +11,8 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .d-block{display: block !important;}
 
 .icon.md.theme-icon{background-position: -8px -486px;margin-right: 4px;}
+.icon.sm.valupp-icon{background-position: -87px -5px;margin-left: 8px;}
+.icon.sm.valdown-icon{background-position: -108px -4px;margin-left: 8px;}
 
 /*----Font Sizes----*/
 
@@ -240,6 +242,10 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /*Modal End*/
 
 /* Dashboard start */
+.price-val{    display: flex;
+    align-items: center; height: 36px;
+    background: #1A8357;
+    padding: 4px 8px;}
 .acount-type{padding: 8px 16px;background: #343E3A;border-radius: 5px;height: 36px;color: var(--coinPrice);font-weight: 400;font-size: 16px;align-items: center;display: flex;margin-left: 16px;margin-bottom: 40px;}
 .tlv-logo{height: 60px;padding-left: 20px;}
 .user-left{margin-left: 16px !important;}
