@@ -592,13 +592,6 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .notify .ant-alert-action{margin: 15px 30px 0 30px;}
 .notify .ant-alert-action .ant-btn{color: #0038FF;font-weight: 500 !important;}
 .notify .ant-alert-close-icon{font-size: 18px;color: var(--textDark) !important;}
-.ant-notification-notice .ant-notification-close-icon{color: var(--textWhite30);}
-.ant-notification{direction: ltr;}
-.ant-notification-notice-closable .ant-notification-notice-message{padding-left: 0 !important;}
-.ant-notification-rtl .ant-notification-notice-close{left: auto;right: 15px;}
-.ant-notification-notice-message{color: var(--textWhite30)!important;}
-.ant-notification-notice-description{color: var(--textSecondary)!important;}
-.ant-notification-notice{background-color: var(--bgDarkGrey);border-radius: 10px;font-size: 14px;}
 .bankview-right{padding: 34px 34px 0 !important;background-color: var(--bgDarkGrey);border-radius: 30px;}
 .bankview-right .kpi-val{padding-bottom: 34px;}
 .kpi-List .ant-col{display: flex;  margin-bottom: 34px;
@@ -867,7 +860,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .customaudit-select{margin-bottom: 16px;}
     .footer-links{text-align: center;}
     .enter-val-container input{font-size: 16px !important;padding: 0px 5px !important;}
-    .enter-val-container.swap-com input{width:68%;}
+    /* .enter-val-container.swap-com input{width:68%;} */
     .ant-tabs > .ant-tabs-nav .ant-tabs-nav-more{display: none;}
     .ant-popover-inner-content div:hover{padding: 8px 22px !important;display: flex;align-items: center;}
     .tlv-logo{height:46px;padding-left:0;}

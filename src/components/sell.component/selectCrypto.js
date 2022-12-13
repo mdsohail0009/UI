@@ -216,7 +216,7 @@ class SelectSellCrypto extends Component {
                                     <Translate value="half" content="half" component={Radio.Button} />
                                     <Translate value="all" content="all" component={Radio.Button} />
                                 </Radio.Group>
-                                <Translate content="thousandKText" component={Paragraph} className="buy-paragraph" />
+                                <Translate content="thousandKText" component={Paragraph} className="buy-paragraph buy-para-bg" />
                                 <Translate content="contact_amount_text" component={Paragraph} className="buy-paragraph" />
 
                                 {/* <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50" />
