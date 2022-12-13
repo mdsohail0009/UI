@@ -225,6 +225,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /*Modal End*/
 
 /* Dashboard start */
+.user-left{margin-left: 16px !important;}
 .ant-list-split .ant-list-item.cytpo-list-style{background: var(--cardBG);border-radius: 13px;margin-bottom: 10px;padding: 14px 20px !important;border-bottom:0;}
 .db-titles{font-weight: 700 !important;color:var(--dbTitle) !important;font-size: 22px !important;}
 .secureDropdown .ant-dropdown-menu{background-color: var(--profileMenu);box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.35);border-radius: 10px;min-width: 239px; max-width: 239px; padding: 24px 0;}
@@ -410,7 +411,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .visible-mobile, .sideropen{display: none;}
     .bill-grid .k-grid-header table{width: 1255px !important;}
     .bill-grid .k-grid-content table{width: 1254px !important;}
-    .listitems-design.iban-style{width: 233px !important;}
+    /* .listitems-design.iban-style{width: 233px;} */
     .listitems-design{width: 356px;}
     .side-drawer .ant-drawer-content-wrapper{width: 524px !important;}
     /* .buycoin-style{font-size: 50px;} */
@@ -426,24 +427,31 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .text-style{margin-top: 36px !important;}
     .select-currency {height: 122px;}
     .text-style{height: 106px;}
+    .full-screenable-node{width: 440px;overflow: auto;}
 }
 
 @media (min-width: 1024px){
 
 }
 @media (min-width: 1200px){
-    .sb-card{width: 482px;}
-    .iban-list .ant-list-items{display: flex;}
+    /* .sb-card{width: 482px;} */
+    .iban-list .iban-style{width: 440px;}
 }
 @media (min-width: 1400px){
+    .iban-list .ant-list-items{display: flex;}
     .listitems-design{width: 406px;}
-    .listitems-design.iban-style{width: 238px;}
+    .listitems-design.iban-style{width: 242px;}
     .side-drawer .ant-drawer-body{padding: 16px 30px;}
     .agree-check{height: calc(100vh - 646px);}
     .successsubtext{height: calc(100vh - 592px);}
     .select-currency {height: calc(100vh - 590px);}
+    .iban-list .ant-list-items{display: 238px;}
+    .full-screenable-node{width: 500px;}
     
 }
+/* @media only screen and (min-width: 1400px) and (max-width : 1900px){
+.tlv-header{padding: 12px 220px !important;}
+} */
 @media (max-width: 991.98px){
     .visible-mobile .ant-tabs-top > .ant-tabs-nav::before{border-bottom: 0 !important;}
     .visible-mobile .user-list .ant-tabs-nav{width: auto;}
