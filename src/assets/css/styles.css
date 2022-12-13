@@ -1053,7 +1053,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .portfolio-list .ant-list-split ul li .custom-btn{min-width: 90px;}
     .coin-details.right{min-height: 705px;}
     .side-drawer.custom-drawer-width .ant-drawer-content-wrapper{width:865px !important;}
-    .side-drawer.custom-fait-sidedrawer .ant-drawer-content-wrapper{width:50% !important;}
+    /* .side-drawer.custom-fait-sidedrawer .ant-drawer-content-wrapper{width:50% !important;} */
     .notify-alerticon .ant-alert-icon{margin: 0px 15px 45px 0px !important;}
     .btn-container{padding-right: 20px;}
 }

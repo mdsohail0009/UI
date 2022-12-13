@@ -75,7 +75,7 @@
     --tableInner:rgba(255, 255, 255, 0.4);
     --tablecol:#E9E9E9;
     --tableborder:rgba(255, 255, 255,0.2);
-    --bodyBg: #000000 url(../../assets/images/dark-bg2.0.svg) no-repeat top center ;
+    --bodyBg: #000000 ;
     --button: #3653E4;
     --coinBal: #FAFCFE;
     --iconBg: #3C3C3C;
@@ -99,3 +99,4 @@
     --cryptoIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/light-crypto-icons.svg);
     --logo: url(../../assets/images/logo-color.png);
 }
+body{background:var(--bodyBg) url(dark-bg2.0.svg) no-repeat top center ;}
