@@ -287,7 +287,9 @@ class Header extends Component {
     return (
       <>
         <Layout className="layout">
+          <section className="haead-main">
           <div className="tlv-header" id="area">
+            
             <div className="login-user">
               <ul className="header-logo pl-0">
                 <li className="visible-mobile p-relative" onClick={this.showToggle}>
@@ -392,6 +394,7 @@ class Header extends Component {
             <HeaderPermissionMenu collapsed={this.state.collapsed} isShowSider={this.state.isShowSider} routeToCockpit={this.routeToCockpit} />
 
           </div>
+          </section>
         </Layout>
         <Drawer
           title={[
