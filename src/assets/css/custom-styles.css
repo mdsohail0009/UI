@@ -65,7 +65,8 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .icon.lg.menu-bar{background-position: -97px -484px;}
 
 /*Header start*/
-.tlv-header{width: 1200px;margin: auto;padding: 12px 0 !important;}
+.notification-conunt .bell span{position: absolute;right: -8px;top: -8px;width: 18px;height: 18px;background: #f6921e;border-radius: 50%;line-height: 18px;text-align: center;font-size: 10px;font-weight: 600;}
+.tlv-header{width: 1200px;margin: auto;padding: 12px 0 !important;align-items: center;}
 .haead-main{background-color: var(--secondary);position: fixed; z-index: 9999;left: 0; right: 0;}
 .tlv-header ul{background-color: transparent; border-bottom: 0;}
 .tlv-header ul li{font-weight: 500;}
@@ -444,14 +445,14 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 }
 @media (min-width: 1400px){
     .iban-list .ant-list-items{display: flex;}
-    .listitems-design{width: 406px;}
+    .listitems-design{width: 346px;}
     .listitems-design.iban-style{width: 242px;}
     .side-drawer .ant-drawer-body{padding: 16px 30px;}
     .agree-check{height: calc(100vh - 646px);}
     .successsubtext{height: calc(100vh - 592px);}
     .select-currency {height: calc(100vh - 590px);}
     .iban-list .ant-list-items{display: 238px;}
-    .full-screenable-node{width: 500px;}
+    .full-screenable-node{width: 430px;}
     
 }
 @media (max-width: 991.98px){
