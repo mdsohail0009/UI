@@ -33,7 +33,3 @@ const deletePayDetials = (id) => {
     return apiClient.delete(ApiControllers.massPayment + `BillPayments/payment/${id}`);
 };
 export { getCurrencyLu,saveBeneficiary,getFileURL, savePayments,getFavourite, getPaymentsData, updatePayments, getBankData,creatPayment,deletePayDetials}
-
-//https://routechanges.azurewebsites.net/api/v1/DepositeWithdraw/Favourite
-//https://routechanges.azurewebsites.net/api/v1/Wallets/Fiat/f8be2fd6-9778-4408-ba57-7502046e13a5
-//https://routechanges.azurewebsites.net/api/v1/DepositeWithdraw/Withdraw/Favourite/9619c559-adfa-4210-a6bb-c75f652e5c99
