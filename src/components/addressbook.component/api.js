@@ -35,9 +35,9 @@ const getCoinList = (type) => {
 	return apiClient.get(ApiControllers.markets + `Coins`);
 };
 
-const getSelectedCoinDetails = (coin_code) => {
+const getSelectedCoinDetails = (customerId,coin_code) => {
 	return apiClient.get(
-		ApiControllers.buySell + `Coins/${coin_code}`
+		ApiControllers.buySell + `${customerId}/Coins/${coin_code}`
 	);
 };
 const activeInactive = (obj) => {
@@ -48,11 +48,7 @@ const getAddress = (addreddId) => {
 		ApiControllers.addressbook + `Withdraw/Favourite/${addreddId}`
 	);
 };
-// const getPayee = ({payeeId}) => {
-// 	return apiClient.get(
-// 		ApiControllers.addressbook + `payee/Withdraw/Favourite/${{payeeId}}`
-// 	);
-// };
+
 const getFileURL = (obj) => {
 	return apiClient.post(ApiControllers.customers + `FetchFile`, obj);
 };
