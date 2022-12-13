@@ -573,7 +573,7 @@ class HeaderPermissionMenu extends Component {
                     overlayClassName="secureDropdown"
                     getPopupContainer={() => document.getElementById("area")}
                 >
-                    <Menu.Item key="10" className="ml-16">
+                    <Menu.Item key="10" className="user-left">
                         {this.props.userConfig?.imageURL != null && (
                             <img
                                 src={
