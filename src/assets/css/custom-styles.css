@@ -63,6 +63,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .icon.lg.search-angle{background-position:-128px -480px;}
 .icon.md.bell{background-position:-39px -486px;}
 .icon.lg.menu-bar{background-position: -97px -484px;}
+.icon.lg.search-angle.drawer-search{background-position:-295px -484px ;}
 
 /*Header start*/
 .notification-conunt .bell span{position: absolute;right: -8px;top: -8px;width: 18px;height: 18px;background: #f6921e;border-radius: 50%;line-height: 18px;text-align: center;font-size: 10px;font-weight: 600;}
@@ -148,9 +149,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .drawer-list-font{font-weight: 700;font-size: 16px;color: var(--coinBal);}
 .drawer-coin .ant-image, .crypto-curr-align .ant-image, .listitems-design .ant-image, .cytpo-list-style .ant-image, .crypto-bg{border: 4px solid var(--coinBg);border-radius: 100%;}
 .drawer-coin .ant-image-img, .crypto-curr-align .ant-image-img, .listitems-design .ant-image-img, .cytpo-list-style .ant-image-img, .crypto-bg{background-color: var(--coinBg);border-radius: 100%;}
-.crypto-bg{width: 50px;
-    height: 50px;
-}
+.crypto-bg{width: 50px;height: 50px;}
 .label-style{color: var(--subText); font-weight: 400;font-size: 14px;margin-bottom: 2px !important;text-transform: capitalize;}
 .ant-card.crypto-card{background: none;}
 .ant-select-item .ant-select-option-active, .ant-select-item-option-content, .ant-select-selection-item{color:var(--menuFont) ;}
@@ -167,6 +166,10 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .ant-notification-notice-message{color: var(--textWhite30)!important;}
 .ant-notification-notice-description{color: var(--textSecondary)!important;}
 .ant-notification-notice{background-color: var(--black);border-radius: 10px;font-size: 14px;}
+.notify{padding: 16px;margin-bottom: 36px;}
+.notify .ant-alert-action{margin: 15px 30px 0 30px;}
+.notify .ant-alert-action .ant-btn{color: var(--viewAll);font-size: 18px;font-weight: 500;}
+.notify .ant-alert-close-icon{font-size: 18px;color: var(--textDark) !important;}
 /*Common css End*/
 
 /*Coin Selection End*/
