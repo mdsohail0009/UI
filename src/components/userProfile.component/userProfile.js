@@ -4,14 +4,11 @@ import ProfileInfo from './profileInfo';
 import Security from './security'
 import QueryString from 'query-string'
 import Settings from './settings';
-import Cases from '../case.component/cases';
 import Referral from './referral.component/referral';
-import NotificationScreen from "../notification.component/notification";
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import { setHeaderTab } from "../../reducers/buysellReducer"
 import { withRouter } from 'react-router-dom';
-
 const { TabPane } = Tabs;
 class UserProfile extends Component {
     constructor(props) {
@@ -27,7 +24,6 @@ class UserProfile extends Component {
     }
     componentDidMount() {
         if (this.props?.match?.path === '/userprofile') {
-            let key = " "
             this.props.dispatch(setHeaderTab(" "));
         }
         let activeKey = QueryString.parse(this.props.history.location.search)?.key;
@@ -81,10 +77,6 @@ class UserProfile extends Component {
                         <Translate content="referr" className="f-16  mt-16" /></span>} key="7" >
                         {this.state.activeTab == 7 && <Referral />}
                     </TabPane>
-                    {/* <TabPane tab={<span><span className="icon lg notification-icon mr-16" style={{marginLeft:"3px"}} />
-                    <Translate content="notification"  className="f-16  mt-16"style={{marginLeft:"-5px"}} /></span>} key="8" >
-                        {this.state.activeTab == 8 && <NotificationScreen />}
-                        </TabPane> */}
                 </Tabs>
             </div>
             <div className="main-container visible-mobile">
@@ -112,35 +104,6 @@ class UserProfile extends Component {
                         <Translate content="referr" className="f-16  mt-16" /></span>} key="7" >
                         {this.state.activeTab == 7 && <Referral />}
                     </TabPane>
-                    {/* <TabPane tab={<span><span className="icon lg notification-icon mr-16" style={{marginLeft:"3px"}} />
-                    <Translate content="notification"  className="f-16  mt-16"style={{marginLeft:"-5px"}} /></span>} key="8" >
-                        {this.state.activeTab == 8 && <NotificationScreen />}
-                        </TabPane> */}
-                    {/* <TabPane tab={<span>
-                        <span className="icon lg profile-icon mr-16" />
-                        <Translate content="ProfileInfo" component={Tabs.TabPane.tab} /></span>} key="1">
-                        {this.state.activeTab == 1 && <ProfileInfo />}
-                    </TabPane>
-                    <TabPane tab={<span><span className="icon lg security-icon mr-16" />
-                        <Translate content="security" className="f-16  mt-16" />
-                    </span>} key="2">
-                        {this.state.activeTab == 2 && <Security />}
-                    </TabPane>
-                    <TabPane tab={<span><span className="icon lg settings-icon mr-16" />
-                        <Translate content="settings" className="f-16  mt-16" />
-                    </span>} key="3">
-                        {this.state.activeTab == 3 && <Settings />}
-                    </TabPane>
-                    <TabPane tab={<span><span className="icon lg cases-icon mr-16" />
-                        <Translate content="case" className="f-16  mt-16" /></span>} key="6" >
-                        {this.state.activeTab == 6 && <Cases />}
-                    </TabPane>
-                    <TabPane tab={<span><span className="icon lg referral-icon mr-16" />
-                        <Translate content="referr" className="f-16  mt-16" /></span>} key="7" >
-                        {this.state.activeTab == 7 && <Referral />}
-                    </TabPane> */}
-
-
                 </Tabs>
             </div>
         </>);
