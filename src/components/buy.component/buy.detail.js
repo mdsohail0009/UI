@@ -170,14 +170,7 @@ class SelectCrypto extends Component {
                         {/* <Text className="fs-24 text-purewhite crypto-name ml-4">{coinFullName}</Text> */}
                         {/* </div> */}
                         {/* <div > */}
-                            
-                            <div className="crypto-amount">
-                               <div className="crypto-details"><span className='buycoin-style'>{coin }</span> <Currency prefix={'' } defaultValue={coinBalance} suffixText={""} className='buycoin-style marginL' /></div>
-                                {/* <NumberFormat value={coinFullName} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props}>{value}</div>} /> */}
-                            </div>
-                        {/* </div> */}
-                        
-                        {/* </div> */}
+                       
                         {this.state.isShowCoinsData && <div>
                    <LocalCryptoSwapperCmp
                         localAmt={localValue}
@@ -190,9 +183,29 @@ class SelectCrypto extends Component {
                         onCurrencySwap={() => {
                             this.setState({ ...this.state, swapValues: { ...this.state.swapValues, isSwaped: !this.state.swapValues.isSwaped } })
                         }}
-                        isConvertionLoad={isConvertionLoading} />
+                        isConvertionLoad={isConvertionLoading} /></div>}
+                            <div className="crypto-amount">
+                               <div className="crypto-details"><span className='buy-balance'>Balance: </span><span className='buycoin-style marginL'>{coin }</span> <Currency prefix={'' } defaultValue={coinBalance} suffixText={""} className='buycoin-style marginL' /></div>
+                                {/* <NumberFormat value={coinFullName} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props}>{value}</div>} /> */}
+                            </div>
+                        {/* </div> */}
+                        
+                        {/* </div> */}
+                        {this.state.isShowCoinsData && <div>
+                   {/* <LocalCryptoSwapperCmp
+                        localAmt={localValue}
+                        cryptoAmt={cryptoValue}
+                        localCurrency={this.state.selectedWallet?.currencyCode || "USD"}
+                        cryptoCurrency={coin}
+                        onChange={(obj) => this.onValueChange(obj)} customerId={this.props.userProfileInfo?.id}
+                        screenName='buy'
+                        isSwaped={isSwaped}
+                        onCurrencySwap={() => {
+                            this.setState({ ...this.state, swapValues: { ...this.state.swapValues, isSwaped: !this.state.swapValues.isSwaped } })
+                        }}
+                        isConvertionLoad={isConvertionLoading} /> */}
 
-                    <Translate content="thousandKText" component={Paragraph} className="buy-paragraph" />
+                    <Translate content="thousandKText" component={Paragraph} className="buy-paragraph buy-para-bg" />
                     <Translate content="contact_amount_text" component={Paragraph} className="buy-paragraph" />
                     {/* <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50 pt-16" />
                     <WalletList onWalletSelect={(e) => this.handleWalletSelection(e)} /> */}

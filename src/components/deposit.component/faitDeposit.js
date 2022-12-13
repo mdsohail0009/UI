@@ -322,7 +322,7 @@ class FaitDeposit extends Component {
                       content="Routing_number"
                       component={Text}
                     />}
-                    {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <CopyToClipboard text={BankInfo.routingNumber} options={{ format: 'text/plain' }}><Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 d-block">{BankInfo.routingNumber}</Text></CopyToClipboard>}
+                    {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <CopyToClipboard text={BankInfo.routingNumber} options={{ format: 'text/plain' }}><Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fait-subtext">{BankInfo.routingNumber}</Text></CopyToClipboard>}
                     <Translate
                       className="fait-maintext"
                       content="for_international_wires"
@@ -387,8 +387,8 @@ class FaitDeposit extends Component {
                       </Paragraph>
                     </div>}</div>
                     <Paragraph
-                      className="fs-14 text-white-30 fw-200 l-height-normal"
-                    ><span className="textpure-yellow">{apicalls.convertLocalLang('reference_hint_text')}</span> </Paragraph>
+                      className="import-note"
+                    ><span className="">{apicalls.convertLocalLang('reference_hint_text')}</span> </Paragraph>
 
                   </div>
                   
