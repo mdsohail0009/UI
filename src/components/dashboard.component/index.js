@@ -72,8 +72,10 @@ class Home extends Component {
                             } />
                     </div>)}
                 </Carousel> : ""}
-
-            <Translate content="Dashboard" component={Title} className="db-main-title" />
+            <div className='d-flex align-center'>
+                <Translate content="Dashboard" component={Title} className="db-main-title" />
+                <span className='acount-type'>Personal</span>
+            </div>
                 <Row justify="center mt-16" gutter={[16,16]}>
                 <Col xs={24} md={12} xl={15}>
                         
