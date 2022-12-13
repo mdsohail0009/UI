@@ -288,7 +288,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /*Buy/sell drawer start*/
 .drawer-maintitle{font-weight: 800;font-size: 26px;color: var(--menuFont);text-transform: capitalize;}
 .crypto-list.auto-scroll.wallet-list{margin-top: 30px;}
-.crypto-list .ant-list-item, .wallet-list .ant-list-item{margin-top: 15px;}
+.crypto-list .ant-list-item, .wallet-list .ant-list-item{margin-bottom: 8px;}
 .search-style{color: var(--menuFont);font-weight: 600;font-size: 18px;margin-bottom: 2px !important;text-transform: capitalize;}
 .buycoin-style{font-weight: 700;font-size: 16px;color: var(--coinBal);}
 .coin-entryval{display: flex;align-items: center;}
@@ -421,6 +421,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .select-currency{height: 400px;}
     .val-updown{right: 140px;}
     .import-note{width: auto;}
+    .side-drawer .ant-drawer-header{padding:16px 30px !important}
     
 }
 @media (min-width: 992px){
@@ -438,7 +439,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .agree-check input[type=checkbox]+span:hover{background-position:-190.5px -513px;}
     .agree-check input[type=checkbox]:checked+span:hover{background-position:-153px -513px;}
     .successsubtext{height: 130px;}
-    .text-style{margin-top: 36px !important;}
+    .text-style{margin-top: 30px !important;}
     .select-currency {height: 122px;}
     .text-style{height: 140px;}
     .full-screenable-node{width: 427px;overflow: auto;}
@@ -457,6 +458,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .iban-list .ant-list-items{display: flex;gap: 16px;}
     .iban-list .custom-btn{min-width: 81px;}
     .main-container{max-width: 1200px; padding: 30px 16px 24px;}
+    .crypto-list .ant-list-item, .wallet-list .ant-list-item{margin-top:12px;}
 }
 @media (min-width: 1400px){
     .iban-list .ant-list-items{display: flex;}
@@ -468,6 +470,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .select-currency {height: calc(100vh - 590px);}
     .iban-list .ant-list-items{display: 238px;}
     .full-screenable-node{width: 430px;}
+    .crypto-list .ant-list-item, .wallet-list .ant-list-item{margin-top: 16px;}
     
 }
 @media (max-width: 991.98px){
