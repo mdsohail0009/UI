@@ -79,7 +79,7 @@ class PaymentsView extends Component {
         <div className="more-popover">
           <Text className="lbl text-white">Bank Label</Text>
           <Text className="val text-white">{moreBankInfo?.bankLabel}</Text>
-          <Text className="lbl text-white">BIC/SWIFT/Routing Number</Text>
+          <Text className="lbl text-white">BIC/SWIFT/ABA Routing Code</Text>
           <Text className="val text-white">{moreBankInfo?.routingNumber}</Text>
         </div>
       );
@@ -114,7 +114,7 @@ class PaymentsView extends Component {
                         <table className='pay-grid view mb-view'>
                             <thead>
                                 <tr>
-                                <th className="doc-def">Favorite Name</th>
+                                <th className="doc-def">Whitelist Name</th>
                                     <th className="doc-def" style={{width: "410px"}}>Bank Name</th>
                                     <th>Bank Account Number/IBAN</th>
                                     <th>State</th>

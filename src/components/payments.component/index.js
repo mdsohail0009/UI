@@ -158,7 +158,6 @@ const getCurrencyLookup = async () => {
   actions[key]();
   };
  const isFiatHeading =(data)=>{
-		// this.setState({...this.state,hideFiatHeading:data})
     setHideFiatHeading(data)
 	}
   if(loading){

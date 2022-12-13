@@ -387,7 +387,7 @@ class PaymentDetails extends Component {
     } else {
       return (
         <div className="more-popover">
-          {this.state.currency === "USD" &&<Text className="lbl text-white">BIC/SWIFT/ABARouting Number</Text>}
+          {this.state.currency === "USD" &&<Text className="lbl text-white">BIC/SWIFT/ABA Routing Code</Text>}
           {this.state.currency === "USD" &&<Text className="val text-white">{moreBankInfo?.routingNumber}</Text>}
           {this.state.currency === "USD" && <Text className="lbl text-white">Bank Address</Text>}
           {this.state.currency === "USD" && <Text className="val text-white">{moreBankInfo?.beneficiaryAccountAddress}</Text>}
@@ -475,7 +475,7 @@ class PaymentDetails extends Component {
                 <table className="pay-grid">
                   <thead>
                     <tr>
-                      <th className="doc-def" style={{ width: '250px' }}>Favorite Name</th>
+                      <th className="doc-def" style={{ width: '250px' }}>Whitelist Name</th>
                       <th className="doc-def" style={{ width: '410px' }}>Bank Name</th>
                       <th style={{ width: '250px' }}>Bank Account Number/IBAN</th>
                       {(this.props.match.params.id !==
