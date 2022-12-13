@@ -248,8 +248,6 @@ class OnthegoCryptoTransfer extends Component {
     }
   }
   submitHandler = (e) => {
-    console.log('Event submitted')
-    console.log(e)
     e.preventDefault()
   }
 

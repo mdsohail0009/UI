@@ -305,8 +305,6 @@ saveWithdrawdata = async () => {
     }
   }
   submitHandler = (e) => {
-    console.log('Event submitted')
-    console.log(e)
     e.preventDefault()
   }
   goToAddressBook = () => {
@@ -466,16 +464,6 @@ saveWithdrawdata = async () => {
                         />
 
                       </Form.Item>
-                      {this.state.selectedCurrency === 'USD' && (
-                        <div className="f-16 text-yellow fw-400 ml-16">
-                          The amount must be greater than USD 50
-                        </div>
-                      )}
-                      {this.state.selectedCurrency === 'EUR' && (
-                        <div className="f-16 text-yellow fw-400 ml-16">
-                          The amount must be greater than EUR 50
-                        </div>
-                      )}
                     </Col>
                   </Row>
                   <Row gutter={[16, 16]} className="mt-16">
@@ -707,7 +695,7 @@ saveWithdrawdata = async () => {
                             let { documents } = this.state.codeDetails;
                             documents = docs;
                             this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, documents } })
-                        }} title={"Please upload supporting docs to explain relationship with beneficiary"} />
+                        }} title={"Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements"} />
             </React.Fragment>
             <Row gutter={[16, 16]}>
               <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
