@@ -166,5 +166,8 @@
     .fs-24{font-size: 24px !important;}
     .fs-20{font-size: 20px !important;}
 }
+@media (max-width: 768px){
+    .new-add.phn-code .loading-btn + button{right: 7px !important;}
+    }
 
 
