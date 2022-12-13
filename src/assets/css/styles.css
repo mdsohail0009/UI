@@ -859,7 +859,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .search-bg{margin-top: 16px; border-radius: 10px;}
     .customaudit-select{margin-bottom: 16px;}
     .footer-links{text-align: center;}
-    .enter-val-container input{font-size: 16px !important;padding: 0px 5px !important;}
+    /* .enter-val-container input{font-size: 16px !important;padding: 0px 5px !important;} */
     /* .enter-val-container.swap-com input{width:68%;} */
     .ant-tabs > .ant-tabs-nav .ant-tabs-nav-more{display: none;}
     .ant-popover-inner-content div:hover{padding: 8px 22px !important;display: flex;align-items: center;}
