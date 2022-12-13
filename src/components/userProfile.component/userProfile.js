@@ -19,7 +19,7 @@ class UserProfile extends Component {
             isSetting: false,
             tabPosition: 'left',
             activeTab: this.props.match.params.key ? this.props.match.params.key : "1",
-            activeWithdrawFiat: this.props.match.params.type == 'fiat' ? true : false
+            activeWithdrawFiat: this.props.match.params.type === 'fiat' ? true : false
         }
     }
     componentDidMount() {
@@ -44,7 +44,7 @@ class UserProfile extends Component {
 
     render() {
         const { tabPosition, activeTab } = this.state;
-        if (this.props.match.params.key != activeTab) {
+        if (this.props.match.params.key !== activeTab) {
             if (this.props.match.params.key) {
                 this.setState({ ...this.state, activeTab: this.props.match.params.key })
             } else {
@@ -88,21 +88,21 @@ class UserProfile extends Component {
                     <TabPane tab={<span>
                         <span className="icon lg profile-icon mr-16" />
                         <Translate content="ProfileInfo" component={Tabs.TabPane.tab} /></span>} key="1">
-                        {this.state.activeTab == 1 && <ProfileInfo />}
+                        {this.state.activeTab === 1 && <ProfileInfo />}
                     </TabPane>
                     <TabPane tab={<span><span className="icon lg security-icon mr-16" />
                         <Translate content="security" className="f-16  mt-16" />
                     </span>} key="2">
-                        {this.state.activeTab == 2 && <Security />}
+                        {this.state.activeTab === 2 && <Security />}
                     </TabPane>
                     <TabPane tab={<span><span className="icon lg settings-icon mr-16" />
                         <Translate content="settings" className="f-16  mt-16" />
                     </span>} key="3">
-                        {this.state.activeTab == 3 && <Settings />}
+                        {this.state.activeTab === 3 && <Settings />}
                     </TabPane>
                     <TabPane tab={<span><span className="icon lg referral-icon mr-16" />
                         <Translate content="referr" className="f-16  mt-16" /></span>} key="7" >
-                        {this.state.activeTab == 7 && <Referral />}
+                        {this.state.activeTab === 7 && <Referral />}
                     </TabPane>
                 </Tabs>
             </div>

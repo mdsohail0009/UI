@@ -135,7 +135,7 @@ class OthersBusiness extends Component {
         let { details, ibanDetails,isSelectedId,isEdit } = this.state;
         if (Object.hasOwn(values, 'iban')) {
             this.setState({ ...this.state, errorMessage: null });
-            if ((!ibanDetails || Object.keys(ibanDetails).length == 0)) {
+            if ((!ibanDetails || Object.keys(ibanDetails).length === 0)) {
                 this.setState({ ...this.state, errorMessage: "Please click validate button before saving", isLoading: false, isBtnLoading: false });
                 this.useDivRef.current?.scrollIntoView();
                 return;
@@ -426,7 +426,7 @@ class OthersBusiness extends Component {
                         </Spin>
                        
                     </div>
-                    {this.props.ontheGoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    {this.props.ontheGoType === "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                                 name="reasonOfTransfer"

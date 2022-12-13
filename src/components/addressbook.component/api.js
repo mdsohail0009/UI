@@ -48,11 +48,11 @@ const getAddress = (addreddId) => {
 		ApiControllers.addressbook + `Withdraw/Favourite/${addreddId}`
 	);
 };
-const getPayee = ({payeeId}) => {
-	return apiClient.get(
-		ApiControllers.addressbook + `payee/Withdraw/Favourite/${{payeeId}}`
-	);
-};
+// const getPayee = ({payeeId}) => {
+// 	return apiClient.get(
+// 		ApiControllers.addressbook + `payee/Withdraw/Favourite/${{payeeId}}`
+// 	);
+// };
 const getFileURL = (obj) => {
 	return apiClient.post(ApiControllers.customers + `FetchFile`, obj);
 };
@@ -111,7 +111,7 @@ const getViewData = (payeeId,customerId,type) => {
     );
 };
 const emailCheck = (email,type) => {
-    if(type=='user'){
+    if(type==='user'){
         return apiClient.get(ApiControllers.customers + 'IsExist/'+email+'/UserName');
     }else{
         return apiClient.get(ApiControllers.customers +'IsExist/'+email+'/Email');

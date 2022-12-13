@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Typography, Button, Alert,Drawer, Form, Input,Modal, Tooltip, Checkbox, Image,Space } from "antd";
+import { Typography, Button, Alert, Form, Input,Modal, Tooltip, Checkbox, Image,Space } from "antd";
 import { connect } from "react-redux";
 import alertIcon from '../../assets/images/pending.png';
 import Translate from "react-translate-component";
@@ -17,7 +17,7 @@ import {
 	setAddress,
 	hideSendCrypto,
 	setSendCrypto,
-	setWithdrawfiatenaable
+
 } from "../../reducers/sendreceiveReducer";
 
 import apiCalls from "../../api/apiCalls";
@@ -28,7 +28,7 @@ import { setCurrentAction } from "../../reducers/actionsReducer";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import apicalls from '../../api/apiCalls';
 
-const { Text, Title } = Typography;
+const { Title } = Typography;
 
 class WithdrawSummary extends Component {
 	state = {
@@ -200,7 +200,7 @@ class WithdrawSummary extends Component {
 	}
 	handleNewExchangeRate = async () => {
 		this.setState({ ...this.state, loading: true });
-		const { totalValue, walletCode, toWalletAddress, addressBookId, network, isShowDeclaration } =
+		const { totalValue, walletCode, toWalletAddress, addressBookId, network } =
 			this.props.sendReceive?.withdrawCryptoObj;
 		let _obj = { ...this.props.sendReceive?.withdrawCryptoObj };
 		let withdrawObj = {
@@ -799,12 +799,12 @@ class WithdrawSummary extends Component {
 							autoComplete="off"
 							form={this.form}
 							onFinish={this.saveWithdrwal}>
-							{this.state.permissions?.Send && this.state.verifyData.isPhoneVerified == true && (
+							{this.state.permissions?.Send && this.state.verifyData.isPhoneVerified === true && (
 								<Text className="fs-14 mb-8 text-white d-block fw-500 code-lbl">
 									Phone Verification Code *
 								</Text>
 							)}
-							{this.state.permissions?.Send && this.state.verifyData.isPhoneVerified == true && (
+							{this.state.permissions?.Send && this.state.verifyData.isPhoneVerified === true && (
 								<Form.Item
 									name="code"
 									className="input-label otp-verify"
@@ -838,7 +838,7 @@ class WithdrawSummary extends Component {
 											onValueChange={(e) => this.handleChange(e.value)}
 											disabled={this.state.inputDisable}
 										/>
-										<div className="new-add get-code text-yellow hy-align">
+										<div className="new-add phn-code get-code text-yellow hy-align">
 											{!this.state.verifyTextotp && (
 												<Button
 													type="text"
@@ -850,10 +850,10 @@ class WithdrawSummary extends Component {
 													{btnList[this.state.buttonText]}
 												</Button>
 											)}
-											{this.state.tooltipVisible == true && (
+											{this.state.tooltipVisible === true && (
 												<Tooltip
 													placement="topRight"
-													title={`Haven\'t received code? Request new code in ${seconds} seconds. The code will expire after 30mins.`}>
+													title={`Haven't received code? Request new code in ${seconds} seconds. The code will expire after 30mins.`}>
 
 													<span className="icon md info mr-16 c-pointer" />
 												</Tooltip>
@@ -863,9 +863,9 @@ class WithdrawSummary extends Component {
 												loading={this.state.phoneVerifyLoading}
 												style={{ color: "black", margin: "0 auto" }}
 												onClick={this.getOtpVerification}
-												disabled={this.state.verifyPhone == true||this.state.verifyTextotp == true}>
+												disabled={this.state.verifyPhone === true||this.state.verifyTextotp === true}>
 												{verifyOtpText[this.state.verifyOtpText]}
-												{this.state.verifyTextotp == true && (
+												{this.state.verifyTextotp === true && (
 													<span className="icon md greenCheck" />
 												)}
 											</Button>
@@ -874,12 +874,12 @@ class WithdrawSummary extends Component {
 								</Form.Item>
 							)}
 							{this.state.verifyData.isPhoneVerified}
-							{this.state.permissions?.Send && this.state.verifyData.isEmailVerification == true && (
+							{this.state.permissions?.Send && this.state.verifyData.isEmailVerification === true && (
 								<Text className="fs-14 mb-8 text-white d-block fw-500 code-lbl">
 									Email Verification Code *
 								</Text>
 							)}
-							{this.state.permissions?.Send && this.state.verifyData.isEmailVerification == true && (
+							{this.state.permissions?.Send && this.state.verifyData.isEmailVerification === true && (
 								<Form.Item
 									name="emailCode"
 									className="input-label otp-verify"
@@ -911,7 +911,7 @@ class WithdrawSummary extends Component {
 											onChange={(e) => this.handleEmailChange(e, "emailCodeVal")}
 											disabled={this.state.inputEmailDisable}
 										/>
-										<div className="new-add c-pointer get-code text-yellow hy-align">
+										<div className="new-add phn-code c-pointer get-code text-yellow hy-align">
 											{!this.state.verifyEmailOtp && (
 												<Button
 													type="text"
@@ -921,10 +921,10 @@ class WithdrawSummary extends Component {
 													{emailBtn[this.state.emailText]}
 												</Button>
 											)}
-											{this.state.tooltipEmail == true && (
+											{this.state.tooltipEmail === true && (
 												<Tooltip
 													placement="topRight"
-													title={`Haven\'t received code? Request new code in ${seconds2} seconds. The code will expire after 5mins.`}>
+													title={`Haven't received code? Request new code in ${seconds2} seconds. The code will expire after 5mins.`}>
 
 													<span className="icon md info mr-8" />
 												</Tooltip>
@@ -936,9 +936,9 @@ class WithdrawSummary extends Component {
 												style={{ color: "black", margin: "0 auto" }}
 												loading={this.state.emailVerifyLoading}
 												onClick={(e) => this.getEmailVerification(e)}
-												disabled={this.state.verifyEmail == true||this.state.verifyEmailOtp == true}>
+												disabled={this.state.verifyEmail === true||this.state.verifyEmailOtp === true}>
 												{verifyText[this.state.verifyText]}
-												{this.state.verifyEmailOtp == true && (
+												{this.state.verifyEmailOtp === true && (
 													<span className="icon md greenCheck" />
 												)}
 											</Button>
@@ -948,12 +948,12 @@ class WithdrawSummary extends Component {
 									</div>
 								</Form.Item>
 							)}
-							{this.state.permissions?.Send && this.state.verifyData.twoFactorEnabled == true && (
+							{this.state.permissions?.Send && this.state.verifyData.twoFactorEnabled === true && (
 								<Text className="fs-14 mb-8 text-white d-block fw-500 code-lbl">
 									Authenticator Code *
 								</Text>
 							)}
-							{this.state.permissions?.Send && this.state.verifyData.twoFactorEnabled == true && (
+							{this.state.permissions?.Send && this.state.verifyData.twoFactorEnabled === true && (
 								<Form.Item
 									name="authenticator"
 									className="input-label otp-verify"
@@ -997,7 +997,7 @@ class WithdrawSummary extends Component {
 												this.handleAuthenticator(e, "authenticator")
 											}
 											style={{ width: "100%" }}
-											disabled={this.state.inputAuthDisable == true}
+											disabled={this.state.inputAuthDisable === true}
 										/>
 										<div className="new-add get-code text-yellow hy-align" >
 											<Button

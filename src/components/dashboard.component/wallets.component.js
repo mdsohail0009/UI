@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, List, Button, Image, Dropdown, Space, Menu, Drawer, Tooltip } from 'antd';
+import { Typography, List, Button, Image, Dropdown, Space, Menu, Drawer } from 'antd';
 import Translate from 'react-translate-component';
 import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
 import { fetchMemberWalletsData, fetchPortfolioData } from '../../reducers/dashboardReducer';
@@ -8,10 +8,9 @@ import Currency from '../shared/number.formate';
 import MassPayment from '../buyfiat.component'
 import { withRouter, Link } from 'react-router-dom';
 import TransactionsHistory from "../transactions.history.component";
-import { setWithdrawfiatenaable, setWithdrawfiat, setStep } from '../../reducers/sendreceiveReducer'
+import { setWithdrawfiatenaable, setStep } from '../../reducers/sendreceiveReducer'
 import { setdepositCurrency, getCurrencieswithBankDetails } from '../../reducers/depositReducer'
 import OnthegoFundTransfer from '../onthego.transfer';
-import BankWallets from '../bankui.component';
 import {setReceiveFiatHead, setSendFiatHead} from '../../reducers/buyFiatReducer';
 import Loader from "../../Shared/loader";
 import { buyFiatSteps as config } from '../buyfiat.component/config';
@@ -117,7 +116,6 @@ class Wallets extends Component {
     }
     render() {
         const { wallets } = this.props.dashboard;
-        const { totalCryptoValue, totalFiatValue } = this.props.dashboard.portFolio.data;
 
         return (
             <>
@@ -151,7 +149,7 @@ class Wallets extends Component {
                             <List.Item.Meta
                                 avatar={<Image preview={false} src={item.imagePath} />}
                                 title={<div className="fs-16 fw-600 text-upper text-white-30 l-height-normal">{item.walletCode}</div>}
-                                description={<Currency className="fs-16 text-white-30 m-0" defaultValue={Math.abs(item.amount) > 999999 ? Math.sign(item.amount)*((Math.abs(item.amount)/1000000).toFixed(1)) : Math.sign(item.amount)*Math.abs(item.amount)} suffixText={Math.abs(item.amount) > 999999?"M":null} prefix={(item?.walletCode == "USD" ? "$" : null) || (item?.walletCode == "GBP" ? "£" : null) || (item?.walletCode == "EUR" ? "€" : null)} decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />}
+                                description={<Currency className="fs-16 text-white-30 m-0" defaultValue={Math.abs(item.amount) > 999999 ? Math.sign(item.amount)*((Math.abs(item.amount)/1000000).toFixed(1)) : Math.sign(item.amount)*Math.abs(item.amount)} suffixText={Math.abs(item.amount) > 999999?"M":null} prefix={(item?.walletCode === "USD" ? "$" : null) || (item?.walletCode === "GBP" ? "£" : null) || (item?.walletCode === "EUR" ? "€" : null)} decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />}
                             />
                             <div className="crypto-btns">
                                 <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
@@ -161,12 +159,12 @@ class Wallets extends Component {
                             <Dropdown 
                             overlay={this.menuBar(item)}
                              trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
-                        <a onClick={e => e.preventDefault()}>
+                        <Link onClick={e => e.preventDefault()}>
                           <Space>
                           <span class="icon md menu-bar ml-4 p-relative"></span>
                           {/* <DownOutlined /> */}
                         </Space>
-                      </a>
+                      </Link>
                     </Dropdown>
                     </div>
                         </List.Item>}

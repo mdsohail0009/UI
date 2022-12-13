@@ -50,7 +50,6 @@ const TransactionTimeSpan=(props)=> {
                     className="input-label mt-12"
                     style={{ marginLeft: 0 }}
                     label="To Date"
-                    // {<Translate content="End_Date" component={Form.label} className=" ml-8" />}
                     rules={[
                       { required: true, message: apicalls.convertLocalLang('is_required') }, {
                         type: "date", validator: async (rule, value, callback) => {

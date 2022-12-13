@@ -18,7 +18,7 @@ const UserProfile = React.lazy(() => import('../components/userProfile.component
 const RequestedDocs = React.lazy(() => import('../components/documents.component/requestedDocs'));
 const DocNotices = React.lazy(() => import("../components/shared/doc.notices"));
 const TwoFactor = React.lazy(() => import("../components/shared/two.factor"));
-const CaseDocs = React.lazy(() => import('../components/case.component/caseView'));
+//const CaseDocs = React.lazy(() => import('../components/case.component/caseView'));
 const CoinDetails = React.lazy(() => import("../components/dashboard.component/coinview"));
 const DashboardCharts = React.lazy(() => import("../components/dashboard.component/cockpitCharts"));
 const Payments = React.lazy(() => import("../components/payments.component"));
@@ -43,7 +43,7 @@ class RouteConfig extends Component {
   }
   checkPermissions(pathname) {
     pathname = pathname.includes("/payments/") ? "/payments" : pathname;  // temporary fix perminent fix will be in next sprint --subbareddy
-    if (this.props.menuItems.featurePermissions?.[KEY_URL_MAP[pathname]] && pathname != "/userprofile" && pathname != "/accessdenied") {
+    if (this.props.menuItems.featurePermissions?.[KEY_URL_MAP[pathname]] && pathname !== "/userprofile" && pathname !== "/accessdenied") {
       let _permissions = {};
       for (let action of (this.props.menuItems.featurePermissions?.[KEY_URL_MAP[pathname]]?.actions || [])) {
         _permissions[action.permissionName] = action.values;

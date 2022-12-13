@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
-import { setStep } from '../../reducers/buysellReducer';
+import { setStep,setSellHeaderHide } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import { getSellPreviewData, savesellData } from '../buy.component/api'
 import Summary from '../summary.component';
 import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboardReducer';
-import { appInsights } from "../../Shared/appinsights";
 import {Alert} from 'antd'
 import { setSellFinalRes } from '../../reducers/sellReducer'
 import apicalls from '../../api/apiCalls';
 import { setCurrentAction } from '../../reducers/actionsReducer';
-import {setSellHeaderHide} from '../../reducers/buysellReducer';
-
 
 class SellSummary extends Component {
     state = {
@@ -71,14 +68,10 @@ class SellSummary extends Component {
             let res = await savesellData(obj);
             if (res.ok) {
                 this.props.sellResData(res.data);
-                //this.props.sellTitleHide(true);
                 this.props.changeStep('sellsuccess')
                 this.setState({ ...this.state, loader: false,isLoading: false, disableConfirm: false })
                 this.props.fetchDashboardData(this.props.customer.id)
                 this.props.fetchMarketCoinDataValue();
-                // appInsights.trackEvent({
-                //     name: 'Sell', properties: { "Type": 'User', "Action": 'Save', "Username": this.props.customer.userName, "MemeberId": this.props.customer.id, "Feature": 'Sell', "Remarks": obj.fromValue + " " + this.state.sellpreviewData.coin + " selled", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Sell Crypto' }
-                // });
             } else {
                 this.setState({ ...this.state, loader: false,isLoading: false, disableConfirm: false, error: { valid: false, message: this.isErrorDispaly(res),title: apicalls.convertLocalLang('sellCrypto'),agreeRed:false }  } )
             }

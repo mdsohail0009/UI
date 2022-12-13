@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { Form, Row, Col, Typography, Select, Input, Tabs, Button,Alert,Spin,Image } from 'antd'
+import { Form, Row, Col, Typography, Input, Tabs, Button,Alert,Spin,Image } from 'antd'
 import Translate from "react-translate-component";
 import apiCalls from "../../../api/apiCalls"
 import { validateContentRule } from "../../../utils/custom.validator";
@@ -10,7 +10,7 @@ import {confirmTransaction} from '../api';
 import alertIcon from '../../../assets/images/pending.png';
 const { Paragraph,Title } = Typography;
 
-const { Option } = Select;
+//const { Option } = Select;
 const { Text } = Typography;
 const { TextArea } = Input;
 const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
@@ -35,7 +35,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     const [isValidateLoading, setValidateLoading] = useState(false);
     useEffect(() => {
         getRecipientDetails()
-    }, [])
+    }, []);//eslint-disable-line react-hooks/exhaustive-deps
     const getRecipientDetails = async () => {
         setLoader(true)
         const response = await apiCalls.getRecipientData(props.userConfig.id, isBusiness ? 'OwnBusiness' : 'MySelf', props.selectedAddress?.id || "00000000-0000-0000-0000-000000000000");
@@ -66,7 +66,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         setBtnLoading(true);
         seterrorMessage(null);
         if (Object.hasOwn(values, 'iban')) {
-            if ((!bankDetails || Object.keys(bankDetails).length == 0)) {
+            if ((!bankDetails || Object.keys(bankDetails).length === 0)) {
                 setBtnLoading(false);
                 seterrorMessage("Please click validate button before saving");
                 useDivRef.current.scrollIntoView();
@@ -75,14 +75,14 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         }
         let saveObj=Object.assign({},saveTransferObj)
         saveObj.favouriteName=values.favouriteName;
-        saveObj.payeeAccountModels[0].iban= (currency=='EUR' || (addressOptions?.transferType == "internationalIBAN"||addressOptions?.tabType == "internationalIBAN")) ? values.iban : null;
-        saveObj.payeeAccountModels[0].accountNumber=currency=='USD'?values.accountNumber:null;
+        saveObj.payeeAccountModels[0].iban= (currency==='EUR' || (addressOptions?.transferType === "internationalIBAN"||addressOptions?.tabType === "internationalIBAN")) ? values.iban : null;
+        saveObj.payeeAccountModels[0].accountNumber=currency==='USD'?values.accountNumber:null;
         saveObj.payeeAccountModels[0].abaRoutingCode=values.abaRoutingCode?values.abaRoutingCode:null;
         saveObj.payeeAccountModels[0].swiftRouteBICNumber=values.swiftRouteBICNumber?values.swiftRouteBICNumber:null;
-        saveObj.payeeAccountModels[0].line1=currency=='USD'?values.line1:null;
-        saveObj.payeeAccountModels[0].line2=currency=='USD'?values.line2:null;
+        saveObj.payeeAccountModels[0].line1=currency==='USD'?values.line1:null;
+        saveObj.payeeAccountModels[0].line2=currency==='USD'?values.line2:null;
         saveObj.payeeAccountModels[0].state=bankDetails.state?bankDetails.state:null;
-        saveObj.payeeAccountModels[0].bankName=(currency=='EUR' || addressOptions?.tabType == "internationalIBAN")?bankDetails.bankName:values.bankName;
+        saveObj.payeeAccountModels[0].bankName=(currency==='EUR' || addressOptions?.tabType === "internationalIBAN")?bankDetails.bankName:values.bankName;
         saveObj.payeeAccountModels[0].bic=bankDetails.routingNumber?bankDetails.routingNumber:null;
         saveObj.payeeAccountModels[0].branch=bankDetails.branch?bankDetails.branch:null;
         saveObj.payeeAccountModels[0].country=bankDetails.country?bankDetails.country:null;
@@ -95,7 +95,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         saveObj.line2=recipientDetails.line2;
         saveObj.line3=recipientDetails.line3;
         saveObj.addressType=isBusiness?'ownbusiness':'myself';
-        saveObj.transferType=currency=='EUR'?'sepa':addressOptions.tabType;
+        saveObj.transferType=currency==='EUR'?'sepa':addressOptions.tabType;
         saveObj.payeeAccountModels[0].currencyType='fiat';
         saveObj.payeeAccountModels[0].walletCode=currency;
         saveObj.amount=onTheGoObj?.amount;
@@ -256,7 +256,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         </>}
         
         
-        {currency == 'EUR' && <h2 className="text-white fw-600" style={{ fontSize: 18, textAlign: 'center' }}>SEPA Transfer</h2>}
+        {currency === 'EUR' && <h2 className="text-white fw-600" style={{ fontSize: 18, textAlign: 'center' }}>SEPA Transfer</h2>}
         
         {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
         {!isLoading &&<>
@@ -346,8 +346,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         </div>
 
         <h2 style={{ fontSize: 14,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
-        {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Row gutter={[8, 8]} >
-        {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
+        {(currency === 'EUR'||addressOptions.tabType === 'internationalIBAN') && <Row gutter={[8, 8]} >
+        {(currency === 'EUR'||addressOptions.tabType === 'internationalIBAN') && <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
             <div className="custom-btn-error">
             <Form.Item
                 className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
@@ -372,7 +372,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                
             </div>
         </Col>}
-        {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') &&<Col xs={24} md={10} lg={10} xl={10} xxl={10}>
+        {(currency === 'EUR'||addressOptions.tabType === 'internationalIBAN') &&<Col xs={24} md={10} lg={10} xl={10} xxl={10}>
             <Button className={`pop-btn dbchart-link fs-14 fw-500`} style={{width:"150px",marginTop:"32px",height:"42px"}}
                 loading={isValidateLoading}
                 onClick={() => onIbanValidate(enteredIbanData)} >
@@ -382,7 +382,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         </Row>}
 
         <Row gutter={[8, 8]}>
-            {(currency == 'USD' && addressOptions.tabType !== 'internationalIBAN')  && <> <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+            {(currency === 'USD' && addressOptions.tabType !== 'internationalIBAN')  && <> <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
                     className="fw-300 mb-8 px-4 text-white-50  custom-forminput custom-label pt-8"
                     name="accountNumber"
@@ -414,11 +414,11 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 </Form.Item>
             </Col>
 
-                {currency == 'USD' && addressOptions.tabType == 'international'&&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                {currency === 'USD' && addressOptions.tabType === 'international'&&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label fw-400 mb-8 px-4 text-white pt-8"
                         name="swiftRouteBICNumber"
-                        label={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
+                        label={currency === 'USD' && addressOptions.tabType === 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
                         required
                         rules={[
                             {
@@ -431,7 +431,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                                         !/^[A-Za-z0-9]+$/.test(value)
                                     ) {
                                         return Promise.reject(
-                                            addressOptions.tabType == 'international' ?"Invalid Swift / BIC Code":"Invalid ABA Routing Code"
+                                            addressOptions.tabType === 'international' ?"Invalid Swift / BIC Code":"Invalid ABA Routing Code"
                                         );
                                     }else {
                                         return Promise.resolve();
@@ -441,15 +441,15 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         ]}>
                         <Input
                             className="cust-input"
-                            placeholder={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
+                            placeholder={currency === 'USD' && addressOptions.tabType === 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
                             maxLength={50}/>
                     </Form.Item>
                 </Col>}
-                {!(currency == 'USD' && addressOptions.tabType == 'international')&&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                {!(currency === 'USD' && addressOptions.tabType === 'international')&&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
                         name="abaRoutingCode"
-                        label={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
+                        label={currency === 'USD' && addressOptions.tabType === 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
                         required
                         rules={[
                             {
@@ -462,7 +462,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                                         !/^[A-Za-z0-9]+$/.test(value)
                                     ) {
                                         return Promise.reject(
-                                            addressOptions.tabType == 'international' ?"Invalid Swift / BIC Code":"Invalid ABA Routing Code"
+                                            addressOptions.tabType === 'international' ?"Invalid Swift / BIC Code":"Invalid ABA Routing Code"
                                         );
                                     }else {
                                         return Promise.resolve();
@@ -473,7 +473,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         <Input
                             className="cust-input"
                             
-                            placeholder={currency == 'USD' && addressOptions.tabType == 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
+                            placeholder={currency === 'USD' && addressOptions.tabType === 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
                         maxLength={50}/>
                     </Form.Item>
                 </Col>}
@@ -541,44 +541,44 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     </Form.Item>
                 </Col></>}
         </Row>
-        {(currency == 'EUR' || addressOptions.tabType == 'internationalIBAN') && <div className="box basic-info alert-info-custom mt-16">
+        {(currency === 'EUR' || addressOptions.tabType === 'internationalIBAN') && <div className="box basic-info alert-info-custom mt-16">
             <Spin spinning={ibanLoading}>
             {validIban&&isShowBankDetails&&<Row>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                 <label className="fs-12 fw-500">
                         Bank Name
                 </label>
-                <div className="pr-24"><Text className="fs-14 fw-400 text-white">{(bankDetails?.bankName!=''&&bankDetails?.bankName!=null)?bankDetails?.bankName:'-'}</Text></div>
+                <div className="pr-24"><Text className="fs-14 fw-400 text-white">{(bankDetails?.bankName!==''&&bankDetails?.bankName!==null)?bankDetails?.bankName:'-'}</Text></div>
 
             </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                 <label className="fs-12 fw-500 ">BIC</label>
-                   <div className="pr-24"><Text className="fs-14 fw-400 text-white"> {bankDetails.routingNumber!=''&&bankDetails.routingNumber!=null?bankDetails.routingNumber:'-'}</Text></div>
+                   <div className="pr-24"><Text className="fs-14 fw-400 text-white"> {bankDetails.routingNumber!==''&&bankDetails.routingNumber!==null?bankDetails.routingNumber:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                 <label className="fs-12 fw-500 ">Branch</label>
-                    <div className="pr-24"><Text className="fs-14 fw-400 text-white">{bankDetails.branch!=''&&bankDetails.branch!=null?bankDetails.branch:'-'}</Text></div>
+                    <div className="pr-24"><Text className="fs-14 fw-400 text-white">{bankDetails.branch!==''&&bankDetails.branch!==null?bankDetails.branch:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                 <label className="fs-12 fw-500 ">Country</label>
-                    <div><Text className="fs-14 fw-400 text-white">{bankDetails.country!=''&&bankDetails.country!=null?bankDetails.country:'-'}</Text></div>
+                    <div><Text className="fs-14 fw-400 text-white">{bankDetails.country!==''&&bankDetails.country!==null?bankDetails.country:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                 <label className="fs-12 fw-500">State</label>
-                    <div><Text className="fs-14 fw-400 text-white">{bankDetails.state!=''&&bankDetails.state!=null?bankDetails.state:'-'}</Text></div>
+                    <div><Text className="fs-14 fw-400 text-white">{bankDetails.state!==''&&bankDetails.state!==null?bankDetails.state:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                 <label className="fs-12 fw-500">City</label>
-                    <div><Text className="fs-14 fw-400 text-white">{(bankDetails.city!=''&&bankDetails.city!=null)?bankDetails.city:'-'}</Text></div>
+                    <div><Text className="fs-14 fw-400 text-white">{(bankDetails.city!==''&&bankDetails.city!==null)?bankDetails.city:'-'}</Text></div>
 
                 </Col>
                 <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                 <label className="fs-12 fw-500">Zip</label>
-                    <div><Text className="fs-14 fw-400 text-white">{(bankDetails.zipCode!=''&&bankDetails.zipCode!=null)?bankDetails.zipCode:'-'}</Text></div>
+                    <div><Text className="fs-14 fw-400 text-white">{(bankDetails.zipCode!==''&&bankDetails.zipCode!==null)?bankDetails.zipCode:'-'}</Text></div>
 
                 </Col></Row>}
                 

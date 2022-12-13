@@ -1,6 +1,5 @@
-import { Divider } from "antd";
 import React, { Component } from "react";
-import { Form, Radio, Row, Col, Typography, Select, AutoComplete, Input } from 'antd'
+import { Form, Col, Select, AutoComplete, Input } from 'antd'
 import Translate from "react-translate-component";
 import ConnectStateProps from "../../utils/state.connect";
 import apiCalls from "../../api/apiCalls";
@@ -8,7 +7,6 @@ import { validateContentRule } from "../../utils/custom.validator";
 import BankDetails from '../addressbook.component/bank.details';
 
 const { Option } = Select;
-const { Text, Paragraph } = Typography;
 const { TextArea } = Input
 class RecipientAddress extends Component {
     render() {
@@ -88,7 +86,7 @@ class RecipientAddress extends Component {
 class RecipientDetails extends Component {
     state = { emailExist: false, payeeLu: [] }
     render() {
-        const { emailExist, payeeLu } = this.props;
+        const { payeeLu } = this.props;
         return <React.Fragment>
             <Col xs={24} md={12} lg={12} xl={12} xxl={12} id="favoriteName">
                 <Form.Item

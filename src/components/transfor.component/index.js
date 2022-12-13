@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Drawer, Typography } from 'antd';
 import Translate from 'react-translate-component';
 import ConnectStateProps from '../../utils/state.connect';
-// import { setStepcode } from '../../reducers/tranfor.Reducer';
 import { tranforobj } from './config';
 import SwapCoins from './swapCoins';
 import TransforSummary from './transforSummary';
@@ -12,11 +11,6 @@ import { setHeaderTab } from "../../reducers/buysellReducer";
 
 const { Paragraph } = Typography
 class Transfor extends Component {
-    state = {
-
-    }
-    componentDidMount() {
-    }
     clearValues() {
         if (this.child)
             this.child.clearSwapCoinValues();

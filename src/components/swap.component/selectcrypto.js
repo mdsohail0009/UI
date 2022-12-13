@@ -4,7 +4,6 @@ import Translate from 'react-translate-component';
 import { setStep, updateCoinDetails, getMemberCoins, updateReceiveCoinDetails } from '../../reducers/swapReducer';
 import { connect } from 'react-redux';
 import CryptoList from '../shared/cryptolist';
-import { appInsights } from "../../Shared/appinsights";
 import { getfromCoinList, gettoCoinList } from './api'
 import apicalls from '../../api/apiCalls';
 class SelectCrypto extends Component {
