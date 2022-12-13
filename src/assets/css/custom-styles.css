@@ -300,7 +300,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .buy-para-bg{border-radius: 10px;background-color: var(--cardBG);padding: 8px 28px;margin: auto;margin-top: 20px;}
 /* .auto-scroll{overflow-y: auto;} */
 .enter-val-container.swap-com{display: flex;align-items: center;justify-content: center;margin-bottom: 16px;}
-.inputfont-style{font-weight: 500;font-size: 70px;color: var(--white);white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
+.inputfont-style{font-weight: 500;font-size: 26px;color: var(--white);white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .buy-paragraph{color: var( --paraBg);font-weight: 500;font-size: 16px;text-align: center;margin-bottom: 0 !important;margin-top:4px;}
 .crycoin-bal{font-weight: 400 !important;font-size: 16px !important;color: var(--coinPrice) !important;}
 .buy-usdt-btn .pop-btn, .sell-btn-style{margin-top: 16px;margin-bottom: 16px;}
@@ -422,9 +422,10 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .successsubtext{height: 400px;}
     .round-pills .ant-radio-button-wrapper{line-height: 30px;}
     .select-currency{height: 400px;}
-    .val-updown{right: 140px;}
+    .val-updown{right: 160px;top:72px;}
     .import-note{width: auto;}
     .side-drawer .ant-drawer-header{padding:16px 30px !important}
+    .inputfont-style{font-size: 56px;}
     
 }
 @media (min-width: 992px){
@@ -462,6 +463,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .iban-list .custom-btn{min-width: 81px;}
     .main-container{max-width: 1200px; padding: 30px 16px 24px;}
     .crypto-list .ant-list-item, .wallet-list .ant-list-item{margin-top:12px;}
+    .inputfont-style{font-size: 56px;}
 }
 @media (min-width: 1400px){
     .iban-list .ant-list-items{display: flex;}
@@ -474,6 +476,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .iban-list .ant-list-items{display: 238px;}
     .full-screenable-node{width: 430px;}
     .crypto-list .ant-list-item, .wallet-list .ant-list-item{margin-top: 16px;}
+    .inputfont-style{font-size: 70px;}
     
 }
 @media (max-width: 991.98px){
