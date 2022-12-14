@@ -96,10 +96,14 @@
     --radioBg:rgba(255, 255, 255 ,0.15);
     --paraBg:rgba(255, 255, 255 ,0.7);
     --accountType:#343E3A;
+    --PriceIncrease:#286B4B;
+    --priceVal:#33FB94;
+    --priceDecrease:#4D3030;
+    --priceRed:#FD7072;
 
-    --lightThemeIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/darktheme-icons.svg);
+    --lightThemeIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/user-darktheme-icons.svg);
     --cryptoIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/light-crypto-icons.svg);
     --logo: url(../../assets/images/logo-color.png);
 }
 body{background:var(--bodyBg) url(dark-bg2.0.svg) no-repeat top center ;}
-.sb-card{background:url(sb-card.png);}
+.sb-card{background:url(sb-card.png)  no-repeat top center;}

@@ -66,6 +66,8 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .icon.md.bell{background-position:-39px -486px;}
 .icon.lg.menu-bar{background-position: -97px -484px;}
 .icon.lg.search-angle.drawer-search{background-position:-295px -484px ;}
+.icon.sm.valupp-icon.pg-arrow{background-position:-10px -692px;}
+.icon.sm.valupp-icon.red-arrow{background-position:-28px -692px;}
 
 /*Header start*/
 .notification-conunt .bell span{position: absolute;right: -8px;top: -8px;width: 18px;height: 18px;background: #f6921e;border-radius: 50%;line-height: 18px;text-align: center;font-size: 10px;font-weight: 600;}
@@ -244,7 +246,10 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /*Modal End*/
 
 /* Dashboard start */
-.price-val{display: flex;align-items: center; height: 36px;background: #1A8357;padding: 4px 8px;}
+.price-valgreen{display: flex;align-items: center; height: 36px;background: var(--PriceIncrease);padding: 4px 8px;margin-left: 16px;border-radius: 5px;}
+.pg-text{color: var(--priceVal);}
+.price-valred{display: flex;align-items: center; height: 36px;background: var(  --priceDecrease);padding: 4px 8px;margin-left: 16px;border-radius: 5px;}
+.red-text{color: var(--priceRed);}
 .acount-type{padding: 8px 16px;background: var(--accountType);border-radius: 5px;height: 36px;color: var(--coinPrice);font-weight: 400;font-size: 16px;align-items: center;display: flex;margin-left: 16px;margin-bottom: 40px;}
 .tlv-logo{height: 60px;padding-left: 20px;}
 .user-left{margin-left: 16px !important;}
@@ -268,7 +273,8 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .market-panel-newstyle{clear: both;}
 .icon-space{margin-left: 12px;margin-bottom: 12px;}
 .pipeline{color: var(--tableText);margin-right: 10px;}
-.sb-card{border-radius: 20px;padding: 30px;margin-bottom: 16px;}
+.sb-card{border-radius: 20px;margin-bottom: 16px;}
+.sb-innercard{padding:20px;}
 .sb-text{color: var(--sbCardText);letter-spacing: 5px;font-weight: 700;font-size: 24px;}
 .sb-accounts{padding: 2px;}
 .cardlogo-height{margin-bottom: 109px;opacity: 0.6;}
@@ -506,6 +512,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .main-container{padding-left: 0 !important;padding-right: 0 !important;}
     .listitems-design{width: 344px;}
     .val-updown{top:24px;}
+    .footer-links{text-align: center;margin: 0 10px;}
 }
 
 /*@media end*/
