@@ -95,9 +95,11 @@
     --radioOutlinefill:rgba(255, 255, 255, 0.1);
     --radioBg:rgba(255, 255, 255 ,0.15);
     --paraBg:rgba(255, 255, 255 ,0.7);
+    --accountType:#343E3A;
 
     --lightThemeIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/darktheme-icons.svg);
     --cryptoIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/light-crypto-icons.svg);
     --logo: url(../../assets/images/logo-color.png);
 }
 body{background:var(--bodyBg) url(dark-bg2.0.svg) no-repeat top center ;}
+.sb-card{background:url(sb-card.png);}

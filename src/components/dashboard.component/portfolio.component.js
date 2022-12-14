@@ -139,7 +139,8 @@ class Portfolio extends Component {
                                                     {this.state.transactionData.length > 0 ? 
                                                     <>
                                                      <tr key={idx}>
-                                                        <td style={{ width: "100px" }}><span className={`crypto-icon c-pointer ${item.coin}`}></span></td>
+                                                        <td style={{ width: "100px" }}><span className={``}></span></td>
+                                                        {/* {`crypto-icon c-pointer ${item.coin}`} */}
                                                      <td><div className='ts-wallet'><Title className='ts-coin'>{item.wallet}</Title><Title className='ts-type'>{item.type}</Title></div></td>
                                                      <td style={{ width: "100px" }}>
                                                      <div className='ts-tbdate'><Title className='ts-date'>{item?.date }</Title></div>

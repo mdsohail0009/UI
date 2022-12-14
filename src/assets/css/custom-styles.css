@@ -151,6 +151,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .drawer-list-font{font-weight: 700;font-size: 16px;color: var(--coinBal);}
 .drawer-coin .ant-image, .crypto-curr-align .ant-image, .listitems-design .ant-image, .cytpo-list-style .ant-image, .crypto-bg{border: 4px solid var(--coinBg);border-radius: 100%;}
 .drawer-coin .ant-image-img, .crypto-curr-align .ant-image-img, .listitems-design .ant-image-img, .cytpo-list-style .ant-image-img, .crypto-bg{background-color: var(--coinBg);border-radius: 100%;}
+.cytpo-list-style .ant-list-item-meta{align-items: center;}
 .crypto-bg{width: 50px;height: 50px;}
 .label-style{color: var(--subText); font-weight: 400;font-size: 14px;margin-bottom: 2px !important;text-transform: capitalize;}
 .ant-card.crypto-card{background: none;}
@@ -244,7 +245,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 
 /* Dashboard start */
 .price-val{display: flex;align-items: center; height: 36px;background: #1A8357;padding: 4px 8px;}
-.acount-type{padding: 8px 16px;background: #343E3A;border-radius: 5px;height: 36px;color: var(--coinPrice);font-weight: 400;font-size: 16px;align-items: center;display: flex;margin-left: 16px;margin-bottom: 40px;}
+.acount-type{padding: 8px 16px;background: var(--accountType);border-radius: 5px;height: 36px;color: var(--coinPrice);font-weight: 400;font-size: 16px;align-items: center;display: flex;margin-left: 16px;margin-bottom: 40px;}
 .tlv-logo{height: 60px;padding-left: 20px;}
 .user-left{margin-left: 16px !important;}
 .ant-list-split .ant-list-item.cytpo-list-style{background: var(--cardBG);border-radius: 13px;margin-bottom: 10px;padding: 14px 20px !important;border-bottom:0;}
@@ -267,7 +268,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .market-panel-newstyle{clear: both;}
 .icon-space{margin-left: 12px;margin-bottom: 12px;}
 .pipeline{color: var(--tableText);margin-right: 10px;}
-.sb-card{background: var(--sbCard);border-radius: 20px;padding: 30px;margin-bottom: 16px;}
+.sb-card{border-radius: 20px;padding: 30px;margin-bottom: 16px;}
 .sb-text{color: var(--sbCardText);letter-spacing: 5px;font-weight: 700;font-size: 24px;}
 .sb-accounts{padding: 2px;}
 .cardlogo-height{margin-bottom: 109px;opacity: 0.6;}
@@ -299,7 +300,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .search-style{color: var(--menuFont);font-weight: 600;font-size: 18px;margin-bottom: 2px !important;text-transform: capitalize;}
 .buycoin-style{font-weight: 700;font-size: 16px;color: var(--coinBal);}
 .coin-entryval{display: flex;align-items: center;}
-.marginL{margin-left: 8px;}
+.marginL{margin-left: 4px;}
 .crypto-details{display: flex;justify-content: center;align-items: center;}
 .buy-para-bg{border-radius: 10px;background-color: var(--cardBG);padding: 8px 28px;margin: auto;margin-top: 20px;}
 /* .auto-scroll{overflow-y: auto;} */
@@ -430,6 +431,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .import-note{width: auto;}
     .side-drawer .ant-drawer-header{padding:16px 30px !important}
     .inputfont-style{font-size: 56px;}
+    .buy-paragraph{width: 300px;margin: auto;}
     
 }
 @media (min-width: 992px){
@@ -482,7 +484,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .crypto-list .ant-list-item, .wallet-list .ant-list-item{margin-top: 16px;}
     .inputfont-style{font-size: 70px;}
     .side-drawer .ant-drawer-content-wrapper{width: 524px !important;}
-    
+    .val-updown{top: 84px;}
 }
 @media (max-width: 991.98px){
     .visible-mobile .ant-tabs-top > .ant-tabs-nav::before{border-bottom: 0 !important;}
@@ -502,6 +504,8 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .visible-mobile .side-drawer .side-drawer-header.change_password{align-items: self-start !important;}
     /* .visible-mobile{margin-right: 24px;padding-left: 24px;padding-right: 24px;} */
     .main-container{padding-left: 0 !important;padding-right: 0 !important;}
+    .listitems-design{width: 344px;}
+    .val-updown{top:24px;}
 }
 
 /*@media end*/
