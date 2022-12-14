@@ -246,15 +246,15 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /*Modal End*/
 
 /* Dashboard start */
-.price-valgreen{display: flex;align-items: center; height: 36px;background: var(--PriceIncrease);padding: 4px 8px;margin-left: 16px;border-radius: 5px;}
+.price-valgreen{display: flex;align-items: center; height: 36px;padding: 4px 8px;margin-left: 16px;border-radius: 5px;}
 .pg-text{color: var(--priceVal);}
-.price-valred{display: flex;align-items: center; height: 36px;background: var(  --priceDecrease);padding: 4px 8px;margin-left: 16px;border-radius: 5px;}
+.price-valred{display: flex;align-items: center; height: 36px;padding: 4px 8px;margin-left: 16px;border-radius: 5px;}
 .red-text{color: var(--priceRed);}
 .acount-type{padding: 8px 16px;background: var(--accountType);border-radius: 5px;height: 36px;color: var(--coinPrice);font-weight: 400;font-size: 16px;align-items: center;display: flex;margin-left: 16px;margin-bottom: 40px;}
 .tlv-logo{height: 60px;padding-left: 20px;}
 .user-left{margin-left: 16px !important;}
 .ant-list-split .ant-list-item.cytpo-list-style{background: var(--cardBG);border-radius: 13px;margin-bottom: 10px;padding: 14px 20px !important;border-bottom:0;}
-.db-titles{font-weight: 700 !important;color:var(--dbTitle) !important;font-size: 22px !important;}
+.db-titles{font-weight: 700 !important;color:var(--primary) !important;font-size: 22px !important;}
 .secureDropdown .ant-dropdown-menu{background-color: var(--profileMenu);box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.35);border-radius: 10px;min-width: 239px; max-width: 239px; padding: 14px 0;}
 .depwith-drpdown .ant-dropdown-menu{min-width: 173px !important; max-width: 173px !important;}
 .drpdwn-list li:hover{background-color: var(--drpdwnHover);}
@@ -412,8 +412,8 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* success end */
 
 /* crypto-coins */
-.crypto-icon{ height: 46px; width:46px;}
-  .crypto-icon{background: url(../images/cryptoicons.svg)  no-repeat; display: inline-block; }
+.crypto-icon{ height: 44px; width:44px;}
+  .crypto-icon{background: var(--coinBg) url(../images/cryptoicons.svg)  no-repeat; display: inline-block;border-radius: 100%;}
   .crypto-icon.BTC{background-position:-56px -6px; }
   .crypto-icon.ETH{background-position: -106px -6px;}
   .crypto-icon.USDT{background-position:-208px -6px;}
