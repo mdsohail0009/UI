@@ -329,7 +329,7 @@ class YourPortfolio extends Component {
                           prefix={""}
                         />
                         </div>
-                        <div className='price-val'>
+                        {/* <div className='price-val'> */}
                         <Currency
                             defaultValue={item.coinValueinNativeCurrency}
                             type={"text"}
@@ -344,7 +344,7 @@ class YourPortfolio extends Component {
                                 ? "valupp-icon"
                                 : "valdown-icon"
                             }`} />
-                            </div>
+                            {/* </div> */}
                       </div>
                     }
                   />

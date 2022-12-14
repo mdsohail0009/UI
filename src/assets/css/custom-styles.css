@@ -69,7 +69,6 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 
 /*Header start*/
 .notification-conunt .bell span{position: absolute;right: -8px;top: -8px;width: 18px;height: 18px;background: #f6921e;border-radius: 50%;line-height: 18px;text-align: center;font-size: 10px;font-weight: 600;}
-.tlv-header{width: 1200px;margin: auto;padding: 12px 0 !important;align-items: center;}
 .haead-main{background-color: var(--secondary);position: fixed; z-index: 9999;left: 0; right: 0;}
 .tlv-header ul{background-color: transparent; border-bottom: 0;}
 .tlv-header ul li{font-weight: 500;}
@@ -453,7 +452,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .val-updown{top: 100px;right: -24px;}
     .enter-val-container.swap-com{margin-bottom: 4px;}
     .import-note{width: 463px;}
-    
+    .tlv-header{width: 1200px;margin: auto;padding: 12px 0 !important;align-items: center;}
 }
 
 @media (min-width: 1024px){
