@@ -47,10 +47,10 @@
      --radioBg:#FFFFFF;
      --paraBg:#08090E;
      --accountType:#F1F2F6;
-     --PriceIncrease:#286B4B;
-    --priceVal:#33FB94;
-    --priceDecrease:#503535;
-    --priceRed:#FD7072;
+     --PriceIncrease:#286b4b26;
+    --priceVal:#007544;
+    --priceDecrease:#50353529;
+    --priceRed:#E74545;
  
      --lightThemeIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/user-light-theme2.0.svg);
      --cryptoIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/light-crypto-icons.svg);
