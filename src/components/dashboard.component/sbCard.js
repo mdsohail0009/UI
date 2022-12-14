@@ -11,6 +11,7 @@ class SbCard extends Component {
         return (<>
              <Translate content="sb_card_title" component={Title} className="db-titles" />
                 <div className='sb-card'>
+                    <div className="sb-innercard">
                     <div> 
                         <img
                         src={logoWhite}
@@ -20,6 +21,7 @@ class SbCard extends Component {
                         />
                     </div>
                 <Text className="sb-text">1234 0404 2323 2443</Text>
+                </div>
                 </div>
         </>);
     }

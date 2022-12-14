@@ -484,7 +484,8 @@ class HeaderPermissionMenu extends Component {
                 <Menu.Item>
                     <Translate
                         content="header_title"
-                        onClick={this.routeToCockpit}
+                        // onClick={this.routeToCockpit}
+                        onClick={this.props.routeToCockpit}
                         component={Text}
                         className="text-white c-pointer cp-link mb-d-none"
                     /> 

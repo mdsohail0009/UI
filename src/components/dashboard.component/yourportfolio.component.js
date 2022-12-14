@@ -329,20 +329,24 @@ class YourPortfolio extends Component {
                           prefix={""}
                         />
                         </div>
-                        <div className='price-val'>
+                        <div  className={` ${
+                              item.coinValueinNativeCurrency > 0
+                                ? "price-valgreen"
+                                : "price-valred"
+                            }`}>
                         <Currency
                             defaultValue={item.coinValueinNativeCurrency}
                             type={"text"}
-                            className={`lg-fontsize custlist-align ${
+                            className={`lg-fontsize ${
                               item.coinValueinNativeCurrency > 0
-                                ? "text-green"
-                                : "text-red"
+                                ? "text-green pg-text"
+                                : "text-red red-text"
                             }`}
                           />
-                          <span className={`icon sm ${
+                          <span className={`icon sm  ${
                               item.coinValueinNativeCurrency > 0
-                                ? "valupp-icon"
-                                : "valdown-icon"
+                                ? "valupp-icon pg-arrow"
+                                : "valdown-icon red-arrow"
                             }`} />
                             </div>
                       </div>

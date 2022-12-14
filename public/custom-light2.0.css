@@ -47,8 +47,13 @@
      --radioBg:#FFFFFF;
      --paraBg:#08090E;
      --accountType:#F1F2F6;
+     --PriceIncrease:#286B4B;
+    --priceVal:#33FB94;
+    --priceDecrease:#503535;
+    --priceRed:#FD7072;
  
      --lightThemeIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/user-light-theme2.0.svg);
      --cryptoIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/light-crypto-icons.svg);
      --logo: url(../../assets/images/logo-color.png);
  }body{background:var(--bodyBg);}
+ .sb-card{background:url(sb-light.png)  no-repeat ;}
