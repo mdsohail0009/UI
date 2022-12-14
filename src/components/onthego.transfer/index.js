@@ -678,6 +678,10 @@ saveWithdrawdata = async () => {
                                             apicalls.convertLocalLang("is_required"),
                       },
                       {
+                        whitespace: true,
+                        message: 'Is required'
+                      },
+                      {
                         validator: validateContentRule,
                     },
                     ]}
