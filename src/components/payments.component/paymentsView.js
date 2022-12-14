@@ -77,10 +77,16 @@ class PaymentsView extends Component {
     } else {
       return (
         <div className="more-popover">
-          <Text className="lbl text-white">Bank Label</Text>
-          <Text className="val text-white">{moreBankInfo?.bankLabel}</Text>
-          <Text className="lbl text-white">BIC/SWIFT/ABA Routing Code</Text>
-          <Text className="val text-white">{moreBankInfo?.routingNumber}</Text>
+           {(moreBankInfo?.transferType!=="internationalIBAN" && moreBankInfo?.transferType!=="sepa")&& <Text className="lbl text-white">BIC/SWIFT/ABA Routing Code</Text>}
+          {(moreBankInfo?.transferType!=="internationalIBAN" && moreBankInfo?.transferType!=="sepa")&&  <Text className="val text-white">{moreBankInfo?.routingNumber}</Text>}
+          { (moreBankInfo?.transferType!=="internationalIBAN" && moreBankInfo?.transferType!=="sepa")&&  <Text className="lbl text-white">Bank Address</Text>}<br/>
+          {(moreBankInfo?.transferType!=="internationalIBAN" && moreBankInfo?.transferType!=="sepa")&& <Text className="lbl text-white">Address Line 1</Text>}
+
+          {(moreBankInfo?.transferType!=="internationalIBAN" && moreBankInfo?.transferType!=="sepa")&&  <Text className="val text-white">{moreBankInfo?.bankAddress1}</Text>}
+          { (moreBankInfo?.transferType!=="internationalIBAN" && moreBankInfo?.transferType!=="sepa")&&  <Text className="lbl text-white">Address Line 2</Text>}
+          { (moreBankInfo?.transferType!=="internationalIBAN" && moreBankInfo?.transferType!=="sepa")&& <Text className="val text-white">{moreBankInfo?.bankAddress2}</Text>}
+          {(moreBankInfo?.transferType==="sepa" || moreBankInfo?.transferType==="internationalIBAN" ) && <Text className="lbl text-white w-100">Bank Address</Text>}
+          {(moreBankInfo?.transferType==="sepa" || moreBankInfo?.transferType==="internationalIBAN") && <Text className="val text-white">{moreBankInfo?.country}{","}<br/>{moreBankInfo?.state}{","}<br/>{moreBankInfo?.city}{","}<br/>{moreBankInfo?.postalCode}</Text>}
         </div>
       );
     }
