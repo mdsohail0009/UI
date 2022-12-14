@@ -66,7 +66,7 @@ const CryptoList = forwardRef(({ coinList, isLoading, onCoinSelected, coinType, 
                    <><div className="text-right coin-typo">
                        {coinType === "Sell" && item.coinBalance != null && <NumberFormat value={item.coinBalance} displayType={'text'} thousandSeparator={true} prefix={''} renderText={(value, props) => <div {...props} className="drawer-list-font">{value}</div>} />}
                        {item.coinValueinNativeCurrency !== 0 && <NumberFormat value={coinType === "Sell" ? item.coinValueinNativeCurrency : item.amountInUSD || item.coinBalance} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props} className={` ${coinType !== "Sell" ? "fs-16 fw-500" : "fs-14 fw-400"} ${coinType === "Sell" ? (item.coinBalance > 0 ? "text-green" : "text-red") : 'text-white'}`}>{value}</div>} />}
-                       {coinType !== "Sell" && <div className={item.percent_change_1h < 0 ? 'text-red ' : 'text-green'}>{item.percent_change_1h} %</div>}
+                        {coinType !== "Sell" && <div className={item.percent_change_1h < 0 ? 'text-red ' : 'text-green'}>{item.percent_change_1h} %</div>}
                    </div>
                        {coinType !== "Sell" && <> {item.percent_change_1h >= 0 ? <span className="icon sm uparrow ml-12" /> : <span className="icon sm downarrow ml-12" />}</>}</>
                </Link>
