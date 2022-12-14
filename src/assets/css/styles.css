@@ -947,7 +947,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
 }
 @media (min-width: 768px){
     .tlv-header{height: 96px !important;border-radius: 0 !important;}
-    .crypto-card .ant-card-body{padding: 16px 24px;height: 94px;}
+    
     .tlv-header{height: 100px;align-items: center; justify-content: space-between;padding: 12px 16px 12px !important;border-radius: 0 0 30px 30px;}
     .markets-panel{margin-right: 16px;}
     .megamenu-label{margin-top: 0px;font-size: 33px !important;}
