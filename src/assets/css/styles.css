@@ -79,14 +79,13 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .secureDropdown .ant-dropdown-arrow{border-color: var(--bgGloom) !important;}
 .drpdwn-list{list-style: none;}
 .drpdwn-list li{font-size: 14px; padding: 0 22px; transition: 0.3s ease;cursor: pointer;}
-.drpdwn-list li:hover{background-color: var(--bgDarkGrey);}
 .drpdwn-list li a{color: var(--textWhite);display: flex; align-items: center; padding: 10px 0 10px 10px;border-top: 1px solid var(--bgDarkGrey);} */
 .dropdown-flex-top{display: flex;justify-content: space-between;align-items: center;}
 .drpdwn-list li:first-child a:first-child{border-top: none}
 .dropdown-flex{border-bottom: 1px solid var(--bgDarkGrey);display: flex;justify-content: space-between;align-items: center;}
 .drpdwn-list li.no-hover:hover{background-color: transparent !important;}
 .drpdwn-list li span.icon{transition: margin 0.3s ease-in; margin-left: auto;}
-.drpdwn-list li:hover span.icon{margin-right: -3px ;}
+
 .icon, .k-i-more-vertical.k-icon,.ant-select-arrow, .custom-checkbox input[type=checkbox]+span{background: var(--lightThemeIcons) no-repeat; display: inline-block; vertical-align: middle;}
 .icon.xl{width: 32px; height: 32px;}
 .icon.md{width: 20px; height: 20px;}

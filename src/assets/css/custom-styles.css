@@ -83,8 +83,8 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 /*profile css start*/
 .user-profile{ border-radius: 50%; background: var(--bgDarkGrey);object-fit: cover;}
 .profile-dropdown .user-profile{width:112px;height: 112px; border-radius: 50%;display: block;margin: 0 auto;}
-.profile-dropdown {text-align: center;padding:12px 34px;}
-.profile-dropdown .drpdwn-list{padding-top: 0px; padding-left: 0; padding-right: 0; margin-left: -35px; margin-right: -35px;}
+.profile-dropdown {text-align: center;padding:12px 24px;}
+.profile-dropdown .drpdwn-list{padding-top: 0px; padding-left: 0; padding-right: 0; margin-left: -24px; margin-right: -24px;}
 .profile-btn, .profile-btn:hover, .profile-btn:active, .profile-btn:focus{background: transparent;
     border: 1px solid var(--green) !important;
     height: 27px;
@@ -250,9 +250,10 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .user-left{margin-left: 16px !important;}
 .ant-list-split .ant-list-item.cytpo-list-style{background: var(--cardBG);border-radius: 13px;margin-bottom: 10px;padding: 14px 20px !important;border-bottom:0;}
 .db-titles{font-weight: 700 !important;color:var(--dbTitle) !important;font-size: 22px !important;}
-.secureDropdown .ant-dropdown-menu{background-color: var(--profileMenu);box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.35);border-radius: 10px;min-width: 239px; max-width: 239px; padding: 24px 0;}
+.secureDropdown .ant-dropdown-menu{background-color: var(--profileMenu);box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.35);border-radius: 10px;min-width: 239px; max-width: 239px; padding: 14px 0;}
 .depwith-drpdown .ant-dropdown-menu{min-width: 173px !important; max-width: 173px !important;}
 .drpdwn-list li:hover{background-color: var(--drpdwnHover);}
+.drpdwn-list li:hover span.icon{margin-right: -3px ;}
 .secureDropdown .ant-dropdown-arrow{display:none;}
 .secureDropdown .ant-dropdown-arrow{border-color: var(--bgGloom) !important;}
 .drpdwn-list{list-style: none;}
@@ -339,6 +340,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .pay-grid tbody td{padding: 8px; color: var(--tablecol);font-weight: 400;font-size: 14px ;}
 .ant-table-placeholder:hover{background: transparent;}
 .ant-popover-inner{background-color: var(--bgGloom); border-radius: 10px;}
+/* . .ant-popover */
 .pay-list{display: flex;justify-content: space-between;align-items: center;}
 .ant-table-placeholder:hover{background: transparent;}
 .ant-popover-inner{background-color: var(--bgGloom); border-radius: 10px;}
@@ -469,6 +471,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .main-container{max-width: 1200px; padding: 30px 16px 24px;}
     .crypto-list .ant-list-item, .wallet-list .ant-list-item{margin-top:12px;}
     .inputfont-style{font-size: 56px;}
+    /* .ant-popover.ant-popover-placement-left{left: 872px !important;} */
 }
 @media (min-width: 1400px){
     .iban-list .ant-list-items{display: flex;}
