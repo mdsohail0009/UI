@@ -86,7 +86,7 @@ class PaymentsView extends Component {
           { (moreBankInfo?.transferType!=="internationalIBAN" && moreBankInfo?.transferType!=="sepa")&&  <Text className="lbl text-white">Address Line 2</Text>}
           { (moreBankInfo?.transferType!=="internationalIBAN" && moreBankInfo?.transferType!=="sepa")&& <Text className="val text-white">{moreBankInfo?.bankAddress2}</Text>}
           {(moreBankInfo?.transferType==="sepa" || moreBankInfo?.transferType==="internationalIBAN" ) && <Text className="lbl text-white w-100">Bank Address</Text>}
-          {(moreBankInfo?.transferType==="sepa" || moreBankInfo?.transferType==="internationalIBAN") && <Text className="val text-white">{moreBankInfo?.country}{","}<br/>{moreBankInfo?.state}{","}<br/>{moreBankInfo?.city}{","}<br/>{moreBankInfo?.postalCode}</Text>}
+          {(moreBankInfo?.transferType==="sepa" || moreBankInfo?.transferType==="internationalIBAN") && <Text className="val text-white">{moreBankInfo?.BankBranch || "-"}{","}{moreBankInfo?.country}{","}<br/>{moreBankInfo?.state}{","}<br/>{moreBankInfo?.city}{","}<br/>{moreBankInfo?.postalCode}</Text>}
         </div>
       );
     }
