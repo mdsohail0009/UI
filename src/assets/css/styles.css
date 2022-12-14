@@ -994,7 +994,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
 }
 @media (min-width: 992px){
     .tlv-header{display: flex}
-    .user-profile{width:52px;height: 52px;}
+    .user-profile{width:44px;height: 44px;}
     .basicinfo{font-size: 24px !important;}
     .right-panel{padding: 0 60px;}
     /* .tlv-header{padding: 24px 32px !important;} */
