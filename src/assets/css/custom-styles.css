@@ -120,7 +120,8 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .loader{background-color: #000000;position: fixed;top: 0; right: 0; bottom: 0; left: 0;display: flex; align-items: center;font-size: 36px;color: var(--textWhite);justify-content: center;}
 .side-drawer .ant-drawer-mask, .side-drawer-full .ant-drawer-mask{background: var(--drawerMask);}
 .side-drawer .ant-drawer-body, .side-drawer .ant-drawer-header{background-color: var(--drawerBG);}
-.cust-input, .expiry-input, .cust-input .ant-input{background: var( --inputBg);border: 1px solid var(--subText);border-radius: 5px;text-align: left;}
+.cust-input, .expiry-input, .cust-input .ant-input{background: var( --inputBg);color: var(--white);height: 50px;margin-bottom: 6px;font-size: 16px;border: 1px solid var(--subText);border-radius: 5px;text-align: left;}
+.ant-select-selection-placeholder{color: var(--white);}
 .ant-select-dropdown{background-color:var(--profileMenu);border-radius: 5px;}
 .select-drpdwn .ant-select-item:hover, .select-drpdwn .ant-select-item.ant-select-item-option-active, .select-drpdwn .ant-select-item.ant-select-item-option-selected, .select-drpdwn .ant-select-item.ant-select-item-option-active.ant-select-item-option-selected{background-color: var(--drpdwnHover);}
 .ant-drawer-content{ background-color: var(--drawerBG);}
@@ -171,6 +172,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .notify .ant-alert-action{margin: 15px 30px 0 30px;}
 .notify .ant-alert-action .ant-btn{color: var(--viewAll);font-size: 18px;font-weight: 500;}
 .notify .ant-alert-close-icon{font-size: 18px;color: var(--textDark) !important;}
+.custom-notify.cust-input .ant-select-selection-item, .cust-input .ant-select-selector, .cust-input .ant-input, .ant-select-single .ant-select-selector .ant-select-selection-item, .ant-select-single .ant-select-selector .ant-select-selection-placeholder{line-height: 36px !important;height: 38px !important;margin-top:2px;}
 /*Common css End*/
 
 /*Coin Selection End*/
@@ -479,6 +481,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .full-screenable-node{width: 430px;}
     .crypto-list .ant-list-item, .wallet-list .ant-list-item{margin-top: 16px;}
     .inputfont-style{font-size: 70px;}
+    .side-drawer .ant-drawer-content-wrapper{width: 524px !important;}
     
 }
 @media (max-width: 991.98px){
