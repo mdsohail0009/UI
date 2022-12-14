@@ -244,7 +244,8 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 
 /* Dashboard start */
 .price-val{display: flex;align-items: center; height: 36px;background: #1A8357;padding: 4px 8px;}
-.acount-type{padding: 8px 16px;background: #343E3A;border-radius: 5px;height: 36px;color: var(--coinPrice);font-weight: 400;font-size: 16px;align-items: center;display: flex;margin-left: 16px;margin-bottom: 40px;}
+.acount-type{padding: 8px 16px;background: var(--accountType);border-radius: 5px;height: 36px;color: var(--coinPrice);font-weight: 400;font-size: 16px;align-items: center;display: flex;margin-left: 16px;margin-bottom: 40px;}
+
 .tlv-logo{height: 60px;padding-left: 20px;}
 .user-left{margin-left: 16px !important;}
 .ant-list-split .ant-list-item.cytpo-list-style{background: var(--cardBG);border-radius: 13px;margin-bottom: 10px;padding: 14px 20px !important;border-bottom:0;}
