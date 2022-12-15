@@ -43,7 +43,6 @@ class TransactionsHistory extends Component {
       searchObj: {
         type: "All",
         docType: "All",
-        customerId: this.props.customer?.id,
         currency: this.props?.selectWallet || "All",
         status:"All",
         timeSpan: "All",

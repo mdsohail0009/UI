@@ -18,7 +18,7 @@ const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {
     const [errorMsg,seterrorMsg] = useState(null)
     const [loading,setLoading] = useState(null)
     const fetchMemberCoins = () => {
-        dispatch(getMemberCoins(userProfile.id));
+        dispatch(getMemberCoins());
     }
     const onCryptoCoinSelect = async (coin) => {
         // dispatch(setSubTitle(`${coin.coinBalance ? coin.coinBalance : '0'} ${coin.coin}` + " " + apicalls.convertLocalLang('available')

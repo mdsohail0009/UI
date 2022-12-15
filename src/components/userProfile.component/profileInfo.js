@@ -113,7 +113,7 @@ class ProfileInfo extends Component {
     }
     else {
       this.setState({ ...this.state, fileLoader: true });
-      let res = await apiCalls.downloadKyc(this.props.userConfig?.id);
+      let res = await apiCalls.downloadKyc();
       if (res.ok) {
         window.open(res.data);
         message.destroy();

@@ -68,10 +68,9 @@ class PaymentDetails extends Component {
 
   handleCurrencyChange = async (val) => {
     this.setState({ ...this.state, currency: val, paymentsData: [], errorMessage: null, errorWarning: null,loading:true });
-    if ((this.state.currency === val)) {
+    if ((this.state.currency = val)) { //don't add === here
       let response = await getPaymentsData(
         "00000000-0000-0000-0000-000000000000",
-        this.props.userConfig?.id,
         this.state.currency
       );
       if (response.ok) {
@@ -88,7 +87,7 @@ class PaymentDetails extends Component {
     }
   };
   getCurrencyLookup = async () => {
-    let response = await getCurrencyLu(this.props.userConfig?.id);
+    let response = await getCurrencyLu();
     if (response.ok) {
       this.setState({ ...this.state, currencylu: response.data });
     } else {
@@ -102,7 +101,6 @@ class PaymentDetails extends Component {
     if (this.props.match.params.id === "00000000-0000-0000-0000-000000000000") {
       let response = await getPaymentsData(
         "00000000-0000-0000-0000-000000000000",
-        this.props.userConfig?.id,
         this.state.currency
       );
       if (response.ok) {
@@ -117,10 +115,10 @@ class PaymentDetails extends Component {
         message.destroy();
         this.setState({
           ...this.state,
-          errorMessage: response.data,
+          errorMessage: this.isErrorDispaly(response),
           loading: false,
         });
-        this.useDivRef.current.scrollIntoView();
+        this.useDivRef.current.scrollIntoView(0,0);
       }
     } else {
       let response = await creatPayment(this.props.match.params.id);
@@ -140,10 +138,10 @@ class PaymentDetails extends Component {
         message.destroy();
         this.setState({
           ...this.state,
-          errorMessage: response.data,
+          errorMessage: this.isErrorDispaly(response),
           loading: false,
         });
-        this.useDivRef.current.scrollIntoView();
+        this.useDivRef.current.scrollIntoView(0,0);
       }
     }
   };
@@ -354,12 +352,14 @@ class PaymentDetails extends Component {
     return this.state.previewPath;
   }
   addressTypeNames = (type) => {
-    const stepcodes = {
-      "1stparty": "1st Party",
-      "3rdparty": "3rd Party",
-    }
-    return stepcodes[type]
-  }
+		const stepcodes = {
+			"ownbusiness": "My Company",
+			"individuals": "Individuals",
+			"otherbusiness": "Other Business",
+			"myself": "My Self"
+		};
+		return stepcodes[type];
+	};
   moreInfoPopover = async (id) => {
     this.setState({...this.state,isloading:true});
     let response = await getBankData(id);
@@ -387,7 +387,7 @@ class PaymentDetails extends Component {
     } else {
       return (
         <div className="more-popover">
-          {this.state.currency === "USD" &&<Text className="lbl text-white">BIC/SWIFT/ABARouting Number</Text>}
+          {this.state.currency === "USD" &&<Text className="lbl text-white">BIC/SWIFT/ABA Routing Code</Text>}
           {this.state.currency === "USD" &&<Text className="val text-white">{moreBankInfo?.routingNumber}</Text>}
           {this.state.currency === "USD" && <Text className="lbl text-white">Bank Address</Text>}
           {this.state.currency === "USD" && <Text className="val text-white">{moreBankInfo?.beneficiaryAccountAddress}</Text>}
@@ -416,13 +416,7 @@ class PaymentDetails extends Component {
         <div ref={this.useDivRef}></div>
         <div className="main-container">
           <div className="mb-16">
-            <Title className="basicinfo mb-0">
-              <Translate
-                content="menu_payments"
-                component={Text}
-                className="basicinfo"
-              />
-            </Title>
+             <Title className="basicinfo mb-0"><span onClick={() => this.props.history?.push(`/payments/${this.state.currency}`)} className='icon md c-pointer back mr-8'></span><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
           </div>
           <div className="box basic-info text-white">
             {this.state.errorMessage && (
@@ -481,7 +475,7 @@ class PaymentDetails extends Component {
                 <table className="pay-grid">
                   <thead>
                     <tr>
-                      <th className="doc-def" style={{ width: '250px' }}>Favorite Name</th>
+                      <th className="doc-def" style={{ width: '250px' }}>Whitelist Name</th>
                       <th className="doc-def" style={{ width: '410px' }}>Bank Name</th>
                       <th style={{ width: '250px' }}>Bank Account Number/IBAN</th>
                       {(this.props.match.params.id !==
@@ -833,8 +827,6 @@ class PaymentDetails extends Component {
                 className="pop-cancel btn-width  bill-cancel"
                 onClick={this.handleCancel}>Cancel</Button>
               <Button className="pop-btn px-36 btn-width"
-                // className="primary-btn pop-btn"
-
                 onClick={() => this.deleteDetials(this.state.selectData, this.state.paymentsData)}>Ok</Button></div>
             </>
           ]}

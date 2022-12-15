@@ -229,9 +229,7 @@ class WithdrawSummary extends Component {
 		}
 	};
 	getVerifyData = async () => {
-		let response = await apiCalls.getVerificationFields(
-			this.props.userProfile.id
-		);
+		let response = await apiCalls.getVerificationFields();
 		if (response.ok) {
 			this.setState({ ...this.state, verifyData: response.data });
 			if (!(response.data.isEmailVerification || response.data.isPhoneVerification || response.data.twoFactorEnabled || response.data.isLiveVerification)) {
@@ -250,10 +248,7 @@ class WithdrawSummary extends Component {
 		}
 	};
 	getOTP = async (val) => {
-		let response = await apiCalls.getCode(
-			this.props.userProfile.id,
-			this.state.type
-		);
+		let response = await apiCalls.getCode(this.state.type);
 		if (response.ok) {
 			this.setState({
 				...this.state,
@@ -283,10 +278,7 @@ class WithdrawSummary extends Component {
 	};
 
 	getEmail = async (val) => {
-		let response = await apiCalls.sendEmail(
-			this.props.userProfile.id,
-			this.state.type
-		);
+		let response = await apiCalls.sendEmail(this.state.type);
 		if (response.ok) {
 			this.setState({
 				...this.state,
@@ -317,10 +309,7 @@ class WithdrawSummary extends Component {
 
 	getEmailVerification = async () => {
 		this.setState({ ...this.state, emailVerifyLoading: true })
-		let response = await apiCalls.verifyEmail(
-			this.props.userProfile.id,
-			this.state.emailCodeVal
-		);
+		let response = await apiCalls.verifyEmail(this.state.emailCodeVal);
 		if (response.ok) {
 			this.setState({
 				...this.state,
@@ -356,10 +345,7 @@ class WithdrawSummary extends Component {
 
 	getOtpVerification = async () => {
 		this.setState({ ...this.state, phoneVerifyLoading: true })
-		let response = await apiCalls.getVerification(
-			this.props.userProfile.id,
-			this.state.otpCode
-		);
+		let response = await apiCalls.getVerification(this.state.otpCode);
 		if (response.ok) {
 			this.setState({
 				...this.state,
@@ -415,8 +401,7 @@ class WithdrawSummary extends Component {
 	getAuthenticator = async () => {
 		this.setState({ ...this.state, faLoading: true })
 		let response = await apiCalls.getAuthenticator(
-			this.state.authCode,
-			this.props.userProfile.userId
+			this.state.authCode
 		);
 		if (response.ok) {
 			this.setState({

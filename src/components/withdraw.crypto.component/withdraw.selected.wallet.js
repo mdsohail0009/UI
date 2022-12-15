@@ -61,7 +61,7 @@ class CryptoWithDrawWallet extends Component {
         }
     }
     async checkVerification() {
-        const verfResponse = await apiCalls.getVerificationFields(this.props.userProfile.id);
+        const verfResponse = await apiCalls.getVerificationFields();
         let minVerifications = 0;
         if (verfResponse.ok) {
             for (let verifMethod in verfResponse.data) {

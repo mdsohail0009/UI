@@ -45,7 +45,7 @@ componentWillUnmount(){
     loadCoinDetailData = async () => {
         this.setState({ ...this.state, loading: true})
         this.props.dispatch(fetchMarketCoinData(false))
-        const response = await getcoinDetails(this.props.match.params?.coinName,this.props.userProfile?.id);
+        const response = await getcoinDetails(this.props.match.params?.coinName);
         if (response.ok) {
             this.setState({ ...this.state, coinData: response.data },
                  () => {this.coinChartData(1); }
@@ -84,7 +84,7 @@ componentWillUnmount(){
         }
 
         if (key === "buy") {
-            this.props.dispatch(fetchSelectedCoinDetails(selectedObj.coin, this.props.userProfile?.id));
+            this.props.dispatch(fetchSelectedCoinDetails(selectedObj.coin));
             this.props.dispatch(setCoin({ ...selectedObj, toWalletCode: selectedObj.coin, toWalletId: selectedObj.id, toWalletName: selectedObj.coinFullName }));
             convertCurrency({ from: selectedObj.coin, to: "USD", value: 1, isCrypto: false, customer_id: this.props.userProfile?.id, screenName: null }).then(val => {
                 this.props.dispatch(setExchangeValue({ key: selectedObj.coin, value: val }));

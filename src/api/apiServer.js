@@ -31,12 +31,12 @@ export const saveSettingsData = (obj) => {
     return apiClient.post(ApiControllers.customers + "Settings", obj);
 }
 
-export const getAccountHolder=(customerId,type)=>{
-    return apiClient.get(ApiControllers.addressbook + `WithdrawPayeeLu/${customerId}/${type}`);
+export const getAccountHolder=(type)=>{
+    return apiClient.get(ApiControllers.addressbook + `WithdrawPayeeLu/${type}`);
 }
 
-export const getAccountWallet=(AccountId)=>{
-    return apiClient.get(ApiControllers.wallets + `Fiat/${AccountId}`);
+export const getAccountWallet=()=>{
+    return apiClient.get(ApiControllers.wallets + `Fiat`);
 }
 
 export const getAccountBankDetails=(payeeId,currency)=>{

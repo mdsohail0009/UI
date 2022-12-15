@@ -27,7 +27,7 @@ class NewCards extends Component {
   }
   async applyCard() {
     this.setState({ loading: true });
-    const respose = await applyCard(this.props.userProfile?.id);
+    const respose = await applyCard();
     this.setState({ loading: false });
     this.props.dispatch(setStaus({ loading: false, status: respose.data }));
    // this.props.dispatch(getStaus(this.props.userProfile?.id));

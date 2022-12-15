@@ -32,7 +32,7 @@ class YourPortfolio extends Component {
     loadCoinDetailData = async () => {
       this.setState({ ...this.state, loading: true})
       this.props.dispatch(fetchMarketCoinData(false))
-      const response = await getcoinDetails(this.props.match.params?.coinName,this.props.userProfile?.id);
+      const response = await getcoinDetails(this.props.match.params?.coinName);
       if (response.ok) {
           this.setState({ ...this.state, coinData: response.data },
           )
@@ -41,7 +41,7 @@ class YourPortfolio extends Component {
   }
     loadCryptos = () => {
         if (this.props.userProfile) {
-            this.props.dispatch(fetchYourPortfoliodata(this.props.userProfile.id));
+            this.props.dispatch(fetchYourPortfoliodata());
         }
     }
     cockpitCharts=()=>{
@@ -62,7 +62,7 @@ class YourPortfolio extends Component {
         }
 
         if (key === "buy") {
-            this.props.dispatch(fetchSelectedCoinDetails(item.coin, this.props.userProfile?.id));
+            this.props.dispatch(fetchSelectedCoinDetails(item.coin));
             this.props.dispatch(setCoin({ ...item, toWalletCode: item.coin, toWalletId: item.id, toWalletName: item.coinFullName }));
             convertCurrency({ from: item.coin, to: "USD", value: 1, isCrypto: false, customer_id: this.props.userProfile?.id, screenName: null }).then(val => {
                 this.props.dispatch(setExchangeValue({ key: item.coin, value: val }));

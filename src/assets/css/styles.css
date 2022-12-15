@@ -110,7 +110,7 @@ border-radius: 5px;}
 .icon.md.lose{background-position: -271px -2px;}
 .icon.md.gain{background-position: -302px -2px;}
 .icon.md.downarrow{background-position: -59px -2px;}
-.icon.md.close-white{background-position: -170px 0;}
+.icon.md.close-white{background-position: -170px 0 !important;}
 .icon.md.date-white{background-position: -480px -37px;}
 .icon.md.search-white{background-position: -197px 0;}
 .icon.md.load{background-position: -242px 0;float: right; margin-top: 2px;}
@@ -193,6 +193,7 @@ border-radius: 5px;}
 .icon.md.calendar{background-position:-481px -36px;}
 .icon.md.status{background-position:-365px -69px}
 .icon.md.add-icon{background-position:-397px -70px;}
+.icon.md.procced-icon{background-position:-381px -102px;}
 .icon.md.back{background-position:-377px -1px;}
 .icon.md.add-icon-black{background-position:-533px -2px;}
 .icon.md.edit-icon{background-position:-336px -70px;}
@@ -780,7 +781,16 @@ font-size: 12px;font-weight: 500;height: 20px;}
 .zsiq_flt_rel{width: 50px !important; height: 50px !important;bottom: 8px;right: -10px;}
 .zsiq_theme1 .siqico-chat:before{font-size: 20px !important; line-height: 50px !important;}
 .ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector, .ant-radio-disabled + span{color: var(--textWhite30);}
-
+/** masspayments end**/
+.batch-actions{text-align: right;margin-bottom: 16px;}
+.batch-actions span{margin-left: 16px;}
+.makepayment-section{line-height: 3 !important;}
+.masspay-popup{width: 620px !important;}
+.ant-modal-close-x .ant-modal-close-icon svg{display: none;}
+.uploadxcel-btn{margin-top: 50px !important;}
+.drawer-content{display: flex !important; justify-content: center !important; align-items: center !important;height: 500px !important;}
+.batch-list{font-size: 20px; font-weight: 500; color: white !important;}
+/** masspayments end**/
 /*-- Cases--*/
 .case-stripe{border: 1px dashed var(--borderLight); padding: 16px 20px; border-radius: 16px; margin-bottom: 16px}
 .case-lbl{font-weight: 300; font-size: 12px; color: var(--textWhite50);}

@@ -1,16 +1,16 @@
 import { fetchCurrencyConvertionValue } from "./api"
 import apicalls from "../../api/apiCalls";
 
-export const convertCurrency = async ({ from, to, value, isCrypto, customer_id, screenName }) => {
-    const response = await fetchCurrencyConvertionValue({ from, to, value, isCrypto, customer_id, screenName });
+export const convertCurrency = async ({ from, to, value, isCrypto, screenName }) => {
+    const response = await fetchCurrencyConvertionValue({ from, to, value, isCrypto,  screenName });
     if (response.ok) {
         return response.data;
     } else {
         return 0;
     }
 }
-export const convertCurrencyDuplicate = async ({ from, to, value, isCrypto, customer_id, screenName }) => {
-    const response = await fetchCurrencyConvertionValue({ from, to, value, isCrypto, customer_id, screenName });
+export const convertCurrencyDuplicate = async ({ from, to, value, isCrypto,  screenName }) => {
+    const response = await fetchCurrencyConvertionValue({ from, to, value, isCrypto,  screenName });
     if (response.ok) {
         return response;
     } else {

@@ -84,7 +84,7 @@ const Verifications = (props) => {
 
     const getVerifyData = async () => {
         props.onReviewDetailsLoading(true)
-        let response = await getVerificationFields(props.userConfig.id);
+        let response = await getVerificationFields();
         if (response.ok) {
             setVerifyData(response.data);
             props.onReviewDetailsLoading(false)
@@ -98,7 +98,7 @@ const Verifications = (props) => {
 
     const sendEmailOTP = async (val) => {
         setEmail({ ...email, errorMsg: '', showRuleMsg: '',btnLoader:true })
-        let response = await sendEmail(props.userConfig.id, email.requestType);
+        let response = await sendEmail( email.requestType);
         if (response.ok) {
         let emailData = { ...email, errorMsg: '', btnName: 'code_Sent', requestType: 'Resend', showRuleMsg: `Enter 6 digit code sent to your Email Id`,btnLoader:false }
         setEmail(emailData)
@@ -116,7 +116,7 @@ const Verifications = (props) => {
         }
         if(email.code && email.code>5){
         setEmail({ ...email, errorMsg: '', showRuleMsg: '',btnLoader:true })
-        let response = await verifyEmailCode(props.userConfig.id, email.code);
+        let response = await verifyEmailCode(email.code);
         if (response.ok) {
             setEmailBtnColor(true)
         setEmail({ ...email, errorMsg: '', verified: true, btnName: 'verified', btnLoader:false });
@@ -141,7 +141,7 @@ const Verifications = (props) => {
     };
     const getphoneOTP = async (val) => {
         setPhone({ ...phone, errorMsg: '', showRuleMsg: '', btnLoader:true })
-        let response = await getCode(props.userConfig.id, phone.requestType);
+        let response = await getCode(phone.requestType);
         if (response.ok) {
         let phoneData = { ...phone, errorMsg: '', btnName: 'code_Sent', requestType: 'Resend', showRuleMsg: `Enter 6 digit code sent to ${maskedNumber}`, btnLoader:false }
         setPhone(phoneData)
@@ -163,7 +163,7 @@ const Verifications = (props) => {
         }
         if (phone.code && phone.code > 5) {
             setPhone({ ...phone, errorMsg: '', showRuleMsg: '', btnLoader: true })
-            let response = await getVerification(props.userConfig.id, phone.code);
+            let response = await getVerification(phone.code);
             if (response.ok) {
                 setPhBtnColor(true)
                 setPhone({ ...phone, errorMsg: '', verified: true, btnName: 'verified', btnLoader: false });
@@ -208,7 +208,7 @@ const Verifications = (props) => {
         }
         if(authenticator.code && authenticator.code>5){
             setAuthenticator({ ...authenticator, errorMsg: '', verified: false, btnLoader:true });
-        let response = await getAuthenticator(authenticator.code, props.userConfig.userId);
+        let response = await getAuthenticator(authenticator.code);
         if (response.ok) {
             setAuthBtnColor(true)
             setAuthenticator({ ...authenticator, errorMsg: '', verified: true, btnName: 'verified', btnLoader:false });

@@ -31,16 +31,18 @@ class PaymentsView extends Component {
     componentDidMount() {
         this.getPaymentsViewData();
     }
-    addressTypeNames = (type) =>{
-       const stepcodes = {
-                  "1stparty" : "1st Party",
-                  "3rdparty" : "3rd Party",
-         }
-         return stepcodes[type]
-     }
+    addressTypeNames = (type) => {
+      const stepcodes = {
+        "ownbusiness": "My Company",
+        "individuals": "Individuals",
+        "otherbusiness": "Other Business",
+        "myself": "My Self"
+      };
+      return stepcodes[type];
+    };
     getPaymentsViewData = async () => {
         this.setState({ ...this.state, loading: true });
-        let response = await getPaymentsData(this.props.match.params.id, this.props.userConfig?.userId,this.state.currency);
+        let response = await getPaymentsData(this.props.match.params.id,this.state.currency);
         if (response.ok) {
             this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false });
         }else {
@@ -77,7 +79,7 @@ class PaymentsView extends Component {
         <div className="more-popover">
           <Text className="lbl text-white">Bank Label</Text>
           <Text className="val text-white">{moreBankInfo?.bankLabel}</Text>
-          <Text className="lbl text-white">BIC/SWIFT/Routing Number</Text>
+          <Text className="lbl text-white">BIC/SWIFT/ABA Routing Code</Text>
           <Text className="val text-white">{moreBankInfo?.routingNumber}</Text>
         </div>
       );
@@ -107,12 +109,12 @@ class PaymentsView extends Component {
             <>
              <div ref={this.useDivRef}></div>
                 <div className="main-container">
-                    <Title className="basicinfo mb-16"><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
+                    <Title className="basicinfo mb-16"><span onClick={() => this.props.history?.push(`/payments/${this.state.currency}`)} className='icon md c-pointer back mr-8'></span><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
                     <div className="box basic-info responsive_table bg-none">
                         <table className='pay-grid view mb-view'>
                             <thead>
                                 <tr>
-                                <th className="doc-def">Favorite Name</th>
+                                <th className="doc-def">Whitelist Name</th>
                                     <th className="doc-def" style={{width: "410px"}}>Bank Name</th>
                                     <th>Bank Account Number/IBAN</th>
                                     <th>State</th>

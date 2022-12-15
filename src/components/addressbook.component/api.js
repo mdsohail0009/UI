@@ -7,10 +7,10 @@ const uuidv4 = () => {
     randumnumberval = buf.toString('hex')
     return (randumnumberval.substr(0, 8) + "-" + randumnumberval.substr(8, 4) + "-" + randumnumberval.substr(12, 4) + "-" + randumnumberval.substr(16, 4) + "-" + randumnumberval.substr(20, 12))
 }
-const favouriteFiatAddress = (customerId, type, coin) => {
+const favouriteFiatAddress = ( type, coin) => {
 	return apiClient.get(
 		ApiControllers.addressbook +
-		`Favourite/${customerId}/${type}/${coin}`
+		`Favourite/${type}/${coin}`
 	);
 };
 const detailsAddress = (id) => {
@@ -35,9 +35,9 @@ const getCoinList = (type) => {
 	return apiClient.get(ApiControllers.markets + `Coins`);
 };
 
-const getSelectedCoinDetails = (coin_code, customerId) => {
+const getSelectedCoinDetails = (coin_code) => {
 	return apiClient.get(
-		ApiControllers.buySell + `${customerId}/Coins/${coin_code}`
+		ApiControllers.buySell + `Coins/${coin_code}`
 	);
 };
 const activeInactive = (obj) => {
@@ -48,11 +48,7 @@ const getAddress = (addreddId) => {
 		ApiControllers.addressbook + `Withdraw/Favourite/${addreddId}`
 	);
 };
-// const getPayee = ({payeeId}) => {
-// 	return apiClient.get(
-// 		ApiControllers.addressbook + `payee/Withdraw/Favourite/${{payeeId}}`
-// 	);
-// };
+
 const getFileURL = (obj) => {
 	return apiClient.post(ApiControllers.customers + `FetchFile`, obj);
 };
@@ -65,9 +61,9 @@ const getInfoVal = (id, type) => {
 const downloadDeclForm=(addr_id)=>{
 	return apiClient.get(ApiControllers.addressbook+`DownloadDocument/${addr_id}`);
 }
-const getPayeeLu = (customerId,type,is1stParty) => {
+const getPayeeLu = (type,is1stParty) => {
     return apiClient.get(
-        ApiControllers.addressbook + `PayeeLu/${customerId}/${type}/${is1stParty}`
+        ApiControllers.addressbook + `PayeeLu/${type}/${is1stParty}`
     );
 };
 
@@ -94,9 +90,9 @@ const getNewAddress = (payeeId) => {
 		ApiControllers.addressbook + `payee/Withdraw/Favourite/${payeeId}`
 	);
 };
-const getBankDetailLu = (payeeId,customerId) => {
+const getBankDetailLu = (payeeId) => {
     return apiClient.get(
-        ApiControllers.addressbook + `PayeeAccountLu/${payeeId}/${customerId}`
+        ApiControllers.addressbook + `PayeeAccountLu/${payeeId}`
     );
 };
 const getBankDetails = (payeeAccountId) => {
@@ -105,9 +101,9 @@ const getBankDetails = (payeeAccountId) => {
 	);
 };
 
-const getViewData = (payeeId,customerId,type) => {
+const getViewData = (payeeId,type) => {
     return apiClient.get(
-        ApiControllers.addressbook + `payee/Withdraw/Favourite/${payeeId}/${customerId}/${type||'myself'}`
+        ApiControllers.addressbook + `payee/Withdraw/Favorite/${payeeId}/${type||'myself'}`
     );
 };
 const emailCheck = (email,type) => {
@@ -118,9 +114,9 @@ const emailCheck = (email,type) => {
     }
 }
 
-const getCryptoData = (id,customerId) => {
+const getCryptoData = (id) => {
 	return apiClient.get(
-		ApiControllers.addressbook + `Crypto/${id}/${customerId}`
+		ApiControllers.addressbook + `Crypto/${id}`
 	);
 };
 

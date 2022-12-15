@@ -58,8 +58,8 @@ class AddressBook extends Component {
 			},
 			customerId: this.props.userConfig.id,
 
-			gridUrlCrypto: process.env.REACT_APP_GRID_API + "Address/Crypto",
-			gridUrlFiat: process.env.REACT_APP_GRID_API + "Address/Fiat",
+			gridUrlCrypto: process.env.REACT_APP_GRID_API + "Address/AddressCrypto",
+			gridUrlFiat: process.env.REACT_APP_GRID_API + "Address/AddressFiat",
 		};
 		this.gridFiatRef = React.createRef();
 		this.gridCryptoRef = React.createRef();
@@ -706,7 +706,7 @@ class AddressBook extends Component {
 							ref={this.gridFiatRef}
 							key={gridUrlFiat}
 							url={gridUrlFiat}
-							additionalParams={{ customerId: customerId }}
+							//additionalParams={{ customerId: customerId }}
 						/>
 					) : (
 						<List
@@ -715,7 +715,7 @@ class AddressBook extends Component {
 							key={gridUrlCrypto}
 							ref={this.gridCryptoRef}
 							url={gridUrlCrypto}
-							additionalParams={{ customerId: customerId }}
+							//additionalParams={{ customerId: customerId }}
 						/>
 					)}
 				</div>
