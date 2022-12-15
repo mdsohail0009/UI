@@ -449,22 +449,22 @@ class CryptoWithDrawWallet extends Component {
 
 {!this.state.isHideCard && <Card className="crypto-card select " bordered={false}>
 
-                        <div className="crypto-details d-flex">
-                            <div>
+                        {/* <div className="crypto-details d-flex"> */}
+                            {/* <div>
                                 <span className="d-flex align-center mb-4">
                                     <Image preview={false} src={selectedWallet?.impageWhitePath} />
-                                    {/* <Text className="crypto-percent">{selectedWallet?.percentage}<sup className="percent fw-700">%</sup></Text> */}
+                                    <Text className="crypto-percent">{selectedWallet?.percentage}<sup className="percent fw-700">%</sup></Text>
                                 </span>
                                 <Text className="fs-24 text-purewhite ml-4">{selectedWallet?.coinFullName}</Text>
 
-                            </div>
-                            <div>
+                            </div> */}
+                            {/* <div> */}
 
                                 <div className="crypto-amount" >
-                                    <Currency defaultValue={selectedWallet?.coinBalance} prefix={""} type={"text"} suffixText={selectedWallet?.coin} />
-                                    <Currency defaultValue={selectedWallet?.coinValueinNativeCurrency} prefix={"$"} type={"text"} />
+                                <div className="crypto-details"><span className='buycoin-style'>{selectedWallet?.coin}</span><Currency defaultValue={selectedWallet?.coinBalance} prefix={""} type={"text"} className="buycoin-style marginL" /></div>
+                                <div className='crypto-details'><div className='sellcrypto-style'>Balance:</div>     <Currency defaultValue={selectedWallet?.coinValueinNativeCurrency} prefix={"$ "} type={"text"} className="marginL sellbal-style" /></div>
                                 </div>
-                            </div></div>
+                            {/* </div></div> */}
                     </Card>}
                     {!this.state.isVerificationLoading &&
                      <OnthegoCryptoTransfer onTransfer={this.newTransferClick} selectedWallet= {selectedWallet} sendReceive={this.props.sendReceive} addressBookReducer= {this.props.addressBookReducer}/>

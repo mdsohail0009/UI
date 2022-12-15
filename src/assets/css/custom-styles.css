@@ -425,6 +425,14 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
   .dash-mobile-list .ant-list-item-meta{align-items: center;}
 /* crypto-coins end   */
 
+/* send crypto start */
+.min-btn{background: var(--radioBg) !important;height: 36px;border-radius: 10px;min-width: 60px;line-height: 34px;color: var(--coinPrice);border: 1px solid rgba(0, 0, 0, 0.3);font-size: 16px;font-weight: 500; margin: 0 16px 16px 0;}
+.min-btn:active ,.min-btn:focus{background-color: var(--radioFill) !important;border: 2px solid var(--radioBorderfill) !important;font-size: 16px;font-weight: 500 !important;color: var(--coinPrice) !important;}
+.min-btn{color: var(--coinPrice) !important;}
+.newtransfer-card{background: var(--drawerList);border-radius: 13px;border: 2px solid transparent;height: 90px;padding: 10px 43px !important;text-align: left !important; font-size: 16px; font-weight: 700; color: var(--coinBal);}
+.newtransfer-card:hover,.newtransfer-card:active{background-color: var(--radioFill) !important;border: 2px solid var(--radioBorderfill);color: var(--coinPrice) !important;}
+/* send crypto end */
+
 /*@media start*/
 @media (min-width: 768px){
     .listitems-design{width: 345px;}
