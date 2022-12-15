@@ -535,11 +535,12 @@ class HeaderPermissionMenu extends Component {
                 onSelect={(key) => {
                     this.props.dispatch(setHeaderTab(key.key));
                 }}>
-                <Menu.Item key="13"> USD
+                {/* <Menu.Item key="13"> USD
                 </Menu.Item>  
                 <Menu.Item key="14"><Text className="pipeline">|</Text> English
-                </Menu.Item>  
-                <Menu.Item key="15"> <Text className="pipeline">|</Text>
+                </Menu.Item>   */}
+                <Menu.Item key="15"> 
+                {/* <Text className="pipeline">|</Text> */}
                 <span className="icon md theme-icon" /> Light Mode
                 </Menu.Item> 
                 <Menu.Item

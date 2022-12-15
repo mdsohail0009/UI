@@ -88,11 +88,11 @@ class Home extends Component {
                                 <Wallets />
                             </div>                     
                         </>}
-                        {this.state.permissions?.Bank &&
+                        {/* {this.state.permissions?.Bank &&
                             <div className="markets-panel ac-topspace">
                                 <BankWallets/>
                             </div>
-                        }
+                        } */}
                         {this.state.permissions.Transactions && <Portfolio
                             crypto="Bitcoin"
                             crypto_value='0.00'
@@ -103,7 +103,10 @@ class Home extends Component {
                     </Col>
                     <Col xs={24} md={12} xl={9}>
                         <SbCard />
-                       <div className='marketcap-mt'> <Iban/></div>
+                        {this.state.permissions?.Bank &&  <div className='marketcap-mt'>
+                       <BankWallets/> 
+                       {/* <Iban/> */}
+                       </div>}
                         {this.state.permissions.Markets && 
                             <MarketCap />
                        }

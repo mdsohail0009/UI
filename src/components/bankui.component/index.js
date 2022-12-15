@@ -117,11 +117,25 @@ class BankWallets extends Component {
             itemLayout="horizontal"
             dataSource={this.state.customerData}
             //bordered={false}
-            className="mobile-list custom-fund-buttons mb-36"
+            className="mobile-list custom-fund-buttons iban-list"
             renderItem={(item) => (
-              <List.Item className="cytpo-list-style">
+              <List.Item className="listitems-design iban-style">
                 <List.Item.Meta
-                  avatar={<Image preview={false} src={item.imagePath} />}
+                  avatar={<><div className='crypto-curr-align'><div><Image preview={false} src={item.imagePath} /></div>
+                {item?.accountStatus?.toLowerCase() == "approved" && (
+                  <Dropdown
+                  overlay={this.menuBar(item)}
+                  trigger={["click"]}
+                  placement="bottomCenter"
+                  arrow
+                  overlayClassName="secureDropdown depwith-drpdown"
+                >
+                  <a onClick={(e) => e.preventDefault()}>
+                    <Space>
+                      <span class="icon lg menu-bar p-relative"></span>
+                    </Space>
+                  </a>
+                </Dropdown> )}</div></>}
                   title={
                     <div className="coin-style">
                       {item.currency}
@@ -144,7 +158,7 @@ class BankWallets extends Component {
                 {item.isAccountExist ? (
                   <>
                     {item?.accountStatus?.toLowerCase() == "approved" && (
-                      <div className="crypto-btns">
+                      <div className="crypto-btns crypto-btn-top">
                         <Translate
                           content="transfer_funds"
                           component={Button}
@@ -174,24 +188,12 @@ class BankWallets extends Component {
                           }
                         />
 
-                        <Dropdown
-                          overlay={this.menuBar(item)}
-                          trigger={["click"]}
-                          placement="bottomCenter"
-                          arrow
-                          overlayClassName="secureDropdown depwith-drpdown"
-                        >
-                          <a onClick={(e) => e.preventDefault()}>
-                            <Space>
-                              <span class="icon lg menu-bar p-relative"></span>
-                            </Space>
-                          </a>
-                        </Dropdown>
+                       
                       </div>
                     )}
 
                     {item?.accountStatus?.toLowerCase() != "approved" && (
-                      <div className="crypto-btns">
+                      <div className="crypto-btns crypto-btn-top">
                         <Button
                           content="Pending"
                           type="primary"
@@ -205,7 +207,7 @@ class BankWallets extends Component {
                     )}
                   </>
                 ) : (
-                  <div className="crypto-btns">
+                  <div className="crypto-btns crypto-btn-top">
                     <Translate
                       content="createnow"
                       type="primary"
