@@ -315,11 +315,13 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* .auto-scroll{overflow-y: auto;} */
 .enter-val-container.swap-com{display: flex;align-items: center;justify-content: center;margin-bottom: 16px;}
 .inputfont-style{font-weight: 500;font-size: 26px;color: var(--white);white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
+.inputbg-fonts{background: var( --inputBg);height: 50px;margin-bottom: 6px;border: 1px solid var(--subText);border-radius: 5px;}
+.inputbg-fonts:hover, .inputbg-fonts:focus, .inputbg-fonts.ant-input-borderless:focus{background: var( --inputBg);height: 50px;margin-bottom: 6px;border: 1px solid var(--subText);border-radius: 5px;}
 .buy-paragraph{color: var( --paraBg);font-weight: 500;font-size: 16px;text-align: center;margin-bottom: 0 !important;margin-top:4px;}
 .crycoin-bal{font-weight: 400 !important;font-size: 16px !important;color: var(--coinPrice) !important;}
 .buy-usdt-btn .pop-btn, .sell-btn-style{margin-top: 16px;margin-bottom: 16px;}
 .select-currency{margin-top: 50px;height: 264px;}
-.swap-text-sub{text-align: center;font-weight: 500;font-size: 20px;color: var(--white);margin-top: -16px !important;}
+.swap-text-sub{text-align: center;font-weight: 500;font-size: 36px;color: var(--white);margin-top: -16px !important;}
 .enrty-field-style{margin-bottom: 12px;}
 .sellcrypto-style{color:var(--coinPrice);font-weight: 400;font-size: 16px;}
 .sellbal-style{font-weight: 700;font-size: 16px;color: var(--balInput);}
@@ -330,6 +332,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .val-updown{position: absolute;right: 0;top: 100px;width: 40px;height: 40px;border-radius: 15px;background-color: var(--radioFill);text-align: center;line-height: 38px;}
 .val-updown:hover .swaparrow, .swap-updown:hover .swaparrow{transform: rotate(180deg);transition: 0.5s;background-position: -237px -35px;}
 .buy-balance{font-weight: 400;font-size: 16px;color: var(--coinPrice);}
+.crypto-amount{margin-bottom: 36px;}
 /*Buy/sell drawer End*/
 /* receive fait start */
 .drawer-subtext{font-weight: 700;font-size: 18px;color: var(--tablesub);}
@@ -451,7 +454,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .val-updown{right: 160px;top:72px;}
     .import-note{width: auto;}
     .side-drawer .ant-drawer-header{padding:16px 30px !important}
-    .inputfont-style{font-size: 56px;}
+    .inputfont-style{font-size:36px;}
     .buy-paragraph{width: 300px;margin: auto;}
     .crypto-card .ant-card-body{padding: 16px 14px;height: 94px;}
     
@@ -475,7 +478,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .select-currency {height: 122px;}
     .text-style{height: 140px;}
     .full-screenable-node{width: 427px;overflow: auto;}
-    .val-updown{top: 100px;right: -24px;}
+    .val-updown{top: 100px;right: 38px;}
     .enter-val-container.swap-com{margin-bottom: 4px;}
     .import-note{width: 463px;}
     .tlv-header{width: 1200px;margin: auto;padding: 12px 0 !important;align-items: center;}
@@ -491,7 +494,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .iban-list .custom-btn{min-width: 81px;}
     .main-container{max-width: 1200px; padding: 30px 16px 24px;}
     .crypto-list .ant-list-item, .wallet-list .ant-list-item{margin-top:12px;}
-    .inputfont-style{font-size: 56px;}
+    .inputfont-style{font-size: 36px;}
     /* .ant-popover.ant-popover-placement-left{left: 872px !important;} */
 }
 @media (min-width: 1400px){
@@ -505,7 +508,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .iban-list .ant-list-items{display: 238px;}
     .full-screenable-node{width: 430px;}
     .crypto-list .ant-list-item, .wallet-list .ant-list-item{margin-top: 16px;}
-    .inputfont-style{font-size: 70px;}
+    .inputfont-style{font-size: 36px;}
     .side-drawer .ant-drawer-content-wrapper{width: 524px !important;}
     .val-updown{top: 84px;}
 }

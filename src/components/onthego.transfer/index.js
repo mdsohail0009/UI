@@ -356,12 +356,13 @@ saveWithdrawdata = async () => {
           {!this.state.fiatWalletsLoading && (
             <div>
               <div className="mt-8">
-              <Title
-                            className='sub-heading code-lbl'>Send from your Suissebase FIAT Wallet</Title>
+              <div
+                 className='label-style'>Send from your Suissebase FIAT Wallet</div>
               </div>
-              <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-              <Search placeholder="Search Currency" value={this.state.searchFiatVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleFiatSearch} size="middle" bordered={false} className="text-center mb-16" />
-              </Col>
+              {/* <Col xs={24} md={24} lg={24} xl={24} xxl={24}> */}
+              <Search placeholder="Search Currency" value={this.state.searchFiatVal} prefix={<span className="icon lg search-angle drawer-search" />} onChange={this.handleFiatSearch} size="middle" bordered={false} className="cust-search" />
+              {/* <Search value={searchVal} placeholder={apiCalls.convertLocalLang('searchCurrency')} prefix={<span className="icon lg search-angle drawer-search" />}  onChange={({ currentTarget }) => { setSearchVal(currentTarget.value); handleSearch(currentTarget.value) }} size="middle" bordered={false} className="cust-search" /> */}
+              {/* </Col> */}
               <List
                 itemLayout="horizontal"
                 dataSource={this.state.fiatWallets}
@@ -382,9 +383,8 @@ saveWithdrawdata = async () => {
                         title={<div className="wallet-title">{item.walletCode}</div>}
                       />
                        <><div className="text-right coin-typo">
-                                        <NumberFormat value={item.amount} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={item.walletCode == 'USD' ? '$' : '€'} renderText={(value, props) => <div {...props} >{value}</div>} />
-
-                                    </div></>
+                         <NumberFormat value={item.amount} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={item.walletCode == 'USD' ? '$' : '€'} renderText={(value, props) => <div {...props} >{value}</div>} />
+                    </div></>
                     </Link>
                   </List.Item>
                 )}
@@ -424,7 +424,7 @@ saveWithdrawdata = async () => {
                   <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                       <Form.Item
-                        className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label fund-transfer-input send-fiat-input"
+                        className="custom-forminput custom-label fund-transfer-input send-fiat-input"
                         name="amount"
                         label={"Enter Amount"}
                         required
