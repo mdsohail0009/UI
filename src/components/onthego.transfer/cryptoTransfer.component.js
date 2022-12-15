@@ -266,10 +266,6 @@ class OnthegoCryptoTransfer extends Component {
         })
         this.myRef.current.scrollIntoView()
       }
-      // else if (_amt > this.props.selectedWallet?.withdrawMaxValue) {
-      //     this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_max') + " " + this.props.selectedWallet?.withdrawMaxValue });
-      //     this.myRef.current.scrollIntoView();
-      // }
       else if (
         _amt >
         this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance
