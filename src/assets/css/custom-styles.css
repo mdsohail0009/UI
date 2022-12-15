@@ -155,7 +155,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .drawer-coin .ant-image-img, .crypto-curr-align .ant-image-img, .listitems-design .ant-image-img, .cytpo-list-style .ant-image-img, .crypto-bg{background-color: var(--coinBg);border-radius: 100%;}
 .cytpo-list-style .ant-list-item-meta{align-items: center;}
 .crypto-bg{width: 52px;height: 52px;}
-.label-style{color: var(--subText); font-weight: 400;font-size: 14px;margin-bottom: 2px !important;text-transform: capitalize;}
+.label-style, .ant-form-item-label > label{color: var(--subText); font-weight: 400;font-size: 14px;margin-bottom: 2px !important;text-transform: capitalize;}
 .ant-card.crypto-card{background: none;}
 .ant-select-item .ant-select-option-active, .ant-select-item-option-content, .ant-select-selection-item{color:var(--menuFont) ;}
 .ant-alert-error {background-color: var(--alertBG);border: 1px solid #ff5747;}
@@ -200,7 +200,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 /*Kendo start*/
 .k-grid-header .k-header > .k-link{font-size: 16px;font-weight: 500;}
 .k-grid td{font-size: 14px;font-weight: 400;}
-.ant-form-item-label > label{font-weight: 500;height: 24px !important;color: var(--textWhite);font-size: 14px;text-align: left;}
+/* .ant-form-item-label > label{color: var(--subText);font-weight: 400;font-size: 14px;margin-bottom: 2px !important;text-transform: capitalize;} */
 h1.sub-heading {text-transform: capitalize;padding-left:4px; padding-right:4px;font-size:18px;font-weight:500;margin-top: 36px;color:var(--textWhite);}
 h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom: 16px;padding-left:4px; padding-right:4px;}
 .pop-btn, .confirm-btn{height: 46px;margin-bottom: 20px;}
@@ -241,7 +241,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .ant-modal-confirm-btns button:first-child{background-color: transparent;border: none;color: var(--textWhite30);}
 .ant-modal-confirm-btns button:nth-child(2){background-color: var(--bgYellow) !important;border: none;color: var(--textDark);border-radius: 16px;padding: 4px 30px}
 .ant-modal-confirm-btns button:first-child:hover{color: var(--textYellow);}
-.ant-picker-input > input, .ant-form-item-label > label{color: var(--textWhite);}
+/* .ant-picker-input > input, .ant-form-item-label > label{color: var(--textWhite);} */
 .search-bg{border: 1px solid rgba(0,0,0,.08);color: #313c46 !important;background-color: var(--bgDarkGrey) !important;padding: 15px 10px;}
 .anticon-copy svg, .anticon-check svg{color: var(--subText);}
 /*Modal End*/
@@ -300,6 +300,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .dashbord-space{padding-top: 0px !important;}
 .ac-topspace{padding-top: 10px;}
 .listitems-design.iban-style .ant-list-item-meta-content{width: 100%;height: 70px;}
+.fund-transfer-input .ant-form-item-label{text-align: left;}
 /* Dashboard end */
 
 /*Buy/sell drawer start*/

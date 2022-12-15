@@ -467,12 +467,12 @@ saveWithdrawdata = async () => {
 
                       </Form.Item>
                       {this.state.selectedCurrency === 'USD' && (
-                        <div className="f-16 text-yellow fw-400 ml-16">
+                        <div className="">
                           The amount must be greater than USD 50
                         </div>
                       )}
                       {this.state.selectedCurrency === 'EUR' && (
-                        <div className="f-16 text-yellow fw-400 ml-16">
+                        <div className="">
                           The amount must be greater than EUR 50
                         </div>
                       )}
