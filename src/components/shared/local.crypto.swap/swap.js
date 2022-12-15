@@ -16,17 +16,17 @@ const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "U
           </div> */}
           <NumberFormat
             id="amtInput"
-            className="inputfont-style text-center"
+            className="inputfont-style text-center inputbg-fonts"
             maxLength={25}
             customInput={Input}
             thousandSeparator={true}
-            suffix={isSwaped ? "" : symbols[localCurrency]}
+            prefix={isSwaped ? "" : symbols[localCurrency]}
             decimalScale={isSwaped ? 8 : 2}
             autoComplete="off"
             placeholder="0.00"
             bordered={false}
             contenteditable="true"
-            prefix={!isSwaped ?localCurrency : cryptoCurrency}
+            suffix={!isSwaped ?localCurrency : cryptoCurrency}
             // style={{
             //   lineHeight: "48px",
             //   fontSize: 30,

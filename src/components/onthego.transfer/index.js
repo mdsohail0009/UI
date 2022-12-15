@@ -357,7 +357,7 @@ saveWithdrawdata = async () => {
             <div>
               <div className="mt-8">
               <Title
-                            className='sub-heading code-lbl'>Send from your Suissebase FIAT Wallet</Title>
+                 className='sub-heading code-lbl'>Send from your Suissebase FIAT Wallet</Title>
               </div>
               <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
               <Search placeholder="Search Currency" value={this.state.searchFiatVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleFiatSearch} size="middle" bordered={false} className="text-center mb-16" />

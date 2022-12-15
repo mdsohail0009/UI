@@ -216,6 +216,7 @@ class SelectSellCrypto extends Component {
                                     <Translate value="half" content="half" component={Radio.Button} />
                                     <Translate value="all" content="all" component={Radio.Button} />
                                 </Radio.Group>
+                                {this.state.isShowCoinsData &&  <div className='crypto-details'><div className='sellcrypto-style'>Balance:</div> <Currency prefix={"$ "} defaultValue={coinDetailData.coinValueinNativeCurrency} suffixText="" className="marginL sellbal-style" /></div>}
                                 <Translate content="thousandKText" component={Paragraph} className="buy-paragraph buy-para-bg" />
                                 <Translate content="contact_amount_text" component={Paragraph} className="buy-paragraph" />
 
