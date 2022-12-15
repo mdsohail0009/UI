@@ -340,6 +340,8 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .walletadrs{font-weight: 700;font-size: 16px;color: var(--coinPrice);}
 .import-note{background-color: var(--cardBG);width: auto;border-radius: 10px;padding: 24px 70px 24px 24px;color: var(--tablesub);}
 .custom-display{margin-left: 12px;}
+.rec-bottom{margin-bottom: 18px !important;}
+.recive-subtext{font-weight: 400;font-size: 16px;color: var(--sbCardText);}
 /* receive fait end */
 /* --Payments Start--*/
 .pay-grid thead th{padding: 8px;width: 250px; color: var(--textWhite30);font-weight: 500;text-align: left;font-size: 16px;}
