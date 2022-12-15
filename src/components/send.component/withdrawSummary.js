@@ -401,8 +401,7 @@ class WithdrawSummary extends Component {
 	getAuthenticator = async () => {
 		this.setState({ ...this.state, faLoading: true })
 		let response = await apiCalls.getAuthenticator(
-			this.state.authCode,
-			this.props.userProfile.userId
+			this.state.authCode
 		);
 		if (response.ok) {
 			this.setState({

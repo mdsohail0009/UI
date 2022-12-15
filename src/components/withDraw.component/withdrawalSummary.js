@@ -480,7 +480,7 @@ const WithdrawalFiatSummary = ({
 	const getAuthenticator = async () => {
 		setValidData(true);
 		setAuthLoading(true)
-		let response = await apiCalls.getAuthenticator(authCode, userConfig.userId);
+		let response = await apiCalls.getAuthenticator(authCode);
 		if (response.ok) {
 			setMsg(null)
 			setAuthLoading(false)

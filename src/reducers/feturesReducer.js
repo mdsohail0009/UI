@@ -41,10 +41,10 @@ const updateAccessdenied = (payload) => {
         payload
     }
 }
-const fetchFeatures = (app_id, customer_id) => {
+const fetchFeatures = (app_id) => {
     return async (dispatch) => {
         dispatch(getData({ data: [], error: null, loading: true, key: "features" }));
-        const response = await getFeatures(app_id, customer_id);
+        const response = await getFeatures(app_id);
         if (response.ok) {
             let menu = [...response.data];
             for (let item of menu) {

@@ -208,7 +208,7 @@ const Verifications = (props) => {
         }
         if(authenticator.code && authenticator.code>5){
             setAuthenticator({ ...authenticator, errorMsg: '', verified: false, btnLoader:true });
-        let response = await getAuthenticator(authenticator.code, props.userConfig.userId);
+        let response = await getAuthenticator(authenticator.code);
         if (response.ok) {
             setAuthBtnColor(true)
             setAuthenticator({ ...authenticator, errorMsg: '', verified: true, btnName: 'verified', btnLoader:false });
