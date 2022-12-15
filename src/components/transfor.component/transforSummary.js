@@ -7,12 +7,9 @@ import apiCalls from '../../api/apiCalls'
 import Currency from "../shared/number.formate";
 import {setStepcode} from '../../reducers/tranfor.Reducer'
 import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboardReducer';
-//const { Option } = Select;
 const { Text, Paragraph } = Typography;
 
-const  TransforSummary = ({userProfile,onClose, transforObj,dispatch}) =>{
-    useEffect(()=>{
-    },[])
+const  TransforSummary = ({userProfile, transforObj,dispatch}) =>{
    const [errorMsg, setErrorMsg] = useState(null)
    const [onCheked, setChecked] = useState(null)
    const [btnLoader, setBtnLoader] = useState(false)

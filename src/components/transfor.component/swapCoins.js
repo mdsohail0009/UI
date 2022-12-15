@@ -10,7 +10,7 @@ import Currency from '../shared/number.formate';
 import { setCurrentAction } from '../../reducers/actionsReducer';
 const { Option } = Select;
 
-const  TranforCoins = ({userProfile,onClose,dispatch,transforObj,transferPermissions}) =>{
+const  TranforCoins = ({userProfile,dispatch,transforObj,transferPermissions}) =>{
     useEffect(()=>{
         loadApis();
         if(transforObj){
@@ -28,7 +28,6 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj,transferPermiss
     const useDivRef = React.useRef(null);
     const [form] = Form.useForm();
     const [permission,setPermission]=useState({});
-    // const [transfordata,setTransfordata] = useState(null)
     useEffect(()=>{
         loadPermissions()
         if(transforObj && currencyLu.length>0){
@@ -100,13 +99,13 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj,transferPermiss
     }
     const toFixed=(x)=> {
         if (Math.abs(x) < 1.0) {
-          var e = parseInt(x.toString().split('e-')[1]);
+          let e = parseInt(x.toString().split('e-')[1]);
           if (e) {
               x *= Math.pow(10,e-1);
               x = '0.' + (new Array(e)).join('0') + x.toString().substring(2);
           }
         } else {
-          var e = parseInt(x.toString().split('+')[1]);
+          let e = parseInt(x.toString().split('+')[1]);
           if (e > 20) {
               e -= 20;
               x /= Math.pow(10,e);
@@ -132,10 +131,6 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj,transferPermiss
         if(values.transferAmount.indexOf('.')===0){
             values.transferAmount = '0'+values.transferAmount
         }
-        // const res = saveTransfor(values);
-        // if(res.ok){
-        //     onClose()
-        // }
         dispatch(setTransforObj(values))
         dispatch(setStepcode('tranforsummary'))
     }
@@ -206,7 +201,6 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj,transferPermiss
                             bordered={false}
                             showArrow={true}
                             optionFilterProp="children"
-                            // onChange={(e) => handleFromchange(e)}
                         >
                           {  toWalletLu.map((wallet)=>{
                                 return <Option value={wallet.name}>{wallet.name}</Option>
@@ -252,7 +246,6 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj,transferPermiss
                               <Translate
                                 content="amount" component={Form.label} />
                               <div className="minmax">
-                                {/* {"Available balance:"+(balance?.available||0) } */}
                                 <Currency defaultValue={balance.available || 0} prefix={'Available balance: '} className={`fs-18 m-0 fw-600 ${balance.available < 0 ? 'text-red' : 'text-green'}`} />
                               </div>
                             </>
@@ -275,9 +268,6 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj,transferPermiss
                             allowNegative={false}
                             maxlength={13}
                             style={{ height: 44 }}
-                            // onValueChange={({ e, value }) => {
-                            //     showBalance(value)
-                            // }}
                         />
                     </Form.Item>
                 </Col>
