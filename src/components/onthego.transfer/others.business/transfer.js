@@ -7,12 +7,11 @@ import { validateContentRule } from "../../../utils/custom.validator";
 import ConnectStateProps from "../../../utils/state.connect";
 import AddressDocumnet from "../../addressbook.component/document.upload";
 import { RecipientAddress } from "../../addressbook.v2/recipient.details";
-import { confirmTransaction, createPayee, payeeAccountObj, savePayee, fetchIBANDetails } from "../api";
+import { confirmTransaction, payeeAccountObj, savePayee, fetchIBANDetails } from "../api";
 import DomesticTransfer from "./domestic.transfer";
 import InternationalTransfer from "./international.transfer";
 import Translate from "react-translate-component";
 import alertIcon from '../../../assets/images/pending.png';
-//const { Option } = Select;
 const { Paragraph, Title, Text } = Typography;
 const { TextArea } = Input;
 class BusinessTransfer extends Component {
