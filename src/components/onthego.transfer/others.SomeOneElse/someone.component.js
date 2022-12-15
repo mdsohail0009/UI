@@ -32,7 +32,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
     }, []);//eslint-disable-line react-hooks/exhaustive-deps
     const getpayeeCreate = async () => {
         setMailLoader(true);
-        const createPayeeData = await createPayee( props.selectedAddress?.id || "", addressOptions.addressType);
+        const createPayeeData = await createPayee(props.userProfile.id, props.selectedAddress?.id || "", addressOptions.addressType);
         if (createPayeeData.ok) {
             let edit = false;
             setCreatePayeeObj(createPayeeData.data);
@@ -64,7 +64,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         obj.payeeAccountModels = [payeeAccountObj()];
         obj.payeeAccountModels[0] = { ...obj.payeeAccountModels[0], ...bankdetails, ...values.payeeAccountModels };
         obj.payeeAccountModels[0].currencyType = "Fiat";
-        obj.payeeAccountModels[0].documents = documents;
+        obj.payeeAccountModels[0].documents = documents?.payee;
         obj.payeeAccountModels[0].walletCode = props.currency;
         if (props.selectedAddress?.id) { obj.payeeAccountModels[0].id = createPayeeObj.payeeAccountModels[0].id; }
         obj['customerId'] = props.userProfile.id;
@@ -75,25 +75,11 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             obj.id = isSelectedId ? isSelectedId : createPayeeObj.payeeAccountModels[0]?.payeeId;
         }
         setBtnLoading(true)
-        if (obj.payeeAccountModels[0].documents === null || obj.payeeAccountModels[0].documents && obj.payeeAccountModels[0].documents.details.length === 0) {
-            useDivRef.current.scrollIntoView()
-            setErrorMessage('At least one document is required'); setBtnLoading(false)
-
-        } else if (obj.payeeAccountModels[0].documents) {
-            let length = 0;
-            for (let k in obj.payeeAccountModels[0].documents.details){
-                if(obj.payeeAccountModels[0].documents.details[k].state==='Deleted'){
-                    length=length+1;
-                }
-            }
-            if(length===obj.payeeAccountModels[0].documents.details.length){
-                useDivRef.current.scrollIntoView()
-                setErrorMessage('At least one document is required'); setBtnLoading(false)
-            } else {
+       
         let payeesave = await savePayee(obj)
         if (payeesave.ok) {
             if (props.type !== "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer })
+                const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer, documents: documents?.transfer })
                 if (confirmRes.ok) {
                     setBtnLoading(false);
                     props.onContinue(confirmRes.data);
@@ -112,9 +98,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             setErrorMessage(isErrorDispaly(payeesave));
             useDivRef.current.scrollIntoView();
         }
-    }
-}
-
+    
     }
     const isErrorDispaly = (objValue) => {
         if (objValue.data && typeof objValue.data === "string") {
@@ -393,8 +377,8 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                 <Paragraph className="mb-8 fw-500 text-white px-4 mt-36" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                 {((props.selectedAddress?.id && createPayeeObj)||!props.selectedAddress?.id ) &&
                  <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} isAddTabCange={isTabChange}/>}
-                
-                {props.type !== "manual" && 
+                 
+                 {props.type !== "manual" && 
                 (<React.Fragment>
                     <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
                     <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
@@ -403,7 +387,8 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         }} refreshData = {addressOptions?.domesticType}/>
                 </React.Fragment>)
                 }
-                    <div className="text-right mt-12">
+
+                                    <div className="text-right mt-12">
                     <Button
                         htmlType="submit"
                         size="large"
