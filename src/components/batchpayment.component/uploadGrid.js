@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Typography,Drawer,Space,Button,Modal,Upload,Tooltip } from 'antd';
+import { Typography,Drawer,Space,Button,Modal,Upload,Tooltip,Alert } from 'antd';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import List from "../grid.component";
@@ -7,9 +7,13 @@ import List from "../grid.component";
 const { Dragger } = Upload;
 const { Title, Text, Paragraph } = Typography;
 const BatchpaymentView = (props) => {
+    debugger
     const [uplaodModal, setUploadModal] = useState(false);
+    const [errorMessage,setErrorMessage]=useState(null)
+    const [fileDetails,setFileDetails]=useState(null)
     const showUploadModal = () =>{
         setUploadModal(true);
+        setErrorMessage(null)
     }
     const gridRef = React.createRef();
     const gridColumns = [
@@ -39,14 +43,56 @@ const BatchpaymentView = (props) => {
               </div></td>)
         },
       ];
+    const beforeUpload=(file)=>{
+        let fileType = {
+			"image/png": true,
+			"image/jpg": true,
+			"image/jpeg": true,
+			"image/PNG": true,
+			"image/JPG": true,
+			"image/JPEG": true,
+			"application/pdf": true,
+			"application/PDF": true,
+		};
+		if (fileType[file.type]) {
+            setErrorMessage(false)
+          return true
+        }else{
+            setErrorMessage("File is not allowed. You can upload jpg, png, jpeg and PDF files")
+            setUploadModal(false)
+            return Upload.LIST_IGNORE;
+        }
+    }
+     const handleUpload=({ file }, type)=>{
+        setErrorMessage(false)
+        // if (type === "IDENTITYPROOF") {
+        //     let obj = {
+        //         "documentId": "00000000-0000-0000-0000-000000000000",
+        //         "documentName": `${file.name}`,
+        //         "id": "00000000-0000-0000-0000-000000000000",
+        //         "isChecked": file.name === "" ? false : true,
+        //         "remarks": `${file.size}`,
+        //         "state": null,
+        //         "status": false,
+        //         "Path": `${file.response}`,
+        //     }
+        //     if (file.response !== undefined) {
+
+        //     }
+        // }
+
+     }
     return (
+        
+        <>
+       
         < div className='main-container'>
             <Title className="basicinfo "><span className='icon md c-pointer back mr-8' onClick={() => props.history.push('/batchpayment')}/><Text className="basicinfo">EURBatchPayment / EUR</Text></Title>
             <div className="box basic-info text-white" style={{ clear: 'both' }}>
                 <List
                     className="bill-grid"
                     showActionBar={false}
-                    url={process.env.REACT_APP_GRID_API + `MassPayments/BatchPayments`}
+                    url={process.env.REACT_APP_GRID_API + `MassPayments/BatchPaymentsDetail/${props.match.params.id}`}
                     columns={gridColumns}
                     ref={gridRef}
                 />
@@ -65,7 +111,9 @@ const BatchpaymentView = (props) => {
                     </Tooltip>
                   }
                 footer={<div><Button className='pop-btn custom-send sell-btc-btn' onClick={() => setUploadModal(false) }>Upload</Button></div>}>
-                
+                 {errorMessage !== null && (
+            <Alert type="error" description={errorMessage} showIcon />
+                 )}
                 <>
                     <div className='my-16'>
                         <Paragraph className="mb-8 fs-14 text-white fw-500 ml-12 text-left">Please upload supporting documents to show your relationship
@@ -73,10 +121,11 @@ const BatchpaymentView = (props) => {
                         <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                             className="upload mt-4"
                             multiple={false}
-                            // action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
+                            action={process.env.REACT_APP_UPLOAD_API +"/UploadFile"}
+
                             showUploadList={false}
-                        // beforeUpload={(props) => { this.beforeUpload(props) }}
-                        // onChange={(props) => { this.handleUpload(props, "IDENTITYPROOF") }}
+                         beforeUpload={(props) => { beforeUpload(props) }}
+                         onChange={(props) => {handleUpload(props, "IDENTITYPROOF") }}
                         // headers={{ Authorization: `Bearer ${this.props.user.access_token}` }}
                         >
                             <p className="ant-upload-drag-icon">
@@ -93,10 +142,10 @@ const BatchpaymentView = (props) => {
                         <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                             className="upload mt-4"
                             multiple={false}
-                            // action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
+                            action={process.env.REACT_APP_UPLOAD_API +"/UploadFile"}
                             showUploadList={false}
-                        // beforeUpload={(props) => { this.beforeUpload(props) }}
-                        // onChange={(props) => { this.handleUpload(props, "IDENTITYPROOF") }}
+                         beforeUpload={(props) => {beforeUpload(props) }}
+                         onChange={(props) => {handleUpload(props, "IDENTITYPROOF") }}
                         // headers={{ Authorization: `Bearer ${this.props.user.access_token}` }}
                         >
                             <p className="ant-upload-drag-icon">
@@ -111,6 +160,7 @@ const BatchpaymentView = (props) => {
                 </>
             </Modal>
         </div>
+        </>
     )
 
 }

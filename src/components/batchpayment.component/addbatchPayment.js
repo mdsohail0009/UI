@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Col, List,Empty, Image,Button,Modal,Tooltip,Upload, message} from 'antd';
+import { Drawer, Typography, Col, List,Empty, Image,Button,Modal,Tooltip,Upload, message,Alert} from 'antd';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import Search from "antd/lib/input/Search";
@@ -12,8 +12,12 @@ import pending from '../../assets/images/pending.png'
 import { store } from "../../store";
 import apiCalls from "../../api/apiCalls";
 import CryptoJS from "crypto-js";
+import { success, error } from "../../utils/message";
+import {uuidv4} from './api'
 const { Title,Paragraph } = Typography
 class AddBatchPayment extends Component {
+    useDivRef = React.createRef()
+
     state = {
         selectedCurrency : "USD",
         fiatWalletsLoading: false,
@@ -25,12 +29,14 @@ class AddBatchPayment extends Component {
         paymentPreview: false,
         isValidFile: true,
         uploadLoader: false,
-        uploadErrorModal: false
-
+        uploadErrorModal: false,
+        errorMessage:null,
+        //uploadUrl: process.env.REACT_APP_UPLOAD_API + "UploadFile",
+        uploadUrl:process.env.REACT_APP_API_END_POINT + "/MassPayment/importfileUpload"
     }
 
     componentDidMount() {
-          this.setState({ ...this.state, fiatWalletsLoading: true });
+          this.setState({ ...this.state, fiatWalletsLoading: true , errorMessage:null });
           fetchMemberWallets(this.props?.userProfile?.id).then(res => {
             if (res.ok) {
                 this.setState({ ...this.state, fiatWallets: res.data, paymentCoinsList: res.data, fiatWalletsLoading: false });
@@ -73,97 +79,122 @@ class AddBatchPayment extends Component {
         });
         return salt.toString() + iv.toString() + encrypted.toString();
     }
+  
+   
     beforeUpload = (file) => {
+        debugger
+        this.setState({...this.state,errorMessage:null})
         let fileType = {
-            "application/csv": true,
-            "application/vnd.ms-excel": true,
-            "text/csv": true
+            // "application/csv": true,
+            // "application/vnd.ms-excel": true,
+            // "text/csv": true,
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":true
         };
-        if (fileType[file.type]) {
-            this.setState({ ...this.state, isValidFile: true });
+         let isFileName = file.name.split(".").length > 2 ? false : true;
+        if (fileType[file.type] && isFileName) {
+            this.setState({ ...this.state, isValidFile: true,errorMessage:null });
             return true;
         } else {
             // message.error({
-            //     content: `File is not allowed. You can upload only csv files`,
+            //     content: `Please upload .XLS or .XLSX file`,
             //     className: "custom-msg"
             // });
-            this.setState({ ...this.state, isValidFile: false });
+            this.setState({ ...this.state, isValidFile: false ,
+                errorMessage: isFileName
+                ? `Please upload .XLS or .XLSX file`
+                : "File don't allow double extension"
+            });
             return Upload.LIST_IGNORE;
         }
     };
-    // isDocExist(lstObj, id) {
-    //     const lst = lstObj.filter((obj) => {
-    //         return obj.docunetDetailId === id;
-    //     });
-    //     return lst[0];
-    // }
-    handleUpload = async ({ file }, doc) => {
-        this.setState({
-            ...this.state,
-            uploadLoader: true,
-            errorMessage: null,
-            docReplyObjs: [],
-            //showModal: true
-        });
-        // if (file.status !== "done" && this.state.isValidFile) {
-        //     let replyObjs = [...this.state.docReplyObjs];
-        //     let item = this.isDocExist(replyObjs, doc?.id);
-        //     let obj;
-        //     if (item) {
-        //         obj = item;
-        //         const ObjPath = (function () {
-        //             if (obj.path === "string") {
-        //                 return JSON.parse(obj.path);
-        //             } else {
-        //                 return obj.path ? obj.path : [];
-        //             }
-        //         })();
-        //         obj.path = obj.path && typeof ObjPath;
-        //         obj.path.push({
-        //             filename: file.name,
-        //             path: file.response,
-        //             size: file.size
-        //         });
-        //         replyObjs = this.uopdateReplyObj(obj, replyObjs);
-        //     } else {
-        //         obj = this.messageObject(doc?.id);
-        //         obj.path.push({
-        //             filename: file.name,
-        //             path: file.response,
-        //             size: file.size
-        //         });
-        //         replyObjs.push(obj);
-        //     }
-        //     this.setState({
-        //         ...this.state,
-        //         uploadLoader: false,
-        //         docReplyObjs: replyObjs
-        //     });
-        // } else if (file.status === "error") {
-        //     message.error({ content: `${file.response}`, className: "custom-msg" });
-        //     this.setState({ ...this.state, uploadLoader: false });
-        // } 
-       if (!this.state.isValidFile) {
-            this.setState({
-                ...this.state,
-                uploadLoader: false,
-                showModal: false,
-                uploadErrorModal: true
+  handleUpload = async ({ file }, doc) => {
+    debugger
+
+    this.setState({
+        ...this.state,
+        uploadLoader: true,
+       // errorMessage: null,
+        docReplyObjs: [],
+        //showModal: true
+    });
+    if (file.status !== "done" && this.state.isValidFile) {
+        let replyObjs = [...this.state.docReplyObjs];
+        let item = this.isDocExist(replyObjs, doc?.id);
+        let obj;
+        if (item) {
+            obj = item;
+            const ObjPath = (function () {
+                if (obj.path === "string") {
+                    return JSON.parse(obj.path);
+                } else {
+                    return obj.path ? obj.path : [];
+                }
+            })();
+            obj.path = obj.path && typeof ObjPath;
+            obj.path.push({
+                filename: file.name,
+                path: file.response,
+                size: file.size
             });
-        }
-        else {
-            this.setState({
-                ...this.state,
-                showModal: true,
-                uploadErrorModal: false
+            replyObjs = this.uopdateReplyObj(obj, replyObjs);
+        } else {
+            obj = this.messageObject(doc?.id);
+            obj.path.push({
+                filename: file.name,
+                path: file.response,
+                size: file.size
             });
+            replyObjs.push(obj);
         }
         this.setState({
             ...this.state,
             uploadLoader: false,
-            path: file.status === "done" ? file.response : null
+            docReplyObjs: replyObjs
         });
-    };
+    } else if (file.status === "error") {
+        message.error({ content: `${file.response}`, className: "custom-msg" });
+        this.setState({ ...this.state, uploadLoader: false });
+    } 
+   if (!this.state.isValidFile) {
+        this.setState({
+            ...this.state,
+            uploadLoader: false,
+            showModal: false,
+            //uploadErrorModal: true
+        });
+    }
+    else {
+        this.setState({
+            ...this.state,
+            showModal: true,
+            //uploadErrorModal: false
+        });
+    }
+    this.setState({
+        ...this.state,
+        uploadLoader: false,
+        path: file.status === "done" ? file.response : null
+    });
+};
+  
+    isDocExist(lstObj, id) {
+        const lst = lstObj.filter((obj) => {
+            return obj.docunetDetailId === id;
+        });
+        return lst[0];
+    }
+    
+    messageObject = (id) => {
+        return {
+            "id": uuidv4(),
+            "documentId": id,
+            "path": [],
+            "reply": "",
+            "repliedBy": "",
+            "repliedDate": null,
+            "isCustomer": true
+        }
+    }
     // uploadExcel=()=>{
     //     this.setState({ ...this.state, showModal:true});
     //         const _currentScreen = window.location.pathname.split("/")[1];
@@ -236,9 +267,16 @@ class AddBatchPayment extends Component {
     }
 
     render() {
-        const { gridUrl, param, headers } = this.state;
+        const { gridUrl, param, headers ,errorMessage} = this.state;
         return (
+            <>
+               <div ref={this.useDivRef}></div>
+               {/* {errorMessage !== null && (
+          <Alert type="error" description={errorMessage} showIcon />
+               )} */}
+           
            <div className='send-address'>
+           
         <Drawer destroyOnClose={true}
             title={[<div className="side-drawer-header">
                 <span></span>
@@ -298,19 +336,37 @@ class AddBatchPayment extends Component {
                 <div className='text-center makepayment-section'>
             <Title className='text-white fs-24 fw-500'>Send {this.state.selectedCurrency} to Multiple Address</Title>
             <Upload
-                                    accept=".xlsx, .xls, .csv"
-                                    multiple="false"
-                                    onChange={(props) => this.handleUpload(props)}
-                                    beforeUpload={(props) => {
-                                        this.beforeUpload(props);
-                                    }}
-                                    showUploadList={false}
-                                    action={
-                                        process.env.REACT_APP_API_END_POINT +
-                                        "/api/v1/ImportExcel/UploadAttachedFile"
-                                    }
-                                    headers={headers}
-                                >
+                                    
+                                    //key={i}
+                                              type="dashed"
+                                              size="large"
+                                              className="ml-8 mt-12"
+                                              shape="circle"
+                                              style={{
+                                                backgroundColor: "transparent",
+                                              }}
+                                              accept=".xlsx, .xls"
+                                              multiple={false}
+                                              action={this.state.uploadUrl}
+                                              showUploadList={false}
+                                              beforeUpload={(props) => this.beforeUpload(props)}
+                                              onChange={(props) => this.handleUpload(props)}
+                                              headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
+                                            //   disabled={
+                                            //     item.state === "Approved" ||
+                                            //     item.state === "Cancelled" ||
+                                            //     item.state === "Pending"
+                                            //   }
+                                            >
+                                              {/* <span
+                                                className={`icon md attach ${item.state === "Approved" || item.state === "Cancelled"
+                                                  ? ""
+                                                  : "c-pointer"
+                                                  } `}/> */}
+                                
+                                     {errorMessage !== null && (
+          <Alert type="error" description={errorMessage} showIcon />
+               )}
                                        <Button className='pop-btn mt-24'>Upload Excel</Button>
                                 </Upload>{" "}
             <Paragraph className='text-white-30'>To download the excel, <a className='fw-700'> click here</a></Paragraph>
@@ -320,7 +376,8 @@ class AddBatchPayment extends Component {
               </div>
               </>}
         </Drawer>
-                <Modal
+                <Modal  
+                
                      visible={this.state.showModal}
                      title="upload success"
                      closeIcon={
@@ -335,8 +392,9 @@ class AddBatchPayment extends Component {
                    
                     footer={ <Button className="primary-btn pop-btn"
                     style={{ width: 100, height: 50 }}
-                    onClick={() => this.setState({ ...this.state, showModal: false, paymentPreview: true }, () => { })}>Next</Button>}>
+                    onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false, paymentPreview: true }, () => { })}>Next</Button>}>
                         <>
+                       
                         <div className='text-center pt-16'>
                             <Paragraph className='text-white fs-18'>Document has been successfully uploaded</Paragraph>
                            
@@ -361,6 +419,7 @@ class AddBatchPayment extends Component {
                     footer={null}
                     >
                     <>
+                    
                         <div className='text-center pt-16'>
                             <Paragraph className='text-white fs-18'>
                             <div>Excel has been uploaded.</div>
@@ -377,21 +436,23 @@ class AddBatchPayment extends Component {
                         showDrawer={this.state.paymentPreview}
                         onClose={() => {
                             this.closeDrawer("true");
+                            this.setState({...this.state,showModal: false, uploadErrorModal: false})
                         }}
                     />
                        }
         </div>
-
+        </>
         );
        
     }
 }
-const connectStateToProps = ({ sendReceive, userConfig }) => {
-    return {sendReceive, userProfile: userConfig.userProfileInfo }
+const connectStateToProps = ({ sendReceive, userConfig,oidc }) => {
+    return {sendReceive, userProfile: userConfig.userProfileInfo ,user: oidc.user}
 }
 const connectDispatchToProps = dispatch => {
     return {
         dispatch
     }
 }
+
 export default connect(connectStateToProps, connectDispatchToProps)(withRouter(AddBatchPayment));

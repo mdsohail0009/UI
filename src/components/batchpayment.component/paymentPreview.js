@@ -5,24 +5,29 @@ import {
   Button,
   Modal,
   Tooltip,
-   Select} from "antd";
+   Select,Alert} from "antd";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import { withRouter } from "react-router-dom";
 import PaymentSummary from "./paymentSummary";
 //import { Spreadsheet } from '@progress/kendo-spreadsheet-react-wrapper';
 import Spreadsheet from "react-spreadsheet";
-
+import {saveTransaction} from './api'
+import { async } from "rxjs";
 const { Paragraph } = Typography
 const { Option } = Select;
 class paymentPreview extends Component {
   constructor(props) {
+    debugger
+
     super(props);
     this.state = {
       modal: false,
       showModal:false,
       paymentSummary: false,
       insufficientModal: false,
+      errorMessage:null,
+      onBack:this.props.isProceedBatchPayment,
       data: [
         [{ value: "File Name" }, { value: "Relationship to Benficiary" },{ value: "Address Line1" }, { value: "Transfer Type" },{ value: "Amount in USD" }, { value: "Account Number/IBAN" },{ value: "ABA Routing/Swift/BIC Code" }, { value: "Bank Name" },{ value: "Bank Address" }, { value: "Reason For Transfer" }],
         [{ value: "" }, { value: "" }],
@@ -43,20 +48,42 @@ class paymentPreview extends Component {
       ]
     };
   }
-
+componentDidMount=()=>{
+  console.log(this.state.onBack)
+}
 handleCancel=()=>{
   this.setState({ ...this.state, showModal:false})
 }
-
 closeDrawer = () => {
   this.setState({ ...this.state, paymentSummary:false})
 }
 
+confirmPreview = async (values) => {
+  debugger
+  // this.setState({...this.state,errorMessage:null})
+  // let saveObj={
+  //   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  //   "currencyType": "EUR",
+  //   "customerId": "7D785BF6-6666-49AE-B35C-F96DA31ACB9E",
+  //   "filepath": "https://devstoragespace.blob.core.windows.net/devstoragecontainer/3c275358-e610-4b83-899c-933835aa79a6_EURPayment.xlsx",
+  //   "userCreated": "Nikitha",
+  //   "walletCode": "EUR"
+  // }
+  // let response = await saveTransaction(saveObj)
+  // if(response.ok){
+    this.setState({ ...this.state, paymentSummary: true, insufficientModal: false})
+  // }else{
+  //   this.setState({...this.state,insufficientModal:true,errorMessage:response.data, paymentSummary:false})
+  // }
+
+}
   render() {
     const { Title } = Typography;
-    debugger
     return (
       <>
+        {this.state.errorMessage !== null && (
+          <Alert type="error" description={this.state.errorMessage} showIcon />
+               )}
         <Drawer
           title={[<div className="side-drawer-header">
             <span></span>
@@ -83,7 +110,7 @@ closeDrawer = () => {
                         onClick={this.props.onClose}>Back</Button>
                     <Button className="pop-btn custom-send sell-btc-btn ml-8"
                         style={{ width: 100, height: 50 }}
-                        onClick={() => this.setState({ ...this.state, paymentSummary: false, insufficientModal: true}, () => { })}>Confirm</Button>
+                        onClick={()=>this.confirmPreview()}>Confirm</Button>
                 
                 </div>
                 <Modal

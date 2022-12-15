@@ -1,6 +1,7 @@
 
 import { apiClient } from '../../api';
 import { ApiControllers } from '../../api/config'
+const crypto = require("crypto");
 
 const getCurrencyLu = (customer_id) => {
     return apiClient.get(ApiControllers.wallets + `Fiat/${customer_id}`);
@@ -33,7 +34,26 @@ const creatPayment = (id) => {
 const deletePayDetials = (id) => {
     return apiClient.delete(ApiControllers.massPayment + `BillPayments/payment/${id}`);
 };
-export { getCurrencyLu,saveBeneficiary,getFileURL, savePayments,getFavourite, getPaymentsData, updatePayments, getBankData,creatPayment,deletePayDetials}
+const saveTransaction = (obj) => {
+    return apiClient.post(ApiControllers.massPayment + "savetransaction", obj);
+}
+const uuidv4 = () => {
+    let randumnumberval;
+    let buf = crypto.randomBytes(16);
+    randumnumberval = buf.toString("hex");
+    return (
+      randumnumberval.substr(0, 8) +
+      "-" +
+      randumnumberval.substr(8, 4) +
+      "-" +
+      randumnumberval.substr(12, 4) +
+      "-" +
+      randumnumberval.substr(16, 4) +
+      "-" +
+      randumnumberval.substr(20, 12)
+    );
+  };
+export { getCurrencyLu,saveBeneficiary,getFileURL, savePayments,getFavourite, getPaymentsData, updatePayments, getBankData,creatPayment,deletePayDetials,saveTransaction,uuidv4}
 
 //https://routechanges.azurewebsites.net/api/v1/DepositeWithdraw/Favourite
 //https://routechanges.azurewebsites.net/api/v1/Wallets/Fiat/f8be2fd6-9778-4408-ba57-7502046e13a5

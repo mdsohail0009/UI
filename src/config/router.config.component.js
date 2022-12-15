@@ -35,6 +35,7 @@ const Cases = React.lazy(()=>import("../components/case.component/cases"))
 const CaseView = React.lazy(()=>import("../components/case.component/caseView"))
 const Batchpayments = React.lazy(()=>import("../components/batchpayment.component"));
 const BatchpaymentView = React.lazy(()=>import("../components/batchpayment.component/uploadGrid"));
+const paymentPreview=React.lazy(()=>import("../components/batchpayment.component/paymentPreview"));
 // const ErrorPage = React.lazy(() => import("../components/internalTransfer.component/errorpage"));
 class RouteConfig extends Component {
   componentDidMount() {
@@ -80,8 +81,19 @@ class RouteConfig extends Component {
         <ReactRoute path='/accessdenied' component={AccessDenied} />
         <ReactRoute path='/caseView/:id' component={CaseView} />
         <Route path="/error" component={ErrorPage} />
-        <ReactRoute path="/batchpayment" component={Batchpayments} />
-        <ReactRoute path="/batchpaymentview" component={BatchpaymentView} />
+        {/* <ReactRoute path="/batchpayment" component={Batchpayments} />
+        <ReactRoute path="/batchpaymentview" component={BatchpaymentView} /> */}
+        <ReactRoute
+					path="/batchpayment"
+					render={({ match: { url } }) => (
+						<>
+							<Route path={`${url}`} component={Batchpayments} exact />
+							<Route path={`${url}/:id/:view`} component={BatchpaymentView} />
+              <Route path={`${url}/:id/:proceed`} component={paymentPreview} />
+
+						</>
+					)}
+				/>
         <ReactRoute
           path="/payments"
           render={({ match: { url } }) => (

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Col, List, Empty, Image, Button, Modal, Form, Input,Tooltip } from 'antd';
+import { Drawer, Typography, Col, List, Empty, Image, Button, Modal, Form, Input,Tooltip,Spin } from 'antd';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 import pending from '../../assets/images/pending.png'
 import success from '../../assets/images/success.png'
+import Verifications from "../onthego.transfer/verification.component/verifications"
+
 const { Title, Paragraph, Text } = Typography
 
 class paymentSummary extends Component {
@@ -12,6 +14,12 @@ class paymentSummary extends Component {
 		super(props);
 		this.state = {
 		  showDeclaration: false,
+		  verifyData: null,
+		  phBtn:false,
+		  emailBtn:false,
+		  authBtn:false,
+		  isShowGreyButton: false,
+		  reviewDetailsLoading: false,
 		}
         
 	}
@@ -22,9 +30,40 @@ class paymentSummary extends Component {
 	handleBack=()=>{
 		this.props.history.push('/cockpit');
 	}
-
+	changesVerification = (obj) => {
+		debugger
+		if (obj.isPhoneVerification && obj.isEmailVerification && (obj.verifyData?.isPhoneVerified && obj.verifyData?.isEmailVerification && !obj.verifyData?.twoFactorEnabled)) {
+			this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
+		}
+		else if (obj.isPhoneVerification && obj.isAuthenticatorVerification && (obj.verifyData?.isPhoneVerified && obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isEmailVerification)) {
+			this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
+		}
+		else if (obj.isAuthenticatorVerification && obj.isEmailVerification && (obj.verifyData?.twoFactorEnabled && obj.verifyData?.isEmailVerification && !obj.verifyData?.isPhoneVerified)) {
+			this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
+		}
+		else if (obj.isPhoneVerification && obj.isAuthenticatorVerification && obj.isEmailVerification && (obj.verifyData?.isPhoneVerified && obj.verifyData?.twoFactorEnabled && obj.verifyData?.isEmailVerification)) {
+			this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
+		}
+		else if (obj.verifyData?.isLiveVerification && obj.isEmailVerification && !obj.verifyData?.isPhoneVerified && !obj.verifyData?.twoFactorEnabled && obj.verifyData?.isEmailVerification) {
+			this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
+		}
+		else if (obj.verifyData?.isLiveVerification && obj.isPhoneVerification && !obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isEmailVerification && obj.verifyData?.isPhoneVerified) {
+			this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
+		}
+		else {
+			if (obj.verifyData?.isLiveVerification && obj.isAuthenticatorVerification && !obj.verifyData?.isPhoneVerified && !obj.verifyData?.isEmailVerification && obj.verifyData?.twoFactorEnabled) {
+				this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
+			}
+		}
+	
+	}
+	onReviewDetailsLoading = (val) => {
+		this.setState({ ...this.state, reviewDetailsLoading: val })
+	  }
 	render() {
+		const {  isShowGreyButton } = this.state;
 		return (<>
+		<Spin spinning={this.state.reviewDetailsLoading}>
 			<div>
 			<Drawer destroyOnClose={true}
             title={[<div className="side-drawer-header"><span></span>
@@ -74,7 +113,7 @@ class paymentSummary extends Component {
 						<div><label className='fw-500 text-white'>Number of Recipients</label></div>
 						<div><Text className='fw-500 text-white-30'>45</Text></div>
 					</div>
-					<Form
+					{/* <Form
 						className="mt-36"
 						name="advanced_search"
 						autoComplete="off">
@@ -171,7 +210,29 @@ class paymentSummary extends Component {
 								Continue
 							</Button>
 						</div>
-						</Form>
+						</Form> */}
+
+                          
+                           <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} />
+                           {/* <Verifications/> */}
+					    
+						   <div className="cust-pop-up-btn crypto-pop text-right">
+							<Button
+								className="primary-btn pop-cancel btn-width"
+								style={{ margin: "0 8px" }}
+								onClick={this.props.onClose}
+							>
+								Back
+							</Button>
+							<Button
+								//className="primary-btn pop-btn btn-width"
+								className="pop-btn custom-send"
+                                style={{ backgroundColor: !isShowGreyButton && '#ccc', borderColor: !isShowGreyButton && '#3d3d3d' }}
+								//onClick={this.showDeclaration}
+							>
+								Continue
+							</Button>
+						</div>
 						</div> 
 						</>}
 						{this.state.showDeclaration && <>
@@ -191,8 +252,10 @@ class paymentSummary extends Component {
 						</>}
 
 					</div>
+
 				</Drawer>
 			</div>
+			</Spin>
 		</>
 		)
 	}
