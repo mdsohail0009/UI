@@ -112,10 +112,10 @@ class Summary extends Component {
 						className="cust-coin-value"
 						>
 						<Currency
-							prefix={coin}
+							suffixText={coin}
 							decimalPlaces={decimalPlaces}
 							defaultValue={amount}
-							suffixText={""}
+							prefix={""}
 						/>{" "}
 					</div>
 					{showEstimated && (
