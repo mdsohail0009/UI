@@ -10,7 +10,7 @@ const getMemberfiat = () => {
     return apiClient.get(ApiControllers.wallets + 'Fiat');
 }
 const getSellamnt = (Value, coin, isCrypto, screenName, currencyCode) => {
-    return apiClient.get(ApiControllers.master + `CryptoFiatConverter//${coin}/${currencyCode}/${Value}/${isCrypto}/${screenName||null}`) ;
+    return apiClient.get(ApiControllers.master + `CryptoFiatConverter/${coin}/${currencyCode}/${Value}/${isCrypto}/${screenName||null}`) ;
 }
 const getSellPreviewData = (sellObject) => {
     return apiClient.get(ApiControllers.buySell + `Sell/Coins/${sellObject?.fromWalletCode}/${sellObject?.toWalletCode}/${(sellObject.isSwap ? sellObject.fromValue : sellObject.toValue)}/${(sellObject.isSwap === true ? false : true)}`);
