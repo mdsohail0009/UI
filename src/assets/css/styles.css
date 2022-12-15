@@ -707,8 +707,8 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     top: -75px;
     right: 13px;}
 /* .minmax{position: absolute;top: 14px; right:10px;} */
-.min-btn{background-color: var(--bgYellow) !important;margin-left: 8px;border-radius: 10px;
-font-size: 12px;font-weight: 500;height: 20px;}
+/* .min-btn{background-color: var(--bgYellow) !important;margin-left: 8px;border-radius: 10px;
+font-size: 12px;font-weight: 500;height: 20px;} */
 .min-max-btn label{width: 100%;}
 .side-drawer .coin-info:last-child{margin-bottom: 60px;}
 
