@@ -952,7 +952,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .markets-panel{margin-right: 16px;}
     .megamenu-label{margin-top: 0px;font-size: 33px !important;}
     /* .side-drawer .ant-drawer-content-wrapper{width: 420px !important;} */
-    .side-drawer.w-50p .ant-drawer-content-wrapper{width: 50% !important;}
+    /* .side-drawer.w-50p .ant-drawer-content-wrapper{width: 50% !important;} */
     .side-drawer .ant-drawer-body{padding: 0 20px 20px 20px;}
     .portfolio-count{display: inline-flex;height: 159px;}
     .megamenu-title .tlv-logo{padding-left: 34px !important;}

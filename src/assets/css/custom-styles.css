@@ -150,7 +150,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .cust-search .ant-input-affix-wrapper{background-color: var(--searchBg) !important;border: 1px solid var(--subText) !important;border-radius: 10px !important;height: 48px;}
 .cust-search::placeholder{color: var(--placeholders);font-weight: 400;font-size: 16px;}
 .cust-search .ant-input{color: var(--primary);font-weight: 400;font-size: 16px;}
-.drawer-list-font{font-weight: 700;font-size: 16px;color: var(--coinBal);}
+.drawer-list-font{font-weight: 700;font-size: 16px;color: var(--coinPrice);}
 .drawer-coin .ant-image, .crypto-curr-align .ant-image, .listitems-design .ant-image, .cytpo-list-style .ant-image, .crypto-bg{border: 4px solid var(--coinBg);border-radius: 100%;}
 .drawer-coin .ant-image-img, .crypto-curr-align .ant-image-img, .listitems-design .ant-image-img, .cytpo-list-style .ant-image-img, .crypto-bg{background-color: var(--coinBg);border-radius: 100%;}
 .cytpo-list-style .ant-list-item-meta{align-items: center;}
@@ -176,6 +176,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .notify .ant-alert-action .ant-btn{color: var(--viewAll);font-size: 18px;font-weight: 500;}
 .notify .ant-alert-close-icon{font-size: 18px;color: var(--textDark) !important;}
 .custom-notify.cust-input .ant-select-selection-item, .cust-input .ant-select-selector, .cust-input .ant-input, .ant-select-single .ant-select-selector .ant-select-selection-item, .ant-select-single .ant-select-selector .ant-select-selection-placeholder{line-height: 36px !important;height: 38px !important;margin-top:2px;}
+.drawer-balnstyle{font-size: 16px;font-weight: 700;color: var(--coinBal);}
 /*Common css End*/
 
 /*Coin Selection End*/
