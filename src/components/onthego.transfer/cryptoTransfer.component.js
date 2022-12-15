@@ -11,9 +11,7 @@ import { connect } from "react-redux";
 import { validateCryptoAmount } from '../onthego.transfer/api';
 import { setStep, setSubTitle, setWithdrawcrypto, setAddress, hideSendCrypto } from '../../reducers/sendreceiveReducer';
 import AddressCrypto from "../addressbook.component/addressCrypto";
-import { setAddressStep} from "../../reducers/addressBookReducer";
 import {rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
-import { Link } from "react-router-dom";
 
 const { Text, Title } = Typography;
 
@@ -53,7 +51,7 @@ class OnthegoCryptoTransfer extends Component {
         this.permissionsInterval = setInterval(this.loadPermissions, 200);
         if (!this.state.selectedCurrency) {
             this.setState({ ...this.state, fiatWalletsLoading: true });
-            fetchMemberWallets().then(res => {
+            fetchMemberWallets(this.props?.userProfile?.id).then(res => {
                 if (res.ok) {
                     this.setState({ ...this.state, fiatWallets: res.data, fiatWalletsLoading: false });
                 } else {
@@ -66,7 +64,7 @@ class OnthegoCryptoTransfer extends Component {
 
     getPayees = async () => {
         this.setState({ ...this.state, loading: true })
-        let response = await apicalls.getPayeeCryptoLu(this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin);
+        let response = await apicalls.getPayeeCryptoLu(this.props.userProfile.id, this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin);
         if (response.ok) {
             this.setState({ ...this.state, loading: false, payeesLoading: false, filterObj: response.data, payees: response.data });
         }
@@ -74,7 +72,7 @@ class OnthegoCryptoTransfer extends Component {
             this.setState({ ...this.state, loading: false, payeesLoading: false, filterObj: [] });
         }
 
-        let res = await apicalls.getPayeeCrypto( this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin);
+        let res = await apicalls.getPayeeCrypto(this.props.userProfile.id, this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin);
         if (res.ok) {
             this.setState({ ...this.state, loading: false, pastPayees: res.data });
         }
@@ -241,7 +239,7 @@ class OnthegoCryptoTransfer extends Component {
         }
     };
 
-
+    
   keyDownHandler = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault()
@@ -268,10 +266,6 @@ class OnthegoCryptoTransfer extends Component {
         })
         this.myRef.current.scrollIntoView()
       }
-      // else if (_amt > this.props.selectedWallet?.withdrawMaxValue) {
-      //     this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_max') + " " + this.props.selectedWallet?.withdrawMaxValue });
-      //     this.myRef.current.scrollIntoView();
-      // }
       else if (
         _amt >
         this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance
@@ -331,76 +325,76 @@ class OnthegoCryptoTransfer extends Component {
     renderStep = (step) => {
         const { filterObj, pastPayees } = this.state;
         const steps = {
-            enteramount: <>
+            enteramount: (
+                <>
             {this.state.isVerificationLoading  && <Loader />}
-            {this.state.isVerificationLoading  && <Loader />}
-          {!this.state.isVerificationLoading  && 
-            <Form
-              autoComplete="off"
-              initialValues={{ amount: "" }}
-              ref={this.enteramtForm}
-              onFinish={this.amountNext}
-              scrollToFirstError
-              onSubmit={this.submitHandler}
-            >
-              <div ref={this.myRef}></div>
-              {this.state.error != null && <Alert type="error"
+            {!this.state.isVerificationLoading  && 
+                    <Form
+                        autoComplete="off"
+                        initialValues={{ amount: "" }}
+                        ref={this.enteramtForm}
+                        onFinish={this.amountNext}
+                        scrollToFirstError
+                        onSubmit={this.submitHandler}
+                    >
+                        <div ref={this.myRef}></div>
+             {this.state.error != null && <Alert type="error"
                     description={this.state.error} onClose={() => this.setState({ ...this.state, error: null })} showIcon />}
-              {this.state.errorMsg && (
-                <Alert
-                  className="mb-12"
-                  showIcon
-                  description={this.state.errorMsg}
-                  closable={false}
-                  type="error"
-                />
-              )}
-              <Row gutter={[16, 16]} className="align-center send-crypto-err mx-4">
+                    {this.state.errorMsg && (
+                        <Alert
+                            className="mb-12"
+                            showIcon
+                            description={this.state.errorMsg}
+                            closable={false}
+                            type="error"
+                        />
+                    )}
+                        <Row gutter={[16, 16]} className="align-center send-crypto-err mx-4">
+                            
+                                <Title className="fs-30 fw-400 text-white-30 text-yellow  mb-0 mt-4">
+                                    {this.props.selectedWallet?.coin}
+                                </Title>
+                           
+                            
+                                <Form.Item
+                                    className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label fund-transfer-input send-crypto-input crypto-blc-inpt"
+                                    name="amount"
+                                    required
+                                    rules={[
+                                        {
+                                            type: "number",
+                                            validator: this.numberValidator
+                                        },
+                                    ]}
+                                >
+                                    <NumberFormat
+                                        customInput={Input}
+                                        className="cust-input"
+                                        placeholder={"Enter Amount"}
+                                        maxLength="20"
+                                        decimalScale={8}
+                                        displayType="input"
+                                        allowNegative={false}
+                                        thousandSeparator={true}
+                                        onKeyDown={this.keyDownHandler}
+                                        addonBefore={this.state.selectedCurrency}
+                                        onValueChange={() => {
+                                            this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: null,error: null })
+                                        }}
+                                    />
+                                </Form.Item>
+                            
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} style={{ marginTop: "-20px" }}>
 
-                <Title className="fs-30 fw-400 text-white-30 text-yellow  mb-0 mt-4">
-                  {this.props.selectedWallet?.coin}
-                </Title>
-
-
-                <Form.Item
-                  className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label fund-transfer-input send-crypto-input crypto-blc-inpt"
-                  name="amount"
-                  required
-                  rules={[
-                    {
-                      type: "number",
-                      validator: this.numberValidator
-                    },
-                  ]}
-                >
-                  <NumberFormat
-                    customInput={Input}
-                    className="cust-input"
-                    placeholder={"Enter Amount"}
-                    maxLength="20"
-                    decimalScale={8}
-                    displayType="input"
-                    allowNegative={false}
-                    thousandSeparator={true}
-                    onKeyDown={this.keyDownHandler}
-                    addonBefore={this.state.selectedCurrency}
-                    onValueChange={() => {
-                        this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: null,error: null })
-                    }}
-                  />
-                </Form.Item>
-
-                <Col xs={24} md={24} lg={24} xl={24} xxl={24} style={{ marginTop: "-20px" }}>
-
-                  <div class="text-right mr-16">
-                    <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn " onClick={() => this.clickMinamnt("min")}>
+                                <div class="text-right mr-16">
+                                    <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn " onClick={() => this.clickMinamnt("min")}>
                                         <span >Min</span>
                                     </button>
                                     <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn " onClick={() => this.clickMinamnt("all")}>
                                         <span>Max</span>
                                     </button>
-                  </div>
-                </Col>
+                                </div>
+                            </Col>
                         </Row>
                         <Row gutter={[16, 4]} className="text-center mt-24 mb-24">
                             <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
@@ -418,31 +412,34 @@ class OnthegoCryptoTransfer extends Component {
                             </Col>
                             <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
                                 <Form.Item className="text-center">
-                                <Button
-                      htmlType="button"
-                      size="large"
-                      className="pop-btn mb-36"
-                      style={{ width: '100% ' }}
-                      loading={this.state.addressLoader}
-                      disabled={this.state.newtransferLoader}
-                      onClick={this.goToAddressBook}
-                    >
-                     Address Book
-                   </Button>
-                 </Form.Item>
+                                    <Button
+                                        htmlType="button"
+                                        size="large"
+                                        className="pop-btn mb-36"
+                                        style={{ width: '100% ' }}
+                                        loading={this.state.addressLoader}
+                                        disabled={this.state.newtransferLoader}
+                                        onClick={this.goToAddressBook}
+                                    >
+                                        Address Book
+                                    </Button>
+                                </Form.Item>
                             </Col>
                         </Row>
                     </Form>
                     }
-                </>,
-                  newtransfer: (<>
+                </>
+                ),
+                  newtransfer: (
+                   <>
                         <AddressCrypto onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1} isShowheading= {true} />
-              </>),
-               addressselection: <React.Fragment>
+              </>
+              ),
+                addressselection: (<React.Fragment>
                 <>
              {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
               <div className="mb-16" style={{textAlign:'center'}}>
-                <text Paragraph
+                    <text Paragraph
                         className='fs-24 fw-600 text-white mb-16 mt-4 text-captz' >Who are you sending crypto to?</text>
                 </div>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -468,12 +465,12 @@ class OnthegoCryptoTransfer extends Component {
                                     }
                                 }
                             }}>
-                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name?.charAt(0).toUpperCase()}</div></Col>
-                                <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="small-text-align">
+                                <Col xs={6} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name?.charAt(0).toUpperCase()}</div></Col>
+                                <Col xs={14} md={24} lg={24} xl={19} xxl={19} className="small-text-align">
                                     <label className="fs-16 fw-600 text-white l-height-normal c-pointer">{item?.name} ({item.walletAddress?.length > 0 ? item.walletAddress.substring(0,4)+ `......`+ item.walletAddress.slice(-4):""})</label>
                                     {item.walletAddress && <div><Text className="fs-14 text-white-30 m-0">{item.walletCode} ({item.network})</Text></div>}
                                 </Col>
-                                <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
+                                <Col xs={4} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white"></span>
                                 </Col>
                             </Row>}</>
@@ -482,7 +479,7 @@ class OnthegoCryptoTransfer extends Component {
                             <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
                             <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
                             <p className="fs-16 text-white-30 fw-200 mb-0"> {apicalls.convertLocalLang('address_available')} </p>
-                            <Link onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</Link>
+                            <a onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</a>
                         </div>}
                     </ul>
 
@@ -503,12 +500,12 @@ class OnthegoCryptoTransfer extends Component {
                                     }
                                 }
                             }}>
-                                <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name?.charAt(0).toUpperCase()}</div></Col>
-                                <Col xs={24} md={24} lg={24} xl={19} xxl={19} className=" small-text-align">
+                                <Col xs={6} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name?.charAt(0).toUpperCase()}</div></Col>
+                                <Col xs={14} md={24} lg={24} xl={19} xxl={19} className=" small-text-align">
                                     <label className="fs-16 fw-600 text-white l-height-normal c-pointer">{item?.name} ({item.walletAddress?.length > 0 ? item.walletAddress.substring(0,4)+ `......`+ item.walletAddress.slice(-4):""})</label>
                                     <div><Text className="fs-14 text-white-30 m-0">{item?.walletCode} ({item.network})</Text></div>
                                 </Col>
-                                <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
+                                <Col xs={4} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                                     <span class="icon md rarrow-white"></span>
                                 </Col>
                             </Row>
@@ -523,6 +520,7 @@ class OnthegoCryptoTransfer extends Component {
                 </>}
              </>  
                </React.Fragment>
+                ),
         }
         return steps[this.state.step];
     }
