@@ -22,9 +22,9 @@ const verifyEmailCode = ( code) => {
 		ApiControllers.master + `EmailOTPVerification/${code}`
 	);
 };
-const getAuthenticator = (Code, customerId) => {
+const getAuthenticator = (Code) => {
 	return apiClient.get(
-		ApiControllers.master + `VerifyAuthenticator/${Code}/${customerId}`
+		ApiControllers.master + `VerifyAuthenticator/${Code}`
 	);
 };
 const getVerificationFields = () => {

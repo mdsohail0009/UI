@@ -24,7 +24,7 @@ class SellToggle extends Component {
     };
     setCoinDetailData = async (coin) => {
         this.setState({ ...this.state, loading: true });
-        let res = await getSelectedCoinDetails(coin.coin, this.props.customer?.id);
+        let res = await getSelectedCoinDetails(coin.coin);
         if (res.ok) {
             this.props.setSelectedCoin(res.data); this.props.changeStep('step10');
             this.props.dispatch(setSelectedSellCoin(true));

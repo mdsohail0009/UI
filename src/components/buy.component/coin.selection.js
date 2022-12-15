@@ -46,7 +46,7 @@ class CryptoComponent extends Component {
         this.buySellEventTracks(e);
     }
     handleCoinSelection = (selectedCoin) => {
-        this.props.getCoinDetails(selectedCoin.walletCode, this.props.member?.id);
+        this.props.getCoinDetails(selectedCoin.walletCode);
         this.props.setSelectedCoin(selectedCoin);
         convertCurrency({ from: selectedCoin.walletCode, to: "USD", value: 1, isCrypto: false, customer_id: this.props.member?.id, screenName: null }).then(val => {
             this.props.setExchangeValue({ key: selectedCoin.walletCode, value: val });
@@ -88,8 +88,8 @@ const connectDispatchToProps = dispatch => {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
         },
-        getCoinDetails: (coin, customer_id) => {
-            dispatch(fetchSelectedCoinDetails(coin, customer_id));
+        getCoinDetails: (coin) => {
+            dispatch(fetchSelectedCoinDetails(coin));
         },
         setSelectedCoin: (coinWallet) => {
             dispatch(setCoin(coinWallet));

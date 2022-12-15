@@ -35,9 +35,9 @@ const getCoinList = (type) => {
 	return apiClient.get(ApiControllers.markets + `Coins`);
 };
 
-const getSelectedCoinDetails = (customerId,coin_code) => {
+const getSelectedCoinDetails = (coin_code) => {
 	return apiClient.get(
-		ApiControllers.buySell + `${customerId}/Coins/${coin_code}`
+		ApiControllers.buySell + `Coins/${coin_code}`
 	);
 };
 const activeInactive = (obj) => {

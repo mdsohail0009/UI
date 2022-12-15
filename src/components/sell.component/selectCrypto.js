@@ -42,7 +42,7 @@ class SelectSellCrypto extends Component {
     }
     setAmount = async ({ currentTarget }, fn, fnRes) => {
         this.setState({ ...this.state, [fn]: currentTarget.value })
-        let res = await getSellamnt(currentTarget.value, !this.state.isSwap, this.props.sellData.coinDetailData?.coin, this.props.customer?.id, null);
+        let res = await getSellamnt(currentTarget.value, !this.state.isSwap, this.props.sellData.coinDetailData?.coin, null);
         if (res.ok) {
             this.setState({ ...this.state, [fnRes]: res.data })
         }
