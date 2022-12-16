@@ -7,29 +7,13 @@ import AddBatchPayment from './addbatchPayment';
 import PaymentPreview from './paymentPreview';
 import moment from "moment/moment";
 import {getFileURL,deleteBatchPayments} from './api'
-import FilePreviewer from "react-file-previewer";
-import { bytesToSize } from "../../utils/service";
-import { silentRenewError } from 'redux-oidc';
+
 import ActionsToolbar from "../toolbar.component/actions.toolbar";
 import { fetchFeaturePermissions, setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 
 const { Title, Text, Paragraph } = Typography;
 
-const EllipsisMiddle = ({ suffixCount, children }) => {
-	const start = children?.slice(0, children.length - suffixCount).trim();
-	const suffix = children?.slice(-suffixCount).trim();
-	return (
-		<Text
-			className="mb-0 fs-14 docnames c-pointer d-block"
-			style={{ maxWidth: "100% !important" }}
-			ellipsis={{ suffix }}>
-			{start}
-		</Text>
-	);
-};
 const Batchpayments = (props) => {
- 
-const [open, setOpen] = useState(false);
   const [placement, setPlacement] = useState('right');
   const gridRef = React.createRef();
   const [isAddBatchDrawer, setIsAddBatchDrawer] = useState(false);
@@ -42,7 +26,7 @@ const [open, setOpen] = useState(false);
   const [permissions, setPermissions] = useState({});
   const [deleteModal,setDeleteModal]=useState(false);
   const [permissionsInterval,setPermissionsInterval]=useState(null)
-  const [check,setCheck]=useState(false);
+  const [btnLoader,setBtnLoader]=useState(false);
 
   useEffect(() => {
     //loadPermissions();
@@ -178,21 +162,30 @@ const filePreviewPath = () => {
  }
 }
  const deleteBatchPayment=()=>{
-  if(check){
+  setErrorWarning(null)
+  if(selection.length === 0){
     setErrorWarning("Please select the one record")
   }else{
   setDeleteModal(true)
   }
  }
- const deleteDetials = async () => {
-const res=await deleteBatchPayments(selection[0])
-if(res.ok){
-setDeleteModal(false);
-gridRef?.current?.refreshGrid();
-setSelection([]);
+  const deleteDetials = async () => {
+    setBtnLoader(true);
+    const res = await deleteBatchPayments(selection[0])
+    if (res.ok) {
+      gridRef?.current?.refreshGrid();
+      setBtnLoader(false);
+      setDeleteModal(false);
+      setSelection([]);
+    }
+  };
+const deleteModalCancel=()=>{
+  gridRef?.current?.refreshGrid();
+  setErrorWarning(null)
+  setSelection([]);
+  setDeleteModal(false)
 
 }
-};
     const closeDrawer = (isPreviewBack) => {
       if(isPreviewBack == "true") {
         setIsAddBatchDrawer(false);
@@ -263,7 +256,7 @@ setSelection([]);
           </div>    
           <Modal title="Delete Payment"
           destroyOnClose={true}
-          closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={()=>setDeleteModal(false)} /></Tooltip>}
+          closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={()=>deleteModalCancel()} /></Tooltip>}
          
           visible={deleteModal}
           className="payments-modal"
@@ -272,9 +265,10 @@ setSelection([]);
             <div className='cust-pop-up-btn crypto-pop bill-pop'>
               <Button
                 className="pop-cancel btn-width  bill-cancel"
-                onClick={()=>setDeleteModal(false)}>Cancel</Button>
+                onClick={()=>deleteModalCancel()}>Cancel</Button>
               <Button className="pop-btn px-36 btn-width"
-                onClick={() =>deleteDetials(selectedObj)}>Ok</Button></div>
+                onClick={() =>deleteDetials(selectedObj)}
+                loading={btnLoader}>Ok</Button></div>
             </>
           ]}
         >
