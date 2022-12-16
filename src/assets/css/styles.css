@@ -274,7 +274,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .enter-val input{background-color: transparent;line-height: normal; font-size: 36px; color: var(--textWhite30);font-weight: var(--fw-300);}
 .enter-val input::placeholder{color: var(--textWhite30);}
 .billing-address{border: 1px solid var(--borderLight);border-radius: 30px; padding: 28px 40px;}
-.scanner-img{width: 170px; height: 170px; margin: 30px auto 50px; padding: 10px;background-color: var(--bgWhite);border-radius: 6px;}
+
 /* .crypto-address{padding: 8px;border: 1px solid var(--borderLight);border-radius: 12px;position: relative;} */
 .recomnd-tag{background-color: var(--bgBlue);border-radius: 3px; padding: 1px 5px;}
 /* Sell */

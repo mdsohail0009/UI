@@ -124,7 +124,7 @@ class QRScan extends Component {
               )}
         
             <div>
-               <div className="text-center f-12 mt-16 text-white custom-crypto-btns">
+               {/* <div className="text-center f-12 mt-16 text-white custom-crypto-btns">
                     {netWorkData && netWorkData.map((network) => {
                         return <>
                             <span className=  {network.code == this.props?.sendReceive?.depositWallet?.network ? "mr-16 custom-bnt text-white-30" : "ant-btn ant-btn-primary custom-btn sec network" }>
@@ -137,12 +137,12 @@ class QRScan extends Component {
                             </span>
                         </>
                     })}
-                </div>
+                </div> */}
                 <div className="scanner-img">
                     <QRCodeComponent value={this.props?.sendReceive?.depositWallet?.walletAddress} size={150} />
                 </div>
-                <div className="crypto-address text-white">
-                    <Translate className="mb-0 fw-400 text-secondary" content="address" component={Text} />{" "}({this.props?.sendReceive?.depositWallet?.network})
+                <div className="recive-lable">
+                    <Translate className="recive-lable" content="address" component={Text} />{" "}({this.props?.sendReceive?.depositWallet?.network})
 
                     <div className="mb-0 fw-600 text-white-30 walletadrs mb-copy">{this.props?.sendReceive?.depositWallet?.walletAddress}
                         <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.walletAddress} options={{ format: 'text/plain' }}>
