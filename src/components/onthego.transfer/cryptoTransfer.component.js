@@ -393,7 +393,7 @@ class OnthegoCryptoTransfer extends Component {
 
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} style={{ marginTop: "-20px" }}>
 
-                  <div class="text-right mr-16">
+                  <div class="text-center mr-16">
                     <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn " onClick={() => this.clickMinamnt("min")}>
                                         <span >Min</span>
                                     </button>
@@ -404,12 +404,12 @@ class OnthegoCryptoTransfer extends Component {
                 </Col>
               </Row>
               <Row gutter={[16, 4]} className="text-center mt-24 mb-24">
-              <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
+              <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mobile-viewbtns">
                   <Form.Item className="text-center">
                     <Button
                       htmlType="submit"
                       size="large"
-                      className="pop-btn mb-36"
+                      className="newtransfer-card"
                       style={{ width: '100%' }}
                       loading={this.state.newtransferLoader}
                     >
@@ -417,12 +417,12 @@ class OnthegoCryptoTransfer extends Component {
                     </Button>
                   </Form.Item>
                 </Col>
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mobile-viewbtns">
                   <Form.Item className="text-center">
                     <Button
                       htmlType="button"
                       size="large"
-                      className="pop-btn mb-36"
+                      className="newtransfer-card"
                       style={{ width: '100% ' }}
                       loading={this.state.addressLoader}
                       disabled={this.state.newtransferLoader}
