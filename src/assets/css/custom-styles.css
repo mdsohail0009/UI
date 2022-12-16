@@ -116,6 +116,12 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 /*profile css end*/
 
 /*Common css start*/
+.ant-input-group-addon .ant-select.ant-select-single:not(.ant-select-customize-input) .ant-select-selector{border: 0 !important;}
+.newtransfer-card.ant-btn[disabled], .newtransfer-card.ant-btn[disabled]:hover, .newtransfer-card.ant-btn[disabled]:focus, .newtransfer-card.ant-btn[disabled]:active{background: var(--drawerList);border: 2px solid transparent;color: var(--coinBal) !important;}
+.ant-btn:hover, .ant-btn:focus, .ant-btn:active{background-color: transparent;}
+.icon, .k-i-more-vertical.k-icon,.ant-select-arrow, .custom-checkbox input[type=checkbox]+span{background: var(--lightThemeIcons) no-repeat; display: inline-block; vertical-align: middle;}
+.ant-select-arrow .anticon{display: none;}
+.ant-select-arrow{width: 20px;height: 20px;background-position: -351px -7px;transform: scale(0.9);}
 .main-container{padding: 24px 16px; margin: auto;}
 .main-container .k-loading-color{background-color: transparent !important;}
 .text-white{color: #FFFFFF;}
@@ -153,8 +159,8 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .cust-search::placeholder{color: var(--placeholders);font-weight: 400;font-size: 16px;}
 .cust-search .ant-input{color: var(--primary);font-weight: 400;font-size: 16px;}
 .drawer-list-font{font-weight: 700;font-size: 16px;color: var(--coinPrice);}
-.drawer-coin .ant-image, .crypto-curr-align .ant-image, .listitems-design .ant-image, .cytpo-list-style .ant-image, .crypto-bg{border: 4px solid var(--coinBg);border-radius: 100%;}
-.drawer-coin .ant-image-img, .crypto-curr-align .ant-image-img, .listitems-design .ant-image-img, .cytpo-list-style .ant-image-img, .crypto-bg{background-color: var(--coinBg);border-radius: 100%;}
+.drawer-coin .ant-image, .crypto-curr-align .ant-image, .listitems-design .ant-image, .cytpo-list-style .ant-image, .crypto-bg, .drawer-list-fiat .ant-image-img{border: 4px solid var(--coinBg);border-radius: 100%;}
+.drawer-coin .ant-image-img, .crypto-curr-align .ant-image-img, .listitems-design .ant-image-img, .cytpo-list-style .ant-image-img, .crypto-bg, .drawer-list-fiat .ant-image{background-color: var(--coinBg);border-radius: 100%;}
 .cytpo-list-style .ant-list-item-meta{align-items: center;}
 .crypto-bg{width: 52px;height: 52px;}
 .label-style, .ant-form-item-label > label{color: var(--subText); font-weight: 400;font-size: 14px;margin-bottom: 2px !important;text-transform: capitalize;}
@@ -179,6 +185,10 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .notify .ant-alert-close-icon{font-size: 18px;color: var(--textDark) !important;}
 .custom-notify.cust-input .ant-select-selection-item, .cust-input .ant-select-selector, .cust-input .ant-input, .ant-select-single .ant-select-selector .ant-select-selection-item, .ant-select-single .ant-select-selector .ant-select-selection-placeholder{line-height: 36px !important;height: 38px !important;margin-top:2px;}
 .drawer-balnstyle{font-size: 16px;font-weight: 700;color: var(--coinBal);}
+.newtransfer-card.ant-btn:hover, .newtransfer-card.ant-btn:focus, .newtransfer-card.ant-btn:active{background-color: var(--radioFill) !important; border: 2px solid var(--radioBorderfill);color: var(--coinPrice) !important;}
+.fund-transfer-input{margin-bottom: 0 !important;}
+.send-drawerbtn{margin: 36px;}
+.input-subtext{font-weight: 400 !important;font-size: 16px !important;color: var(--checksub) !important;}
 /*Common css End*/
 
 /*Coin Selection End*/
@@ -439,12 +449,15 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
   .crypto-icon.USDC{background-position: -157px -6px;}
   .dash-mobile-list .ant-list-item-meta{align-items: center;}
 /* crypto-coins end   */
-
+/* send fiat start */
+.fund-transfer-input .tfunds-inputgroup .ant-select{width: 122px;}
+.fund-transfer-input .tfunds-inputgroup .ant-select-selection-item{}
+/* send fiat end */
 /* send crypto start */
 .min-btn{background: var(--radioBg) !important;height: 36px;border-radius: 10px;min-width: 60px;line-height: 34px;color: var(--coinPrice);border: 1px solid rgba(0, 0, 0, 0.3);font-size: 16px;font-weight: 500; margin: 0 16px 16px 0;}
 .min-btn:active ,.min-btn:focus{background-color: var(--radioFill) !important;border: 2px solid var(--radioBorderfill) !important;font-size: 16px;font-weight: 500 !important;color: var(--coinPrice) !important;}
 .min-btn{color: var(--coinPrice) !important;}
-.newtransfer-card{background: var(--drawerList);border-radius: 13px;border: 2px solid transparent;height: 90px;padding: 10px 43px !important;text-align: left !important; font-size: 16px; font-weight: 700; color: var(--coinBal);}
+.newtransfer-card{background: var(--drawerList);border-radius: 13px;border: 2px solid transparent;height: 90px;padding: 10px 43px !important;text-align: left !important; font-size: 16px; font-weight: 700; color: var(--coinBal);width: 100%;}
 .newtransfer-card:hover,.newtransfer-card:active{background-color: var(--radioFill) !important;border: 2px solid var(--radioBorderfill);color: var(--coinPrice) !important;}
 /* send crypto end */
 
@@ -523,6 +536,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .inputfont-style{font-size: 36px;}
     .side-drawer .ant-drawer-content-wrapper{width: 524px !important;}
     .val-updown{top: 84px;}
+    .iban-list .iban-style{padding: 14px 20px;}
 }
 @media (max-width: 991.98px){
     .visible-mobile .ant-tabs-top > .ant-tabs-nav::before{border-bottom: 0 !important;}

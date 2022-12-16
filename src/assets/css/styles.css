@@ -86,7 +86,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .drpdwn-list li.no-hover:hover{background-color: transparent !important;}
 .drpdwn-list li span.icon{transition: margin 0.3s ease-in; margin-left: auto;}
 
-.icon, .k-i-more-vertical.k-icon,.ant-select-arrow, .custom-checkbox input[type=checkbox]+span{background: var(--lightThemeIcons) no-repeat; display: inline-block; vertical-align: middle;}
+/* .icon, .k-i-more-vertical.k-icon,.ant-select-arrow, .custom-checkbox input[type=checkbox]+span{background: var(--lightThemeIcons) no-repeat; display: inline-block; vertical-align: middle;} */
 .icon.xl{width: 32px; height: 32px;}
 .icon.md{width: 20px; height: 20px;}
 .icon.xxxl{width: 70px; height: 70px;}
@@ -1406,8 +1406,8 @@ cust-address{margin-bottom: 0px !important;}
 .btncolor{background:"gray"}
 .cust-select-arrow .ant-select-single .ant-select-selector .ant-select-selection-item::after{margin-left: 8px;}
  .fund-transfer-input .tfunds-inputgroup .ant-input-group-addon{ padding: 0 10px 0 0 !important;}
- .fund-transfer-input .tfunds-inputgroup .ant-select{ width:150px !important;}
- .fund-transfer-input .tfunds-inputgroup .ant-select-selection-item{padding: 0 !important;}
+ /* .fund-transfer-input .tfunds-inputgroup .ant-select{ width:150px !important;} */
+ /* .fund-transfer-input .tfunds-inputgroup .ant-select-selection-item{padding: 0 !important;} */
  .plist-textwrap {width: 471px;word-wrap: break-word;}
  .trn-sumtext {width: 330px;word-wrap: break-word;}
  .send-crypto-input .cust-input, .cust-input .ant-input{font-size: 22px;}
@@ -1448,8 +1448,8 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .custom-back-btn .pop-cancel:hover{border: 1px solid #f2f2f2 !important;}
 .custom-alert-width{width:800px;margin: auto;padding: 8px 10px;background-color:var(--bgDark) !important;border-radius: 15px;color: var(--textWhite);border-color: var(--borderGrey) !important;}
 .cust-cypto-view{width: 900px;margin: auto;}
-.ant-select-arrow .anticon{display: none;}
-.ant-select-arrow{width: 20px;height: 20px;background-position: -351px -5px;transform: scale(0.9);}
+/* .ant-select-arrow .anticon{display: none;}
+.ant-select-arrow{width: 20px;height: 20px;background-position: -351px -5px;transform: scale(0.9);} */
 .loading-btn{margin: 0 auto;} 
 .new-add .loading-btn + button{position:absolute; right:142px !important;}
 .bg-box{padding: 24px;border-radius: 0;}

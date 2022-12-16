@@ -375,7 +375,7 @@ saveWithdrawdata = async () => {
                 }}
                 renderItem={item => (
 
-                    <List.Item onClick={() => this.setState({ ...this.state, selectedCurrency: item.walletCode }, () => { this.getPayees(); this.chnageStep("enteramount") })}>
+                    <List.Item className="drawer-list-fiat" onClick={() => this.setState({ ...this.state, selectedCurrency: item.walletCode }, () => { this.getPayees(); this.chnageStep("enteramount") })}>
                     <Link>
                       <List.Item.Meta
                         avatar={<Image preview={false} src={item.imagePath} />}
@@ -467,26 +467,26 @@ saveWithdrawdata = async () => {
 
                       </Form.Item>
                       {this.state.selectedCurrency === 'USD' && (
-                        <div className="">
+                        <div className="input-subtext">
                           The amount must be greater than USD 50
                         </div>
                       )}
                       {this.state.selectedCurrency === 'EUR' && (
-                        <div className="">
+                        <div className="input-subtext">
                           The amount must be greater than EUR 50
                         </div>
                       )}
                     </Col>
                   </Row>
-                  <Row gutter={[16, 16]} className="mt-16">
+                  <Row gutter={[16, 16]} className="send-drawerbtn">
 
-                  <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
+                  <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
                       <Form.Item className="text-center">
                         <Button
                           htmlType="submit"
                           size="large"
-                          className="pop-btn mb-36"
-                          style={{ width: '100%' }}
+                          className="newtransfer-card"
+                          // style={{ width: '100%' }}
                           loading={this.state.newtransferLoader}
                           disabled={this.state.addressLoader}
                         >
@@ -494,13 +494,13 @@ saveWithdrawdata = async () => {
                         </Button>
                       </Form.Item>
                     </Col>
-                     <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
+                     <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
                       <Form.Item className="text-center">
                         <Button
                           htmlType="button"
                           size="large"
-                          className="pop-btn mb-36"
-                          style={{ width: '100% ' }}
+                          className="newtransfer-card"
+                          // style={{ width: '100% ' }}
                           loading={this.state.addressLoader}
                           disabled={this.state.newtransferLoader}
                           onClick={this.goToAddressBook}

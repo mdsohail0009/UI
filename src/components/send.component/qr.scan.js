@@ -167,8 +167,8 @@ class QRScan extends Component {
                 </Paragraph>
                 <div className='recive-share'>Share</div>
                 <div>
-                    <span className='icon lg whats-app' />
-                    <span className='icon lg mail-app' />
+                    <span className='icon lg whats-app c-pointer' />
+                    <span className='icon lg mail-app c-pointer' />
                 </div>
 
 
