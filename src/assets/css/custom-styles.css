@@ -551,13 +551,10 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .inputfont-style{font-size: 36px;}
     .side-drawer .ant-drawer-content-wrapper{width: 524px !important;}
     .val-updown{top: 84px;}
-<<<<<<< HEAD
     .iban-list .iban-style{padding: 14px 20px;}
-=======
     .addCryptoList{max-height: calc(100vh - 658px); overflow-y: auto; }
     .addCryptoList .xxl-fs{font-size:14px !important;}
     .addCryptoList .xxl-fs-16{font-size:16px !important;}
->>>>>>> 784a4f65d795d79c391978557d4d40ef00fb9a59
 }
 @media (max-width: 991.98px){
     .visible-mobile .ant-tabs-top > .ant-tabs-nav::before{border-bottom: 0 !important;}
