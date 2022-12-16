@@ -65,6 +65,7 @@ class AddBatchPayment extends Component {
     }
     
     closeDrawer = (isPreviewBack) => {
+        debugger
         this.setState({ ...this.state, paymentPreview: false,showModal:false,isCoinsListHide: false,uploadErrorModal: false,errorMessage:null,showInprogressModal:false});
         if (this.props.onClose) {
             this.props.onClose(isPreviewBack);
@@ -423,10 +424,11 @@ downLoadPreview=()=>{
                        <PaymentPreview
                        previewData={this.state?.previewData}
                         showDrawer={this.state.paymentPreview}
-                        onClose={() => {
-                            this.closeDrawer("true");
-                            this.setState({...this.state,showModal: false, uploadErrorModal: false})
-                        }}
+                        // onClose={() => {
+                        //     this.closeDrawer("true");
+                        //     this.setState({...this.state,showModal: false, uploadErrorModal: false})
+                        // }}
+                        onClose={this.props.onClose}
                     />
                        }
         </div>

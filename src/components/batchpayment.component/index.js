@@ -190,21 +190,16 @@ const filePreviewPath = () => {
   
   }
     const closeDrawer = (isPreviewBack) => {
-      debugger
-
+      // debugger
       // if(isPreviewBack == "true") {
-      //   setIsAddBatchDrawer(true);
+      //   setIsAddBatchDrawer(false);
       // }
       // else {
       //   setIsAddBatchDrawer(false);
       // }
-      if(isPreviewBack == "true") {
-        setIsAddBatchDrawer(false);
-      }
-      else {
-        setIsAddBatchDrawer(false);
-      }
     setProceedBatchPayment(false);
+    setIsAddBatchDrawer(false)
+    setSelection([])
     }
     const refreshPayment=()=>{
       gridRef?.current?.refreshGrid();
@@ -259,10 +254,13 @@ const filePreviewPath = () => {
                      
                   />
               </div>
+              {isAddBatchDrawer && 
               <AddBatchPayment
                   showDrawer={isAddBatchDrawer}
-                  onClose={(isPreviewBack) => closeDrawer(isPreviewBack)}
-              />   
+                  onClose={(isPreviewBack) => {
+                    closeDrawer(isPreviewBack);
+                }}
+              /> }
               {isProceedBatchPayment && 
               <PaymentPreview 
               showDrawer={isProceedBatchPayment}
