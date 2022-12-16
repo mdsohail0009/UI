@@ -13,6 +13,8 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .icon.md.theme-icon{background-position: -8px -486px;margin-right: 4px;}
 .icon.sm.valupp-icon{background-position: -87px -5px;margin-left: 8px;}
 .icon.sm.valdown-icon{background-position: -108px -4px;margin-left: 8px;}
+.icon.lg.whats-app{background-position: -9px -658px;margin-right: 14px;}
+.icon.lg.mail-app{background-position: -52px -658px;}
 
 /*----Font Sizes----*/
 
@@ -351,7 +353,11 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .recive-subtext{font-weight: 400;font-size: 16px;color: var(--sbCardText);margin-bottom: 16px;}
 .scanner-img{width: 170px; height: 170px; margin: 16px auto 60px; padding: 10px;background-color: var(--bgWhite);border-radius: 6px;}
 .recive-lable{font-weight: 400;font-size: 16px;color: var(--tableText);}
-.recive-copyadd{font-weight: 700;font-size: 16px;color: var(--coinPrice);}
+.recive-copy{font-weight: 700;font-size: 16px;color: var(--coinPrice);margin-top: 12px;margin-bottom: 50px;}
+.recive-text, .recive-text .list-dot{font-weight: 400;font-size: 14px;color: var(--tableText);}
+.recive-runtext{font-weight: 400;font-size: 14px;color: var(--tableText);}
+.list-dot{list-style: initial;margin-bottom: 16px !important;}
+.recive-share{margin-top: 100px;font-size: 16px;font-weight: 500;color: var(--tableText);margin-bottom: 18px;}
 /* receive Crypto end */
 /* --Payments Start--*/
 .pay-grid thead th{padding: 8px;width: 250px; color: var(--textWhite30);font-weight: 500;text-align: left;font-size: 16px;}

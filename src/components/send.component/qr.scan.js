@@ -144,7 +144,7 @@ class QRScan extends Component {
                 <div className="recive-lable">
                     <Translate className="recive-lable" content="address" component={Text} />{" "}({this.props?.sendReceive?.depositWallet?.network})
 
-                    <div className="mb-0 fw-600 text-white-30 walletadrs mb-copy">{this.props?.sendReceive?.depositWallet?.walletAddress}
+                    <div className="recive-copy">{this.props?.sendReceive?.depositWallet?.walletAddress}
                         <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.walletAddress} options={{ format: 'text/plain' }}>
                             <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 custom-display"></Text>
                         </CopyToClipboard>
@@ -159,18 +159,25 @@ class QRScan extends Component {
                         </CopyToClipboard></div>
                 </div>}
                 <Paragraph>
-                    <ul className="text-white mt-24">
-                        <li className="list-dot"><Translate className=" f-12 text-white fw-200 mt-16" content="address_hint_text" component={Text} /></li>
-                        <li className="list-dot"><Translate className="f-12 text-white fw-200 mt-16" content="address_hint_text_1" component={Text} /></li>
-                        <li className="list-dot"><Text className=" f-12 text-yellow fw-200 mt-16">Note: {this.props?.sendReceive?.depositWallet?.note} </Text></li>
+                    <ul className="recive-text">
+                        <li className="list-dot"><Translate className="recive-runtext" content="address_hint_text" component={Text} /></li>
+                        <li className="list-dot"><Translate className="recive-runtext" content="address_hint_text_1" component={Text} /></li>
+                        <li className="list-dot"><Text className="recive-runtext">Note: {this.props?.sendReceive?.depositWallet?.note} </Text></li>
                     </ul>
                 </Paragraph>
-                <Dropdown overlay={this.shareMenu}>
-                    {/* <Button className="pop-btn mt-36" block>Share</Button> */}
+                <div className='recive-share'>Share</div>
+                <div>
+                    <span className='icon lg whats-app' />
+                    <span className='icon lg mail-app' />
+                </div>
+
+
+                {/* <Dropdown overlay={this.shareMenu}>
+                    <Button className="pop-btn mt-36" block>Share</Button>
                     <Button
                         style={{ borderRadius: 25, height: 50 }}
                         className="mt-36 text-upper share-btn fw-600 fs-14" block>{apicalls.convertLocalLang('button')}</Button>
-                </Dropdown>
+                </Dropdown> */}
             </div>
             </>
         )
