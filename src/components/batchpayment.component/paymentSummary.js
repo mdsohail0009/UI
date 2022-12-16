@@ -84,34 +84,34 @@ class paymentSummary extends Component {
 					</div>
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'> Payment</label></div>
-						<div><Text className='fw-500 text-white-30'>560,000 USD</Text></div>
+						<div><Text className='fw-500 text-white-30'>{this.props?.getPaymentDetails.amount}</Text></div>
 					</div>
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'> Fee</label></div>
-						<div><Text className='fw-500 text-white-30'>5,600 USD</Text></div>
+						<div><Text className='fw-500 text-white-30'>{this.props?.getPaymentDetails.commission}</Text></div>
 					</div>
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'> Total Amount</label></div>
-						<div><Text className='fw-500 text-white-30'>565,600 USD</Text></div>
+						<div><Text className='fw-500 text-white-30'>{this.props?.getPaymentDetails.availableAmount}</Text></div>
 					</div>
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'>Balance Before</label></div>
-						<div><Text className='fw-500 text-white-30'>570,000 USD</Text></div>
+						<div><Text className='fw-500 text-white-30'>{this.props?.getPaymentDetails.beforeAmount}</Text></div>
 					</div>
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'>Balance After Payment</label></div>
-						<div><Text className='fw-500 text-white-30'>4,400 USD</Text></div>
+						<div><Text className='fw-500 text-white-30'>{this.props?.getPaymentDetails.afterdPaymentAmonunt}</Text></div>
 					</div>
 
 					<div> <Title className='sub-heading p-0 mt-24'>Recipients Details</Title></div>
 
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'>File Name</label></div>
-						<div><Text className='fw-500 text-white-30'>EURBatchPayment</Text></div>
+						<div><Text className='fw-500 text-white-30'>{this.props?.getPaymentDetails.fileName}</Text></div>
 					</div>
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'>Number of Recipients</label></div>
-						<div><Text className='fw-500 text-white-30'>45</Text></div>
+						<div><Text className='fw-500 text-white-30'>{this.props?.getPaymentDetails.noOfPayments}</Text></div>
 					</div>
 					{/* <Form
 						className="mt-36"
@@ -214,7 +214,6 @@ class paymentSummary extends Component {
 
                           
                            <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} />
-                           {/* <Verifications/> */}
 					    
 						   <div className="cust-pop-up-btn crypto-pop text-right">
 							<Button
@@ -228,7 +227,7 @@ class paymentSummary extends Component {
 								//className="primary-btn pop-btn btn-width"
 								className="pop-btn custom-send"
                                 style={{ backgroundColor: !isShowGreyButton && '#ccc', borderColor: !isShowGreyButton && '#3d3d3d' }}
-								//onClick={this.showDeclaration}
+								onClick={this.showDeclaration}
 							>
 								Continue
 							</Button>

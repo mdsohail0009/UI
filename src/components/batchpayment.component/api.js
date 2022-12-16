@@ -37,24 +37,21 @@ const deletePayDetials = (id) => {
 const saveTransaction = (obj) => {
     return apiClient.post(ApiControllers.massPayment + "savetransaction", obj);
 }
-const uuidv4 = () => {
-    let randumnumberval;
-    let buf = crypto.randomBytes(16);
-    randumnumberval = buf.toString("hex");
-    return (
-      randumnumberval.substr(0, 8) +
-      "-" +
-      randumnumberval.substr(8, 4) +
-      "-" +
-      randumnumberval.substr(12, 4) +
-      "-" +
-      randumnumberval.substr(16, 4) +
-      "-" +
-      randumnumberval.substr(20, 12)
-    );
-  };
-export { getCurrencyLu,saveBeneficiary,getFileURL, savePayments,getFavourite, getPaymentsData, updatePayments, getBankData,creatPayment,deletePayDetials,saveTransaction,uuidv4}
+const confirmGetDetails = (id) => {
+    return apiClient.get(ApiControllers.massPayment + `Confirm/Transactions/${id}`);
+};
 
-//https://routechanges.azurewebsites.net/api/v1/DepositeWithdraw/Favourite
-//https://routechanges.azurewebsites.net/api/v1/Wallets/Fiat/f8be2fd6-9778-4408-ba57-7502046e13a5
-//https://routechanges.azurewebsites.net/api/v1/DepositeWithdraw/Withdraw/Favourite/9619c559-adfa-4210-a6bb-c75f652e5c99
+  const deleteBatchPayments = (id) => {
+
+    return apiClient.delete(ApiControllers.massPayment + `BatchPayments/${id}`);
+
+};
+
+const refreshTransaction=(id)=>{
+
+    return apiClient.get(ApiControllers.massPayment + `RefreshTransaction/${id}`);
+
+}
+
+export { getCurrencyLu,saveBeneficiary,getFileURL, savePayments,getFavourite, getPaymentsData, updatePayments, getBankData,creatPayment,deletePayDetials,saveTransaction,deleteBatchPayments,refreshTransaction,confirmGetDetails}
+

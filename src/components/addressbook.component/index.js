@@ -646,6 +646,7 @@ class AddressBook extends Component {
 	};
 
 	onActionClick = (key) => {
+		debugger
 		const actions = {
 			add: "addAddressBook",
 			edit: "editAddressBook",

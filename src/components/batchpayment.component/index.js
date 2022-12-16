@@ -40,10 +40,10 @@ const [open, setOpen] = useState(false);
   const [selectedObj,setSelectedObj]=useState({})
   const [errorWarning,setErrorWarning]=useState(null)
   const [permissions, setPermissions] = useState({});
-
+  const [permissionsInterval,setPermissionsInterval]=useState(null)
   useEffect(() => {
     //loadPermissions();
-     //permissionsInterval = setInterval(loadPermissions, 200);
+    //setPermissionsInterval(setInterval(loadPermissions, 200))
 
 }, []);
   const showDrawer = () => {
@@ -57,16 +57,17 @@ const [open, setOpen] = useState(false);
   };
  
   const loadPermissions = () => {
+    debugger
     if (props.batchPaymentPermissions) {
 			props.dispatch(setSelectedFeatureMenu(props.batchPaymentPermissions?.featureId));
-			//clearInterval(permissionsInterval);
+			clearInterval(permissionsInterval);
 			let _permissions = {};
 			for (let action of props.batchPaymentPermissions?.actions) {
 				_permissions[action.permissionName] = action.values;
 			}
       setPermissions(_permissions)
 			if (!permissions?.view && !permissions?.View) {
-				this.props.history.push("/accessdenied");
+				props.history.push("/accessdenied");
 			}
 		}
 	}
@@ -177,7 +178,7 @@ const filePreviewPath = () => {
    ];
  
    const handleInputChange = (prop) => {
-   // setErrorWarning(null);
+    setErrorWarning(null);
     const rowChecked = prop.dataItem;
     let _selection = [...selection];
     let idx = _selection.indexOf(rowChecked.id);
@@ -194,17 +195,19 @@ const filePreviewPath = () => {
   };
  const addBatchPayment = () => {
    setIsAddBatchDrawer(true);
+   setErrorWarning(null);
  }
  const proceedBatchPayment = (e) => {
   debugger
-  //  if (selection.length === 0) {
-  //   setErrorWarning("Please select the record");
-  // } else {
+   if (selection.length === 0) {
+    setErrorWarning("Please select the record");
+  } else {
+    setErrorWarning(null)
     setProceedBatchPayment(true);
     // const items=e.dataItem;
     // const val = (items.id);
     // props.history.push('/batchpayment/' + val + '/proceed');
-  //}
+  }
  }
  
     const closeDrawer = (isPreviewBack) => {
@@ -228,12 +231,14 @@ const filePreviewPath = () => {
       props.history.push('/cockpit')
     }
     const onActionClick = (key) => {
+      debugger
       const actions = {
-        add: "add",
-        "proceed": "proceed",
-        "delete": "delete"
+        Refresh:"refresh",
+        Add: addBatchPayment,
+        Process: proceedBatchPayment,
+        Delete: "delete"
       };
-      this[actions[key]]();
+      actions[key]();
     };
   
       return (
@@ -249,17 +254,19 @@ const filePreviewPath = () => {
             />
           )}
           <div className='main-container'>
-          {/* <span className="mb-right">
-          <ActionsToolbar featureKey="Batch_Payment" onActionClick={(key) => onActionClick(key)}/>
-          </span> */}
+        
               <div className='d-flex justify-content mb-16'>
                   <div>
                       <Title className="basicinfo mb-0"><span className='icon md c-pointer back mr-8' onClick={gotoDashboard}></span><Translate content="batch_payments" component={Text} className="basicinfo" /></Title>
                   </div>
                   <div className='batch-actions'>
-                      <span className='icon md c-pointer add-icon' onClick={() => addBatchPayment()}></span>
+                      {/* <span className='icon md c-pointer add-icon' onClick={() => addBatchPayment()}></span>
                       <span className='icon md c-pointer procced-icon' onClick={(e) => proceedBatchPayment(e)}></span>
-                      <span className='icon md c-pointer delete-icon'></span>
+                      <span className='icon md c-pointer delete-icon'></span> */}
+                  
+                  <span className="mb-right">
+          <ActionsToolbar featureKey="Batch_Payment" onActionClick={(key) => onActionClick(key)}/>
+          </span>
                   </div>
               </div>
               
@@ -271,8 +278,8 @@ const filePreviewPath = () => {
                       columns={gridColumns}
                       ref={gridRef}
                       key={process.env.REACT_APP_GRID_API + `MassPayments/BatchPayments`}
-                      pKey={"Batch_Payment"}
-                      onActionClick={(key) => this.onActionClick(key)}
+                      //pKey={"Batch_Payment"}
+                      //onActionClick={(key) => this.onActionClick(key)}
                   />
               </div>
               <AddBatchPayment
@@ -294,7 +301,7 @@ const filePreviewPath = () => {
 
 const connectStateToProps = ({ userConfig,menuItems }) => {
   return { userConfig: userConfig.userProfileInfo ,
-    batchPaymentPermissions: menuItems?.featurePermissions.batchPayment,
+    batchPaymentPermissions: menuItems?.featurePermissions.Batch_Payment,
   };
 };
 const connectDispatchToProps = dispatch => {

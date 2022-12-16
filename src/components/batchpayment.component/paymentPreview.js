@@ -12,14 +12,12 @@ import { withRouter } from "react-router-dom";
 import PaymentSummary from "./paymentSummary";
 //import { Spreadsheet } from '@progress/kendo-spreadsheet-react-wrapper';
 import Spreadsheet from "react-spreadsheet";
-import {saveTransaction} from './api'
+import {confirmGetDetails} from './api'
 import { async } from "rxjs";
 const { Paragraph } = Typography
 const { Option } = Select;
 class paymentPreview extends Component {
   constructor(props) {
-    debugger
-
     super(props);
     this.state = {
       modal: false,
@@ -28,6 +26,7 @@ class paymentPreview extends Component {
       insufficientModal: false,
       errorMessage:null,
       onBack:this.props.isProceedBatchPayment,
+      getPaymentDetails:[],
       data: [
         [{ value: "File Name" }, { value: "Relationship to Benficiary" },{ value: "Address Line1" }, { value: "Transfer Type" },{ value: "Amount in USD" }, { value: "Account Number/IBAN" },{ value: "ABA Routing/Swift/BIC Code" }, { value: "Bank Name" },{ value: "Bank Address" }, { value: "Reason For Transfer" }],
         [{ value: "" }, { value: "" }],
@@ -60,21 +59,14 @@ closeDrawer = () => {
 
 confirmPreview = async (values) => {
   debugger
-  // this.setState({...this.state,errorMessage:null})
-  // let saveObj={
-  //   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  //   "currencyType": "EUR",
-  //   "customerId": "7D785BF6-6666-49AE-B35C-F96DA31ACB9E",
-  //   "filepath": "https://devstoragespace.blob.core.windows.net/devstoragecontainer/3c275358-e610-4b83-899c-933835aa79a6_EURPayment.xlsx",
-  //   "userCreated": "Nikitha",
-  //   "walletCode": "EUR"
-  // }
-  // let response = await saveTransaction(saveObj)
-  // if(response.ok){
-    this.setState({ ...this.state, paymentSummary: true, insufficientModal: false})
-  // }else{
-  //   this.setState({...this.state,insufficientModal:true,errorMessage:response.data, paymentSummary:false})
-  // }
+   this.setState({...this.state,errorMessage:null})
+ 
+   let response = await confirmGetDetails("aa2322e2-fd2a-4976-ba55-a87d351aae73")
+   if(response.ok){
+    this.setState({ ...this.state, paymentSummary: true, insufficientModal: false ,getPaymentDetails:response.data})
+  }else{
+    this.setState({...this.state,insufficientModal:true,errorMessage:response.data, paymentSummary:false})
+  }
 
 }
   render() {
@@ -132,9 +124,9 @@ confirmPreview = async (values) => {
                         <>
                         <div className='text-center pt-16'>
                             <Paragraph className='text-white fs-18'><div>You do not have enough balance.</div>
-                            <div>Total amount including fees: EUR X, XXX.XX</div>
-                            <div> Balance available: EUR X,XXX.XX</div>
-                            <div> Shortfall: EUR X,XXX.XX</div>
+                            <div>Total amount including fees: {this.state.getPaymentDetails?.totalAmonunt}</div>
+                            <div> Balance available: {this.state.getPaymentDetails?.availableAmount}</div>
+                            <div> Shortfall: {this.state.getPaymentDetails?.shortfallAmount}</div>
                             <div> Please top up.</div>
                             <div>   A draft has been saved.</div>
                             </Paragraph>
@@ -147,6 +139,7 @@ confirmPreview = async (values) => {
                         onClose={() => {
                             this.closeDrawer();
                         }}
+                        getPaymentDetails={this.state.getPaymentDetails}
                     />
                        }
         </Drawer>

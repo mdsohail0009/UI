@@ -136,8 +136,7 @@ class HeaderPermissionMenu extends Component {
             send_crypto: false,
             receive_fiat: false,
             receive_crypto: false,
-            sendFiatTab: false,
-            batchPayment: false
+            sendFiatTab: false
 
         },
     }
@@ -168,7 +167,7 @@ class HeaderPermissionMenu extends Component {
     }
     
     navigate = (menuKey, menuItem) => {
-        if (menuItem.path === "/modal" && menuKey !== "batchpayment") {
+        if (menuItem.path === "/modal") {
                 switch (menuKey) {
                     case "trade_buy":
                         this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: false } });
@@ -227,11 +226,7 @@ class HeaderPermissionMenu extends Component {
                         break;
                 }
             this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true, selectedTab: menuKey === "trade_sell" ? true : false, sendCryptoTab: menuKey === "send_crypto" ? true : false, sendFiatTab: menuKey === "send_fiat" ? true : false } });
-        } 
-        else if(menuKey === "batchpayment") {
-            this.props.history.push("/batchpayment");
-        }
-        else if (menuItem.path) {
+        } else if (menuItem.path) {
             this.props.history.push(menuItem.path);
         }
     }
@@ -245,10 +240,12 @@ class HeaderPermissionMenu extends Component {
         }
     }
     onMenuItemClick = async (menuKey, menuItem) => {
-        const perIgnoreLst = ["notifications", "auditLogs", "cases","Batch_Payment"];
-        if (perIgnoreLst.includes(menuKey)) { this.navigate(menuKey === "Batch_Payment" ? "batchpayment" :menuKey, menuItem) }
+        debugger
+        const perIgnoreLst = ["notifications", "auditLogs", "cases",];
+        if (perIgnoreLst.includes(menuKey)) { this.navigate(menuKey, menuItem) }
         else {
             const ignoreKycLst = ["transactions"];
+            //const ignoreKybLst = ["Batch_Payment"]
             if ((this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled && checkCustomerState(this.props.userConfig)) || ignoreKycLst.includes(menuItem.key)) {
                 if (!this.props.menuItems.featurePermissions[menuItem.key]) {
                     getFeaturePermissionsByKey(menuItem.key, (data) => {
