@@ -62,7 +62,7 @@ class AddBatchPayment extends Component {
     }
     
     closeDrawer = (isPreviewBack) => {
-        this.setState({ ...this.state, paymentPreview: false,showModal:false,isCoinsListHide: false,uploadErrorModal: false,errorMessage:null});
+        this.setState({ ...this.state, paymentPreview: false,showModal:false,isCoinsListHide: false,uploadErrorModal: false,errorMessage:null,showInprogressModal:false});
         if (this.props.onClose) {
             this.props.onClose(isPreviewBack);
         }
@@ -126,8 +126,11 @@ handleUpload = ({ file }, item, i) => {
         "path": `${file.response}`,
         "size": `${file.size}`,
       }
+      this.setState({ ...this.state, paymentSummary: true, insufficientModal: 
+        false,showInprogressModal:true,uploadLoader:false})
+
       if(file?.response){
-        this.confirmPreview(obj)
+                             this.confirmPreview(obj)
     }
     }
   };
@@ -161,7 +164,7 @@ handleUpload = ({ file }, item, i) => {
       }
 goToGrid=()=>{
     this.closeDrawer();
-    this.setState({...this.state,showInprogressModal:false,errorMessage:null})
+    this.setState({...this.state,showInprogressModal:false,errorMessage:null,isCoinsListHide:false})
 
 }
 downLoadPreview=()=>{
