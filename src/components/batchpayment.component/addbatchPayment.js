@@ -4,6 +4,7 @@ import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import Search from "antd/lib/input/Search";
 import { fetchMemberWallets } from "../dashboard.component/api";
+import {refreshTransaction,saveTransaction} from './api'
 import NumberFormat from "react-number-format";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
@@ -14,6 +15,7 @@ import apiCalls from "../../api/apiCalls";
 import CryptoJS from "crypto-js";
 import { success, error } from "../../utils/message";
 import {uuidv4} from './api'
+import pending1 from '../../assets/images/pending1.png'
 const { Title,Paragraph } = Typography
 class AddBatchPayment extends Component {
     useDivRef = React.createRef()
@@ -31,12 +33,16 @@ class AddBatchPayment extends Component {
         uploadLoader: false,
         uploadErrorModal: false,
         errorMessage:null,
+        showInprogressModal:false,
+        file:{},
+        transactionError:null,
+        refreshBtnLoader:false,
         //uploadUrl: process.env.REACT_APP_UPLOAD_API + "UploadFile",
         uploadUrl:process.env.REACT_APP_API_END_POINT + "/MassPayment/importfileUpload"
     }
 
     componentDidMount() {
-          this.setState({ ...this.state, fiatWalletsLoading: true , errorMessage:null });
+          this.setState({ ...this.state, fiatWalletsLoading: true , errorMessage:null,isCoinsListHide:false });
           fetchMemberWallets(this.props?.userProfile?.id).then(res => {
             if (res.ok) {
                 this.setState({ ...this.state, fiatWallets: res.data, paymentCoinsList: res.data, fiatWalletsLoading: false });
@@ -56,7 +62,7 @@ class AddBatchPayment extends Component {
     }
     
     closeDrawer = (isPreviewBack) => {
-        this.setState({ ...this.state, paymentPreview: false,showModal:false,isCoinsListHide: false,uploadErrorModal: false});
+        this.setState({ ...this.state, paymentPreview: false,showModal:false,isCoinsListHide: false,uploadErrorModal: false,errorMessage:null});
         if (this.props.onClose) {
             this.props.onClose(isPreviewBack);
         }
@@ -82,12 +88,8 @@ class AddBatchPayment extends Component {
   
    
     beforeUpload = (file) => {
-        debugger
         this.setState({...this.state,errorMessage:null})
         let fileType = {
-            // "application/csv": true,
-            // "application/vnd.ms-excel": true,
-            // "text/csv": true,
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":true
         };
          let isFileName = file.name.split(".").length > 2 ? false : true;
@@ -95,10 +97,6 @@ class AddBatchPayment extends Component {
             this.setState({ ...this.state, isValidFile: true,errorMessage:null });
             return true;
         } else {
-            // message.error({
-            //     content: `Please upload .XLS or .XLSX file`,
-            //     className: "custom-msg"
-            // });
             this.setState({ ...this.state, isValidFile: false ,
                 errorMessage: isFileName
                 ? `Please upload .XLS or .XLSX file`
@@ -107,167 +105,83 @@ class AddBatchPayment extends Component {
             return Upload.LIST_IGNORE;
         }
     };
-  handleUpload = async ({ file }, doc) => {
-    debugger
-
-    this.setState({
-        ...this.state,
-        uploadLoader: true,
-       // errorMessage: null,
-        docReplyObjs: [],
-        //showModal: true
-    });
-    if (file.status !== "done" && this.state.isValidFile) {
-        let replyObjs = [...this.state.docReplyObjs];
-        let item = this.isDocExist(replyObjs, doc?.id);
-        let obj;
-        if (item) {
-            obj = item;
-            const ObjPath = (function () {
-                if (obj.path === "string") {
-                    return JSON.parse(obj.path);
-                } else {
-                    return obj.path ? obj.path : [];
-                }
-            })();
-            obj.path = obj.path && typeof ObjPath;
-            obj.path.push({
-                filename: file.name,
-                path: file.response,
-                size: file.size
-            });
-            replyObjs = this.uopdateReplyObj(obj, replyObjs);
-        } else {
-            obj = this.messageObject(doc?.id);
-            obj.path.push({
-                filename: file.name,
-                path: file.response,
-                size: file.size
-            });
-            replyObjs.push(obj);
-        }
-        this.setState({
-            ...this.state,
-            uploadLoader: false,
-            docReplyObjs: replyObjs
-        });
-    } else if (file.status === "error") {
-        message.error({ content: `${file.response}`, className: "custom-msg" });
-        this.setState({ ...this.state, uploadLoader: false });
-    } 
-   if (!this.state.isValidFile) {
-        this.setState({
-            ...this.state,
-            uploadLoader: false,
-            showModal: false,
-            //uploadErrorModal: true
-        });
+  
+handleUpload = ({ file }, item, i) => {
+    if (file.name.split('.').length > 2) {
+      this.setState({ ...this.state, errorMessage: null, uploadLoader: false,});
     }
     else {
-        this.setState({
-            ...this.state,
-            showModal: true,
-            //uploadErrorModal: false
-        });
+      this.setState({ ...this.state, errorMessage: null, uploadLoader: true, });
+
     }
-    this.setState({
-        ...this.state,
-        uploadLoader: false,
-        path: file.status === "done" ? file.response : null
-    });
-};
-  
-    isDocExist(lstObj, id) {
-        const lst = lstObj.filter((obj) => {
-            return obj.docunetDetailId === id;
-        });
-        return lst[0];
+    if (file?.status === "done" && this.state.uploadLoader) {
+
+      let obj = {
+        "id":"00000000-0000-0000-0000-000000000000",
+        "documentName": `${file.name}`,
+        "isChecked": file.name === "" ? false : true,
+        "remarks": `${file.size}`,
+        "state": null,
+        "status": false,
+        "path": `${file.response}`,
+        "size": `${file.size}`,
+      }
+      if(file?.response){
+        this.confirmPreview(obj)
     }
-    
-    messageObject = (id) => {
-        return {
-            "id": uuidv4(),
-            "documentId": id,
-            "path": [],
-            "reply": "",
-            "repliedBy": "",
-            "repliedDate": null,
-            "isCustomer": true
-        }
     }
-    // uploadExcel=()=>{
-    //     this.setState({ ...this.state, showModal:true});
-    //         const _currentScreen = window.location.pathname.split("/")[1];
-    //         const {
-    //             oidc: { user },
-    //             userConfig: { userProfileInfo },
-    //             //permissions: { currentScreen }
-    //         } = store.getState();
-    //         const Authorization = `Bearer ${user.access_token}`;
-    //         const Authentication = this._encrypt(
-    //             `{CustomerId:"${userProfileInfo?.id}",Action:"view", PermissionKey:"${this.props.pKey || _currentScreen 
-    //             }"}`,
-    //             userProfileInfo.sk
-    //         );
-    //         this.setState(
-    //             {
-    //                 ...this.state,
-    //                 modal: true,
-    //                 headers: {
-    //                     Authorization: Authorization,
-    //                     AuthInformation: Authentication
-    //                 }
-    //             },
-    //             () => {
-    //                 this.setState({
-    //                     ...this.state,
-    //                     stateLoading: true,
-    //                     headers: {
-    //                         Authorization: Authorization,
-    //                         AuthInformation: Authentication
-    //                     }
-    //                 });
-    //                 setTimeout(
-    //                     () =>
-    //                         this.setState({
-    //                             ...this.state,
-    //                             stateLoading: false,
-    //                             headers: {
-    //                                 Authorization: Authorization,
-    //                                 AuthInformation: Authentication
-    //                             }
-    //                         }),
-    //                     1000
-    //                 );
-    
-    //                 // setTimeout(
-    //                 //     () =>
-    //                 //         this.formref.current.setFieldsValue({
-    //                 //             ...this.state
-    //                 //         }),
-    //                 //     1000
-    //                 // );
-    //             }
-    //         );
-    //         apiCalls.trackEvent({
-    //             Action: "Upload MassPayment page ",
-    //             Feature: "Upload MassPayments",
-    //             Remarks: "Upload MassPayment page ",
-    //             FullFeatureName: "Upload MassPayments ",
-    //             userName: this.props.userProfile.userName,
-    //             id: this.props.userProfile.id
-    //         });
-        
-    // }
+  };
     selectWhitelist=()=>{
         this.props.history.push(`/payments/${this.state.selectedCurrency}`) 
     }
     handleCancel=()=>{
         this.setState({ ...this.state, showModal:false});
     }
+    handleInprogressCancel=()=>{
+        this.setState({ ...this.state, showInprogressModal:false});
+    }
+    confirmPreview = async (file) => {
+        this.setState({...this.state,errorMessage:null})
+       console.log(file)
+       let saveObj={
+            "id": file?.id,
+            "walletCode": this.state?.selectedCurrency,
+            "customerId": this.props?.userProfile?.id,
+            "filepath": file?.path,
+            "fileName": file?.documentName,
+            "userCreated":this.props.userProfile?.userName
+          }
+        let response = await saveTransaction(saveObj)
+        if(response.ok){
+          this.setState({ ...this.state, paymentSummary: true,file:response.data, insufficientModal: false,showInprogressModal:true,uploadLoader:false})
+        }else{
+          this.setState({...this.state,insufficientModal:true,showInprogressModal:false,errorMessage:response.data, paymentSummary:false})
+        }
+      
+      }
+goToGrid=()=>{
+    this.closeDrawer();
+    this.setState({...this.state,showInprogressModal:false,errorMessage:null})
 
+}
+downLoadPreview=()=>{
+    if(this.state?.selectedCurrency==="USD"){
+    window.open('https://devstoragespace.blob.core.windows.net/devstoragecontainer/USDBatchPayment.xlsx','_blank')
+    }
+    else{
+    window.open('https://devstoragespace.blob.core.windows.net/devstoragecontainer/EURBatchPayment.xlsx','_blank')
+    }
+}
+    refreshTransaction=async()=>{
+        this.setState({...this.state,refreshBtnLoader:true,showModal:false})
+        
+        const res=await refreshTransaction(this.state.file?.id)
+       if(res.ok){
+        this.setState({...this.state,refreshBtnLoader:false,showInprogressModal:false,showModal:true,errorMessage:null})
+       }
+    }
     render() {
-        const { gridUrl, param, headers ,errorMessage} = this.state;
+        const { uploadLoader, refreshBtnLoader, transactionError ,errorMessage} = this.state;
         return (
             <>
                <div ref={this.useDivRef}></div>
@@ -367,15 +281,68 @@ class AddBatchPayment extends Component {
                                      {errorMessage !== null && (
           <Alert type="error" description={errorMessage} showIcon />
                )}
-                                       <Button className='pop-btn mt-24'>Upload Excel</Button>
+                                       <Button className='pop-btn mt-24' loading={uploadLoader}>Upload Excel</Button>
                                 </Upload>{" "}
-            <Paragraph className='text-white-30'>To download the excel, <a className='fw-700'> click here</a></Paragraph>
+            <Paragraph className='text-white-30'>To download the excel, <a className='fw-700' onClick={this.downLoadPreview}> click here</a></Paragraph>
             <Button className='pop-btn px-36' onClick={this.selectWhitelist}>Select from Whitelisted Addresses</Button>
                                 
             </div>
               </div>
               </>}
         </Drawer>
+        <Modal  
+                
+                visible={this.state.showInprogressModal}
+                title="upload success"
+                closeIcon={
+                   <Tooltip title="Close">
+                     <span
+                       className="icon md close-white c-pointer"
+                       onClick={() => this.handleInprogressCancel()}
+                     />
+                   </Tooltip>
+                 }
+                 destroyOnClose={true}
+                 footer={[
+                    <>
+                        <div className="text-right withdraw-footer">
+                          <Button
+                            key="back"
+                            type="text"
+                            className="text-white-30 pop-cancel fw-400 text-captz text-center"
+                            onClick={this.goToGrid}
+                            
+                            // disabled={loading}
+                          >
+
+                            Exit
+                          </Button>
+                          <Button
+                            key="submit"
+                            className="pop-btn px-36 ml-36"
+                            onClick={this.refreshTransaction}
+                            loading={refreshBtnLoader}
+                          >
+                            Refresh
+                          </Button>
+                        </div>
+                    </>
+                  ]}
+            //    footer={ <Button className="primary-btn pop-btn"
+            //    style={{ width: 100, height: 50 }}
+            //    onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false, paymentPreview: true }, () => { })}>Next</Button>}
+               >
+                   <>
+                   {transactionError !== null && (
+          <Alert type="error" description={transactionError} showIcon />
+               )}
+                   <div className='text-center pt-16'>
+                    <Image src={pending1}/>
+                       <Paragraph className='text-white fs-18'>Document has been successfully uploaded</Paragraph>
+                      
+                   </div>
+                   </>
+           </Modal>
                 <Modal  
                 
                      visible={this.state.showModal}

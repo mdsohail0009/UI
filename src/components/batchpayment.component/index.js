@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Typography,Drawer,Space,Button ,Alert} from 'antd';
+import { Typography,Drawer,Tooltip,Button ,Modal,Alert} from 'antd';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import List from "../grid.component";
 import AddBatchPayment from './addbatchPayment';
 import PaymentPreview from './paymentPreview';
 import moment from "moment/moment";
-import {getFileURL} from './api'
+import {getFileURL,deleteBatchPayments} from './api'
 import FilePreviewer from "react-file-previewer";
 import { bytesToSize } from "../../utils/service";
 import { silentRenewError } from 'redux-oidc';
@@ -40,7 +40,10 @@ const [open, setOpen] = useState(false);
   const [selectedObj,setSelectedObj]=useState({})
   const [errorWarning,setErrorWarning]=useState(null)
   const [permissions, setPermissions] = useState({});
+  const [deleteModal,setDeleteModal]=useState(false);
   const [permissionsInterval,setPermissionsInterval]=useState(null)
+  const [check,setCheck]=useState(false);
+
   useEffect(() => {
     //loadPermissions();
     //setPermissionsInterval(setInterval(loadPermissions, 200))
@@ -57,10 +60,9 @@ const [open, setOpen] = useState(false);
   };
  
   const loadPermissions = () => {
-    debugger
     if (props.batchPaymentPermissions) {
 			props.dispatch(setSelectedFeatureMenu(props.batchPaymentPermissions?.featureId));
-			clearInterval(permissionsInterval);
+			// clearInterval(permissionsInterval);
 			let _permissions = {};
 			for (let action of props.batchPaymentPermissions?.actions) {
 				_permissions[action.permissionName] = action.values;
@@ -130,39 +132,6 @@ const filePreviewPath = () => {
         customCell: (props) => (<td>
           <div className="gridLink" onClick={()=>docPreview()}
         >
-                             {/* <div
-															className="docfile mr-0 d-flex ml-8"
-															key={file.id}>
-															<span
-																className={`icon xl ${(file.documentName?.slice(-3) === "zip" &&
-																		"file") ||
-																	(file.documentName?.slice(-3) !== "zip" &&
-																		"") ||
-																	((file.documentName?.slice(-3) === "pdf" ||
-																		file.documentName?.slice(-3) === "PDF") &&
-																		"file") ||
-																	(file.documentName?.slice(-3) !== "pdf" &&
-																		file.documentName?.slice(-3) !== "PDF" &&
-																		"image")
-																	} mr-16`}
-															/>
-															<div
-																className="docdetails c-pointer"
-																onClick={() => docPreview(file)}>
-																{file.name !== null ? (
-																	<EllipsisMiddle suffixCount={4}>
-																		{file.documentName}
-																	</EllipsisMiddle>
-																) : (
-																	<EllipsisMiddle suffixCount={4}>
-																		Name
-																	</EllipsisMiddle>
-																)}
-																<span className="fs-12 text-secondary">
-																	{bytesToSize(file.remarks)}
-																</span>
-															</div>
-														</div> */}
           {props?.dataItem?.numberOfTransactions} 
         </div></td>) 
      },
@@ -178,7 +147,7 @@ const filePreviewPath = () => {
    ];
  
    const handleInputChange = (prop) => {
-    setErrorWarning(null);
+   setErrorWarning(null);
     const rowChecked = prop.dataItem;
     let _selection = [...selection];
     let idx = _selection.indexOf(rowChecked.id);
@@ -194,12 +163,11 @@ const filePreviewPath = () => {
     setSelectedObj(rowChecked.id)
   };
  const addBatchPayment = () => {
+  setErrorWarning(null)
    setIsAddBatchDrawer(true);
-   setErrorWarning(null);
  }
  const proceedBatchPayment = (e) => {
-  debugger
-   if (selection.length === 0) {
+  if (selection.length === 0) {
     setErrorWarning("Please select the record");
   } else {
     setErrorWarning(null)
@@ -207,18 +175,25 @@ const filePreviewPath = () => {
     // const items=e.dataItem;
     // const val = (items.id);
     // props.history.push('/batchpayment/' + val + '/proceed');
+ }
+}
+ const deleteBatchPayment=()=>{
+  if(check){
+    setErrorWarning("Please select the one record")
+  }else{
+  setDeleteModal(true)
   }
  }
- 
-    const closeDrawer = (isPreviewBack) => {
-      debugger
+ const deleteDetials = async () => {
+const res=await deleteBatchPayments(selection[0])
+if(res.ok){
+setDeleteModal(false);
+gridRef?.current?.refreshGrid();
+setSelection([]);
 
-      // if(isPreviewBack == "true") {
-      //   setIsAddBatchDrawer(true);
-      // }
-      // else {
-      //   setIsAddBatchDrawer(false);
-      // }
+}
+};
+    const closeDrawer = (isPreviewBack) => {
       if(isPreviewBack == "true") {
         setIsAddBatchDrawer(false);
       }
@@ -231,12 +206,11 @@ const filePreviewPath = () => {
       props.history.push('/cockpit')
     }
     const onActionClick = (key) => {
-      debugger
       const actions = {
         Refresh:"refresh",
         Add: addBatchPayment,
         Process: proceedBatchPayment,
-        Delete: "delete"
+        Delete: deleteBatchPayment
       };
       actions[key]();
     };
@@ -244,15 +218,6 @@ const filePreviewPath = () => {
       return (
         <>
        
-        {errorWarning !== null && (
-            <Alert
-              className="mb-12"
-              type="warning"
-              description={errorWarning}
-              onClose={() => setErrorWarning(null)}
-              showIcon
-            />
-          )}
           <div className='main-container'>
         
               <div className='d-flex justify-content mb-16'>
@@ -260,16 +225,19 @@ const filePreviewPath = () => {
                       <Title className="basicinfo mb-0"><span className='icon md c-pointer back mr-8' onClick={gotoDashboard}></span><Translate content="batch_payments" component={Text} className="basicinfo" /></Title>
                   </div>
                   <div className='batch-actions'>
-                      {/* <span className='icon md c-pointer add-icon' onClick={() => addBatchPayment()}></span>
-                      <span className='icon md c-pointer procced-icon' onClick={(e) => proceedBatchPayment(e)}></span>
-                      <span className='icon md c-pointer delete-icon'></span> */}
-                  
                   <span className="mb-right">
           <ActionsToolbar featureKey="Batch_Payment" onActionClick={(key) => onActionClick(key)}/>
           </span>
                   </div>
               </div>
-              
+              {errorWarning !== null && (
+            <Alert
+              className="mb-12"
+              type="warning"
+              description={errorWarning}
+              showIcon
+            />
+          )}
               <div className="box basic-info text-white" style={{ clear: 'both' }}>
                   <List
                       className="bill-grid"
@@ -278,8 +246,6 @@ const filePreviewPath = () => {
                       columns={gridColumns}
                       ref={gridRef}
                       key={process.env.REACT_APP_GRID_API + `MassPayments/BatchPayments`}
-                      //pKey={"Batch_Payment"}
-                      //onActionClick={(key) => this.onActionClick(key)}
                   />
               </div>
               <AddBatchPayment
@@ -295,6 +261,31 @@ const filePreviewPath = () => {
               ></PaymentPreview>
               }        
           </div>    
+          <Modal title="Delete Payment"
+          destroyOnClose={true}
+          closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={()=>setDeleteModal(false)} /></Tooltip>}
+         
+          visible={deleteModal}
+          className="payments-modal"
+          footer={[
+            <>
+            <div className='cust-pop-up-btn crypto-pop bill-pop'>
+              <Button
+                className="pop-cancel btn-width  bill-cancel"
+                onClick={()=>setDeleteModal(false)}>Cancel</Button>
+              <Button className="pop-btn px-36 btn-width"
+                onClick={() =>deleteDetials(selectedObj)}>Ok</Button></div>
+            </>
+          ]}
+        >
+          <div className="fs-14 text-white-50">
+            <Title className='fs-18 text-white-50'><span class="icon lg info-icon"></span> Delete Payment?</Title>
+            <Paragraph className="fs-14 text-white-50 modal-para">Are you sure do you want to
+              delete Payment ?</Paragraph>
+
+
+          </div>
+        </Modal>
           </>   
       )
 }
