@@ -81,16 +81,13 @@ class RouteConfig extends Component {
         <ReactRoute path='/accessdenied' component={AccessDenied} />
         <ReactRoute path='/caseView/:id' component={CaseView} />
         <Route path="/error" component={ErrorPage} />
-        {/* <ReactRoute path="/batchpayment" component={Batchpayments} />
-        <ReactRoute path="/batchpaymentview" component={BatchpaymentView} /> */}
+        
         <ReactRoute
 					path="/batchpayment"
 					render={({ match: { url } }) => (
 						<>
-							<Route path={`${url}`} component={Batchpayments} exact />
-							<Route path={`${url}/:id/:view`} component={BatchpaymentView} />
-              <Route path={`${url}/:id/:proceed`} component={paymentPreview} />
-
+							<Route path={`${url}`} component={Batchpayments} exact isRoute={true}/>
+              <Route path={`${url}/:id/:view`} component={BatchpaymentView} />
 						</>
 					)}
 				/>

@@ -13,7 +13,9 @@ import { fetchFeaturePermissions, setSelectedFeatureMenu } from "../../reducers/
 
 const { Title, Text, Paragraph } = Typography;
 
+
 const Batchpayments = (props) => {
+ 
   const [placement, setPlacement] = useState('right');
   const gridRef = React.createRef();
   const [isAddBatchDrawer, setIsAddBatchDrawer] = useState(false);
@@ -23,9 +25,11 @@ const Batchpayments = (props) => {
   const [selection,setSelection]=useState([])
   const [selectedObj,setSelectedObj]=useState({})
   const [errorWarning,setErrorWarning]=useState(null)
-  const [permissions, setPermissions] = useState({});
+  const [permissions, setPermissions] = useState({});  
   const [deleteModal,setDeleteModal]=useState(false);
+
   const [permissionsInterval,setPermissionsInterval]=useState(null)
+  const [setSelectData, setSetSelectData] = useState({})
   const [btnLoader,setBtnLoader]=useState(false);
 
   useEffect(() => {
@@ -33,12 +37,12 @@ const Batchpayments = (props) => {
     //setPermissionsInterval(setInterval(loadPermissions, 200))
 
 }, []);
-
+  
  
   const loadPermissions = () => {
     if (props.batchPaymentPermissions) {
 			props.dispatch(setSelectedFeatureMenu(props.batchPaymentPermissions?.featureId));
-			// clearInterval(permissionsInterval);
+			//clearInterval(permissionsInterval);
 			let _permissions = {};
 			for (let action of props.batchPaymentPermissions?.actions) {
 				_permissions[action.permissionName] = action.values;
@@ -51,6 +55,7 @@ const Batchpayments = (props) => {
 	}
 
   const viewMode = (e) => {
+    setProceedBatchPayment(false)
     const items=e.dataItem;
     const val = (items.id);
     props.history.push('/batchpayment/' + val + '/view');
@@ -108,6 +113,7 @@ const filePreviewPath = () => {
         customCell: (props) => (<td>
           <div className="gridLink" onClick={()=>docPreview()}
         >
+                            
           {props?.dataItem?.numberOfTransactions} 
         </div></td>) 
      },
@@ -123,7 +129,7 @@ const filePreviewPath = () => {
    ];
  
    const handleInputChange = (prop) => {
-   setErrorWarning(null);
+    setErrorWarning(null);
     const rowChecked = prop.dataItem;
     let _selection = [...selection];
     let idx = _selection.indexOf(rowChecked.id);
@@ -136,49 +142,60 @@ const filePreviewPath = () => {
       _selection.push(rowChecked.id);
     }
     setSelection(_selection);
+    setSetSelectData(rowChecked)
     setSelectedObj(rowChecked.id)
   };
  const addBatchPayment = () => {
-  setErrorWarning(null)
+   setErrorWarning(null)
    setIsAddBatchDrawer(true);
+   
  }
- const proceedBatchPayment = (e) => {
-  if (selection.length === 0) {
+ const proceedBatchPayment = () => {
+   if (selection.length === 0) {
     setErrorWarning("Please select the record");
   } else {
     setErrorWarning(null)
     setProceedBatchPayment(true);
-    // const items=e.dataItem;
-    // const val = (items.id);
-    // props.history.push('/batchpayment/' + val + '/proceed');
- }
-}
- const deleteBatchPayment=()=>{
-  setErrorWarning(null)
-  if(selection.length === 0){
-    setErrorWarning("Please select the one record")
-  }else{
-  setDeleteModal(true)
-  }
- }
-  const deleteDetials = async () => {
-    setBtnLoader(true);
-    const res = await deleteBatchPayments(selection[0])
-    if (res.ok) {
-      gridRef?.current?.refreshGrid();
-      setBtnLoader(false);
-      setDeleteModal(false);
-      setSelection([]);
-    }
-  };
-const deleteModalCancel=()=>{
-  gridRef?.current?.refreshGrid();
-  setErrorWarning(null)
-  setSelection([]);
-  setDeleteModal(false)
 
-}
+
+
+
+    }
+  }
+  const deleteBatchPayment=()=>{
+    setErrorWarning(null)
+    if(selection.length === 0){
+      setErrorWarning("Please select the one record")
+    }else{
+    setDeleteModal(true)
+    }
+   }
+    const deleteDetials = async () => {
+      setBtnLoader(true);
+      const res = await deleteBatchPayments(selection[0])
+      if (res.ok) {
+        gridRef?.current?.refreshGrid();
+        setBtnLoader(false);
+        setDeleteModal(false);
+        setSelection([]);
+      }
+    };
+  const deleteModalCancel=()=>{
+    gridRef?.current?.refreshGrid();
+    setErrorWarning(null)
+    setSelection([]);
+    setDeleteModal(false)
+  
+  }
     const closeDrawer = (isPreviewBack) => {
+      debugger
+
+      // if(isPreviewBack == "true") {
+      //   setIsAddBatchDrawer(true);
+      // }
+      // else {
+      //   setIsAddBatchDrawer(false);
+      // }
       if(isPreviewBack == "true") {
         setIsAddBatchDrawer(false);
       }
@@ -203,6 +220,7 @@ const deleteModalCancel=()=>{
       return (
         <>
        
+       
           <div className='main-container'>
         
               <div className='d-flex justify-content mb-16'>
@@ -210,6 +228,8 @@ const deleteModalCancel=()=>{
                       <Title className="basicinfo mb-0"><span className='icon md c-pointer back mr-8' onClick={gotoDashboard}></span><Translate content="batch_payments" component={Text} className="basicinfo" /></Title>
                   </div>
                   <div className='batch-actions'>
+                     
+                  
                   <span className="mb-right">
           <ActionsToolbar featureKey="Batch_Payment" onActionClick={(key) => onActionClick(key)}/>
           </span>
@@ -231,6 +251,7 @@ const deleteModalCancel=()=>{
                       columns={gridColumns}
                       ref={gridRef}
                       key={process.env.REACT_APP_GRID_API + `MassPayments/BatchPayments`}
+                     
                   />
               </div>
               <AddBatchPayment
@@ -240,6 +261,7 @@ const deleteModalCancel=()=>{
               {isProceedBatchPayment && 
               <PaymentPreview 
               showDrawer={isProceedBatchPayment}
+              id={selectedObj}
               onClose={(isPreviewBack) => {
                   closeDrawer(isPreviewBack);
               }}
