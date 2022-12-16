@@ -6,7 +6,7 @@ import { withRouter } from "react-router-dom";
 import pending from '../../assets/images/pending.png'
 import success from '../../assets/images/success.png'
 import Verifications from "../onthego.transfer/verification.component/verifications"
-
+import {proceedTransaction} from './api'
 const { Title, Paragraph, Text } = Typography
 
 class paymentSummary extends Component {
@@ -20,18 +20,46 @@ class paymentSummary extends Component {
 		  authBtn:false,
 		  isShowGreyButton: false,
 		  reviewDetailsLoading: false,
+		  insufficientModal:false,
+		  errorMessage:false
 		}
-        
 	}
-	showDeclaration=()=>{	
-		this.setState({ ...this.state, showDeclaration:true}); 
+
+	showDeclaration=async()=>{	
+		debugger
+		let response= await proceedTransaction(this.props?.id)
+		if(response.ok){
+			if(response.data === true){
+				this.setState({ ...this.state, showDeclaration:true,insufficientModal:false}); 
+			}else{
+				this.setState({ ...this.state, showDeclaration:false,insufficientModal:true});
+			}
+			
+		}else{
+			this.setState({ ...this.state,  errorMessage: this.isErrorDispaly(response) })
+
+			
+		}
+
+		
 	}
 	
+	isErrorDispaly = (objValue) => {
+		if (objValue.data && typeof objValue.data === "string") {
+		  return objValue.data;
+		} else if (
+		  objValue.originalError &&
+		  typeof objValue.originalError.message === "string"
+		) {
+		  return objValue.originalError.message;
+		} else {
+		  return "Something went wrong please try again!";
+		}
+	  };
 	handleBack=()=>{
 		this.props.history.push('/cockpit');
 	}
 	changesVerification = (obj) => {
-		debugger
 		if (obj.isPhoneVerification && obj.isEmailVerification && (obj.verifyData?.isPhoneVerified && obj.verifyData?.isEmailVerification && !obj.verifyData?.twoFactorEnabled)) {
 			this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
 		}
@@ -61,9 +89,10 @@ class paymentSummary extends Component {
 		this.setState({ ...this.state, reviewDetailsLoading: val })
 	  }
 	render() {
-		const {  isShowGreyButton } = this.state;
+		const {  isShowGreyButton,errorMessage } = this.state;
 		return (<>
-		<Spin spinning={this.state.reviewDetailsLoading}>
+		          
+
 			<div>
 			<Drawer destroyOnClose={true}
             title={[<div className="side-drawer-header"><span></span>
@@ -76,6 +105,8 @@ class paymentSummary extends Component {
           visible={this.props.showDrawer}
 		  className="side-drawer w-50p"
         >
+			<Spin spinning={this.state.reviewDetailsLoading}></Spin>
+			{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
 				<div>
 				{!this.state.showDeclaration && <>
 				<div>
@@ -113,106 +144,7 @@ class paymentSummary extends Component {
 						<div><label className='fw-500 text-white'>Number of Recipients</label></div>
 						<div><Text className='fw-500 text-white-30'>{this.props?.getPaymentDetails.noOfPayments}</Text></div>
 					</div>
-					{/* <Form
-						className="mt-36"
-						name="advanced_search"
-						autoComplete="off">
-
-						<Text className="fs-14 mb-8 text-white d-block fw-500 code-lbl">
-							Email Verification*
-						</Text>
-
-						<Form.Item
-							name="code"
-							className="input-label otp-verify"
-							extra={
-								<div>
-									<Text className="fs-12 text-white-30 fw-200">
-
-									</Text>
-									<Text
-										className="fs-12 text-red fw-200"
-										style={{ float: "right", color: "var(--textRed)" }}>
-
-									</Text>
-								</div>
-							}
-							rules={[{ required: true, message: "Is required" }]}
-						>
-							<div className="p-relative d-flex align-center">
-								<Input
-									className="cust-input custom-add-select mb-0"
-									placeholder={"Enter code"}
-									maxLength={6}
-									style={{ width: "100%" }}
-								/>
-								<div className="new-add get-code text-yellow hy-align">
-									<Button
-										type="text"
-										style={{ margin: "0 auto" }}
-									>
-										Click here to get code
-									</Button>
-								</div>
-							</div>
-						</Form.Item>
-						<Text className="fs-14 mb-8 text-white d-block fw-500 code-lbl">
-							2FA*
-						</Text>
-
-						<Form.Item
-							name="authenticator"
-							className="input-label otp-verify"
-							extra={
-								<div>
-									<Text
-										className="fs-12 text-red fw-200"
-										style={{ float: "right", color: "var(--textRed)" }}>
-
-									</Text>
-								</div>
-							}
-						>
-							<div className="p-relative d-flex align-center">
-								<Input
-									type="text"
-									className="cust-input custom-add-select mb-0"
-									placeholder={"Enter code"}
-									maxLength={6}
-
-									style={{ width: "100%" }}
-
-								/>
-								<div className="new-add get-code text-yellow hy-align" >
-									<Button
-										type="text"
-
-										style={{ color: "black", margin: "0 auto" }}
-									>
-										Click here to get code
-									</Button>
-								</div>
-							</div>
-						</Form.Item>
-						<div className="cust-pop-up-btn crypto-pop text-right">
-							<Button
-								className="primary-btn pop-cancel btn-width"
-								style={{ margin: "0 8px" }}
-								onClick={this.props.onClose}
-							>
-								Back
-							</Button>
-							<Button
-								className="primary-btn pop-btn btn-width"
-								style={{ margin: "0 8px" }}
-								onClick={this.showDeclaration}
-							>
-								Continue
-							</Button>
-						</div>
-						</Form> */}
-
-                          
+					
                            <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} />
 					    
 						   <div className="cust-pop-up-btn crypto-pop text-right">
@@ -224,7 +156,6 @@ class paymentSummary extends Component {
 								Back
 							</Button>
 							<Button
-								//className="primary-btn pop-btn btn-width"
 								className="pop-btn custom-send"
                                 style={{ backgroundColor: !isShowGreyButton && '#ccc', borderColor: !isShowGreyButton && '#3d3d3d' }}
 								onClick={this.showDeclaration}
@@ -239,7 +170,7 @@ class paymentSummary extends Component {
 								<img src={pending} />
 								<Title className='text-white'>Declaration form sent!</Title>
 								<Paragraph className='text-white'>We sent declaration form to:
-									Your@emailaddress.com. Please sign using the link
+									{this.props.userConfig?.email} Please sign using the link
 									received in email to whitelist your address. Note that
 									your payments will only be processed once your
 									whitelisted address has been approved. </Paragraph>
@@ -254,7 +185,35 @@ class paymentSummary extends Component {
 
 				</Drawer>
 			</div>
-			</Spin>
+			<Modal
+                     visible={this.state.insufficientModal}
+                     title="Insufficient Balance"
+                     closeIcon={
+                        <Tooltip title="Close">
+                          <span
+                            className="icon md close-white c-pointer"
+                            onClick={() =>  this.setState({ ...this.state, paymentSummary: false, insufficientModal: false}, () => { })}
+                          />
+                        </Tooltip>
+                      }
+                      destroyOnClose={true}
+                   
+                    footer={ <Button className="primary-btn pop-btn"
+                    style={{ width: 100, height: 50 }}
+                    onClick={() => { this.props.history.push('/cockpit') }}>Return</Button>}>
+                        <>
+                        <div className='text-center pt-16'>
+                            <Paragraph className='text-white fs-18'><div>You do not have enough balance.</div>
+                            <div>Total amount including fees: {this.props.getPaymentDetails?.totalAmonunt}</div>
+                            <div> Balance available: {this.props.getPaymentDetails?.availableAmount}</div>
+                            <div> Shortfall: {this.props.getPaymentDetails?.shortfallAmount}</div>
+                            <div> Please top up.</div>
+                            <div>   A draft has been saved.</div>
+                            </Paragraph>
+                        </div>
+                        </>
+                </Modal>
+			
 		</>
 		)
 	}

@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import LiveNessSumsub from '../../sumSub.component/liveness'
 
 const Verifications = (props) => {
-debugger
     const [verifyData, setVerifyData] = useState({});
     const [email, setEmail] = useState({ showRuleMsg: '', errorMsg: '', btnName: 'get_otp', requestType: 'Send', code: '', verified: false,btnLoader:false });
     const [phone, setPhone] = useState({ showRuleMsg: '', errorMsg: '', btnName: 'get_otp', requestType: 'Send', verified: false,btnLoader:false });

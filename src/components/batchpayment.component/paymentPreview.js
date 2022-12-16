@@ -27,6 +27,7 @@ class paymentPreview extends Component {
       errorMessage:null,
       onBack:this.props.isProceedBatchPayment,
       getPaymentDetails:[],
+      isLoad:false,
       data: [
         [{ value: "File Name" }, { value: "Relationship to Benficiary" },{ value: "Address Line1" }, { value: "Transfer Type" },{ value: "Amount in USD" }, { value: "Account Number/IBAN" },{ value: "ABA Routing/Swift/BIC Code" }, { value: "Bank Name" },{ value: "Bank Address" }, { value: "Reason For Transfer" }],
         [{ value: "" }, { value: "" }],
@@ -57,15 +58,14 @@ closeDrawer = () => {
   this.setState({ ...this.state, paymentSummary:false})
 }
 
-confirmPreview = async (values) => {
-  debugger
+confirmPreview = async () => {
+  this.setState({...this.state,isLoad:true})
    this.setState({...this.state,errorMessage:null})
- 
-   let response = await confirmGetDetails("aa2322e2-fd2a-4976-ba55-a87d351aae73")
+   let response = await confirmGetDetails(this.props.id)
    if(response.ok){
-    this.setState({ ...this.state, paymentSummary: true, insufficientModal: false ,getPaymentDetails:response.data})
+    this.setState({ ...this.state,isLoad:false, paymentSummary: true, insufficientModal: false ,getPaymentDetails:response.data})
   }else{
-    this.setState({...this.state,insufficientModal:true,errorMessage:response.data, paymentSummary:false})
+    this.setState({...this.state,isLoad:false,insufficientModal:false,errorMessage:response.data, paymentSummary:false})
   }
 
 }
@@ -100,39 +100,12 @@ confirmPreview = async (values) => {
                     <Button className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn mr-8 ml-0 primary-btn pop-cancel"
                         style={{ width: 100, height: 50 }}
                         onClick={this.props.onClose}>Back</Button>
-                    <Button className="pop-btn custom-send sell-btc-btn ml-8"
+                    <Button className="pop-btn custom-send sell-btc-btn ml-8" loading={this.state.isLoad}
                         style={{ width: 100, height: 50 }}
                         onClick={()=>this.confirmPreview()}>Confirm</Button>
                 
                 </div>
-                <Modal
-                     visible={this.state.insufficientModal}
-                     title="Insufficient Balance"
-                     closeIcon={
-                        <Tooltip title="Close">
-                          <span
-                            className="icon md close-white c-pointer"
-                            onClick={() =>  this.setState({ ...this.state, paymentSummary: false, insufficientModal: false}, () => { })}
-                          />
-                        </Tooltip>
-                      }
-                      destroyOnClose={true}
-                   
-                    footer={ <Button className="primary-btn pop-btn"
-                    style={{ width: 100, height: 50 }}
-                    onClick={() => { this.props.history.push('/cockpit') }}>Return</Button>}>
-                        <>
-                        <div className='text-center pt-16'>
-                            <Paragraph className='text-white fs-18'><div>You do not have enough balance.</div>
-                            <div>Total amount including fees: {this.state.getPaymentDetails?.totalAmonunt}</div>
-                            <div> Balance available: {this.state.getPaymentDetails?.availableAmount}</div>
-                            <div> Shortfall: {this.state.getPaymentDetails?.shortfallAmount}</div>
-                            <div> Please top up.</div>
-                            <div>   A draft has been saved.</div>
-                            </Paragraph>
-                        </div>
-                        </>
-                </Modal>
+                
                 {this.state.paymentSummary &&
                        <PaymentSummary
                         showDrawer={this.state.paymentSummary}
@@ -140,6 +113,7 @@ confirmPreview = async (values) => {
                             this.closeDrawer();
                         }}
                         getPaymentDetails={this.state.getPaymentDetails}
+                        id={this.props?.id}
                     />
                        }
         </Drawer>
