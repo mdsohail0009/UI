@@ -190,13 +190,7 @@ const filePreviewPath = () => {
   
   }
     const closeDrawer = (isPreviewBack) => {
-      // debugger
-      // if(isPreviewBack == "true") {
-      //   setIsAddBatchDrawer(false);
-      // }
-      // else {
-      //   setIsAddBatchDrawer(false);
-      // }
+  
     setProceedBatchPayment(false);
     setIsAddBatchDrawer(false)
     setSelection([])
@@ -285,7 +279,6 @@ const filePreviewPath = () => {
                 onClick={()=>deleteModalCancel()}>Cancel</Button>
               <Button className="pop-btn px-36 btn-width"
                 onClick={() =>deleteDetials(selectedObj)}
-                // loading={btnLoader}
                 >Ok</Button></div>
             </>
           ]}

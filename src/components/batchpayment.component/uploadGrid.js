@@ -7,7 +7,6 @@ import List from "../grid.component";
 const { Dragger } = Upload;
 const { Title, Text, Paragraph } = Typography;
 const BatchpaymentView = (props) => {
-    debugger
     const [uplaodModal, setUploadModal] = useState(false);
     const [errorMessage,setErrorMessage]=useState(null)
     const [fileDetails,setFileDetails]=useState(null)
@@ -65,22 +64,7 @@ const BatchpaymentView = (props) => {
     }
      const handleUpload=({ file }, type)=>{
         setErrorMessage(false)
-        // if (type === "IDENTITYPROOF") {
-        //     let obj = {
-        //         "documentId": "00000000-0000-0000-0000-000000000000",
-        //         "documentName": `${file.name}`,
-        //         "id": "00000000-0000-0000-0000-000000000000",
-        //         "isChecked": file.name === "" ? false : true,
-        //         "remarks": `${file.size}`,
-        //         "state": null,
-        //         "status": false,
-        //         "Path": `${file.response}`,
-        //     }
-        //     if (file.response !== undefined) {
-
-        //     }
-        // }
-
+      
      }
     return (
         
@@ -126,7 +110,6 @@ const BatchpaymentView = (props) => {
                             showUploadList={false}
                          beforeUpload={(props) => { beforeUpload(props) }}
                          onChange={(props) => {handleUpload(props, "IDENTITYPROOF") }}
-                        // headers={{ Authorization: `Bearer ${this.props.user.access_token}` }}
                         >
                             <p className="ant-upload-drag-icon">
                                 <span className="icon xxxl doc-upload" />
@@ -146,7 +129,6 @@ const BatchpaymentView = (props) => {
                             showUploadList={false}
                          beforeUpload={(props) => {beforeUpload(props) }}
                          onChange={(props) => {handleUpload(props, "IDENTITYPROOF") }}
-                        // headers={{ Authorization: `Bearer ${this.props.user.access_token}` }}
                         >
                             <p className="ant-upload-drag-icon">
                                 <span className="icon xxxl doc-upload" />

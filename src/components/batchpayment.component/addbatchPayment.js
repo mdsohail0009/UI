@@ -40,7 +40,6 @@ class AddBatchPayment extends Component {
         refreshBtnLoader:false,
         previewData:null,
         reefreshData:null,
-        //uploadUrl: process.env.REACT_APP_UPLOAD_API + "UploadFile",
         uploadUrl:process.env.REACT_APP_API_END_POINT + "/MassPayment/importfileUpload"
     }
 
@@ -65,7 +64,7 @@ class AddBatchPayment extends Component {
     }
     
     closeDrawer = (isPreviewBack) => {
-        debugger
+
         this.setState({ ...this.state, paymentPreview: false,showModal:false,isCoinsListHide: false,uploadErrorModal: false,errorMessage:null,showInprogressModal:false});
         if (this.props.onClose) {
             this.props.onClose(isPreviewBack);
@@ -198,7 +197,6 @@ downLoadPreview=()=>{
     confirmTransaction=async(id)=>{
         const res=await confirmGetDetails(id) 
         if(res.ok){      
-            console.log(res.data)
             this.setState({...this.state,refreshBtnLoader:false,showInprogressModal:false,showModal:true,errorMessage:null})
         }
     }
@@ -288,18 +286,9 @@ downLoadPreview=()=>{
                                               beforeUpload={(props) => this.beforeUpload(props)}
                                               onChange={(props) => this.handleUpload(props)}
                                               headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
-                                            //   disabled={
-                                            //     item.state === "Approved" ||
-                                            //     item.state === "Cancelled" ||
-                                            //     item.state === "Pending"
-                                            //   }
+                                          
                                             >
-                                              {/* <span
-                                                className={`icon md attach ${item.state === "Approved" || item.state === "Cancelled"
-                                                  ? ""
-                                                  : "c-pointer"
-                                                  } `}/> */}
-                                
+                                             
                                      {errorMessage !== null && (
           <Alert type="error" description={errorMessage} showIcon />
                )}
@@ -334,7 +323,6 @@ downLoadPreview=()=>{
                             className="text-white-30 pop-cancel fw-400 text-captz text-center"
                             onClick={this.goToGrid}
                             
-                            // disabled={loading}
                           >
 
                             Exit
@@ -350,9 +338,7 @@ downLoadPreview=()=>{
                         </div>
                     </>
                   ]}
-            //    footer={ <Button className="primary-btn pop-btn"
-            //    style={{ width: 100, height: 50 }}
-            //    onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false, paymentPreview: true }, () => { })}>Next</Button>}
+         
                >
                    <>
                    {transactionError !== null && (
@@ -402,9 +388,7 @@ downLoadPreview=()=>{
                         </Tooltip>
                     }
                     destroyOnClose={true}
-                    // footer={<div className=''>
-                    //     <Button className="primary-btn pop-btn"  onClick={this.closeDrawer}>View and make changes</Button>
-                    // </div>}
+                  
                     footer={null}
                     >
                     <>
@@ -424,7 +408,6 @@ downLoadPreview=()=>{
                        <PaymentPreview
                        previewData={this.state?.previewData}
                         showDrawer={this.state.paymentPreview}
-                        // onClose={() => {
                             id={this.state.reefreshData?.id}
                         onClose={this.props.onClose}
                     />
