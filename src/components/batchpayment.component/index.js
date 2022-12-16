@@ -61,15 +61,7 @@ const Batchpayments = (props) => {
     props.history.push('/batchpayment/' + val + '/view');
   }
   const docPreview = async (file) => {
-		let res = await getFileURL({ url: file.path });
-		if (res.ok) {
-			setPreviewModal(true);
-			setPreviewPath(res.data);
-		}
-	};
-const filePreviewPath = () => {
-		return previewPath;
-
+    window.open(file.filePath,'_blank')
 	};
   
     const gridColumns = [
@@ -111,7 +103,7 @@ const filePreviewPath = () => {
         { field: "status", title: 'Status', filter: true, width: 150, },
         { field: "numberOfTransactions", title: 'Number of Transactions', filter: true, width: 240,dataType: "number", filterType: "numeric", 
         customCell: (props) => (<td>
-          <div className="gridLink" onClick={()=>docPreview()}
+          <div className="gridLink" onClick={()=>docPreview(props.dataItem)}
         >
                             
           {props?.dataItem?.numberOfTransactions} 
@@ -190,13 +182,13 @@ const filePreviewPath = () => {
   
   }
     const closeDrawer = (isPreviewBack) => {
-  
     setProceedBatchPayment(false);
     setIsAddBatchDrawer(false)
     setSelection([])
     }
     const refreshPayment=()=>{
       gridRef?.current?.refreshGrid();
+      setSelection([])
     }
    const gotoDashboard=()=>{
       props.history.push('/cockpit')
@@ -279,6 +271,7 @@ const filePreviewPath = () => {
                 onClick={()=>deleteModalCancel()}>Cancel</Button>
               <Button className="pop-btn px-36 btn-width"
                 onClick={() =>deleteDetials(selectedObj)}
+                // loading={btnLoader}
                 >Ok</Button></div>
             </>
           ]}
