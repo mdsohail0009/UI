@@ -4,7 +4,7 @@ import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import Search from "antd/lib/input/Search";
 import { fetchMemberWallets } from "../dashboard.component/api";
-import {refreshTransaction,saveTransaction} from './api'
+import {refreshTransaction,saveTransaction,confirmGetDetails} from './api'
 import NumberFormat from "react-number-format";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
@@ -16,6 +16,7 @@ import CryptoJS from "crypto-js";
 import { success, error } from "../../utils/message";
 import {uuidv4} from './api'
 import pending1 from '../../assets/images/pending1.png'
+import { async } from 'rxjs';
 const { Title,Paragraph } = Typography
 class AddBatchPayment extends Component {
     useDivRef = React.createRef()
@@ -37,6 +38,8 @@ class AddBatchPayment extends Component {
         file:{},
         transactionError:null,
         refreshBtnLoader:false,
+        previewData:null,
+        reefreshData:null,
         //uploadUrl: process.env.REACT_APP_UPLOAD_API + "UploadFile",
         uploadUrl:process.env.REACT_APP_API_END_POINT + "/MassPayment/importfileUpload"
     }
@@ -129,9 +132,9 @@ handleUpload = ({ file }, item, i) => {
       this.setState({ ...this.state, paymentSummary: true, insufficientModal: 
         false,showInprogressModal:true,uploadLoader:false})
 
-      if(file?.response){
-                             this.confirmPreview(obj)
-    }
+    //   if(file?.response){
+         this.confirmPreview(obj)
+    // }
     }
   };
     selectWhitelist=()=>{
@@ -141,11 +144,10 @@ handleUpload = ({ file }, item, i) => {
         this.setState({ ...this.state, showModal:false});
     }
     handleInprogressCancel=()=>{
-        this.setState({ ...this.state, showInprogressModal:false});
+        this.setState({ ...this.state, showInprogressModal:false,refreshBtnLoader:false});
     }
     confirmPreview = async (file) => {
         this.setState({...this.state,errorMessage:null})
-       console.log(file)
        let saveObj={
             "id": file?.id,
             "walletCode": this.state?.selectedCurrency,
@@ -176,12 +178,28 @@ downLoadPreview=()=>{
     }
 }
     refreshTransaction=async()=>{
-        this.setState({...this.state,refreshBtnLoader:true,showModal:false})
+        if(this.state.file?.id){
+
         
+        this.setState({...this.state,refreshBtnLoader:true,showModal:false})
         const res=await refreshTransaction(this.state.file?.id)
-       if(res.ok){
-        this.setState({...this.state,refreshBtnLoader:false,showInprogressModal:false,showModal:true,errorMessage:null})
-       }
+       if(res.ok){        this.setState({...this.state,refreshBtnLoader:false,reefreshData:res.data,showInprogressModal:false,showModal:true,errorMessage:null})
+
+    }
+}
+    }
+    handleNext=async()=>{
+        const res=await confirmGetDetails(this.state.reefreshData?.id)
+        if(res.ok){
+            this.setState({ ...this.state,previewData:res.data, showModal: false,errorMessage:null, uploadErrorModal: false, paymentPreview: true }, () => { })
+        }
+    }
+    confirmTransaction=async(id)=>{
+        const res=await confirmGetDetails(id) 
+        if(res.ok){      
+            console.log(res.data)
+            this.setState({...this.state,refreshBtnLoader:false,showInprogressModal:false,showModal:true,errorMessage:null})
+        }
     }
     render() {
         const { uploadLoader, refreshBtnLoader, transactionError ,errorMessage} = this.state;
@@ -340,7 +358,7 @@ downLoadPreview=()=>{
           <Alert type="error" description={transactionError} showIcon />
                )}
                    <div className='text-center pt-16'>
-                    <Image src={pending1}/>
+                   <Image src={pending1} alt={"success"} />
                        <Paragraph className='text-white fs-18'>Document has been successfully uploaded</Paragraph>
                       
                    </div>
@@ -362,7 +380,7 @@ downLoadPreview=()=>{
                    
                     footer={ <Button className="primary-btn pop-btn"
                     style={{ width: 100, height: 50 }}
-                    onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false, paymentPreview: true }, () => { })}>Next</Button>}>
+                    onClick={() => this.handleNext()}>Next</Button>}>
                         <>
                        
                         <div className='text-center pt-16'>
@@ -403,6 +421,7 @@ downLoadPreview=()=>{
                 </Modal>
                 {this.state.paymentPreview &&
                        <PaymentPreview
+                       previewData={this.state?.previewData}
                         showDrawer={this.state.paymentPreview}
                         onClose={() => {
                             this.closeDrawer("true");
