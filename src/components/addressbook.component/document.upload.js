@@ -45,9 +45,8 @@ class AddressDocumnet extends Component {
         }
         return <Row >
             <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="text-left">
-                <div className='mb-24'>
-                    <Paragraph
-                      className="mb-8 fs-14 text-white fw-500 ml-12" 
+                <div >
+                    <Paragraph className="sub-abovesearch code-lbl" 
                     >{this.props.title}</Paragraph>
                      {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
                     <Form.Item name={"files"} required rules={[{
@@ -91,8 +90,8 @@ class AddressDocumnet extends Component {
                             <p className="ant-upload-drag-icon">
                                 <span className="icon xxxl doc-upload" />
                             </p>
-                            <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
-                            <p className="ant-upload-hint text-secondary fs-12">
+                            <p className="ant-upload-text">Drag and drop or browse to choose file</p>
+                            <p className="ant-upload-hint uplaod-inner">
                                 PNG, JPG,JPEG and PDF files are allowed
                             </p>
                         </Dragger>

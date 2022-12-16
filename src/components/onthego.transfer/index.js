@@ -519,24 +519,20 @@ saveWithdrawdata = async () => {
       addressselection: (
         <React.Fragment>
            {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
-          <div className="mt-8">
-          <Title
-                        className='sub-heading code-lbl'>Who are you sending money to?</Title>
+          <div>
+            <Title className='sub-abovesearch code-lbl'>Who are you sending money to?</Title>
           </div>
           <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-
-          <Search placeholder="Search for Payee" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className=" text-center" />
+          <Search placeholder="Search Currency" value={this.state.searchVal} prefix={<span className="icon lg search-angle drawer-search" />} onChange={this.handleSearch} size="middle" bordered={false} className="cust-search" />
+          {/* <Search placeholder="Search for Payee" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className=" text-center" /> */}
           </Col>
           {this.state?.loading && <Loader />}
           {!this.state.loading && (
             <>
-             <Title className="fw-600 text-white px-4 mb-16 mt-16 text-captz" style={{ fontSize: '18px' }}>Address Book</Title>
-              <Divider className="cust-divide" />
+             <Title className="adbook-head">Address Book</Title>
+              {/* <Divider className="cust-divide" /> */}
 
-              <ul
-                style={{ listStyle: 'none', paddingLeft: 0 }}
-                className="addCryptoList"
-              >
+              <ul className="addCryptoList" >
                 {filterObj.length > 0 &&
                   filterObj?.map((item, idx) => (
                     <>
@@ -587,26 +583,26 @@ saveWithdrawdata = async () => {
                               }
                             }
                           }}>
- <Col xs={6} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
+                            <Col xs={6} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
                                 <Col xs={14} md={24} lg={24} xl={19} xxl={19} className="small-text-align">
-                                    <label className="fs-16 fw-600 text-white l-height-normal text-captz c-pointer">{item.name}</label>
-                                    {item.accountNumber && <div><Text className="fs-14 text-white-30 m-0">{this.state.selectedCurrency} account ending with {item.accountNumber?.substr(item.accountNumber.length - 4)}</Text></div>}
+                                    <label className="address-name">{item.name}</label>
+                                    {item.accountNumber && <div><Text className="address-subtext">{this.state.selectedCurrency} account ending with {item.accountNumber?.substr(item.accountNumber.length - 4)}</Text></div>}
                                 </Col>
-                                <Col xs={4} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
+                                {/* <Col xs={4} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                             <span class="icon md rarrow-white"></span>
-                          </Col>
+                          </Col> */}
                         </Row>}</>
                   ))}
-                  {(!filterObj.length > 0) && <div className="success-pop text-center" style={{ marginTop: '0px' }}>
-                            <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
+                  {(!filterObj.length > 0) && <div className="success-pop text-center" >
+                            <img src={oops} className="confirm-icon"  alt="Confirm" />
                             <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
                             <p className="fs-16 text-white-30 fw-200 mb-0"> {apicalls.convertLocalLang('address_available')} </p>
                             <a onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</a>
                         </div>}
               </ul>
 
-              <Title className="fw-600 text-white px-4 mb-16 mt-16 text-captz" style={{ fontSize: '18px' }}>Past Recipients</Title>
-              <Divider className="cust-divide" />
+              <Title className="adbook-head">Past Recipients</Title>
+              {/* <Divider className="cust-divide" /> */}
               <ul
                 style={{ listStyle: 'none', paddingLeft: 0 }}
                 className="addCryptoList"
@@ -614,7 +610,7 @@ saveWithdrawdata = async () => {
                 {pastPayees.length > 0 &&
                   pastPayees?.map((item, idx) => (
                     <Row
-                      className="fund-border c-pointer"
+                      className="fund-border"
                       onClick={async () => {
                         if (
                           !['myself', '1stparty', 'ownbusiness'].includes(
@@ -644,12 +640,12 @@ saveWithdrawdata = async () => {
                       }}>
                       <Col xs={6} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
                                 <Col xs={14} md={24} lg={24} xl={19} xxl={19} className=" small-text-align">
-                                    <label className="fs-16 fw-600 text-white l-height-normal text-captz c-pointer">{item.name}</label>
-                                    <div><Text className="fs-14 text-white-30 m-0">{this.state.selectedCurrency} account ending with {item.accountNumber?.substr(item.accountNumber?.length - 4)}</Text></div>
+                                    <label className="address-name">{item.name}</label>
+                                    <div><Text className="address-subtext">{this.state.selectedCurrency} account ending with {item.accountNumber?.substr(item.accountNumber?.length - 4)}</Text></div>
                       </Col>
-                      <Col xs={4} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
+                      {/* <Col xs={4} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                         <span class="icon md rarrow-white"></span>
-                      </Col>
+                      </Col> */}
                     </Row>
                   ))}
                {(!pastPayees.length > 0) && <div className="success-pop text-center" style={{ marginTop: '20px' }}>
