@@ -33,15 +33,7 @@ const Batchpayments = (props) => {
     //setPermissionsInterval(setInterval(loadPermissions, 200))
 
 }, []);
-  const showDrawer = () => {
-    setOpen(true);
-  };
-  const onChange = (e) => {
-    setPlacement(e.target.value);
-  };
-  const onClose = () => {
-    setOpen(false);
-  };
+
  
   const loadPermissions = () => {
     if (props.batchPaymentPermissions) {
