@@ -126,6 +126,9 @@ const filePreviewPath = () => {
      { field: "pendingTransactionCount", title: 'Pending Transactions', filter: true, dataType: "number", filterType: "numeric", width: 220, },
      { field: "approvedTransactionCount", title: 'Approved Transactions', filter: true, dataType: "number", filterType: "numeric", width: 240, },
      { field: "rejectedTransactionCount", title: 'Rejected Transactions', filter: true, dataType: "number", filterType: "numeric", width: 220, },
+     { field: "FileUploadStatus", title: 'File Upload Status', filter: true, width: 220, }
+
+     
    ];
  
    const handleInputChange = (prop) => {
@@ -171,11 +174,10 @@ const filePreviewPath = () => {
     }
    }
     const deleteDetials = async () => {
-      setBtnLoader(true);
+      // setBtnLoader(true);
       const res = await deleteBatchPayments(selection[0])
       if (res.ok) {
         gridRef?.current?.refreshGrid();
-        setBtnLoader(false);
         setDeleteModal(false);
         setSelection([]);
       }
@@ -204,12 +206,15 @@ const filePreviewPath = () => {
       }
     setProceedBatchPayment(false);
     }
+    const refreshPayment=()=>{
+      gridRef?.current?.refreshGrid();
+    }
    const gotoDashboard=()=>{
       props.history.push('/cockpit')
     }
     const onActionClick = (key) => {
       const actions = {
-        Refresh:"refresh",
+        Refresh:refreshPayment,
         Add: addBatchPayment,
         Process: proceedBatchPayment,
         Delete: deleteBatchPayment
@@ -282,7 +287,8 @@ const filePreviewPath = () => {
                 onClick={()=>deleteModalCancel()}>Cancel</Button>
               <Button className="pop-btn px-36 btn-width"
                 onClick={() =>deleteDetials(selectedObj)}
-                loading={btnLoader}>Ok</Button></div>
+                // loading={btnLoader}
+                >Ok</Button></div>
             </>
           ]}
         >
