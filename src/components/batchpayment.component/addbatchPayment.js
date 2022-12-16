@@ -425,9 +425,7 @@ downLoadPreview=()=>{
                        previewData={this.state?.previewData}
                         showDrawer={this.state.paymentPreview}
                         // onClose={() => {
-                        //     this.closeDrawer("true");
-                        //     this.setState({...this.state,showModal: false, uploadErrorModal: false})
-                        // }}
+                            id={this.state.reefreshData?.id}
                         onClose={this.props.onClose}
                     />
                        }

@@ -65,10 +65,22 @@ confirmPreview = async () => {
    if(response.ok){
     this.setState({ ...this.state,isLoad:false, paymentSummary: true, insufficientModal: false ,getPaymentDetails:response.data})
   }else{
-    this.setState({...this.state,isLoad:false,insufficientModal:false,errorMessage:response.data, paymentSummary:false})
+    this.setState({...this.state,isLoad:false,insufficientModal:false,errorMessage:this.isErrorDispaly(response), paymentSummary:false})
   }
 
 }
+isErrorDispaly = (objValue) => {
+  if (objValue.data && typeof objValue.data === "string") {
+    return objValue.data;
+  } else if (
+    objValue.originalError &&
+    typeof objValue.originalError.message === "string"
+  ) {
+    return objValue.originalError.message;
+  } else {
+    return "Something went wrong please try again!";
+  }
+  };
   render() {
     const { Title } = Typography;
     return (
@@ -114,6 +126,7 @@ confirmPreview = async () => {
                         }}
                         getPaymentDetails={this.state.getPaymentDetails}
                         id={this.props?.id}
+                        transactionContinue={this.props?.transactionContinue}
                     />
                        }
         </Drawer>
