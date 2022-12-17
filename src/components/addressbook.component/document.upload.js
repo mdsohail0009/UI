@@ -101,7 +101,7 @@ class AddressDocumnet extends Component {
                             <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "":(file.documentName?.slice(-3) === "zip" ? "file" : "")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                             <div className="docdetails">
                                 <EllipsisMiddle suffixCount={6}>{file.name || file.documentName}</EllipsisMiddle>
-                                <span className="fs-12 text-secondary">{(file.size || file?.remarks) ? bytesToSize(file.size || file?.remarks) : ""}</span>
+                                <span className="upload-filesize">{(file.size || file?.remarks) ? bytesToSize(file.size || file?.remarks) : ""}</span>
                             </div>
                             <span className="icon md close c-pointer" onClick={() => {
                                 this.setState({ ...this.state, showDeleteModal: true, selectedFileIdx: indx,selectedObj:file })

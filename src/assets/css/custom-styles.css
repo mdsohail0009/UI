@@ -507,6 +507,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .docdetails{flex: 1; margin-left: 16px;}
 .docdetails .docname{font-weight: 700;color: var(--textWhite30); line-height: 16px;max-width: 150px !important;}
 .docfile-container{display: flex; flex-wrap: wrap;}
+.upload-filesize{font-weight: 700;font-size: 16px;color: var(--coinPrice);}
 /* send fiat end */
 /* send crypto start */
 .min-btn{background: var(--radioBg) !important;height: 36px;border-radius: 10px;min-width: 60px;line-height: 34px;color: var(--coinPrice);font-size: 16px;font-weight: 500; margin: 0 16px 16px 0;}
