@@ -201,9 +201,9 @@ const Batchpayments = (props) => {
        
           <div className='main-container'>
           
-              <div className='d-flex justify-content mb-16'>
               
-                  <div>
+              
+                  <div className='d-flex justify-content align-center mb-16'>
                 
                       <Title className="basicinfo mb-0"><span className='icon md c-pointer back mr-8' onClick={gotoDashboard}></span><Translate content="batch_payments" component={Text} className="basicinfo" />
                                         <Popover
@@ -218,15 +218,16 @@ const Batchpayments = (props) => {
                                         </Popover>
                                         
                       </Title>
-                      
-                  </div>
-                  <div className='batch-actions'>
+                      <div className='batch-actions'>
                   <span className="mb-right">
           <ActionsToolbar featureKey="Batch_Payment" onActionClick={(key) => onActionClick(key)}/>
           </span>
                   
                   
                   </div>
+                      
+              
+                  
               </div>
               {errorWarning !== null && (
             <Alert
