@@ -603,7 +603,7 @@ class WithdrawSummary extends Component {
 		const btnList = {
 			get_otp: (
 				<Translate
-					className={`pl-0 ml-0 text-yellow-50 ${disable ? "c-notallowed" : ""
+					className={` ${disable ? "c-notallowed" : ""
 						}`}
 					content="get_code"
 				/>
@@ -700,8 +700,8 @@ class WithdrawSummary extends Component {
 				) : (
 					<div className="auto-scroll">
 						<div
-							className="fs-36 text-white-30 fw-500 text-center"
-							style={{ lineHeight: "36px" }}>
+							className="cust-coin-value"
+							style={{}}>
 							<Currency
 								prefix={""}
 								decimalPlaces={8}
@@ -713,7 +713,7 @@ class WithdrawSummary extends Component {
 								}
 							/>{" "}
 						</div>
-						<div className="text-white-50 fw-500 text-center fs-14 mb-16">
+						<div className="faitcurrency-style">
 							<Currency
 								defaultValue={this.state.usdAmount}
 								prefix={""}
@@ -722,9 +722,10 @@ class WithdrawSummary extends Component {
 								suffixText={"USD"}
 							/>
 						</div>
-						<div className="pay-list fs-14">
+						<div className="cust-summary-new">
+						<div className="pay-list">
 							<Translate
-								className="fw-500 text-white"
+								className="summary-liststyle"
 								content="exchange_rate"
 								component={Text}
 							/>
@@ -732,20 +733,20 @@ class WithdrawSummary extends Component {
 								defaultValue={this.state.OneusdAmount}
 								decimalPlaces={8}
 								prefix={""}
-								className="fw-500 text-white-30"
+								className="summarybal"
 								prefixText={`1 ${this.props.sendReceive.withdrawCryptoObj?.walletCode
 									} = ${"USD"}`}
 							/>
 						</div>
-						<div className="pay-list fs-14">
+						<div className="pay-list">
 							<Translate
-								className="fw-500 text-white"
+								className="summary-liststyle"
 								content="amount"
 								component={Text}
 							/>
 							<Currency
 								prefix={""}
-								className={"text-white fw-500"}
+								className={"summarybal"}
 								decimalPlaces={8}
 								defaultValue={
 									this.props.sendReceive.withdrawCryptoObj?.totalValue
@@ -755,14 +756,14 @@ class WithdrawSummary extends Component {
 								}
 							/>
 						</div>
-						<div className="pay-list fs-14">
+						<div className="pay-list">
 							<Translate
-								className="fw-500 text-white"
+								className="summary-liststyle"
 								content="WithdrawalFee"
 								component={Text}
 							/>
 							<Text
-								className="fw-500 text-white"
+								className="summarybal"
 								style={{
 									width: "250px",
 									textOverflow: "ellipsis",
@@ -773,34 +774,34 @@ class WithdrawSummary extends Component {
 								{this.state?.comission}
 							</Text>
 						</div>
-						<div className="pay-list fs-14">
+						<div className="pay-list">
 							<Translate
-								className="fw-500 text-white"
+								className="summary-liststyle"
 								content="address"
 								component={Text}
 							/>
 								<CopyToClipboard text={this.props.sendReceive.withdrawCryptoObj?.toWalletAddress} options={{ format: 'text/plain' }}>
-									<Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="mb-0 fs-18 fw-400 text-white fw-500" >{this.props.sendReceive.withdrawCryptoObj?.toWalletAddress?.length>0?this.props.sendReceive.withdrawCryptoObj?.toWalletAddress.substring(0,4)+`................`+this.props.sendReceive.withdrawCryptoObj?.toWalletAddress.slice(-4):"-"}</Text>
+									<Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="summary-liststyle" >{this.props.sendReceive.withdrawCryptoObj?.toWalletAddress?.length>0?this.props.sendReceive.withdrawCryptoObj?.toWalletAddress.substring(0,4)+`................`+this.props.sendReceive.withdrawCryptoObj?.toWalletAddress.slice(-4):"-"}</Text>
 								</CopyToClipboard>
 						</div>
-						<div className="pay-list fs-14">
+						<div className="pay-list">
 							<Translate
-								className="fw-500 text-white"
+								className="summary-liststyle"
 								content="network"
 								component={Text}
 							/>
-							<Text className="fw-500 text-white">
+							<Text className="summary-liststyle">
 							{this.props.sendReceive.withdrawCryptoObj?.network || '-'}
 							</Text>
-						</div>
+						</div></div>
 						<Form
-							className="mt-36"
+							className="crypto-summaryform"
 							name="advanced_search"
 							autoComplete="off"
 							form={this.form}
 							onFinish={this.saveWithdrwal}>
 							{this.state.permissions?.Send && this.state.verifyData.isPhoneVerified == true && (
-								<Text className="fs-14 mb-8 text-white d-block fw-500 code-lbl">
+								<Text className="label-style">
 									Phone Verification Code *
 								</Text>
 							)}
@@ -875,7 +876,7 @@ class WithdrawSummary extends Component {
 							)}
 							{this.state.verifyData.isPhoneVerified}
 							{this.state.permissions?.Send && this.state.verifyData.isEmailVerification == true && (
-								<Text className="fs-14 mb-8 text-white d-block fw-500 code-lbl">
+								<Text className="label-style">
 									Email Verification Code *
 								</Text>
 							)}
@@ -949,7 +950,7 @@ class WithdrawSummary extends Component {
 								</Form.Item>
 							)}
 							{this.state.permissions?.Send && this.state.verifyData.twoFactorEnabled == true && (
-								<Text className="fs-14 mb-8 text-white d-block fw-500 code-lbl">
+								<Text className="label-style">
 									Authenticator Code *
 								</Text>
 							)}
