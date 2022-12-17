@@ -776,7 +776,7 @@ font-size: 12px;font-weight: 500;height: 20px;} */
     .ant-popover-inner-content{padding: 10px 0px !important;}
     .ant-popover-inner{padding: 8px 9px;}
     .ant-popover-inner-content .rarrow-white{margin-left: 0px!important;}
-    .ant-popover-inner-content div, .ant-popover-inner{padding: 8px 8px !important;}
+    /* .ant-popover-inner-content div, .ant-popover-inner{padding: 8px 8px !important;} */
     .tlv-header .sideropen {background: var(--bgGloom) !important;}
     .tlv-header .mobile-logo {padding-left: 0px;}
     /* .enter-val-container.swap-com input{width: 65%;} */
@@ -857,7 +857,7 @@ font-size: 12px;font-weight: 500;height: 20px;} */
     /* .enter-val-container input{font-size: 16px !important;padding: 0px 5px !important;} */
     /* .enter-val-container.swap-com input{width:68%;} */
     .ant-tabs > .ant-tabs-nav .ant-tabs-nav-more{display: none;}
-    .ant-popover-inner-content div:hover{padding: 8px 22px !important;display: flex;align-items: center;}
+    /* .ant-popover-inner-content div:hover{padding: 8px 22px !important;display: flex;align-items: center;} */
     .tlv-logo{height:46px;padding-left:0;}
     .mobile-content{width:274px !important;}
     .ant-form-item-control-input-content .pop-btn{margin-top: 20px;}
@@ -1249,8 +1249,8 @@ input[type=number]::-webkit-outer-spin-button {
 .ant-collapse.profile-collapse, .profile-collapse .ant-collapse-content{background: transparent !important;border: 0 !important;}
 .drpdwn-list .ant-collapse > .ant-collapse-item{border-bottom: 0 !important;}
 .ant-collapse-icon-position-right.profile-collapse > .ant-collapse-item > .ant-collapse-header{padding: 10px 0 10px 10px;color: var(--textWhite30);font-size: 14px;font-weight: 300;}
-.ant-popover-inner-content div:hover{padding: 8px 27px;background: var(--bgDarkGrey);}
-.ant-popover-inner-content div, .ant-popover-inner{padding: 8px 12px;background: var(--bgGloom);}
+/* .ant-popover-inner-content div:hover{padding: 8px 27px;background: var(--bgDarkGrey);} */
+/* .ant-popover-inner-content div, .ant-popover-inner{padding: 8px 12px;background: var(--bgGloom);} */
 .ant-popover-inner-content .iban-hov:hover{background-color: var(--bgDark);}
 .ant-popover-arrow{background: #313c46 !important;border-color: var(--bgGloom);}
 .doc-def{width: 460px;margin-left: -2px;}

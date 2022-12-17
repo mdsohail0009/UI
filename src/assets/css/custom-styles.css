@@ -89,17 +89,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .profile-dropdown .user-profile{width:112px;height: 112px; border-radius: 50%;display: block;margin: 0 auto;}
 .profile-dropdown {text-align: center;padding:12px 24px;}
 .profile-dropdown .drpdwn-list{padding-top: 0px; padding-left: 0; padding-right: 0; margin-left: -24px; margin-right: -24px;}
-.profile-btn, .profile-btn:hover, .profile-btn:active, .profile-btn:focus{background: transparent;
-    border: 1px solid var(--green) !important;
-    height: 27px;
-    border-radius: 8px;
-    color: var(--green);
-    font-size: 14px;
-    width: 127px;
-    font-weight: 500;
-    text-align: center;display: flex;
-    align-items: center;
-    padding: 6px 10px;margin-bottom: 10px;}
+.profile-btn, .profile-btn:hover, .profile-btn:active, .profile-btn:focus{background: transparent;border: 1px solid var(--green) !important;height: 27px;border-radius: 8px;color: var(--green);font-size: 14px;width: 127px;font-weight: 500;text-align: center;display: flex;align-items: center;padding: 6px 10px;margin-bottom: 10px;font-style: italic;}
 .profile-info{width: 180px;height: 180px;padding: 5px;border-radius: 50%; margin: 0 auto 24px;background-image: linear-gradient(128deg, var(--bgDark1) 50%, var(--bgDark1) 50%); position: relative;}
 .profile-info .user-profile{width:100%;height: 100%; border-radius: 50%;padding: 6px;background-color: var(--bgDarkGrey);object-fit: cover;}
 .profile-info .img-upld{position: absolute;right: -5px;bottom: 20px;background-color: var(--bgYellow);border-color: var(--bgYellow);}
@@ -113,6 +103,10 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .profileinfo:first-child{border-top:0}
 .profileinfo.active, .profileinfo:hover{background: var(--bgOrient1); margin-left: -32px; margin-right: -32px;}
 .profileinfo.active .profile-block, .profileinfo:hover .profile-block{padding: 0 32px}
+.ant-popover-inner-content div, .ant-popover-inner{padding: 8px 12px;}
+.ant-popover-inner{background-color: var(--profileMenu);border-radius: 10px;padding: 0;}
+.ant-popover-inner-content div:hover{background: var(--drpdwnHover);padding: 8px 12px !important;}
+
 /*profile css end*/
 
 /*Common css start*/
@@ -334,6 +328,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .ac-topspace{padding-top: 10px;}
 .listitems-design.iban-style .ant-list-item-meta-content{width: 100%;height: 70px;}
 .fund-transfer-input .ant-form-item-label{text-align: left;}
+.ant-btn.ant-btn-block.profile-btn:focus, .ant-btn.ant-btn-block.profile-btn:active{border: 1px solid var(--green) !important;}
 /* Dashboard end */
 
 /*Buy/sell drawer start*/
@@ -413,11 +408,11 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .pay-grid thead th:last-child{width: 500px;}
 .pay-grid tbody td{padding: 8px; color: var(--tablecol);font-weight: 400;font-size: 14px ;}
 .ant-table-placeholder:hover{background: transparent;}
-.ant-popover-inner{background-color: var(--bgGloom); border-radius: 10px;}
+/* .ant-popover-inner{background-color: var(--bgGloom); border-radius: 10px;} */
 /* . .ant-popover */
 .pay-list{display: flex;justify-content: space-between;align-items: center;}
 .ant-table-placeholder:hover{background: transparent;}
-.ant-popover-inner{background-color: var(--bgGloom); border-radius: 10px;}
+/* .ant-popover-inner{background-color: var(--bgGloom); border-radius: 10px;} */
 .more-popover .lbl{font-size: 12px; color: var(--textWhite50);font-weight: 100;}
 .more-popover .val{font-size: 14px; color: var(--textWhite30);display: block;margin-bottom: 16px; line-height: normal;}
 .ant-popover-arrow{border-color: var(--bgGloom) !important;}
@@ -490,7 +485,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* crypto-coins end   */
 /* send fiat start */
 .fund-transfer-input .tfunds-inputgroup .ant-select{width: 122px;}
-.fund-transfer-input .tfunds-inputgroup .ant-select-selection-item{}
+/* .fund-transfer-input .tfunds-inputgroup .ant-select-selection-item{} */
 .alert-info-custom{background-color:var(--addressList) !important;border-radius: 13px;color: var(--textWhite);padding: 28px 22px;}
 .kpi-divstyle{border-bottom:1px solid var(--borderColor);padding-bottom: 20px;width: 100%;}
 .custom-forminput.custom-label{margin-bottom: 16px;}
