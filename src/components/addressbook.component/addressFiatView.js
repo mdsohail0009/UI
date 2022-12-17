@@ -324,7 +324,7 @@ const AddressFiatView = (props) => {
 														marginBottom: 16,
 														width: "100%"
 													}}>
-													<Row gutter={[16, 16]} key={idx}>
+													<Row  key={idx}>
 														
 														<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
@@ -554,9 +554,10 @@ const AddressFiatView = (props) => {
 								</Row>
 								</div>
 							)}
-							<div className="text-right mt-24">
+							<div className="">
 								<Button
-									className="pop-btn px-36"
+								block
+									className="pop-btn"
 									style={{ margin: "0 8px",width:'250px' }}
 									onClick={backToAddressBook}>
 									Cancel

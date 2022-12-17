@@ -296,13 +296,14 @@ class AddressCrypto extends Component {
             </Form.Item>
             </Col>
             </Row>
-            <Form.Item className="text-right mt-36">
+            <Form.Item className="">
               <Button
                 htmlType="submit"
                 size="large"
-                className="pop-btn mb-36 px-36"
+                block
+                className="pop-btn"
                 loading={this.state.isBtnLoading}
-                style={{ width: "150px" }}
+                // style={{ width: "150px" }}
               >
                 {this.props.type === "manual" && "Save"}
                 {this.props.type !== "manual" && <Translate content="continue" />}

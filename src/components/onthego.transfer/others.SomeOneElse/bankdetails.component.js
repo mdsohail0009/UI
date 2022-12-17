@@ -134,7 +134,7 @@ class PayeeBankDetails extends Component {
                     </div>
                     </Col>
                     <Col xs={24} md={10} lg={10} xl={10} xxl={10}>
-                       <Button className={`pop-btn dbchart-link fs-14 fw-500`} style={{width:"150px",marginTop:"32px",height:"42px"}}
+                       <Button className={`pop-btn dbchart-link pop-validate-btn`} style={{width:"150px",marginTop:"32px",height:"42px"}}
                                     loading={this.state.isValidateLoading}
                                     onClick={() => this.onIbanValidate(this.props?.form.current?.getFieldValue(["payeeAccountModels","iban"]))} >
                                     <Translate content="validate" />
@@ -479,7 +479,7 @@ class PayeeBankDetails extends Component {
         const { countries, states, isLoading } = this.state;
         
         return <>
-            <Row gutter={[16, 16]} className={'pb-16'}>
+            <Row >
                 {this.renderAddress(domesticType == "internationalIBAN" ? "sepa" : transferType)}
             </Row>
             </>

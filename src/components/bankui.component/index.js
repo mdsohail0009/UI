@@ -197,7 +197,7 @@ class BankWallets extends Component {
                         <Button
                           content="Pending"
                           type="primary"
-                          className="custom-btn prime  text-white"
+                          className="custom-btn prime"
                           style={{width:'118px'}}
                           disabled={true}
                         >

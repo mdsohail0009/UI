@@ -260,7 +260,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         
         {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
         {!isLoading &&<>
-        <Row gutter={[4, 4]}><Col xs={24} md={24} lg={24} xl={24} xxl={24} id="favoriteName" className="mt-16">
+        <Row><Col xs={24} md={24} lg={24} xl={24} xxl={24} id="favoriteName" className="">
             <Form.Item
                 className="custom-forminput custom-label"
                 name="favouriteName"
@@ -346,7 +346,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         </div>
 
         <h2  className="adbook-head">Bank Details</h2>
-        {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Row gutter={[8, 8]} >
+        {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Row>
         {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
             <div className="custom-btn-error">
             <Form.Item
@@ -373,7 +373,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             </div>
         </Col>}
         {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') &&<Col xs={24} md={10} lg={10} xl={10} xxl={10}>
-            <Button className={`pop-btn dbchart-link fs-14 fw-500`}
+            <Button className={`pop-btn dbchart-link pop-validate-btn`}
                 loading={isValidateLoading}
                 onClick={() => onIbanValidate(enteredIbanData)} >
                 <Translate content="validate" />
@@ -381,7 +381,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         </Col>}
         </Row>}
 
-        <Row gutter={[8, 8]}>
+        <Row>
             {(currency == 'USD' && addressOptions.tabType !== 'internationalIBAN')  && <> <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                     className="custom-forminput custom-label"

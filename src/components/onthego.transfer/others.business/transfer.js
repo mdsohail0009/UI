@@ -326,21 +326,22 @@ class BusinessTransfer extends Component {
                         <RecipientAddress />
                     </Row>
 
-                    <Paragraph className="mb-8 px-4 text-white fw-500 mt-36" style={{ fontSize: 18 }}>Bank Details</Paragraph>
+                    <Paragraph className="adbook-head" >Bank Details</Paragraph>
                     {/* <Divider /> */}
                     <DomesticTransfer type={this.props.type} />
-                    <Paragraph className="sub-abovesearch">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
+                    <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
                     <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
                     }} refreshData ={selectedTab}/>
-                    <div className="text-right mt-12">
+                    <div className="">
 
                                 <Button
                                     htmlType="submit"
                                     size="large"
-                                    className="pop-btn mb-36 px-36"
+                                    block
+                                    className="pop-btn "
                                     //style={{ width: "300px" }}
                                     loading={this.state.isBtnLoading}>
                                     {this.props.type === "manual" && "Save"}
@@ -358,7 +359,7 @@ class BusinessTransfer extends Component {
                     onFinish={this.submitPayee}
                     scrollToFirstError
                 >
-                    <Row gutter={[4, 4]}>
+                    <Row >
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label"
@@ -388,9 +389,9 @@ class BusinessTransfer extends Component {
                         </Col>
                     </Row>
                     
-                    <h2 style={{ fontSize: 18,}} className="mt-16 text-captz px-4 text-white fw-600">Recipient's Details</h2>
+                    <h2 className="adbook-head">Recipient's Details</h2>
                     {/* <Divider /> */}
-                    <Row gutter={[12, 12]}>
+                    <Row>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label"
@@ -448,10 +449,10 @@ class BusinessTransfer extends Component {
                         </Col>
                         <RecipientAddress />
                     </Row>
-                    <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
+                    <h2  className="adbook-head">Bank Details</h2>
                     {/* <Divider /> */}
                     <InternationalTransfer type={this.props.type} />
-                    <Paragraph className="sub-abovesearch">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
+                    <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
                     <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;
@@ -461,7 +462,8 @@ class BusinessTransfer extends Component {
                                 <Button
                                     htmlType="submit"
                                     size="large"
-                                    className="pop-btn mb-36"
+                                    block
+                                    className="pop-bt"
                                     style={{ minWidth: "100%" }}
                                     loading={this.state.isBtnLoading}>
                                     {this.props.type === "manual" && "Save"}
@@ -569,7 +571,7 @@ class BusinessTransfer extends Component {
                         <RecipientAddress />
                     </Row>
 
-                    <Paragraph className="mb-8 text-white fw-500 mt-36 px-4" style={{ fontSize: 18 }}>Bank Details</Paragraph>
+                    <Paragraph className="adbook-head" >Bank Details</Paragraph>
                     {/* <Divider /> */}
                     {/* <InternationalTransfer type={this.props.type} /> */}
                     <Row>
@@ -597,7 +599,7 @@ class BusinessTransfer extends Component {
                             </div>
                        </Col>
                        <Col xs={24} md={10} lg={10} xl={10} xxl={10}>
-                       <Button className={`pop-btn dbchart-link fs-14 fw-500`} style={{width:"150px",marginTop:"36px",height:"42px"}}
+                       <Button className={`pop-btn dbchart-link pop-validate-btn`} 
                             loading={this.state.isValidateLoading} 
                              onClick={() => this.onIbanValidate(this.state?.enteredIbanData)} >
                                 <Translate content="validate" />
@@ -669,7 +671,7 @@ class BusinessTransfer extends Component {
                     </div>
                         {this.props?.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label"
                                 name="reasonOfTransfer"
                                 required
                                 rules={[
@@ -697,17 +699,18 @@ class BusinessTransfer extends Component {
                                 ></TextArea>
                             </Form.Item>
                         </Col>}
-                    <Paragraph className="sub-abovesearch">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
+                    <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
                     <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
                     }} refreshData = {selectedTab}/>
-                    <div className="text-right mt-36">
+                    <div className="">
                                 <Button
                                    htmlType="submit"
                                    size="large"
-                                   className="pop-btn px-36"
+                                   block
+                                   className="pop-btn"
                                     loading={this.state.isBtnLoading}>
                                     {this.props.type === "manual" && "Save"}
                                     {this.props.type !== "manual" && "Continue"}

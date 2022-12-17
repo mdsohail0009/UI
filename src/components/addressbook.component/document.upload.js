@@ -44,9 +44,9 @@ class AddressDocumnet extends Component {
             this.setState({ ...this.state, documents: this.props?.documents || document(), filesList: this.props?.documents ? [...this.props?.documents?.details] : [], refreshData:this.props.refreshData })
         }
         return <Row >
-            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="text-left">
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                 <div >
-                    <Paragraph className="sub-abovesearch code-lbl" 
+                    <Paragraph className="sub-abovesearch code-lbl upload-empty-div" 
                     >{this.props.title}</Paragraph>
                      {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
                     <Form.Item name={"files"} required rules={[{

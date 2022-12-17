@@ -509,13 +509,14 @@ class CaseView extends Component {
                                                 </div>)}
                                             </div>
                         
-                                            <Form.Item className="text-center my-36">
+                                            <Form.Item className="">
                                                 <Button
                                                     htmlType="submit"
                                                     size="large"
-                                                    className="pop-btn mb-36 px-36"
+                                                    block
+                                                    className="pop-btn"
                                                     loading={this.state.btnLoading}
-                                                    style={{ width: "300px" }}
+                                                    // style={{ width: "300px" }}
                                                 >
                                                     Submit
                                                 </Button>
