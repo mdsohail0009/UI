@@ -593,10 +593,10 @@ saveWithdrawdata = async () => {
                           </Col> */}
                         </Row>}</>
                   ))}
-                  {(!filterObj.length > 0) && <div className="success-pop text-center" >
+                  {(!filterObj.length > 0) && <div className="success-pop text-center declaration-content" >
                             <img src={oops} className="confirm-icon"  alt="Confirm" />
-                            <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
-                            <p className="fs-16 text-white-30 fw-200 mb-0"> {apicalls.convertLocalLang('address_available')} </p>
+                            <h1 className="success-title" > {apicalls.convertLocalLang('oops')}</h1>
+                            <p className="successsubtext"> {apicalls.convertLocalLang('address_available')} </p>
                             <a onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</a>
                         </div>}
               </ul>
@@ -648,10 +648,10 @@ saveWithdrawdata = async () => {
                       </Col> */}
                     </Row>
                   ))}
-               {(!pastPayees.length > 0) && <div className="success-pop text-center" style={{ marginTop: '20px' }}>
+               {(!pastPayees.length > 0) && <div className="success-pop text-center declaration-content" >
                             <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
-                            <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
-                            <p className="fs-16 text-white-30 fw-200 mb-0"> {'You have no past recipients'} </p>
+                            <h1 className="success-title" > {apicalls.convertLocalLang('oops')}</h1>
+                            <p className="successsubtext"> {'You have no past recipients'} </p>
                             {/* <a onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</a> */}
                             </div>}
               </ul>
@@ -661,9 +661,9 @@ saveWithdrawdata = async () => {
       ),
       reasonfortransfer: (
         <React.Fragment>
-          <div className="mb-16" style={{ textAlign: 'center' }}>
-          <text Paragraph
-                        className='text-white fs-30 fw-600 px-4 mb-16 mt-4' style={{ fontSize: '18px ' }}>Transfer Details</text>
+          <div className="">
+          <div Paragraph
+                        className='adbook-head' >Transfer Details</div>
           </div>
           <Form
             autoComplete="off"
@@ -751,9 +751,9 @@ saveWithdrawdata = async () => {
       reviewdetails: (
         <React.Fragment>
           <div ref={this.reviewScrool}></div>
-          <div className="mb-16 text-center">
-          <text Paragraph
-                        className='fs-24 fw-600 text-white mb-16 mt-4'>Review Details Of Transfer</text>
+          <div className="">
+          <div Paragraph
+                        className='adbook-head'>Review Details Of Transfer</div>
           </div>
           <Spin spinning={this.state.reviewDetailsLoading}>
             <Form
@@ -763,127 +763,123 @@ saveWithdrawdata = async () => {
               autoComplete="off">
                         {this.state.errorMessage && <Alert type="error" showIcon closable={false} description={this.state.errorMessage} />}
 
-              <Row gutter={24}>
-                <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+              
                 <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                    <Text className="fw-600 text-white mt-4 text-captz" style={{ fontSize: '18px' }}>Transfer details</Text>
+                                    <div className="adbook-head" >Transfer details</div>
                   </div>
-                </Col>
-                {"  "}
-                <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">How much you will receive</Title>
-                    <Title className="fs-14 text-white fw-500 text-upper text-right">
+                  <div className="cust-summary-new">
+                <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">How much you will receive</div>
+                    <div className="summarybal">
                     <NumberFormat
                                             value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
-                                            thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
+                                            thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</div>
                   </div>
-                </Col>
-                <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">Total fees</Title>
-                                    <Title className="fs-14 text-white fw-500 text-upper text-right"><NumberFormat
+                
+                <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Total fees</div>
+                                    <div className="summarybal"><NumberFormat
                                         value={`${(this.state.reviewDetails?.comission)}`}
-                                        thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
+                                        thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</div>
                   </div>
-                </Col>
-                <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">Withdrawal amount</Title>
-                                    <Title className="fs-14 text-white fw-500 text-upper text-right"><NumberFormat
+                
+                <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Withdrawal amount</div>
+                                    <div className="summarybal"><NumberFormat
                                         value={`${(this.state.reviewDetails?.requestedAmount)}`}
-                                        thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</div>
                   </div>
-                </Col>
-              </Row>
+                
 
-              <Row gutter={24} className=" text-white mt-36">
-              <Col xs={24} sm={24} md={24} lg={24} xxl={24} >
+                  </div>
+                 
                                 <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                    <Text className="fw-600 text-white mb-0 mt-4 text-captz" style={{ fontSize: '18px' }}>Recipient details</Text>
+                                    <div className="adbook-head">Recipient details</div>
                   </div>
-                </Col>
-                <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">Save Whitelist name as</Title>
-                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.favouriteName}</Title>
+                  <div className="cust-summary-new">
+                <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Save Whitelist name as</div>
+                                    <Text className="summarybal">{this.state.reviewDetails?.favouriteName}</Text>
                   </div>
-                </Col>
-                {this.state.reviewDetails?.name && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">Beneficiary Name</Title>
-                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.name}</Title>
+               
+                {this.state.reviewDetails?.name &&
+                                <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Beneficiary Name</div>
+                                    <Text className="summarybal">{this.state.reviewDetails?.name}</Text>
                                 </div>
-                            </Col>}
-                {this.state.reviewDetails?.firstName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">First Name</Title>
-                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.firstName}</Title>
+                           }
+                {this.state.reviewDetails?.firstName && 
+                                <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">First Name</div>
+                                    <Text className="summarybal">{this.state.reviewDetails?.firstName}</Text>
                                 </div>
-                            </Col>}
-                {this.state.reviewDetails?.lastName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">Last Name</Title>
-                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.lastName}</Title>
+                          }
+                {this.state.reviewDetails?.lastName && 
+                                <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Last Name</div>
+                                    <Text className="summarybal">{this.state.reviewDetails?.lastName}</Text>
                                 </div>
-                            </Col>}
-                 {this.state.reviewDetails?.iban && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">IBAN </Title>
-                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.iban}</Title>
+                           }
+                 {this.state.reviewDetails?.iban &&
+                                <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">IBAN </div>
+                                    <Text className="summarybal">{this.state.reviewDetails?.iban}</Text>
                                 </div>
-                            </Col>}
-               {this.state.reviewDetails?.customerRemarks && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">Reason For Transfer </Title>
-                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
+                           }
+               {this.state.reviewDetails?.customerRemarks &&
+                                <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Reason For Transfer </div>
+                                    <Text className="summarybal">{this.state.reviewDetails?.customerRemarks || "-"}</Text>
                                 </div>
-                            </Col>}
+                          }
 
-{this.state.reviewDetails?.abaRoutingCode && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">ABA Routing code</Title>
-                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.abaRoutingCode || "-"}</Title>
+{this.state.reviewDetails?.abaRoutingCode &&
+                                <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">ABA Routing code</div>
+                                    <Text className="summarybal">{this.state.reviewDetails?.abaRoutingCode || "-"}</Text>
                                 </div>
-                            </Col>}
-                {this.state.reviewDetails?.swiftRouteBICNumber && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">SWIFT / BIC Code</Title>
-                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.swiftRouteBICNumber || "-"}</Title>
+    }
+                {this.state.reviewDetails?.swiftRouteBICNumber &&
+                                <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">SWIFT / BIC Code</div>
+                                    <Text className="summarybal">{this.state.reviewDetails?.swiftRouteBICNumber || "-"}</Text>
                                 </div>
-                            </Col>}
-                {this.state.reviewDetails?.accountNumber && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">Account Number </Title>
-                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.accountNumber || "-"}</Title>
+                            }
+                {this.state.reviewDetails?.accountNumber &&
+                                <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Account Number </div>
+                                    <Text className="summarybal">{this.state.reviewDetails?.accountNumber || "-"}</Text>
                                 </div>
-                            </Col>}
-                {this.state.reviewDetails?.bankName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">Bank Name </Title>
-                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state?.reviewDetails?.bankName || "-"}</Title>
+                           }
+                {this.state.reviewDetails?.bankName &&
+                                <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Bank Name </div>
+                                    <Text className="summarybal">{this.state?.reviewDetails?.bankName || "-"}</Text>
                                 </div>
-                            </Col>}
-                <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+                            }
+                            </div>
+                {/* <Col xs={24} sm={24} md={24} lg={24} xxl={24}> */}
                 <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} />
-                </Col>
-                {this.state.permissions?.Send && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+                {/* </Col> */}
+                {this.state.permissions?.Send && 
+                // <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                     <div className="text-right mt-36 create-account">
                       <Form.Item className="mb-0 mt-16">
                       <Button
-                                            htmlType="button"
-                                            onClick={() => { this.saveWithdrawdata(); }}
-                                            size="large"
-                                            block
-                                            className="pop-btn custom-send"
-                                            style={{ backgroundColor: !isShowGreyButton && '#ccc', borderColor: !isShowGreyButton && '#3d3d3d' }}
-                                            loading={this.state.isBtnLoading} >
-                                            Confirm & Continue
-                                        </Button>
+                         htmlType="button"
+                         onClick={() => { this.saveWithdrawdata(); }}
+                         size="large"
+                         block
+                         className="pop-btn custom-send"
+                        style={{ backgroundColor: !isShowGreyButton && '#7087FF', borderColor: !isShowGreyButton && '#7087FF' }}
+                        loading={this.state.isBtnLoading} >
+                         Confirm & Continue
+                       </Button>
                       </Form.Item>
                     </div>
-                  </Col>}
-              </Row>
+                  // </Col>
+                  }
+              
             </Form>
           </Spin>
         </React.Fragment>
@@ -899,16 +895,16 @@ saveWithdrawdata = async () => {
                     fiatHeadingUpdate={this.fiatHeading}
                     onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} />
             </>,
-      declaration: <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
-      <Image width={80} preview={false} src={alertIcon} />
-      <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
-            <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
+      declaration: <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
+      <Image width={80} preview={false} src={alertIcon} className="confirm-icon"  />
+      <Title level={2} className="success-title">Declaration form sent successfully to your email</Title>
+            <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                        Please sign using link received in email to whitelist your address. `}</Text>
-            <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
+            <Text className="successsubtext">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
             </div></div>,
-       successpage: <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
-       <Image width={80} preview={false} src={success} />
-       <Title level={2} className="text-white-30 my-16 mb-0">Your transaction has been processed successfully</Title>
+       successpage: <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
+       <Image width={80} preview={false} src={success}  className="confirm-icon" />
+       <Title level={2} className="successsubtext">Your transaction has been processed successfully</Title>
    </div></div>
     }
     return steps[this.state.step];

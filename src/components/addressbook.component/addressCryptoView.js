@@ -211,10 +211,10 @@ const AddressCryptoView = (props) => {
 								</Row>
 								</div>
 							)}
-							<div className="text-right mt-24">
+							<div className="">
 								<Button
-									className="pop-btn px-36"
-									style={{ margin: "0 8px",width:'250px'}}
+									className="pop-btn "
+									block
 									onClick={backToAddressBook}>
 									Cancel
 								</Button>
