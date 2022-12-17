@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Typography,Drawer,Tooltip,Button ,Modal,Alert} from 'antd';
+import { Typography,Drawer,Tooltip,Button ,Modal,Alert,Popover} from 'antd';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import List from "../grid.component";
@@ -33,26 +33,12 @@ const Batchpayments = (props) => {
   const [btnLoader,setBtnLoader]=useState(false);
 
   useEffect(() => {
-    //loadPermissions();
-    //setPermissionsInterval(setInterval(loadPermissions, 200))
+   
 
 }, []);
   
  
-  const loadPermissions = () => {
-    if (props.batchPaymentPermissions) {
-			props.dispatch(setSelectedFeatureMenu(props.batchPaymentPermissions?.featureId));
-			//clearInterval(permissionsInterval);
-			let _permissions = {};
-			for (let action of props.batchPaymentPermissions?.actions) {
-				_permissions[action.permissionName] = action.values;
-			}
-      setPermissions(_permissions)
-			if (!permissions?.view && !permissions?.View) {
-				props.history.push("/accessdenied");
-			}
-		}
-	}
+  
 
   const viewMode = (e) => {
     setProceedBatchPayment(false)
@@ -118,7 +104,7 @@ const Batchpayments = (props) => {
      { field: "pendingTransactionCount", title: 'Pending Transactions', filter: true, dataType: "number", filterType: "numeric", width: 220, },
      { field: "approvedTransactionCount", title: 'Approved Transactions', filter: true, dataType: "number", filterType: "numeric", width: 240, },
      { field: "rejectedTransactionCount", title: 'Rejected Transactions', filter: true, dataType: "number", filterType: "numeric", width: 220, },
-     { field: "FileUploadStatus", title: 'File Upload Status', filter: true, width: 220, }
+     { field: "fileUploadStatus", title: 'File Upload Status', filter: true, width: 220, }
 
      
    ];
@@ -145,23 +131,29 @@ const Batchpayments = (props) => {
    setIsAddBatchDrawer(true);
    
  }
- const proceedBatchPayment = () => {
-   if (selection.length === 0) {
+ const proceedBatchPayment = () => {   if (selection.length === 0) {
     setErrorWarning("Please select the record");
-  } else {
+  } 
+  else if(!setSelectData.status == "Draft"){
+    setErrorWarning("Only draft record can proceed")
+  }
+  else if(setSelectData.fileUploadStatus == "File is being processed please wait a while"){
+    setErrorWarning("Upload status is in progress so you can't proceed")
+  }
+  else {
     setErrorWarning(null)
     setProceedBatchPayment(true);
-
-
-
-
     }
   }
   const deleteBatchPayment=()=>{
     setErrorWarning(null)
     if(selection.length === 0){
       setErrorWarning("Please select the one record")
-    }else{
+    }
+    else if(!setSelectData.status == "Draft"){
+      setErrorWarning("Only draft record can delete")
+    }
+    else{
     setDeleteModal(true)
     }
    }
@@ -208,17 +200,32 @@ const Batchpayments = (props) => {
        
        
           <div className='main-container'>
-        
+          
               <div className='d-flex justify-content mb-16'>
+              
                   <div>
-                      <Title className="basicinfo mb-0"><span className='icon md c-pointer back mr-8' onClick={gotoDashboard}></span><Translate content="batch_payments" component={Text} className="basicinfo" /></Title>
+                
+                      <Title className="basicinfo mb-0"><span className='icon md c-pointer back mr-8' onClick={gotoDashboard}></span><Translate content="batch_payments" component={Text} className="basicinfo" />
+                                        <Popover
+                                          className="more-popover"
+                                         content={<span className='text-white'>To proceed the transaction,please click on process icon</span>}
+                                          trigger="hover"
+                                          placement="top"
+                                        >
+                                          <span
+                                            className="icon md info c-pointer ml-4" 
+                                          />
+                                        </Popover>
+                                        
+                      </Title>
+                      
                   </div>
                   <div className='batch-actions'>
-                     
-                  
                   <span className="mb-right">
           <ActionsToolbar featureKey="Batch_Payment" onActionClick={(key) => onActionClick(key)}/>
           </span>
+                  
+                  
                   </div>
               </div>
               {errorWarning !== null && (
