@@ -174,12 +174,12 @@ class AddressCrypto extends Component {
       return <Loader />
     }
     if (showDeclartion) {
-      return<div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
-        <Image width={80} preview={false} src={alertIcon} />
-        <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully </Title>
-        <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
+      return<div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
+        <Image width={80} preview={false} src={alertIcon} className="confirm-icon" />
+        <Title level={2} className="success-title">Declaration form sent successfully </Title>
+        <Text className="ant-typography successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
              Please sign using link received in email to whitelist your address. `}</Text>
-        <Text className="text-white-30">{`Please note that your send will only be processed once your whitelisted address has been approved`}</Text>
+        <Text className="ant-typography successsubtext">{`Please note that your send will only be processed once your whitelisted address has been approved`}</Text>
        
         {/* <div className="my-25 custom-back-btn"><Button
           onClick={this.props.onCancel}
@@ -222,9 +222,9 @@ class AddressCrypto extends Component {
               <Input className="cust-input" maxLength={100} placeholder="Save Whitelist Name As" />
             </Form.Item>
             <div className="">
-            <Title className="sub-title">Beneficiary Details</Title>
+            <Title className="adbook-head">Beneficiary Details</Title>
             </div>
-            <Row gutter={[8, 8]} className="addcrypto-benficiary">
+            <Row className="addcrypto-benficiary">
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="token"

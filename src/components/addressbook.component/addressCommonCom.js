@@ -557,10 +557,10 @@ const AddressCommonCom = (props) => {
     />
   );
   if (isSignRequested) {
-    return <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
-      <Image width={80} preview={false} src={success} />
-      <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully</Title>
-      <Text className="text-white-30">{`Declaration form has been sent to ${props?.userConfig?.email}. 
+    return <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
+      <Image width={80} preview={false} src={success} className="confirm-icon" />
+      <Title level={2} className="success-title">Declaration form sent successfully</Title>
+      <Text className="successsubtext">{`Declaration form has been sent to ${props?.userConfig?.email}. 
 				 Please sign using link received in email to whitelist your address`}</Text>
       {/*<div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBOARD</Button> */}
     </div></div>
