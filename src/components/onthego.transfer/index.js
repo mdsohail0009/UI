@@ -478,9 +478,9 @@ saveWithdrawdata = async () => {
                       )}
                     </Col>
                   </Row>
-                  <Row gutter={[16, 16]} className="send-drawerbtn">
+                  <Row gutter={[16, 4]} className="send-drawerbtn">
 
-                  <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
+                  <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
                       <Form.Item className="text-center">
                         <Button
                           htmlType="submit"
@@ -494,7 +494,7 @@ saveWithdrawdata = async () => {
                         </Button>
                       </Form.Item>
                     </Col>
-                     <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
+                     <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
                       <Form.Item className="text-center">
                         <Button
                           htmlType="button"
@@ -583,8 +583,8 @@ saveWithdrawdata = async () => {
                               }
                             }
                           }}>
-                            <Col xs={6} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
-                                <Col xs={14} md={24} lg={24} xl={19} xxl={19} className="small-text-align">
+                            <Col xs={3} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
+                                <Col xs={19} md={24} lg={24} xl={19} xxl={19} className="small-text-align">
                                     <label className="address-name">{item.name}</label>
                                     {item.accountNumber && <div><Text className="address-subtext">{this.state.selectedCurrency} account ending with {item.accountNumber?.substr(item.accountNumber.length - 4)}</Text></div>}
                                 </Col>
@@ -638,8 +638,8 @@ saveWithdrawdata = async () => {
                           }
                         }
                       }}>
-                      <Col xs={6} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
-                                <Col xs={14} md={24} lg={24} xl={19} xxl={19} className=" small-text-align">
+                      <Col xs={3} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
+                                <Col xs={19} md={24} lg={24} xl={19} xxl={19} className=" small-text-align">
                                     <label className="address-name">{item.name}</label>
                                     <div><Text className="address-subtext">{this.state.selectedCurrency} account ending with {item.accountNumber?.substr(item.accountNumber?.length - 4)}</Text></div>
                       </Col>

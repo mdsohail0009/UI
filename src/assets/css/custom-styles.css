@@ -650,6 +650,10 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .listitems-design{width: 344px;}
     .val-updown{top:24px;}
     .footer-links{text-align: center;margin: 0 10px;}
+    .fund-border{padding: 12px;}
+    .small-text-align{margin-left: 18px;}
+    .address-name{font-size: 14px;}
+    .mobile-btn-pd .ant-form-item{margin-bottom: 16px;}
 }
 
 /*@media end*/
