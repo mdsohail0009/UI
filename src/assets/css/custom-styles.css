@@ -190,18 +190,26 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .fund-transfer-input{margin-bottom: 0 !important;}
 .send-drawerbtn{margin: 36px;}
 .input-subtext{font-weight: 400 !important;font-size: 16px !important;color: var(--checksub) !important;}
-.custom-radiobtn{background: #08090E;border: 1px solid rgba(255, 255, 255, 0.6);border-radius: 8px;padding:6px}
-.ant-radio-button-wrapper.ant-radio-button-wrapper-checked{background: #3653E4;border-radius: 5px; border: 0;height: auto; padding: 10px 36px;color: #FFFFFF;font-weight: 700;font-size: 16px;}
-.ant-radio-button-wrapper{font-weight: 500;font-size: 16px;color: rgb(255 255 255 / 60%);background-color: transparent;border: 0;}
-.ant-radio-button-wrapper:not(:first-child)::before{content: none;}
-.ant-radio-button-wrapper-checked:not([class*=' ant-radio-button-wrapper-disabled']).ant-radio-button-wrapper:first-child{border: transparent;}
-.ant-radio-button-wrapper:first-child{border: 0;}
-.ant-radio-button-wrapper:hover{color: rgb(255 255 255 / 60%);}
-.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active{color: #FFFFFF;}
-.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{color: #FFFFFF;border-color: transparent;}
+.custom-radiobtn{background: var(--tabBg);border: 1px solid var(--inputBorder);border-radius: 8px;padding:6px}
+.custom-radiobtn .ant-radio-button-wrapper.ant-radio-button-wrapper-checked{background: #3653E4;border-radius: 5px; border: 0;height: auto; padding: 10px 36px;color: #FFFFFF;font-weight: 700;font-size: 16px;}
+.custom-radiobtn .ant-radio-button-wrapper{font-weight: 500;font-size: 16px;color: var(--marketTitle);background-color: transparent;border: 0;}
+.custom-radiobtn .ant-radio-button-wrapper:not(:first-child)::before{content: none;}
+.custom-radiobtn .ant-radio-button-wrapper-checked:not([class*=' ant-radio-button-wrapper-disabled']).ant-radio-button-wrapper:first-child{border: transparent;}
+.custom-radiobtn .ant-radio-button-wrapper:first-child{border: 0;}
+.custom-radiobtn .ant-radio-button-wrapper:hover{color: var(--marketTitle);}
+.custom-radiobtn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active{color: #FFFFFF;}
+.custom-radiobtn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{color: #FFFFFF;border-color: transparent;}
 .custom-label .ant-form-item-label, .custom-label.ant-row{display: block !important;padding: 0 0 4px !important;}
 .send-fiat-input .ant-form-item-label > label{height: 22px;}
 .ant-form-item-label{text-align: left !important;}
+.ant-input:focus, .ant-input-focused, .ant-input:hover{border: 1px solid #CCC3FF;box-shadow:none;}
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow:none;
+}
+.round-pills .ant-radio-button-wrapper-checked:not([class*=' ant-radio-button-wrapper-disabled']).ant-radio-button-wrapper:first-child{border-color: var(--radioBorderfill);}
 /*Common css End*/
 
 /*Coin Selection End*/
@@ -359,6 +367,9 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .val-updown:hover .swaparrow, .swap-updown:hover .swaparrow{transform: rotate(180deg);transition: 0.5s;background-position: -237px -35px;}
 .buy-balance{font-weight: 400;font-size: 16px;color: var(--coinPrice);}
 .crypto-amount{margin-bottom: 36px;}
+.kpi-List .kpi-label{font-weight: 500;font-size: 14px;color: var(--sbCardText);}
+.kpi-List .kpi-val{font-size: 16px;font-weight: 500;color: var(--white);}
+.kpi-List .ant-col{margin-bottom: 20px;display: flex;}
 /*Buy/sell drawer End*/
 /* receive fait start */
 .drawer-subtext{font-weight: 700;font-size: 18px;color: var(--tablesub);}
@@ -480,9 +491,12 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* send fiat start */
 .fund-transfer-input .tfunds-inputgroup .ant-select{width: 122px;}
 .fund-transfer-input .tfunds-inputgroup .ant-select-selection-item{}
+.alert-info-custom{background-color:var(--addressList) !important;border-radius: 13px;color: var(--textWhite);border-color: var(--borderGrey) !important;padding: 28px 22px;}
+.kpi-divstyle{border-bottom:1px solid var(--borderColor);padding-bottom: 20px;width: 100%;}
+.custom-forminput.custom-label{margin-bottom: 16px;}
 /* send fiat end */
 /* send crypto start */
-.min-btn{background: var(--radioBg) !important;height: 36px;border-radius: 10px;min-width: 60px;line-height: 34px;color: var(--coinPrice);border: 1px solid rgba(0, 0, 0, 0.3);font-size: 16px;font-weight: 500; margin: 0 16px 16px 0;}
+.min-btn{background: var(--radioBg) !important;height: 36px;border-radius: 10px;min-width: 60px;line-height: 34px;color: var(--coinPrice);font-size: 16px;font-weight: 500; margin: 0 16px 16px 0;}
 .min-btn:active ,.min-btn:focus{background-color: var(--radioFill) !important;border: 2px solid var(--radioBorderfill) !important;font-size: 16px;font-weight: 500 !important;color: var(--coinPrice) !important;}
 .min-btn:hover{border-color: rgba(0, 0, 0, 0.3) !important;color: var(--coinPrice) !important;}
 .newtransfer-card{background: var(--drawerList);border-radius: 13px;border: 2px solid transparent;height: 90px;padding: 10px 43px !important;text-align: left !important; font-size: 16px; font-weight: 700; color: var(--coinBal);width: 100%;}
