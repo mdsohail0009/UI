@@ -358,13 +358,13 @@ class OnthegoCryptoTransfer extends Component {
               )}
               <Row gutter={[16, 16]} className="align-center send-crypto-err mx-4">
 
-                <Title className="fs-30 fw-400 text-white-30 text-yellow  mb-0 mt-4">
+                {/* <Title className="fs-30 fw-400 text-white-30 text-yellow  mb-0 mt-4">
                   {this.props.selectedWallet?.coin}
-                </Title>
+                </Title> */}
 
-
+              
                 <Form.Item
-                  className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label fund-transfer-input send-crypto-input crypto-blc-inpt"
+                  className="custom-forminput custom-label fund-transfer-input send-crypto-input crypto-blc-inpt"
                   name="amount"
                   required
                   rules={[
@@ -376,7 +376,7 @@ class OnthegoCryptoTransfer extends Component {
                 >
                   <NumberFormat
                     customInput={Input}
-                    className="cust-input"
+                    className="inputfont-style text-center inputbg-fonts"
                     placeholder={"Enter Amount"}
                     maxLength="20"
                     decimalScale={8}
@@ -385,6 +385,7 @@ class OnthegoCryptoTransfer extends Component {
                     thousandSeparator={true}
                     onKeyDown={this.keyDownHandler}
                     addonBefore={this.state.selectedCurrency}
+                    suffix={this.props.selectedWallet?.coin}
                     onValueChange={() => {
                         this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: null,error: null })
                     }}
@@ -393,7 +394,7 @@ class OnthegoCryptoTransfer extends Component {
 
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} style={{ marginTop: "-20px" }}>
 
-                  <div class="text-center mr-16">
+                  <div class="text-center mr-16 small-btns">
                     <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn " onClick={() => this.clickMinamnt("min")}>
                                         <span >Min</span>
                                     </button>
