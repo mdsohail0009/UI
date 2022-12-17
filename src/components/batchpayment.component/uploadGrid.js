@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Typography,Drawer,Space,Button,Modal,Upload,Tooltip,Alert } from 'antd';
+import React, { useState } from 'react';
+import { Typography,Button,Modal,Upload,Tooltip,Alert } from 'antd';
 import { connect } from 'react-redux';
-import Translate from 'react-translate-component';
 import List from "../grid.component";
 
 const { Dragger } = Upload;
@@ -9,7 +8,6 @@ const { Title, Text, Paragraph } = Typography;
 const BatchpaymentView = (props) => {
     const [uplaodModal, setUploadModal] = useState(false);
     const [errorMessage,setErrorMessage]=useState(null)
-    const [fileDetails,setFileDetails]=useState(null)
     const showUploadModal = () =>{
         setUploadModal(true);
         setErrorMessage(null)
@@ -20,24 +18,24 @@ const BatchpaymentView = (props) => {
           field: "",
           title: "",
           width: 50,
-          customCell: (prop) => (
+          customCell: () => (
             <td className="text-center">
               1
             </td>
           )
         },
-        { field: "whitelistName", title: "Whitelist Name", filter: true, filterType: "date",width: 200, customCell: (prop) => (<td className='text-center'>a</td>)},
-        { field: "beneficiaryName", title: "Beneficiary Name", filter: true,width: 200, customCell: (prop) => (<td className='text-center'>Name</td>) },
-        { field: "whitelistStatus", title: 'Whitelist Status', filter: true, width: 200,dataType: "number", filterType: "numeric", customCell: (prop) => (<td className='text-center'>Whitelisted</td>) },
-        { field: "AccountNumber/IBAN", title: 'Account Number/IBAN', filter: true, width: 250, customCell: (prop) => (<td className='text-center'>3434523253345</td>) },
+        { field: "whitelistName", title: "Whitelist Name", filter: true, filterType: "date",width: 200, customCell: () => (<td className='text-center'>a</td>)},
+        { field: "beneficiaryName", title: "Beneficiary Name", filter: true,width: 200, customCell: () => (<td className='text-center'>Name</td>) },
+        { field: "whitelistStatus", title: 'Whitelist Status', filter: true, width: 200,dataType: "number", filterType: "numeric", customCell: () => (<td className='text-center'>Whitelisted</td>) },
+        { field: "AccountNumber/IBAN", title: 'Account Number/IBAN', filter: true, width: 250, customCell: () => (<td className='text-center'>3434523253345</td>) },
         { field: "numberOfTransactions", title: 'Number of Transactions', filter: true, width: 250,dataType: "number", filterType: "numeric",},
-        { field: "Amount", title: 'Amount', filter: true, width: 200, customCell: (prop) => (<td className='text-center'>10,000</td>) },
+        { field: "Amount", title: 'Amount', filter: true, width: 200, customCell: () => (<td className='text-center'>10,000</td>) },
         { field: "transactionStatus", title: 'Transaction Status', filter: true, width: 200,
-        customCell: (prop) => (<td className='text-center'>Pending</td>)
+        customCell: () => (<td className='text-center'>Pending</td>)
     },
         { field: "uploadedDocuments", title: 'Uploaded Documents', filter: true, width: 220, },
         { field: "supportingDocument", title: 'Supporting Document', filter: true, width: 240,
-            customCell: (prop) => (
+            customCell: () => (
             <td className='text-center'><div className="gridLink text-center" ><Button className='pop-btn px-36' onClick={showUploadModal}>Upload</Button>
               </div></td>)
         },
@@ -62,7 +60,7 @@ const BatchpaymentView = (props) => {
             return Upload.LIST_IGNORE;
         }
     }
-     const handleUpload=({ file }, type)=>{
+     const handleUpload=()=>{
         setErrorMessage(false)
       
      }
@@ -84,7 +82,6 @@ const BatchpaymentView = (props) => {
             <Modal className='masspay-popup'
                 visible={uplaodModal}
                 title="Supporting Documents"
-                // title={<div className='d-flex justify-content'><div>Supporting Documents</div><div><span className="icon md close-white" /></div></div>}
                 closable={true}
                 closeIcon={
                     <Tooltip title="Close">

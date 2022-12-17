@@ -40,22 +40,18 @@ const saveTransaction = (obj) => {
 const confirmGetDetails = (id) => {
     return apiClient.get(ApiControllers.massPayment + `Confirm/Transactions/${id}`);
 };
-
   const deleteBatchPayments = (id) => {
-
     return apiClient.delete(ApiControllers.massPayment + `BatchPayments/${id}`);
-
 };
 
 const refreshTransaction=(id)=>{
-
     return apiClient.get(ApiControllers.massPayment + `RefreshTransaction/${id}`);
-
 }
 const proceedTransaction=(id)=>{
-
     return apiClient.get(ApiControllers.massPayment + `Transactions/${id}`);
-
 }
-export { getCurrencyLu,saveBeneficiary,getFileURL, savePayments,getFavourite, getPaymentsData, updatePayments, getBankData,creatPayment,deletePayDetials,saveTransaction,deleteBatchPayments,refreshTransaction,confirmGetDetails,proceedTransaction}
+const uploadDocument=(obj)=>{
+    return apiClient.post(ApiControllers.massPayment + `UploadDocument`,obj);
+}
+export { getCurrencyLu,saveBeneficiary,getFileURL, savePayments,getFavourite, getPaymentsData, updatePayments, getBankData,creatPayment,deletePayDetials,saveTransaction,deleteBatchPayments,refreshTransaction,confirmGetDetails,proceedTransaction,uploadDocument}
 

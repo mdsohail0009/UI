@@ -3,19 +3,13 @@ import {
   Drawer,
   Typography,
   Button,
-  Modal,
-  Tooltip,
-   Select,Alert} from "antd";
+   Alert} from "antd";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import { withRouter } from "react-router-dom";
 import PaymentSummary from "./paymentSummary";
-//import { Spreadsheet } from '@progress/kendo-spreadsheet-react-wrapper';
 import Spreadsheet from "react-spreadsheet";
 import {confirmGetDetails} from './api'
-import { async } from "rxjs";
-const { Paragraph } = Typography
-const { Option } = Select;
 class paymentPreview extends Component {
   constructor(props) {
     super(props);
@@ -49,7 +43,6 @@ class paymentPreview extends Component {
     };
   }
 componentDidMount=()=>{
-  console.log(this.state.onBack)
 }
 handleCancel=()=>{
   this.setState({ ...this.state, showModal:false})

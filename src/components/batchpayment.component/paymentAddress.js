@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Typography } from 'antd';
 import { connect } from 'react-redux';
-import List from "../grid.component";
-import AddBatchPayment from './addbatchPayment';
 
-const { Title, Text, Paragraph } = Typography;
-const PaymentAddress = (props) => {
-
-
+const { Title } = Typography;
+const PaymentAddress = () => {
     return (
         <>
          <div className="mt-8">

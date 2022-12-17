@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Col, List,Empty, Image,Button,Modal,Tooltip,Upload, message,Alert} from 'antd';
+import { Drawer, Typography, Col, List,Empty, Image,Button,Modal,Tooltip,Upload,Alert} from 'antd';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import Search from "antd/lib/input/Search";
@@ -9,14 +9,7 @@ import NumberFormat from "react-number-format";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import PaymentPreview from './paymentPreview';
-import pending from '../../assets/images/pending.png'
-import { store } from "../../store";
-import apiCalls from "../../api/apiCalls";
-import CryptoJS from "crypto-js";
-import { success, error } from "../../utils/message";
-import {uuidv4} from './api'
 import pending1 from '../../assets/images/pending1.png'
-import { async } from 'rxjs';
 const { Title,Paragraph } = Typography
 class AddBatchPayment extends Component {
     useDivRef = React.createRef()
@@ -73,23 +66,6 @@ class AddBatchPayment extends Component {
     uploadCancel = () => {
         this.setState({ ...this.state, isCoinsListHide: false});
     }
-    _encrypt(msg, key) {
-        msg = typeof msg === "object" ? JSON.stringify(msg) : msg;
-        var salt = CryptoJS.lib.WordArray.random(128 / 8);
-        key = CryptoJS.PBKDF2(key, salt, {
-            keySize: 256 / 32,
-            iterations: 10
-        });
-        var iv = CryptoJS.lib.WordArray.random(128 / 8);
-        var encrypted = CryptoJS.AES.encrypt(msg, key, {
-            iv: iv,
-            padding: CryptoJS.pad.Pkcs7,
-            mode: CryptoJS.mode.CBC
-        });
-        return salt.toString() + iv.toString() + encrypted.toString();
-    }
-  
-   
     beforeUpload = (file) => {
         this.setState({...this.state,errorMessage:null})
         let fileType = {
@@ -109,16 +85,12 @@ class AddBatchPayment extends Component {
         }
     };
   
-handleUpload = ({ file }, item, i) => {
+handleUpload = ({ file }) => {
     if (file.name.split('.').length > 2) {
       this.setState({ ...this.state, errorMessage: null, uploadLoader: false,});
     }
-    else {
-      this.setState({ ...this.state, errorMessage: null, uploadLoader: true, });
-
-    }
-    if (file?.status === "done" && this.state.uploadLoader) {
-
+    else{
+        this.setState({ ...this.state, errorMessage: null, uploadLoader: false,showInprogressModal:true });
       let obj = {
         "id":"00000000-0000-0000-0000-000000000000",
         "documentName": `${file.name}`,
@@ -129,13 +101,13 @@ handleUpload = ({ file }, item, i) => {
         "path": `${file.response}`,
         "size": `${file.size}`,
       }
-      this.setState({ ...this.state, paymentSummary: true, insufficientModal: 
-        false,showInprogressModal:true,uploadLoader:false})
-
-    //   if(file?.response){
-         this.confirmPreview(obj)
-    // }
+      if(file?.response){
+        this.setState({...this.state,previewData:file})
+        this.confirmPreview(obj)
+      }
+        
     }
+   
   };
     selectWhitelist=()=>{
         this.props.history.push(`/payments/${this.state.selectedCurrency}`) 
@@ -160,7 +132,7 @@ handleUpload = ({ file }, item, i) => {
         if(response.ok){
           this.setState({ ...this.state, paymentSummary: true,file:response.data, insufficientModal: false,showInprogressModal:true,uploadLoader:false})
         }else{
-          this.setState({...this.state,insufficientModal:true,showInprogressModal:false,errorMessage:response.data, paymentSummary:false})
+          this.setState({...this.state,insufficientModal:true,showInprogressModal:false,errorMessage:(this.isErrorDispaly(response)), paymentSummary:false})
         }
       
       }
@@ -191,7 +163,7 @@ downLoadPreview=()=>{
     handleNext=async()=>{
         const res=await confirmGetDetails(this.state.reefreshData?.id)
         if(res.ok){
-            this.setState({ ...this.state,previewData:res.data, showModal: false,errorMessage:null, uploadErrorModal: false, paymentPreview: true }, () => { })
+            this.setState({ ...this.state, showModal: false,errorMessage:null, uploadErrorModal: false, paymentPreview: true }, () => { })
         }
     }
     confirmTransaction=async(id)=>{
@@ -201,14 +173,10 @@ downLoadPreview=()=>{
         }
     }
     render() {
-        const { uploadLoader, refreshBtnLoader, transactionError ,errorMessage} = this.state;
+        const { uploadLoader, refreshBtnLoader ,errorMessage} = this.state;
         return (
             <>
                <div ref={this.useDivRef}></div>
-               {/* {errorMessage !== null && (
-          <Alert type="error" description={errorMessage} showIcon />
-               )} */}
-           
            <div className='send-address'>
            
         <Drawer destroyOnClose={true}
@@ -288,10 +256,6 @@ downLoadPreview=()=>{
                                               headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
                                           
                                             >
-                                             
-                                     {errorMessage !== null && (
-          <Alert type="error" description={errorMessage} showIcon />
-               )}
                                        <Button className='pop-btn mt-24' loading={uploadLoader}>Upload Excel</Button>
                                 </Upload>{" "}
             <Paragraph className='text-white-30'>To download the excel, <a className='fw-700' onClick={this.downLoadPreview}> click here</a></Paragraph>
@@ -341,8 +305,8 @@ downLoadPreview=()=>{
          
                >
                    <>
-                   {transactionError !== null && (
-          <Alert type="error" description={transactionError} showIcon />
+                   {errorMessage !== null && (
+          <Alert type="error" description={errorMessage} showIcon />
                )}
                    <div className='text-center pt-16'>
                    <Image src={pending1} alt={"success"} />

@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Col, List, Empty, Image, Button, Modal, Form, Input,Tooltip,Spin,Alert } from 'antd';
-import Translate from 'react-translate-component';
+import { Drawer, Typography, Button, Modal,Tooltip,Spin,Alert } from 'antd';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 import pending from '../../assets/images/pending.png'
-import success from '../../assets/images/success.png'
 import Verifications from "../onthego.transfer/verification.component/verifications"
 import {proceedTransaction} from './api'
 const { Title, Paragraph, Text } = Typography
 
-class paymentSummary extends Component {
+class PaymentSummary extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -26,7 +24,6 @@ class paymentSummary extends Component {
 	}
 
 	showDeclaration=async()=>{	
-		debugger
 		let response= await proceedTransaction(this.props?.id)
 		if(response.ok){
 			if(response.data === true){
@@ -223,4 +220,4 @@ const connectDispatchToProps = dispatch => {
 		dispatch
 	}
 }
-export default connect(connectStateToProps, connectDispatchToProps)(withRouter(paymentSummary));
+export default connect(connectStateToProps, connectDispatchToProps)(withRouter(PaymentSummary));

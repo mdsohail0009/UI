@@ -1,45 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { Typography,Drawer,Tooltip,Button ,Modal,Alert,Popover} from 'antd';
+import { Typography,Tooltip,Button ,Modal,Alert,Popover} from 'antd';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import List from "../grid.component";
 import AddBatchPayment from './addbatchPayment';
 import PaymentPreview from './paymentPreview';
 import moment from "moment/moment";
-import {getFileURL,deleteBatchPayments} from './api'
+import {deleteBatchPayments} from './api'
 
 import ActionsToolbar from "../toolbar.component/actions.toolbar";
-import { fetchFeaturePermissions, setSelectedFeatureMenu } from "../../reducers/feturesReducer";
-
 const { Title, Text, Paragraph } = Typography;
-
-
 const Batchpayments = (props) => {
- 
-  const [placement, setPlacement] = useState('right');
   const gridRef = React.createRef();
   const [isAddBatchDrawer, setIsAddBatchDrawer] = useState(false);
   const [isProceedBatchPayment, setProceedBatchPayment] = useState(false);
-  const [previewPath, setPreviewPath] = useState(null);
-	const [previewModal, setPreviewModal] = useState(false);
   const [selection,setSelection]=useState([])
   const [selectedObj,setSelectedObj]=useState({})
-  const [errorWarning,setErrorWarning]=useState(null)
-  const [permissions, setPermissions] = useState({});  
+  const [errorWarning,setErrorWarning]=useState(null) 
   const [deleteModal,setDeleteModal]=useState(false);
-
-  const [permissionsInterval,setPermissionsInterval]=useState(null)
   const [setSelectData, setSetSelectData] = useState({})
-  const [btnLoader,setBtnLoader]=useState(false);
-
   useEffect(() => {
-   
-
 }, []);
-  
- 
-  
-
   const viewMode = (e) => {
     setProceedBatchPayment(false)
     const items=e.dataItem;
@@ -49,7 +30,6 @@ const Batchpayments = (props) => {
   const docPreview = async (file) => {
     window.open(file.filePath,'_blank')
 	};
-  
     const gridColumns = [
         {
           field: "",
@@ -158,7 +138,6 @@ const Batchpayments = (props) => {
     }
    }
     const deleteDetials = async () => {
-      // setBtnLoader(true);
       const res = await deleteBatchPayments(selection[0])
       if (res.ok) {
         gridRef?.current?.refreshGrid();
@@ -173,7 +152,7 @@ const Batchpayments = (props) => {
     setDeleteModal(false)
   
   }
-    const closeDrawer = (isPreviewBack) => {
+    const closeDrawer = () => {
     setProceedBatchPayment(false);
     setIsAddBatchDrawer(false)
     setSelection([])
@@ -279,7 +258,6 @@ const Batchpayments = (props) => {
                 onClick={()=>deleteModalCancel()}>Cancel</Button>
               <Button className="pop-btn px-36 btn-width"
                 onClick={() =>deleteDetials(selectedObj)}
-                // loading={btnLoader}
                 >Ok</Button></div>
             </>
           ]}
