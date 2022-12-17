@@ -31,14 +31,14 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onCont
         >
             <Form.Item
                 name="addressType"
-                className="custom-label text-center mb-0"
+                className=""
             >
                 <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     {showHeading!=true&&(
                         <Radio.Group
                             defaultValue={addressOptions.addressType}
-                            className="mb-16 custom-radio-btn buysell-toggle crypto-toggle"
+                            className="custom-radiobtn"
                             onChange={(value) => {
                                 setAddressOptions({ ...addressOptions, addressType: value.target.value });
                                 onAddressOptionsChange({ ...addressOptions, addressType: value.target.value });
@@ -46,11 +46,11 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onCont
                             disabled={isEdit}
                         >
                             <Radio.Button
-                            className="custom-btn sec mt-8" value={props.userProfile?.isBusiness ? "ownbusiness" : "myself"}>{props.userProfile?.isBusiness ? "My Company" : "My Self"}</Radio.Button>
+                            className="" value={props.userProfile?.isBusiness ? "ownbusiness" : "myself"}>{props.userProfile?.isBusiness ? "My Company" : "My Self"}</Radio.Button>
                             <Radio.Button
-                                className="custom-btn sec mt-8" value="individuals">INDIVIDUALS</Radio.Button>
+                                className="" value="individuals">INDIVIDUALS</Radio.Button>
                             <Radio.Button
-                                className="custom-btn sec mt-8" value="otherbusiness">OTHER BUSINESS</Radio.Button>
+                                className="" value="otherbusiness">OTHER BUSINESS</Radio.Button>
                         </Radio.Group>)}
                     </Col>
                 </Row>

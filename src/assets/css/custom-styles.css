@@ -164,6 +164,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .cytpo-list-style .ant-list-item-meta{align-items: center;}
 .crypto-bg{width: 52px;height: 52px;}
 .label-style, .ant-form-item-label > label{color: var(--subText); font-weight: 400;font-size: 14px;margin-bottom: 2px !important;text-transform: capitalize;}
+.ant-form-item-label > label{margin-bottom: 0 !important;}
 .ant-card.crypto-card{background: none;}
 .ant-select-item .ant-select-option-active, .ant-select-item-option-content, .ant-select-selection-item{color:var(--menuFont) ;}
 .ant-alert-error {background-color: var(--alertBG);border: 1px solid #ff5747;}
@@ -189,6 +190,17 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .fund-transfer-input{margin-bottom: 0 !important;}
 .send-drawerbtn{margin: 36px;}
 .input-subtext{font-weight: 400 !important;font-size: 16px !important;color: var(--checksub) !important;}
+.custom-radiobtn{background: #08090E;border: 1px solid rgba(255, 255, 255, 0.6);border-radius: 8px;padding:6px}
+.ant-radio-button-wrapper.ant-radio-button-wrapper-checked{background: #3653E4;border-radius: 5px; border: 0;height: auto; padding: 10px 36px;color: #FFFFFF;font-weight: 700;font-size: 16px;}
+.ant-radio-button-wrapper{font-weight: 500;font-size: 16px;color: rgb(255 255 255 / 60%);background-color: transparent;border: 0;}
+.ant-radio-button-wrapper:not(:first-child)::before{content: none;}
+.ant-radio-button-wrapper-checked:not([class*=' ant-radio-button-wrapper-disabled']).ant-radio-button-wrapper:first-child{border: transparent;}
+.ant-radio-button-wrapper:first-child{border: 0;}
+.ant-radio-button-wrapper:hover{color: rgb(255 255 255 / 60%);}
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active{color: #FFFFFF;}
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{color: #FFFFFF;border-color: transparent;}
+.custom-label .ant-form-item-label, .custom-label.ant-row{display: block !important;padding: 0 0 4px !important;}
+.send-fiat-input .ant-form-item-label > label{height: 22px;}
 /*Common css End*/
 
 /*Coin Selection End*/
@@ -340,7 +352,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .sellbal-style{font-weight: 700;font-size: 16px;color: var(--balInput);}
 .round-pills{width: 100%;text-align: center;}
 .round-pills .ant-radio-button-wrapper{background: var(--radioBg);height: 36px;border-radius: 10px;min-width: 60px; line-height: 34px;color: var(--coinPrice);border:1px solid rgba(0, 0, 0, 0.3);;font-size: 16px;font-weight: 500;margin: 0 16px 16px 0;text-align: center;}
-.round-pills .ant-radio-button-wrapper-checked, .default-radio .ant-radio-button-wrapper-checked, .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled), .ant-radio-button-wrapper-checked:not([class*=' ant-radio-button-wrapper-disabled']).ant-radio-button-wrapper:first-child, .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{background-color: var(--radioFill) !important; color:var(--balInput) !important;font-size: 16px;font-weight:500;border: 2px solid var(--radioBorderfill);}
+.round-pills .ant-radio-button-wrapper-checked, .default-radio .ant-radio-button-wrapper-checked, .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled),  .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{background-color: var(--radioFill) !important; color:var(--balInput) !important;font-size: 16px;font-weight:500;border: 2px solid var(--radioBorderfill);}
 .round-pills .ant-radio-button-wrapper::before, .default-radio .ant-radio-button-wrapper::before{content: none;}
 .val-updown{position: absolute;right: 0;top: 100px;width: 40px;height: 40px;border-radius: 15px;background-color: var(--radioFill);text-align: center;line-height: 38px;}
 .val-updown:hover .swaparrow, .swap-updown:hover .swaparrow{transform: rotate(180deg);transition: 0.5s;background-position: -237px -35px;}

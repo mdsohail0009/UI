@@ -262,7 +262,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         {!isLoading &&<>
         <Row gutter={[4, 4]}><Col xs={24} md={24} lg={24} xl={24} xxl={24} id="favoriteName" className="mt-16">
             <Form.Item
-                className="fw-300 mb-8 px-4 text-white-50 custom-forminput custom-label"
+                className="custom-forminput custom-label"
                 name="favouriteName"
                 label={
                     "Save Whitelist Name As"
