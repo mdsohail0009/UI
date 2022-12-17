@@ -446,17 +446,17 @@ class OnthegoCryptoTransfer extends Component {
       addressselection: (<React.Fragment>
           <>
           {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
-          <div className="mb-16" style={{textAlign:'center'}}>
+          <div>
                     <text Paragraph
-                        className='fs-24 fw-600 text-white mb-16 mt-4 text-captz' >Who are you sending crypto to?</text>
+                        className='label-style' >Who are you sending crypto to?</text>
                 </div>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-            <Search placeholder="Search For Beneficiary" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="text-center mt-12" />
+            <Search placeholder="Search For Beneficiary" value={this.state.searchVal} prefix={<span className="icon lg search-angle drawer-search" />} onChange={this.handleSearch} size="middle" bordered={false} className="cust-search" />
             </Col>
             {this.state?.loading && <Loader />}
             {(!this.state.loading) && <>
-                 <Title className="fw-600 text-white px-4 mb-16 mt-16 text-captz" style={{ fontSize: '18px' }}>Address Book</Title>
-                <Divider className="cust-divide" />
+                 <Title className="sub-title address-book">Address Book</Title>
+                {/* <Divider className="cust-divide" /> */}
 
                 <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                 {(filterObj.length > 0) && filterObj?.map((item, idx) =>
