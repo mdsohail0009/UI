@@ -329,7 +329,7 @@ class BusinessTransfer extends Component {
                     <Paragraph className="mb-8 px-4 text-white fw-500 mt-36" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                     {/* <Divider /> */}
                     <DomesticTransfer type={this.props.type} />
-                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
+                    <Paragraph className="sub-abovesearch">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
                     <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;
@@ -451,7 +451,7 @@ class BusinessTransfer extends Component {
                     <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
                     {/* <Divider /> */}
                     <InternationalTransfer type={this.props.type} />
-                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
+                    <Paragraph className="sub-abovesearch">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
                     <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;
@@ -697,7 +697,7 @@ class BusinessTransfer extends Component {
                                 ></TextArea>
                             </Form.Item>
                         </Col>}
-                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
+                    <Paragraph className="sub-abovesearch">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
                     <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;

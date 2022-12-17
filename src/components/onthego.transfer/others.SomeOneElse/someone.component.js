@@ -387,7 +387,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                 {((props.selectedAddress?.id && createPayeeObj)||!props.selectedAddress?.id ) &&
                  <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} isAddTabCange={isTabChange}/>}
                 
-                <Paragraph className="">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
+                <Paragraph className="sub-abovesearch">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
                 <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
                         setDocuments(docs)
                     }} refreshData = {addressOptions?.domesticType}/>

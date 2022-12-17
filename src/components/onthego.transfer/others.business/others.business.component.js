@@ -454,7 +454,7 @@ class OthersBusiness extends Component {
                             ></TextArea>
                             </Form.Item>
                         </Col>}
-                    <Paragraph className="">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
+                    <Paragraph className="sub-abovesearch">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
 
                     <AddressDocumnet documents={this.state.details?.payeeAccountModels[0].documents} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
