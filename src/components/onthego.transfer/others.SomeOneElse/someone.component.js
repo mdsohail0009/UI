@@ -180,10 +180,10 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                 scrollToFirstError
             >
                
-                <Row gutter={[16, 16]} className={'pb-16'}>
+                <Row  className="">
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item
-                            className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-16"
+                            className="custom-forminput custom-label"
                             name="favouriteName"
                             required
                             rules={[
@@ -212,16 +212,16 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                     </Col>
 
                 </Row>
-                <Translate style={{ fontSize: 18 }}
+                <Translate 
                     content="Beneficiary_Details"
                     component={Paragraph}
-                    className="mb-8 px-4 text-white fw-500 mt-16"
+                    className="adbook-head"
                 />
                 <>
-                    <Row gutter={[4, 4]}>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                    <Row >
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                className="custom-forminput custom-label"
                                 name="firstName"
                                 required
                                 rules={[
@@ -247,9 +247,9 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                                     maxLength={100}/>
                             </Form.Item>
                         </Col>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                className="custom-forminput custom-label"
                                 name="lastName"
                                 required
                                 rules={[
@@ -275,9 +275,9 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                                     maxLength={100}/>
                             </Form.Item>
                         </Col>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                className="custom-forminput custom-label"
                                 name={"relation"}
                                 required
                                 rules={[
@@ -311,7 +311,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                className="custom-forminput custom-label"
                                 name="line1"
                                 required
                                 rules={[
@@ -341,7 +341,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                className="custom-forminput custom-label"
                                 name="line2"
                                 rules={[
                                     {
@@ -362,7 +362,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                className="custom-forminput custom-label"
                                 name="line3"
                                 rules={[
                                     {
@@ -383,18 +383,19 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         </Col>
                     </Row>
                 </>
-                <Paragraph className="mb-8 fw-500 text-white px-4 mt-36" style={{ fontSize: 18 }}>Bank Details</Paragraph>
+                <Paragraph className="adbook-head" >Bank Details</Paragraph>
                 {((props.selectedAddress?.id && createPayeeObj)||!props.selectedAddress?.id ) &&
                  <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} isAddTabCange={isTabChange}/>}
                 
-                <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
+                <Paragraph className="">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
                 <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
                         setDocuments(docs)
                     }} refreshData = {addressOptions?.domesticType}/>
-                    <div className="text-right mt-12">
+                    <div className="">
                     <Button
                         htmlType="submit"
                         size="large"
+                        block
                         className="pop-btn px-36 mt-36"
                         loading={btnLoading}
                     >

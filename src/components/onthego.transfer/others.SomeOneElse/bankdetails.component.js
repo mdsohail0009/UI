@@ -204,7 +204,7 @@ class PayeeBankDetails extends Component {
                 </Col>
                 {this.props.GoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name={"reasonOfTransfer"}
                         required
                         rules={[
@@ -239,9 +239,9 @@ class PayeeBankDetails extends Component {
                 </Col>}
             </>,
             swift: <>
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name={["payeeAccountModels","accountNumber"]}
                         label={apicalls.convertLocalLang("accountnumber")}
                         required
@@ -275,9 +275,9 @@ class PayeeBankDetails extends Component {
                         />
                     </Form.Item>
                 </Col>
-                {this.props.domesticType === "international" &&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                {this.props.domesticType === "international" &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name={["payeeAccountModels","swiftRouteBICNumber"]}
                         label={apicalls.convertLocalLang(
                             "swifbictcode"
@@ -314,9 +314,9 @@ class PayeeBankDetails extends Component {
                     </Form.Item>
                 </Col>}
 
-                {this.props.domesticType === "domestic" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                {this.props.domesticType === "domestic" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name={["payeeAccountModels","abaRoutingCode"]}
                         label="ABA Routing Code"
                         required
@@ -348,9 +348,9 @@ class PayeeBankDetails extends Component {
                         />
                     </Form.Item>
                 </Col>}
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name={["payeeAccountModels","bankName"]}
                         label={apicalls.convertLocalLang("Bank_name")}
                         required
@@ -381,7 +381,7 @@ class PayeeBankDetails extends Component {
                
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name={["payeeAccountModels","line1"]}
                         required
                         rules={[
@@ -413,7 +413,7 @@ class PayeeBankDetails extends Component {
                 </Col>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name={["payeeAccountModels","line2"]}
                         rules={[{
                             validator: validateContentRule,
@@ -436,7 +436,7 @@ class PayeeBankDetails extends Component {
                 </Col>
                 {this.props.GoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name={"reasonOfTransfer"}
                         required
                         rules={[

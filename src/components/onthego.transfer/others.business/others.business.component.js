@@ -228,10 +228,10 @@ class OthersBusiness extends Component {
                     onFinish={this.submitPayee}
                     scrollToFirstError
                 >
-                    <Row gutter={[16, 16]}>
+                    <Row>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label"
                                 name="favouriteName"
                                 label={"Save Whitelist Name As"}
                                 required
@@ -265,10 +265,10 @@ class OthersBusiness extends Component {
                         className="mb-8 text-white fw-500 mt-16"
                     />
                     {/* <Divider /> */}
-                    <Row gutter={[12, 12]}>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                    <Row >
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                className="custom-forminput custom-label"
                                 name="beneficiaryName"
                                 required
                                 rules={[
@@ -294,9 +294,9 @@ class OthersBusiness extends Component {
                                     maxLength={100}/>
                             </Form.Item>
                         </Col>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                className="custom-forminput custom-label"
                                 name="relation"
                                 label={"Relationship To Beneficiary"}
                                 required
@@ -323,13 +323,13 @@ class OthersBusiness extends Component {
                         </Col>
                         <RecipientAddress />
                     </Row>
-                    <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
+                    <h2  className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
                   
-                    <Row gutter={[16, 16]}>
+                    <Row>
                    <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
                        <div className=" custom-btn-error">
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                className="custom-forminput custom-label"
                                 name="iban"
                                 label={"IBAN"}
                                 required
@@ -411,7 +411,7 @@ class OthersBusiness extends Component {
                             </Col>
                         </Row>}
                         {!this.state.iBanValid && !this.state.ibanDetailsLoading && <Row>
-                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                                 <div><Text className="fs-14 fw-400 text-white">No bank details available</Text></div>
 
                             </Col>
@@ -421,7 +421,7 @@ class OthersBusiness extends Component {
                     </div>
                     {this.props.ontheGoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                                className="custom-forminput custom-label"
                                 name="reasonOfTransfer"
                                 required
                                 rules={[
@@ -454,18 +454,19 @@ class OthersBusiness extends Component {
                             ></TextArea>
                             </Form.Item>
                         </Col>}
-                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
+                    <Paragraph className="">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
 
                     <AddressDocumnet documents={this.state.details?.payeeAccountModels[0].documents} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;
                         payeeAccountModels[0].documents = docs;
                         this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
                     }} />
-                    <div className="text-right mt-36">
+                    <div className="">
                         <Button
                             htmlType="submit"
                             size="large"
-                            className="pop-btn px-36"
+                            block
+                            className="pop-btn"
                             disabled={this.state.ibanDetailsLoading}
                             loading={this.state.isBtnLoading} >
                             {this.props.type === "manual" && "Save"}

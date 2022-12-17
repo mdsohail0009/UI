@@ -234,10 +234,10 @@ class BusinessTransfer extends Component {
                     onFinish={this.submitPayee}
                     scrollToFirstError
                 >
-                    <Row gutter={[4, 4]}>
+                    <Row>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label"
+                                className="custom-forminput custom-label"
                                 name="favouriteName"
                                 label={"Save Whitelist Name As"}
                                 required
@@ -265,12 +265,12 @@ class BusinessTransfer extends Component {
                             </Form.Item>
                         </Col>
                     </Row>
-                    <h2 style={{ fontSize: 18,}} className="mt-16 text-captz px-4 text-white fw-600">Recipient's Details</h2>
+                    <h2 className="adbook-head">Recipient's Details</h2>
                     {/* <Divider /> */}
-                    <Row gutter={[4, 4]}>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                    <Row>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                className="custom-forminput custom-label"
                                 name="beneficiaryName"
                                 required
                                 rules={[
@@ -296,9 +296,9 @@ class BusinessTransfer extends Component {
                                     maxLength={100}/>
                             </Form.Item>
                         </Col>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                className="custom-forminput custom-label"
                                 name="relation"
                                 label={"Relationship To Beneficiary"}
                                 required
@@ -361,7 +361,7 @@ class BusinessTransfer extends Component {
                     <Row gutter={[4, 4]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label"
+                                className="custom-forminput custom-label"
                                 name="favouriteName"
                                 label={"Save Whitelist Name As"}
                                 required
@@ -391,9 +391,9 @@ class BusinessTransfer extends Component {
                     <h2 style={{ fontSize: 18,}} className="mt-16 text-captz px-4 text-white fw-600">Recipient's Details</h2>
                     {/* <Divider /> */}
                     <Row gutter={[12, 12]}>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                className="custom-forminput custom-label"
                                 name="beneficiaryName"
                                 required
                                 rules={[
@@ -419,9 +419,9 @@ class BusinessTransfer extends Component {
                                     maxLength={100}/>
                             </Form.Item>
                         </Col>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                className="custom-forminput custom-label"
                                 name="relation"
                                 label={"Relationship To Beneficiary"}
                                 required
@@ -479,10 +479,10 @@ class BusinessTransfer extends Component {
                     onFinish={this.submitPayee}
                     scrollToFirstError
                 >
-                    <Row gutter={[4, 4]}>
+                    <Row >
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label"
+                                className="custom-forminput custom-label"
                                 name="favouriteName"
                                 label={"Save Whitelist Name As"}
                                 required
@@ -508,12 +508,12 @@ class BusinessTransfer extends Component {
                             </Form.Item>
                         </Col>
                     </Row>
-                    <Paragraph className="mb-8 text-white fw-500 mt-16 px-4" style={{ fontSize: 18 }} >Recipient's Details</Paragraph>
+                    <Paragraph className="adbook-head"  >Recipient's Details</Paragraph>
                     {/* <Divider /> */}
-                    <Row gutter={[12, 12]}>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                    <Row>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                className="custom-forminput custom-label"
                                 name="beneficiaryName"
                                 required
                                 rules={[
@@ -539,9 +539,9 @@ class BusinessTransfer extends Component {
                                     maxLength={100}/>
                             </Form.Item>
                         </Col>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                className="custom-forminput custom-label"
                                 name="relation"
                                 label={"Relationship To Beneficiary"}
                                 required
@@ -572,11 +572,11 @@ class BusinessTransfer extends Component {
                     <Paragraph className="mb-8 text-white fw-500 mt-36 px-4" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                     {/* <Divider /> */}
                     {/* <InternationalTransfer type={this.props.type} /> */}
-                    <Row gutter={[16, 16]}>
+                    <Row>
                    <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
                        <div className=" custom-btn-error">
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                className="custom-forminput custom-label"
                                 name="iban"
                                 label={"IBAN"}
                                 required
