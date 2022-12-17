@@ -1023,17 +1023,52 @@ class WithdrawSummary extends Component {
 								valuePropName="checked"
 								required
 							>
-								{this.state.permissions?.Send && <label className="d-flex agree-check">
-									<Checkbox className={`agree-check ${!agreeRed ? "check-red" : " "}`} />
-									<span className="withdraw-check"></span>
-									<Translate
-										content="agree_to_suissebase"
-										with={{ link }}
-										component={Paragraph}
-										className="cust-agreecheck"
-										style={{ flex: 1 }}
-									/>
-								</label>}
+								{this.state.permissions?.Send &&
+								// <div className="d-flex agree-check">
+								//  <label className="">
+								// 	<Checkbox className={`agree-check ${!agreeRed ? "check-red" : " "}`} />
+								// 	<span className="withdraw-check"></span>
+									
+								// </label>
+								// <Translate
+								// 		content="agree_to_suissebase"
+								// 		with={{ link }}
+								// 		component={Paragraph}
+								// 		className="cust-agreecheck"
+								// 		style={{ flex: 1 }}
+								// 	/>
+								// </div>
+
+								<div className="d-flex agree-check">
+						<label>
+							<input
+								type="checkbox"
+								id="agree-check"
+								// checked={onCheked}
+								onChange={({ currentTarget: { checked } }) => {
+									this.props.onTermsChange(checked);
+								}}
+							/>
+							<span for="agree-check"  />
+							{/* // className={`${error?.agreeRed===false ? "checkbox-red":""}`} */}
+							
+						</label>
+						<Paragraph
+							className="cust-agreecheck"
+							style={{ flex: 1 }}>
+							<Translate className="cust-agreecheck" with={{ link }} content="agree_to_suissebase" component="Paragraph" />{" "}
+							{/* <a
+								className="terms-link"
+								href="https://www.iubenda.com/terms-and-conditions/42856099"
+								target="_blank">
+								<Translate content="terms" component="Text" />
+							</a> */}
+							{" "}
+							
+							{/* <Translate content="refund_cancellation" component="Text" /> */}
+						</Paragraph>
+					</div>
+								}
 							</Form.Item>
 							<div className="crypto-btns">
 									
