@@ -532,8 +532,14 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 
 /* crypto sucess start  */
 .success-title{font-weight: 800; font-size: 26px; color: var(--white);}
-.success-content{font-weight: 500;font-size: 16px;line-height: 180%; color: var(--white);}
+.success-content{font-weight: 500;font-size: 16px;line-height: 180%; color: var(--white);opacity: 0.8;}
+.send-crypto-sumry .d-flex.agree-check{margin-top: 150px;}
+.ant-checkbox.ant-checkbox-checked{border: none !important;}
+.ant-custumcheck .ant-checkbox-checked , label:hover .ant-checkbox-checked, .ant-checkbox-checked::after{ border-color:transparent !important;}
 /* crypto success end  */
+
+/* send crypto addressbook start */
+.sub-title.address-book{ margin: 36px 0 16px 0 !important;}
 
 /*@media start*/
 @media (min-width: 768px){

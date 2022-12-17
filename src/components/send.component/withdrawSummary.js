@@ -666,19 +666,18 @@ class WithdrawSummary extends Component {
 		}
 		if (showDeclartion) {
 			return <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
-			  <Image width={80} preview={false} src={alertIcon} />
+			  <Image preview={false} src={alertIcon} className="confirm-icon"/>
 			  <Title level={2} className="success-title">Declaration form sent successfully </Title>
-			  <Text className="success-content">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
+			  <div className="successsubtext">
+			  <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
 				   Please sign using link received in email to whitelist your address. `}</Text>
-			  <span className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</span>
+			  <span className="successsubtext">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</span></div>
 			  {/* <div className="my-25"><Button
 				onClick={() => { this.onBackSend() }}
 				type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button></div> */}
-				 <div className="my-25 my-16"> 
-				 <Space direction="vertical" size="large">
-                        <Translate content="crypto_with_draw_success" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => { this.onBackSend() }} />
-                    </Space>
-					</div>
+				 
+                        <Translate content="crypto_with_draw_success" className="cust-cancel-btn" component={Button} onClick={() => { this.onBackSend() }} />
+                   
 			</div></div>
 		  }
 		  else {
@@ -1024,7 +1023,7 @@ class WithdrawSummary extends Component {
 								valuePropName="checked"
 								required
 							>
-								{this.state.permissions?.Send && <span className="d-flex agree-check">
+								{this.state.permissions?.Send && <label className="d-flex agree-check">
 									<Checkbox className={`agree-check ${!agreeRed ? "check-red" : " "}`} />
 									<span className="withdraw-check"></span>
 									<Translate
@@ -1034,7 +1033,7 @@ class WithdrawSummary extends Component {
 										className="cust-agreecheck"
 										style={{ flex: 1 }}
 									/>
-								</span>}
+								</label>}
 							</Form.Item>
 							<div className="crypto-btns">
 									

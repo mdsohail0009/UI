@@ -218,8 +218,7 @@ class Summary extends Component {
 					</div>
 					{permissions &&
 					<div className="d-flex agree-check">
-						<label
-						>
+						<label>
 							<input
 								type="checkbox"
 								id="agree-check"
