@@ -189,6 +189,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .fund-transfer-input{margin-bottom: 0 !important;}
 .send-drawerbtn{margin: 36px;}
 .input-subtext{font-weight: 400 !important;font-size: 16px !important;color: var(--checksub) !important;}
+.ant-form-item-label{text-align: left !important;}
 /*Common css End*/
 
 /*Coin Selection End*/
@@ -475,6 +476,10 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .newtransfer-card{background: var(--drawerList);border-radius: 13px;border: 2px solid transparent;height: 90px;padding: 10px 43px !important;text-align: left !important; font-size: 16px; font-weight: 700; color: var(--coinBal);width: 100%;}
 .newtransfer-card:hover,.newtransfer-card:active{background-color: var(--radioFill) !important;border: 2px solid var(--radioBorderfill);color: var(--coinPrice) !important;}
 .newtransfer-card::before{ background: var(--drawerList) !important;}
+.small-btns{margin-top: 10px !important;}
+.addcrypto-whitelist{margin-bottom: 45px;}
+.sub-title{font-weight: 700 !important; font-size: 18px !important;margin-bottom: 26px !important; color: var(--white) !important;}
+.addcrypto-benficiary .ant-form-item{margin-bottom: 16px;}
 /* send crypto end */
 
 /*@media start*/

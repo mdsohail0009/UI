@@ -191,8 +191,8 @@ class AddressCrypto extends Component {
     }
     else {
       return <>
-       {this.props?.isShowheading && <div className="text-center fs-16 fw-500">
-          <Paragraph className='text-white fs-24 fw-500' >Add Crypto Address</Paragraph>
+       {this.props?.isShowheading && <div className="text-center">
+          <Paragraph className='drawer-maintitle' >Add Crypto Address</Paragraph>
         </div>}
         <div ref={this.useDivRef}></div>
           {errorMessage && <Alert type="error" description={errorMessage} showIcon />}
@@ -203,7 +203,7 @@ class AddressCrypto extends Component {
             onFinish={this.submit}
             scrollToFirstError
           >
-            <Form.Item className="mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
+            <Form.Item className="custom-forminput custom-label sc-error addcrypto-whitelist"
               name="saveWhiteListName"
               label="Save Whitelist Name As"
               rules={[
@@ -221,10 +221,10 @@ class AddressCrypto extends Component {
             >
               <Input className="cust-input" maxLength={100} placeholder="Save Whitelist Name As" />
             </Form.Item>
-            <div className="mb-16 mt-8">
-            <Title className="sub-heading">Beneficiary Details</Title>
+            <div className="">
+            <Title className="sub-title">Beneficiary Details</Title>
             </div>
-            <Row gutter={[8, 8]}>
+            <Row gutter={[8, 8]} className="addcrypto-benficiary">
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="token"
