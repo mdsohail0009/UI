@@ -1339,7 +1339,7 @@ input[type=number]::-webkit-outer-spin-button {
 .custom-spin .ant-spin-dot-spin i{width: 16px;height: 16px;}
 .ant-dropdown.secureDropdown{z-index: 995; width: 239px;}
 .minmax.custom-minmax{position: relative;right:13px;top:-70px;text-align: right;}
-.new-add .ant-btn:hover{border-color: transparent !important;outline: none !important;}
+.new-add .ant-btn:hover{border-color: transparent;outline: none !important;}
 .markets-panel .custom-table .ant-table-body::-webkit-scrollbar-thumb{background-color: #899097 !important;}
 /* .pay-grid .ant-table-thead th.ant-table-column-has-sorters:hover{background: var(--bgDarkGrey);} */
 .pay-grid .ant-table-cell-scrollbar{box-shadow: none;}

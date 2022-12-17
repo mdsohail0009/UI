@@ -514,9 +514,18 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .cust-input.custom-add-select{margin-bottom: 0 !important; border-radius: 0 !important; border-top-left-radius: 5px !important;border-bottom-left-radius: 5px !important; border-right: transparent;}
 .new-add{padding: 14px;border-bottom-right-radius: 5px; border-top-right-radius: 5px; border-left: transparent;}
 .cust-input[disabled]{background: var( --inputBg);color: var(--textSecondary);}
-.new-add button span{border-left: 1px solid var(--white); padding-left: 20px; color: var(--termsText); font-size: 16px; font-weight: 700;}
+.new-add button{border-left: 1px solid var(--white) !important; padding-left: 20px; }
+.new-add button:hover{border-left: 1px solid var(--white) !important;}
 .cust-input.custom-add-select:hover{border-color: var(--subText);}
+.custom-send.sell-btc-btn span{color: var(--white);}
+.new-add button span{color: var(--termsText); font-size: 16px; font-weight: 700;}
+.verification-text{color: var(--white) !important;font-weight: 400;  font-size: 14px;}
 /* crypto summary end  */
+
+/* crypto sucess start  */
+.success-title{font-weight: 800; font-size: 26px; color: var(--white);}
+.success-content{font-weight: 500;font-size: 16px;line-height: 180%; color: var(--white);}
+/* crypto success end  */
 
 /*@media start*/
 @media (min-width: 768px){

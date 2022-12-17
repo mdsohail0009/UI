@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { Typography, Button, Alert,Drawer, Form, Input,Modal, Tooltip, Checkbox, Image,Space } from "antd";
 import { connect } from "react-redux";
-import alertIcon from '../../assets/images/pending.png';
+import alertIcon from '../../assets/images/success-check.svg';
 import Translate from "react-translate-component";
 import Loader from "../../Shared/loader";
 import Currency from "../shared/number.formate";
@@ -121,7 +121,7 @@ class WithdrawSummary extends Component {
 	LinkValue = (props) => {
 		return (
 			<Translate
-				className="textpure-yellow text-underline c-pointer"
+				className="terms-link"
 				content={props.content}
 				component={Link}
 				onClick={() =>
@@ -667,8 +667,8 @@ class WithdrawSummary extends Component {
 		if (showDeclartion) {
 			return <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
 			  <Image width={80} preview={false} src={alertIcon} />
-			  <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully </Title>
-			  <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
+			  <Title level={2} className="success-title">Declaration form sent successfully </Title>
+			  <Text className="success-content">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
 				   Please sign using link received in email to whitelist your address. `}</Text>
 			  <span className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</span>
 			  {/* <div className="my-25"><Button
@@ -811,7 +811,7 @@ class WithdrawSummary extends Component {
 									className="input-label otp-verify"
 									extra={
 										<div>
-											<Text className="fs-12 text-white-30 fw-200">
+											<Text className="verification-text">
 												{this.state.verificationText}
 											</Text>
 											<Text
@@ -886,7 +886,7 @@ class WithdrawSummary extends Component {
 									className="input-label otp-verify"
 									extra={
 										<div>
-											<Text className="fs-12 text-white-30 fw-200">
+											<Text className="verification-text">
 												{this.state.emailVerificationText}
 											</Text>
 											<Text
@@ -1024,34 +1024,33 @@ class WithdrawSummary extends Component {
 								valuePropName="checked"
 								required
 							>
-								{this.state.permissions?.Send && <span className="d-flex">
-									<Checkbox className={`ant-custumcheck ${!agreeRed ? "check-red" : " "}`} />
+								{this.state.permissions?.Send && <span className="d-flex agree-check">
+									<Checkbox className={`agree-check ${!agreeRed ? "check-red" : " "}`} />
 									<span className="withdraw-check"></span>
 									<Translate
 										content="agree_to_suissebase"
 										with={{ link }}
 										component={Paragraph}
-										className="fs-14 text-white-30 ml-16 mb-4"
+										className="cust-agreecheck"
 										style={{ flex: 1 }}
 									/>
 								</span>}
 							</Form.Item>
-							<div className="align-center btn-content cust-pop-up-btn">
-							<div className="text-center mt-16">
+							<div className="crypto-btns">
+									
+							<div>{this.state.permissions?.Send && <Button size="large" className="pop-btn  custom-send sell-btc-btn ant-btn-block" htmlType="submit" loading={this.state.btnLoading}>
+								<Translate content="with_draw" component={Text} />
+							</Button>}</div>
+							<div className="mt-16">
 							<Translate
 								content="cancel"
 								component={Button}
 								onClick={() => this.onCancel()}
 								type="text"
 								size="large"
-								className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn primary-btn pop-cancel"
+								className="cust-cancel-btn ant-btn-block"
 							/>
 						</div>
-
-						
-							<div>{this.state.permissions?.Send && <Button size="large" className="pop-btn custom-send" htmlType="submit" loading={this.state.btnLoading}>
-								<Translate content="with_draw" component={Text} />
-							</Button>}</div>
 						</div>
 						</Form>
 							<Modal
