@@ -193,7 +193,7 @@ class Wallets extends Component {
                         }
                         <span onClick={() => this.setState({ ...this.state, showFuntransfer: false })} className="icon md close-white c-pointer" />
                     </div>]}
-                    className="side-drawer w-50p"
+                    className="side-drawer"
                     visible={this.state.showFuntransfer}
                 >
                     <OnthegoFundTransfer selectedCurrency={this.state.selectedCurrency} ontheGoType={"Onthego"} onClosePopup={() => this.setState({ ...this.state, showFuntransfer: false })}  />

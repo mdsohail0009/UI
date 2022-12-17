@@ -753,7 +753,7 @@ class AddressBook extends Component {
 					closable={true}
 					visible={this.state.visible}
 					closeIcon={null}
-					className="side-drawer w-50p">
+					className="side-drawer">
 					{this.renderContent()}
 				</Drawer>
 				<Drawer
@@ -780,7 +780,7 @@ class AddressBook extends Component {
 					closable={true}
 					visible={this.state.fiatDrawer}
 					closeIcon={null}
-					className="side-drawer w-50p">
+					className="side-drawer">
 					<AddressBookV3 type="manual" isFiat={this.state.cryptoFiat} selectedAddress={this.state.selectedObj} onContinue={(obj) => this.closeBuyDrawer(obj)} isFiatHeadUpdate={this.isFiatHeading}/>
 				</Drawer>
 				<Modal

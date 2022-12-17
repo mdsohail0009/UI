@@ -511,7 +511,7 @@ class CryptoWithDrawWallet extends Component {
                         closable={true}
                         visible={this.state.visible}
                         closeIcon={null}
-                        className="side-drawer w-50p">
+                        className="side-drawer">
                         {this.renderContent()}
                     </Drawer>
                 </div>

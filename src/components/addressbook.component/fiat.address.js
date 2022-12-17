@@ -34,7 +34,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onCont
                 className=""
             >
                 <Row gutter={[16, 16]}>
-                    <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="text-center">
                     {showHeading!=true&&(
                         <Radio.Group
                             defaultValue={addressOptions.addressType}

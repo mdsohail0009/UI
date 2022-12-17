@@ -230,7 +230,7 @@ const getCurrencyLookup = async () => {
           closable={true}
           visible={beneficiaryDetails}
           closeIcon={null}
-          className=" side-drawer w-50p"
+          className=" side-drawer"
           size="large"
         >
           <AddressCommonCom checkThirdParty={checkRadio} onCancel={() => closeBuyDrawer()} props={props} />

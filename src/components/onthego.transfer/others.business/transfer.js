@@ -463,8 +463,8 @@ class BusinessTransfer extends Component {
                                     htmlType="submit"
                                     size="large"
                                     block
-                                    className="pop-bt"
-                                    style={{ minWidth: "100%" }}
+                                    className="pop-btn"
+                                    // style={{ minWidth: "100%" }}
                                     loading={this.state.isBtnLoading}>
                                     {this.props.type === "manual" && "Save"}
                                     {this.props.type !== "manual" && "Continue"}
