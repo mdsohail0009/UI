@@ -473,14 +473,14 @@ class OnthegoCryptoTransfer extends Component {
                                 }
                               }
                             }}>
-                           <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name?.charAt(0).toUpperCase()}</div></Col>
-                           <Col xs={24} md={24} lg={24} xl={19} xxl={19} className="small-text-align">
-                           <label className="">{item?.name} ({item.walletAddress?.length > 0 ? item.walletAddress.substring(0,4)+ `......`+ item.walletAddress.slice(-4):""})</label>
-                           {item.walletAddress && <div><Text className="">{item.walletCode} ({item.network})</Text></div>}
+                           <Col xs={6} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name?.charAt(0).toUpperCase()}</div></Col>
+                           <Col xs={14} md={22} lg={22} xl={19} xxl={19} className="small-text-align">
+                           <label className="address-name">{item?.name} ({item.walletAddress?.length > 0 ? item.walletAddress.substring(0,4)+ `......`+ item.walletAddress.slice(-4):""})</label>
+                           {item.walletAddress && <div><Text className="address-subtext">{item.walletCode} ({item.network})</Text></div>}
                             </Col>
-                            <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
+                            {/* <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                               <span class="icon md rarrow-white"></span>
-                            </Col>
+                            </Col> */}
                             </Row>}</>
                     )}
                   {(!filterObj.length > 0) && <div className="success-pop text-center declaration-content">
@@ -491,8 +491,8 @@ class OnthegoCryptoTransfer extends Component {
                         </div>}
                 </ul>
 
-                <Title className="fw-600 text-white px-4 mb-16 mt-16 text-captz" style={{ fontSize: '18px' }}>Past Recipients</Title>
-                <Divider className="cust-divide" />
+                <Title className="sub-title address-book">Past Recipients</Title>
+                {/* <Divider className="cust-divide" /> */}
                 <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                 {(pastPayees.length > 0) && pastPayees?.map((item, idx) =>
                      <Row className="fund-border c-pointer" onClick={async () => {
@@ -508,14 +508,14 @@ class OnthegoCryptoTransfer extends Component {
                             }
                           }
                         }}>
-                        <Col xs={2} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name?.charAt(0).toUpperCase()}</div></Col>
-                        <Col xs={24} md={24} lg={24} xl={19} xxl={19} className=" small-text-align">
-                        <label className="">{item?.name} ({item.walletAddress?.length > 0 ? item.walletAddress.substring(0,4)+ `......`+ item.walletAddress.slice(-4):""})</label>
-                        <div><Text className="">{item?.walletCode} ({item.network})</Text></div>
+                        <Col xs={6} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name?.charAt(0).toUpperCase()}</div></Col>
+                        <Col xs={14} md={24} lg={24} xl={19} xxl={19} className=" small-text-align">
+                        <label className="address-name">{item?.name} ({item.walletAddress?.length > 0 ? item.walletAddress.substring(0,4)+ `......`+ item.walletAddress.slice(-4):""})</label>
+                        <div><Text className="address-subtext">{item?.walletCode} ({item.network})</Text></div>
                         </Col>
-                        <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
+                        {/* <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
                           <span class="icon md rarrow-white"></span>
-                        </Col>
+                        </Col> */}
                       </Row>
 
                     )}
