@@ -349,7 +349,7 @@ class OthersBusiness extends Component {
                             </div>
                        </Col>
                        <Col xs={24} md={10} lg={10} xl={10} xxl={10}>
-                       <Button className={`pop-btn dbchart-link fs-14 fw-500`} style={{width:"150px",marginTop:"36px",height:"42px"}}
+                       <Button className={`pop-btn dbchart-link pop-validate-btn`}
                             loading={this.state.isValidateLoading} 
                              onClick={() => this.onIbanValidate(this.state?.enteredIbanData)} >
                                 <Translate content="validate" />
@@ -454,7 +454,7 @@ class OthersBusiness extends Component {
                             ></TextArea>
                             </Form.Item>
                         </Col>}
-                    <Paragraph className="sub-abovesearch">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
+                    <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
 
                     <AddressDocumnet documents={this.state.details?.payeeAccountModels[0].documents} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
                         let { payeeAccountModels } = this.state.details;

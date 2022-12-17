@@ -25,9 +25,9 @@ class BankDetails extends Component {
         const _templates = {
             sepa: <>
             <>
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name="IBAN"
                         label={apicalls.convertLocalLang(
                             "Bank_account_iban"
@@ -72,9 +72,9 @@ class BankDetails extends Component {
                     </Form.Item>
                 </Col>
                  
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name="line2"
                         required
                         rules={[
@@ -106,9 +106,9 @@ class BankDetails extends Component {
                             />
                     </Form.Item>
                 </Col>
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name="line2"
                         required
                         rules={[
@@ -203,9 +203,9 @@ class BankDetails extends Component {
             </div>
             </>,
             swift: <>
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name="accountNumber"
                         label={apicalls.convertLocalLang("accountnumber")}
                         required
@@ -244,9 +244,9 @@ class BankDetails extends Component {
                         />
                     </Form.Item>
                 </Col>
-                {this.props.domesticType === "international" &&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                {this.props.domesticType === "international" &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name="swiftCode"
                         label={apicalls.convertLocalLang(
                             "swifbictcode"
@@ -288,9 +288,9 @@ class BankDetails extends Component {
                     </Form.Item>
                 </Col>}
 
-                {this.props.domesticType === "domestic" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                {this.props.domesticType === "domestic" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name="routingNumber"
                         label={apicalls.convertLocalLang(
                             "Routing_number"
@@ -331,9 +331,9 @@ class BankDetails extends Component {
                         />
                     </Form.Item>
                 </Col>}
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name="bankName"
                         label={apicalls.convertLocalLang("Bank_name")}
                         required
@@ -362,9 +362,9 @@ class BankDetails extends Component {
                         />
                     </Form.Item>
                 </Col>
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name="line1"
                         required
                         rules={[
@@ -397,7 +397,7 @@ class BankDetails extends Component {
                 </Col>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name="line2"
                         required
                         rules={[
@@ -428,9 +428,9 @@ class BankDetails extends Component {
                         ></TextArea>
                     </Form.Item>
                 </Col>
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name="line2"
                         required
                         rules={[
@@ -462,9 +462,9 @@ class BankDetails extends Component {
                         />
                     </Form.Item>
                 </Col>
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name="line2"
                         required
                         rules={[

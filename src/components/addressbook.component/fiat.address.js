@@ -48,9 +48,9 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onCont
                             <Radio.Button
                             className="" value={props.userProfile?.isBusiness ? "ownbusiness" : "myself"}>{props.userProfile?.isBusiness ? "My Company" : "My Self"}</Radio.Button>
                             <Radio.Button
-                                className="" value="individuals">INDIVIDUALS</Radio.Button>
+                                className="" value="individuals">individuals</Radio.Button>
                             <Radio.Button
-                                className="" value="otherbusiness">OTHER BUSINESS</Radio.Button>
+                                className="" value="otherbusiness">other business</Radio.Button>
                         </Radio.Group>)}
                     </Col>
                 </Row>

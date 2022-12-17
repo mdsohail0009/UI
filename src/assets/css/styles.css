@@ -608,8 +608,8 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .accordian .ant-collapse-arrow{vertical-align: text-bottom !important;}
 .accordian .ant-collapse-item.ant-collapse-item-active .downangle{background-position: -329px 0;}
 .accordian .ant-collapse-content-box{padding: 20px;background-color: var(--bgDarkGrey);border-radius: 0 0 24px 24px;border-bottom: 1px solid var(--bgOrion);}
-.upload{border-radius: 30px !important;background-color: var(--bgGloom) !important;border-color: var(--borderGrey) !important;}
-.upload .ant-upload{padding: 30px 0 !important;}
+/* .upload{border-radius: 30px !important;background-color: var(--bgGloom) !important;border-color: var(--borderGrey) !important;}
+.upload .ant-upload{padding: 30px 0 !important;} */
 .docfile{background-color:var(--bgGloom);border-radius: 20px;padding: 16px;display: flex;align-items: center;margin: 12px 0px 0 0;flex: 1 0 240px;}
 .docdetails{flex: 1; margin-right: 16px;}
 .docdetails .docname{font-weight: 700;color: var(--textWhite30); line-height: 16px;max-width: 150px !important;}
@@ -1383,9 +1383,9 @@ cust-address{margin-bottom: 0px !important;}
 .search-input .anticon.anticon-search{padding-right: 30px; }
 .usr-add .ant-select-arrow{color: var(--bgGrey); }
 .usr-add{position: relative; right: 32px; bottom: 6.7px;}
-.cust-tabs-fait .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{color: var(--textYellow) !important;font-size: 16px;}
-.cust-tabs-fait  .ant-tabs-ink-bar{background: #FFDB1A;}
-.cust-tabs-fait .ant-tabs-tab .ant-tabs-tab-btn{color: var(--textWhite)!important;font-size: 16px;}
+/* .cust-tabs-fait .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{color: var(--textYellow) !important;font-size: 16px;} */
+/* .cust-tabs-fait  .ant-tabs-ink-bar{background: #FFDB1A;} */
+/* .cust-tabs-fait .ant-tabs-tab .ant-tabs-tab-btn{color: var(--textWhite)!important;font-size: 16px;} */
 .cust-tabs-fait .ant-tabs-tab + .ant-tabs-tab{margin: 0 0 0 90px;}
 .custom-placeholder .cust-select .ant-select-selection-placeholder{color:#fff !important;}
 .text-red-colr{color:#ff5e43 }

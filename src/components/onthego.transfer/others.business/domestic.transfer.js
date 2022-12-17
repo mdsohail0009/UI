@@ -9,8 +9,8 @@ class DomesticTransfer extends Component {
        // this.setState({ ...this.state, documents: this.props?.documents || document(), filesList: this.props?.documents ? [...this.props?.documents?.details] : [] })
     }
     render() {
-        return <Row gutter={[8, 8]}>
-            <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+        return <Row >
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                     className="fw-300 mb-4 text-white-50 py-4 custom-forminput custom-label"
                     name="accountNumber"
@@ -49,7 +49,7 @@ class DomesticTransfer extends Component {
 
                 </Form.Item>
             </Col>
-            <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                     className="fw-300 mb-4 text-white-50 py-4 custom-forminput custom-label"
                     name="abaRoutingCode"
