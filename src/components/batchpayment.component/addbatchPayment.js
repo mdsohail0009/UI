@@ -132,7 +132,7 @@ handleUpload = ({ file }) => {
       if(response.ok){
         this.setState({ ...this.state, paymentSummary: true,file:response.data, insufficientModal: false,showInprogressModal:true,uploadLoader:false,uploadErrorModal:false})
       }if(response.data?.invalidTransactionCount >0){
-        this.setState({...this.state,uploadErrorModal:true})
+        this.setState({...this.state,uploadErrorModal:true,showInprogressModal:false})
       }
       
       else{
@@ -272,7 +272,7 @@ downLoadPreview=()=>{
                                               headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
                                          
                                               >
-                                              <Button className='pop-btnmt-24'>Upload Excel</Button>
+                                              <Button className='pop-btn mt-24'>Upload Excel</Button>
                                 </Upload>{" "}
             <Paragraph className='text-white-30'>To download the excel, <a className='fw-700' onClick={this.downLoadPreview}> click here</a></Paragraph>
             <Button className='pop-btn px-36' onClick={this.selectWhitelist}>Select from Whitelisted Addresses</Button>
@@ -378,7 +378,7 @@ downLoadPreview=()=>{
                             <div>Excel has been uploaded.</div>
                             <div>We have detected {this.state.file?.invalidTransactionCount} errors out of</div>
                             <div>the {this.state.file?.transactionCount} transactions requested.</div></Paragraph>
-                            {this.state?.file.validTransactionCount > 0 (
+                            {this.state?.file.validTransactionCount > 0 &&(
                            <div> <Button className="primary-btn pop-btn"  onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false, paymentPreview: true }, () => { })}>Proceed with {this.state?.validTransactionCount} transactions</Button></div>)}
                             <br></br>
                             <div><Button className="primary-btn pop-btn"  onClick={this.closeDrawer}>View and make changes</Button></div>
