@@ -89,11 +89,11 @@ const downloadKyc = () => {
 const updateSecurity = (obj) => {
 	return apiClient.put(ApiControllers.master + "UpdateSecurity", obj);
 };
-const getCustomerBankDetails = (customerId)=>{
-    return bankClient.get(ApiControllers.bank + `GetAccountBalanceByCustomerId/${customerId}`);
+const getCustomerBankDetails = ()=>{
+    return bankClient.get(ApiControllers.bank + `GetAccountBalanceByCustomerId`);
 }
-const getAccountDetails=(customerId)=>{
-	return bankClient.get(ApiControllers.bank + `AccountDetails/${customerId}`)
+const getAccountDetails=()=>{
+	return bankClient.get(ApiControllers.bank + `AccountDetails`)
   }
 
 const encryptValue = (msg, key) => {

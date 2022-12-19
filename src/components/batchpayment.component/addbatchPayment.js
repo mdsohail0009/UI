@@ -130,12 +130,24 @@ handleUpload = ({ file }) => {
           }
         let response = await saveTransaction(saveObj)
         if(response.ok){
-          this.setState({ ...this.state, paymentSummary: true,file:response.data, insufficientModal: false,showInprogressModal:true,uploadLoader:false})
+          this.setState({ ...this.state, paymentSummary: true,file:response.data, insufficientModal: false,showInprogressModal:true,uploadLoader:false,uploadErrorModal:false})
         }else{
-          this.setState({...this.state,insufficientModal:true,showInprogressModal:false,errorMessage:(this.isErrorDispaly(response)), paymentSummary:false})
+          this.setState({...this.state,insufficientModal:true,showInprogressModal:false,errorMessage:(this.isErrorDispaly(response)), paymentSummary:false,uploadErrorModal:true})
         }
       
       }
+      isErrorDispaly = (objValue) => {
+        if (objValue.data && typeof objValue.data === "string") {
+          return objValue.data;
+        } else if (
+          objValue.originalError &&
+          typeof objValue.originalError.message === "string"
+        ) {
+          return objValue.originalError.message;
+        } else {
+          return "Something went wrong please try again!";
+        }
+      };
 goToGrid=()=>{
     this.closeDrawer();
     this.setState({...this.state,showInprogressModal:false,errorMessage:null,isCoinsListHide:false})
@@ -155,7 +167,7 @@ downLoadPreview=()=>{
         
         this.setState({...this.state,refreshBtnLoader:true,showModal:false})
         const res=await refreshTransaction(this.state.file?.id)
-       if(res.ok){        this.setState({...this.state,refreshBtnLoader:false,reefreshData:res.data,showInprogressModal:false,showModal:true,errorMessage:null})
+       if(res.ok){this.setState({...this.state,refreshBtnLoader:false,reefreshData:res.data,showInprogressModal:false,showModal:true,errorMessage:null})
 
     }
 }
@@ -254,9 +266,9 @@ downLoadPreview=()=>{
                                               beforeUpload={(props) => this.beforeUpload(props)}
                                               onChange={(props) => this.handleUpload(props)}
                                               headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
-                                          
-                                            >
-                                       <Button className='pop-btn mt-24'>Upload Excel</Button>
+                                         
+                                              >
+                                              <Button className='pop-btnmt-24'>Upload Excel</Button>
                                 </Upload>{" "}
             <Paragraph className='text-white-30'>To download the excel, <a className='fw-700' onClick={this.downLoadPreview}> click here</a></Paragraph>
             <Button className='pop-btn px-36' onClick={this.selectWhitelist}>Select from Whitelisted Addresses</Button>
@@ -294,8 +306,7 @@ downLoadPreview=()=>{
                           <Button
                             key="submit"
                             className="pop-btn px-36 ml-36"
-                            onClick={this.refreshTransaction}
-                            disabled={uploadLoader}
+                            onClick={this.refreshTransaction}  disabled={uploadLoader}
                             loading={refreshBtnLoader}
                           >
                             Refresh
@@ -311,7 +322,7 @@ downLoadPreview=()=>{
                )}
                    <div className='text-center pt-16'>
                    <Image src={pending1} alt={"success"} />
-                       <Paragraph className='text-white fs-18'>This might take a while to load</Paragraph>
+                       <Paragraph className='text-white fs-18'>Document has been processing</Paragraph>
                       
                    </div>
                    </>
@@ -361,14 +372,15 @@ downLoadPreview=()=>{
                         <div className='text-center pt-16'>
                             <Paragraph className='text-white fs-18'>
                             <div>Excel has been uploaded.</div>
-                            <div>We have detected 10 errors out of</div>
-                            <div>the 100 transactions requested.</div></Paragraph>
-                           <div> <Button className="primary-btn pop-btn"  onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false, paymentPreview: true }, () => { })}>Proceed with 90 transactions</Button></div>
+                            <div>We have detected {this.state.file?.invalidTransactionCount} errors out of</div>
+                            <div>the {this.state.file?.transactionCount} transactions requested.</div></Paragraph>
+                           <div> <Button className="primary-btn pop-btn"  onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false, paymentPreview: true }, () => { })}>Proceed with {this.state?.validTransactionCount} transactions</Button></div>
                             <br></br>
                             <div><Button className="primary-btn pop-btn"  onClick={this.closeDrawer}>View and make changes</Button></div>
                         </div>
                     </>
                 </Modal>
+             
                 {this.state.paymentPreview &&
                        <PaymentPreview
                        previewData={this.state?.previewData}
