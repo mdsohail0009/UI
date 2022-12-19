@@ -119,23 +119,27 @@ handleUpload = ({ file }) => {
         this.setState({ ...this.state, showInprogressModal:false,refreshBtnLoader:false});
     }
     confirmPreview = async (file) => {
-        this.setState({...this.state,errorMessage:null})
-       let saveObj={
-            "id": file?.id,
-            "walletCode": this.state?.selectedCurrency,
-            "customerId": this.props?.userProfile?.id,
-            "filepath": file?.path,
-            "fileName": file?.documentName,
-            "userCreated":this.props.userProfile?.userName
-          }
-        let response = await saveTransaction(saveObj)
-        if(response.ok){
-          this.setState({ ...this.state, paymentSummary: true,file:response.data, insufficientModal: false,showInprogressModal:true,uploadLoader:false,uploadErrorModal:false})
-        }else{
-          this.setState({...this.state,insufficientModal:true,showInprogressModal:false,errorMessage:(this.isErrorDispaly(response)), paymentSummary:false,uploadErrorModal:true})
+      this.setState({...this.state,errorMessage:null})
+     let saveObj={
+          "id": file?.id,
+          "walletCode": this.state?.selectedCurrency,
+          "customerId": this.props?.userProfile?.id,
+          "filepath": file?.path,
+          "fileName": file?.documentName,
+          "userCreated":this.props.userProfile?.userName
         }
-      
+      let response = await saveTransaction(saveObj)
+      if(response.ok){
+        this.setState({ ...this.state, paymentSummary: true,file:response.data, insufficientModal: false,showInprogressModal:true,uploadLoader:false,uploadErrorModal:false})
+      }if(response.data?.invalidTransactionCount >0){
+        this.setState({...this.state,uploadErrorModal:true})
       }
+      
+      else{
+        this.setState({...this.state,insufficientModal:true,showInprogressModal:false,errorMessage:(this.isErrorDispaly(response)), paymentSummary:false,uploadErrorModal:false})
+      }
+    
+    }
       isErrorDispaly = (objValue) => {
         if (objValue.data && typeof objValue.data === "string") {
           return objValue.data;
@@ -374,7 +378,8 @@ downLoadPreview=()=>{
                             <div>Excel has been uploaded.</div>
                             <div>We have detected {this.state.file?.invalidTransactionCount} errors out of</div>
                             <div>the {this.state.file?.transactionCount} transactions requested.</div></Paragraph>
-                           <div> <Button className="primary-btn pop-btn"  onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false, paymentPreview: true }, () => { })}>Proceed with {this.state?.validTransactionCount} transactions</Button></div>
+                            {this.state?.file.validTransactionCount > 0 (
+                           <div> <Button className="primary-btn pop-btn"  onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false, paymentPreview: true }, () => { })}>Proceed with {this.state?.validTransactionCount} transactions</Button></div>)}
                             <br></br>
                             <div><Button className="primary-btn pop-btn"  onClick={this.closeDrawer}>View and make changes</Button></div>
                         </div>
