@@ -13,9 +13,9 @@ const favouriteFiatAddress = ( type, coin) => {
 		`Favourite/${type}/${coin}`
 	);
 };
-const detailsAddress = (id) => {
+const detailsAddress = () => {
 	return apiClient.get(
-		ApiControllers.addressbook + `Withdraw/Favourite/${id}`
+		ApiControllers.addressbook + `Withdraw/Favourite`
 	);
 };
 const favouriteNameCheck = (customerId, name, type, favaddrId) => {
@@ -69,11 +69,11 @@ const getPayeeLu = (type,is1stParty) => {
 
 
 
-const getFavData = (payeeId,customerId) => {
+const getFavData = (payeeId) => {
 
     return apiClient.get(
 
-        ApiControllers.addressbook + `payee/Withdraw/Favourite/${payeeId}/${customerId}/1stparty`
+        ApiControllers.addressbook + `payee/Withdraw/Favourite/${payeeId}/1stparty`
 
     );
 };

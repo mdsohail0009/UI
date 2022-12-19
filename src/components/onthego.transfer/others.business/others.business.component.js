@@ -40,7 +40,7 @@ class OthersBusiness extends Component {
     }
     loadDetails = async () => {
         this.setState({ ...this.state, errorMessage: null, isLoading: true });
-        const response = await createPayee(this.props.userProfile.id, this.props.selectedAddress?.id || "", "otherbusiness");
+        const response = await createPayee( this.props.selectedAddress?.id || "", "otherbusiness");
         if (response.ok) {
             let edit=false;
             let data = response.data;
