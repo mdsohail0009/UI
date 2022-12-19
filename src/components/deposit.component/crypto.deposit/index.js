@@ -30,8 +30,7 @@ const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {
             dispatch(fetchDashboardcalls(userProfile?.id));
             dispatch(setStep("step7"));
             dispatch(setSubTitle(` ${coin.coin}` +" " + "balance" +" "+ ":" +" "+ `${coin.coinBalance ? coin.coinBalance : '0'}`+`${" "}`+`${coin.coin}`));
-
-          }else{
+        }else{
             seterrorMsg(isErrorDispaly(response))
         }
         setLoading(false)

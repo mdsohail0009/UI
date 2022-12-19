@@ -141,8 +141,7 @@ class YourPortfolio extends Component {
           this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
         
           this.props.dispatch(setStep("step7"));
-          this.props.dispatch(setSubTitle(` ${coin} + " " + "balance" +" "+ ":" +" "+ ${selectedObj.coinBalance ?  selectedObj.coinBalance : '0'}+${" "}+${coin}
-            )`));
+          this.props.dispatch(setSubTitle(`${coin}` + " " + "balance" +" "+ ":" +" "+ `${selectedObj.coinBalance ?  selectedObj.coinBalance : '0'}`+`${" "}`+`${coin}`));
              const response = await createCryptoDeposit({ customerId: this.props.userProfile?.id, walletCode: coin, network: selectedObj?.netWork });
              if (response.ok) {
                 this.props.dispatch(setWalletAddress(response.data));
