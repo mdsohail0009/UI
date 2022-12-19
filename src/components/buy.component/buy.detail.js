@@ -66,6 +66,7 @@ class SelectCrypto extends Component {
         });
     }
     handleConvertion = async () => {
+        
         const { coin } = this.props.buyInfo?.selectedCoin?.data;
         const { isSwaped, localValue, cryptoValue } = this.state.swapValues;
         this.setState({ ...this.state, swapValues: { ...this.state.swapValues, isConvertionLoading: true } });
@@ -78,6 +79,7 @@ class SelectCrypto extends Component {
             screenName: "buy"
         });
         if (response.ok) {
+            this.setState({...this.state,isConvertionLoading:false})
             const { isSwaped, localValue, cryptoValue } = this.state.swapValues;
             let _nativeValue = localValue, _cryptoValue = cryptoValue;
             const { data: value, config: { url } } = response;

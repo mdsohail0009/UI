@@ -29,8 +29,9 @@ const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {
             dispatch(setWalletAddress(response.data));
             dispatch(fetchDashboardcalls(userProfile?.id));
             dispatch(setStep("step7"));
-            dispatch(setSubTitle(` ${coin.coin} +" " + "balance" +" "+ ":" +" "+ ${coin.coinBalance ? coin.coinBalance : '0'}+${" "}+${coin.coin}`));
-        }else{
+            dispatch(setSubTitle(` ${coin.coin}` +" " + "balance" +" "+ ":" +" "+ `${coin.coinBalance ? coin.coinBalance : '0'}`+`${" "}`+`${coin.coin}`));
+
+          }else{
             seterrorMsg(isErrorDispaly(response))
         }
         setLoading(false)
