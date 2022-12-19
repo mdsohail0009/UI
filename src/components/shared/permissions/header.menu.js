@@ -240,7 +240,6 @@ class HeaderPermissionMenu extends Component {
         }
     }
     onMenuItemClick = async (menuKey, menuItem) => {
-        debugger
         const perIgnoreLst = ["notifications", "auditLogs", "cases",];
         if (perIgnoreLst.includes(menuKey)) { this.navigate(menuKey, menuItem) }
         else {

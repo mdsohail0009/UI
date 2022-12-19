@@ -50,8 +50,8 @@ const refreshTransaction=(id)=>{
 const proceedTransaction=(id)=>{
     return apiClient.get(ApiControllers.massPayment + `Transactions/${id}`);
 }
-const uploadDocument=(obj)=>{
+const uploadDocuments=(obj)=>{
     return apiClient.post(ApiControllers.massPayment + `UploadDocument`,obj);
 }
-export { getCurrencyLu,saveBeneficiary,getFileURL, savePayments,getFavourite, getPaymentsData, updatePayments, getBankData,creatPayment,deletePayDetials,saveTransaction,deleteBatchPayments,refreshTransaction,confirmGetDetails,proceedTransaction,uploadDocument}
+export { getCurrencyLu,saveBeneficiary,getFileURL, savePayments,getFavourite, getPaymentsData, updatePayments, getBankData,creatPayment,deletePayDetials,saveTransaction,deleteBatchPayments,refreshTransaction,confirmGetDetails,proceedTransaction,uploadDocuments}
 

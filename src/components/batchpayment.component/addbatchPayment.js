@@ -102,7 +102,7 @@ handleUpload = ({ file }) => {
         "size": `${file.size}`,
       }
       if(file?.response){
-        this.setState({...this.state,previewData:file})
+        this.setState({...this.state,previewData:file, uploadLoader: true})
         this.confirmPreview(obj)
       }
         
@@ -256,7 +256,7 @@ downLoadPreview=()=>{
                                               headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
                                           
                                             >
-                                       <Button className='pop-btn mt-24' loading={uploadLoader}>Upload Excel</Button>
+                                       <Button className='pop-btn mt-24'>Upload Excel</Button>
                                 </Upload>{" "}
             <Paragraph className='text-white-30'>To download the excel, <a className='fw-700' onClick={this.downLoadPreview}> click here</a></Paragraph>
             <Button className='pop-btn px-36' onClick={this.selectWhitelist}>Select from Whitelisted Addresses</Button>
@@ -295,6 +295,7 @@ downLoadPreview=()=>{
                             key="submit"
                             className="pop-btn px-36 ml-36"
                             onClick={this.refreshTransaction}
+                            disabled={uploadLoader}
                             loading={refreshBtnLoader}
                           >
                             Refresh
@@ -310,7 +311,7 @@ downLoadPreview=()=>{
                )}
                    <div className='text-center pt-16'>
                    <Image src={pending1} alt={"success"} />
-                       <Paragraph className='text-white fs-18'>Document has been successfully uploaded</Paragraph>
+                       <Paragraph className='text-white fs-18'>This might take a while to load</Paragraph>
                       
                    </div>
                    </>
