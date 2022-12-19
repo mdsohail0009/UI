@@ -77,16 +77,18 @@ class PaymentsView extends Component {
     } else {
       return (
         <div className="more-popover">
-           {(moreBankInfo?.transferType!=="internationalIBAN" && moreBankInfo?.transferType!=="sepa")&& <Text className="lbl text-white">BIC/SWIFT/ABA Routing Code</Text>}
-          {(moreBankInfo?.transferType!=="internationalIBAN" && moreBankInfo?.transferType!=="sepa")&&  <Text className="val text-white">{moreBankInfo?.routingNumber}</Text>}
-          { (moreBankInfo?.transferType!=="internationalIBAN" && moreBankInfo?.transferType!=="sepa")&&  <Text className="lbl text-white">Bank Address</Text>}<br/>
-          {(moreBankInfo?.transferType!=="internationalIBAN" && moreBankInfo?.transferType!=="sepa")&& <Text className="lbl text-white">Address Line 1</Text>}
-
-          {(moreBankInfo?.transferType!=="internationalIBAN" && moreBankInfo?.transferType!=="sepa")&&  <Text className="val text-white">{moreBankInfo?.bankAddress1}</Text>}
-          { (moreBankInfo?.transferType!=="internationalIBAN" && moreBankInfo?.transferType!=="sepa")&&  <Text className="lbl text-white">Address Line 2</Text>}
-          { (moreBankInfo?.transferType!=="internationalIBAN" && moreBankInfo?.transferType!=="sepa")&& <Text className="val text-white">{moreBankInfo?.bankAddress2}</Text>}
-          {(moreBankInfo?.transferType==="sepa" || moreBankInfo?.transferType==="internationalIBAN" ) && <Text className="lbl text-white w-100">Bank Address</Text>}
-          {(moreBankInfo?.transferType==="sepa" || moreBankInfo?.transferType==="internationalIBAN") && <Text className="val text-white">{moreBankInfo?.BankBranch || "-"}{","}{moreBankInfo?.country}{","}<br/>{moreBankInfo?.state}{","}<br/>{moreBankInfo?.city}{","}<br/>{moreBankInfo?.postalCode}</Text>}
+           {(moreBankInfo?.transferType!=="internationalIBAN" && moreBankInfo?.transferType!=="sepa")&& <div>
+          <Text className="lbl text-white">BIC/SWIFT/ABA Routing Code</Text>
+          <Text className="val text-white">{moreBankInfo?.routingNumber}</Text>
+          <Text className="lbl text-white">Bank Address</Text><br/>
+          <Text className="lbl text-white">Address Line 1</Text>
+          <Text className="val text-white">{moreBankInfo?.bankAddress1}</Text>
+          <Text className="lbl text-white">Address Line 2</Text>
+          <Text className="val text-white">{moreBankInfo?.bankAddress2}</Text></div>}
+          {(moreBankInfo?.transferType==="sepa" || moreBankInfo?.transferType==="internationalIBAN" ) && 
+          <div>
+           <Text className="lbl text-white w-100">Bank Address</Text>
+           <Text className="val text-white">{moreBankInfo?.bankBranch || "-"}{","}<br/>{moreBankInfo?.country}{","}<br/>{moreBankInfo?.state}{","}<br/>{moreBankInfo?.city}{","}<br/>{moreBankInfo?.postalCode}</Text></div>}
         </div>
       );
     }
