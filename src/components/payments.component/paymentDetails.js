@@ -387,18 +387,20 @@ class PaymentDetails extends Component {
     } else {
       return (
         <div className="more-popover">
-          {this.state.currency === "USD" &&<Text className="lbl text-white">BIC/SWIFT/ABA Routing Code</Text>}
-          {this.state.currency === "USD" &&<Text className="val text-white">{moreBankInfo?.routingNumber}</Text>}
-          {this.state.currency === "USD" && <Text className="lbl text-white">Bank Address</Text>}
-          {this.state.currency === "USD" && <Text className="val text-white">{moreBankInfo?.beneficiaryAccountAddress}</Text>}
-          {this.state.currency === "EUR" && <Text className="lbl text-white">Country</Text>}
-          {this.state.currency === "EUR" && <Text className="val text-white">{moreBankInfo?.country}</Text>}
-          {this.state.currency === "EUR" && <Text className="lbl text-white">State</Text>}
-          {this.state.currency === "EUR" &&<Text className="val text-white">{moreBankInfo?.state}</Text>}
-          {this.state.currency === "EUR" &&<Text className="lbl text-white">City</Text>}
-          {this.state.currency === "EUR" &&<Text className="val text-white">{moreBankInfo?.city}</Text>}
-          {this.state.currency === "EUR" &&<Text className="lbl text-white">Postal Code</Text>}
-          {this.state.currency === "EUR" &&<Text className="val text-white">{moreBankInfo?.postalCode}</Text>}
+          {this.state.currency === "USD" && moreBankInfo?.transferType!=="internationalIBAN"&&
+          <div>
+          <Text className="lbl text-white">BIC/SWIFT/ABA Routing Code</Text>
+          <Text className="val text-white">{moreBankInfo?.routingNumber}</Text>
+          <Text className="lbl text-white">Bank Address</Text><br/>
+          <Text className="lbl text-white">Address Line 1</Text> 
+          <Text className="val text-white">{moreBankInfo?.bankAddress1}</Text>
+          <Text className="lbl text-white">Address Line 2</Text>
+          <Text className="val text-white">{moreBankInfo?.bankAddress2}</Text>
+          </div>}
+          {(moreBankInfo?.transferType==="sepa" || moreBankInfo?.transferType==="internationalIBAN" ) && 
+          <div>
+          <Text className="lbl text-white w-100">Bank Address</Text>
+          <Text className="val text-white">{moreBankInfo?.bankBranch}{","}<br/>{moreBankInfo?.country}{","}<br/>{moreBankInfo?.state}{","}<br/>{moreBankInfo?.city}{","}<br/>{moreBankInfo?.postalCode}</Text></div>}
         </div>
       );
     }

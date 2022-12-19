@@ -37,8 +37,8 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             let edit = false;
             setCreatePayeeObj(createPayeeData.data);
             if (props.selectedAddress?.id) {
-                setIntialObj({ ...createPayeeData.data, payeeAccountModels: createPayeeData.data.payeeAccountModels[0] })
-                setDocuments(createPayeeData.data.payeeAccountModels[0].documents)
+                setIntialObj({ ...createPayeeData.data, payeeAccountModels: createPayeeData?.data?.payeeAccountModels[0] })
+                setDocuments(createPayeeData?.data?.payeeAccountModels[0]?.documents)
                 setAddressOptions({ ...addressOptions, domesticType: createPayeeData.data.transferType });
                 edit = true;
                 props?.onEdit(edit);
