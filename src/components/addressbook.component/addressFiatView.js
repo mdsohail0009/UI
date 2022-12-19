@@ -32,7 +32,7 @@ const AddressFiatView = (props) => {
 	}, []);// eslint-disable-line react-hooks/exhaustive-deps
 	const loadDataAddress = async () => {
 		setIsLoading(true)
-		let response = await getViewData(props?.match?.params?.id,props?.match?.params?.type);
+		let response = await getViewData(props?.match?.params?.id, props?.match?.params?.type);
 		if (response.ok) {	
 			setFiatAddress(response.data);
 			setBankDetailes(response.data.payeeAccountModels)
