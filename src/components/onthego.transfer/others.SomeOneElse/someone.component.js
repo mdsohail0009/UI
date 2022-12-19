@@ -32,13 +32,13 @@ const [isSelectedId,setIsSelectedId] = useState(null);
     }, []);//eslint-disable-line react-hooks/exhaustive-deps
     const getpayeeCreate = async () => {
         setMailLoader(true);
-        const createPayeeData = await createPayee(props.userProfile.id, props.selectedAddress?.id || "", addressOptions.addressType);
+        const createPayeeData = await createPayee(props.selectedAddress?.id || "", addressOptions.addressType);
         if (createPayeeData.ok) {
             let edit = false;
             setCreatePayeeObj(createPayeeData.data);
             if (props.selectedAddress?.id) {
-                setIntialObj({ ...createPayeeData.data, payeeAccountModels: createPayeeData.data.payeeAccountModels[0] })
-                setDocuments(createPayeeData.data.payeeAccountModels[0].documents)
+                setIntialObj({ ...createPayeeData.data, payeeAccountModels: createPayeeData?.data?.payeeAccountModels[0] })
+                setDocuments(createPayeeData?.data?.payeeAccountModels[0]?.documents)
                 setAddressOptions({ ...addressOptions, domesticType: createPayeeData.data.transferType });
                 edit = true;
                 props?.onEdit(edit);
