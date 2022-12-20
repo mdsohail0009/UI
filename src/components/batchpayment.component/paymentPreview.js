@@ -24,24 +24,7 @@ class paymentPreview extends Component {
       getPaymentDetails:[],
       isLoad:false,
       gridUrl:process.env.REACT_APP_GRID_API + `MassPayments/BatchPaymentsDetail/${this.props.id}`,
-      data: [
-        [{ value: "File Name" }, { value: "Relationship to Benficiary" },{ value: "Address Line1" }, { value: "Transfer Type" },{ value: "Amount in USD" }, { value: "Account Number/IBAN" },{ value: "ABA Routing/Swift/BIC Code" }, { value: "Bank Name" },{ value: "Bank Address" }, { value: "Reason For Transfer" }],
-        [{ value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }],
-
-      ]
+     
     };
     this.gridRef = React.createRef();
 
@@ -55,26 +38,12 @@ closeDrawer = () => {
   this.setState({ ...this.state, paymentSummary:false})
 }
  gridColumns = [
-  {
-    field: "",
-    title: "",
-    width: 50,
-    customCell: () => (
-      <td className="text-center" >
-        1
-      </td>
-    )
-  },
+  
   { field: "whiteListName", title: "Whitelist Name", filter: true,width: 200},
   { field: "beneficiaryName", title: "Beneficiary Name", filter: true,width: 200},
   {
 field: "isWhitelisted",
-// customCell: (props) => (
-//   <td>
-//     {props.dataItem?.isWhitelisted && <>  Whitelisted</>}
-//     {!props.dataItem?.isWhitelisted && "Not whitelisted"}
-//   </td>
-// ),
+
 title:"Whitelist Status",
 filter: false,
 width: 200,
@@ -83,14 +52,7 @@ width: 200,
   { field: "amount", title: 'Amount', filter: true, width: 200},
   { field: "transactionStatus", title: 'Transaction Status', filter: true, width: 200},
   { field: "uploadedDocuments", title: 'Uploaded Documents', filter: true, width: 220, },
-  // { field: "supportingDocument", title: 'Supporting Document', filter: true, width: 240,
-  //     customCell: (props) => (
-  //     <td className='text-center'><div className="gridLink text-center" >
-  //         <Button className='pop-btn px-36' disabled={props.dataItem.transactionStatus==="Approved"} onClick={()=>showUploadModal(props.dataItem)}>
-  //             Upload
-  //             </Button>
-  //       </div></td>)
-  // },
+ 
 ];
 
 
@@ -142,18 +104,15 @@ isErrorDispaly = (objValue) => {
         >
            <Translate content="bathch_payments_preview" component={Title} className="fs-26 fw-400 mb-0 text-white-30" />
           <div>
-            {/* <Spreadsheet data={this.state.data} /> */}
           </div>
           < div className='main-container'>
           
                   <List
-                      //className="bill-grid"
+                      
                       showActionBar={false}
                       url={this.state.gridUrl}
                       columns={this.gridColumns}
                       ref={this.gridRef}
-                      //additionalParams={this.props.id} 
-                      //key={this.state.gridUrl}
                      
                   />
             
@@ -188,12 +147,5 @@ isErrorDispaly = (objValue) => {
     );
   }
 }
-const connectStateToProps = ({ userConfig }) => {
-  return { userConfig: userConfig.userProfileInfo };
-};
-const connectDispatchToProps = dispatch => {
-  return {
-    dispatch
-  }
-}
-export default connect(connectStateToProps, connectDispatchToProps)(withRouter(paymentPreview));
+
+export default (withRouter(paymentPreview));
