@@ -110,6 +110,8 @@
     --pfsmbtn:rgba(255, 255, 255, 0.3);
     --btnhover:#ffffff;
     --profilebgImg:rgba(255, 255, 255,0.2);
+    --tablebody:#2c2c30;
+    --gridborder:rgba(255, 255, 255, 0.15);
 
     --lightThemeIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/user-darktheme-icons.svg);
     --cryptoIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/light-crypto-icons.svg);

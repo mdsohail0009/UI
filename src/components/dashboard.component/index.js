@@ -77,7 +77,7 @@ class Home extends Component {
                 <span className='acount-type'>Personal</span>
             </div>
                 <Row justify="center mt-16" gutter={[16,16]}>
-                <Col xs={24} md={12} xl={15} className="db-flex-style">
+                <Col xs={24} md={12} xl={15} lg={15} xxl={15} className="db-flex-style">
                         
                         {this.state.permissions?.Balances &&<>
                             <div className="markets-panel">
@@ -101,7 +101,7 @@ class Home extends Component {
                         {/* {this.state.permissions.Notices && <Notices />} */}
                         
                     </Col>
-                    <Col xs={24} md={12} className="cust-col-design">
+                    <Col xs={24} md={12} lg={9} xl={9} className="cust-col-design">
                         <SbCard />
                         {this.state.permissions?.Bank &&  <div className='marketcap-mt'>
                        <BankWallets/> 
