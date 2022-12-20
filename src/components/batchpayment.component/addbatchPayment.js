@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Col, List,Empty, Image,Button,Modal,Tooltip,Upload, message} from 'antd';
+import { Drawer, Typography, Col, List,Empty, Image,Button,Modal,Tooltip,Upload,Alert} from 'antd';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import Search from "antd/lib/input/Search";
 import { fetchMemberWallets } from "../dashboard.component/api";
+import {refreshTransaction,saveTransaction,confirmGetDetails} from './api'
 import NumberFormat from "react-number-format";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import PaymentPreview from './paymentPreview';
-import pending from '../../assets/images/pending.png'
-import { store } from "../../store";
-import apiCalls from "../../api/apiCalls";
-import CryptoJS from "crypto-js";
+import pending1 from '../../assets/images/pending1.png'
 const { Title,Paragraph } = Typography
 class AddBatchPayment extends Component {
+    useDivRef = React.createRef()
+
     state = {
         selectedCurrency : "USD",
         fiatWalletsLoading: false,
@@ -25,12 +25,19 @@ class AddBatchPayment extends Component {
         paymentPreview: false,
         isValidFile: true,
         uploadLoader: false,
-        uploadErrorModal: false
-
+        uploadErrorModal: false,
+        errorMessage:null,
+        showInprogressModal:false,
+        file:{},
+        transactionError:null,
+        refreshBtnLoader:false,
+        previewData:null,
+        reefreshData:null,
+        uploadUrl:process.env.REACT_APP_API_END_POINT + "/MassPayment/importfileUpload"
     }
 
     componentDidMount() {
-          this.setState({ ...this.state, fiatWalletsLoading: true });
+          this.setState({ ...this.state, fiatWalletsLoading: true , errorMessage:null,isCoinsListHide:false });
           fetchMemberWallets(this.props?.userProfile?.id).then(res => {
             if (res.ok) {
                 this.setState({ ...this.state, fiatWallets: res.data, paymentCoinsList: res.data, fiatWalletsLoading: false });
@@ -50,7 +57,8 @@ class AddBatchPayment extends Component {
     }
     
     closeDrawer = (isPreviewBack) => {
-        this.setState({ ...this.state, paymentPreview: false,showModal:false,isCoinsListHide: false,uploadErrorModal: false});
+
+        this.setState({ ...this.state, paymentPreview: false,showModal:false,isCoinsListHide: false,uploadErrorModal: false,errorMessage:null,showInprogressModal:false});
         if (this.props.onClose) {
             this.props.onClose(isPreviewBack);
         }
@@ -58,187 +66,135 @@ class AddBatchPayment extends Component {
     uploadCancel = () => {
         this.setState({ ...this.state, isCoinsListHide: false});
     }
-    _encrypt(msg, key) {
-        msg = typeof msg === "object" ? JSON.stringify(msg) : msg;
-        var salt = CryptoJS.lib.WordArray.random(128 / 8);
-        key = CryptoJS.PBKDF2(key, salt, {
-            keySize: 256 / 32,
-            iterations: 10
-        });
-        var iv = CryptoJS.lib.WordArray.random(128 / 8);
-        var encrypted = CryptoJS.AES.encrypt(msg, key, {
-            iv: iv,
-            padding: CryptoJS.pad.Pkcs7,
-            mode: CryptoJS.mode.CBC
-        });
-        return salt.toString() + iv.toString() + encrypted.toString();
-    }
     beforeUpload = (file) => {
+        this.setState({...this.state,errorMessage:null})
         let fileType = {
-            "application/csv": true,
-            "application/vnd.ms-excel": true,
-            "text/csv": true
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":true
         };
-        if (fileType[file.type]) {
-            this.setState({ ...this.state, isValidFile: true });
+         let isFileName = file.name.split(".").length > 2 ? false : true;
+        if (fileType[file.type] && isFileName) {
+            this.setState({ ...this.state, isValidFile: true,errorMessage:null });
             return true;
         } else {
-            // message.error({
-            //     content: `File is not allowed. You can upload only csv files`,
-            //     className: "custom-msg"
-            // });
-            this.setState({ ...this.state, isValidFile: false });
+            this.setState({ ...this.state, isValidFile: false ,
+                errorMessage: isFileName
+                ? `Please upload .XLS or .XLSX file`
+                : "File don't allow double extension"
+            });
             return Upload.LIST_IGNORE;
         }
     };
-    // isDocExist(lstObj, id) {
-    //     const lst = lstObj.filter((obj) => {
-    //         return obj.docunetDetailId === id;
-    //     });
-    //     return lst[0];
-    // }
-    handleUpload = async ({ file }, doc) => {
-        this.setState({
-            ...this.state,
-            uploadLoader: true,
-            errorMessage: null,
-            docReplyObjs: [],
-            //showModal: true
-        });
-        // if (file.status !== "done" && this.state.isValidFile) {
-        //     let replyObjs = [...this.state.docReplyObjs];
-        //     let item = this.isDocExist(replyObjs, doc?.id);
-        //     let obj;
-        //     if (item) {
-        //         obj = item;
-        //         const ObjPath = (function () {
-        //             if (obj.path === "string") {
-        //                 return JSON.parse(obj.path);
-        //             } else {
-        //                 return obj.path ? obj.path : [];
-        //             }
-        //         })();
-        //         obj.path = obj.path && typeof ObjPath;
-        //         obj.path.push({
-        //             filename: file.name,
-        //             path: file.response,
-        //             size: file.size
-        //         });
-        //         replyObjs = this.uopdateReplyObj(obj, replyObjs);
-        //     } else {
-        //         obj = this.messageObject(doc?.id);
-        //         obj.path.push({
-        //             filename: file.name,
-        //             path: file.response,
-        //             size: file.size
-        //         });
-        //         replyObjs.push(obj);
-        //     }
-        //     this.setState({
-        //         ...this.state,
-        //         uploadLoader: false,
-        //         docReplyObjs: replyObjs
-        //     });
-        // } else if (file.status === "error") {
-        //     message.error({ content: `${file.response}`, className: "custom-msg" });
-        //     this.setState({ ...this.state, uploadLoader: false });
-        // } 
-       if (!this.state.isValidFile) {
-            this.setState({
-                ...this.state,
-                uploadLoader: false,
-                showModal: false,
-                uploadErrorModal: true
-            });
-        }
-        else {
-            this.setState({
-                ...this.state,
-                showModal: true,
-                uploadErrorModal: false
-            });
-        }
-        this.setState({
-            ...this.state,
-            uploadLoader: false,
-            path: file.status === "done" ? file.response : null
-        });
-    };
-    // uploadExcel=()=>{
-    //     this.setState({ ...this.state, showModal:true});
-    //         const _currentScreen = window.location.pathname.split("/")[1];
-    //         const {
-    //             oidc: { user },
-    //             userConfig: { userProfileInfo },
-    //             //permissions: { currentScreen }
-    //         } = store.getState();
-    //         const Authorization = `Bearer ${user.access_token}`;
-    //         const Authentication = this._encrypt(
-    //             `{CustomerId:"${userProfileInfo?.id}",Action:"view", PermissionKey:"${this.props.pKey || _currentScreen 
-    //             }"}`,
-    //             userProfileInfo.sk
-    //         );
-    //         this.setState(
-    //             {
-    //                 ...this.state,
-    //                 modal: true,
-    //                 headers: {
-    //                     Authorization: Authorization,
-    //                     AuthInformation: Authentication
-    //                 }
-    //             },
-    //             () => {
-    //                 this.setState({
-    //                     ...this.state,
-    //                     stateLoading: true,
-    //                     headers: {
-    //                         Authorization: Authorization,
-    //                         AuthInformation: Authentication
-    //                     }
-    //                 });
-    //                 setTimeout(
-    //                     () =>
-    //                         this.setState({
-    //                             ...this.state,
-    //                             stateLoading: false,
-    //                             headers: {
-    //                                 Authorization: Authorization,
-    //                                 AuthInformation: Authentication
-    //                             }
-    //                         }),
-    //                     1000
-    //                 );
-    
-    //                 // setTimeout(
-    //                 //     () =>
-    //                 //         this.formref.current.setFieldsValue({
-    //                 //             ...this.state
-    //                 //         }),
-    //                 //     1000
-    //                 // );
-    //             }
-    //         );
-    //         apiCalls.trackEvent({
-    //             Action: "Upload MassPayment page ",
-    //             Feature: "Upload MassPayments",
-    //             Remarks: "Upload MassPayment page ",
-    //             FullFeatureName: "Upload MassPayments ",
-    //             userName: this.props.userProfile.userName,
-    //             id: this.props.userProfile.id
-    //         });
+  
+handleUpload = ({ file }) => {
+    if (file.name.split('.').length > 2) {
+      this.setState({ ...this.state, errorMessage: null, uploadLoader: false,});
+    }
+    else{
+        this.setState({ ...this.state, errorMessage: null, uploadLoader: false,showInprogressModal:true });
+      let obj = {
+        "id":"00000000-0000-0000-0000-000000000000",
+        "documentName": `${file.name}`,
+        "isChecked": file.name === "" ? false : true,
+        "remarks": `${file.size}`,
+        "state": null,
+        "status": false,
+        "path": `${file.response}`,
+        "size": `${file.size}`,
+      }
+      if(file?.response){
+        this.setState({...this.state,previewData:file, uploadLoader: true})
+        this.confirmPreview(obj)
+      }
         
-    // }
+    }
+   
+  };
     selectWhitelist=()=>{
         this.props.history.push(`/payments/${this.state.selectedCurrency}`) 
     }
     handleCancel=()=>{
         this.setState({ ...this.state, showModal:false});
     }
+    handleInprogressCancel=()=>{
+        this.setState({ ...this.state, showInprogressModal:false,refreshBtnLoader:false});
+    }
+    confirmPreview = async (file) => {
+      this.setState({...this.state,errorMessage:null})
+     let saveObj={
+          "id": file?.id,
+          "walletCode": this.state?.selectedCurrency,
+          "customerId": this.props?.userProfile?.id,
+          "filepath": file?.path,
+          "fileName": file?.documentName,
+          "userCreated":this.props.userProfile?.userName
+        }
+      let response = await saveTransaction(saveObj)
+      if(response.ok){
+        this.setState({ ...this.state, paymentSummary: true,file:response.data, insufficientModal: false,showInprogressModal:true,uploadLoader:false,uploadErrorModal:false})
+        if(response.data?.invalidTransactionCount >0){
+            this.setState({...this.state,uploadErrorModal:true,file:response.data,showInprogressModal:false})
+          }
+    }
+      else{
+        this.setState({...this.state,insufficientModal:true,showInprogressModal:false,errorMessage:(this.isErrorDispaly(response)), paymentSummary:false,uploadErrorModal:false})
+      }
+    
+    }
+      isErrorDispaly = (objValue) => {
+        if (objValue.data && typeof objValue.data === "string") {
+          return objValue.data;
+        } else if (
+          objValue.originalError &&
+          typeof objValue.originalError.message === "string"
+        ) {
+          return objValue.originalError.message;
+        } else {
+          return "Something went wrong please try again!";
+        }
+      };
+goToGrid=()=>{
+    this.closeDrawer();
+    this.setState({...this.state,showInprogressModal:false,errorMessage:null,isCoinsListHide:false})
 
+}
+downLoadPreview=()=>{
+    if(this.state?.selectedCurrency==="USD"){
+    window.open('https://devstoragespace.blob.core.windows.net/devstoragecontainer/USDBatchPayment.xlsx','_blank')
+    }
+    else{
+    window.open('https://devstoragespace.blob.core.windows.net/devstoragecontainer/EURBatchPayment.xlsx','_blank')
+    }
+}
+    refreshTransaction=async()=>{
+        if(this.state.file?.id){
+
+        
+        this.setState({...this.state,refreshBtnLoader:true,showModal:false})
+        const res=await refreshTransaction(this.state.file?.id)
+       if(res.ok){this.setState({...this.state,refreshBtnLoader:false,reefreshData:res.data,showInprogressModal:false,showModal:true,errorMessage:null})
+
+    }
+}
+    }
+    handleNext=async()=>{
+        const res=await confirmGetDetails(this.state.reefreshData?.id)
+        if(res.ok){
+            this.setState({ ...this.state, showModal: false,errorMessage:null, uploadErrorModal: false, paymentPreview: true }, () => { })
+        }
+    }
+    confirmTransaction=async(id)=>{
+        const res=await confirmGetDetails(id) 
+        if(res.ok){      
+            this.setState({...this.state,refreshBtnLoader:false,showInprogressModal:false,showModal:true,errorMessage:null})
+        }
+    }
     render() {
-        const { gridUrl, param, headers } = this.state;
+        const { uploadLoader, refreshBtnLoader ,errorMessage} = this.state;
         return (
+            <>
+               <div ref={this.useDivRef}></div>
            <div className='send-address'>
+           
         <Drawer destroyOnClose={true}
             title={[<div className="side-drawer-header">
                 <span></span>
@@ -298,29 +254,85 @@ class AddBatchPayment extends Component {
                 <div className='text-center makepayment-section'>
             <Title className='text-white fs-24 fw-500'>Send {this.state.selectedCurrency} to Multiple Address</Title>
             <Upload
-                                    accept=".xlsx, .xls, .csv"
-                                    multiple="false"
-                                    onChange={(props) => this.handleUpload(props)}
-                                    beforeUpload={(props) => {
-                                        this.beforeUpload(props);
-                                    }}
-                                    showUploadList={false}
-                                    action={
-                                        process.env.REACT_APP_API_END_POINT +
-                                        "/api/v1/ImportExcel/UploadAttachedFile"
-                                    }
-                                    headers={headers}
-                                >
-                                       <Button className='pop-btn mt-24'>Upload Excel</Button>
+                                    
+                                    //key={i}
+                                              type="dashed"
+                                              size="large"
+                                              className="ml-8 mt-12"
+                                              shape="circle"
+                                              style={{
+                                                backgroundColor: "transparent",
+                                              }}
+                                              accept=".xlsx, .xls"
+                                              multiple={false}
+                                              action={this.state.uploadUrl}
+                                              showUploadList={false}
+                                              beforeUpload={(props) => this.beforeUpload(props)}
+                                              onChange={(props) => this.handleUpload(props)}
+                                              headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
+                                         
+                                              >
+                                              <Button className='pop-btn mt-24'>Upload Excel</Button>
                                 </Upload>{" "}
-            <Paragraph className='text-white-30'>To download the excel, <a className='fw-700'> click here</a></Paragraph>
+            <Paragraph className='text-white-30'>To download the excel, <a className='fw-700' onClick={this.downLoadPreview}> click here</a></Paragraph>
             <Button className='pop-btn px-36' onClick={this.selectWhitelist}>Select from Whitelisted Addresses</Button>
                                 
             </div>
               </div>
               </>}
         </Drawer>
-                <Modal
+        <Modal  
+                
+                visible={this.state.showInprogressModal}
+                title="upload success"
+                closeIcon={
+                   <Tooltip title="Close">
+                     <span
+                       className="icon md close-white c-pointer"
+                       onClick={() => this.handleInprogressCancel()}
+                     />
+                   </Tooltip>
+                 }
+                 destroyOnClose={true}
+                 footer={[
+                    <>
+                        <div className="text-right withdraw-footer">
+                          <Button
+                            key="back"
+                            type="text"
+                            className="text-white-30 pop-cancel fw-400 text-captz text-center"
+                            onClick={this.goToGrid}
+                            
+                          >
+
+                            Exit
+                          </Button>
+                          <Button
+                            key="submit"
+                            className="pop-btn px-36 ml-36"
+                            onClick={this.refreshTransaction}  disabled={uploadLoader}
+                            loading={refreshBtnLoader}
+                          >
+                            Refresh
+                          </Button>
+                        </div>
+                    </>
+                  ]}
+         
+               >
+                   <>
+                   {errorMessage !== null && (
+          <Alert type="error" description={errorMessage} showIcon />
+               )}
+                   <div className='text-center pt-16'>
+                   <Image src={pending1} alt={"success"} />
+                       <Paragraph className='text-white fs-18'>Document has been processing</Paragraph>
+                      
+                   </div>
+                   </>
+           </Modal>
+                <Modal  
+                
                      visible={this.state.showModal}
                      title="upload success"
                      closeIcon={
@@ -335,8 +347,9 @@ class AddBatchPayment extends Component {
                    
                     footer={ <Button className="primary-btn pop-btn"
                     style={{ width: 100, height: 50 }}
-                    onClick={() => this.setState({ ...this.state, showModal: false, paymentPreview: true }, () => { })}>Next</Button>}>
+                    onClick={() => this.handleNext()}>Next</Button>}>
                         <>
+                       
                         <div className='text-center pt-16'>
                             <Paragraph className='text-white fs-18'>Document has been successfully uploaded</Paragraph>
                            
@@ -355,43 +368,46 @@ class AddBatchPayment extends Component {
                         </Tooltip>
                     }
                     destroyOnClose={true}
-                    // footer={<div className=''>
-                    //     <Button className="primary-btn pop-btn"  onClick={this.closeDrawer}>View and make changes</Button>
-                    // </div>}
+                  
                     footer={null}
                     >
                     <>
+                    
                         <div className='text-center pt-16'>
                             <Paragraph className='text-white fs-18'>
                             <div>Excel has been uploaded.</div>
-                            <div>We have detected 10 errors out of</div>
-                            <div>the 100 transactions requested.</div></Paragraph>
-                           <div> <Button className="primary-btn pop-btn"  onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false, paymentPreview: true }, () => { })}>Proceed with 90 transactions</Button></div>
+                            <div>We have detected {this.state.file?.invalidTransactionCount} errors out of</div>
+                            <div>the {this.state.file?.transactionCount} transactions requested.</div></Paragraph>
+                            {this.state?.file.validTransactionCount > 0 &&(
+                           <div> <Button className="primary-btn pop-btn"  onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false, paymentPreview: true }, () => { })}>Proceed with {this.state?.validTransactionCount} transactions</Button></div>)}
                             <br></br>
                             <div><Button className="primary-btn pop-btn"  onClick={this.closeDrawer}>View and make changes</Button></div>
                         </div>
                     </>
                 </Modal>
+             
                 {this.state.paymentPreview &&
                        <PaymentPreview
+                       previewData={this.state?.previewData}
                         showDrawer={this.state.paymentPreview}
-                        onClose={() => {
-                            this.closeDrawer("true");
-                        }}
+                            id={this.state.reefreshData?.id}
+                        onClose={this.props.onClose}
+                        fileData={this.state.file}
                     />
                        }
         </div>
-
+        </>
         );
        
     }
 }
-const connectStateToProps = ({ sendReceive, userConfig }) => {
-    return {sendReceive, userProfile: userConfig.userProfileInfo }
+const connectStateToProps = ({ sendReceive, userConfig,oidc }) => {
+    return {sendReceive, userProfile: userConfig.userProfileInfo ,user: oidc.user}
 }
 const connectDispatchToProps = dispatch => {
     return {
         dispatch
     }
 }
+
 export default connect(connectStateToProps, connectDispatchToProps)(withRouter(AddBatchPayment));
