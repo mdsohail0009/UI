@@ -445,7 +445,7 @@ export default {
 	Disabled: "Disabled",
 	Password: "Password",
 	Modifiedon: "Modified on",
-	Click_here_to_change_pass_word: "Click here to change password",
+	Click_here_to_change_pass_word: "change",
 	Type_your_current_pass_word: "Type your current password",
 	Type_your_new_pass_word: "Type your new password",
 	Re_type_your_new_pass_word: "Re-type your new password",

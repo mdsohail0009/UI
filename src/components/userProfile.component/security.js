@@ -181,39 +181,42 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
         />
       )}
 
-      <div className="box basic-info basicprofile-info">
+      <div className="basicprofile-info">
+        <div className="security-align">
+          <div>
         <Translate
           content="TwoFactorAuthentication"
           component={Title}
-          className="basicinfo mb-0"
+          className="basicinfo"
         />
         <Translate
           content="TwoFactorAuthentication_tag"
           component={Paragraph}
           className="basic-decs"
         />
-        <ul className="user-list pl-0">
+        </div>
+        <ul className="profile-ul">
           <li className="profileinfo">
             <div className="profile-block">
-              <label className="mb-0 profile-label ">
+              {/* <label className="mb-0 profile-label ">
                 <Translate
                   content="FA_tag"
                   component={Paragraph.label}
                   className="mb-0 profile-label"
                 />
-              </label>
-              <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>
+              </label> */}
+              <p className="profile-value" style={{ flexGrow: 12 }}>
                 {twoFA?.isEnabled ? (
                   <Translate
                     content="Enabled"
                     component={Paragraph.p}
-                    className="mb-0 profile-value"
+                    className="profile-value"
                   />
                 ) : (
                   <Translate
                     content="Disabled"
                     component={Paragraph.p}
-                    className="mb-0 profile-value"
+                    className="profile-value"
                   />
                 )}
               </p>
@@ -228,36 +231,37 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
             </div>
           </li>
         </ul>
+        </div>
       </div>
-      <div className="box contact-info ">
+      <div className="basicprofile-info">
         <Translate
           content="change_pass_word"
           component={Title}
-          className="basicinfo mb-0 "
+          className="basicinfo"
         />
         <Translate
           content="Choose_a_unique_pass_word_to_protect_your_account"
           component={Paragraph}
           className="basic-decs"
         />
-        <ul className="user-list pl-0">
+        <ul className="profile-ul">
           <li className="profileinfo c-pointer" onClick={() => showDrawer()}>
             <div className="profile-block">
-              <label className="mb-0 profile-label c-pointer">
+              <label className="profile-label c-pointer">
                 <Translate
                   content="Password"
                   component={Paragraph.label}
-                  className="mb-0 profile-label c-pointer"
+                  className="profile-label c-pointer"
                 />
               </label>
               <div style={{ flexGrow: 12 }}>
-                <p className="mb-0 profile-value"> ************</p>
+                <p className="profile-value"> ************</p>
                 {userConfig?.pwdModifiedDate != null && (
-                  <p className="mb-0 mobile-ml-8 fs-14 text-white">
+                  <p className="mobile-ml-8 profile-label">
                     <Translate
                       content="Modifiedon"
                       component={Paragraph.p}
-                      className="mb-0 mobile-ml-8  fs-14 text-white"
+                      className="mobile-ml-8 profile-label"
                     />{" "}
                     <Moment format="DD-MM-YYYY">
                       {userConfig?.pwdModifiedDate}
@@ -265,15 +269,15 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                   </p>
                 )}
               </div>
-              <div>
-                <span className="text-white">
+              <div className="passwrd-chang-btn">
+                {/* <span className="small-btn c-pointer"> */}
                   <Translate
                     content="Click_here_to_change_pass_word"
                     component={Paragraph.span}
-                    className="text-white"
+                    className="small-btn c-pointer"
                   />
-                </span>
-                <span className="icon md rarrow-white" />
+                {/* </span> */}
+                {/* <span className="icon md rarrow-white" /> */}
               </div>
             </div>
           </li>
@@ -317,11 +321,11 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
           component={Title}
           className="basicinfo mb-0"
         />
-        <Paragraph className="basic-decs">Please select <Text className="text-yellow fw-700">at least 2 </Text> of the Send verification options below.</Paragraph>
+        <Paragraph className="basic-decs">Please select at least 2 of the Send verification options below.</Paragraph>
        
         <Form>
           <Row gutter={[16, 16]}>
-            <Col md={4} xl={4} xxl={4}>
+            <Col md={24} xl={24} xxl={24}>
               <div className="d-flex align-center mt-16 ">
                 <label className="custom-checkbox p-relative">
                   <Input
@@ -340,7 +344,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                 />
               </div>
             </Col>
-            <Col md={5} xl={5} xxl={5}>
+            <Col md={24} xl={24} xxl={24}>
               <div className="d-flex align-center mt-16">
                 <label className="custom-checkbox p-relative">
                   <Input
@@ -359,7 +363,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                 />
               </div>
             </Col>
-            <Col md={5} xl={5} xxl={5}>
+            <Col md={24} xl={24} xxl={24}>
               <div className="d-flex align-center mt-16">
                 <label className="custom-checkbox p-relative">
                   <Input
@@ -378,7 +382,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                 />
               </div>
             </Col>
-            <Col md={5} xl={5} xxl={5}>
+            <Col md={24} xl={24} xxl={24}>
             {!userConfig?.isBusiness && <div className="d-flex align-center mt-16">
                 <label className="custom-checkbox p-relative c-pointer">
                   <Input
@@ -397,7 +401,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                 />
               </div>}
             </Col>
-            <Col md={5} xl={5} xxl={5}>
+            <Col md={24} xl={24} xxl={24}>
               <div className="text-right">
               <Button
                         className="pop-btn px-36"

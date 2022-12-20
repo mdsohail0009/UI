@@ -8,7 +8,7 @@ import {
   Button, Popover
 } from "antd";
 import { Link, withRouter } from "react-router-dom";
-import logoWhite from "../assets/images/logo-white.png";
+import logoWhite from "../assets/images/SuisseBase.png";
 import logoColor from "../assets/images/logo-color.png";
 import counterpart from "counterpart";
 import Translate from "react-translate-component";
