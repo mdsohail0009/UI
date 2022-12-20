@@ -178,7 +178,7 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
                     <Button
                         htmlType="submit"
                         size="large"
-                        className="pop-btn"
+                        className="pop-btn setting-btn"
                         loading={btnDisabled}
                         block
                         >

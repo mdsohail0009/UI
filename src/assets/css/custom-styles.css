@@ -152,6 +152,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .theme-switch.theme-active{background: var(--bgDark);}
 .theme-switch {width: 212px;background: var(--bgWhite30); border-radius: 30px;height: 52px; padding: 7px 10px}
 .custom-theme-btn{display: flex;align-items: center;}
+.setting-btn{margin-top: 36px;}
 /*profile css end*/
 
 /*Common css start*/
