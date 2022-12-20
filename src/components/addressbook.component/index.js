@@ -135,7 +135,7 @@ class AddressBook extends Component {
 		{
 
 			field: "whiteListName",
-			title: "Whitelist Name",
+			title: "Whitelist Name1",
 			filter: true,
 			width: 300,
 			customCell: (props) => (
