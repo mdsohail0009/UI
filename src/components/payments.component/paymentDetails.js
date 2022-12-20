@@ -400,7 +400,7 @@ class PaymentDetails extends Component {
           {(moreBankInfo?.transferType==="sepa" || moreBankInfo?.transferType==="internationalIBAN" ) && 
           <div>
           <Text className="lbl text-white w-100">Bank Address</Text>
-          <Text className="val text-white">{moreBankInfo?.bankBranch}{","}<br/>{moreBankInfo?.country}{","}<br/>{moreBankInfo?.state}{","}<br/>{moreBankInfo?.city}{","}<br/>{moreBankInfo?.postalCode}</Text></div>}
+          <Text className="val text-white">{moreBankInfo?.bankBranch}{","}{moreBankInfo?.country}{","}{moreBankInfo?.state}{","}{moreBankInfo?.city}{","}{moreBankInfo?.postalCode}</Text></div>}
         </div>
       );
     }
