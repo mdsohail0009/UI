@@ -271,13 +271,25 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
               </div>
               <div className="passwrd-chang-btn">
                 {/* <span className="small-btn c-pointer"> */}
-                  <Translate
+                  {/* <Translate
                     content="Click_here_to_change_pass_word"
                     component={Paragraph.span}
                     className="small-btn c-pointer"
-                  />
+                  /> */}
                 {/* </span> */}
                 {/* <span className="icon md rarrow-white" /> */}
+                <Col md={24} xl={24} xxl={24}>
+              <div className="text-left passwrd-chang-btn">
+              <Button
+                        className="profile-sm-btn"
+                        // loading={btnDisabled}
+                        // onClick={() => saveDetails()}
+                        >
+                        {/* {isLoading && <Spin indicator={antIcon} />}{" "} */}
+                       change
+                    </Button>
+              </div>
+            </Col>
               </div>
             </div>
           </li>
@@ -327,7 +339,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
           <Row gutter={[16, 16]}>
             <Col md={24} xl={24} xxl={24}>
               <div className="d-flex align-center mt-16 ">
-                <label className="custom-checkbox p-relative">
+                <label className="custom-checkbox c-pointer cust-check-outline">
                   <Input
                     name="check"
                     type="checkbox"
@@ -340,13 +352,13 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                 <Translate
                   content="FA_tag"
                   component={Paragraph.label}
-                  className="mb-0 profile-label ml-8" style={{ flex: 1 }}
+                  className="security-label-style" style={{ flex: 1 }}
                 />
               </div>
             </Col>
             <Col md={24} xl={24} xxl={24}>
               <div className="d-flex align-center mt-16">
-                <label className="custom-checkbox p-relative">
+                <label className="custom-checkbox c-pointer cust-check-outline">
                   <Input
                     name="check"
                     type="checkbox"
@@ -359,13 +371,13 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                 <Translate
                   content="Phone_verification"
                   component={Paragraph.label}
-                  className="mb-0 profile-label ml-8" style={{ flex: 1 }}
+                  className="security-label-style" style={{ flex: 1 }}
                 />
               </div>
             </Col>
             <Col md={24} xl={24} xxl={24}>
               <div className="d-flex align-center mt-16">
-                <label className="custom-checkbox p-relative">
+                <label className="custom-checkbox c-pointer cust-check-outline">
                   <Input
                     name="check"
                     type="checkbox"
@@ -378,13 +390,13 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                 <Translate
                   content="Email_verification"
                   component={Paragraph.label}
-                  className="mb-0 profile-label ml-8" style={{ flex: 1 }}
+                  className="security-label-style" style={{ flex: 1 }}
                 />
               </div>
             </Col>
             <Col md={24} xl={24} xxl={24}>
-            {!userConfig?.isBusiness && <div className="d-flex align-center mt-16">
-                <label className="custom-checkbox p-relative c-pointer">
+            {!userConfig?.isBusiness && <div className="d-flex align-center ">
+                <label className="custom-checkbox c-pointer cust-check-outline">
                   <Input
                     name="check"
                     type="checkbox"
@@ -397,16 +409,16 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                 <Translate
                   content="live_verification"
                   component={Paragraph.label}
-                  className="mb-0 profile-label ml-8" style={{ flex: 1 }}
+                  className="security-label-style" style={{ flex: 1 }}
                 />
               </div>}
             </Col>
             <Col md={24} xl={24} xxl={24}>
-              <div className="text-right">
+              <div className="text-left">
               <Button
-                        className="pop-btn px-36"
+                        className="profile-sm-btn"
                         loading={btnDisabled}
-                        style={{ height: 44,minWidth: 100 }} onClick={() => saveDetails()}>
+                        onClick={() => saveDetails()}>
                         {isLoading && <Spin indicator={antIcon} />}{" "}
                         save
                     </Button>

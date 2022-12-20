@@ -313,8 +313,8 @@ class YourPortfolio extends Component {
                       </div>
                     }
                     title={
-                      <div className="mr-16 crypto-card-design">
-                        <div>
+                      <div className="crypto-card-design">
+                        <div className='crypto-values'>
                         <div style={{ display: "flex", alignItems: "center" }}>
                           <Text className="coin-style">
                             {item.coin}
