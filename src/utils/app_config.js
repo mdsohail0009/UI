@@ -1,4 +1,4 @@
-const AppConfig = {
+const _config = {
     REACT_APP_API_END_POINT: process.env.REACT_APP_API_END_POINT,
     REACT_APP_REDIRECT_URI: process.env.REACT_APP_REDIRECT_URI,
     REACT_APP_CLIENT_ID: process.env.REACT_APP_CLIENT_ID,
