@@ -577,6 +577,11 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 
 /* send crypto addressbook start */
 .sub-title.address-book{ margin: 36px 0 16px 0 !important;}
+/* send crypto addressbook end */
+
+/* transactions start  */
+.grid-title{font-weight: 800 !important;font-size: 28px !important;color: var(--white) !important;margin-bottom: 18px !important;}
+/* transactions end  */
 
 /*@media start*/
 @media (min-width: 768px){

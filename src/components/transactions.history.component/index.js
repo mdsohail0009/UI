@@ -308,7 +308,7 @@ isErrorDispaly = (objValue) => {
       <>
         <Drawer
           title={[<div className="side-drawer-header">
-            <Translate content="transactions_history" component={Title} className="fs-26 fw-400 mb-0 text-white-30" />
+            <Translate content="transactions_history" component={Title} className="grid-title" />
             <span onClick={this.props.onClose} className="icon md close-white c-pointer" />
           </div>]}
           placement="right"
