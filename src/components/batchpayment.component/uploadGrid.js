@@ -22,7 +22,6 @@ const BatchpaymentView = (props) => {
     const [uplaodModal, setUploadModal] = useState(false);
     const [errorMessage,setErrorMessage]=useState(null)
     const [docIdentityProofObjs,setDocIdentityProofObjs]=useState([])
-    const [docIdentityProof,setDocIdentityProof]=useState(null);
     const [docTransferObjs,setDocTransferObjs]=useState([]);
     const [upLoader,setUploader]=useState(false);
     const [errorWarning,setErrorWarning]=useState(null);
@@ -31,6 +30,7 @@ const BatchpaymentView = (props) => {
     const [previewPath, setPreviewPath] = useState(null);
 	const [previewModal, setPreviewModal] = useState(false);
     const [data,setData]=useState({});
+    const [isLoading,setIsLoading]=useState(false);
     const gridRef = React.createRef();
     const gridColumns = [
         {
@@ -38,30 +38,44 @@ const BatchpaymentView = (props) => {
           title: "",
           width: 50,
           customCell: () => (
-            <td className="text-center">
+            <td className="text-center" >
               1
             </td>
           )
         },
         { field: "whiteListName", title: "Whitelist Name", filter: true,width: 200},
         { field: "beneficiaryName", title: "Beneficiary Name", filter: true,width: 200},
-        { field: "whitelistStatus", title: 'Whitelist Status', filter: true, width: 200 },
-        { field: "AccountNumber/IBAN", title: 'Account Number/IBAN', filter: true, width: 250, customCell: () => (<td className='text-center'>3434523253345</td>) },
+        {
+			field: "isWhitelisted",
+			customCell: (props) => (
+				<td>
+					{props.dataItem?.isWhitelisted && <>  Whitelisted</>}
+					{!props.dataItem?.isWhitelisted && "Not whitelisted"}
+				</td>
+			),
+			title:"Whitelist Status",
+			filter: false,
+			width: 200,
+		},
+        { field: "accountNumber", title: 'Account Number/IBAN', filter: true, width: 250, customCell: () => (<td className='text-center'></td>) },
         { field: "amount", title: 'Amount', filter: true, width: 200},
         { field: "transactionStatus", title: 'Transaction Status', filter: true, width: 200},
         { field: "uploadedDocuments", title: 'Uploaded Documents', filter: true, width: 220, },
         { field: "supportingDocument", title: 'Supporting Document', filter: true, width: 240,
             customCell: (props) => (
-            <td className='text-center'><div className="gridLink text-center" ><Button className='pop-btn px-36' onClick={()=>showUploadModal(props.dataItem)}>Upload</Button>
+            <td className='text-center'><div className="gridLink text-center" >
+                <Button className='pop-btn px-36' disabled={props.dataItem.transactionStatus==="Approved"} onClick={()=>showUploadModal(props.dataItem)}>
+                    Upload
+                    </Button>
               </div></td>)
         },
       ];
     const beforeUpload=(file)=>{ 
-debugger
-        setErrorMessage(null)
         if (file.name.split('.').length > 2) {
+            setUploader(false)
+           setDocUpload(false)
            setErrorMessage("File don't allow double extension")
-          return
+          return true;
         }
         let fileType = {
 			"image/png": true,
@@ -76,7 +90,9 @@ debugger
 		if (fileType[file.type]) {
             setErrorMessage(null)
           return true
-        } else{
+        } else if(fileType==="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
+            setErrorMessage("File is not allowed. You can upload jpg, png, jpeg and PDF files");
+        }else{
             setErrorMessage("File is not allowed. You can upload jpg, png, jpeg and PDF files");
             return Upload.LIST_IGNORE;
         }
@@ -85,52 +101,46 @@ debugger
         setUploadModal(true);
         setErrorMessage(null)
         setDocIdentityProofObjs([])
+        setDocTransferObjs([])
         setData(prop)
 
     }
   const handleUpload = ({ file },type) => {
-          setErrorMessage(null)
-          setUploader(true)
-        if (file.status==="done" && type === "IDENTITYPROOF") {
-            let obj = {
-                "documentId": "00000000-0000-0000-0000-000000000000",
-                "documentName": `${file.name}`,
-                "id": "00000000-0000-0000-0000-000000000000",
-                "isChecked": file.name === "" ? false : true,
-                "remarks": `${file.size}`,
-                "state": null,
-                "status": false,
-                "Path": `${file.response}`,
-                "uid":file.uid,
+    let identityProofObj=Object.assign([],docIdentityProofObjs)
+    let transferProof=Object.assign([],docTransferObjs)
+    let obj = {
+        "id": "00000000-0000-0000-0000-000000000000",
+        "documentId": "00000000-0000-0000-0000-000000000000",
+        "documentName": `${file.name}`,
+        "status": true,
+        "isChecked": file.name === "" ? false : true,
+        "remarks": `${file.size}`,
+        "state": "Submitted",
+        "recorder": 0,
+        "path": `${file.response}`,
+        "uid":file.uid,
+    } 
+    if (file.name.split('.').length > 2 ||file.type==="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ) {
+        setUploader(false);
+        setDocUpload(false);
+    }else{
+        if (type === "IDENTITYPROOF") {
+            setUploader(true)
+            if (file?.status == "done" && file.response !== undefined) {
+                setUploader(false)
+                identityProofObj?.push(obj);
+                 setDocIdentityProofObjs(identityProofObj)
             }
-            setUploader(false)
-            if (file.response !== undefined) {
-                 docIdentityProofObjs?.push(obj);
-                 setDocIdentityProof(obj)
             }
-            }
-          else if(file.status==="done" && type === "TransferProof"){
+          else if( type === "TransferProof"){
             setDocUpload(true)
-                let obj = {
-                    "documentId": "00000000-0000-0000-0000-000000000000",
-                    "documentName": `${file.name}`,
-                    "id": "00000000-0000-0000-0000-000000000000",
-                    "isChecked": file.name === "" ? false : true,
-                    "remarks": `${file.size}`,
-                    "state": null,
-                    "status": false,
-                    "Path": `${file.response}`,
-                    "uid":file.uid,
-                }
-                if (file.response !== undefined) {
+                if (file?.status == "done" && file.response !== undefined) {
                     setDocUpload(false)
-                    docIdentityProofObjs?.push(obj);
-                    //  docTransferObjs?.push(obj);
-                    //  setDocTransferObjs(obj)
-                    setDocIdentityProof(obj)
+                    transferProof?.push(obj);
+                     setDocTransferObjs(transferProof)
                 }
             }
-        
+        }
     }
  const deleteDocument=(file,type)=>{
     setDeleteModal(true)
@@ -155,24 +165,56 @@ debugger
         setDeleteModal(false)
         message.success("Document deleted sucessfully")
     }
-    
+ const isErrorDispaly = (objValue) => {
+		if (objValue.data && typeof objValue.data === "string") {
+		  return objValue.data;
+		} else if (
+		  objValue.originalError &&
+		  typeof objValue.originalError.message === "string"
+		) {
+		  return objValue.originalError.message;
+		} else {
+		  return "Something went wrong please try again!";
+		}
+	  };
     const uploadDocument= async()=>{
-        const obj = Object.assign({});
-                obj.id=data.transactionId;
-                obj.customerId = props?.userConfig?.id
-                obj.state="Submit"
-                obj.status=true
-                obj.details= docIdentityProofObjs
+        setErrorMessage(null);
+        setIsLoading(true)
+                let obj={
+                    "id": data?.id,
+                    "customerId": props?.userConfig?.id,
+                    "beneficiaryDocuments": {
+                      "id": data?.id,
+                      "customerId": props?.userConfig?.id,
+                      "status": true,
+                      "state": "Submitted",
+                      "currencyType":props.match.params.currency,
+                      "details":docIdentityProofObjs
+                    },
+                    "transferDocuments": {
+                      "id": data?.id,
+                      "customerId": props?.userConfig?.id,
+                      "status": true,
+                      "state": "Submitted",
+                      "currencyType": props.match.params.currency,
+                      "details": docTransferObjs,
+                    }
+                  }
         const res =await uploadDocuments(obj)
              if(res.ok){
                 gridRef?.current?.refreshGrid();
+                setIsLoading(false);
                 setUploadModal(false)
-                setDocIdentityProofObjs([])
+                setDocIdentityProofObjs([]);
+                setDocTransferObjs([]);
              }
-
+                else{
+                    setIsLoading(false);
+                    setErrorMessage(isErrorDispaly(res))
+                }
   }
   const docPreview = async (file) => {
-    let res = await getFileURL({ url: file.Path });
+    let res = await getFileURL({ url: file.path });
     if (res.ok) {
         setPreviewModal(true);
         setPreviewPath(res.data);
@@ -193,7 +235,16 @@ const filePreviewPath = () => {
         gridRef?.current?.refreshGrid();
         setErrorWarning(null)
         setDeleteModal(false)
+        // setUploader(false)
+        // setDocUpload(false)
       
+      }
+      const uploadCancel=()=>{
+        gridRef?.current?.refreshGrid();
+        setErrorWarning(null)
+        setDeleteModal(false)
+        setUploader(false)
+        setDocUpload(false)
       }
       const filePreviewModal = (
 		<Modal
@@ -240,7 +291,7 @@ const filePreviewPath = () => {
         <>
        
         < div className='main-container'>
-            <Title className="basicinfo "><span className='icon md c-pointer back mr-8' onClick={() => props.history.push('/batchpayment')}/><Text className="basicinfo">EURBatchPayment / EUR</Text></Title>
+            <Title className="basicinfo "><span className='icon md c-pointer back mr-8' onClick={() => props.history.push('/batchpayment')}/><Text className="basicinfo">{props.match.params.fileName} / { props.match.params.currency}</Text></Title>
             <div className="box basic-info text-white" style={{ clear: 'both' }}>
                 <List
                     className="bill-grid"
@@ -258,14 +309,14 @@ const filePreviewPath = () => {
                     <Tooltip title="Close">
                       <span
                         className="icon md close-white c-pointer"
-                        onClick={() => setUploadModal(false) }
+                        onClick={() => uploadCancel() }
                       />
                     </Tooltip>
                   }
                 footer={<div><Button className='pop-btn custom-send sell-btc-btn' 
-                 onClick={() => uploadDocument() }>Upload</Button></div>}>
+                 onClick={() => uploadDocument()} loading={isLoading}>Upload</Button></div>}>
                  {errorMessage !== null && (
-            <Alert type="error" description={errorMessage} />
+            <Alert type="error" description={errorMessage}  showIcon/>
                  )}
                 <>
                     <div className='my-16'>
@@ -319,7 +370,7 @@ const filePreviewPath = () => {
                             </p>
                         </Dragger>
                     </div>
-                    {docIdentityProofObjs?.map((file) =>
+                    {docTransferObjs?.map((file) =>
                                                 <>{file ? <div className="docfile">
                                                     <span className={`icon xl file mr-16`} />
                                                     <div className="docdetails c-pointer" onClick={() => docPreview(file)}>
