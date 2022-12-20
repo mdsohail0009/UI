@@ -605,6 +605,9 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .filter-content{align-items:center}
 .pop-btn.search-btn{margin: 16px 0 0 12px; height: 48px; width: 148px;}
 .excel-button{margin-top: 20px;}
+.k-grid-table{background-color: var(--tablebody);}
+.k-grid,.k-grid td{border: 1px solid var(--gridborder) !important;}
+.k-grid th{border-right: 1px solid var(--gridborder) !important;}
 /* transactions end  */
 
 /*@media start*/
