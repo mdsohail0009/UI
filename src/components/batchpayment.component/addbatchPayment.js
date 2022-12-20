@@ -358,7 +358,7 @@ downLoadPreview=()=>{
                 </Modal>
                 <Modal
                     visible={this.state.uploadErrorModal}
-                    title="Incorrect Fields"
+                    title="Proceed with Transactions"
                     closeIcon={
                         <Tooltip title="Close">
                             <span
@@ -390,7 +390,7 @@ downLoadPreview=()=>{
                        <PaymentPreview
                        previewData={this.state?.previewData}
                         showDrawer={this.state.paymentPreview}
-                            id={this.state.reefreshData?.id}
+                            id={this.state.file?.id}
                         onClose={this.props.onClose}
                         fileData={this.state.file}
                     />

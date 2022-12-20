@@ -24,6 +24,54 @@ class PaymentSummary extends Component {
 	}
 
 	showDeclaration=async()=>{	
+		if (this.state.verifyData?.verifyData) {
+			if (this.state.verifyData.verifyData.isPhoneVerified) {
+				if (!this.state.verifyData.isPhoneVerification) {
+					this.setState({
+						...this.state,
+						errorMessage: "Please verify phone verification code"
+					});
+					return;
+				}
+			}
+			if (this.state.verifyData.verifyData.isEmailVerification) {
+				if (!this.state.verifyData.isEmailVerification) {
+					this.setState({
+						...this.state,
+						errorMessage: "Please verify  email verification code"
+					});
+					return;
+				}
+			}
+			if (this.state.verifyData.verifyData.twoFactorEnabled) {
+				if (!this.state.verifyData.isAuthenticatorVerification) {
+					this.setState({
+						...this.state,
+						errorMessage: "Please verify authenticator code"
+					});
+					return;
+				}
+			}
+			if (
+			  this.state.verifyData.verifyData.isPhoneVerified === "" &&
+			  this.state.verifyData.verifyData.isEmailVerification === "" &&
+			  this.state.verifyData.verifyData.twoFactorEnabled === ""
+			) {
+				this.setState({
+					...this.state,
+					errorMessage:
+						"Without Verifications you can't send. Please select send verifications from security section",
+				});
+				return
+			}
+		} else {
+			this.setState({
+				...this.state,
+				errorMessage:
+					"Without Verifications you can't Proceed.",
+			});
+			return
+		}
 		let response= await proceedTransaction(this.props?.id || this.props?.fileData?.id)
 		if(response.ok){
 			if(response.data === true){
