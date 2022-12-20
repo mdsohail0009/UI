@@ -139,7 +139,9 @@ class ProfileInfo extends Component {
             showIcon
           />
         )}
-        <div className="profile-info text-center">
+        <div className="profile-image-content">
+          <div  className="profile-img-style">
+        <div className="profile-info">
           {this.state.Loader && <Loader />}
           {!this.state.Loader && (
             <>
@@ -180,7 +182,20 @@ class ProfileInfo extends Component {
             </>
           )}
         </div>
-        <div className="box contact-info coin-bal">
+        </div>
+        <div className="dwnl-content-style">
+          {/* <span className="icon lg download"></span> */}
+         
+          {this.state.fileLoader ? <Spin size="Large" style={{ padding: 10 }} /> : <span>
+              <Tooltip title="Download">
+                <div onClick={this.fileDownload} className="c-pointer"><span className="icon lg download" /></div>
+              </Tooltip>
+            </span>}
+           
+          <Text className="download-content">Download reference confirmation letter</Text>
+        </div>
+        </div>
+        {/* <div className="box contact-info coin-bal">
           <Translate
             content="account_text"
             component={Text}
@@ -193,9 +208,9 @@ class ProfileInfo extends Component {
               </Tooltip>
             </li>}
           </ul>
-        </div>
-        <div className="box basic-info basicprofile-info">
-          <Title className="basicinfo mb-0">
+        </div> */}
+        <div className="basic-info basicprofile-info">
+          <Title className="basicinfo">
             {" "}
             <Translate
               content="BasicInfo"
@@ -203,7 +218,7 @@ class ProfileInfo extends Component {
               className="basicinfo"
             />
           </Title>
-          <ul className="user-list pl-0">
+          <ul className="profile-ul">
             {this.props.userConfig.isBusiness && <li className="profileinfo">
               <div className="profile-block">
                 <label className="mb-0 profile-label">
