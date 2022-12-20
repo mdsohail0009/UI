@@ -143,6 +143,7 @@ border-radius: 5px;}
 .icon.lg.addressbook-icon{background-position: -140px -329px}
 .icon.lg.cases-icon{background-position:-210px -329px;}
 .icon.lg.referral-icon{background-position:-242px -329px;}
+.icon.md.refresh-icon{background-position:-273px -33px;}
 .icon.lg.hamburg{background-position: -55px 2px; transform: scale(1.4);}
 .icon.md.notifyIcon.deposit{background-position: -375px 0px;transform: rotateZ(235deg);}
 .icon.md.notifyIcon.deposits, .icon.md.notifyIcon.withdraw{background-position: -376px -1px;transform: rotateZ( 45deg);}
@@ -193,7 +194,7 @@ border-radius: 5px;}
 .icon.md.calendar{background-position:-481px -36px;}
 .icon.md.status{background-position:-365px -69px}
 .icon.md.add-icon{background-position:-397px -70px;}
-.icon.md.procced-icon{background-position:-381px -102px;}
+.icon.md.process-icon{background-position: -600px -34px;}
 .icon.md.back{background-position:-377px -1px;}
 .icon.md.add-icon-black{background-position:-533px -2px;}
 .icon.md.edit-icon{background-position:-336px -70px;}

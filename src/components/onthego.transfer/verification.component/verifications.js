@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import LiveNessSumsub from '../../sumSub.component/liveness'
 
 const Verifications = (props) => {
-
     const [verifyData, setVerifyData] = useState({});
     const [email, setEmail] = useState({ showRuleMsg: '', errorMsg: '', btnName: 'get_otp', requestType: 'Send', code: '', verified: false,btnLoader:false });
     const [phone, setPhone] = useState({ showRuleMsg: '', errorMsg: '', btnName: 'get_otp', requestType: 'Send', verified: false,btnLoader:false });
@@ -92,7 +91,7 @@ const Verifications = (props) => {
             setMsg(
                 "Without Verifications you can't withdraw.Please select withdraw verifications from security section"
             );
-            props.onReviewDetailsLoading(false)
+           props.onReviewDetailsLoading(false)
         }
     };
 
@@ -387,7 +386,8 @@ const Verifications = (props) => {
                         onFinish={transferDetials}
                         autoComplete="off">
                             <>
-                        {verifyData.isPhoneVerified === true && permissions?.Send && (<>
+                            {console.log(permissions)}
+                        {verifyData.isPhoneVerified === true  && (<>
                             <Text className="fw-500 mb-8 px-4 text-white pt-16">
                             Phone Verification Code *
                             </Text>
@@ -429,7 +429,7 @@ const Verifications = (props) => {
                             </Form.Item>
                         </>
                         )}
-                        {verifyData.isEmailVerification === true && permissions?.Send && (<>
+                        {verifyData.isEmailVerification === true  && (<>
                             <Text className="fs-14 mb-8 text-white d-block fw-500">
                                 Email Verification Code *
                             </Text>
@@ -471,7 +471,7 @@ const Verifications = (props) => {
                             </Form.Item>
                         </>
                         )}
-                        {verifyData.twoFactorEnabled === true && permissions?.Send && (<>
+                        {verifyData.twoFactorEnabled === true && (<>
                             <Text className="mb-8 px-4 fw-500 text-white pt-16">
                             Authenticator Code *
                             </Text>

@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Drawer, Typography, Col} from 'antd';
-import Translate from 'react-translate-component';
-import ConnectStateProps from '../../utils/state.connect';
 import { connect } from 'react-redux';
 import Search from "antd/lib/input/Search";
 const { Title } = Typography
@@ -9,15 +7,11 @@ class SendUsd extends Component {
     state = {
 
     }
-
-    
     closeDrawer = () => {
         if (this.props.onClose) {
             this.props.onClose();
         }
     }
-
-   
     render() {
         return (<Drawer destroyOnClose={true}
             title={[<div className="side-drawer-header">
