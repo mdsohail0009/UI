@@ -106,13 +106,13 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 /*Header End*/
 
 /*profile css start*/
-.user-profile{ border-radius: 50%; background: var(--bgDarkGrey);object-fit: cover;}
+.user-profile{ border-radius: 50%;object-fit: cover;}
 .profile-dropdown .user-profile{width:112px;height: 112px; border-radius: 50%;display: block;margin: 0 auto;}
 .profile-dropdown {text-align: center;padding:12px 24px;}
 .profile-dropdown .drpdwn-list{padding-top: 0px; padding-left: 0; padding-right: 0; margin-left: -24px; margin-right: -24px;}
 .profile-btn, .profile-btn:hover, .profile-btn:active, .profile-btn:focus{background: transparent;border: 1px solid var(--green) !important;height: 27px;border-radius: 8px;color: var(--green);font-size: 14px;width: 127px;font-weight: 500;text-align: center;display: flex;align-items: center;padding: 6px 10px;margin-bottom: 10px;font-style: italic;}
-.profile-info{width: 180px;height: 180px;padding: 5px;border-radius: 50%;text-align: left;background-image: linear-gradient(128deg, var(--bgDark1) 50%, var(--bgDark1) 50%); position: relative;}
-.profile-info .user-profile{width:100%;height: 100%; border-radius: 50%;padding: 6px;background-color: var(--bgDarkGrey);object-fit: cover;}
+.profile-info{width: 96px;height: 96px;padding: 5px;border-radius: 50%;text-align: left;position: relative;background-color: var(--profilebgImg);}
+.profile-info .user-profile{width:100%;height: 100%; border-radius: 50%;padding: 6px;object-fit: cover;}
 .profile-info .img-upld{position: absolute;right: -5px;bottom: 20px;background-color:#F1F2F6;border:0;}
 .basic-info,.contact-info{padding: 24px;}
 .dash-info.basic-info{padding: 6px !important;}
@@ -138,8 +138,8 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .profile-image-content{display: flex;align-items: center;}
 .download-content{font-weight: 700;font-size: 16px;color: var(--tabLine);}
 .profile-img-style{margin-right: 98px;}
-.dwnl-content-style{margin-top: 118px;display: flex;}
-.basicprofile-info{background: var(--addressList);border-radius: 13px;padding: 24px;margin-top: 26px;}
+.dwnl-content-style{margin-top: 66px;display: flex;}
+.basicprofile-info{background: var(--addressList);border-radius: 13px;padding: 24px;margin-top: 26px;width: 510px;}
 .profile-ul{padding-left: 0 !important;list-style: none;}
 .security-align{display: flex;align-items: center;justify-content: space-between;}
 .custom-toggle.ant-switch-checked{background-color: var(--profiletab) !important;}
@@ -149,6 +149,9 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .security-label-style{font-weight: 400;font-size: 14px;color: var(--checkText);margin-left: 12px;}
 .user-list .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn .tabtitle, .user-list  .ant-tabs-tab-btn:hover .tabtitle{color: #ffffff;}
 .profile-sm-btn:hover, .profile-sm-btn:focus{color: var(--btnhover);border-color: var(--btnhover);}
+.theme-switch.theme-active{background: var(--bgDark);}
+.theme-switch {width: 212px;background: var(--bgWhite30); border-radius: 30px;height: 52px; padding: 7px 10px}
+.custom-theme-btn{display: flex;align-items: center;}
 /*profile css end*/
 
 /*Common css start*/
