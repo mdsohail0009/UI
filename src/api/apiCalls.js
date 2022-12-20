@@ -89,9 +89,6 @@ const downloadKyc = () => {
 const updateSecurity = (obj) => {
 	return apiClient.put(ApiControllers.master + "UpdateSecurity", obj);
 };
-const getCustomerBankDetails = ()=>{
-    return bankClient.get(ApiControllers.bank + `GetAccountBalanceByCustomerId`);
-}
 const getAccountDetails=()=>{
 	return bankClient.get(ApiControllers.bank + `AccountDetails`)
   }
@@ -125,9 +122,9 @@ const verifyEmail = ( code) => {
 		ApiControllers.master + `EmailOTPVerification/${code}`
 	);
 };
-const getAuthenticator = (Code, customerId) => {
+const getAuthenticator = (Code) => {
 	return apiClient.get(
-		ApiControllers.master + `VerifyAuthenticator/${Code}/${customerId}`
+		ApiControllers.master + `VerifyAuthenticator/${Code}`
 	);
 };
 const getVerificationFields = () => {
@@ -216,7 +213,7 @@ let apicalls = {
 	getVerificationFields,
 	twofactor,
 	getInfoVal,
-	getReferalDetails,getPayeeLu,saveTransferData,getRecipientData,getCustomerBankDetails,getAccountDetails,
+	getReferalDetails,getPayeeLu,saveTransferData,getRecipientData,getAccountDetails,
 	getPayeeCryptoLu,
 	getPayeeCrypto,
 	confirmCryptoTransaction,
