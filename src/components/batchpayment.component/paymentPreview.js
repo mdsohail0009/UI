@@ -8,7 +8,6 @@ import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import { withRouter } from "react-router-dom";
 import PaymentSummary from "./paymentSummary";
-import Spreadsheet from "react-spreadsheet";
 import {confirmGetDetails} from './api'
 class paymentPreview extends Component {
   constructor(props) {
@@ -99,7 +98,6 @@ isErrorDispaly = (objValue) => {
         >
            <Translate content="bathch_payments_preview" component={Title} className="fs-26 fw-400 mb-0 text-white-30" />
           <div>
-            <Spreadsheet data={this.state.data} />
           </div>
                 <div className="text-right mt-12">
                     <Button className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn mr-8 ml-0 primary-btn pop-cancel"
