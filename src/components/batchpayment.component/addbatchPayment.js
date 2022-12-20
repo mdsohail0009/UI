@@ -131,10 +131,10 @@ handleUpload = ({ file }) => {
       let response = await saveTransaction(saveObj)
       if(response.ok){
         this.setState({ ...this.state, paymentSummary: true,file:response.data, insufficientModal: false,showInprogressModal:true,uploadLoader:false,uploadErrorModal:false})
-      }if(response.data?.invalidTransactionCount >0){
-        this.setState({...this.state,uploadErrorModal:true,showInprogressModal:false})
-      }
-      
+        if(response.data?.invalidTransactionCount >0){
+            this.setState({...this.state,uploadErrorModal:true,file:response.data,showInprogressModal:false})
+          }
+    }
       else{
         this.setState({...this.state,insufficientModal:true,showInprogressModal:false,errorMessage:(this.isErrorDispaly(response)), paymentSummary:false,uploadErrorModal:false})
       }
@@ -392,6 +392,7 @@ downLoadPreview=()=>{
                         showDrawer={this.state.paymentPreview}
                             id={this.state.reefreshData?.id}
                         onClose={this.props.onClose}
+                        fileData={this.state.file}
                     />
                        }
         </div>

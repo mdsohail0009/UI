@@ -87,7 +87,7 @@ class RouteConfig extends Component {
 					render={({ match: { url } }) => (
 						<>
 							<Route path={`${url}`} component={Batchpayments} exact isRoute={true}/>
-              <Route path={`${url}/:id/:view`} component={BatchpaymentView} />
+              <Route path={`${url}/:id/:fileName/:currency/:view`} component={BatchpaymentView} />
 						</>
 					)}
 				/>

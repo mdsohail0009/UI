@@ -24,7 +24,7 @@ class PaymentSummary extends Component {
 	}
 
 	showDeclaration=async()=>{	
-		let response= await proceedTransaction(this.props?.id)
+		let response= await proceedTransaction(this.props?.id || this.props?.fileData?.id)
 		if(response.ok){
 			if(response.data === true){
 				this.setState({ ...this.state, showDeclaration:true,insufficientModal:false}); 

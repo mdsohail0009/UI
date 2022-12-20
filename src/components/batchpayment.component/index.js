@@ -25,7 +25,7 @@ const Batchpayments = (props) => {
     setProceedBatchPayment(false)
     const items=e.dataItem;
     const val = (items.id);
-    props.history.push('/batchpayment/' + val + '/view');
+    props.history.push(`/batchpayment/${val}/${e.dataItem.fileName}/${e.dataItem.currency}/view`);
   }
   const docPreview = async (file) => {
     window.open(file.filePath,'_blank')
@@ -54,8 +54,12 @@ const Batchpayments = (props) => {
         {
           field: "fileName", title: "File Name", filter: true, width: 200,
           customCell: (props) => (
-            <td><div className="gridLink" onClick={()=>viewMode(props)} >{props?.dataItem?.fileName}
-              </div></td>) 
+            <td>
+               {props?.dataItem?.status==="Draft"&& <div className=''>{props?.dataItem?.fileName}</div>}
+             {props?.dataItem?.status!=="Draft"&& <div className="gridLink" onClick={()=>viewMode(props)} >
+              {props?.dataItem?.fileName}
+              
+              </div>}</td>) 
         },
         { field: "createdDate", title: "Date Created", filter: true, filterType: "date", width: 200, 
         customCell: (props) => (

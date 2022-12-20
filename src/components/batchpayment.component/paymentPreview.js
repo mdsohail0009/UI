@@ -54,7 +54,7 @@ closeDrawer = () => {
 confirmPreview = async () => {
   this.setState({...this.state,isLoad:true})
    this.setState({...this.state,errorMessage:null})
-   let response = await confirmGetDetails(this.props.id)
+   let response = await confirmGetDetails(this.props?.id ||this.props?.fileData?.id)
    if(response.ok){
     this.setState({ ...this.state,isLoad:false, paymentSummary: true, insufficientModal: false ,getPaymentDetails:response.data})
   }else{
@@ -120,6 +120,7 @@ isErrorDispaly = (objValue) => {
                         getPaymentDetails={this.state.getPaymentDetails}
                         id={this.props?.id}
                         transactionContinue={this.props?.transactionContinue}
+                        fileData={this.props?.fileData}
                     />
                        }
         </Drawer>
