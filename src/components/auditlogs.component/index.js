@@ -210,7 +210,7 @@ class AuditLogs extends Component {
                   <Form.Item
                     name="timeSpan"
                     className="input-label selectcustom-input mb-0"
-                    label={<Translate content="TimeSpan" component={Form.label} className="input-label selectcustom-input mb-0" />}
+                    label={<Translate content="TimeSpan" component={Form.label} className="label-style" />}
                   >
                     <Select
                       className="cust-input mb-0 custom-search"
@@ -238,7 +238,7 @@ class AuditLogs extends Component {
                   <Form.Item
                     name="feature"
                     className="input-label selectcustom-input mb-0"
-                    label={<Translate content="Features" component={Form.label} className="input-label selectcustom-input mb-0" />}
+                    label={<Translate content="Features" component={Form.label} className="label-style" />}
                   >
                     <Select
                       defaultValue="All Features"

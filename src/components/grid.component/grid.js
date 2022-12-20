@@ -77,7 +77,7 @@ export function withState(WrappedGrid) {
                     {this.state.isLoading && this.loadingPanel}
                     {this.props.showExcelExport && <div className='text-right'> <button
                         title={this.props?.exExportTitle || "Export Excel"}
-                        className="k-button k-button-md k-rounded-md k-button-solid  mt-16 mb-16 mr-16 search-btn primary-btn excel-btn"
+                        className="pop-btn excel-button"
                         onClick={() => {
                             const getCombineFieldValue = (dataItem, fields) => {
                                

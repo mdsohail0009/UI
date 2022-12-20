@@ -278,7 +278,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .k-button.k-primary.excel-btn{background: var(--bgYellow); color: var(--textDark); border-color: var(--bgYellow);padding: 10px 24px;font-weight: 500;text-transform: uppercase;}
 .k-button.k-primary{background: var(--bgYellow); color: var(--textDark); border-color: var(--bgYellow);padding: 4px 24px;font-weight: 500;text-transform: uppercase;}
 .k-button.k-primary:active, .k-button.k-primary:hover{background: var(--bgDarkYellow); color: var(--textDark); border-color: var(--bgDarkYellow);}
-.k-grid thead{background: var(--bgDarkGrey);}.k-i-more-vertical.k-icon{width:20px; height: 20px; background-position: -350px -1px; transform: scale(0.9);margin-top: 10px;}
+.k-grid thead{background: var(--gridheader);}.k-i-more-vertical.k-icon{width:20px; height: 20px; background-position: -350px -1px; transform: scale(0.9);margin-top: 10px;}
 .k-grouping-row .k-i-collapse::before, .k-grouping-row .k-i-expand::before, .k-i-more-vertical:before{display: none;}
 .ant-picker-suffix{color: var(--textWhite);}
 .k-pager-sizes .k-dropdown .k-dropdown-wrap, .k-dropdowntree .k-dropdown-wrap, .k-pager-sizes .k-dropdown .k-dropdown-wrap:hover{background: var(--bgDarkGrey);color: var(--textWhite);}
@@ -306,7 +306,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .ant-modal-confirm-btns button:nth-child(2){background-color: var(--bgYellow) !important;border: none;color: var(--textDark);border-radius: 16px;padding: 4px 30px}
 .ant-modal-confirm-btns button:first-child:hover{color: var(--textYellow);}
 /* .ant-picker-input > input, .ant-form-item-label > label{color: var(--textWhite);} */
-.search-bg{border: 1px solid rgba(0,0,0,.08);color: #313c46 !important;background-color: var(--bgDarkGrey) !important;padding: 15px 10px;}
+.search-bg{border: 1px solid rgba(0,0,0,.08);color: #313c46 !important;background-color: var(--drawerList) !important;padding: 15px 10px;border-radius: 20px;}
 .anticon-copy svg, .anticon-check svg{color: var(--subText);}
 /*Modal End*/
 
@@ -589,6 +589,12 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 
 /* transactions start  */
 .grid-title{font-weight: 800 !important;font-size: 28px !important;color: var(--white) !important;margin-bottom: 18px !important;}
+.cust-list .k-grid{border-radius: 20px;}
+.cust-list .k-grid-header-wrap{border-top-left-radius: 20px;border-top-right-radius: 20px;}
+.ant-select-selection-item{font-weight: 500;font-size: 14px;color: var(--white);}
+.filter-content{align-items:center}
+.pop-btn.search-btn{margin: 16px 0 0 12px; height: 48px; width: 148px;}
+.excel-button{margin-top: 20px;}
 /* transactions end  */
 
 /*@media start*/

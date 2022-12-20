@@ -325,12 +325,12 @@ isErrorDispaly = (objValue) => {
               autoComplete="off"
               ref={this.formRef}
             >
-              <Row >
+              <Row className="filter-content">
               <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
               <Form.Item
                     name="timeSpan"
                     className="input-label selectcustom-input mb-0"
-                    label={<Translate content="Date" component={Form.label} className="input-label selectcustom-input mb-0" />}
+                    label={<Translate content="Date" component={Form.label} className="label-style" />}
                   >
                     <Select
                       className="cust-input mb-0 custom-search"
@@ -346,7 +346,7 @@ isErrorDispaly = (objValue) => {
                 {this?.state?.isCustomDate ? <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
                   <Form.Item
                     name="selectedTimespan"
-                    className="input-label selectcustom-input mb-0 cust-label"
+                    className="label-style"
                     label="From - To Dates"
                   >
                     <Input disabled placeholder="DD/MM/YYYY" className="cust-input cust-adon mb-0" addonAfter={<i className="icon md date-white c-pointer" onClick={(e) => { this.datePopup(e, 'searchObj') }} />} />
@@ -397,7 +397,6 @@ isErrorDispaly = (objValue) => {
                 <Col xs={24} sm={24} md={3} lg={3} xl={3} className="transaction_resp">
                   <Button
                     className="pop-btn search-btn"
-                    style={{ height: 36, marginTop: "36px" }}
                     htmlType="submit"
                     onClick={this.handleSearch}
                   >
