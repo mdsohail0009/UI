@@ -1,6 +1,7 @@
 
 import { apiClient } from '../../api';
 import { ApiControllers } from '../../api/config'
+const crypto = require("crypto");
 
 const getCurrencyLu = (customer_id) => {
     return apiClient.get(ApiControllers.wallets + `Fiat/${customer_id}`);
@@ -33,8 +34,27 @@ const creatPayment = (id) => {
 const deletePayDetials = (id) => {
     return apiClient.delete(ApiControllers.massPayment + `BillPayments/payment/${id}`);
 };
-export { getCurrencyLu,saveBeneficiary,getFileURL, savePayments,getFavourite, getPaymentsData, updatePayments, getBankData,creatPayment,deletePayDetials}
+const saveTransaction = (obj) => {
+    return apiClient.post(ApiControllers.massPayment + "savetransaction", obj);
+}
+const confirmGetDetails = (id) => {
+    return apiClient.get(ApiControllers.massPayment + `Confirm/Transactions/${id}`);
+};
+  const deleteBatchPayments = (id) => {
+    return apiClient.delete(ApiControllers.massPayment + `BatchPayments/${id}`);
+};
 
-//https://routechanges.azurewebsites.net/api/v1/DepositeWithdraw/Favourite
-//https://routechanges.azurewebsites.net/api/v1/Wallets/Fiat/f8be2fd6-9778-4408-ba57-7502046e13a5
-//https://routechanges.azurewebsites.net/api/v1/DepositeWithdraw/Withdraw/Favourite/9619c559-adfa-4210-a6bb-c75f652e5c99
+const refreshTransaction=(id)=>{
+    return apiClient.get(ApiControllers.massPayment + `RefreshTransaction/${id}`);
+}
+const proceedTransaction=(id)=>{
+    return apiClient.get(ApiControllers.massPayment + `Transactions/${id}`);
+}
+const uploadDocuments=(obj)=>{
+    return apiClient.post(ApiControllers.massPayment + `UploadDocument`,obj);
+}
+const getInvalidTransactionData=(TransactionId)=>{
+    return apiClient.get(ApiControllers.massPayment + `ExportExcelDownload/${TransactionId}`);
+}
+export { getCurrencyLu,saveBeneficiary,getFileURL, savePayments,getFavourite, getPaymentsData, updatePayments, getBankData,creatPayment,deletePayDetials,saveTransaction,deleteBatchPayments,refreshTransaction,confirmGetDetails,proceedTransaction,uploadDocuments,getInvalidTransactionData}
+

@@ -297,6 +297,7 @@ class AddressBook extends Component {
 	}
 
 	handleInputChange = (prop, e) => {
+		debugger
 		this.setState({ ...this.state, errorWorning: null });
 		const rowObj = prop.dataItem;
 		const value =
@@ -645,6 +646,7 @@ class AddressBook extends Component {
 	};
 
 	onActionClick = (key) => {
+		debugger
 		const actions = {
 			add: "addAddressBook",
 			edit: "editAddressBook",
