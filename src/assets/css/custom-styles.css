@@ -149,8 +149,8 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .security-label-style{font-weight: 400;font-size: 14px;color: var(--checkText);margin-left: 12px;}
 .user-list .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn .tabtitle, .user-list  .ant-tabs-tab-btn:hover .tabtitle{color: #ffffff;}
 .profile-sm-btn:hover, .profile-sm-btn:focus{color: var(--btnhover);border-color: var(--btnhover);}
-.theme-switch.theme-active{background: var(--bgDark);}
-.theme-switch {width: 212px;background: var(--bgWhite30); border-radius: 30px;height: 52px; padding: 7px 10px}
+/* .theme-switch.theme-active{background: var(--bgDark);} */
+.theme-switch {width: 212px; border-radius: 30px;height: 52px; padding: 7px 10px}
 .custom-theme-btn{display: flex;align-items: center;}
 .setting-btn{margin-top: 36px;}
 .mb-copy{color: var(--marketTitle) !important;}
