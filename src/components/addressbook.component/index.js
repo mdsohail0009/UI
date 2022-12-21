@@ -68,6 +68,9 @@ class AddressBook extends Component {
 	}
 	componentDidMount() {
 		this.permissionsInterval = setInterval(this.loadPermissions, 200);
+		if(!this.state.cryptoFiat){
+			this.props.changeStep("step1");
+		}
 		if (!this.state.cryptoFiat) {
 			apiCalls.trackEvent({
 				Type: "User",
@@ -297,7 +300,7 @@ class AddressBook extends Component {
 	}
 
 	handleInputChange = (prop, e) => {
-		debugger
+		
 		this.setState({ ...this.state, errorWorning: null });
 		const rowObj = prop.dataItem;
 		const value =
@@ -646,13 +649,18 @@ class AddressBook extends Component {
 	};
 
 	onActionClick = (key) => {
-		debugger
+	if(key==="add" || key==="edit"){
+		if(!this.state.cryptoFiat){
+			this.props.changeStep("step1");
+		}
+	}
 		const actions = {
 			add: "addAddressBook",
 			edit: "editAddressBook",
 			disable: "statusUpdate"
 		};
 		this[actions[key]]();
+
 	};
 
 	render() {
