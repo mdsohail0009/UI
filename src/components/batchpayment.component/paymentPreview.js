@@ -101,11 +101,9 @@ isErrorDispaly = (objValue) => {
           visible={this.props.showDrawer}
           className="side-drawer-full custom-gridresponsive transctns-grid"
         >
-           <Translate content="bathch_payments_preview" component={Title} className="fs-26 fw-400 mb-0 text-white-30" />
-          <div>
-          </div>
+
           < div className='main-container'>
-          
+          <Translate content="bathch_payments_preview" component={Title} className="fs-26 fw-400 mb-14 text-white-30" />
                   <List
                       
                       showActionBar={false}

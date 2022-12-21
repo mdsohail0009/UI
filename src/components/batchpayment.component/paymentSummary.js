@@ -150,7 +150,7 @@ class PaymentSummary extends Component {
           visible={this.props.showDrawer}
 		  className="side-drawer w-50p"
         >
-			<Spin spinning={this.state.reviewDetailsLoading}></Spin>
+			<Spin spinning={this.state.reviewDetailsLoading}>
 			{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
 				<div>
 				{!this.state.showDeclaration && <>
@@ -214,8 +214,8 @@ class PaymentSummary extends Component {
 							<div className='text-center text-white p-24'>
 								<img src={pending} />
 								<Title className='text-white'>Declaration form sent!</Title>
-								<Paragraph className='text-white'>We sent declaration form to:
-									{this.props.userConfig?.email} Please sign using the link
+								<Paragraph className='text-white'>We sent declaration form to 
+									{this.props.customer?.email} Please sign using the link
 									received in email to whitelist your address. Note that
 									your payments will only be processed once your
 									whitelisted address has been approved. </Paragraph>
@@ -224,9 +224,11 @@ class PaymentSummary extends Component {
 						</>}
 
 					</div>
-
+					</Spin>
 				</Drawer>
+				
 			</div>
+			
 			<Modal
                      visible={this.state.insufficientModal}
                      title="Insufficient Balance"

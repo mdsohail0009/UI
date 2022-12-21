@@ -379,7 +379,7 @@ downLoadPreview=()=>{
                             <div>We have detected {this.state.file?.invalidTransactionCount} errors out of</div>
                             <div>the {this.state.file?.transactionCount} transactions requested.</div></Paragraph>
                             {this.state?.file.validTransactionCount > 0 &&(
-                           <div> <Button className="primary-btn pop-btn"  onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false, paymentPreview: true }, () => { })}>Proceed with {this.state?.validTransactionCount} transactions</Button></div>)}
+                           <div> <Button className="primary-btn pop-btn"  onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false, paymentPreview: true }, () => { })}>Proceed with{" "} {this.state?.validTransactionCount} transactions</Button></div>)}
                             <br></br>
                             <div><Button className="primary-btn pop-btn"  onClick={this.closeDrawer}>View and make changes</Button></div>
                         </div>
