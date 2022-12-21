@@ -582,7 +582,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
 
                 </Col></Row>}
                 
-                {(!validIban||!isShowBankDetails)&&<span>No bank details available</span>}
+                {(!validIban||!isShowBankDetails)&&<span className="info-details">No bank details available</span>}
                 </Spin>
         </div>}
         <div className="buy-usdt-btn">

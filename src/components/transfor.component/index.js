@@ -58,8 +58,8 @@ class Transfor extends Component {
         return (<Drawer
             title={[<div className="side-drawer-header">
                 {this.renderTitle()}
-                <div className="text-center fs-16">
-                    <Translate className="text-white-30 fw-600 text-upper mb-4" content={this.props.TransforStore.stepTitles[tranforobj[this.props.TransforStore.stepcode]]} component={Paragraph} />
+                <div className="text-center">
+                    <Translate className="drawer-maintitle" content={this.props.TransforStore.stepTitles[tranforobj[this.props.TransforStore.stepcode]]} component={Paragraph} />
                     <Translate className="text-white-50 mb-0 fw-300 fs-14 swap-subtitlte" content={this.props.TransforStore.stepSubTitles[tranforobj[this.props.TransforStore.stepcode]]} component={Paragraph} /></div>
                 {this.renderIcon()}
             </div>]}

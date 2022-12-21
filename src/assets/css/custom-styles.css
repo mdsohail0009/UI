@@ -64,6 +64,8 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 /*----Margin Utilities----*/
 .m-0{margin: 0 !important;}
 /* icons start */
+.icon.lg.radio-check{background-position:-324px -521px;}
+.icon.lg.radio{background-position:-324px -485px;}
 .icon.lg.download{background-position:-234px -518px;}
 .icon.lg.search-angle{background-position:-128px -480px;}
 .icon.md.bell{background-position:-39px -486px;}
@@ -150,7 +152,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .user-list .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn .tabtitle, .user-list  .ant-tabs-tab-btn:hover .tabtitle{color: #ffffff;}
 .profile-sm-btn:hover, .profile-sm-btn:focus{color: var(--btnhover);border-color: var(--btnhover);}
 /* .theme-switch.theme-active{background: var(--bgDark);} */
-.theme-switch {width: 212px; border-radius: 30px;height: 52px; padding: 7px 10px}
+.theme-switch {width: 212px; border-radius: 30px;height: 52px; padding: 7px 4px;}
 .custom-theme-btn{display: flex;align-items: center;}
 .setting-btn{margin-top: 36px;}
 .mb-copy{color: var(--marketTitle) !important;}
@@ -159,7 +161,15 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .crypto-address.share-width-align{width: 510px;}
 .referral-patner-btn{margin-top: 26px;}
 /* .crypto-address .custom-display{position: absolute;top: 6px;right: 8px;} */
+.theme-txt{font-size: 16px; font-weight: 500; color: var(--coinPrice);margin-left: 4px;}
+.switch-circle, .theme-txt{margin-bottom: 0 !important;}
+/* .theme-active .theme-txt{color: var(--textWhite);font-weight: 400;} */
+.info-details{font-weight: 700;font-size: 20px;color: var(--tablesub);}
 /*profile css end*/
+
+/* manual addressbook start */
+.custom-forminput .ant-form-item-label > label{height: auto;}
+/* manual addressbook end */
 
 /*Common css start*/
 .ant-input-group-addon .ant-select.ant-select-single:not(.ant-select-customize-input) .ant-select-selector{border: 0 !important;}
@@ -205,8 +215,8 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .cust-search::placeholder{color: var(--placeholders);font-weight: 400;font-size: 16px;}
 .cust-search .ant-input{color: var(--primary);font-weight: 400;font-size: 16px;}
 .drawer-list-font{font-weight: 700;font-size: 16px;color: var(--coinPrice);}
-.drawer-coin .ant-image, .crypto-curr-align .ant-image, .listitems-design .ant-image, .cytpo-list-style .ant-image, .crypto-bg, .drawer-list-fiat .ant-image-img{border: 4px solid var(--coinBg);border-radius: 100%;}
-.drawer-coin .ant-image-img, .crypto-curr-align .ant-image-img, .listitems-design .ant-image-img, .cytpo-list-style .ant-image-img, .crypto-bg, .drawer-list-fiat .ant-image{background-color: var(--coinBg);border-radius: 50%;}
+.drawer-coin .ant-image, .crypto-curr-align .ant-image, .listitems-design .ant-image, .cytpo-list-style .ant-image, .crypto-bg, .drawer-list-fiat .ant-image-img{border: 4px solid var(--coinBg);border-radius: 50%;}
+.drawer-coin .ant-image-img, .crypto-curr-align .ant-image-img, .listitems-design .ant-image-img, .cytpo-list-style .ant-image-img, .crypto-bg, .drawer-list-fiat .ant-image{border-radius: 50%;}
 .cytpo-list-style .ant-list-item-meta{align-items: center;}
 .crypto-bg{width: 52px;height: 52px;}
 .label-style, .ant-form-item-label > label{color: var(--subText); font-weight: 400;font-size: 14px;margin-bottom: 2px !important;text-transform: capitalize;}
@@ -258,6 +268,8 @@ input:-webkit-autofill:active{
 .round-pills .ant-radio-button-wrapper-checked:not([class*=' ant-radio-button-wrapper-disabled']).ant-radio-button-wrapper:first-child{border-color: var(--radioBorderfill);}
 .ant-tooltip.ant-tooltip-placement-top{left: 660px !important;top: 321px  !important;}
 .ant-tooltip-inner{background-color: var(--profileMenu);}
+.footer-links a, .footer-links span{font-size: 14px; color: var(--white); font-weight: 500; display: inline-block;margin-right: 30px;text-align: center;}
+.footer-links a:hover{color: var(--textAqua) !important;}
 /*Common css End*/
 
 /*Coin Selection End*/
@@ -431,7 +443,8 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .fait-maintext{font-weight: 700;font-size: 18px;color: var(--tablesub);margin-bottom: 16px !important;margin-top: 16px;}
 .refer-text{font-weight: 400;font-size: 16px;color: var(--tableText);}
 .walletadrs{font-weight: 700;font-size: 16px;color: var(--coinPrice);}
-.import-note{background-color: var(--cardBG);width: auto;border-radius: 10px;padding: 24px 70px 24px 24px;color: var(--tablesub);}
+.import-note{background-color: var(--cardBG);width: auto;border-radius: 10px;padding: 24px 70px 24px 24px;color: var(--tablesub);font-weight: 400;font-size: 20px;}
+.imp-note{font-weight: 700;font-size: 20px;color: var(--tablesub);}
 .custom-display{margin-left: 12px;}
 .cust-tabs-fait .ant-tabs-tab + .ant-tabs-tab{margin: 0 0 0 0px;}
 .cust-tabs-fait .ant-tabs-nav{width: 350px;margin: 0 auto;justify-content: center;margin-bottom: 26px;}
@@ -461,6 +474,11 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .sub-abovesearch{color: var(--subText) !important;font-weight: 400 !important;font-size: 14px !important;margin-bottom: 6px !important;text-transform: capitalize;}
 .uplaod-inner{color: var(--white) !important;}
 .upload .ant-upload-text{font-weight: 600;color: var(--white) !important;}
+.imprt-bg{background-color: var(--cardBG);padding: 24px;border-radius: 10px;margin-bottom: 36px;}
+.ab-note-style{font-weight: 700;font-size: 16px;color: var(--gridcontent);}
+.note-cont{font-weight: 400;font-size: 16px;color: var(--gridcontent);}
+.adbs-mb{margin-bottom: 16px;}
+.addressbook-grid .cust-tabs-fait .ant-tabs-nav{width: 100%;}
 /*Send Address End*/
 /* --Payments Start--*/
 .pay-grid thead th{padding: 8px;width: 250px; color: var(--textWhite30);font-weight: 500;text-align: left;font-size: 16px;}
@@ -605,6 +623,12 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 
 /* send crypto addressbook start */
 .sub-title.address-book{ margin: 36px 0 16px 0 !important;}
+.box{overflow: hidden; margin-bottom: 28px;}
+.adressbook-style{margin-bottom: 16px;}
+.admin-actions{display: flex;padding: 0;list-style: none;margin-bottom: 0px;}
+.admin-actions li{margin-right: 16px;}
+.admin-actions li:last-child{margin-right: 0;}
+
 /* send crypto addressbook end */
 
 /* transactions start  */
@@ -629,7 +653,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 
 /*@media start*/
 @media (min-width: 768px){
-    .listitems-design{width: 345px;}
+    .listitems-design{width: 340px;}
     .tlv-header{height: 90px !important;}
     .header-logo{padding-left: 0 !important;}
     .visible-mobile{padding-left: 16px !important;}
@@ -699,7 +723,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 @media (min-width: 1400px){
     .main-container{max-width: 1300px; }
     .iban-list .ant-list-items{display: flex;}
-    .listitems-design{width: 346px;}
+    .listitems-design{width:376px;}
     .listitems-design.iban-style{width: 242px;}
     .side-drawer .ant-drawer-body{padding: 16px 30px;}
     .agree-check{height: calc(100vh - 590px);}

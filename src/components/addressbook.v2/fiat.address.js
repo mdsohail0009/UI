@@ -210,13 +210,13 @@ class AddressBookV2 extends Component {
 
                         <List.Item  onClick={() => this.selectItem(item)}>
                             <Link>
-                                <List.Item.Meta
+                                <List.Item.Meta className='drawer-coin'
                                     avatar={<Image preview={false} src={item.imagePath} />}
 
                                     title={<div className="wallet-title">{item.walletCode}</div>}
                                 />
                                 <><div className="text-right coin-typo">
-                                    {item.amount !== 0 && <NumberFormat value={item.amount} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={item.walletCode=='USD'?'$':'€'} renderText={(value, props) => <div {...props} >{value}</div>} />}
+                                    {item.amount !== 0 && <NumberFormat value={item.amount} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={item.walletCode=='USD'?'$':'€'} renderText={(value, props) => <div {...props} >{value}</div>} />}
                                  
                                 </div></>
                             </Link>

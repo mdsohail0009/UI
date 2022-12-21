@@ -34,7 +34,7 @@
      --red:  #E74545;
      --placeholders:rgba(116, 118, 125 ,0.5);
      --coinBg:rgba(107, 107, 107, 0.15);
-     --drpdwnHover:rgba(116, 118, 125,0.3);;
+     --drpdwnHover:rgba(116, 118, 125,0.3);
      --inputBg:#FFFFFF;
      --checkText:#74767D;
      --checksub:rgba(8, 9, 14 ,0.7);
@@ -62,9 +62,9 @@
     --btnhover:#5C61FF;
     --profilebgImg:rgba(241, 242, 246, 0.4);
     --tablebody:#ffffff;
-    --gridborder:rgb(8 9 14 / 15%);
+    --gridborder:rgba(8, 9, 14, 0.15);
     --gridtitle:#08090E;
-    --gridcontent:rgb(8 9 14 / 80%);
+    --gridcontent:rgb(8, 9, 14,0.8);
  
      --lightThemeIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/user-light-theme2.0.svg);
      --cryptoIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/light-crypto-icons.svg);

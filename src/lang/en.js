@@ -283,7 +283,7 @@ export default {
 	Fifth_Avenue: "%(value)s",
 	reference: "Customer ID",
 	reference_hint_text:
-		"Important: This code helps us in identifying your deposit. Please include the reference code when submitting the wire transfer to us.",
+		"This code helps us in identifying your deposit. Please include the reference code when submitting the wire transfer to us.",
 	desposite_text:
 		"Ireto ambany ireto ny antsipirihan'ny kaonty any amin'ny banky ho an'ny vola manokana nosafidianao. Takiana aminao ny hihaino ny vola amin'ny antsipirihany avy amin'ny banky.",
 	EUR_amount: "EUR Amount",

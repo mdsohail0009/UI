@@ -164,12 +164,12 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
                 <div className="custom-theme-btn">
                     <div className="theme-switch theme-active mobile-mb-16 c-pointer" onClick={() => theme ? themeSwitch() : ''}>
                         <div className="d-flex align-center " >
-                            <p className="switch-circle" >{!theme && <span className="icon md check-arrow c-pointer"></span>}{theme && <span></span>}</p>
+                            <p className="switch-circle" >{!theme && <span className="icon lg radio-check c-pointer"></span>}{theme && <span className='icon radio lg c-pointer'></span>}</p>
                             <p className="theme-txt"><Translate content="dark_theme" className="theme-txt" component={Text.p} /></p></div>
                     </div>
                     <div className={"theme-switch c-pointer" + (theme ? " themeSwitchOn " : " themeSwitchOff ")} onClick={() => !theme ? themeSwitch() : ''}>
                         <div className="d-flex align-center c-pointer" >
-                            <p className="switch-circle c-pointer" >{theme && <span className="icon md check-arrow c-pointer"></span>}{!theme && <span></span>}</p>
+                            <p className="switch-circle c-pointer" >{theme && <span className="icon lg radio-check c-pointer"></span>}{!theme && <span className='icon radio lg c-pointer'></span>}</p>
                             <p className="theme-txt"><Translate content="light_theme" className="theme-txt" component={Text.p} /></p></div>
                     </div>
                 </div>

@@ -484,9 +484,9 @@ class CryptoWithDrawWallet extends Component {
                         title={[
                             <div className="side-drawer-header">
                                 {this.renderTitle()}
-                                <div className="text-center fs-16">
+                                <div className="text-center">
                                     <Translate
-                                        className="text-white-30 fw-600 text-upper mb-4"
+                                        className="drawer-maintitle"
                                         content={
                                             this.props.addressBookReducer.stepTitles[
                                             config[this.props.addressBookReducer.stepcode]
