@@ -331,7 +331,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
         <Translate
           content="withdraw_verification"
           component={Title}
-          className="basicinfo mb-0"
+          className="basicinfo "
         />
         <Paragraph className="basic-decs">Please select at least 2 of the Send verification options below.</Paragraph>
        
@@ -414,7 +414,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
               </div>}
             </Col>
             <Col md={24} xl={24} xxl={24}>
-              <div className="text-left">
+              <div className="text-left passwrd-chang-btn">
               <Button
                         className="profile-sm-btn"
                         loading={btnDisabled}
