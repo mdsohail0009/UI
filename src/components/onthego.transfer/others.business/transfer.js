@@ -20,7 +20,8 @@ class BusinessTransfer extends Component {
         errorMessage: null,
         isLoading: true,
         details: {},
-        selectedTab: this.props.selectedAddress?.transferType||"domestic", isBtnLoading: false,
+        selectedTab: this.props.transferData?.transferType || "domestic", 
+        isBtnLoading: false,
         showDeclaration: false,isEdit:false,
         isSelectedId: null,
         isShowValid: false,
@@ -36,7 +37,6 @@ class BusinessTransfer extends Component {
     }
     loadDetails = async () => {
         this.setState({ ...this.state, errorMessage: null, isLoading: true });
-       
             let data = this.props.transferData;
             let edit=false;
             if (!data?.payeeAccountModels) {
@@ -208,7 +208,6 @@ class BusinessTransfer extends Component {
                 <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                    Please sign using link received in email to whitelist your address. `}</Text>
                 <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
-                 {/* <div className="my-25"><Button onClick={() => this.props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button></div> */}
             </div>
             </div>
         }
@@ -254,7 +253,6 @@ class BusinessTransfer extends Component {
                         </Col>
                     </Row>
                     <h2 style={{ fontSize: 18,}} className="mt-16 text-captz px-4 text-white fw-600">Recipient's Details</h2>
-                    {/* <Divider /> */}
                     <Row gutter={[4, 4]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
@@ -327,7 +325,6 @@ class BusinessTransfer extends Component {
                     </Row>
 
                     <Paragraph className="mb-8 px-4 text-white fw-500 mt-36" style={{ fontSize: 18 }}>Bank Details</Paragraph>
-                    {/* <Divider /> */}
                     <DomesticTransfer type={this.props.type} />
                     {this.props.type !== "manual" && 
                         (<React.Fragment>
@@ -345,7 +342,6 @@ class BusinessTransfer extends Component {
                                     htmlType="submit"
                                     size="large"
                                     className="pop-btn mb-36 px-36"
-                                    //style={{ width: "300px" }}
                                     loading={this.state.isBtnLoading}>
                                     {this.props.type === "manual" && "Save"}
                                     {this.props.type !== "manual" && "Continue"}
@@ -394,7 +390,6 @@ class BusinessTransfer extends Component {
                     </Row>
                     
                     <h2 style={{ fontSize: 18,}} className="mt-16 text-captz px-4 text-white fw-600">Recipient's Details</h2>
-                    {/* <Divider /> */}
                     <Row gutter={[12, 12]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
@@ -466,7 +461,6 @@ class BusinessTransfer extends Component {
                         <RecipientAddress />
                     </Row>
                     <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
-                    {/* <Divider /> */}
                     <InternationalTransfer type={this.props.type} />
                     {this.props.type !== "manual" && 
                         (<React.Fragment>
