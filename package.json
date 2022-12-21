@@ -80,7 +80,7 @@
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "react-scripts start",
-    "build": "set \"GENERATE_SOURCEMAP=false\" &&react-scripts build",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "build:testing": "env-cmd -f .env.testing react-scripts build",
     "build:uat": "env-cmd -f .env.uat react-scripts build",
     "build:vapt": "env-cmd -f .env.vapt react-scripts build",
