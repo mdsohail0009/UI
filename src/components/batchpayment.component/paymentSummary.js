@@ -19,17 +19,19 @@ class PaymentSummary extends Component {
 		  isShowGreyButton: false,
 		  reviewDetailsLoading: false,
 		  insufficientModal:false,
-		  errorMessage:false
+		  errorMessage:null,
+		  loading:false,
 		}
 	}
 
 	showDeclaration=async()=>{	
+		this.setState({...this.state,loading:true,errorMessage:null})
 		if (this.state.verifyData?.verifyData) {
 			if (this.state.verifyData.verifyData.isPhoneVerified) {
 				if (!this.state.verifyData.isPhoneVerification) {
 					this.setState({
 						...this.state,
-						errorMessage: "Please verify phone verification code"
+						errorMessage: "Please verify phone verification code",loading:false
 					});
 					return;
 				}
@@ -38,7 +40,7 @@ class PaymentSummary extends Component {
 				if (!this.state.verifyData.isEmailVerification) {
 					this.setState({
 						...this.state,
-						errorMessage: "Please verify  email verification code"
+						errorMessage: "Please verify  email verification code",loading:false
 					});
 					return;
 				}
@@ -47,7 +49,7 @@ class PaymentSummary extends Component {
 				if (!this.state.verifyData.isAuthenticatorVerification) {
 					this.setState({
 						...this.state,
-						errorMessage: "Please verify authenticator code"
+						errorMessage: "Please verify authenticator code",loading:false
 					});
 					return;
 				}
@@ -60,7 +62,7 @@ class PaymentSummary extends Component {
 				this.setState({
 					...this.state,
 					errorMessage:
-						"Without Verifications you can't send. Please select send verifications from security section",
+						"Without Verifications you can't send. Please select send verifications from security section",loading:false
 				});
 				return
 			}
@@ -68,20 +70,20 @@ class PaymentSummary extends Component {
 			this.setState({
 				...this.state,
 				errorMessage:
-					"Without Verifications you can't Proceed.",
+					"Without Verifications you can't Proceed.",loading:false
 			});
 			return
 		}
 		let response= await proceedTransaction(this.props?.id || this.props?.fileData?.id)
 		if(response.ok){
 			if(response.data === true){
-				this.setState({ ...this.state, showDeclaration:true,insufficientModal:false}); 
+				this.setState({ ...this.state, showDeclaration:true,insufficientModal:false,errorMessage:null,loading:false}); 
 			}else{
-				this.setState({ ...this.state, showDeclaration:false,insufficientModal:true});
+				this.setState({ ...this.state, showDeclaration:false,insufficientModal:true,loading:false});
 			}
 			
 		}else{
-			this.setState({ ...this.state,  errorMessage: this.isErrorDispaly(response) })
+			this.setState({ ...this.state,  errorMessage: this.isErrorDispaly(response) ,loading:false})
 
 			
 		}
@@ -134,7 +136,7 @@ class PaymentSummary extends Component {
 		this.setState({ ...this.state, reviewDetailsLoading: val })
 	  }
 	render() {
-		const {  isShowGreyButton,errorMessage } = this.state;
+		const {  isShowGreyButton,errorMessage,loading } = this.state;
 		return (<>
 		          
 
@@ -204,6 +206,7 @@ class PaymentSummary extends Component {
 								className="pop-btn custom-send"
                                 style={{ backgroundColor: !isShowGreyButton && '#ccc', borderColor: !isShowGreyButton && '#3d3d3d' }}
 								onClick={this.showDeclaration}
+								loading={loading}
 							>
 								Continue
 							</Button>
@@ -214,7 +217,7 @@ class PaymentSummary extends Component {
 							<div className='text-center text-white p-24'>
 								<img src={pending} />
 								<Title className='text-white'>Declaration form sent!</Title>
-								<Paragraph className='text-white'>We sent declaration form to 
+								<Paragraph className='text-white'>We sent declaration form to{" "}
 									{this.props.customer?.email} Please sign using the link
 									received in email to whitelist your address. Note that
 									your payments will only be processed once your
