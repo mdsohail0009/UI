@@ -1,6 +1,6 @@
 
 import React, { Component } from "react";
-import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert, message, Spin } from "antd";
+import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert, message,Tabs, Spin } from "antd";
 import {
 	setAddressStep,
 	rejectCoin,
@@ -659,36 +659,43 @@ class AddressBook extends Component {
 		return (
 			<>
 			<div className="main-container">
-			<Translate
-				content="address_book"
-				component={Title}
-				className="basicinfo mb-0"
-			/>
-			<Text className="fs-16 text-white fw-500 mb-12 d-block">Note: <span className="fs-14 text-white fw-400 mb-12">Whitelisting of Crypto Address and Bank Account is required, Please add below.</span></Text>
-				<div className="box basic-info addressbook-grid">
-					<div className="display-flex mb-16">
+			<div className="security-align adbs-mb">
+				<Translate
+					content="address_book"
+					component={Title}
+					className="basicinfo mb-0"
+				/>
+				<div className="mb-right">
+					<ActionsToolbar featureKey="addressbook" onActionClick={(key) => this.onActionClick(key)} />
+				</div>
+			</div>
+			<div className="imprt-bg"><span className="ab-note-style">Note:</span> <span className="note-cont">Whitelisting of Crypto Address and Bank Account is required, Please add below.</span></div>
+				<div className="addressbook-grid">
+					<div className="adressbook-style">
 						<Radio.Group
 							defaultValue={(this.props?.activeFiat||this.state.cryptoFiat) ? 2 : 1}
 							onChange={this.handleWithdrawToggle}
-							className="buysell-toggle mx-0"
+							className="custom-radiobtn"
 							style={{ display: "inline-block" }}>
 							<Translate
 								content="withdrawCrypto"
 								component={Radio.Button}
 								value={1}
-								className="buysell-toggle mx-0"
+								className=""
 							/>
 							<Translate
 								content="withdrawFiat"
 								component={Radio.Button}
 								value={2}
-								className="buysell-toggle mx-0"
+								className=""
 							/>
-						</Radio.Group>
-						<span className="mb-right">
-							<ActionsToolbar featureKey="addressbook" onActionClick={(key) => this.onActionClick(key)} />
-						</span>
+						</Radio.Group>		
 					</div>
+					<Tabs className="cust-tabs-fait">
+                                <Tabs.TabPane tab="Send Crypto" className="" key={"domestic"} ></Tabs.TabPane>
+                                <Tabs.TabPane tab="Send Fiat" content="withdrawFiat" className="" key={"international"}  ></Tabs.TabPane>
+                                {/* <Tabs.TabPane tab="International USD IBAN" className="" key={"internationalIBAN"} ></Tabs.TabPane> */}
+                            </Tabs>
 					{this.state.errorWorning && (
 						<div className="custom-alert">
 							<Alert

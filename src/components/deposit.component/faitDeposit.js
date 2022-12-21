@@ -373,13 +373,13 @@ class FaitDeposit extends Component {
                     {BankInfo.referenceNo != null && BankInfo.referenceNo != '' &&
                     <Text className="fait-subtext">{BankInfo.referenceNo}</Text>}
                     </div>
-                    <div className='fait-box'>  {BankInfo.depReferenceNo !== '' && <div className="crypto-address">
+                    <div className='fait-box'>  {BankInfo.depReferenceNo !== '' && <div className="receive-fait">
                       <Translate
                         className="refer-text"
                         content="reference"
                         component={Text}
                       />
-                      <Paragraph className="walletadrs mb-copy">
+                      <Paragraph className="walletadrs">
                         {BankInfo.depReferenceNo}
                         <CopyToClipboard text={BankInfo.depReferenceNo} options={{ format: 'text/plain' }}>
                           <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="custom-display"   ></Text>
@@ -388,7 +388,7 @@ class FaitDeposit extends Component {
                     </div>}</div>
                     <Paragraph
                       className="import-note"
-                    ><span className="">{apicalls.convertLocalLang('reference_hint_text')}</span> </Paragraph>
+                    ><div className=""><span className='imp-note'>Important: </span>{apicalls.convertLocalLang('reference_hint_text')}</div> </Paragraph>
 
                   </div>
                   

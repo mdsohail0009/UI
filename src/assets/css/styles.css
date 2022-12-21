@@ -185,7 +185,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .header-dropdown{font-size: 24px; color: var(--textBlack) !important;}
 .mid-menu{display: flex; align-items: center;}
 .box.dash-info{border-radius: 0 !important;}
-.box{background-color: var(--bgGrey);border-radius: 30px; overflow: hidden; margin-bottom: 28px;}
+/* .box{background-color: var(--bgGrey);border-radius: 30px; overflow: hidden; margin-bottom: 28px;} */
 
 .trade-btn{border-radius: 5px;  line-height: normal; height: 20px;padding: 0 4px;}
 /* Buy/sell */
@@ -1278,9 +1278,7 @@ input[type=number]::-webkit-outer-spin-button {
 .bill-payment .pay-docs{width:100px;}
 .enter-val.enter-vel-field{width:100%}
 .k-animation-container.k-animation-container-relative.k-animation-container-shown{z-index: 9999;}
-.admin-actions{display: flex;padding: 0;list-style: none;margin-bottom: 12px;}
-.admin-actions li{margin-right: 16px;}
-.admin-actions li:last-child{margin-right: 0;}
+
 .toggle-space{position: relative;}
 .toggle-space::before{content: '';position: absolute;width: 1px;height: 27px;right: -17px;background-color: #cecece; margin-left: 10px;}
 .secureDropdown .ant-menu-root {background-color: var(--bgGloom);border-radius: 10px;min-width: 300px;max-width: 300px;padding: 6px 0;color: var(--textWhite);position: absolute;
