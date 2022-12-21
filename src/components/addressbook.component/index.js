@@ -176,15 +176,9 @@ class AddressBook extends Component {
 		},
 		{
 			field: "addressState",
-			title: apiCalls.convertLocalLang("addressState"),
+			title: apiCalls.convertLocalLang("Whitelisting_Status"),
 			filter: true,
-			width: 180,
-		},
-		{
-			field: "status",
-			title: apiCalls.convertLocalLang("Status"),
-			filter: true,
-			width: 100,
+			width: 200,
 		},
 		{
 			field: "isWhitelisted",
@@ -201,7 +195,13 @@ class AddressBook extends Component {
 			title: apiCalls.convertLocalLang("whitelist"),
 			filter: false,
 			width: 200,
-		}
+		},
+		{
+			field: "status",
+			title: apiCalls.convertLocalLang("Status"),
+			filter: true,
+			width: 100,
+		},
 	];
 	columnsCrypto = [
 		{
@@ -260,15 +260,9 @@ class AddressBook extends Component {
 		
 		{
 			field: "addressState",
-			title: apiCalls.convertLocalLang("addressState"),
+			title: apiCalls.convertLocalLang("Whitelisting_Status"),
 			filter: true,
-			width: 180,
-		},
-		{
-			field: "status",
-			title: apiCalls.convertLocalLang("Status"),
-			filter: true,
-			width: 100,
+			width: 200,
 		},
 		{
 			field: "isWhitelisted",
@@ -285,7 +279,13 @@ class AddressBook extends Component {
 			title: apiCalls.convertLocalLang("whitelist"),
 			filter: false,
 			width: 200,
-		}
+		},
+		{
+			field: "status",
+			title: apiCalls.convertLocalLang("Status"),
+			filter: true,
+			width: 100,
+		},
 	];
 	async downloadDeclarationForm(dataItem) {
 		this.setState({ ...this.state, isDownloading: true, selectedDeclaration: dataItem.payeeAccountId });
@@ -297,7 +297,6 @@ class AddressBook extends Component {
 	}
 
 	handleInputChange = (prop, e) => {
-		debugger
 		this.setState({ ...this.state, errorWorning: null });
 		const rowObj = prop.dataItem;
 		const value =
@@ -353,7 +352,6 @@ class AddressBook extends Component {
 		} else {
 			statusObj.status.push("InActive")
 		}
-		// statusObj.status.push(this.state.selectedObj.status);
 		statusObj.type = this.state.cryptoFiat ? "fiat" : "crypto";
 		statusObj.info = JSON.stringify(this.props.trackLogs);
 		let response = await activeInactive(statusObj);
@@ -646,7 +644,6 @@ class AddressBook extends Component {
 	};
 
 	onActionClick = (key) => {
-		debugger
 		const actions = {
 			add: "addAddressBook",
 			edit: "editAddressBook",
@@ -708,7 +705,6 @@ class AddressBook extends Component {
 							ref={this.gridFiatRef}
 							key={gridUrlFiat}
 							url={gridUrlFiat}
-							//additionalParams={{ customerId: customerId }}
 						/>
 					) : (
 						<List
@@ -717,7 +713,6 @@ class AddressBook extends Component {
 							key={gridUrlCrypto}
 							ref={this.gridCryptoRef}
 							url={gridUrlCrypto}
-							//additionalParams={{ customerId: customerId }}
 						/>
 					)}
 				</div>

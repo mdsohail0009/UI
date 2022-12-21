@@ -612,4 +612,6 @@ export default {
 	transaction:"交易",
 	batch_payments: "批量付款",
 	bathch_payments_preview: "请在确认前确认该字段",
+	suissebase_title_crypto:"加密钱包",
+	Whitelisting_Status:"白名單狀態",
 };
