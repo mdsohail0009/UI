@@ -10,6 +10,12 @@ import IdleCmp from './authentication/idle.component';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { CookiesProvider } from 'react-cookie';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import { updateWorker } from './reducers/serviceWorker';
+
+const onUpdate = () => {
+  store.dispatch(updateWorker());
+}
 ReactDOM.render(
   <React.StrictMode>
     <ThemeSwitcherProvider defaultTheme="DRT" themeMap={{ DRT: "./dark-theme.css", LHT: "./light-theme.css" }}>
@@ -23,6 +29,7 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
+serviceWorkerRegistration.register({ onUpdate });
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
