@@ -62,6 +62,8 @@
     --btnhover:#5C61FF;
     --tablebody:#ffffff;
     --gridborder:rgb(8 9 14 / 15%);
+    --gridtitle:#08090E;
+    --gridcontent:rgb(8 9 14 / 80%);
  
      --lightThemeIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/user-light-theme2.0.svg);
      --cryptoIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/light-crypto-icons.svg);

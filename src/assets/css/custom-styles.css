@@ -269,7 +269,7 @@ input:-webkit-autofill:active{
 .cust-cancel-btn.ant-btn:hover, .cust-cancel-btn.ant-btn:focus, .cust-cancel-btn.ant-btn:active{border: 1px solid #CCC3FF;border-radius: 5px;height: 42px;background-color: transparent;color: var(--white);font-weight: 600;transition: 0.3s ease;font-size: 16px;}
 /* button styles end */
 /*Kendo start*/
-.k-grid-header .k-header > .k-link{font-size: 16px;font-weight: 500;}
+.k-grid-header .k-header > .k-link{font-size: 16px;font-weight: 700;color: var(--gridtitle);}
 .k-grid td{font-size: 14px;font-weight: 400;}
 /* .ant-form-item-label > label{color: var(--subText);font-weight: 400;font-size: 14px;margin-bottom: 2px !important;text-transform: capitalize;} */
 h1.sub-heading {text-transform: capitalize;padding-left:4px; padding-right:4px;font-size:18px;font-weight:500;margin-top: 10px;color:var(--textWhite);margin-bottom: 26px !important;}
@@ -277,10 +277,10 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .pop-btn, .confirm-btn{height: 46px;margin-bottom: 20px;}
 .sidebar-push{padding:30px 16px 24px;}
 .k-grid-header .k-header > .k-link{padding: 8px;margin: 0;}
-.k-pager-numbers .k-link.k-state-selected,.k-list .k-item.k-state-selected, .k-list-optionlabel.k-state-selected ,.k-list .k-item.k-state-selected:hover,.k-list-optionlabel.k-state-selected:hover{color: var(--textDark);background-color: var(--bgYellow);}
-.k-pager-numbers .k-link{color: var(--textDark);} 
+.k-pager-numbers .k-link.k-state-selected,.k-list .k-item.k-state-selected, .k-list-optionlabel.k-state-selected ,.k-list .k-item.k-state-selected:hover,.k-list-optionlabel.k-state-selected:hover{background-color: #3653E4;color: #ffffff !important;}
+.k-pager-numbers .k-link{color: var(--white);} 
 .k-button, .k-textbox, .k-pager-numbers .k-link, .k-pager-numbers .k-link.k-state-selected{border-radius: 30px;}
-.k-i-sort-asc-sm::before, .k-i-sort-desc-sm::before,.k-i-arrow-60-left::before,.k-i-arrow-60-right::before, .k-i-arrow-end-left::before,.k-i-arrow-end-right::before{color: var(--textDark);}
+.k-i-sort-asc-sm::before, .k-i-sort-desc-sm::before,.k-i-arrow-60-left::before,.k-i-arrow-60-right::before, .k-i-arrow-end-left::before,.k-i-arrow-end-right::before{color: var(--white);}
 .k-button.k-primary.excel-btn{background: var(--bgYellow); color: var(--textDark); border-color: var(--bgYellow);padding: 10px 24px;font-weight: 500;text-transform: uppercase;}
 .k-button.k-primary{background: var(--bgYellow); color: var(--textDark); border-color: var(--bgYellow);padding: 4px 24px;font-weight: 500;text-transform: uppercase;}
 .k-button.k-primary:active, .k-button.k-primary:hover{background: var(--bgDarkYellow); color: var(--textDark); border-color: var(--bgDarkYellow);}
@@ -296,7 +296,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .k-grid-content{margin-right: -12px;}
 .k-grid-header{padding-right: 0;}
 .k-grid tbody tr:hover, .k-grid tbody tr.k-state-hover{background-color: var( --bgDarkGrey) !important;}
-.k-pager-wrap{color: var(--textWhite);background-color: transparent;}
+.k-pager-wrap{color: var(--white);background-color: transparent;}
 /*Kendo End*/
 /*Modal start*/
 .ant-modal-content{border-radius: 24px;}
@@ -606,8 +606,11 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .pop-btn.search-btn{margin: 16px 0 0 12px; height: 48px; width: 148px;}
 .excel-button{margin-top: 20px;}
 .k-grid-table{background-color: var(--tablebody);}
-.k-grid,.k-grid td{border: 1px solid var(--gridborder) !important;}
-.k-grid th{border-right: 1px solid var(--gridborder) !important;}
+.k-grid td{border-right: 1px solid var(--gridborder) !important;border-bottom: 1px solid var(--gridborder) !important; color: var(--gridcontent);}
+.k-grid th{border-right: 1px solid  var(--tableborder) !important;}
+.transctns-grid .ant-drawer-header,.transctns-grid .ant-drawer-body{background: var(--bodyBg) !important;}
+.k-pager-wrap.k-pager.k-widget.k-grid-pager{background: var(--gridheader);border-bottom-left-radius: 20px;border-bottom-right-radius: 20px;}
+.k-pager-numbers .k-link:hover{background-color: #3653E4;color: #ffffff !important;}
 /* transactions end  */
 
 /*@media start*/

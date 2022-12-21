@@ -626,7 +626,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .wmy-graph .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{background: none;}
 .wmy-graph .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){background: none;color: var(--textDark) !important;}
 
-.gridLink{color: #e0bb02;cursor: pointer;display: inline-block;}
+.gridLink{cursor: pointer;display: inline-block;}
 .ant-message{  bottom: 15px !important; top: auto;}
 .custom-msg .ant-message-notice-content{background:#333; color: var(--textPureWhite); padding: 20px 40px; min-width: 200px;}
 .docreq-slider .slick-dots li button{width: 30px;height: 30px;color: var(--textWhite30);font-size: 16px;border-radius: 15px;}
