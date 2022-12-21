@@ -417,7 +417,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .inputbg-fonts:hover, .inputbg-fonts:focus, .inputbg-fonts.ant-input-borderless:focus{background: var( --inputBg);height: 50px;margin-bottom: 6px;border: 1px solid var(--subText);border-radius: 5px;}
 .buy-paragraph{color: var( --paraBg);font-weight: 500;font-size: 16px;text-align: center;margin-bottom: 0 !important;margin-top:4px;}
 .crycoin-bal{font-weight: 400 !important;font-size: 16px !important;color: var(--coinPrice) !important;}
-.buy-usdt-btn .pop-btn, .sell-btn-style{margin-top: 16px;margin-bottom: 16px;}
+.pop-btn, .sell-btn-style{margin-top: 16px;margin-bottom: 16px;}
 .select-currency{margin-top: 50px;height: 264px;}
 .swap-text-sub{text-align: center;font-weight: 500;font-size: 36px;color: var(--white);margin-top: -16px !important;}
 .enrty-field-style{margin-bottom: 12px;}
@@ -431,9 +431,10 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .val-updown:hover .swaparrow, .swap-updown:hover .swaparrow{transform: rotate(180deg);transition: 0.5s;background-position: -237px -35px;}
 .buy-balance{font-weight: 400;font-size: 16px;color: var(--coinPrice);}
 .crypto-amount{margin-bottom: 2px;}
-.kpi-List .kpi-label{font-weight: 500;font-size: 14px;color: var(--sbCardText);}
-.kpi-List .kpi-val{font-size: 16px;font-weight: 500;color: var(--white);}
+.kpi-List .kpi-label, .adressbook-fiatview .kpi-label{font-weight: 500;font-size: 14px;color: var(--sbCardText);}
+.kpi-List .kpi-val, .adressbook-fiatview .kpi-val{font-size: 16px;font-weight: 500;color: var(--white);}
 .kpi-List .ant-col{margin-bottom: 20px;display: flex;}
+.receiveank-inner{padding-bottom: 20px;}
 /*Buy/sell drawer End*/
 /* receive fait start */
 .drawer-subtext{font-weight: 700;font-size: 18px;color: var(--tablesub);}
@@ -479,6 +480,8 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .note-cont{font-weight: 400;font-size: 16px;color: var(--gridcontent);}
 .adbs-mb{margin-bottom: 16px;}
 .addressbook-grid .cust-tabs-fait .ant-tabs-nav{width: 100%;}
+.custom-alert-width{padding: 28px 22px;background-color:var(--addressList) !important;border-radius: 13px;color: var(--textWhite);}
+.kpi-List, .adressbook-fiatview{margin-top: 16px;}
 /*Send Address End*/
 /* --Payments Start--*/
 .pay-grid thead th{padding: 8px;width: 250px; color: var(--textWhite30);font-weight: 500;text-align: left;font-size: 16px;}
@@ -778,7 +781,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     .crypto-address.share-width-align{width: auto;}
     .profile-value.mv-profile-value{word-break: break-all;}
     .custom-display{margin-left: 0;}
-    .crypto-address.share-width-align{display: flex;}
+    .crypto-address.share-width-align, .adbs-mb{display: flex;}
 }
 
 /*@media end*/

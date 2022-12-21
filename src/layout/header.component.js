@@ -138,7 +138,7 @@ class Header extends Component {
     const userProfileMenu = (
       <Menu>
         <div className="profile-dropdown">
-          {this.props.userConfig?.imageURL != null && (
+          {/* {this.props.userConfig?.imageURL != null && (
             <img
               src={
                 this.props.userConfig?.imageURL
@@ -159,11 +159,11 @@ class Header extends Component {
               className="user-profile"
               alt={"image"}
             />
-          )}
-          <p className="mb-15 ml-8 profile-value" style={{ flexGrow: 12, marginTop: "5px" }}>
+          )} */}
+          {/* <p className="profile-value" style={{ flexGrow: 12, marginTop: "5px" }}>
             {this.props.userConfig.isBusiness ? this.props.userConfig.businessName :
               <>{this.props.userConfig.firstName}{" "}{" "}{this.props.userConfig.lastName}</>}
-          </p>
+          </p> */}
           <Translate
             content="manage_account"
             component={Button}
@@ -180,19 +180,19 @@ class Header extends Component {
                 <Translate
                   content="menu_transactions_history"
                   component={Text}
-                  className="text-white-30"
+                  className="text-white"
                 />
                 <span className="icon md rarrow-white" />
               </Link>
             </li>
             <li
             >
-              <Popover className="ss" placement="left" content={<><div onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/6120197cdc204d9ddb882e4d")}>
+              <Popover className="menulist-items-style" placement="left" content={<><div onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/6120197cdc204d9ddb882e4d")}>
                 <Link>
                   <Translate
                     content="personal_account"
                     component={Text}
-                    className="text-white-30" key="1"
+                    className="text-white" key="1"
                   />
                 </Link><span className="icon c-pointer md rarrow-white ml-12" /></div>
                 <div onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/611b3ed20414885a6fc64fa7")}>
@@ -200,14 +200,14 @@ class Header extends Component {
                     <Translate
                       content="business_account"
                       component={Text}
-                      className="text-white-30" key="1"
+                      className="text-white" key="1"
                     />
                   </Link><span className="icon c-pointer md rarrow-white ml-12" /></div></>} >
                 <Link>
                   <Translate
                     content="get_your_own_iban"
                     component={Text}
-                    className="text-white-30"
+                    className="text-white"
                   />
                   <span className="icon md rarrow-white" />
                 </Link>
@@ -221,7 +221,7 @@ class Header extends Component {
                 <Translate
                   content="AuditLogs"
                   component={Text}
-                  className="text-white-30"
+                  className="text-white"
                 />
                 <span className="icon md rarrow-white" />
               </Link>
@@ -233,7 +233,7 @@ class Header extends Component {
                 <Translate
                   content="address_book"
                   component={Text}
-                  className="text-white-30"
+                  className="text-white"
                 />
                 <span className="icon md rarrow-white" />
               </Link>
@@ -245,7 +245,7 @@ class Header extends Component {
                 <Translate
                   content="case"
                   component={Text}
-                  className="text-white-30"
+                  className="text-white"
                 />
                 <span className="icon md rarrow-white" />
               </Link>
@@ -258,12 +258,12 @@ class Header extends Component {
                   <Translate
                     content="upload_documents"
                     component={Text}
-                    className="d-block text-white-30"
+                    className="d-block text-white"
                   />
                   <Translate
                     content='compliance'
                     component={Text}
-                    className="text-white-30"
+                    className="text-white"
                   />
                 </span>
                 <span className="icon md rarrow-white" />
@@ -274,7 +274,7 @@ class Header extends Component {
                 <span>
                   <Translate
                     content="logout"
-                    className="text-white-30"
+                    className="text-white"
                     component={Text}
                   />
                 </span>
