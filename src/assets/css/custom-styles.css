@@ -93,7 +93,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 /* .custom-checkbox input[type=checkbox] { display: block;position: absolute;zoom: 1.5;margin: 0; opacity: 0;} */
 .cust-check-outline.custom-checkbox input[type=checkbox]:checked+span {width: 24px; height: 24px;cursor: pointer;background-position:-157px -518px !important;}
 .cust-check-outline.custom-checkbox input[type=checkbox]+span{width: 24px;height: 24px;background-position: -120px -517px !important;}
-.ant-form .cust-check-outline input[type='radio'], .ant-form .cust-check-outline input[type='checkbox']{display: none;}
+.cust-check-outline input[type='radio'], .ant-form .cust-check-outline input[type='checkbox']{display: none;}
 /*Header start*/
 .notification-conunt .bell span{position: absolute;right: -8px;top: -8px;width: 18px;height: 18px;background: #f6921e;border-radius: 50%;line-height: 18px;text-align: center;font-size: 10px;font-weight: 600;}
 .haead-main{background-color: var(--secondary);position: fixed; z-index: 9999;left: 0; right: 0;}
@@ -642,15 +642,18 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .k-grid-table{background-color: var(--tablebody);}
 .k-grid td{border-right: 1px solid var(--gridborder) !important;border-bottom: 1px solid var(--gridborder) !important; color: var(--gridcontent);}
 .k-grid th{border-right: 1px solid  var(--tableborder) !important;}
-.transctns-grid .ant-drawer-header,.transctns-grid .ant-drawer-body{background: var(--bodyBg) !important;}
+.custom-gridresponsive .ant-drawer-header,.custom-gridresponsive .ant-drawer-body{background: var(--bodyBg) !important;}
 .k-pager-wrap.k-pager.k-widget.k-grid-pager{background: var(--gridheader);border-bottom-left-radius: 20px;border-bottom-right-radius: 20px;}
 .k-pager-numbers .k-link:hover{background-color: #3653E4;color: #ffffff !important;}
-.k-grid th,.k-grid td{padding: 8px 20px;}
+/* .k-grid th,.k-grid td{padding: 8px 20px;} */
 .k-grid th:last-child,.k-grid td:last-child{border-right-color: transparent !important;}
 .cust-input.cust-adon .ant-input-wrapper.ant-input-group{padding: 0 11px;}
 .icon.md.search-angle{background-position: -361.5px -488px; margin-left: 8px;}
 /* transactions end  */
-
+/* audit logs start  */
+.addressbook-grid .custom-checkbox input{display: none;}
+.addressbook-content .search-bg{margin-bottom: 24px;}
+/* audit logs end  */
 /*@media start*/
 @media (min-width: 768px){
     .listitems-design{width: 340px;}

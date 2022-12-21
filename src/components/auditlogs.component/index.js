@@ -187,7 +187,7 @@ class AuditLogs extends Component {
       <>
         <Drawer
           title={[<div className="side-drawer-header">
-            <span className="text-white"><Translate content="AuditLogs" component={Drawer.span} className="text-white" /></span>
+            <span className="grid-title"><Translate content="AuditLogs" component={Drawer.span} className="text-white" /></span>
             <div className="text-center fs-14"></div>
             <span onClick={this.props.onClose} className="icon md close-white c-pointer" />
           </div>]}
@@ -196,7 +196,7 @@ class AuditLogs extends Component {
           width="100%"
           onClose={this.props.onClose}
           visible={this.props.showDrawer}
-          className="side-drawer-full custom-gridresponsive"
+          className="side-drawer-full custom-gridresponsive addressbook-content"
           destoryOnClose={true}
         >
           <div>
@@ -205,7 +205,7 @@ class AuditLogs extends Component {
               autoComplete="off"
               ref={this.formRef}
             >
-              <Row style={{ alignItems: 'flex-end' }}>
+              <Row className="align-center">
                 <Col xs={24} sm={24} md={7} className="px-8">
                   <Form.Item
                     name="timeSpan"
@@ -263,7 +263,7 @@ class AuditLogs extends Component {
                     htmlType="submit"
                     onClick={this.handleSearch}
                   ><Translate content="search" />
-                  <span class="icon sm search-angle ml-8"></span>
+                  <span class="icon md search-angle"></span>
                   </Button>
                 </Col>
               </Row>

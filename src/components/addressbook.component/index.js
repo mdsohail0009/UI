@@ -117,7 +117,7 @@ class AddressBook extends Component {
 			customCell: (props) => (
 				<td>
 					{" "}
-					<label className="text-center custom-checkbox c-pointer">
+					<label className="text-center custom-checkbox c-pointer cust-check-outline">
 						<input
 							id={props.dataItem.id}
 							className="c-pointer"
@@ -210,7 +210,7 @@ class AddressBook extends Component {
 			customCell: (props) => (
 				<td>
 					{" "}
-					<label className="text-center custom-checkbox c-pointer">
+					<label className="text-center custom-checkbox c-pointer cust-check-outline">
 						<input
 							id={props.dataItem.id}
 							name="isCheck"
@@ -663,7 +663,7 @@ class AddressBook extends Component {
 				<Translate
 					content="address_book"
 					component={Title}
-					className="basicinfo mb-0"
+					className="grid-title"
 				/>
 				<div className="mb-right">
 					<ActionsToolbar featureKey="addressbook" onActionClick={(key) => this.onActionClick(key)} />
