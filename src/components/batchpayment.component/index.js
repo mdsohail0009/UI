@@ -55,11 +55,9 @@ const Batchpayments = (props) => {
           field: "fileName", title: "File Name", filter: true, width: 200,
           customCell: (props) => (
             <td>
-               {props?.dataItem?.status==="Draft"&& <div className=''>{props?.dataItem?.fileName}</div>}
-             {props?.dataItem?.status!=="Draft"&& <div className="gridLink" onClick={()=>viewMode(props)} >
+              <div className="gridLink" onClick={()=>viewMode(props)} >
               {props?.dataItem?.fileName}
-              
-              </div>}</td>) 
+              </div></td>) 
         },
         { field: "createdDate", title: "Date Created", filter: true, filterType: "date", width: 200, 
         customCell: (props) => (
