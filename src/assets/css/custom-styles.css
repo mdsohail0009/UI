@@ -635,6 +635,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .k-pager-numbers .k-link:hover{background-color: #3653E4;color: #ffffff !important;}
 .k-grid th,.k-grid td{padding: 8px 20px;}
 .k-grid th:last-child,.k-grid td:last-child{border-right-color: transparent !important;}
+.cust-input.cust-adon .ant-input-wrapper.ant-input-group{padding: 0 11px;}
 /* transactions end  */
 
 /*@media start*/
