@@ -93,32 +93,32 @@ class UserProfile extends Component {
                 </Tabs>
             </div>
             <div className="main-container visible-mobile">
-                <div className="mb-36 text-white-50 fs-24"><div>Scroll Right to Check Actions<span className="icon sm rightarrow mr-16 c-pointer" /></div></div>
+                <div className="profile-value"><div className='moble-mb-style'>Scroll Right to Check Actions<span className="icon sm rightarrow c-pointer arrow-ml" /></div></div>
                 <Tabs tabPosition={"top"} className="user-list user-tablist pt-16" activeKey={this.state.activeTab} onChange={(key) => {
                     this.props.history.push(`/userprofile/${key}`)
                     this.setState({ ...this.state, activeTab: key })
                 }}>
                     <TabPane tab={<span>
-                        <span className="icon lg profile-icon mr-16" />
-                        <Translate content="ProfileInfo" component={Tabs.TabPane.tab} /></span>} key="1">
+                        <span className="icon lg profile-icon " />
+                        <Translate content="ProfileInfo" component={Tabs.TabPane.tab} className="tabtitle" /></span>} key="1">
                         {this.state.activeTab == 1 && <ProfileInfo />}
                     </TabPane>
-                    <TabPane tab={<span><span className="icon lg security-icon mr-16" />
-                        <Translate content="security" className="f-16  mt-16" />
+                    <TabPane tab={<span><span className="icon lg security-icon " />
+                        <Translate content="security" className="tabtitle" />
                     </span>} key="2">
                         {this.state.activeTab == 2 && <Security />}
                     </TabPane>
-                    <TabPane tab={<span><span className="icon lg settings-icon mr-16" />
-                        <Translate content="settings" className="f-16  mt-16" />
+                    <TabPane tab={<span><span className="icon lg settings-icon " />
+                        <Translate content="settings" className="tabtitle" />
                     </span>} key="3">
                         {this.state.activeTab == 3 && <Settings />}
                     </TabPane>
-                    <TabPane tab={<span><span className="icon lg referral-icon mr-16" />
-                        <Translate content="referr" className="f-16  mt-16" /></span>} key="7" >
+                    <TabPane tab={<span><span className="icon lg referral-icon " />
+                        <Translate content="referr" className="tabtitle" /></span>} key="7" >
                         {this.state.activeTab == 7 && <Referral />}
                     </TabPane>
-                    {/* <TabPane tab={<span><span className="icon lg notification-icon mr-16" style={{marginLeft:"3px"}} />
-                    <Translate content="notification"  className="f-16  mt-16"style={{marginLeft:"-5px"}} /></span>} key="8" >
+                    {/* <TabPane tab={<span><span className="icon lg notification-icon " style={{marginLeft:"3px"}} />
+                    <Translate content="notification"  className="tabtitle"style={{marginLeft:"-5px"}} /></span>} key="8" >
                         {this.state.activeTab == 8 && <NotificationScreen />}
                         </TabPane> */}
                     {/* <TabPane tab={<span>

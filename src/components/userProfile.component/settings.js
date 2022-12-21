@@ -159,7 +159,7 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
                         </Select></Form.Item>
                 </Col>
             </Row>
-            <div className="border-bottom">
+            <div className="">
                 <Translate content="theme" className="label-style" component={Text} />
                 <div className="custom-theme-btn">
                     <div className="theme-switch theme-active mobile-mb-16 c-pointer" onClick={() => theme ? themeSwitch() : ''}>

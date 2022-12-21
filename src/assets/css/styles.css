@@ -560,7 +560,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .ant-modal-confirm-btns button:first-child:hover{color: var(--textYellow);}
 .ant-picker-input > input, .ant-form-item-label > label{color: var(--textWhite);}
 .search-bg{border: 1px solid rgba(0,0,0,.08);color: #313c46 !important;background-color: var(--bgDarkGrey) !important;padding: 15px 10px;}
-.anticon-copy svg, .anticon-check svg{color: var(--textYellow);}
+/* .anticon-copy svg, .anticon-check svg{color: var(--textYellow);} */
 /*--Documents--*/
 /* .notify{padding: 16px;margin-bottom: 36px;}
 .notify .ant-alert-message{font-size: 20px !important;font-weight: 700;color: var(--textDark) !important;}
@@ -777,7 +777,7 @@ font-size: 12px;font-weight: 500;height: 20px;} */
     .mb-togglespace .ant-collapse-header{display: flex !important;}
     /* .custom-label .ant-form-item-label{margin-bottom: -10px !important;}  */
     .custom-label .ant-form-item-label{padding-bottom: 0 !important;}
-    .mb-copy{width: 270px; word-break: break-all;}
+   
     /* .crypto-address .custom-display{margin-top: 20px;} */
     .ant-dropdown-placement-topRight > .ant-dropdown-arrow{top: -5px !important;}
     .ant-dropdown-show-arrow.ant-dropdown-placement-topRight{top: 71px !important;}
@@ -1061,7 +1061,7 @@ font-size: 12px;font-weight: 500;height: 20px;} */
 .currencyContains {display: inline;color: var(--textWhite30);}
 .spinLoader {margin: 20px 0;margin-bottom: 20px;padding: 30px 50px;text-align: center;background: var(--bgWhiteSpin);border-radius: 4px;}
 .inputSpinner{display: block;text-align: left;height: 30px}
-.copy-icon .ant-typography-expand, .ant-typography-edit, .ant-typography-copy {
+/* .copy-icon .ant-typography-expand, .ant-typography-edit, .ant-typography-copy {
     color: #ffff ;
     font-size: 20px;
     margin-left: 12px;
@@ -1070,10 +1070,10 @@ font-size: 12px;font-weight: 500;height: 20px;} */
     color: var(--textSecondary) !important ;
     font-size: 20px;
     margin-left: 12px;
-}
+} */
 /* main.ant-layout-content{min-height: calc(100vh - 220px);} */
 .notkyc{top: 0; right: 0; bottom: 0; left: 0;display: flex; align-items: center;font-size: 36px;color: var(--textWhite);background-color: var(--bgDarkGrey);justify-content: center;margin-top: 150px;text-align: center;}
-.crypto-address.custom-crypto-address{padding: 8px 10px;}
+/* .crypto-address.custom-crypto-address{padding: 8px 10px;} */
 /* .crypto-address .ant-typography-copy svg{color: var(--textYellow);} */
 /* .crypto-address .custom-display{position: absolute;top: 6px;right: 8px;} */
 .crypto-address.custom-crypto-address .ant-typography-expand, .crypto-address .ant-typography-edit, .crypto-address .ant-typography-copy{font-size:18px;margin-left:0px;}
