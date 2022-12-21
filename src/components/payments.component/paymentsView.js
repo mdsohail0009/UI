@@ -124,7 +124,7 @@ class PaymentsView extends Component {
                                 <tr>
                                 <th className="doc-def">Whitelist Name</th>
                                     <th className="doc-def" style={{width: "410px"}}>Bank Name</th>
-                                    <th>Bank Account Number/IBAN</th>
+                                    <th className="doc-def" style={{width: "410px"}}>Bank Account Number/IBAN</th>
                                     <th>State</th>
                                     <th>Amount</th>
                                 </tr>

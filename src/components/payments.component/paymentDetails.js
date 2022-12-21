@@ -820,7 +820,7 @@ class PaymentDetails extends Component {
         >
           <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null, mimeType: this.state?.previewPath?.includes(".pdf") ? 'application/pdf' : '' }} />
         </Modal>
-        <Modal title="Delete Payment"
+        <Modal title="Confirm Delete"
           destroyOnClose={true}
           closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.handleCancel} /></Tooltip>}
          
@@ -831,19 +831,13 @@ class PaymentDetails extends Component {
             <div className='cust-pop-up-btn crypto-pop bill-pop'>
               <Button
                 className="pop-cancel btn-width  bill-cancel"
-                onClick={this.handleCancel}>Cancel</Button>
+                onClick={this.handleCancel}>No</Button>
               <Button className="pop-btn px-36 btn-width"
-                onClick={() => this.deleteDetials(this.state.selectData, this.state.paymentsData)}>Ok</Button></div>
+                onClick={() => this.deleteDetials(this.state.selectData, this.state.paymentsData)}>Yes</Button></div>
             </>
           ]}
         >
-          <div className="fs-14 text-white-50">
-            <Title className='fs-18 text-white-50'><span class="icon lg info-icon"></span> Delete Payment?</Title>
-            <Paragraph className="fs-14 text-white-50 modal-para">Are you sure do you want to
-              delete Payment ?</Paragraph>
-
-
-          </div>
+             <Paragraph className="text-white">Are you sure, do you really want to delete ?</Paragraph>
         </Modal>
 
       </>
