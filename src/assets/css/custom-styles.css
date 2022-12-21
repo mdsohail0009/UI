@@ -624,6 +624,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .k-grid th,.k-grid td{padding: 8px 20px;}
 .k-grid th:last-child,.k-grid td:last-child{border-right-color: transparent !important;}
 .cust-input.cust-adon .ant-input-wrapper.ant-input-group{padding: 0 11px;}
+.icon.md.search-angle{background-position: -361.5px -488px; margin-left: 8px;}
 /* transactions end  */
 
 /*@media start*/
