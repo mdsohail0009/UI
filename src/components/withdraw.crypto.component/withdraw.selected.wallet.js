@@ -111,7 +111,8 @@ class CryptoWithDrawWallet extends Component {
         };
         this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat });
 
-        this.props.dispatch(rejectWithdrawfiat())
+        this.props.dispatch(rejectWithdrawfiat());
+        this.props.changeStep("step1")
     };
     renderContent = () => {
         const stepcodes = {
