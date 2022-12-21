@@ -8,7 +8,6 @@ import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import { withRouter } from "react-router-dom";
 import PaymentSummary from "./paymentSummary";
-import Spreadsheet from "react-spreadsheet";
 import List from "../grid.component";
 import {confirmGetDetails} from './api'
 class paymentPreview extends Component {
