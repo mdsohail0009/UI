@@ -305,7 +305,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .k-grid-content, .k-grid{background-color: transparent !important;color: var(--textWhite) !important;}
 .k-grid-content{margin-right: -12px;}
 .k-grid-header{padding-right: 0;}
-.k-grid tbody tr:hover, .k-grid tbody tr.k-state-hover{background-color: var( --bgDarkGrey) !important;}
+.k-grid tbody tr:hover, .k-grid tbody tr.k-state-hover{background-color: var( --drawerList) !important;}
 .k-pager-wrap{color: var(--white);background-color: transparent;}
 /*Kendo End*/
 /*Modal start*/
@@ -621,6 +621,8 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .transctns-grid .ant-drawer-header,.transctns-grid .ant-drawer-body{background: var(--bodyBg) !important;}
 .k-pager-wrap.k-pager.k-widget.k-grid-pager{background: var(--gridheader);border-bottom-left-radius: 20px;border-bottom-right-radius: 20px;}
 .k-pager-numbers .k-link:hover{background-color: #3653E4;color: #ffffff !important;}
+.k-grid th,.k-grid td{padding: 8px 20px;}
+.k-grid th:last-child,.k-grid td:last-child{border-right-color: transparent !important;}
 /* transactions end  */
 
 /*@media start*/
