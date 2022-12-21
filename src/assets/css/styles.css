@@ -269,8 +269,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .icon-delete{width:35px;height: 35px; border: 1px solid var(--borderGrey); border-radius: 50%;}
 .icon-delete .anticon-delete{margin-left: 7px; margin-top:7px; font-size: 18px !important;}
 /* Footer */
-.footer-links a{font-size: 14px; color: var(--textWhite30); font-weight: var(--fw500); display: inline-block;margin-right: 30px;text-align: center;}
-.footer-links a:hover{color: var(--textAqua) !important;}
+
 .selct-lang, .selct-lang:hover, .selct-lang:active, .selct-lang:focus{width: 42px; height: 40px;border-radius: 50%;background-color: var(--bgDarkGreen);border: none;color: var(--textWhite);box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);}
 .theme-btn{box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25)}
 .theme-dark, .theme-dark:hover, .theme-dark:focus{background-color: var(--bgWhite) !important;color: var(--textBlack);border-color: var(--bgWhite);}
@@ -532,13 +531,12 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .border-bottom{border-bottom: 1px solid var(--borderGrey);}
 
 
-.themeSwitchOn{background: #0E0E2C; }
-.themeSwitchOn .theme-txt{color: #fff;}
-.switch-circle { width: 39px; height: 39px; border-radius: 50%;padding: 8px; background: #e9f3ff;}
-.theme-active .switch-circle{background: var(--borderGrey);}
-.themeSwitchOn .switch-circle{background: #313c46;}
-.theme-txt{font-size: 14px; font-weight: 500; color: var(--textDark);}
-.theme-active .theme-txt{color: var(--textWhite);font-weight: 400;}
+/* .themeSwitchOn{background: #0E0E2C; } */
+/* .themeSwitchOn .theme-txt{color: #fff;} */
+/* .switch-circle { width: 39px; height: 39px; border-radius: 50%;padding: 8px; background: #e9f3ff;} */
+/* .theme-active .switch-circle{background: var(--borderGrey);} */
+/* .themeSwitchOn .switch-circle{background: #313c46;} */
+
 .custom-forminput .cust-input .ant-input{text-align: center !important;}
 .addressbook_tabs .ant-tabs-nav{width:auto !important}
 .addressbook_tabs .ant-tabs-tab.ant-tabs-tab-active,.addressbook_tabs .ant-tabs-tab:hover {background: transparent !important;font-weight: 600;  padding: 12px 15px 12px 12px !important; color: var(--textDark);}

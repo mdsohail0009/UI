@@ -197,7 +197,7 @@ class PayeeBankDetails extends Component {
 
                             </Col>
                         </Row>}
-                        {(!this.state.isValidIban || this.props?.isAddTabCange)&&<span>No bank details available</span>}
+                        {(!this.state.isValidIban || this.props?.isAddTabCange)&&<span className="info-details">No bank details available</span>}
                         </Spin>
                     </div>
 

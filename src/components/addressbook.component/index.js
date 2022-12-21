@@ -725,9 +725,9 @@ class AddressBook extends Component {
 					title={[
 						<div className="side-drawer-header">
 							{this.renderTitle()}
-							<div className="text-center fs-24">
+							<div className="text-center">
 								<Translate
-									className="text-white-30 fw-600 text-captz "
+									className="drawer-maintitle"
 									content={
 										this.state.showHeading!=true&&(
 										this.props.addressBookReducer.stepTitles[
@@ -766,7 +766,7 @@ class AddressBook extends Component {
 									<Translate
 									content={this.state.hideFiatHeading !=true && "AddFiatAddress"}
 										component={Paragraph}
-										className=""
+										className="drawer-maintitle"
 									/>
 								</Paragraph>
 							</div>
@@ -801,7 +801,7 @@ class AddressBook extends Component {
 					footer={
 						<div className="cust-pop-up-btn">
 						<Button
-							style={{border: "1px solid #f2f2f2",width:'150px',height: '46px' }}
+							// style={{border: "1px solid #f2f2f2",width:'150px',height: '46px' }}
 							className="primary-btn pop-cancel"
 							onClick={this.handleCancel}>
 							NO
@@ -809,7 +809,7 @@ class AddressBook extends Component {
 						<Button
 							className="primary-btn pop-btn"
 							onClick={this.handleSatatuSave}
-							style={{ width: '150px', height: '46px' }}
+							// style={{ width: '150px', height: '46px' }}
 							loading={btnDisabled}>
 							{apiCalls.convertLocalLang("Yes")}
 						</Button>

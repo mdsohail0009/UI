@@ -198,7 +198,7 @@ class AddressCrypto extends Component {
           {errorMessage && <Alert type="error" description={errorMessage} showIcon />}
           <Form
             initialValues={cryptoData}
-            className="custom-label  mb-0 fw-400"
+            className="custom-label"
             ref={this.form}
             onFinish={this.submit}
             scrollToFirstError
