@@ -438,6 +438,9 @@ class PaymentDetails extends Component {
               />
             )}
             <Form autoComplete="off">
+            {(this.props.match.params.id ===
+                        "00000000-0000-0000-0000-000000000000"
+                      ) &&
               <Form.Item>
                 <Select
                   className="cust-input cust-disable"
@@ -473,6 +476,7 @@ class PaymentDetails extends Component {
                   ))}
                 </Select>
               </Form.Item>
+  }
               <div className='responsive_table'>
                 <table className="pay-grid">
                   <thead>

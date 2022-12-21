@@ -85,7 +85,7 @@ class SelectCrypto extends Component {
             const { data: value, config: { url } } = response;
             const _obj = url.split("CryptoFiatConverter")[1].split("/");
             const _val = isSwaped ? cryptoValue : localValue;
-            if (_obj[4] === _val || _obj[4] === 0) {
+            if (_obj[3] == _val || _obj[3] == 0) {
                 if (!isSwaped) {
                     _cryptoValue = value || 0;
                 } else { _nativeValue = value || 0; }
@@ -104,7 +104,7 @@ class SelectCrypto extends Component {
     }
 
     handlePreview = async() => {
-        // return
+
         const { localValue, cryptoValue, isSwaped } = this.state.swapValues;
         const { buyMin, buyMax, coin, gbpInUsd, eurInUsd } = this.props.buyInfo?.selectedCoin?.data;
         const _vaidator = validatePreview({ localValue, cryptValue: cryptoValue, wallet: this.state.selectedWallet, maxPurchase: buyMax, minPurchase: buyMin, gbpInUsd, eurInUsd })

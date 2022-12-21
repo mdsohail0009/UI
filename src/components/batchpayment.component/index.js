@@ -115,7 +115,9 @@ const Batchpayments = (props) => {
    setIsAddBatchDrawer(true);
    
  }
- const proceedBatchPayment = () => {   if (selection.length === 0) {
+ const proceedBatchPayment = () => { 
+  if (selection.length === 0) {
+
     setErrorWarning("Please select the record");
   } 
   else if(!setSelectData.status == "Draft"){
@@ -189,16 +191,9 @@ const Batchpayments = (props) => {
                   <div className='d-flex justify-content align-center mb-16'>
                 
                       <Title className="basicinfo mb-0"><span className='icon md c-pointer back mr-8' onClick={gotoDashboard}></span><Translate content="batch_payments" component={Text} className="basicinfo" />
-                                        <Popover
-                                          className="more-popover"
-                                         content={<span className='text-white'>To proceed the transaction,please click on process icon</span>}
-                                          trigger="hover"
-                                          placement="top"
-                                        >
-                                          <span
-                                            className="icon md info c-pointer ml-4" 
-                                          />
-                                        </Popover>
+                                      
+                      <Text className='ml-4 text-white fs-16'>     Proceed(<span className="icon md c-pointer process-icon"></span>) : To proceed the transaction,please click on process icon</Text>
+
                                         
                       </Title>
                       <div className='batch-actions'>

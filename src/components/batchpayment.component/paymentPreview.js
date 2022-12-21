@@ -9,6 +9,7 @@ import Translate from "react-translate-component";
 import { withRouter } from "react-router-dom";
 import PaymentSummary from "./paymentSummary";
 import Spreadsheet from "react-spreadsheet";
+import List from "../grid.component";
 import {confirmGetDetails} from './api'
 class paymentPreview extends Component {
   constructor(props) {
@@ -22,25 +23,11 @@ class paymentPreview extends Component {
       onBack:this.props.isProceedBatchPayment,
       getPaymentDetails:[],
       isLoad:false,
-      data: [
-        [{ value: "File Name" }, { value: "Relationship to Benficiary" },{ value: "Address Line1" }, { value: "Transfer Type" },{ value: "Amount in USD" }, { value: "Account Number/IBAN" },{ value: "ABA Routing/Swift/BIC Code" }, { value: "Bank Name" },{ value: "Bank Address" }, { value: "Reason For Transfer" }],
-        [{ value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }],
-
-      ]
+      gridUrl:process.env.REACT_APP_GRID_API + `MassPayments/BatchPaymentsDetail/${this.props.id}`,
+     
     };
+    this.gridRef = React.createRef();
+
   }
 componentDidMount=()=>{
 }
@@ -50,6 +37,24 @@ handleCancel=()=>{
 closeDrawer = () => {
   this.setState({ ...this.state, paymentSummary:false})
 }
+ gridColumns = [
+  
+  { field: "whiteListName", title: "Whitelist Name", filter: true,width: 200},
+  { field: "beneficiaryName", title: "Beneficiary Name", filter: true,width: 200},
+  {
+field: "isWhitelisted",
+
+title:"Whitelist Status",
+filter: false,
+width: 200,
+},
+  { field: "accountNumber", title: 'Account Number/IBAN', filter: true, width: 250, customCell: () => (<td className='text-center'></td>) },
+  { field: "amount", title: 'Amount', filter: true, width: 200},
+  { field: "transactionStatus", title: 'Transaction Status', filter: true, width: 200},
+  { field: "uploadedDocuments", title: 'Uploaded Documents', filter: true, width: 220, },
+ 
+];
+
 
 confirmPreview = async () => {
   this.setState({...this.state,isLoad:true})
@@ -99,8 +104,18 @@ isErrorDispaly = (objValue) => {
         >
            <Translate content="bathch_payments_preview" component={Title} className="fs-26 fw-400 mb-0 text-white-30" />
           <div>
-            <Spreadsheet data={this.state.data} />
           </div>
+          < div className='main-container'>
+          
+                  <List
+                      
+                      showActionBar={false}
+                      url={this.state.gridUrl}
+                      columns={this.gridColumns}
+                      ref={this.gridRef}
+                     
+                  />
+            
                 <div className="text-right mt-12">
                     <Button className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn mr-8 ml-0 primary-btn pop-cancel"
                         style={{ width: 100, height: 50 }}
@@ -110,6 +125,8 @@ isErrorDispaly = (objValue) => {
                         onClick={()=>this.confirmPreview()}>Confirm</Button>
                 
                 </div>
+          </div>
+         
                 
                 {this.state.paymentSummary &&
                        <PaymentSummary
@@ -130,12 +147,5 @@ isErrorDispaly = (objValue) => {
     );
   }
 }
-const connectStateToProps = ({ userConfig }) => {
-  return { customer: userConfig.userProfileInfo };
-};
-const connectDispatchToProps = dispatch => {
-  return {
-    dispatch
-  }
-}
-export default connect(connectStateToProps, connectDispatchToProps)(withRouter(paymentPreview));
+
+export default (withRouter(paymentPreview));
