@@ -192,7 +192,7 @@ const Batchpayments = (props) => {
                 
                       <Title className="basicinfo mb-0"><span className='icon md c-pointer back mr-8' onClick={gotoDashboard}></span><Translate content="batch_payments" component={Text} className="basicinfo" />
                                       
-                      <Text className='ml-4 text-white fs-16'>     Proceed(<span className="icon md c-pointer process-icon"></span>) : To proceed the transaction,please click on process icon</Text>
+                      <Text className='ml-4 text-white fs-16'> Process{" "}(<span className="icon md c-pointer process-icon"></span>) : To proceed the transaction,please click on process icon</Text>
 
                                         
                       </Title>
