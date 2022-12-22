@@ -98,7 +98,7 @@ class RouteConfig extends Component {
               <Route path={`${url}/:code`} component={Payments} exact isRoute={true} />
               <Route path={`${url}/:id/add`} component={PaymentDetails} />
               <Route path={`${url}/:id/:type/:state/edit`} component={PaymentDetails} />
-              <Route path={`${url}/:id/view`} component={paymentsView} />
+              <Route path={`${url}/:id/:currency/view`} component={paymentsView} />
               <Route path={`${url}/newbeneficiary/:id`} component={BeneficiaryDetails} />
              
             </>

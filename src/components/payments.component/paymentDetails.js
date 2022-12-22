@@ -82,7 +82,7 @@ class PaymentDetails extends Component {
       } else {
         message.destroy();
         this.setState({ ...this.state, errorMessage: response.data, loading: false });
-        this.useDivRef.current.scrollIntoView();
+        this.useDivRef.current.scrollIntoView(0,0);
       }
     }
   };
@@ -163,6 +163,7 @@ class PaymentDetails extends Component {
     if (obj.currency != null) {
       if (objAmount) {
         this.setState({ ...this.state, errorWarning: null, errorMessage: "Amount must be greater than zero." });
+        this.useDivRef.current.scrollIntoView(0,0);
       } else {
         this.setState({ btnDisabled: true });
         if (
@@ -181,6 +182,7 @@ class PaymentDetails extends Component {
           } else {
             message.destroy();
             this.setState({ ...this.state, btnDisabled: false, loading: false, errorWarning: null, errorMessage: this.isErrorDispaly(response) })
+            this.useDivRef.current.scrollIntoView(0,0);
           }
         }
         else {
@@ -191,6 +193,7 @@ class PaymentDetails extends Component {
             }
             if (!PaymentDetail[i].amount) {
               this.setState({ ...this.state, errorWarning: null, errorMessage: "Please enter amount." });
+              this.useDivRef.current.scrollIntoView(0,0);
               return
             }
           }
@@ -207,11 +210,13 @@ class PaymentDetails extends Component {
           } else {
             message.destroy();
             this.setState({ ...this.state, btnDisabled: false, loading: false, errorWarning: null, errorMessage: this.isErrorDispaly(response) });
+            this.useDivRef.current.scrollIntoView(0,0);
           }
         }
       }
     } else {
       this.setState({ ...this.state, errorWarning: null, errorMessage: "Please select currency" });
+      this.useDivRef.current.scrollIntoView(0,0);
     }
   };
   isErrorDispaly = (objValue) => {
@@ -257,6 +262,7 @@ class PaymentDetails extends Component {
     this.setState({ ...this.state, errorWarning: null, errorMessage: null });
     if (file.name.split('.').length > 2) {
       this.setState({ ...this.state, isValidFile: true, isUploading: false, errorMessage: null, errorWarning: "File don't allow double extension" });
+      this.useDivRef.current.scrollIntoView(0,0);
       return
     }
     let fileType = {
@@ -274,6 +280,7 @@ class PaymentDetails extends Component {
       return true;
     } else {
       this.setState({ ...this.state, isValidFile: true, isUploading: false, errorMessage: null, errorWarning: "File is not allowed. You can upload jpg, png, jpeg and PDF files" });
+      this.useDivRef.current.scrollIntoView(0,0);
       return Upload.LIST_IGNORE;
     }
   };
@@ -387,20 +394,22 @@ class PaymentDetails extends Component {
     } else {
       return (
         <div className="more-popover">
-          {this.state.currency === "USD" && moreBankInfo?.transferType!=="internationalIBAN"&&
-          <div>
           <Text className="lbl text-white">BIC/SWIFT/ABA Routing Code</Text>
           <Text className="val text-white">{moreBankInfo?.routingNumber}</Text>
+          {this.state.currency === "USD" && moreBankInfo?.transferType!=="internationalIBAN"&&
+          <>
           <Text className="lbl text-white">Bank Address</Text><br/>
           <Text className="lbl text-white">Address Line 1</Text> 
           <Text className="val text-white">{moreBankInfo?.bankAddress1}</Text>
-          <Text className="lbl text-white">Address Line 2</Text>
+          {moreBankInfo?.bankAddress2!==null &&<>
+            <Text className="lbl text-white">Address Line 2</Text>
           <Text className="val text-white">{moreBankInfo?.bankAddress2}</Text>
-          </div>}
+          </>}
+          </>}
           {(moreBankInfo?.transferType==="sepa" || moreBankInfo?.transferType==="internationalIBAN" ) && 
-          <div>
-          <Text className="lbl text-white w-100">Bank Address</Text>
-          <Text className="val text-white">{moreBankInfo?.bankBranch}{","}{moreBankInfo?.country}{","}{moreBankInfo?.state}{","}{moreBankInfo?.city}{","}{moreBankInfo?.postalCode}</Text></div>}
+          <>
+          <Text className="lbl text-white">Bank Address</Text>
+          <Text className="val text-white">{moreBankInfo?.bankBranch}{","}{moreBankInfo?.country}{","}{moreBankInfo?.state}{","}{moreBankInfo?.city}{","}{moreBankInfo?.postalCode}</Text></>}
         </div>
       );
     }
