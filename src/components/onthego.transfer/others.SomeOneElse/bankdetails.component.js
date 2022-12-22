@@ -3,16 +3,16 @@ import { Row, Col, Form, Input, Typography, Button, Spin } from 'antd';
 import apicalls from "../../../api/apiCalls";
 import { validateContentRule } from "../../../utils/custom.validator";
 import Translate from "react-translate-component";
-import { LoadingOutlined } from "@ant-design/icons";
+//import { LoadingOutlined } from "@ant-design/icons";
 
 const {  Text } = Typography;
 const { TextArea } = Input;
-const antIcon = (
-    <LoadingOutlined
-        style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
-        spin
-    />
-);
+// const antIcon = (
+//     <LoadingOutlined
+//         style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
+//         spin
+//     />
+// );
 class PayeeBankDetails extends Component {
     state = {
         emailExist: false,
@@ -202,7 +202,7 @@ class PayeeBankDetails extends Component {
                     </div>
 
                 </Col>
-                {this.props.GoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                {this.props.GoType === "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name={"reasonOfTransfer"}
@@ -434,7 +434,7 @@ class PayeeBankDetails extends Component {
                         ></TextArea>
                     </Form.Item>
                 </Col>
-                {this.props.GoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                {this.props.GoType === "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                         name={"reasonOfTransfer"}
@@ -475,12 +475,12 @@ class PayeeBankDetails extends Component {
         return _templates[transferType]
     }
     render() {
-        const { addressType, transferType, onSubmit, bankDetails = {}, emailExist = false, onCancel, domesticType } = this.props;
-        const { countries, states, isLoading } = this.state;
+        const {  transferType,   domesticType } = this.props;
+        //const { countries, states, isLoading } = this.state;
         
         return <>
             <Row gutter={[16, 16]} className={'pb-16'}>
-                {this.renderAddress(domesticType == "internationalIBAN" ? "sepa" : transferType)}
+                {this.renderAddress(domesticType === "internationalIBAN" ? "sepa" : transferType)}
             </Row>
             </>
 

@@ -54,7 +54,7 @@ const LineChart = ({ data, type, id, coinType }) => {
                 },
             }]
         });
-    }, [data, type, coinType]);
+    }, [data, type, coinType]);//eslint-disable-line react-hooks/exhaustive-deps
     return <div id={id || "linecontainer"}></div>
 }
 export default LineChart

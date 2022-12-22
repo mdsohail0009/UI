@@ -6,18 +6,19 @@ import { getMemberCoins } from "../../../reducers/swapReducer";
 import ConnectStateProps from "../../../utils/state.connect";
 import CryptoList from "../../shared/cryptolist"
 import { createCryptoDeposit } from "../api";
-import apicalls from "../../../api/apiCalls";
+
 import { fetchDashboardcalls } from "../../../reducers/dashboardReducer";
 import { getFeaturePermissionsByKeyName } from '../../shared/permissions/permissionService'
 import Loader from "../../../Shared/loader";
 
-const { Title, Paragraph } = Typography;
+const {  Paragraph } = Typography;
 const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {
-    useEffect(() => { fetchMemberCoins(); getFeaturePermissionsByKeyName(`send_crypto`)}, []);
+    useEffect(() => { fetchMemberCoins();
+       getFeaturePermissionsByKeyName(`send_crypto`)}, []);;//eslint-disable-line react-hooks/exhaustive-deps
     const [errorMsg,seterrorMsg] = useState(null)
     const [loading,setLoading] = useState(null)
     const fetchMemberCoins = () => {
-        dispatch(getMemberCoins(userProfile.id));
+        dispatch(getMemberCoins());
     }
     const onCryptoCoinSelect = async (coin) => {
         // dispatch(setSubTitle(`${coin.coinBalance ? coin.coinBalance : '0'} ${coin.coin}` + " " + apicalls.convertLocalLang('available')
@@ -28,7 +29,7 @@ const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {
             dispatch(setWalletAddress(response.data));
             dispatch(fetchDashboardcalls(userProfile?.id));
             dispatch(setStep("step7"));
-            dispatch(setSubTitle(` ${coin.coin}` + " " + "balance" +" "+ ":" +" "+ `${coin.coinBalance ? coin.coinBalance : '0'}`+`${" "}`+`${coin.coin}`));
+            dispatch(setSubTitle(` ${coin.coin}` +" " + "balance" +" "+ ":" +" "+ `${coin.coinBalance ? coin.coinBalance : '0'}`+`${" "}`+`${coin.coin}`));
         }else{
             seterrorMsg(isErrorDispaly(response))
         }

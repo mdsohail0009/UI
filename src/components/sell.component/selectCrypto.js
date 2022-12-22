@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Card, Radio, Alert,Image,Select } from 'antd';
+import { Typography, Card, Radio, Alert,Image } from 'antd';
 import { setStep, setTab } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
@@ -12,7 +12,7 @@ import Currency from '../shared/number.formate';
 import apicalls from '../../api/apiCalls';
 import { convertCurrencyDuplicate } from '../buy.component/buySellService';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
-const { Option } = Select;
+
 class SelectSellCrypto extends Component {
     myRef = React.createRef();
     constructor(props) {
@@ -38,34 +38,32 @@ class SelectSellCrypto extends Component {
         apicalls.trackEvent({ "Type": 'User', "Action": 'Sell coin page View', "Feature": 'Sell', "Remarks": "Sell Crypto coin selection view", "FullFeatureName": 'Sell Crypto', "userName": this.props.customer?.userName, id: this.props.customer?.id });
     }
     fetchdefaultMinAmntValues = async () => {
-        this.setState({ ...this.state, CryptoAmnt: this.props.sellData.coinDetailData?.withdrawMinValue || this.props.sellData.coinDetailData?.withDrawMinValue});
+        this.setState({ ...this.state, CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue || this.props.sellData.coinDetailData?.withDrawMinValue});
     }
     setAmount = async ({ currentTarget }, fn, fnRes) => {
         this.setState({ ...this.state, [fn]: currentTarget.value })
-        let res = await getSellamnt(currentTarget.value, !this.state.isSwap, this.props.sellData.coinDetailData?.coin, this.props.customer?.id, null);
+        let res = await getSellamnt(currentTarget.value, !this.state.isSwap, this.props.sellData.coinDetailData?.coin, null);
         if (res.ok) {
             this.setState({ ...this.state, [fnRes]: res.data })
         }
     }
     clickMinamnt(type) {
-        let usdamnt; let cryptoamnt;
+        let cryptoamnt;
         let obj = Object.assign({}, this.props.sellData.coinDetailData)
         if (type === 'half') {
-            usdamnt = (obj.coinValueinNativeCurrency / 2).toString();
             cryptoamnt = (obj.coinBalance / 2)
             this.setState({ ...this.state, USDAmnt: "0", CryptoAmnt: cryptoamnt, minmaxTab: type, isSwap: true, });
         } else if (type === 'all') {
-            usdamnt = obj.coinValueinNativeCurrency ? obj.coinValueinNativeCurrency : 0;
             cryptoamnt = obj.coinBalance ? obj.coinBalance : 0;
             this.setState({ ...this.state, USDAmnt: "0", CryptoAmnt: cryptoamnt, minmaxTab: type, isSwap: true, });
         } else {
-            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.withdrawMinValue, USDAmnt: "0", isSwap: true, minmaxTab: type });
+            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: "0", isSwap: true, minmaxTab: type });
         }
     }
     previewSellData() {
         this.setState({ ...this.state, errorMessage: '' })
         let obj = Object.assign({}, this.state.sellSaveData);
-        let { withdrawMinValue, gbpInUsd, eurInUsd } = this.props.sellData.coinDetailData;
+        let { sellMinValue, gbpInUsd, eurInUsd } = this.props.sellData.coinDetailData;
         const maxUSDT = 100000;
         const purchaseCurrencyMaxAmt = {
             GBP: this.state.USDAmnt * gbpInUsd,
@@ -96,9 +94,9 @@ class SelectSellCrypto extends Component {
            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('insufficientFunds') })
            this.myRef.current.scrollIntoView();
             return;
-        } else if (parseFloat(this.state.CryptoAmnt) < withdrawMinValue) {
+        } else if (parseFloat(this.state.CryptoAmnt) < sellMinValue) {
             this.myRef.current.scrollIntoView();
-            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_minvalue') + withdrawMinValue })
+            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_minvalue') + sellMinValue })
             return;
         }
         else if (purchaseCurrencyMaxAmt[obj.toWalletCode] > maxUSDT) {
@@ -162,7 +160,7 @@ class SelectSellCrypto extends Component {
             const { data: value, config: { url } } = response;
             const _obj = url.split("CryptoFiatConverter")[1].split("/");
             const _val = isSwaped ? cryptoValue : localValue;
-            if (_obj[4] == _val || _obj[4] == 0) {
+            if (_obj[3] == _val || _obj[3] == 0) {
                 if (!isSwaped) {
                     _cryptoValue = value || 0;
                 } else { _nativeValue = value || 0; }

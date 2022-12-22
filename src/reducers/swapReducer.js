@@ -65,10 +65,10 @@ const clearSwapData = (paylaod) => {
     }
 }
 
-const getMemberCoins = (member_id) => {
+const getMemberCoins = () => {
     return async (dispatch) => {
         dispatch(fetchMemberCoins());
-        const response = await getportfolio(member_id);
+        const response = await getportfolio();
         if (response.ok) {
             dispatch(fetchMemberCoinsSuccess(response.data, 'MemberCoins'));
         } else {
