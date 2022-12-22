@@ -92,7 +92,7 @@ class Portfolio extends Component {
                 <div className="markets-panel transaction-panel">
                     <div className='trans-align'>
                     <div className='transaction-title'>
-                    <Translate component={Title} content="transactions_history" className="basicinfo db-titles" />
+                    <Translate component={Title} content="transactions_history" className="db-titles" />
                         <span className="icon lg search-angle icon-space"></span></div>
                     <Button className="dbchart-link"  onClick={() => this.transactionDrawer()}>
                         <Translate content="cockpit" />

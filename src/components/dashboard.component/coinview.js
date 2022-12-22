@@ -187,7 +187,7 @@ componentWillUnmount(){
         }
         return <div className="main-container">
             <>
-            <div className="mb-36 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/cockpit" />{coinData?.name} ({coinData?.symbol.toUpperCase()})</div>
+            <div className="coin-viewstyle"><Link className="icon md leftarrow mr-16 c-pointer" to="/cockpit" />{coinData?.name} ({coinData?.symbol.toUpperCase()})</div>
             <Row gutter={[24, 24]}>
                 <Col lg={14} xl={14} xxl={14}>
                     <div className="box p-24 coin-bal">

@@ -75,7 +75,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .icon.sm.valupp-icon.red-arrow{background-position:-28px -692px;}
 .icon.lg.profile-icon{background-position:-9px -556px}
 .icon.lg.security-icon{background-position:-52px -556px}
-.icon.lg.settings-icon{background-position:-8px -486px}
+.icon.lg.settings-icon{background-position:-173px -555px}
 .icon.lg.info-icon{background-position:-73px -330px}
 .icon.lg.logout-icon{background-position:-73px -330px}
 .icon.lg.documents-icon{background-position:-176px -329px;}
@@ -84,7 +84,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .icon.lg.referral-icon{background-position:-139px -555px;}
 .user-labels.active .icon.lg.profile-icon,.user-labels:hover .icon.lg.profile-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.profile-icon, .ant-tabs-tab:hover .icon.lg.profile-icon{background-position:-9px -590px;} 
 .user-labels.active .icon.lg.security-icon, .user-labels:hover .icon.lg.security-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.security-icon,.ant-tabs-tab:hover .icon.lg.security-icon{background-position:-52px -589px}
-.user-labels.active .icon.lg.settings-icon, .user-labels:hover .icon.lg.settings-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.settings-icon,.ant-tabs-tab:hover .icon.lg.settings-icon{background-position:-8px -486px}
+.user-labels.active .icon.lg.settings-icon, .user-labels:hover .icon.lg.settings-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.settings-icon,.ant-tabs-tab:hover .icon.lg.settings-icon{background-position:-173px -590px}
 .user-labels.active .icon.lg.documents-icon, .user-labels:hover .icon.lg.documents-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.documents-icon,.ant-tabs-tab:hover .icon.lg.documents-icon{background-position:-176px -363px}
 .user-labels.active .icon.lg.addressbook-icon, .user-labels:hover .icon.lg.addressbook-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.addressbook-icon,.ant-tabs-tab:hover .icon.lg.addressbook-icon{background-position:-140px -363px}
 .user-labels.active .icon.lg.cases-icon, .user-labels:hover .icon.lg.cases-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.cases-icon,.ant-tabs-tab:hover .icon.lg.cases-icon{background-position:-210px -362px;}
@@ -266,8 +266,8 @@ input:-webkit-autofill:active{
     -webkit-box-shadow:none;
 }
 .round-pills .ant-radio-button-wrapper-checked:not([class*=' ant-radio-button-wrapper-disabled']).ant-radio-button-wrapper:first-child{border-color: var(--radioBorderfill);}
-.ant-tooltip.ant-tooltip-placement-top{left: 660px !important;top: 321px  !important;}
-.ant-tooltip-inner{background-color: var(--profileMenu);}
+/* .ant-tooltip.ant-tooltip-placement-top{left: 660px !important;top: 321px  !important;} */
+.ant-tooltip-inner{background-color: var(--white);}
 .footer-links a, .footer-links span{font-size: 14px; color: var(--white); font-weight: 500; display: inline-block;margin-right: 30px;text-align: center;}
 .footer-links a:hover{color: var(--textAqua) !important;}
 /*Common css End*/
@@ -587,7 +587,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .upload-filesize{font-weight: 700;font-size: 16px;color: var(--coinPrice);}
 /* send fiat end */
 /* send crypto start */
-.min-btn{background: var(--radioBg) !important;height: 36px;border-radius: 10px;min-width: 60px;line-height: 34px;color: var(--coinPrice);font-size: 16px;font-weight: 500; margin: 0 16px 16px 0;}
+.min-btn{border: 1px solid rgba(0, 0, 0, 0.3);background: var(--radioBg) !important;height: 36px;border-radius: 10px;min-width: 60px;line-height: 34px;color: var(--coinPrice);font-size: 16px;font-weight: 500; margin: 0 16px 16px 0;}
 .min-btn:active ,.min-btn:focus{background-color: var(--radioFill) !important;border: 2px solid var(--radioBorderfill) !important;font-size: 16px;font-weight: 500 !important;color: var(--coinPrice) !important;}
 .min-btn:hover{border-color: rgba(0, 0, 0, 0.3) !important;color: var(--coinPrice) !important;}
 .newtransfer-card{background: var(--drawerList);border-radius: 13px;border: 2px solid transparent;height: 90px;padding: 10px 43px !important;text-align: left !important; font-size: 16px; font-weight: 700; color: var(--coinBal);width: 100%;}

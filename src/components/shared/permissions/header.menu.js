@@ -376,7 +376,7 @@ class HeaderPermissionMenu extends Component {
                                     <Translate
                                         content="personal_account"
                                         component={Text}
-                                        className="text-white" key="1"
+                                        className="" key="1"
                                     />
                                 </Link><span className="icon c-pointer md rarrow-white ml-12" /></div>
                                 <div onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/611b3ed20414885a6fc64fa7")}>
@@ -384,14 +384,14 @@ class HeaderPermissionMenu extends Component {
                                         <Translate
                                             content="business_account"
                                             component={Text}
-                                            className="text-white" key="1"
+                                            className="" key="1"
                                         />
                                     </Link><span className="icon c-pointer md rarrow-white ml-12" /></div></>} >
                                 <Link>
                                     <Translate
                                         content="get_your_own_iban"
                                         component={Text}
-                                        className="text-white"
+                                        className=""
                                     />
                                     <span className="icon md rarrow-white" />
                                 </Link>
