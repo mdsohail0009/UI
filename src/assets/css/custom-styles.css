@@ -662,6 +662,12 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .k-pager-wrap .k-link{background-color: transparent;}
 .k-pager-numbers-wrap .k-pager-numbers.k-reset li{margin: 0 2px !important;}
 /* audit logs end  */
+/* coin detail view start*/
+.coin-details{background-color: var(--addressList);border-radius: 24px;padding: 30px;}
+.coin-titlestyle{color: var(--coinPrice) !important;font-size: 24px !important;font-weight: 700 !important;}
+.coin-date{display: block;text-align: right;color: var(--coindate);font-weight: 400;font-size: 10px;}
+.coin-green-ml{margin-left: 8px;}
+/* coin detail view end */
 /*@media start*/
 @media (min-width: 768px){
     .listitems-design{width: 340px;}

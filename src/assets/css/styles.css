@@ -637,11 +637,11 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .documentmodal-width .preview-pdf-page{border: 1px solid var(--bgDark);margin-bottom: 10px;}
 .accordian textarea.ant-input:placeholder-shown{line-height: 48px;}
 .accordian textarea.ant-input{min-height: 48px !important;padding-top: 0px !important;}
-.coin-details{background-color: var(--bgGloom);}
+
 .coin-details-spin{display: flex;align-items: center;justify-content: center;min-height: 400px;}
 .coin-info{padding: 16px 0;border-top: 1px solid var(--borderGrey);font-size: 16px;display: flex;justify-content: space-between;}
-.coin-info span{font-size: 16px;color: var(--textWhite30);font-weight: 600;}
-.coin-info>span:first-child{font-size: 14px;color: var(--textWhite50);font-weight: 200;}
+/* .coin-info span{font-size: 16px;color: var(--textWhite30);font-weight: 600;} */
+/* .coin-info>span:first-child{font-size: 14px;color: var(--textWhite50);font-weight: 200;} */
 .trade-graph .ant-radio-button-wrapper{background: none;color: var(--textSecondary);font-weight: 500;border-color: var(--borderLight);overflow: hidden;}
 .trade-graph .ant-radio-button-wrapper:first-child{border-radius: 8px 0 0 8px;}
 .trade-graph .ant-radio-button-wrapper:last-child{border-radius: 0 8px 8px 0;}

@@ -190,7 +190,7 @@ componentWillUnmount(){
             <div className="coin-viewstyle"><Link className="icon md leftarrow mr-16 c-pointer" to="/cockpit" />{coinData?.name} ({coinData?.symbol.toUpperCase()})</div>
             <Row gutter={[24, 24]}>
                 <Col lg={14} xl={14} xxl={14}>
-                    <div className="box p-24 coin-bal">
+                    <div className="box coin-bal coin-details">
                     {this.state.loading&& this.state.coinData ?<Spin className="text-center"/>:<>
                         {this.state.coinData ?
                         <> 
@@ -218,9 +218,9 @@ componentWillUnmount(){
                             </ul>
                             </> : <div className="text-center"><Spin className="text-center"/></div>}</>}
                     </div>
-                    <div className="box p-24 coin-details">
-                        <Title component={Title} className="fs-24 fw-600 mb-36 text-white-30">{coinData?.name} ({coinData?.symbol.toUpperCase()}) Price Chart</Title>
-                        <div className="trade-legends mb-24">
+                    <div className="box coin-details">
+                        <Title  component={Title} className="coin-titlestyle">{coinData?.name} ({coinData?.symbol.toUpperCase()}) Price Chart</Title>
+                        <div className="trade-legends">
                             <Radio.Group defaultValue="prices" buttonStyle="outline" className="trade-graph" onChange={(e) => this.setState({ ...this.state, type: e.target.value })}>
                                 <Radio.Button value="prices">Price</Radio.Button>
                                 <Radio.Button value="market_caps">Market Cap</Radio.Button>
@@ -238,73 +238,73 @@ componentWillUnmount(){
                     </div>
                 </Col>
                 <Col lg={10} xl={10} xxl={10}>
-                    <div className="box p-24 coin-details right">
+                    <div className="box coin-details right">
 
-                        {this.state.coinData ? <><Title component={Title} className="fs-24 fw-600 mb-36 text-white-30">{coinData?.symbol.toUpperCase()} Price and Market Status</Title>
+                        {this.state.coinData ? <><Title component={Title} className="coin-titlestyle">{coinData?.symbol.toUpperCase()} Price and Market Status</Title>
                             <div className="coin-info">
-                                <Text>{coinData?.symbol.toUpperCase()} Price</Text>
-                                <Text>
+                                <Text className='profile-label'>{coinData?.symbol.toUpperCase()} Price</Text>
+                                <Text className='profile-value'>
                                     <NumberFormat value={coinData?.current_price} displayType="text" thousandSeparator={true} prefix="$" />
                                 </Text>
                             </div>
                             <div className="coin-info">
-                                <Text>Market Cap</Text>
-                                <Text>
+                                <Text className='profile-label'>Market Cap</Text>
+                                <Text className='profile-value'>
                                     <NumberFormat value={coinData?.market_cap} displayType="text" thousandSeparator={true} prefix="$" />
                                 </Text>
                             </div>
                             <div className="coin-info">
-                                <Text>24 Hour Trading Vol</Text>
-                                <Text>
+                                <Text className='profile-label'>24 Hour Trading Vol</Text>
+                                <Text className='profile-value'>
                                     <NumberFormat value={coinData?.market_cap_change_24h} displayType="text" thousandSeparator={true} prefix="$" />
                                 </Text>
                             </div>
                             <div className="coin-info">
-                                <Text>Fully Diluted Valuation</Text>
-                                <Text>
+                                <Text className='profile-label'>Fully Diluted Valuation</Text>
+                                <Text className='profile-value'>
                                     <NumberFormat value={coinData?.fully_diluted_valuation} displayType="text" thousandSeparator={true} prefix="$" />
                                 </Text>
                             </div>
                             <div className="coin-info">
-                                <Text>Circulating Supply</Text>
-                                <Text>
+                                <Text className='profile-label'>Circulating Supply</Text>
+                                <Text className='profile-value'>
                                     <NumberFormat value={coinData?.circulating_supply} displayType="text" thousandSeparator={true} prefix="" />
                                 </Text>
                             </div>
                             <div className="coin-info">
-                                <Text>Total Supply</Text>
-                                <Text>
+                                <Text className='profile-label'>Total Supply</Text>
+                                <Text className='profile-value'>
                                     <NumberFormat value={coinData?.total_supply} displayType="text" thousandSeparator={true} prefix="" />
                                 </Text>
                             </div>
                             <div className="coin-info">
-                                <Text>Max Supply</Text>
-                                <Text>
+                                <Text className='profile-label'>Max Supply</Text>
+                                <Text className='profile-value'>
                                     <NumberFormat value={coinData?.max_supply} displayType="text" thousandSeparator={true} prefix="" />
                                 </Text>
                             </div>
                             <div className="coin-info">
-                                <Text>All-Time High</Text>
+                                <Text className='profile-label'>All-Time High</Text>
                                 <div>
-                                    <Text>
+                                    <Text className='profile-value'>
                                         <NumberFormat value={coinData?.ath} displayType="text" thousandSeparator={true} prefix="$" />
                                     </Text>
-                                    <Text>
-                                        <NumberFormat className="fs-14 fw-200 text-green ml-8" value={coinData?.ath_change_percentage} displayType="text" thousandSeparator={true} prefix="" suffix="%" />
+                                    <Text className='profile-value'>
+                                        <NumberFormat className="pg-text coin-green-ml" value={coinData?.ath_change_percentage} displayType="text" thousandSeparator={true} prefix="" suffix="%" />
                                     </Text>
-                                    <Text className="fs-10 fw-200 text-secondary d-block text-right">{new Date(coinData?.ath_date).toLocaleDateString()}</Text>
+                                    <Text className='coin-date'>{new Date(coinData?.ath_date).toLocaleDateString()}</Text>
                                 </div>
                             </div>
                             <div className="coin-info">
-                                <Text>All-Time Low</Text>
+                                <Text className='profile-label'>All-Time Low</Text>
                                 <div>
-                                    <Text>
+                                    <Text className='profile-value'>
                                         <NumberFormat value={coinData?.atl} displayType="text" thousandSeparator={true} prefix="$" />
                                     </Text>
-                                    <Text>
-                                        <NumberFormat className="fs-14 fw-200 text-green ml-8" value={coinData?.atl_change_percentage} displayType="text" thousandSeparator={true} prefix="" suffix="%" />
+                                    <Text className='profile-value'>
+                                        <NumberFormat className="pg-text coin-green-ml" value={coinData?.atl_change_percentage} displayType="text" thousandSeparator={true} prefix="" suffix="%" />
                                     </Text>
-                                    <Text className="fs-10 fw-200 text-secondary d-block text-right">{new Date(coinData?.atl_date).toLocaleDateString()}</Text>
+                                    <div className='coin-date'>{new Date(coinData?.atl_date).toLocaleDateString()}</div>
                                 </div>
                             </div></> : <div className="coin-details-spin"><Spin className="text-center" /></div>}
                     </div>
