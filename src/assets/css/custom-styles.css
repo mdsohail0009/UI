@@ -310,7 +310,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .k-grouping-row .k-i-collapse::before, .k-grouping-row .k-i-expand::before, .k-i-more-vertical:before{display: none;}
 .ant-picker-suffix{color: var(--textWhite);}
 .k-pager-sizes .k-dropdown .k-dropdown-wrap, .k-dropdowntree .k-dropdown-wrap, .k-pager-sizes .k-dropdown .k-dropdown-wrap:hover{background: var(--bgDarkGrey);color: var(--textWhite);}
-.k-pager-nav.k-link:hover{background-color: var(--bgDarkGrey);border-radius: 50%;}
+.k-pager-nav.k-link:hover{background-color: var(--drawerList);border-radius: 50%;}
 .fiatdep-info .anticon-copy, .fiatdep-info .anticon-check{font-size: 16px;}
 .ant-select:not(.ant-select-customize-input) .ant-select-selector{background: transparent !important; border: 0;}
 .k-grid-header, .k-grouping-header, .k-grid-add-row, .k-grid-footer{color: var(--textWhite) !important;background-color: transparent !important;}
@@ -323,7 +323,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /*Modal start*/
 .ant-modal-content{border-radius: 24px;}
 .ant-modal-header{border-radius: 24px 24px 0 0;padding: 16px 24px;border-color: var(--borderGrey);}
-.ant-modal-header, .ant-modal-content{background-color: var(--bgGrey);}
+.ant-modal-header, .ant-modal-content{background: var(--popup-bg);}
 .ant-modal-title{font-size: 24px; line-height: 34px;color: var(--textWhite30);text-transform:capitalize;}
 .ant-modal-body p{font-size: 16px;color: var(--textWhite50);font-weight: 400;}
 .ant-modal-footer{padding:16px 24px;border-color: transparent;}
@@ -657,6 +657,8 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* audit logs start  */
 .addressbook-grid .custom-checkbox input{display: none;}
 .addressbook-content .search-bg{margin-bottom: 24px;}
+.k-pager-wrap .k-link{background-color: transparent;}
+.k-pager-numbers-wrap .k-pager-numbers.k-reset li{margin: 0 2px !important;}
 /* audit logs end  */
 /*@media start*/
 @media (min-width: 768px){
