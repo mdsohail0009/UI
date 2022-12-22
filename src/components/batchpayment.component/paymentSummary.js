@@ -158,7 +158,7 @@ class PaymentSummary extends Component {
 				{!this.state.showDeclaration && <>
 				<div>
 					<div>
-						<Title className='sub-heading text-center mt-0'>Transfer Details</Title>
+						<Title className='sub-heading  mt-0'>Transfer Details</Title>
 					</div>
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'> Payment</label></div>
@@ -217,8 +217,8 @@ class PaymentSummary extends Component {
 							<div className='text-center text-white p-24'>
 								<img src={pending} />
 								<Title className='text-white'>Declaration form sent!</Title>
-								<Paragraph className='text-white'>We sent declaration form to{" "}
-									{this.props.customer?.email} Please sign using the link
+								<Paragraph className='text-white'>We sent declaration form to{":"}
+									{this.props.customer?.email}. Please sign using the link
 									received in email to whitelist your address. Note that
 									your payments will only be processed once your
 									whitelisted address has been approved. </Paragraph>

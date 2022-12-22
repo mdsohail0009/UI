@@ -72,17 +72,17 @@ const Batchpayments = (props) => {
         { field: "status", title: 'Status', filter: true, width: 150, },
         { field: "numberOfTransactions", title: 'Number of Transactions', filter: true, width: 240,dataType: "number", filterType: "numeric", 
         customCell: (props) => (<td>
-          <div className="gridLink" onClick={()=>docPreview(props.dataItem)}
-        >
-                            
-          {props?.dataItem?.numberOfTransactions} 
-        </div></td>) 
+        {props?.dataItem?.numberOfTransactions!==0? <div className="gridLink" onClick={()=>docPreview(props.dataItem)}
+        >{props?.dataItem?.numberOfTransactions} 
+        </div>:<>{props?.dataItem?.numberOfTransactions}</>}</td>) 
      },
      { field: "validTransactionCount", title: 'Valid Transactions', filter: true, dataType: "number", filterType: "numeric", width: 200, },
      { field: "invalidTransactionCount", title: 'Invalid Transactions', filter: true, dataType: "number", filterType: "numeric", width: 200,
          customCell: (props) => (
-         <td><div className="gridLink" >{props?.dataItem?.invalidTransactionCount}
-           </div></td>)
+         <td>{props?.dataItem?.invalidTransactionCount!==0?<div className="gridLink" >{props?.dataItem?.invalidTransactionCount}
+           </div>:<>{props?.dataItem?.invalidTransactionCount}</>}
+           
+           </td>)
      },
      { field: "pendingTransactionCount", title: 'Pending Transactions', filter: true, dataType: "number", filterType: "numeric", width: 220, },
      { field: "approvedTransactionCount", title: 'Approved Transactions', filter: true, dataType: "number", filterType: "numeric", width: 240, },
