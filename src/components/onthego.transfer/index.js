@@ -753,7 +753,7 @@ saveWithdrawdata = async () => {
           <div ref={this.reviewScrool}></div>
           {/* <div className="drawer-maintitle"> */}
           <div Paragraph
-                        className='drawer-maintitle text-center'>Review Details Of Transfer</div>
+            className='drawer-maintitle text-center'>Review Details Of Transfer</div>
           {/* </div> */}
           <Spin spinning={this.state.reviewDetailsLoading}>
             <Form
