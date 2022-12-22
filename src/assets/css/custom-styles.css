@@ -661,6 +661,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .addressbook-content .search-bg{margin-bottom: 24px;}
 .k-pager-wrap .k-link{background-color: transparent;}
 .k-pager-numbers-wrap .k-pager-numbers.k-reset li{margin: 0 2px !important;}
+.ant-picker:hover{border-color: #CCC3FF;}
 /* audit logs end  */
 /* coin detail view start*/
 .coin-details{background-color: var(--addressList);border-radius: 24px;padding: 30px;}
