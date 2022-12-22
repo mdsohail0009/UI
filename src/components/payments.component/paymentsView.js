@@ -41,8 +41,9 @@ class PaymentsView extends Component {
       return stepcodes[type];
     };
     getPaymentsViewData = async () => {
+      console.log(this.state.currency)
         this.setState({ ...this.state, loading: true });
-        let response = await getPaymentsData(this.props.match.params.id,this.state.currency);
+        let response = await getPaymentsData(this.props.match.params.id,this.props.match.params.currency);
         if (response.ok) {
             this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false });
         }else {
@@ -77,18 +78,21 @@ class PaymentsView extends Component {
     } else {
       return (
         <div className="more-popover">
-           {(moreBankInfo?.transferType!=="internationalIBAN" && moreBankInfo?.transferType!=="sepa")&& <div>
           <Text className="lbl text-white">BIC/SWIFT/ABA Routing Code</Text>
           <Text className="val text-white">{moreBankInfo?.routingNumber}</Text>
+           {(moreBankInfo?.transferType!=="internationalIBAN" && moreBankInfo?.transferType!=="sepa")&& <>
           <Text className="lbl text-white">Bank Address</Text><br/>
           <Text className="lbl text-white">Address Line 1</Text>
           <Text className="val text-white">{moreBankInfo?.bankAddress1}</Text>
-          <Text className="lbl text-white">Address Line 2</Text>
-          <Text className="val text-white">{moreBankInfo?.bankAddress2}</Text></div>}
+          {moreBankInfo?.bankAddress2!==null &&<>
+            <Text className="lbl text-white">Address Line 2</Text>
+          <Text className="val text-white">{moreBankInfo?.bankAddress2}</Text>
+          </>}
+          </>}
           {(moreBankInfo?.transferType==="sepa" || moreBankInfo?.transferType==="internationalIBAN" ) && 
-          <div>
-           <Text className="lbl text-white w-100">Bank Address</Text>
-           <Text className="val text-white">{moreBankInfo?.bankBranch || "-"}{","}{moreBankInfo?.country}{","}{moreBankInfo?.state}{","}{moreBankInfo?.city}{","}{moreBankInfo?.postalCode}</Text></div>}
+          <>
+           <Text className="lbl text-white">Bank Address</Text>
+           <Text className="val text-white">{moreBankInfo?.bankBranch || "-"}{","}{moreBankInfo?.country}{","}{moreBankInfo?.state}{","}{moreBankInfo?.city}{","}{moreBankInfo?.postalCode}</Text></>}
         </div>
       );
     }
@@ -105,7 +109,8 @@ class PaymentsView extends Component {
         return this.state.previewPath;
     }
     backToPayments = () => {
-        this.props.history.push(`/payments/${this.state.currency}`)
+      this.props.history.push(`/payments/${"All"}`);
+        // this.props.history.push(`/payments/${this.state.currency}`)
     }
     docPreviewClose = () => {
         this.setState({ ...this.state, previewModal: false, previewPath: null })

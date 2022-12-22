@@ -31,7 +31,7 @@ const Payments = (props) => {
   const [cryptoFiat ,setCryptoFiat]=useState(true);
   const [hideFiatHeading,setHideFiatHeading]=useState(false);
   const paymentsView = (prop) => {
-    props.history.push(`/payments/${prop.dataItem.id}/view`)
+    props.history.push(`/payments/${prop.dataItem.id}/${prop.dataItem.currency}/view`)
   };
   const paymentsEdit = () => {
     if (selection.length === 0) {
