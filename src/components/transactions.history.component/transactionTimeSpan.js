@@ -77,7 +77,7 @@ const TransactionTimeSpan=(props)=> {
                 <Form.Item className="mb-0">
                   <div className="">
                   <div> <Button block type="button" key="submit" className="pop-btn" htmlType="submit"><span><Translate content="ok" /></span></Button></div>
-                   <div> <Button block type="button" className="pop-btn" onClick={handleDateCancel} ><span><Translate content="cancel" /></span></Button></div>
+                   <div> <Button block type="button" className="cust-cancel-btn" onClick={handleDateCancel} ><span><Translate content="cancel" /></span></Button></div>
                   </div>
                 </Form.Item>
               </Form>
