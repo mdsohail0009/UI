@@ -33,7 +33,8 @@ class AddBatchPayment extends Component {
         refreshBtnLoader:false,
         previewData:null,
         reefreshData:null,
-        uploadUrl:process.env.REACT_APP_API_END_POINT + "/MassPayment/importfileUpload"
+        uploadUrl:process.env.REACT_APP_API_END_POINT + "/MassPayment/importfileUpload",
+        worningMessage:null,
     }
 
     componentDidMount() {
@@ -67,17 +68,22 @@ class AddBatchPayment extends Component {
         this.setState({ ...this.state, isCoinsListHide: false});
     }
     beforeUpload = (file) => {
-        this.setState({...this.state,errorMessage:null})
+        this.setState({...this.state,worningMessage:null})
+        if (file.name.split('.').length > 2) {
+           this.setState({...this.state,worningMessage:"File don't allow double extension"})
+          return true;
+        }
+        
         let fileType = {
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":true
         };
          let isFileName = file.name.split(".").length > 2 ? false : true;
         if (fileType[file.type] && isFileName) {
-            this.setState({ ...this.state, isValidFile: true,errorMessage:null });
+            this.setState({ ...this.state, isValidFile: true,errorMessage:null,worningMessage:null });
             return true;
         } else {
             this.setState({ ...this.state, isValidFile: false ,
-                errorMessage: isFileName
+                worningMessage: isFileName
                 ? `Please upload .XLS or .XLSX file`
                 : "File don't allow double extension"
             });
@@ -136,7 +142,7 @@ handleUpload = ({ file }) => {
           }
     }
       else{
-        this.setState({...this.state,insufficientModal:true,showInprogressModal:false,errorMessage:(this.isErrorDispaly(response)), paymentSummary:false,uploadErrorModal:false})
+        this.setState({...this.state,insufficientModal:true,showInprogressModal:true,errorMessage:(this.isErrorDispaly(response)),worningMessage:null, paymentSummary:false,uploadErrorModal:false})
       }
     
     }
@@ -154,42 +160,49 @@ handleUpload = ({ file }) => {
       };
 goToGrid=()=>{
     this.closeDrawer();
-    this.setState({...this.state,showInprogressModal:false,errorMessage:null,isCoinsListHide:false})
+    this.setState({...this.state,showInprogressModal:false,errorMessage:null,worningMessage:null,isCoinsListHide:false})
 
 }
 downLoadPreview=()=>{
     if(this.state?.selectedCurrency==="USD"){
-    window.open('https://devstoragespace.blob.core.windows.net/devstoragecontainer/USDBatchPayment.xlsx','_blank')
+    window.open('https://prdsbiostorageaccount.blob.core.windows.net/suissebaseio/USDBatchPayment.xlsx','_blank')
     }
     else{
-    window.open('https://devstoragespace.blob.core.windows.net/devstoragecontainer/EURBatchPayment.xlsx','_blank')
+    window.open('https://prdsbiostorageaccount.blob.core.windows.net/suissebaseio/EURBatchPayment.xlsx','_blank')
     }
 }
     refreshTransaction=async()=>{
         if(this.state.file?.id){
-
-        
-        this.setState({...this.state,refreshBtnLoader:true,showModal:false})
+        this.setState({...this.state,refreshBtnLoader:true,showModal:false,errorMessage:null})
         const res=await refreshTransaction(this.state.file?.id)
-       if(res.ok){this.setState({...this.state,refreshBtnLoader:false,reefreshData:res.data,showInprogressModal:false,showModal:true,errorMessage:null})
-
-    }
+       if(res.ok){
+        if(res.data.isFileUploded===false){
+            this.setState({...this.state,refreshBtnLoader:false,reefreshData:res.data,showInprogressModal:true,showModal:false,errorMessage:null})
+        }else{
+            this.setState({...this.state,refreshBtnLoader:false,reefreshData:res.data,showInprogressModal:false,showModal:true,errorMessage:null})
+        }
+        }else{
+            this.setState({...this.state,errorMessage:this.isErrorDispaly(res),refreshBtnLoader:false,})
+        }
 }
     }
     handleNext=async()=>{
         const res=await confirmGetDetails(this.state.reefreshData?.id)
         if(res.ok){
-            this.setState({ ...this.state, showModal: false,errorMessage:null, uploadErrorModal: false, paymentPreview: true }, () => { })
+            this.setState({ ...this.state, showModal: false,errorMessage:null, uploadErrorModal: false, paymentPreview: true,worningMessage:null }, () => { })
+        }
+        else{
+            this.setState({...this.state,errorMessage:this.isErrorDispaly(res)})
         }
     }
     confirmTransaction=async(id)=>{
         const res=await confirmGetDetails(id) 
         if(res.ok){      
-            this.setState({...this.state,refreshBtnLoader:false,showInprogressModal:false,showModal:true,errorMessage:null})
+            this.setState({...this.state,refreshBtnLoader:false,showInprogressModal:true,showModal:true,errorMessage:null,worningMessage:null})
         }
     }
     render() {
-        const { uploadLoader, refreshBtnLoader ,errorMessage} = this.state;
+        const { uploadLoader, refreshBtnLoader ,errorMessage,worningMessage} = this.state;
         return (
             <>
                <div ref={this.useDivRef}></div>
@@ -249,6 +262,13 @@ downLoadPreview=()=>{
               />
               </>}
               {this.state.isCoinsListHide && <>
+                {worningMessage !== null && (
+          <Alert type="error" description={worningMessage} showIcon />
+               )}
+               {/* {errorMessage !== null && (
+          <Alert type="error" description={errorMessage} showIcon />
+               )} */}
+               
               <div className='drawer-content'>
                
                 <div className='text-center makepayment-section'>
@@ -296,19 +316,14 @@ downLoadPreview=()=>{
                  destroyOnClose={true}
                  footer={[
                     <>
-                        <div className="text-right withdraw-footer">
+                        <div className="cust-pop-up-btn crypto-pop bill-pop">
                           <Button
-                            key="back"
-                            type="text"
-                            className="text-white-30 pop-cancel fw-400 text-captz text-center"
-                            onClick={this.goToGrid}
-                            
+                            className="pop-cancel btn-width  bill-cancel"
+                            onClick={this.goToGrid}   
                           >
-
                             Exit
                           </Button>
                           <Button
-                            key="submit"
                             className="pop-btn px-36 ml-36"
                             onClick={this.refreshTransaction}  disabled={uploadLoader}
                             loading={refreshBtnLoader}

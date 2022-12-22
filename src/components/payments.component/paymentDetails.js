@@ -24,7 +24,7 @@ class PaymentDetails extends Component {
     super(props);
     this.state = {
       currencylu: [],
-      currency: "USD",
+      currency: "EUR",
       paymentsData: [],
       paymentSavedata: [],
       btnDisabled: false,
@@ -427,7 +427,7 @@ class PaymentDetails extends Component {
         <div ref={this.useDivRef}></div>
         <div className="main-container">
           <div className="mb-16">
-             <Title className="basicinfo mb-0"><span onClick={() => this.props.history?.push(`/payments/${this.state.currency}`)} className='icon md c-pointer back mr-8'></span><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
+             <Title className="basicinfo mb-0"><span onClick={() => this.props.history?.push(`/payments/All`)} className='icon md c-pointer back mr-8'></span><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
           </div>
           <div className="box basic-info text-white">
             {this.state.errorMessage && (

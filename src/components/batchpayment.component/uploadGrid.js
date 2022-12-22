@@ -33,16 +33,6 @@ const BatchpaymentView = (props) => {
     const [isLoading,setIsLoading]=useState(false);
     const gridRef = React.createRef();
     const gridColumns = [
-        {
-          field: "",
-          title: "",
-          width: 50,
-          customCell: () => (
-            <td className="text-center" >
-              1
-            </td>
-          )
-        },
         { field: "whiteListName", title: "Whitelist Name", filter: true,width: 200},
         { field: "beneficiaryName", title: "Beneficiary Name", filter: true,width: 200},
         {
@@ -179,7 +169,7 @@ const BatchpaymentView = (props) => {
 	  };
     const uploadDocument= async()=>{
         setErrorMessage(null);
-        setIsLoading(true)
+        // setIsLoading(true)
                 let obj={
                     "id": data?.id,
                     "customerId": props?.userConfig?.id,
@@ -203,10 +193,8 @@ const BatchpaymentView = (props) => {
         const res =await uploadDocuments(obj)
              if(res.ok){
                 gridRef?.current?.refreshGrid();
-                setIsLoading(false);
+                // setIsLoading(false);
                 setUploadModal(false)
-                setDocIdentityProofObjs([]);
-                setDocTransferObjs([]);
              }
                 else{
                     setIsLoading(false);
@@ -242,6 +230,7 @@ const filePreviewPath = () => {
       const uploadCancel=()=>{
         gridRef?.current?.refreshGrid();
         setErrorWarning(null)
+        setUploadModal(false)
         setDeleteModal(false)
         setUploader(false)
         setDocUpload(false)
@@ -313,8 +302,11 @@ const filePreviewPath = () => {
                       />
                     </Tooltip>
                   }
-                footer={<div><Button className='pop-btn custom-send sell-btc-btn' 
-                 onClick={() => uploadDocument()} loading={isLoading}>Upload</Button></div>}>
+                footer={<div><Button className='pop-btn custom-send sell-btc-btn'
+                //  loading={isLoading}
+                 onClick={uploadDocument} 
+                 
+                 >Upload</Button></div>}>
                  {errorMessage !== null && (
             <Alert type="error" description={errorMessage}  showIcon/>
                  )}
@@ -406,7 +398,25 @@ const filePreviewPath = () => {
 
                 <Paragraph className="text-white">Are you sure, do you really want to delete ?</Paragraph>
             </Modal>
-            
+            <Modal title="Confirm Delete"
+          destroyOnClose={true}
+          closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={() => deleteModalCancel()}/></Tooltip>}
+         
+         
+          className="payments-modal"
+          footer={[
+            <>
+            <div className='cust-pop-up-btn crypto-pop bill-pop'>
+              <Button
+                className="pop-cancel btn-width  bill-cancel"
+                onClick={() => deleteModalCancel()}>No</Button>
+              <Button className="pop-btn px-36 btn-width"
+                onClick={() => deleteDocuments()}>Yes</Button></div>
+            </>
+          ]}
+        >
+             <Paragraph className="text-white">Are you sure, do you really want to delete ?</Paragraph>
+        </Modal>
         </div>
         {filePreviewModal}
         </>

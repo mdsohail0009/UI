@@ -41,7 +41,6 @@ class PaymentsView extends Component {
       return stepcodes[type];
     };
     getPaymentsViewData = async () => {
-      console.log(this.state.currency)
         this.setState({ ...this.state, loading: true });
         let response = await getPaymentsData(this.props.match.params.id,this.props.match.params.currency);
         if (response.ok) {
@@ -110,7 +109,7 @@ class PaymentsView extends Component {
     }
     backToPayments = () => {
       this.props.history.push(`/payments/${"All"}`);
-        // this.props.history.push(`/payments/${this.state.currency}`)
+
     }
     docPreviewClose = () => {
         this.setState({ ...this.state, previewModal: false, previewPath: null })
@@ -122,7 +121,7 @@ class PaymentsView extends Component {
             <>
              <div ref={this.useDivRef}></div>
                 <div className="main-container">
-                    <Title className="basicinfo mb-16"><span onClick={() => this.props.history?.push(`/payments/${this.state.currency}`)} className='icon md c-pointer back mr-8'></span><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
+                    <Title className="basicinfo mb-16"><span onClick={() => this.props.history?.push(`/payments/All`)} className='icon md c-pointer back mr-8'></span><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
                     <div className="box basic-info responsive_table bg-none">
                         <table className='pay-grid view mb-view'>
                             <thead>
