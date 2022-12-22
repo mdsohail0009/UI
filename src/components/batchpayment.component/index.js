@@ -55,8 +55,9 @@ const Batchpayments = (props) => {
           field: "fileName", title: "File Name", filter: true, width: 200,
           customCell: (props) => (
             <td>
-              <div className="gridLink" onClick={()=>viewMode(props)} >
+             <div className="gridLink" onClick={()=>viewMode(props)} >
               {props?.dataItem?.fileName}
+              
               </div></td>) 
         },
         { field: "createdDate", title: "Date Created", filter: true, filterType: "date", width: 200, 
@@ -132,7 +133,7 @@ const Batchpayments = (props) => {
   const deleteBatchPayment=()=>{
     setErrorWarning(null)
     if(selection.length === 0){
-      setErrorWarning("Please select the one record")
+      setErrorWarning("Please select the  record")
     }
     else if(!setSelectData.status == "Draft"){
       setErrorWarning("Only draft record can delete")
@@ -190,9 +191,7 @@ const Batchpayments = (props) => {
                 
                       <Title className="basicinfo mb-0"><span className='icon md c-pointer back mr-8' onClick={gotoDashboard}></span><Translate content="batch_payments" component={Text} className="basicinfo" />
                                       
-                      <Text className='ml-4 text-white fs-16'> Process{" "}(<span className="icon md c-pointer process-icon"></span>) : To proceed the transaction,please click on process icon</Text>
-
-                                        
+                      <Text className='ml-4 text-white fs-16'> Proceed{" "}(<span className="icon md process-icon"></span>) : To proceed the transaction,please click on process icon</Text>           
                       </Title>
                       <div className='batch-actions'>
                   <span className="mb-right">
