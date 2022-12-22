@@ -93,8 +93,8 @@ class TransactionsHistory extends Component {
   gridColumns = [
     {
       field: "transactionId",
-      title: "Transcation Id",
-      filter: false,
+      title: "Transaction ID",
+      filter: true,
       locked: true,
       width: 210,
     },
