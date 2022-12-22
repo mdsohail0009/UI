@@ -24,7 +24,7 @@ class PaymentDetails extends Component {
     super(props);
     this.state = {
       currencylu: [],
-      currency: "USD",
+      currency: "EUR",
       paymentsData: [],
       paymentSavedata: [],
       btnDisabled: false,

@@ -142,7 +142,7 @@ handleUpload = ({ file }) => {
           }
     }
       else{
-        this.setState({...this.state,insufficientModal:true,showInprogressModal:false,errorMessage:(this.isErrorDispaly(response)),worningMessage:null, paymentSummary:false,uploadErrorModal:false})
+        this.setState({...this.state,insufficientModal:true,showInprogressModal:true,errorMessage:(this.isErrorDispaly(response)),worningMessage:null, paymentSummary:false,uploadErrorModal:false})
       }
     
     }
@@ -173,19 +173,26 @@ downLoadPreview=()=>{
 }
     refreshTransaction=async()=>{
         if(this.state.file?.id){
-
-        
-        this.setState({...this.state,refreshBtnLoader:true,showModal:false})
+        this.setState({...this.state,refreshBtnLoader:true,showModal:false,errorMessage:null})
         const res=await refreshTransaction(this.state.file?.id)
-       if(res.ok){this.setState({...this.state,refreshBtnLoader:false,reefreshData:res.data,showInprogressModal:false,showModal:true,errorMessage:null})
-
-    }
+       if(res.ok){
+        if(res.data.isFileUploded===false){
+            this.setState({...this.state,refreshBtnLoader:false,reefreshData:res.data,showInprogressModal:true,showModal:false,errorMessage:null})
+        }else{
+            this.setState({...this.state,refreshBtnLoader:false,reefreshData:res.data,showInprogressModal:false,showModal:true,errorMessage:null})
+        }
+        }else{
+            this.setState({...this.state,errorMessage:this.isErrorDispaly(res),refreshBtnLoader:false,})
+        }
 }
     }
     handleNext=async()=>{
         const res=await confirmGetDetails(this.state.reefreshData?.id)
         if(res.ok){
             this.setState({ ...this.state, showModal: false,errorMessage:null, uploadErrorModal: false, paymentPreview: true,worningMessage:null }, () => { })
+        }
+        else{
+            this.setState({...this.state,errorMessage:this.isErrorDispaly(res)})
         }
     }
     confirmTransaction=async(id)=>{
@@ -258,9 +265,9 @@ downLoadPreview=()=>{
                 {worningMessage !== null && (
           <Alert type="error" description={worningMessage} showIcon />
                )}
-               {errorMessage !== null && (
+               {/* {errorMessage !== null && (
           <Alert type="error" description={errorMessage} showIcon />
-               )}
+               )} */}
                
               <div className='drawer-content'>
                
@@ -309,19 +316,14 @@ downLoadPreview=()=>{
                  destroyOnClose={true}
                  footer={[
                     <>
-                        <div className="text-right withdraw-footer">
+                        <div className="cust-pop-up-btn crypto-pop bill-pop">
                           <Button
-                            key="back"
-                            type="text"
-                            className="text-white-30 pop-cancel fw-400 text-captz text-center"
-                            onClick={this.goToGrid}
-                            
+                            className="pop-cancel btn-width  bill-cancel"
+                            onClick={this.goToGrid}   
                           >
-
                             Exit
                           </Button>
                           <Button
-                            key="submit"
                             className="pop-btn px-36 ml-36"
                             onClick={this.refreshTransaction}  disabled={uploadLoader}
                             loading={refreshBtnLoader}
