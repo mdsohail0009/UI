@@ -114,6 +114,7 @@
     --gridborder:rgb(255 255 255 / 15%);
     --gridtitle:rgba(255, 255, 255, 0.6);
     --gridcontent:rgba(255, 255, 255, 0.8);
+    --popup-bg:#55555B;
 
     --lightThemeIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/user-darktheme-icons.svg);
     --cryptoIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/light-crypto-icons.svg);
