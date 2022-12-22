@@ -256,7 +256,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         </>}
         
         
-        {currency == 'EUR' && <h2 className="text-white fw-600" >SEPA Transfer</h2>}
+        {currency == 'EUR' && <h2 className="adbook-head" >SEPA Transfer</h2>}
         
         {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
         {!isLoading &&<>

@@ -163,9 +163,9 @@ const getCurrencyLookup = async () => {
   return (
     <>
       <div className="main-container">
-        <div className='bill_payment mb-16'> 
+        <div className='bill_payment'> 
           
-          <Title className="basicinfo mb-0"><span onClick={() => props.history?.push("/cockpit")} className='icon md c-pointer back mr-8'></span><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
+          <Title className="basicinfo"><span onClick={() => props.history?.push("/cockpit")} className='icon md c-pointer back '></span><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
          
           <Select
                   className="cust-input cust-disable"
@@ -221,8 +221,8 @@ const getCurrencyLookup = async () => {
           destroyOnClose={true}
           title={[<div className="side-drawer-header">
             <span />
-            <div className="text-center fs-24">
-              <Paragraph className="mb-0 text-white-30 fw-600"><Translate content="AddFiatAddress" component={Paragraph} className="mb-0 text-white-30 fw-600" /></Paragraph>
+            <div className="text-center">
+              <Paragraph className="drawer-maintitle"><Translate content="AddFiatAddress" component={Paragraph} className="drawer-maintitle" /></Paragraph>
             </div>
             <span onClick={closeBuyDrawer} className="icon md close-white c-pointer" />
           </div>]}

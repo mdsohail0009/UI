@@ -169,9 +169,11 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 
 /* manual addressbook start */
 .custom-forminput .ant-form-item-label > label{height: auto;}
+.ant-tooltip-arrow-content{background-color: transparent;}
 /* manual addressbook end */
 
 /*Common css start*/
+/* a{color: var(--viewAll);font-size: 18px;font-weight: 500;} */
 .ant-input-group-addon .ant-select.ant-select-single:not(.ant-select-customize-input) .ant-select-selector{border: 0 !important;}
 .newtransfer-card.ant-btn[disabled], .newtransfer-card.ant-btn[disabled]:hover, .newtransfer-card.ant-btn[disabled]:focus, .newtransfer-card.ant-btn[disabled]:active{background: var(--drawerList);border: 2px solid transparent;color: var(--coinBal) !important;}
 .ant-btn:hover, .ant-btn:focus, .ant-btn:active{background-color: transparent;}
@@ -267,7 +269,7 @@ input:-webkit-autofill:active{
 }
 .round-pills .ant-radio-button-wrapper-checked:not([class*=' ant-radio-button-wrapper-disabled']).ant-radio-button-wrapper:first-child{border-color: var(--radioBorderfill);}
 /* .ant-tooltip.ant-tooltip-placement-top{left: 660px !important;top: 321px  !important;} */
-.ant-tooltip-inner{background-color: var(--white);}
+.ant-tooltip-inner{background-color: var(--profileMenu);color: var(--white);}
 .footer-links a, .footer-links span{font-size: 14px; color: var(--white); font-weight: 500; display: inline-block;margin-right: 30px;text-align: center;}
 .footer-links a:hover{color: var(--textAqua) !important;}
 /*Common css End*/
@@ -632,11 +634,11 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .admin-actions{display: flex;padding: 0;list-style: none;margin-bottom: 0px;}
 .admin-actions li{margin-right: 16px;}
 .admin-actions li:last-child{margin-right: 0;}
-
+.addressbook-mb{margin-bottom: 0 !important;}
 /* send crypto addressbook end */
 
 /* transactions start  */
-.grid-title{font-weight: 800 !important;font-size: 28px !important;color: var(--white) !important;margin-bottom: 18px !important;}
+.grid-title{font-weight: 800 !important;font-size: 28px !important;color: var(--white) !important;margin-bottom: 18px;}
 .cust-list .k-grid{border-radius: 20px;}
 .cust-list .k-grid-header-wrap{border-top-left-radius: 20px;border-top-right-radius: 20px;}
 .ant-select-selection-item{font-weight: 500;font-size: 14px;color: var(--white);}

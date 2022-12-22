@@ -219,7 +219,7 @@ class OthersBusiness extends Component {
         if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} updatedHeading={this.props?.headingUpdate} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} /> }
         else {
             return <><div ref={this.useDivRef}>
-                <h2 className="text-white fw-600" style={{ fontSize: 18, textAlign: 'center' }}>SEPA Transfer</h2>
+                <h2 className="adbook-head">SEPA Transfer</h2>
                 {this.state.isLoading && <Loader />}
                 {this.state.errorMessage && <Alert type="error" showIcon closable={false} description={this.state.errorMessage} />}
                 {!this.state.isLoading && <Form initialValues={this.state.details}
@@ -323,7 +323,7 @@ class OthersBusiness extends Component {
                         </Col>
                         <RecipientAddress />
                     </Row>
-                    <h2  className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
+                    <h2  className="adbook-head">Bank Details</h2>
                   
                     <Row>
                    <Col xs={24} md={14} lg={14} xl={14} xxl={14}>

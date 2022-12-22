@@ -910,7 +910,7 @@ const FaitWithdrawal = ({ props,
         title={[<div className="side-drawer-header">
           <span />
           <div className="text-center">
-            <Paragraph className="mb-0 text-white-30 fw-600 text-upper"><Translate content="AddFiatAddress" component={Paragraph} className="mb-0 text-white-30 fw-600 text-upper" /></Paragraph>
+            <Paragraph className="drawer-maintitle"><Translate content="AddFiatAddress" component={Paragraph} className="drawer-maintitle" /></Paragraph>
           </div>
           <span onClick={closeBuyDrawer} className="icon md close-white c-pointer" />
         </div>]}

@@ -663,7 +663,7 @@ class AddressBook extends Component {
 				<Translate
 					content="address_book"
 					component={Title}
-					className="grid-title"
+					className="grid-title addressbook-mb"
 				/>
 				<div className="mb-right">
 					<ActionsToolbar featureKey="addressbook" onActionClick={(key) => this.onActionClick(key)} />

@@ -190,8 +190,8 @@ class Iban extends Component {
                     title={[<div className="side-drawer-header">
                         {/* {this.renderTitle()} */}
                         <span></span>
-                        {!this.props.buyFiat?.sendFiatHeader && <div className="text-center fs-24">
-                            <Translate className="mb-0 text-white-30 fw-600" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
+                        {!this.props.buyFiat?.sendFiatHeader && <div className="text-center">
+                            <Translate className="drawer-maintitle" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
                             </div>
                         }
                         <span onClick={() => this.setState({ ...this.state, showFuntransfer: false })} className="icon md close-white c-pointer" />

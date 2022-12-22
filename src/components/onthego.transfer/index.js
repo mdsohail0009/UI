@@ -751,10 +751,10 @@ saveWithdrawdata = async () => {
       reviewdetails: (
         <React.Fragment>
           <div ref={this.reviewScrool}></div>
-          <div className="">
+          {/* <div className="drawer-maintitle"> */}
           <div Paragraph
-                        className='adbook-head'>Review Details Of Transfer</div>
-          </div>
+                        className='drawer-maintitle text-center'>Review Details Of Transfer</div>
+          {/* </div> */}
           <Spin spinning={this.state.reviewDetailsLoading}>
             <Form
               name="advanced_search"

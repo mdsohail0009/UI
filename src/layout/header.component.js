@@ -405,9 +405,9 @@ class Header extends Component {
                 }
                 className="icon md close-white c-pointer"
               />
-              <div className="text-center fs-14">
+              <div className="text-center">
                 <Translate
-                  className="mb-0 text-white-30 fw-600 text-upper"
+                  className="drawer-maintitle"
                   content="change_pass_word"
                   component={Paragraph}
                 />
