@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import PaymentPreview from './paymentPreview';
 import pending1 from '../../assets/images/pending1.png'
+import Loader from '../../Shared/loader';
 const { Title,Paragraph } = Typography
 class AddBatchPayment extends Component {
     useDivRef = React.createRef()
@@ -35,6 +36,7 @@ class AddBatchPayment extends Component {
         reefreshData:null,
         uploadUrl:process.env.REACT_APP_API_END_POINT + "/MassPayment/importfileUpload",
         worningMessage:null,
+        loader:true,
     }
 
     componentDidMount() {
@@ -65,7 +67,8 @@ class AddBatchPayment extends Component {
         }
     }
     uploadCancel = () => {
-        this.setState({ ...this.state, isCoinsListHide: false});
+        this.setState({ ...this.state, isCoinsListHide: false})
+        this.closeDrawer();
     }
     beforeUpload = (file) => {
         this.setState({...this.state,worningMessage:null})
@@ -226,6 +229,9 @@ downLoadPreview=()=>{
             className="side-drawer w-50p"
         >
             { !this.state.isCoinsListHide && <>
+           
+            {this.state.fiatWalletsLoading && <Loader />}
+          {!this.state.fiatWalletsLoading && (<>
             <div className="mt-8">
                 <Title
                     className='sub-heading code-lbl'>Make Payments</Title>
@@ -260,6 +266,7 @@ downLoadPreview=()=>{
                   </List.Item>
                 )}
               />
+              </>)}
               </>}
               {this.state.isCoinsListHide && <>
                 {worningMessage !== null && (
