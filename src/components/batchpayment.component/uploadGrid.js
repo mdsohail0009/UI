@@ -54,9 +54,18 @@ const BatchpaymentView = (props) => {
     	customCell: (props) => (
             <td>
                 <div>
-              {props.dataItem.documentdetail?.map(item=><div className="gridLink" onClick={() =>docPreview(item)}>{item.documentName} <span onClick={() => this.onModalOpen(item)}
+                {/* {props.dataItem.documentdetail?.map(item=><div className="gridLink" onClick={() =>docPreview(item)}>{item.documentName} <span onClick={() => this.onModalOpen(item)}
                                                     className={`icon md delete mt-12 ${item.documentName ? "c-pointer" : ''} `}
-                                                  /></div>)}
+                                                  /></div>)} */}
+              {props.dataItem.documentdetail?.map(item=>
+                <div className="docfile">
+                                                    <span className={`icon xl file mr-16`} />
+                                                    <div className="docdetails c-pointer" onClick={() => docPreview(item)}>
+                                                        <EllipsisMiddle suffixCount={6}>{item.documentName}</EllipsisMiddle>
+                                                    </div>
+                                                    <span className="icon md close c-pointer" onClick={() => deleteDocument(item,"IDENTITYPROOF")} />
+                                                </div>)}
+             
             </div>
             </td>
         ), },

@@ -158,7 +158,7 @@ class PaymentSummary extends Component {
 				{!this.state.showDeclaration && <>
 				<div>
 					<div>
-						<Title className='sub-heading  mt-0'>Transfer Details</Title>
+					<Title className='mb-8 text-white-30 fw-600 text-captz fs-24'>Transfer Details</Title>
 					</div>
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'> Payment</label></div>
