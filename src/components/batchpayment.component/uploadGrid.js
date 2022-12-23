@@ -50,7 +50,16 @@ const BatchpaymentView = (props) => {
         { field: "accountNumber", title: 'Account Number/IBAN', filter: true, width: 250, customCell: () => (<td className='text-center'></td>) },
         { field: "amount", title: 'Amount', filter: true, width: 200},
         { field: "transactionStatus", title: 'Transaction Status', filter: true, width: 200},
-        { field: "uploadedDocuments", title: 'Uploaded Documents', filter: true, width: 220, },
+        { field: "uploadedDocuments", title: 'Uploaded Documents', filter: true, width: 270,
+    	customCell: (props) => (
+            <td>
+                <div>
+              {props.dataItem.documentdetail?.map(item=><div className="gridLink" onClick={() =>docPreview(item)}>{item.documentName} <span onClick={() => this.onModalOpen(item)}
+                                                    className={`icon md delete mt-12 ${item.documentName ? "c-pointer" : ''} `}
+                                                  /></div>)}
+            </div>
+            </td>
+        ), },
         { field: "supportingDocument", title: 'Supporting Document', filter: true, width: 240,
             customCell: (props) => (
             <td className='text-center'><div className="gridLink text-center" >
