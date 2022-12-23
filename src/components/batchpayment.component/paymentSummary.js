@@ -25,55 +25,56 @@ class PaymentSummary extends Component {
 	}
 
 	showDeclaration=async()=>{	
-		this.setState({...this.state,loading:true,errorMessage:null})
-		if (this.state.verifyData?.verifyData) {
-			if (this.state.verifyData.verifyData.isPhoneVerified) {
-				if (!this.state.verifyData.isPhoneVerification) {
-					this.setState({
-						...this.state,
-						errorMessage: "Please verify phone verification code",loading:false
-					});
-					return;
-				}
-			}
-			if (this.state.verifyData.verifyData.isEmailVerification) {
-				if (!this.state.verifyData.isEmailVerification) {
-					this.setState({
-						...this.state,
-						errorMessage: "Please verify  email verification code",loading:false
-					});
-					return;
-				}
-			}
-			if (this.state.verifyData.verifyData.twoFactorEnabled) {
-				if (!this.state.verifyData.isAuthenticatorVerification) {
-					this.setState({
-						...this.state,
-						errorMessage: "Please verify authenticator code",loading:false
-					});
-					return;
-				}
-			}
-			if (
-			  this.state.verifyData.verifyData.isPhoneVerified === "" &&
-			  this.state.verifyData.verifyData.isEmailVerification === "" &&
-			  this.state.verifyData.verifyData.twoFactorEnabled === ""
-			) {
-				this.setState({
-					...this.state,
-					errorMessage:
-						"Without Verifications you can't send. Please select send verifications from security section",loading:false
-				});
-				return
-			}
-		} else {
-			this.setState({
-				...this.state,
-				errorMessage:
-					"Without Verifications you can't Proceed.",loading:false
-			});
-			return
-		}
+		debugger
+		// this.setState({...this.state,loading:true,errorMessage:null})
+		// if (this.state.verifyData?.verifyData) {
+		// 	if (this.state.verifyData.verifyData.isPhoneVerified) {
+		// 		if (!this.state.verifyData.isPhoneVerification) {
+		// 			this.setState({
+		// 				...this.state,
+		// 				errorMessage: "Please verify phone verification code",loading:false
+		// 			});
+		// 			return;
+		// 		}
+		// 	}
+		// 	if (this.state.verifyData.verifyData.isEmailVerification) {
+		// 		if (!this.state.verifyData.isEmailVerification) {
+		// 			this.setState({
+		// 				...this.state,
+		// 				errorMessage: "Please verify  email verification code",loading:false
+		// 			});
+		// 			return;
+		// 		}
+		// 	}
+		// 	if (this.state.verifyData.verifyData.twoFactorEnabled) {
+		// 		if (!this.state.verifyData.isAuthenticatorVerification) {
+		// 			this.setState({
+		// 				...this.state,
+		// 				errorMessage: "Please verify authenticator code",loading:false
+		// 			});
+		// 			return;
+		// 		}
+		// 	}
+		// 	if (
+		// 	  this.state.verifyData.verifyData.isPhoneVerified === "" &&
+		// 	  this.state.verifyData.verifyData.isEmailVerification === "" &&
+		// 	  this.state.verifyData.verifyData.twoFactorEnabled === ""
+		// 	) {
+		// 		this.setState({
+		// 			...this.state,
+		// 			errorMessage:
+		// 				"Without Verifications you can't send. Please select send verifications from security section",loading:false
+		// 		});
+		// 		return
+		// 	}
+		// } else {
+		// 	this.setState({
+		// 		...this.state,
+		// 		errorMessage:
+		// 			"Without Verifications you can't Proceed.",loading:false
+		// 	});
+		// 	return
+		// }
 		let response= await proceedTransaction(this.props?.id || this.props?.fileData?.id)
 		if(response.ok){
 			if(response.data === true){

@@ -23,6 +23,7 @@ const Verifications = (props) => {
     const last4Digits = fullNumber.slice(-4);
     const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
     const [permissions, setPermissions] = useState({});
+   
 
     useEffect(() => {
         loadPermissions();
@@ -68,7 +69,36 @@ const Verifications = (props) => {
         }, 1000);
     };
     const transferDetials = async (values) => {
-        // setAgreeRed(true);
+debugger
+            if (!(verifyData.isEmailVerification || verifyData.isPhoneVerified || verifyData.twoFactorEnabled || verifyData.isLiveVerification)) {
+                setMsg(
+                    "Without verifications you can't send. Please select send verifications from security section"
+                );
+                return;
+            }
+            if (verifyData.isPhoneVerified) {
+                if (!phone) {
+                    setMsg("Please verify phone verification code");
+                     useOtpRef.current.scrollIntoView(0, 0);
+                    return;
+                }
+            }
+            if (verifyData.isEmailVerification) {
+                if (!email) {
+                    setMsg("Please verify  email verification code");			
+                     useOtpRef.current.scrollIntoView(0, 0);
+                    return;
+                }
+            }
+            if (verifyData.twoFactorEnabled) {
+                if (!authenticator) {
+                    setMsg("Please verify authenticator code");
+                     useOtpRef.current.scrollIntoView(0, 0);
+                    return;
+                }
+            }
+            
+        
     };
 
    const loadPermissions = () => {
@@ -95,6 +125,7 @@ const Verifications = (props) => {
         }
     };
 
+    
     const sendEmailOTP = async (val) => {
         setEmail({ ...email, errorMsg: '', showRuleMsg: '',btnLoader:true })
         let response = await sendEmail( email.requestType);
