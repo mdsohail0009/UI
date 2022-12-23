@@ -18,7 +18,8 @@ const Batchpayments = (props) => {
   const [selectedObj,setSelectedObj]=useState({})
   const [errorWarning,setErrorWarning]=useState(null) 
   const [deleteModal,setDeleteModal]=useState(false);
-  const [setSelectData, setSetSelectData] = useState({})
+  const [setSelectData, setSetSelectData] = useState({});
+  const [errorMessage,setErrorMessage]=useState(null); 
   useEffect(() => {
 }, []);
   const viewMode = (e) => {
@@ -94,6 +95,7 @@ const Batchpayments = (props) => {
  
    const handleInputChange = (prop) => {
     setErrorWarning(null);
+    setErrorMessage(null);
     const rowChecked = prop.dataItem;
     let _selection = [...selection];
     let idx = _selection.indexOf(rowChecked.id);
@@ -139,13 +141,18 @@ const Batchpayments = (props) => {
       setErrorWarning("Only draft record can delete")
     }
     else{
-    setDeleteModal(true)
+    setDeleteModal(true);
     }
    }
     const deleteDetials = async () => {
       const res = await deleteBatchPayments(selection[0])
       if (res.ok) {
         gridRef?.current?.refreshGrid();
+        setDeleteModal(false);
+        setSelection([]);
+      }
+      else{
+        setErrorMessage(isErrorDispaly(res));
         setDeleteModal(false);
         setSelection([]);
       }
@@ -178,7 +185,18 @@ const Batchpayments = (props) => {
       };
       actions[key]();
     };
-  
+   const isErrorDispaly = (objValue) => {
+      if (objValue.data && typeof objValue.data === "string") {
+        return objValue.data;
+      } else if (
+        objValue.originalError &&
+        typeof objValue.originalError.message === "string"
+      ) {
+        return objValue.originalError.message;
+      } else {
+        return "Something went wrong please try again!";
+      }
+    };
       return (
         <>
        
@@ -212,6 +230,14 @@ const Batchpayments = (props) => {
               showIcon
             />
           )}
+           {errorMessage !== null && (
+            <Alert
+              className="mb-12"
+              type="warning"
+              description={errorMessage}
+              showIcon
+            />
+          )}
               <div className="box basic-info text-white" style={{ clear: 'both' }}>
                   <List
                       className="bill-grid"
@@ -240,7 +266,7 @@ const Batchpayments = (props) => {
               ></PaymentPreview>
               }        
           </div>    
-          <Modal title="Delete Payment"
+          <Modal title="Confirm Delete"
           destroyOnClose={true}
           closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={()=>deleteModalCancel()} /></Tooltip>}
          
@@ -258,13 +284,7 @@ const Batchpayments = (props) => {
             </>
           ]}
         >
-          <div className="fs-14 text-white-50">
-            <Title className='fs-18 text-white-50'><span class="icon lg info-icon"></span> Delete Payment?</Title>
-            <Paragraph className="fs-14 text-white-50 modal-para">Are you sure do you want to
-              delete Payment ?</Paragraph>
-
-
-          </div>
+          <Paragraph className="text-white">Are you sure, do you really want to delete ?</Paragraph>
         </Modal>
           </>   
       )
