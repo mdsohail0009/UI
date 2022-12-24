@@ -170,7 +170,7 @@ class PaymentSummary extends Component {
 					</div>
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'> Total Amount</label></div>
-						<div><Text className='fw-500 text-white-30'>{this.props?.getPaymentDetails.availableAmount}</Text></div>
+						<div><Text className='fw-500 text-white-30'>{this.props?.getPaymentDetails.totalAmount}</Text></div>
 					</div>
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'>Balance Before</label></div>
@@ -178,7 +178,7 @@ class PaymentSummary extends Component {
 					</div>
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'>Balance After Payment</label></div>
-						<div><Text className='fw-500 text-white-30'>{this.props?.getPaymentDetails.afterdPaymentAmonunt}</Text></div>
+						<div><Text className='fw-500 text-white-30'>{this.props?.getPaymentDetails.AfterPaymentAmount}</Text></div>
 					</div>
 
 					<div> <Title className='sub-heading p-0 mt-24'>Recipients Details</Title></div>
