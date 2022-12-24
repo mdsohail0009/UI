@@ -311,7 +311,7 @@ downLoadPreview=()=>{
         <Modal  
                 
                 visible={this.state.showInprogressModal}
-                title="upload success"
+                title="upload excel"
                 closeIcon={
                    <Tooltip title="Close">
                      <span
@@ -348,8 +348,7 @@ downLoadPreview=()=>{
                )}
                    <div className='text-center pt-16'>
                    <img src={pending1} alt={"success"} />
-                       <Paragraph className='text-white fs-18'>Document has been processing</Paragraph>
-                      
+                   <Paragraph className='text-white fs-18'>File is being processed please wait a while</Paragraph>
                    </div>
                    </>
            </Modal>
@@ -357,14 +356,6 @@ downLoadPreview=()=>{
                 
                      visible={this.state.showModal}
                      title="upload success"
-                     closeIcon={
-                        <Tooltip title="Close">
-                          <span
-                            className="icon md close-white c-pointer"
-                            onClick={() => this.handleCancel()}
-                          />
-                        </Tooltip>
-                      }
                       destroyOnClose={true}
                    
                     footer={ <Button className="primary-btn pop-btn"
@@ -374,7 +365,7 @@ downLoadPreview=()=>{
                         {errorMessage !== null && (
           <Alert type="error" description={errorMessage} showIcon />
                )}
-                        <div className='text-center pt-16'>
+                        <div className=' pt-16'>
                             <Paragraph className='text-white fs-18'>Document has been successfully uploaded</Paragraph>
                            
                         </div>

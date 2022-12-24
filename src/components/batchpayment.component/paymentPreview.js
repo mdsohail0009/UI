@@ -30,20 +30,15 @@ class PaymentPreview extends Component {
   }
 componentDidMount=()=>{
 }
-handleCancel=()=>{
-  this.setState({ ...this.state, showModal:false})
-}
 closeDrawer = () => {
   this.setState({ ...this.state, paymentSummary:false})
 }
  gridColumns = [
-  
-  { field: "whiteListName", title: "Whitelist Name", filter: true,width: 200},
-  { field: "beneficiaryName", title: "Beneficiary Name", filter: true,width: 200},
-      { field: "accountNumber", title: 'Account Number/IBAN', filter: true, width: 250 },
+  { field: "whiteListName", title: "Whitelist Name", filter: true,width: 400},
+  { field: "beneficiaryName", title: "Beneficiary Name", filter: true,width: 250},
+  { field: "accountNumber", title: 'Account Number/IBAN', filter: true, width: 250 },
   { field: "amount", title: 'Amount', filter: true, width: 200},
   { field: "transactionStatus", title: 'Transaction Status', filter: true, width: 200},
- 
 ];
 
 
@@ -98,7 +93,6 @@ isErrorDispaly = (objValue) => {
           <Alert type="error" description={this.state.errorMessage} showIcon />
                )}
                   <List
-                      
                       showActionBar={false}
                       url={this.state.gridUrl}
                       columns={this.gridColumns}
@@ -112,7 +106,7 @@ isErrorDispaly = (objValue) => {
                         onClick={this.props.onClose}>Back</Button>
                     <Button className="pop-btn custom-send sell-btc-btn ml-8" loading={this.state.isLoad}
                         style={{ width: 100, height: 50 }}
-                        onClick={()=>this.confirmPreview()}>Confirm</Button>
+                        onClick={this.confirmPreview}>Confirm</Button>
                 
                 </div>
           </div>
@@ -121,9 +115,7 @@ isErrorDispaly = (objValue) => {
                 {this.state.paymentSummary &&
                        <PaymentSummary
                         showDrawer={this.state.paymentSummary}
-                        onClose={() => {
-                            this.closeDrawer();
-                        }}
+                        onClose={this.closeDrawer }
                         getPaymentDetails={this.state.getPaymentDetails}
                         id={this.props?.id}
                         transactionContinue={this.props?.transactionContinue}
