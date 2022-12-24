@@ -347,7 +347,7 @@ downLoadPreview=()=>{
           <Alert type="error" description={errorMessage} showIcon />
                )}
                    <div className='text-center pt-16'>
-                   <Image src={pending1} alt={"success"} />
+                   <img src={pending1} alt={"success"} />
                        <Paragraph className='text-white fs-18'>Document has been processing</Paragraph>
                       
                    </div>

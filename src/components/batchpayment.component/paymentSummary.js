@@ -217,7 +217,7 @@ class PaymentSummary extends Component {
 							<div className='text-center text-white p-24'>
 								<img src={pending} />
 								<Title className='text-white'>Declaration form sent!</Title>
-								<Paragraph className='text-white'>We sent declaration form to{":"}
+								<Paragraph className='text-white'>We sent declaration form to{":"}{" "}
 									{this.props.customer?.email}. Please sign using the link
 									received in email to whitelist your address. Note that
 									your payments will only be processed once your

@@ -55,9 +55,6 @@ const BatchpaymentView = (props) => {
     	customCell: (props) => (
             <td>
                 <div>
-                {/* {props.dataItem.documentdetail?.map(item=><div className="gridLink" onClick={() =>docPreview(item)}>{item.documentName} <span onClick={() => this.onModalOpen(item)}
-                                                    className={`icon md delete mt-12 ${item.documentName ? "c-pointer" : ''} `}
-                                                  /></div>)} */}
               {props.dataItem.documentdetail?.map(item=>
                 <>
                                                     <div className="gridLink" onClick={() => docPreview(item)}>
