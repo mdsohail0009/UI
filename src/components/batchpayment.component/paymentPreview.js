@@ -82,9 +82,7 @@ isErrorDispaly = (objValue) => {
     const { Title } = Typography;
     return (
       <>
-        {this.state.errorMessage !== null && (
-          <Alert type="error" description={this.state.errorMessage} showIcon />
-               )}
+
         <Drawer
           title={[<div className="side-drawer-header">
             <span></span>
@@ -104,6 +102,9 @@ isErrorDispaly = (objValue) => {
 
           < div className='main-container'>
           <Translate content="bathch_payments_preview" component={Title} className="fs-26 fw-400 mb-14 text-white-30" />
+          {this.state.errorMessage !== null && (
+          <Alert type="error" description={this.state.errorMessage} showIcon />
+               )}
                   <List
                       
                       showActionBar={false}
