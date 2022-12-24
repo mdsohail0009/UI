@@ -655,7 +655,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .accordian .ant-collapse-arrow{vertical-align: text-bottom !important;}
 .accordian .ant-collapse-item.ant-collapse-item-active .downangle{background-position: -329px 0;}
 .accordian .ant-collapse-content-box{padding: 20px;background-color: var(--bgDarkGrey);border-radius: 0 0 24px 24px;border-bottom: 1px solid var(--bgOrion);}
-.upload{border-radius: 30px !important;background-color: var(--bgGloom) !important;border-color: var(--borderGrey) !important;}
+.upload{border-radius: 30px !important;background-color: var(--uploadcard) !important;border-color: var(--borderGrey) !important;}
 .upload .ant-upload{padding: 30px 0 !important;}
 .upload .ant-upload-text{font-weight: 600;color: var(--textWhite30) !important;}
 .docfile{background-color:var(--bgGloom);border-radius: 20px;padding: 16px;display: flex;align-items: center;margin: 12px 0px 0 0;flex: 1 0 240px;}
@@ -818,6 +818,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
 .addressbook-grid .cust-list>div{position: unset !important;}
 .doc-cancelbtn:hover{border: 1px solid var(--textYellow) !important;}
 .doc-cancelbtn.pop-cancel{width: 150px !important;}
+.file-label.amt-label{width: 105px;}
 @media (min-width: 320px){
     .tlv-header{padding: 8px 8px !important;}
     .header-dropdown{margin-right: 24px;}

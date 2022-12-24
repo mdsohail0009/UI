@@ -165,6 +165,7 @@ const Batchpayments = (props) => {
   
   }
     const closeDrawer = () => {
+      gridRef?.current?.refreshGrid();
     setProceedBatchPayment(false);
     setIsAddBatchDrawer(false)
     setSelection([])

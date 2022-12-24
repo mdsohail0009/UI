@@ -10,7 +10,7 @@ import { withRouter } from "react-router-dom";
 import PaymentSummary from "./paymentSummary";
 import List from "../grid.component";
 import {confirmGetDetails} from './api'
-class paymentPreview extends Component {
+class PaymentPreview extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -145,4 +145,4 @@ isErrorDispaly = (objValue) => {
   }
 }
 
-export default (withRouter(paymentPreview));
+export default (withRouter(PaymentPreview));
