@@ -6,8 +6,7 @@ import Search from "antd/lib/input/Search";
 import { fetchMemberWallets } from "../dashboard.component/api";
 import {refreshTransaction,saveTransaction,confirmGetDetails} from './api'
 import NumberFormat from "react-number-format";
-import { Link } from "react-router-dom";
-import { withRouter } from "react-router-dom";
+import { Link,withRouter } from "react-router-dom";
 import PaymentPreview from './paymentPreview';
 import pending1 from '../../assets/images/pending1.png'
 import Loader from '../../Shared/loader';
@@ -360,7 +359,7 @@ downLoadPreview=()=>{
                    
                     footer={ <Button className="primary-btn pop-btn"
                     style={{ width: 100, height: 50 }}
-                    onClick={() => this.handleNext()}>Next</Button>}>
+                    onClick={this.handleNext}>Next</Button>}>
                         <>
                         {errorMessage !== null && (
           <Alert type="error" description={errorMessage} showIcon />

@@ -3,13 +3,14 @@ import {
   Drawer,
   Typography,
   Button,
-   Alert} from "antd";
-import { connect } from "react-redux";
+   Alert,Modal,Tooltip} from "antd";
 import Translate from "react-translate-component";
 import { withRouter } from "react-router-dom";
 import PaymentSummary from "./paymentSummary";
 import List from "../grid.component";
+import NumberFormat from "react-number-format";
 import {confirmGetDetails} from './api'
+const { Paragraph } = Typography
 class PaymentPreview extends Component {
   constructor(props) {
     super(props);
@@ -17,9 +18,7 @@ class PaymentPreview extends Component {
       modal: false,
       showModal:false,
       paymentSummary: false,
-      insufficientModal: false,
       errorMessage:null,
-      onBack:this.props.isProceedBatchPayment,
       getPaymentDetails:[],
       isLoad:false,
       gridUrl:process.env.REACT_APP_GRID_API + `MassPayments/BatchPaymentsDetail/${this.props.id}`,
@@ -47,9 +46,14 @@ confirmPreview = async () => {
    this.setState({...this.state,errorMessage:null})
    let response = await confirmGetDetails(this.props?.id ||this.props?.fileData?.id)
    if(response.ok){
-    this.setState({ ...this.state,isLoad:false, paymentSummary: true, insufficientModal: false ,getPaymentDetails:response.data})
+    if(response.data.isSuccess===false){
+      this.setState({ ...this.state,isLoad:false, showModal: true,getPaymentDetails:response.data})
+    }else{
+      this.setState({ ...this.state,isLoad:false, paymentSummary: true,getPaymentDetails:response.data})
+    }
+    
   }else{
-    this.setState({...this.state,isLoad:false,insufficientModal:false,errorMessage:this.isErrorDispaly(response), paymentSummary:false})
+    this.setState({...this.state,isLoad:false,errorMessage:this.isErrorDispaly(response), paymentSummary:false})
   }
 
 }
@@ -123,7 +127,50 @@ isErrorDispaly = (objValue) => {
                     />
                        }
         </Drawer>
-
+        <Modal
+                    visible={this.state.showModal}
+                    title="Proceed with Transactions"
+                    closeIcon={
+                        <Tooltip title="Close">
+                            <span
+                                className="icon md close-white c-pointer"
+                                onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false }, () => { })}
+                            />
+                        </Tooltip>
+                    }
+                    destroyOnClose={true}
+                  
+                    footer={null}
+                    >
+                    <>
+                    
+                        <div className='text-center pt-16'>
+                        
+                            <Paragraph className='text-white fs-18'>
+                            <div>You do not have enough balance.</div>
+                            <div>Total amount including fees:{" "}
+                            {this.state.getPaymentDetails?.walletCode}{" "}
+                            <NumberFormat className='fw-500 text-white-30'
+                                        value={`${this.props?.getPaymentDetails?.amount}`}
+                                        thousandSeparator={true} displayType={"text"} />
+                            </div>
+                          <div>Balance available:{" "}
+                          {this.state.getPaymentDetails?.walletCode}{" "}
+                          <NumberFormat className='fw-500 text-white-30'
+                                        value={`${this.props?.getPaymentDetails?.availableAmount}`}
+                                        thousandSeparator={true} displayType={"text"} />
+                           </div>
+                          <div>Shortfall:{" "}{this.state.getPaymentDetails?.walletCode}{" "}
+                          <NumberFormat className='fw-500 text-white-30'
+                                        value={`${this.props?.getPaymentDetails?.shortfallAmount}`}
+                                        thousandSeparator={true} displayType={"text"} />
+                          
+                          </div>
+                          <div>Please top up.{" "}A draft has been saved. </div></Paragraph>
+                            <div><Button className="primary-btn pop-btn"  onClick={this.props.onClose}>Return</Button></div>
+                        </div>
+                    </>
+                </Modal>
       </>
 
     );
