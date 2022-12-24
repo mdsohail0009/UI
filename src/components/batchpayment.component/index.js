@@ -6,7 +6,7 @@ import List from "../grid.component";
 import AddBatchPayment from './addbatchPayment';
 import PaymentPreview from './paymentPreview';
 import moment from "moment/moment";
-import {deleteBatchPayments} from './api'
+import {deleteBatchPayments,getInvalidTransactionData} from './api'
 
 import ActionsToolbar from "../toolbar.component/actions.toolbar";
 const { Title, Text, Paragraph } = Typography;
@@ -80,7 +80,7 @@ const Batchpayments = (props) => {
      { field: "validTransactionCount", title: 'Valid Transactions', filter: true, dataType: "number", filterType: "numeric", width: 200, },
      { field: "invalidTransactionCount", title: 'Invalid Transactions', filter: true, dataType: "number", filterType: "numeric", width: 200,
          customCell: (props) => (
-         <td>{props?.dataItem?.invalidTransactionCount!==0?<div className="gridLink" >{props?.dataItem?.invalidTransactionCount}
+         <td>{props?.dataItem?.invalidTransactionCount!==0?<div onClick={()=>getInvalidTransaction(props?.dataItem)} className="gridLink" >{props?.dataItem?.invalidTransactionCount}
            </div>:<>{props?.dataItem?.invalidTransactionCount}</>}
            
            </td>)
@@ -92,7 +92,12 @@ const Batchpayments = (props) => {
 
      
    ];
- 
+ const getInvalidTransaction=async (data)=>{
+  const res=await getInvalidTransactionData(data?.id)
+  if(res.ok){
+  window.open(res?.data,"_blank")
+  }
+ }
    const handleInputChange = (prop) => {
     setErrorWarning(null);
     setErrorMessage(null);
@@ -210,7 +215,7 @@ const Batchpayments = (props) => {
                 
                       <Title className="basicinfo mb-0"><span className='icon md c-pointer back mr-8' onClick={gotoDashboard}></span><Translate content="batch_payments" component={Text} className="basicinfo" />
                                       
-                      <Text className='ml-4 text-white fs-16'> Proceed{" "}(<span className="icon md process-icon"></span>) : To proceed the transaction,{" "}please click on process icon</Text>           
+                      <Text className='ml-4 fs-16 text-yellow'> Proceed{" "}(<span className="icon md process-icon"></span>) : To proceed the transaction,{" "}please click on process icon</Text>           
                       </Title>
                       <div className='batch-actions'>
                   <span className="mb-right">
