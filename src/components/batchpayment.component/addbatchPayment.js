@@ -282,7 +282,6 @@ downLoadPreview=()=>{
             <Title className='text-white fs-24 fw-500'>Send {this.state.selectedCurrency} to Multiple Address</Title>
             <Upload
                                     
-                                    //key={i}
                                               type="dashed"
                                               size="large"
                                               className="ml-8 mt-12"
@@ -311,7 +310,7 @@ downLoadPreview=()=>{
         <Modal  
                 
                 visible={this.state.showInprogressModal}
-                title="upload success"
+                title="Upload Excel"
                 closeIcon={
                    <Tooltip title="Close">
                      <span
@@ -357,14 +356,6 @@ downLoadPreview=()=>{
                 
                      visible={this.state.showModal}
                      title="upload success"
-                     closeIcon={
-                        <Tooltip title="Close">
-                          <span
-                            className="icon md close-white c-pointer"
-                            onClick={() => this.handleCancel()}
-                          />
-                        </Tooltip>
-                      }
                       destroyOnClose={true}
                    
                     footer={ <Button className="primary-btn pop-btn"
@@ -374,7 +365,7 @@ downLoadPreview=()=>{
                         {errorMessage !== null && (
           <Alert type="error" description={errorMessage} showIcon />
                )}
-                        <div className='text-center pt-16'>
+                        <div className=' pt-16'>
                             <Paragraph className='text-white fs-18'>Document has been successfully uploaded</Paragraph>
                            
                         </div>

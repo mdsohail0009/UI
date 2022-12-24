@@ -126,8 +126,11 @@ const Batchpayments = (props) => {
 
     setErrorWarning("Please select the record");
   } 
-  else if(!setSelectData.status == "Draft"){
+  else if(!setSelectData.status === "Draft"){
     setErrorWarning("Only draft record can proceed")
+  }
+  else if(setSelectData.validTransactionCount === 0){
+    setErrorWarning("You don't have valid transactions to proceed")
   }
   else if(setSelectData.fileUploadStatus == "File is being processed please wait a while"){
     setErrorWarning("Upload status is in progress so you can't proceed")
