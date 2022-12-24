@@ -642,13 +642,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .coin-info{padding: 16px 0;border-top: 1px solid var(--borderGrey);font-size: 16px;display: flex;justify-content: space-between;}
 /* .coin-info span{font-size: 16px;color: var(--textWhite30);font-weight: 600;} */
 /* .coin-info>span:first-child{font-size: 14px;color: var(--textWhite50);font-weight: 200;} */
-.trade-graph .ant-radio-button-wrapper{background: none;color: var(--textSecondary);font-weight: 500;border-color: var(--borderLight);overflow: hidden;}
-.trade-graph .ant-radio-button-wrapper:first-child{border-radius: 8px 0 0 8px;}
-.trade-graph .ant-radio-button-wrapper:last-child{border-radius: 0 8px 8px 0;}
-.trade-graph .ant-radio-button-checked{background-color: var(--bgYellow);border-color: var(--bgYellow) !important;}
-.trade-graph .ant-radio-button-wrapper:not(:first-child)::before{content: none;}
-.trade-graph .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{background: none;}
-.trade-graph .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){background: none;color: var(--textDark) !important;}
+
 .coin-bal{display: flex;justify-content: space-between;align-items: center;}
 .coin-bal ul li{display: inline-block;list-style: none;font-size: 10px;text-align: center;color: var(--textWhite30);font-weight: 500;margin-left:16px;}
 .otp-verify{position: relative;margin-left: 0 !important;}
@@ -964,7 +958,7 @@ font-size: 12px;font-weight: 500;height: 20px;} */
     .user-profile{width:44px;height: 44px;}
     .right-panel{padding: 0 60px;}
   
-    .summary-count{display: inline-block;vertical-align: top;}
+    /* .summary-count{display: inline-block;vertical-align: top;} */
     .tlv-header .main-menu li{margin: 0 4px;}
     .sidebar-push{margin: 100px 0 0;}
     .header-right, .portfolio-list .ant-list-split .ant-list-item{display: block;flex-grow: 1;flex-shrink: 1;text-align: right;}

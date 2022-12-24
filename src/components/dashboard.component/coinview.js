@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { Typography, Row, Col, Spin, Radio, Image } from "antd";
+import { Typography, Row, Col, Spin, Radio,Tabs,Image } from "antd";
 import { Link, withRouter } from "react-router-dom";
 import { getcoinDetails, getCoinChatData } from './api'
 import LineChart from './lineChart';
@@ -196,16 +196,16 @@ componentWillUnmount(){
                         <> 
                         <div className="d-flex align-center">
                             <Image preview={false} src={coinData.imagePath} />
-                            <div className="summary-count ml-16">
-                                <Paragraph className="text-white-30 fs-30 mb-0 fw-500">
+                            <div className="summary-count">
+                                <Paragraph className="coin-balstyle">
                                     <NumberFormat value={coinData?.avilableBalance} displayType="text" thousandSeparator={true} prefix="" />
-                                    <Text className="fs-24 ml-8 text-white-30 fw-500">{coinData?.symbol.toUpperCase()}</Text></Paragraph>
-                                <Text className="text-white-30 fs-16 m-0" style={{ lineHeight: '18px' }}>1{coinData?.symbol.toUpperCase()} = <NumberFormat value={coinData?.current_price} displayType="text" thousandSeparator={true} /> USD
+                                    <Text className="coin-name">{coinData?.symbol.toUpperCase()}</Text></Paragraph>
+                                <Text className="coin-subbalval">1{coinData?.symbol.toUpperCase()} = <NumberFormat value={coinData?.current_price} displayType="text" thousandSeparator={true} /> USD
                                     {coinData?.market_cap_change_percentage_24h > 0 && <>
-                                        <Text className="text-green ml-16">{coinData?.market_cap_change_percentage_24h}%</Text>
+                                        <Text className="text-green value-up">{coinData?.market_cap_change_percentage_24h}%</Text>
                                     </>}
                                     {coinData?.market_cap_change_percentage_24h < 0 && <>
-                                        <Text className="text-red ml-16">{coinData?.market_cap_change_percentage_24h}%</Text>
+                                        <Text className="text-red value-down">{coinData?.market_cap_change_percentage_24h}%</Text>
                                     </>}
                                 </Text>
                             </div>
@@ -218,6 +218,11 @@ componentWillUnmount(){
                             </ul>
                             </> : <div className="text-center"><Spin className="text-center"/></div>}</>}
                     </div>
+                    <Tabs className="cust-tabs-fait coinview-tabs">
+                                <Tabs.TabPane tab="Price" className="" key={"prices"} ></Tabs.TabPane>
+                                <Tabs.TabPane tab="Market Cap" className="" key={"market_caps"}  ></Tabs.TabPane>
+                                <Tabs.TabPane tab="Trading View" className="" key={"total_volumes"} ></Tabs.TabPane>
+                            </Tabs>
                     <div className="box coin-details">
                         <Title  component={Title} className="coin-titlestyle">{coinData?.name} ({coinData?.symbol.toUpperCase()}) Price Chart</Title>
                         <div className="trade-legends">
@@ -226,6 +231,7 @@ componentWillUnmount(){
                                 <Radio.Button value="market_caps">Market Cap</Radio.Button>
                                 <Radio.Button value="total_volumes">Trading View</Radio.Button>
                             </Radio.Group>
+                           
                             <Radio.Group defaultValue="1" buttonStyle="outline" className="trade-graph" onChange={(e) => this.coinChartData(e.target.value)}>
                                 <Radio.Button value="1">24h</Radio.Button>
                                 <Radio.Button value="7">7d</Radio.Button>
