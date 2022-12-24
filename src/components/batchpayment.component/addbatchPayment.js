@@ -181,7 +181,10 @@ downLoadPreview=()=>{
        if(res.ok){
         if(res.data.isFileUploded===false){
             this.setState({...this.state,refreshBtnLoader:false,reefreshData:res.data,showInprogressModal:true,showModal:false,errorMessage:null})
-        }else{
+        }else if(res.data?.invalidTransactionCount >0){
+            this.setState({...this.state,uploadErrorModal:true,file:res.data,showInprogressModal:false})
+          }
+        else{
             this.setState({...this.state,refreshBtnLoader:false,reefreshData:res.data,showInprogressModal:false,showModal:true,errorMessage:null})
         }
         }else{
@@ -272,10 +275,7 @@ downLoadPreview=()=>{
                 {worningMessage !== null && (
           <Alert type="error" description={worningMessage} showIcon />
                )}
-               {/* {errorMessage !== null && (
-          <Alert type="error" description={errorMessage} showIcon />
-               )} */}
-               
+              
               <div className='drawer-content'>
                
                 <div className='text-center makepayment-section'>
@@ -371,7 +371,9 @@ downLoadPreview=()=>{
                     style={{ width: 100, height: 50 }}
                     onClick={() => this.handleNext()}>Next</Button>}>
                         <>
-                       
+                        {errorMessage !== null && (
+          <Alert type="error" description={errorMessage} showIcon />
+               )}
                         <div className='text-center pt-16'>
                             <Paragraph className='text-white fs-18'>Document has been successfully uploaded</Paragraph>
                            

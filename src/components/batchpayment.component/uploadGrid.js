@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import List from "../grid.component";
 import apiCalls from "../../api/apiCalls";
 import FilePreviewer from "react-file-previewer";
-import{uploadDocuments,getFileURL} from './api';
+import{uploadDocuments,getFileURL,deleteDocumentDetails} from './api';
 import Loader from '../../Shared/loader';
 const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
@@ -31,6 +31,7 @@ const BatchpaymentView = (props) => {
 	const [previewModal, setPreviewModal] = useState(false);
     const [data,setData]=useState({});
     const [isLoading,setIsLoading]=useState(false);
+    const [deleteGridDoc,setDeleteGridDoc]=useState(null);
     const gridRef = React.createRef();
     const gridColumns = [
         { field: "whiteListName", title: "Whitelist Name", filter: true,width: 200},
@@ -50,7 +51,7 @@ const BatchpaymentView = (props) => {
         { field: "accountNumber", title: 'Account Number/IBAN', filter: true, width: 250, customCell: () => (<td className='text-center'></td>) },
         { field: "amount", title: 'Amount', filter: true, width: 200},
         { field: "transactionStatus", title: 'Transaction Status', filter: true, width: 200},
-        { field: "uploadedDocuments", title: 'Uploaded Documents', filter: true, width: 270,
+        { field: "uploadedDocuments", title: 'Uploaded Documents', filter: true, width: 290,
     	customCell: (props) => (
             <td>
                 <div>
@@ -58,13 +59,12 @@ const BatchpaymentView = (props) => {
                                                     className={`icon md delete mt-12 ${item.documentName ? "c-pointer" : ''} `}
                                                   /></div>)} */}
               {props.dataItem.documentdetail?.map(item=>
-                <div className="docfile">
-                                                    <span className={`icon xl file mr-16`} />
-                                                    <div className="docdetails c-pointer" onClick={() => docPreview(item)}>
+                <>
+                                                    <div className="gridLink" onClick={() => docPreview(item)}>
                                                         <EllipsisMiddle suffixCount={6}>{item.documentName}</EllipsisMiddle>
                                                     </div>
-                                                    <span className="icon md close c-pointer" onClick={() => deleteDocument(item,"IDENTITYPROOF")} />
-                                                </div>)}
+                                                    <span className="icon md close c-pointer" onClick={() => docDelete(item)} />
+                                                </>)}
              
             </div>
             </td>
@@ -169,6 +169,22 @@ const BatchpaymentView = (props) => {
             
         }
     }
+    const docDelete=async(data)=>{
+        setDeleteModal(true);
+        setDeleteGridDoc(data)
+        
+    }
+    const deleteGridDocuments=async()=>{
+        const res=await deleteDocumentDetails(deleteGridDoc?.documentId)
+        if(res.ok){
+            gridRef?.current?.refreshGrid();
+            setDeleteModal(false);
+            message.success("Document deleted sucessfully")
+        }
+        else{
+            setErrorMessage(isErrorDispaly(res));
+        }
+    }
     const deleteDocuments=()=>{
         setDeleteModal(false)
         message.success("Document deleted sucessfully")
@@ -186,6 +202,7 @@ const BatchpaymentView = (props) => {
 		}
 	  };
     const uploadDocument= async()=>{
+        console.log(deleteGridDoc);
         setErrorMessage(null);
         // setIsLoading(true)
                 let obj={
@@ -195,7 +212,7 @@ const BatchpaymentView = (props) => {
                       "id": data?.id,
                       "customerId": props?.userConfig?.id,
                       "status": true,
-                      "state": "Submitted",
+                      "state": deleteGridDoc?.transactionType==="Beneficiary"?"Deleted":"Submitted",
                       "currencyType":props.match.params.currency,
                       "details":docIdentityProofObjs
                     },
@@ -203,7 +220,7 @@ const BatchpaymentView = (props) => {
                       "id": data?.id,
                       "customerId": props?.userConfig?.id,
                       "status": true,
-                      "state": "Submitted",
+                      "state": deleteGridDoc?.transactionType==="Beneficiary"?"Deleted":"Submitted",
                       "currencyType": props.match.params.currency,
                       "details": docTransferObjs,
                     }
@@ -393,7 +410,7 @@ const filePreviewPath = () => {
                                             {docUpload && <Loader/>}
                 </>
             </Modal>
-            <Modal visible={deleteModal}
+            {/* <Modal visible={deleteModal}
                 closable={false}
                 title={"Confirm delete"}
                 footer={
@@ -415,9 +432,10 @@ const filePreviewPath = () => {
                 }>
 
                 <Paragraph className="text-white">Are you sure, do you really want to delete ?</Paragraph>
-            </Modal>
+            </Modal> */}
             <Modal title="Confirm Delete"
           destroyOnClose={true}
+          visible={deleteModal}
           closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={() => deleteModalCancel()}/></Tooltip>}
          
          
@@ -429,7 +447,7 @@ const filePreviewPath = () => {
                 className="pop-cancel btn-width  bill-cancel"
                 onClick={() => deleteModalCancel()}>No</Button>
               <Button className="pop-btn px-36 btn-width"
-                onClick={() => deleteDocuments()}>Yes</Button></div>
+                onClick={() => deleteGridDocuments()}>Yes</Button></div>
             </>
           ]}
         >

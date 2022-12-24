@@ -53,8 +53,11 @@ const proceedTransaction=(id)=>{
 const uploadDocuments=(obj)=>{
     return apiClient.post(ApiControllers.massPayment + `UploadDocument`,obj);
 }
-const getInvalidTransactionData=(TransactionId)=>{
-    return apiClient.get(ApiControllers.massPayment + `ExportExcelDownload/${TransactionId}`);
+const getInvalidTransactionData=(transactionId)=>{
+    return apiClient.get(ApiControllers.massPayment + `ExportExcelDownload/${transactionId}`);
 }
-export { getCurrencyLu,saveBeneficiary,getFileURL, savePayments,getFavourite, getPaymentsData, updatePayments, getBankData,creatPayment,deletePayDetials,saveTransaction,deleteBatchPayments,refreshTransaction,confirmGetDetails,proceedTransaction,uploadDocuments,getInvalidTransactionData}
+const deleteDocumentDetails=(docId)=>{
+    return apiClient.delete(ApiControllers.massPayment + `DeleteDocumentDetails/${docId}`);
+}
+export { getCurrencyLu,saveBeneficiary,getFileURL, savePayments,getFavourite, getPaymentsData, updatePayments, getBankData,creatPayment,deletePayDetials,saveTransaction,deleteBatchPayments,refreshTransaction,confirmGetDetails,proceedTransaction,uploadDocuments,getInvalidTransactionData,deleteDocumentDetails}
 
