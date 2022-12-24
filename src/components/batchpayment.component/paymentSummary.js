@@ -215,7 +215,7 @@ class PaymentSummary extends Component {
 						</>}
 						{this.state.showDeclaration && <>
 							<div className='text-center text-white p-24'>
-								<img src={pending} />
+								<img src={pending} width={80}/>
 								<Title className='text-white'>Declaration form sent!</Title>
 								<Paragraph className='text-white'>We sent declaration form to{":"}{" "}
 									{this.props.customer?.email}. Please sign using the link
