@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Drawer, Typography, Button, Modal,Tooltip,Spin,Alert } from 'antd';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
-import pending from '../../assets/images/pending.png'
+import pending from '../../assets/images/pending.png';
+import NumberFormat from "react-number-format";
 import Verifications from "../onthego.transfer/verification.component/verifications"
 import {proceedTransaction} from './api'
 const { Title, Paragraph, Text } = Typography
@@ -162,23 +163,46 @@ class PaymentSummary extends Component {
 					</div>
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'> Payment</label></div>
-						<div><Text className='fw-500 text-white-30'>{this.props?.getPaymentDetails.amount}</Text></div>
+						<div>
+							
+						<NumberFormat className='fw-500 text-white-30'
+                                        value={`${this.props?.getPaymentDetails.amount}`}
+                                        thousandSeparator={true} displayType={"text"} />
+							</div>
 					</div>
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'> Fee</label></div>
-						<div><Text className='fw-500 text-white-30'>{this.props?.getPaymentDetails.commission}</Text></div>
+						<div>
+						<NumberFormat className='fw-500 text-white-30'
+                                        value={`${this.props?.getPaymentDetails.commission}`}
+                                        thousandSeparator={true} displayType={"text"} />
+							
+							</div>
 					</div>
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'> Total Amount</label></div>
-						<div><Text className='fw-500 text-white-30'>{this.props?.getPaymentDetails.totalAmonunt}</Text></div>
+						<div>
+						<NumberFormat className='fw-500 text-white-30'
+                                        value={`${this.props?.getPaymentDetails.totalAmonunt}`}
+                                        thousandSeparator={true} displayType={"text"} />
+							
+							</div>
 					</div>
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'>Balance Before</label></div>
-						<div><Text className='fw-500 text-white-30'>{this.props?.getPaymentDetails.beforeAmount}</Text></div>
+						<div>
+						<NumberFormat className='fw-500 text-white-30'
+                                        value={`${this.props?.getPaymentDetails.beforeAmount}`}
+                                        thousandSeparator={true} displayType={"text"} />
+							</div>
 					</div>
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'>Balance After Payment</label></div>
-						<div><Text className='fw-500 text-white-30'>{this.props?.getPaymentDetails.afterPaymentAmount}</Text></div>
+						<div>
+						<NumberFormat className='fw-500 text-white-30'
+                                        value={`${this.props?.getPaymentDetails.afterPaymentAmount}`}
+                                        thousandSeparator={true} displayType={"text"} />
+							</div>
 					</div>
 
 					<div> <Title className='sub-heading p-0 mt-24'>Recipients Details</Title></div>
