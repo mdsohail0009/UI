@@ -311,14 +311,7 @@ downLoadPreview=()=>{
                 
                 visible={this.state.showInprogressModal}
                 title="upload excel"
-                closeIcon={
-                   <Tooltip title="Close">
-                     <span
-                       className="icon md close-white c-pointer"
-                       onClick={() => this.handleInprogressCancel()}
-                     />
-                   </Tooltip>
-                 }
+
                  destroyOnClose={true}
                  footer={[
                     <>

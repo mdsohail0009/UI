@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Typography,Button,Modal,Upload,Tooltip,Alert,message } from 'antd';
+import { Typography,Button,Modal,Upload,Tooltip,Alert } from 'antd';
 import { connect } from 'react-redux';
 import List from "../grid.component";
-import apiCalls from "../../api/apiCalls";
 import FilePreviewer from "react-file-previewer";
 import{uploadDocuments,getFileURL,deleteDocumentDetails} from './api';
 import Loader from '../../Shared/loader';
@@ -24,7 +23,6 @@ const BatchpaymentView = (props) => {
     const [docIdentityProofObjs,setDocIdentityProofObjs]=useState([])
     const [docTransferObjs,setDocTransferObjs]=useState([]);
     const [upLoader,setUploader]=useState(false);
-    const [errorWarning,setErrorWarning]=useState(null);
     const [deleteModal,setDeleteModal]=useState(false);
     const [docUpload,setDocUpload]=useState(false)
     const [previewPath, setPreviewPath] = useState(null);
@@ -57,11 +55,11 @@ const BatchpaymentView = (props) => {
                 <div>
               {props.dataItem.documentdetail?.map(item=>
                 <>
-                                                    <div className="gridLink" onClick={() => docPreview(item)}>
-                                                        <EllipsisMiddle suffixCount={6}>{item.documentName}</EllipsisMiddle>
-                                                    </div>
-                                                    <span className="icon md close c-pointer" onClick={() => docDelete(item)} />
-                                                </>)}
+                <div>
+                <span className="text-yellow gridLink"  onClick={() => docPreview(item)}>{item.documentName}</span>
+                 <span className="icon md close c-pointer" onClick={() => docDelete(item)} />
+                 </div>
+                </>)}
              
             </div>
             </td>
@@ -176,7 +174,6 @@ const BatchpaymentView = (props) => {
         if(res.ok){
             gridRef?.current?.refreshGrid();
             setDeleteModal(false);
-            message.success("Document deleted sucessfully")
         }
         else{
             setErrorMessage(isErrorDispaly(res));
@@ -184,7 +181,6 @@ const BatchpaymentView = (props) => {
     }
     const deleteDocuments=()=>{
         setDeleteModal(false)
-        message.success("Document deleted sucessfully")
     }
  const isErrorDispaly = (objValue) => {
 		if (objValue.data && typeof objValue.data === "string") {
@@ -253,15 +249,11 @@ const filePreviewPath = () => {
     }
     const deleteModalCancel=()=>{
         gridRef?.current?.refreshGrid();
-        setErrorWarning(null)
         setDeleteModal(false)
-        // setUploader(false)
-        // setDocUpload(false)
       
       }
       const uploadCancel=()=>{
         gridRef?.current?.refreshGrid();
-        setErrorWarning(null)
         setUploadModal(false)
         setDeleteModal(false)
         setUploader(false)
@@ -407,29 +399,6 @@ const filePreviewPath = () => {
                                             {docUpload && <Loader/>}
                 </>
             </Modal>
-            {/* <Modal visible={deleteModal}
-                closable={false}
-                title={"Confirm delete"}
-                footer={
-                    <>
-                    	<div className="cust-pop-up-btn crypto-pop">
-                        <Button
-                            style={{ margin: "0 8px" }}
-                            className="primary-btn pop-cancel btn-width"
-                            onClick={() => deleteModalCancel()}>
-                            NO
-                        </Button>
-                        <Button
-                            className="primary-btn pop-btn"
-                            style={{ width: 120, height: 50 }} onClick={()=>deleteDocuments()}>
-                            {apiCalls.convertLocalLang("Yes")}
-                        </Button>
-                        </div>
-                    </>
-                }>
-
-                <Paragraph className="text-white">Are you sure, do you really want to delete ?</Paragraph>
-            </Modal> */}
             <Modal title="Confirm Delete"
           destroyOnClose={true}
           visible={deleteModal}
