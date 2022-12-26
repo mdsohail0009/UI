@@ -838,7 +838,7 @@ class WithdrawSummary extends Component {
 											{this.state.tooltipVisible === true && (
 												<Tooltip
 													placement="topRight"
-													title={`Haven't received code? Request new code in ${seconds} seconds. The code will expire after 120 Seconds.`}>
+													title={`Haven't received code? Request new code in ${seconds} seconds. The code will expire after 2 Minuets.`}>
 
 													<span className="icon md info mr-16 c-pointer" />
 												</Tooltip>
@@ -909,7 +909,7 @@ class WithdrawSummary extends Component {
 											{this.state.tooltipEmail === true && (
 												<Tooltip
 													placement="topRight"
-													title={`Haven't received code? Request new code in ${seconds2} seconds. The code will expire after 120 Seconds.`}>
+													title={`Haven't received code? Request new code in ${seconds2} seconds. The code will expire after 2 Minuets.`}>
 
 													<span className="icon md info mr-8" />
 												</Tooltip>
