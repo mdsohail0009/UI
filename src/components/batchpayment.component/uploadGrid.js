@@ -369,7 +369,7 @@ const filePreviewPath = () => {
                                                 </div> : ""}</>
                                             )}
                          {upLoader && <Loader />}
-                    <div>
+                    <div className='my-16'>
                         <Paragraph className="mb-8 fs-14 text-white fw-500 ml-12 text-left">Please upload supporting documents to justify your transfer request:</Paragraph>
                         <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                             className="upload mt-4"

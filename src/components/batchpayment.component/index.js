@@ -193,7 +193,7 @@ const Batchpayments = (props) => {
       const actions = {
         Refresh:refreshPayment,
         Add: addBatchPayment,
-        Process: proceedBatchPayment,
+        Proceed: proceedBatchPayment,
         Delete: deleteBatchPayment
       };
       actions[key]();
