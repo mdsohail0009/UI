@@ -32,6 +32,9 @@ componentDidMount=()=>{
 closeDrawer = () => {
   this.setState({ ...this.state, paymentSummary:false})
 }
+returnDashboard=()=>{
+  this.props.history.push("/cockpit")
+}
  gridColumns = [
   { field: "whiteListName", title: "Whitelist Name", filter: true,width: 400},
   { field: "beneficiaryName", title: "Beneficiary Name", filter: true,width: 250},
@@ -165,7 +168,7 @@ isErrorDispaly = (objValue) => {
                           
                           </div>
                           <div>Please top up.{" "}A draft has been saved. </div></Paragraph>
-                            <div><Button className="primary-btn pop-btn"  onClick={this.props.onClose}>Return</Button></div>
+                            <div><Button className="primary-btn pop-btn"  onClick={this.returnDashboard}>Return</Button></div>
                         </div>
                     </>
                 </Modal>
