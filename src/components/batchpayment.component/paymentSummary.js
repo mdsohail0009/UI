@@ -236,7 +236,8 @@ class PaymentSummary extends Component {
 						</div> 
 						</>}
 						{this.state.showDeclaration && <>
-							<div className='text-center text-white p-24'>
+					
+	          <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
 								<img src={pending} width={80}/>
 								<Title className='text-white'>Declaration form sent!</Title>
 								<Paragraph className='text-white'>We sent declaration form to{":"}{" "}
@@ -244,16 +245,12 @@ class PaymentSummary extends Component {
 									received in email to whitelist your address. Note that
 									your payments will only be processed once your
 									whitelisted address has been approved. </Paragraph>
-							</div>
-					
+							</div></div>
 						</>}
-
 					</div>
 					</Spin>
-				</Drawer>
-				
-			</div>
-			
+				</Drawer>				
+			</div>			
 			<Modal
                      visible={this.state.insufficientModal}
                      title="Insufficient Balance"

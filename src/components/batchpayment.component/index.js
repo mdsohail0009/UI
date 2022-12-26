@@ -146,7 +146,7 @@ const Batchpayments = (props) => {
       setErrorWarning("Please select the  record")
     }
     else if(setSelectData.status == "Pending"){
-      setErrorWarning("Please select only draft status only")
+      setErrorWarning("Only draft record can delete")
     }
     else{
     setDeleteModal(true);
