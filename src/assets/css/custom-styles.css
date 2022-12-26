@@ -725,7 +725,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .search-box:hover > .search-text{width: 240px;padding: 8px;border:1px solid var(--subText); border-radius: 6px;}
 .search-text:hover .search-box{border: 1px solid #fff;}
 /* .search-box:hover > .search-btn{background: white;	color: black; } */
-.search-btn {position: absolute;left:0 ;z-index:1;transition: 0.4s;cursor: pointer;text-decoration: none;}
+.search-btnexpand {position: absolute;left:0 ;z-index:1;transition: 0.4s;cursor: pointer;text-decoration: none;}
 .search-text {border: none;background: none;outline: none;padding: 0;color: white;font-size: 16px;font-weight: normal;transition: 0.4s;line-height: 26px;width: 0px;margin-left:30px;margin-bottom: 10px;}
 .search-text::placeholder{color: var(--placeholders);}
 /* expand search end */

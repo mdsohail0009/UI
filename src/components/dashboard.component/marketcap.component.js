@@ -68,8 +68,8 @@ const MarketCap = ({ member }) => {
                 <div className="d-flex">
                     <div className="d-flex align-center">
                         <Translate content="markets_title" component={Title} className="db-titles" />
-                        <div class = 'search-box'><input class = "search-text" type="text" placeholder = "Search Anything" />
-                      <a href="#" class = "search-btn">
+                        <div className = 'search-box'><input className = "search-text" type="text" placeholder = "Search Anything" />
+                      <a href="#" className = "search-btnexpand">
                       <span className="icon lg search-angle icon-space" />
                       </a>
                   </div> 

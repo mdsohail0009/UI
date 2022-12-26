@@ -93,8 +93,8 @@ class Portfolio extends Component {
                     <div className='trans-align'>
                     <div className='transaction-title'>
                     <Translate component={Title} content="transactions_history" className="db-titles" />
-                    <div class = 'search-box'><input class = "search-text" type="text" placeholder = "Search Anything" />
-                      <a href="#" class = "search-btn">
+                    <div className = 'search-box'><input className = "search-text" type="text" placeholder = "Search Anything" />
+                      <a href="#" className = "search-btnexpand">
                       <span className="icon lg search-angle icon-space" />
                       </a>
                   </div> </div>
