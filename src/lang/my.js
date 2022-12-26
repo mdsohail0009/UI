@@ -637,4 +637,6 @@ export default {
 	transaction:"Transaksyon",
 	batch_payments: "Batch Payments",
 	bathch_payments_preview: "Hamarino azafady ny saha alohan'ny hanaiky",
+	suissebase_title_crypto:"Suissebase Crypto Wallet",
+	Whitelisting_Status:"Whitelisting Status",
 };
