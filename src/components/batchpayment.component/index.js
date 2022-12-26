@@ -20,8 +20,8 @@ const Batchpayments = (props) => {
   const [deleteModal,setDeleteModal]=useState(false);
   const [setSelectData, setSetSelectData] = useState({});
   const [errorMessage,setErrorMessage]=useState(null); 
-  useEffect(() => {
-}, []);
+  const [isLoading,setIsLoading]=useState(false);
+
   const viewMode = (e) => {
     setProceedBatchPayment(false)
     const items=e.dataItem;
@@ -153,10 +153,12 @@ const Batchpayments = (props) => {
     }
    }
     const deleteDetials = async () => {
+      setIsLoading(true);
       const res = await deleteBatchPayments(selection[0])
       if (res.ok) {
-        gridRef?.current?.refreshGrid();
         setDeleteModal(false);
+        gridRef?.current?.refreshGrid();
+        setIsLoading(false);
         setSelection([]);
       }
       else{
@@ -289,6 +291,7 @@ const Batchpayments = (props) => {
                 onClick={()=>deleteModalCancel()}>Cancel</Button>
               <Button className="pop-btn px-36 btn-width"
                 onClick={() =>deleteDetials(selectedObj)}
+                loading={isLoading}
                 >Ok</Button></div>
             </>
           ]}

@@ -170,10 +170,12 @@ const BatchpaymentView = (props) => {
         
     }
     const deleteGridDocuments=async()=>{
+        setIsLoading(true);
         const res=await deleteDocumentDetails(deleteGridDoc?.documentId)
         if(res.ok){
             gridRef?.current?.refreshGrid();
             setDeleteModal(false);
+        setIsLoading(false)
         }
         else{
             setErrorMessage(isErrorDispaly(res));
@@ -413,7 +415,8 @@ const filePreviewPath = () => {
                 className="pop-cancel btn-width  bill-cancel"
                 onClick={() => deleteModalCancel()}>No</Button>
               <Button className="pop-btn px-36 btn-width"
-                onClick={() => deleteGridDocuments()}>Yes</Button></div>
+                onClick={() => deleteGridDocuments()}
+                loading={isLoading}>Yes</Button></div>
             </>
           ]}
         >
