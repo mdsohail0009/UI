@@ -126,7 +126,7 @@ const Batchpayments = (props) => {
 
     setErrorWarning("Please select the record");
   } 
-  else if(!setSelectData.status == "Draft"){
+  else if(setSelectData.status === "Pending"){
     setErrorWarning("Only draft record can proceed")
   }
   else if(setSelectData.validTransactionCount == 0){
@@ -145,7 +145,7 @@ const Batchpayments = (props) => {
     if(selection.length === 0){
       setErrorWarning("Please select the  record")
     }
-    else if(!setSelectData.status == "Draft"){
+    else if(setSelectData.status == "Draft"){
       setErrorWarning("Only draft record can delete")
     }
     else{
