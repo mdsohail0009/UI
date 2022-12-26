@@ -81,7 +81,7 @@ export function withState(WrappedGrid) {
         render() {
             return (
                 <div>
-                    <div ref={this.tempRef}>
+                    <div ref={this.tempRef} style={{display:"none"}}>
                         <div className='statement-header logo-content'>
                             <div> <img src={logColor} className="logo"/></div>
                             <div><h2 className='header'>Suissebase Account Statement</h2></div>
@@ -179,7 +179,7 @@ export function withState(WrappedGrid) {
                         {this.props?.exExportTitle || "Export Excel"}
                     </button>
                         <button onClick={() => this.exportToPDF()} 
-                        // style={{display:"none"}}
+                        style={{display:"none"}}
                         >Save as Pdf</button>
                     </div>}
                     {this.props.showExcelExport ? <ExcelExport data={this.state.data} ref={this.excelRef} fileName={this.props?.excelFileName}>
