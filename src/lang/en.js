@@ -672,7 +672,7 @@ export default {
 	transactions_history: "Transaction History",
 	transaction:"Transaction",
 	batch_payments: "Batch Payment Summary",
-	bathch_payments_preview: "Please confirm the field before acknowledging",
+	bathch_payments_preview: "Please confirm the field before acknowledging.",
 	tab_BatchPayment: "Batch Payment",
 	suissebase_title_crypto:"Suissebase Crypto Wallet",
 	Whitelisting_Status:"Whitelisting Status",

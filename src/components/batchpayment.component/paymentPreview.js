@@ -94,11 +94,12 @@ isErrorDispaly = (objValue) => {
         >
 
           < div className='main-container'>
-          <Translate content="bathch_payments_preview" component={Title} className="fs-26 fw-400 mb-14 text-white-30" />
+          
           {this.state.errorMessage !== null && (
           <Alert type="error" description={this.state.errorMessage} showIcon />
                )}
                <div className="box basic-info text-white" style={{ clear: 'both' }}>
+               <Translate content="bathch_payments_preview" component={Title} className="fs-26 fw-400 mb-14 text-white-30" />
                   <List
                       showActionBar={false}
                       url={this.state.gridUrl}
