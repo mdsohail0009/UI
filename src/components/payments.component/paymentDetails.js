@@ -681,9 +681,12 @@ class PaymentDetails extends Component {
                                                 <div className='docdetails'>
                                                   <div onClick={() => this.docPreview(file)}>
                                                     <Tooltip title={file.documentName}>
-                                                      <EllipsisMiddle suffixCount={4}>
+                                                      {file.documentName?.split(".")[0].length>4&&<EllipsisMiddle>
+                                                        {file.documentName.slice(0,4) + "..." +file.documentName.split(".")[1]}
+                                                      </EllipsisMiddle>}
+                                                      {file.documentName?.split(".")[0].length<=4&&<EllipsisMiddle>
                                                         {file.documentName}
-                                                      </EllipsisMiddle>
+                                                      </EllipsisMiddle>}
                                                     </Tooltip>
                                                   </div>
                                                 </div>

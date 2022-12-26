@@ -157,7 +157,9 @@ const Batchpayments = (props) => {
       const res = await deleteBatchPayments(selection[0])
       if (res.ok) {
         setDeleteModal(false);
-        gridRef?.current?.refreshGrid();
+        setTimeout(() => {
+          gridRef?.current?.refreshGrid();
+      }, 1000)
         setIsLoading(false);
         setSelection([]);
       }
