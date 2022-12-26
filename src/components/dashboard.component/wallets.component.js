@@ -60,8 +60,6 @@ class Wallets extends Component {
         if (e === 2) {
             this.props.dispatch(setReceiveFiatHead(false));
             this.props.dispatch(setSendFiatHead(false));
-            // this.props.dispatch(setWithdrawfiatenaable(true))
-            // this.props.dispatch(setWithdrawfiat({ walletCode: value }))
             this.setState({ ...this.setState, showFuntransfer: true, selectedCurrency:value })
         } else if (e === 1) {
             this.props.dispatch(setReceiveFiatHead(true));
@@ -119,7 +117,6 @@ class Wallets extends Component {
 
         return (
             <>
-            {/* <BankWallets/> */}
             <div className="d-flex justify-content">
                 <Translate content="suissebase_title" component={Title} className="fs-24 fw-600 text-white px-4 mb-16 mt-4" />
                 <div>
@@ -130,11 +127,6 @@ class Wallets extends Component {
                     
               </div>
               </div>
-                {/* <div style={{ display: "flex",alignItems:"baseline" }}>
-
-                <Translate content="suissebase_subtitle" component={Paragraph} className="text-white-30 fs-16 mb-16 px-4" />
-                <Currency defaultValue={totalFiatValue} className={`fs-24 m-0 fw-600 ${totalFiatValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '54px' }} />
-                </div> */}
                 {wallets?.loading ? (
                     <Loader />
                 ) : (
@@ -143,7 +135,6 @@ class Wallets extends Component {
                     dataSource={wallets.data}
                     bordered={false}
                     className="mobile-list"
-                    //loading={wallets.loading}
                     renderItem={item =>
                         <List.Item className="py-10 px-0">
                             <List.Item.Meta
@@ -154,22 +145,20 @@ class Wallets extends Component {
                             <div className="crypto-btns">
                                 <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
                                 <Translate content="withdraw" onClick={() => { this.showSendReceiveDrawer(2, item.walletCode) }} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} />
-                                {/* <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
-                                <Translate content="withdraw" onClick={() => this.showSendReceiveDrawer(2, item.walletCode)} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} /> */}
                             <Dropdown 
                             overlay={this.menuBar(item)}
                              trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
                         <Link onClick={e => e.preventDefault()}>
                           <Space>
                           <span class="icon md menu-bar ml-4 p-relative"></span>
-                          {/* <DownOutlined /> */}
                         </Space>
                       </Link>
                     </Dropdown>
                     </div>
                         </List.Item>}
                 />
-                )}
+                )}  
+                <Translate content="suissebase_title_crypto" component={Title} className="fs-24 fw-600 text-white px-4 mb-16 mt-4" />
                 <SuissebaseFiat showDrawer={this.state.sendReceiveDrawer} valNum={this.state.valNum} onClose={() => this.closeDrawer()} />
                 {this.state.buyFiatDrawer && <MassPayment showDrawer={this.state.buyFiatDrawer} tabData={{ tabVal: this.state.valNum, walletCode: this.state.selctedVal }} onClose={() => this.closeDrawer()} />}
                 {this.state.transactions && <TransactionsHistory
@@ -181,7 +170,6 @@ class Wallets extends Component {
                 <Drawer
                     destroyOnClose={true}
                     title={[<div className="side-drawer-header">
-                        {/* {this.renderTitle()} */}
                         <span></span>
                         {!this.props.buyFiat?.sendFiatHeader && <div className="text-center fs-24">
                             <Translate className="mb-0 text-white-30 fw-600" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
