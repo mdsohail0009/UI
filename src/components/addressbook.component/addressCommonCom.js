@@ -27,7 +27,7 @@ const { TextArea } = Input;
 const LinkValue = (props) => {
   return (
     <Translate
-      className="textpure-yellow text-underline c-pointer"
+      className="terms-link"
       content={props.content}
       component={Link}
       onClick={() =>
@@ -807,14 +807,15 @@ const AddressCommonCom = (props) => {
                       <Translate
                         content={props?.cryptoTab == 1 ? "cryptoAddressDetails" : "Beneficiary_BankDetails"}
                         component={Paragraph}
-                        className="mb-16 mt-24 fs-14 text-aqua fw-500 text-upper"
+                        className="adbook-head"
                       />
                     </Col>
                     <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="text-right">
                   <Button
                     onClick={showModal}
-                    style={{ height: "40px" }}
-                    className="pop-btn mb-36 mt-24"
+                    // style={{ height: "40px" }}
+                    block
+                    className="pop-btn custmodel-pop custmodel-pop"
                   >
                     <Translate
                     content={props?.cryptoTab == 2 ? "bankAddress" : (withdraeTab == "Fiat" ? "bankAddress" : "cryptoAddress")}
@@ -958,15 +959,15 @@ const AddressCommonCom = (props) => {
                   <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Radio.Group
                       defaultValue={addressOptions.addressType}
-                      className="mb-16 custom-radio-btn buysell-toggle crypto-toggle"
+                      className="custom-radiobtn"
                       onChange={(value) => {
 
                         setAddressOptions({ ...addressOptions, addressType: value.target.value })
                       }}
                     >
-                      <Radio.Button value="myself" className="custom-btn sec mt-8">{props.userConfig?.isBusiness ? "Own Business" : "My Self"}</Radio.Button>
-                      <Radio.Button value="individuals" className="custom-btn sec mt-8">INDIVIDUALS</Radio.Button>
-                      <Radio.Button value="otherbusiness" className="custom-btn sec mt-8">OTHER BUSINESS</Radio.Button>
+                      <Radio.Button value="myself" className="">{props.userConfig?.isBusiness ? "Own Business" : "My Self"}</Radio.Button>
+                      <Radio.Button value="individuals" className="">INDIVIDUALS</Radio.Button>
+                      <Radio.Button value="otherbusiness" className="">OTHER BUSINESS</Radio.Button>
                     </Radio.Group>
                   </Col>
                 </Row>
@@ -976,21 +977,21 @@ const AddressCommonCom = (props) => {
               <Form.Item>
                 <Translate
                   content="transfer_type"
-                  component={Text}
-                  className="text-white fs-18 fw-600"
+                  component={Paragraph}
+                  className="adbook-head"
                 />
                 <Row gutter={[16, 16]}>
 
                   <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                     <Radio.Group
                       defaultValue={addressOptions.transferType}
-                      className="mb-16 custom-radio-btn buysell-toggle crypto-toggle"
+                      className="custom-radiobtn"
                       onChange={(value) => {
                         setAddressOptions({ ...addressOptions, transferType: value.target.value })
                       }}
                     >
-                      <Radio.Button value="sepa" className="custom-btn sec">SEPA</Radio.Button>
-                      <Radio.Button value="swift" className="custom-btn sec">SWIFT</Radio.Button>
+                      <Radio.Button value="sepa" className="">SEPA</Radio.Button>
+                      <Radio.Button value="swift" className="">SWIFT</Radio.Button>
                     </Radio.Group>
                   </Col>
                 </Row>
@@ -1063,12 +1064,12 @@ const AddressCommonCom = (props) => {
                 <Translate
                   content="Beneficiary_Details"
                   component={Paragraph}
-                  className="mb-16 text-white fw-500 mt-36 px-4" style={{ fontSize: 18 }}
+                  className="adbook-head"
                 />
                 <Row gutter={[16, 16]}>
-                  <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                  <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                     className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                     className="custom-forminput custom-label "
                       name="favouriteName"
                       label={
                         <Translate
@@ -1106,9 +1107,9 @@ const AddressCommonCom = (props) => {
                     </Form.Item>
                   </Col>
 
-                  <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                  <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                      className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                      className="custom-forminput custom-label "
                       name="fullName"
                       required
                       rules={[
@@ -1134,11 +1135,11 @@ const AddressCommonCom = (props) => {
                       />
                     </Form.Item>
                   </Col>
-                  <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                  <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                       name="email"
                       label={apiCalls.convertLocalLang("email")}
-                      className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                      className="custom-forminput custom-label "
                       type="email"
                       rules={[
                         {
@@ -1170,9 +1171,9 @@ const AddressCommonCom = (props) => {
                       />
                     </Form.Item>
                   </Col>
-                  <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                  <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                      className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                      className="custom-forminput custom-label "
                       name="phoneNumber"
                       rules={[
                         {
@@ -1211,7 +1212,7 @@ const AddressCommonCom = (props) => {
                   {withdraeTab === "Fiat" && (
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                       <Form.Item
-                         className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                         className="custom-forminput custom-label "
                         name="line1"
                         required
                         rules={[
@@ -1252,7 +1253,7 @@ const AddressCommonCom = (props) => {
                   {withdraeTab === "Fiat" && (
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                       <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label "
                         name="line2"
                         // required
                         // rules={[
@@ -1287,7 +1288,7 @@ const AddressCommonCom = (props) => {
                   {withdraeTab === "Fiat" && (
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                       <Form.Item
-                       className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                       className="custom-forminput custom-label "
                         name="line2"
                         // required
                         // rules={[
@@ -1320,9 +1321,9 @@ const AddressCommonCom = (props) => {
                     </Col>
                   )}
                   {withdraeTab === "Fiat" && (
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                    <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                       <Form.Item
-                       className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                       className="custom-forminput custom-label "
                         name="country"
                         required
                         rules={[
@@ -1388,9 +1389,9 @@ const AddressCommonCom = (props) => {
                     </Col>
                   )} */}
                   {withdraeTab === "Fiat" && (
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                    <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                       <Form.Item
-                         className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                         className="custom-forminput custom-label "
                         name="city"
                         required
                         rules={[
@@ -1419,9 +1420,9 @@ const AddressCommonCom = (props) => {
                     </Col>
                   )}
                   {withdraeTab === "Fiat" && (
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                    <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                       <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label "
                         name="postalCode"
                         required
                         rules={[
@@ -1454,7 +1455,7 @@ const AddressCommonCom = (props) => {
               {(props?.cryptoTab == 2 || withdraeTab == "Fiat") && (addressOptions.addressType == "myself" ||
                 addressOptions.addressType == "individuals" || addressOptions.addressType == "buissiness") &&
                 <Row gutter={[16, 16]}>
-                  <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                  <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Translate
                       content={
                         props?.cryptoTab == 1
@@ -1462,18 +1463,19 @@ const AddressCommonCom = (props) => {
                           : "Beneficiary_BankDetails"
                       }
                       component={Paragraph}
-                      className="mb-16 mt-24 fs-14 text-aqua fw-500 text-upper"
+                      className="adbook-head"
                     />
                     <Button
                       onClick={showModal}
-                      style={{ height: "40px" }}
-                      className="pop-btn mb-36 "
+                     block
+                      className="pop-btn custmodel-pop"
                     >
                       <Translate
                         content={
                           (props?.cryptoTab == 2 || withdraeTab == "Fiat") && "bankAddress"
                         }
                         component={Text}
+                        className="addicon-content"
                       />
                       <span className="icon md add-icon-black ml-8"></span>
                     </Button>
@@ -1611,34 +1613,40 @@ const AddressCommonCom = (props) => {
               })}
 
               <div style={{ position: "relative" }}>
-                <div className="d-flex">
+                
                   <Form.Item
-                    className="custom-forminput mt-36 agree"
+                    className="custom-forminput agree"
                     name="isAgree"
                     valuePropName="checked"
                     required
-                  >
-                    <Checkbox
+                  ><div className="d-flex agree-check">
+                    {/* <Checkbox
                       className={`ant-custumcheck ${!agreeRed ? "check-red " : " "
                         }`}
-                    />
-                  </Form.Item>
+                    /> */}
+                    <label>
+							<input
+								type="checkbox"
+								id="agree-check"
+								// checked={onCheked}
+								// onChange={({ currentTarget: { checked } }) => {
+								// 	this.props.onTermsChange(checked);
+								// }}
+							/>
+							<span for="agree-check"  />
+							{/* // className={`${error?.agreeRed===false ? "checkbox-red":""}`} */}
+							
+						</label>
+                 
                   <Translate
                     content="agree_to_suissebase"
                     with={{ link }}
                     component={Paragraph}
-                    className="fs-14 text-white-30 ml-16  mt-36"
-                    style={{
-                      index: 50,
-                      position: "absolute",
-                      width: "600px",
-                      top: 10,
-                      left: 30,
-                      paddingBottom: "10px",
-                      marginBottom: "10px",
-                    }}
+                    className="cust-agreecheck"
                   />
-                </div>
+                  </div>
+                   </Form.Item>
+                
 
                 {!props?.addressBookReducer?.selectedRowData?.isWhitelisted && (
                   <div className="whitelist-note">
@@ -1655,11 +1663,12 @@ const AddressCommonCom = (props) => {
                 )}
               </div>
 
-              <Form.Item className="text-right">
+              <Form.Item >
                 <Button
                   htmlType="submit"
                   size="large"
-                  className="pop-btn mb-36"
+                  block
+                  className="pop-btn"
                   loading={btnDisabled}
                   // style={{ minWidth: "100%" }}
                 >
@@ -1706,14 +1715,16 @@ const AddressCommonCom = (props) => {
           footer={
             <>
               <Button
-                className="pop-btn px-36 pop-btn-46"
+                className="pop-btn pop-btn-46"
+                block
                 style={{ margin: "0 8px" }}
                 onClick={() => handleDeleteCancel()}
               >
                 No
               </Button>
               <Button
-                className="pop-btn px-36 pop-btn-46"
+                className="pop-btn  pop-btn-46"
+                block
                 style={{ margin: "0 8px" }}
                 onClick={() => handleDeleteModal()}
               >

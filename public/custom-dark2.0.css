@@ -117,6 +117,7 @@
     --popupbg:#55555B;
     --coindate:#74767D;
     --coinviewradio:rgba(255, 255, 255, 0.1);
+    --coinViewborder:#4E505A;
 
     --lightThemeIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/user-darktheme-icons.svg);
     --cryptoIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/light-crypto-icons.svg);

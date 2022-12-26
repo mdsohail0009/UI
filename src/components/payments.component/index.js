@@ -73,7 +73,7 @@ const Payments = (props) => {
       width: 50,
       customCell: (prop) => (
         <td className="text-center">
-          <label className="text-center custom-checkbox c-pointer">
+          <label className="text-center custom-checkbox c-pointer cust-check-outline">
             <input
               id={prop.dataItem.id}
               name="check"
@@ -163,9 +163,9 @@ const getCurrencyLookup = async () => {
   return (
     <>
       <div className="main-container">
-        <div className='bill_payment'> 
+        <div className='bill-payment'> 
           
-          <Title className="basicinfo"><span onClick={() => props.history?.push("/cockpit")} className='icon md c-pointer back '></span><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
+          <div className="billpaycoin-style"><span onClick={() => props.history?.push("/cockpit")} className='icon md c-pointer back backarrow-mr'></span><Translate content="menu_payments" component={Text} className="coin-viewstyle" /></div>
          
           <Select
                   className="cust-input cust-disable"
@@ -202,7 +202,7 @@ const getCurrencyLookup = async () => {
               showIcon
             />
           )}
-        <div className="box basic-info text-white" style={{clear:'both'}}>
+        <div className="box">
           <List
            className="bill-grid"
             showActionBar={false}

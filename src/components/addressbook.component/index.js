@@ -14,7 +14,7 @@ import { processSteps as config } from "./config";
 import List from "../grid.component";
 import { activeInactive, downloadDeclForm } from "./api";
 import SelectCrypto from "./selectCrypto";
-import { withRouter } from "react-router-dom";
+import {Link,  withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import apiCalls from "../../api/apiCalls";
 import Info from "../shared/info";
@@ -659,6 +659,7 @@ class AddressBook extends Component {
 		return (
 			<>
 			<div className="main-container">
+			<div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/cockpit" /><span className="back-btnarrow">Back</span></div>
 			<div className="security-align adbs-mb">
 				<Translate
 					content="address_book"

@@ -187,7 +187,7 @@ componentWillUnmount(){
         }
         return <div className="main-container">
             <>
-            <div className="coin-viewstyle"><Link className="icon md leftarrow mr-16 c-pointer" to="/cockpit" />{coinData?.name} ({coinData?.symbol.toUpperCase()})</div>
+            <div className="coin-viewstyle"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/cockpit" /><span>{coinData?.name} ({coinData?.symbol.toUpperCase()})</span></div>
             <Row gutter={[24, 24]}>
                 <Col lg={14} xl={14} xxl={14}>
                     <div className="box coin-bal coin-details">
@@ -211,10 +211,10 @@ componentWillUnmount(){
                             </div>
                         </div>
                             <ul className="m-0 pl-0">
-                                <li><div onClick={() => this.showBuyDrawer(coinData, "buy")} className="c-pointer"><span  className="icon md buy" /></div>BUY</li>
-                                <li><div onClick={() => this.showBuyDrawer(coinData, "sell")} className="c-pointer"><span className="icon md sell" /></div>SELL</li>
-                                <li><div onClick={() => this.showSendReceiveDrawer(1, coinData)} value={1} className="c-pointer"><span className="icon md withdraw" /></div>RECEIVE</li>
-                                <li><div onClick={() => this.showSendReceiveDrawer(2, coinData)} value={2} className="c-pointer"><span className="icon md deposit" /></div>SEND</li>
+                                <li><div onClick={() => this.showBuyDrawer(coinData, "buy")} className="c-pointer"><span  className="icon md buy" /></div><span className='coin-fs'>BUY</span></li>
+                                <li><div onClick={() => this.showBuyDrawer(coinData, "sell")} className="c-pointer"><span className="icon md sell" /></div><span className='coin-fs'>SELL</span></li>
+                                <li><div onClick={() => this.showSendReceiveDrawer(1, coinData)} value={1} className="c-pointer"><span className="icon md withdraw" /></div><span className='coin-fs'>RECEIVE</span></li>
+                                <li><div onClick={() => this.showSendReceiveDrawer(2, coinData)} value={2} className="c-pointer"><span className="icon md deposit" /></div><span className='coin-fs'>SEND</span></li>
                             </ul>
                             </> : <div className="text-center"><Spin className="text-center"/></div>}</>}
                     </div>

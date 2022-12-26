@@ -415,16 +415,19 @@ class PaymentDetails extends Component {
       <>
         <div ref={this.useDivRef}></div>
         <div className="main-container">
-          <div className="mb-16">
-            <Title className="basicinfo mb-0">
+          {/* <div className="mb-16">
+            <div className="coin-viewstyle">
               <Translate
                 content="menu_payments"
                 component={Text}
-                className="basicinfo"
+                className="coin-viewstyle"
               />
-            </Title>
-          </div>
-          <div className="box basic-info text-white">
+            </div>
+          </div> */}
+          <div className="coin-viewstyle">
+            {/* <span onClick={() => props.history?.push("/cockpit")} className='icon md c-pointer back backarrow-mr'></span> */}
+          <Translate content="menu_payments" component={Text} className="coin-viewstyle" /></div>
+          <div className="box">
             {this.state.errorMessage && (
               <Alert
                 description={this.state.errorMessage}
@@ -477,7 +480,7 @@ class PaymentDetails extends Component {
                   ))}
                 </Select>
               </Form.Item>
-              <div className='responsive_table'>
+              <div className='responsive_table transaction-custom-table'>
                 <table className="pay-grid">
                   <thead>
                     <tr>
