@@ -183,6 +183,7 @@ const Batchpayments = (props) => {
     }
     const refreshPayment=()=>{
       gridRef?.current?.refreshGrid();
+      setErrorWarning(null)
       setSelection([])
     }
    const gotoDashboard=()=>{
