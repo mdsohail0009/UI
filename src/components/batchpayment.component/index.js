@@ -145,7 +145,7 @@ const Batchpayments = (props) => {
     if(selection.length === 0){
       setErrorWarning("Please select the  record")
     }
-    else if(setSelectData.status == "Draft"){
+    else if(setSelectData.status == "Pending"){
       setErrorWarning("Please select only draft status only")
     }
     else{
