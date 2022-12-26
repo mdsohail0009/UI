@@ -68,6 +68,9 @@ class AddressBook extends Component {
 	}
 	componentDidMount() {
 		this.permissionsInterval = setInterval(this.loadPermissions, 200);
+		if(!this.state.cryptoFiat){
+			this.props.changeStep("step1");
+		}
 		if (!this.state.cryptoFiat) {
 			apiCalls.trackEvent({
 				Type: "User",
@@ -644,6 +647,11 @@ class AddressBook extends Component {
 	};
 
 	onActionClick = (key) => {
+		if(key==="add" || key==="edit"){
+			if(!this.state.cryptoFiat){
+				this.props.changeStep("step1");
+			}
+		}
 		const actions = {
 			add: "addAddressBook",
 			edit: "editAddressBook",
