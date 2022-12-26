@@ -42,8 +42,7 @@ closeDrawer = () => {
 
 
 confirmPreview = async () => {
-  this.setState({...this.state,isLoad:true})
-   this.setState({...this.state,errorMessage:null})
+   this.setState({...this.state,errorMessage:null,isLoad:true})
    let response = await confirmGetDetails(this.props?.id ||this.props?.fileData?.id)
    if(response.ok){
     if(response.data.isSuccess===false){
@@ -145,24 +144,23 @@ isErrorDispaly = (objValue) => {
                     <>
                     
                         <div className='text-center pt-16'>
-                        
                             <Paragraph className='text-white fs-18'>
                             <div>You do not have enough balance.</div>
                             <div>Total amount including fees:{" "}
                             {this.state.getPaymentDetails?.walletCode}{" "}
                             <NumberFormat className='fw-500 text-white-30'
-                                        value={`${this.props?.getPaymentDetails?.amount}`}
+                                        value={`${this.state?.getPaymentDetails?.amount}`}
                                         thousandSeparator={true} displayType={"text"} />
                             </div>
                           <div>Balance available:{" "}
                           {this.state.getPaymentDetails?.walletCode}{" "}
                           <NumberFormat className='fw-500 text-white-30'
-                                        value={`${this.props?.getPaymentDetails?.availableAmount}`}
+                                        value={`${this.state?.getPaymentDetails?.availableAmount}`}
                                         thousandSeparator={true} displayType={"text"} />
                            </div>
                           <div>Shortfall:{" "}{this.state.getPaymentDetails?.walletCode}{" "}
                           <NumberFormat className='fw-500 text-white-30'
-                                        value={`${this.props?.getPaymentDetails?.shortfallAmount}`}
+                                        value={`${this.state?.getPaymentDetails?.shortfallAmount}`}
                                         thousandSeparator={true} displayType={"text"} />
                           
                           </div>
