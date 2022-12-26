@@ -80,29 +80,31 @@ export function withState(WrappedGrid) {
         }
         render() {
             return (
-                <div style={{ position: 'relative' }}>
-                    <div ref={this.tempRef} style={{display:"none"}}>
-                        <div className='statement-header'>
-                            <div> <img src={logColor} /></div>
+                <div>
+                    <div ref={this.tempRef}>
+                        <div className='statement-header logo-content'>
+                            <div> <img src={logColor} className="logo"/></div>
                             <div><h2 className='header'>Suissebase Account Statement</h2></div>
                         </div>
                         <div className='statement-header'>
-                            <div>
-                                <span>Place de la Fusterie 12, 1204 Genève</span><br/>
-                                <span> +41 22 575 40 62</span><br/>
-                                <span> compliance@suissebase.ch</span><br/>
-                            </div>
-                            <div className='details-cust'>
-                                <span>CustomerID: DYUOREWHDB</span>
-                                <span> Name : Ramkishore</span>
-                                <span> Email : ramkishore@yopmail.com</span>
-                                <span> Phone : +919542634551</span>
-                                <span> Address :7-1-397/91 2nd floor,</span>
-                                <span>Anuna building,
-                                    24 B,Lane Number 13,</span>
-                                <span>MIGH Colony, Sanjeeva Reddy Nagar,
-                                    Hyderabad 500038. </span>
-                            </div>
+                            <ul>
+                                <li>Place de la Fusterie 12, 1204 Genève</li>
+                                <li> +41 22 575 40 62</li>
+                                <li> compliance@suissebase.ch</li>
+                            </ul>
+                           
+                                <ul>
+                                <li>CustomerID: DYUOREWHDB</li>
+                                <li> Name : Ramkishore</li>
+                                <li> Email : ramkishore@yopmail.com</li>
+                                <li> Phone : +919542634551</li>
+                                <li> Address :7-1-397/91 2nd floor,</li>
+                                <li>Anuna building,
+                                    24 B,Lane Number 13,</li>
+                                <li>MIGH Colony, Sanjeeva Reddy Nagar,
+                                    Hyderabad 500038. </li>
+                                </ul>
+                          
                         </div>
                         <div>
                             <table className="transaction-pdf-template">
@@ -176,7 +178,9 @@ export function withState(WrappedGrid) {
                     >
                         {this.props?.exExportTitle || "Export Excel"}
                     </button>
-                        <button onClick={() => this.exportToPDF()} style={{display:"none"}}>Save as Pdf</button>
+                        <button onClick={() => this.exportToPDF()} 
+                        // style={{display:"none"}}
+                        >Save as Pdf</button>
                     </div>}
                     {this.props.showExcelExport ? <ExcelExport data={this.state.data} ref={this.excelRef} fileName={this.props?.excelFileName}>
 
