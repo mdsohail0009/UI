@@ -156,10 +156,11 @@ const Batchpayments = (props) => {
       setIsLoading(true);
       const res = await deleteBatchPayments(selection[0])
       if (res.ok) {
-        setDeleteModal(false);
+       
         setTimeout(() => {
           gridRef?.current?.refreshGrid();
       }, 1000)
+      setDeleteModal(false);
         setIsLoading(false);
         setSelection([]);
       }
@@ -294,7 +295,7 @@ const Batchpayments = (props) => {
                 className="pop-cancel btn-width  bill-cancel"
                 onClick={()=>deleteModalCancel()}>Cancel</Button>
               <Button className="pop-btn px-36 btn-width"
-                onClick={() =>deleteDetials(selectedObj)}
+                onClick={deleteDetials}
                 loading={isLoading}
                 >Ok</Button></div>
             </>

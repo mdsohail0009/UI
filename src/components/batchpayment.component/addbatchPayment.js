@@ -77,7 +77,8 @@ class AddBatchPayment extends Component {
         }
         
         let fileType = {
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":true
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":true,
+            "application/vnd.ms-excel":true
         };
          let isFileName = file.name.split(".").length > 2 ? false : true;
         if (fileType[file.type] && isFileName) {
