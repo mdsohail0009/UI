@@ -129,6 +129,7 @@ const Payments = (props) => {
     setBeneficiaryDetails(true);
   }
   const closeBuyDrawer = () => {
+    setHideFiatHeading(false);
     setBeneficiaryDetails(false);
   }
 const getCurrencyLookup = async () => {
@@ -227,7 +228,7 @@ const getCurrencyLookup = async () => {
             <div className="text-center fs-16">
 								<Paragraph className="mb-0 text-white-30 fw-600 text-upper">
 									<Translate
-									content={"AddFiatAddress"}
+                  content={hideFiatHeading !==true && "AddFiatAddress"}
 										component={Paragraph}
 										className="mb-0 text-white-30 fw-600 text-upper"
 									/>
