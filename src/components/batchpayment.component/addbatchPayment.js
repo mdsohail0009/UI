@@ -349,7 +349,14 @@ downLoadPreview=()=>{
                      visible={this.state.showModal}
                      title="upload success"
                       destroyOnClose={true}
-                   
+                      closeIcon={
+                        <Tooltip title="Close">
+                            <span
+                                className="icon md close-white c-pointer"
+                                onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false }, () => { })}
+                            />
+                        </Tooltip>
+                    }
                     footer={ <Button className="primary-btn pop-btn"
                     style={{ width: 100, height: 50 }}
                     onClick={this.handleNext}>Next</Button>}>

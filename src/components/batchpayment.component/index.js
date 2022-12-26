@@ -164,6 +164,7 @@ const Batchpayments = (props) => {
       else{
         setErrorMessage(isErrorDispaly(res));
         setDeleteModal(false);
+        setIsLoading(false);
         setSelection([]);
       }
     };
