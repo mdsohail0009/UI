@@ -98,6 +98,7 @@ isErrorDispaly = (objValue) => {
           {this.state.errorMessage !== null && (
           <Alert type="error" description={this.state.errorMessage} showIcon />
                )}
+               <div className="box basic-info text-white" style={{ clear: 'both' }}>
                   <List
                       showActionBar={false}
                       url={this.state.gridUrl}
@@ -105,7 +106,7 @@ isErrorDispaly = (objValue) => {
                       ref={this.gridRef}
                      
                   />
-            
+            </div>
                 <div className="text-right mt-12">
                     <Button className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn mr-8 ml-0 primary-btn pop-cancel"
                         style={{ width: 100, height: 50 }}
@@ -118,7 +119,9 @@ isErrorDispaly = (objValue) => {
           </div>
          
                 
-                {this.state.paymentSummary &&
+               
+        </Drawer>
+        {this.state.paymentSummary &&
                        <PaymentSummary
                         showDrawer={this.state.paymentSummary}
                         onClose={this.closeDrawer }
@@ -128,7 +131,6 @@ isErrorDispaly = (objValue) => {
                         fileData={this.props?.fileData}
                     />
                        }
-        </Drawer>
         <Modal
                     visible={this.state.showModal}
                     title="Proceed with Transactions"
