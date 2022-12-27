@@ -4,7 +4,8 @@ import { store } from '../../store'
 import moment from 'moment';
 import CryptoJS from "crypto-js";
 import { ExcelExport } from '@progress/kendo-react-excel-export'
-// import { excellExportSubject } from './subscribir';
+import { savePDF } from '@progress/kendo-react-pdf';
+import logColor from '../../assets/images/logo-color.png' 
 const filterOperators = {
     'text': [
         { text: 'grid.filterContainsOperator', operator: 'contains' },
@@ -44,14 +45,14 @@ export function withState(WrappedGrid) {
             super(props);
             this.state = { dataState: { skip: 0, take: 10 }, additionalParams: null, data: [], isLoading: false };
             this.excelRef = React.createRef();
-            // this.exportSubscriber = excellExportSubject.subscribe(() => {
-            // });
+            this.gridref = React.createRef(null);
+            this.tempRef = React.createRef(null)
         }
         numberWithCommas(x) {
-            if(!x){
+            if (!x) {
                 return ''
-            }else if((typeof x) === 'string'){
-               return x 
+            } else if ((typeof x) === 'string') {
+                return x
             }
             x = (typeof x) == 'string' ? x : x.toString();
             var arParts = x.split('.');
@@ -59,15 +60,9 @@ export function withState(WrappedGrid) {
             var decPart = (arParts.length > 1 ? arParts[1] : '');
             return '' + intPart + (decPart ? ('.' + decPart) : '');
         }
-        // numberWithCommas(x) {
-        //     return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-        // }
         refreshGrid() {
             this.fetchData(this.state.dataState);
         }
-        //     componentWillUnmount() {
-        //         this.exportSubscriber.unsubscribe();
-        //   }
         loadingPanel = (
             <div className="k-loading-mask">
                 <span className="k-loading-text">Loading</span>
@@ -75,9 +70,69 @@ export function withState(WrappedGrid) {
                 <div className="k-loading-color"></div>
             </div>
         );
+        exportToPDF = () => {
+            savePDF(this.tempRef.current, {
+                paperSize: "A4",
+                margin: 30,
+                scale: 0.7,
+                fileName: `Report for ${new Date().getFullYear()}`,
+            })
+        }
         render() {
             return (
-                <div style={{ position: 'relative' }}>
+                <div>
+                    <div ref={this.tempRef} style={{display:"none"}}>
+                        <div className='statement-header logo-content'>
+                            <div> <img src={logColor} className="logo"/></div>
+                            <div><h2 className='header'>Suissebase Account Statement</h2></div>
+                        </div>
+                        <div className='statement-header'>
+                            <ul>
+                                <li>Place de la Fusterie 12, 1204 Genève</li>
+                                <li> +41 22 575 40 62</li>
+                                <li> compliance@suissebase.ch</li>
+                            </ul>
+                           
+                                <ul>
+                                <li>CustomerID: DYUOREWHDB</li>
+                                <li> Name : Ramkishore</li>
+                                <li> Email : ramkishore@yopmail.com</li>
+                                <li> Phone : +919542634551</li>
+                                <li> Address :7-1-397/91 2nd floor,</li>
+                                <li>Anuna building,
+                                    24 B,Lane Number 13,</li>
+                                <li>MIGH Colony, Sanjeeva Reddy Nagar,
+                                    Hyderabad 500038. </li>
+                                </ul>
+                          
+                        </div>
+                        <div>
+                            <table className="transaction-pdf-template">
+                                <thead>
+                                    <th >Transaction Id</th>
+                                    <th >Date</th>
+                                    <th >Type</th>
+                                    <th >Wallet</th>
+                                    <th >Value</th>
+                                    <th >Sender/Recipient Full Name</th>
+                                    <th >Bank Account Number /IBAN</th>
+                                    <th >Status</th>
+                                </thead>
+                                <tbody>
+                                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(item => <tr>
+                                        <td>W8DAE35938E1AE8A</td>
+                                        <td >21/12/2022 07:12:37 PM</td>
+                                        <td >Withdraw</td>
+                                        <td >USD</td>
+                                        <td >100</td>
+                                        <td >Raj</td>
+                                        <td >56464464566464</td>
+                                        <td >Submitted</td>
+                                    </tr>)}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                     {this.state.isLoading && this.loadingPanel}
                     {this.props.showExcelExport && <div className='text-right'> <button
                         title={this.props?.exExportTitle || "Export Excel"}
@@ -85,10 +140,10 @@ export function withState(WrappedGrid) {
                         onClick={() => {
                             const getCombineFieldValue = (dataItem, fields) => {
                                 for (const i in this.props.columns) {
-                                if(this.props.columns[i].filterType === "numeric"){
-                                    dataItem[fields[0]] = this.numberWithCommas(dataItem[fields[0]])
-                                    dataItem[fields[1]] = this.numberWithCommas(dataItem[fields[1]])
-                                   }
+                                    if (this.props.columns[i].filterType === "numeric") {
+                                        dataItem[fields[0]] = this.numberWithCommas(dataItem[fields[0]])
+                                        dataItem[fields[1]] = this.numberWithCommas(dataItem[fields[1]])
+                                    }
                                 }
                                 return dataItem[fields[0]] && dataItem[fields[1]] ? `${dataItem[fields[0]]} / ${dataItem[fields[1]]}` : (dataItem[fields[0]] || dataItem[fields[1]]);
                             }
@@ -109,7 +164,7 @@ export function withState(WrappedGrid) {
                                                     item.cells[idx].textAlign = "right";
                                                 }
                                                 if (this.props.columns[i]?.combine) {
-                                                    item.cells[idx].value = getCombineFieldValue(this.excelRef?.current.props.data[index-1], this.props.columns[i].combineFields)
+                                                    item.cells[idx].value = getCombineFieldValue(this.excelRef?.current.props.data[index - 1], this.props.columns[i].combineFields)
                                                 }
                                             }
                                         }
@@ -121,12 +176,15 @@ export function withState(WrappedGrid) {
 
                         }}
                     >
-                       {this.props?.exExportTitle || "Export Excel"}
+                        {this.props?.exExportTitle || "Export Excel"}
                     </button>
+                        <button onClick={() => this.exportToPDF()} 
+                        style={{display:"none"}}
+                        >Save as Pdf</button>
                     </div>}
                     {this.props.showExcelExport ? <ExcelExport data={this.state.data} ref={this.excelRef} fileName={this.props?.excelFileName}>
 
-                        <WrappedGrid
+                        <WrappedGrid ref={this.gridref}
                             sortable={true}
                             resizable={true}
                             filterOperators={filterOperators}
@@ -140,7 +198,7 @@ export function withState(WrappedGrid) {
                             sort={this.state.dataState.sort}
                             onDataStateChange={this.handleDataStateChange}
                         />
-                    </ExcelExport> : <WrappedGrid
+                    </ExcelExport> : <WrappedGrid ref={this.gridref}
                         sortable={true}
                         resizable={true}
                         filterOperators={filterOperators}
@@ -157,11 +215,9 @@ export function withState(WrappedGrid) {
                 </div>
             );
         }
-
         componentDidMount() {
             this.fetchData(this.state.dataState);
         }
-
         handleDataStateChange = (changeEvent) => {
             let _dataState = changeEvent.dataState;
             if (isNaN(_dataState.take)) {
@@ -170,7 +226,6 @@ export function withState(WrappedGrid) {
             this.setState({ dataState: _dataState });
             this.fetchData(_dataState);
         }
-
         _encrypt = (msg, key) => {
             msg = typeof (msg) == 'object' ? JSON.stringify(msg) : msg;
             var salt = CryptoJS.lib.WordArray.random(128 / 8);
@@ -190,7 +245,6 @@ export function withState(WrappedGrid) {
             });
             return ((salt.toString()) + (iv.toString()) + (encrypted.toString()));
         }
-
         fetchData = (dataState) => {
             if (dataState.filter) {
                 dataState.filter.filters?.map((item) => {
