@@ -11,18 +11,11 @@ class Content extends Component {
   };
   render() {
     return <AntContent className="sidebar-push">
-        {this.props.serviceWReducer?.isUpdateAvailable && <Alert showIcon
+        {this.props.serviceWReducer?.isUpdateAvailable &&  <div className="main-container"> <Alert showIcon 
         message="App Update"
         description="New app updates available. Please close all browser tabs & re-open app for seemless experience"
         type="warning"
-      // action={
-      //   <Space direction="vertical">
-      //     <Button size="small" type="primary" className='primary-btn pop-btn' onClick={()=>window.location.reload()}>
-      //       Refresh
-      //     </Button>
-      //   </Space>
-      // }
-      />}
+      /></div>}
       <RouteConfig />
     </AntContent>
   }

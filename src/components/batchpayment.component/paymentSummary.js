@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import { Drawer, Typography, Button, Modal,Tooltip,Spin,Alert } from 'antd';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
-import pending from '../../assets/images/pending.png'
+import pending from '../../assets/images/pending.png';
+import NumberFormat from "react-number-format";
 import Verifications from "../onthego.transfer/verification.component/verifications"
 import {proceedTransaction} from './api'
+import { getVerificationFields } from "../onthego.transfer/verification.component/api"
+import { Link } from "react-router-dom";
 const { Title, Paragraph, Text } = Typography
 
 class PaymentSummary extends Component {
@@ -21,10 +24,33 @@ class PaymentSummary extends Component {
 		  insufficientModal:false,
 		  errorMessage:null,
 		  loading:false,
+		  isVerificationEnable:true
 		}
 	}
-
+	componentDidMount(){
+		this.verificationCheck()
+	}
+	verificationCheck = async () => {
+		this.setState({ ...this.state, isVarificationLoader: true })
+		const verfResponse = await getVerificationFields();
+		let minVerifications = 0;
+		if (verfResponse.ok) {
+		  for (let verifMethod in verfResponse.data) {
+			if (["isEmailVerification", "isPhoneVerified", "twoFactorEnabled", "isLiveVerification"].includes(verifMethod) && verfResponse.data[verifMethod] === true) {
+				minVerifications = minVerifications + 1;
+			}
+		  }
+		  if (minVerifications >= 2) {
+			this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: true })
+				} else {
+					this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: false })
+		  }
+		} else {
+			this.setState({ ...this.state, isVarificationLoader: false, errorMessage: this.isErrorDispaly(verfResponse) })
+		}
+	  }
 	showDeclaration=async()=>{	
+		debugger
 		this.setState({...this.state,loading:true,errorMessage:null})
 		if (this.state.verifyData?.verifyData) {
 			if (this.state.verifyData.verifyData.isPhoneVerified) {
@@ -136,7 +162,7 @@ class PaymentSummary extends Component {
 		this.setState({ ...this.state, reviewDetailsLoading: val })
 	  }
 	render() {
-		const {  isShowGreyButton,errorMessage,loading } = this.state;
+		const {  isShowGreyButton,errorMessage,loading,isVerificationEnable } = this.state;
 		return (<>
 		          
 
@@ -152,33 +178,69 @@ class PaymentSummary extends Component {
           visible={this.props.showDrawer}
 		  className="side-drawer w-50p"
         >
-			<Spin spinning={this.state.reviewDetailsLoading}>
+			 {!isVerificationEnable && (
+                  <Alert 
+                  message="Verification alert !"
+                  description={<Text>Without verifications you can't send. Please select send verifications from <Link onClick={() => {
+                      this.props.history.push("/userprofile/2");
+                      if (this.props?.onClosePopup) {
+                          this.props?.onClosePopup();
+                      }
+                  }}>security section</Link></Text>}
+                  type="warning"
+                  showIcon
+                  closable={false}
+              />
+              )}
+			
 			{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
 				<div>
-				{!this.state.showDeclaration && <>
+				{!this.state.showDeclaration &&!this.state.reviewDetailsLoading && isVerificationEnable && <>
+					<Spin spinning={this.state.reviewDetailsLoading}>
 				<div>
-					<div>
-					<Title className='mb-8 text-white-30 fw-600 text-captz fs-24'>Transfer Details</Title>
-					</div>
+					<div> <Title className='sub-heading p-0 mt-24'>Transfer Details</Title></div>
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'> Payment</label></div>
-						<div><Text className='fw-500 text-white-30'>{this.props?.getPaymentDetails.amount}</Text></div>
+						<div>
+							
+						<NumberFormat className='fw-500 text-white-30'
+                                        value={`${this.props?.getPaymentDetails.amount}`}
+                                        thousandSeparator={true} displayType={"text"} />
+							</div>
 					</div>
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'> Fee</label></div>
-						<div><Text className='fw-500 text-white-30'>{this.props?.getPaymentDetails.commission}</Text></div>
+						<div>
+						<NumberFormat className='fw-500 text-white-30'
+                                        value={`${this.props?.getPaymentDetails.commission}`}
+                                        thousandSeparator={true} displayType={"text"} />
+							
+							</div>
 					</div>
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'> Total Amount</label></div>
-						<div><Text className='fw-500 text-white-30'>{this.props?.getPaymentDetails.totalAmonunt}</Text></div>
+						<div>
+						<NumberFormat className='fw-500 text-white-30'
+                                        value={`${this.props?.getPaymentDetails.totalAmonunt}`}
+                                        thousandSeparator={true} displayType={"text"} />
+							
+							</div>
 					</div>
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'>Balance Before</label></div>
-						<div><Text className='fw-500 text-white-30'>{this.props?.getPaymentDetails.beforeAmount}</Text></div>
+						<div>
+						<NumberFormat className='fw-500 text-white-30'
+                                        value={`${this.props?.getPaymentDetails.beforeAmount}`}
+                                        thousandSeparator={true} displayType={"text"} />
+							</div>
 					</div>
 					<div className='pay-list fs-14'>
 						<div><label className='fw-500 text-white'>Balance After Payment</label></div>
-						<div><Text className='fw-500 text-white-30'>{this.props?.getPaymentDetails.afterPaymentAmount}</Text></div>
+						<div>
+						<NumberFormat className='fw-500 text-white-30'
+                                        value={`${this.props?.getPaymentDetails.afterPaymentAmount}`}
+                                        thousandSeparator={true} displayType={"text"} />
+							</div>
 					</div>
 
 					<div> <Title className='sub-heading p-0 mt-24'>Recipients Details</Title></div>
@@ -212,9 +274,11 @@ class PaymentSummary extends Component {
 							</Button>
 						</div>
 						</div> 
-						</>}
+						</Spin></>}
+						
 						{this.state.showDeclaration && <>
-							<div className='text-center text-white p-24'>
+					
+	          <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
 								<img src={pending} width={80}/>
 								<Title className='text-white'>Declaration form sent!</Title>
 								<Paragraph className='text-white'>We sent declaration form to{":"}{" "}
@@ -222,16 +286,12 @@ class PaymentSummary extends Component {
 									received in email to whitelist your address. Note that
 									your payments will only be processed once your
 									whitelisted address has been approved. </Paragraph>
-							</div>
-					
+							</div></div>
 						</>}
-
 					</div>
-					</Spin>
-				</Drawer>
-				
-			</div>
-			
+					
+				</Drawer>				
+			</div>			
 			<Modal
                      visible={this.state.insufficientModal}
                      title="Insufficient Balance"

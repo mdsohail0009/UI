@@ -93,8 +93,8 @@ class TransactionsHistory extends Component {
   gridColumns = [
     {
       field: "transactionId",
-      title: "Transcation Id",
-      filter: false,
+      title: "Transaction ID",
+      filter: true,
       locked: true,
       width: 210,
     },
@@ -388,7 +388,7 @@ isErrorDispaly = (objValue) => {
                   </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
-                  <Form.Item name="state" className="input-label cust-label transaction-type" label="State" colon={false}>
+                  <Form.Item name="state" className="input-label cust-label transaction-type" label="Status" colon={false}>
                     <Select
                       defaultValue="All"
                       className="cust-input w-100 bgwhite"

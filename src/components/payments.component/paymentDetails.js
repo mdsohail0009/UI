@@ -12,7 +12,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
   const start = children?.slice(0, children.length - suffixCount).trim();
   const suffix = children?.slice(-suffixCount).trim();
   return (
-    <Text className="mb-0 fs-14 docnames c-pointer d-block file-label fs-12 text-yellow fw-400 amt-label"
+    <Text className="mb-0 fs-14 docnames c-pointer d-block file-label fs-12 fw-400 amt-label"
       style={{ maxWidth: '100% !important' }} ellipsis={{ suffix }}>
       {start}
     </Text>
@@ -24,7 +24,7 @@ class PaymentDetails extends Component {
     super(props);
     this.state = {
       currencylu: [],
-      currency: "EUR",
+      currency: "USD",
       paymentsData: [],
       paymentSavedata: [],
       btnDisabled: false,
@@ -681,9 +681,12 @@ class PaymentDetails extends Component {
                                                 <div className='docdetails'>
                                                   <div onClick={() => this.docPreview(file)}>
                                                     <Tooltip title={file.documentName}>
-                                                      <EllipsisMiddle suffixCount={4}>
+                                                      {file.documentName?.split(".")[0].length>4&&<EllipsisMiddle>
+                                                        {file.documentName.slice(0,4) + "..." +file.documentName.split(".")[1]}
+                                                      </EllipsisMiddle>}
+                                                      {file.documentName?.split(".")[0].length<=4&&<EllipsisMiddle>
                                                         {file.documentName}
-                                                      </EllipsisMiddle>
+                                                      </EllipsisMiddle>}
                                                     </Tooltip>
                                                   </div>
                                                 </div>

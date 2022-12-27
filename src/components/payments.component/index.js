@@ -129,6 +129,7 @@ const Payments = (props) => {
     setBeneficiaryDetails(true);
   }
   const closeBuyDrawer = () => {
+    setHideFiatHeading(false);
     setBeneficiaryDetails(false);
   }
 const getCurrencyLookup = async () => {
@@ -224,11 +225,15 @@ const getCurrencyLookup = async () => {
           destroyOnClose={true}
           title={[<div className="side-drawer-header">
             <span />
-            <div className="text-center fs-24">
-              <Paragraph className="mb-0 text-white-30 fw-600">
-                <Translate content="AddFiatAddress" component={Paragraph} className="mb-0 text-white-30 fw-600" />
-                </Paragraph>
-            </div>
+            <div className="text-center fs-16">
+								<Paragraph className="mb-0 text-white-30 fw-600 text-upper">
+									<Translate
+                  content={hideFiatHeading !==true && "AddFiatAddress"}
+										component={Paragraph}
+										className="mb-0 text-white-30 fw-600 text-upper"
+									/>
+								</Paragraph>
+							</div>
             <span onClick={closeBuyDrawer} className="icon md close-white c-pointer" />
           </div>]}
           placement="right"

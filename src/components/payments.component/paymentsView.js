@@ -10,7 +10,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children?.slice(0, children.length - suffixCount).trim();
     const suffix = children?.slice(-suffixCount).trim();
     return (
-        <Text className="mb-0 fs-14 docnames c-pointer d-block file-label fs-12 text-yellow fw-400"
+        <Text className="mb-0 fs-14 docnames c-pointer d-block file-label fs-12 fw-400"
             style={{ maxWidth: '100% !important' }} ellipsis={{ suffix }}>
             {start}
         </Text>
@@ -188,11 +188,14 @@ class PaymentsView extends Component {
                                                    <>
                                                    {file.documentName !== null && (
                                                      <div className='docdetails'  style={{width:"80px"}} onClick={() => this.filePreview(file)}>
-                                                     <Tooltip title={file.documentName}>
-                                                     <EllipsisMiddle  suffixCount={4}>
-                                                       {file.documentName}
-                                                       </EllipsisMiddle>
-                                                     </Tooltip>
+                                                                                                        <Tooltip title={file.documentName}>
+                                                      {file.documentName?.split(".")[0].length>4&&<EllipsisMiddle>
+                                                        {file.documentName.slice(0,4) + "..." +file.documentName.split(".")[1]}
+                                                      </EllipsisMiddle>}
+                                                      {file.documentName?.split(".")[0].length<=4&&<EllipsisMiddle>
+                                                        {file.documentName}
+                                                      </EllipsisMiddle>}
+                                                    </Tooltip>
                                                      </div>
                                                    )}
                                                  </>

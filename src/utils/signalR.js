@@ -46,7 +46,7 @@ async function start(id) {
         store.dispatch(fetchDashboardcalls(userProfileInfo?.id));
     });
     connection.on("SendRoleUpdatedMessage", () => {
-          store.dispatch(clearPermissions());
+        //   store.dispatch(clearPermissions());
         //   store.dispatch(updateAccessdenied(true));
     });
 }
