@@ -20,8 +20,8 @@ const Batchpayments = (props) => {
   const [deleteModal,setDeleteModal]=useState(false);
   const [setSelectData, setSetSelectData] = useState({});
   const [errorMessage,setErrorMessage]=useState(null); 
-  useEffect(() => {
-}, []);
+  const [isLoading,setIsLoading]=useState(false);
+
   const viewMode = (e) => {
     setProceedBatchPayment(false)
     const items=e.dataItem;
@@ -71,23 +71,23 @@ const Batchpayments = (props) => {
       },
         { field: "currency", title: 'Currency', filter: true, width: 150,dataType: "number", filterType: "numeric" },
         { field: "status", title: 'Status', filter: true, width: 150, },
-        { field: "numberOfTransactions", title: 'Number of Transactions', filter: true, width: 240,dataType: "number", filterType: "numeric", 
+        { field: "numberOfTransactions", title: 'Number of Transactions', filter: true, width: 250,dataType: "number", filterType: "numeric", 
         customCell: (props) => (<td>
         {props?.dataItem?.numberOfTransactions!==0? <div className="gridLink" onClick={()=>docPreview(props.dataItem)}
         >{props?.dataItem?.numberOfTransactions} 
         </div>:<>{props?.dataItem?.numberOfTransactions}</>}</td>) 
      },
-     { field: "validTransactionCount", title: 'Valid Transactions', filter: true, dataType: "number", filterType: "numeric", width: 200, },
-     { field: "invalidTransactionCount", title: 'Invalid Transactions', filter: true, dataType: "number", filterType: "numeric", width: 200,
+     { field: "validTransactionCount", title: 'Valid Transactions', filter: true, dataType: "number", filterType: "numeric", width: 210, },
+     { field: "invalidTransactionCount", title: 'Invalid Transactions', filter: true, dataType: "number", filterType: "numeric", width: 210,
          customCell: (props) => (
          <td>{props?.dataItem?.invalidTransactionCount!==0?<div onClick={()=>getInvalidTransaction(props?.dataItem)} className="gridLink" >{props?.dataItem?.invalidTransactionCount}
            </div>:<>{props?.dataItem?.invalidTransactionCount}</>}
            
            </td>)
      },
-     { field: "pendingTransactionCount", title: 'Pending Transactions', filter: true, dataType: "number", filterType: "numeric", width: 220, },
+     { field: "pendingTransactionCount", title: 'Pending Transactions', filter: true, dataType: "number", filterType: "numeric", width: 230, },
      { field: "approvedTransactionCount", title: 'Approved Transactions', filter: true, dataType: "number", filterType: "numeric", width: 240, },
-     { field: "rejectedTransactionCount", title: 'Rejected Transactions', filter: true, dataType: "number", filterType: "numeric", width: 220, },
+     { field: "rejectedTransactionCount", title: 'Rejected Transactions', filter: true, dataType: "number", filterType: "numeric", width: 230, },
      { field: "fileUploadStatus", title: 'File Upload Status', filter: true, width: 220, }
 
      
@@ -126,10 +126,10 @@ const Batchpayments = (props) => {
 
     setErrorWarning("Please select the record");
   } 
-  else if(!setSelectData.status === "Draft"){
+  else if(setSelectData.status === "Pending"){
     setErrorWarning("Only draft record can proceed")
   }
-  else if(setSelectData.validTransactionCount === 0){
+  else if(setSelectData.validTransactionCount == 0){
     setErrorWarning("You don't have valid transactions to proceed")
   }
   else if(setSelectData.fileUploadStatus == "File is being processed please wait a while"){
@@ -145,7 +145,7 @@ const Batchpayments = (props) => {
     if(selection.length === 0){
       setErrorWarning("Please select the  record")
     }
-    else if(!setSelectData.status == "Draft"){
+    else if(setSelectData.status == "Pending"){
       setErrorWarning("Only draft record can delete")
     }
     else{
@@ -153,15 +153,21 @@ const Batchpayments = (props) => {
     }
    }
     const deleteDetials = async () => {
+      setIsLoading(true);
       const res = await deleteBatchPayments(selection[0])
       if (res.ok) {
-        gridRef?.current?.refreshGrid();
-        setDeleteModal(false);
+       
+        setTimeout(() => {
+          gridRef?.current?.refreshGrid();
+      }, 1000)
+      setDeleteModal(false);
+        setIsLoading(false);
         setSelection([]);
       }
       else{
         setErrorMessage(isErrorDispaly(res));
         setDeleteModal(false);
+        setIsLoading(false);
         setSelection([]);
       }
     };
@@ -180,6 +186,7 @@ const Batchpayments = (props) => {
     }
     const refreshPayment=()=>{
       gridRef?.current?.refreshGrid();
+      setErrorWarning(null)
       setSelection([])
     }
    const gotoDashboard=()=>{
@@ -189,7 +196,7 @@ const Batchpayments = (props) => {
       const actions = {
         Refresh:refreshPayment,
         Add: addBatchPayment,
-        Process: proceedBatchPayment,
+        Proceed: proceedBatchPayment,
         Delete: deleteBatchPayment
       };
       actions[key]();
@@ -218,7 +225,7 @@ const Batchpayments = (props) => {
                 
                       <Title className="basicinfo mb-0"><span className='icon md c-pointer back mr-8' onClick={gotoDashboard}></span><Translate content="batch_payments" component={Text} className="basicinfo" />
                                       
-                      <Text className='ml-4 text-yellow fs-16'> Proceed{" "}(<span className="icon md process-icon"></span>)</Text>  <Text className='ml-4 text-white fs-16'> : To proceed the transaction,{" "}please click on process icon</Text>           
+                      <Text className='ml-4 text-yellow fs-16'> Proceed{" "}(<span className="icon md process-icon"/>)</Text><Text className='ml-4 text-white fs-16'>: To proceed the transaction,{" "}please click on proceed icon</Text>           
                       </Title>
                       <div className='batch-actions'>
                   <span className="mb-right">
@@ -288,7 +295,8 @@ const Batchpayments = (props) => {
                 className="pop-cancel btn-width  bill-cancel"
                 onClick={()=>deleteModalCancel()}>Cancel</Button>
               <Button className="pop-btn px-36 btn-width"
-                onClick={() =>deleteDetials(selectedObj)}
+                onClick={deleteDetials}
+                loading={isLoading}
                 >Ok</Button></div>
             </>
           ]}
