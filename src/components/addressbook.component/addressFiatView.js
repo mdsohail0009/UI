@@ -309,7 +309,14 @@ const AddressFiatView = (props) => {
 													</div>
 												</div>
 											</Col>}
-
+											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+												<div>
+													<label className="kpi-label">Address State</label>
+													<div className="kpi-val">
+														{bankDetailes[0]?.addressState}
+													</div>
+												</div>
+											</Col>
 											
 										</Row>
 										<Title className="basic-info p-0 basicinfo">
