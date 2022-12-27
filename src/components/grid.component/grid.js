@@ -4,8 +4,9 @@ import { store } from '../../store'
 import moment from 'moment';
 import CryptoJS from "crypto-js";
 import { ExcelExport } from '@progress/kendo-react-excel-export'
-import { savePDF } from '@progress/kendo-react-pdf';
-import logColor from '../../assets/images/logo-color.png' 
+import { savePDF, PDFExport } from '@progress/kendo-react-pdf';
+import logColor from '../../assets/images/logo-color.png'
+import { Dropdown } from 'antd';
 const filterOperators = {
     'text': [
         { text: 'grid.filterContainsOperator', operator: 'contains' },
@@ -43,7 +44,7 @@ export function withState(WrappedGrid) {
     return class StatefullGrid extends React.Component {
         constructor(props) {
             super(props);
-            this.state = { dataState: { skip: 0, take: 10 }, additionalParams: null, data: [], isLoading: false };
+            this.state = { dataState: { skip: 0, take: 10 }, additionalParams: null, data: [], isLoading: false, profile: store.getState().userConfig?.userProfileInfo };
             this.excelRef = React.createRef();
             this.gridref = React.createRef(null);
             this.tempRef = React.createRef(null)
@@ -71,120 +72,112 @@ export function withState(WrappedGrid) {
             </div>
         );
         exportToPDF = () => {
-            savePDF(this.tempRef.current, {
-                paperSize: "A4",
-                margin: 30,
-                scale: 0.7,
-                fileName: `Report for ${new Date().getFullYear()}`,
-            })
+            if (this.tempRef.current)
+                this.tempRef.current.save();
+        }
+        getPDFROWS = () => {
+
+        }
+        getCombineFieldValue = (dataItem, fields) => {
+            for (const i in this.props.columns) {
+                if (this.props.columns[i].filterType === "numeric") {
+                    dataItem[fields[0]] = this.numberWithCommas(dataItem[fields[0]])
+                    dataItem[fields[1]] = this.numberWithCommas(dataItem[fields[1]])
+                }
+            }
+            return dataItem[fields[0]] && dataItem[fields[1]] ? `${dataItem[fields[0]]} / ${dataItem[fields[1]]}` : (dataItem[fields[0]] || dataItem[fields[1]]);
+        }
+        handleExcelExport = () => {
+
+            if (this.excelRef) {
+                if (this.excelRef?.current.save) {
+                    let workbook = this.excelRef.current.workbookOptions(); // get the workbook.
+                    workbook.sheets[0].rows.map((item, index) => {
+                        if (item.type === "data") {
+                            for (const i in this.props.columns) {
+                                const idx = this.props.columns.length === item.cells.length ? i : (i - 1);
+                                if (this.props.columns[i].filterType === "date") {
+                                    if (item.cells[idx].value)
+                                        item.cells[idx].value = moment(item.cells[idx].value).format("DD/MM/YYYY hh:mm a")
+                                }
+                                if (this.props.columns[i].filterType === "numeric") {
+                                    if (item.cells[idx].value)
+                                        item.cells[idx].value = this.numberWithCommas(item.cells[idx].value);
+                                    item.cells[idx].textAlign = "right";
+                                }
+                                if (this.props.columns[i]?.combine) {
+                                    item.cells[idx].value = this.getCombineFieldValue(this.excelRef?.current.props.data[index - 1], this.props.columns[i].combineFields)
+                                }
+                            }
+                        }
+                    });
+                    this.excelRef.current.save(workbook);
+                }
+                // this.excelRef.save(workbook);
+            }
+
         }
         render() {
             return (
-                <div>
-                    <div ref={this.tempRef} 
-                    style={{display:"none"}}
-                    >
-                        <table width="100%">
-                            <tr>
-                            
-                                <td colspan="2" style={{fontSize:"26px !important",fontWeight: 700,textAlign:"center",fontWeight:"700"}}>Suissebase Account Statement</td>
-  
-                            </tr>
+                <div >
+                    <div style={{ position: "absolute", left: "-1500px", top: 0 }}>
+                        <PDFExport margin={5} scale={0.55} paperSize="A4" repeatHeaders={true} fileName='Transaction History' ref={this.tempRef}>
+                            <table width="100%">
+                                <tr>
+
+                                    <td colspan="2" style={{ fontSize: "26px !important", fontWeight: 700, textAlign: "center", fontWeight: "700" }}>Suissebase Account Statement</td>
+
+                                </tr>
                             </table>
-                            
-                        
-                        <div className='statement-header logo-content'>
-                            <div> <img src={logColor} className="logo"/></div>
-                            <ul style={{fontWeight: 500,margin:"0",padding:"0"}}>
-                            <li>CustomerID: DYUOREWHDB</li>
-                                <li> Name : Ramkishore</li>
-                                <li> Email : ramkishore@yopmail.com</li>
-                                <li> Phone : +919542634551</li>
-                                <li> Address :7-1-397/91 2nd floor,</li>
-                                <li>Anuna building,
-                                    24 B,Lane Number 13,</li>
-                                <li>MIGH Colony, Sanjeeva Reddy Nagar,
-                                    Hyderabad 500038. </li>
-                                <li>Place de la Fusterie 12, 1204 Genève</li>
-                                <li> +41 22 575 40 62</li>
-                                <li> compliance@suissebase.ch</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <table className="transaction-pdf-template">
-                                <thead style={{background:"#cccccc"}}>
-                                    <th >Transaction Id</th>
-                                    <th >Date</th>
-                                    <th >Type</th>
-                                    <th >Wallet</th>
-                                    <th >Value</th>
-                                    <th >Sender/Recipient Full Name</th>
-                                    <th >Bank Account Number /IBAN</th>
-                                    <th >Status</th>
-                                </thead>
-                                <tbody>
-                                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(item => <tr>
-                                        <td>W8DAE35938E1AE8A</td>
-                                        <td >21/12/2022 07:12:37 PM</td>
-                                        <td >Withdraw</td>
-                                        <td >USD</td>
-                                        <td >100</td>
-                                        <td >Raj</td>
-                                        <td >56464464566464</td>
-                                        <td >Submitted</td>
-                                    </tr>)}
-                                </tbody>
-                            </table>
-                        </div>
+                            <div className='statement-header logo-content'>
+                                <div> <img src={logColor} className="logo" /></div>
+                                {
+                                    <ul style={{ fontWeight: 500, margin: "0", padding: "0" }}>
+                                        <li> Name : {`${this.state.profile.firstName} ${this.state.profile.lastName}`}</li>
+                                        <li> Email : {this.state.profile.email}</li>
+                                        <li> Phone : {this.state.profile.phoneNo || this.state.profile.phoneNumber}</li>
+                                    </ul>
+                                }
+                            </div>
+                            <div>
+                                <table className="transaction-pdf-template">
+                                    <thead style={{ background: "#cccccc" }}>
+                                        <th >Transaction Id</th>
+                                        <th >Date</th>
+                                        <th >Type</th>
+                                        <th >Wallet</th>
+                                        <th >Value</th>
+                                        <th >Sender/Recipient Full Name</th>
+                                        <th >Bank Account Number /IBAN</th>
+                                        <th >Status</th>
+                                    </thead>
+                                    <tbody>
+                                        {this.state?.data?.map(item => <tr>
+                                            <td>{item.transactionId}</td>
+                                            <td >{moment(item.date).format("DD/MM/YYYY hh:mm a")}</td>
+                                            <td >{item.docType}</td>
+                                            <td >{item.wallet}</td>
+                                            <td >{this.getCombineFieldValue(item, ["credit", "debit"])}</td>
+                                            <td >{this.getCombineFieldValue(item, ["senderName", "beneficiryName"])}</td>
+                                            <td >{this.getCombineFieldValue(item, ["accountnumber", "iban"])}</td>
+                                            <td >{item.state}</td>
+                                        </tr>)}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </PDFExport>
                     </div>
                     {this.state.isLoading && this.loadingPanel}
-                    {this.props.showExcelExport && <div className='text-right'> <button
-                        title={this.props?.exExportTitle || "Export Excel"}
-                        className="k-button k-button-md k-rounded-md k-button-solid  mt-16 mb-16 mr-16 search-btn primary-btn excel-btn"
-                        onClick={() => {
-                            const getCombineFieldValue = (dataItem, fields) => {
-                                for (const i in this.props.columns) {
-                                    if (this.props.columns[i].filterType === "numeric") {
-                                        dataItem[fields[0]] = this.numberWithCommas(dataItem[fields[0]])
-                                        dataItem[fields[1]] = this.numberWithCommas(dataItem[fields[1]])
-                                    }
-                                }
-                                return dataItem[fields[0]] && dataItem[fields[1]] ? `${dataItem[fields[0]]} / ${dataItem[fields[1]]}` : (dataItem[fields[0]] || dataItem[fields[1]]);
-                            }
-                            if (this.excelRef) {
-                                if (this.excelRef?.current.save) {
-                                    let workbook = this.excelRef.current.workbookOptions(); // get the workbook.
-                                    workbook.sheets[0].rows.map((item, index) => {
-                                        if (item.type === "data") {
-                                            for (const i in this.props.columns) {
-                                                const idx = this.props.columns.length === item.cells.length ? i : (i - 1);
-                                                if (this.props.columns[i].filterType === "date") {
-                                                    if (item.cells[idx].value)
-                                                        item.cells[idx].value = moment(item.cells[idx].value).format("DD/MM/YYYY hh:mm a")
-                                                }
-                                                if (this.props.columns[i].filterType === "numeric") {
-                                                    if (item.cells[idx].value)
-                                                        item.cells[idx].value = this.numberWithCommas(item.cells[idx].value);
-                                                    item.cells[idx].textAlign = "right";
-                                                }
-                                                if (this.props.columns[i]?.combine) {
-                                                    item.cells[idx].value = getCombineFieldValue(this.excelRef?.current.props.data[index - 1], this.props.columns[i].combineFields)
-                                                }
-                                            }
-                                        }
-                                    });
-                                    this.excelRef.current.save(workbook);
-                                }
-                                // this.excelRef.save(workbook);
-                            }
-
-                        }}
-                    >
-                        {this.props?.exExportTitle || "Export Excel"}
-                    </button>
-                        <button onClick={() => this.exportToPDF()} 
-                        style={{display:"none"}}
-                        >Save as Pdf</button>
+                    {this.props.showExcelExport && <div className='text-right'>
+                        <Dropdown.Button className=" k-button-solid  mt-16 mb-16 mr-16"
+                            overlay={
+                                <div>
+                                    <button onClick={this.handleExcelExport}>Export to Excel</button><br />
+                                    <button onClick={this.exportToPDF}>Export to Pdf</button>
+                                </div>
+                            }>
+                            Download Transaction History
+                        </Dropdown.Button>
                     </div>}
                     {this.props.showExcelExport ? <ExcelExport data={this.state.data} ref={this.excelRef} fileName={this.props?.excelFileName}>
 
