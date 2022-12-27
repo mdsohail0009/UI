@@ -227,7 +227,7 @@ const BatchpaymentView = (props) => {
                 setUploadModal(false)
              }
                 else{
-                    setIsLoading(false);
+                    // setIsLoading(false);
                     setErrorMessage(isErrorDispaly(res))
                 }
   }

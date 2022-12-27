@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Typography,Tooltip,Button ,Modal,Alert,Popover} from 'antd';
+import React, {useState } from 'react';
+import { Typography,Tooltip,Button ,Modal,Alert} from 'antd';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import List from "../grid.component";
