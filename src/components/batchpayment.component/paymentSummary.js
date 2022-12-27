@@ -24,11 +24,12 @@ class PaymentSummary extends Component {
 		  insufficientModal:false,
 		  errorMessage:null,
 		  loading:false,
-		  isVerificationEnable:true
+		  isVerificationEnable:true,
+		  isVarificationLoader: true,
 		}
 	}
 	componentDidMount(){
-		// this.verificationCheck()
+		// this.verificationCheck();
 	}
 	verificationCheck = async () => {
 		this.setState({ ...this.state, isVarificationLoader: true })
@@ -195,7 +196,9 @@ class PaymentSummary extends Component {
 			
 			{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
 				<div>
-				{!this.state.showDeclaration &&!this.state.reviewDetailsLoading && isVerificationEnable && <>
+				{!this.state.showDeclaration 
+				// &&!this.state.reviewDetailsLoading && !isVerificationEnable &&
+				&& <>
 					<Spin spinning={this.state.reviewDetailsLoading}>
 				<div>
 					<div> <Title className='sub-heading p-0 mt-24'>Transfer Details</Title></div>
