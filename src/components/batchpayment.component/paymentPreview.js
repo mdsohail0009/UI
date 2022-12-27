@@ -35,12 +35,32 @@ closeDrawer = () => {
 returnDashboard=()=>{
   this.props.history.push("/cockpit")
 }
- gridColumns = [
-  { field: "whiteListName", title: "Whitelist Name", filter: true,width: 400},
+ gridUSDColumns = [
+  { field: "whiteListName", title: "Whitelist Name", filter: true,width: 200},
+  { field: "beneficiaryName", title: "First & Last Name/Beneficiary Name", filter: true,width: 335},
+  { field: "relationshipToBeneficiary", title: "Relationship To Beneficiary", filter: true,width: 270},
+  { field: "address", title: "Address", filter: true,width: 250},
+  { field: "addressType", title: "Address Type", filter: true,width: 250},
+  { field: "transferType", title: "Transfer Type", filter: true,width: 250},
+  { field: "amount", title: "Amount in USD", filter: true,width: 250},
+  { field: "accountNumber", title: 'Account Number/IBAN', filter: true, width: 260},
+  { field: "abaShiftCode", title: 'ABA Routing/ Swift / BIC Code', filter: true, width: 300 },
+  { field: "bankName", title: 'Bank Name', filter: true, width: 200},
+  { field: "bankAddress", title: 'Bank Address', filter: true, width: 200},
+  { field: "reasonforTransfer", title: 'Reason For Transfer', filter: true, width: 200},
+  { field: "reference", title: 'Reference', filter: true, width: 200},
+];
+gridEURColumns = [
+  { field: "whiteListName", title: "Whitelist Name", filter: true,width: 200},
   { field: "beneficiaryName", title: "Beneficiary Name", filter: true,width: 250},
-  { field: "accountNumber", title: 'Account Number/IBAN', filter: true, width: 250 },
-  { field: "amount", title: 'Amount', filter: true, width: 200},
-  { field: "transactionStatus", title: 'Transaction Status', filter: true, width: 200},
+  { field: "relationshipToBeneficiary", title: "Relationship To Beneficiary", filter: true,width: 250},
+  { field: "address", title: "Address", filter: true,width: 250},
+  { field: "addressType", title: "Address Type", filter: true,width: 250},
+  { field: "transferType", title: "Transfer Type", filter: true,width: 250},
+  { field: "amount", title: "Amount in EUR", filter: true,width: 250},
+  { field: "iban", title: "IBAN", filter: true,width: 250},
+  { field: "reasonforTransfer", title: 'Reason For Transfer', filter: true, width: 200},
+  { field: "reference", title: 'Reference', filter: true, width: 250 },
 ];
 
 
@@ -100,13 +120,24 @@ isErrorDispaly = (objValue) => {
                )}
                <div className="box basic-info text-white" style={{ clear: 'both' }}>
                <Translate content="bathch_payments_preview" component={Title} className="fs-26 fw-400 mb-14 text-white-30" />
-                  <List
-                      showActionBar={false}
-                      url={this.state.gridUrl}
-                      columns={this.gridColumns}
-                      ref={this.gridRef}
-                     
-                  />
+                
+                  {this.props?.currency === "EUR" ? (
+						<List
+							className="address-clear"
+							columns={this.gridEURColumns}
+							ref={this.gridRef}
+              showActionBar={false}
+              url={this.state.gridUrl}
+						/>
+					) : (
+						<List
+							className="address-clear"
+							columns={this.gridUSDColumns}
+              ref={this.gridRef}
+              url={this.state.gridUrl}
+              showActionBar={false}
+						/>
+					)}
             </div>
                 <div className="text-right mt-12">
                     <Button className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn mr-8 ml-0 primary-btn pop-cancel"

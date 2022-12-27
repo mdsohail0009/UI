@@ -279,6 +279,7 @@ const Batchpayments = (props) => {
               onClose={(isPreviewBack) => {
                   closeDrawer(isPreviewBack);
               }}
+              currency={setSelectData?.currency}
               ></PaymentPreview>
               }        
           </div>    
