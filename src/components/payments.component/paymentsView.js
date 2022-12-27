@@ -188,11 +188,14 @@ class PaymentsView extends Component {
                                                    <>
                                                    {file.documentName !== null && (
                                                      <div className='docdetails'  style={{width:"80px"}} onClick={() => this.filePreview(file)}>
-                                                     <Tooltip title={file.documentName}>
-                                                     <EllipsisMiddle  suffixCount={4}>
-                                                       {file.documentName}
-                                                       </EllipsisMiddle>
-                                                     </Tooltip>
+                                                                                                        <Tooltip title={file.documentName}>
+                                                      {file.documentName?.split(".")[0].length>4&&<EllipsisMiddle>
+                                                        {file.documentName.slice(0,4) + "..." +file.documentName.split(".")[1]}
+                                                      </EllipsisMiddle>}
+                                                      {file.documentName?.split(".")[0].length<=4&&<EllipsisMiddle>
+                                                        {file.documentName}
+                                                      </EllipsisMiddle>}
+                                                    </Tooltip>
                                                      </div>
                                                    )}
                                                  </>

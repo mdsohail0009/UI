@@ -267,7 +267,7 @@ const Verifications = (props) => {
         ${"c-notallowed"}`} >Verification code sent</Text></Button>
             <Tooltip
                 placement="topRight"
-                title={`Haven't received code? Request new code in ${phoneSeconds} seconds. The code will expire after 2 Minuets.`}>
+                title={`Haven't received code? Request new code in ${phoneSeconds} seconds. The code will expire after 2 Min.`}>
                 <span className="icon md info mr-8" />
             </Tooltip>
         </div>
