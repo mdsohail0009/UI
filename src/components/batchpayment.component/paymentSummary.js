@@ -28,7 +28,7 @@ class PaymentSummary extends Component {
 		}
 	}
 	componentDidMount(){
-		this.verificationCheck()
+		// this.verificationCheck()
 	}
 	verificationCheck = async () => {
 		this.setState({ ...this.state, isVarificationLoader: true })
