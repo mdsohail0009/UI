@@ -6,8 +6,7 @@ import Search from "antd/lib/input/Search";
 import { fetchMemberWallets } from "../dashboard.component/api";
 import {refreshTransaction,saveTransaction,confirmGetDetails} from './api'
 import NumberFormat from "react-number-format";
-import { Link } from "react-router-dom";
-import { withRouter } from "react-router-dom";
+import { Link,withRouter } from "react-router-dom";
 import PaymentPreview from './paymentPreview';
 import pending1 from '../../assets/images/pending1.png'
 import Loader from '../../Shared/loader';
@@ -78,7 +77,8 @@ class AddBatchPayment extends Component {
         }
         
         let fileType = {
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":true
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":true,
+            "application/vnd.ms-excel":true
         };
          let isFileName = file.name.split(".").length > 2 ? false : true;
         if (fileType[file.type] && isFileName) {
@@ -279,9 +279,10 @@ downLoadPreview=()=>{
               <div className='drawer-content'>
                
                 <div className='text-center makepayment-section'>
-            <Title className='text-white fs-24 fw-500'>Send {this.state.selectedCurrency} to Multiple Address</Title>
+            <Title className='text-white fs-24 fw-500'>Send {this.state.selectedCurrency} to Multiple Addresses</Title>
             <Upload
                                     
+                                    //key={i}
                                               type="dashed"
                                               size="large"
                                               className="ml-8 mt-12"
@@ -310,15 +311,8 @@ downLoadPreview=()=>{
         <Modal  
                 
                 visible={this.state.showInprogressModal}
-                title="Upload Excel"
-                closeIcon={
-                   <Tooltip title="Close">
-                     <span
-                       className="icon md close-white c-pointer"
-                       onClick={() => this.handleInprogressCancel()}
-                     />
-                   </Tooltip>
-                 }
+                title="upload excel"
+
                  destroyOnClose={true}
                  footer={[
                     <>
@@ -347,8 +341,7 @@ downLoadPreview=()=>{
                )}
                    <div className='text-center pt-16'>
                    <img src={pending1} alt={"success"} />
-                       <Paragraph className='text-white fs-18'>Document has been processing</Paragraph>
-                      
+                   <Paragraph className='text-white fs-18'>File is being processed please wait a while</Paragraph>
                    </div>
                    </>
            </Modal>
@@ -357,10 +350,17 @@ downLoadPreview=()=>{
                      visible={this.state.showModal}
                      title="upload success"
                       destroyOnClose={true}
-                   
+                      closeIcon={
+                        <Tooltip title="Close">
+                            <span
+                                className="icon md close-white c-pointer"
+                                onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false }, () => { })}
+                            />
+                        </Tooltip>
+                    }
                     footer={ <Button className="primary-btn pop-btn"
                     style={{ width: 100, height: 50 }}
-                    onClick={() => this.handleNext()}>Next</Button>}>
+                    onClick={this.handleNext}>Next</Button>}>
                         <>
                         {errorMessage !== null && (
           <Alert type="error" description={errorMessage} showIcon />
