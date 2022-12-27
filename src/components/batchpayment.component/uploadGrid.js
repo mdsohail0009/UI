@@ -53,7 +53,7 @@ const BatchpaymentView = (props) => {
     	customCell: (props) => (
             <td>
                 <div>
-              {props.dataItem.documentdetail?.map(item=>
+              {props.dataItem.beneficiarydetail?.map(item=>
                 <>
                 <div>
                 <span className="text-yellow gridLink"  onClick={() => docPreview(item)}>{item.documentName}</span>
