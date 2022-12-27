@@ -1586,3 +1586,4 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .pay-list.transaction-details h1{flex: 1; word-break: break-all;}
 .ant-alert-info .ant-alert-icon{color: #ff4d4f;}
 .ant-alert-info{background-color: #fff2f0; border: 1px solid #ffccc7;}
+.docfile.address-upload{background-color: var(--uploadcard) !important;}
