@@ -81,20 +81,22 @@ export function withState(WrappedGrid) {
         render() {
             return (
                 <div>
-                    <div ref={this.tempRef} style={{display:"none"}}>
+                    <div ref={this.tempRef} 
+                    style={{display:"none"}}
+                    >
+                        <table width="100%">
+                            <tr>
+                            
+                                <td colspan="2" style={{fontSize:"26px !important",fontWeight: 700,textAlign:"center",fontWeight:"700"}}>Suissebase Account Statement</td>
+  
+                            </tr>
+                            </table>
+                            
+                        
                         <div className='statement-header logo-content'>
                             <div> <img src={logColor} className="logo"/></div>
-                            <div><h2 className='header'>Suissebase Account Statement</h2></div>
-                        </div>
-                        <div className='statement-header'>
-                            <ul>
-                                <li>Place de la Fusterie 12, 1204 Genève</li>
-                                <li> +41 22 575 40 62</li>
-                                <li> compliance@suissebase.ch</li>
-                            </ul>
-                           
-                                <ul>
-                                <li>CustomerID: DYUOREWHDB</li>
+                            <ul style={{fontWeight: 500,margin:"0",padding:"0"}}>
+                            <li>CustomerID: DYUOREWHDB</li>
                                 <li> Name : Ramkishore</li>
                                 <li> Email : ramkishore@yopmail.com</li>
                                 <li> Phone : +919542634551</li>
@@ -103,12 +105,14 @@ export function withState(WrappedGrid) {
                                     24 B,Lane Number 13,</li>
                                 <li>MIGH Colony, Sanjeeva Reddy Nagar,
                                     Hyderabad 500038. </li>
-                                </ul>
-                          
+                                <li>Place de la Fusterie 12, 1204 Genève</li>
+                                <li> +41 22 575 40 62</li>
+                                <li> compliance@suissebase.ch</li>
+                            </ul>
                         </div>
                         <div>
                             <table className="transaction-pdf-template">
-                                <thead>
+                                <thead style={{background:"#cccccc"}}>
                                     <th >Transaction Id</th>
                                     <th >Date</th>
                                     <th >Type</th>
