@@ -5,8 +5,9 @@ import moment from 'moment';
 import CryptoJS from "crypto-js";
 import { ExcelExport } from '@progress/kendo-react-excel-export'
 import { savePDF, PDFExport } from '@progress/kendo-react-pdf';
-import logColor from '../../assets/images/logo-color.png'
-import { Dropdown } from 'antd';
+import logColor from '../../assets/images/logo-color.png';
+import { withRouter, Link } from "react-router-dom";
+import { Dropdown,Space,Menu, } from 'antd';
 const filterOperators = {
     'text': [
         { text: 'grid.filterContainsOperator', operator: 'contains' },
@@ -40,6 +41,35 @@ const filterOperators = {
         { text: 'grid.filterEqOperator', operator: 'eq' }
     ]
 }
+
+    // menuBar = (item) => (
+    //     <Menu>
+    //       <ul className="pl-0 drpdwn-list">
+    //         <li
+             
+    //         >
+    //           <Link value={5} className="c-pointer">
+    //             Internal Transfer
+    //           </Link>
+    //         </li>
+    //         <li
+              
+    //         >
+    //           <Link value={5} className="c-pointer">
+    //           Go To Personal Bank Account
+    //           </Link>
+    //         </li>
+    //         <li
+              
+    //         >
+    //           <Link value={5} className="c-pointer">
+    //           Transfer To Suissebase Digital Wallet
+    //           </Link>
+    //         </li>
+    //       </ul>
+    //     </Menu>
+    //   );
+
 export function withState(WrappedGrid) {
     return class StatefullGrid extends React.Component {
         constructor(props) {
@@ -125,7 +155,7 @@ export function withState(WrappedGrid) {
                             <table width="100%">
                                 <tr>
 
-                                    <td colspan="2" style={{ fontSize: "26px !important", fontWeight: 700, textAlign: "center", fontWeight: "700" }}>Suissebase Account Statement</td>
+                                    <td colspan="2" style={{ fontSize: "26px", fontWeight: 700, textAlign: "center", fontWeight: "700" }}><h1>Suissebase Account Statement</h1></td>
 
                                 </tr>
                             </table>
@@ -168,8 +198,8 @@ export function withState(WrappedGrid) {
                         </PDFExport>
                     </div>
                     {this.state.isLoading && this.loadingPanel}
-                    {this.props.showExcelExport && <div className='text-right'>
-                        <Dropdown.Button className=" k-button-solid  mt-16 mb-16 mr-16"
+                    {this.props.showExcelExport && <div className='text-right secureDropdown export-pdf'>
+                        {/* <Dropdown.Button className=" k-button-solid  mt-16 mb-16 mr-16"
                             overlay={
                                 <div>
                                     <button onClick={this.handleExcelExport}>Export to Excel</button><br />
@@ -177,7 +207,34 @@ export function withState(WrappedGrid) {
                                 </div>
                             }>
                             Download Transaction History
+                        </Dropdown.Button> */}
+                        <Dropdown.Button
+                        className="mt-16 mb-16"
+                          overlay={<div className='ant-dropdown-menu history-excel'>
+                            <ul className='pl-0 drpdwn-list'>
+                            <li onClick={this.handleExcelExport}><a>Export to Excel</a></li>
+                            <li onClick={this.exportToPDF}><a>Export to Pdf</a></li></ul>
+                        </div>}
+
+                          placement="bottomCenter"
+                          arrow
+                          overlayClassName=""
+                        >
+                             Download Transaction History
                         </Dropdown.Button>
+                        {/* <Dropdown
+                          overlay={this.menuBar(item)}
+                          trigger={["click"]}
+                          placement="bottomCenter"
+                          arrow
+                          overlayClassName="secureDropdown depwith-drpdown"
+                        >
+                          <Link >
+                            <Space>
+                              <span class="icon md menu-bar ml-4 p-relative"></span>
+                            </Space>
+                          </Link>
+                        </Dropdown> */}
                     </div>}
                     {this.props.showExcelExport ? <ExcelExport data={this.state.data} ref={this.excelRef} fileName={this.props?.excelFileName}>
 
