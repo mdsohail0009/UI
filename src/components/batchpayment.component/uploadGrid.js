@@ -92,7 +92,7 @@ const BatchpaymentView = (props) => {
 		if (fileType[file.type]) {
             setErrorMessage(null)
           return true
-        } else if(fileType==="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
+        } else if(fileType=="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
             setErrorMessage("File is not allowed. You can upload jpg, png, jpeg and PDF files");
         }else{
             setErrorMessage("File is not allowed. You can upload jpg, png, jpeg and PDF files");
