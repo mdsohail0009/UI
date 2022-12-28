@@ -48,7 +48,16 @@ returnDashboard=()=>{
       </Text>
     </td>
   ),},
-  { field: "transferType", title: "Transfer Type", filter: true,width: 250},
+  { field: "transferType", title: "Transfer Type", filter: true,width: 250,
+  customCell: (props) => (
+    <td>
+      <Text className="text-upper text-white">
+        {((props?.dataItem?.transferType === "internationalIBAN") && "International USD IBAN") ||
+															props?.dataItem?.transferType.toUpperCase()}
+      </Text>
+    </td>
+  )
+  },
   { field: "amount", title: "Amount in USD", filter: true,width: 250},
   { field: "accountNumber", title: 'Account Number/IBAN', filter: true, width: 260},
   { field: "abaShiftCode", title: 'ABA Routing/ Swift / BIC Code', filter: true, width: 300 },
