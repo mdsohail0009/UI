@@ -96,7 +96,6 @@ class AddBatchPayment extends Component {
         this.setState({...this.state,worningMessage:null})
         if (file.name.split('.').length > 2) {
            this.setState({...this.state,worningMessage:"File don't allow double extension"})
-          return true;
         }
         
         let fileType = {
@@ -218,7 +217,7 @@ downLoadPreview=()=>{
     handleNext=async()=>{
         const res=await confirmGetDetails(this.state.reefreshData?.id)
         if(res.ok){
-            this.setState({ ...this.state, showModal: false,errorMessage:null, uploadErrorModal: false, paymentPreview: true,worningMessage:null }, () => { })
+            this.setState({ ...this.state, showModal: false,errorMessage:null, uploadErrorModal: false, paymentPreview: true,worningMessage:null })
         }
         else{
             this.setState({...this.state,errorMessage:this.isErrorDispaly(res)})
@@ -390,7 +389,7 @@ downLoadPreview=()=>{
                         <Tooltip title="Close">
                             <span
                                 className="icon md close-white c-pointer"
-                                onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false }, () => { })}
+                                onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false })}
                             />
                         </Tooltip>
                     }
@@ -416,7 +415,7 @@ downLoadPreview=()=>{
                         <Tooltip title="Close">
                             <span
                                 className="icon md close-white c-pointer"
-                                onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false }, () => { })}
+                                onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false })}
                             />
                         </Tooltip>
                     }
@@ -432,7 +431,7 @@ downLoadPreview=()=>{
                             <div>We have detected {this.state.file?.invalidTransactionCount} errors out of</div>
                             <div>the {this.state.file?.transactionCount} transactions requested.</div></Paragraph>
                             {this.state?.file.validTransactionCount > 0 &&(
-                           <div> <Button className="primary-btn pop-btn"  onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false, paymentPreview: true }, () => { })}>
+                           <div> <Button className="primary-btn pop-btn"  onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false, paymentPreview: true })}>
                             Proceed with {" "} {this.state.file?.validTransactionCount} transactions
                             </Button></div>)}
                             <br></br>
