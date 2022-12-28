@@ -28,7 +28,6 @@ const BatchpaymentView = (props) => {
     const [previewPath, setPreviewPath] = useState(null);
 	const [previewModal, setPreviewModal] = useState(false);
     const [data,setData]=useState({});
-    const [isLoading,setIsLoading]=useState(false);
     const [deleteGridDoc,setDeleteGridDoc]=useState(null);
     const gridRef = React.createRef();
     const gridColumns = [
@@ -53,7 +52,7 @@ const BatchpaymentView = (props) => {
     	customCell: (props) => (
             <td>
                 <div>
-              {props.dataItem.documentdetail?.map(item=>
+              {props.dataItem.beneficiarydetail?.map(item=>
                 <>
                 <div>
                 <span className="text-yellow gridLink"  onClick={() => docPreview(item)}>{item.documentName}</span>
@@ -67,7 +66,7 @@ const BatchpaymentView = (props) => {
         { field: "supportingDocument", title: 'Supporting Document', filter: true, width: 240,
             customCell: (props) => (
             <td className='text-center'><div className="gridLink text-center" >
-                <Button className='pop-btn px-36' disabled={props.dataItem.transactionStatus==="Approved"} onClick={()=>showUploadModal(props.dataItem)}>
+                <Button className='pop-btn px-36' disabled={props.dataItem.transactionStatus==="Approved"||props.dataItem.transactionStatus==="Rejected"} onClick={()=>showUploadModal(props.dataItem)}>
                     Upload
                     </Button>
               </div></td>)
@@ -170,12 +169,10 @@ const BatchpaymentView = (props) => {
         
     }
     const deleteGridDocuments=async()=>{
-        setIsLoading(true);
         const res=await deleteDocumentDetails(deleteGridDoc?.documentId)
         if(res.ok){
             gridRef?.current?.refreshGrid();
             setDeleteModal(false);
-        setIsLoading(false)
         }
         else{
             setErrorMessage(isErrorDispaly(res));
@@ -197,9 +194,7 @@ const BatchpaymentView = (props) => {
 		}
 	  };
     const uploadDocument= async()=>{
-        console.log(deleteGridDoc);
         setErrorMessage(null);
-        // setIsLoading(true)
                 let obj={
                     "id": data?.id,
                     "customerId": props?.userConfig?.id,
@@ -223,11 +218,9 @@ const BatchpaymentView = (props) => {
         const res =await uploadDocuments(obj)
              if(res.ok){
                 gridRef?.current?.refreshGrid();
-                // setIsLoading(false);
                 setUploadModal(false)
              }
                 else{
-                    setIsLoading(false);
                     setErrorMessage(isErrorDispaly(res))
                 }
   }
@@ -302,9 +295,7 @@ const filePreviewPath = () => {
 		</Modal>
 	);
     return (
-        
         <>
-       
         < div className='main-container'>
             <Title className="basicinfo "><span className='icon md c-pointer back mr-8' onClick={() => props.history.push('/batchpayment')}/><Text className="basicinfo">{props.match.params.fileName} / { props.match.params.currency}</Text></Title>
             <div className="box basic-info text-white" style={{ clear: 'both' }}>
@@ -329,7 +320,6 @@ const filePreviewPath = () => {
                     </Tooltip>
                   }
                 footer={<div><Button className='pop-btn custom-send sell-btc-btn'
-                //  loading={isLoading}
                  onClick={uploadDocument} 
                  
                  >Upload</Button></div>}>
@@ -416,7 +406,7 @@ const filePreviewPath = () => {
                 onClick={() => deleteModalCancel()}>No</Button>
               <Button className="pop-btn px-36 btn-width"
                 onClick={() => deleteGridDocuments()}
-                loading={isLoading}>Yes</Button></div>
+                >Yes</Button></div>
             </>
           ]}
         >

@@ -10,7 +10,8 @@ import { Link,withRouter } from "react-router-dom";
 import PaymentPreview from './paymentPreview';
 import pending1 from '../../assets/images/pending1.png'
 import Loader from '../../Shared/loader';
-const { Title,Paragraph } = Typography
+import { getVerificationFields } from "../onthego.transfer/verification.component/api"
+const { Title, Paragraph, Text } = Typography
 class AddBatchPayment extends Component {
     useDivRef = React.createRef()
 
@@ -36,6 +37,8 @@ class AddBatchPayment extends Component {
         uploadUrl:process.env.REACT_APP_API_END_POINT + "/MassPayment/importfileUpload",
         worningMessage:null,
         loader:true,
+        isVerificationEnable: false,
+        isVarificationLoader: true,
     }
 
     componentDidMount() {
@@ -47,8 +50,28 @@ class AddBatchPayment extends Component {
                 this.setState({ ...this.state, fiatWallets: [], paymentCoinsList: [], fiatWalletsLoading: false });
             }
           });
+          this.verificationCheck();
       }
 
+      verificationCheck = async () => {
+        this.setState({ ...this.state, isVarificationLoader: true,fiatWalletsLoading: true  })
+        const verfResponse = await getVerificationFields();
+        let minVerifications = 0;
+        if (verfResponse.ok) {
+          for (let verifMethod in verfResponse.data) {
+          if (["isEmailVerification", "isPhoneVerified", "twoFactorEnabled", "isLiveVerification"].includes(verifMethod) && verfResponse.data[verifMethod] === true) {
+            minVerifications = minVerifications + 1;
+          }
+          }
+          if (minVerifications >= 2) {
+          this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: false })
+            } else {
+              this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: true })
+          }
+        } else {
+          this.setState({ ...this.state, isVarificationLoader: false, errorMessage: this.isErrorDispaly(verfResponse) })
+        }
+        }
     handleSearch = ({ target: { value: val } }) => {
         if (val) {
             const fiatWallets = this.state.paymentCoinsList?.filter(item => item.walletCode.toLowerCase().includes(val.toLowerCase()));
@@ -208,7 +231,7 @@ downLoadPreview=()=>{
         }
     }
     render() {
-        const { uploadLoader, refreshBtnLoader ,errorMessage,worningMessage} = this.state;
+        const { uploadLoader, refreshBtnLoader ,errorMessage,worningMessage,isVerificationEnable} = this.state;
         return (
             <>
                <div ref={this.useDivRef}></div>
@@ -231,10 +254,11 @@ downLoadPreview=()=>{
             closeIcon={null}
             className="side-drawer w-50p"
         >
-            { !this.state.isCoinsListHide && <>
+
+            {!this.state.isCoinsListHide && <>
            
-            {this.state.fiatWalletsLoading && <Loader />}
-          {!this.state.fiatWalletsLoading && (<>
+            {this.state.fiatWalletsLoading &&<Loader />}
+          {!this.state.fiatWalletsLoading && !isVerificationEnable && (<>
             <div className="mt-8">
                 <Title
                     className='sub-heading code-lbl'>Make Payments</Title>
@@ -254,7 +278,7 @@ downLoadPreview=()=>{
                 }}
                 renderItem={item => (
                     <List.Item onClick={
-                        () => this.setState({ ...this.state, selectedCurrency: item.walletCode, isCoinsListHide: true }, () => { })}>
+                        () => this.setState({ ...this.state, selectedCurrency: item.walletCode, isCoinsListHide: true}, () => { })}>
                     <Link>
                       <List.Item.Meta
                         avatar={<Image preview={false} src={item.imagePath} />}
@@ -271,7 +295,21 @@ downLoadPreview=()=>{
               />
               </>)}
               </>}
-              {this.state.isCoinsListHide && <>
+              {isVerificationEnable && !this.state.fiatWalletsLoading && !this.state.isCoinsListHide&& (
+                  <Alert 
+                  message="Verification alert !"
+                  description={<Text>Without verifications you can't send. Please select send verifications from <Link onClick={() => {
+                      this.props.history.push("/userprofile/2");
+                      if (this.props?.onClosePopup) {
+                          this.props?.onClosePopup();
+                      }
+                  }}>security section</Link></Text>}
+                  type="warning"
+                  showIcon
+                  closable={false}
+              />
+              )}
+              {this.state.isCoinsListHide&& <>
                 {worningMessage !== null && (
           <Alert type="error" description={worningMessage} showIcon />
                )}
@@ -280,9 +318,7 @@ downLoadPreview=()=>{
                
                 <div className='text-center makepayment-section'>
             <Title className='text-white fs-24 fw-500'>Send {this.state.selectedCurrency} to Multiple Addresses</Title>
-            <Upload
-                                    
-                                    //key={i}
+                                             <Upload
                                               type="dashed"
                                               size="large"
                                               className="ml-8 mt-12"
@@ -363,12 +399,14 @@ downLoadPreview=()=>{
                     onClick={this.handleNext}>Next</Button>}>
                         <>
                         {errorMessage !== null && (
-          <Alert type="error" description={errorMessage} showIcon />
-               )}
+                      <Alert type="error" description={errorMessage} showIcon />
+                       )}
+                     {errorMessage === null&&
                         <div className=' pt-16'>
                             <Paragraph className='text-white fs-18'>Document has been successfully uploaded</Paragraph>
                            
                         </div>
+                     }
                         </>
                 </Modal>
                 <Modal
