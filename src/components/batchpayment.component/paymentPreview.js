@@ -10,7 +10,7 @@ import PaymentSummary from "./paymentSummary";
 import List from "../grid.component";
 import NumberFormat from "react-number-format";
 import {confirmGetDetails} from './api'
-const { Paragraph } = Typography
+const { Paragraph,Text } = Typography
 class PaymentPreview extends Component {
   constructor(props) {
     super(props);
@@ -40,7 +40,14 @@ returnDashboard=()=>{
   { field: "beneficiaryName", title: "First & Last Name/Beneficiary Name", filter: true,width: 335},
   { field: "relationshipToBeneficiary", title: "Relationship To Beneficiary", filter: true,width: 270},
   { field: "address", title: "Address", filter: true,width: 250},
-  { field: "addressType", title: "Address Type", filter: true,width: 250},
+  { field: "addressType", title: "Address Type", filter: true,width: 250,
+  customCell: (props) => (
+    <td className="d-flex justify-content">
+      <Text className="text-white">
+        {this.addressTypeNames(props?.dataItem?.addressType)}
+      </Text>
+    </td>
+  ),},
   { field: "transferType", title: "Transfer Type", filter: true,width: 250},
   { field: "amount", title: "Amount in USD", filter: true,width: 250},
   { field: "accountNumber", title: 'Account Number/IBAN', filter: true, width: 260},
@@ -55,15 +62,37 @@ gridEURColumns = [
   { field: "beneficiaryName", title: "Beneficiary Name", filter: true,width: 250},
   { field: "relationshipToBeneficiary", title: "Relationship To Beneficiary", filter: true,width: 250},
   { field: "address", title: "Address", filter: true,width: 250},
-  { field: "addressType", title: "Address Type", filter: true,width: 250},
-  { field: "transferType", title: "Transfer Type", filter: true,width: 250},
+  { field: "addressType", title: "Address Type", filter: true,width: 250,
+  customCell: (props) => (
+    <td className="d-flex justify-content">
+      <Text className="text-white">
+        {this.addressTypeNames(props?.dataItem?.addressType)}
+      </Text>
+    </td>
+  )},
+  { field: "transferType", title: "Transfer Type", filter: true,width: 250,
+  customCell: (props) => (
+    <td>
+      <Text className="text-upper text-white">
+        {props?.dataItem?.transferType}
+      </Text>
+    </td>
+  )},
   { field: "amount", title: "Amount in EUR", filter: true,width: 250},
-  { field: "iban", title: "IBAN", filter: true,width: 250},
+  { field: "accountNumber", title: "IBAN", filter: true,width: 250},
   { field: "reasonforTransfer", title: 'Reason For Transfer', filter: true, width: 200},
   { field: "reference", title: 'Reference', filter: true, width: 250 },
 ];
 
-
+addressTypeNames = (type) => {
+  const stepcodes = {
+    "ownbusiness": "My Company",
+    "individuals": "Individuals",
+    "otherbusiness": "Other Business",
+    "myself": "My Self"
+  };
+  return stepcodes[type];
+};
 confirmPreview = async () => {
    this.setState({...this.state,errorMessage:null,isLoad:true})
    let response = await confirmGetDetails(this.props?.id ||this.props?.fileData?.id)

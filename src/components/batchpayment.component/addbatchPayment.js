@@ -399,12 +399,14 @@ downLoadPreview=()=>{
                     onClick={this.handleNext}>Next</Button>}>
                         <>
                         {errorMessage !== null && (
-          <Alert type="error" description={errorMessage} showIcon />
-               )}
+                      <Alert type="error" description={errorMessage} showIcon />
+                       )}
+                     {errorMessage === null&&
                         <div className=' pt-16'>
                             <Paragraph className='text-white fs-18'>Document has been successfully uploaded</Paragraph>
                            
                         </div>
+                     }
                         </>
                 </Modal>
                 <Modal
