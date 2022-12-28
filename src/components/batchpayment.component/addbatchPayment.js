@@ -96,6 +96,7 @@ class AddBatchPayment extends Component {
         this.setState({...this.state,worningMessage:null})
         if (file.name.split('.').length > 2) {
            this.setState({...this.state,worningMessage:"File don't allow double extension"})
+          return true;
         }
         
         let fileType = {
@@ -117,11 +118,12 @@ class AddBatchPayment extends Component {
     };
   
 handleUpload = ({ file }) => {
+  this.setState({...this.state,})
     if (file.name.split('.').length > 2) {
       this.setState({ ...this.state, errorMessage: null, uploadLoader: false,});
     }
     else{
-        this.setState({ ...this.state, errorMessage: null, uploadLoader: false,showInprogressModal:true });
+        this.setState({ ...this.state, errorMessage: null, uploadLoader: true,showInprogressModal:true });
       let obj = {
         "id":"00000000-0000-0000-0000-000000000000",
         "documentName": `${file.name}`,
