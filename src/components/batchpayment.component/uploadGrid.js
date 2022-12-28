@@ -28,7 +28,6 @@ const BatchpaymentView = (props) => {
     const [previewPath, setPreviewPath] = useState(null);
 	const [previewModal, setPreviewModal] = useState(false);
     const [data,setData]=useState({});
-    const [isLoading,setIsLoading]=useState(false);
     const [deleteGridDoc,setDeleteGridDoc]=useState(null);
     const gridRef = React.createRef();
     const gridColumns = [
@@ -67,7 +66,7 @@ const BatchpaymentView = (props) => {
         { field: "supportingDocument", title: 'Supporting Document', filter: true, width: 240,
             customCell: (props) => (
             <td className='text-center'><div className="gridLink text-center" >
-                <Button className='pop-btn px-36' disabled={props.dataItem.transactionStatus==="Approved"} onClick={()=>showUploadModal(props.dataItem)}>
+                <Button className='pop-btn px-36' disabled={props.dataItem.transactionStatus==="Approved"||props.dataItem.transactionStatus==="Rejected"} onClick={()=>showUploadModal(props.dataItem)}>
                     Upload
                     </Button>
               </div></td>)
@@ -407,7 +406,7 @@ const filePreviewPath = () => {
                 onClick={() => deleteModalCancel()}>No</Button>
               <Button className="pop-btn px-36 btn-width"
                 onClick={() => deleteGridDocuments()}
-                loading={isLoading}>Yes</Button></div>
+                >Yes</Button></div>
             </>
           ]}
         >
