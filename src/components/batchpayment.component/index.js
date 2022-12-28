@@ -20,7 +20,6 @@ const Batchpayments = (props) => {
   const [deleteModal,setDeleteModal]=useState(false);
   const [setSelectData, setSetSelectData] = useState({});
   const [errorMessage,setErrorMessage]=useState(null); 
-  const [isLoading,setIsLoading]=useState(false);
 
   const viewMode = (e) => {
     setProceedBatchPayment(false)
@@ -153,21 +152,15 @@ const Batchpayments = (props) => {
     }
    }
     const deleteDetials = async () => {
-      setIsLoading(true);
       const res = await deleteBatchPayments(selection[0])
       if (res.ok) {
-       
-        setTimeout(() => {
           gridRef?.current?.refreshGrid();
-      }, 1000)
       setDeleteModal(false);
-        setIsLoading(false);
         setSelection([]);
       }
       else{
         setErrorMessage(isErrorDispaly(res));
         setDeleteModal(false);
-        setIsLoading(false);
         setSelection([]);
       }
     };
@@ -215,12 +208,7 @@ const Batchpayments = (props) => {
     };
       return (
         <>
-       
-       
           <div className='main-container'>
-          
-              
-              
                   <div className='d-flex justify-content align-center mb-16'>
                 
                       <Title className="basicinfo mb-0"><span className='icon md c-pointer back mr-8' onClick={gotoDashboard}></span><Translate content="batch_payments" component={Text} className="basicinfo" />
@@ -231,12 +219,7 @@ const Batchpayments = (props) => {
                   <span className="mb-right">
           <ActionsToolbar featureKey="Batch_Payment" onActionClick={(key) => onActionClick(key)}/>
           </span>
-                  
-                  
                   </div>
-                      
-              
-                  
               </div>
               {errorWarning !== null && (
             <Alert
@@ -268,16 +251,16 @@ const Batchpayments = (props) => {
               {isAddBatchDrawer && 
               <AddBatchPayment
                   showDrawer={isAddBatchDrawer}
-                  onClose={(isPreviewBack) => {
-                    closeDrawer(isPreviewBack);
+                  onClose={() => {
+                    closeDrawer();
                 }}
               /> }
               {isProceedBatchPayment && 
               <PaymentPreview 
               showDrawer={isProceedBatchPayment}
               id={selectedObj}
-              onClose={(isPreviewBack) => {
-                  closeDrawer(isPreviewBack);
+              onClose={() => {
+                  closeDrawer();
               }}
               currency={setSelectData?.currency}
               ></PaymentPreview>
@@ -297,7 +280,6 @@ const Batchpayments = (props) => {
                 onClick={()=>deleteModalCancel()}>Cancel</Button>
               <Button className="pop-btn px-36 btn-width"
                 onClick={deleteDetials}
-                loading={isLoading}
                 >Ok</Button></div>
             </>
           ]}

@@ -170,12 +170,10 @@ const BatchpaymentView = (props) => {
         
     }
     const deleteGridDocuments=async()=>{
-        setIsLoading(true);
         const res=await deleteDocumentDetails(deleteGridDoc?.documentId)
         if(res.ok){
             gridRef?.current?.refreshGrid();
             setDeleteModal(false);
-        setIsLoading(false)
         }
         else{
             setErrorMessage(isErrorDispaly(res));
@@ -197,9 +195,7 @@ const BatchpaymentView = (props) => {
 		}
 	  };
     const uploadDocument= async()=>{
-        console.log(deleteGridDoc);
         setErrorMessage(null);
-        // setIsLoading(true)
                 let obj={
                     "id": data?.id,
                     "customerId": props?.userConfig?.id,
@@ -223,11 +219,9 @@ const BatchpaymentView = (props) => {
         const res =await uploadDocuments(obj)
              if(res.ok){
                 gridRef?.current?.refreshGrid();
-                // setIsLoading(false);
                 setUploadModal(false)
              }
                 else{
-                    // setIsLoading(false);
                     setErrorMessage(isErrorDispaly(res))
                 }
   }
@@ -302,9 +296,7 @@ const filePreviewPath = () => {
 		</Modal>
 	);
     return (
-        
         <>
-       
         < div className='main-container'>
             <Title className="basicinfo "><span className='icon md c-pointer back mr-8' onClick={() => props.history.push('/batchpayment')}/><Text className="basicinfo">{props.match.params.fileName} / { props.match.params.currency}</Text></Title>
             <div className="box basic-info text-white" style={{ clear: 'both' }}>
@@ -329,7 +321,6 @@ const filePreviewPath = () => {
                     </Tooltip>
                   }
                 footer={<div><Button className='pop-btn custom-send sell-btc-btn'
-                //  loading={isLoading}
                  onClick={uploadDocument} 
                  
                  >Upload</Button></div>}>

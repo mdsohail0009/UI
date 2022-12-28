@@ -82,14 +82,10 @@ class PaymentSummary extends Component {
 			}else{
 				this.setState({ ...this.state, showDeclaration:false,insufficientModal:true,loading:false});
 			}
-			
 		}else{
 			this.setState({ ...this.state,  errorMessage: this.isErrorDispaly(response) ,loading:false})
 
-			
 		}
-
-		
 	}
 	
 	isErrorDispaly = (objValue) => {
@@ -139,8 +135,6 @@ class PaymentSummary extends Component {
 	render() {
 		const {  isShowGreyButton,errorMessage,loading } = this.state;
 		return (<>
-		          
-
 			<div>
 			<Drawer destroyOnClose={true}
             title={[<div className="side-drawer-header"><span></span>
@@ -279,7 +273,6 @@ class PaymentSummary extends Component {
                         </div>
                         </>
                 </Modal>
-			
 		</>
 		)
 	}

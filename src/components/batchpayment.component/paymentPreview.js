@@ -149,11 +149,8 @@ isErrorDispaly = (objValue) => {
                 
                 </div>
           </div>
-         
-                
-               
         </Drawer>
-        {this.state.paymentSummary &&
+               {this.state.paymentSummary &&
                        <PaymentSummary
                         showDrawer={this.state.paymentSummary}
                         onClose={this.closeDrawer }
@@ -163,7 +160,7 @@ isErrorDispaly = (objValue) => {
                         fileData={this.props?.fileData}
                     />
                        }
-        <Modal
+               <Modal
                     visible={this.state.showModal}
                     title="Proceed with Transactions"
                     closeIcon={
@@ -179,7 +176,6 @@ isErrorDispaly = (objValue) => {
                     footer={null}
                     >
                     <>
-                    
                         <div className='text-center pt-16'>
                             <Paragraph className='text-white fs-18'>
                             <div>You do not have enough balance.</div>
