@@ -55,8 +55,8 @@ const Batchpayments = (props) => {
           field: "fileName", title: "File Name", filter: true, width: 200,
           customCell: (props) => (
             <td>
-              {props?.dataItem.status==="Draft"?<> {props?.dataItem?.fileName}</>:
-             <div className="gridLink" onClick={()=>viewMode(props)} >
+              {props?.dataItem.status==="Draft"?<div  className='draft-filename'> {props?.dataItem?.fileName}</div>:
+             <div className="gridLink batch-filename" onClick={()=>viewMode(props)} >
               {props?.dataItem?.fileName}</div>}
               </td>) 
         },

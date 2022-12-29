@@ -136,9 +136,9 @@ isErrorDispaly = (objValue) => {
 
         <Drawer
           title={[<div className="side-drawer-header">
-            <span></span>
+            
              <div className="text-center">
-                <div className='text-white fs-24 fw-500'>Preview</div>
+                <div className='text-white fs-26 fw-400'>Preview</div>
                 </div>
            
             <span onClick={this.props.onClose} className="icon md close-white c-pointer" />
@@ -151,13 +151,13 @@ isErrorDispaly = (objValue) => {
           className="side-drawer-full custom-gridresponsive transctns-grid"
         >
 
-          < div className='main-container'>
+          {/* < div className='main-container'> */}
           
           {this.state.errorMessage !== null && (
           <Alert type="error" description={this.state.errorMessage} showIcon />
                )}
-               <div className="box basic-info text-white" style={{ clear: 'both' }}>
-               <Translate content="bathch_payments_preview" component={Title} className="fs-26 fw-400 mb-14 text-white-30" />
+               <div className="text-white" style={{ clear: 'both' }}>
+               <Translate content="bathch_payments_preview" component={Title} className="sub-heading" />
                 
                   {this.props?.currency === "EUR" ? (
 						<List
@@ -186,7 +186,7 @@ isErrorDispaly = (objValue) => {
                         onClick={this.confirmPreview}>Confirm</Button>
                 
                 </div>
-          </div>
+          {/* </div> */}
         </Drawer>
                {this.state.paymentSummary &&
                        <PaymentSummary
