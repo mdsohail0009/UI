@@ -36,7 +36,7 @@ returnDashboard=()=>{
   this.props.history.push("/cockpit")
 }
  gridUSDColumns = [
-  { field: "whiteListName", title: "Whitelist Name", filter: true,width: 200},
+  { field: "whiteListName", title: "Whitelist Name", filter: true,width:300},
   { field: "beneficiaryName", title: "First & Last Name/Beneficiary Name", filter: true,width: 335},
   { field: "relationshipToBeneficiary", title: "Relationship To Beneficiary", filter: true,width: 270},
   { field: "address", title: "Address", filter: true,width: 250},
@@ -48,7 +48,16 @@ returnDashboard=()=>{
       </Text>
     </td>
   ),},
-  { field: "transferType", title: "Transfer Type", filter: true,width: 250},
+  { field: "transferType", title: "Transfer Type", filter: true,width: 250,
+  customCell: (props) => (
+    <td>
+      <Text className="text-upper text-white">
+        {((props?.dataItem?.transferType === "internationalIBAN") && "International USD IBAN") ||
+															props?.dataItem?.transferType.toUpperCase()}
+      </Text>
+    </td>
+  )
+  },
   { field: "amount", title: "Amount in USD", filter: true,width: 250},
   { field: "accountNumber", title: 'Account Number/IBAN', filter: true, width: 260},
   { field: "abaShiftCode", title: 'ABA Routing/ Swift / BIC Code', filter: true, width: 300 },
@@ -58,7 +67,7 @@ returnDashboard=()=>{
   { field: "reference", title: 'Reference', filter: true, width: 200},
 ];
 gridEURColumns = [
-  { field: "whiteListName", title: "Whitelist Name", filter: true,width: 200},
+  { field: "whiteListName", title: "Whitelist Name", filter: true,width: 300},
   { field: "beneficiaryName", title: "Beneficiary Name", filter: true,width: 250},
   { field: "relationshipToBeneficiary", title: "Relationship To Beneficiary", filter: true,width: 250},
   { field: "address", title: "Address", filter: true,width: 250},
@@ -127,9 +136,9 @@ isErrorDispaly = (objValue) => {
 
         <Drawer
           title={[<div className="side-drawer-header">
-            <span></span>
+
              <div className="text-center">
-                <div className='text-white fs-24 fw-500'>Preview</div>
+                <div className='text-white fs-26 fw-400'>Preview</div>
                 </div>
            
             <span onClick={this.props.onClose} className="icon md close-white c-pointer" />
@@ -142,13 +151,12 @@ isErrorDispaly = (objValue) => {
           className="side-drawer-full custom-gridresponsive transctns-grid"
         >
 
-          < div className='main-container'>
           
           {this.state.errorMessage !== null && (
           <Alert type="error" description={this.state.errorMessage} showIcon />
                )}
-               <div className="box basic-info text-white" style={{ clear: 'both' }}>
-               <Translate content="bathch_payments_preview" component={Title} className="fs-26 fw-400 mb-14 text-white-30" />
+               <div className="text-white" style={{ clear: 'both' }}>
+               <Translate content="bathch_payments_preview" component={Title} className="sub-heading" />
                 
                   {this.props?.currency === "EUR" ? (
 						<List
@@ -177,7 +185,6 @@ isErrorDispaly = (objValue) => {
                         onClick={this.confirmPreview}>Confirm</Button>
                 
                 </div>
-          </div>
         </Drawer>
                {this.state.paymentSummary &&
                        <PaymentSummary

@@ -4,7 +4,10 @@ import { store } from '../../store'
 import moment from 'moment';
 import CryptoJS from "crypto-js";
 import { ExcelExport } from '@progress/kendo-react-excel-export'
-// import { excellExportSubject } from './subscribir';
+import { savePDF, PDFExport } from '@progress/kendo-react-pdf';
+import logColor from '../../assets/images/logo-color.png';
+import { withRouter, Link } from "react-router-dom";
+import { Dropdown,Space,Menu, } from 'antd';
 const filterOperators = {
     'text': [
         { text: 'grid.filterContainsOperator', operator: 'contains' },
@@ -38,20 +41,49 @@ const filterOperators = {
         { text: 'grid.filterEqOperator', operator: 'eq' }
     ]
 }
+
+    // menuBar = (item) => (
+    //     <Menu>
+    //       <ul className="pl-0 drpdwn-list">
+    //         <li
+             
+    //         >
+    //           <Link value={5} className="c-pointer">
+    //             Internal Transfer
+    //           </Link>
+    //         </li>
+    //         <li
+              
+    //         >
+    //           <Link value={5} className="c-pointer">
+    //           Go To Personal Bank Account
+    //           </Link>
+    //         </li>
+    //         <li
+              
+    //         >
+    //           <Link value={5} className="c-pointer">
+    //           Transfer To Suissebase Digital Wallet
+    //           </Link>
+    //         </li>
+    //       </ul>
+    //     </Menu>
+    //   );
+
 export function withState(WrappedGrid) {
     return class StatefullGrid extends React.Component {
         constructor(props) {
             super(props);
-            this.state = { dataState: { skip: 0, take: 10 }, additionalParams: null, data: [], isLoading: false };
+            this.state = { dataState: { skip: 0, take: 10 }, additionalParams: null, data: [], isLoading: false, profile: store.getState().userConfig?.userProfileInfo };
             this.excelRef = React.createRef();
-            // this.exportSubscriber = excellExportSubject.subscribe(() => {
-            // });
+            this.gridref = React.createRef(null);
+            this.tempRef = React.createRef(null)
         }
         numberWithCommas(x) {
-            if(!x){
+            if (!x) {
                 return ''
-            }else if((typeof x) === 'string'){
-               return x 
+            } else if ((typeof x) === 'string') {
+                return x
             }
             x = (typeof x) == 'string' ? x : x.toString();
             var arParts = x.split('.');
@@ -59,15 +91,9 @@ export function withState(WrappedGrid) {
             var decPart = (arParts.length > 1 ? arParts[1] : '');
             return '' + intPart + (decPart ? ('.' + decPart) : '');
         }
-        // numberWithCommas(x) {
-        //     return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-        // }
         refreshGrid() {
             this.fetchData(this.state.dataState);
         }
-        //     componentWillUnmount() {
-        //         this.exportSubscriber.unsubscribe();
-        //   }
         loadingPanel = (
             <div className="k-loading-mask">
                 <span className="k-loading-text">Loading</span>
@@ -75,58 +101,144 @@ export function withState(WrappedGrid) {
                 <div className="k-loading-color"></div>
             </div>
         );
+        exportToPDF = () => {
+            if (this.tempRef.current)
+                this.tempRef.current.save();
+        }
+        getPDFROWS = () => {
+
+        }
+        getCombineFieldValue = (dataItem, fields) => {
+            for (const i in this.props.columns) {
+                if (this.props.columns[i].filterType === "numeric") {
+                    dataItem[fields[0]] = this.numberWithCommas(dataItem[fields[0]])
+                    dataItem[fields[1]] = this.numberWithCommas(dataItem[fields[1]])
+                }
+            }
+            return dataItem[fields[0]] && dataItem[fields[1]] ? `${dataItem[fields[0]]} / ${dataItem[fields[1]]}` : (dataItem[fields[0]] || dataItem[fields[1]]);
+        }
+        handleExcelExport = () => {
+
+            if (this.excelRef) {
+                if (this.excelRef?.current.save) {
+                    let workbook = this.excelRef.current.workbookOptions(); // get the workbook.
+                    workbook.sheets[0].rows.map((item, index) => {
+                        if (item.type === "data") {
+                            for (const i in this.props.columns) {
+                                const idx = this.props.columns.length === item.cells.length ? i : (i - 1);
+                                if (this.props.columns[i].filterType === "date") {
+                                    if (item.cells[idx].value)
+                                        item.cells[idx].value = moment(item.cells[idx].value).format("DD/MM/YYYY hh:mm a")
+                                }
+                                if (this.props.columns[i].filterType === "numeric") {
+                                    if (item.cells[idx].value)
+                                        item.cells[idx].value = this.numberWithCommas(item.cells[idx].value);
+                                    item.cells[idx].textAlign = "right";
+                                }
+                                if (this.props.columns[i]?.combine) {
+                                    item.cells[idx].value = this.getCombineFieldValue(this.excelRef?.current.props.data[index - 1], this.props.columns[i].combineFields)
+                                }
+                            }
+                        }
+                    });
+                    this.excelRef.current.save(workbook);
+                }
+                // this.excelRef.save(workbook);
+            }
+
+        }
         render() {
             return (
-                <div style={{ position: 'relative' }}>
-                    {this.state.isLoading && this.loadingPanel}
-                    {this.props.showExcelExport && <div className='text-right'> <button
-                        title={this.props?.exExportTitle || "Export Excel"}
-                        className="k-button k-button-md k-rounded-md k-button-solid  mt-16 mb-16 mr-16 search-btn primary-btn excel-btn"
-                        onClick={() => {
-                            const getCombineFieldValue = (dataItem, fields) => {
-                                for (const i in this.props.columns) {
-                                if(this.props.columns[i].filterType === "numeric"){
-                                    dataItem[fields[0]] = this.numberWithCommas(dataItem[fields[0]])
-                                    dataItem[fields[1]] = this.numberWithCommas(dataItem[fields[1]])
-                                   }
-                                }
-                                return dataItem[fields[0]] && dataItem[fields[1]] ? `${dataItem[fields[0]]} / ${dataItem[fields[1]]}` : (dataItem[fields[0]] || dataItem[fields[1]]);
-                            }
-                            if (this.excelRef) {
-                                if (this.excelRef?.current.save) {
-                                    let workbook = this.excelRef.current.workbookOptions(); // get the workbook.
-                                    workbook.sheets[0].rows.map((item, index) => {
-                                        if (item.type === "data") {
-                                            for (const i in this.props.columns) {
-                                                const idx = this.props.columns.length === item.cells.length ? i : (i - 1);
-                                                if (this.props.columns[i].filterType === "date") {
-                                                    if (item.cells[idx].value)
-                                                        item.cells[idx].value = moment(item.cells[idx].value).format("DD/MM/YYYY hh:mm a")
-                                                }
-                                                if (this.props.columns[i].filterType === "numeric") {
-                                                    if (item.cells[idx].value)
-                                                        item.cells[idx].value = this.numberWithCommas(item.cells[idx].value);
-                                                    item.cells[idx].textAlign = "right";
-                                                }
-                                                if (this.props.columns[i]?.combine) {
-                                                    item.cells[idx].value = getCombineFieldValue(this.excelRef?.current.props.data[index-1], this.props.columns[i].combineFields)
-                                                }
-                                            }
-                                        }
-                                    });
-                                    this.excelRef.current.save(workbook);
-                                }
-                                // this.excelRef.save(workbook);
-                            }
+                <div >
+                    <div style={{ position: "absolute", left: "-1500px", top: 0 }}>
+                        <PDFExport margin={5} scale={0.55} paperSize="A4" repeatHeaders={true} fileName='Transaction History' ref={this.tempRef}>
+                            <table width="100%">
+                                <tr>
 
-                        }}
-                    >
-                       {this.props?.exExportTitle || "Export Excel"}
-                    </button>
+                                    <td colspan="2" style={{ fontSize: "26px", fontWeight: 700, textAlign: "center", fontWeight: "700" }}><h1>Suissebase Account Statement</h1></td>
+
+                                </tr>
+                            </table>
+                            <div className='statement-header logo-content'>
+                                <div> <img src={logColor} className="logo" /></div>
+                                {
+                                    <ul style={{ fontWeight: 500, margin: "0", padding: "0" }}>
+                                        <li> Name : {`${this.state.profile.firstName} ${this.state.profile.lastName}`}</li>
+                                        <li> Email : {this.state.profile.email}</li>
+                                        <li> Phone : {this.state.profile.phoneNo || this.state.profile.phoneNumber}</li>
+                                    </ul>
+                                }
+                            </div>
+                            <div>
+                                <table className="transaction-pdf-template">
+                                    <thead style={{ background: "#cccccc" }}>
+                                        <th >Transaction Id</th>
+                                        <th >Date</th>
+                                        <th >Type</th>
+                                        <th >Wallet</th>
+                                        <th >Value</th>
+                                        <th >Sender/Recipient Full Name</th>
+                                        <th >Bank Account Number /IBAN</th>
+                                        <th >Status</th>
+                                    </thead>
+                                    <tbody>
+                                        {this.state?.data?.map(item => <tr>
+                                            <td>{item.transactionId}</td>
+                                            <td >{moment(item.date).format("DD/MM/YYYY hh:mm a")}</td>
+                                            <td >{item.docType}</td>
+                                            <td >{item.wallet}</td>
+                                            <td >{this.getCombineFieldValue(item, ["credit", "debit"])}</td>
+                                            <td >{this.getCombineFieldValue(item, ["senderName", "beneficiryName"])}</td>
+                                            <td >{this.getCombineFieldValue(item, ["accountnumber", "iban"])}</td>
+                                            <td >{item.state}</td>
+                                        </tr>)}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </PDFExport>
+                    </div>
+                    {this.state.isLoading && this.loadingPanel}
+                    {this.props.showExcelExport && <div className='text-right secureDropdown export-pdf'>
+                        {/* <Dropdown.Button className=" k-button-solid  mt-16 mb-16 mr-16"
+                            overlay={
+                                <div>
+                                    <button onClick={this.handleExcelExport}>Export to Excel</button><br />
+                                    <button onClick={this.exportToPDF}>Export to Pdf</button>
+                                </div>
+                            }>
+                            Download Transaction History
+                        </Dropdown.Button> */}
+                        <Dropdown.Button
+                        className="mt-16 mb-16"
+                          overlay={<div className='ant-dropdown-menu history-excel'>
+                            <ul className='pl-0 drpdwn-list'>
+                            <li onClick={this.handleExcelExport}><a>Export to Excel</a></li>
+                            <li onClick={this.exportToPDF}><a>Export to Pdf</a></li></ul>
+                        </div>}
+
+                          placement="bottomCenter"
+                          arrow
+                          overlayClassName=""
+                        >
+                             Download Transaction History
+                        </Dropdown.Button>
+                        {/* <Dropdown
+                          overlay={this.menuBar(item)}
+                          trigger={["click"]}
+                          placement="bottomCenter"
+                          arrow
+                          overlayClassName="secureDropdown depwith-drpdown"
+                        >
+                          <Link >
+                            <Space>
+                              <span class="icon md menu-bar ml-4 p-relative"></span>
+                            </Space>
+                          </Link>
+                        </Dropdown> */}
                     </div>}
                     {this.props.showExcelExport ? <ExcelExport data={this.state.data} ref={this.excelRef} fileName={this.props?.excelFileName}>
 
-                        <WrappedGrid
+                        <WrappedGrid ref={this.gridref}
                             sortable={true}
                             resizable={true}
                             filterOperators={filterOperators}
@@ -140,7 +252,7 @@ export function withState(WrappedGrid) {
                             sort={this.state.dataState.sort}
                             onDataStateChange={this.handleDataStateChange}
                         />
-                    </ExcelExport> : <WrappedGrid
+                    </ExcelExport> : <WrappedGrid ref={this.gridref}
                         sortable={true}
                         resizable={true}
                         filterOperators={filterOperators}
@@ -157,11 +269,9 @@ export function withState(WrappedGrid) {
                 </div>
             );
         }
-
         componentDidMount() {
             this.fetchData(this.state.dataState);
         }
-
         handleDataStateChange = (changeEvent) => {
             let _dataState = changeEvent.dataState;
             if (isNaN(_dataState.take)) {
@@ -170,7 +280,6 @@ export function withState(WrappedGrid) {
             this.setState({ dataState: _dataState });
             this.fetchData(_dataState);
         }
-
         _encrypt = (msg, key) => {
             msg = typeof (msg) == 'object' ? JSON.stringify(msg) : msg;
             var salt = CryptoJS.lib.WordArray.random(128 / 8);
@@ -190,7 +299,6 @@ export function withState(WrappedGrid) {
             });
             return ((salt.toString()) + (iv.toString()) + (encrypted.toString()));
         }
-
         fetchData = (dataState) => {
             if (dataState.filter) {
                 dataState.filter.filters?.map((item) => {

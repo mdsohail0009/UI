@@ -53,17 +53,17 @@ const Batchpayments = (props) => {
         },
         {
           field: "fileName", title: "File Name", filter: true, width: 200,
-          customCell: (props) => (
+          customCell: (properites) => (
             <td>
-              {props?.dataItem.status==="Draft"?<> {props?.dataItem?.fileName}</>:
-             <div className="gridLink" onClick={()=>viewMode(props)} >
-              {props?.dataItem?.fileName}</div>}
+              {properites?.dataItem.status==="Draft"?<div  className='draft-filename'> {properites?.dataItem?.fileName}</div>:
+             <div className="gridLink batch-filename" onClick={()=>viewMode(properites)} >
+              {properites?.dataItem?.fileName}</div>}
               </td>) 
         },
         { field: "createdDate", title: "Date Created", filter: true, filterType: "date", width: 200, 
-        customCell: (props) => (
+        customCell: (properites) => (
           <td>
-              {props.dataItem?.createdDate ? <>{ moment.utc(props.dataItem?.createdDate).local().format("DD/MM/YYYY hh:mm:ss A")}</> : props.dataItem?.createdDate}
+              {properites.dataItem?.createdDate ? <>{ moment.utc(properites.dataItem?.createdDate).local().format("DD/MM/YYYY hh:mm:ss A")}</> : properites.dataItem?.createdDate}
           
           </td>
         )
@@ -71,16 +71,16 @@ const Batchpayments = (props) => {
         { field: "currency", title: 'Currency', filter: true, width: 150,dataType: "number", filterType: "numeric" },
         { field: "status", title: 'Status', filter: true, width: 150, },
         { field: "numberOfTransactions", title: 'Number of Transactions', filter: true, width: 250,dataType: "number", filterType: "numeric", 
-        customCell: (props) => (<td>
-        {props?.dataItem?.numberOfTransactions!==0? <div className="gridLink" onClick={()=>docPreview(props.dataItem)}
-        >{props?.dataItem?.numberOfTransactions} 
-        </div>:<>{props?.dataItem?.numberOfTransactions}</>}</td>) 
+        customCell: (properites) => (<td>
+        {properites?.dataItem?.numberOfTransactions!==0? <div className="gridLink" onClick={()=>docPreview(properites.dataItem)}
+        >{properites?.dataItem?.numberOfTransactions} 
+        </div>:<>{properites?.dataItem?.numberOfTransactions}</>}</td>) 
      },
      { field: "validTransactionCount", title: 'Valid Transactions', filter: true, dataType: "number", filterType: "numeric", width: 210, },
      { field: "invalidTransactionCount", title: 'Invalid Transactions', filter: true, dataType: "number", filterType: "numeric", width: 210,
-         customCell: (props) => (
-         <td>{props?.dataItem?.invalidTransactionCount!==0?<div onClick={()=>getInvalidTransaction(props?.dataItem)} className="gridLink" >{props?.dataItem?.invalidTransactionCount}
-           </div>:<>{props?.dataItem?.invalidTransactionCount}</>}
+         customCell: (properites) => (
+         <td>{properites?.dataItem?.invalidTransactionCount!==0?<div onClick={()=>getInvalidTransaction(properites?.dataItem)} className="gridLink" >{properites?.dataItem?.invalidTransactionCount}
+           </div>:<>{properites?.dataItem?.invalidTransactionCount}</>}
            
            </td>)
      },
@@ -128,10 +128,10 @@ const Batchpayments = (props) => {
   else if(setSelectData.status === "Pending"){
     setErrorWarning("Only draft record can proceed")
   }
-  else if(setSelectData.validTransactionCount == 0){
+  else if(setSelectData.validTransactionCount === 0){
     setErrorWarning("You don't have valid transactions to proceed")
   }
-  else if(setSelectData.fileUploadStatus == "File is being processed please wait a while"){
+  else if(setSelectData.fileUploadStatus === "File is being processed please wait a while"){
     setErrorWarning("Upload status is in progress so you can't proceed")
   }
   else {
@@ -144,7 +144,7 @@ const Batchpayments = (props) => {
     if(selection.length === 0){
       setErrorWarning("Please select the  record")
     }
-    else if(setSelectData.status == "Pending"){
+    else if(setSelectData.status === "Pending"){
       setErrorWarning("Only draft record can delete")
     }
     else{
@@ -277,10 +277,10 @@ const Batchpayments = (props) => {
             <div className='cust-pop-up-btn crypto-pop bill-pop'>
               <Button
                 className="pop-cancel btn-width  bill-cancel"
-                onClick={()=>deleteModalCancel()}>Cancel</Button>
+                onClick={()=>deleteModalCancel()}>No</Button>
               <Button className="pop-btn px-36 btn-width"
                 onClick={deleteDetials}
-                >Ok</Button></div>
+                >Yes</Button></div>
             </>
           ]}
         >
