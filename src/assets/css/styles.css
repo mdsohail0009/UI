@@ -1599,5 +1599,5 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .upload-disable{cursor: not-allowed;}
 .file-label.batch-upload{width: 100%;}
 .icon.md.close.batch-close{transform: scale(0.7);}
-.gridLink.batch-filename{width: 162px;}
-.draft-filename{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;width: 162px;}
+.gridLink.batch-filename{display: block;}
+.draft-filename{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
