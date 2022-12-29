@@ -48,7 +48,7 @@ const BatchpaymentView = (props) => {
         { field: "accountNumber", title: 'Account Number/IBAN', filter: true, width: 250 },
         { field: "amount", title: 'Amount', filter: true, width: 200},
         { field: "transactionStatus", title: 'Transaction Status', filter: true, width: 200},
-        { field: "uploadedDocuments", title: 'Uploaded Documents', filter: true, width: 290,
+        { field: "uploadedDocuments", title: 'Uploaded Documents', width: 290,
     	customCell: (props) => (
             <td>
                 <div>
@@ -63,7 +63,7 @@ const BatchpaymentView = (props) => {
             </div>
             </td>
         ), },
-        { field: "supportingDocument", title: 'Supporting Document', filter: true, width: 240,
+        { field: "supportingDocument", title: 'Supporting Document', width: 240,
             customCell: (props) => (
             <td className='text-center'><div className="gridLink text-center" >
                 <Button className='pop-btn px-36' disabled={props.dataItem.transactionStatus==="Approved"||props.dataItem.transactionStatus==="Rejected"} onClick={()=>showUploadModal(props.dataItem)}>
@@ -92,7 +92,7 @@ const BatchpaymentView = (props) => {
 		if (fileType[file.type]) {
             setErrorMessage(null)
           return true
-        } else if(fileType=="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
+        } else if(fileType==="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
             setErrorMessage("File is not allowed. You can upload jpg, png, jpeg and PDF files");
         }else{
             setErrorMessage("File is not allowed. You can upload jpg, png, jpeg and PDF files");
@@ -128,7 +128,7 @@ const BatchpaymentView = (props) => {
     }else{
         if (type === "IDENTITYPROOF") {
             setUploader(true)
-            if (file?.status == "done" && file.response !== undefined) {
+            if (file?.status === "done" && file.response !== undefined) {
                 setUploader(false)
                 identityProofObj?.push(obj);
                  setDocIdentityProofObjs(identityProofObj)
@@ -136,7 +136,7 @@ const BatchpaymentView = (props) => {
             }
           else if( type === "TransferProof"){
             setDocUpload(true)
-                if (file?.status == "done" && file.response !== undefined) {
+                if (file?.status === "done" && file.response !== undefined) {
                     setDocUpload(false)
                     transferProof?.push(obj);
                      setDocTransferObjs(transferProof)

@@ -36,7 +36,7 @@ returnDashboard=()=>{
   this.props.history.push("/cockpit")
 }
  gridUSDColumns = [
-  { field: "whiteListName", title: "Whitelist Name", filter: true,width: 200},
+  { field: "whiteListName", title: "Whitelist Name", filter: true,width:300},
   { field: "beneficiaryName", title: "First & Last Name/Beneficiary Name", filter: true,width: 335},
   { field: "relationshipToBeneficiary", title: "Relationship To Beneficiary", filter: true,width: 270},
   { field: "address", title: "Address", filter: true,width: 250},
@@ -67,7 +67,7 @@ returnDashboard=()=>{
   { field: "reference", title: 'Reference', filter: true, width: 200},
 ];
 gridEURColumns = [
-  { field: "whiteListName", title: "Whitelist Name", filter: true,width: 200},
+  { field: "whiteListName", title: "Whitelist Name", filter: true,width: 300},
   { field: "beneficiaryName", title: "Beneficiary Name", filter: true,width: 250},
   { field: "relationshipToBeneficiary", title: "Relationship To Beneficiary", filter: true,width: 250},
   { field: "address", title: "Address", filter: true,width: 250},
@@ -136,7 +136,7 @@ isErrorDispaly = (objValue) => {
 
         <Drawer
           title={[<div className="side-drawer-header">
-            
+
              <div className="text-center">
                 <div className='text-white fs-26 fw-400'>Preview</div>
                 </div>
@@ -151,7 +151,6 @@ isErrorDispaly = (objValue) => {
           className="side-drawer-full custom-gridresponsive transctns-grid"
         >
 
-          {/* < div className='main-container'> */}
           
           {this.state.errorMessage !== null && (
           <Alert type="error" description={this.state.errorMessage} showIcon />
@@ -186,7 +185,6 @@ isErrorDispaly = (objValue) => {
                         onClick={this.confirmPreview}>Confirm</Button>
                 
                 </div>
-          {/* </div> */}
         </Drawer>
                {this.state.paymentSummary &&
                        <PaymentSummary

@@ -232,7 +232,7 @@ class PaymentSummary extends Component {
 						{this.state.showDeclaration && <>
 					
 	          <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
-								<img src={pending} width={80}/>
+								<img src={pending} alt={`Processed`}  width={80}/>
 								<Title className='text-white'>Declaration form sent!</Title>
 								<Paragraph className='text-white'>We sent declaration form to{":"}{" "}
 									{this.props.customer?.email}. Please sign using the link

@@ -279,7 +279,7 @@ downLoadPreview=()=>{
                 }}
                 renderItem={item => (
                     <List.Item onClick={
-                        () => this.setState({ ...this.state, selectedCurrency: item.walletCode, isCoinsListHide: true}, () => { })}>
+                        () => this.setState({ ...this.state, selectedCurrency: item.walletCode, isCoinsListHide: true})}>
                     <Link>
                       <List.Item.Meta
                         avatar={<Image preview={false} src={item.imagePath} />}
@@ -287,7 +287,7 @@ downLoadPreview=()=>{
                         title={<div className="wallet-title">{item.walletCode}</div>}
                       />
                        <><div className="text-right coin-typo">
-                                        <NumberFormat value={item.amount} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={item.walletCode == 'USD' ? '$' : '€'} renderText={(value, props) => <div {...props} >{value}</div>} />
+                                        <NumberFormat value={item.amount} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={item.walletCode === 'USD' ? '$' : '€'} renderText={(value, props) => <div {...props} >{value}</div>} />
 
                                     </div></>
                     </Link>
@@ -338,7 +338,7 @@ downLoadPreview=()=>{
                                               >
                                               <Button className='pop-btn mt-24'>Upload Excel</Button>
                                 </Upload>{" "}
-            <Paragraph className='text-white-30'>To download the excel, <a className='fw-700' onClick={this.downLoadPreview}> click here</a></Paragraph>
+            <Paragraph className='text-white-30'>To download the excel, <a className='fw-700' onClick={this.downLoadPreview} href> click here</a></Paragraph>
             <Button className='pop-btn px-36' onClick={this.selectWhitelist}>Select from Whitelisted Addresses</Button>
                                 
             </div>
@@ -377,7 +377,7 @@ downLoadPreview=()=>{
           <Alert type="error" description={errorMessage} showIcon />
                )}
                    <div className='text-center pt-16'>
-                   <img src={pending1} alt={"success"} />
+                   <img src={pending1} alt={"Processed"} />
                    <Paragraph className='text-white fs-18'>File is being processed please wait a while</Paragraph>
                    </div>
                    </>
