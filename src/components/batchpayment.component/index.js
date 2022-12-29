@@ -277,10 +277,10 @@ const Batchpayments = (props) => {
             <div className='cust-pop-up-btn crypto-pop bill-pop'>
               <Button
                 className="pop-cancel btn-width  bill-cancel"
-                onClick={()=>deleteModalCancel()}>Cancel</Button>
+                onClick={()=>deleteModalCancel()}>No</Button>
               <Button className="pop-btn px-36 btn-width"
                 onClick={deleteDetials}
-                >Ok</Button></div>
+                >Yes</Button></div>
             </>
           ]}
         >

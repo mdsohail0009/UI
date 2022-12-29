@@ -51,17 +51,20 @@ const BatchpaymentView = (props) => {
         { field: "uploadedDocuments", title: 'Uploaded Documents', width: 290,
     	customCell: (props) => (
             <td>
-                <div>
-              {props.dataItem.beneficiarydetail?.map(item=>
-                <>
-                <div className='file-label d-flex justify-content mb-8 py-4 batch-upload'>
-                <div><span className="mb-0 fs-14 docnames c-pointer fs-12 fw-400 amt-label"  onClick={() => docPreview(item)}>{item.documentName}</span></div>
-                <div> <span className="icon md close c-pointer batch-close" onClick={() => docDelete(item)} /></div>
-                 </div>
-                </>)}
-             
-            </div>
-            </td>
+               {props.dataItem.beneficiarydetail?.map(item=>
+              <>
+              <div className={`file-label d-flex justify-content mb-8 py-4 batch-upload`}
+             >
+              <span className="mb-0 fs-14 docnames  fs-12 fw-400 amt-label c-pointer"  onClick={() => docPreview(item)}>{item.documentName}</span>
+              <span className="delete-disable"
+               disabled={
+                  props.dataItem.transactionStatus==="Approved" ||
+                   props.dataItem.transactionStatus==="Rejected"}
+              > <span  onClick={() => docDelete(item,props.dataItem)} className={`icon md close ${(props.dataItem.transactionStatus==="Pending")||(props.dataItem.transactionStatus==="Submitted")?"c-pointer":""}`}  
+              /></span>
+               </div>
+              </>)}
+          </td>
         ), },
         { field: "supportingDocument", title: 'Supporting Document', width: 240,
             customCell: (props) => (
@@ -163,10 +166,14 @@ const BatchpaymentView = (props) => {
             
         }
     }
-    const docDelete=async(data)=>{
-        setDeleteModal(true);
-        setDeleteGridDoc(data)
-        
+    const docDelete=async(data,rowData)=>{
+        if(rowData.transactionStatus==="Approved" ||rowData.transactionStatus==="Rejected"){
+            setDeleteModal(false);
+        }else{
+            setDeleteModal(true);
+            setDeleteGridDoc(data)
+        }
+     
     }
     const deleteGridDocuments=async()=>{
         const res=await deleteDocumentDetails(deleteGridDoc?.documentId)
