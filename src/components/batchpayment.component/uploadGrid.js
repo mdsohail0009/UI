@@ -54,9 +54,9 @@ const BatchpaymentView = (props) => {
                 <div>
               {props.dataItem.beneficiarydetail?.map(item=>
                 <>
-                <div className='file-label d-flex justify-content mb-8 py-4'>
+                <div className='file-label d-flex justify-content mb-8 py-4 batch-upload'>
                 <div><span className="mb-0 fs-14 docnames c-pointer fs-12 fw-400 amt-label"  onClick={() => docPreview(item)}>{item.documentName}</span></div>
-                <div> <span className="icon md close c-pointer" onClick={() => docDelete(item)} /></div>
+                <div> <span className="icon md close c-pointer batch-close" onClick={() => docDelete(item)} /></div>
                  </div>
                 </>)}
              

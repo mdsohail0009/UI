@@ -194,7 +194,7 @@ border-radius: 5px;}
 .icon.md.calendar{background-position:-481px -36px;}
 .icon.md.status{background-position:-365px -69px}
 .icon.md.add-icon{background-position:-397px -70px;}
-.icon.md.process-icon{background-position: -600px -34px;}
+.icon.md.process-icon{background-position: -680px -37px;}
 .icon.md.back{background-position:-377px -1px;}
 .icon.md.add-icon-black{background-position:-533px -2px;}
 .icon.md.edit-icon{background-position:-336px -70px;}
@@ -1598,3 +1598,4 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .export-pdf button:hover{background-color: var(--bgDarkYellow);color: var(--textDark);border-color: var(--bgYellow);}
 .upload-disable{cursor: not-allowed;}
 .file-label.batch-upload{width: 100%;}
+.icon.md.close.batch-close{transform: scale(0.7);}
