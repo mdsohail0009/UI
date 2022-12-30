@@ -154,7 +154,7 @@ class AddressCrypto extends Component {
       let coinType = this.form?.current?.getFieldValue("token");
       if (coinType) {
         const validAddress = WAValidator.validate(address, coinType, "both");
-          if (!validAddress && coinType !== "USDT") {
+          if (!validAddress && coinType != "USDT") {
             return Promise.reject(
               "Address is not valid, Please enter a valid address according to the token selected"
             );
@@ -175,12 +175,12 @@ class AddressCrypto extends Component {
       return <Loader />
     }
     if (showDeclartion) {
-      return<div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
-        <Image width={80} preview={false} src={alertIcon} />
-        <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully </Title>
-        <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
+      return<div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
+        <Image width={80} preview={false} src={alertIcon} className="confirm-icon" />
+        <Title level={2} className="success-title">Declaration form sent successfully </Title>
+        <Text className="ant-typography successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
              Please sign using link received in email to whitelist your address. `}</Text>
-        <Text className="text-white-30">{`Please note that your send will only be processed once your whitelisted address has been approved`}</Text>
+        <Text className="ant-typography successsubtext">{`Please note that your send will only be processed once your whitelisted address has been approved`}</Text>
        
         {/* <div className="my-25 custom-back-btn"><Button
           onClick={this.props.onCancel}
@@ -192,19 +192,19 @@ class AddressCrypto extends Component {
     }
     else {
       return <>
-       {this.props?.isShowheading && <div className="text-center fs-16 fw-500">
-          <Paragraph className='text-white fs-24 fw-500' >Add Crypto Address</Paragraph>
+       {this.props?.isShowheading && <div className="text-center">
+          <Paragraph className='drawer-maintitle' >Add Crypto Address</Paragraph>
         </div>}
         <div ref={this.useDivRef}></div>
           {errorMessage && <Alert type="error" description={errorMessage} showIcon />}
           <Form
             initialValues={cryptoData}
-            className="custom-label  mb-0 fw-400"
+            className="custom-label"
             ref={this.form}
             onFinish={this.submit}
             scrollToFirstError
           >
-            <Form.Item className="mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
+            <Form.Item className="custom-forminput custom-label sc-error addcrypto-whitelist"
               name="saveWhiteListName"
               label="Save Whitelist Name As"
               rules={[
@@ -222,10 +222,10 @@ class AddressCrypto extends Component {
             >
               <Input className="cust-input" maxLength={100} placeholder="Save Whitelist Name As" />
             </Form.Item>
-            <div className="mb-16 mt-8">
-            <Title className="sub-heading">Beneficiary Details</Title>
+            <div className="">
+            <Title className="adbook-head">Beneficiary Details</Title>
             </div>
-            <Row gutter={[8, 8]}>
+            <Row className="addcrypto-benficiary">
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="token"
@@ -297,13 +297,14 @@ class AddressCrypto extends Component {
             </Form.Item>
             </Col>
             </Row>
-            <Form.Item className="text-right mt-36">
+            <Form.Item className="">
               <Button
                 htmlType="submit"
                 size="large"
-                className="pop-btn mb-36 px-36"
+                block
+                className="pop-btn"
                 loading={this.state.isBtnLoading}
-                style={{ width: "150px" }}
+                // style={{ width: "150px" }}
               >
                 {this.props.type === "manual" && "Save"}
                 {this.props.type !== "manual" && <Translate content="continue" />}
@@ -312,7 +313,7 @@ class AddressCrypto extends Component {
           </Form>
       </>
     }
-  }
+  };
 
 }
 const connectStateToProps = ({ sendReceive, userConfig, addressBookReducer }) => {
