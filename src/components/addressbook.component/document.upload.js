@@ -23,7 +23,8 @@ class AddressDocumnet extends Component {
         documents: {}, showDeleteModal: false, isDocLoading: false,selectedObj:{},errorMessage:null
     }
     componentDidMount() {
-        this.setState({ ...this.state, documents: this.props?.documents || document(), isEdit: this.props?.editDocument, filesList: this.props?.documents ? [...this.props?.documents?.details] : [],refreshData:this.props?.refreshData })
+        let propsDocument = JSON.stringify(this.props?.documents) == JSON.stringify({'transfer': '', 'payee': ''}) ? null : this.props?.documents
+        this.setState({ ...this.state, documents: propsDocument || document(), isEdit: this.props?.editDocument, filesList: propsDocument ? [...this.props?.documents?.details] : [],refreshData:this.props?.refreshData })
     }
     docDetail = (doc) => {
         return {
@@ -40,8 +41,9 @@ class AddressDocumnet extends Component {
     }
   
     render() {
-        if(this.props.refreshData != this.state.refreshData){
-            this.setState({ ...this.state, documents: this.props?.documents || document(), filesList: this.props?.documents ? [...this.props?.documents?.details] : [], refreshData:this.props.refreshData })
+        if(this.props.refreshData !== this.state.refreshData){
+            let propsDocument = JSON.stringify(this.props?.documents) == JSON.stringify({'transfer': '', 'payee': ''}) ? null : this.props?.documents
+            this.setState({ ...this.state, errorMessage: null, documents: propsDocument || document(), filesList: propsDocument ? [...this.props?.documents?.details] : [], refreshData:this.props.refreshData })
         }
         return <Row >
             <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
@@ -130,7 +132,7 @@ class AddressDocumnet extends Component {
                                 let { documents: docs } = this.state;
                                 let files = docs.details;
                                 for(var k in files){
-                                    if(files[k].id==this.state.selectedObj?.id){
+                                    if(files[k].id===this.state.selectedObj?.id){
                                         files[k].state='Deleted';
                                         files[k].isChecked=false;
                                     }
@@ -142,7 +144,7 @@ class AddressDocumnet extends Component {
                                     obj.splice(this.state.selectedFileIdx, 1);
                                 }
                                 files?.map((file, indx) =>{
-                                    if (file.id == "00000000-0000-0000-0000-000000000000"&& indx == this.state.selectedFileIdx &&  file.state != "Deleted"  && this.state?.isEdit) {
+                                    if (file.id === "00000000-0000-0000-0000-000000000000"&& indx === this.state.selectedFileIdx &&  file.state !== "Deleted"  && this.state?.isEdit) {
                                         filesList.splice(indx, 1);
                                         obj.splice(indx, 1);
                                     }
