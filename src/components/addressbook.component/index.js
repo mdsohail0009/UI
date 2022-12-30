@@ -1,6 +1,6 @@
 
 import React, { Component } from "react";
-import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert, message, Spin } from "antd";
+import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert, message,Tabs, Spin } from "antd";
 import {
 	setAddressStep,
 	rejectCoin,
@@ -9,13 +9,12 @@ import {
 	clearValues,
 	clearCryptoValues,
 } from "../../reducers/addressBookReducer";
-import { Link } from "react-router-dom";
 import Translate from "react-translate-component";
 import { processSteps as config } from "./config";
 import List from "../grid.component";
 import { activeInactive, downloadDeclForm } from "./api";
 import SelectCrypto from "./selectCrypto";
-import { withRouter } from "react-router-dom";
+import {Link,  withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import apiCalls from "../../api/apiCalls";
 import Info from "../shared/info";
@@ -214,7 +213,7 @@ class AddressBook extends Component {
 			customCell: (props) => (
 				<td>
 					{" "}
-					<label className="text-center custom-checkbox c-pointer">
+					<label className="text-center custom-checkbox c-pointer cust-check-outline">
 						<input
 							id={props.dataItem.id}
 							name="isCheck"
@@ -667,36 +666,44 @@ class AddressBook extends Component {
 		return (
 			<>
 			<div className="main-container">
-			<Translate
-				content="address_book"
-				component={Title}
-				className="basicinfo mb-0"
-			/>
-			<Text className="fs-16 text-white fw-500 mb-12 d-block">Note: <span className="fs-14 text-white fw-400 mb-12">Whitelisting of Crypto Address and Bank Account is required, Please add below.</span></Text>
-				<div className="box basic-info addressbook-grid">
-					<div className="display-flex mb-16">
+			<div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/cockpit" /><span className="back-btnarrow">Back</span></div>
+			<div className="security-align adbs-mb">
+				<Translate
+					content="address_book"
+					component={Title}
+					className="grid-title addressbook-mb"
+				/>
+				<div className="mb-right">
+					<ActionsToolbar featureKey="addressbook" onActionClick={(key) => this.onActionClick(key)} />
+				</div>
+			</div>
+			<div className="imprt-bg"><span className="ab-note-style">Note:</span> <span className="note-cont">Whitelisting of Crypto Address and Bank Account is required, Please add below.</span></div>
+				<div className="addressbook-grid">
+					<div className="adressbook-style">
 						<Radio.Group
 							defaultValue={(this.props?.activeFiat||this.state.cryptoFiat) ? 2 : 1}
 							onChange={this.handleWithdrawToggle}
-							className="buysell-toggle mx-0"
+							className="custom-radiobtn"
 							style={{ display: "inline-block" }}>
 							<Translate
 								content="withdrawCrypto"
 								component={Radio.Button}
 								value={1}
-								className="buysell-toggle mx-0"
+								className=""
 							/>
 							<Translate
 								content="withdrawFiat"
 								component={Radio.Button}
 								value={2}
-								className="buysell-toggle mx-0"
+								className=""
 							/>
-						</Radio.Group>
-						<span className="mb-right">
-							<ActionsToolbar featureKey="addressbook" onActionClick={(key) => this.onActionClick(key)} />
-						</span>
+						</Radio.Group>		
 					</div>
+					<Tabs className="cust-tabs-fait">
+                                <Tabs.TabPane tab="Send Crypto" className="" key={"domestic"} ></Tabs.TabPane>
+                                <Tabs.TabPane tab="Send Fiat" content="withdrawFiat" className="" key={"international"}  ></Tabs.TabPane>
+                                {/* <Tabs.TabPane tab="International USD IBAN" className="" key={"internationalIBAN"} ></Tabs.TabPane> */}
+                            </Tabs>
 					{this.state.errorWorning && (
 						<div className="custom-alert">
 							<Alert
@@ -713,6 +720,7 @@ class AddressBook extends Component {
 							ref={this.gridFiatRef}
 							key={gridUrlFiat}
 							url={gridUrlFiat}
+							additionalParams={{ customerId: customerId }}
 						/>
 					) : (
 						<List
@@ -721,6 +729,7 @@ class AddressBook extends Component {
 							key={gridUrlCrypto}
 							ref={this.gridCryptoRef}
 							url={gridUrlCrypto}
+							additionalParams={{ customerId: customerId }}
 						/>
 					)}
 				</div>
@@ -731,11 +740,11 @@ class AddressBook extends Component {
 					title={[
 						<div className="side-drawer-header">
 							{this.renderTitle()}
-							<div className="text-center fs-24">
+							<div className="text-center">
 								<Translate
-									className="text-white-30 fw-600 text-captz "
+									className="drawer-maintitle"
 									content={
-										this.state.showHeading!==true&&(
+										this.state.showHeading!=true&&(
 										this.props.addressBookReducer.stepTitles[
 										config[this.props.addressBookReducer.stepcode]
 										])
@@ -759,7 +768,7 @@ class AddressBook extends Component {
 					closable={true}
 					visible={this.state.visible}
 					closeIcon={null}
-					className="side-drawer w-50p">
+					className="side-drawer">
 					{this.renderContent()}
 				</Drawer>
 				<Drawer
@@ -767,12 +776,12 @@ class AddressBook extends Component {
 					title={[
 						<div className="side-drawer-header">
 							<span />
-							<div className="text-center fs-16">
-								<Paragraph className="mb-0 text-white-30 fw-600 text-upper">
+							<div className="text-center">
+								<Paragraph className="drawer-maintitle">
 									<Translate
-									content={this.state.hideFiatHeading !==true && "AddFiatAddress"}
+									content={this.state.hideFiatHeading !=true && "AddFiatAddress"}
 										component={Paragraph}
-										className="mb-0 text-white-30 fw-600 text-upper"
+										className="drawer-maintitle"
 									/>
 								</Paragraph>
 							</div>
@@ -786,7 +795,7 @@ class AddressBook extends Component {
 					closable={true}
 					visible={this.state.fiatDrawer}
 					closeIcon={null}
-					className="side-drawer w-50p">
+					className="side-drawer">
 					<AddressBookV3 type="manual" isFiat={this.state.cryptoFiat} selectedAddress={this.state.selectedObj} onContinue={(obj) => this.closeBuyDrawer(obj)} isFiatHeadUpdate={this.isFiatHeading}/>
 				</Drawer>
 				<Modal
@@ -807,7 +816,7 @@ class AddressBook extends Component {
 					footer={
 						<div className="cust-pop-up-btn">
 						<Button
-							style={{border: "1px solid #f2f2f2",width:'150px',height: '46px' }}
+							// style={{border: "1px solid #f2f2f2",width:'150px',height: '46px' }}
 							className="primary-btn pop-cancel"
 							onClick={this.handleCancel}>
 							NO
@@ -815,7 +824,7 @@ class AddressBook extends Component {
 						<Button
 							className="primary-btn pop-btn"
 							onClick={this.handleSatatuSave}
-							style={{ width: '150px', height: '46px' }}
+							// style={{ width: '150px', height: '46px' }}
 							loading={btnDisabled}>
 							{apiCalls.convertLocalLang("Yes")}
 						</Button>
