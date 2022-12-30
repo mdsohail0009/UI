@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import List from '../grid.component'
+import {
+    Form, Typography, Input, Button, Alert, Spin, message, Select, Checkbox, Tooltip, Modal,
+    Radio, Row, Col, AutoComplete,  Image, Tabs, Drawer
+  } from "antd";
 import { withRouter } from 'react-router';
 import Translate from 'react-translate-component';
 import apiCalls from "../../api/apiCalls";
 import Moment from 'react-moment';
+
+const { Text, Paragraph, Title } = Typography;
 class Cases extends Component {
     constructor(props) {
         super(props);
@@ -55,7 +61,7 @@ class Cases extends Component {
         return (<>
         <div className="main-container">
             <div className="box basic-info">
-                <Translate content="case" className="basicinfo mb-12 d-block " />
+                <Translate content="case" component={Paragraph} className="grid-title" />
                 <div className="mb-16 cases-grid-view">
                     <List className="address-clear" url={gridUrl} ref={this.gridRef} columns={this.columnGrid} />
                 </div>

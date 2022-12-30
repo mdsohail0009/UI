@@ -9,7 +9,7 @@ import { rejectWithdrawfiat, setWithdrawfiatenaable } from '../../reducers/sendr
 import { setStep, setSubTitle } from '../../reducers/buyFiatReducer';
 import {  requestDepositFiat } from './api';
 import Loader from '../../Shared/loader';
-import success from '../../assets/images/success.png';
+import success from '../../assets/images/success.svg';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import apicalls from '../../api/apiCalls';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
@@ -232,7 +232,7 @@ class FaitDeposit extends Component {
             {!this.state.Loader && <Form layout="vertical" initialValues={{ ...depObj }} ref={this.formRef} onFinish={(values) => this.ConfirmDeposit(values)}><div className="auto-scroll"><div ref={this.myRef}></div>
               {this.state?.errorMessage !== null && this.state?.errorMessage !== '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="error" message="" description={this.state?.errorMessage} closable />}
               {!this.state.showSuccessMsg && <Translate
-                className="mb-0 text-white-30 fs-18 fw-600 mt-16"
+                className="drawer-subtext"
                 content={this.props.sendReceive.withdrawFiatEnable ?  "send_fiat_text": "receive_fiat_text"}
                 component={Paragraph}
               />}
@@ -243,7 +243,7 @@ class FaitDeposit extends Component {
                   name="currency"
                   id="currency"
                 ><div> <div className="d-flex"><Translate
-                  className="input-label"
+                  className="label-style"
                   content="currency"
                   component={Text}
                 /></div>
@@ -258,7 +258,7 @@ class FaitDeposit extends Component {
                    
                 {this.state.BankInfo === null && depObj.currency !== null && this.state.BankDetails?.length === 0 && !this.state.bankLoader && <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="bank_msg" /></Text>}
                 {this.state.BankDetails?.length > 1 && depObj.currency !== null && <Form.Item><Translate
-                  className="input-label"
+                  className="label-style"
                   content="BankName"
                   component={Text}
                 />
@@ -278,108 +278,117 @@ class FaitDeposit extends Component {
 
                     <div className="d-flex">
                       <div style={{ flex: 1 }}>
+                        <div className='fait-box'>
                           <Translate
-                      className="fw-600 text-white-50 fs-14"
+                      className="fait-title"
                       content="account_name"
                       component={Text}
                     />
+                    
                     <Translate
-                      className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24"
+                      className="fait-subtext"
                       content="signature_bank"
                       component={Text}
                       with={{ value: BankInfo.accountName }} />
-                          <Translate
-                      className="fw-600 text-white-50 fs-14"
+                      </div>
+                      <div className='fait-box'><Translate
+                      className="fait-title"
                       content="account_address"
                       component={Text}
                     />
                     <Translate
-                      className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24"
+                      className="fait-subtext"
                       content="signature_bank"
                       component={Text}
                       with={{ value: BankInfo.accountAddress }} />
                       </div>
+                      </div>
                       
                     </div>
-                    {BankInfo.currencyCode === "USD" && <Text className="text-white-30 fs-14">Beneficiary Account No. </Text>}
-                    {BankInfo.currencyCode === "EUR" && <Text className="text-white-30 fs-14">Beneficiary IBAN No. </Text>}
+                    <div className='fait-box'>
+                    {BankInfo.currencyCode === "USD" && <span className="fait-title">Beneficiary Account No. </span>}
+                    {BankInfo.currencyCode === "EUR" && <span className="fait-title">Beneficiary IBAN No. </span>}
                     <CopyToClipboard text={BankInfo.accountNumber} options={{ format: 'text/plain' }}>
-                    <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="mb-0 fs-18 fw-400 text-yellow fw-500" >{BankInfo.accountNumber}</Text>
+                    <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fait-subtext" >{BankInfo.accountNumber}</Text>
                      </CopyToClipboard>
-                    {BankInfo.routingNumber !== null && BankInfo.routingNumber !== '' && <Translate
-                      className="mt-36 fs-20 text-white fw-500 text-upper"
+                     </div>
+                    {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <Translate
+                      className="fait-maintext"
                       content="for_Domestic_wires"
                       component={Paragraph}
                     />}
-                    {BankInfo.routingNumber !==null && BankInfo.routingNumber !== '' && <Translate
-                      className="fw-600 text-white-50 fs-14"
+                    {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <Translate
+                      className="fait-title"
                       content="Routing_number"
                       component={Text}
                     />}
-                    {BankInfo.routingNumber !== null && BankInfo.routingNumber !== '' && <CopyToClipboard text={BankInfo.routingNumber} options={{ format: 'text/plain' }}><Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 d-block">{BankInfo.routingNumber}</Text></CopyToClipboard>}
+                    {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <CopyToClipboard text={BankInfo.routingNumber} options={{ format: 'text/plain' }}><Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fait-subtext">{BankInfo.routingNumber}</Text></CopyToClipboard>}
                     <Translate
-                      className="mt-24 fs-20 text-white fw-500 text-upper"
+                      className="fait-maintext"
                       content="for_international_wires"
                       component={Paragraph}
-                    />
+                    /><div className='fait-box'>
                     <Translate
-                      className="fw-600 text-white-50 fs-14"
+                      className="fait-title"
                       content="Swift_BICcode"
                       component={Text}
                     />
                      <CopyToClipboard text={BankInfo.networkCode} options={{ format: 'text/plain' }}>
                     <Translate copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }}
-                      className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24"
+                      className="fait-subtext"
                       content="SIGNU"
                       component={Text}
                       with={{ value: BankInfo.networkCode }}
                        />
                        </CopyToClipboard>
-                    <Translate
-                      className="fw-600 text-white-50 fs-14"
+                       </div>
+                       <div className='fait-box'><Translate
+                      className="fait-title"
                       content="beneficiaryBank"
                       component={Text}
                     />
                     <Translate
-                      className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24"
+                      className="fait-subtext"
                       content="signature_bank"
                       component={Text}
-                      with={{ value: BankInfo.bankName }} />
+                      with={{ value: BankInfo.bankName }} /></div>
+                      <div className='fait-box'>
                     <Translate
-                      className="fw-600 text-white-50 fs-14"
+                      className="fait-title"
                       content="beneficiary_Bank_address"
                       component={Text}
                     />
                     <Translate
-                      className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24"
+                      className="fait-subtext"
                       content="signature_bank"
                       component={Text}
                       with={{ value: BankInfo.bankAddress }} />
-                      {BankInfo.referenceNo !== null && BankInfo.referenceNo !== '' && 
-                    <Translate
-                      className="fw-600 text-white-50 fs-14"
+                      </div>
+                      <div className='fait-box'>   {BankInfo.referenceNo != null && BankInfo.referenceNo != '' && 
+                   <Translate
+                      className="fait-title"
                       content="bank_Reference_No"
                       component={Text}
                     />}
-                    {BankInfo.referenceNo !== null && BankInfo.referenceNo !== '' &&
-                    <Text className="fs-18 fw-400 text-white-30 l-height-normal d-block mb-24">{BankInfo.referenceNo}</Text>}
-                    
-                    {BankInfo.depReferenceNo !== '' && <div className="crypto-address mb-36 mx-0">
+                    {BankInfo.referenceNo != null && BankInfo.referenceNo != '' &&
+                    <Text className="fait-subtext">{BankInfo.referenceNo}</Text>}
+                    </div>
+                    <div className='fait-box'>  {BankInfo.depReferenceNo !== '' && <div className="receive-fait">
                       <Translate
-                        className="mb-0 fw-400 fs-14 text-secondary"
+                        className="refer-text"
                         content="reference"
                         component={Text}
                       />
-                      <Paragraph className="mb-0 fs-18 fw-500 text-white-30 walletadrs mb-copy">
+                      <Paragraph className="walletadrs">
                         {BankInfo.depReferenceNo}
                         <CopyToClipboard text={BankInfo.depReferenceNo} options={{ format: 'text/plain' }}>
-                          <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 custom-display"   ></Text>
+                          <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="custom-display"   ></Text>
                         </CopyToClipboard>
                       </Paragraph>
-                    </div>}
+                    </div>}</div>
                     <Paragraph
-                      className="fs-14 text-white-30 fw-200 l-height-normal"
-                    ><span className="textpure-yellow">{apicalls.convertLocalLang('reference_hint_text')}</span> </Paragraph>
+                      className="import-note"
+                    ><div className=""><span className='imp-note'>Important: </span>{apicalls.convertLocalLang('reference_hint_text')}</div> </Paragraph>
 
                   </div>
                   
@@ -390,7 +399,7 @@ class FaitDeposit extends Component {
             </Form>}
             {this.state.showSuccessMsg && <div className="success-pop text-center">
               <img src={success} className="confirm-icon" alt={'success'} />
-              <Translate content="success_msg" component={Title} className="text-white-30 fs-36 fw-200 mb-4" />
+              <Translate content="success_msg" component={Title} className="" />
               <Paragraph className="fs-14 text-white-30 fw-200">0.2258 BTC and 212545 USD amount has been added to your wallets, Your order has been placed successfully</Paragraph>
               <Space direction="vertical" size="large">
                 <Translate content="return_to_depositfiat" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => this.setState({ ...this.state, showSuccessMsg: false })} />

@@ -83,7 +83,7 @@ class CockpitCharts extends Component {
     render() {
         return (<>
             <div className="main-container db-container">
-                <div className="mb-36 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/cockpit" />Back</div>
+                <div className="coin-viewstyle"><Link className="icon md leftarrow backarrow-mr c-pointer" to="/cockpit" />Back</div>
               
                 <Row gutter={16} className="mb-8">
 
@@ -143,7 +143,7 @@ class CockpitCharts extends Component {
                 <Row gutter={16}>
                     <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
                         <div className='graph'>
-                            <h4 className="text-white-30 fs-14 graph-title">Cumulative PNL(%)</h4>
+                            <h4 className="coin-titlestyle">Cumulative PNL(%)</h4>
                             <div className='graph-body'>
                                 {this.state.cumulativePNL ? <LChart data={this.state.cumulativePNL} showPnl={true} showBtc={true} /> : <div className="chart-loader"><Spin /></div>}
                             </div>
@@ -151,7 +151,7 @@ class CockpitCharts extends Component {
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
                         <div className='graph'>
-                            <h4 className="text-white-30 fs-14 graph-title">Daily PNL(%)</h4>
+                            <h4 className="coin-titlestyle">Daily PNL(%)</h4>
                             <div className='graph-body'>
                                 {this.state.dailyPnl ? <BChart data={this.state.dailyPnl} /> : <div className="chart-loader"><Spin /></div>}
                             </div>
@@ -161,7 +161,7 @@ class CockpitCharts extends Component {
                 <Row gutter={16}>
                     <Col xs={24} sm={24} md={24} lg={12} xl={11} xxl={11}>
                         <div className='graph'>
-                            <h4 className="text-white-30 fs-14 graph-title">Asset Allocation</h4>
+                            <h4 className="coin-titlestyle">Asset Allocation</h4>
                             <div className='graph-body'>
                                 {this.state.assetAlloction ? <PieChart data={this.state.assetAlloction} /> : <div className="chart-loader"><Spin /></div>}
                             </div>
@@ -169,7 +169,7 @@ class CockpitCharts extends Component {
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={12} xl={13} xxl={13}>
                         <div className='graph'>
-                            <h4 className="text-white-30 fs-14 graph-title">Assets Net Worth</h4>
+                            <h4 className="coin-titlestyle">Assets Net Worth</h4>
                             <div className='graph-body'>
                                 {this.state.assetnetWorth ? <LChart data={this.state.assetnetWorth} showPnl={true} showBtc={true} /> : <div className="chart-loader"><Spin /></div>}
                             </div>
@@ -179,7 +179,7 @@ class CockpitCharts extends Component {
                 <Row gutter={16}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <div className='graph'>
-                            <h4 className="text-white-30 fs-14 graph-title">Profits</h4>
+                            <h4 className="coin-titlestyle">Profits</h4>
                             <div className='graph-body'>
                                 {this.state.profits ? <LChart data={this.state.profits} showPnl={true} showBtc={true} /> : <div className="chart-loader"><Spin /></div>}
                             </div>

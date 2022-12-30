@@ -139,7 +139,9 @@ class ProfileInfo extends Component {
             showIcon
           />
         )}
-        <div className="profile-info text-center">
+        <div className="profile-image-content">
+          <div  className="profile-img-style">
+        <div className="profile-info">
           {this.state.Loader && <Loader />}
           {!this.state.Loader && (
             <>
@@ -180,7 +182,20 @@ class ProfileInfo extends Component {
             </>
           )}
         </div>
-        <div className="box contact-info coin-bal">
+        </div>
+        <div className="dwnl-content-style">
+          {/* <span className="icon lg download"></span> */}
+         
+          {this.state.fileLoader ? <Spin size="Large" style={{ padding: 10 }} /> : <span>
+              <Tooltip title="Download">
+                <div onClick={this.fileDownload} className="c-pointer"><span className="icon lg download" /></div>
+              </Tooltip>
+            </span>}
+           
+          <Text className="download-content">Download reference confirmation letter</Text>
+        </div>
+        </div>
+        {/* <div className="box contact-info coin-bal">
           <Translate
             content="account_text"
             component={Text}
@@ -193,9 +208,9 @@ class ProfileInfo extends Component {
               </Tooltip>
             </li>}
           </ul>
-        </div>
-        <div className="box basic-info basicprofile-info">
-          <Title className="basicinfo mb-0">
+        </div> */}
+        <div className="basic-info basicprofile-info">
+          <Title className="basicinfo">
             {" "}
             <Translate
               content="BasicInfo"
@@ -203,60 +218,60 @@ class ProfileInfo extends Component {
               className="basicinfo"
             />
           </Title>
-          <ul className="user-list pl-0">
+          <ul className="profile-ul">
             {this.props.userConfig.isBusiness && <li className="profileinfo">
               <div className="profile-block">
-                <label className="mb-0 profile-label">
+                <label className="profile-label">
                   <Translate
                     content="business"
                     component={Text}
-                    className="mb-0 profile-label"
+                    className="profile-label"
                   />
                 </label>
-                <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>
+                <p className="profile-value" style={{ flexGrow: 12 }}>
                   {this.props.userConfig.businessName || "--"}
                 </p>
-                <div></div>
+                {/* <div></div> */}
               </div>
             </li>}
             <li className="profileinfo">
               <div className="profile-block">
-                <label className="mb-0 profile-label">
+                <label className="profile-label">
                   <Translate
                     content="userName"
                     component={Text}
-                    className="mb-0 profile-label"
+                    className="profile-label"
                   />
                 </label>
-                <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>
+                <p className="profile-value" style={{ flexGrow: 12 }}>
                   {this.props.userConfig.userName || "--"}
                 </p>
-                <div></div>
+                {/* <div></div> */}
               </div>
             </li>
             {this.props.userConfig.isBusiness !== true && <>
               <li className="profileinfo">
                 <div className="profile-block ">
-                  <label className="mb-0 profile-label">
+                  <label className="profile-label">
                     <Translate
                       content="FirstName"
                       component={Text}
-                      className="mb-0 profile-label"
+                      className="profile-label"
                     />
                   </label>
-                  <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>
+                  <p className="profile-value" style={{ flexGrow: 12 }}>
                     {this.props.userConfig.firstName || "--"}
                   </p>
-                  <div></div>
+                  {/* <div></div> */}
                 </div>
               </li>
               {/* <li className="profileinfo">
               <div className="profile-block ">
-                <label className="mb-0 profile-label">
+                <label className="profile-label">
                   <Translate
                     content="MiddleName"
                     component={Text}
-                    className="mb-0 profile-label"
+                    className="profile-label"
                   />
                 </label>
                 <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>
@@ -267,29 +282,29 @@ class ProfileInfo extends Component {
             </li> */}
               <li className="profileinfo">
                 <div className="profile-block ">
-                  <label className="mb-0 profile-label">
+                  <label className="profile-label">
                     <Translate
                       content="LastName"
                       component={Text}
-                      className="mb-0 profile-label"
+                      className="profile-label"
                     />
                   </label>
-                  <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>
+                  <p className="profile-value" style={{ flexGrow: 12 }}>
                     {this.props.userConfig.lastName || "--"}
                   </p>
-                  <div></div>
+                  {/* <div></div> */}
                 </div>
               </li></>}
             {/* <li className="profileinfo">
               <div className="profile-block">
-                <label className="mb-0 profile-label">
+                <label className="profile-label">
                   <Translate
                     content="Birthday"
                     component={Text}
-                    className="mb-0 profile-label"
+                    className="profile-label"
                   />
                 </label>
-                <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>
+                <p className="profile-value" style={{ flexGrow: 12 }}>
                   {this.props.userConfig.dob != null ? <Moment format="DD/MM/YYYY">{this.props.userConfig.dob}
                   </Moment> : "--"}
                 </p>
@@ -299,22 +314,22 @@ class ProfileInfo extends Component {
 
             <li className="profileinfo">
               <div className="profile-block">
-                <label className="mb-0 profile-label">
+                <label className="profile-label">
                   <Translate
                     content="ReferenceCode"
                     component={Text}
-                    className="mb-0 profile-label"
+                    className="profile-label"
                   />
                 </label>
-                <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>
+                <p className="profile-value" style={{ flexGrow: 12 }}>
                   {this.props.userConfig.depositReference || "--"}
                 </p>
-                <div></div>
+                {/* <div></div> */}
               </div>
             </li>
           </ul>
         </div>
-        <div className="box contact-info">
+        <div className="basicprofile-info">
           <Title className="basicinfo">
             <Translate
               content="ContactInfo"
@@ -322,52 +337,52 @@ class ProfileInfo extends Component {
               className="basicinfo"
             />
           </Title>
-          <ul className="user-list pl-0">
+          <ul className="profile-ul">
             <li className="profileinfo">
               <div className="profile-block">
-                <label className="mb-0 profile-label">
+                <label className="profile-label">
                   <Translate
                     content="Country"
                     component={Text}
-                    className="mb-0 profile-label"
+                    className="profile-label"
                   />
                 </label>
-                <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>
+                <p className="profile-value" style={{ flexGrow: 12 }}>
                   {this.props.userConfig.country || "--"}
                 </p>
-                <div></div>
+                {/* <div></div> */}
               </div>
             </li>
             <li className="profileinfo">
               <div className="profile-block">
-                <label className="mb-0 profile-label">
+                <label className="profile-label">
                   <Translate
                     content="EmailAddress"
                     component={Text}
-                    className="mb-0 profile-label"
+                    className="profile-label"
                   />
                 </label>
-                <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>
+                <p className="profile-value" style={{ flexGrow: 12 }}>
                   {this.props.userConfig.email || "--"}
                 </p>
-                <div></div>
+                {/* <div></div> */}
               </div>
             </li>
             <li className="profileinfo">
               <div className="profile-block ">
-                <label className="mb-0 profile-label">
+                <label className="profile-label">
                   <Translate
                     content="PhoneNumber"
                     component={Text}
-                    className="mb-0 profile-label"
+                    className="profile-label"
                   />
                 </label>
                 <div style={{ flexGrow: 12 }}>
-                  <p className="mb-0 profile-value">
+                  <p className="profile-value">
                     {this.props.userConfig.phoneNo || "--"}
                   </p>
                 </div>
-                <div></div>
+                {/* <div></div> */}
               </div>
             </li>
           </ul>

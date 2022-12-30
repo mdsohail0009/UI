@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { message, Spin,Button } from 'antd';
+import { Typography, message, Spin,Button,Image,  } from 'antd';
 import Translate from 'react-translate-component';
 import { getData } from './api';
 import NumberFormat from 'react-number-format';
@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { dashboardTransactionSub } from '../../utils/pubsub';
 import TransactionsHistory from "../transactions.history.component";
+import apiCalls from '../../api/apiCalls';
+import { getcoinDetails } from './api';
 
 class Portfolio extends Component {
     chart;
@@ -82,19 +84,22 @@ class Portfolio extends Component {
         this.setState({transactions: false});
     }
     render() {
-
-        const { loading } = this.state;
-        return (
-            <div className="mb-16">
-                <div className='mb-12 mt-4'>
-                    <Translate content="transactions_history" className="basicinfo" />
-                    <Button
-                        onClick={() => this.transactionDrawer()}
-                        className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}}
-                        >
-                           <Translate content="search" />
-                        <span className="icon sm search-angle ml-8"></span>
-                    </Button>
+        const { Title } = Typography;
+        const { gridUrl, loading } = this.state;
+        return (<>
+            <div className='market-panel-newstyle'></div>
+                <div className="markets-panel transaction-panel">
+                    <div className='trans-align'>
+                    <div className='transaction-title'>
+                    <Translate component={Title} content="transactions_history" className="db-titles" />
+                    <div className = 'search-box'><input className = "search-text" type="text" placeholder = "Search Anything" />
+                      <a href="#" className = "search-btnexpand">
+                      <span className="icon lg search-angle icon-space" />
+                      </a>
+                  </div> </div>
+                    <Button className="dbchart-link"  onClick={() => this.transactionDrawer()}>
+                        <Translate content="cockpit" />
+                    </Button></div>
                        {this.state.transactions &&
                        <TransactionsHistory
                         showDrawer={this.state.transactions}
@@ -103,17 +108,18 @@ class Portfolio extends Component {
                         }}
                     />
                        }
-                       </div>
+                      
                    
-                    <div>
+                    <div className='transaction-custom-table'>
 
-                        <div className="box dash-info basic-info responsive_table bg-none mb-0 ">
-                            <table className='pay-grid view mb-view'  style={{width: "100%"}}>
+                        <div className="responsive_table db-ts-grid">
+                            <table className='pay-grid view mb-view'>
                                 <thead>
                                     <tr>
-                                        <th style={{width: "18%"}}>Date</th>
-                                        <th style={{width: "35%"}}>Type</th>
+                                        <th style={{width: "5%"}}></th>
                                         <th style={{width: "15%"}}>Wallet</th>
+                                        {/* <th style={{width: "35%"}}>Type</th> */}
+                                        <th style={{width: "18%"}}>Date</th>
                                         <th style={{width: "15%"}}>Value</th>
                                         <th style={{width: "15%"}}>Status</th>
                                     </tr>
@@ -136,12 +142,15 @@ class Portfolio extends Component {
                                                     {this.state.transactionData.length > 0 ? 
                                                     <>
                                                      <tr key={idx}>
+                                                        <td style={{ width: "100px" }}><span className={``}></span></td>
+                                                        {/* {`crypto-icon c-pointer ${item.coin}`} */}
+                                                     <td><div className='ts-wallet'><Title className='ts-coin'>{item.wallet}</Title><Title className='ts-type'>{item.type}</Title></div></td>
                                                      <td style={{ width: "100px" }}>
-                                                            {item?.date }
+                                                     <div className='ts-tbdate'><Title className='ts-date'>{item?.date }</Title></div>
                                                             </td>
                                                         
-                                                        <td style={{ width: "50px" }}>{item.type}</td>
-                                                        <td>{item.wallet}</td>
+                                                        {/* <td style={{ width: "50px" }}>{item.type}</td> */}
+                                                        
                                                         <td>{this.getNumberVal(item)}</td>
                                                         <td>{item.state} </td>
                                                     </tr>
@@ -173,7 +182,7 @@ class Portfolio extends Component {
                         </div>
                     </div>
             </div>
-        );
+       </> );
     }
 }
 

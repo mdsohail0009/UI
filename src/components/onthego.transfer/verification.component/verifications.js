@@ -258,7 +258,7 @@ const Verifications = (props) => {
                 onClick={() => getphoneOTP()}
             ><Text className="text-yellow" >Click here to resend code</Text></Button>
         ),
-        code_Sent: (<div style={{ margin: "0 auto"}} className="code-sent-tool-tip">
+        code_Sent: (<div style={{ margin: "0 auto"}} className="code-sent-tool-tip code-tooltip-align">
             <Button
                 type="text"
                 style={{ color: "black",margin: "0 auto" }}
@@ -279,7 +279,7 @@ const Verifications = (props) => {
                 style={{ color: "black", margin: "0 auto" }}
                 disabled={true}
             ><Text className="text-yellow pr-24"> Verified </Text>
-                <span className="icon md greenCheck " />
+                <span className="icon md greenCheck check-ml-align" />
             </Button>
 
         ),
@@ -329,7 +329,7 @@ const Verifications = (props) => {
                 style={{ color: "black", margin: "0 auto" }}
                 disabled={true}
             ><Text className="text-yellow pr-24"> Verified </Text>
-                <span className="icon md greenCheck " />
+                <span className="icon md greenCheck  check-ml-align" />
             </Button>
 
         ),
@@ -352,7 +352,7 @@ const Verifications = (props) => {
                 style={{ color: "black", margin: "0 auto" }}
                 disabled={true}
             ><Text className="text-yellow pr-24"> Verified </Text>
-                <span className="icon md greenCheck " />
+                <span className="icon md greenCheck  check-ml-align" />
             </Button>
 
         ),
@@ -380,15 +380,14 @@ const Verifications = (props) => {
             {(
                 <>
                     <Form
-                        className="mt-36"
+                        className="verify-btn-from"
                         name="advanced_search"
                         form={form}
                         onFinish={transferDetials}
                         autoComplete="off">
                             <>
-                            {console.log(permissions)}
-                        {verifyData.isPhoneVerified === true  && (<>
-                            <Text className="fw-500 mb-8 px-4 text-white pt-16">
+                        {verifyData.isPhoneVerified === true && (<>
+                            <Text className="label-style">
                             Phone Verification Code *
                             </Text>
                             <Form.Item
@@ -396,7 +395,7 @@ const Verifications = (props) => {
                                 className="input-label otp-verify"
                                 extra={
                                     <div>
-                                        <Text className="fs-12 text-white-30 fw-200">
+                                        <Text className="verification-text">
                                             {phone.showRuleMsg}
                                         </Text>
                                         <Text
@@ -429,8 +428,8 @@ const Verifications = (props) => {
                             </Form.Item>
                         </>
                         )}
-                        {verifyData.isEmailVerification === true  && (<>
-                            <Text className="fs-14 mb-8 text-white d-block fw-500">
+                        {verifyData.isEmailVerification === true && (<>
+                            <Text className="label-style">
                                 Email Verification Code *
                             </Text>
                             <Form.Item
@@ -472,7 +471,7 @@ const Verifications = (props) => {
                         </>
                         )}
                         {verifyData.twoFactorEnabled === true && (<>
-                            <Text className="mb-8 px-4 fw-500 text-white pt-16">
+                            <Text className="label-style">
                             Authenticator Code *
                             </Text>
                             <Form.Item

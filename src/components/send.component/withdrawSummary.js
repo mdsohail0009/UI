@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { Typography, Button, Alert, Form, Input,Modal, Tooltip, Checkbox, Image,Space } from "antd";
 import { connect } from "react-redux";
-import alertIcon from '../../assets/images/pending.png';
+import alertIcon from '../../assets/images/success-check.svg';
 import Translate from "react-translate-component";
 import Loader from "../../Shared/loader";
 import Currency from "../shared/number.formate";
@@ -121,7 +121,7 @@ class WithdrawSummary extends Component {
 	LinkValue = (props) => {
 		return (
 			<Translate
-				className="textpure-yellow text-underline c-pointer"
+				className="terms-link"
 				content={props.content}
 				component={Link}
 				onClick={() =>
@@ -588,7 +588,7 @@ class WithdrawSummary extends Component {
 		const btnList = {
 			get_otp: (
 				<Translate
-					className={`pl-0 ml-0 text-yellow-50 ${disable ? "c-notallowed" : ""
+					className={` ${disable ? "c-notallowed" : ""
 						}`}
 					content="get_code"
 				/>
@@ -651,19 +651,18 @@ class WithdrawSummary extends Component {
 		}
 		if (showDeclartion) {
 			return <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
-			  <Image width={80} preview={false} src={alertIcon} />
-			  <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully </Title>
-			  <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
+			  <Image preview={false} src={alertIcon} className="confirm-icon"/>
+			  <Title level={2} className="success-title">Declaration form sent successfully </Title>
+			  <div className="successsubtext">
+			  <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
 				   Please sign using link received in email to whitelist your address. `}</Text>
-			  <span className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</span>
+			  <span className="successsubtext">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</span></div>
 			  {/* <div className="my-25"><Button
 				onClick={() => { this.onBackSend() }}
 				type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button></div> */}
-				 <div className="my-25 my-16"> 
-				 <Space direction="vertical" size="large">
-                        <Translate content="crypto_with_draw_success" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => { this.onBackSend() }} />
-                    </Space>
-					</div>
+				 
+                        <Translate content="crypto_with_draw_success" className="cust-cancel-btn" component={Button} onClick={() => { this.onBackSend() }} />
+                   
 			</div></div>
 		  }
 		  else {
@@ -685,8 +684,8 @@ class WithdrawSummary extends Component {
 				) : (
 					<div className="auto-scroll">
 						<div
-							className="fs-36 text-white-30 fw-500 text-center"
-							style={{ lineHeight: "36px" }}>
+							className="cust-coin-value"
+							style={{}}>
 							<Currency
 								prefix={""}
 								decimalPlaces={8}
@@ -698,7 +697,7 @@ class WithdrawSummary extends Component {
 								}
 							/>{" "}
 						</div>
-						<div className="text-white-50 fw-500 text-center fs-14 mb-16">
+						<div className="faitcurrency-style">
 							<Currency
 								defaultValue={this.state.usdAmount}
 								prefix={""}
@@ -707,9 +706,10 @@ class WithdrawSummary extends Component {
 								suffixText={"USD"}
 							/>
 						</div>
-						<div className="pay-list fs-14">
+						<div className="cust-summary-new">
+						<div className="pay-list">
 							<Translate
-								className="fw-500 text-white"
+								className="summary-liststyle"
 								content="exchange_rate"
 								component={Text}
 							/>
@@ -717,20 +717,20 @@ class WithdrawSummary extends Component {
 								defaultValue={this.state.OneusdAmount}
 								decimalPlaces={8}
 								prefix={""}
-								className="fw-500 text-white-30"
+								className="summarybal"
 								prefixText={`1 ${this.props.sendReceive.withdrawCryptoObj?.walletCode
 									} = ${"USD"}`}
 							/>
 						</div>
-						<div className="pay-list fs-14">
+						<div className="pay-list">
 							<Translate
-								className="fw-500 text-white"
+								className="summary-liststyle"
 								content="amount"
 								component={Text}
 							/>
 							<Currency
 								prefix={""}
-								className={"text-white fw-500"}
+								className={"summarybal"}
 								decimalPlaces={8}
 								defaultValue={
 									this.props.sendReceive.withdrawCryptoObj?.totalValue
@@ -740,14 +740,14 @@ class WithdrawSummary extends Component {
 								}
 							/>
 						</div>
-						<div className="pay-list fs-14">
+						<div className="pay-list">
 							<Translate
-								className="fw-500 text-white"
+								className="summary-liststyle"
 								content="WithdrawalFee"
 								component={Text}
 							/>
 							<Text
-								className="fw-500 text-white"
+								className="summarybal"
 								style={{
 									width: "250px",
 									textOverflow: "ellipsis",
@@ -758,34 +758,34 @@ class WithdrawSummary extends Component {
 								{this.state?.comission}
 							</Text>
 						</div>
-						<div className="pay-list fs-14">
+						<div className="pay-list">
 							<Translate
-								className="fw-500 text-white"
+								className="summary-liststyle"
 								content="address"
 								component={Text}
 							/>
 								<CopyToClipboard text={this.props.sendReceive.withdrawCryptoObj?.toWalletAddress} options={{ format: 'text/plain' }}>
-									<Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="mb-0 fs-18 fw-400 text-white fw-500" >{this.props.sendReceive.withdrawCryptoObj?.toWalletAddress?.length>0?this.props.sendReceive.withdrawCryptoObj?.toWalletAddress.substring(0,4)+`................`+this.props.sendReceive.withdrawCryptoObj?.toWalletAddress.slice(-4):"-"}</Text>
+									<Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="summary-liststyle" >{this.props.sendReceive.withdrawCryptoObj?.toWalletAddress?.length>0?this.props.sendReceive.withdrawCryptoObj?.toWalletAddress.substring(0,4)+`................`+this.props.sendReceive.withdrawCryptoObj?.toWalletAddress.slice(-4):"-"}</Text>
 								</CopyToClipboard>
 						</div>
-						<div className="pay-list fs-14">
+						<div className="pay-list">
 							<Translate
-								className="fw-500 text-white"
+								className="summary-liststyle"
 								content="network"
 								component={Text}
 							/>
-							<Text className="fw-500 text-white">
+							<Text className="summary-liststyle">
 							{this.props.sendReceive.withdrawCryptoObj?.network || '-'}
 							</Text>
-						</div>
+						</div></div>
 						<Form
-							className="mt-36"
+							className="crypto-summaryform"
 							name="advanced_search"
 							autoComplete="off"
 							form={this.form}
 							onFinish={this.saveWithdrwal}>
 							{this.state.permissions?.Send && this.state.verifyData.isPhoneVerified === true && (
-								<Text className="fs-14 mb-8 text-white d-block fw-500 code-lbl">
+								<Text className="label-style">
 									Phone Verification Code *
 								</Text>
 							)}
@@ -795,7 +795,7 @@ class WithdrawSummary extends Component {
 									className="input-label otp-verify"
 									extra={
 										<div>
-											<Text className="fs-12 text-white-30 fw-200">
+											<Text className="verification-text">
 												{this.state.verificationText}
 											</Text>
 											<Text
@@ -860,7 +860,7 @@ class WithdrawSummary extends Component {
 							)}
 							{this.state.verifyData.isPhoneVerified}
 							{this.state.permissions?.Send && this.state.verifyData.isEmailVerification === true && (
-								<Text className="fs-14 mb-8 text-white d-block fw-500 code-lbl">
+								<Text className="label-style">
 									Email Verification Code *
 								</Text>
 							)}
@@ -870,7 +870,7 @@ class WithdrawSummary extends Component {
 									className="input-label otp-verify"
 									extra={
 										<div>
-											<Text className="fs-12 text-white-30 fw-200">
+											<Text className="verification-text">
 												{this.state.emailVerificationText}
 											</Text>
 											<Text
@@ -934,7 +934,7 @@ class WithdrawSummary extends Component {
 								</Form.Item>
 							)}
 							{this.state.permissions?.Send && this.state.verifyData.twoFactorEnabled === true && (
-								<Text className="fs-14 mb-8 text-white d-block fw-500 code-lbl">
+								<Text className="label-style">
 									Authenticator Code *
 								</Text>
 							)}
@@ -1008,34 +1008,68 @@ class WithdrawSummary extends Component {
 								valuePropName="checked"
 								required
 							>
-								{this.state.permissions?.Send && <span className="d-flex">
-									<Checkbox className={`ant-custumcheck ${!agreeRed ? "check-red" : " "}`} />
-									<span className="withdraw-check"></span>
-									<Translate
-										content="agree_to_suissebase"
-										with={{ link }}
-										component={Paragraph}
-										className="fs-14 text-white-30 ml-16 mb-4"
-										style={{ flex: 1 }}
-									/>
-								</span>}
+								{this.state.permissions?.Send &&
+								// <div className="d-flex agree-check">
+								//  <label className="">
+								// 	<Checkbox className={`agree-check ${!agreeRed ? "check-red" : " "}`} />
+								// 	<span className="withdraw-check"></span>
+									
+								// </label>
+								// <Translate
+								// 		content="agree_to_suissebase"
+								// 		with={{ link }}
+								// 		component={Paragraph}
+								// 		className="cust-agreecheck"
+								// 		style={{ flex: 1 }}
+								// 	/>
+								// </div>
+
+								<div className="d-flex agree-check">
+						<label>
+							<input
+								type="checkbox"
+								id="agree-check"
+								// checked={onCheked}
+								onChange={({ currentTarget: { checked } }) => {
+									this.props.onTermsChange(checked);
+								}}
+							/>
+							<span for="agree-check"  />
+							{/* // className={`${error?.agreeRed===false ? "checkbox-red":""}`} */}
+							
+						</label>
+						<Paragraph
+							className="cust-agreecheck"
+							style={{ flex: 1 }}>
+							<Translate className="cust-agreecheck" with={{ link }} content="agree_to_suissebase" component="Paragraph" />{" "}
+							{/* <a
+								className="terms-link"
+								href="https://www.iubenda.com/terms-and-conditions/42856099"
+								target="_blank">
+								<Translate content="terms" component="Text" />
+							</a> */}
+							{" "}
+							
+							{/* <Translate content="refund_cancellation" component="Text" /> */}
+						</Paragraph>
+					</div>
+								}
 							</Form.Item>
-							<div className="align-center btn-content cust-pop-up-btn">
-							<div className="text-center mt-16">
+							<div className="crypto-btns">
+									
+							<div>{this.state.permissions?.Send && <Button size="large" className="pop-btn  custom-send sell-btc-btn ant-btn-block" htmlType="submit" loading={this.state.btnLoading}>
+								<Translate content="with_draw" component={Text} />
+							</Button>}</div>
+							<div className="mt-16">
 							<Translate
 								content="cancel"
 								component={Button}
 								onClick={() => this.onCancel()}
 								type="text"
 								size="large"
-								className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn primary-btn pop-cancel"
+								className="cust-cancel-btn ant-btn-block"
 							/>
 						</div>
-
-						
-							<div>{this.state.permissions?.Send && <Button size="large" className="pop-btn custom-send" htmlType="submit" loading={this.state.btnLoading}>
-								<Translate content="with_draw" component={Text} />
-							</Button>}</div>
 						</div>
 						</Form>
 							<Modal

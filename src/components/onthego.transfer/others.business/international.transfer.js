@@ -7,10 +7,10 @@ class InternationalTransfer extends Component {
 
 
     render() {
-        return <Row gutter={[8, 8]}>
-            <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+        return <Row >
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="fw-300 mb-4 text-white-50 py-4 custom-forminput custom-label"
+                    className="custom-forminput custom-label"
                     name="accountNumber"
                     label={"Account Number"}
                     required
@@ -47,9 +47,9 @@ class InternationalTransfer extends Component {
 
                 </Form.Item>
             </Col>
-            <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="custom-forminput custom-label fw-300 mb-4 text-white-50 py-4"
+                    className="custom-forminput custom-label"
                     name="swiftRouteBICNumber"
                     label={"Swift / BIC Code"}
                     required
@@ -86,9 +86,9 @@ class InternationalTransfer extends Component {
 
                 </Form.Item>
             </Col>
-            <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="custom-forminput custom-label fw-300 mb-4 text-white-50 py-4"
+                    className="custom-forminput custom-label"
                     name="bankName"
                     label={"Bank Name"}
                     required
@@ -115,7 +115,7 @@ class InternationalTransfer extends Component {
            
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="custom-forminput custom-label fw-300 mb-4 text-white-50 py-4"
+                    className="custom-forminput custom-label"
                     name="bankAddress1"
                     required
                     rules={[
@@ -144,7 +144,7 @@ class InternationalTransfer extends Component {
             </Col>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="custom-forminput custom-label fw-300 mb-4 text-white-50 py-4"
+                    className="custom-forminput custom-label"
                     name="bankAddress2"
                     rules={[
                         {
@@ -165,7 +165,7 @@ class InternationalTransfer extends Component {
             </Col>
             {this.props.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="custom-forminput custom-label mb-0"
+                    className="custom-forminput custom-label"
                     name="reasonOfTransfer"
                     required
                     rules={[

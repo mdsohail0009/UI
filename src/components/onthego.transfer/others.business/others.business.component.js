@@ -198,12 +198,12 @@ class OthersBusiness extends Component {
             return <Loader />
         }
         if (this.state.showDeclartion) {
-            return  <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
-                <Image width={80} preview={false} src={alertIcon} />
-                <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
-                <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
+            return  <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
+                <Image width={80} preview={false} src={alertIcon} className="confirm-icon" />
+                <Title level={2} className="success-title">Declaration form sent successfully to your email</Title>
+                <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                    Please sign using link received in email to whitelist your address. `}</Text>
-                <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
+                <Text className="successsubtext">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
                 <div className="my-25">
                     {/* <Button onClick={() => this.props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button> */}
                     </div>
@@ -212,7 +212,7 @@ class OthersBusiness extends Component {
         if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} transferData={this.state.objData} updatedHeading={this.props?.headingUpdate} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} /> }
         else {
             return <><div ref={this.useDivRef}>
-                <h2 className="text-white fw-600" style={{ fontSize: 18, textAlign: 'center' }}>SEPA Transfer</h2>
+                <h2 className="adbook-head">SEPA Transfer</h2>
                 {this.state.isLoading && <Loader />}
                 {this.state.errorMessage && <Alert type="error" showIcon closable={false} description={this.state.errorMessage} />}
                 {!this.state.isLoading && <Form initialValues={this.state.details}
@@ -221,10 +221,10 @@ class OthersBusiness extends Component {
                     onFinish={this.submitPayee}
                     scrollToFirstError
                 >
-                    <Row gutter={[16, 16]}>
+                    <Row>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label mb-0"
+                                className="custom-forminput custom-label"
                                 name="favouriteName"
                                 label={"Save Whitelist Name As"}
                                 required
@@ -258,10 +258,10 @@ class OthersBusiness extends Component {
                         className="mb-8 text-white fw-500 mt-16"
                     />
                     {/* <Divider /> */}
-                    <Row gutter={[12, 12]}>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                    <Row >
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                className="custom-forminput custom-label"
                                 name="beneficiaryName"
                                 required
                                 rules={[
@@ -287,9 +287,9 @@ class OthersBusiness extends Component {
                                     maxLength={100}/>
                             </Form.Item>
                         </Col>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                className="custom-forminput custom-label"
                                 name="relation"
                                 label={"Relationship To Beneficiary"}
                                 required
@@ -330,13 +330,13 @@ class OthersBusiness extends Component {
 
 
                     </Row>
-                    <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
+                    <h2  className="adbook-head">Bank Details</h2>
                   
-                    <Row gutter={[16, 16]}>
+                    <Row>
                    <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
                        <div className=" custom-btn-error">
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                className="custom-forminput custom-label"
                                 name="iban"
                                 label={"IBAN"}
                                 required
@@ -356,7 +356,7 @@ class OthersBusiness extends Component {
                             </div>
                        </Col>
                        <Col xs={24} md={10} lg={10} xl={10} xxl={10}>
-                       <Button className={`pop-btn dbchart-link fs-14 fw-500`} style={{width:"150px",marginTop:"36px",height:"42px"}}
+                       <Button className={`pop-btn dbchart-link pop-validate-btn`}
                             loading={this.state.isValidateLoading} 
                              onClick={() => this.onIbanValidate(this.state?.enteredIbanData)} >
                                 <Translate content="validate" />
@@ -418,8 +418,8 @@ class OthersBusiness extends Component {
                             </Col>
                         </Row>}
                         {!this.state.iBanValid && !this.state.ibanDetailsLoading && <Row>
-                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
-                                <div><Text className="fs-14 fw-400 text-white">No bank details available</Text></div>
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
+                                <div><Text className="info-details">No bank details available</Text></div>
 
                             </Col>
                         </Row>}
@@ -428,7 +428,7 @@ class OthersBusiness extends Component {
                     </div>
                     {this.props.ontheGoType === "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                                className="custom-forminput custom-label"
                                 name="reasonOfTransfer"
                                 required
                                 rules={[
@@ -463,7 +463,7 @@ class OthersBusiness extends Component {
                         </Col>}
                         {this.props.type !== "manual" && 
                         (<React.Fragment>
-                            <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
+                        <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
                             <AddressDocumnet documents={this.state.details?.payeeAccountModels[0].documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
                                 let { payeeAccountModels } = this.state.details;
                                 payeeAccountModels[0].documents.transfer = docs;
@@ -471,11 +471,12 @@ class OthersBusiness extends Component {
                             }} />
                         </React.Fragment>)
                         }
-                    <div className="text-right mt-36">
+                    <div className="">
                         <Button
                             htmlType="submit"
                             size="large"
-                            className="pop-btn px-36"
+                            block
+                            className="pop-btn"
                             disabled={this.state.ibanDetailsLoading}
                             loading={this.state.isBtnLoading} >
                             {this.props.type === "manual" && "Save"}

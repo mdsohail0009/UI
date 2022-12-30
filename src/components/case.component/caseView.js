@@ -329,7 +329,7 @@ class CaseView extends Component {
         }
         return <>
             <div className="main-container">
-                <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/cases" />{caseData?.documents?.customerCaseTitle}</div>
+                <div className="coin-viewstyle"><Link className="icon md leftarrow backarrow-mr c-pointer" to="/cases" />{caseData?.documents?.customerCaseTitle}</div>
                 <div className='case-stripe'>
                     <Row gutter={[16, 16]}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8} xxl={8}>
@@ -509,13 +509,14 @@ class CaseView extends Component {
                                                 </div>)}
                                             </div>
                         
-                                            <Form.Item className="text-center my-36">
+                                            <Form.Item className="">
                                                 <Button
                                                     htmlType="submit"
                                                     size="large"
-                                                    className="pop-btn mb-36 px-36"
+                                                    block
+                                                    className="pop-btn"
                                                     loading={this.state.btnLoading}
-                                                    style={{ width: "300px" }}
+                                                    // style={{ width: "300px" }}
                                                 >
                                                     Submit
                                                 </Button>

@@ -139,7 +139,7 @@ class YourPortfolio extends Component {
         this.props.dispatch(setWithdrawfiatenaable(false));
         this.props.dispatch(hideSendCrypto(false));
           this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
-        
+
           this.props.dispatch(setStep("step7"));
           this.props.dispatch(setSubTitle(`${coin}` + " " + "balance" +" "+ ":" +" "+ `${selectedObj.coinBalance ?  selectedObj.coinBalance : '0'}`+`${" "}`+`${coin}`));
              const response = await createCryptoDeposit({ customerId: this.props.userProfile?.id, walletCode: coin, network: selectedObj?.netWork });
@@ -177,7 +177,7 @@ class YourPortfolio extends Component {
 }
      menuBar = (item) => (
       <Menu>
-          <ul className="pl-0 drpdwn-list">
+          <ul className="drpdwn-list">
               {/* <li  onClick={() =>  this.showSendReceiveDrawer(1, item)}>
                   <Link value={1} className="c-pointer">Receive</Link>
               </li> */}
@@ -201,10 +201,10 @@ class YourPortfolio extends Component {
       </Menu>
   )
     render() {
-        const { Text } = Typography;
+        const { Text,Title } = Typography;
         const { cryptoPortFolios } = this.props.dashboard
         return (
-          <div className="" style={{borderTop:'1px solid #c2c2c2'}}>
+          <div className="" >
 {/*            
            <div  className="portfolio-title mb-8">
            <div className='portfolio-data' >
@@ -228,7 +228,15 @@ class YourPortfolio extends Component {
                     
               </div>
             </div> */}
-        {cryptoPortFolios?.loading ? (
+            <div className='fait-wallets-style m-0'>
+            <Translate content="suissebase_title" component={Title} className="db-titles" />
+            
+              <Button className="dbchart-link" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
+                  <Translate content="cockpit" />
+              </Button>
+                    
+              </div>
+                {cryptoPortFolios?.loading ? (
                <Loader />
         ) : (
             <List
@@ -246,7 +254,7 @@ class YourPortfolio extends Component {
               }}
               renderItem={(item) => (
                 <List.Item
-                  className=""
+                  className="cytpo-list-style"
                   extra={
                     <div className='crypto-btns'>
                       
@@ -273,11 +281,12 @@ class YourPortfolio extends Component {
                       <Dropdown overlay={this.menuBar(item)} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
                         <Link onClick={e => e.preventDefault()}>
                           <Space>
-                          <span class="icon md menu-bar ml-4 p-relative"></span>
+                          <span class="icon lg menu-bar p-relative"></span>
                           {/* <DownOutlined /> */}
                         </Space>
                       </Link>
                     </Dropdown>
+                        
                      {/* <span class="icon md bell ml-4 p-relative"></span> */}
                      {/* <Dropdown overlay={this.depostWithdrawMenu} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
                      <span class="icon md bell ml-4 p-relative"></span>
@@ -287,39 +296,54 @@ class YourPortfolio extends Component {
                 >
                   {/* to={"/coindetails/" + item.coinFullName.toLowerCase()} */}
                   <List.Item.Meta
-                    avatar={
+                    avatar={<div className='crypto-bg'>
                       <span
-                        className={`coin c-pointer ${item.coin}`}
+                        className={`crypto-icon c-pointer ${item.coin}`}
                         onClick={() =>
                           this.props.history.push(
                             "/coindetails/" + item.coinFullName.toLowerCase()
                           )
                         }
                       />
+                      </div>
                     }
                     title={
-                      <div className="mr-16">
+                      <div className="crypto-card-design">
+                        <div className='crypto-values'>
                         <div style={{ display: "flex", alignItems: "center" }}>
-                          <Text className="fs-16 fw-600 text-upper text-white">
+                          <Text className="coin-style">
                             {item.coin}
                           </Text>
-                          <Text className="fs-14 px-8 text-secondary">|</Text>
-                          <Currency
+                          {/* <Text className="fs-14 px-8 text-secondary">|</Text> */}
+                          
+                        </div>
+                        <Currency
+                          defaultValue={item.coinBalance}
+                          className="coinbal-style"
+                          type={"text"}
+                          prefix={""}
+                        />
+                        </div>
+                        <div  className={` ${
+                              item.coinValueinNativeCurrency > 0
+                                ? "price-valgreen"
+                                : "price-valred"
+                            }`}>
+                        <Currency
                             defaultValue={item.coinValueinNativeCurrency}
                             type={"text"}
                             className={`lg-fontsize ${
                               item.coinValueinNativeCurrency > 0
-                                ? "text-green"
-                                : "text-red"
+                                ? "text-green pg-text"
+                                : "text-red red-text"
                             }`}
                           />
-                        </div>
-                        <Currency
-                          defaultValue={item.coinBalance}
-                          className="text-white fs-18 text-left"
-                          type={"text"}
-                          prefix={""}
-                        />
+                          <span className={`icon sm  ${
+                              item.coinValueinNativeCurrency > 0
+                                ? "valupp-icon pg-arrow"
+                                : "valdown-icon red-arrow"
+                            }`} />
+                            </div>
                       </div>
                     }
                   />

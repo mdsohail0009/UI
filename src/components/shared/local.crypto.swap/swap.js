@@ -9,14 +9,14 @@ const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "U
         "GBP": "£"
     });
     return (
-      <div className="p-relative">
+      <div className="p-relative enrty-field-style">
         <div className="enter-val-container swap-com">
-          <Text className="fs-30 fw-400 text-white-30 text-yellow mr-4">
+        {/* <div className="crycoin-bal">
             {!isSwaped ? localCurrency : cryptoCurrency}
-          </Text>
+          </div> */}
           <NumberFormat
             id="amtInput"
-            className="fw-400 text-white-30 text-center enter-val p-0"
+            className="inputfont-style text-center inputbg-fonts"
             maxLength={25}
             customInput={Input}
             thousandSeparator={true}
@@ -25,16 +25,18 @@ const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "U
             autoComplete="off"
             placeholder="0.00"
             bordered={false}
-            style={{
-              lineHeight: "48px",
-              fontSize: 30,
-              paddingRight: "40px !important",
-              marginBottom: 0
-            }}
+            contenteditable="true"
+            suffix={!isSwaped ?localCurrency : cryptoCurrency}
+            // style={{
+            //   lineHeight: "48px",
+            //   fontSize: 30,
+            //   paddingRight: "40px !important",
+            //   marginBottom: 0
+            // }}
            
-            onKeyPress={(e) => {
-              e.currentTarget.style.fontSize = "30px";
-            }}
+            // onKeyPress={(e) => {
+            //   e.currentTarget.style.fontSize = "24px";
+            // }}
             value={isSwaped ? cryptoAmt : localAmt}
             onValueChange={({ value }) => {
               onChange(value);
@@ -52,13 +54,14 @@ const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "U
             renderText={(value, props) => (
               <div
                 {...props}
-                className="fs-14 text-white-30 text-center d-block"
+                className="swap-text-sub"
               >
                 {value} {isSwaped ? localCurrency : cryptoCurrency}{" "}
                 {isConvertionLoad && <Spin size="small" />}
               </div>
             )}
           />
+           
             <span className="val-updown c-pointer" onClick={onCurrencySwap} disabled={isConvertionLoad}>
               <span className="icon md swaparrow" />
             </span>

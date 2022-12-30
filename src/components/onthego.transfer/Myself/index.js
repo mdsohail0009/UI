@@ -233,12 +233,12 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     {isLoading &&<Loader /> }
     {!isLoading &&
         <Form layout="vertical" form={form} onFinish={saveTransfer} initialValues={{createTransfer}} scrollToFirstError>
-        {showDeclartion &&  <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
-                <Image width={80} preview={false} src={alertIcon} />
-                <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
-                <Text className="text-white-30">{`Declaration form has been sent to ${props.userProfile?.email}. 
+        {showDeclartion &&  <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
+                <Image width={80} preview={false} src={alertIcon} className="confirm-icon" />
+                <Title level={2} className="success-title">Declaration form sent successfully to your email</Title>
+                <Text className="successsubtext">{`Declaration form has been sent to ${props.userProfile?.email}. 
                    Please sign using link received in email to whitelist your address. `}</Text>
-                <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
+                <Text className="successsubtext">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
                 <div className="my-25">
                     {/* <Button onClick={() => props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button> */}
                     </div>
@@ -256,13 +256,13 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         </>}
         
         
-        {currency === 'EUR' && <h2 className="text-white fw-600" style={{ fontSize: 18, textAlign: 'center' }}>SEPA Transfer</h2>}
+        {currency == 'EUR' && <h2 className="adbook-head" >SEPA Transfer</h2>}
         
         {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
         {!isLoading &&<>
-        <Row gutter={[4, 4]}><Col xs={24} md={24} lg={24} xl={24} xxl={24} id="favoriteName" className="mt-16">
+        <Row><Col xs={24} md={24} lg={24} xl={24} xxl={24} id="favoriteName" className="">
             <Form.Item
-                className="fw-300 mb-8 px-4 text-white-50 custom-forminput custom-label"
+                className="custom-forminput custom-label"
                 name="favouriteName"
                 label={
                     "Save Whitelist Name As"
@@ -291,51 +291,51 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             </Form.Item>
         </Col>
     </Row>
-            <Translate style={{ fontSize: 14,color: "white" }}
+            <Translate 
                     content="Beneficiary_Details"
                     component={Paragraph}
-                    className="mt-24 text-captz px-4 text-white fw-600"
+                    className="adbook-head"
                 />
 
-        <div className="box basic-info alert-info-custom kpi-List">
+        <div className="alert-info-custom kpi-List">
             <Row>
-                {!isBusiness && <><Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                <div><label className="kpi-label">
+                {!isBusiness && <><Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
+                <div className="kpi-divstyle"><label className="kpi-label">
                         First name
                     </label>
                     <div><Text className="kpi-val">{recipientDetails.firstName}</Text></div></div>
 
                 </Col>
-                    <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                    <div> <label className="kpi-label">
+                    <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
+                    <div className="kpi-divstyle"> <label className="kpi-label">
                             Last Name
                         </label>
                         <div><Text className="kpi-val">{recipientDetails.lastName}</Text></div></div>
 
                     </Col></>}
-                {isBusiness && <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                <div><label className="kpi-label">
+                {isBusiness && <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
+                <div className="kpi-divstyle"><label className="kpi-label">
                         Beneficiary Name
                     </label>
                     <div><Text className="kpi-val">{recipientDetails.beneficiaryName}</Text></div></div>
 
                 </Col>}
-                <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                <div> <label className="kpi-label">
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
+                <div className="kpi-divstyle"> <label className="kpi-label">
                         Address Line 1
                     </label>
                     <div><Text className="kpi-val">{recipientDetails.line1!=null?recipientDetails.line1:'-'}</Text></div></div>
 
                 </Col>
-                <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                <div> <label className="kpi-label ">
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
+                <div className="kpi-divstyle"> <label className="kpi-label ">
                         Address Line 2
                     </label>
                     <div><Text className="kpi-val">{recipientDetails.line2!=null?recipientDetails.line2:'-'}</Text></div></div>
 
                 </Col>
-                <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                <div><label className="kpi-label">
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
+                <div className="kpi-divstyle"><label className="kpi-label">
                        Address Line 3
                     </label>
                     <div><Text className="kpi-val">{recipientDetails.line3!=null?recipientDetails.line3:'-'}</Text></div></div>
@@ -345,9 +345,9 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             </Row>
         </div>
 
-        <h2 style={{ fontSize: 14,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
-        {(currency === 'EUR'||addressOptions.tabType === 'internationalIBAN') && <Row gutter={[8, 8]} >
-        {(currency === 'EUR'||addressOptions.tabType === 'internationalIBAN') && <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
+        <h2  className="adbook-head">Bank Details</h2>
+        {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Row>
+        {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
             <div className="custom-btn-error">
             <Form.Item
                 className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
@@ -373,7 +373,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             </div>
         </Col>}
         {(currency === 'EUR'||addressOptions.tabType === 'internationalIBAN') &&<Col xs={24} md={10} lg={10} xl={10} xxl={10}>
-            <Button className={`pop-btn dbchart-link fs-14 fw-500`} style={{width:"150px",marginTop:"32px",height:"42px"}}
+            <Button className={`pop-btn dbchart-link pop-validate-btn`}
                 loading={isValidateLoading}
                 onClick={() => onIbanValidate(enteredIbanData)} >
                 <Translate content="validate" />
@@ -381,10 +381,10 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         </Col>}
         </Row>}
 
-        <Row gutter={[8, 8]}>
-            {(currency === 'USD' && addressOptions.tabType !== 'internationalIBAN')  && <> <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+        <Row>
+            {(currency == 'USD' && addressOptions.tabType !== 'internationalIBAN')  && <> <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="fw-300 mb-8 px-4 text-white-50  custom-forminput custom-label pt-8"
+                    className="custom-forminput custom-label"
                     name="accountNumber"
                     label='Account Number' required
                     rules={[
@@ -414,9 +414,9 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 </Form.Item>
             </Col>
 
-                {currency === 'USD' && addressOptions.tabType === 'international'&&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                {currency === 'USD' && addressOptions.tabType === 'international'&&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-400 mb-8 px-4 text-white pt-8"
+                        className="custom-forminput custom-label"
                         name="swiftRouteBICNumber"
                         label={currency === 'USD' && addressOptions.tabType === 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
                         required
@@ -445,9 +445,9 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             maxLength={50}/>
                     </Form.Item>
                 </Col>}
-                {!(currency === 'USD' && addressOptions.tabType === 'international')&&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                {!(currency === 'USD' && addressOptions.tabType === 'international')&&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name="abaRoutingCode"
                         label={currency === 'USD' && addressOptions.tabType === 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
                         required
@@ -477,9 +477,9 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         maxLength={50}/>
                     </Form.Item>
                 </Col>}
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name="bankName"
                         label='Bank Name'
                         required
@@ -582,14 +582,15 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
 
                 </Col></Row>}
                 
-                {(!validIban||!isShowBankDetails)&&<span>No bank details available</span>}
+                {(!validIban||!isShowBankDetails)&&<span className="info-details">No bank details available</span>}
                 </Spin>
         </div>}
-        <div className="text-right mt-36">
+        <div className="buy-usdt-btn">
             <Button
                 htmlType="submit"
                 size="large"
-                className="pop-btn px-36"
+                block
+                className="pop-btn"
                 loading={isBtnLoading} >
                 {props.type === "manual" && "Save"}
                 {props.type !== "manual" && <Translate content="continue" />}

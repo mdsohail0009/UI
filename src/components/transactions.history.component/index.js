@@ -315,7 +315,7 @@ isErrorDispaly = (objValue) => {
       <>
         <Drawer
           title={[<div className="side-drawer-header">
-            <Translate content="transactions_history" component={Title} className="fs-26 fw-400 mb-0 text-white-30" />
+            <Translate content="transactions_history" component={Title} className="grid-title" />
             <span onClick={this.props.onClose} className="icon md close-white c-pointer" />
           </div>]}
           placement="right"
@@ -332,12 +332,12 @@ isErrorDispaly = (objValue) => {
               autoComplete="off"
               ref={this.formRef}
             >
-              <Row >
+              <Row className="filter-content">
               <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
               <Form.Item
                     name="timeSpan"
                     className="input-label selectcustom-input mb-0"
-                    label={<Translate content="Date" component={Form.label} className="input-label selectcustom-inputdate-mobile" />}
+                    label={<Translate content="Date" component={Form.label} className="label-style" />}
                   >
                     <Select
                       className="cust-input mb-0 custom-search"
@@ -353,7 +353,7 @@ isErrorDispaly = (objValue) => {
                 {this?.state?.isCustomDate ? <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
                   <Form.Item
                     name="selectedTimespan"
-                    className="input-label selectcustom-input cust-label transaction-type"
+                    className="input-label selectcustom-input mb-0"
                     label="From - To Dates"
                   >
                     <Input disabled placeholder="DD/MM/YYYY" className="cust-input cust-adon mb-0" addonAfter={<i className="icon md date-white c-pointer" onClick={(e) => { this.datePopup(e, 'searchObj') }} />} />
@@ -404,11 +404,10 @@ isErrorDispaly = (objValue) => {
                 <Col xs={24} sm={24} md={3} lg={3} xl={3} className="transaction_resp">
                   <Button
                     className="pop-btn search-btn"
-                    style={{ height: 36, marginTop: "36px" }}
                     htmlType="submit"
                     onClick={this.handleSearch}
                   >
-                    Search<span className="icon sm search-angle ml-8"></span>
+                    Search<span className="icon md search-angle "></span>
                   </Button>
                 </Col>
 

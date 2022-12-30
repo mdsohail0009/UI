@@ -303,7 +303,7 @@ export default {
 	send_crypto: "Alefaso ny Crypto",
 	remarks: "sinabi",
 	userName: "John Huh",
-	manage_account: "PAMAHALAAN ANG IYONG ACCOUNT",
+	manage_account: "Kaonty manokana",
 	withdrawCrypto: "Bawiin ang Crypto",
 	withdrawFiat: "Bawiin ang Fiat",
 	fiatAddress: "idagdag Fiat Address",

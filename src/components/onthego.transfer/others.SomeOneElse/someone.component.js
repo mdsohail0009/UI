@@ -131,12 +131,12 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         {mainLoader && <Loader />}
         {!mainLoader && <>
             <div ref={useDivRef}></div>
-            {showDeclartion &&<div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
-                <Image width={80} preview={false} src={alertIcon} />
-                <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
-                <Text className="text-white-30">{`Declaration form has been sent to ${props.userProfile?.email}. 
+            {showDeclartion &&<div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
+                <Image width={80} preview={false} src={alertIcon} className="confirm-icon" />
+                <Title level={2} className="success-title">Declaration form sent successfully to your email</Title>
+                <Text className="successsubtext">{`Declaration form has been sent to ${props.userProfile?.email}. 
                    Please sign using link received in email to whitelist your address. `}</Text>
-                <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
+                <Text className="successsubtext">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
             </div></div>}
 
             {!showDeclartion && <>
@@ -154,7 +154,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         </Col>
                     </Row>
                 </>}
-                {props.currency === 'EUR' && <h2 className="text-white fw-600" style={{ fontSize: 18, textAlign: 'center'}}>SEPA Transfer</h2>}
+                {props.currency == 'EUR' && <h2 className="adbook-head">SEPA Transfer</h2>}
                 {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
             <Form
                 ref={form}
@@ -164,10 +164,10 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                 scrollToFirstError
             >
                
-                <Row gutter={[16, 16]} className={'pb-16'}>
+                <Row  className="">
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item
-                            className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-16"
+                            className="custom-forminput custom-label"
                             name="favouriteName"
                             required
                             rules={[
@@ -196,16 +196,16 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                     </Col>
 
                 </Row>
-                <Translate style={{ fontSize: 18 }}
+                <Translate 
                     content="Beneficiary_Details"
                     component={Paragraph}
-                    className="mb-8 px-4 text-white fw-500 mt-16"
+                    className="adbook-head"
                 />
                 <>
-                    <Row gutter={[4, 4]}>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                    <Row >
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                className="custom-forminput custom-label"
                                 name="firstName"
                                 required
                                 rules={[
@@ -231,9 +231,9 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                                     maxLength={100}/>
                             </Form.Item>
                         </Col>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                className="custom-forminput custom-label"
                                 name="lastName"
                                 required
                                 rules={[
@@ -259,9 +259,9 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                                     maxLength={100}/>
                             </Form.Item>
                         </Col>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                className="custom-forminput custom-label"
                                 name={"relation"}
                                 required
                                 rules={[
@@ -302,7 +302,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                className="custom-forminput custom-label"
                                 name="line1"
                                 required
                                 rules={[
@@ -332,7 +332,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                className="custom-forminput custom-label"
                                 name="line2"
                                 rules={[
                                     {
@@ -353,7 +353,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
-                                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                                className="custom-forminput custom-label"
                                 name="line3"
                                 rules={[
                                     {
@@ -374,13 +374,13 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         </Col>
                     </Row>
                 </>
-                <Paragraph className="mb-8 fw-500 text-white px-4 mt-36" style={{ fontSize: 18 }}>Bank Details</Paragraph>
+                <Paragraph className="adbook-head" >Bank Details</Paragraph>
                 {((props.selectedAddress?.id && createPayeeObj)||!props.selectedAddress?.id ) &&
                  <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} isAddTabCange={isTabChange}/>}
                  
                  {props.type !== "manual" && 
                 (<React.Fragment>
-                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
+                        <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
                     <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
                             let temp = {...documents, "transfer": docs}
                             setDocuments(temp)
@@ -388,11 +388,12 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                 </React.Fragment>)
                 }
 
-                                    <div className="text-right mt-12">
+                                    <div className="">
                     <Button
                         htmlType="submit"
                         size="large"
-                        className="pop-btn px-36 mt-36"
+                        block
+                        className="pop-btn"
                         loading={btnLoading}
                     >
                         {props.type === "manual" && "Save"}

@@ -1,17 +1,21 @@
 
 import React, { Component } from 'react';
-import { Row, Col, Button, Carousel } from 'antd';
+import { Row, Col, Button, Carousel,Typography, } from 'antd';
 import Portfolio from './portfolio.component';
 import MarketCap from './marketcap.component';
 import AlertConfirmation from '../shared/alertconfirmation';
 import { connect } from 'react-redux';
 import { fetchNotices } from '../../reducers/dashboardReducer';
+import Translate from 'react-translate-component';
 import Wallets from '../dashboard.component/wallets.component';
 import YourPortfolio from '../dashboard.component/yourportfolio.component';
 import apiCalls from '../../api/apiCalls';
 import Notices from './notices';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 import BankWallets from '../bankui.component'
+import SbCard from './sbCard';
+import Iban from './ibanAccounts';
+const { Title, Paragraph } = Typography;
 class Home extends Component {
     state = {
         loading: false,
@@ -49,7 +53,7 @@ class Home extends Component {
     render() {
         const { data: notices } = this.props.dashboard?.notices;
         return (
-            <div className="main-container">
+            <div className="main-container dashbord-space">
                 {this.props?.twoFA && ((!this.props?.twoFA?.isEnabled) && (!this.props?.twoFA?.loading)) && <div>
                     <AlertConfirmation type="error" title={"2FA"} showIcon description="Please enable two-factor authentication (2FA) by clicking on user profile in the top right hand corner and navigating to “Manage Your Account” > “Security” or by clicking on Enable 2FA."
                         action={
@@ -68,33 +72,45 @@ class Home extends Component {
                             } />
                     </div>)}
                 </Carousel> : ""}
-
-                <Row justify="center mt-16">
-                     <Col xs={24} md={12} xl={10}>
-                        {this.state.permissions?.Bank &&
+            <div className='d-flex align-center'>
+                <Translate content="Dashboard" component={Title} className="db-main-title" />
+                <span className='acount-type'>Personal</span>
+            </div>
+                <Row justify="center mt-16" gutter={[16,16]}>
+                <Col xs={24} md={12} xl={15} lg={15} xxl={15} className="db-flex-style">
+                        
+                        {this.state.permissions?.Balances &&<>
                             <div className="markets-panel">
+                                <YourPortfolio />
+                            </div>
+                        
+                            <div className="markets-panel markets-line">    
+                                <Wallets />
+                            </div>                     
+                        </>}
+                        {/* {this.state.permissions?.Bank &&
+                            <div className="markets-panel ac-topspace">
                                 <BankWallets/>
                             </div>
-                        }
-                        {this.state.permissions?.Balances &&<>
-                        <div className="markets-panel mb-16 markets-line">
-                            <Wallets />
-                        </div>
-                        <div className="markets-panel">
-                            <YourPortfolio />
-                        </div>
-                        </>}
-                    </Col>
-                    <Col xs={24} md={12} xl={14}>
+                        } */}
                         {this.state.permissions.Transactions && <Portfolio
                             crypto="Bitcoin"
                             crypto_value='0.00'
                             crypto_usd="0.00 BTC"
                             crypto_stock="0.0%" />}
-                        {this.state.permissions.Notices && <Notices />}
-                        {this.state.permissions.Markets && <div className="markets-panel mr-0">
+                        {/* {this.state.permissions.Notices && <Notices />} */}
+                        
+                    </Col>
+                    <Col xs={24} md={12} lg={9} xl={9} className="cust-col-design">
+                        <SbCard />
+                        {this.state.permissions?.Bank &&  <div className='marketcap-mt'>
+                       <BankWallets/> 
+                       {/* <Iban/> */}
+                       </div>}
+                        {this.state.permissions.Markets && 
                             <MarketCap />
-                        </div>}
+                       }
+                       
                     </Col>
                 </Row>
             </div >

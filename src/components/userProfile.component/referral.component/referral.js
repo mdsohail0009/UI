@@ -9,6 +9,7 @@ import {
 import apicalls from "../../../api/apiCalls"
 import { connect } from "react-redux";
 
+const { Title, Paragraph, Text } = Typography;
 class Referral extends Component {
     state = {
         referaldata:null,
@@ -86,16 +87,16 @@ class Referral extends Component {
           />
         )}
 
-        <Spin spinning={this.state.isLoading}>
-          <div className="box basic-info basicprofile-info">
+        {/* <Spin spinning={this.state.isLoading}> */}
+          
             <div
-              className="box mb-flex contact-info coin-bal"
+              className=""
               style={{ padding: "0" }}
             >
               {/* <Text className="basicinfo mb-0" style={{ marginLeft: '-22px' }}>My Referral</Text> */}
               	<Translate
 						content="referr"
-						component={Text}
+						component={Title}
 						className="basicinfo"
 					/>
               {/* <ul class="m-0 pl-0">
@@ -104,10 +105,91 @@ class Referral extends Component {
 								Go to Partner
 							</li>
 					</ul> */}
+              </div>
+           
+            <div className="referral-bg-style basicprofile-info">
+            <div className="crypto-address">
+              <div>
+            <Translate content="Referral_code" className="profile-label" component={Text} />
+              <div className="profile-value mv-profile-value">
+                {this.state.referaldata?.referralCode || "---"}
+              </div>
+              </div>
+              <div className="walletadrs mb-copy">
+                <CopyToClipboard
+                  text={this.state.referaldata?.referralCode || "---"}
+                  options={{ format: 'text/plain' }}>
+                  <Text
+                    copyable
+                    className="custom-display"
+                  ></Text>
+                </CopyToClipboard>
+              </div>
+            </div>
+            </div>
+            <div className="referral-bg-style basicprofile-info">
+            <div className="crypto-address">
+              <div>
+            <Translate content="Personal_referral_link" className="profile-label" component={Text} />
+              <div className="profile-value mv-profile-value">
+                {this.state.referaldata?.referrallink || "---"}
+              </div>
+              </div>
+            
+            <div className="walletadrs mb-copy">
+                <CopyToClipboard
+                  text={this.state.referaldata?.referrallink || "---"}
+                  options={{ format: 'text/plain' }}>
+                  <Text
+                    copyable
+                    className="custom-display"
+                  ></Text>
+                </CopyToClipboard>
+              </div>
+              </div>
+              </div>
+              <div className="referral-bg-style basicprofile-info">
+            <div className="crypto-address">
+            <div>
+            <Translate content="Business_referral_link" className="profile-label" component={Text} />
+              <div className="profile-value mv-profile-value">
+                {this.state.referaldata?.referralBusinesslink || "---"}
+              </div>
+              </div>
+              <div className="walletadrs mb-copy">
+                <Paragraph 
+                  text={this.state.referaldata?.referralBusinesslink || "---"}
+                  options={{ format: 'text/plain' }}>
+                  <Text
+                    copyable
+                    // className="custom-display"
+                  ></Text>
+                </Paragraph>
+              </div>
+            </div>
+            </div>
+            {/* <Dropdown overlay={this.shareMenu} trigger={['click']}>
               <Button
+                style={{ borderRadius: 25, height: 50 }}
+                className="share-btn"
+                block
+                onClick={e => e.preventDefault()}
+              >
+               <Translate content="share" />
+              </Button>
+            </Dropdown> */}
+            <div className="crypto-address share-width-align">
+              <div>
+            <div className='refferral-share-btn'>Share</div>
+                <div>
+                    <span className='icon lg whats-app c-pointer' />
+                    <span className='icon lg mail-app c-pointer' />
+            </div>
+            </div>
+          <Button
                 htmlType="submit"
                 size="large"
-                className="pop-btn"
+                className="profile-sm-btn referral-patner-btn"
                 style={{ marginRight: "" }}
                 onClick={() =>
                   window.open(process.env.REACT_APP_PARTNER_UI_URL, "_blank")
@@ -115,68 +197,8 @@ class Referral extends Component {
               >
                 <Translate content="Go_to_Partner" />
               </Button>
-            </div>
-            <div className="crypto-address mt-12">
-            <Translate content="Referral_code" className="mb-0 fw-400 text-secondary" component={Text} />
-              <div className="mb-0 fw-600 text-white-30 walletadrs">
-                {this.state.referaldata?.referralCode || "---"}
               </div>
-              <div className="mb-0 fw-600 text-white-30 walletadrs">
-                <CopyToClipboard
-                  text={this.state.referaldata?.referralCode || "---"}
-                  options={{ format: 'text/plain' }}>
-                  <Text
-                    copyable
-                    className="fs-20 text-white-30 custom-display"
-                  ></Text>
-                </CopyToClipboard>
-              </div>
-            </div>
-            <div className="crypto-address mt-12">
-            <Translate content="Personal_referral_link" className="mb-0 fw-400 text-secondary" component={Text} />
-              <div className="mb-0 fw-600 text-white-30 walletadrs mb-copy">
-                {this.state.referaldata?.referrallink || "---"}
-              </div>
-              <div className="mb-0 fw-600 text-white-30 walletadrs mb-copy">
-                <CopyToClipboard
-                  text={this.state.referaldata?.referrallink || "---"}
-                  options={{ format: 'text/plain' }}>
-                  <Text
-                    copyable
-                    className="fs-20 text-white-30 custom-display"
-                  ></Text>
-                </CopyToClipboard>
-              </div>
-            </div>
-            <div className="crypto-address mt-12">
-            <Translate content="Business_referral_link" className="mb-0 fw-400 text-secondary" component={Text} />
-              <div className="mb-0 fw-600 text-white-30 walletadrs mb-copy">
-                {this.state.referaldata?.referralBusinesslink || "---"}
-              </div>
-              <div className="mb-0 fw-600 text-white-30 walletadrs mb-copy">
-                <CopyToClipboard
-                  text={this.state.referaldata?.referralBusinesslink || "---"}
-                  options={{ format: 'text/plain' }}>
-                  <Text
-                    copyable
-                    className="fs-20 text-white-30 custom-display"
-                  ></Text>
-                </CopyToClipboard>
-              </div>
-            </div>
-
-            <Dropdown overlay={this.shareMenu} trigger={['click']}>
-              <Button
-                style={{ borderRadius: 25, height: 50 }}
-                className="mt-36 text-upper share-btn fw-600 fs-14"
-                block
-                onClick={e => e.preventDefault()}
-              >
-               <Translate content="share" />
-              </Button>
-            </Dropdown>
-          </div>
-        </Spin>
+        {/* </Spin> */}
       </>
     );
 	}

@@ -15,7 +15,7 @@ import Loader from "../../Shared/loader";
 import { withRouter, Link } from "react-router-dom";
 
 import apicalls from "../../api/apiCalls";
-//const { Title } = Typography;
+const { Title } = Typography;
 
 class BankWallets extends Component {
   state = {
@@ -28,7 +28,9 @@ class BankWallets extends Component {
   }
   getCustomerAccountBalance = async () => {
     this.setState({ ...this.state, isLoading: true });
-    let response = await apicalls.getAccountDetails();
+    let response = await apicalls.getAccountDetails(
+      this.props.userProfile.id
+    );
     if (response.ok) {
       this.setState({
         ...this.state,
@@ -60,7 +62,7 @@ class BankWallets extends Component {
   }
   menuBar = (item) => (
     <Menu>
-      <ul className="pl-0 drpdwn-list">
+      <ul className="drpdwn-list">
         <li
           onClick={() =>
             this.redirectBank(
@@ -99,11 +101,11 @@ class BankWallets extends Component {
   );
 
   render() {
-    const { Title } = Typography;
-    //const { wallets } = this.props.dashboard;
+    const { Title, Text } = Typography;
+    const { wallets } = this.props.dashboard;
     return (
-      <>
-        <Title className="fs-24 fw-600 mb-16 text-white px-4">
+      <><div className='market-panel-newstyle'></div>
+        <Title className="db-titles crypto-style">
           Personal Bank Accounts
         </Title>
         {this.state.isLoading ? (
@@ -113,23 +115,37 @@ class BankWallets extends Component {
             itemLayout="horizontal"
             dataSource={this.state.customerData}
             //bordered={false}
-            className="mobile-list custom-fund-buttons mb-36"
+            className="mobile-list custom-fund-buttons iban-list"
             renderItem={(item) => (
-              <List.Item className="py-10 px-0">
+              <List.Item className="listitems-design iban-style">
                 <List.Item.Meta
-                  avatar={<Image preview={false} src={item.imagePath} />}
+                  avatar={<><div className='crypto-curr-align'><div><Image preview={false} src={item.imagePath} /></div>
+                {item?.accountStatus?.toLowerCase() == "approved" && (
+                  <Dropdown
+                  overlay={this.menuBar(item)}
+                  trigger={["click"]}
+                  placement="bottomCenter"
+                  arrow
+                  overlayClassName="secureDropdown depwith-drpdown"
+                >
+                  <a onClick={(e) => e.preventDefault()}>
+                    <Space>
+                      <span class="icon lg menu-bar p-relative"></span>
+                    </Space>
+                  </a>
+                </Dropdown> )}</div></>}
                   title={
-                    <div className="fs-16 fw-600 text-upper text-white-30 l-height-normal">
+                    <div className="coin-style">
                       {item.currency}
                     </div>
                   }
                   description={
                     <Currency
-                      className="fs-16 text-white-30 m-0"
+                      className="currency-style"
                       defaultValue={item.availableBalance}
                       prefix={
-                        (item?.currency === "USD" ? "$" : null) ||
-                        (item?.currency === "EUR" ? "€" : null)
+                        (item?.currency == "USD" ? "$" : null) ||
+                        (item?.currency == "EUR" ? "€" : null)
                       }
                       decimalPlaces={8}
                       type={"text"}
@@ -137,10 +153,11 @@ class BankWallets extends Component {
                     />
                   }
                 />
+                {console.log(item)}
                 {item.isAccountExist ? (
                   <>
-                    {item?.accountStatus?.toLowerCase() === "approved" && (
-                      <div className="crypto-btns mt-8">
+                    {item?.accountStatus?.toLowerCase() == "approved" && (
+                      <div className="crypto-btns crypto-btn-top">
                         <Translate
                           content="transfer_funds"
                           component={Button}
@@ -170,28 +187,16 @@ class BankWallets extends Component {
                           }
                         />
 
-                        <Dropdown
-                          overlay={this.menuBar(item)}
-                          trigger={["click"]}
-                          placement="bottomCenter"
-                          arrow
-                          overlayClassName="secureDropdown depwith-drpdown"
-                        >
-                          <Link onClick={(e) => e.preventDefault()}>
-                            <Space>
-                              <span class="icon md menu-bar ml-4 p-relative"></span>
-                            </Space>
-                          </Link>
-                        </Dropdown>
+                       
                       </div>
                     )}
 
-                    {item?.accountStatus?.toLowerCase() !== "approved" && (
-                      <div className="crypto-btns mt-8">
+                    {item?.accountStatus?.toLowerCase() != "approved" && (
+                      <div className="crypto-btns crypto-btn-top">
                         <Button
                           content="Pending"
                           type="primary"
-                          className="custom-btn prime  text-white"
+                          className="custom-btn prime"
                           style={{width:'118px'}}
                           disabled={true}
                         >
@@ -201,7 +206,7 @@ class BankWallets extends Component {
                     )}
                   </>
                 ) : (
-                  <div className="crypto-btns mt-8">
+                  <div className="crypto-btns crypto-btn-top">
                     <Translate
                       content="createnow"
                       type="primary"

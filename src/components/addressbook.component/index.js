@@ -120,7 +120,7 @@ class AddressBook extends Component {
 			customCell: (props) => (
 				<td>
 					{" "}
-					<label className="text-center custom-checkbox c-pointer">
+					<label className="text-center custom-checkbox c-pointer cust-check-outline">
 						<input
 							id={props.dataItem.id}
 							className="c-pointer"
@@ -178,25 +178,9 @@ class AddressBook extends Component {
 		},
 		{
 			field: "addressState",
-			title: apiCalls.convertLocalLang("Whitelisting_Status"),
+			title: apiCalls.convertLocalLang("addressState"),
 			filter: true,
-			width: 200,
-		},
-		{
-			field: "isWhitelisted",
-			customCell: (props) => (
-				<td>
-					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <><Link onClick={() => {
-						if (!this.state.isDownloading)
-							this.downloadDeclarationForm(props?.dataItem);
-					}} ><DownloadOutlined /></Link> Whitelisted</>}
-					{!props.dataItem?.isWhitelisted && "Not whitelisted"}
-					{this.state.isDownloading && this.state.selectedDeclaration === props?.dataItem.payeeAccountId && <Spin size="small" />}
-				</td>
-			),
-			title: apiCalls.convertLocalLang("whitelist"),
-			filter: false,
-			width: 200,
+			width: 180,
 		},
 		{
 			field: "status",
@@ -204,6 +188,22 @@ class AddressBook extends Component {
 			filter: true,
 			width: 100,
 		},
+		{
+			field: "isWhitelisted",
+			customCell: (props) => (
+				<td>
+					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration != props?.dataItem.payeeAccountId) && <><a onClick={() => {
+						if (!this.state.isDownloading)
+							this.downloadDeclarationForm(props?.dataItem);
+					}} ><DownloadOutlined /></a> Whitelisted</>}
+					{!props.dataItem?.isWhitelisted && "Not whitelisted"}
+					{this.state.isDownloading && this.state.selectedDeclaration == props?.dataItem.payeeAccountId && <Spin size="small" />}
+				</td>
+			),
+			title: apiCalls.convertLocalLang("whitelist"),
+			filter: false,
+			width: 200,
+		}
 	];
 	columnsCrypto = [
 		{
@@ -262,25 +262,9 @@ class AddressBook extends Component {
 		
 		{
 			field: "addressState",
-			title: apiCalls.convertLocalLang("Whitelisting_Status"),
+			title: apiCalls.convertLocalLang("addressState"),
 			filter: true,
-			width: 200,
-		},
-		{
-			field: "isWhitelisted",
-			customCell: (props) => (
-				<td>
-					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <> <Link onClick={() => {
-						if (!this.state.isDownloading)
-							this.downloadDeclarationForm(props?.dataItem);
-					}} ><DownloadOutlined /></Link> Whitelisted</>}
-					{!props.dataItem?.isWhitelisted && "Not whitelisted"}
-					{this.state.isDownloading && this.state.selectedDeclaration === props?.dataItem.payeeAccountId && <Spin size="small" />}
-				</td>
-			),
-			title: apiCalls.convertLocalLang("whitelist"),
-			filter: false,
-			width: 200,
+			width: 180,
 		},
 		{
 			field: "status",
@@ -288,6 +272,22 @@ class AddressBook extends Component {
 			filter: true,
 			width: 100,
 		},
+		{
+			field: "isWhitelisted",
+			customCell: (props) => (
+				<td>
+					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration != props?.dataItem.payeeAccountId) && <> <a onClick={() => {
+						if (!this.state.isDownloading)
+							this.downloadDeclarationForm(props?.dataItem);
+					}} ><DownloadOutlined /></a> Whitelisted</>}
+					{!props.dataItem?.isWhitelisted && "Not whitelisted"}
+					{this.state.isDownloading && this.state.selectedDeclaration == props?.dataItem.payeeAccountId && <Spin size="small" />}
+				</td>
+			),
+			title: apiCalls.convertLocalLang("whitelist"),
+			filter: false,
+			width: 200,
+		}
 	];
 	async downloadDeclarationForm(dataItem) {
 		this.setState({ ...this.state, isDownloading: true, selectedDeclaration: dataItem.payeeAccountId });
@@ -354,6 +354,7 @@ class AddressBook extends Component {
 		} else {
 			statusObj.status.push("InActive")
 		}
+		// statusObj.status.push(this.state.selectedObj.status);
 		statusObj.type = this.state.cryptoFiat ? "fiat" : "crypto";
 		statusObj.info = JSON.stringify(this.props.trackLogs);
 		let response = await activeInactive(statusObj);
@@ -720,7 +721,6 @@ class AddressBook extends Component {
 							ref={this.gridFiatRef}
 							key={gridUrlFiat}
 							url={gridUrlFiat}
-							additionalParams={{ customerId: customerId }}
 						/>
 					) : (
 						<List
@@ -729,7 +729,6 @@ class AddressBook extends Component {
 							key={gridUrlCrypto}
 							ref={this.gridCryptoRef}
 							url={gridUrlCrypto}
-							additionalParams={{ customerId: customerId }}
 						/>
 					)}
 				</div>
@@ -815,19 +814,21 @@ class AddressBook extends Component {
 					}
 					footer={
 						<div className="cust-pop-up-btn">
-						<Button
-							// style={{border: "1px solid #f2f2f2",width:'150px',height: '46px' }}
-							className="primary-btn pop-cancel"
-							onClick={this.handleCancel}>
-							NO
-						</Button>
-						<Button
-							className="primary-btn pop-btn"
+							<Button
+							className="pop-btn"
+							block
 							onClick={this.handleSatatuSave}
 							// style={{ width: '150px', height: '46px' }}
 							loading={btnDisabled}>
 							{apiCalls.convertLocalLang("Yes")}
 						</Button>
+						<Button
+							// style={{border: "1px solid #f2f2f2",width:'150px',height: '46px' }}
+							className="cust-cancel-btn"
+							onClick={this.handleCancel}>
+							NO
+						</Button>
+						
 					</div>
 					}>
 					<p className="fs-16 mb-0">

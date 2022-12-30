@@ -89,7 +89,7 @@ class MobileHeaderMenu extends Component {
                     key={indx}
                     className="mr-16"
                 /><Menu>
-                        <ul className="pl-0 drpdwn-list">
+                        <ul className="drpdwn-list">
                             {item?.subMenu?.map((subItem) => <li onClick={() => onMenuItemClick(subItem.key, subItem)}>
                                 <Link>
                                     <Translate content={subItem.content} conmponent={Text} />{" "}
@@ -326,7 +326,7 @@ class HeaderPermissionMenu extends Component {
         const userProfileMenu = (
             <Menu>
                 <div className="profile-dropdown">
-                    {this.props.userConfig?.imageURL != null && (
+                    {/* {this.props.userConfig?.imageURL != null && (
                         <img
                             src={
                                 this.props.userConfig?.imageURL
@@ -347,11 +347,11 @@ class HeaderPermissionMenu extends Component {
                             className="user-profile"
                             alt={"image"}
                         />
-                    )}
-                    <p className="mb-15 ml-8 profile-value" style={{ flexGrow: 12, marginTop: "5px" }}>
+                    )} */}
+                    {/* <p className="mb-15 ml-8 profile-value" style={{ flexGrow: 12, marginTop: "5px" }}>
                         {this.props.userConfig.isBusiness ? this.props.userConfig.businessName :
                             <>{this.props.userConfig.firstName}{" "}{" "}{this.props.userConfig.lastName}</>}
-                    </p>
+                    </p> */}
                     <Translate
                         content="manage_account"
                         component={Button}
@@ -360,7 +360,7 @@ class HeaderPermissionMenu extends Component {
                         className="profile-btn"
                         onClick={() => this.userProfile()}
                     />
-                    <ul className="pl-0 drpdwn-list">
+                    <ul className="drpdwn-list">
                         <li
                             onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/modal" })}
                         >
@@ -368,34 +368,34 @@ class HeaderPermissionMenu extends Component {
                                 <Translate
                                     content="transactions_history"
                                     component={Text}
-                                    className="text-white-30"
+                                    className="text-white"
                                 />
                                 <span className="icon md rarrow-white" />
                             </Link>
                         </li>
                         <li
                         >
-                            <Popover placement="left" content={<><div onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/6120197cdc204d9ddb882e4d")}>
+                            <Popover placement="left" content={<><div className="personal-popup" onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/6120197cdc204d9ddb882e4d")}>
                                 <Link>
                                     <Translate
                                         content="personal_account"
                                         component={Text}
-                                        className="text-white-30" key="1"
+                                        className="text-white" key="1"
                                     />
                                 </Link><span className="icon c-pointer md rarrow-white ml-12" /></div>
-                                <div onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/611b3ed20414885a6fc64fa7")}>
+                                <div className="personal-popup" onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/611b3ed20414885a6fc64fa7")}>
                                     <Link>
                                         <Translate
                                             content="business_account"
                                             component={Text}
-                                            className="text-white-30" key="1"
+                                            className="text-white" key="1"
                                         />
                                     </Link><span className="icon c-pointer md rarrow-white ml-12" /></div></>} >
                                 <Link>
                                     <Translate
                                         content="get_your_own_iban"
                                         component={Text}
-                                        className="text-white-30"
+                                        className="text-white"
                                     />
                                     <span className="icon md rarrow-white" />
                                 </Link>
@@ -409,7 +409,7 @@ class HeaderPermissionMenu extends Component {
                                 <Translate
                                     content="AuditLogs"
                                     component={Text}
-                                    className="text-white-30"
+                                    className="text-white"
                                 />
                                 <span className="icon md rarrow-white" />
                             </Link>
@@ -421,7 +421,7 @@ class HeaderPermissionMenu extends Component {
                                 <Translate
                                     content="address_book"
                                     component={Text}
-                                    className="text-white-30"
+                                    className="text-white"
                                 />
                                 <span className="icon md rarrow-white" />
                             </Link>
@@ -433,7 +433,7 @@ class HeaderPermissionMenu extends Component {
                                 <Translate
                                     content="case"
                                     component={Text}
-                                    className="text-white-30"
+                                    className="text-white"
                                 />
                                 <span className="icon md rarrow-white" />
                             </Link>
@@ -446,12 +446,12 @@ class HeaderPermissionMenu extends Component {
                                     <Translate
                                         content="upload_documents"
                                         component={Text}
-                                        className="d-block text-white-30"
+                                        className="d-block text-white"
                                     />
                                     <Translate
                                         content='compliance'
                                         component={Text}
-                                        className="text-white-30"
+                                        className="text-white"
                                     />
                                 </span>
                                 <span className="icon md rarrow-white" />
@@ -462,7 +462,7 @@ class HeaderPermissionMenu extends Component {
                                 <span>
                                     <Translate
                                         content="logout"
-                                        className="text-white-30"
+                                        className="text-white"
                                         component={Text}
                                     />
                                 </span>
@@ -485,8 +485,15 @@ class HeaderPermissionMenu extends Component {
                     this.props.dispatch(setHeaderTab(key.key));
                 }}
             >
-                {/* <Menu.Item key="12" className="custom-header"><Link to="/batchpayment" className="batch-list">Batch Payments</Link></Menu.Item> */}
-
+                <Menu.Item>
+                    <Translate
+                        content="header_title"
+                        // onClick={this.routeToCockpit}
+                        onClick={this.props.routeToCockpit}
+                        component={Text}
+                        className="text-white c-pointer cp-link mb-d-none"
+                    /> 
+                </Menu.Item>
                 {data?.map((item, indx) => <React.Fragment>
                     {item.isTab ? <Menu.Item key={item.id}>
                         <Dropdown
@@ -494,7 +501,7 @@ class HeaderPermissionMenu extends Component {
                                 this.setState({ ...this.state, visbleProfileMenu: false })
                             }
                             overlay={<Menu>
-                                <ul className="pl-0 drpdwn-list">
+                                <ul className="drpdwn-list">
                                     {item.subMenu.map(subitem => <li onClick={() => this.onMenuItemClick(subitem.key, subitem)}>
                                         <Link value={2} className="c-pointer">
                                             <Translate content={subitem.content} />
@@ -523,7 +530,23 @@ class HeaderPermissionMenu extends Component {
                             className="fs-20 custom-header" />
                     </Menu.Item>}
                 </React.Fragment>)}
-
+</Menu>
+<Menu
+                theme="light"
+                mode="horizontal"
+                className="header-right mobile-headerview" 
+                 selectedKeys={[this.props.buySell?.headerTab]}
+                onSelect={(key) => {
+                    this.props.dispatch(setHeaderTab(key.key));
+                }}>
+                {/* <Menu.Item key="13"> USD
+                </Menu.Item>  
+                <Menu.Item key="14"><Text className="pipeline">|</Text> English
+                </Menu.Item>   */}
+                <Menu.Item key="15"> 
+                {/* <Text className="pipeline">|</Text> */}
+                <span className="icon md theme-icon" /> Light Mode
+                </Menu.Item> 
                 <Menu.Item
                     key="9"
                     className="notification-conunt"
@@ -556,7 +579,7 @@ class HeaderPermissionMenu extends Component {
                     overlayClassName="secureDropdown"
                     getPopupContainer={() => document.getElementById("area")}
                 >
-                    <Menu.Item key="10" className="ml-16">
+                    <Menu.Item key="10" className="user-left">
                         {this.props.userConfig?.imageURL != null && (
                             <img
                                 src={
@@ -654,9 +677,9 @@ class HeaderPermissionMenu extends Component {
                             }
                             className="icon md close-white c-pointer"
                         />
-                        <div className="text-center fs-14">
+                        <div className="text-center">
                             <Translate
-                                className="mb-0 text-white-30 fw-600 text-upper"
+                                className="drawer-maintitle"
                                 content="change_pass_word"
                                 component={Paragraph}
                             />
