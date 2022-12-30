@@ -55,12 +55,12 @@ const BatchpaymentView = (props) => {
               <>
               <div className={`file-label d-flex justify-content mb-8 py-4 batch-upload`}
              >
-              <span className="mb-0 fs-14 docnames  fs-12 fw-400 amt-label c-pointer"  onClick={() => docPreview(item)}>{item.documentName}</span>
+              <span className="mb-0 fs-14 docnames  fs-12 fw-400 amt-label c-pointer webkit-color"  onClick={() => docPreview(item)}>{item.documentName}</span>
               <span className="delete-disable"
                disabled={
                 properites.dataItem.transactionStatus==="Approved" ||
                    properites.dataItem.transactionStatus==="Rejected"}
-              > <span  onClick={() => docDelete(item,properites.dataItem)} className={`icon md close ${(properites.dataItem.transactionStatus==="Pending")||(properites.dataItem.transactionStatus==="Submitted")?"c-pointer":""}`}  
+              > <span  onClick={() => docDelete(item,properites.dataItem)} className={`icon md close ${(properites.dataItem.transactionStatus==="Pending")||(properites.dataItem.transactionStatus==="Submitted")?"c-pointer batch-close":""}`}  
               /></span>
                </div>
               </>)}

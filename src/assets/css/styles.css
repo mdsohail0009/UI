@@ -133,7 +133,7 @@ border-radius: 5px;}
 .icon.md.lose-arw{background-position:-338px -34px}
 .icon.md.download{background-position:-627px -38px;}
 .icon.md.delete{background-position:-465px -102px;}
-.icon.md.delete-icon{background-position:-465px -102px;}
+.icon.md.delete-icon{background-position:-465px -101.5px;}
 .icon.lg.profile-icon{background-position: -4px -329px}
 .icon.lg.security-icon{background-position:-107px -330px}
 .icon.lg.settings-icon{background-position: -38px -330px}
@@ -938,6 +938,9 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .transaction-grid .k-pager-wrap.k-pager.k-widget.k-grid-pager{overflow: auto;}
     .transaction-grid .k-pager-wrap .k-pager-numbers.k-reset li:not(:first-child){display: none;}
     .transaction-type{margin-top: 8px !important;}
+    .batchpayment-summary{display: block;}
+    .ant-tooltip.ant-tooltip-placement-top{visibility: hidden;}
+    .btn-mobile button{padding: 0 30px;}
 }
 @media (max-width: 1024px){
     .custom-gridresponsive .ant-drawer-body{word-wrap: unset !important;}
@@ -1058,6 +1061,8 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .changepwd-btn{display: flex !important;}
     .changepwd-btn div{width: 210px !important;}
     .basicprofile-info{padding: 24px !important;}
+    .batchpayment-summary{display: flex;}
+    .btn-mobile button{padding: 0 36px;}
 
 }
 @media (min-width: 992px){
@@ -1098,6 +1103,8 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .transctns-grid .search-btn{margin-left: 12px !important;}
     .bill-grid .k-grid-header table{width: 1255px !important;}
     .bill-grid .k-grid-content table{width: 1254px !important;}
+    .cust-input.cust-disable{width: 280px;}
+
 }
 @media (min-width: 1200px){
     .custom-font{font-size:28px !important;}
@@ -1601,3 +1608,5 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .icon.md.close.batch-close{transform: scale(0.7);}
 .gridLink.batch-filename{display: block;}
 .draft-filename{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
+.btn-space{margin-left: 8px;}
+.webkit-color{-webkit-text-fill-color: var(--bgDarkYellow);}
