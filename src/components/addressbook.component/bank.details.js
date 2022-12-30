@@ -7,12 +7,12 @@ import { LoadingOutlined } from "@ant-design/icons";
 
 const {  Text } = Typography;
 const { TextArea } = Input;
-const antIcon = (
-    <LoadingOutlined
-        style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
-        spin
-    />
-);
+// const antIcon = (
+//     <LoadingOutlined
+//         style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
+//         spin
+//     />
+// );
 class BankDetails extends Component {
     state = {
         emailExist: false,
@@ -501,8 +501,7 @@ class BankDetails extends Component {
         return _templates[transferType]
     }
     render() {
-        const { addressType, transferType, onSubmit, bankDetails = {}, emailExist = false, onCancel } = this.props;
-        const { countries, states, isLoading } = this.state;
+        const { transferType } = this.props;
         
         return <>
             <Row gutter={[16, 16]} className={'pb-16'}>

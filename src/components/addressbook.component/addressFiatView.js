@@ -32,8 +32,8 @@ const AddressFiatView = (props) => {
 	}, []);// eslint-disable-line react-hooks/exhaustive-deps
 	const loadDataAddress = async () => {
 		setIsLoading(true)
-		let response = await getViewData(props?.match?.params?.id, props?.userConfig?.id, props?.match?.params?.type);
-		if (response.ok) {
+		let response = await getViewData(props?.match?.params?.id, props?.match?.params?.type);
+		if (response.ok) {	
 			setFiatAddress(response.data);
 			setBankDetailes(response.data.payeeAccountModels)
 		}
@@ -57,8 +57,8 @@ const AddressFiatView = (props) => {
 
 	};
 
-	const iban = fiatAddress?.bankType === "iban" ? "IBAN" : "Bank Account"
-	const iban1 = fiatAddress?.bankType === "iban" ? "IBAN" : "Bank Account Number"
+	// const iban = fiatAddress?.bankType === "iban" ? "IBAN" : "Bank Account"
+	// const iban1 = fiatAddress?.bankType === "iban" ? "IBAN" : "Bank Account Number"
 
 	const filePreviewModal = (
 		<Modal
