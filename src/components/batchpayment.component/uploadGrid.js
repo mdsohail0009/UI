@@ -29,7 +29,8 @@ const BatchpaymentView = (props) => {
 	const [previewModal, setPreviewModal] = useState(false);
     const [data,setData]=useState({});
     const [deleteGridDoc,setDeleteGridDoc]=useState(null);
-    const gridRef = React.createRef();
+    const [isLoad,setIsLoad]=useState(false);
+    const gridRef = React.useRef();
     const gridColumns = [
         { field: "whiteListName", title: "Whitelist Name", filter: true,width: 200},
         { field: "beneficiaryName", title: "Beneficiary Name", filter: true,width: 200},
@@ -176,13 +177,19 @@ const BatchpaymentView = (props) => {
      
     }
     const deleteGridDocuments=async()=>{
+        setIsLoad(true)
         const res=await deleteDocumentDetails(deleteGridDoc?.documentId)
         if(res.ok){
             gridRef?.current?.refreshGrid();
+            setIsLoad(false);
             setDeleteModal(false);
+            setErrorMessage(null);
         }
         else{
             setErrorMessage(isErrorDispaly(res));
+            gridRef?.current?.refreshGrid();
+            setIsLoad(false);
+            setDeleteModal(false);
         }
     }
     const deleteDocuments=()=>{
@@ -201,6 +208,7 @@ const BatchpaymentView = (props) => {
 		}
 	  };
     const uploadDocument= async()=>{
+        setIsLoad(true);
         setErrorMessage(null);
                 let obj={
                     "id": data?.id,
@@ -225,10 +233,14 @@ const BatchpaymentView = (props) => {
         const res =await uploadDocuments(obj)
              if(res.ok){
                 gridRef?.current?.refreshGrid();
+                setIsLoad(false);
                 setUploadModal(false)
+                setErrorMessage(null)
              }
                 else{
                     setErrorMessage(isErrorDispaly(res))
+                    gridRef?.current?.refreshGrid();
+                    setIsLoad(false);
                 }
   }
   const docPreview = async (file) => {
@@ -305,6 +317,9 @@ const filePreviewPath = () => {
         <>
         < div className='main-container'>
             <Title className="basicinfo "><span className='icon md c-pointer back mr-8' onClick={() => props.history.push('/batchpayment')}/><Text className="basicinfo">{props.match.params.fileName} / { props.match.params.currency}</Text></Title>
+            {errorMessage !== null && (
+            <Alert type="error" description={errorMessage}  showIcon/>
+                 )}
             <div className="box basic-info text-white" style={{ clear: 'both' }}>
                 <List
                     className="bill-grid"
@@ -328,7 +343,7 @@ const filePreviewPath = () => {
                   }
                 footer={<div><Button className='pop-btn custom-send sell-btc-btn'
                  onClick={uploadDocument} 
-                 
+                 loading={isLoad}
                  >Upload</Button></div>}>
                  {errorMessage !== null && (
             <Alert type="error" description={errorMessage}  showIcon/>
@@ -413,6 +428,7 @@ const filePreviewPath = () => {
                 onClick={() => deleteModalCancel()}>No</Button>
               <Button className="pop-btn px-36 btn-width"
                 onClick={() => deleteGridDocuments()}
+                loading={isLoad}
                 >Yes</Button></div>
             </>
           ]}

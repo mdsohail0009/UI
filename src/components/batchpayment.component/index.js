@@ -11,7 +11,7 @@ import {deleteBatchPayments,getInvalidTransactionData} from './api'
 import ActionsToolbar from "../toolbar.component/actions.toolbar";
 const { Title, Text, Paragraph } = Typography;
 const Batchpayments = (props) => {
-  const gridRef = React.createRef();
+  const gridRef = React.useRef();
   const [isAddBatchDrawer, setIsAddBatchDrawer] = useState(false);
   const [isProceedBatchPayment, setProceedBatchPayment] = useState(false);
   const [selection,setSelection]=useState([])
@@ -20,7 +20,7 @@ const Batchpayments = (props) => {
   const [deleteModal,setDeleteModal]=useState(false);
   const [setSelectData, setSetSelectData] = useState({});
   const [errorMessage,setErrorMessage]=useState(null); 
-
+  const [isLoad,setIsLoad]=useState(false);
   const viewMode = (e) => {
     setProceedBatchPayment(false)
     const items=e.dataItem;
@@ -152,15 +152,19 @@ const Batchpayments = (props) => {
     }
    }
     const deleteDetials = async () => {
+      setIsLoad(true);
       const res = await deleteBatchPayments(selection[0])
       if (res.ok) {
           gridRef?.current?.refreshGrid();
       setDeleteModal(false);
+      setIsLoad(false);
         setSelection([]);
       }
       else{
         setErrorMessage(isErrorDispaly(res));
+        gridRef?.current?.refreshGrid();
         setDeleteModal(false);
+        setIsLoad(false);
         setSelection([]);
       }
     };
@@ -280,6 +284,7 @@ const Batchpayments = (props) => {
                 onClick={()=>deleteModalCancel()}>No</Button>
               <Button className="pop-btn px-36 btn-width"
                 onClick={deleteDetials}
+                loading={isLoad}
                 >Yes</Button></div>
             </>
           ]}
