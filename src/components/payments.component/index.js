@@ -7,12 +7,12 @@ import Moment from 'react-moment';
 import moment from 'moment';
 import List from "../grid.component";
 import BeneficiaryDrawer from './beneficiaryDrawer';
-import AddressCommonCom from "../addressbook.component/addressCommonCom";
 import { setHeaderTab } from "../../reducers/buysellReducer"
 import ActionsToolbar from "../toolbar.component/actions.toolbar";
 import { getCurrencyLu} from './api'
 import {getFeaturePermissionsByKey} from '../shared/permissions/permissionService'
 import apicalls from '../../api/apiCalls';
+import AddressbookV3 from '../addressbook.v3';
 
 const { Title, Text, Paragraph } = Typography;
 const { Option } = Select;
@@ -21,7 +21,6 @@ const Payments = (props) => {
   
   const [beneficiaryDrawer, setBeneficiaryDrawer] = useState(false);
   const [beneficiaryDetails, setBeneficiaryDetails] = useState(false);
-  const [checkRadio, setCheckRadio] = useState(false);
   const [selection, setSelection] = useState([]);
   const [selectedObj, setSelectedObj] = useState()
   const [setSelectData, setSetSelectData] = useState({})
@@ -29,11 +28,13 @@ const Payments = (props) => {
   const [ currencylu,setCurrencylu]=useState([]);
   const [walletType,setWalletType]=useState(props.match.params.code);
   const [loading,setLoading] = useState(true)
+  const [cryptoFiat ,setCryptoFiat]=useState(true);
+  const [hideFiatHeading,setHideFiatHeading]=useState(false);
   const paymentsView = (prop) => {
-    props.history.push(`/payments/${prop.dataItem.id}/view`)
+    props.history.push(`/payments/${prop.dataItem.id}/${prop.dataItem.currency}/view`)
   };
   const paymentsEdit = () => {
-    if (selection.length == 0) {
+    if (selection.length === 0) {
       setErrorWarning("Please select the record");
     } else {
       props.history.push(`/payments/${selectedObj}/${setSelectData.currency}/${setSelectData.state}/edit`)
@@ -52,20 +53,20 @@ const Payments = (props) => {
   }
   useEffect(() => {
     if(props.billpaymentsPermission){
-      let viewPermission = props.billpaymentsPermission.actions.filter((item)=>item.permissionName == 'view')[0];
+      let viewPermission = props.billpaymentsPermission.actions.filter((item)=>item.permissionName === 'view')[0];
       if(!viewPermission.values){
         props.history.push('/accessdenied')
       }
     }else{
       getFeaturePermissionsByKey('billpayments',loadInfo)
     }
-  }, [props.billpaymentsPermission])
+  }, [props.billpaymentsPermission]);//eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     getFeaturePermissionsByKey('billpayments',loadInfo)
-  }, [])
+  }, []);//eslint-disable-line react-hooks/exhaustive-deps
   useEffect(()=>{
     gridRef.current?.refreshGrid();
-  },[walletType])
+  },[walletType]);;//eslint-disable-line react-hooks/exhaustive-deps
   const gridColumns = [
     {
       field: "",
@@ -125,10 +126,10 @@ const Payments = (props) => {
   }
 
   const showNewBenificiary = () => {
-    setCheckRadio(true);
     setBeneficiaryDetails(true);
   }
   const closeBuyDrawer = () => {
+    setHideFiatHeading(false);
     setBeneficiaryDetails(false);
   }
 const getCurrencyLookup = async () => {
@@ -157,6 +158,9 @@ const getCurrencyLookup = async () => {
     };
   actions[key]();
   };
+ const isFiatHeading =(data)=>{
+    setHideFiatHeading(data)
+	}
   if(loading){
     return <div className='custom-spin text-center mt-36'><Spin loading={true}></Spin></div>
   }else{
@@ -206,7 +210,7 @@ const getCurrencyLookup = async () => {
           <List
            className="bill-grid"
             showActionBar={false}
-            url={process.env.REACT_APP_GRID_API + `MassPayments/UserPayments/${props.userConfig?.id}`}
+            url={process.env.REACT_APP_GRID_API + `MassPayments/UserPayments`}
                        additionalParams={{type:walletType}}
             columns={gridColumns}
             ref={gridRef}
@@ -222,7 +226,7 @@ const getCurrencyLookup = async () => {
           title={[<div className="side-drawer-header">
             <span />
             <div className="text-center">
-              <Paragraph className="drawer-maintitle"><Translate content="AddFiatAddress" component={Paragraph} className="drawer-maintitle" /></Paragraph>
+              <Paragraph className="drawer-maintitle"><Translate content={hideFiatHeading !==true && "AddFiatAddress"}component={Paragraph} className="drawer-maintitle" /></Paragraph>
             </div>
             <span onClick={closeBuyDrawer} className="icon md close-white c-pointer" />
           </div>]}
@@ -233,7 +237,7 @@ const getCurrencyLookup = async () => {
           className=" side-drawer"
           size="large"
         >
-          <AddressCommonCom checkThirdParty={checkRadio} onCancel={() => closeBuyDrawer()} props={props} />
+          <AddressbookV3 type="manual" isFiat={cryptoFiat} onCancel={() => closeBuyDrawer()} props={props} isFiatHeadUpdate={isFiatHeading}/>
         </Drawer>
       </div>
     </>
