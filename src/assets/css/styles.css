@@ -963,7 +963,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .coin-typo{font-size: 12px !important;}
     .ant-modal-wrap.megamenu-backdrop{left:12px !important}
     .sidebar-push {margin: 100px 0 0;}
-    .mobile-header-right {display: block;flex-grow: 1;flex-shrink: 1;text-align: right;}
+    .mobile-header-right {display: flex;flex-grow: 1;flex-shrink: 1;text-align: right; justify-content: end;}
     .mobile-headerview{display: none;}
     .mobile-headerview{margin-top: 15px;}
     .mobile-headerview li{margin: 0 34px}
