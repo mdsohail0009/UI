@@ -109,7 +109,7 @@ const FaitWithdrawal = ({ props,
   const [isVerificationMethodsChecked, setIsVerificationMethodsChecked] = useState(true);
   const [isVerificationLoading, setVerificationLoading] = useState(true);
   const checkVerification = async () => {
-    const verfResponse = await apicalls.getVerificationFields(userConfig.id);
+    const verfResponse = await apicalls.getVerificationFields();
     let minVerifications = 0;
     if (verfResponse.ok) {
       for (let verifMethod in verfResponse.data) {
@@ -216,7 +216,6 @@ const FaitWithdrawal = ({ props,
   const getAddressLu = async (obj, e) => {
     let selectedFiat = obj.currencyCode;
     let recAddress = await favouriteFiatAddress(
-      userConfig.id,
       "fiat",
       selectedFiat
     );
@@ -414,7 +413,7 @@ const FaitWithdrawal = ({ props,
     }
   };
   const getAccountdetails = async () => {
-    let response = await getAccountHolder(userConfig.id, "Fiat")
+    let response = await getAccountHolder( "Fiat")
     setAccountHolder(response.data)
   }
   const handleAccountChange = (e) => {
@@ -427,7 +426,7 @@ const FaitWithdrawal = ({ props,
     setBankDetails([])
     let data = accountHolder.find((item) => item.name == e)
     setAccountHolderDetails(data)
-    AccountWallet(userConfig.id)
+    AccountWallet()
     if (e !== data.name) {
       form.setFieldsValue({ currencyCode: " " })
       // setBankDetails(null)
@@ -435,8 +434,8 @@ const FaitWithdrawal = ({ props,
 
     }
   }
-  const AccountWallet = async (AccountId) => {
-    let response = await getAccountWallet(AccountId)
+  const AccountWallet = async () => {
+    let response = await getAccountWallet()
     if (response.ok) {
       setAccountCurrency(response.data)
     }
