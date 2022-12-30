@@ -39,7 +39,7 @@ class AddressCrypto extends Component {
   getCryptoData = async () => {
     let id = this.props?.addressBookReducer?.selectedRowData?.id || "00000000-0000-0000-0000-000000000000";
     this.setState({ ...this.state, isLoading: true })
-    let response = await getCryptoData(id, this.props.userProfile?.id);
+    let response = await getCryptoData(id);
     if (response.ok) {
       this.setState({ ...this.state, cryptoData: response.data, isLoading: false })
     }
@@ -79,9 +79,9 @@ class AddressCrypto extends Component {
       let val=this.props.sendReceive?.withdrawFiatObj?.walletCode
       this.handleTokenChange(val);
     }
-    else if(this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !=" "
+    else if(this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !==" "
     ||this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !=null||
-    this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !=undefined){
+    this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !==undefined){
       let val=this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin
       this.form?.current?.setFieldsValue({token:val});
       this.handleTokenChange(val);
@@ -97,9 +97,10 @@ class AddressCrypto extends Component {
     let networkLu = [];
     if(value) {
       this.state.coinsList?.filter(function (item){
-        if(item.walletCode == value) {
+        if(item.walletCode === value) {
         return networkLu = item?.network;
         }
+         return false;
       })
     }
     this.setState({ ...this.state, networksList: networkLu})
