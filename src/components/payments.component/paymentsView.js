@@ -10,7 +10,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children?.slice(0, children.length - suffixCount).trim();
     const suffix = children?.slice(-suffixCount).trim();
     return (
-        <Text className="mb-0 fs-14 docnames c-pointer d-block file-label fs-12 fw-400"
+        <Text className="mb-0 fs-14 docnames c-pointer d-block file-label fs-12 text-yellow fw-400"
             style={{ maxWidth: '100% !important' }} ellipsis={{ suffix }}>
             {start}
         </Text>
@@ -77,22 +77,22 @@ class PaymentsView extends Component {
     } else {
       return (
         <div className="more-popover">
-          <Text className="lbl text-white">BIC/SWIFT/ABA Routing Code</Text>
-          <Text className="val text-white">{moreBankInfo?.routingNumber}</Text>
-           {(moreBankInfo?.transferType!=="internationalIBAN" && moreBankInfo?.transferType!=="sepa")&& <>
-          <Text className="lbl text-white">Bank Address</Text><br/>
-          <Text className="lbl text-white">Address Line 1</Text>
-          <Text className="val text-white">{moreBankInfo?.bankAddress1}</Text>
-          {moreBankInfo?.bankAddress2!==null &&<>
-            <Text className="lbl text-white">Address Line 2</Text>
-          <Text className="val text-white">{moreBankInfo?.bankAddress2}</Text>
-          </>}
-          </>}
-          {(moreBankInfo?.transferType==="sepa" || moreBankInfo?.transferType==="internationalIBAN" ) && 
-          <>
-           <Text className="lbl text-white">Bank Address</Text>
-           <Text className="val text-white">{moreBankInfo?.bankBranch || "-"}{","}{moreBankInfo?.country}{","}{moreBankInfo?.state}{","}{moreBankInfo?.city}{","}{moreBankInfo?.postalCode}</Text></>}
-        </div>
+        <Text className="lbl text-white">BIC/SWIFT/ABA Routing Code</Text>
+        <Text className="val text-white">{moreBankInfo?.routingNumber}</Text>
+         {(moreBankInfo?.transferType!=="internationalIBAN" && moreBankInfo?.transferType!=="sepa")&& <>
+        <Text className="lbl text-white">Bank Address</Text><br/>
+        <Text className="lbl text-white">Address Line 1</Text>
+        <Text className="val text-white">{moreBankInfo?.bankAddress1}</Text>
+        {moreBankInfo?.bankAddress2!==null &&<>
+          <Text className="lbl text-white">Address Line 2</Text>
+        <Text className="val text-white">{moreBankInfo?.bankAddress2}</Text>
+        </>}
+        </>}
+        {(moreBankInfo?.transferType==="sepa" || moreBankInfo?.transferType==="internationalIBAN" ) && 
+        <>
+         <Text className="lbl text-white">Bank Address</Text>
+         <Text className="val text-white">{moreBankInfo?.bankBranch || "-"}{","}{moreBankInfo?.country}{","}{moreBankInfo?.state}{","}{moreBankInfo?.city}{","}{moreBankInfo?.postalCode}</Text></>}
+      </div>
       );
     }
   };
