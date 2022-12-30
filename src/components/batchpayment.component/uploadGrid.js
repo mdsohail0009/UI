@@ -35,10 +35,10 @@ const BatchpaymentView = (props) => {
         { field: "beneficiaryName", title: "Beneficiary Name", filter: true,width: 200},
         {
 			field: "isWhitelisted",
-			customCell: (props) => (
+			customCell: (properites) => (
 				<td>
-					{props.dataItem?.isWhitelisted && <>  Whitelisted</>}
-					{!props.dataItem?.isWhitelisted && "Not whitelisted"}
+					{properites.dataItem?.isWhitelisted && <>  Whitelisted</>}
+					{!properites.dataItem?.isWhitelisted && "Not whitelisted"}
 				</td>
 			),
 			title:"Whitelist Status",
@@ -49,27 +49,27 @@ const BatchpaymentView = (props) => {
         { field: "amount", title: 'Amount', filter: true, width: 200},
         { field: "transactionStatus", title: 'Transaction Status', filter: true, width: 200},
         { field: "uploadedDocuments", title: 'Uploaded Documents', width: 290,
-    	customCell: (props) => (
+    	customCell: (properites) => (
             <td>
-               {props.dataItem.beneficiarydetail?.map(item=>
+               {properites.dataItem.beneficiarydetail?.map(item=>
               <>
               <div className={`file-label d-flex justify-content mb-8 py-4 batch-upload`}
              >
               <span className="mb-0 fs-14 docnames  fs-12 fw-400 amt-label c-pointer"  onClick={() => docPreview(item)}>{item.documentName}</span>
               <span className="delete-disable"
                disabled={
-                  props.dataItem.transactionStatus==="Approved" ||
-                   props.dataItem.transactionStatus==="Rejected"}
-              > <span  onClick={() => docDelete(item,props.dataItem)} className={`icon md close ${(props.dataItem.transactionStatus==="Pending")||(props.dataItem.transactionStatus==="Submitted")?"c-pointer":""}`}  
+                properites.dataItem.transactionStatus==="Approved" ||
+                   properites.dataItem.transactionStatus==="Rejected"}
+              > <span  onClick={() => docDelete(item,properites.dataItem)} className={`icon md close ${(properites.dataItem.transactionStatus==="Pending")||(properites.dataItem.transactionStatus==="Submitted")?"c-pointer":""}`}  
               /></span>
                </div>
               </>)}
           </td>
         ), },
         { field: "supportingDocument", title: 'Supporting Document', width: 240,
-            customCell: (props) => (
+            customCell: (properites) => (
             <td className='text-center'><div className="gridLink text-center" >
-                <Button className='pop-btn px-36' disabled={props.dataItem.transactionStatus==="Approved"||props.dataItem.transactionStatus==="Rejected"} onClick={()=>showUploadModal(props.dataItem)}>
+                <Button className='pop-btn px-36' disabled={properites.dataItem.transactionStatus==="Approved"||properites.dataItem.transactionStatus==="Rejected"} onClick={()=>showUploadModal(properites.dataItem)}>
                     Upload
                     </Button>
               </div></td>)
@@ -95,7 +95,7 @@ const BatchpaymentView = (props) => {
 		if (fileType[file.type]) {
             setErrorMessage(null)
           return true
-        } else if(fileType==="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
+        } else if(fileType=="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
             setErrorMessage("File is not allowed. You can upload jpg, png, jpeg and PDF files");
         }else{
             setErrorMessage("File is not allowed. You can upload jpg, png, jpeg and PDF files");
@@ -166,12 +166,12 @@ const BatchpaymentView = (props) => {
             
         }
     }
-    const docDelete=async(data,rowData)=>{
+    const docDelete=async(obj,rowData)=>{
         if(rowData.transactionStatus==="Approved" ||rowData.transactionStatus==="Rejected"){
             setDeleteModal(false);
         }else{
             setDeleteModal(true);
-            setDeleteGridDoc(data)
+            setDeleteGridDoc(obj)
         }
      
     }
@@ -343,8 +343,8 @@ const filePreviewPath = () => {
                             action={process.env.REACT_APP_UPLOAD_API +"/UploadFile"}
 
                             showUploadList={false}
-                         beforeUpload={(props) => { beforeUpload(props) }}
-                         onChange={(props) => {handleUpload(props,"IDENTITYPROOF") }}
+                         beforeUpload={(prop) => { beforeUpload(prop) }}
+                         onChange={(prop) => {handleUpload(prop,"IDENTITYPROOF") }}
                         >
                             <p className="ant-upload-drag-icon">
                                 <span className="icon xxxl doc-upload" />
@@ -373,8 +373,8 @@ const filePreviewPath = () => {
                             multiple={false}
                             action={process.env.REACT_APP_UPLOAD_API +"/UploadFile"}
                             showUploadList={false}
-                         beforeUpload={(props) => {beforeUpload(props) }}
-                         onChange={(props) => {handleUpload(props,"TransferProof") }}
+                         beforeUpload={(prop) => {beforeUpload(prop) }}
+                         onChange={(prop) => {handleUpload(prop,"TransferProof") }}
                         >
                             <p className="ant-upload-drag-icon">
                                 <span className="icon xxxl doc-upload" />

@@ -27,8 +27,6 @@ class PaymentPreview extends Component {
     this.gridRef = React.createRef();
 
   }
-componentDidMount=()=>{
-}
 closeDrawer = () => {
   this.setState({ ...this.state, paymentSummary:false})
 }
@@ -203,7 +201,7 @@ isErrorDispaly = (objValue) => {
                         <Tooltip title="Close">
                             <span
                                 className="icon md close-white c-pointer"
-                                onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false }, () => { })}
+                                onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false })}
                             />
                         </Tooltip>
                     }
