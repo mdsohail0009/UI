@@ -31,7 +31,7 @@ const AddressCryptoView = (props) => {
 	}, []);// eslint-disable-line react-hooks/exhaustive-deps
 	const loadDataAddress = async () => {
 		setIsLoading(true)
-		let response = await getCryptoData(props?.match?.params?.id, props?.userConfig?.id);
+		let response = await getCryptoData(props?.match?.params?.id);
 		if (response.ok) {
 			setCryptoAddress(response.data);
 		}
