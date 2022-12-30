@@ -114,15 +114,15 @@ withdrawFiatSummaryBack = () => {
                 title={[
                     <div className="side-drawer-header">
                         {this.renderTitle()}
-                        <div className="text-center fs-24">
+                        <div className="text-center">
                             {this.props.buyFiat?.receiveFiatHeader && <>
-                               <Translate className="mb-0 text-white-30 fw-600" content="DepositandFiat"  component={Paragraph} />
-                               <Translate className="text-white-50 mb-0 fs-14 fw-300" content={this.props.buyFiat.stepSubTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
+                               <Translate className="drawer-maintitle" content="DepositandFiat"  component={Paragraph} />
+                               <Translate className="" content={this.props.buyFiat.stepSubTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
                                </>
                             }
                             {!this.props.buyFiat?.receiveFiatHeader && !this.props.buyFiat?.sendFiatHeader&& <>
-                            <Translate className="mb-0 text-white-30 fw-600" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
-                            <Translate className="text-white-50 mb-0 fs-14 fw-300" content={this.props.buyFiat.stepSubTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
+                            <Translate className="drawer-maintitle" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
+                            <Translate className="" content={this.props.buyFiat.stepSubTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
                             </>
                             }
                             </div>
