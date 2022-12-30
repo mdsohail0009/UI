@@ -31,16 +31,18 @@ class PaymentsView extends Component {
     componentDidMount() {
         this.getPaymentsViewData();
     }
-    addressTypeNames = (type) =>{
-       const stepcodes = {
-                  "1stparty" : "1st Party",
-                  "3rdparty" : "3rd Party",
-         }
-         return stepcodes[type]
-     }
+    addressTypeNames = (type) => {
+      const stepcodes = {
+        "ownbusiness": "My Company",
+        "individuals": "Individuals",
+        "otherbusiness": "Other Business",
+        "myself": "My Self"
+      };
+      return stepcodes[type];
+    };
     getPaymentsViewData = async () => {
         this.setState({ ...this.state, loading: true });
-        let response = await getPaymentsData(this.props.match.params.id, this.props.userConfig?.userId,this.state.currency);
+        let response = await getPaymentsData(this.props.match.params.id,this.props.match.params.currency);
         if (response.ok) {
             this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false });
         }else {
@@ -64,7 +66,7 @@ class PaymentsView extends Component {
       };
      handleVisibleChange = () => {
     this.setState({ ...this.state, visible: false });
-    if(this.state.visible== false){
+    if(this.state.visible=== false){
       this.setState({ ...this.state, isloading: false });
     }
   };
@@ -75,11 +77,22 @@ class PaymentsView extends Component {
     } else {
       return (
         <div className="more-popover">
-          <Text className="lbl text-white">Bank Label</Text>
-          <Text className="val text-white">{moreBankInfo?.bankLabel}</Text>
-          <Text className="lbl text-white">BIC/SWIFT/Routing Number</Text>
-          <Text className="val text-white">{moreBankInfo?.routingNumber}</Text>
-        </div>
+        <Text className="lbl text-white">BIC/SWIFT/ABA Routing Code</Text>
+        <Text className="val text-white">{moreBankInfo?.routingNumber}</Text>
+         {(moreBankInfo?.transferType!=="internationalIBAN" && moreBankInfo?.transferType!=="sepa")&& <>
+        <Text className="lbl text-white">Bank Address</Text><br/>
+        <Text className="lbl text-white">Address Line 1</Text>
+        <Text className="val text-white">{moreBankInfo?.bankAddress1}</Text>
+        {moreBankInfo?.bankAddress2!==null &&<>
+          <Text className="lbl text-white">Address Line 2</Text>
+        <Text className="val text-white">{moreBankInfo?.bankAddress2}</Text>
+        </>}
+        </>}
+        {(moreBankInfo?.transferType==="sepa" || moreBankInfo?.transferType==="internationalIBAN" ) && 
+        <>
+         <Text className="lbl text-white">Bank Address</Text>
+         <Text className="val text-white">{moreBankInfo?.bankBranch || "-"}{","}{moreBankInfo?.country}{","}{moreBankInfo?.state}{","}{moreBankInfo?.city}{","}{moreBankInfo?.postalCode}</Text></>}
+      </div>
       );
     }
   };
@@ -95,7 +108,8 @@ class PaymentsView extends Component {
         return this.state.previewPath;
     }
     backToPayments = () => {
-        this.props.history.push(`/payments/${this.state.currency}`)
+      this.props.history.push(`/payments/${"All"}`);
+
     }
     docPreviewClose = () => {
         this.setState({ ...this.state, previewModal: false, previewPath: null })
@@ -107,14 +121,14 @@ class PaymentsView extends Component {
             <>
              <div ref={this.useDivRef}></div>
                 <div className="main-container">
-                    <Title className="basicinfo mb-16"><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
+                    <Title className="basicinfo mb-16"><span onClick={() => this.props.history?.push(`/payments/All`)} className='icon md c-pointer back mr-8'></span><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
                     <div className="box basic-info responsive_table bg-none">
                         <table className='pay-grid view mb-view'>
                             <thead>
                                 <tr>
-                                <th className="doc-def">Favorite Name</th>
+                                <th className="doc-def">Whitelist Name</th>
                                     <th className="doc-def" style={{width: "410px"}}>Bank Name</th>
-                                    <th>Bank Account Number/IBAN</th>
+                                    <th className="doc-def" style={{width: "410px"}}>Bank Account Number/IBAN</th>
                                     <th>State</th>
                                     <th>Amount</th>
                                 </tr>
@@ -174,11 +188,14 @@ class PaymentsView extends Component {
                                                    <>
                                                    {file.documentName !== null && (
                                                      <div className='docdetails'  style={{width:"80px"}} onClick={() => this.filePreview(file)}>
-                                                     <Tooltip title={file.documentName}>
-                                                     <EllipsisMiddle  suffixCount={4}>
-                                                       {file.documentName}
-                                                       </EllipsisMiddle>
-                                                     </Tooltip>
+                                                                                                        <Tooltip title={file.documentName}>
+                                                      {file.documentName?.split(".")[0].length>4&&<EllipsisMiddle>
+                                                        {file.documentName.slice(0,4) + "..." +file.documentName.split(".")[1]}
+                                                      </EllipsisMiddle>}
+                                                      {file.documentName?.split(".")[0].length<=4&&<EllipsisMiddle>
+                                                        {file.documentName}
+                                                      </EllipsisMiddle>}
+                                                    </Tooltip>
                                                      </div>
                                                    )}
                                                  </>
