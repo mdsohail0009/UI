@@ -43,13 +43,13 @@ class AddressBookV3 extends Component {
 
                         <List.Item onClick={() => this.setState({ ...this.state, currency: item.walletCode })}>
                             <Link>
-                                <List.Item.Meta
+                                <List.Item.Meta className='drawer-coin'
                                     avatar={<Image preview={false} src={item.imagePath} />}
 
                                     title={<div className="wallet-title">{item.walletCode}</div>}
                                 />
                                 <><div className="text-right coin-typo">
-                                    <NumberFormat value={item.amount} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={item.walletCode === 'USD' ? '$' : '€'} renderText={(value, props) => <div {...props} >{value}</div>} />
+                                    <NumberFormat value={item.amount} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={item.walletCode == 'USD' ? '$' : '€'} renderText={(value, props) => <div {...props} >{value}</div>} />
 
                                 </div></>
                             </Link>
