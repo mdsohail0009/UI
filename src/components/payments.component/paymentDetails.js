@@ -12,7 +12,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
   const start = children?.slice(0, children.length - suffixCount).trim();
   const suffix = children?.slice(-suffixCount).trim();
   return (
-    <Text className="mb-0 fs-14 docnames c-pointer d-block file-label fs-12 fw-400 amt-label"
+    <Text className="mb-0 fs-14 docnames c-pointer d-block file-label fs-12 text-yellow fw-400"
       style={{ maxWidth: '100% !important' }} ellipsis={{ suffix }}>
       {start}
     </Text>
@@ -426,8 +426,11 @@ class PaymentDetails extends Component {
       <>
         <div ref={this.useDivRef}></div>
         <div className="main-container">
-          <div className="mb-16">
-             <Title className="basicinfo mb-0"><span onClick={() => this.props.history?.push(`/payments/All`)} className='icon md c-pointer back mr-8'></span><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
+          <div className="coin-viewstyle">
+          <Title className="basicinfo mb-0">
+          <span onClick={() => this.props.history?.push(`/payments/All`)} className='icon md c-pointer back mr-8'></span>
+          <Translate content="menu_payments" component={Text} className="coin-viewstyle" />
+          </Title>
           </div>
           <div className="box basic-info text-white">
             {this.state.errorMessage && (
@@ -486,7 +489,7 @@ class PaymentDetails extends Component {
                 </Select>
               </Form.Item>
   }
-              <div className='responsive_table'>
+              <div className='responsive_table transaction-custom-table'>
                 <table className="pay-grid">
                   <thead>
                     <tr>
@@ -678,7 +681,7 @@ class PaymentDetails extends Component {
                                           </div> : item.documents?.details.map((file) => (
                                             <>
                                               {file.documentName !== null && (
-                                                <div className='docdetails'>
+                                                <div className='docdetails' style={{ width: "80px" }}>
                                                   <div onClick={() => this.docPreview(file)}>
                                                     <Tooltip title={file.documentName}>
                                                       {file.documentName?.split(".")[0].length>4&&<EllipsisMiddle>
