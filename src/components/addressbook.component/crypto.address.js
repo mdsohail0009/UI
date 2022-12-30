@@ -74,7 +74,7 @@ const CryptoAdress = ({PayeeLu=[]}) => {
                 <tbody>
                     <tr>
                         <td className="text-center">
-                            <label className="text-center custom-checkbox c-pointer">
+                            <label className="text-center custom-checkbox c-pointer cust-check-outline">
                                 <input
                                     id={""}
                                     className="c-pointer"
@@ -104,7 +104,7 @@ const CryptoAdress = ({PayeeLu=[]}) => {
                     </tr>
                     <tr>
                         <td className="text-center">
-                            <label className="text-center custom-checkbox c-pointer">
+                            <label className="text-center custom-checkbox c-pointer cust-check-outline">
                                 <input
                                     id={""}
                                     className="c-pointer"
