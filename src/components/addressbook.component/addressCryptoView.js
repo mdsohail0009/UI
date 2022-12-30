@@ -43,7 +43,6 @@ const AddressCryptoView = (props) => {
 	};
 
 	const docPreview = async (file) => {
-		debugger
 		let res = await getFileURL({ url: file.path });
 		if (res.ok) {
 			setPreviewModal(true);
@@ -99,10 +98,9 @@ const AddressCryptoView = (props) => {
 	return (
 		<>
 			<div className="main-container cust-cypto-view">
-			<Title className="basicinfo mb-12">
-				Beneficiary Details
-			</Title>
-				<div className="box basic-info ">
+			
+				<div className="">
+				
 					{loading ? (
 						<Loader />
 					) : (
@@ -110,11 +108,14 @@ const AddressCryptoView = (props) => {
 							
 							{cryptoAddress && (
 								<div className="custom-alert-width">
+									<Title className="basicinfo">
+										Beneficiary Details
+									</Title>
 								<Row gutter={8}>
 									<Col xl={24} xxl={24} className="bank-view">
 										<Row className="kpi-List">
-											<Col xs={24} sm={24} md={12} lg={14} xxl={14}>
-												<div>
+										<Col xs={24} sm={24} md={12} lg={14} xxl={14}>
+												<div className="kpi-divstyle">
 													<label className="kpi-label">Whitelist Name</label>
 													<div className=" kpi-val">
 														{cryptoAddress?.saveWhiteListName === " " ||
@@ -125,7 +126,7 @@ const AddressCryptoView = (props) => {
 												</div>
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={5} xxl={5}>
-												<div>
+												<div className="kpi-divstyle">
 													<label className="kpi-label">Token</label>
 													<div className=" kpi-val">
 														{cryptoAddress?.token === " " ||
@@ -136,7 +137,7 @@ const AddressCryptoView = (props) => {
 												</div>
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={5} xxl={5}>
-												<div>
+												<div className="kpi-divstyle">
 													<label className="kpi-label">Network</label>
 													<div className=" kpi-val">
 														{cryptoAddress?.network === " " ||
@@ -148,7 +149,7 @@ const AddressCryptoView = (props) => {
 											</Col>
 											
 											<Col xs={24} sm={24} md={12} lg={14} xxl={14}>
-												<div>
+												<div className="kpi-divstyle">
 													<label className="kpi-label">Wallet Address</label>
 													<div className=" kpi-val">
 														{cryptoAddress?.walletAddress === " " ||
@@ -159,7 +160,7 @@ const AddressCryptoView = (props) => {
 												</div>
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={5} xxl={5}>
-												<div>
+												<div className="kpi-divstyle">
 													<label className="kpi-label">Address State</label>
 													<div className=" kpi-val">
 														{cryptoAddress?.adressstate === " " ||
@@ -210,16 +211,17 @@ const AddressCryptoView = (props) => {
 												))}
 									</Col>
 								</Row>
-								</div>
-							)}
-							<div className="text-right mt-24">
+								<div className="">
 								<Button
-									className="pop-btn px-36"
-									style={{ margin: "0 8px",width:'250px'}}
+									className="pop-btn "
+									block
 									onClick={backToAddressBook}>
 									Cancel
 								</Button>
 							</div>
+								</div>
+							)}
+							
 						</>
 					)}
 				</div>
