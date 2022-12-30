@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Card, Alert, message,Image,Select } from 'antd';
+import { Typography, Card, Alert, message,Image } from 'antd';
 import WalletList from '../shared/walletList';
 import { changeStep, setTab } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
@@ -14,7 +14,7 @@ import Currency from '../shared/number.formate';
 import apicalls from '../../api/apiCalls';
 import {  getPreview } from './api'
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
-const { Option } = Select;
+
 class SelectCrypto extends Component {
     myRef = React.createRef();
     swapRef = React.createRef();
@@ -66,6 +66,7 @@ class SelectCrypto extends Component {
         });
     }
     handleConvertion = async () => {
+        
         const { coin } = this.props.buyInfo?.selectedCoin?.data;
         const { isSwaped, localValue, cryptoValue } = this.state.swapValues;
         this.setState({ ...this.state, swapValues: { ...this.state.swapValues, isConvertionLoading: true } });
@@ -78,12 +79,13 @@ class SelectCrypto extends Component {
             screenName: "buy"
         });
         if (response.ok) {
+            this.setState({...this.state,isConvertionLoading:false})
             const { isSwaped, localValue, cryptoValue } = this.state.swapValues;
             let _nativeValue = localValue, _cryptoValue = cryptoValue;
             const { data: value, config: { url } } = response;
             const _obj = url.split("CryptoFiatConverter")[1].split("/");
             const _val = isSwaped ? cryptoValue : localValue;
-            if (_obj[4] == _val || _obj[4] == 0) {
+            if (_obj[3] == _val || _obj[3] == 0) {
                 if (!isSwaped) {
                     _cryptoValue = value || 0;
                 } else { _nativeValue = value || 0; }
@@ -102,7 +104,7 @@ class SelectCrypto extends Component {
     }
 
     handlePreview = async() => {
-        // return
+
         const { localValue, cryptoValue, isSwaped } = this.state.swapValues;
         const { buyMin, buyMax, coin, gbpInUsd, eurInUsd } = this.props.buyInfo?.selectedCoin?.data;
         const _vaidator = validatePreview({ localValue, cryptValue: cryptoValue, wallet: this.state.selectedWallet, maxPurchase: buyMax, minPurchase: buyMin, gbpInUsd, eurInUsd })
@@ -111,12 +113,12 @@ class SelectCrypto extends Component {
             this.myRef.current.scrollIntoView();
             return;
         }
-        if((localValue == 0 && cryptoValue == 0)){
+        if((localValue === 0 && cryptoValue === 0)){
             this.setState({ ...this.state, error: "We can not process this request, Since commission is more than or equal to requested amount" });
 
         }
         this.setState({...this.state,btnLoading:true})
-        const response = await getPreview({ coin, currency: this.state.selectedWallet.currencyCode, amount:(isSwaped ? cryptoValue : localValue), isCrypto:!isSwaped, customer_id:this.props?.userProfileInfo.id });
+        const response = await getPreview({ coin, currency: this.state.selectedWallet.currencyCode, amount:(isSwaped ? cryptoValue : localValue), isCrypto:!isSwaped });
         if (response.ok) {
             this.props.preview(this.state.selectedWallet, coin, (isSwaped ? cryptoValue : localValue), !isSwaped, this.props?.userProfileInfo.id);
             this.props.setStep('step3');
@@ -160,18 +162,24 @@ class SelectCrypto extends Component {
                     )}
                 {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="error" message={apicalls.convertLocalLang('buy_crypto')} description={this.state.error?.message} />}
                 <div className="selectcrypto-container">
-                    <Card className="crypto-card select " bordered={false}>
-                    {/* <div className=''> */}
-                        {/* <div> */}
-                        {/* <div className="d-flex align-center mb-4">
+                    <Card className="crypto-card select" bordered={false}>
+                    <div className='d-flex justify-content'>
+                        <div>
+                        <span className="d-flex align-center mb-4">
                             <Image preview={false} src={impageWhitePath}/>
                             <Text className="crypto-percent text-purewhite">{percentage}<sup className="percent text-purewhite">%</sup></Text>
-                        </div> */}
-                        {/* <Text className="fs-24 text-purewhite crypto-name ml-4">{coinFullName}</Text> */}
-                        {/* </div> */}
-                        {/* <div > */}
-                       
-                        {this.state.isShowCoinsData && <div>
+                        </span>
+                        <Text className="fs-24 text-purewhite crypto-name ml-4">{coinFullName}</Text>
+                        </div>
+                        <div className="crypto-details">
+                            
+                            <div className="fs-16 text-purewhite fw-200 crypto-amount">
+                                <Currency prefix={""} defaultValue={coinBalance} suffixText={coin} />
+                                <NumberFormat value={coinFullName} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props}>{value}</div>} />
+                            </div>
+                        </div></div>
+                 
+            {this.state.isShowCoinsData && <div>
                    <LocalCryptoSwapperCmp
                         localAmt={localValue}
                         cryptoAmt={cryptoValue}
@@ -183,29 +191,9 @@ class SelectCrypto extends Component {
                         onCurrencySwap={() => {
                             this.setState({ ...this.state, swapValues: { ...this.state.swapValues, isSwaped: !this.state.swapValues.isSwaped } })
                         }}
-                        isConvertionLoad={isConvertionLoading} /></div>}
-                            <div className="crypto-amount">
-                               <div className="crypto-details"><span className='buy-balance'>Balance: </span><span className='buycoin-style marginL'>{coin }</span> <Currency prefix={'' } defaultValue={coinBalance} suffixText={""} className='buycoin-style marginL' /></div>
-                                {/* <NumberFormat value={coinFullName} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props}>{value}</div>} /> */}
-                            </div>
-                        {/* </div> */}
-                        
-                        {/* </div> */}
-                        {this.state.isShowCoinsData && <div>
-                   {/* <LocalCryptoSwapperCmp
-                        localAmt={localValue}
-                        cryptoAmt={cryptoValue}
-                        localCurrency={this.state.selectedWallet?.currencyCode || "USD"}
-                        cryptoCurrency={coin}
-                        onChange={(obj) => this.onValueChange(obj)} customerId={this.props.userProfileInfo?.id}
-                        screenName='buy'
-                        isSwaped={isSwaped}
-                        onCurrencySwap={() => {
-                            this.setState({ ...this.state, swapValues: { ...this.state.swapValues, isSwaped: !this.state.swapValues.isSwaped } })
-                        }}
-                        isConvertionLoad={isConvertionLoading} /> */}
+                        isConvertionLoad={isConvertionLoading} />
 
-                    <Translate content="thousandKText" component={Paragraph} className="buy-paragraph buy-para-bg" />
+                   <Translate content="thousandKText" component={Paragraph} className="buy-paragraph buy-para-bg" />
                     <Translate content="contact_amount_text" component={Paragraph} className="buy-paragraph" />
                     {/* <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50 pt-16" />
                     <WalletList onWalletSelect={(e) => this.handleWalletSelection(e)} /> */}
