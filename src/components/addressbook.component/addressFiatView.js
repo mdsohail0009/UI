@@ -181,7 +181,7 @@ const AddressFiatView = (props) => {
 													</div>
 												</div>
 											</Col>}
-											{fiatAddress?.beneficiaryName &&<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+											 {fiatAddress?.addressType != "individuals" && fiatAddress?.beneficiaryName &&<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">Beneficiary Name</label>
 													<div className=" kpi-val">
