@@ -10,7 +10,8 @@ import { Link,withRouter } from "react-router-dom";
 import PaymentPreview from './paymentPreview';
 import pending1 from '../../assets/images/pending1.png'
 import Loader from '../../Shared/loader';
-const { Title,Paragraph } = Typography
+import { getVerificationFields } from "../onthego.transfer/verification.component/api"
+const { Title, Paragraph, Text } = Typography
 class AddBatchPayment extends Component {
     useDivRef = React.createRef()
 
@@ -36,6 +37,8 @@ class AddBatchPayment extends Component {
         uploadUrl:process.env.REACT_APP_API_END_POINT + "/MassPayment/importfileUpload",
         worningMessage:null,
         loader:true,
+        isVerificationEnable: false,
+        isVarificationLoader: true,
     }
 
     componentDidMount() {
@@ -47,8 +50,28 @@ class AddBatchPayment extends Component {
                 this.setState({ ...this.state, fiatWallets: [], paymentCoinsList: [], fiatWalletsLoading: false });
             }
           });
+          this.verificationCheck();
       }
 
+      verificationCheck = async () => {
+        this.setState({ ...this.state, isVarificationLoader: true,fiatWalletsLoading: true  })
+        const verfResponse = await getVerificationFields();
+        let minVerifications = 0;
+        if (verfResponse.ok) {
+          for (let verifMethod in verfResponse.data) {
+          if (["isEmailVerification", "isPhoneVerified", "twoFactorEnabled", "isLiveVerification"].includes(verifMethod) && verfResponse.data[verifMethod] === true) {
+            minVerifications = minVerifications + 1;
+          }
+          }
+          if (minVerifications >= 2) {
+          this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: false })
+            } else {
+              this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: true })
+          }
+        } else {
+          this.setState({ ...this.state, isVarificationLoader: false, errorMessage: this.isErrorDispaly(verfResponse) })
+        }
+        }
     handleSearch = ({ target: { value: val } }) => {
         if (val) {
             const fiatWallets = this.state.paymentCoinsList?.filter(item => item.walletCode.toLowerCase().includes(val.toLowerCase()));
@@ -95,11 +118,12 @@ class AddBatchPayment extends Component {
     };
   
 handleUpload = ({ file }) => {
+  this.setState({...this.state,})
     if (file.name.split('.').length > 2) {
       this.setState({ ...this.state, errorMessage: null, uploadLoader: false,});
     }
     else{
-        this.setState({ ...this.state, errorMessage: null, uploadLoader: false,showInprogressModal:true });
+        this.setState({ ...this.state, errorMessage: null, uploadLoader: true,showInprogressModal:true });
       let obj = {
         "id":"00000000-0000-0000-0000-000000000000",
         "documentName": `${file.name}`,
@@ -195,7 +219,7 @@ downLoadPreview=()=>{
     handleNext=async()=>{
         const res=await confirmGetDetails(this.state.reefreshData?.id)
         if(res.ok){
-            this.setState({ ...this.state, showModal: false,errorMessage:null, uploadErrorModal: false, paymentPreview: true,worningMessage:null }, () => { })
+            this.setState({ ...this.state, showModal: false,errorMessage:null, uploadErrorModal: false, paymentPreview: true,worningMessage:null })
         }
         else{
             this.setState({...this.state,errorMessage:this.isErrorDispaly(res)})
@@ -208,7 +232,7 @@ downLoadPreview=()=>{
         }
     }
     render() {
-        const { uploadLoader, refreshBtnLoader ,errorMessage,worningMessage} = this.state;
+        const { uploadLoader, refreshBtnLoader ,errorMessage,worningMessage,isVerificationEnable} = this.state;
         return (
             <>
                <div ref={this.useDivRef}></div>
@@ -231,10 +255,11 @@ downLoadPreview=()=>{
             closeIcon={null}
             className="side-drawer w-50p"
         >
-            { !this.state.isCoinsListHide && <>
+
+            {!this.state.isCoinsListHide && <>
            
-            {this.state.fiatWalletsLoading && <Loader />}
-          {!this.state.fiatWalletsLoading && (<>
+            {this.state.fiatWalletsLoading &&<Loader />}
+          {!this.state.fiatWalletsLoading && !isVerificationEnable && (<>
             <div className="mt-8">
                 <Title
                     className='sub-heading code-lbl'>Make Payments</Title>
@@ -254,7 +279,7 @@ downLoadPreview=()=>{
                 }}
                 renderItem={item => (
                     <List.Item onClick={
-                        () => this.setState({ ...this.state, selectedCurrency: item.walletCode, isCoinsListHide: true }, () => { })}>
+                        () => this.setState({ ...this.state, selectedCurrency: item.walletCode, isCoinsListHide: true})}>
                     <Link>
                       <List.Item.Meta
                         avatar={<Image preview={false} src={item.imagePath} />}
@@ -262,7 +287,7 @@ downLoadPreview=()=>{
                         title={<div className="wallet-title">{item.walletCode}</div>}
                       />
                        <><div className="text-right coin-typo">
-                                        <NumberFormat value={item.amount} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={item.walletCode == 'USD' ? '$' : '€'} renderText={(value, props) => <div {...props} >{value}</div>} />
+                                        <NumberFormat value={item.amount} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={item.walletCode === 'USD' ? '$' : '€'} renderText={(value, props) => <div {...props} >{value}</div>} />
 
                                     </div></>
                     </Link>
@@ -271,7 +296,21 @@ downLoadPreview=()=>{
               />
               </>)}
               </>}
-              {this.state.isCoinsListHide && <>
+              {isVerificationEnable && !this.state.fiatWalletsLoading && !this.state.isCoinsListHide&& (
+                  <Alert 
+                  message="Verification alert !"
+                  description={<Text>Without verifications you can't send. Please select send verifications from <Link onClick={() => {
+                      this.props.history.push("/userprofile/2");
+                      if (this.props?.onClosePopup) {
+                          this.props?.onClosePopup();
+                      }
+                  }}>security section</Link></Text>}
+                  type="warning"
+                  showIcon
+                  closable={false}
+              />
+              )}
+              {this.state.isCoinsListHide&& <>
                 {worningMessage !== null && (
           <Alert type="error" description={worningMessage} showIcon />
                )}
@@ -280,9 +319,7 @@ downLoadPreview=()=>{
                
                 <div className='text-center makepayment-section'>
             <Title className='text-white fs-24 fw-500'>Send {this.state.selectedCurrency} to Multiple Addresses</Title>
-            <Upload
-                                    
-                                    //key={i}
+                                             <Upload
                                               type="dashed"
                                               size="large"
                                               className="ml-8 mt-12"
@@ -301,7 +338,7 @@ downLoadPreview=()=>{
                                               >
                                               <Button className='pop-btn mt-24'>Upload Excel</Button>
                                 </Upload>{" "}
-            <Paragraph className='text-white-30'>To download the excel, <a className='fw-700' onClick={this.downLoadPreview}> click here</a></Paragraph>
+            <Paragraph className='text-white-30'>To download the excel, <a className='fw-700' onClick={this.downLoadPreview} href> click here</a></Paragraph>
             <Button className='pop-btn px-36' onClick={this.selectWhitelist}>Select from Whitelisted Addresses</Button>
                                 
             </div>
@@ -340,7 +377,7 @@ downLoadPreview=()=>{
           <Alert type="error" description={errorMessage} showIcon />
                )}
                    <div className='text-center pt-16'>
-                   <img src={pending1} alt={"success"} />
+                   <img src={pending1} alt={"Processed"} />
                    <Paragraph className='text-white fs-18'>File is being processed please wait a while</Paragraph>
                    </div>
                    </>
@@ -354,7 +391,7 @@ downLoadPreview=()=>{
                         <Tooltip title="Close">
                             <span
                                 className="icon md close-white c-pointer"
-                                onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false }, () => { })}
+                                onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false })}
                             />
                         </Tooltip>
                     }
@@ -363,12 +400,14 @@ downLoadPreview=()=>{
                     onClick={this.handleNext}>Next</Button>}>
                         <>
                         {errorMessage !== null && (
-          <Alert type="error" description={errorMessage} showIcon />
-               )}
+                      <Alert type="error" description={errorMessage} showIcon />
+                       )}
+                     {errorMessage === null&&
                         <div className=' pt-16'>
                             <Paragraph className='text-white fs-18'>Document has been successfully uploaded</Paragraph>
                            
                         </div>
+                     }
                         </>
                 </Modal>
                 <Modal
@@ -378,7 +417,7 @@ downLoadPreview=()=>{
                         <Tooltip title="Close">
                             <span
                                 className="icon md close-white c-pointer"
-                                onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false }, () => { })}
+                                onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false })}
                             />
                         </Tooltip>
                     }
@@ -394,7 +433,7 @@ downLoadPreview=()=>{
                             <div>We have detected {this.state.file?.invalidTransactionCount} errors out of</div>
                             <div>the {this.state.file?.transactionCount} transactions requested.</div></Paragraph>
                             {this.state?.file.validTransactionCount > 0 &&(
-                           <div> <Button className="primary-btn pop-btn"  onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false, paymentPreview: true }, () => { })}>
+                           <div> <Button className="primary-btn pop-btn"  onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false, paymentPreview: true })}>
                             Proceed with {" "} {this.state.file?.validTransactionCount} transactions
                             </Button></div>)}
                             <br></br>

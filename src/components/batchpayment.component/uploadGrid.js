@@ -28,18 +28,18 @@ const BatchpaymentView = (props) => {
     const [previewPath, setPreviewPath] = useState(null);
 	const [previewModal, setPreviewModal] = useState(false);
     const [data,setData]=useState({});
-    const [isLoading,setIsLoading]=useState(false);
     const [deleteGridDoc,setDeleteGridDoc]=useState(null);
-    const gridRef = React.createRef();
+    const [isLoad,setIsLoad]=useState(false);
+    const gridRef = React.useRef();
     const gridColumns = [
         { field: "whiteListName", title: "Whitelist Name", filter: true,width: 200},
         { field: "beneficiaryName", title: "Beneficiary Name", filter: true,width: 200},
         {
 			field: "isWhitelisted",
-			customCell: (props) => (
+			customCell: (properites) => (
 				<td>
-					{props.dataItem?.isWhitelisted && <>  Whitelisted</>}
-					{!props.dataItem?.isWhitelisted && "Not whitelisted"}
+					{properites.dataItem?.isWhitelisted && <>  Whitelisted</>}
+					{!properites.dataItem?.isWhitelisted && "Not whitelisted"}
 				</td>
 			),
 			title:"Whitelist Status",
@@ -49,25 +49,28 @@ const BatchpaymentView = (props) => {
         { field: "accountNumber", title: 'Account Number/IBAN', filter: true, width: 250 },
         { field: "amount", title: 'Amount', filter: true, width: 200},
         { field: "transactionStatus", title: 'Transaction Status', filter: true, width: 200},
-        { field: "uploadedDocuments", title: 'Uploaded Documents', filter: true, width: 290,
-    	customCell: (props) => (
+        { field: "uploadedDocuments", title: 'Uploaded Documents', width: 290,
+    	customCell: (properites) => (
             <td>
-                <div>
-              {props.dataItem.documentdetail?.map(item=>
-                <>
-                <div>
-                <span className="text-yellow gridLink"  onClick={() => docPreview(item)}>{item.documentName}</span>
-                 <span className="icon md close c-pointer" onClick={() => docDelete(item)} />
-                 </div>
-                </>)}
-             
-            </div>
-            </td>
+               {properites.dataItem.beneficiarydetail?.map(item=>
+              <>
+              <div className={`file-label d-flex justify-content mb-8 py-4 batch-upload`}
+             >
+              <span className="mb-0 fs-14 docnames  fs-12 fw-400 amt-label c-pointer webkit-color"  onClick={() => docPreview(item)}>{item.documentName}</span>
+              <span className="delete-disable"
+               disabled={
+                properites.dataItem.transactionStatus==="Approved" ||
+                   properites.dataItem.transactionStatus==="Rejected"}
+              > <span  onClick={() => docDelete(item,properites.dataItem)} className={`icon md close ${(properites.dataItem.transactionStatus==="Pending")||(properites.dataItem.transactionStatus==="Submitted")?"c-pointer batch-close":""}`}  
+              /></span>
+               </div>
+              </>)}
+          </td>
         ), },
-        { field: "supportingDocument", title: 'Supporting Document', filter: true, width: 240,
-            customCell: (props) => (
+        { field: "supportingDocument", title: 'Supporting Document', width: 240,
+            customCell: (properites) => (
             <td className='text-center'><div className="gridLink text-center" >
-                <Button className='pop-btn px-36' disabled={props.dataItem.transactionStatus==="Approved"} onClick={()=>showUploadModal(props.dataItem)}>
+                <Button className='pop-btn px-36' disabled={properites.dataItem.transactionStatus==="Approved"||properites.dataItem.transactionStatus==="Rejected"} onClick={()=>showUploadModal(properites.dataItem)}>
                     Upload
                     </Button>
               </div></td>)
@@ -164,21 +167,29 @@ const BatchpaymentView = (props) => {
             
         }
     }
-    const docDelete=async(data)=>{
-        setDeleteModal(true);
-        setDeleteGridDoc(data)
-        
+    const docDelete=async(obj,rowData)=>{
+        if(rowData.transactionStatus==="Approved" ||rowData.transactionStatus==="Rejected"){
+            setDeleteModal(false);
+        }else{
+            setDeleteModal(true);
+            setDeleteGridDoc(obj)
+        }
+     
     }
     const deleteGridDocuments=async()=>{
-        setIsLoading(true);
+        setIsLoad(true)
         const res=await deleteDocumentDetails(deleteGridDoc?.documentId)
         if(res.ok){
             gridRef?.current?.refreshGrid();
+            setIsLoad(false);
             setDeleteModal(false);
-        setIsLoading(false)
+            setErrorMessage(null);
         }
         else{
             setErrorMessage(isErrorDispaly(res));
+            gridRef?.current?.refreshGrid();
+            setIsLoad(false);
+            setDeleteModal(false);
         }
     }
     const deleteDocuments=()=>{
@@ -197,9 +208,8 @@ const BatchpaymentView = (props) => {
 		}
 	  };
     const uploadDocument= async()=>{
-        console.log(deleteGridDoc);
+        setIsLoad(true);
         setErrorMessage(null);
-        // setIsLoading(true)
                 let obj={
                     "id": data?.id,
                     "customerId": props?.userConfig?.id,
@@ -223,12 +233,14 @@ const BatchpaymentView = (props) => {
         const res =await uploadDocuments(obj)
              if(res.ok){
                 gridRef?.current?.refreshGrid();
-                // setIsLoading(false);
+                setIsLoad(false);
                 setUploadModal(false)
+                setErrorMessage(null)
              }
                 else{
-                    setIsLoading(false);
                     setErrorMessage(isErrorDispaly(res))
+                    gridRef?.current?.refreshGrid();
+                    setIsLoad(false);
                 }
   }
   const docPreview = async (file) => {
@@ -302,11 +314,12 @@ const filePreviewPath = () => {
 		</Modal>
 	);
     return (
-        
         <>
-       
         < div className='main-container'>
             <Title className="basicinfo "><span className='icon md c-pointer back mr-8' onClick={() => props.history.push('/batchpayment')}/><Text className="basicinfo">{props.match.params.fileName} / { props.match.params.currency}</Text></Title>
+            {errorMessage !== null && (
+            <Alert type="error" description={errorMessage}  showIcon/>
+                 )}
             <div className="box basic-info text-white" style={{ clear: 'both' }}>
                 <List
                     className="bill-grid"
@@ -329,9 +342,8 @@ const filePreviewPath = () => {
                     </Tooltip>
                   }
                 footer={<div><Button className='pop-btn custom-send sell-btc-btn'
-                //  loading={isLoading}
                  onClick={uploadDocument} 
-                 
+                 loading={isLoad}
                  >Upload</Button></div>}>
                  {errorMessage !== null && (
             <Alert type="error" description={errorMessage}  showIcon/>
@@ -346,8 +358,8 @@ const filePreviewPath = () => {
                             action={process.env.REACT_APP_UPLOAD_API +"/UploadFile"}
 
                             showUploadList={false}
-                         beforeUpload={(props) => { beforeUpload(props) }}
-                         onChange={(props) => {handleUpload(props,"IDENTITYPROOF") }}
+                         beforeUpload={(prop) => { beforeUpload(prop) }}
+                         onChange={(prop) => {handleUpload(prop,"IDENTITYPROOF") }}
                         >
                             <p className="ant-upload-drag-icon">
                                 <span className="icon xxxl doc-upload" />
@@ -376,8 +388,8 @@ const filePreviewPath = () => {
                             multiple={false}
                             action={process.env.REACT_APP_UPLOAD_API +"/UploadFile"}
                             showUploadList={false}
-                         beforeUpload={(props) => {beforeUpload(props) }}
-                         onChange={(props) => {handleUpload(props,"TransferProof") }}
+                         beforeUpload={(prop) => {beforeUpload(prop) }}
+                         onChange={(prop) => {handleUpload(prop,"TransferProof") }}
                         >
                             <p className="ant-upload-drag-icon">
                                 <span className="icon xxxl doc-upload" />
@@ -416,7 +428,8 @@ const filePreviewPath = () => {
                 onClick={() => deleteModalCancel()}>No</Button>
               <Button className="pop-btn px-36 btn-width"
                 onClick={() => deleteGridDocuments()}
-                loading={isLoading}>Yes</Button></div>
+                loading={isLoad}
+                >Yes</Button></div>
             </>
           ]}
         >
