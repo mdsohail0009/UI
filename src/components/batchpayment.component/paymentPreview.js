@@ -166,7 +166,7 @@ isErrorDispaly = (objValue) => {
 						/>
 					) : (
 						<List
-							className="address-clear"
+							className="address-clear preview-content"
 							columns={this.gridUSDColumns}
               ref={this.gridRef}
               url={this.state.gridUrl}
