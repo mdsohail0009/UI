@@ -134,7 +134,7 @@ isErrorDispaly = (objValue) => {
 
         <Drawer
           title={[<div className="side-drawer-header">
-            <span></span>
+
              <div className="text-center">
                 <div className='text-white fs-26 fw-400'>Preview</div>
                 </div>

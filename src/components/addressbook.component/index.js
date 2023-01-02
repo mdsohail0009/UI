@@ -184,14 +184,14 @@ class AddressBook extends Component {
 			width: 200,
 		},
 		{
-			field: "isWhitelisted",
+			field: "digitallySigned",
+			filter:true,
 			customCell: (props) => (
 				<td>
-					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <><Link onClick={() => {
+					{props.dataItem?.digitallySigned==="Signed" ? (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <><Link onClick={() => {
 						if (!this.state.isDownloading)
 							this.downloadDeclarationForm(props?.dataItem);
-					}} ><DownloadOutlined /></Link> Whitelisted</>}
-					{!props.dataItem?.isWhitelisted && "Not whitelisted"}
+					}} ><DownloadOutlined /></Link> {props.dataItem?.digitallySigned}</>:<>{props.dataItem?.digitallySigned}</>}
 					{this.state.isDownloading && this.state.selectedDeclaration === props?.dataItem.payeeAccountId && <Spin size="small" />}
 				</td>
 			),
@@ -268,14 +268,14 @@ class AddressBook extends Component {
 			width: 200,
 		},
 		{
-			field: "isWhitelisted",
+			field: "digitallySigned",
+			filter:true,
 			customCell: (props) => (
 				<td>
-					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <> <Link onClick={() => {
+					{props.dataItem?.digitallySigned ? (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <> <Link onClick={() => {
 						if (!this.state.isDownloading)
 							this.downloadDeclarationForm(props?.dataItem);
-					}} ><DownloadOutlined /></Link> Whitelisted</>}
-					{!props.dataItem?.isWhitelisted && "Not whitelisted"}
+					}} ><DownloadOutlined /></Link> {props.dataItem?.digitallySigned}</>:<>{props.dataItem?.digitallySigned}</>}
 					{this.state.isDownloading && this.state.selectedDeclaration === props?.dataItem.payeeAccountId && <Spin size="small" />}
 				</td>
 			),
