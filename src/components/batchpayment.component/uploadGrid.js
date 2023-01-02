@@ -49,7 +49,7 @@ const BatchpaymentView = (props) => {
         { field: "accountNumber", title: 'Account Number/IBAN', filter: true, width: 250 },
         { field: "amount", title: 'Amount', filter: true, width: 200},
         { field: "transactionStatus", title: 'Transaction Status', filter: true, width: 200},
-        { field: "uploadedDocuments", title: 'Uploaded Documents', width: 290,
+        { field: "uploadedDocuments", title: 'Uploaded Documents', width: 290,sortable:false,
     	customCell: (properites) => (
             <td>
                {properites.dataItem.beneficiarydetail?.map(item=>
@@ -67,7 +67,7 @@ const BatchpaymentView = (props) => {
               </>)}
           </td>
         ), },
-        { field: "supportingDocument", title: 'Supporting Document', width: 240,
+        { field: "supportingDocument", title: 'Supporting Document', width: 240,sortable:false,
             customCell: (properites) => (
             <td className='text-center'><div className="gridLink text-center" >
                 <Button className='pop-btn px-36' disabled={properites.dataItem.transactionStatus==="Approved"||properites.dataItem.transactionStatus==="Rejected"} onClick={()=>showUploadModal(properites.dataItem)}>
@@ -375,7 +375,6 @@ const filePreviewPath = () => {
                                                     <span className={`icon xl file mr-16`} />
                                                     <div className="docdetails c-pointer" onClick={() => docPreview(file)}>
                                                         <EllipsisMiddle suffixCount={6}>{file.documentName}</EllipsisMiddle>
-                                                        <span className="fs-12 text-secondary">{formatBytes(file ? file.remarks : "")}</span>
                                                     </div>
                                                     <span className="icon md close c-pointer" onClick={() => deleteDocument(file,"IDENTITYPROOF")} />
                                                 </div> : ""}</>
@@ -405,7 +404,7 @@ const filePreviewPath = () => {
                                                     <span className={`icon xl file mr-16`} />
                                                     <div className="docdetails c-pointer" onClick={() => docPreview(file)}>
                                                         <EllipsisMiddle suffixCount={6}>{file.documentName}</EllipsisMiddle>
-                                                        <span className="fs-12 text-secondary">{formatBytes(file ? file.remarks : "")}</span>
+                                                        
                                                     </div>
                                                     <span className="icon md close c-pointer" onClick={() => deleteDocument(file,"TransferProof")} />
                                                 </div> : ""}</>
