@@ -155,7 +155,7 @@ export function withState(WrappedGrid) {
                             <table width="100%">
                                 <tr>
 
-                                    <td colspan="2" style={{ fontSize: "26px", fontWeight: 700, textAlign: "center", fontWeight: "700" }}><h1>Suissebase Account Statement</h1></td>
+                                    <td colspan="2" style={{ fontSize: "26px", fontWeight: 700, textAlign: "center"}}><h1>Suissebase Account Statement</h1></td>
 
                                 </tr>
                             </table>

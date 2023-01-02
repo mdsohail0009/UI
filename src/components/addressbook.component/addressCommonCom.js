@@ -207,11 +207,11 @@ const AddressCommonCom = (props) => {
 
   const radioChangeHandler = (e) => {
     if (e.target.value === "3rdparty") {
-      payeeLuData(props?.userConfig?.id, withdraeTab, false);
+      payeeLuData(withdraeTab, false);
 
     } else {
 
-      payeeLuData(props?.userConfig?.id, withdraeTab, true);
+      payeeLuData(withdraeTab, true);
       getFavs("00000000-0000-0000-0000-000000000000", props?.userConfig?.id)
       // setIsLoading(false);
     }
