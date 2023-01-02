@@ -375,6 +375,7 @@ const filePreviewPath = () => {
                                                     <span className={`icon xl file mr-16`} />
                                                     <div className="docdetails c-pointer" onClick={() => docPreview(file)}>
                                                         <EllipsisMiddle suffixCount={6}>{file.documentName}</EllipsisMiddle>
+                                                        <span className="fs-12 text-secondary">{formatBytes(file ? file.remarks : "")}</span>
                                                     </div>
                                                     <span className="icon md close c-pointer" onClick={() => deleteDocument(file,"IDENTITYPROOF")} />
                                                 </div> : ""}</>
@@ -404,7 +405,7 @@ const filePreviewPath = () => {
                                                     <span className={`icon xl file mr-16`} />
                                                     <div className="docdetails c-pointer" onClick={() => docPreview(file)}>
                                                         <EllipsisMiddle suffixCount={6}>{file.documentName}</EllipsisMiddle>
-                                                        
+                                                        <span className="fs-12 text-secondary">{formatBytes(file ? file.remarks : "")}</span>
                                                     </div>
                                                     <span className="icon md close c-pointer" onClick={() => deleteDocument(file,"TransferProof")} />
                                                 </div> : ""}</>
