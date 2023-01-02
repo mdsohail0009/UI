@@ -15,8 +15,9 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
     const suffix = children.slice(-suffixCount).trim();
     return (
-        <Text className="mb-0 fs-14 docnames c-pointer d-block"
-            style={{ maxWidth: '100%' }} ellipsis={{ suffix }}>
+        <Text className="btn-textstyle"
+            // style={{ maxWidth: '100%' }} 
+            ellipsis={{ suffix }}>
             {start}
         </Text>
     );
@@ -384,10 +385,10 @@ class PaymentsView extends Component {
                             ref={this.formRef}
                             autoComplete="off"
                         >
-                            <Row gutter={16} className="mb-24">
+                            <Row gutter={16} className="">
                                 <Col xl={8}>
                                     <Form.Item
-                                        className="custom-forminput custom-label mb-24"
+                                        className="custom-forminput custom-label "
                                         name="beneficiaryAccountName"
                                         label={<Translate content="beneficiaryAccountName" component={Form.label} />}
                                         required
@@ -409,7 +410,7 @@ class PaymentsView extends Component {
                                 </Col>
                                 <Col xl={16}>
                                     <Form.Item
-                                        className="custom-forminput custom-label mb-24"
+                                        className="custom-forminput custom-label "
                                         name="beneficiaryAccountAddress"
                                         label={<Translate content="Recipient_address1" component={Form.label} />}
                                         required
@@ -433,12 +434,12 @@ class PaymentsView extends Component {
                             <Translate
                                 content="Beneficiary_BankDetails"
                                 component={Paragraph}
-                                className="mb-16 fs-20 text-white fw-500"
+                                className=""
                             />
                             <Row gutter={16}>
                                 <Col xl={8}>
                                     <Form.Item
-                                        className="custom-forminput  custom-label mb-24 pr-0"
+                                        className="custom-forminput  custom-label "
                                         name="favouriteName" required
                                         label={<Translate content="AddressLabel" component={Form.label} />}
                                         rules={[
@@ -459,7 +460,7 @@ class PaymentsView extends Component {
                                 </Col>
                                 <Col xl={8}>
                                     <Form.Item
-                                        className="custom-forminput custom-label mb-24 pr-0"
+                                        className="custom-forminput custom-label "
                                         label={<Translate content="address" component={Form.label} />}
                                         name="toWalletAddress" required
                                         rules={[
@@ -484,7 +485,7 @@ class PaymentsView extends Component {
                                     <Form.Item
                                         name="toCoin"
                                         label={<Translate content="currency" component={Form.label} />}
-                                        className="custom-forminput custom-label mb-24"
+                                        className="custom-forminput custom-label "
                                     >
                                         <Select
                                             showSearch
@@ -506,7 +507,7 @@ class PaymentsView extends Component {
                                 </Col>
                                 <Col xl={8}>
                                     <Form.Item
-                                        className="custom-forminput custom-label mb-24"
+                                        className="custom-forminput custom-label "
                                         name="accountNumber"
                                         label={apiCalls.convertLocalLang('Bank_account')}
                                         required
@@ -529,7 +530,7 @@ class PaymentsView extends Component {
                                 </Col>
                                 <Col xl={8}>
                                     <Form.Item
-                                        className="custom-forminput custom-label mb-24"
+                                        className="custom-forminput custom-label "
                                         name="routingNumber"
                                         label={<Translate content="BIC_SWIFT_routing_number" component={Form.label} />}
                                         required
@@ -552,7 +553,7 @@ class PaymentsView extends Component {
                                 </Col>
                                 <Col xl={8}>
                                     <Form.Item
-                                        className="custom-forminput custom-label mb-24"
+                                        className="custom-forminput custom-label "
                                         name="bankName"
                                         label={<Translate content="Bank_name" component={Form.label} />}
                                         required
@@ -575,7 +576,7 @@ class PaymentsView extends Component {
                                 </Col>
                                 <Col xl={16}>
                                     <Form.Item
-                                        className="custom-forminput custom-label mb-24"
+                                        className="custom-forminput custom-label"
                                         name="bankAddress"
                                         label={<Translate content="Bank_address1" component={Form.label} />}
                                         required
@@ -597,16 +598,16 @@ class PaymentsView extends Component {
                                 </Col>
                             </Row>
                             <Paragraph
-                                className="mb-16 fs-20 mt-24 text-white fw-500"
+                                className="fw-500"
                             >KYC Documents</Paragraph>
                             <>
 
                                 <Row gutter={16}>
                                     <Col xl={8}>
-                                        <div className='mb-24'>
+                                        <div className=''>
                                             <Paragraph
 
-                                                className="mb-16 fs-14 text-white fw-500 text-upper"
+                                                className=" fw-500"
                                             >Please provide your identity proof</Paragraph>
                                             <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                                                 className="upload mt-4"
@@ -620,8 +621,8 @@ class PaymentsView extends Component {
                                                 <p className="ant-upload-drag-icon">
                                                     <span className="icon xxxl doc-upload" />
                                                 </p>
-                                                <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
-                                                <p className="ant-upload-hint text-secondary fs-12">
+                                                <p className="ant-upload-text upload-title">Drag and drop or browse to choose file</p>
+                                                <p className="ant-upload-hint upload-text">
                                                     PNG, JPG,JPEG and PDF files are allowed
                                                 </p>
                                             </Dragger>
@@ -630,7 +631,7 @@ class PaymentsView extends Component {
                                                     <span className={`icon xl file mr-16`} />
                                                     <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
                                                         <EllipsisMiddle suffixCount={6}>{file.documentName}</EllipsisMiddle>
-                                                        <span className="fs-12 text-secondary">{this.formatBytes(file ? file.remarks : "")}</span>
+                                                        <span className="file-sizestyle">{this.formatBytes(file ? file.remarks : "")}</span>
                                                     </div>
                                                     <span className="icon md close c-pointer" onClick={() => this.deleteDocument(file,"IDENTITYPROOF")} />
                                                 </div> : ""}</>
@@ -642,7 +643,7 @@ class PaymentsView extends Component {
                                         <div>
                                             <Paragraph
 
-                                                className="mb-16 fs-14 text-white fw-500 text-upper"
+                                                className="fw-500"
                                             >Please provide your address proof</Paragraph>
                                             <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                                                 className="upload mt-4"
@@ -656,8 +657,8 @@ class PaymentsView extends Component {
                                                 <p className="ant-upload-drag-icon">
                                                     <span className="icon xxxl doc-upload" />
                                                 </p>
-                                                <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
-                                                <p className="ant-upload-hint text-secondary fs-12">
+                                                <p className="ant-upload-text upload-title">Drag and drop or browse to choose file</p>
+                                                <p className="ant-upload-hint upload-text">
                                                     PNG, JPG,JPEG and PDF files are allowed
                                                 </p>
                                             </Dragger>
@@ -666,7 +667,7 @@ class PaymentsView extends Component {
                                                     <span className={`icon xl file mr-16`} />
                                                     <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
                                                         <EllipsisMiddle suffixCount={6}>{file.documentName}</EllipsisMiddle>
-                                                        <span className="fs-12 text-secondary">{this.formatBytes(file ? file.remarks : "")}</span>
+                                                        <span className="file-sizestyle">{this.formatBytes(file ? file.remarks : "")}</span>
                                                     </div>
                                                     <span className="icon md close c-pointer" onClick={() => this.deleteDocument(file,"ADDRESSPROOF")} />
                                                 </div> : ""}</>
@@ -677,7 +678,7 @@ class PaymentsView extends Component {
                                         <div>
                                             <Paragraph
 
-                                                className="mb-16 fs-14 text-white fw-500 text-upper"
+                                                className="fw-500"
                                             >Please provide your address proof</Paragraph>
                                             <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                                                 className="upload mt-4"
@@ -690,8 +691,8 @@ class PaymentsView extends Component {
                                                 <p className="ant-upload-drag-icon">
                                                     <span className="icon xxxl doc-upload" />
                                                 </p>
-                                                <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
-                                                <p className="ant-upload-hint text-secondary fs-12">
+                                                <p className="ant-upload-text upload-title">Drag and drop or browse to choose file</p>
+                                                <p className="ant-upload-hint upload-text">
                                                     PNG, JPG,JPEG and PDF files are allowed
                                                 </p>
                                             </Dragger>
@@ -700,7 +701,7 @@ class PaymentsView extends Component {
                                                     <span className={`icon xl file mr-16`} />
                                                     <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
                                                         <EllipsisMiddle suffixCount={6}>{file.documentName}</EllipsisMiddle>
-                                                        <span className="fs-12 text-secondary">{this.formatBytes(file ? file.remarks : "")}</span>
+                                                        <span className="file-sizestyle">{this.formatBytes(file ? file.remarks : "")}</span>
                                                     </div>
                                                     <span className="icon md close c-pointer" onClick={() => this.deleteDocument(file,"BANKPROOF")} />
                                                 </div> : ""}</>
@@ -728,18 +729,20 @@ class PaymentsView extends Component {
                             <div className='text-center mt-36'>
                                 <Button
                                     size="large"
-                                    className="pop-cancel"
-                                    style={{ width: 150 }}
-                                    onClick={() => this.props.history.push('/payments')}
-                                >
-                                    <Translate content="cancel" />
+                                    block
+                                    disabled={this.state.btnDisabled}
+                                    // tyle={{ width: 250 }}
+                                    className="pop-btn" htmlType="submit">
+                                    <Translate content="confirm_beneficiary" />
                                 </Button>
                                 <Button
                                     size="large"
-                                    disabled={this.state.btnDisabled}
-                                    tyle={{ width: 250 }}
-                                    className="pop-btn" htmlType="submit">
-                                    <Translate content="confirm_beneficiary" />
+                                    block
+                                    className="cust-cancel-btn"
+                                    // style={{ width: 150 }}
+                                    onClick={() => this.props.history.push('/payments')}
+                                >
+                                    <Translate content="cancel" />
                                 </Button>
 
                             </div>

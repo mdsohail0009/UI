@@ -6,8 +6,6 @@
     --bgDarkGrey-95:rgba(49,60,70,0.75);
     --bgGrey: #515A64;
     --bgGreen: #389738;
-    --bgDarkGreen: #4DB205;
-    --bgDarkRed: #FF2400;
     --bgBlack: #000000;
     --bgYellow: #FFDB1A;
     --bgDarkYellow:#e0bb02;
@@ -17,7 +15,6 @@
     --bgOrient: #1E526E;
     --bgOrient1: #1E526E;
     --bgGloom: #243540;
-    --bgBlue: #1E90FF;
     --bgSwapFrom: #1B4156;
     --bgSwapTo: #1E526E;
     --bgPitch1: #1B4156;
@@ -118,6 +115,10 @@
     --coindate:#74767D;
     --coinviewradio:rgba(255, 255, 255, 0.1);
     --coinViewborder:#4E505A;
+    --bgDarkGreen: #4DB205;
+    --bgBlue: #1E90FF;
+    --bgDarkRed: #FF2400;
+    --labelBorder:rgba(255, 255, 255, 0.4);
 
     --lightThemeIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/user-darktheme-icons.svg);
     --cryptoIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/light-crypto-icons.svg);

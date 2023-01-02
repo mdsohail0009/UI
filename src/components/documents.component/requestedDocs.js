@@ -348,7 +348,7 @@ class RequestedDocs extends Component {
         return <>
             <div className="main-container">
                 {(!this.state.docDetails?.details || this.state.docDetails?.details.length === 0) && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div>}
-                <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile/4" />{this.state?.docDetails?.note}</div>
+                <div className=""><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile/4" />{this.state?.docDetails?.note}</div>
                 <div className="bank-view">
                     {this.state.docDetails?.details?.map((doc, idx) => <Collapse onChange={(key) => { if (key) { this.loadDocReplies(doc.id) } }} accordion className="accordian mb-24" defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
                         <Panel header={doc.documentName} key={idx + 1} extra={doc.status ? (<span className={`${doc.status ? doc.status.toLowerCase() + " staus-lbl" : ""}`}>{doc.status}</span>) : ""}>
@@ -363,7 +363,7 @@ class RequestedDocs extends Component {
                                             <span className={`icon xl ${(file.filename.slice(-3) === "zip" ? "file" : "") || (file.filename.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                             <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
                                                 <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>
-                                                <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
+                                                <span className="file-sizestyle">{this.formatBytes(file.size)}</span>
                                             </div>
                                         </div>)}
                                     </div>
@@ -390,8 +390,8 @@ class RequestedDocs extends Component {
                                     <p className="ant-upload-drag-icon">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
-                                    <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
-                                    <p className="ant-upload-hint text-secondary fs-12">
+                                    <p className="ant-upload-text upload-title">Drag and drop or browse to choose file</p>
+                                    <p className="ant-upload-hint upload-text">
                                         PNG, JPG,JPEG and PDF files are allowed
                                     </p>
                                 </Dragger>
@@ -402,7 +402,7 @@ class RequestedDocs extends Component {
                                         <span className={`icon xl ${(file.filename.slice(-3) === "zip" ? "file" : "") || (file.filename.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                         <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
                                             <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>
-                                            <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
+                                            <span className="file-sizestyle">{this.formatBytes(file.size)}</span>
                                         </div>
                                         <span className="icon md close c-pointer" onClick={() => this.deleteDocument(this.getUploadedFiles(doc.id), idx1, true)} />
                                     </div>)}

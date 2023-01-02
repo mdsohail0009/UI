@@ -28,7 +28,7 @@ const TransactionTimeSpan=(props)=> {
                 ref={formDateRef}
               >
                 {message && <Alert showIcon type="info" description={message} closable={false} />}
-                <div className="mb-24">
+                <div className="custom-model-label">
                   <Form.Item
                     name="fromdate"
                     className="input-label"

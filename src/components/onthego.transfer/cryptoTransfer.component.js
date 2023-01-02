@@ -87,7 +87,7 @@ class OnthegoCryptoTransfer extends Component {
             this.setState({ ...this.state, filterObj, searchVal: val });
         }
         else
-            this.setState({ ...this.state, filterObj: this.state.payees, searchVal: val });
+        this.setState({ ...this.state, filterObj: this.state.payees, searchVal: val });
     }
 
     handlePreview = (item) => {
@@ -136,7 +136,7 @@ class OnthegoCryptoTransfer extends Component {
         else if (amt < withdrawMinValue) {
             this.setState({ ...this.state, errorMsg: null, error: apicalls.convertLocalLang('amount_min') + " " + withdrawMinValue });
             this.myRef.current.scrollIntoView();
-        }
+        } 
         // else if (amt > withdrawMaxValue) {
         //     this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_max') + " " + withdrawMaxValue });
         //     this.myRef.current.scrollIntoView();
@@ -147,9 +147,9 @@ class OnthegoCryptoTransfer extends Component {
         }
         else {
             this.setState({ ...this.state, amount: amt }, () => this.validateAmt(amt, "newtransfer", values, "newtransferLoader"))
-
-        }
-    }
+            
+        } 
+    } 
     isErrorDispaly = (objValue) => {
         if (objValue.data && typeof objValue.data === "string") {
             return objValue.data;
@@ -162,25 +162,25 @@ class OnthegoCryptoTransfer extends Component {
             return "Something went wrong please try again!";
         }
     };
-
+  
     validateAmt = async (amt, type, values, loader) => {
         this.getPayees();
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.props.dispatch(setSubTitle(""))
         this.props.dispatch(hideSendCrypto(false));
-        let obj = {
-            "customerId": this.props.userProfile.id,
-            "customerWalletId": id,
-            "walletCode": coin,
-            "toWalletAddress": this.state.walletAddress,
-            "reference": "",
-            "description": "",
-            "totalValue": amt,
-            "tag": "",
-            'amounttype': this.state.amountPercentageType
-        }
-        this.props.dispatch(setWithdrawcrypto(obj))
-        this.props.dispatch(setSubTitle(apicalls.convertLocalLang('wallet_address')));
+         let obj = {
+             "customerId": this.props.userProfile.id,
+             "customerWalletId": id,
+             "walletCode": coin,
+             "toWalletAddress": this.state.walletAddress,
+             "reference": "",
+             "description": "",
+             "totalValue": amt,
+             "tag": "",
+             'amounttype': this.state.amountPercentageType
+         }
+         this.props.dispatch(setWithdrawcrypto(obj))
+         this.props.dispatch(setSubTitle(apicalls.convertLocalLang('wallet_address')));
         const validObj = {
             CustomerId: this.props.userProfile?.id,
             amount: amt ? amt : null,
@@ -190,10 +190,10 @@ class OnthegoCryptoTransfer extends Component {
         const res = await validateCryptoAmount(validObj);
         if (res.ok) {
             this.props.dispatch(setSubTitle(""));
-            type === "addressSelection" ? this.setState({ ...this.state, loading: false, [loader]: false, errorMsg: null }, () => this.props.chnageStep(type, values)) :
-                this.setState({
-                    ...this.state, visible: true, errorWorning: null, errorMsg: null, [loader]: false, showFuntransfer: true
-                }, () => this.chnageStep(type, values));
+            type === "addressSelection" ? this.setState({ ...this.state, loading: false, [loader]: false, errorMsg: null }, () => this.props.chnageStep(type, values)) : 
+            this.setState({
+                ...this.state, visible: true, errorWorning: null, errorMsg: null, [loader]: false, showFuntransfer: true
+            }, () => this.chnageStep(type, values));
         } else {
             this.setState({ ...this.state, loading: false, [loader]: false, error: null, errorMsg: this.isErrorDispaly(res) })
             this.myRef.current.scrollIntoView();
@@ -228,7 +228,7 @@ class OnthegoCryptoTransfer extends Component {
                 (value.indexOf(".") < 0 && value.length >= 11)
             ) {
                 throw new Error("Amount exceeded");
-            }
+            } 
             else {
                 callback();
             }
@@ -242,116 +242,116 @@ class OnthegoCryptoTransfer extends Component {
     };
 
 
-    keyDownHandler = (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault()
-            this.goToAddressBook()
-        }
+  keyDownHandler = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      this.goToAddressBook()
     }
-    submitHandler = (e) => {
-        e.preventDefault()
-    }
+  }
+  submitHandler = (e) => {
+    e.preventDefault()
+  }
 
-    goToAddressBook = () => {
-        let _amt = this.enteramtForm.current.getFieldsValue().amount
-        _amt = typeof _amt == 'string' ? _amt.replace(/,/g, '') : _amt
-        this.setState({ ...this.state, errorMsg: null, error: null })
-        if (_amt > 0) {
-            if (_amt < this.props.selectedWallet?.withdrawMinValue) {
-                this.setState({
-                    ...this.state,
-                    errorMsg: null,
-                    error:
-                        apicalls.convertLocalLang('amount_min') +
-                        ' ' +
-                        this.props.selectedWallet?.withdrawMinValue,
-                })
-                this.myRef.current.scrollIntoView()
-            }
-            else if (
-                _amt >
-                this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance
-            ) {
-                this.setState({
-                    ...this.state,
-                    errorMsg: null,
-                    error: ' ' + apicalls.convertLocalLang('insufficient_balance'),
-                })
-                this.myRef.current.scrollIntoView()
-            } else {
-                this.setState(
-                    {
-                        ...this.state,
-                        isNewTransfer: false,
-                        amount: _amt,
-                        onTheGoObj: this.enteramtForm.current.getFieldsValue(),
-                    },
-                    () => {
-                        this.enteramtForm.current
-                            .validateFields()
-                            .then(() =>
-                                this.validateAmt(
-                                    _amt,
-                                    'addressselection',
-                                    this.enteramtForm.current.getFieldsValue(),
-                                    'addressLoader',
-                                ),
-                            )
-                            .catch((error) => { })
-                    },
-                )
-            }
-        } else {
-            if (!_amt && _amt != 0) {
-                this.enteramtForm.current.validateFields()
-            } else {
-                if (_amt === '') {
-                    this.setState({
-                        ...this.state,
-                        errorMsg: null,
-                        error: ' ' + apicalls.convertLocalLang('enter_amount'),
-                    })
-                    this.myRef.current.scrollIntoView()
-                } else if (this.state.CryptoAmnt == '0' || _amt == 0) {
-                    this.setState({
-                        ...this.state,
-                        errorMsg: null,
-                        error: ' ' + apicalls.convertLocalLang('amount_greater_zero'),
-                    })
-                    this.myRef.current.scrollIntoView()
-                }
-            }
+  goToAddressBook = () => {
+    let _amt = this.enteramtForm.current.getFieldsValue().amount
+    _amt = typeof _amt == 'string' ? _amt.replace(/,/g, '') : _amt
+    this.setState({ ...this.state, errorMsg: null, error: null })
+    if (_amt > 0) {
+      if (_amt < this.props.selectedWallet?.withdrawMinValue) {
+        this.setState({
+          ...this.state,
+          errorMsg: null,
+          error:
+            apicalls.convertLocalLang('amount_min') +
+            ' ' +
+            this.props.selectedWallet?.withdrawMinValue,
+        })
+        this.myRef.current.scrollIntoView()
+      }
+      else if (
+        _amt >
+        this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance
+      ) {
+        this.setState({
+          ...this.state,
+          errorMsg: null,
+          error: ' ' + apicalls.convertLocalLang('insufficient_balance'),
+        })
+        this.myRef.current.scrollIntoView()
+      } else {
+        this.setState(
+          {
+            ...this.state,
+            isNewTransfer: false,
+            amount: _amt,
+            onTheGoObj: this.enteramtForm.current.getFieldsValue(),
+          },
+          () => {
+            this.enteramtForm.current
+              .validateFields()
+              .then(() =>
+                this.validateAmt(
+                  _amt,
+                  'addressselection',
+                  this.enteramtForm.current.getFieldsValue(),
+                  'addressLoader',
+                ),
+              )
+              .catch((error) => { })
+          },
+        )
+      }
+    } else {
+      if (!_amt && _amt != 0) {
+        this.enteramtForm.current.validateFields()
+      } else {
+        if (_amt === '') {
+          this.setState({
+            ...this.state,
+            errorMsg: null,
+            error: ' ' + apicalls.convertLocalLang('enter_amount'),
+          })
+          this.myRef.current.scrollIntoView()
+        } else if (this.state.CryptoAmnt == '0' || _amt == 0) {
+          this.setState({
+            ...this.state,
+            errorMsg: null,
+            error: ' ' + apicalls.convertLocalLang('amount_greater_zero'),
+          })
+          this.myRef.current.scrollIntoView()
         }
+      }
     }
+  }
 
-    renderStep = (step) => {
-        const { filterObj, pastPayees } = this.state;
-        const steps = {
-            enteramount: (
-                <>
-                    {this.state.isVerificationLoading && <Loader />}
+  renderStep = (step) => {
+    const { filterObj, pastPayees } = this.state;
+    const steps = {
+      enteramount: (
+        <>
+          {this.state.isVerificationLoading && <Loader />}
                     {!this.state.isVerificationLoading &&
-                        <Form
-                            autoComplete="off"
-                            initialValues={{ amount: "" }}
-                            ref={this.enteramtForm}
-                            onFinish={this.amountNext}
-                            scrollToFirstError
-                            onSubmit={this.submitHandler}
-                        >
-                            <div ref={this.myRef}></div>
-                            {this.state.error != null && <Alert type="error"
-                                description={this.state.error} onClose={() => this.setState({ ...this.state, error: null })} showIcon />}
-                            {this.state.errorMsg && (
-                                <Alert
-                                    className="mb-12"
-                                    showIcon
-                                    description={this.state.errorMsg}
-                                    closable={false}
-                                    type="error"
-                                />
-                            )}
-                            <Row gutter={[16, 16]} className="align-center send-crypto-err mx-4">
+            <Form
+              autoComplete="off"
+              initialValues={{ amount: "" }}
+              ref={this.enteramtForm}
+              onFinish={this.amountNext}
+              scrollToFirstError
+              onSubmit={this.submitHandler}
+            >
+              <div ref={this.myRef}></div>
+              {this.state.error != null && <Alert type="error"
+                    description={this.state.error} onClose={() => this.setState({ ...this.state, error: null })} showIcon />}
+              {this.state.errorMsg && (
+                <Alert
+                  className="mb-12"
+                  showIcon
+                  description={this.state.errorMsg}
+                  closable={false}
+                  type="error"
+                />
+              )}
+              <Row gutter={[16, 16]} className="align-center send-crypto-err mx-4">
 
                 {/* <Title className="fs-30 fw-400 text-white-30 text-yellow  mb-0 mt-4">
                   {this.props.selectedWallet?.coin}
@@ -387,7 +387,7 @@ class OnthegoCryptoTransfer extends Component {
                   />
                 </Form.Item>
 
-                                <Col xs={24} md={24} lg={24} xl={24} xxl={24} style={{ marginTop: "-20px" }}>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24} style={{ marginTop: "-20px" }}>
 
                   <div class="text-center mr-16 small-btns">
                     <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn " onClick={() => this.clickMinamnt("min")}>
@@ -399,27 +399,25 @@ class OnthegoCryptoTransfer extends Component {
                   </div>
                 </Col>
               </Row>
-              <Row gutter={[16, 4]} className="text-center mt-24 mb-24">
-              <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mobile-viewbtns mobile-btn-pd">
+              <Row gutter={[16, 4]} className="text-center">
+              <Col xs={12} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
                   <Form.Item className="text-center">
                     <Button
                       htmlType="submit"
                       size="large"
                       className="newtransfer-card"
-                      style={{ width: '100%' }}
                       loading={this.state.newtransferLoader}
                     >
                       New Transfer
                     </Button>
                   </Form.Item>
                 </Col>
-                <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mobile-viewbtns mobile-btn-pd">
+                <Col xs={12} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
                   <Form.Item className="text-center">
                     <Button
                       htmlType="button"
                       size="large"
                       className="newtransfer-card"
-                      style={{ width: '100% ' }}
                       loading={this.state.addressLoader}
                       disabled={this.state.newtransferLoader}
                       onClick={this.goToAddressBook}
@@ -451,6 +449,7 @@ class OnthegoCryptoTransfer extends Component {
             {this.state?.loading && <Loader />}
             {(!this.state.loading) && <>
                  <Title className="sub-title address-book">Address Book</Title>
+                {/* <Divider className="cust-divide" /> */}
 
                 <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                 {(filterObj.length > 0) && filterObj?.map((item, idx) =>
@@ -535,27 +534,27 @@ class OnthegoCryptoTransfer extends Component {
 }
 
 const connectStateToProps = ({ sendReceive, userConfig, menuItems, oidc }) => {
-    return {
-        sendReceive,
-        userProfile: userConfig?.userProfileInfo,
-        trackAuditLogData: userConfig?.trackAuditLogData,
-        withdrawCryptoPermissions: menuItems?.featurePermissions?.send_fiat,
-        oidc: oidc?.user?.profile
-    };
+  return {
+    sendReceive,
+    userProfile: userConfig?.userProfileInfo,
+    trackAuditLogData: userConfig?.trackAuditLogData,
+    withdrawCryptoPermissions: menuItems?.featurePermissions?.send_fiat,
+    oidc: oidc?.user?.profile
+  };
 };
 const connectDispatchToProps = dispatch => {
-    return {
-        // commented due to sonar issue
+  return {
+    // commented due to sonar issue
         // changeStep: (stepcode) => {
-        // dispatch(setAddressStep(stepcode))
+            // dispatch(setAddressStep(stepcode))
         // },
-        changeStep: (stepcode) => {
-            dispatch(setStep(stepcode))
-        },
-        clearAddress: (stepcode) => {
-            dispatch(setAddress(stepcode))
-        },
-        dispatch
-    }
+    changeStep: (stepcode) => {
+      dispatch(setStep(stepcode))
+    },
+    clearAddress: (stepcode) => {
+      dispatch(setAddress(stepcode))
+    },
+    dispatch
+  }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(withRouter(OnthegoCryptoTransfer));

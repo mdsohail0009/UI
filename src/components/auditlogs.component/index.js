@@ -288,7 +288,7 @@ class AuditLogs extends Component {
                 ref={this.formDateRef}
               >
                 {this.state?.message && <Alert showIcon type="info" description={this.state?.message} closable={false} />}
-                <div className="mb-24">
+                <div className="">
                   <Form.Item
                     name="fromdate"
                     className="input-label"
