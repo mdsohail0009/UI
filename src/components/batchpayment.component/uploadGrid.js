@@ -136,6 +136,7 @@ const BatchpaymentView = (props) => {
                 setUploader(false)
                 identityProofObj?.push(obj);
                  setDocIdentityProofObjs(identityProofObj)
+                 setIsLoad(false);
             }
             }
           else if( type === "TransferProof"){
@@ -144,6 +145,7 @@ const BatchpaymentView = (props) => {
                     setDocUpload(false)
                     transferProof?.push(obj);
                      setDocTransferObjs(transferProof)
+                     setIsLoad(false);
                 }
             }
         }
@@ -153,17 +155,18 @@ const BatchpaymentView = (props) => {
         if(docIdentityProofObjs && type === "IDENTITYPROOF"){
             let deleteIdentityList = docIdentityProofObjs.filter((file1) => file1.uid !== file.uid);
             let obj=docIdentityProofObjs[0];
-            obj.isChecked=false
+            obj.isChecked=true
             setDocIdentityProofObjs(deleteIdentityList);
-            deleteDocuments();
-            
+            setDeleteModal(false)
+            setIsLoad(false);
         }
         else if(docTransferObjs && type === "TransferProof"){
             let deleteTransferList = docTransferObjs.filter((file1) => file1.uid !== file.uid);
             let obj=docTransferObjs[0];
-            obj.isChecked=false
+            obj.isChecked=true
             setDocTransferObjs(deleteTransferList);
-            deleteDocuments();
+            setDeleteModal(false)
+            setIsLoad(false);
             
         }
     }
@@ -192,9 +195,6 @@ const BatchpaymentView = (props) => {
             setDeleteModal(false);
         }
     }
-    const deleteDocuments=()=>{
-        setDeleteModal(false)
-    }
  const isErrorDispaly = (objValue) => {
 		if (objValue.data && typeof objValue.data === "string") {
 		  return objValue.data;
@@ -217,7 +217,7 @@ const BatchpaymentView = (props) => {
                       "id": data?.id,
                       "customerId": props?.userConfig?.id,
                       "status": true,
-                      "state": deleteGridDoc?.transactionType==="Beneficiary"?"Deleted":"Submitted",
+                      "state":"Submitted",
                       "currencyType":props.match.params.currency,
                       "details":docIdentityProofObjs
                     },
@@ -225,7 +225,7 @@ const BatchpaymentView = (props) => {
                       "id": data?.id,
                       "customerId": props?.userConfig?.id,
                       "status": true,
-                      "state": deleteGridDoc?.transactionType==="Beneficiary"?"Deleted":"Submitted",
+                      "state":"Submitted",
                       "currencyType": props.match.params.currency,
                       "details": docTransferObjs,
                     }
