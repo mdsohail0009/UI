@@ -393,23 +393,27 @@ class PaymentDetails extends Component {
       return <Spin />;
     } else {
       return (
-        <div className="more-popover">
-          <Text className="lbl text-white">BIC/SWIFT/ABA Routing Code</Text>
-          <Text className="val text-white">{moreBankInfo?.routingNumber}</Text>
+        <div className="more-popover payments-card kpi-List">
+           <div className='popover-mb-12'>
+          <label className="kpi-label">BIC/SWIFT/ABA Routing Code</label>
+          <span className=" kpi-val d-block">{moreBankInfo?.routingNumber}</span></div>
           {this.state.currency === "USD" && moreBankInfo?.transferType!=="internationalIBAN"&&
           <>
-          <Text className="lbl text-white">Bank Address</Text><br/>
-          <Text className="lbl text-white">Address Line 1</Text> 
-          <Text className="val text-white">{moreBankInfo?.bankAddress1}</Text>
+           <div className='popover-mb-12'>
+          <label className="basicinfo">Bank Address</label>
+          <label className="kpi-label d-block">Address Line 1</label> 
+          <span className="kpi-val d-block">{moreBankInfo?.bankAddress1}</span></div>
           {moreBankInfo?.bankAddress2!==null &&<>
-            <Text className="lbl text-white">Address Line 2</Text>
-          <Text className="val text-white">{moreBankInfo?.bankAddress2}</Text>
+            <div className='popover-mb-12'>
+            <label className="kpi-label">Address Line 2</label>
+          <span className="kpi-val d-block">{moreBankInfo?.bankAddress2}</span></div>
           </>}
           </>}
           {(moreBankInfo?.transferType==="sepa" || moreBankInfo?.transferType==="internationalIBAN" ) && 
           <>
-          <Text className="lbl text-white">Bank Address</Text>
-          <Text className="val text-white">{moreBankInfo?.bankBranch}{","}{moreBankInfo?.country}{","}{moreBankInfo?.state}{","}{moreBankInfo?.city}{","}{moreBankInfo?.postalCode}</Text></>}
+          <div className='popover-mb-12'>
+          <label className="kpi-label">Bank Address</label>
+          <span className="kpi-val d-block">{moreBankInfo?.bankBranch}{","}{moreBankInfo?.country}{","}{moreBankInfo?.state}{","}{moreBankInfo?.city}{","}{moreBankInfo?.postalCode}</span></div></>}
         </div>
       );
     }
@@ -428,7 +432,7 @@ class PaymentDetails extends Component {
         <div className="main-container">
           <div className="coin-viewstyle">
           <Title className="basicinfo mb-0">
-          <span onClick={() => this.props.history?.push(`/payments/All`)} className='icon md c-pointer back mr-8'></span>
+          <span onClick={() => this.props.history?.push(`/payments/All`)} className='icon md c-pointer back backarrow-mr'></span>
           <Translate content="menu_payments" component={Text} className="coin-viewstyle" />
           </Title>
           </div>
@@ -592,7 +596,7 @@ class PaymentDetails extends Component {
                                         <td style={{ width: '250px' }}>
                                           <div className="d-flex amt-field">
                                             <Form.Item
-                                              className="mb-0"
+                                              className="form-margin-bottom"
                                               rules={
                                                 item.checked && [
                                                   {
@@ -637,7 +641,7 @@ class PaymentDetails extends Component {
                                               key={i}
                                               type="dashed"
                                               size="large"
-                                              className="ml-8 mt-12"
+                                              className="attach-iconalign"
                                               shape="circle"
                                               style={{
                                                 backgroundColor: "transparent",
@@ -681,7 +685,7 @@ class PaymentDetails extends Component {
                                           </div> : item.documents?.details.map((file) => (
                                             <>
                                               {file.documentName !== null && (
-                                                <div className='docdetails' style={{ width: "80px" }}>
+                                                <div className='docdetails pay-docdetails'>
                                                   <div onClick={() => this.docPreview(file)}>
                                                     <Tooltip title={file.documentName}>
                                                       {file.documentName?.split(".")[0].length>4&&<EllipsisMiddle>
@@ -796,8 +800,9 @@ class PaymentDetails extends Component {
                   {(this.props.match.params.id ===
                     "00000000-0000-0000-0000-000000000000" || this.props.match.params.state === "Submitted" || this.props.match.params.state === "Pending") &&
                     <Button
+                    block
                       htmlType="submit"
-                      className="pop-btn px-36"
+                      className="pop-btn"
                       loading={this.state.btnDisabled}
                       onClick={() => {
                         this.savePayment();
@@ -807,8 +812,7 @@ class PaymentDetails extends Component {
                     </Button>
                   }
                   <Button
-                    className="pop-btn px-36"
-                    style={{ margin: "0 8px" }}
+                    className="cust-cancel-btn pay-cust-btn"
                     onClick={this.backToPayments}
                   >
                     Cancel
@@ -829,8 +833,9 @@ class PaymentDetails extends Component {
           destroyOnClose={true}
           closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.docPreviewClose} /></Tooltip>}
           footer={<>
-            <Button type="primary" onClick={this.docPreviewClose} className="text-center text-white-30 pop-cancel fw-400 mr-36">Close</Button>
-            <Button className="pop-btn px-36" onClick={() => this.fileDownload()}>Download</Button>
+            
+            <Button className="pop-btn" block onClick={() => this.fileDownload()}>Download</Button>
+            <Button type="primary" block onClick={this.docPreviewClose} className="cust-cancel-btn">Close</Button>
           </>}
         >
           <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null, mimeType: this.state?.previewPath?.includes(".pdf") ? 'application/pdf' : '' }} />
@@ -844,11 +849,12 @@ class PaymentDetails extends Component {
           footer={[
             <>
             <div className='cust-pop-up-btn crypto-pop bill-pop'>
-              <Button
-                className="pop-cancel btn-width  bill-cancel"
+              <Button className="pop-btn"
+                onClick={() => this.deleteDetials(this.state.selectData, this.state.paymentsData)}>Yes</Button>
+                <Button
+                className="cust-cancel-btn"
                 onClick={this.handleCancel}>No</Button>
-              <Button className="pop-btn px-36 btn-width"
-                onClick={() => this.deleteDetials(this.state.selectData, this.state.paymentsData)}>Yes</Button></div>
+                </div>
             </>
           ]}
         >

@@ -302,7 +302,7 @@ downLoadPreview=()=>{
                                               <Button className='pop-btn mt-24'>Upload Excel</Button>
                                 </Upload>{" "}
             <Paragraph className='text-white-30'>To download the excel, <a className='fw-700' onClick={this.downLoadPreview}> click here</a></Paragraph>
-            <Button className='pop-btn px-36' onClick={this.selectWhitelist}>Select from Whitelisted Addresses</Button>
+            <Button className='pop-btn' onClick={this.selectWhitelist}>Select from Whitelisted Addresses</Button>
                                 
             </div>
               </div>
@@ -318,17 +318,17 @@ downLoadPreview=()=>{
                     <>
                         <div className="cust-pop-up-btn crypto-pop bill-pop">
                           <Button
-                            className="pop-cancel btn-width  bill-cancel"
-                            onClick={this.goToGrid}   
-                          >
-                            Exit
-                          </Button>
-                          <Button
-                            className="pop-btn px-36 ml-36"
+                            className="pop-btn"
                             onClick={this.refreshTransaction}  disabled={uploadLoader}
                             loading={refreshBtnLoader}
                           >
                             Refresh
+                          </Button>
+                          <Button
+                            className="cust-cancel-btn"
+                            onClick={this.goToGrid}   
+                          >
+                            Exit
                           </Button>
                         </div>
                     </>

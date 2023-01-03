@@ -299,16 +299,16 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
         title={[
           <div className="side-drawer-header change_password">
             <span />
-            <div className="text-center fs-16">
+            <div className="text-center">
               <Translate
-                className="text-white-30 fw-600 text-upper mb-4 d-block"
+                className="drawer-maintitle rec-bottom"
                 content="change_pass_word"
-                component={Drawer.title}
+                component={Paragraph}
               />
               <Translate
                 content="Choose_a_unique_pass_word_to_protect_your_account"
-                component={Drawer.Paragraph}
-                className="mb-16 ml-8 fs-14 text-white mt-8 fw-200 py-16"
+                component={Paragraph}
+                className="recive-subtext"
               />
             </div>
             <span

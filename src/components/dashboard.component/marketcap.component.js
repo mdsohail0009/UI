@@ -82,7 +82,7 @@ const MarketCap = ({ member }) => {
                 <div className='bash-market-table responsive_table bg-none dashb-btmtable'>
                 
                 
-                <Table  locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }} sortDirections={["ascend", "descend"]} style={{ background: "daryGrey" }} scroll={{ y: '' }} pagination={false} columns={infoColumns} dataSource={marketCaps} loading={isLoading} className="pay-grid view mb-view" />
+                <Table  locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }} sortDirections={["ascend", "descend"]}  scroll={{ y: '' }} pagination={false} columns={infoColumns} dataSource={marketCaps} loading={isLoading} className="pay-grid view mb-view marketcap-coinsize" />
                 </div>
             </div>
             <Drawer
@@ -100,7 +100,7 @@ const MarketCap = ({ member }) => {
                 destroyOnClose={true}
             >
                 <div className="markets-panel mr-0 markets-popup">
-                    <div className="full-screenable-node" style={{ overflow: "hidden", height: "100%", background: "daryGrey" }}>
+                    <div className="full-screenable-node" >
                   
                         <div style={{ marginBottom: '8px', textAlign: 'right' }}>
                             <Search 
@@ -113,7 +113,7 @@ const MarketCap = ({ member }) => {
                              className="mt-8 mb-8 dark-search"
                               />
                               
-                            <Table className='' locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }} sortDirections={["ascend", "descend"]} pagination={false} columns={detailInfoColumns} style={{ backgroundColor: 'var(--bgGrey)' }} scroll={{ y: '100vh' }} dataSource={fullViewData} loading={fullViewLoading} />
+                            <Table className='' locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }} sortDirections={["ascend", "descend"]} scroll={{ y: '100vh' }} pagination={false} columns={detailInfoColumns}  dataSource={fullViewData} loading={fullViewLoading} />
                         </div>
                     </div>
                 </div>

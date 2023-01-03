@@ -717,8 +717,9 @@ class PaymentsView extends Component {
                                     destroyOnClose={true}
                                     closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.docPreviewClose} /></Tooltip>}
                                     footer={<>
-                                        <Button type="primary" onClick={this.docPreviewClose} className="text-center text-white-30 pop-cancel fw-400 mr-36">Close</Button>
-                                        <Button className="pop-btn px-36" onClick={() => this.fileDownload()}>Download</Button>
+                                        
+                                        <Button className="pop-btn" block onClick={() => this.fileDownload()}>Download</Button>
+                                        <Button type="primary" block onClick={this.docPreviewClose} className="cust-cancel-btn">Close</Button>
                                     </>}
                                 >
                                     <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null, mimeType: this.state?.previewPath?.includes(".pdf") ? 'application/pdf' : '' }} />

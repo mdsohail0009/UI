@@ -223,7 +223,7 @@ const Batchpayments = (props) => {
               
                   <div className='d-flex justify-content align-center mb-16'>
                 
-                      <Title className="basicinfo mb-0"><span className='icon md c-pointer back mr-8' onClick={gotoDashboard}></span><Translate content="batch_payments" component={Text} className="basicinfo" />
+                      <Title className="basicinfo mb-0"><span className='icon md c-pointer back backarrow-mr' onClick={gotoDashboard}></span><Translate content="batch_payments" component={Text} className="basicinfo" />
                                       
                       <Text className='ml-4 text-yellow fs-16'> Proceed{" "}(<span className="icon md process-icon"/>)</Text><Text className='ml-4 text-white fs-16'>: To proceed the transaction,{" "}please click on proceed icon</Text>           
                       </Title>
@@ -291,13 +291,14 @@ const Batchpayments = (props) => {
           footer={[
             <>
             <div className='cust-pop-up-btn crypto-pop bill-pop'>
-              <Button
-                className="pop-cancel btn-width  bill-cancel"
-                onClick={()=>deleteModalCancel()}>Cancel</Button>
-              <Button className="pop-btn px-36 btn-width"
+              <Button className="pop-btn"
                 onClick={deleteDetials}
                 loading={isLoading}
-                >Ok</Button></div>
+                >Ok</Button>
+                <Button
+                className="cust-cancel-btn"
+                onClick={()=>deleteModalCancel()}>Cancel</Button>
+                </div>
             </>
           ]}
         >

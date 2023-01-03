@@ -67,7 +67,7 @@ const BatchpaymentView = (props) => {
         { field: "supportingDocument", title: 'Supporting Document', filter: true, width: 240,
             customCell: (props) => (
             <td className='text-center'><div className="gridLink text-center" >
-                <Button className='pop-btn px-36' disabled={props.dataItem.transactionStatus==="Approved"} onClick={()=>showUploadModal(props.dataItem)}>
+                <Button className='pop-btn' disabled={props.dataItem.transactionStatus==="Approved"} onClick={()=>showUploadModal(props.dataItem)}>
                     Upload
                     </Button>
               </div></td>)
@@ -279,16 +279,16 @@ const filePreviewPath = () => {
 			footer={
 				<>
 					<Button
-						className="pop-btn px-36"
-						style={{ margin: "0 8px" }}
-						onClick={() => setPreviewModal(false)}>
-						Close
-					</Button>
-					<Button
-						className="pop-btn px-36"
-						style={{ margin: "0 8px" }}
+						className="pop-btn"
+                        block
 						onClick={() => window.open(previewPath, "_blank")}>
 						Download
+					</Button>
+                    <Button
+						className="cust-cancel-btn"	
+                        block
+						onClick={() => setPreviewModal(false)}>
+						Close
 					</Button>
 				</>
 			}>
@@ -411,12 +411,13 @@ const filePreviewPath = () => {
           footer={[
             <>
             <div className='cust-pop-up-btn crypto-pop bill-pop'>
-              <Button
-                className="pop-cancel btn-width  bill-cancel"
-                onClick={() => deleteModalCancel()}>No</Button>
-              <Button className="pop-btn px-36 btn-width"
+                <Button className="pop-btn" block
                 onClick={() => deleteGridDocuments()}
-                loading={isLoading}>Yes</Button></div>
+                loading={isLoading}>Yes</Button>
+                 <Button
+                className="cust-cancel-btn"
+                onClick={() => deleteModalCancel()}>No</Button>
+                </div>
             </>
           ]}
         >

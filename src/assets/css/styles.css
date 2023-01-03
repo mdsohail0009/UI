@@ -465,7 +465,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .defaulticon{position: absolute; left: 0px;top: 3px; margin-left: 110px;}
 .ant-modal-content{border-radius: 24px;}
 .ant-modal-header{border-radius: 24px 24px 0 0;padding: 16px 24px;border-color: var(--borderGrey);}
-.ant-modal-title{font-size: 24px; line-height: 34px;color: var(--textWhite30);text-transform:capitalize;}
+/* .ant-modal-title{font-size: 24px; line-height: 34px;color: var(--textWhite30);text-transform:capitalize;} */
 .ant-modal-body p{font-size: 16px;color: var(--textWhite50);font-weight: 400;}
 .ant-modal-footer{padding:16px 24px;border-color: transparent;}
 .cust-adon .ant-input-group, .cust-adon .ant-input-group .ant-input:focus, .cust-adon .ant-input, .cust-adon .ant-input-group-addon{border: none !important;box-shadow: none;padding: 0;background: transparent;}
@@ -474,7 +474,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .ant-modal-confirm-btns button:nth-child(2){background-color: var(--bgYellow) !important;border: none;color: var(--textDark);border-radius: 16px;padding: 4px 30px}
 .ant-modal-confirm-btns button:first-child:hover{color: var(--textYellow);}
 .ant-picker-input > input, .ant-form-item-label > label{color: var(--textWhite);}
-.search-bg{border: 1px solid rgba(0,0,0,.08);color: #313c46 !important;background-color: var(--bgDarkGrey) !important;padding: 15px 10px;}
+/* .search-bg{border: 1px solid rgba(0,0,0,.08);color: #313c46 !important;background-color: var(--bgDarkGrey) !important;padding: 15px 10px;} */
 .bankview-right{padding: 34px 34px 0 !important;background-color: var(--bgDarkGrey);border-radius: 30px;}
 .bankview-right .kpi-val{padding-bottom: 34px;}
 .kpi-List .icon{margin: 6px 10px 0 0;}
@@ -525,10 +525,10 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 
 .pay-grid thead th:last-child{width: 500px;}
 .ant-table-placeholder:hover{background: transparent;}
-.ant-popover-inner{background-color: var(--bgGloom); border-radius: 10px;}
-.more-popover .lbl{font-size: 12px; color: var(--textWhite50);font-weight: 100;}
-.more-popover .val{font-size: 14px; color: var(--textWhite30);display: block;margin-bottom: 16px; line-height: normal;}
-.ant-popover-arrow{border-color: var(--bgGloom) !important;}
+
+/* .more-popover .lbl{font-size: 12px; color: var(--textWhite50);font-weight: 100;} */
+/* .more-popover .val{font-size: 14px; color: var(--textWhite30);display: block;margin-bottom: 16px; line-height: normal;} */
+
 .payment-docs .accordian .ant-collapse-content-box, .payment-docs .accordian .ant-collapse-item{background-color: var(--bgGrey);border-radius: 24px;}
 .payment-docs .accordian .ant-collapse-item:last-child > .ant-collapse-content{background-color: var(--bgGrey);border-radius: 30px;}
 .file-label{border: 1px solid var(--borderLight);border-radius: 6px;padding: 2px 8px;color: var(--bgDarkYellow);background-color: var(--bgDarkGrey);width:100px}
@@ -585,9 +585,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .drawer-title{font-size: 28px !important;font-weight: 200 !important;color: var(--textWhite30) !important; margin: 16px 0 4px !important;}
     .buysell-toggle + .fs-36{font-size: 28px !important;}  
     .footer-links a{margin-right: 30px;}
-    .ant-popover-inner-content{padding: 10px 0px !important;}
-    .ant-popover-inner{padding: 8px 9px;}
-    .ant-popover-inner-content .rarrow-white{margin-left: 0px!important;}    
+      
     .tlv-header .sideropen {background: var(--bgGloom) !important;}
     .tlv-header .mobile-logo {padding-left: 0px;}   
     .custom-radio-btn.buysell-toggle.crypto-toggle{text-align: left !important;}
@@ -898,11 +896,10 @@ input[type=number]::-webkit-outer-spin-button {-webkit-appearance: none;-moz-app
 .ant-collapse.profile-collapse, .profile-collapse .ant-collapse-content{background: transparent !important;border: 0 !important;}
 .drpdwn-list .ant-collapse > .ant-collapse-item{border-bottom: 0 !important;}
 .ant-collapse-icon-position-right.profile-collapse > .ant-collapse-item > .ant-collapse-header{padding: 10px 0 10px 10px;color: var(--textWhite30);font-size: 14px;font-weight: 300;}
-.ant-popover-inner-content .iban-hov:hover{background-color: var(--bgDark);}
-.ant-popover-arrow{background: #313c46 !important;border-color: var(--bgGloom);}
+
 .doc-def{width: 460px;margin-left: -2px;}
 .submission-sec{width: 550px;color: var(--bgWhite);margin: 0 auto;}
-.ant-alert-with-description{width: 100%; align-items: center;}
+
 .custom-forminput .ant-select-show-search.ant-select:not(.ant-select-customize-input) .ant-select-selector input{text-align: center;}
 .custom-dropdown.btn-dropdown button{ background-color: var(--bgYellow) !important;  border-color: var(--bgYellow) !important;}
 .custom-dropdown.ant-btn-group > .ant-btn:first-child:not(:last-child){border-top-left-radius: 40px; border-bottom-left-radius: 40px; padding-left: 50px;;padding-right: 50px;}

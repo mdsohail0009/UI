@@ -167,7 +167,7 @@ const getCurrencyLookup = async () => {
   return (
     <>
       <div className="main-container">
-        <div className='bill-payment'> 
+        <div className='bill-payment search-bg'> 
           
           <div className="billpaycoin-style"><span onClick={() => props.history?.push("/cockpit")} className='icon md c-pointer back backarrow-mr'></span><Translate content="menu_payments" component={Text} className="coin-viewstyle" /></div>
          
