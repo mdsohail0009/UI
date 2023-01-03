@@ -361,7 +361,7 @@ downLoadPreview=()=>{
                             Exit
                           </Button>
                           <Button
-                            className="pop-btn px-36 ml-36"
+                            className="pop-btn px-36 btn-space"
                             onClick={this.refreshTransaction}  disabled={uploadLoader}
                             loading={refreshBtnLoader}
                           >

@@ -936,11 +936,12 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .date-mobile{margin-left: 12px !important;}
     .transaction-grid table col{width: 250px !important;}
     .transaction-grid .k-pager-wrap.k-pager.k-widget.k-grid-pager{overflow: auto;}
-    .transaction-grid .k-pager-wrap .k-pager-numbers.k-reset li:not(:first-child){display: none;}
+    .k-pager-wrap .k-pager-numbers.k-reset li:not(:first-child){display: none;}
     .transaction-type{margin-top: 8px !important;}
     .batchpayment-summary{display: block;}
     .ant-tooltip.ant-tooltip-placement-top{visibility: hidden;}
     .btn-mobile button{padding: 0 30px;}
+    .k-pager-wrap.k-pager{font-size: 10px;}
 }
 @media (max-width: 1024px){
     .custom-gridresponsive .ant-drawer-body{word-wrap: unset !important;}
@@ -950,7 +951,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .custom-gridresponsive .k-grid-table col:nth-of-type(4){
         width: 20% !important
     }
-    .custom-gridresponsive .k-pager-wrap .k-link {font: small-caption;font-size: 10px;}
+    .k-pager-wrap .k-link {font: small-caption;font-size: 10px;}
     .custom-gridresponsive .k-pager-nav{min-width: calc(1.4285714286em + 3px);height: calc(1.4285714286em + 3px) }
 	.tlv-header .list-item.ant-menu-item .ant-menu-title-content{padding: 6px 0px;}
     .mobile-viewbtns .ant-form-item-control-input-content .pop-btn{margin-bottom: 0 !important;margin-top: 0 !important;}
@@ -1611,3 +1612,4 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .btn-space{margin-left: 8px;}
 .webkit-color{-webkit-text-fill-color: var(--bgDarkYellow);}
 .address-clear.preview-content table tr td:first-child{white-space: nowrap;}
+.file-label span.webkit-color{width: 215px;display: inline-block;overflow: hidden;text-overflow: ellipsis;}
