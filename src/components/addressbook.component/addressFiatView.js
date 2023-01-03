@@ -56,10 +56,6 @@ const AddressFiatView = (props) => {
 		return previewPath;
 
 	};
-
-	// const iban = fiatAddress?.bankType === "iban" ? "IBAN" : "Bank Account"
-	// const iban1 = fiatAddress?.bankType === "iban" ? "IBAN" : "Bank Account Number"
-
 	const filePreviewModal = (
 		<Modal
 			className="documentmodal-width"
@@ -136,10 +132,10 @@ const AddressFiatView = (props) => {
 														{fiatAddress?.addressType === " " ||
 															fiatAddress?.addressType === null
 															? "-"
-															:(fiatAddress?.addressType?.toLowerCase()=="myself")&&"My Self"||
-															 (fiatAddress?.addressType?.toLowerCase()=="individuals")&&"Individuals"||
-															(fiatAddress?.addressType?.toLowerCase()=="ownbusiness")&&"My Company"||
-															(fiatAddress?.addressType?.toLowerCase()=="otherbusiness")&&"Other Business"}
+															:((fiatAddress?.addressType?.toLowerCase()==="myself")&&"My Self")||
+															 ((fiatAddress?.addressType?.toLowerCase()==="individuals")&&"Individuals")||
+															((fiatAddress?.addressType?.toLowerCase()==="ownbusiness")&&"My Company")||
+															((fiatAddress?.addressType?.toLowerCase()==="otherbusiness")&&"Other Business")}
 
 													</div>}
 												</div>
@@ -151,7 +147,7 @@ const AddressFiatView = (props) => {
 														{fiatAddress?.transferType === " " ||
 															fiatAddress?.transferType === null
 															? "-"
-															: (fiatAddress?.transferType == "internationalIBAN") && "International USD IBAN" ||
+															: ((fiatAddress?.transferType === "internationalIBAN") && "International USD IBAN") ||
 															fiatAddress?.transferType.toUpperCase()}
 
 													</div>}
@@ -180,7 +176,7 @@ const AddressFiatView = (props) => {
 													</div>
 												</div>
 											</Col>}
-											{fiatAddress?.beneficiaryName &&<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+											 {fiatAddress?.addressType != "individuals" && fiatAddress?.beneficiaryName &&<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle">
 													<label className="kpi-label">Beneficiary Name</label>
 													<div className=" kpi-val">
@@ -308,7 +304,14 @@ const AddressFiatView = (props) => {
 													</div>
 												</div>
 											</Col>}
-
+											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+												<div className="kpi-divstyle">
+													<label className="kpi-label">Address State</label>
+													<div className="kpi-val">
+														{bankDetailes[0]?.addressState}
+													</div>
+												</div>
+											</Col>
 											
 										</Row>
 										<Title className="basicinfo">
@@ -383,31 +386,13 @@ const AddressFiatView = (props) => {
 															</div>
 															</div>
 														</Col>}
-														{item?.swiftRouteBICNumber && <Col xs={24} md={12} lg={14} xl={8} xxl={4}>
+														{((item?.swiftRouteBICNumber!=null|| item?.abaRoutingCode!=null) && (item?.iban ==null || item?.iban =="")) && <Col xs={24} md={12} lg={14} xl={8} xxl={4}>
 														<div className="receiveank-inner">
 															<Text className="kpi-label">
-																BIC/SWIFT/Routing Code
+															BIC/SWIFT/Routing Code
 															</Text>
 															<div level={5} className="kpi-val"   >
-
-																{item.swiftRouteBICNumber === " " ||
-																	item.swiftRouteBICNumber === null
-																	? "-"
-																	: item.swiftRouteBICNumber}
-															</div>
-															</div>
-														</Col>}
-														{item?.abaRoutingCode && <Col xs={24} md={12} lg={14} xl={8} xxl={4}>
-														<div className="receiveank-inner">
-															<Text className="kpi-label">
-																ABA Routing Code
-															</Text>
-															<div level={5} className="kpi-val"   >
-
-																{item.abaRoutingCode === " " ||
-																	item.abaRoutingCode === null
-																	? "-"
-																	: item.abaRoutingCode}
+																   {((item?.swiftRouteBICNumber !=null && item?.swiftRouteBICNumber != "" ) ? item?.swiftRouteBICNumber : item?.abaRoutingCode)}
 															</div>
 															</div>
 														</Col>}
