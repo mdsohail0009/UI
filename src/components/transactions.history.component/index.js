@@ -155,7 +155,7 @@ class TransactionsHistory extends Component {
       customCell: (props) => (
         <td>
          <Tooltip title={props.dataItem.transactionId}>
-         {(props.dataItem.transactionId && <a href="#/" onClick={() => window.open(`${props.dataItem?.explorer}${props.dataItem?.transactionId}`, '_blank')}> {props?.dataItem?.transactionId?.slice(0, 4) +"......." +props?.dataItem?.transactionId?.slice(-4)}</a>) || "-"}
+         {(props.dataItem.transactionId && <a href="#/" onClick={() => window.open(`${props.dataItem?.explorer}${props.dataItem?.transactionId}`, '_blank')}> {props?.dataItem?.transactionId?.slice(0, 4) +"......." +props?.dataItem?.transactionId?.slice(-4)}</a>) || " "}
        </Tooltip>
         </td>
       ),
