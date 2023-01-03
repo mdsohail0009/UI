@@ -9,8 +9,6 @@ import Loader from "../../../Shared/loader";
 import {confirmTransaction} from '../api';
 import alertIcon from '../../../assets/images/pending.png';
 const { Paragraph,Title } = Typography;
-
-//const { Option } = Select;
 const { Text } = Typography;
 const { TextArea } = Input;
 const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
@@ -240,7 +238,6 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                    Please sign using link received in email to whitelist your address. `}</Text>
                 <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
                 <div className="my-25">
-                    {/* <Button onClick={() => props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button> */}
                     </div>
             </div></div>}
        {!showDeclartion &&<> {currency === "USD" && <>
@@ -489,6 +486,10 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                                 message: apiCalls.convertLocalLang("is_required"),
                             },
                             {
+                                whitespace: true,
+                                message: apiCalls.convertLocalLang("is_required"),
+                            }, 
+                            {
                                 validator: validateContentRule
                             }
                         ]}>
@@ -510,7 +511,12 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             {
                                 required: true,
                                 message: apiCalls.convertLocalLang("is_required"),
-                            }, {
+                            },
+                            {
+                                whitespace: true,
+                                message: apiCalls.convertLocalLang("is_required"),
+                            }, 
+                            {
                                 validator: validateContentRule,
                             },
                         ]}>
