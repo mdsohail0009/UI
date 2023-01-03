@@ -144,7 +144,7 @@ const AddressCommonCom = (props) => {
     }
     selectCoin()
     getCountry();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); 
   const getName = () => {
     return props?.userConfig.isBusiness
       ? props?.userConfig.businessName
@@ -165,7 +165,6 @@ const AddressCommonCom = (props) => {
   };
   const handleOk = () => {
     setIsModalVisible(false);
-   // setEditBankDetails(false)
   };
   
   const handleCryptoOk = () => {
@@ -207,13 +206,12 @@ const AddressCommonCom = (props) => {
 
   const radioChangeHandler = (e) => {
     if (e.target.value === "3rdparty") {
-      payeeLuData(props?.userConfig?.id, withdraeTab, false);
+      payeeLuData(withdraeTab, false);
 
     } else {
 
-      payeeLuData(props?.userConfig?.id, withdraeTab, true);
+      payeeLuData(withdraeTab, true);
       getFavs("00000000-0000-0000-0000-000000000000", props?.userConfig?.id)
-      // setIsLoading(false);
     }
     setIsLoading(false);
     setAgreeRed(true);
@@ -265,13 +263,6 @@ const AddressCommonCom = (props) => {
   }
 
   const bankDetailsLu = async (id, customerId) => {
-    // setIsLoading(true)
-    // let response = await getBankDetailLu(id, customerId)
-    // if (response.ok) {
-    //   let obj = response.data;
-    //   setBankDetail(obj)
-    // }
-    // setIsLoading(false)
   }
   const getFavs = async (id, customerId) => {
     let response = await getFavData(id, customerId)
@@ -411,18 +402,11 @@ const AddressCommonCom = (props) => {
     }
     values["type"] = type;
     values["info"] = JSON.stringify(props?.trackAuditLogData);
-    // values["addressState"] = addressState;
     let Id = "00000000-0000-0000-0000-000000000000";
     let favaddrId = props?.addressBookReducer?.selectedRowData
       ? favouriteDetails.id
       : Id;
     let namecheck = values.favouriteName;
-    // let responsecheck = await favouriteNameCheck(
-    //   props?.userConfig?.id,
-    //   namecheck,
-    //   withdraeTab,
-    //   favaddrId
-    // );
     if (!values.isAgree) {
       setBtnDisabled(false);
       useDivRef.current.scrollIntoView();
@@ -532,7 +516,6 @@ const AddressCommonCom = (props) => {
       <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully</Title>
       <Text className="text-white-30">{`Declaration form has been sent to ${props?.userConfig?.email}. 
 				 Please sign using link received in email to whitelist your address`}</Text>
-      {/*<div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBOARD</Button> */}
     </div></div>
 
   }
@@ -788,9 +771,7 @@ const AddressCommonCom = (props) => {
                   >
                     <Translate
                     content={props?.cryptoTab === 2 ? "bankAddress" : (withdraeTab === "Fiat" ? "bankAddress" : "cryptoAddress")}
-                   // content={props?.cryptoTab == 2 ? "cryptoAddress" : "bankAddress"}
-                    component={Text}
-                   
+                    component={Text}                   
                   />
                     <span className="icon md add-icon-black ml-8"></span>
                   </Button>
@@ -879,12 +860,7 @@ const AddressCommonCom = (props) => {
                         label={<Translate content="address" component={Form.label} />}
                         required
 
-                        rules={[
-                          // {
-                          //   required: true,
-                          //   //message: 'Is required',
-                          //   whitespace: true,
-                          // },
+                        rules={[                        
                           {
                             validator: validateAddressType,
                           },
@@ -996,7 +972,6 @@ const AddressCommonCom = (props) => {
                       >
                         <AutoComplete
                           onChange={(e) => {
-                            // handleChange(e)
                           }}
                           maxLength={20}
                           className="cust-input"
@@ -1203,13 +1178,7 @@ const AddressCommonCom = (props) => {
                             component={Form.label}
                           />
                         }
-                      >
-                        {/* <TextArea
-                        placeholder="Address Line1"
-                        className="cust-input  cust-text-area"
-                        autoSize={{ minRows: 2, maxRows: 2 }}
-                        maxLength={100}
-                      ></TextArea> */}
+                      >                        
                         <TextArea
                           placeholder={apiCalls.convertLocalLang("Address_Line1")}
                           className="cust-input cust-text-area address-book-cust"
@@ -1223,21 +1192,7 @@ const AddressCommonCom = (props) => {
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                       <Form.Item
                         className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
-                        name="line2"
-                        // required
-                        // rules={[
-                        //   {
-                        //     required: true,
-                        //     message: apiCalls.convertLocalLang("is_required"),
-                        //   },
-                        //   {
-                        //     whitespace: true,
-                        //     message: apiCalls.convertLocalLang("is_required"),
-                        //   },
-                        //   {
-                        //     validator: validateContentRule,
-                        //   },
-                        // ]}
+                        name="line2"                       
                         label={
                           <Translate
                             content="Address_Line2"
@@ -1258,21 +1213,7 @@ const AddressCommonCom = (props) => {
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                       <Form.Item
                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
-                        name="line2"
-                        // required
-                        // rules={[
-                        //   {
-                        //     required: true,
-                        //     message: apiCalls.convertLocalLang("is_required"),
-                        //   },
-                        //   {
-                        //     whitespace: true,
-                        //     message: apiCalls.convertLocalLang("is_required"),
-                        //   },
-                        //   {
-                        //     validator: validateContentRule,
-                        //   },
-                        // ]}
+                        name="line2"                       
                         label={
                           <Translate
                             content="Address_Line3"
@@ -1607,7 +1548,6 @@ const AddressCommonCom = (props) => {
                   size="large"
                   className="pop-btn mb-36"
                   loading={btnDisabled}
-                  // style={{ minWidth: "100%" }}
                 >
                   {isLoading && <Spin indicator={antIcon} />}{" "}
                   <Translate content="Save_btn_text" />
