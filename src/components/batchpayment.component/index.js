@@ -1,5 +1,5 @@
 import React, {useState } from 'react';
-import { Typography,Tooltip,Button ,Modal,Alert} from 'antd';
+import { Typography,Tooltip,Button ,Modal,Alert,message} from 'antd';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import List from "../grid.component";
@@ -125,7 +125,7 @@ const Batchpayments = (props) => {
 
     setErrorWarning("Please select the record");
   } 
-  else if(setSelectData.status === "Pending"){
+  else if(setSelectData.status != "Draft"){
     setErrorWarning("Only draft record can proceed")
   }
   else if(setSelectData.validTransactionCount === 0){
@@ -144,7 +144,7 @@ const Batchpayments = (props) => {
     if(selection.length === 0){
       setErrorWarning("Please select the  record")
     }
-    else if(setSelectData.status === "Pending"){
+    else if(setSelectData.status != "Draft"){
       setErrorWarning("Only draft record can delete")
     }
     else{
@@ -159,6 +159,11 @@ const Batchpayments = (props) => {
       setDeleteModal(false);
       setIsLoad(false);
         setSelection([]);
+        message.success({
+          content:"Batch record deleted successfully",
+          className: "custom-msg",
+          duration: 3,
+        });
       }
       else{
         setErrorMessage(isErrorDispaly(res));
@@ -217,7 +222,7 @@ const Batchpayments = (props) => {
                 
                       <Title className="basicinfo mb-0"><span className='icon md c-pointer back mr-8' onClick={gotoDashboard}></span><Translate content="batch_payments" component={Text} className="basicinfo" />
                                       
-                      <Text className='ml-4 fs-16 webkit-color'> Proceed{" "}(<span className="icon md process-icon"/>)</Text><Text className='ml-4 text-white fs-16'>: To proceed the transaction,{" "}please click on proceed icon</Text>           
+                      <Text className='ml-4 fs-16 webkit-color'> Proceed{" "}(<span className="icon md process-icon"/>)</Text><Text className='fs-14 text-white fw-400 mb-12'>: To proceed the transaction,{" "}please click on proceed icon</Text>           
                       </Title>
                       <div className='batch-actions'>
                   <span className="mb-right">
