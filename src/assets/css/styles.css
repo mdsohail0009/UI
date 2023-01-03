@@ -1612,4 +1612,4 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .btn-space{margin-left: 8px;}
 .webkit-color{-webkit-text-fill-color: var(--bgDarkYellow);}
 .address-clear.preview-content table tr td:first-child{white-space: nowrap;}
-.file-label span.webkit-color{width: 215px;display: inline-block;overflow: hidden;text-overflow: ellipsis;}
+.file-label span.webkit-color{width: 215px;display: inline-block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
