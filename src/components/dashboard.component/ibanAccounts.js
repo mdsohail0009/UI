@@ -125,7 +125,7 @@ class Iban extends Component {
             <div className="fait-wallets-style">
             <Translate content="iban" component={Title} className="db-titles" />
                 <div>
-              {/* <Button className="dbchart-link" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
+              {/* <Button className="dbchart-link"  onClick={() => this.cockpitCharts()} >
                   <Translate content="cockpit" />
                   <span className="icon sm right-angle ml-4" />
               </Button> */}

@@ -121,9 +121,9 @@ class Wallets extends Component {
             <div className="fait-wallets-style">
             <Translate content="fait_walets" component={Title} className="db-titles" />
                 <div>
-              {/* <Button className="dbchart-link" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
+              <Button className="dbchart-link" onClick={() => this.cockpitCharts()} >
                   <Translate content="cockpit" />
-              </Button> */}
+              </Button>
                     
               </div>
               </div>
