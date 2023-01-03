@@ -73,6 +73,8 @@
     --bgBlue: #1E90FF;
     --bgDarkRed: #FF2400;
     --labelBorder:#74767D;
+    --swapBg:rgba(8, 9, 14, 0.5);
+    --swapvalBg:rgba(21, 21, 25, 0.4);
  
      --lightThemeIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/user-light-theme2.0.svg);
      --cryptoIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/light-crypto-icons.svg);

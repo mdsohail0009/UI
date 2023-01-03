@@ -65,7 +65,7 @@
     --cardBG: rgba(255, 255, 255 ,0.15);
     --menuFont: rgba(255, 255, 255 ,0.9);
     --coinPrice: rgba(250, 252, 254 ,0.8);
-    --sbCardText: rgba(255, 255, 255 ,0.7);
+    --sbCardText: rgba(255, 255, 255 ,0.6);
     --dbTitle:rgba(255, 255, 255, 0.6);
     --subText: rgba(255, 255, 255 ,0.6);
     --tableText: rgba(255, 255, 255 ,0.5);
@@ -119,6 +119,8 @@
     --bgBlue: #1E90FF;
     --bgDarkRed: #FF2400;
     --labelBorder:rgba(255, 255, 255, 0.4);
+    --swapBg:rgba(8, 9, 14, 0.5);
+    --swapvalBg:rgba(21, 21, 25, 0.4);
 
     --lightThemeIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/user-darktheme-icons.svg);
     --cryptoIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/light-crypto-icons.svg);

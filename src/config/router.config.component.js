@@ -21,6 +21,7 @@ const TwoFactor = React.lazy(() => import("../components/shared/two.factor"));
 //const CaseDocs = React.lazy(() => import('../components/case.component/caseView'));
 const CoinDetails = React.lazy(() => import("../components/dashboard.component/coinview"));
 const DashboardCharts = React.lazy(() => import("../components/dashboard.component/cockpitCharts"));
+const CryptocoinsView = React.lazy(() => import("../components/dashboard.component/cryptocoinsView"));
 const Payments = React.lazy(() => import("../components/payments.component"));
 const PaymentDetails = React.lazy(() => import("../components/payments.component/paymentDetails"));
 const paymentsView = React.lazy(() => import("../components/payments.component/paymentsView"));
@@ -80,6 +81,7 @@ class RouteConfig extends Component {
         <Route path='/cards' component={RewardCard} isRoute={true} />
         <ReactRoute path='/accessdenied' component={AccessDenied} />
         <ReactRoute path='/caseView/:id' component={CaseView} />
+        <ReactRoute path='/cryptocoinsView' component={CryptocoinsView} />
         <Route path="/error" component={ErrorPage} />
         
         <ReactRoute

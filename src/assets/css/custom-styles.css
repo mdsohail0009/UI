@@ -51,6 +51,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .text-captz{text-transform: capitalize !important;}
 .align-center{align-items: center;}
 .justify-content{justify-content: space-between;}
+.display-items{display: flex;align-items: center;justify-content: space-between;}
 
 .text-underline{text-decoration: underline !important;}
 .valign-initial{vertical-align: initial;}
@@ -426,33 +427,41 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .buycoin-style{font-weight: 700;font-size: 16px;color: var(--coinBal);}
 .coin-entryval{display: flex;align-items: center;}
 .marginL{margin-left: 4px;}
-.crypto-details{display: flex;justify-content: center;align-items: center;}
+.crypto-details{display: flex;justify-content: right;align-items: center;}
 .buy-para-bg{border-radius: 10px;background-color: var(--cardBG);padding: 8px 28px;margin: auto;margin-top: 20px;}
 /* .auto-scroll{overflow-y: auto;} */
-.enter-val-container.swap-com{display: flex;align-items: center;justify-content: center;margin-bottom: 16px;}
+.enter-val-container.swap-com{display: flex;align-items: center;justify-content: center;}
 .inputfont-style{font-weight: 500;font-size: 26px;color: var(--white);white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
-.inputbg-fonts{background: var( --inputBg);height: 50px;margin-bottom: 6px;border: 1px solid var(--subText);border-radius: 5px;}
-.inputbg-fonts:hover, .inputbg-fonts:focus, .inputbg-fonts.ant-input-borderless:focus{background: var( --inputBg);height: 50px;margin-bottom: 6px;border: 1px solid var(--subText);border-radius: 5px;}
+/* .inputbg-fonts{background: var( --inputBg);height: 50px;margin-bottom: 6px;border: 1px solid var(--subText);border-radius: 5px;}
+.inputbg-fonts:hover, .inputbg-fonts:focus, .inputbg-fonts.ant-input-borderless:focus{background: var( --inputBg);height: 50px;margin-bottom: 6px;border: 1px solid var(--subText);border-radius: 5px;} */
 .buy-paragraph{color: var( --paraBg);font-weight: 500;font-size: 16px;text-align: center;margin-bottom: 0 !important;margin-top:4px;}
 .crycoin-bal{font-weight: 400 !important;font-size: 16px !important;color: var(--coinPrice) !important;}
-.pop-btn, .sell-btn-style{margin-top: 16px;margin-bottom: 16px;}
-.select-currency{margin-top: 50px;height: 264px;}
-.swap-text-sub{text-align: center;font-weight: 500;font-size: 36px;color: var(--white);margin-top: -16px !important;}
+.pop-btn{margin-top: 16px;margin-bottom: 16px;}
+.select-currency{margin-top: 50px;}
+.swap-text-sub{text-align: left;font-weight: 500;font-size: 22px;color: var(--white);}
 .enrty-field-style{margin-bottom: 12px;}
 .sellcrypto-style{color:var(--coinPrice);font-weight: 400;font-size: 16px;}
-.sellbal-style{font-weight: 700;font-size: 16px;color: var(--balInput);}
+.sellbal-style{font-weight: 700;font-size: 16px;color: var(--balInput);word-break: break-all;}
 .round-pills{width: 100%;text-align: center;}
 .round-pills .ant-radio-button-wrapper{background: var(--radioBg);height: 36px;border-radius: 10px;min-width: 60px; line-height: 34px;color: var(--coinPrice);border:1px solid rgba(0, 0, 0, 0.3);;font-size: 16px;font-weight: 500;margin: 0 16px 16px 0;text-align: center;}
 .round-pills .ant-radio-button-wrapper-checked, .default-radio .ant-radio-button-wrapper-checked, .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled),  .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{background-color: var(--radioFill) !important; color:var(--balInput) !important;font-size: 16px;font-weight:500;border: 2px solid var(--radioBorderfill);}
 .round-pills .ant-radio-button-wrapper::before, .default-radio .ant-radio-button-wrapper::before{content: none;}
-.val-updown{position: absolute;right: 0;top: 100px;width: 40px;height: 40px;border-radius: 15px;background-color: var(--radioFill);text-align: center;line-height: 38px;}
+.val-updown{position: absolute;right: 0;top: 100px;width: 34px;height: 35px;border-radius: 10px;background-color: var(--gridborder);text-align: center;line-height: 34px;}
 .val-updown:hover .swaparrow, .swap-updown:hover .swaparrow{transform: rotate(180deg);transition: 0.5s;background-position: -237px -35px;}
 .buy-balance{font-weight: 400;font-size: 16px;color: var(--coinPrice);}
-.crypto-amount{margin-bottom: 2px;}
+.crypto-amount{margin-bottom: 14px;}
 .kpi-List .kpi-label, .adressbook-fiatview .kpi-label{font-weight: 500;font-size: 14px;color: var(--sbCardText);}
 .kpi-List .kpi-val, .adressbook-fiatview .kpi-val{font-size: 16px;font-weight: 500;color: var(--white);word-break: break-all;}
 .kpi-List .ant-col{margin-bottom: 20px;display: flex;}
 .receiveank-inner{padding-bottom: 20px;}
+.new-swap-design{border-radius: 5px;}
+.new-swap-subtext{background: var(--swapBg);height: 62px;border-radius: 5px 5px 0 0;display: flex;align-items: center;padding: 0 12px;margin-top: 0 !important;}
+.swap-entryvalue{flex: 0 0 175px;text-align: left;font-size: 26px;}
+.swapcoin-alignemnt{ flex: auto;text-align: right;color: var(--sbCardText);font-size: 24px;}
+.swap-currencytext{background: var(--swapvalBg);height:62px;border-radius: 0 0 5px 5px;display: flex;align-items: center;padding: 0 12px;}
+.swap-custinputfield{border: 0 !important;padding: 0 !important;}
+.buy-usdt-btn .pop-btn, .sell-btn-style .pop-btn{margin-top: 20px;}
+.sell-radiobtn-style{flex: 0 0 236px;}
 /*Buy/sell drawer End*/
 /* receive fait start */
 .drawer-subtext{font-weight: 700;font-size: 18px;color: var(--tablesub);}
@@ -471,13 +480,14 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* receive crypto start */
 .rec-bottom{margin-bottom: 18px !important;}
 .recive-subtext{font-weight: 400;font-size: 16px;color: var(--sbCardText);margin-bottom: 16px;}
-.scanner-img{width: 170px; height: 170px; margin: 16px auto 60px; padding: 10px;background-color: var(--bgWhite);border-radius: 6px;}
+.scanner-img{width: 170px; height: 170px; margin: 35px auto 60px; padding: 10px;background-color: var(--bgWhite);border-radius: 6px;}
 .recive-lable{font-weight: 400;font-size: 16px;color: var(--tableText);}
 .recive-copy{font-weight: 700;font-size: 16px;color: var(--coinPrice);margin-top: 12px;margin-bottom: 50px;}
 .recive-text, .recive-text .list-dot{font-weight: 400;font-size: 14px;color: var(--tableText);}
 .recive-runtext{font-weight: 400;font-size: 14px;color: var(--tableText);}
 .list-dot{list-style: initial;margin-bottom: 16px !important;}
 .recive-share{margin-top: 100px;font-size: 16px;font-weight: 500;color: var(--tableText);margin-bottom: 18px;}
+.network-display{display: flex;align-items: center;justify-content: center;}
 /* receive Crypto end */
 /*Send Address start*/
 .adbook-head{font-weight: 700 !important;font-size: 18px !important;color: var(--checkText) !important;margin-bottom: 18px !important;margin-top: 30px;}
@@ -618,6 +628,9 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .docdetails .docname{font-weight: 700;color: var(--textWhite30); line-height: 16px;max-width: 150px !important;}
 .docfile-container{display: flex; flex-wrap: wrap;}
 .upload-filesize{font-weight: 700;font-size: 16px;color: var(--coinPrice);}
+.cust-networkstyle{background-color: var(--profiletab);padding: 10px 20px;border-radius: 10px;color: var(--white);font-weight: 700;font-size: 16px;}
+.swap-fontsize{color: var(--white);font-weight: 700;font-size: 16px;}
+.network{background-color: var(--drpdwnHover);padding: 10px 20px;border-radius: 10px;margin: 0 12px}
 /* send fiat end */
 /* send crypto start */
 .min-btn{border: 1px solid rgba(0, 0, 0, 0.3);background: var(--radioBg) !important;height: 36px;border-radius: 10px;min-width: 60px;line-height: 34px;color: var(--coinPrice);font-size: 16px;font-weight: 500; margin: 0 16px 16px 0;}
@@ -831,8 +844,8 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
     .text-style{height: 230px;margin-top: 16px !important;}
     .successsubtext{height: 400px;}
     .round-pills .ant-radio-button-wrapper{line-height: 30px;}
-    .select-currency{height: 400px;}
-    .val-updown{right: 160px;top:72px;}
+    /* .select-currency{height: 400px;} */
+    .val-updown{right: 20px;top:45px;}
     .import-note{width: auto;}
     .side-drawer .ant-drawer-header{padding:16px 30px !important}
     .inputfont-style{font-size:36px;}
@@ -862,7 +875,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
     .agree-check input[type=checkbox]:checked+span:hover{background-position:-153px -513px;}
     .successsubtext{height: 130px;}
     .text-style{margin-top: 30px !important;}
-    .select-currency {height: 122px;}
+    /* .select-currency {height: 122px;} */
     .text-style{height: 140px;}
     /* .full-screenable-node{overflow: auto;} */
     .val-updown{top: 100px;right: 38px;}
@@ -870,6 +883,9 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
     .import-note{width: 463px;}
     .tlv-header{max-width: 1200px;margin: auto;padding: 12px 0 !important;align-items: center;}
     .basicprofile-info{width: 510px;}
+    .swap-entryvalue{flex: 0 0 305px;}
+    .swap-text-sub{margin-top: -4px;}
+ 
 }
 
 @media (min-width: 1024px){
@@ -901,7 +917,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
     .crypto-list .ant-list-item, .wallet-list .ant-list-item{margin-top: 16px;}
     .inputfont-style{font-size: 36px;}
     .side-drawer .ant-drawer-content-wrapper{width: 524px !important;}
-    .val-updown{top: 58px;right: 2px;}
+    .val-updown{top:45px;right: 20px;}
     .iban-list .iban-style{padding: 14px 20px;}
     .addCryptoList{max-height: calc(100vh - 590px); overflow-y: auto; }
     .addCryptoList .xxl-fs{font-size:14px !important;}
@@ -929,7 +945,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
     /* .visible-mobile{margin-right: 24px;padding-left: 24px;padding-right: 24px;} */
     .main-container{padding-left: 0 !important;padding-right: 0 !important;}
     .listitems-design{width: 344px;}
-    .val-updown{top:24px;}
+    .val-updown{top: 46px;right: 18px;}
     .footer-links{text-align: center;margin: 0 10px;}
     .fund-border{padding: 12px;}
     .small-text-align{margin-left: 18px;}
@@ -955,6 +971,8 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
     .theme-switch{width: auto;margin-bottom: 0;}
     .walletadrs{margin-left: 30px;}
     .ant-tabs-tab + .ant-tabs-tab{margin: 0 0 0 26px;}
+    .display-items{display: block;}
+    .crypto-details{justify-content: center;}
 }
 
 /*@media end*/

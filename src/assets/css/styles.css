@@ -2,7 +2,7 @@
 * { scrollbar-width: thin; scrollbar-color: var(--bgGrey) var(--bgDarkGrey);}
 *::-webkit-scrollbar { width: 12px;height: 10px;  }
 *::-webkit-scrollbar-thumb {background-color: var( --bgDark1);border-radius: 20px;}
-.ant-layout, body{background-color: var(--bgDarkGrey);}
+/* .ant-layout, body{background-color: var(--bgDarkGrey);} */
 .ant-btn{font-weight: var(--fw500);}
 .ant-drawer-close{display: none;}
 .d-inlineblock{display: inline-block !important;}

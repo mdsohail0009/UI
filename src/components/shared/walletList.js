@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Select } from 'antd';
+import { Select, List,Empty, Image } from 'antd';
 import { setStep } from '../../reducers/buysellReducer';
+import { Link ,} from "react-router-dom";
+import Translate from "react-translate-component";
 import { connect } from 'react-redux';
 import { fetchMemberFiat } from '../../reducers/buyReducer';
 import NumberFormat from 'react-number-format'
@@ -38,6 +40,33 @@ class WalletList extends Component {
                             </Option>
                         )}
                     </Select>
+                    <List
+                    itemLayout="horizontal"
+                    dataSource={this.props.buyInfo.memberFiat?.data}
+                    className="crypto-list auto-scroll wallet-list"
+                    // loading={this.state.fiatWalletsLoading}
+                    locale={{
+                        emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
+                            <Translate content="No_data" />
+                        } />
+                    }}
+                    renderItem={item => (
+
+                        <List.Item onClick={() => this.setState({ ...this.state, currency: item.currencyCode })}>
+                            <Link>
+                                <List.Item.Meta className='drawer-coin'
+                                    avatar={<Image preview={false} src={item.imagePath} />}
+
+                                    title={<div className="wallet-title">{item.currencyCode}</div>}
+                                />
+                                <><div className="text-right coin-typo">
+                                    <NumberFormat value={item.avilable} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={item.currencyCode == 'USD' ? '$' : '€'} renderText={(value, props) => <div {...props} >{value}</div>} />
+
+                                </div></>
+                            </Link>
+                        </List.Item>
+                    )}
+                />
                 </form>
             }
         </>
