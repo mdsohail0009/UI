@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Typography,Button,Modal,Upload,Tooltip,Alert } from 'antd';
+import { Typography,Button,Modal,Upload,Tooltip,Alert,message } from 'antd';
 import { connect } from 'react-redux';
 import List from "../grid.component";
 import FilePreviewer from "react-file-previewer";
@@ -56,7 +56,7 @@ const BatchpaymentView = (props) => {
               <>
               <div className={`file-label d-flex justify-content mb-8 py-4 batch-upload`}
              >
-              <span className="mb-0 fs-14 docnames  fs-12 fw-400 amt-label c-pointer webkit-color"  onClick={() => docPreview(item)}>{item.documentName}</span>
+              <span className="mb-0 fs-14 docnames  fs-12 fw-400 amt-label c-pointer webkit-color"  onClick={() => docPreview(item)}><Tooltip title={item.documentName}>{item.documentName}</Tooltip></span>
               <span className="delete-disable"
                disabled={
                 properites.dataItem.transactionStatus==="Approved" ||
@@ -187,6 +187,11 @@ const BatchpaymentView = (props) => {
             setIsLoad(false);
             setDeleteModal(false);
             setErrorMessage(null);
+            message.success({
+                content:"Document deleted successfully",
+                className: "custom-msg",
+                duration: 3,
+              });
         }
         else{
             setErrorMessage(isErrorDispaly(res));
@@ -236,6 +241,11 @@ const BatchpaymentView = (props) => {
                 setIsLoad(false);
                 setUploadModal(false)
                 setErrorMessage(null)
+                message.success({
+                    content:"Uploaded successfully",
+                    className: "custom-msg",
+                    duration: 3,
+                  });
              }
                 else{
                     setErrorMessage(isErrorDispaly(res))
