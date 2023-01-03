@@ -56,7 +56,7 @@ const BatchpaymentView = (props) => {
               <>
               <div className={`file-label d-flex justify-content mb-8 py-4 batch-upload`}
              >
-              <span className="mb-0 fs-14 docnames  fs-12 fw-400 amt-label c-pointer webkit-color"  onClick={() => docPreview(item)}>{item.documentName}</span>
+              <span className="mb-0 fs-14 docnames  fs-12 fw-400 amt-label c-pointer webkit-color"  onClick={() => docPreview(item)}><Tooltip title={item.documentName}>{item.documentName}</Tooltip></span>
               <span className="delete-disable"
                disabled={
                 properites.dataItem.transactionStatus==="Approved" ||
