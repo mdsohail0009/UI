@@ -196,15 +196,7 @@ isErrorDispaly = (objValue) => {
                        }
                <Modal
                     visible={this.state.showModal}
-                    title="Proceed with Transactions"
-                    closeIcon={
-                        <Tooltip title="Close">
-                            <span
-                                className="icon md close-white c-pointer"
-                                onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false })}
-                            />
-                        </Tooltip>
-                    }
+                    closeIcon={false}
                     destroyOnClose={true}
                   
                     footer={null}
