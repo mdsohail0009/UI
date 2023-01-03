@@ -1,5 +1,5 @@
 import React, {useState } from 'react';
-import { Typography,Tooltip,Button ,Modal,Alert} from 'antd';
+import { Typography,Tooltip,Button ,Modal,Alert,message} from 'antd';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import List from "../grid.component";
@@ -159,6 +159,11 @@ const Batchpayments = (props) => {
       setDeleteModal(false);
       setIsLoad(false);
         setSelection([]);
+        message.success({
+          content:"Batch record deleted successfully",
+          className: "custom-msg",
+          duration: 3,
+        });
       }
       else{
         setErrorMessage(isErrorDispaly(res));
