@@ -455,7 +455,7 @@ class PaymentDetails extends Component {
                   className="cust-input cust-disable"
                   placeholder="Select Currency"
                   onChange={(e) => this.handleCurrencyChange(e)}
-                  style={{ width: 280 }}
+                  // style={{ width: 280 }}
                   dropdownClassName="select-drpdwn"
                   bordered={false}
                   showArrow={true}
@@ -789,12 +789,12 @@ class PaymentDetails extends Component {
             </Form>
             <div className="text-right mt-36">
               {paymentsData.length > 0 ? (
-                <div>
+                <div className='btn-mobile'>
                   {(this.props.match.params.id ===
                     "00000000-0000-0000-0000-000000000000" || this.props.match.params.state === "Submitted" || this.props.match.params.state === "Pending") &&
                     <Button
                       htmlType="submit"
-                      className="pop-btn px-36"
+                      className="pop-btn"
                       loading={this.state.btnDisabled}
                       onClick={() => {
                         this.savePayment();
@@ -804,8 +804,8 @@ class PaymentDetails extends Component {
                     </Button>
                   }
                   <Button
-                    className="pop-btn px-36"
-                    style={{ margin: "0 8px" }}
+                    className="pop-btn btn-space"
+                    // style={{ margin: "0 8px" }}
                     onClick={this.backToPayments}
                   >
                     Cancel

@@ -57,10 +57,6 @@ const AddressFiatView = (props) => {
 		return previewPath;
 
 	};
-
-	// const iban = fiatAddress?.bankType === "iban" ? "IBAN" : "Bank Account"
-	// const iban1 = fiatAddress?.bankType === "iban" ? "IBAN" : "Bank Account Number"
-
 	const filePreviewModal = (
 		<Modal
 			className="documentmodal-width"
@@ -181,7 +177,7 @@ const AddressFiatView = (props) => {
 													</div>
 												</div>
 											</Col>}
-											{fiatAddress?.beneficiaryName &&<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+											 {fiatAddress?.addressType != "individuals" && fiatAddress?.beneficiaryName &&<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">Beneficiary Name</label>
 													<div className=" kpi-val">
@@ -200,19 +196,6 @@ const AddressFiatView = (props) => {
 															fiatAddress?.relation === null
 															? "-"
 															: fiatAddress?.relation}
-													</div>
-												</div>
-											</Col>}
-											{fiatAddress?.email && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
-													<label className="kpi-label">Email</label>
-													<div className="kpi-val">
-														<div className=" kpi-val">
-															{fiatAddress?.email === " " ||
-																fiatAddress?.email === null
-																? "-"
-																: fiatAddress?.email}
-														</div>
 													</div>
 												</div>
 											</Col>}
@@ -371,9 +354,9 @@ const AddressFiatView = (props) => {
 																	: item.bankType}
 															</Title>
 														</Col>}
-														{(item?.accountNumber && fiatAddress?.transferType !== "internationalIBAN")&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
+														{(item?.accountNumber && fiatAddress?.transferType !== "internationalIBAN" && item?.walletCode !="EUR")&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
-																Bank Account Number / IBAN
+																Bank Account Number/IBAN
 															</Text>
 															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
 
@@ -383,30 +366,14 @@ const AddressFiatView = (props) => {
 																	: item.accountNumber}
 															</Title>
 														</Col>}
-														{item?.swiftRouteBICNumber && <Col xs={24} md={24} lg={14} xl={8} xxl={4}>
+														{((item?.swiftRouteBICNumber!=null|| item?.abaRoutingCode!=null) && (item?.iban ==null || item?.iban =="")) && <Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
-																BIC/SWIFT/Routing Code
+															BIC/SWIFT/ABA Routing Code
 															</Text>
 															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
-
-																{item.swiftRouteBICNumber === " " ||
-																	item.swiftRouteBICNumber === null
-																	? "-"
-																	: item.swiftRouteBICNumber}
+																   {((item?.swiftRouteBICNumber !=null && item?.swiftRouteBICNumber != "" ) ? item?.swiftRouteBICNumber : item?.abaRoutingCode)}
 															</Title>
-														</Col>}
-														{item?.abaRoutingCode && <Col xs={24} md={24} lg={14} xl={8} xxl={4}>
-															<Text className="fw-300 text-white-50 fs-12">
-																ABA Routing Code
-															</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
-
-																{item.abaRoutingCode === " " ||
-																	item.abaRoutingCode === null
-																	? "-"
-																	: item.abaRoutingCode}
-															</Title>
-														</Col>}
+														</Col>}														
 														{item?.bankName && <Col xs={24} md={24} lg={14} xl={8} xxl={4}>
 															<Text className="fw-300 text-white-50 fs-12">
 																Bank Name

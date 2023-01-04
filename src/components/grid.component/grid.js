@@ -6,8 +6,7 @@ import CryptoJS from "crypto-js";
 import { ExcelExport } from '@progress/kendo-react-excel-export'
 import { savePDF, PDFExport } from '@progress/kendo-react-pdf';
 import logColor from '../../assets/images/logo-color.png';
-import { withRouter, Link } from "react-router-dom";
-import { Dropdown,Space,Menu, } from 'antd';
+import { Dropdown} from 'antd';
 const filterOperators = {
     'text': [
         { text: 'grid.filterContainsOperator', operator: 'contains' },
@@ -41,35 +40,6 @@ const filterOperators = {
         { text: 'grid.filterEqOperator', operator: 'eq' }
     ]
 }
-
-    // menuBar = (item) => (
-    //     <Menu>
-    //       <ul className="pl-0 drpdwn-list">
-    //         <li
-             
-    //         >
-    //           <Link value={5} className="c-pointer">
-    //             Internal Transfer
-    //           </Link>
-    //         </li>
-    //         <li
-              
-    //         >
-    //           <Link value={5} className="c-pointer">
-    //           Go To Personal Bank Account
-    //           </Link>
-    //         </li>
-    //         <li
-              
-    //         >
-    //           <Link value={5} className="c-pointer">
-    //           Transfer To Suissebase Digital Wallet
-    //           </Link>
-    //         </li>
-    //       </ul>
-    //     </Menu>
-    //   );
-
 export function withState(WrappedGrid) {
     return class StatefullGrid extends React.Component {
         constructor(props) {
@@ -121,7 +91,7 @@ export function withState(WrappedGrid) {
 
             if (this.excelRef) {
                 if (this.excelRef?.current.save) {
-                    let workbook = this.excelRef.current.workbookOptions(); // get the workbook.
+                    let workbook = this.excelRef.current.workbookOptions();
                     workbook.sheets[0].rows.map((item, index) => {
                         if (item.type === "data") {
                             for (const i in this.props.columns) {
@@ -143,7 +113,6 @@ export function withState(WrappedGrid) {
                     });
                     this.excelRef.current.save(workbook);
                 }
-                // this.excelRef.save(workbook);
             }
 
         }
@@ -155,24 +124,24 @@ export function withState(WrappedGrid) {
                             <table width="100%">
                                 <tr>
 
-                                    <td colspan="2" style={{ fontSize: "26px", fontWeight: 700, textAlign: "center", fontWeight: "700" }}><h1>Suissebase Account Statement</h1></td>
+                                    <h1 style={{ fontSize: "26px", fontWeight: 700, textAlign: "center",position:"relative",left:"80px",top:"20px"}}>Suissebase Account Statement</h1>
 
                                 </tr>
                             </table>
-                            <div className='statement-header logo-content'>
+                            <div className='statement-header logo-content'style={{margin:"20px 50px",width:"90%"}}>
                                 <div> <img src={logColor} className="logo" /></div>
                                 {
-                                    <ul style={{ fontWeight: 500, margin: "0", padding: "0" }}>
-                                        <li> Name : {`${this.state.profile.firstName} ${this.state.profile.lastName}`}</li>
-                                        <li> Email : {this.state.profile.email}</li>
-                                        <li> Phone : {this.state.profile.phoneNo || this.state.profile.phoneNumber}</li>
+                                    <ul style={{ fontWeight: 500, margin: "0", padding: "0",}}>
+                                        <li><b> Name : {`${this.state.profile.firstName} ${this.state.profile.lastName}`}</b></li>
+                                        <li><b> Email : {this.state.profile.email}</b></li>
+                                        <li><b>Phone : {this.state.profile.phoneNo || this.state.profile.phoneNumber}</b></li>
                                     </ul>
                                 }
                             </div>
                             <div>
-                                <table className="transaction-pdf-template">
+                                <table className="transaction-pdf-template" width="100%">
                                     <thead style={{ background: "#cccccc" }}>
-                                        <th >Transaction Id</th>
+                                        <th >Transaction ID</th>
                                         <th >Date</th>
                                         <th >Type</th>
                                         <th >Wallet</th>
@@ -187,7 +156,7 @@ export function withState(WrappedGrid) {
                                             <td >{moment(item.date).format("DD/MM/YYYY hh:mm a")}</td>
                                             <td >{item.docType}</td>
                                             <td >{item.wallet}</td>
-                                            <td >{this.getCombineFieldValue(item, ["credit", "debit"])}</td>
+                                            <td >{this.getCombineFieldValue(item, ["debit","credit"])}</td>
                                             <td >{this.getCombineFieldValue(item, ["senderName", "beneficiryName"])}</td>
                                             <td >{this.getCombineFieldValue(item, ["accountnumber", "iban"])}</td>
                                             <td >{item.state}</td>
@@ -199,16 +168,7 @@ export function withState(WrappedGrid) {
                     </div>
                     {this.state.isLoading && this.loadingPanel}
                     {this.props.showExcelExport && <div className='text-right secureDropdown export-pdf'>
-                        {/* <Dropdown.Button className=" k-button-solid  mt-16 mb-16 mr-16"
-                            overlay={
-                                <div>
-                                    <button onClick={this.handleExcelExport}>Export to Excel</button><br />
-                                    <button onClick={this.exportToPDF}>Export to Pdf</button>
-                                </div>
-                            }>
-                            Download Transaction History
-                        </Dropdown.Button> */}
-                        <Dropdown.Button
+                       <Dropdown.Button
                         className="mt-16 mb-16"
                           overlay={<div className='ant-dropdown-menu history-excel'>
                             <ul className='pl-0 drpdwn-list'>
@@ -221,20 +181,7 @@ export function withState(WrappedGrid) {
                           overlayClassName=""
                         >
                              Download Transaction History
-                        </Dropdown.Button>
-                        {/* <Dropdown
-                          overlay={this.menuBar(item)}
-                          trigger={["click"]}
-                          placement="bottomCenter"
-                          arrow
-                          overlayClassName="secureDropdown depwith-drpdown"
-                        >
-                          <Link >
-                            <Space>
-                              <span class="icon md menu-bar ml-4 p-relative"></span>
-                            </Space>
-                          </Link>
-                        </Dropdown> */}
+                        </Dropdown.Button>                       
                     </div>}
                     {this.props.showExcelExport ? <ExcelExport data={this.state.data} ref={this.excelRef} fileName={this.props?.excelFileName}>
 

@@ -252,7 +252,7 @@ class PaymentSummary extends Component {
                         <Tooltip title="Close">
                           <span
                             className="icon md close-white c-pointer"
-                            onClick={() =>  this.setState({ ...this.state, paymentSummary: false, insufficientModal: false}, () => { })}
+                            onClick={() =>  this.setState({ ...this.state, paymentSummary: false, insufficientModal: false})}
                           />
                         </Tooltip>
                       }
