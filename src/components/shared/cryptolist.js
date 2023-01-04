@@ -68,7 +68,7 @@ const CryptoList = forwardRef(({ coinList, isLoading, onCoinSelected, coinType, 
                        {item.coinValueinNativeCurrency !== 0 && <NumberFormat value={coinType === "Sell" ? item.coinValueinNativeCurrency : item.amountInUSD || item.coinBalance} className="" displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props} className={`drawer-list-font ${coinType !== "Sell" ? "fs-16" : "fs-14 "} ${coinType === "Sell" ? (item.coinBalance > 0 ? "text-green" : "text-red") : 'text-white'}`}>{value}</div>} />}
                         {coinType !== "Sell" && <div className={item.percent_change_1h < 0 ? 'text-red ' : 'text-green'}>{item.percent_change_1h} %</div>}
                    </div>
-                       {coinType !== "Sell" && <> {item.percent_change_1h >= 0 ? <span className="icon sm uparrow ml-12" /> : <span className="icon sm downarrow ml-12" />}</>}</>
+                       {coinType !== "Sell" && <> {item.percent_change_1h >= 0 ? <span className="icon sm  valupp-icon pg-arrow" /> : <span className="icon sm downarrow ml-12" />}</>}</>
                </Link>
            </List.Item>
               </> : 
@@ -83,7 +83,7 @@ const CryptoList = forwardRef(({ coinList, isLoading, onCoinSelected, coinType, 
                    <><div className="text-right coin-typo">
                        {coinType === "swap" && item.coinBalance != null && <NumberFormat value={item.coinBalance} displayType={'text'} thousandSeparator={true} prefix={''} renderText={(value, props) => <div {...props} className="drawer-balnstyle">{value}</div>} />}
                        {item.coinValueinNativeCurrency !== 0 && <NumberFormat value={coinType === "swap" ? item.coinValueinNativeCurrency : item.amountInUSD || item.coinBalance} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props} className={`drawer-list-font ${coinType !== "swap" ? "fs-16 " : "fs-14 "} ${coinType === "swap" ? (item.coinBalance > 0 ? "text-green" : "text-red") : ''}`}>{value}</div>} />}
-                       {coinType !== "swap" && <div className={item.percent_change_1h < 0 ? 'text-red' : 'text-green'}>{item.percent_change_1h} % {coinType !== "swap" && <> {item.percent_change_1h >= 0 ? <span className="icon sm uparrow ml-12" /> : <span className="icon sm downarrow ml-12" />}</>}</div>}
+                       {coinType !== "swap" && <div className={item.percent_change_1h < 0 ? 'text-red' : 'text-green'}>{item.percent_change_1h} % {coinType !== "swap" && <> {item.percent_change_1h >= 0 ? <span className="icon sm  valupp-icon pg-arrow" /> : <span className="icon sm downarrow ml-12" />}</>}</div>}
                        
                    </div>
                        </>

@@ -359,7 +359,7 @@ class OnthegoCryptoTransfer extends Component {
 
               
                 <Form.Item
-                  className="custom-forminput custom-label fund-transfer-input send-crypto-input crypto-blc-inpt"
+                  className="custom-forminput custom-label fund-transfer-input send-crypto-input crypto-blc-inpt new-swap-subtext" 
                   name="amount"
                   required
                   rules={[
@@ -371,9 +371,10 @@ class OnthegoCryptoTransfer extends Component {
                 >
                   <NumberFormat
                     customInput={Input}
-                    className="inputfont-style text-center inputbg-fonts"
+                    className="inputfont-style text-center inputbg-fonts "
                     placeholder={"Enter Amount"}
                     maxLength="20"
+                    bordered={false}
                     decimalScale={8}
                     displayType="input"
                     allowNegative={false}
