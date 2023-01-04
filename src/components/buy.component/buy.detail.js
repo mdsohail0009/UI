@@ -188,7 +188,7 @@ class SelectCrypto extends Component {
                         }}
                         isConvertionLoad={isConvertionLoading} /></div>}
                             <div className="crypto-amount">
-                               <div className="crypto-details"><span className='buy-balance'>Balance: </span><span className='buycoin-style marginL'>{coin }</span> <Currency prefix={'' } defaultValue={coinBalance} suffixText={""} className='buycoin-style marginL' /></div>
+                               <div className="crypto-details"><span className='buy-balance'>Balance: </span><Currency prefix={'' } defaultValue={coinBalance} suffixText={""} className='buycoin-style marginL' /><span className='buycoin-style marginL'>{coin }</span> </div>
                                 {/* <NumberFormat value={coinFullName} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props}>{value}</div>} /> */}
                             </div>
                         {/* </div> */}
@@ -218,7 +218,7 @@ class SelectCrypto extends Component {
                         {/* <Translate content="buy_select_currency" component={Paragraph} className="label-style" /> */}
                         <WalletList placeholder="Select Currency" onWalletSelect={(e) => this.handleWalletSelection(e)} />
                     </div>
-                    {this.state.isShowCoinsData &&<div><Translate content="thousandKText" component={Paragraph} className="buy-paragraph " />
+                    {<div><Translate content="thousandKText" component={Paragraph} className="buy-paragraph " />
                     <Translate content="contact_amount_text" component={Paragraph} className="buy-paragraph" />
                      <div className="buy-usdt-btn">
                         <SuisseBtn title="PreviewBuy" loading={this.state.btnLoading} onRefresh={() => this.refresh()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />

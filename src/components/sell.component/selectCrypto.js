@@ -212,7 +212,7 @@ class SelectSellCrypto extends Component {
                                     this.clickMinamnt(value)
                                 }}>
                                     <Translate value="min" content="min" component={Radio.Button} />
-                                    <Translate value="half" content="half" component={Radio.Button} />
+                                    {/* <Translate value="half" content="half" component={Radio.Button} /> */}
                                     <Translate value="all" content="all" component={Radio.Button} />
                                 </Radio.Group>
                                 { <div className='crypto-details'><div className='sellcrypto-style'>Balance:
@@ -229,7 +229,7 @@ class SelectSellCrypto extends Component {
                                 <WalletList placeholder="Select Currency" onWalletSelect={(e) => this.handleWalletSelection(e)} />
                             </div>
 
-                            {this.state.isShowCoinsData && <div><Translate content="thousandKText" component={Paragraph} className="buy-paragraph" />
+                            {<div><Translate content="thousandKText" component={Paragraph} className="buy-paragraph" />
                                 <Translate content="contact_amount_text" component={Paragraph} className="buy-paragraph" /><div className="sell-btn-style">
                                 <SuisseBtn autoDisable={true} title="PreviewSell" className="pop-btn" onClick={() => { this.previewSellData() }} />
                             </div></div>}

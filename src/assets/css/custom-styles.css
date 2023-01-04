@@ -446,7 +446,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .sellcrypto-style{color:var(--coinPrice);font-weight: 400;font-size: 16px;}
 .sellbal-style{font-weight: 700;font-size: 16px;color: var(--balInput);word-break: break-all;}
 .round-pills{width: 100%;text-align: center;}
-.round-pills .ant-radio-button-wrapper{background: var(--radioBg);height: 36px;border-radius: 10px;min-width: 60px; line-height: 34px;color: var(--coinPrice);border:1px solid rgba(0, 0, 0, 0.3);;font-size: 16px;font-weight: 500;margin: 0 16px 16px 0;text-align: center;}
+.round-pills .ant-radio-button-wrapper{background: var(--radioBg);height: 36px;border-radius: 10px;min-width: 60px; line-height: 34px;color: var(--coinPrice);border:1px solid rgba(0, 0, 0, 0.3);;font-size: 16px;font-weight: 500;margin: 0 16px 0px 0;text-align: center;}
 .round-pills .ant-radio-button-wrapper-checked, .default-radio .ant-radio-button-wrapper-checked, .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled),  .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{background-color: var(--radioFill) !important; color:var(--balInput) !important;font-size: 16px;font-weight:500;border: 2px solid var(--radioBorderfill);}
 .round-pills .ant-radio-button-wrapper::before, .default-radio .ant-radio-button-wrapper::before{content: none;}
 .val-updown{position: absolute;right: 0;top: 100px;width: 34px;height: 35px;border-radius: 10px;background-color: var(--gridborder);text-align: center;line-height: 34px;}
@@ -639,7 +639,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .docdetails .docname{font-weight: 700;color: var(--textWhite30); line-height: 16px;max-width: 150px !important;}
 .docfile-container{display: flex; flex-wrap: wrap;}
 .upload-filesize{font-weight: 700;font-size: 16px;color: var(--coinPrice);}
-.cust-networkstyle{background-color: var(--profiletab);padding: 10px 20px;border-radius: 10px;color: var(--white);font-weight: 700;font-size: 16px;}
+.cust-networkstyle{background-color: var(--profiletab);padding: 10px 20px;border-radius: 10px;color: #FFFFFF;font-weight: 700;font-size: 16px;}
 .swap-fontsize{color: var(--white);font-weight: 700;font-size: 16px;}
 .network{background-color: var(--drpdwnHover);padding: 10px 20px;border-radius: 10px;margin: 0 12px}
 /* send fiat end */
@@ -692,7 +692,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .admin-actions li:last-child{margin-right: 0;}
 .addressbook-mb{margin-bottom: 0 !important;}
 .new-custom-radiobtn, .ant-radio-button-wrapper, .ant-radio-button.ant-radio-button-checked, .ant-radio-button-wrapper:first-child, .ant-radio-button-wrapper:not(:first-child)::before, .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){background: none;border: 0;}
-.new-custom-radiobtn .ant-radio-button-wrapper-checked, .new-custom-radiobtn .ant-radio-button-wrapper{font-weight: 500;font-size: 16px;color: var( --radiocheccolor);}
+.new-custom-radiobtn .ant-radio-button-wrapper-checked, .new-custom-radiobtn .ant-radio-button-wrapper{font-weight: 500;font-size: 16px;color: var( --radiocheccolor);text-transform: capitalize;}
 .new-custom-radiobtn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active{color: var( --radiocheccolor);border-color: transparent;}
 .new-custom-radiobtn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover::before{background-color: transparent;}
 .new-custom-radiobtn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){border-color: transparent;}
