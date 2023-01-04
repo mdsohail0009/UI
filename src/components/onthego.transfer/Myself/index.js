@@ -9,8 +9,6 @@ import Loader from "../../../Shared/loader";
 import {confirmTransaction} from '../api';
 import alertIcon from '../../../assets/images/pending.png';
 const { Paragraph,Title } = Typography;
-
-//const { Option } = Select;
 const { Text } = Typography;
 const { TextArea } = Input;
 const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
@@ -489,6 +487,10 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                                 message: apiCalls.convertLocalLang("is_required"),
                             },
                             {
+                                whitespace: true,
+                                message: apiCalls.convertLocalLang("is_required"),
+                            }, 
+                            {
                                 validator: validateContentRule
                             }
                         ]}>
@@ -510,7 +512,12 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             {
                                 required: true,
                                 message: apiCalls.convertLocalLang("is_required"),
-                            }, {
+                            },
+                            {
+                                whitespace: true,
+                                message: apiCalls.convertLocalLang("is_required"),
+                            }, 
+                            {
                                 validator: validateContentRule,
                             },
                         ]}>
