@@ -141,7 +141,7 @@ export function withState(WrappedGrid) {
                             <div>
                                 <table className="transaction-pdf-template" width="100%">
                                     <thead style={{ background: "#cccccc" }}>
-                                        <th >Transaction Id</th>
+                                        <th >Transaction ID</th>
                                         <th >Date</th>
                                         <th >Type</th>
                                         <th >Wallet</th>
@@ -156,7 +156,7 @@ export function withState(WrappedGrid) {
                                             <td >{moment(item.date).format("DD/MM/YYYY hh:mm a")}</td>
                                             <td >{item.docType}</td>
                                             <td >{item.wallet}</td>
-                                            <td >{this.getCombineFieldValue(item, ["credit", "debit"])}</td>
+                                            <td >{this.getCombineFieldValue(item, ["debit","credit"])}</td>
                                             <td >{this.getCombineFieldValue(item, ["senderName", "beneficiryName"])}</td>
                                             <td >{this.getCombineFieldValue(item, ["accountnumber", "iban"])}</td>
                                             <td >{item.state}</td>
