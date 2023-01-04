@@ -200,12 +200,11 @@ class OthersBusiness extends Component {
         if (this.state.showDeclartion) {
             return  <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
                 <Image width={80} preview={false} src={alertIcon} />
-                <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
+                <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent!</Title>
                 <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
-                   Please sign using link received in email to whitelist your address. `}</Text>
-                <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
+                Please review and sign the document in your email to whitelist your address.
+                Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
                 <div className="my-25">
-                    {/* <Button onClick={() => this.props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button> */}
                     </div>
             </div></div>
         }
@@ -257,7 +256,6 @@ class OthersBusiness extends Component {
                         component={Paragraph}
                         className="mb-8 text-white fw-500 mt-16"
                     />
-                    {/* <Divider /> */}
                     <Row gutter={[12, 12]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item

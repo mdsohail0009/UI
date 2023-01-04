@@ -235,12 +235,12 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         <Form layout="vertical" form={form} onFinish={saveTransfer} initialValues={{createTransfer}} scrollToFirstError>
         {showDeclartion &&  <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
                 <Image width={80} preview={false} src={alertIcon} />
-                <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
+                <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent!</Title>
                 <Text className="text-white-30">{`Declaration form has been sent to ${props.userProfile?.email}. 
-                   Please sign using link received in email to whitelist your address. `}</Text>
-                <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
+                Please review and sign the document in your email to whitelist your address.
+                Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
+
                 <div className="my-25">
-                    {/* <Button onClick={() => props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button> */}
                     </div>
             </div></div>}
        {!showDeclartion &&<> {currency === "USD" && <>
