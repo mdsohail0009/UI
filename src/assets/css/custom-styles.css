@@ -67,6 +67,8 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 /*----Margin Utilities----*/
 .m-0{margin: 0 !important;}
 /* icons start */
+.new-custom-radiobtn .ant-radio-button-wrapper-checked .icon.lg{background-position:-324px -521px !important;}
+.new-custom-radiobtn .ant-radio-button-wrapper .icon.lg{background-position:-324px -485px;}
 .icon.md.add-icon-black{background-position: -397px -71px;}
 .icon.lg.radio-check{background-position:-324px -521px;}
 .icon.lg.radio{background-position:-324px -485px;}
@@ -98,6 +100,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .cust-check-outline.custom-checkbox input[type=checkbox]:checked+span {width: 24px; height: 24px;cursor: pointer;background-position:-157px -518px !important;}
 .cust-check-outline.custom-checkbox input[type=checkbox]+span{width: 24px;height: 24px;background-position: -120px -517px !important;}
 .cust-check-outline input[type='radio'], .ant-form .cust-check-outline input[type='checkbox']{display: none;}
+/* .new-custom-radiobtn  input[type=radio]:checked+span{background-position:-324px -521px;} */
 /*Header start*/
 .notification-conunt .bell span{position: absolute;right: -8px;top: -8px;width: 18px;height: 18px;background: #f6921e;border-radius: 50%;line-height: 18px;text-align: center;font-size: 10px;font-weight: 600;}
 .haead-main{background-color: var(--secondary);position: fixed; z-index: 9999;left: 0; right: 0;}
@@ -292,7 +295,7 @@ input:-webkit-autofill:active{
 .wallet-list .ant-list-item:hover, .wallet-list .ant-list-item.select, .addCryptoList li.select{background: rgba(92, 97, 255, 0.35);border: 2px solid #CCC3FF !important;border-radius: 13px;}
 .wallet-list.ant-list-split .ant-list-item:last-child{border:2px solid transparent;}
 .code-lbl{margin-bottom: 4px !important;margin-left: 4px;}
-
+.fiatdep-info.fiat-list-items .alert-info-custom.kpi-List .fait-box.kpi-divstyle:last-child{border: 0;}
 /*Coin Selection End*/
 /* button styles start */
 .select-drpdwn .ant-select-item:hover, .select-drpdwn .ant-select-item.ant-select-item-option-active, .select-drpdwn .ant-select-item.ant-select-item-option-selected, .select-drpdwn .ant-select-item.ant-select-item-option-active.ant-select-item-option-selected, .ant-select-item-option-selected:not(.ant-select-item-option-disabled), .ant-select-item-option-active:not(.ant-select-item-option-disabled){background-color: var(--drpdwnHover)}
@@ -482,7 +485,8 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .imp-note{font-weight: 700;font-size: 20px;color: var(--tablesub);}
 .custom-display{margin-left: 12px;}
 .cust-tabs-fait .ant-tabs-tab + .ant-tabs-tab{margin: 0 0 0 0px;}
-.cust-tabs-fait .ant-tabs-nav{width: 350px;margin: 0 auto;justify-content: center;margin-bottom: 26px;}
+.cust-tabs-fait .ant-tabs-nav{margin: 0 auto;justify-content: center;margin-bottom: 26px;} 
+/* width: 350px; */
 /* receive fait end */
 /* receive crypto start */
 .rec-bottom{margin-bottom: 18px !important;}
@@ -687,6 +691,13 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .admin-actions li{margin-right: 16px;}
 .admin-actions li:last-child{margin-right: 0;}
 .addressbook-mb{margin-bottom: 0 !important;}
+.new-custom-radiobtn, .ant-radio-button-wrapper, .ant-radio-button.ant-radio-button-checked, .ant-radio-button-wrapper:first-child, .ant-radio-button-wrapper:not(:first-child)::before, .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){background: none;border: 0;}
+.new-custom-radiobtn .ant-radio-button-wrapper-checked, .new-custom-radiobtn .ant-radio-button-wrapper{font-weight: 500;font-size: 16px;color: var( --radiocheccolor);}
+.new-custom-radiobtn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active{color: var( --radiocheccolor);border-color: transparent;}
+.new-custom-radiobtn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover::before{background-color: transparent;}
+.new-custom-radiobtn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){border-color: transparent;}
+.new-custom-radiobtn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):focus-within{box-shadow:none;}
+.new-custom-radiobtn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{color: var( --radiocheccolor);}
 /* send crypto addressbook end */
 
 /* transactions start  */

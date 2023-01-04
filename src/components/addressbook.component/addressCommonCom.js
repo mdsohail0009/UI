@@ -931,15 +931,15 @@ const AddressCommonCom = (props) => {
                   <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Radio.Group
                       defaultValue={addressOptions.addressType}
-                      className="custom-radiobtn"
+                      className="new-custom-radiobtn"
                       onChange={(value) => {
 
                         setAddressOptions({ ...addressOptions, addressType: value.target.value })
                       }}
                     >
-                      <Radio.Button value="myself" className="">{props.userConfig?.isBusiness ? "Own Business" : "My Self"}</Radio.Button>
-                      <Radio.Button value="individuals" className="">INDIVIDUALS</Radio.Button>
-                      <Radio.Button value="otherbusiness" className="">OTHER BUSINESS</Radio.Button>
+                      <Radio.Button value="myself" className=""><span className="lg icon" />{props.userConfig?.isBusiness ? "Own Business" : "My Self"}</Radio.Button>
+                      <Radio.Button value="individuals" className=""><span className="lg icon" />INDIVIDUALS</Radio.Button>
+                      <Radio.Button value="otherbusiness" className=""><span className="lg icon" />OTHER BUSINESS</Radio.Button>
                     </Radio.Group>
                   </Col>
                 </Row>
