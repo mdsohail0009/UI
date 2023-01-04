@@ -174,7 +174,7 @@ class SelectCrypto extends Component {
                         {/* </div> */}
                         {/* <div > */}
                        
-                        {this.state.isShowCoinsData && <div>
+                        {<div>
                    <LocalCryptoSwapperCmp
                         localAmt={localValue}
                         cryptoAmt={cryptoValue}
@@ -215,7 +215,7 @@ class SelectCrypto extends Component {
                     
                     </div>}
                     <div className="select-currency">
-                        <Translate content="buy_select_currency" component={Paragraph} className="label-style" />
+                        {/* <Translate content="buy_select_currency" component={Paragraph} className="label-style" /> */}
                         <WalletList placeholder="Select Currency" onWalletSelect={(e) => this.handleWalletSelection(e)} />
                     </div>
                     {this.state.isShowCoinsData &&<div><Translate content="thousandKText" component={Paragraph} className="buy-paragraph " />
