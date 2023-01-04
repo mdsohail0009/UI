@@ -930,7 +930,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .k-pager-sizes.k-label{margin-left: 5px;}
     .k-pager-wrap{margin-left: -11px;}
     .k-dropdown-wrap{margin-right: -8px;}
-    .transctns-grid table col{width: 120px;}
+    table col{width: 250px;}
     .changepwd-btn div{margin: 20px 0px !important;}
     /* .ant-popover.ant-popover-placement-left {left: 176px !important;} */
     .date-mobile{margin-left: 12px !important;}
@@ -1105,7 +1105,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .bill-grid .k-grid-header table{width: 1255px !important;}
     .bill-grid .k-grid-content table{width: 1254px !important;}
     .cust-input.cust-disable{width: 280px;}
-
+     tbody td{text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
 }
 @media (min-width: 1200px){
     .custom-font{font-size:28px !important;}
