@@ -254,7 +254,6 @@ class OnthegoCryptoTransfer extends Component {
 
     goToAddressBook = () => {
         let _amt = this.enteramtForm.current.getFieldsValue().amount
-        _amt = typeof _amt == 'string' ? _amt.replace(/,/g, '') : _amt
         this.setState({ ...this.state, errorMsg: null, error: null })
         if (_amt > 0) {
             if (_amt < this.props.selectedWallet?.withdrawMinValue) {
@@ -305,14 +304,8 @@ class OnthegoCryptoTransfer extends Component {
             if (!_amt && _amt != 0) {
                 this.enteramtForm.current.validateFields()
             } else {
-                if (_amt === '') {
-                    this.setState({
-                        ...this.state,
-                        errorMsg: null,
-                        error: ' ' + apicalls.convertLocalLang('enter_amount'),
-                    })
-                    this.myRef.current.scrollIntoView()
-                } else if (this.state.CryptoAmnt == '0' || _amt == 0) {
+                
+                if ((this.state.CryptoAmnt == '0' || _amt == 0) && !(_amt == "")) {
                     this.setState({
                         ...this.state,
                         errorMsg: null,
@@ -324,7 +317,7 @@ class OnthegoCryptoTransfer extends Component {
         }
     }
 
-    renderStep = (step) => {
+    renderStep = () => {
         const { filterObj, pastPayees } = this.state;
         const steps = {
             enteramount: (
@@ -545,10 +538,7 @@ const connectStateToProps = ({ sendReceive, userConfig, menuItems, oidc }) => {
 };
 const connectDispatchToProps = dispatch => {
     return {
-        // commented due to sonar issue
-        // changeStep: (stepcode) => {
-        // dispatch(setAddressStep(stepcode))
-        // },
+       
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
         },
