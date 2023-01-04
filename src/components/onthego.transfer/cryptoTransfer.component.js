@@ -12,6 +12,7 @@ import { validateCryptoAmount } from '../onthego.transfer/api';
 import { setStep, setSubTitle, setWithdrawcrypto, setAddress, hideSendCrypto } from '../../reducers/sendreceiveReducer';
 import AddressCrypto from "../addressbook.component/addressCrypto";
 import { rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
+import Currency from '../shared/number.formate';
 import { setAddressStep } from "../../reducers/addressBookReducer";
 
 const { Text, Title } = Typography;
@@ -359,7 +360,7 @@ class OnthegoCryptoTransfer extends Component {
 
               
                 <Form.Item
-                  className="custom-forminput custom-label fund-transfer-input send-crypto-input crypto-blc-inpt new-swap-subtext" 
+                  className="custom-forminput custom-label fund-transfer-input send-crypto-input crypto-blc-inpt new-swap-subtext send-crypto-enrty" 
                   name="amount"
                   required
                   rules={[
@@ -371,11 +372,12 @@ class OnthegoCryptoTransfer extends Component {
                 >
                   <NumberFormat
                     customInput={Input}
-                    className="inputfont-style text-center inputbg-fonts "
+                    className="inputfont-style text-center inputbg-fonts swap-text-sub"
                     placeholder={"Enter Amount"}
                     maxLength="20"
                     bordered={false}
                     decimalScale={8}
+                    autoComplete="off"
                     displayType="input"
                     allowNegative={false}
                     thousandSeparator={true}
@@ -388,8 +390,8 @@ class OnthegoCryptoTransfer extends Component {
                   />
                 </Form.Item>
 
-                <Col xs={24} md={24} lg={24} xl={24} xxl={24} style={{ marginTop: "-20px" }}>
-
+              </Row>
+              <div className="display-items">
                   <div class="text-center mr-16 small-btns">
                     <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn " onClick={() => this.clickMinamnt("min")}>
                                         <span >Min</span>
@@ -398,10 +400,10 @@ class OnthegoCryptoTransfer extends Component {
                                         <span>Max</span>
                                     </button>
                   </div>
-                </Col>
-              </Row>
-              <Row gutter={[16, 4]} className="text-center">
-              <Col xs={12} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
+                  <div className='crypto-details'><div className='sellcrypto-style'>Balance:</div> <Currency defaultValue="$ 67.83" prefix={"$ "} type={"text"} className="marginL sellbal-style" /></div>
+                  </div>
+              <Row gutter={[16,0]} className="text-center transfer-designstyle">
+              <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mobile-viewbtns mobile-btn-pd">
                   <Form.Item className="text-center">
                     <Button
                       htmlType="submit"
@@ -413,7 +415,7 @@ class OnthegoCryptoTransfer extends Component {
                     </Button>
                   </Form.Item>
                 </Col>
-                <Col xs={12} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mobile-viewbtns mobile-btn-pd">
                   <Form.Item className="text-center">
                     <Button
                       htmlType="button"
