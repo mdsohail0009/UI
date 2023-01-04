@@ -61,7 +61,7 @@ class RouteConfig extends Component {
   render() {
     return <Switch>
       <React.Suspense fallback={<div className="loader">Loading...</div>}>
-        <ReactRoute path='/transactions' component={Transactions} />
+        <ReactRoute path="/transactions" component={Transactions} />
         <Route path="/cockpit" component={Dashboard} />
         <ReactRoute path="/callback" component={CallbackPage} />
         <ReactRoute path="/login" component={Login} />
