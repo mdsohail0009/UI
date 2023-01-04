@@ -43,7 +43,7 @@ class WalletList extends Component {
                     <List
                     itemLayout="horizontal"
                     dataSource={this.props.buyInfo.memberFiat?.data}
-                    className="crypto-list auto-scroll wallet-list"
+                    className="crypto-list auto-scroll wallet-list selection-currency-list"
                     // loading={this.state.fiatWalletsLoading}
                     locale={{
                         emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={

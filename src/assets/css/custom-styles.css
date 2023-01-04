@@ -462,16 +462,17 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .swap-custinputfield{border: 0 !important;padding: 0 !important;}
 .buy-usdt-btn .pop-btn, .sell-btn-style .pop-btn{margin-top: 20px;}
 .sell-radiobtn-style{flex: 0 0 236px;}
+.selection-currency-list{margin-bottom: 50px;}
 /*Buy/sell drawer End*/
 /* receive fait start */
 .drawer-subtext{font-weight: 700;font-size: 18px;color: var(--tablesub);}
 .fait-title{font-weight: 500 !important;font-size: 14px !important;color: var(--subText) !important;}
 .fait-subtext{display: block !important;font-size: 16px !important;font-weight: 500 !important;color: var(--white) !important;}
-.fait-box{margin-top: 12px;}
-.fait-maintext{font-weight: 700;font-size: 18px;color: var(--tablesub);margin-bottom: 16px !important;margin-top: 16px;}
+.fait-box{margin-bottom: 20px;}
+.fait-maintext{font-weight: 700;font-size: 18px;color: var(--tablesub);margin-bottom: 16px !important;margin-top: 41px;}
 .refer-text{font-weight: 400;font-size: 16px;color: var(--tableText);}
 .walletadrs{font-weight: 700;font-size: 16px;color: var(--coinPrice);}
-.import-note{background-color: var(--cardBG);width: auto;border-radius: 10px;padding: 24px 70px 24px 24px;color: var(--tablesub);font-weight: 400;font-size: 20px;}
+.import-note{background-color: var(--cardBG);width: auto;border-radius: 10px;padding: 24px 70px 24px 24px;color: var(--tablesub);font-weight: 400;font-size: 20px;margin-top: 38px;}
 .imp-note{font-weight: 700;font-size: 20px;color: var(--tablesub);}
 .custom-display{margin-left: 12px;}
 .cust-tabs-fait .ant-tabs-tab + .ant-tabs-tab{margin: 0 0 0 0px;}

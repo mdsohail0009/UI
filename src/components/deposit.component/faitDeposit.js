@@ -275,10 +275,10 @@ class FaitDeposit extends Component {
 
                 {(this.state.BankInfo && !this.state.bankLoader) &&
                   <div className="fiatdep-info">
-
+                  <div className='alert-info-custom kpi-List'>
                     <div className="d-flex">
                       <div style={{ flex: 1 }}>
-                        <div className='fait-box'>
+                        <div className='fait-box kpi-divstyle'>
                           <Translate
                       className="fait-title"
                       content="account_name"
@@ -291,7 +291,7 @@ class FaitDeposit extends Component {
                       component={Text}
                       with={{ value: BankInfo.accountName }} />
                       </div>
-                      <div className='fait-box'><Translate
+                      <div className='fait-box kpi-divstyle'><Translate
                       className="fait-title"
                       content="account_address"
                       component={Text}
@@ -305,29 +305,33 @@ class FaitDeposit extends Component {
                       </div>
                       
                     </div>
-                    <div className='fait-box'>
+                    <div className='fait-box kpi-divstyle'>
                     {BankInfo.currencyCode === "USD" && <span className="fait-title">Beneficiary Account No. </span>}
                     {BankInfo.currencyCode === "EUR" && <span className="fait-title">Beneficiary IBAN No. </span>}
                     <CopyToClipboard text={BankInfo.accountNumber} options={{ format: 'text/plain' }}>
                     <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fait-subtext" >{BankInfo.accountNumber}</Text>
                      </CopyToClipboard>
                      </div>
+                     </div>
                     {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <Translate
                       className="fait-maintext"
                       content="for_Domestic_wires"
                       component={Paragraph}
                     />}
+                    <div className='alert-info-custom kpi-List'>
                     {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <Translate
                       className="fait-title"
                       content="Routing_number"
                       component={Text}
                     />}
-                    {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <CopyToClipboard text={BankInfo.routingNumber} options={{ format: 'text/plain' }}><Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fait-subtext">{BankInfo.routingNumber}</Text></CopyToClipboard>}
+                    {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <CopyToClipboard text={BankInfo.routingNumber} options={{ format: 'text/plain' }}>
+                      <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fait-subtext">{BankInfo.routingNumber}</Text></CopyToClipboard>}
+                      </div>
                     <Translate
                       className="fait-maintext"
                       content="for_international_wires"
                       component={Paragraph}
-                    /><div className='fait-box'>
+                    /><div className='alert-info-custom kpi-List'><div className='fait-box kpi-divstyle'>
                     <Translate
                       className="fait-title"
                       content="Swift_BICcode"
@@ -342,7 +346,7 @@ class FaitDeposit extends Component {
                        />
                        </CopyToClipboard>
                        </div>
-                       <div className='fait-box'><Translate
+                       <div className='fait-box kpi-divstyle'><Translate
                       className="fait-title"
                       content="beneficiaryBank"
                       component={Text}
@@ -352,7 +356,7 @@ class FaitDeposit extends Component {
                       content="signature_bank"
                       component={Text}
                       with={{ value: BankInfo.bankName }} /></div>
-                      <div className='fait-box'>
+                      <div className='fait-box kpi-divstyle'>
                     <Translate
                       className="fait-title"
                       content="beneficiary_Bank_address"
@@ -364,7 +368,7 @@ class FaitDeposit extends Component {
                       component={Text}
                       with={{ value: BankInfo.bankAddress }} />
                       </div>
-                      <div className='fait-box'>   {BankInfo.referenceNo != null && BankInfo.referenceNo != '' && 
+                      <div className='fait-box kpi-divstyle'>   {BankInfo.referenceNo != null && BankInfo.referenceNo != '' && 
                    <Translate
                       className="fait-title"
                       content="bank_Reference_No"
@@ -373,7 +377,8 @@ class FaitDeposit extends Component {
                     {BankInfo.referenceNo != null && BankInfo.referenceNo != '' &&
                     <Text className="fait-subtext">{BankInfo.referenceNo}</Text>}
                     </div>
-                    <div className='fait-box'>  {BankInfo.depReferenceNo !== '' && <div className="receive-fait">
+                    </div>
+                    <div className='alert-info-custom kpi-List'>  {BankInfo.depReferenceNo !== '' && <div className="receive-fait">
                       <Translate
                         className="refer-text"
                         content="reference"
