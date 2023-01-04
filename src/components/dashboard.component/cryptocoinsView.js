@@ -228,6 +228,7 @@ class cryptocoinsView extends Component {
                     
               </div>
             </div> */}
+            <div className='coinveiw-newpage'>
             <div className='fait-wallets-style m-0'>
             <Translate content="suissebase_title" component={Title} className="db-titles" />
               {/* <Button className="dbchart-link"  onClick={() => this.cockpitCharts()} >
@@ -353,7 +354,9 @@ class cryptocoinsView extends Component {
                 </List.Item>
               )}
             />
+            
         )}
+        </div>
             <BuySell
               showDrawer={this.state.buyDrawer}
               onClose={() => this.closeDrawer()}
