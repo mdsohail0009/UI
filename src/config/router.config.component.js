@@ -32,12 +32,13 @@ const RewardCard = React.lazy(() => import("../components/cards.component"));
 const AccessDenied = React.lazy(() => import("../components/shared/permissions/access.denied"));
 const InternalTransfer = React.lazy(() => import("../components/internalTransfer.component/internalTransfer"));
 const AddressBook = React.lazy(() => import("../components/addressbook.component"));
-const Cases = React.lazy(()=>import("../components/case.component/cases"))
-const CaseView = React.lazy(()=>import("../components/case.component/caseView"))
-const Batchpayments = React.lazy(()=>import("../components/batchpayment.component"));
-const BatchpaymentView = React.lazy(()=>import("../components/batchpayment.component/uploadGrid"));
-const paymentPreview=React.lazy(()=>import("../components/batchpayment.component/paymentPreview"));
+const Cases = React.lazy(() => import("../components/case.component/cases"))
+const CaseView = React.lazy(() => import("../components/case.component/caseView"))
+const Batchpayments = React.lazy(() => import("../components/batchpayment.component"));
+const BatchpaymentView = React.lazy(() => import("../components/batchpayment.component/uploadGrid"));
+const paymentPreview = React.lazy(() => import("../components/batchpayment.component/paymentPreview"));
 // const ErrorPage = React.lazy(() => import("../components/internalTransfer.component/errorpage"));
+const Transactions = React.lazy(() => import("../components/transactions.history.component/index"))
 class RouteConfig extends Component {
   componentDidMount() {
     this.checkPermissions(window.location.pathname || "/cockpit");
@@ -60,6 +61,7 @@ class RouteConfig extends Component {
   render() {
     return <Switch>
       <React.Suspense fallback={<div className="loader">Loading...</div>}>
+        <ReactRoute path="/transactions" component={Transactions} />
         <Route path="/cockpit" component={Dashboard} />
         <ReactRoute path="/callback" component={CallbackPage} />
         <ReactRoute path="/login" component={Login} />
@@ -83,16 +85,16 @@ class RouteConfig extends Component {
         <ReactRoute path='/caseView/:id' component={CaseView} />
         <ReactRoute path='/cryptocoinsView' component={CryptocoinsView} />
         <Route path="/error" component={ErrorPage} />
-        
+
         <ReactRoute
-					path="/batchpayment"
-					render={({ match: { url } }) => (
-						<>
-							<Route path={`${url}`} component={Batchpayments} exact isRoute={true}/>
+          path="/batchpayment"
+          render={({ match: { url } }) => (
+            <>
+              <Route path={`${url}`} component={Batchpayments} exact isRoute={true} />
               <Route path={`${url}/:id/:fileName/:currency/:view`} component={BatchpaymentView} />
-						</>
-					)}
-				/>
+            </>
+          )}
+        />
         <ReactRoute
           path="/payments"
           render={({ match: { url } }) => (
@@ -102,7 +104,7 @@ class RouteConfig extends Component {
               <Route path={`${url}/:id/:type/:state/edit`} component={PaymentDetails} />
               <Route path={`${url}/:id/:currency/view`} component={paymentsView} />
               <Route path={`${url}/newbeneficiary/:id`} component={BeneficiaryDetails} />
-             
+
             </>
           )}
         />

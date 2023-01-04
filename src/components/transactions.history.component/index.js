@@ -3,12 +3,13 @@ import {
   Drawer,
   Typography,
   Button,
-  Row, Col, Select, Form,Input} from "antd";
+  Row, Col, Select, Form, Input
+} from "antd";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
 import List from "../grid.component";
-import { getTransactionSearch, getTransactionCurrency,transactionsView } from './api';
+import { getTransactionSearch, getTransactionCurrency, transactionsView } from './api';
 import { setCurrentAction } from "../../reducers/actionsReducer";
 import { getFeaturePermissionsByKey } from '../shared/permissions/permissionService';
 import { withRouter } from "react-router-dom";
@@ -30,7 +31,7 @@ class TransactionsHistory extends Component {
       currenyData: [],
       permissions: {},
       value: "",
-      statusData:[],
+      statusData: [],
       timeListSpan: ["All", "Custom"],
       modal: false,
       selectedTimespan: "",
@@ -39,12 +40,12 @@ class TransactionsHistory extends Component {
       customFromdata: "",
       customTodate: "",
       isCustomDate: false,
-      message:"",
+      message: "",
       searchObj: {
         type: "All",
         docType: "All",
         currency: this.props?.selectWallet || "All",
-        status:"All",
+        status: "All",
         timeSpan: "All",
         fromdate: "",
         todate: "",
@@ -52,12 +53,12 @@ class TransactionsHistory extends Component {
       tranObj: {},
       loader: true,
       gridUrl: process.env.REACT_APP_GRID_API + `Transaction/Customers`,
-      showModal:false,
-      modalData:{},
-      modalPoupData:{},
-      downloadError:"",
-      viewData:{},
-      viewLoader:false,
+      showModal: false,
+      modalData: {},
+      modalPoupData: {},
+      downloadError: "",
+      viewData: {},
+      viewLoader: false,
     };
     this.props.dispatch(setSelectedFeatureMenu(this.props.transactionsPermissions?.featureId || this.props.customer?.id));
     this.gridRef = React.createRef();
@@ -102,24 +103,26 @@ class TransactionsHistory extends Component {
       field: "date", title: "Date", filter: true, filterType: "date", locked: true, width: 210,
       customCell: (props) => (
         <td>
-         
-            {props.dataItem?.date ? <>{ moment.utc(props.dataItem?.date).local().format("DD/MM/YYYY hh:mm:ss A")}</> : props.dataItem?.date}
 
-        
+          {props.dataItem?.date ? <>{moment.utc(props.dataItem?.date).local().format("DD/MM/YYYY hh:mm:ss A")}</> : props.dataItem?.date}
+
+
         </td>
       )
     },
-    { field: "docType", title: "Type", filter: true,width: 260,
-    customCell: (props) => (
-      <td className="d-flex justify-content">
-      <div className="gridLink c-pointer	" onClick={() => this.transactionModal(props?.dataItem)}>
-      {props?.dataItem?.docType}
-      </div>
-    </td>
-    ), },
-    { field: "wallet", title: "Wallet", filter: true,width: 260, },
     {
-      field: "debit", title: "Value", filter: false, dataType: 'number', filterType: "numeric",width: 260,
+      field: "docType", title: "Type", filter: true, width: 260,
+      customCell: (props) => (
+        <td className="d-flex justify-content">
+          <div className="gridLink c-pointer	" onClick={() => this.transactionModal(props?.dataItem)}>
+            {props?.dataItem?.docType}
+          </div>
+        </td>
+      ),
+    },
+    { field: "wallet", title: "Wallet", filter: true, width: 260, },
+    {
+      field: "debit", title: "Value", filter: false, dataType: 'number', filterType: "numeric", width: 260,
       customCell: (props) => (
         <td>
           {props.dataItem?.debit && <NumberFormat value={props.dataItem?.debit} displayType={"text"} thousandSeparator={true} />}
@@ -129,7 +132,7 @@ class TransactionsHistory extends Component {
         </td>
       ),
       combine: true,
-      combineFields: ["debit","credit"]
+      combineFields: ["debit", "credit"]
     },
 
     {
@@ -150,8 +153,8 @@ class TransactionsHistory extends Component {
     {
       field: "accountnumber", title: "Bank Account Number/IBAN", filter: true, width: 260,
     },
-    { field: "state", title: "Status", filter: true, width: 260,},
-    
+    { field: "state", title: "Status", filter: true, width: 260, },
+
 
 
   ]
@@ -160,7 +163,7 @@ class TransactionsHistory extends Component {
     if (response.ok) {
       this.setState({
         doctypeData: response.data.docTypes,
-        statusData:response.data.status
+        statusData: response.data.status
       });
     }
   };
@@ -251,7 +254,7 @@ class TransactionsHistory extends Component {
     customFromdata = values.fromdate;
     customTodate = values.todate;
     values.fromdate = values.fromdate.format('MM/DD/YYYY');
-    values.todate =values.todate.format('MM/DD/YYYY');
+    values.todate = values.todate.format('MM/DD/YYYY');
     timeSpanfromdate = values.fromdate;
     timeSpantodate = values.todate;
     selectedTimespan = moment(timeSpanfromdate).format('DD/MM/YYYY') + " - " + moment(timeSpantodate).format('DD/MM/YYYY');
@@ -262,42 +265,46 @@ class TransactionsHistory extends Component {
   handleDateCancel = e => {
     let { searchObj, customFromdata, customTodate } = this.state;
     if (customFromdata && customTodate) {
-      this.setState({ modal: false,  message: '' });
+      this.setState({ modal: false, message: '' });
     } else {
       this.setState({ ...this.state, searchObj: { ...searchObj, timeSpan: "All", fromdate: '', todate: '' }, modal: false, isCustomDate: false, message: '' });
       this.formRef.current.setFieldsValue({ ...searchObj, timeSpan: "All", fromdate: '', todate: '' })
       this.formDateRef.current.resetFields();
     }
   }
-transactionModal=async(data)=>{
-  this.setState({ ...this.state, showModal:true,modalData:data,viewLoader:true ,
-    isLoading:false  })
-    let response = await transactionsView(data.id,data.docType);
-    if(response.ok){
-      this.setState({ ...this.state, showModal:true,viewData:response.data ,
-        isLoading:false,viewLoader:false  })
+  transactionModal = async (data) => {
+    this.setState({
+      ...this.state, showModal: true, modalData: data, viewLoader: true,
+      isLoading: false
+    })
+    let response = await transactionsView(data.id, data.docType);
+    if (response.ok) {
+      this.setState({
+        ...this.state, showModal: true, viewData: response.data,
+        isLoading: false, viewLoader: false
+      })
     }
   }
 
-handleCancel=()=>{
-  this.setState({ ...this.state, showModal:false,downloadError:"" })
-}
-isErrorDispaly = (objValue) => {
-  if (objValue.data && typeof objValue.data === "string") {
-    return objValue.data;
-  } else if (
-    objValue.originalError &&
-    typeof objValue.originalError.message === "string"
-  ) {
-    return objValue.originalError.message;
-  } else {
-    return "Something went wrong please try again!";
+  handleCancel = () => {
+    this.setState({ ...this.state, showModal: false, downloadError: "" })
   }
-};
+  isErrorDispaly = (objValue) => {
+    if (objValue.data && typeof objValue.data === "string") {
+      return objValue.data;
+    } else if (
+      objValue.originalError &&
+      typeof objValue.originalError.message === "string"
+    ) {
+      return objValue.originalError.message;
+    } else {
+      return "Something went wrong please try again!";
+    }
+  };
 
   render() {
     const { Title } = Typography;
-    const {  doctypeData, currenyData, gridUrl, searchObj,showModal,modalData,timeListSpan,statusData,isLoading,viewData } = this.state;
+    const { doctypeData, currenyData, gridUrl, searchObj, showModal, modalData, timeListSpan, statusData, isLoading, viewData } = this.state;
 
     const options2 = doctypeData.map((d) => (
       <Option key={d.value} value={d.name}>{d.name}</Option>
@@ -325,7 +332,9 @@ isErrorDispaly = (objValue) => {
           visible={this.props.showDrawer}
           className="side-drawer-full custom-gridresponsive transctns-grid"
         >
-          <div>
+    
+        </Drawer>
+        <div>
             <Form
               initialValues={this.state.customerData}
               className="ant-advanced-search-form form form-bg search-bg pt-8"
@@ -333,8 +342,8 @@ isErrorDispaly = (objValue) => {
               ref={this.formRef}
             >
               <Row className="filter-content">
-              <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
-              <Form.Item
+                <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
+                  <Form.Item
                     name="timeSpan"
                     className="input-label selectcustom-input mb-0"
                     label={<Translate content="Date" component={Form.label} className="label-style" />}
@@ -415,17 +424,15 @@ isErrorDispaly = (objValue) => {
             </Form>
           </div>
           <List
-          className="transaction-grid"
+            className="transaction-grid"
             url={gridUrl} additionalParams={searchObj} ref={this.gridRef}
             columns={this.gridColumns}
             showExcelExport={this.state.permissions?.ExcelExport}
             excelFileName={'Transaction History'}
             exExportTitle={"Download Transaction History"}
           />
-        </Drawer>
-
-                <TransactionSlips showModal={showModal}  modalData={modalData} isLoading={isLoading} handleCancel={this.handleCancel} viewData={viewData} loader={this.state.viewLoader} />
-                <TransactionTimeSpan modal={this.state.modal} handleDateCancel={this.handleDateCancel} handleDateChange={this.handleDateChange} handleOk={this.handleOk} formDateRef={this.formDateRef} message={this.state?.message} searchObj={searchObj}/>
+        <TransactionSlips showModal={showModal} modalData={modalData} isLoading={isLoading} handleCancel={this.handleCancel} viewData={viewData} loader={this.state.viewLoader} />
+        <TransactionTimeSpan modal={this.state.modal} handleDateCancel={this.handleDateCancel} handleDateChange={this.handleDateChange} handleOk={this.handleOk} formDateRef={this.formDateRef} message={this.state?.message} searchObj={searchObj} />
       </>
 
     );

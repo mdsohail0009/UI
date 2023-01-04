@@ -7,6 +7,7 @@ import Moment from 'react-moment';
 import moment from 'moment';
 import List from "../grid.component";
 import BeneficiaryDrawer from './beneficiaryDrawer';
+import {Link,  withRouter } from "react-router-dom";
 import { setHeaderTab } from "../../reducers/buysellReducer"
 import ActionsToolbar from "../toolbar.component/actions.toolbar";
 import { getCurrencyLu} from './api'
@@ -167,11 +168,19 @@ const getCurrencyLookup = async () => {
   return (
     <>
       <div className="main-container">
-        <div className='bill-payment search-bg'> 
+      <div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/cockpit" /><span className="back-btnarrow">Back</span></div>
+        <div className='bill-payment'> 
           
-          <div className="billpaycoin-style"><span onClick={() => props.history?.push("/cockpit")} className='icon md c-pointer back backarrow-mr'></span><Translate content="menu_payments" component={Text} className="coin-viewstyle" /></div>
+          <div className="billpaycoin-style"><Translate content="menu_payments" component={Text} className="coin-viewstyle" /></div>
          
-          <Select
+         
+          <span className="mb-right">
+          <ActionsToolbar featureKey="billpayments" onActionClick={(key) => onActionClick(key)}/>
+          </span>
+          
+        </div>
+        <div className='bill-payment'> 
+        <Select
                   className="cust-input cust-disable"
                   placeholder="Select Currency"
                   onChange={(e) => handleCurrencyChange(e)}
@@ -192,11 +201,7 @@ const getCurrencyLookup = async () => {
                     </Option>
                   ))}
                 </Select>
-          <span className="mb-right">
-          <ActionsToolbar featureKey="billpayments" onActionClick={(key) => onActionClick(key)}/>
-          </span>
-          
-        </div>
+                </div>
         {errorWarning !== null && (
             <Alert
               className="mb-12"

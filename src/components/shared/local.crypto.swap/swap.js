@@ -55,7 +55,7 @@ const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "U
             autoFocus
             allowNegative={false}
           /></div>
-        <div className='swapcoin-alignemnt'><span>{!isSwaped ?localCurrency : cryptoCurrency}</span></div>
+        <div className='swapcoin-alignemnt crypto-coin-mbspace'><span>{!isSwaped ?localCurrency : cryptoCurrency}</span></div>
         </div>
         <div class="swap-text-sub swap-currencytext">
         <div className='swap-entryvalue'><NumberFormat
@@ -73,7 +73,7 @@ const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "U
               </div>
             )}
           /></div>
-        <div className='swapcoin-alignemnt'><span>{isSwaped ? localCurrency : cryptoCurrency}{" "}</span></div>
+        <div className='swapcoin-alignemnt'><span className='crypto-coin-mtspace'>{isSwaped ? localCurrency : cryptoCurrency}{" "}</span></div>
     </div>
         <>
           {/* <NumberFormat

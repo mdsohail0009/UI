@@ -185,7 +185,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .ant-btn:hover, .ant-btn:focus, .ant-btn:active{background-color: transparent;}
 .icon, .k-i-more-vertical.k-icon,.ant-select-arrow, .cust-check-outline.custom-checkbox input[type=checkbox]+span{background: var(--lightThemeIcons) no-repeat; display: inline-block; vertical-align: middle;}
 .ant-select-arrow .anticon{display: none;}
-.ant-select-arrow{width: 20px;height: 20px;background-position: -351px -7px;opacity: 0.5;}
+.ant-select-arrow{width: 20px;height: 20px;background-position: -351px -5px;opacity: 0.5;}
 .main-container{padding: 24px 16px; margin: auto;}
 .main-container .k-loading-color{background-color: transparent !important;}
 .text-white{color: #FFFFFF;}
@@ -249,7 +249,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .notify .ant-alert-action{margin: 15px 30px 0 30px;}
 .notify .ant-alert-action .ant-btn{color: var(--viewAll);font-size: 18px;font-weight: 500;}
 .notify .ant-alert-close-icon{font-size: 18px;color: var(--textDark) !important;}
-.custom-notify.cust-input .ant-select-selection-item, .cust-input .ant-select-selector, .cust-input .ant-input, .ant-select-single .ant-select-selector .ant-select-selection-item, .ant-select-single .ant-select-selector .ant-select-selection-placeholder{line-height: 36px !important;height: 38px !important;margin-top:2px;}
+.custom-notify.cust-input .ant-select-selection-item, .cust-input .ant-select-selector, .cust-input .ant-input, .ant-select-single .ant-select-selector .ant-select-selection-item, .ant-select-single .ant-select-selector .ant-select-selection-placeholder{line-height: 36px !important;height: 38px !important;margin-top:3px;}
 .drawer-balnstyle{font-size: 16px;font-weight: 700;color: var(--coinBal);}
 .newtransfer-card.ant-btn:hover, .newtransfer-card.ant-btn:focus, .newtransfer-card.ant-btn:active{background-color: var(--radioFill) !important; border: 2px solid var(--radioBorderfill);color: var(--coinPrice) !important;}
 .fund-transfer-input{margin-bottom: 0 !important;}
@@ -353,7 +353,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .ant-modal-confirm-btns button:first-child:hover{color: var(--textYellow);}
 /* .ant-picker-input > input, .ant-form-item-label > label{color: var(--textWhite);} */
 .search-bg{border: 1px solid rgba(0,0,0,.08);color: #313c46 !important;background-color: var(--drawerList) !important;padding: 15px 10px;border-radius: 20px;}
-.anticon-copy svg, .anticon-check svg{color: var(--subText);}
+.anticon-copy svg, .anticon-check svg{color: transparent;background: var(--lightThemeIcons) no-repeat !important; display: inline-block; vertical-align: middle;width: 26px;height: 26px;background-position: -8px -624px !important;}
 /*Modal End*/
 
 /* Dashboard start */
@@ -456,13 +456,19 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .receiveank-inner{padding-bottom: 20px;}
 .new-swap-design{border-radius: 5px;}
 .new-swap-subtext{background: var(--swapBg);height: 62px;border-radius: 5px 5px 0 0;display: flex;align-items: center;padding: 0 12px;margin-top: 0 !important;}
-.swap-entryvalue{flex: 0 0 175px;text-align: left;font-size: 26px;}
+.swap-entryvalue{flex: 0 0 175px;text-align: left;font-size: 26px;margin-top: 12px;}
 .swapcoin-alignemnt{ flex: auto;text-align: right;color: var(--sbCardText);font-size: 24px;}
 .swap-currencytext{background: var(--swapvalBg);height:62px;border-radius: 0 0 5px 5px;display: flex;align-items: center;padding: 0 12px;}
 .swap-custinputfield{border: 0 !important;padding: 0 !important;}
 .buy-usdt-btn .pop-btn, .sell-btn-style .pop-btn{margin-top: 20px;}
 .sell-radiobtn-style{flex: 0 0 236px;}
 .selection-currency-list{margin-bottom: 50px;}
+.drawer-title-style{display: flex;align-items: center;justify-content:center;margin-bottom: 50px;}
+.selctcoin-style{margin-bottom: 50px;}
+.drawer-crypto-bg{margin-right: 21px;}
+.label-style.drawer-subtextstyle{font-weight: 400;font-size: 16px;color: var(--paraBg);margin-top: 18px;}
+.crypto-coin-mbspace,.swap-custinputfield{margin-bottom: 10px;}
+.crypto-coin-mtspace{margin-top:12px;display: inline-block;}
 /*Buy/sell drawer End*/
 /* receive fait start */
 .drawer-subtext{font-weight: 700;font-size: 18px;color: var(--tablesub);}
@@ -541,6 +547,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .transaction-custom-table .pay-grid thead tr, .bash-market-table .pay-grid tbody tr td{border-bottom: 1px solid var(--tableborder) !important;}
 .transaction-custom-table .pay-grid thead tr th:first-child{padding-left: 30px;}
 .transaction-custom-table .pay-grid tbody tr td:first-child{padding-left: 30px;}
+.transctns-grid .ant-drawer-header, .transctns-grid .ant-drawer-body{padding-left: 100px;padding-right: 100px;}
 .bash-market-table .pay-grid thead  tr th{border-bottom: 0;}
 .bash-market-table .pay-grid tbody tr:last-child td, .bash-market-table .pay-grid tbody tr:first-child td{border-bottom: 0 !important;}
 .detail-popbtn{width: 463px;}
@@ -764,6 +771,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .db-kpi.vthicon{display: flex;align-items: center;min-height: 112px;}
 .custom-radiobtn.coin-alldetail{margin-top: 16px;margin-bottom: 16px;}
 .ant-modal-footer .ant-btn + .ant-btn:not(.ant-dropdown-trigger){margin-left: 0;}
+.coinveiw-newpage{width: 900px;margin:0 auto ;}
 /* coin view end */
 /* expand search */
 .search-box {position:relative;height: 46px;border-radius: 40px;padding: 10px;flex:300px 0 0 ;display: flex;align-items: center;}
@@ -879,7 +887,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
     /* .select-currency {height: 122px;} */
     .text-style{height: 140px;}
     /* .full-screenable-node{overflow: auto;} */
-    .val-updown{top: 100px;right: 38px;}
+    .val-updown{top: 45px;right: 18px;}
     .enter-val-container.swap-com{margin-bottom: 4px;}
     .import-note{width: 463px;}
     .tlv-header{max-width: 1200px;margin: auto;padding: 12px 0 !important;align-items: center;}

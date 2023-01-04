@@ -55,7 +55,7 @@ class WalletList extends Component {
                         <List.Item onClick={() => this.setState({ ...this.state, currency: item.currencyCode })}>
                             <Link>
                                 <List.Item.Meta className='drawer-coin'
-                                    avatar={<Image preview={false} src={item.imagePath} />}
+                                    avatar={<div className='crypto-bg'><span className='crypto-icon c-pointer ETH'></span></div>}
 
                                     title={<div className="wallet-title">{item.currencyCode}</div>}
                                 />
