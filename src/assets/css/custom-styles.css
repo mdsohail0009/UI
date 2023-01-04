@@ -513,7 +513,6 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .imprt-bg{background-color: var(--cardBG);padding: 24px;border-radius: 10px;margin-bottom: 36px;}
 .ab-note-style{font-weight: 700;font-size: 16px;color: var(--gridcontent);}
 .note-cont{font-weight: 400;font-size: 16px;color: var(--gridcontent);}
-.adbs-mb{margin-bottom: 16px;}
 .addressbook-grid .cust-tabs-fait .ant-tabs-nav{width: 100%;}
 .custom-alert-width{padding: 28px 22px;background-color:var(--addressList) !important;border-radius: 13px;color: var(--textWhite);}
 .kpi-List, .adressbook-fiatview{margin-top: 16px;}
@@ -547,6 +546,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .transaction-custom-table .pay-grid thead tr, .bash-market-table .pay-grid tbody tr td{border-bottom: 1px solid var(--tableborder) !important;}
 .transaction-custom-table .pay-grid thead tr th:first-child{padding-left: 30px;}
 .transaction-custom-table .pay-grid tbody tr td:first-child{padding-left: 30px;}
+.transctns-grid .ant-drawer-header, .transctns-grid .ant-drawer-body{padding-left: 100px;padding-right: 100px;}
 .bash-market-table .pay-grid thead  tr th{border-bottom: 0;}
 .bash-market-table .pay-grid tbody tr:last-child td, .bash-market-table .pay-grid tbody tr:first-child td{border-bottom: 0 !important;}
 .detail-popbtn{width: 463px;}
@@ -690,8 +690,9 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* send crypto addressbook end */
 
 /* transactions start  */
-.grid-title{font-weight: 800 !important;font-size: 28px !important;color: var(--white) !important;margin-bottom: 18px;}
+.grid-title{font-weight: 800 !important;font-size: 28px !important;color: var(--white) !important;margin-bottom: 24px !important;}
 .cust-list .k-grid{border-radius: 20px;}
+.cust-list{padding-top: 0 !important;}
 .cust-list .k-grid-header-wrap{border-top-left-radius: 20px;border-top-right-radius: 20px;background-color: var(--gridheader);}
 .ant-select-selection-item{font-weight: 500;font-size: 14px;color: var(--white);}
 .filter-content{align-items:center}
@@ -734,7 +735,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* .trade-graph .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){background: none;color: var(--textDark) !important;} */
 .trade-graph .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){color: var(--white);font-size: 14px;font-weight: 700;}
 .trade-graph .ant-radio-button-wrapper{color: var(--marketTitle);font-size: 14px;font-weight: 500;}
-.coin-viewstyle {font-size: 24px;font-weight: 800;color: var(--white);margin-bottom: 36px;text-transform: capitalize;}
+.coin-viewstyle {font-size: 28px;font-weight: 800;color: var(--white);margin-bottom: 36px;text-transform: capitalize;}
 .summary-count{margin-left: 12px;}
 .summary-count .coin-balstyle, .coin-name{font-size: 24px;font-weight: 800;color: var(--white);margin-bottom: 0;}
 .coin-name{margin-left:8px;}

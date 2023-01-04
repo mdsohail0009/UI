@@ -11,7 +11,7 @@ import List from "../grid.component";
 import { getTransactionSearch, getTransactionCurrency,transactionsView } from './api';
 import { setCurrentAction } from "../../reducers/actionsReducer";
 import { getFeaturePermissionsByKey } from '../shared/permissions/permissionService';
-import { withRouter } from "react-router-dom";
+import { withRouter,Link } from "react-router-dom";
 import { setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 import NumberFormat from "react-number-format";
 import moment from "moment/moment";
@@ -325,7 +325,11 @@ isErrorDispaly = (objValue) => {
           visible={this.props.showDrawer}
           className="side-drawer-full custom-gridresponsive transctns-grid"
         >
-          <div>
+    
+        </Drawer>
+        <div className="main-container">
+			<div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/" /><span className="back-btnarrow">Back</span></div>
+        <Translate content="transactions_history" component={Title} className="grid-title" />
             <Form
               initialValues={this.state.customerData}
               className="ant-advanced-search-form form form-bg search-bg pt-8"
@@ -422,10 +426,8 @@ isErrorDispaly = (objValue) => {
             excelFileName={'Transaction History'}
             exExportTitle={"Download Transaction History"}
           />
-        </Drawer>
-
-                <TransactionSlips showModal={showModal}  modalData={modalData} isLoading={isLoading} handleCancel={this.handleCancel} viewData={viewData} loader={this.state.viewLoader} />
-                <TransactionTimeSpan modal={this.state.modal} handleDateCancel={this.handleDateCancel} handleDateChange={this.handleDateChange} handleOk={this.handleOk} formDateRef={this.formDateRef} message={this.state?.message} searchObj={searchObj}/>
+        <TransactionSlips showModal={showModal} modalData={modalData} isLoading={isLoading} handleCancel={this.handleCancel} viewData={viewData} loader={this.state.viewLoader} />
+        <TransactionTimeSpan modal={this.state.modal} handleDateCancel={this.handleDateCancel} handleDateChange={this.handleDateChange} handleOk={this.handleOk} formDateRef={this.formDateRef} message={this.state?.message} searchObj={searchObj} />
       </>
 
     );

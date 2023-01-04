@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Typography,Tooltip,Button ,Modal,Alert,Popover} from 'antd';
+import React, {useState } from 'react';
+import { Typography,Tooltip,Button ,Modal,Alert,message} from 'antd';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import List from "../grid.component";
@@ -11,7 +11,7 @@ import {deleteBatchPayments,getInvalidTransactionData} from './api'
 import ActionsToolbar from "../toolbar.component/actions.toolbar";
 const { Title, Text, Paragraph } = Typography;
 const Batchpayments = (props) => {
-  const gridRef = React.createRef();
+  const gridRef = React.useRef();
   const [isAddBatchDrawer, setIsAddBatchDrawer] = useState(false);
   const [isProceedBatchPayment, setProceedBatchPayment] = useState(false);
   const [selection,setSelection]=useState([])
@@ -20,8 +20,7 @@ const Batchpayments = (props) => {
   const [deleteModal,setDeleteModal]=useState(false);
   const [setSelectData, setSetSelectData] = useState({});
   const [errorMessage,setErrorMessage]=useState(null); 
-  const [isLoading,setIsLoading]=useState(false);
-
+  const [isLoad,setIsLoad]=useState(false);
   const viewMode = (e) => {
     setProceedBatchPayment(false)
     const items=e.dataItem;
@@ -54,17 +53,17 @@ const Batchpayments = (props) => {
         },
         {
           field: "fileName", title: "File Name", filter: true, width: 200,
-          customCell: (props) => (
+          customCell: (properites) => (
             <td>
-              {props?.dataItem.status==="Draft"?<> {props?.dataItem?.fileName}</>:
-             <div className="gridLink" onClick={()=>viewMode(props)} >
-              {props?.dataItem?.fileName}</div>}
+              {properites?.dataItem.status==="Draft"?<div  className='draft-filename'> {properites?.dataItem?.fileName}</div>:
+             <div className="gridLink batch-filename" onClick={()=>viewMode(properites)} >
+              {properites?.dataItem?.fileName}</div>}
               </td>) 
         },
         { field: "createdDate", title: "Date Created", filter: true, filterType: "date", width: 200, 
-        customCell: (props) => (
+        customCell: (properites) => (
           <td>
-              {props.dataItem?.createdDate ? <>{ moment.utc(props.dataItem?.createdDate).local().format("DD/MM/YYYY hh:mm:ss A")}</> : props.dataItem?.createdDate}
+              {properites.dataItem?.createdDate ? <>{ moment.utc(properites.dataItem?.createdDate).local().format("DD/MM/YYYY hh:mm:ss A")}</> : properites.dataItem?.createdDate}
           
           </td>
         )
@@ -72,16 +71,16 @@ const Batchpayments = (props) => {
         { field: "currency", title: 'Currency', filter: true, width: 150,dataType: "number", filterType: "numeric" },
         { field: "status", title: 'Status', filter: true, width: 150, },
         { field: "numberOfTransactions", title: 'Number of Transactions', filter: true, width: 250,dataType: "number", filterType: "numeric", 
-        customCell: (props) => (<td>
-        {props?.dataItem?.numberOfTransactions!==0? <div className="gridLink" onClick={()=>docPreview(props.dataItem)}
-        >{props?.dataItem?.numberOfTransactions} 
-        </div>:<>{props?.dataItem?.numberOfTransactions}</>}</td>) 
+        customCell: (properites) => (<td>
+        {properites?.dataItem?.numberOfTransactions!==0? <div className="gridLink" onClick={()=>docPreview(properites.dataItem)}
+        >{properites?.dataItem?.numberOfTransactions} 
+        </div>:<>{properites?.dataItem?.numberOfTransactions}</>}</td>) 
      },
      { field: "validTransactionCount", title: 'Valid Transactions', filter: true, dataType: "number", filterType: "numeric", width: 210, },
      { field: "invalidTransactionCount", title: 'Invalid Transactions', filter: true, dataType: "number", filterType: "numeric", width: 210,
-         customCell: (props) => (
-         <td>{props?.dataItem?.invalidTransactionCount!==0?<div onClick={()=>getInvalidTransaction(props?.dataItem)} className="gridLink" >{props?.dataItem?.invalidTransactionCount}
-           </div>:<>{props?.dataItem?.invalidTransactionCount}</>}
+         customCell: (properites) => (
+         <td>{properites?.dataItem?.invalidTransactionCount!==0?<div onClick={()=>getInvalidTransaction(properites?.dataItem)} className="gridLink" >{properites?.dataItem?.invalidTransactionCount}
+           </div>:<>{properites?.dataItem?.invalidTransactionCount}</>}
            
            </td>)
      },
@@ -126,13 +125,13 @@ const Batchpayments = (props) => {
 
     setErrorWarning("Please select the record");
   } 
-  else if(setSelectData.status === "Pending"){
+  else if(setSelectData.status != "Draft"){
     setErrorWarning("Only draft record can proceed")
   }
-  else if(setSelectData.validTransactionCount == 0){
+  else if(setSelectData.validTransactionCount === 0){
     setErrorWarning("You don't have valid transactions to proceed")
   }
-  else if(setSelectData.fileUploadStatus == "File is being processed please wait a while"){
+  else if(setSelectData.fileUploadStatus === "File is being processed please wait a while"){
     setErrorWarning("Upload status is in progress so you can't proceed")
   }
   else {
@@ -145,7 +144,7 @@ const Batchpayments = (props) => {
     if(selection.length === 0){
       setErrorWarning("Please select the  record")
     }
-    else if(setSelectData.status == "Pending"){
+    else if(setSelectData.status != "Draft"){
       setErrorWarning("Only draft record can delete")
     }
     else{
@@ -153,21 +152,24 @@ const Batchpayments = (props) => {
     }
    }
     const deleteDetials = async () => {
-      setIsLoading(true);
+      setIsLoad(true);
       const res = await deleteBatchPayments(selection[0])
       if (res.ok) {
-       
-        setTimeout(() => {
           gridRef?.current?.refreshGrid();
-      }, 1000)
       setDeleteModal(false);
-        setIsLoading(false);
+      setIsLoad(false);
         setSelection([]);
+        message.success({
+          content:"Batch record deleted successfully",
+          className: "custom-msg",
+          duration: 3,
+        });
       }
       else{
         setErrorMessage(isErrorDispaly(res));
+        gridRef?.current?.refreshGrid();
         setDeleteModal(false);
-        setIsLoading(false);
+        setIsLoad(false);
         setSelection([]);
       }
     };
@@ -215,28 +217,18 @@ const Batchpayments = (props) => {
     };
       return (
         <>
-       
-       
           <div className='main-container'>
-          
-              
-              
-                  <div className='d-flex justify-content align-center mb-16'>
+                  <div className='batchpayment-summary justify-content align-center mb-16'>
                 
-                      <Title className="basicinfo mb-0"><span className='icon md c-pointer back backarrow-mr' onClick={gotoDashboard}></span><Translate content="batch_payments" component={Text} className="basicinfo" />
+                      <Title className="basicinfo mb-0"><span className='icon md c-pointer back mr-8' onClick={gotoDashboard}></span><Translate content="batch_payments" component={Text} className="basicinfo" />
                                       
-                      <Text className='ml-4 text-yellow fs-16'> Proceed{" "}(<span className="icon md process-icon"/>)</Text><Text className='ml-4 text-white fs-16'>: To proceed the transaction,{" "}please click on proceed icon</Text>           
+                      <Text className='ml-4 fs-16 webkit-color'> Proceed{" "}(<span className="icon md process-icon"/>)</Text><Text className='fs-14 text-white fw-400 mb-12'>: To proceed the transaction,{" "}please click on proceed icon</Text>           
                       </Title>
                       <div className='batch-actions'>
                   <span className="mb-right">
           <ActionsToolbar featureKey="Batch_Payment" onActionClick={(key) => onActionClick(key)}/>
           </span>
-                  
-                  
                   </div>
-                      
-              
-                  
               </div>
               {errorWarning !== null && (
             <Alert
@@ -268,17 +260,18 @@ const Batchpayments = (props) => {
               {isAddBatchDrawer && 
               <AddBatchPayment
                   showDrawer={isAddBatchDrawer}
-                  onClose={(isPreviewBack) => {
-                    closeDrawer(isPreviewBack);
+                  onClose={() => {
+                    closeDrawer();
                 }}
               /> }
               {isProceedBatchPayment && 
               <PaymentPreview 
               showDrawer={isProceedBatchPayment}
               id={selectedObj}
-              onClose={(isPreviewBack) => {
-                  closeDrawer(isPreviewBack);
+              onClose={() => {
+                  closeDrawer();
               }}
+              currency={setSelectData?.currency}
               ></PaymentPreview>
               }        
           </div>    
@@ -291,14 +284,13 @@ const Batchpayments = (props) => {
           footer={[
             <>
             <div className='cust-pop-up-btn crypto-pop bill-pop'>
-              <Button className="pop-btn"
+              <Button
+                className="pop-cancel btn-width  bill-cancel"
+                onClick={()=>deleteModalCancel()}>No</Button>
+              <Button className="pop-btn px-36 btn-width"
                 onClick={deleteDetials}
-                loading={isLoading}
-                >Ok</Button>
-                <Button
-                className="cust-cancel-btn"
-                onClick={()=>deleteModalCancel()}>Cancel</Button>
-                </div>
+                loading={isLoad}
+                >Yes</Button></div>
             </>
           ]}
         >
