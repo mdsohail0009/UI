@@ -353,7 +353,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .ant-modal-confirm-btns button:first-child:hover{color: var(--textYellow);}
 /* .ant-picker-input > input, .ant-form-item-label > label{color: var(--textWhite);} */
 .search-bg{border: 1px solid rgba(0,0,0,.08);color: #313c46 !important;background-color: var(--drawerList) !important;padding: 15px 10px;border-radius: 20px;}
-.anticon-copy svg, .anticon-check svg{color: transparent;background: var(--lightThemeIcons) no-repeat !important; display: inline-block; vertical-align: middle;width: 26px;height: 26px;background-position: -8px -624px !important;margin-left: 8px;}
+.anticon-copy svg, .anticon-check svg{color: transparent;background: var(--lightThemeIcons) no-repeat !important; display: inline-block; vertical-align: middle;width: 26px;height: 26px;background-position: -8px -624px !important;}
 /*Modal End*/
 
 /* Dashboard start */
