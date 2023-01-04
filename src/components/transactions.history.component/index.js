@@ -3,7 +3,7 @@ import {
   Drawer,
   Typography,
   Button,
-  Row, Col, Select, Form,Input,Tooltip} from "antd";
+  Row, Col, Select, Form,Input} from "antd";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
@@ -325,7 +325,9 @@ isErrorDispaly = (objValue) => {
           visible={this.props.showDrawer}
           className="side-drawer-full custom-gridresponsive transctns-grid"
         >
-          <div>
+    
+        </Drawer>
+        <div>
             <Form
               initialValues={this.state.customerData}
               className="ant-advanced-search-form form form-bg search-bg pt-8"
@@ -422,10 +424,8 @@ isErrorDispaly = (objValue) => {
             excelFileName={'Transaction History'}
             exExportTitle={"Download Transaction History"}
           />
-        </Drawer>
-
-                <TransactionSlips showModal={showModal}  modalData={modalData} isLoading={isLoading} handleCancel={this.handleCancel} viewData={viewData} loader={this.state.viewLoader} />
-                <TransactionTimeSpan modal={this.state.modal} handleDateCancel={this.handleDateCancel} handleDateChange={this.handleDateChange} handleOk={this.handleOk} formDateRef={this.formDateRef} message={this.state?.message} searchObj={searchObj}/>
+        <TransactionSlips showModal={showModal} modalData={modalData} isLoading={isLoading} handleCancel={this.handleCancel} viewData={viewData} loader={this.state.viewLoader} />
+        <TransactionTimeSpan modal={this.state.modal} handleDateCancel={this.handleDateCancel} handleDateChange={this.handleDateChange} handleOk={this.handleOk} formDateRef={this.formDateRef} message={this.state?.message} searchObj={searchObj} />
       </>
 
     );
