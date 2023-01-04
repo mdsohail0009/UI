@@ -175,7 +175,7 @@ isErrorDispaly = (objValue) => {
 					)}
             </div>
                 <div className="text-right mt-12">
-                    <Button className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn mr-8 ml-0 primary-btn pop-cancel"
+                    <Button className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn ml-0 primary-btn pop-cancel"
                         style={{ width: 100, height: 50 }}
                         onClick={this.props.onClose}>Back</Button>
                     <Button className="pop-btn custom-send sell-btc-btn ml-8" loading={this.state.isLoad}
@@ -196,15 +196,7 @@ isErrorDispaly = (objValue) => {
                        }
                <Modal
                     visible={this.state.showModal}
-                    title="Proceed with Transactions"
-                    closeIcon={
-                        <Tooltip title="Close">
-                            <span
-                                className="icon md close-white c-pointer"
-                                onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false })}
-                            />
-                        </Tooltip>
-                    }
+                    closeIcon={false}
                     destroyOnClose={true}
                   
                     footer={null}

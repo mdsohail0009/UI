@@ -199,19 +199,6 @@ const AddressFiatView = (props) => {
 													</div>
 												</div>
 											</Col>}
-											{fiatAddress?.email && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
-													<label className="kpi-label">Email</label>
-													<div className="kpi-val">
-														<div className=" kpi-val">
-															{fiatAddress?.email === " " ||
-																fiatAddress?.email === null
-																? "-"
-																: fiatAddress?.email}
-														</div>
-													</div>
-												</div>
-											</Col>}
 											{fiatAddress?.phoneNumber && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">Phone Number</label>

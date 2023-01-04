@@ -124,30 +124,31 @@ export function withState(WrappedGrid) {
                             <table width="100%">
                                 <tr>
 
-                                    <td colspan="2" style={{ fontSize: "26px", fontWeight: 700, textAlign: "center"}}><h1>Suissebase Account Statement</h1></td>
+                                    <h1 style={{ fontSize: "26px", fontWeight: 700, textAlign: "center",position:"relative",left:"80px",top:"20px"}}>Suissebase Account Statement</h1>
 
                                 </tr>
                             </table>
-                            <div className='statement-header logo-content'>
+                            <div className='statement-header logo-content'style={{margin:"20px 50px",width:"90%"}}>
                                 <div> <img src={logColor} className="logo" /></div>
                                 {
-                                    <ul style={{ fontWeight: 500, margin: "0", padding: "0" }}>
-                                        <li> Name : {`${this.state.profile.firstName} ${this.state.profile.lastName}`}</li>
-                                        <li> Email : {this.state.profile.email}</li>
-                                        <li> Phone : {this.state.profile.phoneNo || this.state.profile.phoneNumber}</li>
+                                    <ul style={{ fontWeight: 500, margin: "0", padding: "0",}}>
+                                        <li><b> Name : {`${this.state.profile.firstName} ${this.state.profile.lastName}`}</b></li>
+                                        <li><b> Email : {this.state.profile.email}</b></li>
+                                        <li><b>Phone : {this.state.profile.phoneNo || this.state.profile.phoneNumber}</b></li>
                                     </ul>
                                 }
                             </div>
                             <div>
-                                <table className="transaction-pdf-template">
+                                <table className="transaction-pdf-template" width="100%">
                                     <thead style={{ background: "#cccccc" }}>
-                                        <th >Transaction Id</th>
+                                        <th >Transaction ID</th>
                                         <th >Date</th>
                                         <th >Type</th>
                                         <th >Wallet</th>
                                         <th >Value</th>
                                         <th >Sender/Recipient Full Name</th>
                                         <th >Bank Account Number /IBAN</th>
+                                        <th>Hash</th>
                                         <th >Status</th>
                                     </thead>
                                     <tbody>
@@ -156,9 +157,10 @@ export function withState(WrappedGrid) {
                                             <td >{moment(item.date).format("DD/MM/YYYY hh:mm a")}</td>
                                             <td >{item.docType}</td>
                                             <td >{item.wallet}</td>
-                                            <td >{this.getCombineFieldValue(item, ["credit", "debit"])}</td>
+                                            <td >{this.getCombineFieldValue(item, ["debit","credit"])}</td>
                                             <td >{this.getCombineFieldValue(item, ["senderName", "beneficiryName"])}</td>
                                             <td >{this.getCombineFieldValue(item, ["accountnumber", "iban"])}</td>
+                                            <td >{item.hash}</td>
                                             <td >{item.state}</td>
                                         </tr>)}
                                     </tbody>

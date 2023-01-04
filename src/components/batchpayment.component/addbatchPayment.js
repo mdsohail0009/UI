@@ -39,6 +39,7 @@ class AddBatchPayment extends Component {
         loader:true,
         isVerificationEnable: false,
         isVarificationLoader: true,
+        btnloader:false,
     }
 
     componentDidMount() {
@@ -217,12 +218,13 @@ downLoadPreview=()=>{
 }
     }
     handleNext=async()=>{
+      this.setState({...this.state,btnloader:true})
         const res=await confirmGetDetails(this.state.reefreshData?.id)
         if(res.ok){
-            this.setState({ ...this.state, showModal: false,errorMessage:null, uploadErrorModal: false, paymentPreview: true,worningMessage:null })
+            this.setState({ ...this.state, showModal: false,errorMessage:null, uploadErrorModal: false, paymentPreview: true,worningMessage:null,btnloader:false })
         }
         else{
-            this.setState({...this.state,errorMessage:this.isErrorDispaly(res)})
+            this.setState({...this.state,errorMessage:this.isErrorDispaly(res),btnloader:false})
         }
     }
     confirmTransaction=async(id)=>{
@@ -232,7 +234,7 @@ downLoadPreview=()=>{
         }
     }
     render() {
-        const { uploadLoader, refreshBtnLoader ,errorMessage,worningMessage,isVerificationEnable} = this.state;
+        const { uploadLoader, refreshBtnLoader ,errorMessage,worningMessage,isVerificationEnable,btnloader} = this.state;
         return (
             <>
                <div ref={this.useDivRef}></div>
@@ -361,7 +363,7 @@ downLoadPreview=()=>{
                             Exit
                           </Button>
                           <Button
-                            className="pop-btn px-36 ml-36"
+                            className="pop-btn px-36 btn-space"
                             onClick={this.refreshTransaction}  disabled={uploadLoader}
                             loading={refreshBtnLoader}
                           >
@@ -391,12 +393,13 @@ downLoadPreview=()=>{
                         <Tooltip title="Close">
                             <span
                                 className="icon md close-white c-pointer"
-                                onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false })}
+                                onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false,btnloader:false })}
                             />
                         </Tooltip>
                     }
                     footer={ <Button className="primary-btn pop-btn"
                     style={{ width: 100, height: 50 }}
+                   loading={btnloader}
                     onClick={this.handleNext}>Next</Button>}>
                         <>
                         {errorMessage !== null && (
