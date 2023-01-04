@@ -41,7 +41,6 @@ class SelectCrypto extends Component {
     }
     componentDidMount() {
         getFeaturePermissionsByKeyName(`trade_buy`)
-        this.props.getCoinsList(this.props.userProfileInfo?.id);
         this.props.setTabKey();
         this.EventTrack()
     }
@@ -224,8 +223,8 @@ const connectDispatchToProps = dispatch => {
         setWallet: (wallet) => {
             dispatch(setWallet(wallet))
         },
-        getCoinsList: (id) => {
-            dispatch(fetchMemberFiat(id));
+        getCoinsList: () => {
+            dispatch(fetchMemberFiat());
         },
         setTabKey: () => dispatch(setTab(1))
 
