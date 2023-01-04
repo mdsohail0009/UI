@@ -547,6 +547,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .transaction-custom-table .pay-grid thead tr, .bash-market-table .pay-grid tbody tr td{border-bottom: 1px solid var(--tableborder) !important;}
 .transaction-custom-table .pay-grid thead tr th:first-child{padding-left: 30px;}
 .transaction-custom-table .pay-grid tbody tr td:first-child{padding-left: 30px;}
+.transctns-grid .ant-drawer-header, .transctns-grid .ant-drawer-body{padding-left: 100px;padding-right: 100px;}
 .bash-market-table .pay-grid thead  tr th{border-bottom: 0;}
 .bash-market-table .pay-grid tbody tr:last-child td, .bash-market-table .pay-grid tbody tr:first-child td{border-bottom: 0 !important;}
 .detail-popbtn{width: 463px;}
