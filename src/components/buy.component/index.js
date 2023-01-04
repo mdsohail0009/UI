@@ -107,12 +107,12 @@ class BuySell extends Component {
         return (<Drawer
             title={[<div className="side-drawer-header">
                 {this.renderTitle()}
-                {((this.props.isTabKey && this.props.buySell?.stepcode !=="sellsuccess" && !this.props.buySell?.selectedSellCoin) || this.props.buySell?.sellHeader) && <div className="text-center">
+                {/* {((this.props.isTabKey && this.props.buySell?.stepcode !=="sellsuccess" && !this.props.buySell?.selectedSellCoin) || this.props.buySell?.sellHeader) && <div className="text-center">
                     <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin }} className="drawer-maintitle" content="sell_assets" component={Paragraph} />
-                </div>}
-                {((!this.props.isTabKey && !this.props.buySell?.sellHeader) || this.props.buySell?.selectedSellCoin)&& <div className="text-center">
-                    <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin }} className="drawer-maintitle" content={this.props.buySell.stepTitles[config[this.props.buySell.stepcode]]} component={Paragraph} />
-                </div>}
+                </div>} */}
+                {/* {((!this.props.isTabKey && !this.props.buySell?.sellHeader) || this.props.buySell?.selectedSellCoin)&& <div className="text-center">
+                    <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin }} className="drawer-maintitle buy-sellprocess" content={this.props.buySell.stepTitles[config[this.props.buySell.stepcode]]} component={Paragraph} />
+                </div>} */}
                 {this.renderIcon()}</div>]}
             placement="right"
             closable={true}
