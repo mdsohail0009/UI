@@ -233,7 +233,7 @@ class PaymentSummary extends Component {
 					
 	          <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
 								<img src={pending} alt={`Processed`}  width={80}/>
-									<Title className='text-white'>Declaration form sent!</Title>
+									<Title className='text-white-30 my-16 mb-0'>Declaration form sent successfully</Title>
 								<Paragraph className='text-white'>Declaration form has been sent to {this.props.customer?.email}. 
 									Please review and sign the document in your email to whitelist your address.
 									Please note that your withdrawal will only be processed once the address has been approved by compliance. </Paragraph>
