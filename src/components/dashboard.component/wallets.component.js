@@ -157,8 +157,7 @@ class Wallets extends Component {
                     </div>
                         </List.Item>}
                 />
-                )}  
-                <Translate content="suissebase_title_crypto" component={Title} className="fs-24 fw-600 text-white px-4 mb-16 mt-4" />
+                )}
                 <SuissebaseFiat showDrawer={this.state.sendReceiveDrawer} valNum={this.state.valNum} onClose={() => this.closeDrawer()} />
                 {this.state.buyFiatDrawer && <MassPayment showDrawer={this.state.buyFiatDrawer} tabData={{ tabVal: this.state.valNum, walletCode: this.state.selctedVal }} onClose={() => this.closeDrawer()} />}
                 {this.state.transactions && <TransactionsHistory
