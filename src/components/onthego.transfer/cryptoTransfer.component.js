@@ -120,28 +120,26 @@ class OnthegoCryptoTransfer extends Component {
         }
     }
     amountNext = async (values) => {
+        debugger
         this.setState({ ...this.state, error: null });
         let amt = values.amount;
         amt = typeof amt == "string" ? amt?.replace(/,/g, "") : amt;
-        const { withdrawMaxValue, withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
+        const {  withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null });
         if (amt === "") {
             this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('enter_amount') });
             this.myRef.current.scrollIntoView();
         }
-        else if (amt === 0) {
+        else if (parseFloat(amt) === 0) {
             this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_greater_zero') });
             this.myRef.current.scrollIntoView();
         }
-        else if (amt < withdrawMinValue) {
+        else if (parseFloat(amt) < withdrawMinValue) {
             this.setState({ ...this.state, errorMsg: null, error: apicalls.convertLocalLang('amount_min') + " " + withdrawMinValue });
             this.myRef.current.scrollIntoView();
         }
-        // else if (amt > withdrawMaxValue) {
-        //     this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_max') + " " + withdrawMaxValue });
-        //     this.myRef.current.scrollIntoView();
-        // } 
-        else if (amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
+       
+        else if (parseFloat(amt) > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
             this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('insufficient_balance') });
             this.myRef.current.scrollIntoView();
         }
@@ -254,6 +252,8 @@ class OnthegoCryptoTransfer extends Component {
 
     goToAddressBook = () => {
         let _amt = this.enteramtForm.current.getFieldsValue().amount
+        _amt = typeof _amt == 'string' ? _amt.replace(/,/g, '') : _amt
+
         this.setState({ ...this.state, errorMsg: null, error: null })
         if (_amt > 0) {
             if (_amt < this.props.selectedWallet?.withdrawMinValue) {
