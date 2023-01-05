@@ -403,7 +403,8 @@ class HeaderPermissionMenu extends Component {
                             </Popover>
                         </li>
                         <li
-                            onClick={() => this.onMenuItemClick("auditLogs", { key: "auditLogs", path: "/modal" })}
+                            onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/auditlogs" })}
+                            
                         >
                             <Link>
                                 <Translate

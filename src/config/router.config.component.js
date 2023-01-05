@@ -35,6 +35,7 @@ const AddressBook = React.lazy(() => import("../components/addressbook.component
 const Cases = React.lazy(() => import("../components/case.component/cases"))
 const CaseView = React.lazy(() => import("../components/case.component/caseView"))
 const Batchpayments = React.lazy(() => import("../components/batchpayment.component"));
+const AuditLogs = React.lazy(() => import("../components/auditlogs.component"));
 const BatchpaymentView = React.lazy(() => import("../components/batchpayment.component/uploadGrid"));
 const paymentPreview = React.lazy(() => import("../components/batchpayment.component/paymentPreview"));
 // const ErrorPage = React.lazy(() => import("../components/internalTransfer.component/errorpage"));
@@ -62,6 +63,7 @@ class RouteConfig extends Component {
     return <Switch>
       <React.Suspense fallback={<div className="loader">Loading...</div>}>
         <ReactRoute path="/transactions" component={Transactions} />
+        <ReactRoute path="/auditlogs" component={AuditLogs} />
         <Route path="/cockpit" component={Dashboard} />
         <ReactRoute path="/callback" component={CallbackPage} />
         <ReactRoute path="/login" component={Login} />

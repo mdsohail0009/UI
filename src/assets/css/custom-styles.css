@@ -485,7 +485,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .imp-note{font-weight: 700;font-size: 20px;color: var(--tablesub);}
 .custom-display{margin-left: 12px;}
 .cust-tabs-fait .ant-tabs-tab + .ant-tabs-tab{margin: 0 0 0 0px;}
-.cust-tabs-fait .ant-tabs-nav{margin: 0 auto;justify-content: center;margin-bottom: 26px;} 
+.cust-tabs-fait .ant-tabs-nav{margin: 0 auto;justify-content: center;margin-bottom: 26px;width: 480px;} 
 /* width: 350px; */
 /* receive fait end */
 /* receive crypto start */
