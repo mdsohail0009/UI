@@ -54,8 +54,8 @@ class WalletList extends Component {
 
                         <List.Item onClick={() => {
                             
-                            if (this.props.onWalletSelect) { this.props.onWalletSelect(item.currencyCode) }
-                            this.setState({ ...this.state, selectedvalue: item.currencyCode });
+                            if (this.props.onWalletSelect) { this.props.onWalletSelect(item.id) }
+                            this.setState({ ...this.state, selectedvalue: item.id });
                            // this.props.sendCurrency(e)      
                         }}>
                             <Link>

@@ -437,15 +437,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .swap-to{ background-color: var(--bgSwapFrom);}
 .side-drawer-full .ant-table-cell{border-color: var(--borderLight);color: var(--textWhite);vertical-align: top;}
 .bg-color{padding: 8px 6px;background: #ffffff1c;border-radius: 6px;}
-.side-drawer-full .ant-table-cell:nth-child(2) .ant-table-column-title{width: 105px;}
-.side-drawer-full .ant-table-cell:nth-child(3) .ant-table-column-title{width: 100px;}
-.side-drawer-full tr th{border: none;}
-.side-drawer-full tr th.ant-table-cell-scrollbar{box-shadow: none;}
-.side-drawer-full .ant-table-tbody p.fs-16{line-height: normal;}
-.side-drawer-full .ant-pagination-disabled .ant-pagination-item-link, .side-drawer-full .ant-pagination-disabled:hover .ant-pagination-item-link, .side-drawer-full .ant-pagination-disabled:focus-visible .ant-pagination-item-link{color: rgb(255 251 251 / 25%);background-color: transparent;}
-.side-drawer-full .ant-pagination-item-active{border-color: #ffffff !important;background: transparent;}
-.side-drawer-full .ant-pagination-item-active a, .ant-table-column-sorter-up.active, .ant-table-column-sorter-down.active{color: #ffdb1a !important;}
-.side-drawer-full .ant-table-column-title{text-transform: capitalize;font-size: 16px;font-weight: 500;}
+
 .ant-table-container table > thead > tr:first-child th:last-child{border-top-right-radius:0}
 .widthdraw-pop .ant-modal-close-x{position: absolute;width: 22px;height: 22px;line-height: 22px;top: 16px;right: 16px;}
 .markets-panel .ant-table-tbody > tr.ant-table-placeholder:hover > td{background: var(--bgGrey) !important;}
@@ -953,7 +945,7 @@ input[type=number]::-webkit-outer-spin-button {-webkit-appearance: none;-moz-app
 .pay-grid .ant-table-cell-scrollbar{box-shadow: none;}
 .pay-grid .ant-table-body{height: 450px;}
 td.ant-table-column-sort{background: transparent;}
-.ant-table-thead th.ant-table-column-sort{background: var(--bgDarkGrey);}
+
 .custom-radio-btn.buysell-toggle{background-color: transparent;}
 .custom-table.pay-grid.view .ant-table-tbody > tr.ant-table-placeholder:hover > td{background-color: transparent;}
 .address-book-table .pay-grid tbody td{padding: 4px 8px 4px 8px;}

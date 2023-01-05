@@ -160,8 +160,10 @@ class SelectCrypto extends Component {
                             type="error"
                         />
                     )}
+                    {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="error" message={apicalls.convertLocalLang('buy_crypto')} description={this.state.error?.message} />}
                 {/* <div className='drawer-title-style'><div className='crypto-bg drawer-crypto-bg'>
-                      <span className={`crypto-icon c-pointer BTC`}  /></div><div className='drawer-maintitle'>Buy Crypto</div></div>{!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="error" message={apicalls.convertLocalLang('buy_crypto')} description={this.state.error?.message} />} */}
+                      <span className={`crypto-icon c-pointer BTC`}  /></div><div className='drawer-maintitle'>Buy Crypto</div></div>
+                      {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="error" message={apicalls.convertLocalLang('buy_crypto')} description={this.state.error?.message} />} */}
                 <div className="selectcrypto-container">
                     <Card className="crypto-card select " bordered={false}>
                     {/* <div className=''> */}
@@ -221,7 +223,8 @@ class SelectCrypto extends Component {
                     {<div><Translate content="thousandKText" component={Paragraph} className="buy-paragraph " />
                     <Translate content="contact_amount_text" component={Paragraph} className="buy-paragraph" />
                      <div className="buy-usdt-btn">
-                        <SuisseBtn title="PreviewBuy" loading={this.state.btnLoading} onRefresh={() => this.refresh()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
+                        {/* <SuisseBtn title="PreviewBuy" loading={this.state.btnLoading} onRefresh={() => this.refresh()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} /> */}
+                        <SuisseBtn autoDisable={true} title="PreviewSell" className="pop-btn" onClick={() => this.handlePreview()} />
                     </div> </div>}
 
                     </Card>

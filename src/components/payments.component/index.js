@@ -179,6 +179,7 @@ const getCurrencyLookup = async () => {
           </span>
           
         </div>
+       
         <div className='bill-payment'> 
         <Select
                   className="cust-input cust-disable"
@@ -211,7 +212,8 @@ const getCurrencyLookup = async () => {
               showIcon
             />
           )}
-        <div className="box">
+           </div>
+        {/* <div className="box"> */}
           <List
            className="bill-grid"
             showActionBar={false}
@@ -220,7 +222,7 @@ const getCurrencyLookup = async () => {
             columns={gridColumns}
             ref={gridRef}
           />
-        </div>
+       
         <BeneficiaryDrawer
           showDrawer={beneficiaryDrawer}
           onClose={() => closeDrawer()}
@@ -244,7 +246,6 @@ const getCurrencyLookup = async () => {
         >
           <AddressbookV3 type="manual" isFiat={cryptoFiat} onCancel={() => closeBuyDrawer()} props={props} isFiatHeadUpdate={isFiatHeading}/>
         </Drawer>
-      </div>
     </>
   )
         }

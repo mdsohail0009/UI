@@ -358,9 +358,9 @@ class OnthegoCryptoTransfer extends Component {
                   {this.props.selectedWallet?.coin}
                 </Title> */}
 
-              
-                <Form.Item
-                  className="custom-forminput custom-label fund-transfer-input send-crypto-input crypto-blc-inpt new-swap-subtext send-crypto-enrty" 
+                <div className="enter-val-container swap-com swap-text-sub new-swap-subtext  send-crypto-enrty">
+                  <div className='swap-entryvalue send-crypto-style'>    <Form.Item
+                  className="custom-forminput custom-label fund-transfer-input send-crypto-input crypto-blc-inpt " 
                   name="amount"
                   required
                   rules={[
@@ -372,7 +372,7 @@ class OnthegoCryptoTransfer extends Component {
                 >
                  <NumberFormat
                     customInput={Input}
-                    className="inputfont-style text-center inputbg-fonts swap-text-sub"
+                    className="inputfont-style  inputbg-fonts swap-text-sub"
                     placeholder={"Enter Amount"}
                     maxLength="20"
                     bordered={false}
@@ -383,7 +383,7 @@ class OnthegoCryptoTransfer extends Component {
                     thousandSeparator={true}
                     onKeyDown={this.keyDownHandler}
                     addonBefore={this.state.selectedCurrency}
-                    suffix={this.props.selectedWallet?.coin}
+                    // suffix={this.props.selectedWallet?.coin}
                     onValueChange={() => {
                         this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: null,error: null })
                     }}
@@ -391,8 +391,9 @@ class OnthegoCryptoTransfer extends Component {
                   {/* <div className='swapcoin-alignemnt crypto-coin-mbspace'><span>{this.props.selectedWallet?.coin}</span></div> */}
                   
 
-                </Form.Item>
-
+                </Form.Item></div>
+                <div className='swapcoin-alignemnt crypto-coin-mbspace coin-name-mb'><span>{this.props.selectedWallet?.coin}</span></div>
+</div>
               </Row>
               <div className="display-items">
                   <div class="text-center mr-16 small-btns">

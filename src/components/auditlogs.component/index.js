@@ -274,7 +274,7 @@ class AuditLogs extends Component {
               </Row>
             </Form>
           </div>
-          <List className="cust-list main-container"
+          <List className=""
             url={gridUrl} additionalParams={searchObj} ref={this.gridRef}
             key={gridUrl}
             columns={this.gridColumns}
