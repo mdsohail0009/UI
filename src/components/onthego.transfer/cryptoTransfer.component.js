@@ -408,11 +408,11 @@ class OnthegoCryptoTransfer extends Component {
                   </div>
               <Row gutter={[16,0]} className="text-center transfer-designstyle">
               <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mobile-viewbtns mobile-btn-pd">
-                  <Form.Item className="text-center">
+                  <Form.Item className="">
                     <Button
                       htmlType="submit"
                       size="large"
-                      className="newtransfer-card"
+                      className="newtransfer-card text-left"
                       loading={this.state.newtransferLoader}
                     >
                       New Transfer
@@ -420,11 +420,11 @@ class OnthegoCryptoTransfer extends Component {
                   </Form.Item>
                 </Col>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mobile-viewbtns mobile-btn-pd">
-                  <Form.Item className="text-center">
+                  <Form.Item className="">
                     <Button
                       htmlType="button"
                       size="large"
-                      className="newtransfer-card"
+                      className="newtransfer-card text-left"
                       loading={this.state.addressLoader}
                       disabled={this.state.newtransferLoader}
                       onClick={this.goToAddressBook}

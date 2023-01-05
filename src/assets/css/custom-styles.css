@@ -643,7 +643,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .upload-btn-mt{margin-top: 16px;}
 .cust-tabs-fait .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{color: var(--tabLine) !important;font-size: 16px;font-weight: 700;}
 .cust-tabs-fait  .ant-tabs-ink-bar{background: var(--tabLine);}
-.ant-upload-drag.upload{border-radius: 30px !important;background-color: var(--upload) !important;border-color:var( --borderColor) !important;}
+.ant-upload-drag.upload{border-radius: 10px !important;background-color: var(--upload) !important;border-color:var( --borderColor) !important;}
 .upload .ant-upload{padding: 30px 0 !important;}
 .cust-tabs-fait .ant-tabs-tab .ant-tabs-tab-btn{color: var(--sbCardText)!important;font-size: 16px;font-weight: 400;}
 .ant-tabs-top > .ant-tabs-nav::before, .ant-tabs-bottom > .ant-tabs-nav::before, .ant-tabs-top > div > .ant-tabs-nav::before, .ant-tabs-bottom > div > .ant-tabs-nav::before{border-bottom: 1px solid var(--inputBorder);}

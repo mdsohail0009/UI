@@ -679,6 +679,7 @@ class AddressBook extends Component {
 				</div>
 			</div>
 			<div className="imprt-bg"><span className="ab-note-style">Note:</span> <span className="note-cont">Whitelisting of Crypto Address and Bank Account is required, Please add below.</span></div>
+			
 				<div className="addressbook-grid">
 					<div className="adressbook-style">
 						<Radio.Group
@@ -705,6 +706,8 @@ class AddressBook extends Component {
                                 <Tabs.TabPane tab="Send Fiat" content="withdrawFiat" className="" key={"international"}  ></Tabs.TabPane>
                                 {/* <Tabs.TabPane tab="International USD IBAN" className="" key={"internationalIBAN"} ></Tabs.TabPane> */}
                             </Tabs>
+					</div>
+					</div>
 					{this.state.errorWorning && (
 						<div className="custom-alert">
 							<Alert
@@ -731,8 +734,8 @@ class AddressBook extends Component {
 							url={gridUrlCrypto}
 						/>
 					)}
-				</div>
-				</div>
+				
+				
 
 				<Drawer
 					destroyOnClose={true}
