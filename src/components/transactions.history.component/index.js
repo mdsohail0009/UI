@@ -11,7 +11,7 @@ import List from "../grid.component";
 import { getTransactionSearch, getTransactionCurrency,transactionsView } from './api';
 import { setCurrentAction } from "../../reducers/actionsReducer";
 import { getFeaturePermissionsByKey } from '../shared/permissions/permissionService';
-import { withRouter } from "react-router-dom";
+import { withRouter,Link } from "react-router-dom";
 import { setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 import NumberFormat from "react-number-format";
 import moment from "moment/moment";
@@ -327,7 +327,9 @@ isErrorDispaly = (objValue) => {
         >
     
         </Drawer>
-        <div>
+        <div className="main-container">
+			<div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/" /><span className="back-btnarrow">Back</span></div>
+        <Translate content="transactions_history" component={Title} className="grid-title" />
             <Form
               initialValues={this.state.customerData}
               className="ant-advanced-search-form form form-bg search-bg pt-8"
@@ -405,7 +407,7 @@ isErrorDispaly = (objValue) => {
                 </Col>
                 <Col xs={24} sm={24} md={3} lg={3} xl={3} className="transaction_resp">
                   <Button
-                    className="pop-btn search-btn"
+                    className="pop-btn search-btn "
                     htmlType="submit"
                     onClick={this.handleSearch}
                   >
