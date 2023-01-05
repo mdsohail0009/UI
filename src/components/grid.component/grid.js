@@ -79,9 +79,9 @@ export function withState(WrappedGrid) {
             return (
                 <div style={{ position: 'relative' }}>
                     {this.state.isLoading && this.loadingPanel}
-                    {this.props.showExcelExport && <div className='text-right'> <button
-                        title={this.props?.exExportTitle || "Export Excel"}
-                        className="pop-btn excel-button"
+                    {this.props.showExcelExport && <div className='text-right'> 
+                    <button title={this.props?.exExportTitle || "Export Excel"}
+                        className="down-tansactions"
                         onClick={() => {
                             const getCombineFieldValue = (dataItem, fields) => {
                                 for (const i in this.props.columns) {
