@@ -71,7 +71,7 @@ class List extends React.Component {
                         cell={column.customCell || this.gridFilterData(column)}
                         filter={column.filterType || 'text'}
                         format="{0:#,0.##########}"
-
+                         sortable={column.sortable===false?false:true}
                     />
                     )}
                 </StatefullGrid>

@@ -1,7 +1,6 @@
 
 import { apiClient } from '../../api';
 import { ApiControllers } from '../../api/config'
-const crypto = require("crypto");
 
 const getCurrencyLu = (customer_id) => {
     return apiClient.get(ApiControllers.wallets + `Fiat/${customer_id}`);
