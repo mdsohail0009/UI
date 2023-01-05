@@ -512,10 +512,9 @@ const AddressCommonCom = (props) => {
   );
   if (isSignRequested) {
     return <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
-      <Image width={80} preview={false} src={success} />
-      <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully</Title>
-      <Text className="text-white-30">{`Declaration form has been sent to ${props?.userConfig?.email}. 
-				 Please sign using link received in email to whitelist your address`}</Text>
+<Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully</Title>
+       <Text className="text-white-30">{`Declaration form has been sent to ${props?.userConfig?.email}. Please review and sign the document in your email to whitelist your address.
+        Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
     </div></div>
 
   }

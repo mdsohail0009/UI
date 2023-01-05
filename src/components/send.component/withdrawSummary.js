@@ -652,10 +652,9 @@ class WithdrawSummary extends Component {
 		if (showDeclartion) {
 			return <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
 			  <Image width={80} preview={false} src={alertIcon} />
-			  <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully </Title>
-			  <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
-				   Please sign using link received in email to whitelist your address. `}</Text>
-			  <span className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</span>
+			  <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully</Title>
+       <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. Please review and sign the document in your email to whitelist your address.
+        Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
 			  {/* <div className="my-25"><Button
 				onClick={() => { this.onBackSend() }}
 				type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button></div> */}
