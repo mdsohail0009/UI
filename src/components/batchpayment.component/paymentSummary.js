@@ -6,8 +6,6 @@ import pending from '../../assets/images/pending.png';
 import NumberFormat from "react-number-format";
 import Verifications from "../onthego.transfer/verification.component/verifications"
 import {proceedTransaction} from './api'
-import { getVerificationFields } from "../onthego.transfer/verification.component/api"
-import { Link } from "react-router-dom";
 const { Title, Paragraph, Text } = Typography
 
 class PaymentSummary extends Component {
@@ -24,34 +22,10 @@ class PaymentSummary extends Component {
 		  insufficientModal:false,
 		  errorMessage:null,
 		  loading:false,
-		  isVerificationEnable:true,
-		  isVarificationLoader: true,
 		}
 	}
-	componentDidMount(){
-		// this.verificationCheck();
-	}
-	verificationCheck = async () => {
-		this.setState({ ...this.state, isVarificationLoader: true })
-		const verfResponse = await getVerificationFields();
-		let minVerifications = 0;
-		if (verfResponse.ok) {
-		  for (let verifMethod in verfResponse.data) {
-			if (["isEmailVerification", "isPhoneVerified", "twoFactorEnabled", "isLiveVerification"].includes(verifMethod) && verfResponse.data[verifMethod] === true) {
-				minVerifications = minVerifications + 1;
-			}
-		  }
-		  if (minVerifications >= 2) {
-			this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: true })
-				} else {
-					this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: false })
-		  }
-		} else {
-			this.setState({ ...this.state, isVarificationLoader: false, errorMessage: this.isErrorDispaly(verfResponse) })
-		}
-	  }
+
 	showDeclaration=async()=>{	
-		debugger
 		this.setState({...this.state,loading:true,errorMessage:null})
 		if (this.state.verifyData?.verifyData) {
 			if (this.state.verifyData.verifyData.isPhoneVerified) {
@@ -108,14 +82,10 @@ class PaymentSummary extends Component {
 			}else{
 				this.setState({ ...this.state, showDeclaration:false,insufficientModal:true,loading:false});
 			}
-			
 		}else{
 			this.setState({ ...this.state,  errorMessage: this.isErrorDispaly(response) ,loading:false})
 
-			
 		}
-
-		
 	}
 	
 	isErrorDispaly = (objValue) => {
@@ -163,10 +133,8 @@ class PaymentSummary extends Component {
 		this.setState({ ...this.state, reviewDetailsLoading: val })
 	  }
 	render() {
-		const {  isShowGreyButton,errorMessage,loading,isVerificationEnable } = this.state;
+		const {  isShowGreyButton,errorMessage,loading } = this.state;
 		return (<>
-		          
-
 			<div>
 			<Drawer destroyOnClose={true}
             title={[<div className="side-drawer-header"><span></span>
@@ -179,27 +147,10 @@ class PaymentSummary extends Component {
           visible={this.props.showDrawer}
 		  className="side-drawer w-50p"
         >
-			 {!isVerificationEnable && (
-                  <Alert 
-                  message="Verification alert !"
-                  description={<Text>Without verifications you can't send. Please select send verifications from <Link onClick={() => {
-                      this.props.history.push("/userprofile/2");
-                      if (this.props?.onClosePopup) {
-                          this.props?.onClosePopup();
-                      }
-                  }}>security section</Link></Text>}
-                  type="warning"
-                  showIcon
-                  closable={false}
-              />
-              )}
-			
+			<Spin spinning={this.state.reviewDetailsLoading}>
 			{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
 				<div>
-				{!this.state.showDeclaration 
-				// &&!this.state.reviewDetailsLoading && !isVerificationEnable &&
-				&& <>
-					<Spin spinning={this.state.reviewDetailsLoading}>
+				{!this.state.showDeclaration && <>
 				<div>
 					<div> <Title className='sub-heading p-0 mt-24'>Transfer Details</Title></div>
 					<div className='pay-list fs-14'>
@@ -277,12 +228,11 @@ class PaymentSummary extends Component {
 							</Button>
 						</div>
 						</div> 
-						</Spin></>}
-						
+						</>}
 						{this.state.showDeclaration && <>
 					
 	          <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
-								<img src={pending} width={80}/>
+								<img src={pending} alt={`Processed`}  width={80}/>
 								<Title className='text-white'>Declaration form sent!</Title>
 								<Paragraph className='text-white'>We sent declaration form to{":"}{" "}
 									{this.props.customer?.email}. Please sign using the link
@@ -292,7 +242,7 @@ class PaymentSummary extends Component {
 							</div></div>
 						</>}
 					</div>
-					
+					</Spin>
 				</Drawer>				
 			</div>			
 			<Modal
@@ -302,7 +252,7 @@ class PaymentSummary extends Component {
                         <Tooltip title="Close">
                           <span
                             className="icon md close-white c-pointer"
-                            onClick={() =>  this.setState({ ...this.state, paymentSummary: false, insufficientModal: false}, () => { })}
+                            onClick={() =>  this.setState({ ...this.state, paymentSummary: false, insufficientModal: false})}
                           />
                         </Tooltip>
                       }
@@ -323,7 +273,6 @@ class PaymentSummary extends Component {
                         </div>
                         </>
                 </Modal>
-			
 		</>
 		)
 	}

@@ -407,7 +407,7 @@ isErrorDispaly = (objValue) => {
                 </Col>
                 <Col xs={24} sm={24} md={3} lg={3} xl={3} className="transaction_resp">
                   <Button
-                    className="pop-btn search-btn"
+                    className="pop-btn search-btn "
                     htmlType="submit"
                     onClick={this.handleSearch}
                   >Apply

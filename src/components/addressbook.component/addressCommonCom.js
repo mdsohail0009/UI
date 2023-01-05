@@ -56,9 +56,6 @@ const AddressCommonCom = (props) => {
   const [errorWarning, setErrorWarning] = useState(null);
   const [isEdit, setEdit] = useState(false);
   const [emailExist] = useState(false);
-  const [identityFile, setIdentityFile] = useState(null);
-  const [declarationFile, setDeclarationFile] = useState(null);
-  const [isUploading, setUploading] = useState(false);
   const [bankType, setBankType] = useState("");
   const [PayeeLu, setPayeeLu] = useState([]);
   const [editBankDetsils, setEditBankDetails] = useState(false)
@@ -168,7 +165,6 @@ const AddressCommonCom = (props) => {
   };
   const handleOk = () => {
     setIsModalVisible(false);
-   // setEditBankDetails(false)
   };
   
   const handleCryptoOk = () => {
@@ -210,13 +206,12 @@ const AddressCommonCom = (props) => {
 
   const radioChangeHandler = (e) => {
     if (e.target.value === "3rdparty") {
-      payeeLuData(props?.userConfig?.id, withdraeTab, false);
+      payeeLuData(withdraeTab, false);
 
     } else {
 
-      payeeLuData(props?.userConfig?.id, withdraeTab, true);
+      payeeLuData(withdraeTab, true);
       getFavs("00000000-0000-0000-0000-000000000000", props?.userConfig?.id)
-      // setIsLoading(false);
     }
     setIsLoading(false);
     setAgreeRed(true);
@@ -268,13 +263,6 @@ const AddressCommonCom = (props) => {
   }
 
   const bankDetailsLu = async (id, customerId) => {
-    // setIsLoading(true)
-    // let response = await getBankDetailLu(id, customerId)
-    // if (response.ok) {
-    //   let obj = response.data;
-    //   setBankDetail(obj)
-    // }
-    // setIsLoading(false)
   }
   const getFavs = async (id, customerId) => {
     let response = await getFavData(id, customerId)
@@ -329,7 +317,7 @@ const AddressCommonCom = (props) => {
       payeeId: uuidv4(),
       label: values.label,
       currencyType: withdraeTab,
-      walletAddress: (props?.addressBookReducer?.cryptoTab == true && !bilPay) ? values.walletAddress.trim() : values.walletAddress,
+      walletAddress: (props?.addressBookReducer?.cryptoTab === true && !bilPay) ? values.walletAddress.trim() : values.walletAddress,
       walletCode: values.walletCode,
       accountNumber: values.accountNumber || values.IBAN,
       bankType: values.bankType || "Bank Account",
@@ -414,18 +402,11 @@ const AddressCommonCom = (props) => {
     }
     values["type"] = type;
     values["info"] = JSON.stringify(props?.trackAuditLogData);
-    // values["addressState"] = addressState;
     let Id = "00000000-0000-0000-0000-000000000000";
     let favaddrId = props?.addressBookReducer?.selectedRowData
       ? favouriteDetails.id
       : Id;
     let namecheck = values.favouriteName;
-    // let responsecheck = await favouriteNameCheck(
-    //   props?.userConfig?.id,
-    //   namecheck,
-    //   withdraeTab,
-    //   favaddrId
-    // );
     if (!values.isAgree) {
       setBtnDisabled(false);
       useDivRef.current.scrollIntoView();
@@ -535,7 +516,6 @@ const AddressCommonCom = (props) => {
       <Title level={2} className="success-title">Declaration form sent successfully</Title>
       <Text className="successsubtext">{`Declaration form has been sent to ${props?.userConfig?.email}. 
 				 Please sign using link received in email to whitelist your address`}</Text>
-      {/*<div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBOARD</Button> */}
     </div></div>
 
   }
@@ -791,7 +771,6 @@ const AddressCommonCom = (props) => {
                   >
                     <Translate
                     content={props?.cryptoTab === 2 ? "bankAddress" : (withdraeTab === "Fiat" ? "bankAddress" : "cryptoAddress")}
-                   // content={props?.cryptoTab == 2 ? "cryptoAddress" : "bankAddress"}
                     component={Text}
                    
                   />
@@ -883,11 +862,7 @@ const AddressCommonCom = (props) => {
                         required
 
                         rules={[
-                          // {
-                          //   required: true,
-                          //   //message: 'Is required',
-                          //   whitespace: true,
-                          // },
+
                           {
                             validator: validateAddressType,
                           },
@@ -931,15 +906,15 @@ const AddressCommonCom = (props) => {
                   <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Radio.Group
                       defaultValue={addressOptions.addressType}
-                      className="custom-radiobtn"
+                      className="new-custom-radiobtn"
                       onChange={(value) => {
 
                         setAddressOptions({ ...addressOptions, addressType: value.target.value })
                       }}
                     >
-                      <Radio.Button value="myself" className="">{props.userConfig?.isBusiness ? "Own Business" : "My Self"}</Radio.Button>
-                      <Radio.Button value="individuals" className="">INDIVIDUALS</Radio.Button>
-                      <Radio.Button value="otherbusiness" className="">OTHER BUSINESS</Radio.Button>
+                      <Radio.Button value="myself" className=""><span className="lg icon" />{props.userConfig?.isBusiness ? "Own Business" : "My Self"}</Radio.Button>
+                      <Radio.Button value="individuals" className=""><span className="lg icon" />INDIVIDUALS</Radio.Button>
+                      <Radio.Button value="otherbusiness" className=""><span className="lg icon" />OTHER BUSINESS</Radio.Button>
                     </Radio.Group>
                   </Col>
                 </Row>
@@ -999,7 +974,6 @@ const AddressCommonCom = (props) => {
                       >
                         <AutoComplete
                           onChange={(e) => {
-                            // handleChange(e)
                           }}
                           maxLength={20}
                           className="cust-input"
@@ -1206,13 +1180,7 @@ const AddressCommonCom = (props) => {
                             component={Form.label}
                           />
                         }
-                      >
-                        {/* <TextArea
-                        placeholder="Address Line1"
-                        className="cust-input  cust-text-area"
-                        autoSize={{ minRows: 2, maxRows: 2 }}
-                        maxLength={100}
-                      ></TextArea> */}
+                      >                        
                         <TextArea
                           placeholder={apiCalls.convertLocalLang("Address_Line1")}
                           className="cust-input cust-text-area address-book-cust"
@@ -1227,20 +1195,7 @@ const AddressCommonCom = (props) => {
                       <Form.Item
                         className="custom-forminput custom-label "
                         name="line2"
-                        // required
-                        // rules={[
-                        //   {
-                        //     required: true,
-                        //     message: apiCalls.convertLocalLang("is_required"),
-                        //   },
-                        //   {
-                        //     whitespace: true,
-                        //     message: apiCalls.convertLocalLang("is_required"),
-                        //   },
-                        //   {
-                        //     validator: validateContentRule,
-                        //   },
-                        // ]}
+
                         label={
                           <Translate
                             content="Address_Line2"
@@ -1262,20 +1217,7 @@ const AddressCommonCom = (props) => {
                       <Form.Item
                        className="custom-forminput custom-label "
                         name="line2"
-                        // required
-                        // rules={[
-                        //   {
-                        //     required: true,
-                        //     message: apiCalls.convertLocalLang("is_required"),
-                        //   },
-                        //   {
-                        //     whitespace: true,
-                        //     message: apiCalls.convertLocalLang("is_required"),
-                        //   },
-                        //   {
-                        //     validator: validateContentRule,
-                        //   },
-                        // ]}
+
                         label={
                           <Translate
                             content="Address_Line3"
@@ -1565,21 +1507,14 @@ const AddressCommonCom = (props) => {
                     valuePropName="checked"
                     required
                   ><div className="d-flex agree-check">
-                    {/* <Checkbox
-                      className={`ant-custumcheck ${!agreeRed ? "check-red " : " "
-                        }`}
-                    /> */}
                     <label>
 							<input
 								type="checkbox"
 								id="agree-check"
-								// checked={onCheked}
-								// onChange={({ currentTarget: { checked } }) => {
-								// 	this.props.onTermsChange(checked);
-								// }}
+								
 							/>
 							<span for="agree-check"  />
-							{/* // className={`${error?.agreeRed===false ? "checkbox-red":""}`} */}
+						
 							
 						</label>
                  
@@ -1615,7 +1550,6 @@ const AddressCommonCom = (props) => {
                   block
                   className="pop-btn"
                   loading={btnDisabled}
-                  // style={{ minWidth: "100%" }}
                 >
                   {isLoading && <Spin indicator={antIcon} />}{" "}
                   <Translate content="Save_btn_text" />

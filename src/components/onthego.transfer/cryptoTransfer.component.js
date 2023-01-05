@@ -370,7 +370,7 @@ class OnthegoCryptoTransfer extends Component {
                     },
                   ]}
                 >
-                  <NumberFormat
+                 <NumberFormat
                     customInput={Input}
                     className="inputfont-style text-center inputbg-fonts swap-text-sub"
                     placeholder={"Enter Amount"}
@@ -388,6 +388,9 @@ class OnthegoCryptoTransfer extends Component {
                         this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: null,error: null })
                     }}
                   />
+                  {/* <div className='swapcoin-alignemnt crypto-coin-mbspace'><span>{this.props.selectedWallet?.coin}</span></div> */}
+                  
+
                 </Form.Item>
 
               </Row>

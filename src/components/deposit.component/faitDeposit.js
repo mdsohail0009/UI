@@ -274,10 +274,10 @@ class FaitDeposit extends Component {
                   {this.state.bankLoader && <Loader />}
 
                 {(this.state.BankInfo && !this.state.bankLoader) &&
-                  <div className="fiatdep-info">
+                  <div className="fiatdep-info fiat-list-items">
                   <div className='alert-info-custom kpi-List'>
-                    <div className="d-flex">
-                      <div style={{ flex: 1 }}>
+                    {/* <div className="d-flex"> */}
+                      {/* <div style={{ flex: 1 }}> */}
                         <div className='fait-box kpi-divstyle'>
                           <Translate
                       className="fait-title"
@@ -302,9 +302,9 @@ class FaitDeposit extends Component {
                       component={Text}
                       with={{ value: BankInfo.accountAddress }} />
                       </div>
-                      </div>
+                      {/* </div> */}
                       
-                    </div>
+                    {/* </div> */}
                     <div className='fait-box kpi-divstyle'>
                     {BankInfo.currencyCode === "USD" && <span className="fait-title">Beneficiary Account No. </span>}
                     {BankInfo.currencyCode === "EUR" && <span className="fait-title">Beneficiary IBAN No. </span>}

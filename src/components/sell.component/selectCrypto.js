@@ -189,13 +189,13 @@ class SelectSellCrypto extends Component {
                             </span>
                             <Text className="fs-24 textc-white crypto-name ml-4">{coinDetailData.coinFullName}</Text>
                         </div> */}
-                            <div className="crypto-amount">
-                                {/* <div className="fs-16 textc-white fw-200 crypto-amount"> */}
+                            {/* <div className="crypto-amount">
+                                <div className="fs-16 textc-white fw-200 crypto-amount">
                                 <div className="crypto-details"><span className='buycoin-style'>{coinDetailData.coin}</span><Currency prefix={""} defaultValue={coinDetailData.coinBalance} suffixText={""} className="buycoin-style marginL" /></div>
                                 <div className='crypto-details'><div className='sellcrypto-style'>Balance:</div> <Currency prefix={"$ "} defaultValue={coinDetailData.coinValueinNativeCurrency} suffixText="" className="marginL sellbal-style" /></div>
-                            </div>
+                            </div> */}
                             {/* </div></div> */}
-                            {this.state.isShowCoinsData && <div> <LocalCryptoSwapperCmp
+                            { <div> <LocalCryptoSwapperCmp
                                 cryptoAmt={this.state.CryptoAmnt}
                                 localAmt={this.state.USDAmnt}
                                 cryptoCurrency={coinDetailData?.coin}
@@ -212,10 +212,10 @@ class SelectSellCrypto extends Component {
                                     this.clickMinamnt(value)
                                 }}>
                                     <Translate value="min" content="min" component={Radio.Button} />
-                                    <Translate value="half" content="half" component={Radio.Button} />
+                                    {/* <Translate value="half" content="half" component={Radio.Button} /> */}
                                     <Translate value="all" content="all" component={Radio.Button} />
                                 </Radio.Group>
-                                {this.state.isShowCoinsData &&  <div className='crypto-details'><div className='sellcrypto-style'>Balance:
+                                { <div className='crypto-details'><div className='sellcrypto-style'>Balance:
                                 </div> <Currency prefix={"$ "} defaultValue={coinDetailData.coinValueinNativeCurrency} suffixText="" className="marginL sellbal-style" /></div>} </div>
                                 
                                
@@ -225,11 +225,11 @@ class SelectSellCrypto extends Component {
                             </div>}
 
                             <div className="select-currency">
-                                <Translate content="sell_select_currency" component={Paragraph} className="label-style" />
+                                {/* <Translate content="sell_select_currency" component={Paragraph} className="label-style" /> */}
                                 <WalletList placeholder="Select Currency" onWalletSelect={(e) => this.handleWalletSelection(e)} />
                             </div>
 
-                            {this.state.isShowCoinsData && <div><Translate content="thousandKText" component={Paragraph} className="buy-paragraph" />
+                            {<div><Translate content="thousandKText" component={Paragraph} className="buy-paragraph" />
                                 <Translate content="contact_amount_text" component={Paragraph} className="buy-paragraph" /><div className="sell-btn-style">
                                 <SuisseBtn autoDisable={true} title="PreviewSell" className="pop-btn" onClick={() => { this.previewSellData() }} />
                             </div></div>}

@@ -215,6 +215,38 @@ class BusinessTransfer extends Component {
 
             <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"} disabled={this.state.isEdit}>
                 <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
+                <Row gutter={[16, 4]} className="send-drawerbtn">
+
+                  <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
+                      <Form.Item className="text-center">
+                        <Button
+                          htmlType="submit"
+                          size="large"
+                          className="newtransfer-card"
+                          // style={{ width: '100%' }}
+                        //   loading={this.state.newtransferLoader}
+                        //   disabled={this.state.addressLoader}
+                        >
+                          New Transfer
+                        </Button>
+                      </Form.Item>
+                    </Col>
+                     <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
+                      <Form.Item className="text-center">
+                        <Button
+                          htmlType="button"
+                          size="large"
+                          className="newtransfer-card"
+                          // style={{ width: '100% ' }}
+                        //   loading={this.state.addressLoader}
+                        //   disabled={this.state.newtransferLoader}
+                        //   onClick={this.goToAddressBook}
+                        >
+                          Address book
+                        </Button>
+                      </Form.Item>
+                    </Col>
+                  </Row>
                 <Form initialValues={details}
                     className="custom-label  mb-0"
                     ref={this.form}

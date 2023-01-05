@@ -7,6 +7,7 @@ import { userNameLuSearch, getFeatureLuSearch, getAuditLogInfo } from './api';
 import moment from 'moment';
 import Translate from 'react-translate-component';
 import apicalls from '../../api/apiCalls';
+import { withRouter,Link } from "react-router-dom";
 
 
 const { Option } = Select;
@@ -198,7 +199,12 @@ class AuditLogs extends Component {
           className="side-drawer-full custom-gridresponsive addressbook-content"
           destoryOnClose={true}
         >
-          <div>
+           </Drawer>
+           <div className="main-container">
+			<div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/" /><span className="back-btnarrow">Back</span></div>
+      <span className="grid-title"><Translate content="AuditLogs" component={Drawer.span} className="text-white" /></span>
+      </div>
+          <div className="cust-list main-container">
             <Form
               className="ant-advanced-search-form form form-bg search-bg pt-8 pb-30 customaudit-select"
               autoComplete="off"
@@ -268,7 +274,7 @@ class AuditLogs extends Component {
               </Row>
             </Form>
           </div>
-          <List
+          <List className="cust-list main-container"
             url={gridUrl} additionalParams={searchObj} ref={this.gridRef}
             key={gridUrl}
             columns={this.gridColumns}
@@ -342,7 +348,7 @@ class AuditLogs extends Component {
               </Form>
             </div>
           </Modal>
-        </Drawer>
+
         <Drawer
           title={[<div className="side-drawer-header">
             <span />

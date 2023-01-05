@@ -26,7 +26,7 @@ class WalletList extends Component {
         return (<>
             {this.props.buyInfo.memberFiat &&
                 <form className="form" id="withdrawCurrency">
-                    <Select    getPopupContainer={() => document.getElementById('withdrawCurrency')} dropdownClassName="select-drpdwn" loading={this.props?.buyInfo?.memberFiat?.loading} placeholder={this.props.placeholder || apicalls.convertLocalLang("selectWallet")} className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
+                    {/* <Select    getPopupContainer={() => document.getElementById('withdrawCurrency')} dropdownClassName="select-drpdwn" loading={this.props?.buyInfo?.memberFiat?.loading} placeholder={this.props.placeholder || apicalls.convertLocalLang("selectWallet")} className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
                         value={this.props.selectedvalue ? this.props.selectedvalue : this.state.selectedvalue} 
                         onChange={(e) => {
                             
@@ -39,7 +39,7 @@ class WalletList extends Component {
                                 {!this.props.hideBalance && <NumberFormat value={item.avilable} displayType={'text'} thousandSeparator={true} prefix={this.state.symbols[item.currencyCode]} renderText={(value, props) => <span {...props}> Balance: {value}</span>} />}
                             </Option>
                         )}
-                    </Select>
+                    </Select> */}
                     <List
                     itemLayout="horizontal"
                     dataSource={this.props.buyInfo.memberFiat?.data}
@@ -52,7 +52,12 @@ class WalletList extends Component {
                     }}
                     renderItem={item => (
 
-                        <List.Item onClick={() => this.setState({ ...this.state, currency: item.currencyCode })}>
+                        <List.Item onClick={() => {
+                            
+                            if (this.props.onWalletSelect) { this.props.onWalletSelect(item.currencyCode) }
+                            this.setState({ ...this.state, selectedvalue: item.currencyCode });
+                           // this.props.sendCurrency(e)      
+                        }}>
                             <Link>
                                 <List.Item.Meta className='drawer-coin'
                                     avatar={<div className='crypto-bg'><span className='crypto-icon c-pointer ETH'></span></div>}
