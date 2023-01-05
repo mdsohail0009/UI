@@ -12,8 +12,8 @@ const Verifications = (props) => {
     const [phone, setPhone] = useState({ showRuleMsg: '', errorMsg: '', btnName: 'get_otp', requestType: 'Send', verified: false,btnLoader:false });
     const [authenticator, setAuthenticator] = useState({ showRuleMsg: '', errorMsg: '', btnName: 'verifyOtpBtn', verified: false,btnLoader:false });
     const [liveverification, setLiveverification] = useState({ showRuleMsg: '', errorMsg: '', btnName: 'verifyOtpBtn', verified: false, btnLoader:false, isLiveEnable:false});
-    const [phoneSeconds, setPhoneSeconds] = useState(30);
-    const [emailSeconds, setEmailSeconds] = useState(30);
+    const [phoneSeconds, setPhoneSeconds] = useState(120);
+    const [emailSeconds, setEmailSeconds] = useState(120);
     const [errorMsg, setMsg] = useState(false);
     const [phbtnColor,setPhBtnColor]=useState(false)
     const [emailbtnColor,setEmailBtnColor]=useState(false)
@@ -29,25 +29,25 @@ const Verifications = (props) => {
     useEffect(() => {
         loadPermissions();
         getVerifyData();
-    }, []);
+    }, []);//eslint-disable-line react-hooks/exhaustive-deps
     useEffect(() => {
-        if(phoneSeconds==0 && phone.btnName=='code_Sent'){
+        if(phoneSeconds===0 && phone.btnName==='code_Sent'){
             setPhone({ ...phone, btnName: 'resendotp', code: '' });
         }
-    }, [phoneSeconds]);
+    }, [phoneSeconds]);//eslint-disable-line react-hooks/exhaustive-deps
     useEffect(() => {
-        if(emailSeconds==0 && email.btnName=='code_Sent'){
+        if(emailSeconds===0 && email.btnName==='code_Sent'){
             setEmail({ ...email, btnName: 'resendotp', code: '' });
         }
-    }, [emailSeconds]);
+    }, [emailSeconds]);//eslint-disable-line react-hooks/exhaustive-deps
 
     let timeInterval;
-    let count = 30;
+    let count = 120;
     const startphoneTimer = (secondsType) => {
         let timer = count - 1;
         let seconds;
         timeInterval = setInterval(function () {
-            seconds = parseInt(timer % 30);
+            seconds = parseInt(timer % 120);
             setPhoneSeconds(seconds);
             if (--timer < 0) {
                 timer = count;
@@ -56,12 +56,12 @@ const Verifications = (props) => {
         }, 1000);
     };
     let timeIntervalemail;
-    let countemail = 30;
+    let countemail = 120;
     const startemailTimer = (secondsType) => {
         let timer = countemail - 1;
         let seconds;
         timeIntervalemail = setInterval(function () {
-            seconds = parseInt(timer % 30);
+            seconds = parseInt(timer % 120);
             setEmailSeconds(seconds);
             if (--timer < 0) {
                 timer = countemail;
@@ -282,7 +282,7 @@ const Verifications = (props) => {
         ${"c-notallowed"}`} >Verification code sent</Text></Button>
             <Tooltip
                 placement="topRight"
-                title={`Haven't received code? Request new code in ${phoneSeconds} seconds. The code will expire after 30 seconds.`}>
+                title={`Haven't received code? Request new code in ${phoneSeconds} seconds. The code will expire after 2 Min.`}>
                 <span className="icon md info mr-8" />
             </Tooltip>
         </div>
@@ -332,7 +332,7 @@ const Verifications = (props) => {
         ${"c-notallowed"}`} >Verification code sent</Text></Button>
             <Tooltip
                 placement="topRight"
-                title={`Haven\'t received code ? Request new code in ${emailSeconds} seconds. The code will expire after 5mins.`}>
+                title={`Haven't received code ? Request new code in ${emailSeconds} seconds. The code will expire after 5mins.`}>
                 <span className="icon md info mr-8" />
             </Tooltip>
         </>

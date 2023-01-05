@@ -635,5 +635,7 @@ export default {
 	sell_select_currency: "MIFIDY VOLA Hraisina",
 	transactions_history: "Kasaysayan ng Transaksyon",
 	transaction:"Transaksyon",
+	suissebase_title_crypto:"Suissebase Crypto Wallet",
+	Whitelisting_Status:"Whitelisting Status",
 
 };

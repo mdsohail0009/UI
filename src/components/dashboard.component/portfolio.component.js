@@ -116,7 +116,7 @@ class Portfolio extends Component {
                                         <th style={{width: "35%"}}>Type</th>
                                         <th style={{width: "15%"}}>Wallet</th>
                                         <th style={{width: "15%"}}>Value</th>
-                                        <th style={{width: "15%"}}>State</th>
+                                        <th style={{width: "15%"}}>Status</th>
                                     </tr>
                                 </thead>
                                 {loading ? (
