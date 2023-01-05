@@ -43,6 +43,7 @@ class BusinessTransfer extends Component {
             let edit=false;
             if (!data?.payeeAccountModels) {
                 data.payeeAccountModels = [payeeAccountObj()];
+                data.payeeAccountModels[0].documents = {"transfer": "", "payee": ""}
             }
             if (this.props.selectedAddress?.id) {
                 const accountDetails = data.payeeAccountModels[0];
@@ -75,7 +76,7 @@ class BusinessTransfer extends Component {
         if (Object.hasOwn(values, 'iban')) {
         this.setState({ ...this.state, errorMessage: null});
         if ((!ibanDetails || Object.keys(ibanDetails).length == 0)) {
-            this.setState({ ...this.state, errorMessage: "Please click validate button before saving", isLoading: false, isBtnLoading: false });;
+            this.setState({ ...this.state, errorMessage: "Please click validate button before saving", isLoading: false, isBtnLoading: false });
             this.useDivRef.current.scrollIntoView()
             return;
         }
@@ -89,6 +90,7 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].swiftRouteBICNumber = values?.swiftRouteBICNumber;
         _obj.payeeAccountModels[0].line1 = selectedTab == "internationalIBAN" ? ibanDetails?.bankAddress : values.bankAddress1;
         _obj.payeeAccountModels[0].line2 = values.bankAddress2;
+
         _obj.addressType = "otherbusiness";
         _obj.transferType = selectedTab;
         _obj.amount = this.props.amount;
@@ -102,28 +104,21 @@ class BusinessTransfer extends Component {
         if(isEdit){
             _obj.id = isSelectedId? isSelectedId:details?.payeeId;
         }
-        if (_obj.payeeAccountModels[0].documents == null || _obj.payeeAccountModels[0].documents && _obj.payeeAccountModels[0].documents.details.length == 0) {
-            this.useDivRef.current.scrollIntoView()
-            this.setState({ ...this.state, isLoading: false, errorMessage: 'At least one document is required', isBtnLoading: false });
-        } else if (_obj.payeeAccountModels[0].documents) {
-            let length = 0;
-            for (let k in _obj.payeeAccountModels[0].documents.details) {
-                if (_obj.payeeAccountModels[0].documents.details[k].state == 'Deleted') {
-                    length = length + 1;
-                }
-            }
-            if (length == _obj.payeeAccountModels[0].documents.details.length) {
-                this.useDivRef.current.scrollIntoView()
-                this.setState({ ...this.state, isLoading: false, errorMessage: 'At least one document is required', isBtnLoading: false });
-            } else {
-                _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
-                this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
+        if (_obj.payeeAccountModels[0].documents) {
+            _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
+        }
+        this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
         delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
         this.setState({ ...this.state, errorMessage: null, isLoading: false, isBtnLoading: true });
-        const response = await savePayee(_obj);
+
+        let temp = JSON.parse(JSON.stringify(_obj))
+        temp.payeeAccountModels[0].documents = _obj.payeeAccountModels[0]?.documents?.payee
+        
+        const response = await savePayee(this.state.isEdit ? _obj : temp);      
+
         if (response.ok) {
             if (this.props.type != "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
+                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer, documents: _obj.payeeAccountModels[0]?.documents?.transfer })
                 if (confirmRes.ok) {this.useDivRef.current.scrollIntoView()
                     this.props.onContinue(confirmRes.data);
                     this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
@@ -138,11 +133,9 @@ class BusinessTransfer extends Component {
             this.setState({ ...this.state, details: { ...details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, isBtnLoading: false });
         }
     }
-}
-    }
     handleTabChange = (key) => {
         let _obj = { ...this.state.details}
-        _obj.payeeAccountModels[0].documents=null
+        _obj.payeeAccountModels[0].documents={"transfer": "", "payee": ""}
         this.setState({ ...this.state, selectedTab: key,errorMessage:null, ibanDetails: {}, iBanValid: false, enteredIbanData: null });this.form.current.resetFields();
     }
    
@@ -155,7 +148,11 @@ class BusinessTransfer extends Component {
                 if(response.data && (response.data?.routingNumber || response.data?.bankName)){
                     this.setState({ ...this.state, enteredIbanData: value, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:true, isValidateLoading: false });
                 }else{
-                    this.setState({ ...this.state, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:false, isValidateLoading: false });
+                    if(this.state.ibanDetails && !this.state.ibanDetails?.routingNumber|| !this.state.ibanDetails?.bankName) {
+                        this.setState({ ...this.state, errorMessage: "No bank details are available for this IBAN number", enteredIbanData: value, ibanDetails:{}, ibanDetailsLoading: false,  iBanValid:false, isValidateLoading: false });
+                        this.useDivRef.current?.scrollIntoView();
+                        return;
+                    }
                 }
             } else {
                 this.setState({ ...this.state, enteredIbanData: value, ibanDetailsLoading: false,iBanValid:false, errorMessage: response.data || response.data?.message || response.originalError?.message, isValidateLoading: false });
@@ -220,6 +217,7 @@ class BusinessTransfer extends Component {
             </div>
         }
         return <div ref={this.useDivRef}><Tabs className="cust-tabs-fait" onChange={this.handleTabChange} activeKey={selectedTab}>
+
             <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"} disabled={this.state.isEdit}>
                 <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
                 <Form initialValues={details}
@@ -317,19 +315,36 @@ class BusinessTransfer extends Component {
 
                             </Form.Item>
                         </Col>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
+                            <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
+                                let { payeeAccountModels } = this.state.details;
+                                if(this.state.isEdit){
+                                    payeeAccountModels[0].documents = docs;
+                                } else{
+                                    payeeAccountModels[0].documents.payee = docs;
+                                }
+                                this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
+                            }} refreshData ={selectedTab}/>
+                        </ Col>
                         <RecipientAddress />
                     </Row>
 
                     <Paragraph className="mb-8 px-4 text-white fw-500 mt-36" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                     {/* <Divider /> */}
                     <DomesticTransfer type={this.props.type} />
-                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
-                    <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
-                        let { payeeAccountModels } = this.state.details;
-                        payeeAccountModels[0].documents = docs;
-                        this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
-                    }} refreshData ={selectedTab}/>
+                    {this.props.type !== "manual" && 
+                        (<React.Fragment>
+                            <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
+                            <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
+                                let { payeeAccountModels } = this.state.details;
+                                payeeAccountModels[0].documents.transfer = docs;
+                                this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
+                            }} refreshData ={selectedTab}/>
+                        </React.Fragment>)
+                    }
                     <div className="text-right mt-12">
+
                                 <Button
                                     htmlType="submit"
                                     size="large"
@@ -339,9 +354,11 @@ class BusinessTransfer extends Component {
                                     {this.props.type === "manual" && "Save"}
                                     {this.props.type !== "manual" && "Continue"}
                                 </Button>
+
                     </div>
                 </Form></div>
             </Tabs.TabPane>
+
             <Tabs.TabPane tab="International USD Swift" key={"international"} disabled={this.state.isEdit}>
             <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
                 <Form initialValues={details}
@@ -438,22 +455,39 @@ class BusinessTransfer extends Component {
 
                             </Form.Item>
                         </Col>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
+                            <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
+                                let { payeeAccountModels } = this.state.details;
+                                if(this.state.isEdit){
+                                    payeeAccountModels[0].documents = docs;
+                                } else{
+                                    payeeAccountModels[0].documents.payee = docs;
+                                }
+                                this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
+                            }} refreshData ={selectedTab}/>
+                        </ Col>
                         <RecipientAddress />
                     </Row>
                     <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
                     {/* <Divider /> */}
                     <InternationalTransfer type={this.props.type} />
-                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
-                    <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
-                        let { payeeAccountModels } = this.state.details;
-                        payeeAccountModels[0].documents = docs;
-                        this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
-                    }} refreshData ={selectedTab}/>
+                    {this.props.type !== "manual" && 
+                        (<React.Fragment>
+                            <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
+                            <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
+                                let { payeeAccountModels } = this.state.details;
+                                payeeAccountModels[0].documents.transfer = docs;
+                                this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
+                            }} refreshData ={selectedTab}/>
+                        </React.Fragment>)
+                    }
                     <div className="text-right mt-12">
                                 <Button
                                     htmlType="submit"
                                     size="large"
                                     className="pop-btn px-36"
+                                    
                                     loading={this.state.isBtnLoading}>
                                     {this.props.type === "manual" && "Save"}
                                     {this.props.type !== "manual" && "Continue"}
@@ -462,6 +496,7 @@ class BusinessTransfer extends Component {
                 </Form></div>
 
             </Tabs.TabPane>
+
             <Tabs.TabPane tab="International USD IBAN" key={"internationalIBAN"} disabled={this.state.isEdit}>
             <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
                 <Form initialValues={details}
@@ -557,6 +592,18 @@ class BusinessTransfer extends Component {
 
                             </Form.Item>
                         </Col>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
+                            <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
+                                let { payeeAccountModels } = this.state.details;
+                                if(this.state.isEdit){
+                                    payeeAccountModels[0].documents = docs;
+                                } else{
+                                    payeeAccountModels[0].documents.payee = docs;
+                                }
+                                this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
+                            }} refreshData ={selectedTab}/>
+                        </ Col>
                         <RecipientAddress />
                     </Row>
 
@@ -688,12 +735,16 @@ class BusinessTransfer extends Component {
                                 ></TextArea>
                             </Form.Item>
                         </Col>}
-                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
-                    <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
-                        let { payeeAccountModels } = this.state.details;
-                        payeeAccountModels[0].documents = docs;
-                        this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
-                    }} refreshData = {selectedTab}/>
+                    {this.props.type !== "manual" && 
+                        (<React.Fragment>
+                            <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
+                            <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
+                                let { payeeAccountModels } = this.state.details;
+                                payeeAccountModels[0].documents.transfer = docs;
+                                this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
+                            }} refreshData ={selectedTab}/>
+                        </React.Fragment>)
+                    }
                     <div className="text-right mt-36">
                                 <Button
                                    htmlType="submit"

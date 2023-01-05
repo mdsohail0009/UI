@@ -1,23 +1,24 @@
 import React, { Component } from "react";
-import { Typography, Button, Upload, message, Tooltip, Spin,Alert } from "antd";
+import { Typography, Button, Upload, message, Tooltip, Spin, Alert } from "antd";
 import { connect } from "react-redux";
 import Moment from "react-moment";
 import { uploadClient } from "../../api";
 import { ProfileImageSave } from "../../api/apiServer";
-import { getmemeberInfo,getIpRegisteryData } from "../../reducers/configReduser";
+import { getmemeberInfo, getIpRegisteryData } from "../../reducers/configReduser";
 import DefaultUser from "../../assets/images/defaultuser.jpg";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
 import Loader from "../../Shared/loader";
+import { checkCustomerState } from "../../utils/service";
 
 class ProfileInfo extends Component {
-  state = { Image: null, Loader: false, fileLoader: false,errorMessage:null };
+  state = { Image: null, Loader: false, fileLoader: false, errorMessage: null };
   uploadProps = {
     name: "file",
     multiple: false,
     fileList: [],
     customRequest: ({ file }) => {
-      
+
       let formData = new FormData();
       this.setState({ ...this.state, Loader: true });
       formData.append("file", file, file.name);
@@ -28,10 +29,10 @@ class ProfileInfo extends Component {
             ImageURL: res.data[0],
             UserId: this.props.userConfig?.userId
           };
-          
+
           this.saveImage(Obj);
         } else {
-          this.setState({ ...this.state, Loader: false ,errorMessage:this.isErrorDispaly(res) });
+          this.setState({ ...this.state, Loader: false, errorMessage: this.isErrorDispaly(res) });
         }
       });
     },
@@ -48,9 +49,11 @@ class ProfileInfo extends Component {
       if (fileType[file.type] && isFileName) {
         return true;
       } else {
-        this.setState({ ...this.state, Loader: false,errorMessage:isFileName
-          ? `File is not allowed. You can upload jpg, png, jpeg files`
-          : "File don't allow double extension" });
+        this.setState({
+          ...this.state, Loader: false, errorMessage: isFileName
+            ? `File is not allowed. You can upload jpg, png, jpeg files`
+            : "File don't allow double extension"
+        });
         return Upload.LIST_IGNORE;
       }
     }
@@ -70,7 +73,7 @@ class ProfileInfo extends Component {
       Duration: 1,
       Url: window.location.href,
       FullFeatureName: "Profile Info",
-      
+
     });
   };
   saveImage = async (Obj) => {
@@ -83,10 +86,10 @@ class ProfileInfo extends Component {
         className: "custom-msg",
         duration: 3
       });
-      this.setState({ ...this.state, Loader: false,errorMessage:null });
+      this.setState({ ...this.state, Loader: false, errorMessage: null });
       this.props.getmemeberInfoa(this.props.userConfig.userId);
     } else {
-      this.setState({ ...this.state, Loader: false,errorMessage:this.isErrorDispaly(res1)});
+      this.setState({ ...this.state, Loader: false, errorMessage: this.isErrorDispaly(res1) });
     }
   };
   isErrorDispaly = (objValue) => {
@@ -104,36 +107,39 @@ class ProfileInfo extends Component {
 
   fileDownload = async () => {
     if (!this.props?.userConfig?.isKYC) {
-      this.setState({ ...this.state, Loader: false,errorMessage:"Please complete KYC/KYB"});
-     
-  }else{
-    this.setState({ ...this.state, fileLoader: true });
-    let res = await apiCalls.downloadKyc(this.props.userConfig?.id);
-    if (res.ok) {
-      window.open(res.data);
-      message.destroy();
-      message.success({
-        content: "Document downloaded successfully",
-        className: "custom-msg",
-        duration: 3,
-      });
-      this.setState({ ...this.state, fileLoader: false });
+      this.setState({ ...this.state, Loader: false, errorMessage: "Please complete KYC/KYB" });
+
+    } else if (!checkCustomerState(this.props?.userConfig)) {
+      this.setState({ ...this.state, Loader: false, errorMessage: this.props?.userConfig?.customerState==="Under Review"?"Your account is under review state":"Your account approval is in progress state" });
     }
-  }
+    else {
+      this.setState({ ...this.state, fileLoader: true });
+      let res = await apiCalls.downloadKyc(this.props.userConfig?.id);
+      if (res.ok) {
+        window.open(res.data);
+        message.destroy();
+        message.success({
+          content: "Document downloaded successfully",
+          className: "custom-msg",
+          duration: 3,
+        });
+        this.setState({ ...this.state, fileLoader: false });
+      }
+    }
   }
 
   render() {
     const { Title, Text } = Typography;
     return (
       <>
-       {this.state.errorMessage !== null && (
-        <Alert
-          className="mb-12"
-          type="error"
-          description={this.state.errorMessage}
-          showIcon
-        />
-      )}
+        {this.state.errorMessage !== null && (
+          <Alert
+            className="mb-12"
+            type="error"
+            description={this.state.errorMessage}
+            showIcon
+          />
+        )}
         <div className="profile-info text-center">
           {this.state.Loader && <Loader />}
           {!this.state.Loader && (
@@ -177,10 +183,10 @@ class ProfileInfo extends Component {
         </div>
         <div className="box contact-info coin-bal">
           <Translate
-                    content="account_text"
-                    component={Text}
-                    className="basicinfo mb-0"
-                  />
+            content="account_text"
+            component={Text}
+            className="basicinfo mb-0"
+          />
           <ul class="m-0 pl-0">
             {this.state.fileLoader ? <Spin size="Large" style={{ padding: 10 }} /> : <li>
               <Tooltip title="Download">
@@ -189,7 +195,7 @@ class ProfileInfo extends Component {
             </li>}
           </ul>
         </div>
-        <div className="box basic-info">
+        <div className="box basic-info basicprofile-info">
           <Title className="basicinfo mb-0">
             {" "}
             <Translate
@@ -199,7 +205,7 @@ class ProfileInfo extends Component {
             />
           </Title>
           <ul className="user-list pl-0">
-          {this.props.userConfig.isBusiness&&<li className="profileinfo">
+            {this.props.userConfig.isBusiness && <li className="profileinfo">
               <div className="profile-block">
                 <label className="mb-0 profile-label">
                   <Translate
@@ -229,23 +235,23 @@ class ProfileInfo extends Component {
                 <div></div>
               </div>
             </li>
-            {this.props.userConfig.isBusiness !==true&&<>
-            <li className="profileinfo">
-              <div className="profile-block ">
-                <label className="mb-0 profile-label">
-                  <Translate
-                    content="FirstName"
-                    component={Text}
-                    className="mb-0 profile-label"
-                  />
-                </label>
-                <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>
-                  {this.props.userConfig.firstName || "--"}
-                </p>
-                <div></div>
-              </div>
-            </li>
-            {/* <li className="profileinfo">
+            {this.props.userConfig.isBusiness !== true && <>
+              <li className="profileinfo">
+                <div className="profile-block ">
+                  <label className="mb-0 profile-label">
+                    <Translate
+                      content="FirstName"
+                      component={Text}
+                      className="mb-0 profile-label"
+                    />
+                  </label>
+                  <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>
+                    {this.props.userConfig.firstName || "--"}
+                  </p>
+                  <div></div>
+                </div>
+              </li>
+              {/* <li className="profileinfo">
               <div className="profile-block ">
                 <label className="mb-0 profile-label">
                   <Translate
@@ -260,21 +266,21 @@ class ProfileInfo extends Component {
                 <div></div>
               </div>
             </li> */}
-            <li className="profileinfo">
-              <div className="profile-block ">
-                <label className="mb-0 profile-label">
-                  <Translate
-                    content="LastName"
-                    component={Text}
-                    className="mb-0 profile-label"
-                  />
-                </label>
-                <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>
-                  {this.props.userConfig.lastName || "--"}
-                </p>
-                <div></div>
-              </div>
-            </li></>}
+              <li className="profileinfo">
+                <div className="profile-block ">
+                  <label className="mb-0 profile-label">
+                    <Translate
+                      content="LastName"
+                      component={Text}
+                      className="mb-0 profile-label"
+                    />
+                  </label>
+                  <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>
+                    {this.props.userConfig.lastName || "--"}
+                  </p>
+                  <div></div>
+                </div>
+              </li></>}
             {/* <li className="profileinfo">
               <div className="profile-block">
                 <label className="mb-0 profile-label">

@@ -1,5 +1,5 @@
 import React, { Component, createRef } from 'react';
-import { Typography, Select, Form, Alert, Space } from 'antd';
+import { Typography,  Select,  Form, Alert, Space, Col } from 'antd';
 import { Link } from 'react-router-dom';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
@@ -7,7 +7,7 @@ import config from '../../config/config';
 import { getCurrencieswithBankDetails, setdepositCurrency, updatdepfiatobject, setsavefiatobject } from '../../reducers/depositReducer'
 import { rejectWithdrawfiat, setWithdrawfiatenaable } from '../../reducers/sendreceiveReducer';
 import { setStep, setSubTitle } from '../../reducers/buyFiatReducer';
-import { requestDepositFiat } from './api';
+import {  requestDepositFiat } from './api';
 import Loader from '../../Shared/loader';
 import success from '../../assets/images/success.png';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -47,7 +47,7 @@ class FaitDeposit extends Component {
     if (this.props.sendReceive.withdrawFiatEnable||this.props?.isShowSendFiat) {
       getFeaturePermissionsByKeyName(`send_fiat`);
       this.handleshowTab(2);
-     this.props.dispatch(setSubTitle(apicalls.convertLocalLang("withdrawFiat")));
+      this.props.dispatch(setSubTitle(apicalls.convertLocalLang("withdrawFiat")));
     } else {
       getFeaturePermissionsByKeyName(`receive_fiat`);
       this.handleshowTab(1);
@@ -101,13 +101,13 @@ class FaitDeposit extends Component {
         if (currencyLu[k].walletCode === this.props.depositInfo?.depositCurrency) {
           if (currencyLu[k].bankDetailModel?.length === 1) {
             this.setState({ ...this.state, Loader: true })
-            let reqdepositObj = await requestDepositFiat(currencyLu[k].bankDetailModel[0].bankId, this.props.member?.id);
-            if (reqdepositObj.ok === true) {
-              this.setState({
-                ...this.state, fiatDepEur: this.props.depositInfo?.depositCurrency === "EUR", BankInfo: reqdepositObj.data, BankDetails: [], Loader: false, isTermsAgreed: false, faitdeposit: tabKey === 2,
-                tabValue: tabKey,
-              });
-            }
+            // let reqdepositObj = await requestDepositFiat(currencyLu[k].bankDetailModel[0].bankId, this.props.member?.id);
+            // if (reqdepositObj.ok === true) {
+            //   this.setState({
+            //     ...this.state, fiatDepEur: this.props.depositInfo?.depositCurrency === "EUR", BankInfo: reqdepositObj.data, BankDetails: [], Loader: false, isTermsAgreed: false, faitdeposit: tabKey === 2,
+            //     tabValue: tabKey,
+            //   });
+            // }
           } else {
             this.setState({
               ...this.state, fiatDepEur: this.props.depositInfo?.depositCurrency === "EUR", BankDetails: currencyLu[k].bankDetailModel, BankInfo: null, isTermsAgreed: false, faitdeposit: tabKey === 2,
@@ -229,7 +229,7 @@ class FaitDeposit extends Component {
          </div>
           : <> {this.state.Loader && <Loader />}
 
-            {!this.state.Loader && <Form layout="vertical" initialValues={{ ...depObj }} ref={this.formRef} onFinish={(values) => this.ConfirmDeposit(values)}><div className="suisfiat-container auto-scroll"><div ref={this.myRef}></div>
+            {!this.state.Loader && <Form layout="vertical" initialValues={{ ...depObj }} ref={this.formRef} onFinish={(values) => this.ConfirmDeposit(values)}><div className="auto-scroll"><div ref={this.myRef}></div>
               {this.state?.errorMessage !== null && this.state?.errorMessage !== '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="error" message="" description={this.state?.errorMessage} closable />}
               {!this.state.showSuccessMsg && <Translate
                 className="mb-0 text-white-30 fs-18 fw-600 mt-16"
@@ -413,7 +413,7 @@ const connectDispatchToProps = dispatch => {
       dispatch(setStep(stepcode))
     },
     fetchCurrencyWithBankDetails: () => {
-      dispatch(getCurrencieswithBankDetails())
+      // dispatch(getCurrencieswithBankDetails())
     },
     dispatch
   }

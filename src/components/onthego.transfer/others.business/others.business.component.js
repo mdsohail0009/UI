@@ -1,4 +1,4 @@
-import { Form, Row, Col, Typography, Input, Button, Alert, Image, Spin } from "antd";
+import { Form, Row, Col,Typography, Input, Button, Alert, Image, Spin } from "antd";
 import React, { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
 import { validateContentRule } from "../../../utils/custom.validator";
@@ -45,6 +45,7 @@ class OthersBusiness extends Component {
             let data = response.data;
             if (!data?.payeeAccountModels) {
                 data.payeeAccountModels = [payeeAccountObj()];
+                data.payeeAccountModels[0].documents = {"transfer": "", "payee": ""}
             }
             if (this.props.selectedAddress?.id) {
                 const accountDetails = data.payeeAccountModels[0];
@@ -75,7 +76,7 @@ class OthersBusiness extends Component {
                 }else{
                     if(this.state.ibanDetails && !this.state.ibanDetails?.routingNumber|| !this.state.ibanDetails?.bankName) {
                         this.setState({ ...this.state, ibanDetails: {}, ibanDetailsLoading: false, errorMessage: null, iBanValid:false, isValidateLoading: false });
-                        this.setState({ ...this.state, errorMessage: "No bank details are available for this IBAN number", isLoading: false, isBtnLoading: false });;
+                        this.setState({ ...this.state, errorMessage: "No bank details are available for this IBAN number", isLoading: false, isBtnLoading: false });
                         this.useDivRef.current?.scrollIntoView();
                         return;
                     }
@@ -133,7 +134,7 @@ class OthersBusiness extends Component {
         if (Object.hasOwn(values, 'iban')) {
             this.setState({ ...this.state, errorMessage: null });
             if ((!ibanDetails || Object.keys(ibanDetails).length == 0)) {
-                this.setState({ ...this.state, errorMessage: "Please click validate button before saving", isLoading: false, isBtnLoading: false });;
+                this.setState({ ...this.state, errorMessage: "Please click validate button before saving", isLoading: false, isBtnLoading: false });
                 this.useDivRef.current?.scrollIntoView();
                 return;
             }
@@ -151,32 +152,25 @@ class OthersBusiness extends Component {
         _obj.payeeAccountModels[0].walletCode = "EUR";
         _obj.payeeAccountModels[0].bankName = ibanDetails?.bankName;
         delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
+        
         _obj.addressType = "otherbusiness";
         _obj.transferType = "sepa";
         _obj.amount = this.props.amount;
         if(isEdit){
             _obj.id = isSelectedId ? isSelectedId : details?.payeeId;
         }
-        if (_obj.payeeAccountModels[0].documents == null || _obj.payeeAccountModels[0].documents && _obj.payeeAccountModels[0].documents.details.length == 0) {
-            this.useDivRef.current.scrollIntoView()
-            this.setState({ ...this.state, isLoading: false, errorMessage: 'At least one document is required', isBtnLoading: false });
-        }else if (_obj.payeeAccountModels[0].documents) {
-            let length = 0;
-            for (let k in _obj.payeeAccountModels[0].documents.details){
-                if(_obj.payeeAccountModels[0].documents.details[k].state=='Deleted'){
-                    length=length+1;
-                }
-            }
-            if(length==_obj.payeeAccountModels[0].documents.details.length){
-                this.useDivRef.current.scrollIntoView()
-                this.setState({ ...this.state, isLoading: false, errorMessage: 'At least one document is required', isBtnLoading: false });
-            } else {
-                _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
-        this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
-        const response = await savePayee(_obj);
+        if(_obj.payeeAccountModels[0].documents){
+            _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
+        }
+        this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });  
+
+        let temp = JSON.parse(JSON.stringify(_obj))
+        temp.payeeAccountModels[0].documents = _obj.payeeAccountModels[0]?.documents?.payee
+
+        const response = await savePayee(this.state.isEdit ? _obj : temp);        
         if (response.ok) {
             if (this.props.type !== "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer })
+                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer, documents: _obj.payeeAccountModels[0]?.documents?.transfer   })
                 if (confirmRes.ok) {
                     this.props.onContinue(confirmRes.data);
                     this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
@@ -194,8 +188,6 @@ class OthersBusiness extends Component {
         } else {
             this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, isBtnLoading: false });
         }
-    }
-}
 
     }
     render() {
@@ -320,7 +312,21 @@ class OthersBusiness extends Component {
 
                             </Form.Item>
                         </Col>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
+                            <AddressDocumnet documents={this.state.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
+                            let { payeeAccountModels } = this.state.details;
+                            if(this.state.isEdit){
+                                payeeAccountModels[0].documents = docs;
+                            } else{
+                                payeeAccountModels[0].documents.payee = docs;
+                            }
+                            this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
+                        }} />
+                        </ Col>                        
                         <RecipientAddress />
+
+
                     </Row>
                     <h2 style={{ fontSize: 18,}} className="mt-36 text-captz px-4 text-white fw-600">Bank Details</h2>
                   
@@ -453,13 +459,16 @@ class OthersBusiness extends Component {
                             ></TextArea>
                             </Form.Item>
                         </Col>}
-                    <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting docs to explain relationship with beneficiary*</Paragraph>
-
-                    <AddressDocumnet documents={this.state.details?.payeeAccountModels[0].documents} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
-                        let { payeeAccountModels } = this.state.details;
-                        payeeAccountModels[0].documents = docs;
-                        this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
-                    }} />
+                        {this.props.type !== "manual" && 
+                        (<React.Fragment>
+                            <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
+                            <AddressDocumnet documents={this.state.details?.payeeAccountModels[0].documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
+                                let { payeeAccountModels } = this.state.details;
+                                payeeAccountModels[0].documents.transfer = docs;
+                                this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
+                            }} />
+                        </React.Fragment>)
+                        }
                     <div className="text-right mt-36">
                         <Button
                             htmlType="submit"

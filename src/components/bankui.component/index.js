@@ -39,7 +39,6 @@ class BankWallets extends Component {
         customerData: response.data,
         isLoading: false
       });
-      console.log(response.data);
     } else {
       this.setState({ ...this.state, isLoading: false });
     }

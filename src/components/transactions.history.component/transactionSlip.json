@@ -1,0 +1,64 @@
+{
+    "Buy":{
+        "date":"Date and Time",
+        "type":"Transaction Type",
+        "amount":"Amount",
+        "wallet":"Asset",
+        "newAssetBalance":"New Asset Balance",
+        "state":"Status"
+    },
+    "Sell":{
+        "date":"Date and Time",
+        "type":"Transaction Type",
+        "amount":"Amount",
+        "wallet":"Asset",
+        "newAssetBalance":"New Asset Balance",
+        "state":"Status"
+    },
+    "Deposit Crypto":{
+        "date":"Date and Time",
+        "type":"Transaction Type",
+        "amount":"Amount",
+        "wallet":"Asset",
+        "newAssetBalance":"New Asset Balance",
+        "network":"Network",
+        "address":"Address",
+        "hashId":"Hash",
+        "sbFee":"SB Fee ",
+        "sourceWallet":"Source Wallet",
+        "state":"Status"
+    },
+    "Withdraw Crypto":{
+        "date":"Date and Time",
+        "type":"Transaction Type",
+        "amount":"Amount",
+        "wallet":"Asset",
+        "newAssetBalance":"New Asset Balance",
+        "network":"Network",
+        "address":"Address",
+        "hashId":"Hash",
+        "sbFee":"SB Fee ",
+        "state":"Status"
+    },
+    "Withdraw Fiat":{
+        "date":"Date and Time",
+        "type":"Transaction Type",
+        "amount":"Amount",
+        "sbFee":"SB Fee ",
+        "senderName":"Sender's Name",
+        "beneficiaryName":"Beneficiary's Name",
+        "beneficiaryIBAN":"Beneficiary Account Number/IBAN",
+        "state":"Status"
+    },
+    "Deposit Fiat":{
+        "date":"Date and Time",
+        "type":"Transaction Type",
+        "amount":"Amount",
+        "sbFee":"SB Fee",
+        "senderName":"Sender's Name ",
+        "bankName":"Sender's Bank Account  ",
+        "beneficiaryName":"Beneficiary’s Name ",
+        "beneficiaryIBAN":"Beneficiary Account Number/IBAN",
+        "state":"Status"
+    }
+}

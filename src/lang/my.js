@@ -109,7 +109,7 @@ export default {
 	deposite_Btc: "Tambah dana",
 	sell_your_crypto_for_cash: "Jual Crypto anda dengan Wang Tunai",
 	buy_your_crypto_for_cash_text:
-	"Mividiana mora foana ny crypto amin'ny poketranao.",
+	"Madaling bumili ng crypto diretso sa iyong wallet.",
 	sell_your_crypto_for_cash_text:
 		"Mivarotra moramora ny crypto avy amin'ny poketranao.",
 	sell_your_fiat_for_cash: "Jual Fiat anda dengan Wang Tunai",
@@ -191,7 +191,7 @@ export default {
 	personal: "Peribadi",
 	wallets: "Dompet",
 	wallets_text: "Kawalan penuh kunci peribadi anda.",
-	cards: "Kad",
+	cards: "card",
 	exchange: "Pertukaran",
 	business: "Perniagaan",
 	business_text:
@@ -543,7 +543,6 @@ export default {
 	Email_verification: "Pagpapatunay ng Email",
 	live_verification: "Fanamarinana mivantana",
 	addresslabel: "Label ng Address",
-	address_type: "Address Type",
 	addressState: "Alamat Sate",
 	add_new_beneficiary: "Add New Beneficiary",
 	kyc_documents: "KYC Documents",
@@ -556,7 +555,6 @@ export default {
 	personal_account: 'Kaonty manokana',
 	business_account: "Kaonty fandraharahana",
 	Recipient_Business_name: "Anarana feno/Anaran'ny orinasa",
-	cards: "KARATRA",
 	agree_to_signup: "Amin'ny fanindriana ny Sign Up, dia manaiky aho fa manaiky ny fifanarahana %(rohy)s Suissebase ary namaky ny Politika momba ny fiainana manokana",
 	terms_Use: "Fepetra fampiasana",
 	whitelist: "senarai putih",
@@ -591,7 +589,6 @@ export default {
 	email:"Email",
 	Phone_No:"Numero ng telepono",
 	cryptoAddressDetails:"Mga Detalye ng Crypto Address",
-	bankAddress:"Magdagdag ng Address ng Bangko",
 	declaration:"Ang form ng deklarasyon ay ipapadala sa",
 	whitelist_note:"Mangyaring mag-sign gamit ang link na natanggap sa email upang i-whitelist ang iyong address",
 	Address_Line1:"Linya ng Address1",
@@ -623,7 +620,6 @@ export default {
 	continue:'Continue',
 	transfer_funds:'Ipadala',
     receive_funds:'Tumanggap',
-    suisse_wallets:'Ilipat sa digital Wallets',
 	receve_funds: "Tumanggap",
 	bankAddress: "Magdagdag ng Address ng Bangko",
   send_fund: "Ipadala",
@@ -635,7 +631,9 @@ export default {
 	send_fiat_text: "Alefaso ny Suissebase FIAT Wallet",
     receive_fiat_text: "Mandraisa ao amin'ny Suissebase FIAT Wallet",
 	contact_amount_text: "Mifandraisa amin'ny tohan-kevitra amin'ny vola ambony kokoa.",
-	buy_your_crypto_for_cash_text: "Mividiana mora foana ny crypto amin'ny poketranao.",
 	validate: "E-manan-kery",
-	sell_select_currency: "MIFIDY VOLA Hraisina"
+	sell_select_currency: "MIFIDY VOLA Hraisina",
+	transactions_history: "Kasaysayan ng Transaksyon",
+	transaction:"Transaksyon",
+
 };

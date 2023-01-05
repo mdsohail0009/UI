@@ -35,8 +35,10 @@ import apiCalls from "../api/apiCalls";
 import { setNotificationCount } from "../reducers/dashboardReducer";
 import { getmemeberInfo } from "../reducers/configReduser";
 import HeaderPermissionMenu from '../components/shared/permissions/header.menu';
+import { clearPermissions } from "../reducers/feturesReducer";
 import { handleHeaderProfileMenuClick } from "../utils/pubsub";
 import Notifications from "../notifications";
+import { checkCustomerState } from "../utils/service";
 
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
@@ -87,6 +89,7 @@ class Header extends Component {
     window.open(url);
   };
   trackEvent() {
+    this.props.dispatch(clearPermissions());
     window.$zoho?.salesiq?.chat.complete();
     window.$zoho?.salesiq?.reset();
     // this.props.dispatch(clearUserInfo());
@@ -113,12 +116,17 @@ class Header extends Component {
     });
   }
   routeToHome = () => {
-    this.props.dispatch(setHeaderTab(''));
-    this.props.history.push("/cockpit");
+    this.routeToCockpit();
   };
   routeToCockpit = () => {
     this.props.dispatch(setHeaderTab(''));
-    this.props.userConfig.isKYC ? this.props.history.push("/cockpit") : this.props.history.push("/notkyc")
+    if (!this.props.userConfig?.isKYC) {
+      this.props.history.push("/notkyc");
+    } else if (!checkCustomerState(this.props.userConfig)) {
+      this.props.history.push("/sumsub");
+    } else {
+      this.props.history.push("/cockpit");
+    }
     this.setState({ ...this.state, collapsed: true, isShowSider: false })
   }
   showToggle = () => {
@@ -171,7 +179,7 @@ class Header extends Component {
             >
               <Link>
                 <Translate
-                  content="menu_transactions_history"
+                  content="transactions_history"
                   component={Text}
                   className="text-white-30"
                 />
@@ -348,7 +356,7 @@ class Header extends Component {
                   </span>
                 </Menu.Item>
                 <Dropdown
-                   trigger={["click"]}
+                  trigger={["click"]}
                   overlay={userProfileMenu}
                   placement="topRight"
                   arrow

@@ -838,7 +838,7 @@ class WithdrawSummary extends Component {
 											onValueChange={(e) => this.handleChange(e.value)}
 											disabled={this.state.inputDisable}
 										/>
-										<div className="new-add get-code text-yellow hy-align">
+										<div className="new-add phn-code get-code text-yellow hy-align">
 											{!this.state.verifyTextotp && (
 												<Button
 													type="text"
@@ -859,7 +859,7 @@ class WithdrawSummary extends Component {
 												</Tooltip>
 											)}
 											<Button
-												type="text" className="c-pointer"
+												type="text" className=""
 												loading={this.state.phoneVerifyLoading}
 												style={{ color: "black", margin: "0 auto" }}
 												onClick={this.getOtpVerification}
@@ -911,7 +911,7 @@ class WithdrawSummary extends Component {
 											onChange={(e) => this.handleEmailChange(e, "emailCodeVal")}
 											disabled={this.state.inputEmailDisable}
 										/>
-										<div className="new-add c-pointer get-code text-yellow hy-align">
+										<div className="new-add phn-code c-pointer get-code text-yellow hy-align">
 											{!this.state.verifyEmailOtp && (
 												<Button
 													type="text"
@@ -1001,7 +1001,7 @@ class WithdrawSummary extends Component {
 										/>
 										<div className="new-add get-code text-yellow hy-align" >
 											<Button
-												type="text" className=" c-pointer"
+												type="text" className=" "
 												loading={this.state.faLoading}
 												style={{ color: "black", margin: "0 auto" }}
 												onClick={this.getAuthenticator}

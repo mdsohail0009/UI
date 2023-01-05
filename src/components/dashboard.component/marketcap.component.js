@@ -1,4 +1,4 @@
-import { Table, Tooltip, Input, Empty, Drawer, Typography } from 'antd';
+import { Table, Tooltip, Input, Empty, Drawer, Typography,Form } from 'antd';
 import { FullscreenOutlined, ReloadOutlined } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react';
 import Translate from 'react-translate-component';
@@ -7,7 +7,7 @@ import { fetchMarketCaps } from './api';
 import { detailInfoColumns, infoColumns } from './marketcap.columns';
 import apiCalls from '../../api/apiCalls';
 import { connect } from 'react-redux';
-
+import {validateContentRule} from '../../utils/custom.validator'
 const { Title, Paragraph } = Typography;
 
 const MarketCap = ({ member }) => {
@@ -76,7 +76,7 @@ const MarketCap = ({ member }) => {
                     </div>
                 </div>
                 <Search placeholder={apiCalls.convertLocalLang('searchCurrency')} value={searchVal} addonAfter={<span className="icon md search-white" />} onChange={(value) => onSearch(value)} size="middle" bordered={false} className="grey-search mt-12" />
-                <div className='box dash-info basic-info responsive_table bg-none mt-8'>
+                <div className='box dash-info basic-info responsive_table bg-none mt-8 dashb-btmtable'>
                 
                 
                 <Table  locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }} sortDirections={["ascend", "descend"]} style={{ background: "daryGrey" }} scroll={{ y: '' }} pagination={false} columns={infoColumns} dataSource={marketCaps} loading={isLoading} className="pay-grid view mb-view" />
@@ -98,8 +98,18 @@ const MarketCap = ({ member }) => {
             >
                 <div className="markets-panel mr-0 markets-popup">
                     <div className="full-screenable-node" style={{ overflow: "hidden", height: "100%", background: "daryGrey" }}>
+                  
                         <div style={{ marginBottom: '8px', textAlign: 'right' }}>
-                            <Search value={searchVal} placeholder={apiCalls.convertLocalLang('search_currency')} addonAfter={<span className="icon md search-white" />} onChange={(value) => onSearch(value, true)} size="middle" bordered={false} className="mt-8 mb-8 dark-search" />
+                            <Search 
+                            value={searchVal} 
+                            placeholder={apiCalls.convertLocalLang('search_currency')} 
+                            addonAfter={<span className="icon md search-white" />} 
+                            onChange={(value) => onSearch(value, true)} 
+                            size="middle"
+                             bordered={false} 
+                             className="mt-8 mb-8 dark-search"
+                              />
+                              
                             <Table className='' locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }} sortDirections={["ascend", "descend"]} pagination={false} columns={detailInfoColumns} style={{ backgroundColor: 'var(--bgGrey)' }} scroll={{ y: '100vh' }} dataSource={fullViewData} loading={fullViewLoading} />
                         </div>
                     </div>
