@@ -71,6 +71,8 @@ class TransactionSlips extends Component {
     const transactionSlipData = TransactionSlip[modalData?.copyType]
     return (
       <>
+
+      
         <Modal
           title="Transaction Details" visible={showModal}
           closeIcon={
