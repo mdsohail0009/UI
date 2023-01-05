@@ -33,7 +33,7 @@ class AddressBook extends Component {
 		super(props);
 		this.state = {
 			visible: false,
-			cryptoFiat: (this.props?.activeFiat || new URLSearchParams(this.props.history?.location?.search).get("key") === 2) ? true : false,
+			cryptoFiat: (this.props?.activeFiat || new URLSearchParams(this.props.history?.location?.search).get("key") == 2) ? true : false,
 			fiatDrawer: false,
 			isCheck: false,
 			selection: [],

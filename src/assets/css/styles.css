@@ -100,7 +100,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .icon.md.lose-arw{background-position:-338px -34px}
 .icon.md.download{background-position:-627px -38px;}
 .icon.md.delete{background-position:-465px -102px;}
-.icon.md.delete-icon{background-position:-465px -102px;}
+.icon.md.delete-icon{background-position:-465px -101.5px;}
 .icon.lg.hamburg{background-position: -55px 2px; transform: scale(1.4);}
 .icon.md.notifyIcon.deposit{background-position: -375px 0px;transform: rotateZ(235deg);}
 .icon.md.notifyIcon.deposits, .icon.md.notifyIcon.withdraw{background-position: -376px -1px;transform: rotateZ( 45deg);}
@@ -143,7 +143,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .icon.md.calendar{background-position:-481px -36px;}
 .icon.md.status{background-position:-365px -69px}
 .icon.md.add-icon{background-position:-397px -70px;}
-.icon.md.process-icon{background-position: -600px -34px;}
+.icon.md.process-icon{background-position: -680px -37px;}
 .icon.md.back{background-position:-377px -1px;}
 .icon.md.add-icon-black{background-position:-533px -2px;}
 .icon.md.edit-icon{background-position:-336px -70px;}
@@ -654,8 +654,12 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .date-mobile{margin-left: 12px !important;}
     .transaction-grid table col{width: 250px !important;}
     .transaction-grid .k-pager-wrap.k-pager.k-widget.k-grid-pager{overflow: auto;}
-    .transaction-grid .k-pager-wrap .k-pager-numbers.k-reset li:not(:first-child){display: none;}
+    .k-pager-wrap .k-pager-numbers.k-reset li:not(:first-child){display: none;}
     .transaction-type{margin-top: 8px !important;}
+    .batchpayment-summary{display: block;}
+    .ant-tooltip.ant-tooltip-placement-top{visibility: hidden;}
+    .btn-mobile button{padding: 0 30px;}
+    .k-pager-wrap.k-pager{font-size: 10px;}
 }
 @media (max-width: 1024px){
     .custom-gridresponsive .ant-drawer-body{word-wrap: unset !important;}
@@ -740,6 +744,8 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .login-user .header-logo{flex-grow: 1;}
     .dash-mobile-list ul{max-height: 787px;overflow: auto;}
     .create-account .ant-form-item-control-input-content{text-align: right;}
+    .batchpayment-summary{display: flex;}
+    .btn-mobile button{padding: 0 36px;}
 }
 @media (min-width: 992px){
     .tlv-header{display: flex}
@@ -769,6 +775,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .transctns-grid .search-btn{margin-left: 12px !important;}
     .bill-grid .k-grid-header table{width: 1255px !important;}
     .bill-grid .k-grid-content table{width: 1254px !important;}
+    .cust-input.cust-disable{width: 280px;}
 }
 @media (min-width: 1200px){
     .custom-font{font-size:28px !important;}
@@ -1072,7 +1079,20 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .details-cust{display: grid;text-align: right;}
 .statement-header ul{list-style: none !important;padding: 0;}
 .logo{vertical-align: middle; height: 80px;}
-.transaction-pdf-template tr:nth-child(even){background-color: rgb(204, 204, 204);}
+.transaction-pdf-template tr:nth-child(even){background-color: rgb(235 235 235 / 85%)}
 .statement-header div{flex: 1;}
 .statement-header.logo-content{align-items: flex-end;}
 .transaction-pdf-template thead{vertical-align: top;text-align: left;}
+.transaction-pdf-template thead th:first-child,tbody tr td:first-child{padding-left: 10px;}
+.ant-dropdown-menu.history-excel{background-color: var(--bgGloom) !important; border-radius: 10px; min-width: 100px; max-width: 200px; padding: 24px 0;}
+.export-pdf button{background-color: var(--bgYellow);border-color: var(--bgYellow);border-radius: 40px;height: 42px;text-transform: uppercase;font-weight: 700;transition: 0.3s ease;}
+.export-pdf button:hover{background-color: var(--bgDarkYellow);color: var(--textDark);border-color: var(--bgYellow);}
+.upload-disable{cursor: not-allowed;}
+.file-label.batch-upload{width: 100%;}
+.icon.md.close.batch-close{transform: scale(0.7);}
+.gridLink.batch-filename{display: block;}
+.draft-filename{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
+.btn-space{margin-left: 8px;}
+.webkit-color{-webkit-text-fill-color: var(--bgDarkYellow);}
+.address-clear.preview-content table tr td:first-child{white-space: nowrap;}
+.file-label span.webkit-color{width: 215px;display: inline-block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
