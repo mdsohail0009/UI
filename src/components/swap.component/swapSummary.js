@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { fetchCurrConvertionValue, saveSwapData, fetchCurrConvertionCommisionValue } from '../../components/swap.component/api';
 import Summary from '../summary.component';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
-import { appInsights } from "../../Shared/appinsights";
 import Loader from '../../Shared/loader';
 import apiCalls from '../../api/apiCalls';
 
@@ -49,14 +48,14 @@ class SwapSummary extends Component {
     async setOneCoinValue() {
         this.setState({ ...this.state, loader: true })
         if (this.props.swapStore.coinDetailData.coin && this.props.swapStore.coinReceiveDetailData.coin) {
-            let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, 1, this.props.userProfile.id);
+            let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, 1);
             if (res.ok) {
                 this.setState({ ...this.state, loader: false, price: res.data })
             }
         }
     }
     async setReceiveAmount(e) {
-        let res = await fetchCurrConvertionCommisionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, this.props.swapStore.fromCoinInputValue, this.props.userProfile.id, 'swap');
+        let res = await fetchCurrConvertionCommisionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, this.props.swapStore.fromCoinInputValue, 'swap');
         if (res.ok) {
             this.setState({ ...this.state, loader: false, receiveValue: res.data?.amount, commision: res.data?.comission })
         }
@@ -105,9 +104,6 @@ class SwapSummary extends Component {
                 this.props.changeStep('confirm');
                 this.setState({ ...this.state, loader: false, isLoading: false })
                 this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id))
-                // appInsights.trackEvent({
-                //     name: 'Swap', properties: { "Type": 'User', "Action": 'Save swap', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Swap', "Remarks": (obj.fromValue + " " + obj.fromWalletName + " to " + obj.toValue + " " + obj.toWalletName), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Swap Crypto' }
-                // });
             } else {
                 
                 this.setState({ ...this.state, loader: false, isLoading: false, errorMessage: res.error || res.data })

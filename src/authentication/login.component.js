@@ -13,10 +13,10 @@ class Login extends Component {
     state = {
 
     }
-     onFinish = (values) => {
+     onFinish = () => {
       };
     
-       onFinishFailed = (errorInfo) => {
+       onFinishFailed = () => {
       };
     render() {
 

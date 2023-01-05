@@ -33,16 +33,18 @@ class OthersBusiness extends Component {
         isValidateLoading: false,
         isValidCheck: false,
         isValidateMsg: false,
+        objData:{}
     };
     componentDidMount() {
         this.loadDetails();
     }
     loadDetails = async () => {
         this.setState({ ...this.state, errorMessage: null, isLoading: true });
-        const response = await createPayee(this.props.userProfile.id, this.props.selectedAddress?.id || "", "otherbusiness");
+        const response = await createPayee( this.props.selectedAddress?.id || "", "otherbusiness");
         if (response.ok) {
             let edit=false;
             let data = response.data;
+            this.setState({ ...this.state, objData: data });
             if (!data?.payeeAccountModels) {
                 data.payeeAccountModels = [payeeAccountObj()];
                 data.payeeAccountModels[0].documents = {"transfer": "", "payee": ""}
@@ -133,7 +135,7 @@ class OthersBusiness extends Component {
         let { details, ibanDetails,isSelectedId,isEdit } = this.state;
         if (Object.hasOwn(values, 'iban')) {
             this.setState({ ...this.state, errorMessage: null });
-            if ((!ibanDetails || Object.keys(ibanDetails).length == 0)) {
+            if ((!ibanDetails || Object.keys(ibanDetails).length === 0)) {
                 this.setState({ ...this.state, errorMessage: "Please click validate button before saving", isLoading: false, isBtnLoading: false });
                 this.useDivRef.current?.scrollIntoView();
                 return;
@@ -207,7 +209,7 @@ class OthersBusiness extends Component {
                     </div>
             </div></div>
         }
-        if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} updatedHeading={this.props?.headingUpdate} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} /> }
+        if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} transferData={this.state.objData} updatedHeading={this.props?.headingUpdate} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} /> }
         else {
             return <><div ref={this.useDivRef}>
                 <h2 className="text-white fw-600" style={{ fontSize: 18, textAlign: 'center' }}>SEPA Transfer</h2>
@@ -424,7 +426,7 @@ class OthersBusiness extends Component {
                         </Spin>
                        
                     </div>
-                    {this.props.ontheGoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    {this.props.ontheGoType === "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                                 name="reasonOfTransfer"

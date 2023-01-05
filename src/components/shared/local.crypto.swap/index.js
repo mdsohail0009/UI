@@ -1,10 +1,9 @@
 import { Input, Spin } from 'antd';
 import Text from 'antd/lib/typography/Text';
-import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { convertCurrencyDuplicate } from '../../buy.component/buySellService';
-import { handleSendFetch, setStep, setSubTitle, setWithdrawcrypto, setAddress } from '../../../reducers/sendreceiveReducer';
+import { setStep, setAddress } from '../../../reducers/sendreceiveReducer';
 import NumberFormat from 'react-number-format';
-import { connect } from 'react-redux';
 const LocalCryptoSwapper = (props, ref) => {
     const { localAmt = 0, cryptoAmt = 0, localCurrency = "USD", cryptoCurrency, onChange, sellData, showSwap = true, selectedCoin = null, showConvertion = true } = props;
     const [isSwaped, setSwapped] = useState(props.isSwap || false);

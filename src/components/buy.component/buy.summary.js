@@ -6,7 +6,6 @@ import { buyCrypto } from './api';
 import Summary from '../summary.component';
 import Loader from '../../Shared/loader';
 import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboardReducer';
-import { appInsights } from "../../Shared/appinsights";
 import apicalls from '../../api/apiCalls';
 import {Alert} from 'antd'
 import { setCurrentAction } from '../../reducers/actionsReducer';
@@ -93,7 +92,7 @@ class BuySummary extends Component {
         this.props.setStep("success");
         this.props.fetchDashboardData(this.props.customer.id);
         this.props.fetchMarketCoinDataValue();
-        appInsights.trackEvent({
+        apicalls.trackEvent({
           name: "Buy",
           properties: {
             Type: "User",

@@ -1,14 +1,11 @@
 import React, { Component } from 'react'
-import { Card, Row, Col, Typography, Radio, Tooltip, Empty, Spin } from 'antd';
+import { Card, Row, Col, Typography, Radio, Spin } from 'antd';
 import apiCalls from "../../api/apiCalls";
 import { connect } from 'react-redux';
-import BarChart from '../trading.components/barchart';
 import PieChart from '../trading.components/piechart';
-import LineChart from '../trading.components/linechart';
 import { Link } from 'react-router-dom';
 import BChart from '../trading.components/bar.Chart';
 import LChart from '../trading.components/line.Chart';
-import Loader from '../../Shared/loader';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -32,30 +29,30 @@ class CockpitCharts extends Component {
     cokpitKpiTrack = () => {
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Cockpit KPI page view', "Username": this.props.userProfileInfo?.userName, "customerId": this.props.userProfileInfo?.id, "Feature": 'Cockpit', "Remarks": 'Cockpit KPI page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Cockpit' });
     }
-    loadDashboards = async (days) => {
+    loadDashboards = async (Days) => {
         this.setState({ ...this.state, cumulativePNL: null, profits: null, dailyPnl: null, assetnetWorth: null, assetAlloction: null })
         await Promise.all([
-            apiCalls.getdshcumulativePnl(this.props.userConfig.id, days).then(_response => {
+            apiCalls.getdshcumulativePnl(Days).then(_response => {
                 if (_response.ok) {
                     this.setState({ ...this.state, cumulativePNL: _response.data })
                 }
             }),
-            apiCalls.getprofits(this.props.userConfig.id, days).then(_res => {
+            apiCalls.getprofits(Days).then(_res => {
                 if (_res.ok) {
                     this.setState({ ...this.state, profits: _res.data })
                 }
             }),
-            apiCalls.getdailypnl(this.props.userConfig.id, days).then(_dailyPnlres => {
+            apiCalls.getdailypnl(Days).then(_dailyPnlres => {
                 if (_dailyPnlres.ok) {
                     this.setState({ ...this.state, dailyPnl: _dailyPnlres.data })
                 }
             }),
-            apiCalls.getAssetNetwroth(this.props.userConfig.id, days).then(assetnetWorthres => {
+            apiCalls.getAssetNetwroth(Days).then(assetnetWorthres => {
                 if (assetnetWorthres.ok) {
                     this.setState({ ...this.state, assetnetWorth: assetnetWorthres.data })
                 }
             }),
-            apiCalls.getAssetAllowcation(this.props.userConfig.id, days).then(assetAlloctionres => {
+            apiCalls.getAssetAllowcation(Days).then(assetAlloctionres => {
                 if (assetAlloctionres.ok) {
                     this.setState({ ...this.state, assetAlloction: assetAlloctionres.data })
                 }
@@ -70,7 +67,7 @@ class CockpitCharts extends Component {
     }
     loadKpis = async () => {
         this.setState({...this.state,isLoading:true})
-        let response = await apiCalls.getdshKpis(this.props?.userConfig?.id);
+        let response = await apiCalls.getdshKpis();
         if (response.ok) {
             this.setState({ ...this.state, kpis: response.data })
             this.setState({...this.state,isLoading:false})
@@ -87,16 +84,10 @@ class CockpitCharts extends Component {
         return (<>
             <div className="main-container db-container">
                 <div className="mb-36 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/cockpit" />Back</div>
-                {/* {this.state.kpis &&  */}
-
+              
                 <Row gutter={16} className="mb-8">
 
-                    {/* <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
-                        <div className="db-kpi">
-                            <Text className="db-kpi-label">{'Crypto Balance'} </Text>
-                            <Text className="db-kpi-val"> ${this.state.kpis.cryptoBalance}</Text><Text className="badge">BTC=${this.state.kpis.cryptoBTC} </Text>
-                        </div>
-                    </Col> */}
+                   
 
                     <Col xs={24} sm={24} md={24} lg={12} xl={6} xxl={6}>
 							{this.state.kpis ? (
@@ -117,12 +108,7 @@ class CockpitCharts extends Component {
 								</div>
 							)}
 						</Col>
-                    {/* <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
-                        <div className="db-kpi">
-                            <Text className="db-kpi-label">{'Fiat Balance'}</Text>
-                            <Text className="db-kpi-val">${this.state.kpis.currency}{this.state.kpis.fiatBalance}</Text><Text className="badge">BTC<span>=</span>${this.state.kpis.fiatBTC}</Text>
-                        </div>
-                    </Col> */}
+                
                     
                     <Col xs={24} sm={24} md={24} lg={12} xl={6} xxl={6}>
 							{this.state.kpis ? (
@@ -144,69 +130,9 @@ class CockpitCharts extends Component {
 							)}
 						</Col>
 
-                    {/* {this.state.kpis?.yesterdayPNL != 0 && 
-                    <Col xs={24} sm={24} md={12} lg={12} xl={6} xxl={6}>
-							{this.state.kpis ? (
-
-                        <div className="db-kpi vthicon">
-                            <div className="icon-bg">
-                                <span className={`icon md ${this.state.kpis?.monthPNL > 0 ? "profit" : "lose"}-arw`} />
-                            </div>
-                            <div>
-                                <Text className="db-kpi-label">{"Yesterday's PNL"}<Tooltip title="See for more info"><span className="icon md info ml-4" /></Tooltip></Text>
-                                {this.state.kpis?.yesterdayPNL < 0 && <>
-                                    <Text className="db-kpi-val text-red">{this.state.kpis.currency}{this.state.kpis.yesterdayPNL}</Text><Text className="badge ml-16"><span>-</span>{this.state.kpis.percentage}</Text></>}
-                                {this.state.kpis?.yesterdayPNL > 0 && <>
-                                    <Text className="db-kpi-val text-red">{this.state.kpis.currency}{this.state.kpis.yesterdayPNL}</Text><Text className="badge"><span>-</span>{this.state.kpis.percentage}</Text></>}
-                            </div>
-                        </div> ): (
-								<div
-									className="db-kpi p-relative text-center"
-									style={{
-										display: "flex",
-										justifyContent: "center",
-										alignItems: "center",
-									}}>
-									{" "}
-									<Spin />
-								</div>
-	                        )}
-                    </Col>}
-                                      
-                    {this.state.kpis?.monthPNL != 0 && 
-                    <Col xs={24} sm={24} md={12} lg={12} xl={6} xxl={6}>
-							{this.state.kpis ? (
-
-                        <div className="db-kpi vthicon">
-                            <div className="icon-bg">
-                                <span className={`icon md ${this.state.kpis?.monthPNL > 0 ? "profit" : "lose"}-arw`} />
-                            </div>
-                            <div>
-                                <Text className="db-kpi-label">{'30 Days PNL'}</Text>
-                                {this.state.kpis?.monthPNL > 0 && <>
-                                    <Text className="db-kpi-val text-green">${this.state.kpis.monthPNL}</Text>
-                                </>}
-                                {this.state.kpis?.monthPNL < 0 && <>
-                                    <Text className="db-kpi-val text-red"><span>$</span>{this.state.kpis.monthPNL}</Text><Text className="badge">${this.state.kpis.monthPNL}</Text>
-                                </>}
-                            </div>
-                        </div>): (
-								<div
-									className="db-kpi p-relative text-center"
-									style={{
-										display: "flex",
-										justifyContent: "center",
-										alignItems: "center",
-									}}>
-									{" "}
-									<Spin />
-								</div>
-	                        )}
-
-                    </Col>} */}
-
+              
                 </Row>
-                 {/* } */}
+                
 
                 <Radio.Group defaultValue={30} buttonStyle="solid" className="my-16 wmy-graph" onChange={(e) => this.loadDashboards(e.target.value)}>
                     <Radio.Button value={1}>1 Day</Radio.Button>
