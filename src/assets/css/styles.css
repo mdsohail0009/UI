@@ -1614,3 +1614,5 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .address-clear.preview-content table tr td:first-child{white-space: nowrap;}
 .file-label span.webkit-color{display: inline-block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
 .export-pdf .ant-dropdown-button button:first-child{cursor: default !important;}
+.history-excel .drpdwn-list li a{padding: 10px 0;}
+.input-label.selectcustom-inputdate-mobile{margin-bottom: 0 !important;}
