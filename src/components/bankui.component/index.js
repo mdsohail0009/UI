@@ -7,8 +7,6 @@ import {
   Dropdown,
   Space,
   Menu,
-  Avatar,
-  Empty
 } from "antd";
 import ConnectStateProps from "../../utils/state.connect";
 import Currency from "../shared/number.formate";
@@ -17,7 +15,7 @@ import Loader from "../../Shared/loader";
 import { withRouter, Link } from "react-router-dom";
 
 import apicalls from "../../api/apiCalls";
-const { Title } = Typography;
+//const { Title } = Typography;
 
 class BankWallets extends Component {
   state = {
@@ -30,9 +28,7 @@ class BankWallets extends Component {
   }
   getCustomerAccountBalance = async () => {
     this.setState({ ...this.state, isLoading: true });
-    let response = await apicalls.getAccountDetails(
-      this.props.userProfile.id
-    );
+    let response = await apicalls.getAccountDetails();
     if (response.ok) {
       this.setState({
         ...this.state,
@@ -103,8 +99,8 @@ class BankWallets extends Component {
   );
 
   render() {
-    const { Title, Text } = Typography;
-    const { wallets } = this.props.dashboard;
+    const { Title } = Typography;
+    //const { wallets } = this.props.dashboard;
     return (
       <>
         <Title className="fs-24 fw-600 mb-16 text-white px-4">
@@ -132,8 +128,8 @@ class BankWallets extends Component {
                       className="fs-16 text-white-30 m-0"
                       defaultValue={item.availableBalance}
                       prefix={
-                        (item?.currency == "USD" ? "$" : null) ||
-                        (item?.currency == "EUR" ? "€" : null)
+                        (item?.currency === "USD" ? "$" : null) ||
+                        (item?.currency === "EUR" ? "€" : null)
                       }
                       decimalPlaces={8}
                       type={"text"}
@@ -143,7 +139,7 @@ class BankWallets extends Component {
                 />
                 {item.isAccountExist ? (
                   <>
-                    {item?.accountStatus?.toLowerCase() == "approved" && (
+                    {item?.accountStatus?.toLowerCase() === "approved" && (
                       <div className="crypto-btns mt-8">
                         <Translate
                           content="transfer_funds"
@@ -181,16 +177,16 @@ class BankWallets extends Component {
                           arrow
                           overlayClassName="secureDropdown depwith-drpdown"
                         >
-                          <a onClick={(e) => e.preventDefault()}>
+                          <Link onClick={(e) => e.preventDefault()}>
                             <Space>
                               <span class="icon md menu-bar ml-4 p-relative"></span>
                             </Space>
-                          </a>
+                          </Link>
                         </Dropdown>
                       </div>
                     )}
 
-                    {item?.accountStatus?.toLowerCase() != "approved" && (
+                    {item?.accountStatus?.toLowerCase() !== "approved" && (
                       <div className="crypto-btns mt-8">
                         <Button
                           content="Pending"

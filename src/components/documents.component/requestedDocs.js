@@ -14,7 +14,6 @@ import Mome from 'moment'
 const { Panel } = Collapse;
 const { Text } = Typography;
 const { Dragger } = Upload;
-const { TextArea } = Input;
 
 const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
@@ -64,7 +63,7 @@ class RequestedDocs extends Component {
         }
     }
     loadDocReplies = async (id) => {
-        let docReObj = this.state.docReplyObjs.filter(item => item.docunetDetailId != id);
+        let docReObj = this.state.docReplyObjs.filter(item => item.docunetDetailId !== id);
         this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } }, docReplyObjs: docReObj, isMessageError: null });
         const response = await getDocumentReplies(id);
         if (response.ok) {
@@ -348,7 +347,7 @@ class RequestedDocs extends Component {
         }
         return <>
             <div className="main-container">
-                {!this.state.docDetails?.details || this.state.docDetails?.details.length === 0 && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div>}
+                {(!this.state.docDetails?.details || this.state.docDetails?.details.length === 0) && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div>}
                 <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile/4" />{this.state?.docDetails?.note}</div>
                 <div className="bank-view">
                     {this.state.docDetails?.details?.map((doc, idx) => <Collapse onChange={(key) => { if (key) { this.loadDocReplies(doc.id) } }} accordion className="accordian mb-24" defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
@@ -377,7 +376,7 @@ class RequestedDocs extends Component {
                                     placeholder="Write your message"
                                     maxLength={200}
                                 />
-                                {this.state.isMessageError == doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter message</div>}
+                                {this.state.isMessageError === doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter message</div>}
                                 {this.state.validHtmlError && <Translate Component={Text} content="please_enter_valid_content" className="fs-14 text-red" />}
                                 {this.state.errorMessage != null && <Alert
                                     description={this.state.errorMessage}

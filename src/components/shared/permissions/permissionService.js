@@ -3,12 +3,12 @@ import { store } from "../../../store"
 
 const getFeatureId = (path) => {
     const { menuItems: { features } } = store.getState();
-    const feature = features?.data?.find(item => item.path == path);
+    const feature = features?.data?.find(item => item.path === path);
     return feature?.id;
 }
 const getFeatureWithKeyId = (key) => {
     const { menuItems: { features:{originalData} } } = store.getState();
-    const feature = originalData?.find(item => item.key == key);
+    const feature = originalData?.find(item => item.key === key);
     return feature?.id;
 }
 const getFeaturePermissionsByKey = (key,callback) => {

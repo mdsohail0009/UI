@@ -4,20 +4,20 @@ import HighchartsReact from 'highcharts-react-official';
 const LineChart = ({ data, showPnl, showBtc }) => {
     const dateConverter = (d) => {
         d = d.split("/")
-        d[1] = d[1].length == 1 ? d[1] === '0' + d[1] : d[1]
+        d[1] = d[1].length === 1 ? d[1] === '0' + d[1] : d[1]
         return `${d[2]}-${d[0]}-${d[1]}`
     }
     let dateData = [];
     let pnlData = [];
     let btcData = [];
-    data.cpnl.map((d) => {
+    data.cpnl.forEach((d) => {
         pnlData.push(parseFloat((d.value).toFixed(2)))
         dateData.push(dateConverter(d.time))
     })
     if (data.btcTrend == null) {
         btcData.push([]);
     } else {
-        data.btcTrend.map((d) => {
+        data.btcTrend.forEach((d) => {
             btcData.push(parseFloat((d.value).toFixed(2)))
         })
     }

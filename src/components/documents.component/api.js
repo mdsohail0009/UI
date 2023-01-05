@@ -22,8 +22,8 @@ const saveDocReply = (obj) => {
 const approveDoc = (obj) => {
     return clientApi.post(ApiControllers.documents + `Actions/Status`, obj)
 }
-const getDashboardNotices = (customer_id) => {
-    return clientApi.get(ApiControllers.customers + `Dashboard/Notifications/${customer_id}`)
+const getDashboardNotices = () => {
+    return clientApi.get(ApiControllers.customers + `Dashboard/Notifications`)
 }
 const getFileURL = (obj) => {
     return clientApi.post(ApiControllers.customers + `FetchFile`, obj)

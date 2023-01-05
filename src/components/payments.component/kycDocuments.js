@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Spin, Upload, Typography, Form, Input } from 'antd';
 import { connect } from 'react-redux';
 import { LoadingOutlined } from '@ant-design/icons';
@@ -20,15 +20,11 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
     );
 };
 const KycDocuments = (props) => {
-    const [btnDisabled, setBtnDisabled] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
     return (
         <>
             <div className='mb-24'>
                 <Paragraph
-                    //content="Beneficiary_Details"
-                    //component={Paragraph}
                     className="mb-16 fs-14 text-white fw-500 text-upper"
                 >Please provide your identity proof</Paragraph>
                 <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
@@ -36,7 +32,6 @@ const KycDocuments = (props) => {
                     multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                     showUploadList={false}
                     beforeUpload={(props) => { this.beforeUpload(props) }}
-                //onChange={(props) => { this.handleUpload(props, doc) }}
                 headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
                 >
                     <p className="ant-upload-drag-icon">
@@ -58,8 +53,6 @@ const KycDocuments = (props) => {
             </div>
             <div>
                 <Paragraph
-                    //content="Beneficiary_Details"
-                    //component={Paragraph}
                     className="mb-16 fs-14 text-white fw-500 text-upper"
                 >Please provide your address proof</Paragraph>
                 <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
@@ -67,7 +60,6 @@ const KycDocuments = (props) => {
                     multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                     showUploadList={false}
                     beforeUpload={(props) => { this.beforeUpload(props) }}
-                //onChange={(props) => { this.handleUpload(props, doc) }}
                 headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
                 >
                     <p className="ant-upload-drag-icon">
@@ -106,10 +98,9 @@ const KycDocuments = (props) => {
                 size="large"
                 block
                 className="pop-btn mt-36"
-                disabled={btnDisabled}
                 onClick={() => props.dispatch(setStep('step3'))}
             >
-                {isLoading && <Spin indicator={antIcon} />}  <Translate content="submit" />
+                <Spin indicator={antIcon} /> <Translate content="submit" />
             </Button>
         </>
     )

@@ -33,16 +33,18 @@ class OthersBusiness extends Component {
         isValidateLoading: false,
         isValidCheck: false,
         isValidateMsg: false,
+        objData:{}
     };
     componentDidMount() {
         this.loadDetails();
     }
     loadDetails = async () => {
         this.setState({ ...this.state, errorMessage: null, isLoading: true });
-        const response = await createPayee(this.props.userProfile.id, this.props.selectedAddress?.id || "", "otherbusiness");
+        const response = await createPayee( this.props.selectedAddress?.id || "", "otherbusiness");
         if (response.ok) {
             let edit=false;
             let data = response.data;
+            this.setState({ ...this.state, objData: data });
             if (!data?.payeeAccountModels) {
                 data.payeeAccountModels = [payeeAccountObj()];
                 data.payeeAccountModels[0].documents = {"transfer": "", "payee": ""}
@@ -133,7 +135,7 @@ class OthersBusiness extends Component {
         let { details, ibanDetails,isSelectedId,isEdit } = this.state;
         if (Object.hasOwn(values, 'iban')) {
             this.setState({ ...this.state, errorMessage: null });
-            if ((!ibanDetails || Object.keys(ibanDetails).length == 0)) {
+            if ((!ibanDetails || Object.keys(ibanDetails).length === 0)) {
                 this.setState({ ...this.state, errorMessage: "Please click validate button before saving", isLoading: false, isBtnLoading: false });
                 this.useDivRef.current?.scrollIntoView();
                 return;
@@ -198,16 +200,15 @@ class OthersBusiness extends Component {
         if (this.state.showDeclartion) {
             return  <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
                 <Image width={80} preview={false} src={alertIcon} />
-                <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
+                <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully</Title>
                 <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
-                   Please sign using link received in email to whitelist your address. `}</Text>
-                <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
+                Please review and sign the document in your email to whitelist your address.
+                Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
                 <div className="my-25">
-                    {/* <Button onClick={() => this.props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button> */}
                     </div>
             </div></div>
         }
-        if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} updatedHeading={this.props?.headingUpdate} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} /> }
+        if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} transferData={this.state.objData} updatedHeading={this.props?.headingUpdate} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} /> }
         else {
             return <><div ref={this.useDivRef}>
                 <h2 className="text-white fw-600" style={{ fontSize: 18, textAlign: 'center' }}>SEPA Transfer</h2>
@@ -255,7 +256,6 @@ class OthersBusiness extends Component {
                         component={Paragraph}
                         className="mb-8 text-white fw-500 mt-16"
                     />
-                    {/* <Divider /> */}
                     <Row gutter={[12, 12]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
@@ -424,7 +424,7 @@ class OthersBusiness extends Component {
                         </Spin>
                        
                     </div>
-                    {this.props.ontheGoType == "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    {this.props.ontheGoType === "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
                                 name="reasonOfTransfer"
