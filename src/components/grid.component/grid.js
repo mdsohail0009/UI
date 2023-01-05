@@ -139,7 +139,7 @@ export function withState(WrappedGrid) {
                                 }
                             </div>
                             <div>
-                                <table className="transaction-pdf-template" width="100%">
+                                <table className="transaction-pdf-template">
                                     <thead style={{ background: "#cccccc" }}>
                                         <th >Transaction ID</th>
                                         <th >Date</th>
@@ -150,7 +150,7 @@ export function withState(WrappedGrid) {
                                         <th >Bank Account Number /IBAN</th>
                                         <th >Status</th>
                                     </thead>
-                                    <tbody>
+                                    <tbody className='pdt-data'>
                                         {this.state?.data?.map(item => <tr>
                                             <td>{item.transactionId}</td>
                                             <td >{moment(item.date).format("DD/MM/YYYY hh:mm a")}</td>
