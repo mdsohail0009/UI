@@ -900,7 +900,7 @@ saveWithdrawdata = async () => {
             </>,
       declaration: <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
       <Image width={80} preview={false} src={alertIcon} />
-      <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
+      <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully</Title>
             <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                        Please sign using link received in email to whitelist your address. `}</Text>
             <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
