@@ -268,7 +268,7 @@ class WithdrawSummary extends Component {
 					tooltipVisible: false,
 					verifyOtpText: null,
 				});
-			}, 30000);
+			}, 120000);
 		} else {
 			this.setState({
 				...this.state,
