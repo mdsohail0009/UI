@@ -119,7 +119,7 @@ export function withState(WrappedGrid) {
         render() {
             return (
                 <div >
-                    <div style={{ position: "absolute", left: "-1500px", top: 0 }}>
+                    <div style={{height:"0",overflow:"hidden"}}>
                         <PDFExport margin={5} scale={0.55} paperSize="A4" repeatHeaders={true} fileName='Transaction History' ref={this.tempRef}>
                             <table width="100%">
                                 <tr>
