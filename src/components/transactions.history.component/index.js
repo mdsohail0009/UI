@@ -92,13 +92,6 @@ class TransactionsHistory extends Component {
   }
   gridColumns = [
     {
-      field: "transactionId",
-      title: "Transaction ID",
-      filter: true,
-      locked: true,
-      width: 210,
-    },
-    {
       field: "date", title: "Date", filter: true, filterType: "date", locked: true, width: 210,
       customCell: (props) => (
         <td>
