@@ -29,16 +29,16 @@ const [edit,setEdit]=useState(false);
 const [isSelectedId,setIsSelectedId] = useState(null);
     useEffect(() => {
         getpayeeCreate();
-    }, [])
+    }, []);//eslint-disable-line react-hooks/exhaustive-deps
     const getpayeeCreate = async () => {
         setMailLoader(true);
-        const createPayeeData = await createPayee(props.userProfile.id, props.selectedAddress?.id || "", addressOptions.addressType);
+        const createPayeeData = await createPayee(props.selectedAddress?.id || "", addressOptions.addressType);
         if (createPayeeData.ok) {
             let edit = false;
             setCreatePayeeObj(createPayeeData.data);
             if (props.selectedAddress?.id) {
-                setIntialObj({ ...createPayeeData.data, payeeAccountModels: createPayeeData.data.payeeAccountModels[0] })
-                setDocuments(createPayeeData.data.payeeAccountModels[0].documents)
+                setIntialObj({ ...createPayeeData.data, payeeAccountModels: createPayeeData?.data?.payeeAccountModels[0] })
+                setDocuments(createPayeeData?.data?.payeeAccountModels[0]?.documents)
                 setAddressOptions({ ...addressOptions, domesticType: createPayeeData.data.transferType });
                 edit = true;
                 props?.onEdit(edit);
@@ -54,7 +54,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
     const onSubmit = async (values) => {
         if (Object.hasOwn(values?.payeeAccountModels, 'iban')) {
             setErrorMessage(null);
-            if ((!bankdetails || Object.keys(bankdetails).length == 0)) {
+            if ((!bankdetails || Object.keys(bankdetails).length === 0)) {
                 useDivRef.current.scrollIntoView()
                 setErrorMessage("Please click validate button before saving");
                 return;
@@ -75,7 +75,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             obj.id = isSelectedId ? isSelectedId : createPayeeObj.payeeAccountModels[0]?.payeeId;
         }
         setBtnLoading(true)
-        
+       
         let payeesave = await savePayee(obj)
         if (payeesave.ok) {
             if (props.type !== "manual") {
@@ -98,7 +98,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             setErrorMessage(isErrorDispaly(payeesave));
             useDivRef.current.scrollIntoView();
         }
-
+    
     }
     const isErrorDispaly = (objValue) => {
         if (objValue.data && typeof objValue.data === "string") {
@@ -133,10 +133,10 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             <div ref={useDivRef}></div>
             {showDeclartion &&<div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
                 <Image width={80} preview={false} src={alertIcon} />
-                <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
-                <Text className="text-white-30">{`Declaration form has been sent to ${props.userProfile?.email}. 
-                   Please sign using link received in email to whitelist your address. `}</Text>
-                <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
+                  <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully</Title>
+                 <Text className="text-white-30">{`Declaration form has been sent to ${props.userProfile?.email}. 
+                Please review and sign the document in your email to whitelist your address.
+                Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
             </div></div>}
 
             {!showDeclartion && <>
@@ -154,7 +154,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         </Col>
                     </Row>
                 </>}
-                {props.currency == 'EUR' && <h2 className="text-white fw-600" style={{ fontSize: 18, textAlign: 'center'}}>SEPA Transfer</h2>}
+                {props.currency === 'EUR' && <h2 className="text-white fw-600" style={{ fontSize: 18, textAlign: 'center'}}>SEPA Transfer</h2>}
                 {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
             <Form
                 ref={form}
@@ -294,7 +294,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
+                        <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
                             <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
                                     let temp = {...documents, "payee": docs}
                                     setDocuments(temp)
@@ -377,8 +377,8 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                 <Paragraph className="mb-8 fw-500 text-white px-4 mt-36" style={{ fontSize: 18 }}>Bank Details</Paragraph>
                 {((props.selectedAddress?.id && createPayeeObj)||!props.selectedAddress?.id ) &&
                  <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} isAddTabCange={isTabChange}/>}
-                
-                {props.type !== "manual" && 
+                 
+                 {props.type !== "manual" && 
                 (<React.Fragment>
                     <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
                     <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
@@ -388,7 +388,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                 </React.Fragment>)
                 }
 
-                    <div className="text-right mt-12">
+                                    <div className="text-right mt-12">
                     <Button
                         htmlType="submit"
                         size="large"

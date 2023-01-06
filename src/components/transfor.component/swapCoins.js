@@ -1,6 +1,6 @@
-import React, { Component, useEffect, useState } from 'react';
-import { Typography, Button, Input, Alert, Spin,Image,Row,Select,Col, Form } from 'antd';
-import { gettransforLu, getCurrencyLu, getcurrencyBalance, saveTransfor } from './api';
+import React, { useEffect, useState } from 'react';
+import { Button, Input, Alert, Spin, Select,Col, Form } from 'antd';
+import { gettransforLu, getCurrencyLu, getcurrencyBalance } from './api';
 import { connect } from 'react-redux';
 import Translate from "react-translate-component";  
 import apiCalls from '../../api/apiCalls'
@@ -10,13 +10,13 @@ import Currency from '../shared/number.formate';
 import { setCurrentAction } from '../../reducers/actionsReducer';
 const { Option } = Select;
 
-const  TranforCoins = ({userProfile,onClose,dispatch,transforObj,transferPermissions}) =>{
+const  TranforCoins = ({userProfile,dispatch,transforObj,transferPermissions}) =>{
     useEffect(()=>{
         loadApis();
         if(transforObj){
             form.setFieldsValue(transforObj)
         }
-    },[])
+    },[]);//eslint-disable-line react-hooks/exhaustive-deps
     
     const [fromWalletLu,setFromWalletLu] = useState([])
     const [toWalletLu,setToWalletLu] = useState([])
@@ -28,18 +28,17 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj,transferPermiss
     const useDivRef = React.useRef(null);
     const [form] = Form.useForm();
     const [permission,setPermission]=useState({});
-    // const [transfordata,setTransfordata] = useState(null)
     useEffect(()=>{
         loadPermissions()
         if(transforObj && currencyLu.length>0){
             showBalance(transforObj.walletCode)
         }
-    },[currencyLu])
+    },[currencyLu]);//eslint-disable-line react-hooks/exhaustive-deps
     useEffect(()=>{
         if(transforObj && fromWalletLu.length>0){
             handleFromchange(transforObj.fromWalletType)
         }
-    },[fromWalletLu])
+    },[fromWalletLu]);//eslint-disable-line react-hooks/exhaustive-deps
 
 
    const loadPermissions = () => {
@@ -79,7 +78,7 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj,transferPermiss
     }
     const showBalance = async(val) =>{
         const obj=form.getFieldValue()
-        const selectedList = currencyLu.filter((item)=>item.walletCode==val)
+        const selectedList = currencyLu.filter((item)=>item.walletCode===val)
         if(selectedList.length>0){
             setSelectedwalletType(selectedList[0].walletType);
         }
@@ -91,7 +90,7 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj,transferPermiss
         }
     }
     const handleFromchange = (val) =>{
-       let towallet =  fromWalletLu.filter((type)=>type.name == val)
+       let towallet =  fromWalletLu.filter((type)=>type.name === val)
         setToWalletLu(towallet[0].toWalletTypes)
         const obj=form.getFieldValue()
         if(obj.walletCode){
@@ -100,13 +99,13 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj,transferPermiss
     }
     const toFixed=(x)=> {
         if (Math.abs(x) < 1.0) {
-          var e = parseInt(x.toString().split('e-')[1]);
+          let e = parseInt(x.toString().split('e-')[1]);
           if (e) {
               x *= Math.pow(10,e-1);
               x = '0.' + (new Array(e)).join('0') + x.toString().substring(2);
           }
         } else {
-          var e = parseInt(x.toString().split('+')[1]);
+          let e = parseInt(x.toString().split('+')[1]);
           if (e > 20) {
               e -= 20;
               x /= Math.pow(10,e);
@@ -117,7 +116,7 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj,transferPermiss
       }
     const showSummary= async(values) =>{
         values.transferAmount = toFixed(parseFloat(values.transferAmount.replace(',',''))).toString()
-        if((!values.transferAmount)||values.transferAmount=='0'){
+        if((!values.transferAmount)||values.transferAmount==='0'){
             useDivRef.current.scrollIntoView();
             return setErrorMsg('Amount must be greater than zero.');
         }
@@ -125,17 +124,13 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj,transferPermiss
             useDivRef.current.scrollIntoView();
             return setErrorMsg('Insufficient funds');
         }
-        let selectedWallet =  currencyLu.filter((type)=>type.walletCode == values.walletCode)
+        let selectedWallet =  currencyLu.filter((type)=>type.walletCode === values.walletCode)
         values.memberWalletId = selectedWallet[0].walletId;
         values.customerId = userProfile.id;
-        values.transferAmount = selectedwalletType=='Fiat'?( values.transferAmount.slice(0,(values.transferAmount.indexOf('.')>-1?(values.transferAmount.indexOf('.')+3):values.transferAmount.length)) ):values.transferAmount;
-        if(values.transferAmount.indexOf('.')==0){
+        values.transferAmount = selectedwalletType==='Fiat'?( values.transferAmount.slice(0,(values.transferAmount.indexOf('.')>-1?(values.transferAmount.indexOf('.')+3):values.transferAmount.length)) ):values.transferAmount;
+        if(values.transferAmount.indexOf('.')===0){
             values.transferAmount = '0'+values.transferAmount
         }
-        // const res = saveTransfor(values);
-        // if(res.ok){
-        //     onClose()
-        // }
         dispatch(setTransforObj(values))
         dispatch(setStepcode('tranforsummary'))
     }
@@ -206,7 +201,6 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj,transferPermiss
                             bordered={false}
                             showArrow={true}
                             optionFilterProp="children"
-                            // onChange={(e) => handleFromchange(e)}
                         >
                           {  toWalletLu.map((wallet)=>{
                                 return <Option value={wallet.name}>{wallet.name}</Option>
@@ -252,7 +246,6 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj,transferPermiss
                               <Translate
                                 content="amount" component={Form.label} />
                               <div className="minmax">
-                                {/* {"Available balance:"+(balance?.available||0) } */}
                                 <Currency defaultValue={balance.available || 0} prefix={'Available balance: '} className={`fs-18 m-0 fw-600 ${balance.available < 0 ? 'text-red' : 'text-green'}`} />
                               </div>
                             </>
@@ -271,13 +264,10 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj,transferPermiss
                             thousandSeparator={true}
                             prefix={""}
                             placeholder="0.00"
-                            decimalScale={selectedwalletType=='Crypto'?8:2}
+                            decimalScale={selectedwalletType==='Crypto'?8:2}
                             allowNegative={false}
                             maxlength={13}
                             style={{ height: 44 }}
-                            // onValueChange={({ e, value }) => {
-                            //     showBalance(value)
-                            // }}
                         />
                     </Form.Item>
                 </Col>

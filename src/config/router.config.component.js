@@ -18,7 +18,7 @@ const UserProfile = React.lazy(() => import('../components/userProfile.component
 const RequestedDocs = React.lazy(() => import('../components/documents.component/requestedDocs'));
 const DocNotices = React.lazy(() => import("../components/shared/doc.notices"));
 const TwoFactor = React.lazy(() => import("../components/shared/two.factor"));
-const CaseDocs = React.lazy(() => import('../components/case.component/caseView'));
+//const CaseDocs = React.lazy(() => import('../components/case.component/caseView'));
 const CoinDetails = React.lazy(() => import("../components/dashboard.component/coinview"));
 const DashboardCharts = React.lazy(() => import("../components/dashboard.component/cockpitCharts"));
 const Payments = React.lazy(() => import("../components/payments.component"));
@@ -33,6 +33,9 @@ const InternalTransfer = React.lazy(() => import("../components/internalTransfer
 const AddressBook = React.lazy(() => import("../components/addressbook.component"));
 const Cases = React.lazy(()=>import("../components/case.component/cases"))
 const CaseView = React.lazy(()=>import("../components/case.component/caseView"))
+const Batchpayments = React.lazy(()=>import("../components/batchpayment.component"));
+const BatchpaymentView = React.lazy(()=>import("../components/batchpayment.component/uploadGrid"));
+const paymentPreview=React.lazy(()=>import("../components/batchpayment.component/paymentPreview"));
 // const ErrorPage = React.lazy(() => import("../components/internalTransfer.component/errorpage"));
 class RouteConfig extends Component {
   componentDidMount() {
@@ -43,7 +46,7 @@ class RouteConfig extends Component {
   }
   checkPermissions(pathname) {
     pathname = pathname.includes("/payments/") ? "/payments" : pathname;  // temporary fix perminent fix will be in next sprint --subbareddy
-    if (this.props.menuItems.featurePermissions?.[KEY_URL_MAP[pathname]] && pathname != "/userprofile" && pathname != "/accessdenied") {
+    if (this.props.menuItems.featurePermissions?.[KEY_URL_MAP[pathname]] && pathname !== "/userprofile" && pathname !== "/accessdenied") {
       let _permissions = {};
       for (let action of (this.props.menuItems.featurePermissions?.[KEY_URL_MAP[pathname]]?.actions || [])) {
         _permissions[action.permissionName] = action.values;
@@ -78,6 +81,16 @@ class RouteConfig extends Component {
         <ReactRoute path='/accessdenied' component={AccessDenied} />
         <ReactRoute path='/caseView/:id' component={CaseView} />
         <Route path="/error" component={ErrorPage} />
+        
+        <ReactRoute
+					path="/batchpayment"
+					render={({ match: { url } }) => (
+						<>
+							<Route path={`${url}`} component={Batchpayments} exact isRoute={true}/>
+              <Route path={`${url}/:id/:fileName/:currency/:view`} component={BatchpaymentView} />
+						</>
+					)}
+				/>
         <ReactRoute
           path="/payments"
           render={({ match: { url } }) => (
@@ -85,7 +98,7 @@ class RouteConfig extends Component {
               <Route path={`${url}/:code`} component={Payments} exact isRoute={true} />
               <Route path={`${url}/:id/add`} component={PaymentDetails} />
               <Route path={`${url}/:id/:type/:state/edit`} component={PaymentDetails} />
-              <Route path={`${url}/:id/view`} component={paymentsView} />
+              <Route path={`${url}/:id/:currency/view`} component={paymentsView} />
               <Route path={`${url}/newbeneficiary/:id`} component={BeneficiaryDetails} />
              
             </>

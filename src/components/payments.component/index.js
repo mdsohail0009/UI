@@ -1,22 +1,18 @@
 
 import React, { useEffect, useState } from 'react';
-import { Typography, Button, Drawer, Select ,message, Alert, Spin } from 'antd';
-import {Link} from 'react-router-dom';
+import { Typography, Drawer, Select ,message, Alert, Spin } from 'antd';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
 import moment from 'moment';
-import { warning } from '../../utils/messages'
 import List from "../grid.component";
 import BeneficiaryDrawer from './beneficiaryDrawer';
-import AddressCommonCom from "../addressbook.component/addressCommonCom";
 import { setHeaderTab } from "../../reducers/buysellReducer"
 import ActionsToolbar from "../toolbar.component/actions.toolbar";
-import { fetchFeaturePermissions } from "../../reducers/feturesReducer";
-import { getFeatureId } from "../shared/permissions/permissionService";
 import { getCurrencyLu} from './api'
 import {getFeaturePermissionsByKey} from '../shared/permissions/permissionService'
 import apicalls from '../../api/apiCalls';
+import AddressbookV3 from '../addressbook.v3';
 
 const { Title, Text, Paragraph } = Typography;
 const { Option } = Select;
@@ -25,7 +21,6 @@ const Payments = (props) => {
   
   const [beneficiaryDrawer, setBeneficiaryDrawer] = useState(false);
   const [beneficiaryDetails, setBeneficiaryDetails] = useState(false);
-  const [checkRadio, setCheckRadio] = useState(false);
   const [selection, setSelection] = useState([]);
   const [selectedObj, setSelectedObj] = useState()
   const [setSelectData, setSetSelectData] = useState({})
@@ -33,11 +28,13 @@ const Payments = (props) => {
   const [ currencylu,setCurrencylu]=useState([]);
   const [walletType,setWalletType]=useState(props.match.params.code);
   const [loading,setLoading] = useState(true)
+  const [cryptoFiat ,setCryptoFiat]=useState(true);
+  const [hideFiatHeading,setHideFiatHeading]=useState(false);
   const paymentsView = (prop) => {
-    props.history.push(`/payments/${prop.dataItem.id}/view`)
+    props.history.push(`/payments/${prop.dataItem.id}/${prop.dataItem.currency}/view`)
   };
   const paymentsEdit = () => {
-    if (selection.length == 0) {
+    if (selection.length === 0) {
       setErrorWarning("Please select the record");
     } else {
       props.history.push(`/payments/${selectedObj}/${setSelectData.currency}/${setSelectData.state}/edit`)
@@ -56,20 +53,20 @@ const Payments = (props) => {
   }
   useEffect(() => {
     if(props.billpaymentsPermission){
-      let viewPermission = props.billpaymentsPermission.actions.filter((item)=>item.permissionName == 'view')[0];
+      let viewPermission = props.billpaymentsPermission.actions.filter((item)=>item.permissionName === 'view')[0];
       if(!viewPermission.values){
         props.history.push('/accessdenied')
       }
     }else{
       getFeaturePermissionsByKey('billpayments',loadInfo)
     }
-  }, [props.billpaymentsPermission])
+  }, [props.billpaymentsPermission]);//eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     getFeaturePermissionsByKey('billpayments',loadInfo)
-  }, [])
+  }, []);//eslint-disable-line react-hooks/exhaustive-deps
   useEffect(()=>{
     gridRef.current?.refreshGrid();
-  },[walletType])
+  },[walletType]);;//eslint-disable-line react-hooks/exhaustive-deps
   const gridColumns = [
     {
       field: "",
@@ -129,10 +126,10 @@ const Payments = (props) => {
   }
 
   const showNewBenificiary = () => {
-    setCheckRadio(true);
     setBeneficiaryDetails(true);
   }
   const closeBuyDrawer = () => {
+    setHideFiatHeading(false);
     setBeneficiaryDetails(false);
   }
 const getCurrencyLookup = async () => {
@@ -161,6 +158,9 @@ const getCurrencyLookup = async () => {
     };
   actions[key]();
   };
+ const isFiatHeading =(data)=>{
+    setHideFiatHeading(data)
+	}
   if(loading){
     return <div className='custom-spin text-center mt-36'><Spin loading={true}></Spin></div>
   }else{
@@ -210,7 +210,7 @@ const getCurrencyLookup = async () => {
           <List
            className="bill-grid"
             showActionBar={false}
-            url={process.env.REACT_APP_GRID_API + `MassPayments/UserPayments/${props.userConfig?.id}`}
+            url={process.env.REACT_APP_GRID_API + `MassPayments/UserPayments`}
                        additionalParams={{type:walletType}}
             columns={gridColumns}
             ref={gridRef}
@@ -225,9 +225,15 @@ const getCurrencyLookup = async () => {
           destroyOnClose={true}
           title={[<div className="side-drawer-header">
             <span />
-            <div className="text-center fs-24">
-              <Paragraph className="mb-0 text-white-30 fw-600"><Translate content="AddFiatAddress" component={Paragraph} className="mb-0 text-white-30 fw-600" /></Paragraph>
-            </div>
+            <div className="text-center fs-16">
+								<Paragraph className="mb-0 text-white-30 fw-600 text-upper">
+									<Translate
+                  content={hideFiatHeading !==true && "AddFiatAddress"}
+										component={Paragraph}
+										className="mb-0 text-white-30 fw-600 text-upper"
+									/>
+								</Paragraph>
+							</div>
             <span onClick={closeBuyDrawer} className="icon md close-white c-pointer" />
           </div>]}
           placement="right"
@@ -237,7 +243,7 @@ const getCurrencyLookup = async () => {
           className=" side-drawer w-50p"
           size="large"
         >
-          <AddressCommonCom checkThirdParty={checkRadio} onCancel={() => closeBuyDrawer()} props={props} />
+          <AddressbookV3 type="manual" isFiat={cryptoFiat} onCancel={() => closeBuyDrawer()} props={props} isFiatHeadUpdate={isFiatHeading}/>
         </Drawer>
       </div>
     </>

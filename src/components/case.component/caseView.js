@@ -69,7 +69,7 @@ class CaseView extends Component {
         }
     }
     loadDocReplies = async (id) => {
-        let docReObj = this.state.docReplyObjs.filter(item => item.docunetDetailId != id);
+        let docReObj = this.state.docReplyObjs.filter(item => item.docunetDetailId !== id);
         this.setState({ ...this.state, isMessageError: null, validHtmlError: null, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } }, docReplyObjs: docReObj, docErrorMessage: null });
         const response = await getDocumentReplies(id);
         if (response.ok) {
@@ -152,7 +152,7 @@ class CaseView extends Component {
         this.setState({ ...this.state, btnLoading: true });
         item.path = itemPath();
         item.status = "Submitted";
-        item.repliedBy = `${(this.props.userProfileInfo?.isBusiness==true)?this.props.userProfileInfo?.businessName:this.props.userProfileInfo?.firstName}`;
+        item.repliedBy = `${(this.props.userProfileInfo?.isBusiness===true)?this.props.userProfileInfo?.businessName:this.props.userProfileInfo?.firstName}`;
         item.repliedDate = Mome().format("YYYY-MM-DDTHH:mm:ss");
         item.info = JSON.stringify(this.props.trackAuditLogData);
         item.customerId=this.props.userProfileInfo.id;
@@ -300,10 +300,10 @@ class CaseView extends Component {
             return { path: [] }
         }
     }
-    formatBytes(bytes, decimals = 2) {
+    formatBytes(bytes) { // <-----(bytes, decimals = 2)
         if (bytes === 0) return '0 Bytes';
         const k = 1024;
-        const dm = decimals < 0 ? 0 : decimals;
+        // const dm = decimals < 0 ? 0 : decimals;
         const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         const i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed()) + ' ' + sizes[i];
@@ -365,16 +365,16 @@ class CaseView extends Component {
                   <Col
                     key={idx}
                     xs={24}
-                    sm={key == "Decription" ? 24 : 12}
-                    md={key == "Decription" ? 24 : 12}
-                    lg={key == "Decription" ? 24 : 8}
-                    xl={key == "Decription" ? 24 : 8}
-                    xxl={key == "Decription" ? 24 : 6}
+                    sm={key === "Decription" ? 24 : 12}
+                    md={key === "Decription" ? 24 : 12}
+                    lg={key === "Decription" ? 24 : 8}
+                    xl={key === "Decription" ? 24 : 8}
+                    xxl={key === "Decription" ? 24 : 6}
                   >
                     <div className="ribbon-item">
                       <span
                         className={`icon md 
-                            ${key === null ? "Decription" : ((key == "Currency" && value == "EUR") ? "EURS" : (key == "Amount" ? 'Currency' : (key == "Currency" && value == "USD") ? "USDS" : key))
+                            ${key === null ? "Decription" : ((key === "Currency" && value === "EUR") ? "EURS" : (key === "Amount" ? 'Currency' : (key === "Currency" && value === "USD") ? "USDS" : key))
                                                 }`}
                                         />
                                         <div className="ml-16" style={{ flex: 1 }}>
@@ -382,7 +382,7 @@ class CaseView extends Component {
                           {key}
                         </Text>
                                 <div className='fw-600 text-white-30 fs-16 l-height-normal' style={{ wordBreak: "break-all" }} >
-                                    {(value == null || value == " " || value == "") ? '-' : (isNaN(value) || (key === 'Transaction Id' || key === 'Bank Account number/IBAN' || key === "Bank Account Number/IBAN" || key === "Wallet Address"
+                                    {(value == null || value === " " || value === "") ? '-' : (isNaN(value) || (key === 'Transaction Id' || key === 'Bank Account number/IBAN' || key === "Bank Account Number/IBAN" || key === "Wallet Address"
                                         || key === 'Bank Name') ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
                                 </div>
                       </div>
@@ -400,7 +400,7 @@ class CaseView extends Component {
                 </div>
 
                 <Divider />
-                {!this.state.docDetails?.details || this.state.docDetails?.details.length === 0 && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No documents available" /></div>}
+                {(!this.state.docDetails?.details || this.state.docDetails?.details.length === 0) && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No documents available" /></div>}
                 <div className="bank-view">
                     {this.state.docDetails?.details?.map((doc, idx) =>
                         <Collapse onChange={(key) => {
@@ -434,7 +434,7 @@ class CaseView extends Component {
                                         </div>
                                     </div>
                                 </div>)}
-                                {(!this.state.documentReplies[doc.id]?.loading && doc.state != "Approved" && this.state.docDetails.caseState != 'Approved' && this.state.docDetails.caseState != 'Cancelled')&&
+                                {(!this.state.documentReplies[doc.id]?.loading && doc.state !== "Approved" && this.state.docDetails.caseState !== 'Approved' && this.state.docDetails.caseState !== 'Cancelled')&&
                                     <>
                                         <Form
                                             onFinish={() => this.docReject(doc)}
@@ -466,7 +466,7 @@ class CaseView extends Component {
                                                     </Form.Item>
                                               
 
-                                                {this.state.isMessageError == doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter message</div>}
+                                                {this.state.isMessageError === doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter message</div>}
                                                 {this.state.errorMessage != null && <Alert
                                                     description={this.state.errorMessage}
                                                     type="error"
@@ -526,7 +526,7 @@ class CaseView extends Component {
                                      <> 
                                    
                                     {((!this.state?.documentReplies[doc.id]?.data ||
-                                        this.state?.documentReplies[doc.id]?.data?.length == 0)&&(( doc.state == "Approved" || this.state.docDetails.caseState == 'Approved' || this.state.docDetails.caseState == 'Cancelled'))
+                                        this.state?.documentReplies[doc.id]?.data?.length === 0)&&(( doc.state === "Approved" || this.state.docDetails.caseState === 'Approved' || this.state.docDetails.caseState === 'Cancelled'))
                                         ) && (
                                             <Empty
                                                  image={Empty.PRESENTED_IMAGE_SIMPLE}

@@ -45,7 +45,7 @@ class IdleCmp extends Component {
                     onIdle={this.handleOnIdle}
                     debounce={250}
                 />
-                <App />
+                <App updateAvailable={this.props.updateAvailable} />
                 <Modal
                     title="Session timedout alert" visible={showIdleModal}
                     closable={false}

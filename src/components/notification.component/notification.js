@@ -37,7 +37,7 @@ class NotificationScreen extends Component {
 
   getNotificationData = async () => {
     this.setState({ ...this.state, isLoading: true });
-    let response = await getNotifications(this.props.userConfig.id);
+    let response = await getNotifications();
     if(response.ok) {
     this.setState({ ...this.state, isLoading: false });
     let obj = response.data;

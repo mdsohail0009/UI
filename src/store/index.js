@@ -1,5 +1,5 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import thunk from 'redux-thunk';
@@ -20,6 +20,7 @@ import cardsReducer from '../components/cards.component/cardsReducer';
 import TransforReducer from '../reducers/tranfor.Reducer';
 import featuresReducer from '../reducers/feturesReducer';
 import currentActionReducer from '../reducers/actionsReducer';
+import serviceWorkerReducer from '../reducers/serviceWorker';
 
 const persistConfig = {
     key: "root",
@@ -44,6 +45,7 @@ const rootReducer = combineReducers({
     TransforStore: TransforReducer,
     menuItems:featuresReducer,
     currentAction:currentActionReducer,
+    serviceWReducer:serviceWorkerReducer
 })
 const reducer = persistReducer(persistConfig, rootReducer)
 let store = createStore(

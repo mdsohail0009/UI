@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import apicalls from '../../api/apiCalls';
 import { setAddressStep} from "../../reducers/addressBookReducer";
 import CryptoTransfer from '../onthego.transfer/crypto.transfer';
-const { Paragraph, Text } = Typography;
+const { Paragraph} = Typography;
 class SelectAddress extends Component {
     state = {
         addressLu: [],
@@ -28,9 +28,8 @@ class SelectAddress extends Component {
     }
     getAddressLu = async () => {
         this.setState({ ...this.state, loading: true })
-        let customerId = this.props.userProfile.id;
         let coin_code = this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coin;
-        let recAddress = await favouriteFiatAddress(customerId, 'crypto', coin_code)
+        let recAddress = await favouriteFiatAddress('crypto', coin_code)
         if (recAddress.ok) {
             this.setState({ ...this.state, addressLu: recAddress.data, loading: false, filterObj: recAddress.data });
         }
@@ -68,7 +67,7 @@ class SelectAddress extends Component {
         }
         this.props.dispatch(setWithdrawcrypto(obj))
         this.setState({ ...this.state, loading: true })
-        if (type == "ADDRESS") {
+        if (type === "ADDRESS") {
             this.props.changeStep('step8');
         } else {
             this.setState({

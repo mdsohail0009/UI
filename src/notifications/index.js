@@ -39,7 +39,7 @@ const Notifications = ({
     notificationsTrack();
     if (userProfile?.id) {
       setLoading(true);
-      const response = await getNotifications(userProfile?.id);
+      const response = await getNotifications();
       if (response.ok) {
         setNotifications(response.data.listNotificationsModel || []);
         dispatch(setNotificationCount(response?.data?.unReadCount));
@@ -146,8 +146,5 @@ const Notifications = ({
     </>
   );
 };
-// const connectStateToProps = ({ userConfig }) => {
-//   return { userConfig: userConfig.userProfileInfo };
-// };
 
 export default ConnectStateProps(Notifications);

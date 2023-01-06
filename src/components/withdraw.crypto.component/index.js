@@ -1,16 +1,12 @@
-import { Card, Typography, Empty,Image, Spin } from "antd";
+import { Typography,  Spin } from "antd";
 import { useEffect } from "react";
-import Translate from "react-translate-component";
-import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setStep, setSubTitle } from "../../reducers/sendreceiveReducer";
-import ConnectStateProps from "../../utils/state.connect";
-import Currency from '../shared/number.formate';
+import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setStep} from "../../reducers/sendreceiveReducer";
 import Loader from '../../Shared/loader';
-import apicalls from "../../api/apiCalls";
 import CryptoList from '../shared/cryptolist';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 import { connect } from "react-redux";
 
-const { Paragraph, Text, Title } = Typography;
+const { Title } = Typography;
 const WithdrawCrypto = ({ dispatch, userProfile, sendReceive, props, changeStep }) => {
     useEffect(() => {
         loadData();

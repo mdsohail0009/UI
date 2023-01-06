@@ -59,7 +59,7 @@ class OnthegoFundTransfer extends Component {
     this.permissionsInterval = setInterval(this.loadPermissions, 200);
     if (!this.state.selectedCurrency) {
       this.setState({ ...this.state, fiatWalletsLoading: true });
-      fetchMemberWallets(this.props?.userProfile?.id).then(res => {
+      fetchMemberWallets().then(res => {
         if (res.ok) {
             this.setState({ ...this.state, fiatWallets: res.data, filtercoinsList: res.data, fiatWalletsLoading: false });
         } else {
@@ -87,16 +87,16 @@ class OnthegoFundTransfer extends Component {
   getCoinDetails = async () => {
     let response = await getCoinwithBank()
     if (response.ok) {
-      let obj = response.data
+      //let obj = response.data
     }
   }
   getPayees() {
-    fetchPayees(this.props.userProfile.id, this.state.selectedCurrency).then((response) => {
+    fetchPayees( this.state.selectedCurrency).then((response) => {
         if (response.ok) {
             this.setState({ ...this.state, payeesLoading: false, filterObj: response.data, payees: response.data });
         }
     });
-    fetchPastPayees(this.props.userProfile.id, this.state.selectedCurrency).then((response) => {
+    fetchPastPayees(this.state.selectedCurrency).then((response) => {
       if (response.ok) {
         this.setState({ ...this.state, pastPayees: response.data });
       }
@@ -104,7 +104,7 @@ class OnthegoFundTransfer extends Component {
   }
   verificationCheck = async () => {
     this.setState({ ...this.state, isVarificationLoader: true })
-    const verfResponse = await getVerificationFields(this.props.userProfile.id);
+    const verfResponse = await getVerificationFields();
     let minVerifications = 0;
     if (verfResponse.ok) {
       for (let verifMethod in verfResponse.data) {
@@ -190,9 +190,9 @@ saveWithdrawdata = async () => {
             }
         }
         if (
-            this.state.verifyData.verifyData.isPhoneVerified == "" &&
-            this.state.verifyData.verifyData.isEmailVerification == "" &&
-            this.state.verifyData.verifyData.twoFactorEnabled == ""
+          this.state.verifyData.verifyData.isPhoneVerified === "" &&
+          this.state.verifyData.verifyData.isEmailVerification === "" &&
+          this.state.verifyData.verifyData.twoFactorEnabled === ""
         ) {
             this.setState({
                 ...this.state,
@@ -346,7 +346,7 @@ saveWithdrawdata = async () => {
   }
 
   renderStep = (step) => {
-    const { filterObj, pastPayees, payeesLoading, isVarificationLoader, isVerificationEnable, isPhMail, isShowGreyButton, isAuthMail } = this.state;
+    const { filterObj, pastPayees, isVarificationLoader, isVerificationEnable, isPhMail, isShowGreyButton, isAuthMail } = this.state;
     const steps = {
       selectcurrency: (
         <React.Fragment>
@@ -403,18 +403,18 @@ saveWithdrawdata = async () => {
               scrollToFirstError
             >
               {!isVerificationEnable && (
-                <Alert
+                  <Alert 
                   message="Verification alert !"
-                  description={<Text>Without verifications you can't send. Please select send verifications from <a onClick={() => {
-                                    this.props.history.push("/userprofile/2");
-                                    if (this.props?.onClosePopup) {
-                                        this.props?.onClosePopup();
-                                    }
-                                }}>security section</a></Text>}
+                  description={<Text>Without verifications you can't send. Please select send verifications from <Link onClick={() => {
+                      this.props.history.push("/userprofile/2");
+                      if (this.props?.onClosePopup) {
+                          this.props?.onClosePopup();
+                      }
+                  }}>security section</Link></Text>}
                   type="warning"
                   showIcon
                   closable={false}
-                />
+              />
               )}
               {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
               {isVerificationEnable && (
@@ -589,7 +589,7 @@ saveWithdrawdata = async () => {
                             <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
                             <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
                             <p className="fs-16 text-white-30 fw-200 mb-0"> {apicalls.convertLocalLang('address_available')} </p>
-                            <a onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</a>
+                            <Link onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</Link>
                         </div>}
               </ul>
 
@@ -672,6 +672,9 @@ saveWithdrawdata = async () => {
                     label={"Reason For Transfer"}
                     required
                     rules={[
+                      {whitespace: true,
+                        message: "Is required",
+                      },
                       {
                         required: true,
                         message:
@@ -897,7 +900,7 @@ saveWithdrawdata = async () => {
             </>,
       declaration: <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
       <Image width={80} preview={false} src={alertIcon} />
-      <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully to your email</Title>
+      <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully</Title>
             <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                        Please sign using link received in email to whitelist your address. `}</Text>
             <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>

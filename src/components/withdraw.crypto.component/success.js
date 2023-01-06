@@ -4,7 +4,7 @@ import { Typography, Space } from 'antd';
 import { Link } from 'react-router-dom';
 import Translate from 'react-translate-component';
 import { connect } from "react-redux";
-import { handleSendFetch,hideSendCrypto,setSendCrypto, setWithdrawfiatenaable} from '../../reducers/sendreceiveReducer';
+import { handleSendFetch,hideSendCrypto,setSendCrypto} from '../../reducers/sendreceiveReducer';
 import apiCalls from '../../api/apiCalls';
 class SuccessMsg extends Component {
     componentDidMount() {
