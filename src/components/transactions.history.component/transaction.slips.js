@@ -57,13 +57,6 @@ class TransactionSlips extends Component {
     return _value;
 
   }
-  getHashLink=(key)=>{
-    const {viewData } = this.props;
-    if(key==="Hash"){
-      return <><a className='gridLink c-pointer ' href={`${viewData.hashUrl}`} target="_blank">{viewData.hashId}</a></>
-    }
-
-  }
   render() {
     const { Title } = Typography;
     const { downloadError } = this.state;
@@ -107,7 +100,7 @@ class TransactionSlips extends Component {
                 <div className="pay-list py-4 transaction-details" style={{ alignItems: 'baseline' }} key={key}>
                   <Title className="fs-14 text-white fw-400">{typeof transactionSlipData[key] === "object" ? key : transactionSlipData[key]}</Title>
                   <Title className="fs-14 text-white fw-500  text-right trn-sumtext">
-                  {(viewData[key] === null || viewData[key] === "") ? '-' : (transactionSlipData[key] === 'Date') ? moment.utc(viewData[key]).local().format("DD/MM/YYYY hh:mm:ss A") : (typeof transactionSlipData[key] === "object") ? `${this.getCombinedValues(transactionSlipData[key])}` : (transactionSlipData[key]==="Hash")?this.getHashLink(transactionSlipData[key]):viewData[key]}
+                  {(viewData[key] === null || viewData[key] === "") ? '-' : (transactionSlipData[key] === 'Date') ? moment.utc(viewData[key]).local().format("DD/MM/YYYY hh:mm:ss A") : (typeof transactionSlipData[key] === "object") ? `${this.getCombinedValues(transactionSlipData[key])}` : viewData[key]}
                   </Title>
                 </div>
               </Col></>)}

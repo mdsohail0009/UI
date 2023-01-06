@@ -179,9 +179,15 @@ class AddressBook extends Component {
 		},
 		{
 			field: "addressState",
-			title: apiCalls.convertLocalLang("Whitelisting_Status"),
+			title: apiCalls.convertLocalLang("addressState"),
 			filter: true,
-			width: 200,
+			width: 180,
+		},
+		{
+			field: "status",
+			title: apiCalls.convertLocalLang("Status"),
+			filter: true,
+			width: 100,
 		},
 		{
 			field: "isWhitelisted",
@@ -198,13 +204,7 @@ class AddressBook extends Component {
 			title: apiCalls.convertLocalLang("whitelist"),
 			filter: false,
 			width: 200,
-		},
-		{
-			field: "status",
-			title: apiCalls.convertLocalLang("Status"),
-			filter: true,
-			width: 100,
-		},
+		}
 	];
 	columnsCrypto = [
 		{
@@ -263,9 +263,15 @@ class AddressBook extends Component {
 		
 		{
 			field: "addressState",
-			title: apiCalls.convertLocalLang("Whitelisting_Status"),
+			title: apiCalls.convertLocalLang("addressState"),
 			filter: true,
-			width: 200,
+			width: 180,
+		},
+		{
+			field: "status",
+			title: apiCalls.convertLocalLang("Status"),
+			filter: true,
+			width: 100,
 		},
 		{
 			field: "isWhitelisted",
@@ -282,13 +288,7 @@ class AddressBook extends Component {
 			title: apiCalls.convertLocalLang("whitelist"),
 			filter: false,
 			width: 200,
-		},
-		{
-			field: "status",
-			title: apiCalls.convertLocalLang("Status"),
-			filter: true,
-			width: 100,
-		},
+		}
 	];
 	async downloadDeclarationForm(dataItem) {
 		this.setState({ ...this.state, isDownloading: true, selectedDeclaration: dataItem.payeeAccountId });
