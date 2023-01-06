@@ -102,10 +102,12 @@ class SendReceive extends Component {
             title={[<div className="side-drawer-header">
                 {this.renderTitle()}
                 <div className="text-center">
-                {!this.props?.sendReceive?.sendCryptoHide && <div>
+                {/* {!this.props?.sendReceive?.sendCryptoHide &&  */}
+                <div>
                     <Translate className="mb-8 text-white-30 fw-600 text-captz fs-24" content={(this.props?.isSendTab || this.props?.sendReceive?.sendCryptoEnable) ? (this.props.sendReceive.stepcode === "withdraw_crpto_summary" ?  this.props.sendReceive.stepTitles[config[this.props.sendReceive.stepcode]] :"send_crypto") :  this.props.sendReceive.stepTitles[config[this.props.sendReceive.stepcode]]} component={Paragraph} />
                     <Paragraph className="text-white-50 mb-0 fs-14 fw-300 px-8" >{this.props.sendReceive?.subTitle} {this.props.sendReceive?.selectedCoin?.coin} </Paragraph>
-                    </div> }
+                    </div>
+                     {/* } */}
                     </div>
                 {this.renderIcon()}
             </div>]}
