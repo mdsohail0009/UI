@@ -110,7 +110,7 @@ border-radius: 5px;}
 .icon.md.lose{background-position: -271px -2px;}
 .icon.md.gain{background-position: -302px -2px;}
 .icon.md.downarrow{background-position: -59px -2px;}
-.icon.md.close-white{background-position: -170px 0;}
+.icon.md.close-white{background-position: -170px 0 !important;}
 .icon.md.date-white{background-position: -480px -37px;}
 .icon.md.search-white{background-position: -197px 0;}
 .icon.md.load{background-position: -242px 0;float: right; margin-top: 2px;}
@@ -143,6 +143,7 @@ border-radius: 5px;}
 .icon.lg.addressbook-icon{background-position: -140px -329px}
 .icon.lg.cases-icon{background-position:-210px -329px;}
 .icon.lg.referral-icon{background-position:-242px -329px;}
+.icon.md.refresh-icon{background-position:-273px -33px;}
 .icon.lg.hamburg{background-position: -55px 2px; transform: scale(1.4);}
 .icon.md.notifyIcon.deposit{background-position: -375px 0px;transform: rotateZ(235deg);}
 .icon.md.notifyIcon.deposits, .icon.md.notifyIcon.withdraw{background-position: -376px -1px;transform: rotateZ( 45deg);}
@@ -193,6 +194,7 @@ border-radius: 5px;}
 .icon.md.calendar{background-position:-481px -36px;}
 .icon.md.status{background-position:-365px -69px}
 .icon.md.add-icon{background-position:-397px -70px;}
+.icon.md.process-icon{background-position: -600px -34px;}
 .icon.md.back{background-position:-377px -1px;}
 .icon.md.add-icon-black{background-position:-533px -2px;}
 .icon.md.edit-icon{background-position:-336px -70px;}
@@ -780,7 +782,16 @@ font-size: 12px;font-weight: 500;height: 20px;}
 .zsiq_flt_rel{width: 50px !important; height: 50px !important;bottom: 8px;right: -10px;}
 .zsiq_theme1 .siqico-chat:before{font-size: 20px !important; line-height: 50px !important;}
 .ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector, .ant-radio-disabled + span{color: var(--textWhite30);}
-
+/** masspayments end**/
+.batch-actions{text-align: right;margin-bottom: 16px;}
+.batch-actions span{margin-left: 16px;}
+.makepayment-section{line-height: 3 !important;}
+.masspay-popup{width: 620px !important;}
+.ant-modal-close-x .ant-modal-close-icon svg{display: none;}
+.uploadxcel-btn{margin-top: 50px !important;}
+.drawer-content{display: flex !important; justify-content: center !important; align-items: center !important;height: 500px !important;}
+.batch-list{font-size: 20px; font-weight: 500; color: white !important;}
+/** masspayments end**/
 /*-- Cases--*/
 .case-stripe{border: 1px dashed var(--borderLight); padding: 16px 20px; border-radius: 16px; margin-bottom: 16px}
 .case-lbl{font-weight: 300; font-size: 12px; color: var(--textWhite50);}
@@ -1309,7 +1320,7 @@ input[type=number]::-webkit-outer-spin-button {
 .pay-docs{white-space: nowrap;max-width: 250px !important;overflow: hidden; text-overflow: ellipsis; width: 65px;word-break: inherit; display: inline-block; vertical-align: bottom;}
 .pay-account{white-space: nowrap;max-width: 250px !important;overflow: hidden; text-overflow: ellipsis; width: 100px;word-break: inherit; display: inline-block; vertical-align: bottom;}
 .docdetails .docnames{font-weight: 700;color: var(--textWhite30); line-height: 16px;max-width: 150px !important;}
-.pay-docs{white-space: nowrap;max-width: 250px !important;overflow: hidden; text-overflow: ellipsis; width: 215px;word-break: inherit; display: inline-block; vertical-align: bottom;}
+.pay-docs{white-space: nowrap;max-width: 250px !important;overflow: hidden; text-overflow: ellipsis; width: 190px;word-break: inherit; display: inline-block; vertical-align: bottom;}
 .portfolio-title{display: flex; justify-content: space-between;}
 /* .common-withdraow input[type=text]{font-size: 16px !important;} */
 .ant-collapse.profile-collapse, .profile-collapse .ant-collapse-content{background: transparent !important;border: 0 !important;}

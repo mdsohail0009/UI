@@ -10,7 +10,7 @@ import { withRouter } from 'react-router-dom';
 import apicalls from '../../api/apiCalls';
 import { setWithdrawfiatenaable, setWithdrawfiat } from '../../reducers/sendreceiveReducer'
 import { setdepositCurrency, getCurrencieswithBankDetails } from '../../reducers/depositReducer'
-const { Title, Paragraph } = Typography;
+const { Title } = Typography;
 
 class FiatWallets extends Component {
     state = {
@@ -93,7 +93,7 @@ class FiatWallets extends Component {
                                 title={<div className="fs-16 mt-12 fw-600 text-upper text-white-30 l-height-normal">{item.walletCode}</div>}
                             />
                             <div className="text-right wallet-mb">
-                                <Currency className="fs-14 text-white-30 m-0" defaultValue={item.amount} prefix={(item?.walletCode == "USD" ? "$" : null) || (item?.walletCode == "GBP" ? "£" : null) || (item?.walletCode == "EUR" ? "€" : null)} decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />
+                                <Currency className="fs-14 text-white-30 m-0" defaultValue={item.amount} prefix={(item?.walletCode === "USD" ? "$" : null) || (item?.walletCode === "GBP" ? "£" : null) || (item?.walletCode === "EUR" ? "€" : null)} decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />
                             </div>
                         </List.Item>}
                 />

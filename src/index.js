@@ -19,12 +19,11 @@ const onUpdate = () => {
 ReactDOM.render(
   <React.StrictMode>
     <ThemeSwitcherProvider defaultTheme="DRT" themeMap={{ DRT: "./dark-theme.css", LHT: "./light-theme.css" }}>
-     <Provider store={store}>
-     <CookiesProvider>
-      <IdleCmp />
-      </CookiesProvider>
+      <Provider store={store}>
+        <CookiesProvider>
+          <IdleCmp />
+        </CookiesProvider>
       </Provider>
-
     </ThemeSwitcherProvider>
   </React.StrictMode>,
   document.getElementById('root')

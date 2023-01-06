@@ -1,34 +1,33 @@
 
-import React, { useState, useEffect } from "react";
-import Translate from "react-translate-component";
+import React, { useEffect } from "react";
+// import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import AddressCommonCom from "./addressCommonCom";
-const LinkValue = (props) => {
-  return (
-    <Translate
-      className="textpure-yellow text-underline c-pointer"
-      content={props.content}
-      component={Link}
-      onClick={() =>
-        window.open(
-          "https://www.iubenda.com/terms-and-conditions/42856099",
-          "_blank"
-        )
-      }
-    />
-  );
-};
-const link = <LinkValue content="terms_service" />;
+// const LinkValue = (props) => {
+//   return (
+//     <Translate
+//       className="textpure-yellow text-underline c-pointer"
+//       content={props.content}
+//       component={Link}
+//       onClick={() =>
+//         window.open(
+//           "https://www.iubenda.com/terms-and-conditions/42856099",
+//           "_blank"
+//         )
+//       }
+//     />
+//   );
+// };
+//  <LinkValue content="terms_service" />;
 const NewFiatAddress = (props) => {
-  const [isEdit, setEdit] = useState(false);
-  const [state, setstate] = useState()
+ 
   useEffect(() => {
     if (
       props?.addressBookReducer?.selectedRowData?.id !==
       "00000000-0000-0000-0000-000000000000" &&
       props?.addressBookReducer?.selectedRowData?.id
-    ) { setEdit(true); }
+    ) {  }
     addressbkTrack();
 
 
@@ -48,7 +47,7 @@ const NewFiatAddress = (props) => {
     });
   };
   const screen=()=>{
-  setstate("Fiat")
+ 
 }
   return (
     <>

@@ -1,5 +1,5 @@
-import React, { Component, useEffect, useState } from 'react';
-import { Typography, Button, Input, Alert, Spin,Image,Row,Select,Col, Form } from 'antd';
+import React, {  useEffect, useState } from 'react';
+import { Typography, Button,  Alert,Row,Col, Form } from 'antd';
 import { saveTransfor } from './api';
 import { connect } from 'react-redux';
 import Translate from "react-translate-component";  
@@ -7,12 +7,9 @@ import apiCalls from '../../api/apiCalls'
 import Currency from "../shared/number.formate";
 import {setStepcode} from '../../reducers/tranfor.Reducer'
 import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboardReducer';
-const { Option } = Select;
 const { Text, Paragraph } = Typography;
 
-const  TransforSummary = ({userProfile,onClose, transforObj,dispatch}) =>{
-    useEffect(()=>{
-    },[])
+const  TransforSummary = ({userProfile, transforObj,dispatch}) =>{
    const [errorMsg, setErrorMsg] = useState(null)
    const [onCheked, setChecked] = useState(null)
    const [btnLoader, setBtnLoader] = useState(false)

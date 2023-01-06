@@ -1,16 +1,16 @@
 import { fetchCurrencyConvertionValue } from "./api"
 import apicalls from "../../api/apiCalls";
 
-export const convertCurrency = async ({ from, to, value, isCrypto, customer_id, screenName }) => {
-    const response = await fetchCurrencyConvertionValue({ from, to, value, isCrypto, customer_id, screenName });
+export const convertCurrency = async ({ from, to, value, isCrypto, screenName }) => {
+    const response = await fetchCurrencyConvertionValue({ from, to, value, isCrypto,  screenName });
     if (response.ok) {
         return response.data;
     } else {
         return 0;
     }
 }
-export const convertCurrencyDuplicate = async ({ from, to, value, isCrypto, customer_id, screenName }) => {
-    const response = await fetchCurrencyConvertionValue({ from, to, value, isCrypto, customer_id, screenName });
+export const convertCurrencyDuplicate = async ({ from, to, value, isCrypto,  screenName }) => {
+    const response = await fetchCurrencyConvertionValue({ from, to, value, isCrypto,  screenName });
     if (response.ok) {
         return response;
     } else {
@@ -24,16 +24,11 @@ export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, m
     };
     const maxPurchaseAmt = 100000;
     const maxAmtMessage = "$100k"
-    // const currencyMaxPurchase = {
-    //     GBP: gbpInUsd * parseFloat(localValue),
-    //     EUR: parseFloat(localValue) * eurInUsd,
-    //     USD: parseFloat(localValue)
-    // }
     if (localValue === ""|| cryptValue === "") {
         validate.message = apicalls.convertLocalLang('enter_wallet')
         validate.valid = false;
     }
-    else if (localValue === "0" || cryptValue == "0"|| localValue == "0") {
+    else if (localValue === "0" || cryptValue === "0" ||cryptValue===undefined) {
         validate.message = apicalls.convertLocalLang('amount_greater_zero')
         validate.valid = false;
     }

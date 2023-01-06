@@ -2,7 +2,7 @@ import * as SignalR from '@microsoft/signalr';
 import { notification } from 'antd';
 import { updateDocRequest } from '../reducers/configReduser';
 import { fetchDashboardcalls, setNotificationCount } from '../reducers/dashboardReducer';
-import { clearPermissions,updateAccessdenied } from '../reducers/feturesReducer';
+import { clearPermissions } from '../reducers/feturesReducer';
 import { store } from '../store';
 function openNotification(message, title) {
     const args = {
