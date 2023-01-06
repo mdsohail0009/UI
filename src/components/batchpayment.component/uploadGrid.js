@@ -35,7 +35,7 @@ const BatchpaymentView = (props) => {
         { field: "whiteListName", title: "Whitelist Name", filter: true,width: 200},
         { field: "beneficiaryName", title: "Beneficiary Name", filter: true,width: 200},
         {
-			field: "whitelistStatus",
+			field: "addressbookStatus",
 			title:"Whitelisting Status",
 			filter: true,
 			width: 210,
