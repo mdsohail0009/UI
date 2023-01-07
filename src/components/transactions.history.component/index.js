@@ -155,7 +155,8 @@ class TransactionsHistory extends Component {
       customCell: (props) => (
         <td>
          <Tooltip title={props.dataItem.transactionId}>
-         {(props.dataItem.transactionId && <a href="#/" onClick={() => window.open(`${props.dataItem?.explorer}${props.dataItem?.transactionId}`, '_blank')}> {props?.dataItem?.transactionId?.slice(0, 4) +"......." +props?.dataItem?.transactionId?.slice(-4)}</a>) || " "}
+         {(props.dataItem.transactionId && <a className="gridLink c-pointer"  onClick={() => window.open(`${props.dataItem?.explorer}${props.dataItem?.transactionId}`, '_blank')}>
+          <span className="gridLink c-pointer">{props?.dataItem?.transactionId?.slice(0, 4) +"......." +props?.dataItem?.transactionId?.slice(-4)}</span></a>) || " "}
        </Tooltip>
         </td>
       ),
