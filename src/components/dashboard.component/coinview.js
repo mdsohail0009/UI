@@ -13,7 +13,7 @@ import { updateCoinDetail } from '../../reducers/sellReducer'
 import { convertCurrency } from '../buy.component/buySellService';
 import apiCalls from '../../api/apiCalls';
 import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboardReducer'
-import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle, setWithdrawfiatenaable, setWithdrawfiat, setWalletAddress, setSendCrypto } from "../../reducers/sendreceiveReducer";
+import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle, setWithdrawfiatenaable, setWithdrawfiat, setWalletAddress, setSendCrypto,hideSendCrypto } from "../../reducers/sendreceiveReducer";
 import NumberFormat from "react-number-format";
 import { coinSubject } from '../../utils/pubsub';
 import { createCryptoDeposit } from '../deposit.component/api';
@@ -104,6 +104,7 @@ componentWillUnmount(){
         })
     }
     showSendReceiveDrawer = async (e, value) => {
+        this.props.dispatch(hideSendCrypto(false));
         let selectedObj = { ...value };
         selectedObj.coin = selectedObj.symbol.toUpperCase();
         selectedObj.coinBalance = selectedObj.avilableBalance

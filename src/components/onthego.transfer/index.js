@@ -21,6 +21,7 @@ import { connect } from "react-redux";
 import { getFeaturePermissionsByKeyName } from "../shared/permissions/permissionService";
 import { setSendFiatHead } from "../../reducers/buyFiatReducer";
 import {validateContentRule} from '../../utils/custom.validator'
+import {hideSendCrypto} from '../../reducers/sendreceiveReducer'
 const { Text, Title } = Typography; 
 const { Option } = Select
 class OnthegoFundTransfer extends Component {
@@ -124,6 +125,7 @@ class OnthegoFundTransfer extends Component {
   chnageStep = (step, values) => {
     this.setState({ ...this.state, step, onTheGoObj: values });
     if (step === 'newtransfer') {
+      this.props.dispatch(hideSendCrypto(false));
         this.setState({ ...this.state, step, isNewTransfer: true, onTheGoObj: values });
     }
 }
