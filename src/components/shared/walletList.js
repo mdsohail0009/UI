@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Select } from 'antd';
+import { Select, List,Empty, Image } from 'antd';
 import { setStep } from '../../reducers/buysellReducer';
+import { Link ,} from "react-router-dom";
+import Translate from "react-translate-component";
 import { connect } from 'react-redux';
 import { fetchMemberFiat } from '../../reducers/buyReducer';
 import NumberFormat from 'react-number-format'
@@ -24,7 +26,7 @@ class WalletList extends Component {
         return (<>
             {this.props.buyInfo.memberFiat &&
                 <form className="form" id="withdrawCurrency">
-                    <Select    getPopupContainer={() => document.getElementById('withdrawCurrency')} dropdownClassName="select-drpdwn" loading={this.props?.buyInfo?.memberFiat?.loading} placeholder={this.props.placeholder || apicalls.convertLocalLang("selectWallet")} className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
+                    {/* <Select    getPopupContainer={() => document.getElementById('withdrawCurrency')} dropdownClassName="select-drpdwn" loading={this.props?.buyInfo?.memberFiat?.loading} placeholder={this.props.placeholder || apicalls.convertLocalLang("selectWallet")} className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
                         value={this.props.selectedvalue ? this.props.selectedvalue : this.state.selectedvalue} 
                         onChange={(e) => {
                             
@@ -37,7 +39,39 @@ class WalletList extends Component {
                                 {!this.props.hideBalance && <NumberFormat value={item.avilable} displayType={'text'} thousandSeparator={true} prefix={this.state.symbols[item.currencyCode]} renderText={(value, props) => <span {...props}> Balance: {value}</span>} />}
                             </Option>
                         )}
-                    </Select>
+                    </Select> */}
+                    <List
+                    itemLayout="horizontal"
+                    dataSource={this.props.buyInfo.memberFiat?.data}
+                    className="crypto-list auto-scroll wallet-list selection-currency-list"
+                    // loading={this.state.fiatWalletsLoading}
+                    locale={{
+                        emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
+                            <Translate content="No_data" />
+                        } />
+                    }}
+                    renderItem={item => (
+
+                        <List.Item onClick={() => {
+                            
+                            if (this.props.onWalletSelect) { this.props.onWalletSelect(item.id) }
+                            this.setState({ ...this.state, selectedvalue: item.id });
+                           // this.props.sendCurrency(e)      
+                        }}>
+                            <Link>
+                                <List.Item.Meta className='drawer-coin'
+                                    avatar={<div className='crypto-bg'><span className='crypto-icon c-pointer ETH'></span></div>}
+
+                                    title={<div className="wallet-title">{item.currencyCode}</div>}
+                                />
+                                <><div className="text-right coin-typo">
+                                    <NumberFormat value={item.avilable} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={item.currencyCode == 'USD' ? '$' : '€'} renderText={(value, props) => <div {...props} >{value}</div>} />
+
+                                </div></>
+                            </Link>
+                        </List.Item>
+                    )}
+                />
                 </form>
             }
         </>

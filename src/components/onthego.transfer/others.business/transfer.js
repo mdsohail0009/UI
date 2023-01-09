@@ -215,6 +215,38 @@ class BusinessTransfer extends Component {
 
             <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"} disabled={this.state.isEdit}>
                 <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
+                <Row gutter={[16, 4]} className="send-drawerbtn tabs-innertabs">
+
+                  <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
+                      <Form.Item className="text-center form-marginB">
+                        <Button
+                          htmlType="submit"
+                          size="large"
+                          className="newtransfer-card"
+                          // style={{ width: '100%' }}
+                        //   loading={this.state.newtransferLoader}
+                        //   disabled={this.state.addressLoader}
+                        >
+                          New Transfer
+                        </Button>
+                      </Form.Item>
+                    </Col>
+                     <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
+                      <Form.Item className="text-center form-marginB">
+                        <Button
+                          htmlType="button"
+                          size="large"
+                          className="newtransfer-card"
+                          // style={{ width: '100% ' }}
+                        //   loading={this.state.addressLoader}
+                        //   disabled={this.state.newtransferLoader}
+                        //   onClick={this.goToAddressBook}
+                        >
+                          Address book
+                        </Button>
+                      </Form.Item>
+                    </Col>
+                  </Row>
                 <Form initialValues={details}
                     className="custom-label  mb-0"
                     ref={this.form}
@@ -311,7 +343,7 @@ class BusinessTransfer extends Component {
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
+                            <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
                             <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
                                 let { payeeAccountModels } = this.state.details;
                                 if(this.state.isEdit){
@@ -355,6 +387,33 @@ class BusinessTransfer extends Component {
             </Tabs.TabPane>
             <Tabs.TabPane tab="International USD Swift" key={"international"} disabled={this.state.isEdit}>
             <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
+            <Row gutter={[16, 4]} className="send-drawerbtn tabs-innertabs">
+                <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
+                    <Form.Item className="text-center form-marginB">
+                        <Button
+                            htmlType="submit"
+                            size="large"
+                            className="newtransfer-card"
+                            // style={{ width: '100%' }}
+                            //   loading={this.state.newtransferLoader}
+                            //   disabled={this.state.addressLoader}
+                        >New Transfer</Button>
+                    </Form.Item>
+                </Col>
+                <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
+                    <Form.Item className="text-center form-marginB">
+                        <Button
+                            htmlType="button"
+                            size="large"
+                            className="newtransfer-card"
+                            // style={{ width: '100% ' }}
+                            //   loading={this.state.addressLoader}
+                            //   disabled={this.state.newtransferLoader}
+                            //   onClick={this.goToAddressBook}
+                        > Address book</Button>
+                    </Form.Item>
+                </Col>
+            </Row>
                 <Form initialValues={details}
                     className="custom-label  mb-0"
                     ref={this.form}
@@ -449,7 +508,7 @@ class BusinessTransfer extends Component {
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
+                            <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
                             <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
                                 let { payeeAccountModels } = this.state.details;
                                 if(this.state.isEdit){
@@ -491,12 +550,45 @@ class BusinessTransfer extends Component {
 
             <Tabs.TabPane tab="International USD IBAN" key={"internationalIBAN"} disabled={this.state.isEdit}>
             <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
+            <Row gutter={[16, 4]} className="send-drawerbtn tabs-innertabs">
+
+<Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
+    <Form.Item className="text-center form-marginB">
+      <Button
+        htmlType="submit"
+        size="large"
+        className="newtransfer-card"
+        // style={{ width: '100%' }}
+      //   loading={this.state.newtransferLoader}
+      //   disabled={this.state.addressLoader}
+      >
+        New Transfer
+      </Button>
+    </Form.Item>
+  </Col>
+   <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
+    <Form.Item className="text-center form-marginB">
+      <Button
+        htmlType="button"
+        size="large"
+        className="newtransfer-card"
+        // style={{ width: '100% ' }}
+      //   loading={this.state.addressLoader}
+      //   disabled={this.state.newtransferLoader}
+      //   onClick={this.goToAddressBook}
+      >
+        Address book
+      </Button>
+    </Form.Item>
+  </Col>
+</Row>
                 <Form initialValues={details}
                     className="custom-label  mb-0"
                     ref={this.form}
                     onFinish={this.submitPayee}
                     scrollToFirstError
                 >
+                    
                     <Row >
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
@@ -585,7 +677,7 @@ class BusinessTransfer extends Component {
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
+                            <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
                             <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
                                 let { payeeAccountModels } = this.state.details;
                                 if(this.state.isEdit){

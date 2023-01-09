@@ -18,7 +18,7 @@ import {createCryptoDeposit} from "../deposit.component/api";
 import TransactionsHistory from "../transactions.history.component";
 import Loader from "../../Shared/loader";
 
-class YourPortfolio extends Component {
+class cryptocoinsView extends Component {
     state = {
         loading: true,
         initLoading: true,
@@ -45,7 +45,7 @@ class YourPortfolio extends Component {
         }
     }
     cockpitCharts=()=>{
-      this.props.history.push("/cryptocoinsView");
+      this.props.history.push("/cockpitCharts");
     }
     showBuyDrawer = (item, key) => {
         if (!this.props?.userProfile?.isKYC) {
@@ -204,7 +204,7 @@ class YourPortfolio extends Component {
         const { Text,Title } = Typography;
         const { cryptoPortFolios } = this.props.dashboard
         return (
-          <div className="" >
+          <div className="main-container" >
 {/*            
            <div  className="portfolio-title mb-8">
            <div className='portfolio-data' >
@@ -228,18 +228,19 @@ class YourPortfolio extends Component {
                     
               </div>
             </div> */}
+            <div className='coinveiw-newpage'>
             <div className='fait-wallets-style m-0'>
             <Translate content="suissebase_title" component={Title} className="db-titles" />
-              <Button className="dbchart-link"  onClick={() => this.cockpitCharts()} >
+              {/* <Button className="dbchart-link"  onClick={() => this.cockpitCharts()} >
                   <Translate content="cockpit" />
               </Button>   
-                    
+                     */}
               </div>
                 {cryptoPortFolios?.loading ? (
                <Loader />
         ) : (
             <List
-              className="mobile-list dash-mobile-list"
+              className="mobile-list"
               itemLayout="horizontal"
               dataSource={cryptoPortFolios.data}
               //loading={cryptoPortFolios.loading}
@@ -353,7 +354,9 @@ class YourPortfolio extends Component {
                 </List.Item>
               )}
             />
+            
         )}
+        </div>
             <BuySell
               showDrawer={this.state.buyDrawer}
               onClose={() => this.closeDrawer()}
@@ -383,5 +386,5 @@ const connectDispatchToProps = dispatch => {
   }
 }
 
-export default connect(connectStateToProps, connectDispatchToProps)(withRouter(YourPortfolio));
+export default connect(connectStateToProps, connectDispatchToProps)(withRouter(cryptocoinsView));
 //export default ConnectStateProps(withRouter(YourPortfolio));

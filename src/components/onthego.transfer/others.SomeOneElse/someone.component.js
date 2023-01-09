@@ -154,6 +154,38 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         </Col>
                     </Row>
                 </>}
+                <Row gutter={[16, 4]} className="send-drawerbtn tabs-innertabs">
+
+                  <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
+                      <Form.Item className="text-center form-marginB">
+                        <Button
+                          htmlType="submit"
+                          size="large"
+                          className="newtransfer-card"
+                          // style={{ width: '100%' }}
+                        //   loading={this.state.newtransferLoader}
+                        //   disabled={this.state.addressLoader}
+                        >
+                          New Transfer
+                        </Button>
+                      </Form.Item>
+                    </Col>
+                     <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
+                      <Form.Item className="text-center form-marginB">
+                        <Button
+                          htmlType="button"
+                          size="large"
+                          className="newtransfer-card"
+                          // style={{ width: '100% ' }}
+                        //   loading={this.state.addressLoader}
+                        //   disabled={this.state.newtransferLoader}
+                        //   onClick={this.goToAddressBook}
+                        >
+                          Address book
+                        </Button>
+                      </Form.Item>
+                    </Col>
+                  </Row>
                 {props.currency == 'EUR' && <h2 className="adbook-head">SEPA Transfer</h2>}
                 {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
             <Form
@@ -294,7 +326,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Paragraph className="fw-400 mb-0 pb-4 ml-12 text-white pt-16">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
+                        <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
                             <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
                                     let temp = {...documents, "payee": docs}
                                     setDocuments(temp)

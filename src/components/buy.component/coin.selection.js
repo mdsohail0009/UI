@@ -10,6 +10,7 @@ import { fetchCoins, fetchSelectedCoinDetails, setCoin, setExchangeValue } from 
 import { convertCurrency } from './buySellService';
 import apiClient from "../../api/apiCalls";
 import Loader from '../../Shared/loader'
+import Title from 'antd/lib/skeleton/Title';
 
 class CryptoComponent extends Component {
     ref = React.createRef();
@@ -54,7 +55,7 @@ class CryptoComponent extends Component {
         this.props.changeStep("step2");
     }
     render() {
-        const { Paragraph } = Typography;
+        const { Paragraph,Title } = Typography;
         const { coins: coinListdata } = this.props?.buyInfo;
         if (coinListdata["All"]?.loading) { return <Loader /> }
         return (
@@ -68,6 +69,9 @@ class CryptoComponent extends Component {
                         <Translate content="sell" component={Radio.Button} value={2} />
                     </Radio.Group>
                 </div> */}
+               {/* <div className='text-center selctcoin-style'><div className='drawer-maintitle'>Buy Crypto</div>
+                      <Translate content="buy_your_crypto_for_cash_text" component={Paragraph} className="label-style drawer-subtextstyle" /></div> */}
+                    
                 {this.props.buySell.tabKey === 1 && !this.props.isTab ? <>
                     <Translate content="buy_your_crypto_for_cash_text" component={Paragraph} className="label-style" />
                     

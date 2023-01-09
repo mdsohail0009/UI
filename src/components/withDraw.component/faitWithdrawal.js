@@ -879,21 +879,21 @@ const FaitWithdrawal = ({ props,
             {confirmationStep !== "step2" && (
               <div className="text-right withdraw-footer">
                 <Button
-                  key="back"
-                  type="text"
-                  className="text-white-30 pop-cancel fw-400 text-captz text-center"
-                  onClick={handleCancel}
-                  disabled={loading}
-                >
-                  Cancel
-                </Button>
-                <Button
                   key="submit"
-                  className="pop-btn px-36 ml-36"
+                  className="pop-btn"
                   onClick={handleOk}
                   loading={loading}
                 >
                   Confirm
+                </Button>
+                <Button
+                  key="back"
+                  type="text"
+                  className="cust-cancel-btn"
+                  onClick={handleCancel}
+                  disabled={loading}
+                >
+                  Cancel
                 </Button>
               </div>
             )}

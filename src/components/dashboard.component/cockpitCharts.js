@@ -134,7 +134,7 @@ class CockpitCharts extends Component {
                 </Row>
                 
 
-                <Radio.Group defaultValue={30} buttonStyle="solid" className="my-16 wmy-graph" onChange={(e) => this.loadDashboards(e.target.value)}>
+                <Radio.Group defaultValue={30} className="custom-radiobtn coin-alldetail" onChange={(e) => this.loadDashboards(e.target.value)}>
                     <Radio.Button value={1}>1 Day</Radio.Button>
                     <Radio.Button value={7}>7 Days</Radio.Button>
                     <Radio.Button value={14}>14 Days</Radio.Button>
