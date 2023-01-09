@@ -202,7 +202,7 @@ class PayeeBankDetails extends Component {
                     </div>
 
                 </Col>
-                {this.props.GoType === "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+              {this.props.currency !="GBP" && <>{this.props.GoType === "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name={"reasonOfTransfer"}
@@ -236,10 +236,10 @@ class PayeeBankDetails extends Component {
                             maxLength={100}
                         ></TextArea>
                     </Form.Item>
-                </Col>}
+                </Col>}</>}
             </>,
             swift: <>
-                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+              {this.props.currency !="GBP" && <> <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name={["payeeAccountModels","accountNumber"]}
@@ -468,7 +468,7 @@ class PayeeBankDetails extends Component {
                             maxLength={100}
                         ></TextArea>
                     </Form.Item>
-                </Col>}
+                </Col>}</>}
                 
             </>
         }

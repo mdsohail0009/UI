@@ -9,6 +9,7 @@ import apiCalls from "../../../api/apiCalls";
 import ConnectStateProps from "../../../utils/state.connect";
 import Loader from "../../../Shared/loader";
 import alertIcon from '../../../assets/images/pending.png';
+import GBPReciepiantAddress from "../gbpReciepientAddress";
 const { Paragraph, Text, Title } = Typography;
 const { TextArea } = Input;
 
@@ -65,7 +66,13 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         obj.payeeAccountModels[0] = { ...obj.payeeAccountModels[0], ...bankdetails, ...values.payeeAccountModels };
         obj.payeeAccountModels[0].currencyType = "Fiat";
         obj.payeeAccountModels[0].documents = documents?.payee;
-        obj.payeeAccountModels[0].walletCode = props.currency;
+        obj.payeeAccountModels[0].ukSortCode = values?.payeeAccountModels?.ukSortCode;
+        obj.payeeAccountModels[0].accountNumber = values?.payeeAccountModels?.accountNumber;
+        obj.payeeAccountModels[0].country = values?.payeeAccountModels.country;
+        obj.payeeAccountModels[0].line1 = values?.payeeAccountModels.address;
+        obj.payeeAccountModels[0].postalCode = values?.payeeAccountModels?.postalCode;
+        // obj.payeeAccountModels[0].walletCode = props.currency;
+        obj.payeeAccountModels[0].walletCode = props.currency;obj.payeeAccountModels[0].walletCode = props.currency;
         if (props.selectedAddress?.id) { obj.payeeAccountModels[0].id = createPayeeObj.payeeAccountModels[0].id; }
         obj['customerId'] = props.userProfile.id;
         if (props.type !== "manual") { obj['amount'] = props.onTheGoObj?.amount; }
@@ -140,16 +147,16 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             </div></div>}
 
             {!showDeclartion && <>
-                {props.currency === "USD" && <>
+                {props.currency === "USD" || props.currency==="GBP" && <>
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                             <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
                                 setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
                                 form.current.resetFields();setDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);
                             }}>
-                                <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
-                                <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"} disabled={edit} ></Tabs.TabPane>
-                                <Tabs.TabPane tab="International USD IBAN" className="text-white text-captz" key={"internationalIBAN"} disabled={edit}></Tabs.TabPane>
+                                <Tabs.TabPane tab={`Domestic ${props.currency} Transfer`} className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
+                               {props?.currency !="GBP" && <Tabs.TabPane tab={`International ${props.currency} Swift`} className="text-white text-captz" key={"international"} disabled={edit} ></Tabs.TabPane>}
+                                <Tabs.TabPane tab={`International ${props.currency} IBAN`} className="text-white text-captz" key={"internationalIBAN"} disabled={edit}></Tabs.TabPane>
                             </Tabs>
                         </Col>
                     </Row>
@@ -195,8 +202,9 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                 initialValues={intialObj}
                 scrollToFirstError
             >
-               
-                <Row  className="">
+              {props.currency ==="GBP" && <GBPReciepiantAddress domesticType={addressOptions?.domesticType}/>}
+             
+               {props.currency !="GBP" && <Row  className="">
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item
                             className="custom-forminput custom-label"
@@ -227,14 +235,14 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         </Form.Item>
                     </Col>
 
-                </Row>
+                </Row>}
                 <Translate 
                     content="Beneficiary_Details"
                     component={Paragraph}
                     className="adbook-head"
                 />
                 <>
-                    <Row >
+                   {props.currency != 'GBP' && <Row >
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label"
@@ -404,11 +412,11 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                                     ></TextArea>
                             </Form.Item>
                         </Col>
-                    </Row>
+                    </Row>}
                 </>
-                <Paragraph className="adbook-head" >Bank Details</Paragraph>
-                {((props.selectedAddress?.id && createPayeeObj)||!props.selectedAddress?.id ) &&
-                 <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} isAddTabCange={isTabChange}/>}
+               { props.currency === 'GBP' && <Paragraph className="adbook-head" >Bank Details</Paragraph>}
+                {((props.selectedAddress?.id && createPayeeObj)||!props.selectedAddress?.id) &&                                                               
+                 <PayeeBankDetails GoType={props.ontheGoType} currency={props.currency} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} isAddTabCange={isTabChange}/>}
                  
                  {props.type !== "manual" && 
                 (<React.Fragment>

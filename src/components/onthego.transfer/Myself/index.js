@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import Loader from "../../../Shared/loader";
 import {confirmTransaction} from '../api';
 import alertIcon from '../../../assets/images/pending.png';
+import NumberFormat from "react-number-format";
 const { Paragraph,Title } = Typography;
 
 //const { Option } = Select;
@@ -76,7 +77,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         let saveObj=Object.assign({},saveTransferObj)
         saveObj.favouriteName=values.favouriteName;
         saveObj.payeeAccountModels[0].iban= (currency==='EUR' || (addressOptions?.transferType === "internationalIBAN"||addressOptions?.tabType === "internationalIBAN")) ? values.iban : null;
-        saveObj.payeeAccountModels[0].accountNumber=currency==='USD'?values.accountNumber:null;
+        saveObj.payeeAccountModels[0].accountNumber=currency===('USD' || 'GBP')?values.accountNumber:null;
         saveObj.payeeAccountModels[0].abaRoutingCode=values.abaRoutingCode?values.abaRoutingCode:null;
         saveObj.payeeAccountModels[0].swiftRouteBICNumber=values.swiftRouteBICNumber?values.swiftRouteBICNumber:null;
         saveObj.payeeAccountModels[0].line1=currency==='USD'?values.line1:null;
@@ -87,7 +88,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         saveObj.payeeAccountModels[0].branch=bankDetails.branch?bankDetails.branch:null;
         saveObj.payeeAccountModels[0].country=bankDetails.country?bankDetails.country:null;
         saveObj.payeeAccountModels[0].city=bankDetails.city?bankDetails.city:null;
-        saveObj.payeeAccountModels[0].postalCode=bankDetails.zipCode?bankDetails.zipCode:null;
+        saveObj.payeeAccountModels[0].postalCode=bankDetails.zipCode?(bankDetails.zipCode || values.postalCode):null;
         saveObj.firstName=recipientDetails.firstName;
         saveObj.lastName=recipientDetails.lastName;
         saveObj.beneficiaryName=recipientDetails.beneficiaryName;
@@ -243,13 +244,13 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     {/* <Button onClick={() => props.onContinue({ close: true, isCrypto: false })} type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button> */}
                     </div>
             </div></div>}
-       {!showDeclartion &&<> {currency === "USD" && <>
+       {!showDeclartion &&<> {currency === "USD" || currency === "GBP" && <>
             <Row gutter={[16, 16]}>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                     <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });form.resetFields();seterrorMessage(null);setbankDetails({});setValidIban(false); setEnteredIbanData(null) }} activeKey={addressOptions.tabType}>
-                        <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz"  key={"domestic"} disabled={isEdit}></Tabs.TabPane>
-                        <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"} disabled={isEdit}></Tabs.TabPane>
-                        <Tabs.TabPane tab="International USD IBAN" className="text-white text-captz" key={"internationalIBAN"} disabled={isEdit}></Tabs.TabPane>
+                        <Tabs.TabPane tab={`Domestic ${currency} Transfer`} className="text-white text-captz"  key={"domestic"} disabled={isEdit}></Tabs.TabPane>
+                       { currency !="GBP" && <Tabs.TabPane tab={`International ${currency} Swift`} className="text-white text-captz" key={"international"} disabled={isEdit}></Tabs.TabPane>}
+                        <Tabs.TabPane tab={`International ${currency} IBAN`} className="text-white text-captz" key={"internationalIBAN"} disabled={isEdit}></Tabs.TabPane>
                     </Tabs>
                 </Col>
             </Row>
@@ -330,7 +331,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
 
         <div className="alert-info-custom kpi-List">
             <Row>
-                {!isBusiness && <><Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
+                {(!isBusiness || currency ==="GBP") && <><Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                 <div className="kpi-divstyle"><label className="kpi-label">
                         First name
                     </label>
@@ -344,13 +345,13 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         <div><Text className="kpi-val">{recipientDetails.lastName}</Text></div></div>
 
                     </Col></>}
-                {isBusiness && <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
+                {(isBusiness && currency !="GBP") && <> <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                 <div className="kpi-divstyle"><label className="kpi-label">
                         Beneficiary Name
                     </label>
                     <div><Text className="kpi-val">{recipientDetails.beneficiaryName}</Text></div></div>
 
-                </Col>}
+                </Col>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                 <div className="kpi-divstyle"> <label className="kpi-label">
                         Address Line 1
@@ -371,7 +372,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     </label>
                     <div><Text className="kpi-val">{recipientDetails.line3!=null?recipientDetails.line3:'-'}</Text></div></div>
 
-                </Col>
+                </Col></>}
 
             </Row>
         </div>
@@ -411,9 +412,39 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             </Button>      
         </Col>}
         </Row>}
-
+  <Row gutter={[8, 8]}>
+        {(currency === "GBP"  && addressOptions.tabType != 'internationalIBAN') && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Form.Item
+                    className="fw-300 mb-8 px-4 text-white-50  custom-forminput custom-label pt-8"
+                    name="uksortcode"
+                    label='UK SORT CODE' required
+                    rules={[
+                        {
+                            required: true,
+                            message: apiCalls.convertLocalLang("is_required"),
+                        },
+                    ]}
+                >
+                                            <NumberFormat
+                        customInput={Input}
+                        thousandSeparator={false}
+                        prefix={""}
+                        decimalScale={0}
+                        allowNegative={false}
+                        allowLeadingZeros={true}
+                        className="cust-input"
+                        placeholder={"Enter Uk Sort code"}
+                        maxLength={6}
+                        style={{ width: "100%"  }}
+                      //  onValueChange={(e) => handleChange(e.value)}
+                       // disabled={inputDisable}
+                        />
+                  
+                </Form.Item>
+            </Col>}
+            </Row>
         <Row>
-            {(currency == 'USD' && addressOptions.tabType !== 'internationalIBAN')  && <> <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            {((currency == 'USD' || currency == 'GBP') && addressOptions.tabType !== 'internationalIBAN')  && <> <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                     className="custom-forminput custom-label"
                     name="accountNumber"
@@ -445,7 +476,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 </Form.Item>
             </Col>
 
-                {currency === 'USD' && addressOptions.tabType === 'international'&&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                {(currency === 'USD' && addressOptions.tabType === 'international') || currency != 'GBP'&&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name="swiftRouteBICNumber"
@@ -476,7 +507,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             maxLength={50}/>
                     </Form.Item>
                 </Col>}
-                {!(currency === 'USD' && addressOptions.tabType === 'international')&&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                {!(currency === 'USD' && addressOptions.tabType === 'international') || currency != 'GBP' &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name="abaRoutingCode"
@@ -508,7 +539,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         maxLength={50}/>
                     </Form.Item>
                 </Col>}
-                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+              {currency != 'GBP' && <>  <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name="bankName"
@@ -570,7 +601,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             maxLength={1000}
                         ></TextArea>
                     </Form.Item>
-                </Col></>}
+                </Col> </>}
+  </>}
         </Row>
         {(currency === 'EUR' || addressOptions.tabType === 'internationalIBAN') && <div className="box basic-info alert-info-custom mt-16">
             <Spin spinning={ibanLoading}>

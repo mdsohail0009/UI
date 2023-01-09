@@ -12,6 +12,7 @@ import DomesticTransfer from "./domestic.transfer";
 import InternationalTransfer from "./international.transfer";
 import Translate from "react-translate-component";
 import alertIcon from '../../../assets/images/pending.png';
+import GBPReciepiantAddress from "../gbpReciepientAddress";
 const { Paragraph, Title, Text } = Typography;
 const { TextArea } = Input;
 class BusinessTransfer extends Component {
@@ -90,10 +91,10 @@ class BusinessTransfer extends Component {
         _obj.addressType = "otherbusiness";
         _obj.transferType = selectedTab;
         _obj.amount = this.props.amount;
-        _obj.payeeAccountModels[0].city = ibanDetails?.city;
-        _obj.payeeAccountModels[0].state = ibanDetails?.state;
-        _obj.payeeAccountModels[0].country = ibanDetails?.country;
-        _obj.payeeAccountModels[0].postalCode = ibanDetails?.zipCode;
+        _obj.payeeAccountModels[0].city = ibanDetails?.city || values.city;
+        _obj.payeeAccountModels[0].state = ibanDetails?.state || values.state;
+        _obj.payeeAccountModels[0].country = ibanDetails?.country || values.country;
+        _obj.payeeAccountModels[0].postalCode = ibanDetails?.zipCode || values.postalCode;
         _obj.payeeAccountModels[0].bankBranch = ibanDetails?.branch;
         _obj.payeeAccountModels[0].bic=ibanDetails?.routingNumber;
         _obj.payeeAccountModels[0].iban = values?.iban ? values?.iban : this.form.current?.getFieldValue('iban');
@@ -213,7 +214,7 @@ class BusinessTransfer extends Component {
         }
         return <div ref={this.useDivRef}><Tabs className="cust-tabs-fait" onChange={this.handleTabChange} activeKey={selectedTab}>
 
-            <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"} disabled={this.state.isEdit}>
+            <Tabs.TabPane tab={`Domestic ${this.props.currency} transfer`} className="text-white" key={"domestic"} disabled={this.state.isEdit}>
                 <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
                 <Row gutter={[16, 4]} className="send-drawerbtn tabs-innertabs">
 
@@ -223,6 +224,7 @@ class BusinessTransfer extends Component {
                           htmlType="submit"
                           size="large"
                           className="newtransfer-card"
+                          //(this.props.currency === "GBP")
                           // style={{ width: '100%' }}
                         //   loading={this.state.newtransferLoader}
                         //   disabled={this.state.addressLoader}
@@ -253,6 +255,9 @@ class BusinessTransfer extends Component {
                     onFinish={this.submitPayee}
                     scrollToFirstError
                 >
+
+                   {this.props.currency ==="GBP" && <GBPReciepiantAddress  tabss={"Domestic GBP transfer"}/>}
+                    {this.props.currency !="GBP" && <>
                     <Row>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
@@ -370,6 +375,7 @@ class BusinessTransfer extends Component {
                     }} refreshData ={selectedTab}/>
                         </React.Fragment>)
                     }
+                    </> }
                     <div className="">
 
                                 <Button
@@ -385,7 +391,7 @@ class BusinessTransfer extends Component {
                     </div>
                 </Form></div>
             </Tabs.TabPane>
-            <Tabs.TabPane tab="International USD Swift" key={"international"} disabled={this.state.isEdit}>
+          {this.props.currency !="GBP" &&  <Tabs.TabPane tab={`International ${this.props.currency} Swift`} key={"international"} disabled={this.state.isEdit}>
             <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
             <Row gutter={[16, 4]} className="send-drawerbtn tabs-innertabs">
                 <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
@@ -546,9 +552,9 @@ class BusinessTransfer extends Component {
                     </div>
                 </Form></div>
 
-            </Tabs.TabPane>
+            </Tabs.TabPane>}
 
-            <Tabs.TabPane tab="International USD IBAN" key={"internationalIBAN"} disabled={this.state.isEdit}>
+            <Tabs.TabPane tab={`International ${this.props.currency} IBAN`}key={"internationalIBAN"} disabled={this.state.isEdit}>
             <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
             <Row gutter={[16, 4]} className="send-drawerbtn tabs-innertabs">
 
@@ -588,8 +594,9 @@ class BusinessTransfer extends Component {
                     onFinish={this.submitPayee}
                     scrollToFirstError
                 >
-                    
-                    <Row >
+                       {this.props.currency ==="GBP" && <GBPReciepiantAddress  tabss={"International GBP IBAN"}/>}
+                {this.props.currency !="GBP" &&  <Row >
+                 <Paragraph className="adbook-head" >Bank Details</Paragraph>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label"
@@ -617,10 +624,11 @@ class BusinessTransfer extends Component {
                                 />
                             </Form.Item>
                         </Col>
-                    </Row>
-                    <Paragraph className="adbook-head"  >Recipient's Details</Paragraph>
+                    </Row>}
+                 
+         {/* <Paragraph className="adbook-head"  >Recipient's Details</Paragraph> */}
                     {/* <Divider /> */}
-                    <Row>
+                    { this.props.currency !="GBP" && <>     <Row>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label"
@@ -690,8 +698,7 @@ class BusinessTransfer extends Component {
                         </ Col>
                         <RecipientAddress />
                     </Row>
-
-                    <Paragraph className="adbook-head" >Bank Details</Paragraph>
+                    </>}
                     {/* <Divider /> */}
                     {/* <InternationalTransfer type={this.props.type} /> */}
                     <Row>
@@ -789,7 +796,7 @@ class BusinessTransfer extends Component {
                         </Spin>
                        
                     </div>
-                        {this.props?.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                        {this.props?.type !== "manual" || this.props.currency !="GBP" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label"
                                 name="reasonOfTransfer"
