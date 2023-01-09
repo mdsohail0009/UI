@@ -151,7 +151,7 @@ export function withState(WrappedGrid) {
                                         <th>Hash</th>
                                         <th >Status</th>
                                     </thead>
-                                    <tbody>
+                                    <tbody className='pdt-data'>
                                         {this.state?.data?.map(item => <tr>
                                             <td>{item.transactionId}</td>
                                             <td >{moment(item.date).format("DD/MM/YYYY hh:mm a")}</td>
