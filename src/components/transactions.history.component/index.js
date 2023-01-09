@@ -151,7 +151,7 @@ class TransactionsHistory extends Component {
       field: "accountnumber", title: "Bank Account Number/IBAN", filter: true, width: 260,
     },
     {
-      field: "hashId", title: "Hash", filter: true, width: 180,
+      field: "hash", title: "Hash", filter: true, width: 180,
       customCell: (props) => (
         <td>
          <Tooltip title={props.dataItem.hashId}>
