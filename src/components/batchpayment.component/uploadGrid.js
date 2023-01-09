@@ -35,16 +35,10 @@ const BatchpaymentView = (props) => {
         { field: "whiteListName", title: "Whitelist Name", filter: true,width: 200},
         { field: "beneficiaryName", title: "Beneficiary Name", filter: true,width: 200},
         {
-			field: "isWhitelisted",
-			customCell: (properites) => (
-				<td>
-					{properites.dataItem?.isWhitelisted && <>  Whitelisted</>}
-					{!properites.dataItem?.isWhitelisted && "Not whitelisted"}
-				</td>
-			),
-			title:"Whitelist Status",
-			filter: false,
-			width: 200,
+			field: "addressbookStatus",
+			title:"Whitelisting Status",
+			filter: true,
+			width: 210,
 		},
         { field: "accountNumber", title: 'Account Number/IBAN', filter: true, width: 250 },
         { field: "amount", title: 'Amount', filter: true, width: 200},

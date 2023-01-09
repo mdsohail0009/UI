@@ -231,15 +231,14 @@ class PaymentSummary extends Component {
 						</>}
 						{this.state.showDeclaration && <>
 					
-	          <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
-								<img src={pending} alt={`Processed`}  width={80}/>
-								<Title className='text-white'>Declaration form sent!</Title>
-								<Paragraph className='text-white'>We sent declaration form to{":"}{" "}
-									{this.props.customer?.email}. Please sign using the link
-									received in email to whitelist your address. Note that
-									your payments will only be processed once your
-									whitelisted address has been approved. </Paragraph>
-							</div></div>
+							<div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
+							<img src={pending} alt={`Processed`}  width={80}/>
+       <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully</Title>
+       <Text className="text-white-30">{`Declaration form has been sent to ${this.props.customer?.email}. Please review and sign the document in your email to whitelist your address.
+        Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
+
+      </div>
+      </div>
 						</>}
 					</div>
 					</Spin>
