@@ -38,7 +38,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onCont
                     {showHeading!=true&&(
                         <Radio.Group
                             defaultValue={addressOptions.addressType}
-                            className="custom-radiobtn"
+                            className="new-custom-radiobtn"
                             onChange={(value) => {
                                 setAddressOptions({ ...addressOptions, addressType: value.target.value });
                                 onAddressOptionsChange({ ...addressOptions, addressType: value.target.value });
@@ -46,11 +46,11 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onCont
                             disabled={isEdit}
                         >
                             <Radio.Button
-                            className="" value={props.userProfile?.isBusiness ? "ownbusiness" : "myself"}>{props.userProfile?.isBusiness ? "My Company" : "My Self"}</Radio.Button>
+                            className="" value={props.userProfile?.isBusiness ? "ownbusiness" : "myself"}><span className="lg icon" />{props.userProfile?.isBusiness ? "My Company" : "My Self"}</Radio.Button>
                             <Radio.Button
-                                className="" value="individuals">individuals</Radio.Button>
+                                className="" value="individuals"><span className="lg icon" />individuals</Radio.Button>
                             <Radio.Button
-                                className="" value="otherbusiness">other business</Radio.Button>
+                                className="" value="otherbusiness"><span className="lg icon" />other business</Radio.Button>
                         </Radio.Group>)}
                     </Col>
                 </Row>

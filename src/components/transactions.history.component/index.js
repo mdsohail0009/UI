@@ -3,7 +3,7 @@ import {
   Drawer,
   Typography,
   Button,
-  Row, Col, Select, Form,Input,Tooltip} from "antd";
+  Row, Col, Select, Form,Input} from "antd";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
@@ -11,7 +11,7 @@ import List from "../grid.component";
 import { getTransactionSearch, getTransactionCurrency,transactionsView } from './api';
 import { setCurrentAction } from "../../reducers/actionsReducer";
 import { getFeaturePermissionsByKey } from '../shared/permissions/permissionService';
-import { withRouter } from "react-router-dom";
+import { withRouter,Link } from "react-router-dom";
 import { setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 import NumberFormat from "react-number-format";
 import moment from "moment/moment";
@@ -336,10 +336,14 @@ isErrorDispaly = (objValue) => {
           visible={this.props.showDrawer}
           className="side-drawer-full custom-gridresponsive transctns-grid"
         >
-          <div>
+    
+        </Drawer>
+        <div className="main-container">
+			<div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/" /><span className="back-btnarrow">Back</span></div>
+        <Translate content="transactions_history" component={Title} className="grid-title" />
             <Form
               initialValues={this.state.customerData}
-              className="ant-advanced-search-form form form-bg search-bg pt-8"
+              className="ant-advanced-search-form form form-bg search-bg " 
               autoComplete="off"
               ref={this.formRef}
             >
@@ -351,7 +355,7 @@ isErrorDispaly = (objValue) => {
                     label={<Translate content="Date" component={Form.label} className="label-style" />}
                   >
                     <Select
-                      className="cust-input mb-0 custom-search"
+                      className="cust-input mb-0 custom-search newcust-bg"
                       dropdownClassName="select-drpdwn"
                       defaultValue="All"
                       onChange={(e) => this.handleTimeSpan(e, 'timeSpan')}
@@ -361,20 +365,20 @@ isErrorDispaly = (objValue) => {
                     </Select>
                   </Form.Item>
                 </Col>
-                {this?.state?.isCustomDate ? <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
+                {this?.state?.isCustomDate ? <Col xs={24} sm={24} md={8} lg={8} xl={6} className="px-8 transaction_resp">
                   <Form.Item
                     name="selectedTimespan"
                     className="input-label selectcustom-input mb-0"
                     label="From - To Dates"
                   >
-                    <Input disabled placeholder="DD/MM/YYYY" className="cust-input cust-adon mb-0" addonAfter={<i className="icon md date-white c-pointer" onClick={(e) => { this.datePopup(e, 'searchObj') }} />} />
+                    <Input disabled placeholder="DD/MM/YYYY" className="cust-input cust-adon mb-0 newcust-bg" addonAfter={<i className="icon md date-white c-pointer" onClick={(e) => { this.datePopup(e, 'searchObj') }} />} />
                   </Form.Item>
                 </Col> : ""}
                 <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
                   <Form.Item name="docType" className="input-label cust-label transaction-type" label="Transaction Type" colon={false}>
                     <Select
                       defaultValue="All"
-                      className="cust-input w-100 bgwhite c-pointer"
+                      className="cust-input w-100 bgwhite c-pointer newcust-bg"
                       dropdownClassName="select-drpdwn"
                       showSearch
                       onChange={(e) => this.handleChange(e, "docType")}
@@ -388,7 +392,7 @@ isErrorDispaly = (objValue) => {
                   <Form.Item className="input-label cust-label transaction-type" label="Wallet" colon={false}>
                     <Select
                       value={this.state.searchObj.currency}
-                      className="cust-input w-100 bgwhite"
+                      className="cust-input w-100 bgwhite newcust-bg"
                       dropdownClassName="select-drpdwn"
                       showSearch
                       onChange={(e) => this.handleChange(e, "currency")}
@@ -402,7 +406,7 @@ isErrorDispaly = (objValue) => {
                   <Form.Item name="state" className="input-label cust-label transaction-type" label="Status" colon={false}>
                     <Select
                       defaultValue="All"
-                      className="cust-input w-100 bgwhite"
+                      className="cust-input w-100 bgwhite newcust-bg"
                       dropdownClassName="select-drpdwn"
                       showSearch
                       onChange={(e) => this.handleChange(e, "status")}
@@ -414,11 +418,11 @@ isErrorDispaly = (objValue) => {
                 </Col>
                 <Col xs={24} sm={24} md={3} lg={3} xl={3} className="transaction_resp">
                   <Button
-                    className="pop-btn search-btn"
+                    className="pop-btn search-btn "
                     htmlType="submit"
                     onClick={this.handleSearch}
-                  >
-                    Search<span className="icon md search-angle "></span>
+                  >Apply
+                    {/* Search<span className="icon md search-angle "></span> */}
                   </Button>
                 </Col>
 
@@ -433,10 +437,8 @@ isErrorDispaly = (objValue) => {
             excelFileName={'Transaction History'}
             exExportTitle={"Download Transaction History"}
           />
-        </Drawer>
-
-                <TransactionSlips showModal={showModal}  modalData={modalData} isLoading={isLoading} handleCancel={this.handleCancel} viewData={viewData} loader={this.state.viewLoader} />
-                <TransactionTimeSpan modal={this.state.modal} handleDateCancel={this.handleDateCancel} handleDateChange={this.handleDateChange} handleOk={this.handleOk} formDateRef={this.formDateRef} message={this.state?.message} searchObj={searchObj}/>
+        <TransactionSlips showModal={showModal} modalData={modalData} isLoading={isLoading} handleCancel={this.handleCancel} viewData={viewData} loader={this.state.viewLoader} />
+        <TransactionTimeSpan modal={this.state.modal} handleDateCancel={this.handleDateCancel} handleDateChange={this.handleDateChange} handleOk={this.handleOk} formDateRef={this.formDateRef} message={this.state?.message} searchObj={searchObj} />
       </>
 
     );

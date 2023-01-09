@@ -26,8 +26,9 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
     const suffix = children.slice(-suffixCount).trim();
     return (
-        <Text className="mb-0 fs-14 docnames c-pointer d-block"
-            style={{ maxWidth: '100%' }} ellipsis={{ suffix }}>
+        <Text className="btn-textstyle"
+            // style={{ maxWidth: '100%' }} 
+            ellipsis={{ suffix }}>
             {start}
         </Text>
     );
@@ -374,14 +375,13 @@ class CaseView extends Component {
                     <div className="ribbon-item">
                       <span
                         className={`icon md 
-                            ${key === null ? "Decription" : ((key === "Currency" && value === "EUR") ? "EURS" : (key === "Amount" ? 'Currency' : (key === "Currency" && value === "USD") ? "USDS" : key))
-                                                }`}
-                                        />
-                                        <div className="ml-16" style={{ flex: 1 }}>
-                        <Text className="fw-300 text-white-50 fs-12">
+                            ${key === null ? "Decription" : ((key === "Currency" && value === "EUR") ? "EURS" : (key == "Amount" ? 'Currency' : (key == "Currency" && value == "USD") ? "USDS" : key))
+                              }`} />
+                            <div className="cases-lefttext" style={{ flex: 1 }}>
+                        <Text className="case-lbl">
                           {key}
                         </Text>
-                                <div className='fw-600 text-white-30 fs-16 l-height-normal' style={{ wordBreak: "break-all" }} >
+                                <div className='case-val cases-subtext'>
                                     {(value == null || value === " " || value === "") ? '-' : (isNaN(value) || (key === 'Transaction Id' || key === 'Bank Account number/IBAN' || key === "Bank Account Number/IBAN" || key === "Wallet Address"
                                         || key === 'Bank Name') ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
                                 </div>
@@ -394,12 +394,12 @@ class CaseView extends Component {
                         )}
                     </Row>
                 </div>
-                <div className="px-16">
-                    <Translate Component={Text} content="remarks" className="fw-300 text-white-50 fs-12" />
-                    <Title level={5} className='case-val' style={{ marginTop: '3px' }} maxLength={500} rows={4}>{caseData.remarks ? caseData.remarks : '-'}</Title>
+                <div className="case-remarksstyle">
+                    <Translate Component={Text} content="remarks" className="basicinfo" />
+                    <div className='case-lbl remark-casestyle'  maxLength={500} rows={4}>{caseData.remarks ? caseData.remarks : '-'}</div>
                 </div>
 
-                <Divider />
+                {/* <Divider /> */}
                 {(!this.state.docDetails?.details || this.state.docDetails?.details.length === 0) && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No documents available" /></div>}
                 <div className="bank-view">
                     {this.state.docDetails?.details?.map((doc, idx) =>
@@ -414,7 +414,7 @@ class CaseView extends Component {
                             }
                         }}
                             collapsible
-                            accordion className="accordian mb-24 mb-togglespace "
+                            accordion className="accordian  mb-togglespace "
                             defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
                             <Panel header={doc.documentName} key={idx + 1} extra={doc.state ? (<span className={`${doc.state ? doc.state.toLowerCase() + " staus-lbl" : ""}`}>{doc.state}</span>) : ""}>
                                 {/* {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>} */}
@@ -428,7 +428,7 @@ class CaseView extends Component {
                                                 <span className={`icon xl ${(file.filename.slice(-3) === "zip" ? "file" : "") || (file.filename.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                                 <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
                                                     <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>
-                                                    <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
+                                                    <span className="file-sizestyle">{this.formatBytes(file.size)}</span>
                                                 </div>
                                             </div>)}
                                         </div>
@@ -491,8 +491,8 @@ class CaseView extends Component {
                                                     <p className="ant-upload-drag-icon">
                                                         <span className="icon xxxl doc-upload" />
                                                     </p>
-                                                    <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
-                                                    <p className="ant-upload-hint text-secondary fs-12">
+                                                    <p className="ant-upload-text upload-title">Drag and drop or browse to choose file</p>
+                                                    <p className="ant-upload-hint upload-text">
                                                         PNG, JPG,JPEG and PDF files are allowed
                                                     </p>
                                                 </Dragger>
@@ -503,7 +503,7 @@ class CaseView extends Component {
                                                     <span className={`icon xl ${(file.filename.slice(-3) === "zip" ? "file" : "") || (file.filename.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                                     <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
                                                         <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>
-                                                        <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
+                                                        <span className="file-sizestyle">{this.formatBytes(file.size)}</span>
                                                     </div>
                                                     <span className="icon md close c-pointer" onClick={() => this.deleteDocument(this.getUploadedFiles(doc.id), idx1, true)} />
                                                 </div>)}
@@ -547,8 +547,9 @@ class CaseView extends Component {
                     destroyOnClose={true}
                     closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.docPreviewClose} /></Tooltip>}
                     footer={<>
-                        <Button type="primary" onClick={this.docPreviewClose} className="doc-cancelbtn text-center text-white-30 pop-cancel fw-400 mr-8 pop-btn px-36 ">Close</Button>
-                        <Button className="pop-btn px-36" onClick={() => this.fileDownload()}>Download</Button>
+                        
+                        <Button className="pop-btn" block onClick={() => this.fileDownload()}>Download</Button>
+                        <Button type="primary" block onClick={this.docPreviewClose} className="cust-cancel-btn">Close</Button>
                     </>}
                 >
                     <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null, mimeType: this.state?.previewPath?.includes(".pdf") ? 'application/pdf' : '' }} />

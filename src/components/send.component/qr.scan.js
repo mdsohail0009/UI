@@ -122,20 +122,22 @@ class QRScan extends Component {
               )}
         
             <div>
-               {/* <div className="text-center f-12 mt-16 text-white custom-crypto-btns">
+               <div className="network-display">
                     {netWorkData && netWorkData.map((network) => {
                         return <>
-                            <span className=  {network.code === this.props?.sendReceive?.depositWallet?.network ? "mr-16 custom-bnt text-white-30" : "ant-btn ant-btn-primary custom-btn sec network" }>
+                       
+                            <div className=  {network.code === this.props?.sendReceive?.depositWallet?.network ? "cust-networkstyle" : "network" }>
                                {netWorkData.length>1 &&<Link onClick={() => this.onNetworkView(network)}>
-                                    <span className='fw-500'>
+                                    <div className='swap-fontsize'>
                                         {network.code}
-                                        </span>
+                                        </div>
                                 </Link>}
                                 {netWorkData.length === 1 &&  `${network.code}`}
-                            </span>
+                            </div>
+                           
                         </>
                     })}
-                </div> */}
+                </div>
                 <div className="scanner-img">
                     <QRCodeComponent value={this.props?.sendReceive?.depositWallet?.walletAddress} size={150} />
                 </div>

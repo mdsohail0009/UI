@@ -240,7 +240,7 @@ class HeaderPermissionMenu extends Component {
         }
     }
     onMenuItemClick = async (menuKey, menuItem) => {
-        const perIgnoreLst = ["notifications", "auditLogs", "cases",];
+        const perIgnoreLst = ["notifications", "auditLogs", "cases","transactions"];
         if (perIgnoreLst.includes(menuKey)) { this.navigate(menuKey, menuItem) }
         else {
             const ignoreKycLst = ["transactions"];
@@ -362,7 +362,7 @@ class HeaderPermissionMenu extends Component {
                     />
                     <ul className="drpdwn-list">
                         <li
-                            onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/modal" })}
+                            onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/transactions" })}
                         >
                             <Link>
                                 <Translate
@@ -403,7 +403,8 @@ class HeaderPermissionMenu extends Component {
                             </Popover>
                         </li>
                         <li
-                            onClick={() => this.onMenuItemClick("auditLogs", { key: "auditLogs", path: "/modal" })}
+                            onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/auditlogs" })}
+                            
                         >
                             <Link>
                                 <Translate

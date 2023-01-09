@@ -115,11 +115,11 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
 
         <div className="d-flex">
           <Translate
-            className="text-white input-label"
+            className="label-style"
             content="current_pass_word"
             component={Text}
           />
-          <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span>
+          <span className='label-style'>*</span>
         </div>
         <Form.Item
           className="custom-forminput mb-24"
@@ -136,19 +136,19 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
           ]}
         >
 
-          <Input.Password placeholder={apiClient.convertLocalLang('Type_your_current_pass_word')} value={initialValues.CurrentPassword} className="text-left cust-input mb-8 pr-0 change-space" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ? <EyeOutlined style={{ color: '#fff' }} /> : <EyeInvisibleOutlined />)} />
+          <Input.Password placeholder={apiClient.convertLocalLang('Type_your_current_pass_word')} value={initialValues.CurrentPassword} className="cust-input change-space" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ? <EyeOutlined  /> : <EyeInvisibleOutlined />)} />
         </Form.Item>
         <div className="d-flex">
           <Translate
-            className="text-white input-label"
+            className="label-style"
             content="new_pass_word"
             component={Text}
           />
-          <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span>
+          <span className="label-style">*</span>
         </div>
         <Form.Item
           name="Password"
-          className="custom-forminput mb-24"
+          className="custom-forminput"
           required
           rules={[
             {
@@ -179,20 +179,20 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
             placeholder={apiClient.convertLocalLang('Type_your_new_pass_word')}
             value={initialValues.Password}
             onChange={(e) => handleChange("Password", e)}
-            className="text-left cust-input mb-8 pr-0 change-space pass-onhover" iconRender={visible => (visible ? <EyeOutlined style={{ color: '#fff' }} /> : <EyeInvisibleOutlined />)}
+            className="cust-input change-space pass-onhover" iconRender={visible => (visible ? <EyeOutlined  /> : <EyeInvisibleOutlined />)}
           />
         </Form.Item>
         <div className="d-flex">
           <Translate
-            className="text-white input-label"
+            className="label-style"
             content="confirm_pass_word"
             component={Text}
           />
-          <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span>
+          <span className="label-style">*</span>
         </div>
         <Form.Item
           required
-          className="custom-forminput mb-24"
+          className="custom-forminput"
           name="ConfirmPassword"
           dependencies={["password"]}
           //hasFeedback
@@ -218,11 +218,11 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
             placeholder={apiClient.convertLocalLang('Re_type_your_new_pass_word')}
             value={initialValues.ConfirmPassword}
             onChange={(e) => handleChange("ConfirmPassword", e)}
-            className="text-left cust-input mb-8 pr-0 change-space" iconRender={visible => (visible ? <EyeOutlined style={{ color: '#fff' }} /> : <EyeInvisibleOutlined />)}
+            className="cust-input change-space" iconRender={visible => (visible ? <EyeOutlined /> : <EyeInvisibleOutlined />)}
           />
         </Form.Item>
 
-        <div style={{ marginTop: '' }} className="changepwd-btn align-center btn-content btn-container">
+        <div className="changepwd-btn btn-content btn-container">
          
           <div classname="sell-btc-btn">
           <Button
@@ -230,18 +230,18 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
             htmlType="submit"
             size="large"
             block
-            className="pwdbtn-submit pop-btn custom-send sell-btc-btn"
+            className="primary-btn pop-btn"
             loading={btnDisabled}
           >{changePasswordResponse.isLoading && <Spin indicator={antIcon} />}{" "}
             <Translate content="Save_btn_text" />
           </Button>
           </div>
-          <div classname="text-center mt-16 cust-pop-up-btn sell-btc-btn">
+          <div classname="">
           <Button
             htmlType="button"
             size="medium"
             block
-            className="pwdbtn-cancel text-white-30 fw-400 pop-btn custom-send  cancel-btn mr-8 ml-0 primary-btn pop-cancel"
+            className="cust-cancel-btn"
             onClick={() => onSubmit()}>
             <Translate content="cancel" />
           </Button>

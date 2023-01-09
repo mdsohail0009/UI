@@ -1084,21 +1084,19 @@ class WithdrawSummary extends Component {
 									</Tooltip>
 								}
 								footer={
-									<div className="cust-pop-up-btn crypto-pop">									
+									<div className="cust-pop-up-btn crypto-pop">	
 										<Button
-											className="primary-btn pop-cancel btn-width"
-											style={{ margin: "0 8px" }}
+											className="pop-btn" block
+											onClick={() => this.onModalOk()}
+										>
+											Yes
+										</Button>
+										<Button block
+											className="cust-cancel-btn"
 											onClick={() => this.onModalCancel()}
 
 										>
 											NO
-										</Button>
-										<Button
-											className="primary-btn pop-btn btn-width"
-											style={{ margin: "0 8px" }}
-											onClick={() => this.onModalOk()}
-										>
-											Yes
 										</Button>
 									</div>
 								}>
