@@ -204,10 +204,10 @@ class BusinessTransfer extends Component {
         if (this.state.showDeclaration) {
             return <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
                 <Image width={80} preview={false} src={alertIcon} className="confirm-icon" />
-                <Title level={2} className="success-title">Declaration form sent successfully to your email</Title>
-                <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
-                   Please sign using link received in email to whitelist your address. `}</Text>
-                <Text className="successsubtext">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
+                <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully</Title>
+                <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
+                Please review and sign the document in your email to whitelist your address.
+                Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
             </div>
             </div>
         }

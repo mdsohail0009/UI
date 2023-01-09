@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Input, Row, Col, Form, Button, Typography, Divider, Alert } from 'antd';
+import { Input, Row, Col, Form, Button, Typography, Alert } from 'antd';
 import apicalls from "../../api/apiCalls";
 import oops from '../../assets/images/oops.png';
 import NumberFormat from "react-number-format";
@@ -123,25 +123,22 @@ class OnthegoCryptoTransfer extends Component {
         this.setState({ ...this.state, error: null });
         let amt = values.amount;
         amt = typeof amt == "string" ? amt?.replace(/,/g, "") : amt;
-        const { withdrawMaxValue, withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
+        const {  withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null });
         if (amt === "") {
             this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('enter_amount') });
             this.myRef.current.scrollIntoView();
         }
-        else if (amt === 0) {
+        else if (parseFloat(amt) === 0) {
             this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_greater_zero') });
             this.myRef.current.scrollIntoView();
         }
-        else if (amt < withdrawMinValue) {
+        else if (parseFloat(amt) < withdrawMinValue) {
             this.setState({ ...this.state, errorMsg: null, error: apicalls.convertLocalLang('amount_min') + " " + withdrawMinValue });
             this.myRef.current.scrollIntoView();
         }
-        // else if (amt > withdrawMaxValue) {
-        //     this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_max') + " " + withdrawMaxValue });
-        //     this.myRef.current.scrollIntoView();
-        // } 
-        else if (amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
+       
+        else if (parseFloat(amt) > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
             this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('insufficient_balance') });
             this.myRef.current.scrollIntoView();
         }
@@ -305,7 +302,7 @@ class OnthegoCryptoTransfer extends Component {
             if (!_amt && _amt != 0) {
                 this.enteramtForm.current.validateFields()
             } else {
-                if (_amt === '') {
+                if ((this.state.CryptoAmnt == '0' || _amt == 0) && !(_amt == "")) {
                     this.setState({
                         ...this.state,
                         errorMsg: null,
@@ -324,7 +321,7 @@ class OnthegoCryptoTransfer extends Component {
         }
     }
 
-    renderStep = (step) => {
+    renderStep = () => {
         const { filterObj, pastPayees } = this.state;
         const steps = {
             enteramount: (
@@ -352,10 +349,6 @@ class OnthegoCryptoTransfer extends Component {
                                 />
                             )}
                             <Row gutter={[16, 16]} className="align-center send-crypto-err mx-4">
-
-                {/* <Title className="fs-30 fw-400 text-white-30 text-yellow  mb-0 mt-4">
-                  {this.props.selectedWallet?.coin}
-                </Title> */}
 
               
                 <Form.Item
@@ -545,10 +538,6 @@ const connectStateToProps = ({ sendReceive, userConfig, menuItems, oidc }) => {
 };
 const connectDispatchToProps = dispatch => {
     return {
-        // commented due to sonar issue
-        // changeStep: (stepcode) => {
-        // dispatch(setAddressStep(stepcode))
-        // },
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
         },

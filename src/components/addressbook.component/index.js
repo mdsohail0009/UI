@@ -20,7 +20,7 @@ import apiCalls from "../../api/apiCalls";
 import Info from "../shared/info";
 import { DownloadOutlined } from '@ant-design/icons';
 import ActionsToolbar from "../toolbar.component/actions.toolbar";
-import { fetchFeaturePermissions, setSelectedFeatureMenu } from "../../reducers/feturesReducer";
+import { setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 import {rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
 import { getFeatureId } from "../shared/permissions/permissionService";
 import { setCurrentAction } from '../../reducers/actionsReducer'
@@ -62,7 +62,6 @@ class AddressBook extends Component {
 		};
 		this.gridFiatRef = React.createRef();
 		this.gridCryptoRef = React.createRef();
-		this.props.dispatch(fetchFeaturePermissions(getFeatureId("/addressBook"), this.props.userConfig.id))
 		this.props.dispatch(setSelectedFeatureMenu(getFeatureId("/addressBook"), this.props.userConfig.id));
 	}
 	componentDidMount() {

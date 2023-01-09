@@ -176,17 +176,10 @@ class AddressCrypto extends Component {
     }
     if (showDeclartion) {
       return<div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
-        <Image width={80} preview={false} src={alertIcon} className="confirm-icon" />
-        <Title level={2} className="success-title">Declaration form sent successfully </Title>
-        <Text className="ant-typography successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
-             Please sign using link received in email to whitelist your address. `}</Text>
-        <Text className="ant-typography successsubtext">{`Please note that your send will only be processed once your whitelisted address has been approved`}</Text>
-       
-        {/* <div className="my-25 custom-back-btn"><Button
-          onClick={this.props.onCancel}
-          style={{width:"150px",height:"46px"}}
-          type="" className="mt-36 pop-cancel ">BACK</Button>
-          </div> */}
+          <Image width={80} preview={false} src={alertIcon} />
+       <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent!</Title>
+       <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}.              Please review and sign the document in your email to whitelist your address.
+        Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
       </div>
       </div>
     }

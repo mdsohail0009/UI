@@ -119,7 +119,7 @@ export function withState(WrappedGrid) {
         render() {
             return (
                 <div >
-                    <div style={{ position: "absolute", left: "-1500px", top: 0 }}>
+                   <div style={{height:"0",overflow:"hidden"}}>
                         <PDFExport margin={5} scale={0.55} paperSize="A4" repeatHeaders={true} fileName='Transaction History' ref={this.tempRef}>
                             <table width="100%">
                                 <tr>
@@ -141,7 +141,7 @@ export function withState(WrappedGrid) {
                             <div>
                                 <table className="transaction-pdf-template">
                                     <thead style={{ background: "#cccccc" }}>
-                                        <th >Transaction Id</th>
+                                        <th >Transaction ID</th>
                                         <th >Date</th>
                                         <th >Type</th>
                                         <th >Wallet</th>
@@ -157,7 +157,7 @@ export function withState(WrappedGrid) {
                                             <td >{moment(item.date).format("DD/MM/YYYY hh:mm a")}</td>
                                             <td >{item.docType}</td>
                                             <td >{item.wallet}</td>
-                                            <td >{this.getCombineFieldValue(item, ["credit", "debit"])}</td>
+                                            <td >{this.getCombineFieldValue(item, ["debit","credit"])}</td>
                                             <td >{this.getCombineFieldValue(item, ["senderName", "beneficiryName"])}</td>
                                             <td >{this.getCombineFieldValue(item, ["accountnumber", "iban"])}</td>
                                             <td >{item.hash}</td>
