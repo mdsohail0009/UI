@@ -148,6 +148,7 @@ export function withState(WrappedGrid) {
                                         <th >Value</th>
                                         <th >Sender/Recipient Full Name</th>
                                         <th >Bank Account Number /IBAN</th>
+                                        <th>Hash</th>
                                         <th >Status</th>
                                     </thead>
                                     <tbody>
@@ -159,6 +160,7 @@ export function withState(WrappedGrid) {
                                             <td >{this.getCombineFieldValue(item, ["credit", "debit"])}</td>
                                             <td >{this.getCombineFieldValue(item, ["senderName", "beneficiryName"])}</td>
                                             <td >{this.getCombineFieldValue(item, ["accountnumber", "iban"])}</td>
+                                            <td >{item.hash}</td>
                                             <td >{item.state}</td>
                                         </tr>)}
                                     </tbody>

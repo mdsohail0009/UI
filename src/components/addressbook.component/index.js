@@ -189,21 +189,21 @@ class AddressBook extends Component {
 			width: 100,
 		},
 		{
-			field: "isWhitelisted",
+			field: "digitallySigned",
 			customCell: (props) => (
 				<td>
-					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration != props?.dataItem.payeeAccountId) && <><a onClick={() => {
+					{props.dataItem?.digitallySigned==="Signed" && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <><Link onClick={() => {
 						if (!this.state.isDownloading)
 							this.downloadDeclarationForm(props?.dataItem);
-					}} ><DownloadOutlined /></a> Whitelisted</>}
-					{!props.dataItem?.isWhitelisted && "Not whitelisted"}
-					{this.state.isDownloading && this.state.selectedDeclaration == props?.dataItem.payeeAccountId && <Spin size="small" />}
+					}} ><DownloadOutlined /></Link> {props.dataItem?.digitallySigned}</>}
+					{props.dataItem?.digitallySigned!=="Signed" && props.dataItem?.digitallySigned}
+					{this.state.isDownloading && this.state.selectedDeclaration === props?.dataItem.payeeAccountId && <Spin size="small" />}
 				</td>
 			),
 			title: apiCalls.convertLocalLang("whitelist"),
-			filter: false,
+			filter: true,
 			width: 200,
-		}
+		},
 	];
 	columnsCrypto = [
 		{
@@ -273,21 +273,21 @@ class AddressBook extends Component {
 			width: 100,
 		},
 		{
-			field: "isWhitelisted",
+			field: "digitallySigned",
 			customCell: (props) => (
 				<td>
-					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration != props?.dataItem.payeeAccountId) && <> <a onClick={() => {
+					{props.dataItem?.digitallySigned==="Signed" && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <> <Link onClick={() => {
 						if (!this.state.isDownloading)
 							this.downloadDeclarationForm(props?.dataItem);
-					}} ><DownloadOutlined /></a> Whitelisted</>}
-					{!props.dataItem?.isWhitelisted && "Not whitelisted"}
-					{this.state.isDownloading && this.state.selectedDeclaration == props?.dataItem.payeeAccountId && <Spin size="small" />}
+					}} ><DownloadOutlined /></Link> {props.dataItem?.digitallySigned}</>}
+					{props.dataItem?.digitallySigned!=="Signed" && props.dataItem?.digitallySigned}
+					{this.state.isDownloading && this.state.selectedDeclaration === props?.dataItem.payeeAccountId && <Spin size="small" />}
 				</td>
 			),
 			title: apiCalls.convertLocalLang("whitelist"),
-			filter: false,
+			filter: true,
 			width: 200,
-		}
+		},
 	];
 	async downloadDeclarationForm(dataItem) {
 		this.setState({ ...this.state, isDownloading: true, selectedDeclaration: dataItem.payeeAccountId });
