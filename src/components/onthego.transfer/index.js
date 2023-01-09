@@ -21,6 +21,7 @@ import { connect } from "react-redux";
 import { getFeaturePermissionsByKeyName } from "../shared/permissions/permissionService";
 import { setSendFiatHead } from "../../reducers/buyFiatReducer";
 import {validateContentRule} from '../../utils/custom.validator'
+import {hideSendCrypto} from '../../reducers/sendreceiveReducer'
 const { Text, Title } = Typography; 
 const { Option } = Select
 class OnthegoFundTransfer extends Component {
@@ -124,6 +125,7 @@ class OnthegoFundTransfer extends Component {
   chnageStep = (step, values) => {
     this.setState({ ...this.state, step, onTheGoObj: values });
     if (step === 'newtransfer') {
+      this.props.dispatch(hideSendCrypto(false));
         this.setState({ ...this.state, step, isNewTransfer: true, onTheGoObj: values });
     }
 }
@@ -677,10 +679,6 @@ saveWithdrawdata = async () => {
                                             apicalls.convertLocalLang("is_required"),
                       },
                       {
-                        whitespace: true,
-                        message: 'Is required'
-                      },
-                      {
                         validator: validateContentRule,
                     },
                     ]}
@@ -892,14 +890,14 @@ saveWithdrawdata = async () => {
             </>,
       declaration: <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
       <Image width={80} preview={false} src={alertIcon} className="confirm-icon"  />
-      <div level={2} className="success-title">Declaration form sent successfully to your email</div>
-            <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
-                       Please sign using link received in email to whitelist your address. `}</Text>
-            <Text className="successsubtext">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
+      <Title level={2} className="success-title">Declaration form sent successfully</Title>
+                <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
+                Please review and sign the document in your email to whitelist your address.
+                Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
             </div></div>,
        successpage: <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
        <Image width={80} preview={false} src={success}  className="confirm-icon" />
-       <div level={2} className="successsubtext">Your transaction has been processed successfully</div>
+       <Title level={2} className="successsubtext">Your transaction has been processed successfully</Title>
    </div></div>
     }
     return steps[this.state.step];
