@@ -150,6 +150,17 @@ class TransactionsHistory extends Component {
     {
       field: "accountnumber", title: "Bank Account Number/IBAN", filter: true, width: 260,
     },
+    {
+      field: "hashId", title: "Hash", filter: true, width: 180,
+      customCell: (props) => (
+        <td>
+         <Tooltip title={props.dataItem.hashId}>
+         {(props.dataItem.hashId && <a className="gridLink c-pointer"  onClick={() => window.open(`${props.dataItem?.explorer}${props.dataItem?.hashId}`, '_blank')}>
+          <span className="gridLink c-pointer">{props?.dataItem?.hashId?.slice(0, 4) +"......." +props?.dataItem?.hashId?.slice(-4)}</span></a>) || " "}
+       </Tooltip>
+        </td>
+      ),
+    },
     { field: "state", title: "Status", filter: true, width: 260,},
     
 
