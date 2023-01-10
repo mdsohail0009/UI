@@ -391,14 +391,14 @@ class HeaderPermissionMenu extends Component {
                                             className="text-white-30" key="1"
                                         />
                                     </Link><span className="icon c-pointer md rarrow-white ml-12" /></div></>} >
-                                <Link>
+                                {/* <Link>
                                     <Translate
                                         content="get_your_own_iban"
                                         component={Text}
                                         className="text-white-30"
                                     />
                                     <span className="icon md rarrow-white" />
-                                </Link>
+                                </Link> */}
 
                             </Popover>
                         </li>

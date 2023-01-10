@@ -4,7 +4,6 @@ import { store } from '../../store'
 import moment from 'moment';
 import CryptoJS from "crypto-js";
 import { ExcelExport } from '@progress/kendo-react-excel-export'
-// import { excellExportSubject } from './subscribir';
 const filterOperators = {
     'text': [
         { text: 'grid.filterContainsOperator', operator: 'contains' },
@@ -44,8 +43,6 @@ export function withState(WrappedGrid) {
             super(props);
             this.state = { dataState: { skip: 0, take: 10 }, additionalParams: null, data: [], isLoading: false };
             this.excelRef = React.createRef();
-            // this.exportSubscriber = excellExportSubject.subscribe(() => {
-            // });
         }
         numberWithCommas(x) {
             if(!x){
@@ -116,7 +113,6 @@ export function withState(WrappedGrid) {
                                     });
                                     this.excelRef.current.save(workbook);
                                 }
-                                // this.excelRef.save(workbook);
                             }
 
                         }}
