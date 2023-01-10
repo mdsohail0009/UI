@@ -8,7 +8,7 @@ const TwoFactor = (props) => {
             < Result status="404"
                 // title={<h4 className="text-white">Please click on bellow button to go Security for enable 2FA.</h4>}
                 title={<h4 className="text-white">Please click the button below to enable 2FA.</h4>}
-                extra={<Button className="pop-btn px-36" onClick={() => { props.history.push("/userprofile/2") }}>Go to Security</Button>}
+                extra={<Button className="pop-btn" onClick={() => { props.history.push("/userprofile/2") }}>Go to Security</Button>}
             />
         </div>
     </React.Fragment>

@@ -462,10 +462,10 @@ class CryptoWithDrawWallet extends Component {
                             </div> */}
                             {/* <div> */}
 
-                                <div className="crypto-amount" >
+                                {/* <div className="crypto-amount" >
                                 <div className="crypto-details"><span className='buycoin-style'>{selectedWallet?.coin}</span><Currency defaultValue={selectedWallet?.coinBalance} prefix={""} type={"text"} className="buycoin-style marginL" /></div>
                                 <div className='crypto-details'><div className='sellcrypto-style'>Balance:</div>     <Currency defaultValue={selectedWallet?.coinValueinNativeCurrency} prefix={"$ "} type={"text"} className="marginL sellbal-style" /></div>
-                                </div>
+                                </div> */}
                             {/* </div></div> */}
                     </Card>}
                     {!this.state.isVerificationLoading &&

@@ -111,7 +111,7 @@ class BuySell extends Component {
                     <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin }} className="drawer-maintitle" content="sell_assets" component={Paragraph} />
                 </div>}
                 {((!this.props.isTabKey && !this.props.buySell?.sellHeader) || this.props.buySell?.selectedSellCoin)&& <div className="text-center">
-                    <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin }} className="drawer-maintitle" content={this.props.buySell.stepTitles[config[this.props.buySell.stepcode]]} component={Paragraph} />
+                    <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin }} className="drawer-maintitle buy-sellprocess" content={this.props.buySell.stepTitles[config[this.props.buySell.stepcode]]} component={Paragraph} />
                 </div>}
                 {this.renderIcon()}</div>]}
             placement="right"

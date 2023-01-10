@@ -25,7 +25,7 @@ const KycDocuments = (props) => {
         <>
             <div className='mb-24'>
                 <Paragraph
-                    className="mb-16 fs-14 text-white fw-500 text-upper"
+                    className="fw-500"
                 >Please provide your identity proof</Paragraph>
                 <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                     className="upload mt-4"
@@ -37,8 +37,8 @@ const KycDocuments = (props) => {
                     <p className="ant-upload-drag-icon">
                         <span className="icon xxxl doc-upload" />
                     </p>
-                    <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
-                    <p className="ant-upload-hint text-secondary fs-12">
+                    <p className="ant-upload-text upload-title">Drag and drop or browse to choose file</p>
+                    <p className="ant-upload-hint upload-text">
                         PNG, JPG,JPEG and PDF files are allowed
                     </p>
                 </Dragger>
@@ -46,14 +46,14 @@ const KycDocuments = (props) => {
                     <span className={`icon xl file mr-16`} />
                     <div className="docdetails c-pointer">
                         <EllipsisMiddle suffixCount={6}>Identity card</EllipsisMiddle>
-                        <span className="fs-12 text-secondary">25 KB</span>
+                        <span className="file-sizestyle">25 KB</span>
                     </div>
                     <span className="icon md close c-pointer" />
                 </div>
             </div>
             <div>
                 <Paragraph
-                    className="mb-16 fs-14 text-white fw-500 text-upper"
+                    className="fw-500"
                 >Please provide your address proof</Paragraph>
                 <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                     className="upload mt-4"
@@ -65,8 +65,8 @@ const KycDocuments = (props) => {
                     <p className="ant-upload-drag-icon">
                         <span className="icon xxxl doc-upload" />
                     </p>
-                    <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
-                    <p className="ant-upload-hint text-secondary fs-12">
+                    <p className="ant-upload-text upload-title">Drag and drop or browse to choose file</p>
+                    <p className="ant-upload-hint upload-text">
                         PNG, JPG,JPEG and PDF files are allowed
                     </p>
                 </Dragger>
@@ -74,7 +74,7 @@ const KycDocuments = (props) => {
                     <span className={`icon xl file mr-16`} />
                     <div className="docdetails c-pointer">
                         <EllipsisMiddle suffixCount={6}>Address Details</EllipsisMiddle>
-                        <span className="fs-12 text-secondary">25 KB</span>
+                        <span className="file-sizestyle">25 KB</span>
                     </div>
                     <span className="icon md close c-pointer" />
                 </div>

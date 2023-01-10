@@ -71,17 +71,18 @@ const AddressCryptoView = (props) => {
 			}
 			footer={
 				<>
+					
 					<Button
-						className="pop-btn px-36"
-						style={{ margin: "0 8px" }}
-						onClick={() => setPreviewModal(false)}>
-						Close
-					</Button>
-					<Button
-						className="pop-btn px-36"
-						style={{ margin: "0 8px" }}
+						className="pop-btn"
+						block
 						onClick={() => window.open(previewPath, "_blank")}>
 						Download
+					</Button>
+					<Button
+						className="cust-cancel-btn"
+						block
+						onClick={() => setPreviewModal(false)}>
+						Close
 					</Button>
 				</>
 			}>
