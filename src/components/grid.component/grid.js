@@ -44,8 +44,6 @@ export function withState(WrappedGrid) {
             super(props);
             this.state = { dataState: { skip: 0, take: 10 }, additionalParams: null, data: [], isLoading: false };
             this.excelRef = React.createRef();
-            // this.exportSubscriber = excellExportSubject.subscribe(() => {
-            // });
         }
         numberWithCommas(x) {
             if(!x){
@@ -116,7 +114,6 @@ export function withState(WrappedGrid) {
                                     });
                                     this.excelRef.current.save(workbook);
                                 }
-                                // this.excelRef.save(workbook);
                             }
 
                         }}
