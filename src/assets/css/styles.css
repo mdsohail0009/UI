@@ -650,7 +650,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .k-pager-sizes.k-label{margin-left: 5px;}
     .k-pager-wrap{margin-left: -11px;}
     .k-dropdown-wrap{margin-right: -8px;}
-    .transctns-grid table col{width: 120px;}
+    .table col{width: 120px;}
     .date-mobile{margin-left: 12px !important;}
     .transaction-grid table col{width: 250px !important;}
     .transaction-grid .k-pager-wrap.k-pager.k-widget.k-grid-pager{overflow: auto;}
@@ -1084,9 +1084,9 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .statement-header.logo-content{align-items: flex-end;}
 .transaction-pdf-template thead{vertical-align: top;text-align: left;}
 .transaction-pdf-template thead th:first-child,tbody tr td:first-child{padding-left: 10px;}
-.ant-dropdown-menu.history-excel{background-color: var(--profileMenu) !important; border-radius: 10px; min-width: 100px; max-width: 200px; padding: 24px 0;}
-.export-pdf button{background-color: #3653E4;border-color: #3653E4;border-radius: 40px;color: #ffffff;height: 42px;text-transform: uppercase;font-weight: 700;transition: 0.3s ease;}
-.export-pdf button:hover{background-color: #7087FF;border-color: #7087FF;color: #ffffff;}
+.ant-dropdown-menu.history-excel{background-color: var(--bgGloom) !important; border-radius: 10px; min-width: 100px; max-width: 200px; padding: 24px 0;right: 25px;}
+.export-pdf button{background-color: var(--bgYellow);border-color: var(--bgYellow);border-radius: 40px;height: 42px;text-transform: uppercase;font-weight: 700;transition: 0.3s ease;}
+.export-pdf button:hover,.export-pdf button:active,.export-pdf button:focus{background-color: var(--bgDarkYellow);color: var(--textDark);border-color: var(--bgYellow);}
 .secureDropdown.export-pdf{margin-bottom: 16px;}
 .upload-disable{cursor: not-allowed;}
 .file-label.batch-upload{width: 100%;}
@@ -1094,6 +1094,9 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .gridLink.batch-filename{display: block;}
 .draft-filename{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .btn-space{margin-left: 8px;}
-.webkit-color{-webkit-text-fill-color:#7087FF;}
+.webkit-color{-webkit-text-fill-color: var(--bgDarkYellow);}
 .address-clear.preview-content table tr td:first-child{white-space: nowrap;}
-.file-label span.webkit-color{width: 215px;display: inline-block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.file-label span.webkit-color{display: inline-block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.export-pdf .ant-dropdown-button button:first-child{cursor: default !important;}
+.history-excel .drpdwn-list li a{padding: 10px 0;}
+.input-label.selectcustom-inputdate-mobile{margin-bottom: 0 !important;}

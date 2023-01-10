@@ -37,7 +37,7 @@ const Batchpayments = (props) => {
           width: 50,
           customCell: (prop) => (
             <td className="text-center">
-              <label className="text-center custom-checkbox c-pointer">
+              <label className="text-center custom-checkbox c-pointer cust-check-outline">
                 <input
                   id={prop.dataItem.id}
                   name="check"

@@ -19,10 +19,6 @@ class InternationalTransfer extends Component {
                             required: true,
                             message: apiCalls.convertLocalLang("is_required"),
                         },
-                        {
-                            whitespace: true,
-                            message: apiCalls.convertLocalLang("is_required"),
-                        },
                        {
                             validator: (_, value) => {
                                 if (
@@ -58,10 +54,6 @@ class InternationalTransfer extends Component {
                             required: true,
                             message: apiCalls.convertLocalLang("is_required"),
                         },
-                        {
-                            whitespace: true,
-                            message: apiCalls.convertLocalLang("is_required"),
-                        },
                        {
                             validator: (_, value) => {
                                 if (
@@ -72,7 +64,6 @@ class InternationalTransfer extends Component {
                                         "Invalid Swift / BIC Code"
                                     );
                                 }else {
-                                    // return Promise.resolve();
                                     return validateContentRule(_, value)
                                 }
                             },

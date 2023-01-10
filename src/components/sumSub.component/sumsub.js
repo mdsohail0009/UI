@@ -68,7 +68,7 @@ class SumSub extends Component {
         return (
             <>
                 {this.state.loading && <div className="loader">Loading .....</div>}
-                {!this.state.loading && this.props?.userConfig?.isKYC && !this.state.isAccountApproved && <AccountStatus />}
+                {!this.state.loading && this.props?.userConfig?.isKYC && !this.state.isAccountApproved && <AccountStatus customerState={this.props?.userConfig}/>}
                 {(this.state.sumSubConfirm === true) ? <>({sumSubConfirms})</> : (<div id="sumsub-websdk-container"></div>)}
                 {/* <div id="sumsub-websdk-container"></div> */}
             </>

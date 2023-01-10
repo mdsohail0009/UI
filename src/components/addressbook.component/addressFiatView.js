@@ -198,19 +198,6 @@ const AddressFiatView = (props) => {
 													</div>
 												</div>
 											</Col>}
-											{fiatAddress?.email && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle">
-													<label className="kpi-label">Email</label>
-													<div className="kpi-val">
-														<div className=" kpi-val">
-															{fiatAddress?.email === " " ||
-																fiatAddress?.email === null
-																? "-"
-																: fiatAddress?.email}
-														</div>
-													</div>
-												</div>
-											</Col>}
 											{fiatAddress?.phoneNumber && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle">
 													<label className="kpi-label">Phone Number</label>
@@ -372,7 +359,7 @@ const AddressFiatView = (props) => {
 															</div>
 															</div>
 														</Col>}
-														{(item?.accountNumber && fiatAddress?.transferType != "internationalIBAN")&&<Col xs={24} md={12} lg={14} xl={8} xxl={4}>
+														{(item?.accountNumber && fiatAddress?.transferType !== "internationalIBAN" && item?.walletCode !="EUR")&&<Col xs={24} md={12} lg={14} xl={8} xxl={4}>
 														<div className="receiveank-inner">
 															<Text className="kpi-label">
 																Bank Account Number / IBAN
@@ -389,7 +376,7 @@ const AddressFiatView = (props) => {
 														{((item?.swiftRouteBICNumber!=null|| item?.abaRoutingCode!=null) && (item?.iban ==null || item?.iban =="")) && <Col xs={24} md={12} lg={14} xl={8} xxl={4}>
 														<div className="receiveank-inner">
 															<Text className="kpi-label">
-															BIC/SWIFT/Routing Code
+															BIC/SWIFT/ABA Routing Code
 															</Text>
 															<div level={5} className="kpi-val"   >
 																   {((item?.swiftRouteBICNumber !=null && item?.swiftRouteBICNumber != "" ) ? item?.swiftRouteBICNumber : item?.abaRoutingCode)}
@@ -494,7 +481,7 @@ const AddressFiatView = (props) => {
 															</div>
 															</div>
 														</Col>}
-														 {(item.walletCode!='EUR'&& fiatAddress?.transferType != "internationalIBAN")&&<Col xs={24} md={12} lg={14} xl={8} xxl={4}>
+														 {(item.walletCode!=='EUR'&& fiatAddress?.transferType !== "internationalIBAN")&&<Col xs={24} md={12} lg={14} xl={8} xxl={4}>
 														 <div className="receiveank-inner">
 															<Text className="kpi-label">
 															Bank Address 1
@@ -507,7 +494,7 @@ const AddressFiatView = (props) => {
 															</div>
 															</div>
 														</Col>}
-														{(item.walletCode!='EUR'&& fiatAddress?.transferType != "internationalIBAN")&&<Col xs={24} md={12} lg={14} xl={8} xxl={4}>
+														{(item.walletCode!=='EUR'&& fiatAddress?.transferType !== "internationalIBAN")&&<Col xs={24} md={12} lg={14} xl={8} xxl={4}>
 														<div className="receiveank-inner">
 															<Text className="kpi-label">
 															Bank Address 2
