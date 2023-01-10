@@ -3,7 +3,7 @@ import {
   Drawer,
   Typography,
   Button,
-  Row, Col, Select, Form,Input} from "antd";
+  Row, Col, Select, Form,Input,Tooltip} from "antd";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
@@ -149,6 +149,17 @@ class TransactionsHistory extends Component {
 
     {
       field: "accountnumber", title: "Bank Account Number/IBAN", filter: true, width: 260,
+    },
+    {
+      field: "hash", title: "Hash", filter: true, width: 180,
+      customCell: (props) => (
+        <td>
+         <Tooltip title={props.dataItem.hash}>
+         {(props.dataItem.hash && <a className="gridLink c-pointer"  onClick={() => window.open(`${props.dataItem?.explorer}${props.dataItem?.hash}`, '_blank')}>
+          <span className="gridLink c-pointer">{props?.dataItem?.hash?.slice(0, 4) +"......." +props?.dataItem?.hash?.slice(-4)}</span></a>) || " "}
+       </Tooltip>
+        </td>
+      ),
     },
     { field: "state", title: "Status", filter: true, width: 260,},
     

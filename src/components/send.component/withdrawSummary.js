@@ -652,14 +652,10 @@ class WithdrawSummary extends Component {
 		if (showDeclartion) {
 			return <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
 			  <Image preview={false} src={alertIcon} className="confirm-icon"/>
-			  <Title level={2} className="success-title">Declaration form sent successfully </Title>
-			  <div className="successsubtext">
-			  <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
-				   Please sign using link received in email to whitelist your address. `}</Text>
-			  <span className="successsubtext">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</span></div>
-			  {/* <div className="my-25"><Button
-				onClick={() => { this.onBackSend() }}
-				type="primary" className="mt-36 pop-btn withdraw-popcancel">BACK</Button></div> */}
+			  <Title level={2} className="success-title">Declaration form sent successfully</Title>
+                <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
+                Please review and sign the document in your email to whitelist your address.
+                Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
 				 
                         <Translate content="crypto_with_draw_success" className="cust-cancel-btn" component={Button} onClick={() => { this.onBackSend() }} />
                    
