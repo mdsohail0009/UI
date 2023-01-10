@@ -12,8 +12,8 @@ class Content extends Component {
   render() {
     return <AntContent className="sidebar-push">
         {this.props.serviceWReducer?.isUpdateAvailable &&  <div className="main-container"> <Alert showIcon 
-        message="App Update"
-        description="New software release! Sign out and login again."
+        message="New Software Release Available"
+        description="New software release! Sign out and Sign in again"
         type="warning"
       /></div>}
       <RouteConfig />
