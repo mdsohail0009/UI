@@ -9,7 +9,7 @@ const InternalTransfer = () => {
     return <div className="text-center intertrans">
         <div className="">
         <img src={comingsoon} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
-        <div><Text className="text-center fw-700 fs-40 textpure-yellow">Coming soon</Text></div>
+        <div><Text className="db-titles">Coming soon</Text></div>
         </div>
 
         </div>
