@@ -201,7 +201,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .pop-btn,.confirm-btn{font-size: 14px;}
 .confirm-btn{height: 48px;}
 .confirm-btn, .confirm-btn:hover, .confirm-btn:focus, .confirm-btn:active {background-image: linear-gradient(99.09deg, var(--btnGrad1), var(--btnGrad2));  border-radius: 40px;text-transform: uppercase;font-weight: 700; transition: 0.5s ease; color: var(--textPureWhite) !important;border: 1px solid linear-gradient(99.09deg, var(--btnGrad1), var(--btnGrad2)) !important;}
-.pop-btn.ant-btn[disabled]{background-color: var(--bgDarkYellow) !important; border-color: var(--bgDarkYellow) !important;color: var(--textDark); cursor: not-allowed !important; }
+.pop-btn.ant-btn[disabled]{background-color: #3653E4 !important; border-color: #3653E4 !important;color: #FFFFFF; cursor: not-allowed !important; }
 .btn-dropdown .ant-btn:hover{background-color: var(--bgDarkYellow); color: #000;}
 .pop-cancel{background-color: transparent !important;color: var(--textWhite30) !important; border-color: transparent !important; border-radius: 40px;height: 57px;padding: 0;}
 .pop-cancel:hover span{color: var(--textYellow) !important;}
@@ -648,7 +648,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     }
     .code-sent-tool-tip{display: flex;}
     .k-pager-sizes.k-label{margin-left: 5px;}
-    .k-pager-wrap{margin-left: -11px;}
+    /* .k-pager-wrap{margin-left: -11px;} */
     .k-dropdown-wrap{margin-right: -8px;}
     .table col{width: 120px;}
     .date-mobile{margin-left: 12px !important;}
@@ -1094,7 +1094,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .gridLink.batch-filename{display: block;}
 .draft-filename{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .btn-space{margin-left: 8px;}
-.webkit-color{-webkit-text-fill-color: var(--bgDarkYellow);}
+.webkit-color{-webkit-text-fill-color: #3653E4}
 .address-clear.preview-content table tr td:first-child{white-space: nowrap;}
 .file-label span.webkit-color{display: inline-block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
 .export-pdf .ant-dropdown-button button:first-child{cursor: default !important;}

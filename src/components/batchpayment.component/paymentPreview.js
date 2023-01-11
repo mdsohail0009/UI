@@ -136,7 +136,7 @@ isErrorDispaly = (objValue) => {
           title={[<div className="side-drawer-header">
 
              <div className="text-center">
-                <div className='text-white fs-26 fw-400'>Preview</div>
+                <div className='grid-title'>Preview</div>
                 </div>
            
             <span onClick={this.props.onClose} className="icon md close-white c-pointer" />
@@ -175,11 +175,11 @@ isErrorDispaly = (objValue) => {
 					)}
             </div>
                 <div className="text-right mt-12">
-                    <Button className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn ml-0 primary-btn pop-cancel"
-                        style={{ width: 100, height: 50 }}
+                    <Button className="cust-cancel-btn preview-back"
+                        style={{ width: 148, height: 48 }}
                         onClick={this.props.onClose}>Back</Button>
                     <Button className="pop-btn custom-send sell-btc-btn ml-8" loading={this.state.isLoad}
-                        style={{ width: 100, height: 50 }}
+                        style={{ width: 148, height: 48 }}
                         onClick={this.confirmPreview}>Confirm</Button>
                 
                 </div>

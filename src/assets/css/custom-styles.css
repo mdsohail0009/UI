@@ -567,7 +567,6 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .transaction-custom-table .pay-grid thead tr, .bash-market-table .pay-grid tbody tr td{border-bottom: 1px solid var(--tableborder) !important;}
 .transaction-custom-table .pay-grid thead tr th:first-child{padding-left: 30px;}
 .transaction-custom-table .pay-grid tbody tr td:first-child{padding-left: 30px;}
-.transctns-grid .ant-drawer-header, .transctns-grid .ant-drawer-body{padding-left: 100px;padding-right: 100px;}
 .bash-market-table .pay-grid thead  tr th{border-bottom: 0;}
 .bash-market-table .pay-grid tbody tr:last-child td, .bash-market-table .pay-grid tbody tr:first-child td{border-bottom: 0 !important;}
 .detail-popbtn{width: 463px;}
@@ -871,6 +870,14 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .withdrawbg .ant-list-item-meta-avatar, .depositsbg .ant-list-item-meta-avatar, .sellbg .ant-list-item-meta-avatar, .withdraw.fiatbg .ant-list-item-meta-avatar, .withdraw.cryptobg .ant-list-item-meta-avatar{background-color: var(--bgDarkRed);}
 .requestbg .ant-list-item-meta-avatar, .documentsbg .ant-list-item-meta-avatar, .cutomersbg .ant-list-item-meta-avatar, .casesbg .ant-list-item-meta-avatar{background-color: var(--bgBlue);}
 .ant-alert-with-description{width: 100%; align-items:start;}
+
+/* batchpayments start  */
+.download-excel a{color: var(--termsText);}
+.pay-list .file-name{width: 300px;}
+.pay-list .file-name+div{text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+.icon.md.back{margin-right: 8px;}
+.preview-back{margin-right: 8px;}
+/* batchpayments end */
 /*@media start*/
 @media (min-width: 768px){
     .listitems-design{width: 340px;}
@@ -943,6 +950,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
     .custom-radiobtn .ant-radio-button-wrapper.ant-radio-button-wrapper-checked{padding:10px 36px;}
     .custom-radiobtn .ant-radio-button-wrapper{padding: 0 15px;}
     /* .ant-popover.ant-popover-placement-left{left: 872px !important;} */
+    .transctns-grid .ant-drawer-header, .transctns-grid .ant-drawer-body{padding-left: 100px;padding-right: 100px;}
 }
 @media (min-width: 1400px){
     .main-container{max-width: 1300px; }

@@ -320,11 +320,11 @@ const filePreviewPath = () => {
     return (
         <>
         < div className='main-container'>
-            <Title className="basicinfo "><span className='icon md c-pointer back mr-8' onClick={() => props.history.push('/batchpayment')}/><Text className="basicinfo">{props.match.params.fileName} / { props.match.params.currency}</Text></Title>
+            <div className="basicinfo"><span className='icon md c-pointer back' onClick={() => props.history.push('/batchpayment')}/><Text className="basicinfo">{props.match.params.fileName} / { props.match.params.currency}</Text></div>
             {errorMessage !== null && (
             <Alert type="error" description={errorMessage}  showIcon/>
                  )}
-            <div className="box basic-info text-white" style={{ clear: 'both' }}>
+            <div className="box  text-white" style={{ clear: 'both' }}>
                 <List
                     className="bill-grid"
                     showActionBar={false}
