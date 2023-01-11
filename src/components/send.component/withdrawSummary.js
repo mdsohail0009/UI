@@ -147,7 +147,7 @@ class WithdrawSummary extends Component {
 				clearInterval(timeInterval);
 				this.setState({ ...this.state, disable: false, type: "Resend" })
 			}
-		}, 120000);
+		}, 1000);
 	};
 	startTimer2 = () => {
 		let timeInterval2;
