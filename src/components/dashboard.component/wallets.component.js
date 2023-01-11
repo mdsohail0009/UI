@@ -94,9 +94,10 @@ class Wallets extends Component {
                     </Link>
                 </li>
                 <li onClick={() => this.showTransactionDrawer(item)}>
-                    <Link value={4} className="c-pointer">
-                    <Translate content="transactions_history" />
-                    </Link>
+                   
+                    
+                    <Link to="/transactions" value={4} className="c-pointer"><Translate content="transactions_history" /></Link>
+                   
                 </li>
                 <li onClick={() => this.showSendReceiveDrawer(5, item)}>
                     <Link value={5} className="c-pointer">
