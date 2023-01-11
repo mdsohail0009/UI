@@ -433,6 +433,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .side-drawer-full .ant-pagination-item-active a, .ant-table-column-sorter-up.active, .ant-table-column-sorter-down.active{color: #3653E4 !important;}
 .side-drawer-full .ant-table-column-title{text-transform: capitalize;font-size: 16px;font-weight: 500;}
 .ant-table-thead th.ant-table-column-sort{background: var(--iconBg);}
+.db-titles.internal-titles{font-size: 36px !important;margin-top: 16px;}
 /* Dashboard end */
 
 /*Buy/sell drawer start*/
