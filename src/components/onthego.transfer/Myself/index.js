@@ -253,7 +253,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 </Col>
             </Row>
         </>}
-        <Row gutter={[16, 4]} className="send-drawerbtn tabs-innertabs">
+        {/* <Row gutter={[16, 4]} className="send-drawerbtn tabs-innertabs">
 
                   <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
                       <Form.Item className="text-center form-marginB">
@@ -284,7 +284,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         </Button>
                       </Form.Item>
                     </Col>
-                  </Row>
+                  </Row> */}
         
         {currency == 'EUR' && <h2 className="adbook-head" >SEPA Transfer</h2>}
         
