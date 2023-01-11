@@ -559,10 +559,9 @@ class AddressBook extends Component {
 		this.props.changeStep("step1");
 	};
 	handleWithdrawToggle = (e) => {
-
 		this.setState({
 			...this.state,
-			cryptoFiat: e.target.value === 2,
+			cryptoFiat: parseInt(e) === 2,
 			selection: [],
 			selectedObj: {},
 			isCheck: false,
@@ -680,32 +679,14 @@ class AddressBook extends Component {
 			<div className="imprt-bg"><span className="ab-note-style">Note:</span> <span className="note-cont">Whitelisting of Crypto Address and Bank Account is required, Please add below.</span></div>
 			
 				<div className="addressbook-grid">
-					<div className="adressbook-style">
-						<Radio.Group
-							defaultValue={(this.props?.activeFiat||this.state.cryptoFiat) ? 2 : 1}
+					<Tabs className="cust-tabs-fait" 
+					defaultValue={(this.props?.activeFiat||this.state.cryptoFiat) ? 2 : 1}
 							onChange={this.handleWithdrawToggle}
-							className="custom-radiobtn"
-							style={{ display: "inline-block" }}>
-							<Translate
-								content="withdrawCrypto"
-								component={Radio.Button}
-								value={1}
-								className=""
-							/>
-							<Translate
-								content="withdrawFiat"
-								component={Radio.Button}
-								value={2}
-								className=""
-							/>
-						</Radio.Group>		
-					</div>
-					<Tabs className="cust-tabs-fait">
-                                <Tabs.TabPane tab="Send Crypto" className="" key={"domestic"} ></Tabs.TabPane>
-                                <Tabs.TabPane tab="Send Fiat" content="withdrawFiat" className="" key={"international"}  ></Tabs.TabPane>
-                                {/* <Tabs.TabPane tab="International USD IBAN" className="" key={"internationalIBAN"} ></Tabs.TabPane> */}
-                            </Tabs>
-					</div>
+							>					
+                                <Tabs.TabPane tab="Send Crypto" content="withdrawCrypto" key={1} className=""  component={Radio.Button}/>
+                                <Tabs.TabPane tab="Send Fiat" content="withdrawFiat" key={2} className="" component={Radio.Button}/>
+						    </Tabs>
+							</div>
 					</div>
 					{this.state.errorWorning && (
 						<div className="custom-alert">
