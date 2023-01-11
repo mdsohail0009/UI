@@ -166,7 +166,7 @@ class Header extends Component {
               <>{this.props.userConfig.firstName}{" "}{" "}{this.props.userConfig.lastName}</>}
           </p> */}
           <Translate
-            content="manage_account"
+          content={`${this.props.userConfig?.isBusiness===true?"business_account":"manage_account"}`}
             component={Button}
             size="medium"
             block

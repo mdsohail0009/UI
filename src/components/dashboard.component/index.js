@@ -74,7 +74,7 @@ class Home extends Component {
                 </Carousel> : ""}
             <div className='d-flex align-center'>
                 <Translate content="Dashboard" component={Title} className="db-main-title" />
-                <span className='acount-type'>Personal</span>
+                <span className='acount-type'>{this.props.userProfileInfo?.isBusiness==true?"Business":"Personal"}</span>
             </div>
                 <Row justify="center mt-16" gutter={[16,16]}>
                 <Col xs={24} md={12} xl={15} lg={15} xxl={15} className="db-flex-style">
