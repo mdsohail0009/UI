@@ -147,7 +147,7 @@ class WithdrawSummary extends Component {
 				clearInterval(timeInterval);
 				this.setState({ ...this.state, disable: false, type: "Resend" })
 			}
-		}, 1000);
+		}, 120000);
 	};
 	startTimer2 = () => {
 		let timeInterval2;
@@ -657,7 +657,7 @@ class WithdrawSummary extends Component {
                 Please review and sign the document in your email to whitelist your address.
                 Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
 				 
-                        <Translate content="crypto_with_draw_success" className="cust-cancel-btn" component={Button} onClick={() => { this.onBackSend() }} />
+                        <Translate content="crypto_with_draw_success" className="cust-cancel-btn" component={Button} onClick={this.onBackSend} />
                    
 			</div></div>
 		  }
