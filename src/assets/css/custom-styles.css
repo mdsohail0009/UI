@@ -828,7 +828,6 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .db-kpi.vthicon{display: flex;align-items: center;min-height: 112px;}
 .custom-radiobtn.coin-alldetail{margin-top: 16px;margin-bottom: 16px;}
 .ant-modal-footer .ant-btn + .ant-btn:not(.ant-dropdown-trigger){margin-left: 0;}
-.coinveiw-newpage{width: 900px;margin:0 auto ;}
 .inputfont-style:hover, .inputfont-style:focus{border: 0;}
 /* coin view end */
 /* expand search */
@@ -967,6 +966,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 
 }
 @media (min-width: 1200px){
+    .coinveiw-newpage{width: 900px;margin:0 auto ;}
     /* .sb-card{width: 482px;} */
     .iban-list .iban-style{width: auto !important;float: unset; padding: 12px !important;flex: 1;margin-right: 0;}
     .iban-list .ant-list-items{display: flex;gap: 16px;}
@@ -1020,6 +1020,9 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
     .login-user{width: 100%;padding: 2px 0;}  
 }
 @media (max-width: 767.98px){
+    .new-viewpage .search-box{margin-left: 0;}
+    .fait-wallets-style.new-viewpage{display: block !important;}
+    .footer-links a{margin-right: 20px !important;}
     .sidebar-push{margin: 62px 0 0 !important;}
     .visible-mobile .side-drawer .side-drawer-header.change_password{align-items: self-start !important;}
     /* .visible-mobile{margin-right: 24px;padding-left: 24px;padding-right: 24px;} */
