@@ -116,6 +116,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 /*Header End*/
 
 /*profile css start*/
+.ant-input-search .ant-input:hover, .ant-input-search .ant-input:focus{border-color: transparent !important;}
 .ant-alert-with-description{align-items: center;}
 .secureDropdown.export-pdf .excel-export{margin-left: 8px;}
 .user-profile{ border-radius: 50%;object-fit: cover;}
