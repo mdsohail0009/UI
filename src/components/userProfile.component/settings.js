@@ -83,6 +83,7 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
         }
       };
     const themeSwitch = async () => {
+        debugger
         setTheme(!theme)
         switcher({ theme: theme ? themes.DRT : themes.LHT });
         settingsObj.Theme = !theme ? 'Light Theme' : 'Dark Theme';

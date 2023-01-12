@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, message, Spin,Button,Image,  } from 'antd';
+import { Typography,Input, message, Spin,Button,Image,  } from 'antd';
 import Translate from 'react-translate-component';
 import { getData } from './api';
 import NumberFormat from 'react-number-format';
@@ -24,20 +24,46 @@ class Portfolio extends Component {
             portfolioData: null,
             info: {},
             loading: true,
-            transactionData: []
+            transactionData: [],
+            searchVal:[],
+            fullViewData:[]
         }
     }
     getTransactionData = async () => {
+        debugger
         this.setState({ ...this.state, loading: true });
         let response = await getData();
         if (response.ok) {
-            this.setState({ ...this.state, transactionData: response.data, loading: false });
+            console.log(response.data)
+            this.setState({ ...this.state, dashBoardTransactions:response.data, transactionData: response.data, loading: false });
         } else {
             message.destroy();
 
         }
     }
+    // onSearch = ({ currentTarget: { value } }, isFullScreen) => {
+    //     debugger
+    //     let matches = this.state.transactionData.filter(item => item.copyType==value);
+    //     this.setState({...this.state,searchVal:value})
+    //     // searchVal(value)
+    //     if (!isFullScreen) { 
+    //         this.setState({...this.state,dashBoardTransactions:matches})
+    //     } else {
+    //         this.setState({...this.state,transactionData:matches})
+    //     }
 
+    // }
+    onSearch = ({ currentTarget: { value } }) => {
+        debugger
+        let filterTransactionList;
+        if (!value) {
+            filterTransactionList = this.state.transactionData;
+        } else {
+            filterTransactionList =  this.state.transactionData.filter(item => item.wallet.toLowerCase().includes(value.toLowerCase()));
+            this.setState({...this.state,searchVal:value})
+        }
+        this.setState({...this.state,transactionData:filterTransactionList})
+    }
     componentWillUnmount() {
         this.transSub.unsubscribe();
     }
@@ -83,17 +109,30 @@ class Portfolio extends Component {
     closeDrawer = () => {
         this.setState({transactions: false});
     }
+  
     render() {
         const { Title } = Typography;
         const { gridUrl, loading } = this.state;
+        const { Search } = Input;
         return (<>
             <div className='market-panel-newstyle'></div>
                 <div className="markets-panel transaction-panel">
                     <div className='trans-align'>
                     <div className='transaction-title'>
                     <Translate component={Title} content="transactions_history" className="db-titles" />
-                    <div className = 'search-box'><input className = "search-text" type="text" placeholder = "Search Anything" />
-                      <a href="#" className = "search-btnexpand">
+                    <div className = 'search-box'>
+                        {/* <input className = "search-text" type="text" placeholder = "Search Anything" /> */}
+
+                        <Search
+                            placeholder="Search Transactions"
+                            value={this.state.searchVal}
+                            // addonAfter={<span className="icon md search-white" />}
+                            onChange={(value) => this.onSearch(value)}
+                            size="middle"
+                            bordered={false}
+                            className="search-text" />
+
+                      <a  className = "search-btnexpand">
                       <span className="icon lg search-angle icon-space" />
                       </a>
                   </div> </div>
