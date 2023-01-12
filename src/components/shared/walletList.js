@@ -20,6 +20,7 @@ class WalletList extends Component {
         }
     }
     componentDidMount() {
+        console.log(this.props.buyInfo?.selectedWallet?.id,"this.props.buyInfo?.selectedWallet?.id")
         this.props.getFiat(this.props.member?.id);
         if(this.props.buyInfo?.selectedWallet?.id){
             if (this.props.onWalletSelect) { this.props.onWalletSelect(this.props.buyInfo?.selectedWallet?.id) }

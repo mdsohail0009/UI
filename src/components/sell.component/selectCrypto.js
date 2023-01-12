@@ -12,6 +12,7 @@ import Currency from '../shared/number.formate';
 import apicalls from '../../api/apiCalls';
 import { convertCurrencyDuplicate } from '../buy.component/buySellService';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
+import { setWallet } from '../../reducers/buyReducer';
 
 class SelectSellCrypto extends Component {
     myRef = React.createRef();
@@ -131,6 +132,7 @@ class SelectSellCrypto extends Component {
         this.setState({ ...this.state, isShowCoinsData: true, sellSaveData: obj }, () => {
             this.handleConvertion();
         });
+        this.props.setWallet(obj);
     }
     onValueChange = (value) => {
         const { isSwap: isSwaped, USDAmnt: localValue, CryptoAmnt: cryptoValue } = this.state;
@@ -255,6 +257,9 @@ const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
+        },
+        setWallet: (wallet) => {
+            dispatch(setWallet(wallet))
         },
         dispatch
     }
