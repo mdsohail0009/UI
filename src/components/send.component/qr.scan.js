@@ -66,7 +66,7 @@ class QRScan extends Component {
     get walletCode() {
         let selectedWalletCode = this.props?.sendReceive?.depositWallet?.walletCode;
         if((selectedWalletCode === "USDT" || selectedWalletCode === "ETH" || selectedWalletCode === "USDC") && this.props?.sendReceive?.depositWallet?.network ){
-            return `${this.props?.sendReceive?.depositWallet?.walletCode} + " " + "(" + ${this.props?.sendReceive?.depositWallet?.network}  + ")"`;
+            return `${this.props?.sendReceive?.depositWallet?.walletCode}` + " " + "(" + `${this.props?.sendReceive?.depositWallet?.network}`  + ")";
         }
         else {
             return this.props?.sendReceive?.depositWallet?.walletCode;
