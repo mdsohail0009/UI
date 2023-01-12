@@ -208,7 +208,17 @@ class PaymentsView extends Component {
                                         :"No bank details available."}</>
                                     )
                                 })}
-
+                                {paymentsData?.length == 0 && !loading&&
+                                <tr>
+                                <td
+                                  colSpan="8"
+                                  className="p-16 text-center"
+                                  style={{ width: 300 }}
+                                >
+                                 No bank details available
+                                </td>
+                              </tr>
+                                  }
                                 {loading && <tr>
                                     <td colSpan='6' className='text-center p-16'><Spin size='default' /></td></tr>}
                             </tbody>

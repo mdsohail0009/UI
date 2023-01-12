@@ -27,6 +27,8 @@ import AuditLogs from "../../auditlogs.component";
 import Notifications from "../../../notifications";
 import Wallets from "../../wallets.component.js";
 import Batchpayments from "../../batchpayment.component";
+import { useThemeSwitcher } from 'react-css-theme-switcher';
+import TheamSwitch from "./theamSwitch"
 // Action Steps
 import {
     setStepcode as transforSetStep
@@ -57,6 +59,7 @@ import { KEY_URL_MAP } from "./config";
 import { getFeaturePermissionsByKey } from "./permissionService";
 import { headerSubscriber } from "../../../utils/pubsub";
 import { checkCustomerState } from "../../../utils/service";
+import { saveSettingsData } from "../../../api/apiServer";
 
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
@@ -66,6 +69,7 @@ const { Sider } = Layout;
 class MobileHeaderMenu extends Component {
     render() {
         const { onMenuItemClick, features: { features: { data } } } = this.props;
+        
         return <> <Menu
             theme="light"
             mode="vertical"
@@ -136,7 +140,8 @@ class HeaderPermissionMenu extends Component {
             send_crypto: false,
             receive_fiat: false,
             receive_crypto: false,
-            sendFiatTab: false
+            sendFiatTab: false,
+            theamFalge: 'darkTheam'
 
         },
     }
@@ -322,7 +327,31 @@ class HeaderPermissionMenu extends Component {
             FullFeatureName: "Logout"
         });
     }
+    // themeSwitch=async()=>{
+    //     debugger
+    //     this.state({...this.state,theme:false})
+    //     switcher({ theme: this.state.theme ? themes.DRT : themes.LHT });
+    //     let settingsObj={};
+    //     settingsObj.Theme = !theme ? 'Light Theme' : 'Dark Theme';
+    //     settingsObj.Language = settingsObj.Language?.toLowerCase();
+    //     settingsObj.customerId = this.props.userConfig?.id;
+    //    // settingsObj.info = JSON.stringify(trackAuditLogData)
+    //     let res = await saveSettingsData(settingsObj);
+    //     if (res.ok) {
+    //        message.destroy()
+    //         getmemeberInfoa(this.props.userConfig.userId)
+    //         counterpart.setLocale(settingsObj.Language);
+    //     }
+    // }
+    themeSwitch=()=>{
+         if(this.props.userConfig?.theme=="Light Theme") {
+            this.state({...this.state,theamFalge:"lightTheam"})
+         }else{
+            this.state({...this.state,theamFalge:"darkTheam"})
+         }
+    }
     render() {
+        // const { switcher, themes } = useThemeSwitcher();
         const userProfileMenu = (
             <Menu>
                 <div className="profile-dropdown">
@@ -546,7 +575,9 @@ class HeaderPermissionMenu extends Component {
                 </Menu.Item>   */}
                 <Menu.Item key="15"> 
                 {/* <Text className="pipeline">|</Text> */}
-                <span className="icon md theme-icon" /> Light Mode
+                <span className="icon md theme-icon" onClick={() => this.themeSwitch()} />
+                <TheamSwitch  theamFlag={this.state.theamFalge}/>
+               
                 </Menu.Item> 
                 <Menu.Item
                     key="9"
