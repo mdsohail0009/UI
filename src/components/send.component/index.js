@@ -103,8 +103,8 @@ class SendReceive extends Component {
                 {this.renderTitle()}
                 <div className="text-center">
                 {!this.props?.sendReceive?.sendCryptoHide && <div>
-                    <Translate className="drawer-maintitle rec-bottom" content={(this.props?.isSendTab || this.props?.sendReceive?.sendCryptoEnable) ? (this.props.sendReceive.stepcode == "withdraw_crpto_summary" ?  this.props.sendReceive.stepTitles[config[this.props.sendReceive.stepcode]] :"send_crypto") :  this.props.sendReceive.stepTitles[config[this.props.sendReceive.stepcode]]} component={Paragraph} />
-                    <Paragraph className="recive-subtext" >{this.props.sendReceive?.subTitle} {this.props.sendReceive?.selectedCoin?.coin} </Paragraph>
+                    <Translate className="drawer-maintitle rec-bottom text-center selctcoin-style" content={(this.props?.isSendTab || this.props?.sendReceive?.sendCryptoEnable) ? (this.props.sendReceive.stepcode == "withdraw_crpto_summary" ?  this.props.sendReceive.stepTitles[config[this.props.sendReceive.stepcode]] :"send_crypto") :  this.props.sendReceive.stepTitles[config[this.props.sendReceive.stepcode]]} component={Paragraph} />
+                    <Paragraph className="recive-subtext label-style drawer-subtextstyle" >{this.props.sendReceive?.subTitle} {this.props.sendReceive?.selectedCoin?.coin} </Paragraph>
                     </div> }
                     </div>
                 {this.renderIcon()}
