@@ -131,14 +131,16 @@ class ProfileInfo extends Component {
     const { Title, Text } = Typography;
     return (
       <>
+      <div className="main-container ">
         {this.state.errorMessage !== null && (
           <Alert
-            className="mb-12"
+            className="mb-12  profile-alert-style"
             type="error"
             description={this.state.errorMessage}
             showIcon
           />
         )}
+        </div>
         <div className="profile-image-content">
           <div  className="profile-img-style">
         <div className="profile-info">

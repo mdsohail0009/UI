@@ -249,18 +249,10 @@ class cryptocoinsView extends Component {
             <div className='fait-wallets-style m-0 new-viewpage'>
             <Translate content="suissebase_title" component={Title} className="db-titles" />
             <div className = 'search-box'>
-              {/* <input className = "search-text" type="text" placeholder = "Search Coin" /> */}
-              <Search
-                            placeholder="Search Coin"
-                            value={this.state.searchVal}
-                            // addonAfter={<span className="icon md search-white" />}
-                            onChange={(value) => this.onSearch(value)}
-                            size="middle"
-                            bordered={false}
-                            className="search-text" />
-                      <a  className = "search-btnexpand">
+              {/* <input className = "search-text" type="text" placeholder = "Search Anything" /> */}
+                      <div className = "search-btnexpand">
                       <span className="icon lg search-angle icon-space" />
-                      </a>
+                      </div>
                   </div> 
               {/* <Button className="dbchart-link"  onClick={() => this.cockpitCharts()} >
                   <Translate content="cockpit" />

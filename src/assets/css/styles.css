@@ -535,7 +535,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector, .ant-radio-disabled + span{color: var(--textWhite30);}
 /** masspayments end**/
 .batch-actions{text-align: right;margin-bottom: 16px;}
-.batch-actions span{margin-left: 16px;}
+/* .batch-actions span{margin-left: 16px;} */
 .makepayment-section{line-height: 3 !important;}
 .masspay-popup{width: 620px !important;}
 .ant-modal-close-x .ant-modal-close-icon svg{display: none;}
@@ -1085,8 +1085,8 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .transaction-pdf-template thead{vertical-align: top;text-align: left;}
 .transaction-pdf-template thead th:first-child,tbody tr td:first-child{padding-left: 10px;}
 .ant-dropdown-menu.history-excel{background-color: var(--bgGloom) !important; border-radius: 10px; min-width: 100px; max-width: 200px; padding: 24px 0;right: 25px;}
-.export-pdf button{background-color: var(--bgYellow);border-color: var(--bgYellow);border-radius: 40px;height: 42px;text-transform: uppercase;font-weight: 700;transition: 0.3s ease;}
-.export-pdf button:hover,.export-pdf button:active,.export-pdf button:focus{background-color: var(--bgDarkYellow);color: var(--textDark);border-color: var(--bgYellow);}
+.export-pdf button{background-color: #3653E4;border-color: #3653E4;border-radius: 40px;height: 42px;color:#FFFFFF;text-transform: uppercase;font-weight: 700;transition: 0.3s ease;}
+.export-pdf button:hover,.export-pdf button:active,.export-pdf button:focus{background-color:#7087FF;color:#FFFFFF;border-color:#7087FF;}
 .secureDropdown.export-pdf{margin-bottom: 16px;}
 .upload-disable{cursor: not-allowed;}
 .file-label.batch-upload{width: 100%;}
@@ -1100,3 +1100,4 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .export-pdf .ant-dropdown-button button:first-child{cursor: default !important;}
 .history-excel .drpdwn-list li a{padding: 10px 0;}
 .input-label.selectcustom-inputdate-mobile{margin-bottom: 0 !important;}
+/* .search-box > .search-btnexpand:hover, .search-box > .search-btnexpand:focus{border: 1px solid var(--subText);border-right: 0;border-radius: 10px 0px 0px 10px;} */

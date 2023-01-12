@@ -123,6 +123,7 @@
     --swapvalBg:rgba(21, 21, 25, 0.4);
     --radiocheccolor:rgba(250, 252, 254, 0.8);
     --upload: #4E505A;
+    --addHover: rgba(92, 97, 255, 0.35);;
 
     --lightThemeIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/user-darktheme-icons.svg);
     --cryptoIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/light-crypto-icons.svg);
