@@ -215,7 +215,7 @@ class BusinessTransfer extends Component {
 
             <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"} disabled={this.state.isEdit}>
                 <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
-                <Row gutter={[16, 4]} className="send-drawerbtn tabs-innertabs">
+                {/* <Row gutter={[16, 4]} className="send-drawerbtn tabs-innertabs">
 
                   <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
                       <Form.Item className="text-center form-marginB">
@@ -246,7 +246,7 @@ class BusinessTransfer extends Component {
                         </Button>
                       </Form.Item>
                     </Col>
-                  </Row>
+                  </Row> */}
                 <Form initialValues={details}
                     className="custom-label  mb-0"
                     ref={this.form}
@@ -358,7 +358,6 @@ class BusinessTransfer extends Component {
                     </Row>
 
                     <Paragraph className="adbook-head" >Bank Details</Paragraph>
-                    {/* <Divider /> */}
                     <DomesticTransfer type={this.props.type} />
                     {this.props.type !== "manual" && 
                         (<React.Fragment>
@@ -387,7 +386,7 @@ class BusinessTransfer extends Component {
             </Tabs.TabPane>
             <Tabs.TabPane tab="International USD Swift" key={"international"} disabled={this.state.isEdit}>
             <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
-            <Row gutter={[16, 4]} className="send-drawerbtn tabs-innertabs">
+            {/* <Row gutter={[16, 4]} className="send-drawerbtn tabs-innertabs">
                 <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
                     <Form.Item className="text-center form-marginB">
                         <Button
@@ -413,7 +412,7 @@ class BusinessTransfer extends Component {
                         > Address book</Button>
                     </Form.Item>
                 </Col>
-            </Row>
+            </Row> */}
                 <Form initialValues={details}
                     className="custom-label  mb-0"
                     ref={this.form}
@@ -550,7 +549,7 @@ class BusinessTransfer extends Component {
 
             <Tabs.TabPane tab="International USD IBAN" key={"internationalIBAN"} disabled={this.state.isEdit}>
             <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
-            <Row gutter={[16, 4]} className="send-drawerbtn tabs-innertabs">
+            {/* <Row gutter={[16, 4]} className="send-drawerbtn tabs-innertabs">
 
 <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
     <Form.Item className="text-center form-marginB">
@@ -581,7 +580,7 @@ class BusinessTransfer extends Component {
       </Button>
     </Form.Item>
   </Col>
-</Row>
+</Row> */}
                 <Form initialValues={details}
                     className="custom-label  mb-0"
                     ref={this.form}
@@ -692,8 +691,6 @@ class BusinessTransfer extends Component {
                     </Row>
 
                     <Paragraph className="adbook-head" >Bank Details</Paragraph>
-                    {/* <Divider /> */}
-                    {/* <InternationalTransfer type={this.props.type} /> */}
                     <Row>
                    <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
                        <div className=" custom-btn-error">
@@ -711,7 +708,6 @@ class BusinessTransfer extends Component {
                                 <Input
                                     className="cust-input"
                                     placeholder={"IBAN"}
-                                    //style={{ width:'350px',display:'table-cell !important' }}
                                     onChange={this.handleIbanChange}
                                     maxLength={30}/>
 
