@@ -153,7 +153,6 @@ class BankWallets extends Component {
                     />
                   }
                 />
-                {console.log(item)}
                 {item.isAccountExist ? (
                   <>
                     {item?.accountStatus?.toLowerCase() == "approved" && (
