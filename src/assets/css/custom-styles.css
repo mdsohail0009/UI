@@ -661,6 +661,8 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .swap-fontsize{color: #ffffff;font-weight: 700;font-size: 16px;}
 .network{background-color: var(--drpdwnHover);padding: 10px 20px;border-radius: 10px;margin: 0 12px}
 .network .swap-fontsize{color: var(--white);}
+.custom-height {max-height: calc(100vh - 926px);}
+.nodata-text{margin-top: 10px !important;display: inline-block;}
 /* send fiat end */
 /* send crypto start */
 .min-btn{border: 1px solid rgba(0, 0, 0, 0.3);background: var(--radioBg) !important;height: 36px;border-radius: 10px;min-width: 60px;line-height: 30px;color: var(--coinPrice);font-size: 16px;font-weight: 500; margin: 0 10px 10px 0;}
@@ -953,6 +955,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
     .custom-radiobtn .ant-radio-button-wrapper{padding: 0 15px;}
     /* .ant-popover.ant-popover-placement-left{left: 872px !important;} */
     .transctns-grid .ant-drawer-header, .transctns-grid .ant-drawer-body{padding-left: 100px;padding-right: 100px;}
+    .adbook-scroll{max-height: calc(100vh - 418px);overflow-y: auto;}
 }
 @media (min-width: 1400px){
     .main-container{max-width: 1300px; }
@@ -962,6 +965,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
     .side-drawer .ant-drawer-body{padding: 16px 30px;}
     .agree-check{height: 100px;}
     .successsubtext{height: calc(100vh - 592px);}
+    .custom-height {max-height: calc(100vh - 926px);}
     /* .select-currency {height: calc(100vh - 590px);} */
     .iban-list .ant-list-items{display: 238px;}
     /* .full-screenable-node{width: 430px;} */
@@ -976,6 +980,8 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
     .tlv-header{max-width: 1300px; }
     .cust-col-design{flex: 0 0 482px;}
     .db-flex-style{flex:1;}
+    .adbook-scroll{max-height: calc(100vh - 610px); overflow-y: auto;}
+    
 }
 @media (max-width: 991.98px){
     .visible-mobile .ant-tabs-top > .ant-tabs-nav::before{border-bottom: 0 !important;}
