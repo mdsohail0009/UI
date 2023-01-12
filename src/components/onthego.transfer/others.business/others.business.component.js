@@ -362,57 +362,64 @@ class OthersBusiness extends Component {
                         </Col>
                          
                     </Row>
-                    <div className="box basic-info alert-info-custom mt-16">
+                    <div className="box basic-info alert-info-custom mt-16 kpi-List">
                         <Spin spinning={this.state.ibanDetailsLoading}>
                         {this.state.iBanValid && <Row>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-12 fw-500">
+                            <div className="kpi-divstyle">
+                                <label className="kpi-label">
                                     Bank Name
                                 </label>
-                                <div className="pr-24"><Text className="fs-14 fw-400 text-white">{this.state.ibanDetails?.bankName || "-"}</Text></div>
-
+                                <div ><Text className="kpi-val">{this.state.ibanDetails?.bankName || "-"}</Text></div>
+                            </div>
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-12 fw-500 ">
+                            <div className="kpi-divstyle">
+                                <label className="kpi-label ">
                                 BIC
                                 </label>
-                                <div className="pr-24"><Text className="fs-14 fw-400 text-white">{this.state.ibanDetails?.routingNumber || "-"}</Text></div>
-
+                                <div ><Text className="kpi-val">{this.state.ibanDetails?.routingNumber || "-"}</Text></div>
+                                </div>
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-12 fw-500 ">
+                            <div className="kpi-divstyle">
+                                <label className="kpi-label ">
                                     Branch
                                 </label>
-                                <div className="pr-24"><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.branch || "-"}</Text></div>
-
+                                <div ><Text className="kpi-val">{this.state?.ibanDetails?.branch || "-"}</Text></div>
+                                </div>
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-12 fw-500 ">
+                            <div className="kpi-divstyle">
+                                <label className="kpi-label ">
                                     Country
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.country || "-"}</Text></div>
-
+                                <div><Text className="kpi-val">{this.state?.ibanDetails?.country || "-"}</Text></div>
+                                </div>
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-12 fw-500 ">
+                            <div className="kpi-divstyle">
+                                <label className="kpi-label ">
                                     State
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.state || "-"}</Text></div>
-
+                                <div><Text className="kpi-val">{this.state?.ibanDetails?.state || "-"}</Text></div>
+                                </div>
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                            <div className="kpi-divstyle">
                                 <label className="fs-12 fw-500 ">
                                     City
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.city || "-"}</Text></div>
-
+                                <div><Text className="kpi-val">{this.state?.ibanDetails?.city || "-"}</Text></div>
+                                </div>
                             </Col>
                             <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                            <div className="kpi-divstyle">
                                 <label className="fs-12 fw-500 ">
                                     Zip
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state?.ibanDetails?.zipCode || "-"}</Text></div>
-
+                                <div><Text className="kpi-val">{this.state?.ibanDetails?.zipCode || "-"}</Text></div>
+                                </div>
                             </Col>
                         </Row>}
                         {!this.state.iBanValid && !this.state.ibanDetailsLoading && <Row>
