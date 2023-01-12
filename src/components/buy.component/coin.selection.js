@@ -10,7 +10,6 @@ import { fetchCoins, fetchSelectedCoinDetails, setCoin, setExchangeValue } from 
 import { convertCurrency } from './buySellService';
 import apiClient from "../../api/apiCalls";
 import Loader from '../../Shared/loader'
-import Title from 'antd/lib/skeleton/Title';
 
 class CryptoComponent extends Component {
     ref = React.createRef();
@@ -59,25 +58,12 @@ class CryptoComponent extends Component {
         const { coins: coinListdata } = this.props?.buyInfo;
         if (coinListdata["All"]?.loading) { return <Loader /> }
         return (
-            <>
-                {/* <div className="text-center">
-                    <Radio.Group
-                        value={this.props.buySell.tabKey}
-                        onChange={this.handleBuySellToggle}
-                        className="buysell-toggle">
-                        <Translate content="buy" component={Radio.Button} value={1} />
-                        <Translate content="sell" component={Radio.Button} value={2} />
-                    </Radio.Group>
-                </div> */}
-               {/* <div className='text-center selctcoin-style'><div className='drawer-maintitle'>Buy Crypto</div>
-                      <Translate content="buy_your_crypto_for_cash_text" component={Paragraph} className="label-style drawer-subtextstyle" /></div> */}
-                    
+            <>      
                 {this.props.buySell.tabKey === 1 && !this.props.isTab ? <>
                     <Translate content="buy_your_crypto_for_cash_text" component={Paragraph} className="label-style" />
                     
                     <CryptoList ref={this.ref} isLoading={coinListdata["All"]?.loading} showSearch={true} coinList={coinListdata["All"]?.data} coinType="All" onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
                     </> : <>
-                    {/* <Translate content="sell_your_crypto_for_cash_text" component={Paragraph} className="text-white-30 fw-500 fs-14 mt-16 code-lbl" /> */}
                     <SellToggle /></>
                 }
             </>

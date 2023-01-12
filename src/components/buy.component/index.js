@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Drawer, Typography } from 'antd';
+import { Drawer, Typography,Image } from 'antd';
 import Translate from 'react-translate-component';
 import CryptoComponent from './coin.selection';
 import ConnectStateProps from '../../utils/state.connect';
@@ -107,12 +107,6 @@ class BuySell extends Component {
         return (<Drawer
             title={[<div className="side-drawer-header">
                 {this.renderTitle()}
-                {((this.props.isTabKey && this.props.buySell?.stepcode !=="sellsuccess" && !this.props.buySell?.selectedSellCoin) || this.props.buySell?.sellHeader) && <div className="text-center">
-                    <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin }} className="drawer-maintitle" content="sell_assets" component={Paragraph} />
-                </div>}
-                {((!this.props.isTabKey && !this.props.buySell?.sellHeader) || this.props.buySell?.selectedSellCoin)&& <div className="text-center">
-                    <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin }} className="drawer-maintitle buy-sellprocess" content={this.props.buySell.stepTitles[config[this.props.buySell.stepcode]]} component={Paragraph} />
-                </div>}
                 {this.renderIcon()}</div>]}
             placement="right"
             closable={true}
@@ -121,6 +115,16 @@ class BuySell extends Component {
             className="side-drawer"
             destroyOnClose={true}
         >
+            <>
+            {((this.props.isTabKey && this.props.buySell?.stepcode !=="sellsuccess" && !this.props.buySell?.selectedSellCoin) || this.props.buySell?.sellHeader) && <div className="text-center">
+                    <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin }} className="drawer-maintitle" content="sell_assets" component={Paragraph} />
+                </div>}
+                {((!this.props.isTabKey && !this.props.buySell?.sellHeader) || this.props.buySell?.selectedSellCoin)&& <div className="text-center">
+                    <Translate 
+                    with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin }}
+                     className="drawer-maintitle buy-sellprocess" content={this.props.buySell.stepTitles[config[this.props.buySell.stepcode]]} component={Paragraph} />
+                     <Image preview={false} src={this.props.sellData?.coinWallet?.impagePath} />
+                </div>}</>
             {this.renderContent()}
         </Drawer>);
     }

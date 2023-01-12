@@ -1026,9 +1026,9 @@ class WithdrawSummary extends Component {
 								type="checkbox"
 								id="agree-check"
 								// checked={onCheked}
-								onChange={({ currentTarget: { checked } }) => {
-									this.props.onTermsChange(checked);
-								}}
+								// onChange={({ currentTarget: { checked } }) => {
+								// 	this.props?.onTermsChange(checked);
+								// }}
 							/>
 							<span for="agree-check"  />
 							{/* // className={`${error?.agreeRed===false ? "checkbox-red":""}`} */}
