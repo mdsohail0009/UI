@@ -482,7 +482,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .sell-radiobtn-style{flex: 0 0 236px;}
 .selection-currency-list{margin-bottom: 50px;}
 .drawer-title-style{display: flex;align-items: center;justify-content:center;margin-bottom: 50px;}
-.selctcoin-style{margin-bottom: 50px;}
+.selctcoin-style{margin-bottom: 50px;margin-top: 80px;}
 .drawer-crypto-bg{margin-right: 21px;}
 .label-style.drawer-subtextstyle{font-weight: 400;font-size: 16px;color: var(--paraBg);margin-top: 18px;}
 .crypto-coin-mbspace,.swap-custinputfield{margin-bottom: 10px;}
@@ -496,7 +496,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .fait-maintext{font-weight: 700;font-size: 18px;color: var(--tablesub);margin-bottom: 16px !important;margin-top: 41px;}
 .refer-text{font-weight: 400;font-size: 16px;color: var(--tableText);}
 .walletadrs{font-weight: 700;font-size: 16px;color: var(--coinPrice);}
-.import-note{background-color: var(--cardBG);width: auto;border-radius: 10px;padding: 24px 70px 24px 24px;color: var(--tablesub);font-weight: 400;font-size: 20px;margin-top: 38px;}
+.import-note{background-color: var(--cardBG);width: auto;border-radius: 10px;padding: 24px;color: var(--tablesub);font-weight: 400;font-size: 20px;margin-top: 38px;}
 .imp-note{font-weight: 700;font-size: 20px;color: var(--tablesub);}
 .custom-display{margin-left: 12px;}
 .cust-tabs-fait .ant-tabs-tab + .ant-tabs-tab{margin: 0 0 0 0px;}
@@ -505,6 +505,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .send-drawerbtn.tabs-innertabs{margin: 16px 0 40px;}
 .swap-entryvalue.send-crypto-style{margin-top: 0;}
 .coin-name-mb{margin-bottom: 0;}
+.newtransfer-card.ant-btn:hover, .newtransfer-card.ant-btn:focus, .newtransfer-card.ant-btn:active, .small-btns .min-btn:active, .small-btns .min-btn:focus, .small-btns .min-btn:hover{background-color:var(--addHover) !important;}
 /* width: 350px; */
 /* .cust-tabs-fait .ant-tabs-nav{width: 350px;margin: 0 auto;justify-content: center;margin-bottom: 26px;} */
 /* receive fait end */

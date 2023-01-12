@@ -163,8 +163,6 @@ class SelectCrypto extends Component {
 
                 <div className="selectcrypto-container">
                     <Card className="crypto-card select " bordered={false}>
-
-                       
                         {<div>
                    <LocalCryptoSwapperCmp
                         localAmt={localValue}
