@@ -404,7 +404,7 @@ class OnthegoCryptoTransfer extends Component {
                                         <span>Max</span>
                                     </button>
                   </div>
-                  <div className='crypto-details'><div className='sellcrypto-style'>Balance:</div> <Currency defaultValue="$ 67.83" prefix={"$ "} type={"text"} className="marginL sellbal-style" /></div>
+                  <div className='crypto-details'><div className='sellcrypto-style'>Balance:</div> <Currency defaultValue={this.props?.selectedWallet?.coinBalance} prefix={""} type={"text"} suffixText={this.props?.selectedWallet?.coin} className="marginL sellbal-style" /></div>
                   </div>
               <Row gutter={[16,0]} className="text-center transfer-designstyle">
               <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mobile-viewbtns mobile-btn-pd">
