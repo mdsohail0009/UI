@@ -11,7 +11,7 @@ import Loader from "../../Shared/loader";
 import { checkCustomerState } from "../../utils/service";
 
 class ProfileInfo extends Component {
-  state = { Image: null, Loader: false, fileLoader: false, errorMessage: null };
+  state = { Image: null, Loader: true, fileLoader: false, errorMessage: null };
   uploadProps = {
     name: "file",
     multiple: false,

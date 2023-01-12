@@ -141,7 +141,7 @@ class BankDetails extends Component {
                     </Form.Item>
                 </Col>
                 </>
-                <div className="box basic-info alert-info-custom mt-16">
+                <div className="box basic-info alert-info-custom mt-16  kpi-List">
                 <Row>
                     <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
                         <label className="fs-14 fw-400 text-white">
