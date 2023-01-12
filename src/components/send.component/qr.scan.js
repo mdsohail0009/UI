@@ -162,7 +162,7 @@ class QRScan extends Component {
                     <ul className="recive-text">
                         <li className="list-dot"><Translate className="recive-runtext" content="address_hint_text" component={Text} /></li>
                         <li className="list-dot"><Translate className="recive-runtext" content="address_hint_text_1" component={Text} /></li>
-                        <li className="list-dot"><Text className="recive-runtext">Note: {this.props?.sendReceive?.depositWallet?.note} </Text></li>
+                        <li className="list-dot"><Text className="recive-runtext">{this.props?.sendReceive?.depositWallet?.note} </Text></li>
                     </ul>
                 </Paragraph>
                 <div className='recive-share'>Share</div>
