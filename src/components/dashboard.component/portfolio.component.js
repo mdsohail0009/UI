@@ -93,10 +93,19 @@ class Portfolio extends Component {
                     <div className='transaction-title'>
                     <Translate component={Title} content="transactions_history" className="db-titles" />
                     <div className = 'search-box'><input className = "search-text" type="text" placeholder = "Search Anything" />
-                      <a href="#" className = "search-btnexpand">
+                      <div className = "search-btnexpand">
                       <span className="icon lg search-angle icon-space" />
-                      </a>
-                  </div> </div>
+                      </div>
+                  </div> 
+                   {/* <div class="search-container">
+               
+               <input class="search" id="searchleft" type="search" name="q" placeholder="Search">
+               <input className = "search-left"  type="search" name="q" placeholder="Search" />
+               <label class="button searchbutton" for="searchleft">
+               <span className="icon lg search-angle icon-space"  />        
+           </label>
+           </div> */}
+                  </div>
                     <Button className="dbchart-link"  >
                         <Link to="/transactions"><Translate content="cockpit" /></Link>
                     </Button></div>

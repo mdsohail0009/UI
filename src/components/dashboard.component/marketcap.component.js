@@ -67,10 +67,13 @@ const MarketCap = ({ member }) => {
                     <div className="d-flex align-center">
                         <Translate content="markets_title" component={Title} className="db-titles" />
                         <div className = 'search-box'><input className = "search-text" type="text" placeholder = "Search Anything" />
-                      <a href="#" className = "search-btnexpand">
-                      <span className="icon lg search-angle icon-space" />
-                      </a>
+                      <div className = "search-btnexpand">
+                      <span className="icon lg search-angle icon-space" placeholder={apiCalls.convertLocalLang('searchCurrency')} value={searchVal} onChange={(value) => onSearch(value)} />
+                      </div>
                   </div> 
+
+            
+
                         {/* <Translate content="markets_subtitle" component={Paragraph} className="text-white-50 fs-16 mb-0 l-height-normal" /> */}
                     </div>
                     {/* <div className="market-actions">

@@ -123,6 +123,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .profile-info{width: 96px;height: 96px;padding: 5px;border-radius: 50%;text-align: left;position: relative;background-color: var(--profilebgImg);}
 .profile-info .user-profile{width:100%;height: 100%; border-radius: 50%;padding: 6px;object-fit: cover;}
 .profile-info .img-upld{position: absolute;right: -5px;bottom: 20px;background-color:#F1F2F6;border:0;}
+.profile-info .img-upld:focus{background-color:#F1F2F6;}
 .basic-info,.contact-info{padding: 24px;}
 .dash-info.basic-info{padding: 6px !important;}
 .basicinfo{font-weight: 700 !important;font-size: 18px !important;color: var(--menuFont) !important;margin-bottom: 0 !important;}
@@ -289,6 +290,7 @@ input:-webkit-autofill:active{
 .crypto-card.select .ant-card-body .select-currency .cust-input .ant-select-selector{line-height: 44px !important;}
 .crypto-card.select .ant-card-body .select-currency .ant-select-single .ant-select-selector .ant-select-selection-item{line-height: 42px !important;}
 .profile-img-style .profile-info .loader-antd{padding: 30px !important;}
+
 /*Common css End*/
 
 /*Coin Selection End*/
@@ -573,7 +575,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .delete-btn:focus{border:none !important;}
 .ant-modal-footer .delete-btn{padding: 0 30px;}
 .pay-list{display: flex;justify-content: space-between;align-items: center;}
-.transaction-custom-table{background: var(--cardBG);border-radius: 20px;padding-top: 12px;padding-bottom: 12px;}
+.transaction-custom-table{background: var(--cardBG);border-radius: 20px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;}
 .transaction-custom-table .pay-grid tbody td{border: 0;}
 .transaction-custom-table .pay-grid tr{border-bottom: 1px solid var(--tableborder);}
 .transaction-custom-table .pay-grid tr:last-child{border-bottom: 0;}
@@ -597,6 +599,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .amt-field .form-margin-bottom{margin-bottom: 0;}
 .docdetails.pay-docdetails{margin-left: 0;}
 .cust-cancel-btn.pay-cust-btn{margin-top: 16px;}
+.dashb-btmtable, .mobile-list{margin-top: 10px;}
 /* --Payments End--*/
 
 /*--Zoho start--*/
@@ -766,6 +769,9 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .coin-titlestyle{color: var(--coinPrice) !important;font-size: 24px !important;font-weight: 700 !important;}
 .coin-date{display: block;text-align: right;color: var(--coindate);font-weight: 400;font-size: 10px;}
 .coin-green-ml{margin-left: 8px;}
+.sell-title-styels{display: flex;justify-content: center;margin-bottom: 75px;}
+.sell-title-styels .ant-image{margin-right: 12px;}
+.sell-title-styels .ant-image .ant-image-img{border: 4px solid var(--coinBg);background-color:var(--coinBg);border-radius: 50%;}
 /* coin detail view end */
 /* coin view start */
 .trade-graph .ant-radio-button-wrapper{background-color: var(--coinviewradio);border-color: var(--coinviewradio) !important;}
@@ -820,12 +826,11 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .inputfont-style:hover, .inputfont-style:focus{border: 0;}
 /* coin view end */
 /* expand search */
-.search-box {position:relative;height: 46px;border-radius: 40px;padding: 10px;flex:300px 0 0 ;display: flex;align-items: center;}
-.search-box:hover > .search-text{width: 240px;padding: 8px;border:1px solid var(--subText); border-radius: 6px;}
-.search-text:hover .search-box{border: 1px solid #fff;}
-/* .search-box:hover > .search-btn{background: white;	color: black; } */
+.search-box {position:relative;height: 46px;padding: 10px;flex:300px 0 0 ;display: flex;align-items: center;}
+.search-box:hover > .search-text{width: 240px;padding: 6px;border-radius: 0px 10px 10px 0px;border-left: 0;}
+.search-box:focus, .search-box:hover{border:1px solid var(--subText);border-radius: 10px;margin-left: 12px;}
 .search-btnexpand {position: absolute;left:0 ;z-index:1;transition: 0.4s;cursor: pointer;text-decoration: none;}
-.search-text {border: none;background: none;outline: none;padding: 0;color: white;font-size: 16px;font-weight: normal;transition: 0.4s;line-height: 26px;width: 0px;margin-left:30px;margin-bottom: 10px;}
+.search-text {border: none;background: none;outline: none;padding: 0;color: white;font-size: 16px;font-weight: normal;transition: 0.4s;line-height: 26px;width: 0px;margin-left:29px;}
 .search-text::placeholder{color: var(--placeholders);}
 /* expand search end */
 /* cases */
@@ -922,6 +927,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
     
 }
 @media (min-width: 992px){
+    .profile-alert-style{width: 510px !important;align-items: center;}
     .bill-payment{display: flex; align-items: center; justify-content: space-between;margin-bottom: 36px;}
     .visible-mobile, .sideropen{display: none;}
     .bill-grid .k-grid-header table{width: 1266px !important;}

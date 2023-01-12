@@ -119,11 +119,12 @@ class BuySell extends Component {
             {((this.props.isTabKey && this.props.buySell?.stepcode !=="sellsuccess" && !this.props.buySell?.selectedSellCoin) || this.props.buySell?.sellHeader) && <div className="text-center">
                     <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin }} className="drawer-maintitle" content="sell_assets" component={Paragraph} />
                 </div>}
-                {((!this.props.isTabKey && !this.props.buySell?.sellHeader) || this.props.buySell?.selectedSellCoin)&& <div className="text-center">
-                    <Translate 
+                {((!this.props.isTabKey && !this.props.buySell?.sellHeader) || this.props.buySell?.selectedSellCoin)&& <div className="text-center sell-title-styels">
+                <Image preview={false} src={this.props.sellData?.coinWallet?.impagePath} />
+                   <Translate 
                     with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin }}
                      className="drawer-maintitle buy-sellprocess" content={this.props.buySell.stepTitles[config[this.props.buySell.stepcode]]} component={Paragraph} />
-                     <Image preview={false} src={this.props.sellData?.coinWallet?.impagePath} />
+                     
                 </div>}</>
             {this.renderContent()}
         </Drawer>);
