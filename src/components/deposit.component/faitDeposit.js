@@ -318,15 +318,15 @@ class FaitDeposit extends Component {
                       content="for_Domestic_wires"
                       component={Paragraph}
                     />}
-                    <div className='alert-info-custom kpi-List'>
-                    {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <Translate
+                    {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <div className='alert-info-custom kpi-List'>
+                    <Translate
                       className="fait-title"
                       content="Routing_number"
                       component={Text}
-                    />}
-                    {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <CopyToClipboard text={BankInfo.routingNumber} options={{ format: 'text/plain' }}>
-                      <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fait-subtext">{BankInfo.routingNumber}</Text></CopyToClipboard>}
-                      </div>
+                    />
+                     <CopyToClipboard text={BankInfo.routingNumber} options={{ format: 'text/plain' }}>
+                      <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fait-subtext">{BankInfo.routingNumber}</Text></CopyToClipboard>
+                      </div>}
                     <Translate
                       className="fait-maintext"
                       content="for_international_wires"

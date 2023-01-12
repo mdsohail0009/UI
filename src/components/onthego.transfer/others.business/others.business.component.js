@@ -355,7 +355,7 @@ class OthersBusiness extends Component {
                        </Col>
                        <Col xs={24} md={10} lg={10} xl={10} xxl={10}>
                        <Button className={`pop-btn dbchart-link pop-validate-btn`}
-                            loading={this.state.isValidateLoading} 
+                            // loading={this.state.isValidateLoading} 
                              onClick={() => this.onIbanValidate(this.state?.enteredIbanData)} >
                                 <Translate content="validate" />
                             </Button>
