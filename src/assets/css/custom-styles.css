@@ -505,6 +505,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .send-drawerbtn.tabs-innertabs{margin: 16px 0 40px;}
 .swap-entryvalue.send-crypto-style{margin-top: 0;}
 .coin-name-mb{margin-bottom: 0;}
+.newtransfer-card.ant-btn:hover, .newtransfer-card.ant-btn:focus, .newtransfer-card.ant-btn:active, .small-btns .min-btn:active, .small-btns .min-btn:focus, .small-btns .min-btn:hover{background-color:var(--addHover) !important;}
 /* width: 350px; */
 /* .cust-tabs-fait .ant-tabs-nav{width: 350px;margin: 0 auto;justify-content: center;margin-bottom: 26px;} */
 /* receive fait end */
