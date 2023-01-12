@@ -122,7 +122,6 @@ class Portfolio extends Component {
                     <Translate component={Title} content="transactions_history" className="db-titles" />
                     <div className = 'search-box'>
                         {/* <input className = "search-text" type="text" placeholder = "Search Anything" /> */}
-
                         <Search
                             placeholder="Search Transactions"
                             value={this.state.searchVal}
@@ -131,8 +130,7 @@ class Portfolio extends Component {
                             size="middle"
                             bordered={false}
                             className="search-text" />
-
-                      <a  className = "search-btnexpand">
+                      <div className = "search-btnexpand">
                       <span className="icon lg search-angle icon-space" />
                       </div>
                   </div> 
