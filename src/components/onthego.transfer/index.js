@@ -522,7 +522,7 @@ saveWithdrawdata = async () => {
              <Title className="adbook-head">Address Book</Title>
               {/* <Divider className="cust-divide" /> */}
 
-              <ul className="addCryptoList" >
+              <ul className="addCryptoList adbook-scroll" >
                 {filterObj.length > 0 &&
                   filterObj?.map((item, idx) => (
                     <>
@@ -586,8 +586,8 @@ saveWithdrawdata = async () => {
                   {(!filterObj.length > 0) && <div className="success-pop text-center declaration-content" >
                             <img src={oops} className="confirm-icon"  alt="Confirm" />
                             <h1 className="success-title" > {apicalls.convertLocalLang('oops')}</h1>
-                            <p className="successsubtext"> {apicalls.convertLocalLang('address_available')} </p>
-                            <a onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</a>
+                            <p className="successsubtext custom-height"> {apicalls.convertLocalLang('address_available')} </p>
+                            <a onClick={() => this.chnageStep("newtransfer")} className="nodata-text" >Click here to make new transfer</a>
                         </div>}
               </ul>
 
@@ -595,7 +595,7 @@ saveWithdrawdata = async () => {
               {/* <Divider className="cust-divide" /> */}
               <ul
                 style={{ listStyle: 'none', paddingLeft: 0 }}
-                className="addCryptoList"
+                className="addCryptoList adbook-scroll"
               >
                 {pastPayees.length > 0 &&
                   pastPayees?.map((item, idx) => (
