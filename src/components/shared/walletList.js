@@ -21,6 +21,11 @@ class WalletList extends Component {
     }
     componentDidMount() {
         this.props.getFiat(this.props.member?.id);
+        if(this.props.buyInfo?.selectedWallet?.id){
+            if (this.props.onWalletSelect) { this.props.onWalletSelect(this.props.buyInfo?.selectedWallet?.id) }
+            this.setState({ ...this.state, selectedvalue: this.props.buyInfo?.selectedWallet?.id });
+        }
+
     }
     render() {
         return (<>
@@ -52,7 +57,9 @@ class WalletList extends Component {
                     }}
                     renderItem={item => (
 
-                        <List.Item onClick={() => {
+                        <List.Item
+                        className={this.props.buyInfo?.selectedWallet?.currencyCode===item?.currencyCode?"select":""}
+                         onClick={() => {
                             
                             if (this.props.onWalletSelect) { this.props.onWalletSelect(item.id) }
                             this.setState({ ...this.state, selectedvalue: item.id });
