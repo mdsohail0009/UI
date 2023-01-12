@@ -70,6 +70,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .new-custom-radiobtn .ant-radio-button-wrapper-checked .icon.lg{background-position:-324px -521px !important;}
 .new-custom-radiobtn .ant-radio-button-wrapper .icon.lg{background-position:-324px -485px;}
 .icon.md.add-icon-black{background-position: -397px -71px;}
+.icon.md.excel-export{background-position: -664px -3px;}
 .icon.lg.radio-check{background-position:-324px -521px;}
 .icon.lg.radio{background-position:-324px -485px;}
 .icon.lg.download{background-position:-234px -518px;}
@@ -115,6 +116,8 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 /*Header End*/
 
 /*profile css start*/
+.ant-alert-with-description{align-items: center;}
+.secureDropdown.export-pdf .excel-export{margin-left: 8px;}
 .user-profile{ border-radius: 50%;object-fit: cover;}
 .profile-dropdown .user-profile{width:112px;height: 112px; border-radius: 50%;display: block;margin: 0 auto;}
 .profile-dropdown {text-align: center;padding:12px 24px;}
@@ -719,11 +722,14 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* crypto success end  */
 
 /* send crypto addressbook start */
+.batchpayment-summary, .batch-style{margin-bottom: 16px !important;}
+.batchpayment-summary{justify-content: space-between;}
+.admin-actions.address-icons li{margin-left: 8px;}
 .sub-title.address-book{ margin: 36px 0 16px 0 !important;}
 .box{overflow: hidden; margin-bottom: 28px;}
 .adressbook-style{margin-bottom: 16px;}
 .admin-actions{display: flex;padding: 0;list-style: none;margin-bottom: 0px;}
-.admin-actions li{margin-right: 16px;}
+/* .admin-actions li{margin-right: 16px;} */
 .admin-actions li:last-child{margin-right: 0;}
 .addressbook-mb{margin-bottom: 0 !important;}
 .new-custom-radiobtn, .new-custom-radiobtn .ant-radio-button-wrapper, .new-custom-radiobtn .ant-radio-button.ant-radio-button-checked, .new-custom-radiobtn .ant-radio-button-wrapper:first-child, .new-custom-radiobtn .ant-radio-button-wrapper:not(:first-child)::before, .new-custom-radiobtn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){background: none;border: 0;}

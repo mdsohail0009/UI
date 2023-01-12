@@ -170,8 +170,9 @@ export function withState(WrappedGrid) {
                     </div>
                     {this.state.isLoading && this.loadingPanel}
                     {this.props.showExcelExport && <div className='text-right secureDropdown export-pdf'>
+                        
                        <Dropdown.Button
-                        className="mt-16 mb-16"
+                        className=""
                           overlay={<div className='ant-dropdown-menu history-excel'>
                             <ul className='pl-0 drpdwn-list'>
                             <li onClick={this.handleExcelExport}><a>Export to Excel</a></li>
@@ -182,7 +183,7 @@ export function withState(WrappedGrid) {
                           arrow
                           overlayClassName=""
                         >
-                             Download Transaction History
+                             Download Transaction History<span className='icon md excel-export'></span>
                         </Dropdown.Button>                       
                     </div>}
                     {this.props.showExcelExport ? <ExcelExport data={this.state.data} ref={this.excelRef} fileName={this.props?.excelFileName}>

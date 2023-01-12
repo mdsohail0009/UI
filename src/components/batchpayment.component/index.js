@@ -218,7 +218,7 @@ const Batchpayments = (props) => {
       return (
         <>
           <div className='main-container'>
-                  <div className='batchpayment-summary justify-content align-center mb-16'>
+                  <div className='batchpayment-summary'>
                 
                       <Title className="basicinfo mb-0"><span className='icon md c-pointer back' onClick={gotoDashboard}></span><Translate content="batch_payments" component={Text} className="basicinfo" />
                                       
