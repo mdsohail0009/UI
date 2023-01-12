@@ -122,7 +122,7 @@ class PaymentsView extends Component {
             <>
              <div ref={this.useDivRef}></div>
                 <div className="main-container">
-                    <Title className="adbook-head"><span onClick={() => this.props.history?.push(`/payments/All`)} className='icon md c-pointer back mr-8 backarrow-mr'/><Translate content="menu_payments" component={Text} className="adbook-head" /></Title>
+                    <Title className="adbook-head"><span onClick={() => this.props.history?.push(`/payments/All`)} className='icon md c-pointer back backarrow-mr'/><Translate content="menu_payments" component={Text} className="adbook-head" /></Title>
                     <div className='transaction-custom-table'>
                     <div className="responsive_table db-ts-grid">
                         <table className='pay-grid view mb-view'>

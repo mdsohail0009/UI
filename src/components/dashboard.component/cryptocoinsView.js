@@ -228,13 +228,21 @@ class cryptocoinsView extends Component {
                     
               </div>
             </div> */}
+           
             <div className='coinveiw-newpage'>
-            <div className='fait-wallets-style m-0'>
+            <div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/" /><span className="back-btnarrow">Back</span></div>
+            <div className='fait-wallets-style m-0 new-viewpage'>
             <Translate content="suissebase_title" component={Title} className="db-titles" />
+            <div className = 'search-box'><input className = "search-text" type="text" placeholder = "Search Anything" />
+                      <a href="#" className = "search-btnexpand">
+                      <span className="icon lg search-angle icon-space" />
+                      </a>
+                  </div> 
               {/* <Button className="dbchart-link"  onClick={() => this.cockpitCharts()} >
                   <Translate content="cockpit" />
               </Button>   
                      */}
+                     
               </div>
                 {cryptoPortFolios?.loading ? (
                <Loader />

@@ -138,7 +138,7 @@ class PaymentSummary extends Component {
 			<div>
 			<Drawer destroyOnClose={true}
             title={[<div className="side-drawer-header"><span></span>
-			{!this.state.showDeclaration &&<><Title className='mb-8 text-white-30 fw-600 text-captz fs-24'>Payment Summary</Title>
+			{!this.state.showDeclaration &&<><div className='drawer-maintitle rec-bottom'>Payment Summary</div>
 			 <span onClick={this.props.onClose} className="icon md close-white c-pointer" /></>}
 			 {this.state.showDeclaration &&<span onClick={this.handleBack} className="icon md close-white c-pointer" />}
           </div>]}
@@ -152,80 +152,81 @@ class PaymentSummary extends Component {
 				<div>
 				{!this.state.showDeclaration && <>
 				<div>
-					<div> <Title className='sub-heading p-0 mt-24'>Transfer Details</Title></div>
+					<div className='adbook-head'>Transfer Details</div>
+					<div className='alert-info-custom kpi-List'>
 					<div className='pay-list fs-14'>
-						<div><label className='fw-500 text-white'> Payment</label></div>
+						<div><label className='summary-liststyle'> Payment</label></div>
 						<div>
 							
-						<NumberFormat className='fw-500 text-white-30'
+						<NumberFormat className='summarybal'
                                         value={`${this.props?.getPaymentDetails.amount}`}
                                         thousandSeparator={true} displayType={"text"} />
 							</div>
 					</div>
 					<div className='pay-list fs-14'>
-						<div><label className='fw-500 text-white'> Fee</label></div>
+						<div><label className='summary-liststyle'> Fee</label></div>
 						<div>
-						<NumberFormat className='fw-500 text-white-30'
+						<NumberFormat className='summarybal'
                                         value={`${this.props?.getPaymentDetails.commission}`}
                                         thousandSeparator={true} displayType={"text"} />
 							
 							</div>
 					</div>
 					<div className='pay-list fs-14'>
-						<div><label className='fw-500 text-white'> Total Amount</label></div>
+						<div><label className='summary-liststyle'> Total Amount</label></div>
 						<div>
-						<NumberFormat className='fw-500 text-white-30'
+						<NumberFormat className='summarybal'
                                         value={`${this.props?.getPaymentDetails.totalAmonunt}`}
                                         thousandSeparator={true} displayType={"text"} />
 							
 							</div>
 					</div>
 					<div className='pay-list fs-14'>
-						<div><label className='fw-500 text-white'>Balance Before</label></div>
+						<div><label className='summary-liststyle'>Balance Before</label></div>
 						<div>
-						<NumberFormat className='fw-500 text-white-30'
+						<NumberFormat className='summarybal'
                                         value={`${this.props?.getPaymentDetails.beforeAmount}`}
                                         thousandSeparator={true} displayType={"text"} />
 							</div>
 					</div>
 					<div className='pay-list fs-14'>
-						<div><label className='fw-500 text-white'>Balance After Payment</label></div>
+						<div><label className='summary-liststyle'>Balance After Payment</label></div>
 						<div>
-						<NumberFormat className='fw-500 text-white-30'
+						<NumberFormat className='summarybal'
                                         value={`${this.props?.getPaymentDetails.afterPaymentAmount}`}
                                         thousandSeparator={true} displayType={"text"} />
 							</div>
-					</div>
+					</div></div>
 
-					<div> <Title className='sub-heading p-0 mt-24'>Recipients Details</Title></div>
-
+					<div> <Title className='adbook-head'>Recipients Details</Title></div>
+					<div className='alert-info-custom kpi-List'>
 					<div className='pay-list fs-14'>
-						<div><label className='fw-500 text-white'>File Name</label></div>
-						<div><Text className='fw-500 text-white-30'>{this.props?.getPaymentDetails.fileName}</Text></div>
+						<div className='file-name'><label className='summary-liststyle'>File Name</label></div>
+						<div><Text className='summarybal'>{this.props?.getPaymentDetails.fileName}</Text></div>
 					</div>
 					<div className='pay-list fs-14'>
-						<div><label className='fw-500 text-white'>Number of Recipients</label></div>
-						<div><Text className='fw-500 text-white-30'>{this.props?.getPaymentDetails.noOfPayments}</Text></div>
-					</div>
+						<div><label className='summary-liststyle'>Number of Recipients</label></div>
+						<div><Text className='summarybal'>{this.props?.getPaymentDetails.noOfPayments}</Text></div>
+					</div></div>
 					
                            <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} />
 					    
-						   <div className="cust-pop-up-btn crypto-pop text-right">
-							<Button
-								className="primary-btn pop-cancel btn-width"
-								style={{ margin: "0 8px" }}
-								onClick={this.props.onClose}
-							>
-								Back
-							</Button>
-							<Button
-								className="pop-btn custom-send"
-                                style={{ backgroundColor: !isShowGreyButton && '#ccc', borderColor: !isShowGreyButton && '#3d3d3d' }}
+						   <div className="cust-pop-up-btn crypto-pop">
+						   <Button block
+								className="pop-btn"
+                                // style={{ backgroundColor: !isShowGreyButton && '#ccc', borderColor: !isShowGreyButton && '#3d3d3d' }}
 								onClick={this.showDeclaration}
 								loading={loading}
 							>
 								Continue
 							</Button>
+							<Button
+								className="cust-cancel-btn"
+								onClick={this.props.onClose}
+							>
+								Back
+							</Button>
+							
 						</div>
 						</div> 
 						</>}

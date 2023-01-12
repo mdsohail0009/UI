@@ -154,7 +154,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         </Col>
                     </Row>
                 </>}
-                <Row gutter={[16, 4]} className="send-drawerbtn tabs-innertabs">
+                {/* <Row gutter={[16, 4]} className="send-drawerbtn tabs-innertabs">
 
                   <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
                       <Form.Item className="text-center form-marginB">
@@ -185,7 +185,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         </Button>
                       </Form.Item>
                     </Col>
-                  </Row>
+                  </Row> */}
                 {props.currency == 'EUR' && <h2 className="adbook-head">SEPA Transfer</h2>}
                 {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
             <Form

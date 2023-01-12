@@ -131,7 +131,7 @@ const Notifications = ({
                 }
                 description={
                   <Text
-                    className={`profile-value ${!item.isRead ? "fw-200" : "fw-500"
+                    className={`profile-value ${!item.isRead ? "fw-500" : "fw-500"
                       } fs-12`}
                   >
                     {item?.message}{" "}

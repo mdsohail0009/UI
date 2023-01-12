@@ -218,7 +218,7 @@ componentWillUnmount(){
                             </ul>
                             </> : <div className="text-center"><Spin className="text-center"/></div>}</>}
                     </div>
-                    <Tabs className="cust-tabs-fait coinview-tabs">
+                    <Tabs className="cust-tabs-fait coinview-tabs" onChange={(e) => this.setState({ ...this.state, type: e })}>
                                 <Tabs.TabPane tab="Price" className="" key={"prices"} ></Tabs.TabPane>
                                 <Tabs.TabPane tab="Market Cap" className="" key={"market_caps"}  ></Tabs.TabPane>
                                 <Tabs.TabPane tab="Trading View" className="" key={"total_volumes"} ></Tabs.TabPane>
