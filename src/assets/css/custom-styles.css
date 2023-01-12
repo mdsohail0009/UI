@@ -529,6 +529,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .img-upld:hover{background-color: #F1F2F6;}
 /* receive Crypto end */
 /*Send Address start*/
+.thank-subtext{font-size: 16px;font-weight: 400;color:#ffffff;}
 .adbook-head{font-weight: 700 !important;font-size: 18px !important;color: var(--checkText) !important;margin-bottom: 18px !important;margin-top: 30px;}
 .fund-border{margin-top: 15px;padding: 8px;background: var(--addressList);border: 2px solid  var(--addressList);border-radius: 13px;padding: 22px;cursor: pointer !important;align-items: center !important;}
 .fund-border:first-child{margin-top: 0;}
@@ -683,7 +684,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .newtransfer-card{background: var(--drawerList);border-radius: 13px;border: 2px solid transparent;height: 90px;padding: 10px 43px !important;font-size: 16px; font-weight: 700; color: var(--coinBal);width: 100%;text-align: center;}
 .newtransfer-card:hover,.newtransfer-card:active{background-color: var(--radioFill) !important;border: 2px solid var(--radioBorderfill);color: var(--coinPrice) !important;}
 .newtransfer-card::before{ background: var(--drawerList) !important;}
-.small-btns{margin-top: 10px !important;}
+.small-btns{margin-top: 20px !important;}
 .addcrypto-whitelist{margin-bottom: 45px;}
 .sub-title{font-weight: 700 !important; font-size: 18px !important;margin-bottom: 26px !important; color: var(--white) !important;}
 .addcrypto-benficiary .ant-form-item{margin-bottom: 16px;}
