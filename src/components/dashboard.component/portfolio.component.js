@@ -26,7 +26,9 @@ class Portfolio extends Component {
             loading: true,
             transactionData: [],
             searchVal:[],
-            fullViewData:[]
+            fullViewData:[],
+            marketCaps:[],
+            dashBoardTransactions:[]
         }
     }
     getTransactionData = async () => {
@@ -53,16 +55,15 @@ class Portfolio extends Component {
     //     }
 
     // }
-    onSearch = ({ currentTarget: { value } }) => {
+   
+    handleSearch = ({ currentTarget: { value } }) => {
         debugger
-        let filterTransactionList;
-        if (!value) {
-            filterTransactionList = this.state.transactionData;
-        } else {
-            filterTransactionList =  this.state.transactionData.filter(item => item.wallet.toLowerCase().includes(value.toLowerCase()));
-            this.setState({...this.state,searchVal:value})
+        if(value){
+            let filterTransactionList =  this.state.transactionData.filter(item => item.wallet.toLowerCase().includes(value.toLowerCase()));
+            this.setState({...this.state,transactionData:filterTransactionList,searchVal:value})
+        }else{
+            this.setState({...this.state,transactionData:this.state.dashBoardTransactions}) 
         }
-        this.setState({...this.state,transactionData:filterTransactionList})
     }
     componentWillUnmount() {
         this.transSub.unsubscribe();
@@ -124,9 +125,7 @@ class Portfolio extends Component {
                         {/* <input className = "search-text" type="text" placeholder = "Search Anything" /> */}
                         <Search
                             placeholder="Search Transactions"
-                            value={this.state.searchVal}
-                            // addonAfter={<span className="icon md search-white" />}
-                            onChange={(value) => this.onSearch(value)}
+                            onChange={(value)=>this.handleSearch(value)}
                             size="middle"
                             bordered={false}
                             className="search-text" />

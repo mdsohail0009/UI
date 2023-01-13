@@ -25,7 +25,12 @@ class cryptocoinsView extends Component {
         portfolioData: [], buyDrawer: false, coinData: null,sendDrawer: false,
         selectedWallet: '',
         searchVal:[],
-        coinData:[]
+        coinData:[],
+        transactionData: this.props.dashboard.cryptoPortFolios.data,
+        searchVal:[],
+        fullViewData:[],
+        marketCaps:[],
+        dashBoardTransactions:this.props.dashboard.cryptoPortFolios.data
     }
     componentDidMount() {
         this.loadCryptos();
@@ -214,6 +219,15 @@ class cryptocoinsView extends Component {
           </ul>
       </Menu>
   )
+  handleSearch = ({ currentTarget: { value } }) => {
+    debugger
+    if(value){
+        let filterTransactionList =  this.props.dashboard?.cryptoPortFolios?.data.filter(item => item.coin.toLowerCase().includes(value.toLowerCase()));
+        this.setState({...this.state,transactionData:filterTransactionList,searchVal:value})
+    }else{
+        this.setState({...this.state,transactionData:this.state.dashBoardTransactions}) 
+    }
+}
     render() {
         const { Text,Title } = Typography;
         const { cryptoPortFolios } = this.props.dashboard
@@ -250,6 +264,12 @@ class cryptocoinsView extends Component {
             <Translate content="suissebase_title" component={Title} className="db-titles" />
             <div className = 'search-box'>
               {/* <input className = "search-text" type="text" placeholder = "Search Anything" /> */}
+              <Search
+                            placeholder="Search Transactions"
+                            onChange={(value)=>this.handleSearch(value)}
+                            size="middle"
+                            bordered={false}
+                            className="search-text" />
                       <div className = "search-btnexpand">
                       <span className="icon lg search-angle icon-space" />
                       </div>
@@ -266,7 +286,7 @@ class cryptocoinsView extends Component {
             <List
               className="mobile-list"
               itemLayout="horizontal"
-              dataSource={cryptoPortFolios.data|| this.state.coinData}
+              dataSource={this.state.transactionData}
               //loading={cryptoPortFolios.loading}
               locale={{
                 emptyText: (
