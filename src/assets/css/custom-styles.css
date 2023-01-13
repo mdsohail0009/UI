@@ -770,7 +770,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .cust-input.cust-adon .ant-input-wrapper.ant-input-group{padding: 0 11px;}
 .icon.md.search-angle{background-position:-360.5px -488px; margin-left: 8px;}
 .custom-model-label .ant-form-item-label > label{height: 20px;}
-.marketcap-coinsize .ant-table-cell img{width: 32px !important;height: 32px !important;}
+.marketcap-coinsize .ant-table-cell img{width: 30px !important;height: 30px !important;}
 /* transactions end  */
 /* audit logs start  */
 .addressbook-grid .custom-checkbox input{display: none;}
@@ -988,6 +988,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
     /* .ant-popover.ant-popover-placement-left{left: 872px !important;} */
     .transctns-grid .ant-drawer-header, .transctns-grid .ant-drawer-body{padding-left: 100px;padding-right: 100px;}
     .adbook-scroll{max-height: calc(100vh - 418px);overflow-y: auto;}
+    .your-card{margin-top: 8px;}
 }
 @media (min-width: 1400px){
     .main-container{max-width: 1300px; }
