@@ -19,11 +19,10 @@ class WalletList extends Component {
         }
     }
     componentDidMount() {
-        const {buyInfo}=this.props.buyInfo;
         this.props.getFiat(this.props.member?.id);
-        if(buyInfo?.memberFiat?.data[0]?.id){
-            if (this.props.onWalletSelect) { this.props.onWalletSelect(buyInfo?.memberFiat?.data[0]?.id ) }
-            this.setState({ ...this.state, selectedvalue:buyInfo?.memberFiat?.data[0]?.id });
+        if(this.props.buyInfo?.memberFiat?.data[0]?.id){
+            if (this.props.onWalletSelect) { this.props.onWalletSelect(this.props.buyInfo?.memberFiat?.data[0]?.id ) }
+            this.setState({ ...this.state, selectedvalue:this.props.buyInfo?.memberFiat?.data[0]?.id });
         }
 
     }

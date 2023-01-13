@@ -42,6 +42,7 @@ class Wallets extends Component {
         this.props.history.push("/docnotices");
     }
     showSendReceiveDrawer = (e, value) => {
+        debugger
         this.props.dispatch(setStep("step1"));
         const is2faEnabled = this.props.twoFA?.isEnabled;
         if (!this.props?.userProfile?.isKYC) {
@@ -122,8 +123,8 @@ class Wallets extends Component {
             <div className="fait-wallets-style">
             <Translate content="fait_walets" component={Title} className="db-titles" />
                 <div>
-              <Button className="dbchart-link" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
-                  <Translate content="cockpit" />
+              <Button className="dbchart-link" style={{ height: 36,}}  >
+                  <Translate content="cockpit" onClick={() => this.cockpitCharts()} />
               </Button>
                     
               </div>
