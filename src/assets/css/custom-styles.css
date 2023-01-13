@@ -619,7 +619,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* success start */
 .cryptosummary-container{max-height: calc(100vh - 0px);}
 .success-title{font-weight: 800 !important;font-size: 26px !important;color: var(--white) !important;}
-.successsubtext{font-weight: 500;font-size: 16px;color: var(--coinPrice);height: 330px;}
+.successsubtext{font-weight: 500;font-size: 16px;color: var(--coinPrice) !important;height: 330px;}
 .custom-declaraton{height: calc(100vh - 225px);align-items: center;display: flex;justify-content: center;}
 .pop-cancel span{color:var(--textYellow);text-transform: uppercase;font-weight: 700;}
 .custom-declaraton .declaration-content{width: 600px;}
@@ -663,6 +663,9 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .network .swap-fontsize{color: var(--white);}
 .custom-height {max-height: calc(100vh - 926px);}
 .nodata-text{margin-top: 10px !important;display: inline-block;}
+.nodata-image{margin-bottom: 10px;}
+.custom-upload{ margin: 12px 0px 4px 0;}
+.send-fiatform .ant-alert-with-description{margin-top: 20px;}
 /* send fiat end */
 /* send crypto start */
 .min-btn{border: 1px solid rgba(0, 0, 0, 0.3);background: var(--radioBg) !important;height: 36px;border-radius: 10px;min-width: 60px;line-height: 30px;color: var(--coinPrice);font-size: 16px;font-weight: 500; margin: 0 10px 10px 0;}

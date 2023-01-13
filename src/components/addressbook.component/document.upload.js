@@ -99,7 +99,7 @@ class AddressDocumnet extends Component {
                         </Dragger>
                     </Form.Item>
                     {this.state?.filesList?.map((file, indx) => <div>
-                        {((file.status === "done" || file.status == true)&& file.state !='Deleted') && <> <div className="docfile">
+                        {((file.status === "done" || file.status == true)&& file.state !='Deleted') && <> <div className="docfile custom-upload">
                             <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "":(file.documentName?.slice(-3) === "zip" ? "file" : "")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                             <div className="docdetails">
                                 <EllipsisMiddle suffixCount={6}>{file.name || file.documentName}</EllipsisMiddle>
