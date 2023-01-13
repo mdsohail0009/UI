@@ -477,12 +477,12 @@ class CaseView extends Component {
                                                 {this.state.errorWarning !== undefined && this.state.errorWarning !== null && (
                                                     <div style={{ width: '100%' }}>
                                                         <Alert
-                                                            className="w-100 mb-16"
+                                                            className="newcase-style"
                                                             type="warning"
                                                             description={this.state.errorWarning}
                                                             showIcon
                                                             closable={false}
-                                                            style={{ marginBottom: 0, marginTop: '16px' }}
+                                                           
                                                         />
                                                     </div>
                                                 )}

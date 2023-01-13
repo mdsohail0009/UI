@@ -167,7 +167,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .user-list .ant-tabs-tab:hover .tabtitle{color: #fff;}
 .profile-sm-btn:hover, .profile-sm-btn:focus{color: var(--btnhover);border-color: var(--btnhover);}
 /* .theme-switch.theme-active{background: var(--bgDark);} */
-.theme-switch {width: 212px; border-radius: 30px;height: 52px; padding: 7px 4px;}
+.theme-switch {border-radius: 30px;height: 52px; padding: 7px 4px;}
 .custom-theme-btn{display: flex;align-items: center;}
 .setting-btn{margin-top: 36px;}
 .mb-copy{color: var(--marketTitle) !important;}
@@ -296,7 +296,7 @@ input:-webkit-autofill:active{
 .crypto-card.select .ant-card-body .select-currency .cust-input .ant-select-selector{line-height: 44px !important;}
 .crypto-card.select .ant-card-body .select-currency .ant-select-single .ant-select-selector .ant-select-selection-item{line-height: 42px !important;}
 .profile-img-style .profile-info .loader-antd{padding: 30px !important;}
-
+.newcase-style{margin-bottom: 16px;align-items: center;}
 /*Common css End*/
 
 /*Coin Selection End*/
