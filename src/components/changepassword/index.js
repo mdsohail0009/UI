@@ -222,7 +222,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
           />
         </Form.Item>
 
-        <div className="changepwd-btn btn-content btn-container">
+        <div className="changepwd-btn btn-content ">
          
           <div classname="sell-btc-btn">
           <Button

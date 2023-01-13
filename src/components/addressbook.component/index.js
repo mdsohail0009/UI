@@ -699,6 +699,7 @@ class AddressBook extends Component {
 						</div>
 					)}
 					</div>
+					<div className="cust-list main-container"> 
 					{cryptoFiat ? (
 						<List
 							className="address-clear"
@@ -717,7 +718,7 @@ class AddressBook extends Component {
 						/>
 					)}
 				
-				
+				</div>
 
 				<Drawer
 					destroyOnClose={true}

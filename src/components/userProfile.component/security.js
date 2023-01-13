@@ -205,7 +205,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                   className="mb-0 profile-label"
                 />
               </label> */}
-              <p className="profile-value" style={{ flexGrow: 12 }}>
+              {/* <p className="profile-value" style={{ flexGrow: 12 }}>
                 {twoFA?.isEnabled ? (
                   <Translate
                     content="Enabled"
@@ -219,7 +219,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                     className="profile-value"
                   />
                 )}
-              </p>
+              </p> */}
               <div>
                 <Switch
                   onChange={(status) => enableDisable2fa(status)}
@@ -245,7 +245,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
           className="basic-decs"
         />
         <ul className="profile-ul">
-          <li className="profileinfo c-pointer" onClick={() => showDrawer()}>
+          <li className="profileinfo " onClick={() => showDrawer()}>
             <div className="profile-block">
               <label className="profile-label c-pointer">
                 <Translate
@@ -278,7 +278,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                   /> */}
                 {/* </span> */}
                 {/* <span className="icon md rarrow-white" /> */}
-                <Col md={24} xl={24} xxl={24}>
+                {/* <Col md={24} xl={24} xxl={24}> */}
               <div className="text-left passwrd-chang-btn">
               <Button
                         className="profile-sm-btn"
@@ -289,7 +289,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                        change
                     </Button>
               </div>
-            </Col>
+            {/* </Col> */}
               </div>
             </div>
           </li>

@@ -168,6 +168,7 @@ export function withState(WrappedGrid) {
                             </div>
                         </PDFExport>
                     </div>
+                    <div className="cust-list main-container">
                     {this.state.isLoading && this.loadingPanel}
                     {this.props.showExcelExport && <div className='text-right secureDropdown export-pdf'>
                         
@@ -216,6 +217,7 @@ export function withState(WrappedGrid) {
                         sort={this.state.dataState.sort}
                         onDataStateChange={this.handleDataStateChange}
                     />}
+                </div>
                 </div>
             );
         }

@@ -341,8 +341,8 @@ class AuditLogs extends Component {
                 </div>
                 <Form.Item className="mb-0">
                   <div className="text-right">
-                    <Button type="button" className="c-pointer text-center ant-btn-lg text-white-30 pop-cancel fw-400 text-captz text-center mr-36" onClick={this.handleCancel} ><span><Translate content="cancel" /></span></Button>
-                    <Button type="button" style={{ width: 100 }} key="submit" className="c-pointer pop-btn ant-btn px-24" htmlType="submit"><span><Translate content="ok" /></span></Button>
+                  <Button type="button" block key="submit" className="primary-btn pop-btn" htmlType="submit"><span><Translate content="ok" /></span></Button>
+                    <Button type="button" block className="cust-cancel-btn" onClick={this.handleCancel} ><span><Translate content="cancel" /></span></Button>         
                   </div>
                 </Form.Item>
               </Form>
@@ -353,7 +353,7 @@ class AuditLogs extends Component {
           title={[<div className="side-drawer-header">
             <span />
             <div className="text-center fs-16">
-              <Title className="text-white-30 fs-16 fw-600 text-upper mb-4 d-block">{this.state.featureName}</Title>
+              <div className="drawer-maintitle rec-bottom">{this.state.featureName}</div>
             </div>
             <span onClick={this.hideMoreAuditLogs} className="icon md close-white c-pointer" />
           </div>]}
