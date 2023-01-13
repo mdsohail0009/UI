@@ -190,7 +190,7 @@ class SelectCrypto extends Component {
                     {<div><Translate content="thousandKText" component={Paragraph} className="buy-paragraph " />
                     <Translate content="contact_amount_text" component={Paragraph} className="buy-paragraph" />
                      <div className="buy-usdt-btn">
-                        <SuisseBtn autoDisable={true} title="PreviewBuy" className="pop-btn" onClick={() => this.handlePreview()} />
+                     <SuisseBtn title="PreviewBuy" loading={this.state.btnLoading} onRefresh={() => this.refresh()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
                     </div> </div>}
 
                     </Card>
