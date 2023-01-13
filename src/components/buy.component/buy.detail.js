@@ -109,7 +109,7 @@ class SelectCrypto extends Component {
         const _vaidator = validatePreview({ localValue, cryptValue: cryptoValue, wallet: this.state.selectedWallet, maxPurchase: buyMax, minPurchase: buyMin, gbpInUsd, eurInUsd })
         if (!_vaidator.valid) {
             this.setState({ ...this.state, error: { ..._vaidator } });
-            this.myRef.current.scrollIntoView();
+            this.myRef.current.scrollIntoView(0,0);
             return;
         }
         if((localValue == 0 && cryptoValue == 0)){
