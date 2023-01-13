@@ -135,7 +135,7 @@ class PayeeBankDetails extends Component {
                     </Col>
                     <Col xs={24} md={10} lg={10} xl={10} xxl={10}>
                        <Button className={`pop-btn dbchart-link pop-validate-btn`} style={{width:"150px",marginTop:"32px",height:"42px"}}
-                                    loading={this.state.isValidateLoading}
+                                    // loading={this.state.isValidateLoading}
                                     onClick={() => this.onIbanValidate(this.props?.form.current?.getFieldValue(["payeeAccountModels","iban"]))} >
                                     <Translate content="validate" />
                                 </Button>

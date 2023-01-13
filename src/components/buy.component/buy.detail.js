@@ -8,7 +8,6 @@ import { convertCurrency, convertCurrencyDuplicate, validatePreview } from './bu
 import { fetchPreview, setWallet, fetchMemberFiat } from '../../reducers/buyReducer';
 import Loader from '../../Shared/loader';
 import SuisseBtn from '../shared/butons';
-import NumberFormat from 'react-number-format';
 import LocalCryptoSwapperCmp from '../shared/local.crypto.swap/swap';
 import Currency from '../shared/number.formate';
 import apicalls from '../../api/apiCalls';
@@ -146,9 +145,9 @@ class SelectCrypto extends Component {
         if (this.props.buyInfo?.selectedCoin?.loading || !this.props.buyInfo?.selectedCoin?.data) {
             return <Loader />
         }
-        const { Paragraph, Text } = Typography;
+        const { Paragraph } = Typography;
         const { localValue, cryptoValue, isSwaped, isConvertionLoading } = this.state.swapValues;
-        const { coin, coinFullName, coinBalance, percentage,impageWhitePath } = this.props.buyInfo?.selectedCoin?.data;
+        const { coin, coinBalance } = this.props.buyInfo?.selectedCoin?.data;
         return (
             <div id="divScroll" ref={this.myRef}>
                 {this.state.errorMsg && (
@@ -161,21 +160,9 @@ class SelectCrypto extends Component {
                         />
                     )}
                     {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="error" message={apicalls.convertLocalLang('buy_crypto')} description={this.state.error?.message} />}
-                {/* <div className='drawer-title-style'><div className='crypto-bg drawer-crypto-bg'>
-                      <span className={`crypto-icon c-pointer BTC`}  /></div><div className='drawer-maintitle'>Buy Crypto</div></div>
-                      {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="error" message={apicalls.convertLocalLang('buy_crypto')} description={this.state.error?.message} />} */}
+
                 <div className="selectcrypto-container">
                     <Card className="crypto-card select " bordered={false}>
-                    {/* <div className=''> */}
-                        {/* <div> */}
-                        {/* <div className="d-flex align-center mb-4">
-                            <Image preview={false} src={impageWhitePath}/>
-                            <Text className="crypto-percent text-purewhite">{percentage}<sup className="percent text-purewhite">%</sup></Text>
-                        </div> */}
-                        {/* <Text className="fs-24 text-purewhite crypto-name ml-4">{coinFullName}</Text> */}
-                        {/* </div> */}
-                        {/* <div > */}
-                       
                         {<div>
                    <LocalCryptoSwapperCmp
                         localAmt={localValue}
@@ -191,39 +178,18 @@ class SelectCrypto extends Component {
                         isConvertionLoad={isConvertionLoading} /></div>}
                             <div className="crypto-amount">
                                <div className="crypto-details"><span className='buy-balance'>Balance: </span><Currency prefix={'' } defaultValue={coinBalance} suffixText={""} className='buycoin-style marginL' /><span className='buycoin-style marginL'>{coin }</span> </div>
-                                {/* <NumberFormat value={coinFullName} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props}>{value}</div>} /> */}
-                            </div>
-                        {/* </div> */}
-                        
-                        {/* </div> */}
-                        {this.state.isShowCoinsData && <div>
-                   {/* <LocalCryptoSwapperCmp
-                        localAmt={localValue}
-                        cryptoAmt={cryptoValue}
-                        localCurrency={this.state.selectedWallet?.currencyCode || "USD"}
-                        cryptoCurrency={coin}
-                        onChange={(obj) => this.onValueChange(obj)} customerId={this.props.userProfileInfo?.id}
-                        screenName='buy'
-                        isSwaped={isSwaped}
-                        onCurrencySwap={() => {
-                            this.setState({ ...this.state, swapValues: { ...this.state.swapValues, isSwaped: !this.state.swapValues.isSwaped } })
-                        }}
-                        isConvertionLoad={isConvertionLoading} /> */}
 
-                    
-                    {/* <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50 pt-16" />
-                    <WalletList onWalletSelect={(e) => this.handleWalletSelection(e)} /> */}
-                    {/* <div className="fs-12 text-white-30 text-center mt-24"><Translate content="change_10Sec_amount" component={Paragraph} className="fs-12 text-white-30 text-center mt-24" /></div> */}
+                            </div>
+
+                        {this.state.isShowCoinsData && <div>
                     
                     </div>}
                     <div className="select-currency">
-                        {/* <Translate content="buy_select_currency" component={Paragraph} className="label-style" /> */}
                         <WalletList placeholder="Select Currency" onWalletSelect={(e) => this.handleWalletSelection(e)} />
                     </div>
                     {<div><Translate content="thousandKText" component={Paragraph} className="buy-paragraph " />
                     <Translate content="contact_amount_text" component={Paragraph} className="buy-paragraph" />
                      <div className="buy-usdt-btn">
-                        {/* <SuisseBtn title="PreviewBuy" loading={this.state.btnLoading} onRefresh={() => this.refresh()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} /> */}
                         <SuisseBtn autoDisable={true} title="PreviewBuy" className="pop-btn" onClick={() => this.handlePreview()} />
                     </div> </div>}
 

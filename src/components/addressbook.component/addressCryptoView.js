@@ -171,6 +171,14 @@ const AddressCryptoView = (props) => {
 													</div>
 												</div>
 											</Col>
+											<Col xs={24} sm={24} md={12} lg={5} xxl={5}>
+												<div className="kpi-divstyle">
+													<label className="kpi-label"></label>
+													<div className=" kpi-val">
+														
+													</div>
+												</div>
+											</Col>
 												
 										</Row>
 										{cryptoAddress?.documents?.details.map((file) => (
@@ -212,7 +220,7 @@ const AddressCryptoView = (props) => {
 												))}
 									</Col>
 								</Row>
-								<div className="">
+								<div className="text-right">
 								<Button
 									className="pop-btn "
 									block

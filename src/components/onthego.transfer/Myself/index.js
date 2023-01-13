@@ -404,7 +404,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         </Col>}
         {(currency === 'EUR'||addressOptions.tabType === 'internationalIBAN') &&<Col xs={24} md={10} lg={10} xl={10} xxl={10}>
             <Button className={`pop-btn dbchart-link pop-validate-btn`}
-                loading={isValidateLoading}
+            type="primary"
+                // loading={isValidateLoading}
                 onClick={() => onIbanValidate(enteredIbanData)} >
                 <Translate content="validate" />
             </Button>      
@@ -571,45 +572,52 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     </Form.Item>
                 </Col></>}
         </Row>
-        {(currency === 'EUR' || addressOptions.tabType === 'internationalIBAN') && <div className="box basic-info alert-info-custom mt-16">
+        {(currency === 'EUR' || addressOptions.tabType === 'internationalIBAN') && <div className="box basic-info alert-info-custom mt-16 kpi-List">
             <Spin spinning={ibanLoading}>
             {validIban&&isShowBankDetails&&<Row>
-                <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                <label className="fs-12 fw-500">
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                <div className="kpi-divstyle">
+                <label className="kpi-label">
                         Bank Name
                 </label>
-                <div className="pr-24"><Text className="fs-14 fw-400 text-white">{(bankDetails?.bankName!==''&&bankDetails?.bankName!==null)?bankDetails?.bankName:'-'}</Text></div>
-
+                <div ><Text className="kpi-val">{(bankDetails?.bankName!==''&&bankDetails?.bankName!==null)?bankDetails?.bankName:'-'}</Text></div>
+                </div>
             </Col>
-                <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                <label className="fs-12 fw-500 ">BIC</label>
-                   <div className="pr-24"><Text className="fs-14 fw-400 text-white"> {bankDetails.routingNumber!==''&&bankDetails.routingNumber!==null?bankDetails.routingNumber:'-'}</Text></div>
-
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                <div className="kpi-divstyle">
+                <label className="kpi-label ">BIC</label>
+                   <div ><Text className="kpi-val"> {bankDetails.routingNumber!==''&&bankDetails.routingNumber!==null?bankDetails.routingNumber:'-'}</Text></div>
+                </div>
                 </Col>
-                <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                <label className="fs-12 fw-500 ">Branch</label>
-                    <div className="pr-24"><Text className="fs-14 fw-400 text-white">{bankDetails.branch!==''&&bankDetails.branch!==null?bankDetails.branch:'-'}</Text></div>
-
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                <div className="kpi-divstyle">
+                <label className="kpi-label ">Branch</label>
+                    <div ><Text className="kpi-val">{bankDetails.branch!==''&&bankDetails.branch!==null?bankDetails.branch:'-'}</Text></div>
+                </div>
                 </Col>
-                <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                <label className="fs-12 fw-500 ">Country</label>
-                    <div><Text className="fs-14 fw-400 text-white">{bankDetails.country!==''&&bankDetails.country!==null?bankDetails.country:'-'}</Text></div>
-
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                <div className="kpi-divstyle">
+                <label className="kpi-label">Country</label>
+                    <div><Text className="kpi-val">{bankDetails.country!==''&&bankDetails.country!==null?bankDetails.country:'-'}</Text></div>
+                </div>
                 </Col>
-                <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                <label className="fs-12 fw-500">State</label>
-                    <div><Text className="fs-14 fw-400 text-white">{bankDetails.state!==''&&bankDetails.state!==null?bankDetails.state:'-'}</Text></div>
-
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                <div className="kpi-divstyle">
+                <label className="kpi-label">State</label>
+                    <div><Text className="kpi-val">{bankDetails.state!==''&&bankDetails.state!==null?bankDetails.state:'-'}</Text></div>
+                </div>
                 </Col>
-                <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                <label className="fs-12 fw-500">City</label>
-                    <div><Text className="fs-14 fw-400 text-white">{(bankDetails.city!==''&&bankDetails.city!==null)?bankDetails.city:'-'}</Text></div>
-
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                <div className="kpi-divstyle">
+                <label className="kpi-label">City</label>
+                    <div><Text className="kpi-val">{(bankDetails.city!==''&&bankDetails.city!==null)?bankDetails.city:'-'}</Text></div>
+                </div>
                 </Col>
-                <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                <label className="fs-12 fw-500">Zip</label>
-                    <div><Text className="fs-14 fw-400 text-white">{(bankDetails.zipCode!==''&&bankDetails.zipCode!==null)?bankDetails.zipCode:'-'}</Text></div>
-
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                <div className="kpi-divstyle">
+                <label className="kpi-label">Zip</label>
+                    <div><Text className="kpi-val">{(bankDetails.zipCode!==''&&bankDetails.zipCode!==null)?bankDetails.zipCode:'-'}</Text></div>
+                </div>
                 </Col></Row>}
                 
                 {(!validIban||!isShowBankDetails)&&<span className="info-details">No bank details available</span>}

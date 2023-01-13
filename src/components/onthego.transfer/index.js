@@ -513,7 +513,7 @@ saveWithdrawdata = async () => {
             <Title className='sub-abovesearch code-lbl'>Who are you sending money to?</Title>
           </div>
           <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-          <Search placeholder="Search Currency" value={this.state.searchVal} prefix={<span className="icon lg search-angle drawer-search" />} onChange={this.handleSearch} size="middle" bordered={false} className="cust-search" />
+          <Search placeholder="Search for Payee" value={this.state.searchVal} prefix={<span className="icon lg search-angle drawer-search" />} onChange={this.handleSearch} size="middle" bordered={false} className="cust-search" />
           {/* <Search placeholder="Search for Payee" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className=" text-center" /> */}
           </Col>
           {this.state?.loading && <Loader />}

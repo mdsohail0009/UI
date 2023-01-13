@@ -235,7 +235,7 @@ class AddressBook extends Component {
 			customCell: (props) => (
 				<td>
 					<div>
-						<span className="gridLink c-pointer" onClick={() => this.addressCryptoView(props)}>{props.dataItem?.whiteListName}</span>
+						<span className="gridLink c-pointer batch-filename" onClick={() => this.addressCryptoView(props)}>{props.dataItem?.whiteListName}</span>
 					</div>
 				</td>
 			),

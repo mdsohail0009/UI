@@ -657,7 +657,7 @@ class WithdrawSummary extends Component {
                 Please review and sign the document in your email to whitelist your address.
                 Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
 				 
-                        <Translate content="crypto_with_draw_success" className="cust-cancel-btn" component={Button} onClick={this.onBackSend} />
+                        <Translate content="crypto_with_draw_success" className="cust-cancel-btn send-crypto-btn" component={Button} onClick={this.onBackSend} />
                    
 			</div></div>
 		  }
@@ -1026,9 +1026,9 @@ class WithdrawSummary extends Component {
 								type="checkbox"
 								id="agree-check"
 								// checked={onCheked}
-								onChange={({ currentTarget: { checked } }) => {
-									this.props.onTermsChange(checked);
-								}}
+								// onChange={({ currentTarget: { checked } }) => {
+								// 	this.props?.onTermsChange(checked);
+								// }}
 							/>
 							<span for="agree-check"  />
 							{/* // className={`${error?.agreeRed===false ? "checkbox-red":""}`} */}

@@ -66,7 +66,7 @@ class QRScan extends Component {
     get walletCode() {
         let selectedWalletCode = this.props?.sendReceive?.depositWallet?.walletCode;
         if((selectedWalletCode === "USDT" || selectedWalletCode === "ETH" || selectedWalletCode === "USDC") && this.props?.sendReceive?.depositWallet?.network ){
-            return `${this.props?.sendReceive?.depositWallet?.walletCode} + " " + "(" + ${this.props?.sendReceive?.depositWallet?.network}  + ")"`;
+            return `${this.props?.sendReceive?.depositWallet?.walletCode}` + " " + "(" + `${this.props?.sendReceive?.depositWallet?.network}`  + ")";
         }
         else {
             return this.props?.sendReceive?.depositWallet?.walletCode;
@@ -162,13 +162,17 @@ class QRScan extends Component {
                     <ul className="recive-text">
                         <li className="list-dot"><Translate className="recive-runtext" content="address_hint_text" component={Text} /></li>
                         <li className="list-dot"><Translate className="recive-runtext" content="address_hint_text_1" component={Text} /></li>
-                        <li className="list-dot"><Text className="recive-runtext">Note: {this.props?.sendReceive?.depositWallet?.note} </Text></li>
+                        <li className="list-dot"><Text className="recive-runtext">{this.props?.sendReceive?.depositWallet?.note} </Text></li>
                     </ul>
                 </Paragraph>
                 <div className='recive-share'>Share</div>
                 <div>
-                    <span className='icon lg whats-app c-pointer' />
-                    <span className='icon lg mail-app c-pointer' />
+                <WhatsappShareButton te url={process.env.REACT_APP_WEB_URL} title={`Hello, I would like to share my ${this.walletCode} address for receiving  ${this.walletAddress}. Note: Please make sure you are using the correct protocol otherwise you are risking losing the funds. I am using Suissebase. Thank you.`} >
+                <span className='icon lg whats-app c-pointer'/>
+                </WhatsappShareButton>
+                <EmailShareButton url={process.env.REACT_APP_WEB_URL} subject={"Wallet Address"} body={`Hello, I would like to share my ${this.walletCode} address for receiving  ${this.walletAddress}. Note: Please make sure you are using the correct protocol otherwise you are risking losing the funds. I am using Suissebase. Thank you.`}  >
+                <span className='icon lg mail-app c-pointer' />
+                </EmailShareButton>
                 </div>
 
 

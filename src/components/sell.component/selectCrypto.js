@@ -12,6 +12,7 @@ import Currency from '../shared/number.formate';
 import apicalls from '../../api/apiCalls';
 import { convertCurrencyDuplicate } from '../buy.component/buySellService';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
+import { setWallet } from '../../reducers/buyReducer';
 
 class SelectSellCrypto extends Component {
     myRef = React.createRef();
@@ -131,6 +132,7 @@ class SelectSellCrypto extends Component {
         this.setState({ ...this.state, isShowCoinsData: true, sellSaveData: obj }, () => {
             this.handleConvertion();
         });
+        this.props.setWallet(obj);
     }
     onValueChange = (value) => {
         const { isSwap: isSwaped, USDAmnt: localValue, CryptoAmnt: cryptoValue } = this.state;
@@ -208,7 +210,7 @@ class SelectSellCrypto extends Component {
                                 isSwaped={this.state.isSwap}
                             />
                             <div className='display-items' >
-                                <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills sell-radiobtn-style" onChange={({ target: { value } }) => {
+                                <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills sell-radiobtn-style text-left" onChange={({ target: { value } }) => {
                                     this.clickMinamnt(value)
                                 }}>
                                     <Translate value="min" content="min" component={Radio.Button} />
@@ -255,6 +257,9 @@ const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
+        },
+        setWallet: (wallet) => {
+            dispatch(setWallet(wallet))
         },
         dispatch
     }

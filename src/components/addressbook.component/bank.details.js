@@ -141,63 +141,71 @@ class BankDetails extends Component {
                     </Form.Item>
                 </Col>
                 </>
-                <div className="box basic-info alert-info-custom mt-16">
+                <div className="box basic-info alert-info-custom mt-16  kpi-List">
                 <Row>
-                    <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 text-white">
+                    <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                    <div className="kpi-divstyle">
+                        <label className="kpi-label">
                             <strong>Bank Name</strong>
                         </label>
-                        <div><Text className="fs-14 fw-400 text-white">Barcslays Bank UK PLC</Text></div>
-
+                        <div><Text className="kpi-val">Barcslays Bank UK PLC</Text></div>
+                        </div>
                     </Col>
-                    <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 text-white">
+                    <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                    <div className="kpi-divstyle">
+                        <label className="kpi-label">
                             <strong>BIC</strong>
                         </label>
-                        <div><Text className="fs-14 fw-400 text-white">BUKBGB22</Text></div>
-
+                        <div><Text className="kpi-val">BUKBGB22</Text></div>
+                        </div>
                     </Col>
-                    <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 text-white">
+                    <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                    <div className="kpi-divstyle">
+                        <label className="kpi-label">
                             <strong>Branch</strong>
                         </label>
-                        <div><Text className="fs-14 fw-400 text-white">CHELTENHAM</Text></div>
-
+                        <div><Text className="kpi-val">CHELTENHAM</Text></div>
+                        </div>
                     </Col>
-                    <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 text-white">
+                    <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                    <div className="kpi-divstyle">
+                        <label className="kpi-label">
                             <strong>Branch</strong>
                         </label>
-                        <div><Text className="fs-14 fw-400 text-white">CHELTENHAM</Text></div>
-
+                        <div><Text className="kpi-val">CHELTENHAM</Text></div>
+                        </div>
                     </Col>
-                    <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 text-white">
+                    <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                    <div className="kpi-divstyle">
+                        <label className="kpi-label">
                             <strong>Country</strong>
                         </label>
-                        <div><Text className="fs-14 fw-400 text-white">United Kingdom (GB)</Text></div>
-
+                        <div><Text className="kpi-val">United Kingdom (GB)</Text></div>
+                        </div>
                     </Col>
-                    <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 text-white">
+                    <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                    <div className="kpi-divstyle">
+                        <label className="kpi-label">
                             <strong>State</strong>
                         </label>
-                        <div><Text className="fs-14 fw-400 text-white">XXXX</Text></div>
-
+                        <div><Text className="kpi-val">XXXX</Text></div>
+                        </div>
                     </Col>
-                    <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 text-white">
+                    <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                    <div className="kpi-divstyle">
+                        <label className="kpi-label">
                             <strong>City</strong>
                         </label>
-                        <div><Text className="fs-14 fw-400 text-white">Leicester</Text></div>
-
+                        <div><Text className="kpi-val">Leicester</Text></div>
+                        </div>
                     </Col>
-                    <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                        <label className="fs-14 fw-400 text-white">
+                    <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                    <div className="kpi-divstyle">
+                        <label className="kpi-label">
                             <strong>Zip</strong>
                         </label>
-                        <div><Text className="fs-14 fw-400 text-white">LE87 2BB</Text></div>
-
+                        <div><Text className="kpi-val">LE87 2BB</Text></div>
+                        </div>
                     </Col>
                 </Row>
             </div>
