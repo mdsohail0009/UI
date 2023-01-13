@@ -162,9 +162,9 @@ class Portfolio extends Component {
                                 <thead>
                                     <tr>
                                         <th style={{width: "5%"}}></th>
+                                        <th style={{width: "18%"}}>Date</th>
                                         <th style={{width: "15%"}}>Wallet</th>
                                         {/* <th style={{width: "35%"}}>Type</th> */}
-                                        <th style={{width: "18%"}}>Date</th>
                                         <th style={{width: "15%"}}>Value</th>
                                         <th style={{width: "15%"}}>Status</th>
                                     </tr>
@@ -189,10 +189,14 @@ class Portfolio extends Component {
                                                      <tr key={idx}>
                                                         <td style={{ width: "100px" }}><span className={``}></span></td>
                                                         {/* {`crypto-icon c-pointer ${item.coin}`} */}
-                                                     <td><div className='ts-wallet'><Title className='ts-coin'>{item.wallet}</Title><Title className='ts-type'>{item.type}</Title></div></td>
-                                                     <td style={{ width: "100px" }}>
-                                                     <div className='ts-tbdate'><Title className='ts-date'>{item?.date }</Title></div>
+                                                        <td style={{ width: "100px" }}>
+                                                     <div className='ts-tbdate'>
+                                                        <Title className='ts-date'>{item?.date }</Title></div>
                                                             </td>
+                                                     <td><div className='ts-wallet'>
+                                                        <Title className='ts-coin'>{item.wallet}</Title>
+                                                     <Title className='ts-type'>{item.type}</Title></div></td>
+                                                    
                                                         
                                                         {/* <td style={{ width: "50px" }}>{item.type}</td> */}
                                                         
@@ -201,7 +205,7 @@ class Portfolio extends Component {
                                                     </tr>
                                                     </>
                                                         : <tr>
-                                                            <td>No transaction details available.</td>
+                                                            <td >No transaction details available.</td>
                                                         </tr>
                                                         }
                                                         </>

@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import { Typography, List, Button, Image, Dropdown, Space, Menu, Drawer } from 'antd';
 import Translate from 'react-translate-component';
@@ -124,7 +125,7 @@ class Wallets extends Component {
             <Translate content="fait_walets" component={Title} className="db-titles" />
                 <div>
               <Button className="dbchart-link" style={{ height: 36,}}  >
-                  <Translate content="cockpit" onClick={() => this.cockpitCharts()} />
+                  <Translate content="cockpit" onClick={() => this.cockpitCharts()}  />
               </Button>
                     
               </div>

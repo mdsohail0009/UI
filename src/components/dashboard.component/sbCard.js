@@ -16,7 +16,7 @@ class SbCard extends Component {
                         <img
                         src={logoWhite}
                         alt="logo"
-                        className="tlv-logo light c-pointer p-relative p-0 cardlogo-height"
+                        className="tlv-logo light  p-relative p-0 cardlogo-height"
                         onClick={this.routeToHome}
                         />
                     </div>
