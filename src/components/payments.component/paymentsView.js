@@ -189,7 +189,7 @@ class PaymentsView extends Component {
                                                     {item.documents?.details.map((file) =>
                                                    <>
                                                    {file.documentName !== null && (
-                                                     <div className='docdetails'  style={{width:"80px"}} onClick={() => this.filePreview(file)}>
+                                                     <div className='docdetails'  onClick={() => this.filePreview(file)}>
                                                                                                         <Tooltip title={file.documentName}>
                                                       {file.documentName?.split(".")[0].length>4&&<EllipsisMiddle>
                                                         {file.documentName.slice(0,4) + "..." +file.documentName.split(".")[1]}
@@ -240,7 +240,7 @@ class PaymentsView extends Component {
                         </div>
                         </div>
                         {!loading &&
-                        <div className="text-left">
+                        <div className="text-right">
                         {paymentsData?.length > 0 &&
                             <Button
                             block

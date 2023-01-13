@@ -5,7 +5,7 @@ import {
     Form, Typography, Input, Button, Alert, Spin, message, Select, Checkbox, Tooltip, Modal,
     Radio, Row, Col, AutoComplete,  Image, Tabs, Drawer
   } from "antd";
-import { withRouter } from 'react-router';
+import {Link,  withRouter } from "react-router-dom";
 import Translate from 'react-translate-component';
 import apiCalls from "../../api/apiCalls";
 import Moment from 'react-moment';
@@ -59,13 +59,13 @@ class Cases extends Component {
         const { gridUrl } = this.state;
 
         return (<>
-        <div className="main-container">
-            <div className="box basic-info">
+        <div className="cust-list main-container">
+        <div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/cockpit" /><span className="back-btnarrow">Back</span></div>
+            
                 <Translate content="case" component={Paragraph} className="grid-title" />
                 <div className="mb-16 cases-grid-view">
                     <List className="address-clear" url={gridUrl} ref={this.gridRef} columns={this.columnGrid} />
                 </div>
-            </div>
             </div>
         </>
         );
