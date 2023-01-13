@@ -520,6 +520,10 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                                 message: apiCalls.convertLocalLang("is_required"),
                             },
                             {
+                                   whitespace:true,
+                                   message: apiCalls.convertLocalLang("is_required"),
+                            },
+                            {
                                 validator: validateContentRule
                             }
                         ]}>
