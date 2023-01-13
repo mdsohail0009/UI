@@ -167,7 +167,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .user-list .ant-tabs-tab:hover .tabtitle{color: #fff;}
 .profile-sm-btn:hover, .profile-sm-btn:focus{color: var(--btnhover);border-color: var(--btnhover);}
 /* .theme-switch.theme-active{background: var(--bgDark);} */
-.theme-switch {width: 212px; border-radius: 30px;height: 52px; padding: 7px 4px;}
+.theme-switch {border-radius: 30px;height: 52px; padding: 7px 4px;}
 .custom-theme-btn{display: flex;align-items: center;}
 .setting-btn{margin-top: 36px;}
 .mb-copy{color: var(--marketTitle) !important;}
@@ -296,7 +296,7 @@ input:-webkit-autofill:active{
 .crypto-card.select .ant-card-body .select-currency .cust-input .ant-select-selector{line-height: 44px !important;}
 .crypto-card.select .ant-card-body .select-currency .ant-select-single .ant-select-selector .ant-select-selection-item{line-height: 42px !important;}
 .profile-img-style .profile-info .loader-antd{padding: 30px !important;}
-
+.newcase-style{margin-bottom: 16px;align-items: center;}
 /*Common css End*/
 
 /*Coin Selection End*/
@@ -770,7 +770,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .cust-input.cust-adon .ant-input-wrapper.ant-input-group{padding: 0 11px;}
 .icon.md.search-angle{background-position:-360.5px -488px; margin-left: 8px;}
 .custom-model-label .ant-form-item-label > label{height: 20px;}
-.marketcap-coinsize .ant-table-cell img{width: 32px !important;height: 32px !important;}
+.marketcap-coinsize .ant-table-cell img{width: 30px !important;height: 30px !important;}
 /* transactions end  */
 /* audit logs start  */
 .addressbook-grid .custom-checkbox input{display: none;}
@@ -988,6 +988,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
     /* .ant-popover.ant-popover-placement-left{left: 872px !important;} */
     .transctns-grid .ant-drawer-header, .transctns-grid .ant-drawer-body{padding-left: 100px;padding-right: 100px;}
     .adbook-scroll{max-height: calc(100vh - 418px);overflow-y: auto;}
+    .your-card{margin-top: 8px;}
 }
 @media (min-width: 1400px){
     .main-container{max-width: 1300px; }

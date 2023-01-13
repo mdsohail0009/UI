@@ -576,7 +576,7 @@ class HeaderPermissionMenu extends Component {
                 </Menu.Item>   */}
                 <Menu.Item key="15"> 
                 {/* <Text className="pipeline">|</Text> */}
-                <span className="icon md theme-icon" onClick={() => this.themeSwitch()} />
+                {/* <span className="icon md theme-icon" onClick={() => this.themeSwitch()} /> */}
                 <TheamSwitch  theamFlag={this.state.theamFalge}/>
                
                 </Menu.Item> 

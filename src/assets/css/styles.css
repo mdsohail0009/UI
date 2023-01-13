@@ -737,7 +737,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .markets-panel .custom-table .ant-table-body{height: 875px !important;padding: 0 4px 0 0;}
     .docfile{flex: 0 0 240px;width: auto;}
     .footer-links a{margin-right: 50px;text-align: left;}
-    .theme-switch{width: 220px;}
+    /* .theme-switch{width: 220px;} */
     .themeSwitchOff,.themeSwitchOn{margin-left: 22px !important;}    
     .display-flex {display:flex; align-items: center;justify-content: space-between;}
     .address-icons{list-style: none; padding-left: 0; margin-bottom: 0; display: flex;}

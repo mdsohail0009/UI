@@ -9,7 +9,7 @@ class SbCard extends Component {
 
     render() {
         return (<>
-             <Translate content="sb_card_title" component={Title} className="db-titles" />
+             <Translate content="sb_card_title" component={Title} className="db-titles your-card" />
                 <div className='sb-card'>
                     <div className="sb-innercard">
                     <div> 
