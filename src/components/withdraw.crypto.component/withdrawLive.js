@@ -56,7 +56,7 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep, dispatch, t
       >
         <Translate content="confirm_button" />
       </Button>}
-      <Translate content="back" component={Button} onClick={() => Cancel()} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />
+      <Translate content="back" component={Button} onClick={() => Cancel()} type="text" size="large" className="cust-cancel-btn back-btn-sumsub" block />
     </div>
   )
 }
