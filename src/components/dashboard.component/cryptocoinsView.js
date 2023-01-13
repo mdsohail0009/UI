@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { List, Button, Typography, Empty,Dropdown, Menu, Space } from 'antd';
+import { List, Button,Input, Typography, Empty,Dropdown, Menu, Space } from 'antd';
 import Translate from 'react-translate-component';
 import BuySell from '../buy.component';
 import SendReceive from '../send.component'
@@ -23,7 +23,14 @@ class cryptocoinsView extends Component {
         loading: true,
         initLoading: true,
         portfolioData: [], buyDrawer: false, coinData: null,sendDrawer: false,
-        selectedWallet: ''
+        selectedWallet: '',
+        searchVal:[],
+        coinData:[],
+        transactionData: this.props.dashboard.cryptoPortFolios.data,
+        searchVal:[],
+        fullViewData:[],
+        marketCaps:[],
+        dashBoardTransactions:this.props.dashboard.cryptoPortFolios.data
     }
     componentDidMount() {
         this.loadCryptos();
@@ -172,6 +179,18 @@ class cryptocoinsView extends Component {
           transactions: false
       })
   }
+  onSearch=({ currentTarget: { value } })=>{
+    debugger
+    let filterTransactionList;
+    if (!value) {
+        filterTransactionList = this.props.dashboard.cryptoPortFolios.data;
+    } else {
+        filterTransactionList =  this.props.dashboard.cryptoPortFolios.data.filter(item => item.coin.toLowerCase().includes(value.toLowerCase()));
+        this.setState({...this.state,searchVal:value})
+    }
+    //this.props.dispatch(fetchYourPortfoliodata({loading:false,data:filterTransactionList}));
+    this.setState({...this.state,coinData:filterTransactionList})
+  }
   showTransactionDrawer =(item) => {
     this.setState({...this.state, transactions: true, selectedWallet: item?.coin});
 }
@@ -200,9 +219,19 @@ class cryptocoinsView extends Component {
           </ul>
       </Menu>
   )
+  handleSearch = ({ currentTarget: { value } }) => {
+    debugger
+    if(value){
+        let filterTransactionList =  this.props.dashboard?.cryptoPortFolios?.data.filter(item => item.coin.toLowerCase().includes(value.toLowerCase()));
+        this.setState({...this.state,transactionData:filterTransactionList,searchVal:value})
+    }else{
+        this.setState({...this.state,transactionData:this.state.dashBoardTransactions}) 
+    }
+}
     render() {
         const { Text,Title } = Typography;
         const { cryptoPortFolios } = this.props.dashboard
+        const { Search } = Input;
         return (
           <div className="main-container" >
 {/*            
@@ -233,7 +262,14 @@ class cryptocoinsView extends Component {
             <div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/" /><span className="back-btnarrow">Back</span></div>
             <div className='fait-wallets-style m-0 new-viewpage'>
             <Translate content="suissebase_title" component={Title} className="db-titles" />
-            <div className = 'search-box'><input className = "search-text" type="text" placeholder = "Search Anything" />
+            <div className = 'search-box'>
+              {/* <input className = "search-text" type="text" placeholder = "Search Anything" /> */}
+              <Search
+                            placeholder="Search Transactions"
+                            onChange={(value)=>this.handleSearch(value)}
+                            size="middle"
+                            bordered={false}
+                            className="search-text" />
                       <div className = "search-btnexpand">
                       <span className="icon lg search-angle icon-space" />
                       </div>
@@ -250,7 +286,7 @@ class cryptocoinsView extends Component {
             <List
               className="mobile-list"
               itemLayout="horizontal"
-              dataSource={cryptoPortFolios.data}
+              dataSource={this.state.transactionData}
               //loading={cryptoPortFolios.loading}
               locale={{
                 emptyText: (

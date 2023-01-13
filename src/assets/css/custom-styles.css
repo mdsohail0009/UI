@@ -116,6 +116,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 /*Header End*/
 
 /*profile css start*/
+.ant-input-search .ant-input:hover, .ant-input-search .ant-input:focus{border-color: transparent !important;}
 .ant-alert-with-description{align-items: center;}
 .secureDropdown.export-pdf .excel-export{margin-left: 8px;}
 .user-profile{ border-radius: 50%;object-fit: cover;}
@@ -535,6 +536,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .img-upld:hover{background-color: #F1F2F6;}
 /* receive Crypto end */
 /*Send Address start*/
+.thank-subtext{font-size: 16px;font-weight: 400;color:#ffffff;}
 .adbook-head{font-weight: 700 !important;font-size: 18px !important;color: var(--checkText) !important;margin-bottom: 18px !important;margin-top: 30px;}
 .fund-border{margin-top: 15px;padding: 8px;background: var(--addressList);border: 2px solid  var(--addressList);border-radius: 13px;padding: 22px;cursor: pointer !important;align-items: center !important;}
 .fund-border:first-child{margin-top: 0;}
@@ -638,7 +640,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* success start */
 .cryptosummary-container{max-height: calc(100vh - 0px);}
 .success-title{font-weight: 800 !important;font-size: 26px !important;color: var(--white) !important;}
-.successsubtext{font-weight: 500;font-size: 16px;color: var(--coinPrice);height: 330px;}
+.successsubtext{font-weight: 500;font-size: 16px;color: var(--coinPrice) !important;height: 330px;}
 .custom-declaraton{height: calc(100vh - 225px);align-items: center;display: flex;justify-content: center;}
 .pop-cancel span{color:var(--textYellow);text-transform: uppercase;font-weight: 700;}
 .custom-declaraton .declaration-content{width: 600px;}
@@ -683,6 +685,9 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .custom-height {max-height: calc(100vh - 926px);}
 .nodata-text{margin-top: 10px !important;display: inline-block;}
 .cust-input.change-space .ant-input{height: 34px !important;}
+.nodata-image{margin-bottom: 10px;}
+.custom-upload{ margin: 12px 0px 4px 0;}
+.send-fiatform .ant-alert-with-description{margin-top: 20px;}
 /* send fiat end */
 /* send crypto start */
 .min-btn{border: 1px solid rgba(0, 0, 0, 0.3);background: var(--radioBg) !important;height: 36px;border-radius: 10px;min-width: 60px;line-height: 30px;color: var(--coinPrice);font-size: 16px;font-weight: 500; margin: 0 10px 10px 0;}
@@ -691,7 +696,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .newtransfer-card{background: var(--drawerList);border-radius: 13px;border: 2px solid transparent;height: 90px;padding: 10px 43px !important;font-size: 16px; font-weight: 700; color: var(--coinBal);width: 100%;text-align: center;}
 .newtransfer-card:hover,.newtransfer-card:active{background-color: var(--radioFill) !important;border: 2px solid var(--radioBorderfill);color: var(--coinPrice) !important;}
 .newtransfer-card::before{ background: var(--drawerList) !important;}
-.small-btns{margin-top: 10px !important;}
+.small-btns{margin-top: 20px !important;}
 .addcrypto-whitelist{margin-bottom: 45px;}
 .sub-title{font-weight: 700 !important; font-size: 18px !important;margin-bottom: 26px !important; color: var(--white) !important;}
 .addcrypto-benficiary .ant-form-item{margin-bottom: 16px;}
@@ -832,7 +837,6 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .db-kpi.vthicon{display: flex;align-items: center;min-height: 112px;}
 .custom-radiobtn.coin-alldetail{margin-top: 16px;margin-bottom: 16px;}
 .ant-modal-footer .ant-btn + .ant-btn:not(.ant-dropdown-trigger){margin-left: 0;}
-.coinveiw-newpage{width: 900px;margin:0 auto ;}
 .inputfont-style:hover, .inputfont-style:focus{border: 0;}
 /* coin view end */
 /* expand search */
@@ -971,6 +975,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 
 }
 @media (min-width: 1200px){
+    .coinveiw-newpage{width: 900px;margin:0 auto ;}
     /* .sb-card{width: 482px;} */
     .iban-list .iban-style{width: auto !important;float: unset; padding: 12px !important;flex: 1;margin-right: 0;}
     .iban-list .ant-list-items{display: flex;gap: 16px;}
@@ -1024,6 +1029,9 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
     .login-user{width: 100%;padding: 2px 0;}  
 }
 @media (max-width: 767.98px){
+    .new-viewpage .search-box{margin-left: 0;}
+    .fait-wallets-style.new-viewpage{display: block !important;}
+    .footer-links a{margin-right: 20px !important;}
     .sidebar-push{margin: 62px 0 0 !important;}
     .visible-mobile .side-drawer .side-drawer-header.change_password{align-items: self-start !important;}
     /* .visible-mobile{margin-right: 24px;padding-left: 24px;padding-right: 24px;} */

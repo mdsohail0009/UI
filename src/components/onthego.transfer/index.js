@@ -513,7 +513,7 @@ saveWithdrawdata = async () => {
             <Title className='sub-abovesearch code-lbl'>Who are you sending money to?</Title>
           </div>
           <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-          <Search placeholder="Search Currency" value={this.state.searchVal} prefix={<span className="icon lg search-angle drawer-search" />} onChange={this.handleSearch} size="middle" bordered={false} className="cust-search" />
+          <Search placeholder="Search for Payee" value={this.state.searchVal} prefix={<span className="icon lg search-angle drawer-search" />} onChange={this.handleSearch} size="middle" bordered={false} className="cust-search" />
           {/* <Search placeholder="Search for Payee" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className=" text-center" /> */}
           </Col>
           {this.state?.loading && <Loader />}
@@ -584,8 +584,8 @@ saveWithdrawdata = async () => {
                         </Row>}</>
                   ))}
                   {(!filterObj.length > 0) && <div className="success-pop text-center declaration-content" >
-                            <img src={oops} className="confirm-icon"  alt="Confirm" />
-                            <h1 className="success-title" > {apicalls.convertLocalLang('oops')}</h1>
+                            <img src={oops} className="confirm-icon nodata-image"  alt="Confirm" />
+                            <h1 className="success-title oops-title" > {apicalls.convertLocalLang('oops')}</h1>
                             <p className="successsubtext custom-height"> {apicalls.convertLocalLang('address_available')} </p>
                             <a onClick={() => this.chnageStep("newtransfer")} className="nodata-text" >Click here to make new transfer</a>
                         </div>}
@@ -641,7 +641,7 @@ saveWithdrawdata = async () => {
                {(!pastPayees.length > 0) && <div className="success-pop text-center declaration-content" >
                             <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
                             <h1 className="success-title" > {apicalls.convertLocalLang('oops')}</h1>
-                            <p className="successsubtext"> {'You have no past recipients'} </p>
+                            <p className="successsubtext custom-height"> {'You have no past recipients'} </p>
                             {/* <a onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</a> */}
                             </div>}
               </ul>
@@ -749,7 +749,7 @@ saveWithdrawdata = async () => {
             className='drawer-maintitle text-center'>Review Details Of Transfer</div>
           {/* </div> */}
           <Spin spinning={this.state.reviewDetailsLoading}>
-            <Form
+            <Form className="send-fiatform"
               name="advanced_search"
               ref={this.formRef}
               onFinish={this.transferDetials}
@@ -889,7 +889,7 @@ saveWithdrawdata = async () => {
                     onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} />
             </>,
       declaration: <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
-      <Image width={80} preview={false} src={alertIcon} className="confirm-icon"  />
+      <Image preview={false} src={alertIcon} className="confirm-icon"  />
       <Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                 Please review and sign the document in your email to whitelist your address.

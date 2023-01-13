@@ -399,7 +399,7 @@ const Verifications = (props) => {
                                             {phone.showRuleMsg}
                                         </Text>
                                         <Text
-                                            className="fs-12 text-red fw-200"
+                                            className="fs-14 text-red fw-400"
                                             style={{ float: "right", color: "var(--textRed)" }}>
                                             {phone.errorMsg}
                                         </Text>
@@ -441,7 +441,7 @@ const Verifications = (props) => {
                                             {email.showRuleMsg}
                                         </Text>
                                         <Text
-                                            className="fs-12 text-red fw-200"
+                                            className="fs-14 text-red fw-400"
                                             style={{ float: "right", color: "var(--textRed)" }}>
                                             {email.errorMsg}
                                         </Text>
@@ -483,7 +483,7 @@ const Verifications = (props) => {
                                             {authenticator.showRuleMsg}
                                         </Text>
                                         <Text
-                                            className="fs-12 text-red fw-200"
+                                            className="fs-14 text-red fw-400"
                                             style={{ float: "right", color: "var(--textRed)" }}>
                                             {authenticator.errorMsg}
                                         </Text>

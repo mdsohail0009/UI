@@ -85,7 +85,7 @@ class CockpitCharts extends Component {
             <div className="main-container db-container">
                 <div className="coin-viewstyle"><Link className="icon md leftarrow backarrow-mr c-pointer" to="/cockpit" />Back</div>
               
-                <Row gutter={16} className="mb-8">
+                {/* <Row gutter={16} className="mb-8">
 
                    
 
@@ -131,10 +131,10 @@ class CockpitCharts extends Component {
 						</Col>
 
               
-                </Row>
+                </Row> */}
                 
 
-                <Radio.Group defaultValue={30} className="custom-radiobtn coin-alldetail" onChange={(e) => this.loadDashboards(e.target.value)}>
+                {/* <Radio.Group defaultValue={30} className="custom-radiobtn coin-alldetail" onChange={(e) => this.loadDashboards(e.target.value)}>
                     <Radio.Button value={1}>1 Day</Radio.Button>
                     <Radio.Button value={7}>7 Days</Radio.Button>
                     <Radio.Button value={14}>14 Days</Radio.Button>
@@ -185,9 +185,9 @@ class CockpitCharts extends Component {
                             </div>
                         </div>
                     </Col>
-                </Row>
+                </Row> */}
             </div>
-            <Row gutter={16}>
+            {/* <Row gutter={16}>
                 {this.state.reports && <>{this.state.reports.map(elem => (
                     <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
                         <Card className="db-card" onClick={() => this.viewReport(elem)}>
@@ -201,7 +201,7 @@ class CockpitCharts extends Component {
                         </Card>
                     </Col>
                 ))}</>}
-            </Row>
+            </Row> */}
 
 
         </>)
