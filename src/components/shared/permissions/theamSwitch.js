@@ -6,11 +6,15 @@ import { saveSettingsData } from '../../../api/apiServer';
 const TheamSwitch = ({customer,theamFlag}) => {
     const { switcher, themes } = useThemeSwitcher();
     const [theme, setTheme] = useState(customer?.theme === 'Light Theme' ? true : false);
+    const [screenTheme,setScreenTheme]=useState("lightMode")
+    const [settingsObj, setSettingsObj] = useState({ customerId: '', Language: customer?.language ? customer.language?.toUpperCase() : 'EN', currency: customer?.currency ? customer.currency : 'USD', Theme: customer?.theme ? customer.theme : null })
+    
     useEffect(() => {
         debugger
         switcher({ theme: customer?.theme === 'Light Theme' ? themes.LHT : themes.DRT });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
     const themeSwitch = async () => {
         debugger
         setTheme(!theme)
@@ -19,9 +23,16 @@ const TheamSwitch = ({customer,theamFlag}) => {
         settingsObj.Theme = !theme ? 'Light Theme' : 'Dark Theme';
         settingsObj.Language = settingsObj.Language?.toLowerCase();
         settingsObj.customerId = customer?.id;
+        if(theme ==true){
+            setScreenTheme("lightMode")
+        }else{
+            setScreenTheme("darkMode") 
+        }
         //settingsObj.info = JSON.stringify(trackAuditLogData)
+
         let res = await saveSettingsData(settingsObj);
         if (res.ok) {
+            
             // message.destroy()
             // getmemeberInfoa(customer.userId)
             // counterpart.setLocale(settingsObj.Language);
@@ -31,17 +42,17 @@ const TheamSwitch = ({customer,theamFlag}) => {
     <div>
         
       <div className="custom-theme-btn">
-        {theamFlag =="darkTheam" && 
-                    <div className="theme-switch theme-active mobile-mb-16 c-pointer" onClick={() => theme ? themeSwitch() : ''}>
+         {screenTheme != 'lightMode' && 
+                    <div className="theme-switch theme-active mobile-mb-16 c-pointer" onClick={() =>  themeSwitch() }>
                         <div className="d-flex align-center " >
-                            <p className="switch-circle" >{!theme && <span className="icon lg radio-check c-pointer"></span>}{theme && <span className='icon radio lg c-pointer'></span>}</p>
+                            {/* <p className="switch-circle" >{!theme && <span className="icon lg radio-check c-pointer"></span>}{theme && <span className='icon radio lg c-pointer'></span>}</p> */}
                             <p className="theme-txt">Dark Mode</p></div>
                     </div>}
-         {theamFlag == "lightTheam" &&            
-                    <div className={"theme-switch c-pointer" + (theme ? " themeSwitchOn " : " themeSwitchOff ")} onClick={() => !theme ? themeSwitch() : ''}>
+         {screenTheme != 'darkMode' &&            
+                    <div className={"theme-switch c-pointer" + (theme ? " themeSwitchOn " : " themeSwitchOff ")} onClick={() =>  themeSwitch() }>
                         <div className="d-flex align-center c-pointer" >
-                            <p className="switch-circle c-pointer" >{theme && <span className="icon lg radio-check c-pointer"></span>}{!theme && <span className='icon radio lg c-pointer'></span>}</p>
-                            <p className="theme-txt">Light mode</p>
+                            {/* <p className="switch-circle c-pointer" >{theme && <span className="icon lg radio-check c-pointer"></span>}{!theme && <span className='icon radio lg c-pointer'></span>}</p> */}
+                            <p className="theme-txt">Light Mode</p>
                             </div>
                     </div>}
                 </div>

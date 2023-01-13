@@ -344,10 +344,11 @@ class HeaderPermissionMenu extends Component {
     //     }
     // }
     themeSwitch=()=>{
+        debugger
          if(this.props.userConfig?.theme=="Light Theme") {
-            this.state({...this.state,theamFalge:"lightTheam"})
-         }else{
-            this.state({...this.state,theamFalge:"darkTheam"})
+            this.setState({...this.state,theamFalge:"darkTheam"})
+         }else if(this.props.userConfig?.theme=="Dark Theme"){
+            this.setState({...this.state,theamFalge:"lightTheam"})
          }
     }
     render() {
