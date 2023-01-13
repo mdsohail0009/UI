@@ -230,8 +230,8 @@ class YourPortfolio extends Component {
             </div> */}
             <div className='fait-wallets-style m-0'>
             <Translate content="suissebase_title" component={Title} className="db-titles" />
-              <Button className="dbchart-link"  onClick={() => this.cockpitCharts()} >
-                  <Translate content="cockpit" />
+              <Button className="dbchart-link"   >
+                  <Translate content="cockpit" onClick={() => this.cockpitCharts()}/>
               </Button>   
                     
               </div>
@@ -297,12 +297,12 @@ class YourPortfolio extends Component {
                   <List.Item.Meta
                     avatar={<div className='crypto-bg'>
                       <span
-                        className={`crypto-icon c-pointer ${item.coin}`}
-                        onClick={() =>
-                          this.props.history.push(
-                            "/coindetails/" + item.coinFullName.toLowerCase()
-                          )
-                        }
+                        className={`crypto-icon  ${item.coin}`}
+                        // onClick={() =>
+                        //   this.props.history.push(
+                        //     "/coindetails/" + item.coinFullName.toLowerCase()
+                        //   )
+                        // }
                       />
                       </div>
                     }
