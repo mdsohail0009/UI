@@ -904,7 +904,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .withdrawbg .ant-list-item-meta-avatar, .depositsbg .ant-list-item-meta-avatar, .sellbg .ant-list-item-meta-avatar, .withdraw.fiatbg .ant-list-item-meta-avatar, .withdraw.cryptobg .ant-list-item-meta-avatar{background-color: var(--bgDarkRed);}
 .requestbg .ant-list-item-meta-avatar, .documentsbg .ant-list-item-meta-avatar, .cutomersbg .ant-list-item-meta-avatar, .casesbg .ant-list-item-meta-avatar{background-color: var(--bgBlue);}
 .ant-alert-with-description{width: 100%; align-items:start;}
-
+.buysell-balances{text-align: center;}
 /* batchpayments start  */
 .download-excel a{color: var(--termsText);}
 .pay-list .file-name{width: 300px;}
