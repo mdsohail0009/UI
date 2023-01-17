@@ -1010,7 +1010,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .sidebar-push{padding:30px 16px 24px;}
 .k-grid-header .k-header > .k-link{padding: 8px;margin: 0;}
 .ant-btn{box-shadow: none;}
-.custom-header span {padding: 6px 0px;}
+.custom-header span {padding: 6px 0px;color: white;}
 .ant-menu-item:active, .ant-menu-submenu-title:active{background-color: transparent;}
 .k-grid th{padding:0px 12px 0px 3px; height:42px;}
 .cust-pop-up-btn .primary-btn.pop-cancel{border: transparent !important;}
