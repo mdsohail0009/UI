@@ -441,7 +441,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .side-drawer-full .ant-pagination-item-active{border-color: #ffffff !important;background: transparent;}
 .side-drawer-full .ant-pagination-item-active a, .ant-table-column-sorter-up.active, .ant-table-column-sorter-down.active{color: #3653E4 !important;}
 .side-drawer-full .ant-table-column-title{text-transform: capitalize;font-size: 16px;font-weight: 500;}
-.ant-table-thead th.ant-table-column-sort{background: var(--iconBg);}
+/* .ant-table-thead th.ant-table-column-sort{background: var(--iconBg);} */
 .db-titles.internal-titles{font-size: 36px !important;margin-top: 16px;}
 /* Dashboard end */
 
@@ -564,7 +564,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .pay-grid thead th{padding: 8px;width: 250px; color: var(--textWhite30);font-weight: 500;text-align: left;font-size: 16px;}
 .pay-grid thead th:last-child{width: 500px;}
 .pay-grid tbody td{padding: 8px; color: var(--menuFont);font-weight: 700;font-size: 14px ;}
-.ant-table-placeholder:hover{background: transparent;}
+.ant-table-placeholder:hover, .ant-table-placeholder:hover .ant-table-cell{background: #2a2a2a26 !important;}
 .pay-grid {width: 100%;}
 /* .ant-popover-inner{background-color: var(--bgGloom); border-radius: 10px;} */
 /* . .ant-popover */
@@ -913,6 +913,9 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .buysell-balances{text-align: center;margin: 0 0 12px 0 !important;}
 .faitwallet-cards .ant-list-items li:nth-child(n+3){display: none;}
 .cust-cancel-btn.back-btn-sumsub{margin-top: 12px !important;}
+.header-right .ant-menu-title-content:hover,.header-right .ant-typography.custom-header:hover{color:var(--white);}
+.custom-header{color:var(--white) !important;}
+.custom-inactive{color:var(--sbCardText) !important}
 /* batchpayments end */
 /*@media start*/
 @media (min-width: 768px){

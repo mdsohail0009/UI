@@ -161,7 +161,7 @@ class BankWallets extends Component {
                           content="transfer_funds"
                           component={Button}
                           type="primary"
-                          className="custom-btn prime text-white" 
+                          className="custom-btn prime" 
                           disabled={!(item.availableBalance && item.availableBalance>0)}
                           onClick={() =>
                             this.redirectBank(

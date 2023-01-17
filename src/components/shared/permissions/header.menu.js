@@ -520,8 +520,8 @@ class HeaderPermissionMenu extends Component {
                         onClick={this.props.routeToCockpit}
                         onMouseOver={()=>{this.handleHover()}}
                         component={Text}
-                        className='custom-header'
-                       style={{color:this.props.menuItems.getScreen.getScreen=="dashboard"?"white":"gray"}}
+                        className={this.props.menuItems.getScreen.getScreen=="dashboard"?"custom-header":"custom-inactive"}
+                    //    style={{color:this.props.menuItems.getScreen.getScreen=="dashboard"?"white":"gray"}}
                     />
                 </Menu.Item>
                 {data?.map((item, indx) => <React.Fragment>
