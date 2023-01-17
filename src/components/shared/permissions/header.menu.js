@@ -500,7 +500,7 @@ class HeaderPermissionMenu extends Component {
                 </div>
             </Menu>
         );
-        const { features: { data },getScreen } = this.props.menuItems;
+        const { features: { data } } = this.props.menuItems;
         const { collapsed, isShowSider } = this.props;
         const { send_crypto, send_fiat, receive_crypto, receive_fiat } = this.state.drawerMenu
         return <>
@@ -521,7 +521,7 @@ class HeaderPermissionMenu extends Component {
                         onMouseOver={()=>{this.handleHover()}}
                         component={Text}
                         className='custom-header'
-                      style={{color:getScreen=="dashboard"?"white":"gray"}}
+                       style={{color:this.props.menuItems.getScreen.getScreen=="dashboard"?"white":"gray"}}
                     />
                 </Menu.Item>
                 {data?.map((item, indx) => <React.Fragment>
@@ -550,7 +550,7 @@ class HeaderPermissionMenu extends Component {
                                 content={item.content}
                                 component={Menu.Item}
                                 key="4"
-                                className={item.content==getScreen?"custom-header":"active"}
+                                className={item.content==this.props.menuItems.getScreen.getScreen?"custom-header":"active"}
                                 
                             />
                         </Dropdown>
