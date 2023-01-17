@@ -405,7 +405,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .sb-innercard{padding:24px;}
 .sb-text{color: var(--sbCardText);letter-spacing: 5px;font-weight: 700;font-size: 24px;}
 .sb-accounts{padding: 2px;}
-.cardlogo-height{margin-bottom: 109px;opacity: 0.6;}
+.cardlogo-height{margin-bottom: 109px;}
 .transaction-panel, .crypto-style{margin-top: 50px;}
 .transaction-title{display: flex;align-items: center;width: 100%;}
 .trans-align{display: flex;align-items: center;justify-content: space-between;}
@@ -931,7 +931,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
     /* .select-currency{height: 400px;} */
     .val-updown{right: 20px;top:45px;}
     .import-note{width: auto;}
-    .side-drawer .ant-drawer-header{padding:16px 30px !important}
+    .side-drawer .ant-drawer-header{padding:12px 30px !important}
     .inputfont-style{font-size:36px;}
     .buy-paragraph{width: 300px;margin: auto;}
     .crypto-card .ant-card-body{padding: 16px 14px;height: 94px;}

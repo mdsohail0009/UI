@@ -521,7 +521,7 @@ class HeaderPermissionMenu extends Component {
                         onMouseOver={()=>{this.handleHover()}}
                         component={Text}
                         className='custom-header'
-                       style={{color:getScreen.getScreen=="dashboard"?"white":"gray"}}
+                      style={{color:getScreen=="dashboard"?"white":"gray"}}
                     />
                 </Menu.Item>
                 {data?.map((item, indx) => <React.Fragment>
@@ -550,7 +550,7 @@ class HeaderPermissionMenu extends Component {
                                 content={item.content}
                                 component={Menu.Item}
                                 key="4"
-                                className={item.content==getScreen.getScreen?"custom-header":"active"}
+                                className={item.content==getScreen?"custom-header":"active"}
                                 
                             />
                         </Dropdown>
