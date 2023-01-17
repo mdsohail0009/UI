@@ -142,7 +142,7 @@ class Wallets extends Component {
                     itemLayout="horizontal"
                     dataSource={wallets.data}
                     bordered={false}
-                    className="mobile-list"
+                    className="mobile-list faitwallet-cards"
                     renderItem={item =>
                         <List.Item className="listitems-design">
                             <List.Item.Meta
