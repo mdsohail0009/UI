@@ -262,7 +262,9 @@ class cryptocoinsView extends Component {
                     
               </div>
             </div> */}
-           
+            {cryptoPortFolios?.loading ? (
+               <Loader />
+        ) : (
             <div className='coinveiw-newpage'>
             <div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/" /><span className="back-btnarrow">Back</span></div>
             <div className='fait-wallets-style m-0 new-viewpage'>
@@ -285,9 +287,9 @@ class cryptocoinsView extends Component {
                      */}
                      
               </div>
-                {cryptoPortFolios?.loading ? (
+                {/* {cryptoPortFolios?.loading ? (
                <Loader />
-        ) : (
+        ) : ( */}
             <List
               className="mobile-list"
               itemLayout="horizontal"
@@ -404,8 +406,8 @@ class cryptocoinsView extends Component {
               )}
             />
             
-        )}
-        </div>
+        {/* )} */}
+        </div>)}
             <BuySell
               showDrawer={this.state.buyDrawer}
               onClose={() => this.closeDrawer()}
