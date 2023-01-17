@@ -16,12 +16,15 @@ import WithdrawaCryptolLive from '../withdraw.crypto.component/withdrawLive';
 import SuccessMsg from '../withdraw.crypto.component/success';
 import SelectAddress from '../withdraw.crypto.component/selectAddress';
 import OnthegoCryptoTransfer from '../onthego.transfer/cryptoTransfer.component';
+import { getScreenName } from '../../reducers/feturesReducer';
+import { connect } from 'react-redux';
 const { Paragraph } = Typography
 class SendReceive extends Component {
     state = {
 
     }
     closeDrawer = () => {
+        this.props.dispatch(getScreenName({getScreen:"dashboard"}))
         this.props.dispatch(rejectWithdrawfiat())
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", selectedWallet: null }));
         this.props.dispatch(setSubTitle(""))
@@ -129,5 +132,9 @@ class SendReceive extends Component {
         </Drawer>);
     }
 }
-
-export default ConnectStateProps(SendReceive);
+const connectDispatchToProps = dispatch => {
+    return {
+        dispatch
+    }
+  }
+export default connect(connectDispatchToProps) (ConnectStateProps(SendReceive));

@@ -17,6 +17,7 @@ import { getcoinDetails } from './api';
 import {createCryptoDeposit} from "../deposit.component/api";
 import TransactionsHistory from "../transactions.history.component";
 import Loader from "../../Shared/loader";
+import { getScreenName } from '../../reducers/feturesReducer';
 
 class cryptocoinsView extends Component {
     state = {
@@ -75,12 +76,14 @@ class cryptocoinsView extends Component {
                 this.props.dispatch(setExchangeValue({ key: item.coin, value: val }));
             });
             this.props.dispatch(setSellHeaderHide(false));
+            this.props.dispatch(getScreenName({getScreen:"menu_buy_sell"}))
             this.props.dispatch(setStep("step2"));
         } else if (key === "sell") {
           this.props.dispatch(setSellHeaderHide(false));
             this.props.dispatch(setCoin(item));
             this.props.dispatch(setExchangeValue({ key: item.coin, value: item.oneCoinValue }));
             this.props.dispatch(updateCoinDetail(item))
+            this.props.dispatch(getScreenName({getScreen:"menu_buy_sell"}))
             this.props.dispatch(setStep("step10"));
         }
         this.setState({
@@ -137,6 +140,9 @@ class cryptocoinsView extends Component {
           this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
           this.props.dispatch(setSendCrypto(true));
           this.props.changeStep('withdraw_crypto_selected');
+          this.props.dispatch(getScreenName({getScreen:"withdraw"}))
+         
+          
         //   this.setState({
         //     ...this.state,
         //     sendDrawer: true
@@ -146,7 +152,7 @@ class cryptocoinsView extends Component {
         this.props.dispatch(setWithdrawfiatenaable(false));
         this.props.dispatch(hideSendCrypto(false));
           this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
-
+          this.props.dispatch(getScreenName({getScreen:"deposit"}))
           this.props.dispatch(setStep("step7"));
           this.props.dispatch(setSubTitle(`${coin}` + " " + "balance" +" "+ ":" +" "+ `${selectedObj.coinBalance ?  selectedObj.coinBalance : '0'}`+`${" "}`+`${coin}`));
              const response = await createCryptoDeposit({ customerId: this.props.userProfile?.id, walletCode: coin, network: selectedObj?.netWork });
@@ -172,6 +178,7 @@ class cryptocoinsView extends Component {
       })
   }
     closeDrawer = () => {
+      this.props.dispatch(getScreenName({getScreen:"dashboard"}))
       this.props.dispatch(rejectWithdrawfiat())
       this.setState({
           buyDrawer: false,
@@ -180,7 +187,6 @@ class cryptocoinsView extends Component {
       })
   }
   onSearch=({ currentTarget: { value } })=>{
-    debugger
     let filterTransactionList;
     if (!value) {
         filterTransactionList = this.props.dashboard.cryptoPortFolios.data;
@@ -220,7 +226,6 @@ class cryptocoinsView extends Component {
       </Menu>
   )
   handleSearch = ({ currentTarget: { value } }) => {
-    debugger
     if(value){
         let filterTransactionList =  this.props.dashboard?.cryptoPortFolios?.data.filter(item => item.coin.toLowerCase().includes(value.toLowerCase()));
         this.setState({...this.state,transactionData:filterTransactionList,searchVal:value})

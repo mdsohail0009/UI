@@ -19,6 +19,7 @@ import OnthegoFundTransfer from '../onthego.transfer';
 import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
 import MassPayment from '../buyfiat.component'
 import { buyFiatSteps as config } from '../buyfiat.component/config';
+import { getScreenName } from '../../reducers/feturesReducer';
 const { Title, Paragraph, Text } = Typography;
 
 class CockpitCharts extends Component {
@@ -120,10 +121,12 @@ class CockpitCharts extends Component {
             this.props.dispatch(setReceiveFiatHead(false));
             this.props.dispatch(setSendFiatHead(false));
             this.setState({ ...this.setState, showFuntransfer: true, selectedCurrency:value })
+            this.props.dispatch(getScreenName({getScreen:"withdraw"}))
         } else if (e === 1) {
             this.props.dispatch(setReceiveFiatHead(true));
             this.props.dispatch(setWithdrawfiatenaable(false))
             this.props.dispatch(setdepositCurrency(value))
+            this.props.dispatch(getScreenName({getScreen:"deposit"}))
             this.setState({
                 valNum: e
             }, () => {
@@ -142,9 +145,11 @@ class CockpitCharts extends Component {
         
     }
     closeDrawer = () => {
+        this.props.dispatch(getScreenName({getScreen:"dashboard"}))
         this.setState({
             buyFiatDrawer: false,
-            transactions: false
+            transactions: false,
+            showFuntransfer:false,
         })
     }
     handleSearch = ({ currentTarget: { value } }) => {
@@ -361,12 +366,12 @@ class CockpitCharts extends Component {
                             <Translate className="drawer-maintitle"  component={Paragraph} />
                             </div>
                         }
-                        <span onClick={() => this.setState({ ...this.state, showFuntransfer: false })} className="icon md close-white c-pointer" />
+                        <span onClick={() => this.closeDrawer()} className="icon md close-white c-pointer" />
                     </div>]}
                     className="side-drawer"
                     visible={this.state.showFuntransfer}
                 >
-                    <OnthegoFundTransfer selectedCurrency={this.state.selectedCurrency} ontheGoType={"Onthego"} onClosePopup={() => this.setState({ ...this.state, showFuntransfer: false })}  />
+                    <OnthegoFundTransfer selectedCurrency={this.state.selectedCurrency} ontheGoType={"Onthego"} onClosePopup={() => this.closeDrawer()}  />
                 </Drawer>
           </div>
             {/* <Row gutter={16}>

@@ -15,6 +15,7 @@ import OnthegoFundTransfer from '../onthego.transfer';
 import {setReceiveFiatHead, setSendFiatHead} from '../../reducers/buyFiatReducer';
 import Loader from "../../Shared/loader";
 import { buyFiatSteps as config } from '../buyfiat.component/config';
+import { getScreenName } from '../../reducers/feturesReducer';
 const { Title, Paragraph } = Typography;
 
 class Wallets extends Component {
@@ -43,7 +44,6 @@ class Wallets extends Component {
         this.props.history.push("/docnotices");
     }
     showSendReceiveDrawer = (e, value) => {
-        debugger
         this.props.dispatch(setStep("step1"));
         const is2faEnabled = this.props.twoFA?.isEnabled;
         if (!this.props?.userProfile?.isKYC) {
@@ -63,10 +63,12 @@ class Wallets extends Component {
             this.props.dispatch(setReceiveFiatHead(false));
             this.props.dispatch(setSendFiatHead(false));
             this.setState({ ...this.setState, showFuntransfer: true, selectedCurrency:value })
+            this.props.dispatch(getScreenName({getScreen:"withdraw"}))
         } else if (e === 1) {
             this.props.dispatch(setReceiveFiatHead(true));
             this.props.dispatch(setWithdrawfiatenaable(false))
             this.props.dispatch(setdepositCurrency(value))
+            this.props.dispatch(getScreenName({getScreen:"deposit"}))
             this.setState({
                 valNum: e
             }, () => {
@@ -110,9 +112,12 @@ class Wallets extends Component {
         </Menu>
     )
     closeDrawer = () => {
+        debugger
+        this.props.dispatch(getScreenName({getScreen:"dashboard"}))
         this.setState({
             buyFiatDrawer: false,
-            transactions: false
+            transactions: false,
+            showFuntransfer:false
         })
     }
     render() {
@@ -184,12 +189,12 @@ class Wallets extends Component {
                             <Translate className="drawer-maintitle" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
                             </div>
                         }
-                        <span onClick={() => this.setState({ ...this.state, showFuntransfer: false })} className="icon md close-white c-pointer" />
+                        <span onClick={() => this.closeDrawer()} className="icon md close-white c-pointer" />
                     </div>]}
                     className="side-drawer"
                     visible={this.state.showFuntransfer}
                 >
-                    <OnthegoFundTransfer selectedCurrency={this.state.selectedCurrency} ontheGoType={"Onthego"} onClosePopup={() => this.setState({ ...this.state, showFuntransfer: false })}  />
+                    <OnthegoFundTransfer selectedCurrency={this.state.selectedCurrency} ontheGoType={"Onthego"} onClosePopup={() => this.closeDrawer()}  />
                 </Drawer>
             </>
         );

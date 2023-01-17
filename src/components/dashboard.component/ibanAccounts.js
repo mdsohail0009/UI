@@ -112,7 +112,8 @@ class Iban extends Component {
     closeDrawer = () => {
         this.setState({
             buyFiatDrawer: false,
-            transactions: false
+            transactions: false,
+            showFuntransfer:false
         })
     }
     render() {
@@ -199,7 +200,7 @@ class Iban extends Component {
                     className="side-drawer"
                     visible={this.state.showFuntransfer}
                 >
-                    <OnthegoFundTransfer selectedCurrency={this.state.selectedCurrency} ontheGoType={"Onthego"} onClosePopup={() => this.setState({ ...this.state, showFuntransfer: false })}  />
+                    <OnthegoFundTransfer selectedCurrency={this.state.selectedCurrency} ontheGoType={"Onthego"} onClosePopup={() => this.closeDrawer()}  />
                 </Drawer>
             </>
         );

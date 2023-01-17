@@ -32,7 +32,6 @@ class Portfolio extends Component {
         }
     }
     getTransactionData = async () => {
-        debugger
         this.setState({ ...this.state, loading: true });
         let response = await getData();
         if (response.ok) {
@@ -43,21 +42,9 @@ class Portfolio extends Component {
 
         }
     }
-    // onSearch = ({ currentTarget: { value } }, isFullScreen) => {
-    //     debugger
-    //     let matches = this.state.transactionData.filter(item => item.copyType==value);
-    //     this.setState({...this.state,searchVal:value})
-    //     // searchVal(value)
-    //     if (!isFullScreen) { 
-    //         this.setState({...this.state,dashBoardTransactions:matches})
-    //     } else {
-    //         this.setState({...this.state,transactionData:matches})
-    //     }
-
-    // }
+   
    
     handleSearch = ({ currentTarget: { value } }) => {
-        debugger
         if(value){
             let filterTransactionList =  this.state.transactionData.filter(item => item.wallet.toLowerCase().includes(value.toLowerCase()));
             this.setState({...this.state,transactionData:filterTransactionList,searchVal:value})
@@ -205,7 +192,7 @@ class Portfolio extends Component {
                                                     </tr>
                                                     </>
                                                         : <tr>
-                                                            <td >No transaction details available.</td>
+                                                            <td  style={{padding:"13px"}}>No transaction details available.</td>
                                                         </tr>
                                                         }
                                                         </>

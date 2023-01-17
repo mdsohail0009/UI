@@ -19,6 +19,7 @@ import Translate from 'react-translate-component';
 import Mome from 'moment'
 import { success, warning } from '../../utils/messages';
 import { LoadingOutlined } from "@ant-design/icons";
+import { getScreenName } from '../../reducers/feturesReducer';
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
 const { Dragger } = Upload;
@@ -57,6 +58,7 @@ class CaseView extends Component {
         errorWarning: null,
     }
     componentDidMount() {
+        this.props.dispatch(getScreenName({getScreen:null}))
         this.getCaseData(this.props?.match.params?.id);
     }
     getDocument = async (id) => {

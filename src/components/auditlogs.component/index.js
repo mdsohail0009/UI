@@ -8,6 +8,7 @@ import moment from 'moment';
 import Translate from 'react-translate-component';
 import apicalls from '../../api/apiCalls';
 import { withRouter,Link } from "react-router-dom";
+import { getScreenName } from "../../reducers/feturesReducer";
 
 
 const { Option } = Select;
@@ -49,6 +50,7 @@ class AuditLogs extends Component {
   }
   componentDidMount = async () => {
     this.auditlogsTrack();
+    this.props.dispatch(getScreenName({getScreen:null}))
     //setTimeout(() => this.gridRef?.current?.refreshGrid(), 200);             -- code commneted for duplicate calls issue
 
 

@@ -12,7 +12,7 @@ import { getTransactionSearch, getTransactionCurrency,transactionsView } from '.
 import { setCurrentAction } from "../../reducers/actionsReducer";
 import { getFeaturePermissionsByKey } from '../shared/permissions/permissionService';
 import { withRouter,Link } from "react-router-dom";
-import { setSelectedFeatureMenu } from "../../reducers/feturesReducer";
+import { getScreenName, setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 import NumberFormat from "react-number-format";
 import moment from "moment/moment";
 import TransactionSlips from "./transaction.slips";
@@ -66,6 +66,7 @@ class TransactionsHistory extends Component {
 
 
   componentDidMount() {
+    this.props.dispatch(getScreenName({getScreen:null}))
     getFeaturePermissionsByKey('transactions', this.loadInfo)
   }
 

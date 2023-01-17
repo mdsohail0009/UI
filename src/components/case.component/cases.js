@@ -9,6 +9,7 @@ import {Link,  withRouter } from "react-router-dom";
 import Translate from 'react-translate-component';
 import apiCalls from "../../api/apiCalls";
 import Moment from 'react-moment';
+import { getScreenName } from '../../reducers/feturesReducer';
 
 const { Text, Paragraph, Title } = Typography;
 class Cases extends Component {
@@ -45,6 +46,9 @@ class Cases extends Component {
 		{field: "customerCaseTitle",title: apiCalls.convertLocalLang("title"),filter: true,width: 450},
 		{field: "state",title:apiCalls.convertLocalLang("state"),filter: true,width: 275,},
 	];
+    componentDidMount() {
+        this.props.dispath(getScreenName({getScreen:null}))
+    }
      viewCase = ({dataItem}) => {
 		this.props.history.push(`/caseView/${dataItem.id}`);
 	};

@@ -31,7 +31,6 @@ const MarketCap = ({ member }) => {
         }
     }
     const onSearch = ({ currentTarget: { value } }, isFullScreen) => {
-        debugger
         let matches = originalMarketCaps.filter(item => item.symbol.toLowerCase().includes(value.toLowerCase()));
         setSearchVal(value)
         if (!isFullScreen) { setMarketCaps(matches) } else {
@@ -84,11 +83,11 @@ const MarketCap = ({ member }) => {
                     </div> 
                         {/* <Translate content="markets_subtitle" component={Paragraph} className="text-white-50 fs-16 mb-0 l-height-normal" /> */}
                     </div>
-                    {/* <div className="market-actions">
+                </div>
+                <div className="market-actions">
                         <Tooltip title={apiCalls.convertLocalLang('full_screen')}><FullscreenOutlined onClick={() => showDrawer()} className="fs-18 text-white ml-8 fw-500" /></Tooltip>
                         <Tooltip title={apiCalls.convertLocalLang('reload')}><ReloadOutlined onClick={fetchMarketCapsInfo} className="fs-18 text-white ml-16 fw-500" /></Tooltip>
-                    </div> */}
-                </div>
+                    </div>
                 {/* <Search
                 placeholder={apiCalls.convertLocalLang('searchCurrency')} 
                   value={searchVal} 
