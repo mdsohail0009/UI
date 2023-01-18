@@ -520,7 +520,7 @@ class HeaderPermissionMenu extends Component {
                         onClick={this.props.routeToCockpit}
                         onMouseOver={()=>{this.handleHover()}}
                         component={Text}
-                        className={this.props.menuItems.getScreen.getScreen=="dashboard"?"custom-header":"custom-inactive"}
+                        className={this.props.menuItems.getScreen?.getScreen=="dashboard"?"custom-header":"custom-inactive"}
                     //    style={{color:this.props.menuItems.getScreen.getScreen=="dashboard"?"white":"gray"}}
                     />
                 </Menu.Item>
@@ -550,7 +550,7 @@ class HeaderPermissionMenu extends Component {
                                 content={item.content}
                                 component={Menu.Item}
                                 key="4"
-                                className={item.content==this.props.menuItems.getScreen.getScreen?"custom-header":"active"}
+                                className={item.content==this.props.menuItems.getScreen?.getScreen?"custom-header":"active"}
                                 
                             />
                         </Dropdown>

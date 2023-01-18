@@ -65,12 +65,13 @@ class Cases extends Component {
         return (<>
         <div className="cust-list main-container">
         <div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/cockpit" /><span className="back-btnarrow">Back</span></div>
-            
-                <Translate content="case" component={Paragraph} className="grid-title" />
-                <div className="mb-16 cases-grid-view">
+          
+                <Translate content="case" component={Paragraph} className="grid-title" /> </div>
+                {/* <div className=""> */}
                     <List className="address-clear" url={gridUrl} ref={this.gridRef} columns={this.columnGrid} />
-                </div>
-            </div>
+                    {/* </div> */}
+               
+            
         </>
         );
     }

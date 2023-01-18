@@ -125,7 +125,6 @@ class Wallets extends Component {
 
         return (
             <>
-            {/* <BankWallets/> */}
             <div className="fait-wallets-style">
             <Translate content="fait_walets" component={Title} className="db-titles" />
                 <div>
@@ -156,23 +155,22 @@ class Wallets extends Component {
                             <a onClick={e => e.preventDefault()}>
                               <Space>
                               <span class="icon lg menu-bar p-relative"></span>
-                              {/* <DownOutlined /> */}
+                          
                             </Space>
                           </a>
                         </Dropdown></div></>}
-                                // description={}
+                                
                             />
                             <div className="crypto-btns crypto-btn-top">
                                 <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
                                 <Translate content="withdraw" onClick={() => { this.showSendReceiveDrawer(2, item.walletCode) }} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} />
-                                {/* <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
-                                <Translate content="withdraw" onClick={() => this.showSendReceiveDrawer(2, item.walletCode)} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} /> */}
+                               
                            
                     </div>
                         </List.Item>}
                 />
                 )}  
-                {/* <Translate content="suissebase_title_crypto" component={Title} className="fs-24 fw-600 text-white px-4 mb-16 mt-4" /> */}
+               
                 <SuissebaseFiat showDrawer={this.state.sendReceiveDrawer} valNum={this.state.valNum} onClose={() => this.closeDrawer()} />
                 {this.state.buyFiatDrawer && <MassPayment showDrawer={this.state.buyFiatDrawer} tabData={{ tabVal: this.state.valNum, walletCode: this.state.selctedVal }} onClose={() => this.closeDrawer()} />}
                 {this.state.transactions && <TransactionsHistory

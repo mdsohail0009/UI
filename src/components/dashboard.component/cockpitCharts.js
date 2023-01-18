@@ -1,24 +1,18 @@
 import React, { Component } from 'react'
-import { Card,List,Button, Row, Col,Empty, Menu,Dropdown,Input,Typography, Radio, Spin,Space,Drawer } from 'antd';
+import { List,Button, Empty, Menu,Dropdown,Input,Typography,Space,Drawer } from 'antd';
 import apiCalls from "../../api/apiCalls";
 import { connect } from 'react-redux';
-import PieChart from '../trading.components/piechart';
 import { Link } from 'react-router-dom';
-import BChart from '../trading.components/bar.Chart';
-import LChart from '../trading.components/line.Chart';
 import Translate from 'react-translate-component';
 import Loader from "../../Shared/loader";
-import SendReceive from '../send.component'
 import Currency from '../shared/number.formate';
-import BuySell from '../buy.component';
 import TransactionsHistory from "../transactions.history.component";
 import { setWithdrawfiatenaable, setStep } from '../../reducers/sendreceiveReducer'
 import {setReceiveFiatHead, setSendFiatHead} from '../../reducers/buyFiatReducer';
-import { setdepositCurrency, getCurrencieswithBankDetails } from '../../reducers/depositReducer'
+import { setdepositCurrency } from '../../reducers/depositReducer'
 import OnthegoFundTransfer from '../onthego.transfer';
 import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
 import MassPayment from '../buyfiat.component'
-import { buyFiatSteps as config } from '../buyfiat.component/config';
 import { getScreenName } from '../../reducers/feturesReducer';
 const { Title, Paragraph, Text } = Typography;
 
@@ -187,38 +181,15 @@ class CockpitCharts extends Component {
         const { wallets } = this.props.dashboard;
         return (<>
             <div className="main-container" >
-{/*            
-           <div  className="portfolio-title mb-8">
-           <div className='portfolio-data' >
-            <Translate
-              content="your_portfolio"
-              component={Title}
-              className="fs-24 text-white mb-0 fw-600 mr-8"
-            />
-            <Currency prefix={"$"} defaultValue={totalCryptoValue}  className={`text-white-30 fs-16 m-0 ${totalCryptoValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '18px' }} />
-            </div>
-              <div>
-              <Link to="/cockpitCharts" className="dbchart-link fs-14 fw-500">
-                <Translate content="cockpit" />
-                <span className="icon sm right-angle ml-4" />
-              </Link>
 
-               <Button className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
-                  <Translate content="cockpit" />
-                  <span className="icon sm right-angle ml-4" />
-              </Button> 
-                    
-              </div>
-            </div> */}
            
             <div className='coinveiw-newpage'>
             <div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/" /><span className="back-btnarrow">Back</span></div>
             <div className='fait-wallets-style m-0 new-viewpage'>
             <Translate content="fait_walets" component={Title} className="db-titles" />
             <div className = 'search-box'>
-              {/* <input className = "search-text" type="text" placeholder = "Search Anything" /> */}
               <Search
-                            placeholder="Search Transactions"
+                             placeholder={apiCalls.convertLocalLang('search_currency')} 
                             onChange={(value)=>this.handleSearch(value)}
                             size="middle"
                             bordered={false}
@@ -227,10 +198,7 @@ class CockpitCharts extends Component {
                       <span className="icon lg search-angle icon-space" />
                       </div>
                   </div> 
-              {/* <Button className="dbchart-link"  onClick={() => this.cockpitCharts()} >
-                  <Translate content="cockpit" />
-              </Button>   
-                     */}
+            
                      
               </div>
                 {wallets?.loading ? (
@@ -240,7 +208,6 @@ class CockpitCharts extends Component {
               className="mobile-list"
               itemLayout="horizontal"
               dataSource={this.state.transactionData}
-              //loading={cryptoPortFolios.loading}
               locale={{
                 emptyText: (
                   <Empty
@@ -255,12 +222,7 @@ class CockpitCharts extends Component {
                   extra={
                     <div className='crypto-btns'>
                       
-                      {/* <Translate
-                        content="sell"
-                        component={Button}
-                        className="custom-btn sec ml-16"
-                        onClick={() => this.showBuyDrawer(item, "sell")}
-                      /> */}
+                    
                         <Translate
                         content="deposit"
                         component={Button}
@@ -281,27 +243,18 @@ class CockpitCharts extends Component {
                             <a onClick={e => e.preventDefault()}>
                               <Space>
                               <span class="icon lg menu-bar p-relative"></span>
-                              {/* <DownOutlined /> */}
+
                             </Space>
                           </a>
                         </Dropdown>
-                        
-                     {/* <span class="icon md bell ml-4 p-relative"></span> */}
-                     {/* <Dropdown overlay={this.depostWithdrawMenu} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
-                     <span class="icon md bell ml-4 p-relative"></span>
-                    </Dropdown> */}
+                 
                     </div>
                   }
                 >
                   <List.Item.Meta
                     avatar={<div className='crypto-bg'>
                       <span
-                        className={`crypto-icon c-pointer ${item.walletCode.toLowerCase()}`}
-                        onClick={() =>
-                          this.props.history.push(
-                            "/coindetails/" + item.walletCode.toLowerCase()
-                          )
-                        }
+                        className={`crypto-icon ${item.walletCode.toLowerCase()}`}
                       />
                       </div>
                     }
@@ -325,20 +278,6 @@ class CockpitCharts extends Component {
                                 ? "price-valgreen"
                                 : "price-valred"
                             }`}>
-                        <Currency
-                            defaultValue={item.amount}
-                            type={"text"}
-                            className={`lg-fontsize ${
-                              item.amount > 0
-                                ? "text-green pg-text"
-                                : "text-red red-text"
-                            }`}
-                          />
-                          <span className={`icon sm  ${
-                              item.amount > 0
-                                ? "valupp-icon pg-arrow"
-                                : "valdown-icon red-arrow"
-                            }`} />
                             </div>
                       </div>
                     }
@@ -374,23 +313,6 @@ class CockpitCharts extends Component {
                     <OnthegoFundTransfer selectedCurrency={this.state.selectedCurrency} ontheGoType={"Onthego"} onClosePopup={() => this.closeDrawer()}  />
                 </Drawer>
           </div>
-            {/* <Row gutter={16}>
-                {this.state.reports && <>{this.state.reports.map(elem => (
-                    <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
-                        <Card className="db-card" onClick={() => this.viewReport(elem)}>
-                            <div className="d-flex">
-                                <span className='icon lg dashboard mr-16' />
-                                <div style={{ flex: 1 }}>
-                                    <Title className="fs-20 fw-600 mb-0 text-white-30">{elem.name}</Title>
-                                    <Paragraph className="text-white-30 fs-14 fw-200 mb-0">{elem.description}</Paragraph>
-                                </div>
-                            </div>
-                        </Card>
-                    </Col>
-                ))}</>}
-            </Row> */}
-
-
         </>)
 
     }
