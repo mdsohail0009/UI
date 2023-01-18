@@ -107,6 +107,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
           "Password": "",
           "ConfirmPassword": ""
         }} onFinish={(values) => saveUserPass(values)} enableReinitialize>
+          <div ref={useDivRef}></div>
         {changePasswordResponse.messsage !== "" && (
           <Typography>
             <Alert
