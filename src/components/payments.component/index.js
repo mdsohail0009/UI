@@ -14,6 +14,7 @@ import { getCurrencyLu} from './api'
 import {getFeaturePermissionsByKey} from '../shared/permissions/permissionService'
 import apicalls from '../../api/apiCalls';
 import AddressbookV3 from '../addressbook.v3';
+import { getScreenName } from '../../reducers/feturesReducer';
 
 const { Title, Text, Paragraph } = Typography;
 const { Option } = Select;
@@ -162,13 +163,19 @@ const getCurrencyLookup = async () => {
  const isFiatHeading =(data)=>{
     setHideFiatHeading(data)
 	}
+
+  const  handleBack = () => {
+    props.dispatch(getScreenName({getScreen:"dashboard"}))
+} 
   if(loading){
     return <div className='custom-spin text-center mt-36'><Spin loading={true}></Spin></div>
   }else{
   return (
     <>
       <div className="main-container">
-      <div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/cockpit" /><span className="back-btnarrow">Back</span></div>
+      <div className="backbtn-arrowmb" onClick={handleBack}>
+        <Link className="icon md leftarrow c-pointer backarrow-mr" to="/cockpit" /><span className="back-btnarrow">Back</span>
+        </div>
         <div className='bill-payment'> 
           
           <div className="billpaycoin-style"><Translate content="menu_payments" component={Text} className="coin-viewstyle" /></div>

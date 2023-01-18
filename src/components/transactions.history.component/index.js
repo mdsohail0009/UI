@@ -323,6 +323,11 @@ isErrorDispaly = (objValue) => {
     const options5 = statusData?.map((d) => (
       <Option key={d.code} value={d.code}>{d.code}</Option>
     ));
+
+   const  handleBack = () => {
+      this.props.dispatch(getScreenName({getScreen:"dashboard"}))
+  }
+
     return (
       <>
         <Drawer
@@ -340,7 +345,9 @@ isErrorDispaly = (objValue) => {
     
         </Drawer>
         <div className="main-container">
-			<div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/" /><span className="back-btnarrow">Back</span></div>
+			<div className="backbtn-arrowmb" onClick={handleBack}>
+        <Link className="icon md leftarrow c-pointer backarrow-mr" to="/" />
+        <span className="back-btnarrow">Back</span></div>
         <Translate content="transactions_history" component={Title} className="grid-title" />
             <Form
               initialValues={this.state.customerData}
