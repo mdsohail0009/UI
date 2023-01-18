@@ -83,8 +83,6 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
         }
       };
     const themeSwitch = async () => {
-        setTheme(!theme)
-        switcher({ theme: theme ? themes.DRT : themes.LHT });
         settingsObj.Theme = !theme ? 'Light Theme' : 'Dark Theme';
         settingsObj.Language = settingsObj.Language?.toLowerCase();
         settingsObj.customerId = customer?.id;
@@ -94,6 +92,8 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
             message.destroy()
             getmemeberInfoa(customer.userId)
             counterpart.setLocale(settingsObj.Language);
+            setTheme(!theme)
+            switcher({ theme: theme ? themes.DRT : themes.LHT });
         }
     }
 
