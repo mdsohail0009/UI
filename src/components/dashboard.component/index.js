@@ -10,11 +10,9 @@ import Translate from 'react-translate-component';
 import Wallets from '../dashboard.component/wallets.component';
 import YourPortfolio from '../dashboard.component/yourportfolio.component';
 import apiCalls from '../../api/apiCalls';
-import Notices from './notices';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 import BankWallets from '../bankui.component'
 import SbCard from './sbCard';
-import Iban from './ibanAccounts';
 const { Title, Paragraph } = Typography;
 class Home extends Component {
     state = {
@@ -88,17 +86,11 @@ class Home extends Component {
                                 <Wallets />
                             </div>                     
                         </>}
-                        {/* {this.state.permissions?.Bank &&
-                            <div className="markets-panel ac-topspace">
-                                <BankWallets/>
-                            </div>
-                        } */}
                         {this.state.permissions.Transactions && <Portfolio
                             crypto="Bitcoin"
                             crypto_value='0.00'
                             crypto_usd="0.00 BTC"
                             crypto_stock="0.0%" />}
-                        {/* {this.state.permissions.Notices && <Notices />} */}
                         
                     </Col>
                     <Col xs={24} md={12} lg={9} xl={9} className="cust-col-design">

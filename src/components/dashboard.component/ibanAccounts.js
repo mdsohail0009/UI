@@ -61,8 +61,6 @@ class Iban extends Component {
         if (e === 2) {
             this.props.dispatch(setReceiveFiatHead(false));
             this.props.dispatch(setSendFiatHead(false));
-            // this.props.dispatch(setWithdrawfiatenaable(true))
-            // this.props.dispatch(setWithdrawfiat({ walletCode: value }))
             this.setState({ ...this.setState, showFuntransfer: true, selectedCurrency:value })
         } else if (e === 1) {
             this.props.dispatch(setReceiveFiatHead(true));
@@ -122,22 +120,10 @@ class Iban extends Component {
 
         return (
             <>
-            {/* <BankWallets/> */}
             <div className="fait-wallets-style">
             <Translate content="iban" component={Title} className="db-titles" />
-                <div>
-              {/* <Button className="dbchart-link"  onClick={() => this.cockpitCharts()} >
-                  <Translate content="cockpit" />
-                  <span className="icon sm right-angle ml-4" />
-              </Button> */}
-                    
               </div>
-              </div>
-                {/* <div style={{ display: "flex",alignItems:"baseline" }}>
-
-                <Translate content="suissebase_subtitle" component={Paragraph} className="text-white-30 fs-16 mb-16 px-4" />
-                <Currency defaultValue={totalFiatValue} className={`fs-24 m-0 fw-600 ${totalFiatValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '54px' }} />
-                </div> */}
+               
                 {wallets?.loading ? (
                     <Loader />
                 ) : (
@@ -146,7 +132,7 @@ class Iban extends Component {
                             dataSource={wallets.data}
                             bordered={false}
                             className="mobile-list iban-list"
-                            //loading={wallets.loading}
+                          
                             renderItem={item =>
                                 <List.Item className="listitems-design iban-style">
                                     <List.Item.Meta
@@ -157,7 +143,7 @@ class Iban extends Component {
                                                 <a onClick={e => e.preventDefault()}>
                                                     <Space>
                                                         <span class="icon lg menu-bar  p-relative"></span>
-                                                        {/* <DownOutlined /> */}
+                                                   
                                                     </Space>
                                                 </a>
                                             </Dropdown>
@@ -166,13 +152,12 @@ class Iban extends Component {
                                             <Currency className="currency-style" defaultValue={Math.abs(item.amount) > 999999 ? Math.sign(item.amount) * ((Math.abs(item.amount) / 1000000).toFixed(1)) : Math.sign(item.amount) * Math.abs(item.amount)} suffixText={Math.abs(item.amount) > 999999 ? "M" : null} prefix={(item?.walletCode == "USD" ? "$" : null) || (item?.walletCode == "GBP" ? "£" : null) || (item?.walletCode == "EUR" ? "€" : null)} decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />
 
                                         </>}
-                                    // description={}
+                                   
                                     />
                                     <div className="crypto-btns crypto-btn-top d-flex">
                                         <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
                                         <Translate content="withdraw" onClick={() => { this.showSendReceiveDrawer(2, item.walletCode) }} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} />
-                                        {/* <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
-                                <Translate content="withdraw" onClick={() => this.showSendReceiveDrawer(2, item.walletCode)} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} /> */}
+                                      
 
                                     </div>
                                 </List.Item>}
