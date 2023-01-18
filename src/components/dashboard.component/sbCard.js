@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Card, Typography } from 'antd';
-//import logoWhite from "../../assets/images/logo-white.svg";
 import logoColor from "../../assets/images/logo-color.png";
 import logoWhite from "../../assets/images/SuisseBase.png";
 import Translate from 'react-translate-component';

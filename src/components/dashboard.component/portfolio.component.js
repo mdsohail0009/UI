@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography,Input, message, Spin,Button,Image,  } from 'antd';
+import { Typography,Input, message, Spin,Button,  } from 'antd';
 import Translate from 'react-translate-component';
 import { getData } from './api';
 import NumberFormat from 'react-number-format';
@@ -8,8 +8,7 @@ import { connect } from 'react-redux';
 import { withRouter,Link } from 'react-router-dom';
 import { dashboardTransactionSub } from '../../utils/pubsub';
 import TransactionsHistory from "../transactions.history.component";
-import apiCalls from '../../api/apiCalls';
-import { getcoinDetails } from './api';
+
 
 class Portfolio extends Component {
     chart;
@@ -141,7 +140,7 @@ class Portfolio extends Component {
                                         <th style={{width: "5%"}}></th>
                                         <th style={{width: "18%"}}>Date</th>
                                         <th style={{width: "15%"}}>Wallet</th>
-                                        {/* <th style={{width: "35%"}}>Type</th> */}
+                                       
                                         <th style={{width: "15%"}}>Value</th>
                                         <th style={{width: "15%"}}>Status</th>
                                     </tr>
@@ -165,7 +164,7 @@ class Portfolio extends Component {
                                                     <>
                                                      <tr key={idx}>
                                                         <td style={{ width: "100px" }}><span className={``}></span></td>
-                                                        {/* {`crypto-icon c-pointer ${item.coin}`} */}
+                                                        
                                                         <td style={{ width: "100px" }}>
                                                      <div className='ts-tbdate'>
                                                         <Title className='ts-date'>{item?.date }</Title></div>

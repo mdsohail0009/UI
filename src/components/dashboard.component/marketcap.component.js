@@ -81,10 +81,6 @@ const MarketCap = ({ member }) => {
                     </div> 
                     </div>
                 </div>
-                {/* <div className="market-actions">
-                        <Tooltip title={apiCalls.convertLocalLang('full_screen')}><FullscreenOutlined onClick={() => showDrawer()} className="fs-18 text-white ml-8 fw-500" /></Tooltip>
-                        <Tooltip title={apiCalls.convertLocalLang('reload')}><ReloadOutlined onClick={fetchMarketCapsInfo} className="fs-18 text-white ml-16 fw-500" /></Tooltip>
-                    </div> */}
                     <div className="market-actions">
                         <Tooltip title={apiCalls.convertLocalLang('full_screen')}><FullscreenOutlined onClick={() => showDrawer()} className="fs-18 text-white ml-8 fw-500" /></Tooltip>
                         <Tooltip title={apiCalls.convertLocalLang('reload')}><ReloadOutlined onClick={fetchMarketCapsInfo} className="fs-18 text-white ml-16 fw-500" /></Tooltip>
