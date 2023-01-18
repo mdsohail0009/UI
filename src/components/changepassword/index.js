@@ -140,7 +140,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
           ]}
         >
 
-          <Input.Password placeholder={apiClient.convertLocalLang('Type_your_current_pass_word')} value={initialValues.CurrentPassword} className="cust-input change-space" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ? <EyeOutlined  /> : <EyeInvisibleOutlined />)} />
+          <Input.Password placeholder={apiClient.convertLocalLang('Type_your_current_pass_word')} maxLength={15} value={initialValues.CurrentPassword} className="cust-input change-space" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ? <EyeOutlined  /> : <EyeInvisibleOutlined />)} />
         </Form.Item>
         <div className="d-flex">
           <Translate
@@ -181,6 +181,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
 
           <Input.Password
             placeholder={apiClient.convertLocalLang('Type_your_new_pass_word')}
+            maxLength={15}
             value={initialValues.Password}
             onChange={(e) => handleChange("Password", e)}
             className="cust-input change-space pass-onhover" iconRender={visible => (visible ? <EyeOutlined  /> : <EyeInvisibleOutlined />)}
@@ -220,6 +221,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
 
           <Input.Password
             placeholder={apiClient.convertLocalLang('Re_type_your_new_pass_word')}
+            maxLength={15}
             value={initialValues.ConfirmPassword}
             onChange={(e) => handleChange("ConfirmPassword", e)}
             className="cust-input change-space" iconRender={visible => (visible ? <EyeOutlined /> : <EyeInvisibleOutlined />)}
