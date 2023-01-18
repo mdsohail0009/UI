@@ -35,7 +35,6 @@ class Portfolio extends Component {
         this.setState({ ...this.state, loading: true });
         let response = await getData();
         if (response.ok) {
-            console.log(response.data)
             this.setState({ ...this.state, dashBoardTransactions:response.data, transactionData: response.data, loading: false });
         } else {
             message.destroy();
@@ -100,7 +99,7 @@ class Portfolio extends Component {
   
     render() {
         const { Title } = Typography;
-        const { gridUrl, loading } = this.state;
+        const {  loading } = this.state;
         const { Search } = Input;
         return (<>
             <div className='market-panel-newstyle'></div>
@@ -109,7 +108,6 @@ class Portfolio extends Component {
                     <div className='transaction-title'>
                     <Translate component={Title} content="transactions_history" className="db-titles" />
                     <div className = 'search-box'>
-                        {/* <input className = "search-text" type="text" placeholder = "Search Anything" /> */}
                         <Search
                             placeholder="Search Wallet"
                             onChange={(value)=>this.handleSearch(value)}
@@ -120,14 +118,6 @@ class Portfolio extends Component {
                       <span className="icon lg search-angle icon-space" />
                       </div>
                   </div> 
-                   {/* <div class="search-container">
-               
-               <input class="search" id="searchleft" type="search" name="q" placeholder="Search">
-               <input className = "search-left"  type="search" name="q" placeholder="Search" />
-               <label class="button searchbutton" for="searchleft">
-               <span className="icon lg search-angle icon-space"  />        
-           </label>
-           </div> */}
                   </div>
                     <Button className="dbchart-link"  >
                         <Link to="/transactions"><Translate content="cockpit" /></Link>
