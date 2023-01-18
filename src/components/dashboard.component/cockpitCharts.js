@@ -289,20 +289,6 @@ class CockpitCharts extends Component {
                                 ? "price-valgreen"
                                 : "price-valred"
                             }`}>
-                        <Currency
-                            defaultValue={item.amount}
-                            type={"text"}
-                            className={`lg-fontsize ${
-                              item.amount > 0
-                                ? "text-green pg-text"
-                                : "text-red red-text"
-                            }`}
-                          />
-                          <span className={`icon sm  ${
-                              item.amount > 0
-                                ? "valupp-icon pg-arrow"
-                                : "valdown-icon red-arrow"
-                            }`} />
                             </div>
                       </div>
                     }
