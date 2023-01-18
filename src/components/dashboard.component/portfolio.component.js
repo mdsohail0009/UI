@@ -111,7 +111,7 @@ class Portfolio extends Component {
                     <div className = 'search-box'>
                         {/* <input className = "search-text" type="text" placeholder = "Search Anything" /> */}
                         <Search
-                            placeholder="Search Transactions"
+                            placeholder="Search Wallet"
                             onChange={(value)=>this.handleSearch(value)}
                             size="middle"
                             bordered={false}

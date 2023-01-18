@@ -134,10 +134,6 @@ class YourPortfolio extends Component {
           this.props.dispatch(setSendCrypto(true));
            this.props.dispatch(getScreenName({getScreen:"withdraw"}))
           this.props.changeStep('withdraw_crypto_selected');
-        //   this.setState({
-        //     ...this.state,
-        //     sendDrawer: true
-        // })
       } else {
         this.props.dispatch(setSendCrypto(false));
         this.props.dispatch(setWithdrawfiatenaable(false));
@@ -149,7 +145,6 @@ class YourPortfolio extends Component {
              const response = await createCryptoDeposit({ customerId: this.props.userProfile?.id, walletCode: coin, network: selectedObj?.netWork });
              if (response.ok) {
                 this.props.dispatch(setWalletAddress(response.data));
-               // this.props.dispatch(fetchDashboardcalls(this.props.userProfile?.id));
              }
 
           this.setState({
@@ -183,9 +178,7 @@ class YourPortfolio extends Component {
      menuBar = (item) => (
       <Menu>
           <ul className="drpdwn-list">
-              {/* <li  onClick={() =>  this.showSendReceiveDrawer(1, item)}>
-                  <Link value={1} className="c-pointer">Receive</Link>
-              </li> */}
+            
               <li onClick={() => this.showBuyDrawer(item, "buy")}>
                   <Link  value={2} className="c-pointer">
                   <Translate content="buy" />
@@ -210,29 +203,6 @@ class YourPortfolio extends Component {
         const { cryptoPortFolios } = this.props.dashboard
         return (
           <div className="" >
-{/*            
-           <div  className="portfolio-title mb-8">
-           <div className='portfolio-data' >
-            <Translate
-              content="your_portfolio"
-              component={Title}
-              className="fs-24 text-white mb-0 fw-600 mr-8"
-            />
-            <Currency prefix={"$"} defaultValue={totalCryptoValue}  className={`text-white-30 fs-16 m-0 ${totalCryptoValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '18px' }} />
-            </div>
-              <div>
-              <Link to="/cockpitCharts" className="dbchart-link fs-14 fw-500">
-                <Translate content="cockpit" />
-                <span className="icon sm right-angle ml-4" />
-              </Link>
-
-               <Button className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
-                  <Translate content="cockpit" />
-                  <span className="icon sm right-angle ml-4" />
-              </Button> 
-                    
-              </div>
-            </div> */}
             <div className='fait-wallets-style m-0'>
             <Translate content="suissebase_title" component={Title} className="db-titles" />
               <Button className="dbchart-link"   >
@@ -247,7 +217,6 @@ class YourPortfolio extends Component {
               className="mobile-list dash-mobile-list"
               itemLayout="horizontal"
               dataSource={cryptoPortFolios.data}
-              //loading={cryptoPortFolios.loading}
               locale={{
                 emptyText: (
                   <Empty
@@ -262,12 +231,7 @@ class YourPortfolio extends Component {
                   extra={
                     <div className='crypto-btns'>
                       
-                      {/* <Translate
-                        content="sell"
-                        component={Button}
-                        className="custom-btn sec ml-16"
-                        onClick={() => this.showBuyDrawer(item, "sell")}
-                      /> */}
+                      
                         <Translate
                         content="deposit"
                         component={Button}
@@ -286,28 +250,21 @@ class YourPortfolio extends Component {
                         <Link onClick={e => e.preventDefault()}>
                           <Space>
                           <span class="icon lg menu-bar p-relative"></span>
-                          {/* <DownOutlined /> */}
+                          
                         </Space>
                       </Link>
                     </Dropdown>
                         
-                     {/* <span class="icon md bell ml-4 p-relative"></span> */}
-                     {/* <Dropdown overlay={this.depostWithdrawMenu} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
-                     <span class="icon md bell ml-4 p-relative"></span>
-                    </Dropdown> */}
+                    
                     </div>
                   }
                 >
-                  {/* to={"/coindetails/" + item.coinFullName.toLowerCase()} */}
+                 
                   <List.Item.Meta
                     avatar={<div className='crypto-bg'>
                       <span
                         className={`crypto-icon  ${item.coin}`}
-                        // onClick={() =>
-                        //   this.props.history.push(
-                        //     "/coindetails/" + item.coinFullName.toLowerCase()
-                        //   )
-                        // }
+                       
                       />
                       </div>
                     }
@@ -318,7 +275,7 @@ class YourPortfolio extends Component {
                           <Text className="coin-style">
                             {item.coin}
                           </Text>
-                          {/* <Text className="fs-14 px-8 text-secondary">|</Text> */}
+                         
                           
                         </div>
                         <Currency
@@ -351,10 +308,7 @@ class YourPortfolio extends Component {
                       </div>
                     }
                   />
-                  {/* <div className='text-right fs-20 text-white'>
-                                <Currency defaultValue={item.coinBalance} type={"text"} prefix={""} />
-                                <Currency defaultValue={item.coinValueinNativeCurrency} type={"text"} className={`fs-16 ${item.coinValueinNativeCurrency > 0 ? "text-green" : "text-red"}`} />
-                            </div> */}
+                
                 </List.Item>
               )}
             />
@@ -389,4 +343,3 @@ const connectDispatchToProps = dispatch => {
 }
 
 export default connect(connectStateToProps, connectDispatchToProps)(withRouter(YourPortfolio));
-//export default ConnectStateProps(withRouter(YourPortfolio));

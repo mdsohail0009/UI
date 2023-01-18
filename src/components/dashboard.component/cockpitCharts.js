@@ -187,38 +187,15 @@ class CockpitCharts extends Component {
         const { wallets } = this.props.dashboard;
         return (<>
             <div className="main-container" >
-{/*            
-           <div  className="portfolio-title mb-8">
-           <div className='portfolio-data' >
-            <Translate
-              content="your_portfolio"
-              component={Title}
-              className="fs-24 text-white mb-0 fw-600 mr-8"
-            />
-            <Currency prefix={"$"} defaultValue={totalCryptoValue}  className={`text-white-30 fs-16 m-0 ${totalCryptoValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '18px' }} />
-            </div>
-              <div>
-              <Link to="/cockpitCharts" className="dbchart-link fs-14 fw-500">
-                <Translate content="cockpit" />
-                <span className="icon sm right-angle ml-4" />
-              </Link>
 
-               <Button className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
-                  <Translate content="cockpit" />
-                  <span className="icon sm right-angle ml-4" />
-              </Button> 
-                    
-              </div>
-            </div> */}
            
             <div className='coinveiw-newpage'>
             <div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/" /><span className="back-btnarrow">Back</span></div>
             <div className='fait-wallets-style m-0 new-viewpage'>
             <Translate content="fait_walets" component={Title} className="db-titles" />
             <div className = 'search-box'>
-              {/* <input className = "search-text" type="text" placeholder = "Search Anything" /> */}
               <Search
-                            placeholder="Search Transactions"
+                             placeholder={apiCalls.convertLocalLang('search_currency')} 
                             onChange={(value)=>this.handleSearch(value)}
                             size="middle"
                             bordered={false}
@@ -227,10 +204,7 @@ class CockpitCharts extends Component {
                       <span className="icon lg search-angle icon-space" />
                       </div>
                   </div> 
-              {/* <Button className="dbchart-link"  onClick={() => this.cockpitCharts()} >
-                  <Translate content="cockpit" />
-              </Button>   
-                     */}
+            
                      
               </div>
                 {wallets?.loading ? (
@@ -240,7 +214,6 @@ class CockpitCharts extends Component {
               className="mobile-list"
               itemLayout="horizontal"
               dataSource={this.state.transactionData}
-              //loading={cryptoPortFolios.loading}
               locale={{
                 emptyText: (
                   <Empty
@@ -255,12 +228,7 @@ class CockpitCharts extends Component {
                   extra={
                     <div className='crypto-btns'>
                       
-                      {/* <Translate
-                        content="sell"
-                        component={Button}
-                        className="custom-btn sec ml-16"
-                        onClick={() => this.showBuyDrawer(item, "sell")}
-                      /> */}
+                    
                         <Translate
                         content="deposit"
                         component={Button}
@@ -281,15 +249,11 @@ class CockpitCharts extends Component {
                             <a onClick={e => e.preventDefault()}>
                               <Space>
                               <span class="icon lg menu-bar p-relative"></span>
-                              {/* <DownOutlined /> */}
+
                             </Space>
                           </a>
                         </Dropdown>
-                        
-                     {/* <span class="icon md bell ml-4 p-relative"></span> */}
-                     {/* <Dropdown overlay={this.depostWithdrawMenu} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
-                     <span class="icon md bell ml-4 p-relative"></span>
-                    </Dropdown> */}
+                 
                     </div>
                   }
                 >
@@ -374,23 +338,6 @@ class CockpitCharts extends Component {
                     <OnthegoFundTransfer selectedCurrency={this.state.selectedCurrency} ontheGoType={"Onthego"} onClosePopup={() => this.closeDrawer()}  />
                 </Drawer>
           </div>
-            {/* <Row gutter={16}>
-                {this.state.reports && <>{this.state.reports.map(elem => (
-                    <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
-                        <Card className="db-card" onClick={() => this.viewReport(elem)}>
-                            <div className="d-flex">
-                                <span className='icon lg dashboard mr-16' />
-                                <div style={{ flex: 1 }}>
-                                    <Title className="fs-20 fw-600 mb-0 text-white-30">{elem.name}</Title>
-                                    <Paragraph className="text-white-30 fs-14 fw-200 mb-0">{elem.description}</Paragraph>
-                                </div>
-                            </div>
-                        </Card>
-                    </Col>
-                ))}</>}
-            </Row> */}
-
-
         </>)
 
     }

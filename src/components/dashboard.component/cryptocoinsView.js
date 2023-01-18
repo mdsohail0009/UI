@@ -239,29 +239,6 @@ class cryptocoinsView extends Component {
         const { Search } = Input;
         return (
           <div className="main-container" >
-{/*            
-           <div  className="portfolio-title mb-8">
-           <div className='portfolio-data' >
-            <Translate
-              content="your_portfolio"
-              component={Title}
-              className="fs-24 text-white mb-0 fw-600 mr-8"
-            />
-            <Currency prefix={"$"} defaultValue={totalCryptoValue}  className={`text-white-30 fs-16 m-0 ${totalCryptoValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '18px' }} />
-            </div>
-              <div>
-              <Link to="/cockpitCharts" className="dbchart-link fs-14 fw-500">
-                <Translate content="cockpit" />
-                <span className="icon sm right-angle ml-4" />
-              </Link>
-
-               <Button className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
-                  <Translate content="cockpit" />
-                  <span className="icon sm right-angle ml-4" />
-              </Button> 
-                    
-              </div>
-            </div> */}
             {cryptoPortFolios?.loading ? (
                <Loader />
         ) : (
@@ -270,9 +247,8 @@ class cryptocoinsView extends Component {
             <div className='fait-wallets-style m-0 new-viewpage'>
             <Translate content="suissebase_title" component={Title} className="db-titles" />
             <div className = 'search-box'>
-              {/* <input className = "search-text" type="text" placeholder = "Search Anything" /> */}
               <Search
-                            placeholder="Search Transactions"
+                             placeholder={apiCalls.convertLocalLang('search_currency')} 
                             onChange={(value)=>this.handleSearch(value)}
                             size="middle"
                             bordered={false}
@@ -281,20 +257,12 @@ class cryptocoinsView extends Component {
                       <span className="icon lg search-angle icon-space" />
                       </div>
                   </div> 
-              {/* <Button className="dbchart-link"  onClick={() => this.cockpitCharts()} >
-                  <Translate content="cockpit" />
-              </Button>   
-                     */}
                      
               </div>
-                {/* {cryptoPortFolios?.loading ? (
-               <Loader />
-        ) : ( */}
             <List
               className="mobile-list"
               itemLayout="horizontal"
               dataSource={this.state.transactionData}
-              //loading={cryptoPortFolios.loading}
               locale={{
                 emptyText: (
                   <Empty
@@ -309,12 +277,7 @@ class cryptocoinsView extends Component {
                   extra={
                     <div className='crypto-btns'>
                       
-                      {/* <Translate
-                        content="sell"
-                        component={Button}
-                        className="custom-btn sec ml-16"
-                        onClick={() => this.showBuyDrawer(item, "sell")}
-                      /> */}
+                      
                         <Translate
                         content="deposit"
                         component={Button}
@@ -333,28 +296,20 @@ class cryptocoinsView extends Component {
                         <Link onClick={e => e.preventDefault()}>
                           <Space>
                           <span class="icon lg menu-bar p-relative"></span>
-                          {/* <DownOutlined /> */}
+                         
                         </Space>
                       </Link>
                     </Dropdown>
                         
-                     {/* <span class="icon md bell ml-4 p-relative"></span> */}
-                     {/* <Dropdown overlay={this.depostWithdrawMenu} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
-                     <span class="icon md bell ml-4 p-relative"></span>
-                    </Dropdown> */}
+                   
                     </div>
                   }
                 >
-                  {/* to={"/coindetails/" + item.coinFullName.toLowerCase()} */}
+                  
                   <List.Item.Meta
                     avatar={<div className='crypto-bg'>
                       <span
                         className={`crypto-icon c-pointer ${item.coin}`}
-                        onClick={() =>
-                          this.props.history.push(
-                            "/coindetails/" + item.coinFullName.toLowerCase()
-                          )
-                        }
                       />
                       </div>
                     }
@@ -365,7 +320,7 @@ class cryptocoinsView extends Component {
                           <Text className="coin-style">
                             {item.coin}
                           </Text>
-                          {/* <Text className="fs-14 px-8 text-secondary">|</Text> */}
+                          
                           
                         </div>
                         <Currency
@@ -398,15 +353,12 @@ class cryptocoinsView extends Component {
                       </div>
                     }
                   />
-                  {/* <div className='text-right fs-20 text-white'>
-                                <Currency defaultValue={item.coinBalance} type={"text"} prefix={""} />
-                                <Currency defaultValue={item.coinValueinNativeCurrency} type={"text"} className={`fs-16 ${item.coinValueinNativeCurrency > 0 ? "text-green" : "text-red"}`} />
-                            </div> */}
+                
                 </List.Item>
               )}
             />
             
-        {/* )} */}
+      
         </div>)}
             <BuySell
               showDrawer={this.state.buyDrawer}
@@ -438,4 +390,3 @@ const connectDispatchToProps = dispatch => {
 }
 
 export default connect(connectStateToProps, connectDispatchToProps)(withRouter(cryptocoinsView));
-//export default ConnectStateProps(withRouter(YourPortfolio));
