@@ -183,10 +183,7 @@ class Portfolio extends Component {
                                                      <td><div className='ts-wallet'>
                                                         <Title className='ts-coin'>{item.wallet}</Title>
                                                      <Title className='ts-type'>{item.type}</Title></div></td>
-                                                    
-                                                        
-                                                        {/* <td style={{ width: "50px" }}>{item.type}</td> */}
-                                                        
+
                                                         <td>{this.getNumberVal(item)}</td>
                                                         <td>{item.state} </td>
                                                     </tr>
@@ -205,7 +202,7 @@ class Portfolio extends Component {
                           <tr>
                             <td
                               colSpan="8"
-                              className="p-16 text-center"
+                              className="p-16 text-center no-transaction"
                               style={{width: 300 }}
                             >
                              No transaction details available

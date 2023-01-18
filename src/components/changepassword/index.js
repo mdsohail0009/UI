@@ -24,6 +24,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
   })
   const { Text } = Typography;
   const [form] = Form.useForm();
+  const useDivRef = React.useRef(null);
   const [changePasswordResponse, setChangePasswordResponse] = useState({ error: false, messsage: "", isLoading: false });
   useEffect(() => {
     if (userProfile && userProfile?.isNew) {
@@ -41,6 +42,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
       setBtnDisabled(false)
       setChangePasswordResponse({ error: false, messsage: "", isLoading: false });
       passwordResponce(true, "Current password and New password should not be same", false);
+      useDivRef.current?.scrollIntoView(0,0)
     } else {
       setBtnDisabled(true);
       passwordResponce(false, '', false);
@@ -66,6 +68,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
         setBtnDisabled(false);
         setChangePasswordResponse({ error: false, messsage: "", isLoading: false });
         passwordResponce(true, isErrorDispaly(result), false);
+        useDivRef.current?.scrollIntoView(0,0)
       }
     }
   }
@@ -82,6 +85,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
 
   const passwordResponce = (isError, msg, isloading) => {
     setChangePasswordResponse({ error: isError, messsage: msg, isLoading: isloading });
+    useDivRef.current?.scrollIntoView(0,0)
   }
   const handleChange = (prop, val) => {
     let object = { ...initialValues };

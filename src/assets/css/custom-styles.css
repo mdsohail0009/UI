@@ -917,6 +917,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .custom-header{color:var(--white) !important;}
 .custom-inactive{color:var(--sbCardText) !important}
 /* batchpayments end */
+.no-transaction{padding-top: 18px !important;}
 /*@media start*/
 @media (min-width: 768px){
     .listitems-design{width: 340px;}
