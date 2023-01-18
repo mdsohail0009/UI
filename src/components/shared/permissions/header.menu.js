@@ -274,7 +274,6 @@ class HeaderPermissionMenu extends Component {
         }
     }
     closeDrawer = (key) => {
-        debugger
         if (this.props.menuItems?.featurePermissions?.[KEY_URL_MAP[window.location.pathname]]?.featureId) {
             this.props.dispatch(setSelectedFeatureMenu(this.props.menuItems?.featurePermissions?.[KEY_URL_MAP[window.location.pathname]]?.featureId));
         }

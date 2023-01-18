@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { List,Button, Empty, Menu,Dropdown,Input,Typography,Space,Drawer } from 'antd';
+import { List,Button, Empty, Menu,Dropdown,Input,Typography,Space,Drawer,Image } from 'antd';
 import apiCalls from "../../api/apiCalls";
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -252,12 +252,7 @@ class CockpitCharts extends Component {
                   }
                 >
                   <List.Item.Meta
-                    avatar={<div className='crypto-bg'>
-                      <span
-                        className={`crypto-icon ${item.walletCode.toLowerCase()}`}
-                      />
-                      </div>
-                    }
+                     avatar={<Image preview={false} src={item.imagePath} />}
                     title={
                       <div className="crypto-card-design">
                         <div className='crypto-values'>
