@@ -245,13 +245,13 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
           className="basic-decs"
         />
         <ul className="profile-ul">
-          <li className="profileinfo " onClick={() => showDrawer()}>
+          <li className="profileinfo ">
             <div className="profile-block">
-              <label className="profile-label c-pointer">
+              <label className="profile-label">
                 <Translate
                   content="Password"
                   component={Paragraph.label}
-                  className="profile-label c-pointer"
+                  className="profile-label"
                 />
               </label>
               <div style={{ flexGrow: 12 }}>
@@ -270,26 +270,14 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                 )}
               </div>
               <div className="passwrd-chang-btn">
-                {/* <span className="small-btn c-pointer"> */}
-                  {/* <Translate
-                    content="Click_here_to_change_pass_word"
-                    component={Paragraph.span}
-                    className="small-btn c-pointer"
-                  /> */}
-                {/* </span> */}
-                {/* <span className="icon md rarrow-white" /> */}
-                {/* <Col md={24} xl={24} xxl={24}> */}
               <div className="text-left passwrd-chang-btn">
               <Button
                         className="profile-sm-btn"
-                        // loading={btnDisabled}
-                        // onClick={() => saveDetails()}
+                        onClick={() => showDrawer()}
                         >
-                        {/* {isLoading && <Spin indicator={antIcon} />}{" "} */}
                        change
                     </Button>
               </div>
-            {/* </Col> */}
               </div>
             </div>
           </li>
@@ -321,8 +309,8 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
         closable={true}
         visible={isChangepassword}
         closeIcon={null}
-        onClose={() => setisChangepassword(false)}
         className="side-drawer"
+        destroyOnClose={true}
       >
         <Changepassword onSubmit={() => setisChangepassword(false)} />
       </Drawer>

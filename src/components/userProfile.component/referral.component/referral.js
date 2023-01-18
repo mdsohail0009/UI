@@ -8,7 +8,7 @@ import {
 } from "react-share";
 import apicalls from "../../../api/apiCalls"
 import { connect } from "react-redux";
-
+import Loader from "../../../Shared/loader";
 const { Title, Paragraph, Text } = Typography;
 class Referral extends Component {
     state = {
@@ -51,6 +51,10 @@ class Referral extends Component {
         const { Text } = Typography;
 		return (
       <>
+       {this.state.isLoading ? (
+				<Loader />
+			) : (
+        <div>
         {this.state.errorMsg && (
           <Alert
             type="error"
@@ -60,7 +64,6 @@ class Referral extends Component {
           />
         )}
 
-        <Spin spinning={this.state.isLoading}>
           
             <div
               className=""
@@ -168,7 +171,8 @@ class Referral extends Component {
                 <Translate content="Go_to_Partner" />
               </Button>
               </div>
-        </Spin>
+        </div>
+        )}
       </>
     );
 	}

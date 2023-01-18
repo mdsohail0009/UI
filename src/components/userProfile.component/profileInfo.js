@@ -186,7 +186,6 @@ class ProfileInfo extends Component {
         </div>
         </div>
         <div className="dwnl-content-style">
-          {/* <span className="icon lg download"></span> */}
          
           {this.state.fileLoader ? <Spin size="Large" style={{ padding: 10 }} /> : <span>
               <Tooltip title="Download">
@@ -197,20 +196,6 @@ class ProfileInfo extends Component {
           <Text className="download-content">Download reference confirmation letter</Text>
         </div>
         </div>
-        {/* <div className="box contact-info coin-bal">
-          <Translate
-            content="account_text"
-            component={Text}
-            className="basicinfo mb-0"
-          />
-          <ul class="m-0 pl-0">
-            {this.state.fileLoader ? <Spin size="Large" style={{ padding: 10 }} /> : <li>
-              <Tooltip title="Download">
-                <div onClick={this.fileDownload} className="c-pointer"><span className="icon md download" /></div>
-              </Tooltip>
-            </li>}
-          </ul>
-        </div> */}
         <div className="basic-info basicprofile-info">
           <Title className="basicinfo">
             {" "}
@@ -233,22 +218,15 @@ class ProfileInfo extends Component {
                 <p className="profile-value" style={{ flexGrow: 12 }}>
                   {this.props.userConfig.businessName || "--"}
                 </p>
-                {/* <div></div> */}
               </div>
             </li>}
             <li className="profileinfo">
               <div className="profile-block">
-                <label className="profile-label">
-                  <Translate
-                    content="userName"
-                    component={Text}
-                    className="profile-label"
-                  />
+                <label className="profile-label">Username
                 </label>
                 <p className="profile-value" style={{ flexGrow: 12 }}>
                   {this.props.userConfig.userName || "--"}
                 </p>
-                {/* <div></div> */}
               </div>
             </li>
             {this.props.userConfig.isBusiness !== true && <>
