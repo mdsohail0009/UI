@@ -10,13 +10,11 @@ const TheamSwitch = ({customer,theamFlag}) => {
     const [settingsObj, setSettingsObj] = useState({ customerId: '', Language: customer?.language ? customer.language?.toUpperCase() : 'EN', currency: customer?.currency ? customer.currency : 'USD', Theme: customer?.theme ? customer.theme : null })
     
     useEffect(() => {
-        debugger
         switcher({ theme: customer?.theme === 'Light Theme' ? themes.LHT : themes.DRT });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const themeSwitch = async () => {
-        debugger
         setTheme(!theme)
         switcher({ theme: theme ? themes.DRT : themes.LHT });
         let settingsObj={};

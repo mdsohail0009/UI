@@ -12,7 +12,7 @@ import { getTransactionSearch, getTransactionCurrency,transactionsView } from '.
 import { setCurrentAction } from "../../reducers/actionsReducer";
 import { getFeaturePermissionsByKey } from '../shared/permissions/permissionService';
 import { withRouter,Link } from "react-router-dom";
-import { setSelectedFeatureMenu } from "../../reducers/feturesReducer";
+import { getScreenName, setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 import NumberFormat from "react-number-format";
 import moment from "moment/moment";
 import TransactionSlips from "./transaction.slips";
@@ -66,6 +66,7 @@ class TransactionsHistory extends Component {
 
 
   componentDidMount() {
+    this.props.dispatch(getScreenName({getScreen:null}))
     getFeaturePermissionsByKey('transactions', this.loadInfo)
   }
 
@@ -322,6 +323,11 @@ isErrorDispaly = (objValue) => {
     const options5 = statusData?.map((d) => (
       <Option key={d.code} value={d.code}>{d.code}</Option>
     ));
+
+   const  handleBack = () => {
+      this.props.dispatch(getScreenName({getScreen:"dashboard"}))
+  }
+
     return (
       <>
         <Drawer
@@ -339,7 +345,9 @@ isErrorDispaly = (objValue) => {
     
         </Drawer>
         <div className="main-container">
-			<div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/" /><span className="back-btnarrow">Back</span></div>
+			<div className="backbtn-arrowmb" onClick={handleBack}>
+        <Link className="icon md leftarrow c-pointer backarrow-mr" to="/" />
+        <span className="back-btnarrow">Back</span></div>
         <Translate content="transactions_history" component={Title} className="grid-title" />
             <Form
               initialValues={this.state.customerData}

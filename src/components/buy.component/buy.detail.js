@@ -109,7 +109,7 @@ class SelectCrypto extends Component {
         const _vaidator = validatePreview({ localValue, cryptValue: cryptoValue, wallet: this.state.selectedWallet, maxPurchase: buyMax, minPurchase: buyMin, gbpInUsd, eurInUsd })
         if (!_vaidator.valid) {
             this.setState({ ...this.state, error: { ..._vaidator } });
-            this.myRef.current.scrollIntoView();
+            this.myRef.current.scrollIntoView(0,0);
             return;
         }
         if((localValue == 0 && cryptoValue == 0)){
@@ -190,7 +190,7 @@ class SelectCrypto extends Component {
                     {<div><Translate content="thousandKText" component={Paragraph} className="buy-paragraph " />
                     <Translate content="contact_amount_text" component={Paragraph} className="buy-paragraph" />
                      <div className="buy-usdt-btn">
-                        <SuisseBtn autoDisable={true} title="PreviewBuy" className="pop-btn" onClick={() => this.handlePreview()} />
+                     <SuisseBtn title="PreviewBuy" loading={this.state.btnLoading} onRefresh={() => this.refresh()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
                     </div> </div>}
 
                     </Card>

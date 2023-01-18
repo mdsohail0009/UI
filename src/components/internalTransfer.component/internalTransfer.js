@@ -1,11 +1,17 @@
-import React from "react"
+import { useEffect } from "react"
 import comingsoon from '../../assets/images/comingsoon.png'
 import {Typography} from "antd";
+import { getScreenName } from "../../reducers/feturesReducer";
+import { connect } from "react-redux";
+import { withRouter } from 'react-router-dom';
 
 const { Text } = Typography;
 
-const InternalTransfer = () => {
-
+const InternalTransfer = (props) => {
+    useEffect(() => {
+       props.dispatch(getScreenName({getScreenName:null}))
+    }, []);
+    
     return <div className="text-center intertrans">
         <div className="">
         <img src={comingsoon} className="" style={{ marginBottom: '10px' }} alt="Confirm" />
@@ -15,4 +21,12 @@ const InternalTransfer = () => {
         </div>
 
 }
-export default InternalTransfer;
+
+const connectDispatchToProps = dispatch => {
+    return {
+        dispatch
+    }
+  }
+  
+ export default connect(connectDispatchToProps)(withRouter(InternalTransfer));
+

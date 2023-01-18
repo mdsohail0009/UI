@@ -31,7 +31,6 @@ const MarketCap = ({ member }) => {
         }
     }
     const onSearch = ({ currentTarget: { value } }, isFullScreen) => {
-        debugger
         let matches = originalMarketCaps.filter(item => item.symbol.toLowerCase().includes(value.toLowerCase()));
         setSearchVal(value)
         if (!isFullScreen) { setMarketCaps(matches) } else {
@@ -69,11 +68,9 @@ const MarketCap = ({ member }) => {
                     <div className="d-flex align-center">
                         <Translate content="markets_title" component={Title} className="db-titles" />
                         <div className = 'search-box'>
-                            {/* <input className = "search-text" type="text" placeholder = "Search Anything" /> */}
                         <Search
-                            placeholder="Search Anything"
+                            placeholder={apiCalls.convertLocalLang('search_currency')} 
                             value={searchVal}
-                            // addonAfter={<span className="icon md search-white" />}
                             onChange={(value) => onSearch(value)}
                             size="middle"
                             bordered={false}
@@ -82,21 +79,12 @@ const MarketCap = ({ member }) => {
                             <span className="icon lg search-angle icon-space" />
                         </a>
                     </div> 
-                        {/* <Translate content="markets_subtitle" component={Paragraph} className="text-white-50 fs-16 mb-0 l-height-normal" /> */}
                     </div>
-                    {/* <div className="market-actions">
+                </div>
+                <div className="market-actions">
                         <Tooltip title={apiCalls.convertLocalLang('full_screen')}><FullscreenOutlined onClick={() => showDrawer()} className="fs-18 text-white ml-8 fw-500" /></Tooltip>
                         <Tooltip title={apiCalls.convertLocalLang('reload')}><ReloadOutlined onClick={fetchMarketCapsInfo} className="fs-18 text-white ml-16 fw-500" /></Tooltip>
-                    </div> */}
-                </div>
-                {/* <Search
-                placeholder={apiCalls.convertLocalLang('searchCurrency')} 
-                  value={searchVal} 
-                  addonAfter={<span className="icon md search-white" />} 
-                  onChange={(value) => onSearch(value)} 
-                  size="middle"
-                   bordered={false} 
-                   className="mt-8 mb-8 dark-search" /> */}
+                    </div>
                 <div className='bash-market-table responsive_table bg-none dashb-btmtable'>
                 
                 
@@ -121,15 +109,6 @@ const MarketCap = ({ member }) => {
                     <div className="full-screenable-node" >
                   
                         <div style={{ marginBottom: '8px', textAlign: 'right' }}>
-                            {/* <Search 
-                            value={searchVal} 
-                            placeholder={apiCalls.convertLocalLang('search_currency')} 
-                            addonAfter={<span className="icon md search-white" />} 
-                            onChange={(value) => onSearch(value, true)} 
-                            size="middle"
-                             bordered={false} 
-                             className="mt-8 mb-8 dark-search"
-                              /> */}
                             <Table className='' locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }} sortDirections={["ascend", "descend"]} scroll={{ y: '100vh' }} pagination={false} columns={detailInfoColumns}  dataSource={fullViewData} loading={fullViewLoading} />
                         </div>
                     </div>

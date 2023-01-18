@@ -49,8 +49,8 @@
     --primary: #E8E9EE;
     --white:#FFFFFF;
     --secondary: #08090E;
-    --faitGradGreen: linear-gradient(180deg, #88C351 -167.81%, #000000 100%);
-    --faitGradeBlue:linear-gradient(180deg, #627EEA -115.75%, #000000 100%);
+    --faitGradGreen: linear-gradient(180deg, #88C351 -167.81%, #081100 100%);
+    --faitGradeBlue:linear-gradient(180deg, #627EEA -115.75%, #00061d 100%);
     --sbCard: linear-gradient(116.55deg, #79001C 18.81%, #0E0411 61.78%, #203386 86.7%);
     --profileMenu: #4E505A;
     --green: #1AFD90;
@@ -97,7 +97,7 @@
     --PriceIncrease:#286B4B;
     --priceVal:#33FB94;
     --priceDecrease:#4D3030;
-    --priceRed:#FD7072;
+    --priceRed:#FF3A1A;
     --addressList:rgba(255, 255, 255, 0.1);
     --tabBg:rgba(8, 9, 14,0.9);
     --tabLine:#CCC3FF;

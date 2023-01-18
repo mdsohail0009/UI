@@ -32,7 +32,6 @@ class Portfolio extends Component {
         }
     }
     getTransactionData = async () => {
-        debugger
         this.setState({ ...this.state, loading: true });
         let response = await getData();
         if (response.ok) {
@@ -43,21 +42,9 @@ class Portfolio extends Component {
 
         }
     }
-    // onSearch = ({ currentTarget: { value } }, isFullScreen) => {
-    //     debugger
-    //     let matches = this.state.transactionData.filter(item => item.copyType==value);
-    //     this.setState({...this.state,searchVal:value})
-    //     // searchVal(value)
-    //     if (!isFullScreen) { 
-    //         this.setState({...this.state,dashBoardTransactions:matches})
-    //     } else {
-    //         this.setState({...this.state,transactionData:matches})
-    //     }
-
-    // }
+   
    
     handleSearch = ({ currentTarget: { value } }) => {
-        debugger
         if(value){
             let filterTransactionList =  this.state.transactionData.filter(item => item.wallet.toLowerCase().includes(value.toLowerCase()));
             this.setState({...this.state,transactionData:filterTransactionList,searchVal:value})
@@ -124,7 +111,7 @@ class Portfolio extends Component {
                     <div className = 'search-box'>
                         {/* <input className = "search-text" type="text" placeholder = "Search Anything" /> */}
                         <Search
-                            placeholder="Search Transactions"
+                            placeholder="Search Wallet"
                             onChange={(value)=>this.handleSearch(value)}
                             size="middle"
                             bordered={false}
@@ -162,9 +149,9 @@ class Portfolio extends Component {
                                 <thead>
                                     <tr>
                                         <th style={{width: "5%"}}></th>
+                                        <th style={{width: "18%"}}>Date</th>
                                         <th style={{width: "15%"}}>Wallet</th>
                                         {/* <th style={{width: "35%"}}>Type</th> */}
-                                        <th style={{width: "18%"}}>Date</th>
                                         <th style={{width: "15%"}}>Value</th>
                                         <th style={{width: "15%"}}>Status</th>
                                     </tr>
@@ -189,10 +176,14 @@ class Portfolio extends Component {
                                                      <tr key={idx}>
                                                         <td style={{ width: "100px" }}><span className={``}></span></td>
                                                         {/* {`crypto-icon c-pointer ${item.coin}`} */}
-                                                     <td><div className='ts-wallet'><Title className='ts-coin'>{item.wallet}</Title><Title className='ts-type'>{item.type}</Title></div></td>
-                                                     <td style={{ width: "100px" }}>
-                                                     <div className='ts-tbdate'><Title className='ts-date'>{item?.date }</Title></div>
+                                                        <td style={{ width: "100px" }}>
+                                                     <div className='ts-tbdate'>
+                                                        <Title className='ts-date'>{item?.date }</Title></div>
                                                             </td>
+                                                     <td><div className='ts-wallet'>
+                                                        <Title className='ts-coin'>{item.wallet}</Title>
+                                                     <Title className='ts-type'>{item.type}</Title></div></td>
+                                                    
                                                         
                                                         {/* <td style={{ width: "50px" }}>{item.type}</td> */}
                                                         
@@ -201,7 +192,7 @@ class Portfolio extends Component {
                                                     </tr>
                                                     </>
                                                         : <tr>
-                                                            <td>No transaction details available.</td>
+                                                            <td  style={{padding:"13px"}}>No transaction details available.</td>
                                                         </tr>
                                                         }
                                                         </>

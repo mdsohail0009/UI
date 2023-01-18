@@ -20,7 +20,7 @@ import apiCalls from "../../api/apiCalls";
 import Info from "../shared/info";
 import { DownloadOutlined } from '@ant-design/icons';
 import ActionsToolbar from "../toolbar.component/actions.toolbar";
-import { setSelectedFeatureMenu } from "../../reducers/feturesReducer";
+import { getScreenName, setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 import {rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
 import { getFeatureId } from "../shared/permissions/permissionService";
 import { setCurrentAction } from '../../reducers/actionsReducer'
@@ -65,6 +65,7 @@ class AddressBook extends Component {
 		this.props.dispatch(setSelectedFeatureMenu(getFeatureId("/addressBook"), this.props.userConfig.id));
 	}
 	componentDidMount() {
+		this.props.dispatch(getScreenName({getScreen:null}))
 		this.permissionsInterval = setInterval(this.loadPermissions, 200);
 		if(!this.state.cryptoFiat){
 			this.props.changeStep("step1");
@@ -141,8 +142,8 @@ class AddressBook extends Component {
 			width: 300,
 			customCell: (props) => (
 				<td className="d-flex justify-content">
-					<div className="gridLink c-pointer	gridlink-data" onClick={() => this.addressFiatView(props)}>
-					{props?.dataItem?.whiteListName}
+					<div>
+					<Text className="gridLink c-pointer	gridlink-data" onClick={() => this.addressFiatView(props)}>{props?.dataItem?.whiteListName}</Text>
 					</div>
 					<Text className="file-label ml-8 fs-12 add-lbl">
 						{this.addressTypeNames(props?.dataItem?.addressType)}

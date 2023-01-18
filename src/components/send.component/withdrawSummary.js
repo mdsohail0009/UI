@@ -846,9 +846,10 @@ class WithdrawSummary extends Component {
 												onClick={this.getOtpVerification}
 												disabled={this.state.verifyPhone === true||this.state.verifyTextotp === true}>
 												{verifyOtpText[this.state.verifyOtpText]}
-												{this.state.verifyTextotp === true && (
+												{this.state.verifyTextotp === true && (<>
+													<Text className="text-yellow pr-24"> Verified </Text>
 													<span className="icon md greenCheck" />
-												)}
+													</>)}
 											</Button>
 										</div>
 									</div>
@@ -919,9 +920,10 @@ class WithdrawSummary extends Component {
 												onClick={(e) => this.getEmailVerification(e)}
 												disabled={this.state.verifyEmail === true||this.state.verifyEmailOtp === true}>
 												{verifyText[this.state.verifyText]}
-												{this.state.verifyEmailOtp === true && (
+												{this.state.verifyEmailOtp === true && (<>
+													<Text className="text-yellow pr-24"> Verified </Text>
 													<span className="icon md greenCheck" />
-												)}
+													</>)}
 											</Button>
 
 
@@ -987,9 +989,10 @@ class WithdrawSummary extends Component {
 												style={{ color: "black", margin: "0 auto" }}
 												onClick={this.getAuthenticator}
 												disabled={this.state.verifyAuthCode}>
-												{this.state.verifyAuthCode ? (
+												{this.state.verifyAuthCode ? ( <>
+													<Text className="text-yellow pr-24"> Verified </Text>
 													<span className="icon md greenCheck" />
-												) : (
+													</>) : (
 													"Click here to verify"
 												)}
 											</Button>

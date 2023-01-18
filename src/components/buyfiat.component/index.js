@@ -17,12 +17,15 @@ import WithdrawalLive from '../withDraw.component/withdrawLive';
 import WithdrawalSuccess from '../withDraw.component/withdrwSuccess';
 import ConfirmMsg from './confirmMsg';
 import { Link } from 'react-router-dom';
+import { getScreenName } from '../../reducers/feturesReducer';
+import { connect } from 'react-redux';
 
 class MassPayment extends Component {
     state = {
         withdraw: false,
     }
     closeDrawer = () => {
+        this.props.dispatch(getScreenName({getScreen:"dashboard"}))
         this.props.dispatch(setWithdrawfiatenaable(false))
         this.props.dispatch(rejectWithdrawfiat())
         if (this.props.onClose) {
@@ -143,5 +146,9 @@ withdrawFiatSummaryBack = () => {
         );
     }
 }
-
- export default ConnectStateProps(MassPayment);
+const connectDispatchToProps = dispatch => {
+    return {
+        dispatch
+    }
+  }
+ export default connect(connectDispatchToProps) (ConnectStateProps(MassPayment));

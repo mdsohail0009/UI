@@ -16,12 +16,15 @@ import WithdrawaCryptolLive from '../withdraw.crypto.component/withdrawLive';
 import SuccessMsg from '../withdraw.crypto.component/success';
 import SelectAddress from '../withdraw.crypto.component/selectAddress';
 import OnthegoCryptoTransfer from '../onthego.transfer/cryptoTransfer.component';
+import { getScreenName } from '../../reducers/feturesReducer';
+import { connect } from 'react-redux';
 const { Paragraph } = Typography
 class SendReceive extends Component {
     state = {
 
     }
     closeDrawer = () => {
+        this.props.dispatch(getScreenName({getScreen:"dashboard"}))
         this.props.dispatch(rejectWithdrawfiat())
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", selectedWallet: null }));
         this.props.dispatch(setSubTitle(""))
@@ -111,14 +114,16 @@ class SendReceive extends Component {
         >
             <>
                 {!this.props?.sendReceive?.sendCryptoHide && <><div className="text-center sell-title-styels">
-                      {!["step1","withdraw_crpto_summary"].includes(this.props.sendReceive.stepcode) && (this.props?.isSendTab || this.props?.sendReceive?.sendCryptoEnable)&& (this.props.sendReceive.stepcode === "withdraw_crpto_summary"&&this.props.sendReceive?.subTitle!=="") &&
+                      {!["step1","withdraw_crpto_summary"].includes(this.props.sendReceive.stepcode) && (this.props?.isSendTab || this.props?.sendReceive?.sendCryptoEnable)&& ((this.props.sendReceive.stepcode === "withdraw_crpto_summary"||this.props.sendReceive.stepcode ==="withdraw_crypto_selected")&&this.props.sendReceive?.subTitle!=="") &&
                      <Image preview={false} src={this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.impagePath ||this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.imagePath} />
                      }
+                     {(this.props.sendReceive.stepcode !== "withdraw_crypto_liveness") &&
                     <Translate 
                     with={{ coin: this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin}}
                     className="drawer-maintitle buy-sellprocess" 
                     content={(this.props?.isSendTab || this.props?.sendReceive?.sendCryptoEnable) ? (this.props.sendReceive.stepcode == "withdraw_crpto_summary" ?  this.props.sendReceive.stepTitles[config[this.props.sendReceive.stepcode]] : (this.props.sendReceive.stepcode==="withdraw_crypto_selected" ? "withdraw" : "send_crypto")) :  this.props.sendReceive.stepTitles[config[this.props.sendReceive.stepcode]]} component={Paragraph} />
-                    </div>
+                     } 
+                     </div>
                     <Paragraph className="recive-subtext label-style drawer-subtextstyle buysell-balances" >{this.props.sendReceive?.subTitle} {this.props.sendReceive?.selectedCoin?.coin} </Paragraph> 
                     </>}
                     
@@ -127,5 +132,9 @@ class SendReceive extends Component {
         </Drawer>);
     }
 }
-
-export default ConnectStateProps(SendReceive);
+const connectDispatchToProps = dispatch => {
+    return {
+        dispatch
+    }
+  }
+export default connect(connectDispatchToProps) (ConnectStateProps(SendReceive));
