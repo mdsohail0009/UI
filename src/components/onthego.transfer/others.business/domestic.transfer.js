@@ -22,10 +22,6 @@ class DomesticTransfer extends Component {
                             message: apiCalls.convertLocalLang("is_required"),
                         },
                         {
-                            whitespace: true,
-                            message: apiCalls.convertLocalLang("is_required"),
-                        },
-                        {
                             validator: (_, value) => {
                                 if (
                                     value &&
@@ -35,7 +31,7 @@ class DomesticTransfer extends Component {
                                         "Invalid Account Number"
                                     );
                                 }else {
-                                    // return Promise.resolve();
+                                    
                                     return validateContentRule(_, value);
                                 }
                             },
@@ -60,10 +56,7 @@ class DomesticTransfer extends Component {
                             required: true,
                             message: apiCalls.convertLocalLang("is_required"),
                         },
-                        {
-                            whitespace: true,
-                            message: apiCalls.convertLocalLang("is_required"),
-                        },
+                       
                         {
                             validator: (_, value) => {
                                 if (
@@ -74,7 +67,7 @@ class DomesticTransfer extends Component {
                                         "Invalid ABA Routing Code"
                                     );
                                 }else {
-                                    // return Promise.resolve();
+                                    
                                     return validateContentRule(_, value);
                                 }
                             },

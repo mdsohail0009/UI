@@ -417,7 +417,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 <Form.Item
                     className="custom-forminput custom-label"
                     name="accountNumber"
-                    label='Account Number' required
+                    label='Account Number' 
+                    required
                     rules={[
                         {
                             required: true,
@@ -545,7 +546,11 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             {
                                 required: true,
                                 message: apiCalls.convertLocalLang("is_required"),
-                            }, {
+                            }, 
+                            {
+                                whitespace:true,
+                                message: apiCalls.convertLocalLang("is_required"),
+                         },{
                                 validator: validateContentRule,
                             },
                         ]}>
