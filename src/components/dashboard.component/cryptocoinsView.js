@@ -309,7 +309,7 @@ class cryptocoinsView extends Component {
                   <List.Item.Meta
                     avatar={<div className='crypto-bg'>
                       <span
-                        className={`crypto-icon c-pointer ${item.coin}`}
+                        className={`crypto-icon ${item.coin}`}
                       />
                       </div>
                     }
