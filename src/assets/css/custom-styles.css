@@ -563,7 +563,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* --Payments Start--*/
 .pay-grid thead th{padding: 8px;width: 250px; color: var(--textWhite30);font-weight: 500;text-align: left;font-size: 16px;}
 .pay-grid thead th:last-child{width: 500px;}
-.pay-grid tbody td{padding: 8px; color: var(--menuFont);font-weight: 700;font-size: 14px ;}
+.pay-grid tbody td{padding: 8px; color: var(--menuFont);font-weight: 500;font-size: 14px ;}
 .ant-table-placeholder:hover, .ant-table-placeholder:hover .ant-table-cell{background: #2a2a2a26 !important;}
 .pay-grid {width: 100%;}
 /* .ant-popover-inner{background-color: var(--bgGloom); border-radius: 10px;} */
@@ -593,6 +593,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .bash-market-table .pay-grid tbody tr:last-child td, .bash-market-table .pay-grid tbody tr:first-child td{border-bottom: 0 !important;}
 .detail-popbtn{width: auto;margin-top: 16px;}
 .paynow-btn-ml{margin-left: 12px;}
+.total-align{padding: 8px; color: var(--menuFont);}
 .amt-field.icons-display{display: flex;align-items: center;}
 .delete-btn.delete-disable, .btn-upload-style{margin-left: 12px;}
 .ant-popover-inner-content .iban-hov:hover{background-color: var(--bgDark);}
@@ -607,7 +608,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .popover-mb-12{margin-bottom: 12px;}
 .attach-iconalign{margin-top: 12px;margin-left: 8px;}
 .amt-field .form-margin-bottom{margin-bottom: 0;}
-.docdetails.pay-docdetails{margin-left: 0;}
+.docdetails.pay-docdetails{margin-left: 0;width: 100px;}
 .cust-cancel-btn.pay-cust-btn{margin-top: 16px;}
 .dashb-btmtable,.mobile-list{margin-top: 10px;}
 /* --Payments End--*/

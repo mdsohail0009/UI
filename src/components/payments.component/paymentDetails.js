@@ -12,7 +12,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
   const start = children?.slice(0, children.length - suffixCount).trim();
   const suffix = children?.slice(-suffixCount).trim();
   return (
-    <Text className="mb-0 fs-14 docnames c-pointer d-block file-label fs-12 text-yellow fw-400"
+    <Text className="docnames c-pointer d-block file-label "
       style={{ maxWidth: '100% !important' }} ellipsis={{ suffix }}>
       {start}
     </Text>
@@ -766,11 +766,11 @@ class PaymentDetails extends Component {
                         </> }
                         <td></td>
                       
-                        <td>
-                          <span className="text-white fs-24 ml-8"> Total:</span>
+                        <td className='total-align'>
+                          <span className=""> Total:</span>
                         </td>
-                        <td>
-                          <span className="text-white fs-24">
+                        <td className="total-align">
+                          <span >
                             {" "}
                             <NumberFormat
                               className=" text-right"
