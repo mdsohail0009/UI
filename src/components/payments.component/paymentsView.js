@@ -254,7 +254,7 @@ class PaymentsView extends Component {
                         {paymentsData?.length > 0 &&
                             <Button
                             block
-                                className="pop-btn detail-popbtn"
+                                className="detail-popbtn cust-cancel-btn"
                                 
                                 onClick={this.backToPayments}
                             >

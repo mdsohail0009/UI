@@ -591,7 +591,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .transaction-custom-table .pay-grid tbody tr td:first-child{padding-left: 30px;}
 .bash-market-table .pay-grid thead  tr th{border-bottom: 0;}
 .bash-market-table .pay-grid tbody tr:last-child td, .bash-market-table .pay-grid tbody tr:first-child td{border-bottom: 0 !important;}
-.detail-popbtn{width: auto;}
+.detail-popbtn{width: auto;margin-top: 16px;}
 .ant-popover-inner-content .iban-hov:hover{background-color: var(--bgDark);}
 .ant-popover-arrow{background: transparent !important;border-color: transparent;}
 .ant-popover-arrow{border-color: var(--profileMenu) !important;}
