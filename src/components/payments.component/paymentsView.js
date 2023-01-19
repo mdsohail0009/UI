@@ -229,10 +229,10 @@ class PaymentsView extends Component {
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td >
-                                            <span className='text-white fs-24 ml-8'> Total:</span>
+                                        <td className='total-align'>
+                                            <span className=''> Total:</span>
                                         </td>
-                                        <td><span className='text-white fs-24'> <NumberFormat className=" text-right"
+                                        <td className='total-align font-size-align'><span className=''> <NumberFormat className=" text-right"
                                             customInput={Text} thousandSeparator={true} prefix={""}
                                             decimalScale={2}
                                             allowNegative={false}
