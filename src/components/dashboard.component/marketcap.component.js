@@ -102,14 +102,14 @@ const MarketCap = ({ member }) => {
                 visible={isOpen}
                 closeIcon={null}
                 onClose={() => setIsOpen(false)}
-                className="side-drawer-full"
+                className="side-drawer-full markets-drawer"
                 destroyOnClose={true}
             > 
                 <div className="markets-panel mr-0 markets-popup">
                     <div className="full-screenable-node" >
                   
                         <div style={{ marginBottom: '8px', textAlign: 'right' }}>
-                            <Table className='' locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }} sortDirections={["ascend", "descend"]} scroll={{ y: '100vh' }} pagination={false} columns={detailInfoColumns}  dataSource={fullViewData} loading={fullViewLoading} />
+                            <Table className='markets-grid' locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }} sortDirections={["ascend", "descend"]}  pagination={false} columns={detailInfoColumns}  dataSource={fullViewData} loading={fullViewLoading} />
                         </div>
                     </div>
                 </div>

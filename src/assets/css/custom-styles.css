@@ -346,7 +346,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .k-grid-content, .k-grid{background-color: transparent !important;color: var(--textWhite) !important;}
 .k-grid-content{margin-right: -12px;}
 .k-grid-header{padding-right: 0;}
-.k-grid tbody tr:hover, .k-grid tbody tr.k-state-hover{background-color: var( --drawerList) !important;}
+.k-grid tbody tr:hover, .k-grid tbody tr.k-state-hover,.markets-grid tbody tr:hover{background-color: var( --drawerList) !important;}
 .k-pager-wrap{color: var(--white);background-color: transparent;}
 .k-actions.k-actions-stretched .k-button.k-button-md.k-button-solid.k-button-solid-base.k-rounded-md{background-color:#E8E8E8 !important ;border-radius: 30px;}
 .k-actions.k-actions-stretched .k-button-solid-primary.k-disabled{background-color:#3653E4 !important ;border-radius: 30px;border:transparent;color:#000;text-transform: uppercase;font-weight: 500;}
@@ -767,20 +767,20 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .grid-title{font-weight: 800 !important;font-size: 28px !important;color: var(--white) !important;margin-bottom: 24px !important;}
 .cust-list .k-grid{border-radius: 20px;}
 .cust-list{padding-top: 0 !important;}
-.cust-list .k-grid-header-wrap{border-top-left-radius: 20px;border-top-right-radius: 20px;background-color: var(--gridheader);}
+.cust-list .k-grid-header-wrap,.markets-drawer .ant-table-header{border-top-left-radius: 20px;border-top-right-radius: 20px;background-color: var(--gridheader);}
 .ant-select-selection-item{font-weight: 500;font-size: 14px;color: var(--white);}
 .filter-content{align-items:center}
 .pop-btn.search-btn{margin: 22px 0 0 12px; height: 48px; width: 148px;}
 .ant-picker-dropdown{z-index: 9999;}
 .excel-button{margin-top: 20px;}
-.k-grid-table{background-color: var(--tablebody);}
-.k-grid td{border-right: 1px solid var(--gridborder) !important;border-bottom: 1px solid var(--gridborder) !important; color: var(--gridcontent);}
-.k-grid th{border-right: 1px solid  var(--tableborder) !important;}
+.k-grid-table,.ant-table-tbody{background-color: var(--tablebody);}
+.k-grid td,.markets-grid td{border-right: 1px solid var(--gridborder) !important;border-bottom: 1px solid var(--gridborder) !important; color: var(--gridcontent);}
+.k-grid th,.markets-grid th{border-right: 1px solid  var(--tableborder) !important;}
 .custom-gridresponsive .ant-drawer-header,.custom-gridresponsive .ant-drawer-body{background: var(--bodyBg) !important;}
 .k-pager-wrap.k-pager.k-widget.k-grid-pager{background: var(--gridheader);border-bottom-left-radius: 20px;border-bottom-right-radius: 20px;}
 .k-pager-numbers .k-link:hover{background-color: #3653E4;color: #ffffff !important;}
 /* .k-grid th,.k-grid td{padding: 8px 20px;} */
-.k-grid th:last-child,.k-grid td:last-child{border-right-color: transparent !important;}
+.k-grid th:last-child,.k-grid td:last-child,.markets-grid td:last-child,.markets-grid th:last-child{border-right-color: transparent !important;}
 .cust-input.cust-adon .ant-input-wrapper.ant-input-group{padding: 0 11px;}
 .icon.md.search-angle{background-position:-360.5px -488px; margin-left: 8px;}
 .custom-model-label .ant-form-item-label > label{height: 20px;}
@@ -933,6 +933,11 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .sumsub-content{margin: 10px 0;}
 .icon.md.refresh-icon{background-position: -271px -33px;}
 .cust-cancel-btn.pop-space{margin-right: 8px;margin-bottom: 0;}
+.markets-drawer .ant-drawer-wrapper-body{background: var(--bodyBg) url(../images/dark-bg2.0.svg) no-repeat top center !important;}
+.markets-grid tr:last-child td:first-child{border-bottom-left-radius: 20px;}
+.markets-grid tr:last-child td:last-child{border-bottom-right-radius: 20px;}
+.markets-grid .ant-table-tbody{border-bottom-left-radius: 20px;border-bottom-right-radius: 20px;}
+.markets-grid .side-drawer-header{padding: 0 16px 0 0;}
 /* batchpayments end */
 .no-transaction{padding-top: 18px !important;}
 .search-box .ant-input, .search-box .ant-input:focus,.search-box .ant-input:hover{color: var(--textWhite); border: 0;}
