@@ -134,6 +134,7 @@ class CockpitCharts extends Component {
         }else if(e===3){
             this.props.history.push(`/payments/${value.walletCode}`)
         }else {
+            this.props.dispatch(getScreenName({getScreen:"dashboard"}))
             this.props.history.push(`/internaltransfer`)
         }
         
@@ -265,7 +266,10 @@ class CockpitCharts extends Component {
                           defaultValue={item.amount}
                           className="coinbal-style"
                           type={"text"}
-                          prefix={""}
+                          prefix={
+                            (item?.walletCode == "USD" ? "$" : null) ||
+                            (item?.walletCode == "EUR" ? "€" : null)
+                          }
                         />
                         </div>
                         <div  className={` ${

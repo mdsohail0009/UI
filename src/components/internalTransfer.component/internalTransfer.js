@@ -9,7 +9,7 @@ const { Text } = Typography;
 
 const InternalTransfer = (props) => {
     useEffect(() => {
-       props.dispatch(getScreenName({getScreenName:null}))
+       props.dispatch(getScreenName({getScreen:"dashboard"}))
     }, []);
     
     return <div className="text-center intertrans">

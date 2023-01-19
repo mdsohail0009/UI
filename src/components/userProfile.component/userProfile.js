@@ -8,8 +8,9 @@ import Referral from './referral.component/referral';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import { setHeaderTab } from "../../reducers/buysellReducer"
+import { getScreenName } from "../../reducers/feturesReducer";
 import { withRouter } from 'react-router-dom';
-const { Text, Title } = Typography; 
+const {  Title } = Typography; 
 const { TabPane } = Tabs;
 class UserProfile extends Component {
     constructor(props) {
@@ -24,6 +25,7 @@ class UserProfile extends Component {
         }
     }
     componentDidMount() {
+        this.props.dispatch(getScreenName({getScreen:null}))
         if (this.props?.match?.path === '/userprofile') {
             this.props.dispatch(setHeaderTab(" "));
         }

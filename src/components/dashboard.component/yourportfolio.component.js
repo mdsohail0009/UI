@@ -96,6 +96,7 @@ class YourPortfolio extends Component {
         this.props.history.push("/notkyc");
         return;
     }else{
+      this.props.dispatch(getScreenName({getScreen:"dashboard"}))
       this.props.history.push(`/internalTransfer`)
     }}
   
