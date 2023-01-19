@@ -891,7 +891,7 @@ input[type=number]::-webkit-outer-spin-button {-webkit-appearance: none;-moz-app
 .pay-docs{white-space: nowrap;max-width: 250px !important;overflow: hidden; text-overflow: ellipsis; width: 65px;word-break: inherit; display: inline-block; vertical-align: bottom;}
 .pay-account{white-space: nowrap;max-width: 250px !important;overflow: hidden; text-overflow: ellipsis; width: 100px;word-break: inherit; display: inline-block; vertical-align: bottom;}
 .docdetails .docnames{font-weight: 700;color: var(--viewAll); line-height: 16px;max-width: 150px !important;}
-.pay-docs{white-space: nowrap;max-width: 250px !important;overflow: hidden; text-overflow: ellipsis; width: 190px;word-break: inherit; display: inline-block; vertical-align: bottom;}
+.pay-docs{white-space: nowrap;overflow: hidden; text-overflow: ellipsis; width:auto;margin-right:12px;word-break: inherit; display: inline-block; vertical-align: bottom;}
 .portfolio-title{display: flex; justify-content: space-between;}
 .ant-collapse.profile-collapse, .profile-collapse .ant-collapse-content{background: transparent !important;border: 0 !important;}
 .drpdwn-list .ant-collapse > .ant-collapse-item{border-bottom: 0 !important;}

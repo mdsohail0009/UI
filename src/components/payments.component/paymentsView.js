@@ -142,14 +142,14 @@ class PaymentsView extends Component {
                                           {paymentsData.length > 0? <> <tr key={idx}>
                                           <td className="doc-def" >{item?.beneficiaryAccountName}</td>
                                                 <td className="doc-def" style={{ width: '350px' }}>
-                                      <div className="d-flex align-center justify-content" style={{ width: '350px' }}>
+                                      <div className="d-flex align-center ">
                                         <span>
                                           <Tooltip title={item.bankname}>
                                             <span className='pay-docs'>{item.bankname}</span>
                                           </Tooltip>
                                           <Text
                                             size="small"
-                                            className="file-label doc-def ml-8"
+                                            className="file-label doc-def"
                                           >
                                             {this.addressTypeNames(item.addressType)}{" "}
                                           </Text>

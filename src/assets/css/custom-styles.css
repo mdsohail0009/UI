@@ -558,6 +558,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .kpi-List, .adressbook-fiatview{margin-top: 16px;}
 .custom-alert-width .pop-btn{width:auto;}
 .adbook-newdesign{width: 100%;}
+.file-label.doc-def{margin-right: 12px;}
 /* .font-size-align */
 .abbook-title-mt{margin-top: 16px;}
 /*Send Address End*/
