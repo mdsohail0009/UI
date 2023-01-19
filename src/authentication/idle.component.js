@@ -53,13 +53,13 @@ class IdleCmp extends Component {
                     footer={[
                         <>
 
-                            <Button block className="primary-btn pop-btn"
+                            
+                            <Button  block
+                                className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
+                                onClick={() => this.handleCancel()}>Cancel</Button>
+                            <Button block className="primary-btn pop-btn detail-popbtn "
                                 // style={{ width: 100, height: 50 }}
                                 onClick={() => {userManager.signoutRedirect() }}>Ok</Button>
-                            <Button  block
-                                className="cust-cancel-btn"
-                                onClick={() => this.handleCancel()}>Cancel</Button>
-                            
                         </>
                     ]} >
                     <h4 className="summary-liststyle">You're session will be logged out in {counter}</h4>

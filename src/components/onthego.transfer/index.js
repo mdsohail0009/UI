@@ -591,7 +591,7 @@ saveWithdrawdata = async () => {
                         </div>}
               </ul>
 
-              <Title className="adbook-head">Past Recipients</Title>
+              <Title className="adbook-head adbs-paste-recepients">Past Recipients</Title>
               {/* <Divider className="cust-divide" /> */}
               <ul
                 style={{ listStyle: 'none', paddingLeft: 0 }}

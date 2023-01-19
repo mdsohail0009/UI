@@ -298,6 +298,8 @@ input:-webkit-autofill:active{
 .profile-img-style .profile-info .loader-antd{padding: 36px 30px 30px 30px !important;}
 .newcase-style{margin-bottom: 16px;align-items: center;}
 .ant-alert-with-description{align-items: center !important;}
+.summarybal .gridLink:hover{color: var(--viewAll);}
+.pay-list.modal-listbr .summarybal .gridLink{word-break: break-all;text-align: right;width: 326px;}
 /*Common css End*/
 
 /*Coin Selection End*/
@@ -545,7 +547,8 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .fund-circle{width: 44px;height: 44px;border-radius: 50%;text-align: center;padding: 11px;background-color: var(--borderColor);margin-right: 12px;}
 .address-name{font-weight: 700;font-size: 16px;color: var(--coinBal);cursor: pointer;}
 .address-subtext{font-weight: 700;font-size: 12px;color: var(--coinPrice);}
-.addCryptoList{list-style: none; padding-left: 0;max-height: calc(100vh - 436px); overflow-y: auto;}
+.addCryptoList{list-style: none; padding-left: 0;max-height: 436px;}
+.adbs-paste-recepients{padding-top: 30px;}
 .addCryptoList li{padding:10px; color: var(--textWhite);border-bottom: 1px solid var(--borderLight);font-size: 16px;}
 .addCryptoList li:hover{background-color:var(--bgBlu); cursor: pointer;}
 .sub-abovesearch{color: var(--subText) !important;font-weight: 400 !important;font-size: 14px !important;margin-bottom: 6px !important;text-transform: capitalize;}
@@ -682,7 +685,8 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .verify-btn-from, .crypto-summaryform{margin-top: 36px;margin-bottom: 18px;}
 .small-text-align{margin-left: 8px;}
 .docfile{background-color:var(--addressList) !important;border-radius: 20px;padding: 16px;display: flex;align-items: center;margin: 12px 6px 4px 0;flex: 1 0 240px;}
-.docdetails{flex: 1; }
+.docdetails{flex: 1; margin-left: 12px;}
+.cust-upload-sy{margin-bottom: 20px !important;}
 .docdetails .docname{font-weight: 700;color: var(--textWhite30); line-height: 16px;max-width: 150px !important;}
 .docfile-container{display: flex; flex-wrap: wrap;}
 .upload-filesize{font-weight: 700;font-size: 16px;color: var(--coinPrice);}
@@ -691,7 +695,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .network{background-color: var(--drpdwnHover);padding: 10px 20px;border-radius: 10px;margin: 0 12px}
 .network .swap-fontsize{color: var(--white);}
 .custom-height {max-height: calc(100vh - 926px);}
-.nodata-text{margin-top: 10px !important;display: inline-block;}
+.nodata-text{margin-top: 10px !important;display: inline-block;color:var(--termsText);}
 .cust-input.change-space .ant-input{height: 34px !important;}
 .nodata-image{margin-bottom: 10px;}
 .custom-upload{ margin: 12px 0px 4px 0;}
@@ -850,7 +854,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .db-kpi .icon-bg{width: 48px;height: 48px;border-radius: 8px;background-color: var(--bgDarkGrey);margin-right: 20px;text-align: center; line-height: 48px;}
 .db-kpi.vthicon{display: flex;align-items: center;min-height: 112px;}
 .custom-radiobtn.coin-alldetail{margin-top: 16px;margin-bottom: 16px;}
-.ant-modal-footer .ant-btn + .ant-btn:not(.ant-dropdown-trigger){margin-left: 0;}
+.ant-modal-footer .ant-btn + .ant-btn:not(.ant-dropdown-trigger){margin-left: 12px;}
 .inputfont-style:hover, .inputfont-style:focus{border: 0;}
 /* coin view end */
 /* expand search */
@@ -1018,7 +1022,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .custom-radiobtn .ant-radio-button-wrapper{padding: 0 15px;}
     /* .ant-popover.ant-popover-placement-left{left: 872px !important;} */
     .transctns-grid .ant-drawer-header, .transctns-grid .ant-drawer-body{padding-left: 100px;padding-right: 100px;}
-    .adbook-scroll{max-height: calc(100vh - 418px);overflow-y: auto;}
+    .adbook-scroll{max-height: 418px;}
     .your-card{margin-top: 8px;}
     .batchpayment-summary{padding: 0 16px;}
 }
@@ -1039,13 +1043,13 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .side-drawer .ant-drawer-content-wrapper{width: 524px !important;}
     .val-updown{top:45px;right: 20px;}
     .iban-list .iban-style{padding: 14px 20px;}
-    .addCryptoList{max-height: calc(100vh - 590px); overflow-y: auto; }
+    .addCryptoList{max-height: 590px;}
     .addCryptoList .xxl-fs{font-size:14px !important;}
     .addCryptoList .xxl-fs-16{font-size:16px !important;}
     .tlv-header{max-width: 1300px; }
     .cust-col-design{flex: 0 0 482px;}
     .db-flex-style{flex:1;}
-    .adbook-scroll{max-height: calc(100vh - 610px); overflow-y: auto;}
+    .adbook-scroll{max-height: 610px;}
     
 }
 @media (max-width: 991.98px){
