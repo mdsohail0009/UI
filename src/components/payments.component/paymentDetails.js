@@ -594,7 +594,7 @@ class PaymentDetails extends Component {
                                       "00000000-0000-0000-0000-000000000000" || this.props.match.params.state === "Submitted" || this.props.match.params.state === "Pending")
                                       ? <>
                                         <td style={{ width: '250px' }}>
-                                          <div className="d-flex amt-field">
+                                          <div className="amt-field icons-display">
                                             <Form.Item
                                               className="form-margin-bottom"
                                               rules={
@@ -641,7 +641,7 @@ class PaymentDetails extends Component {
                                               key={i}
                                               type="dashed"
                                               size="large"
-                                              className="attach-iconalign"
+                                              className="btn-upload-style"
                                               shape="circle"
                                               style={{
                                                 backgroundColor: "transparent",
@@ -668,13 +668,13 @@ class PaymentDetails extends Component {
 
                                             {this.props.match.params.id !==
                                               "00000000-0000-0000-0000-000000000000" && (
-                                                <span className='mt-30 ml-12 delete-btn delete-disable' disabled={
+                                                <span className='delete-btn delete-disable' disabled={
                                                   item.state === "Approved" ||
                                                   item.state === "Cancelled" ||
                                                   item.state === "Pending"
                                                 }>
                                                   <span onClick={() => this.onModalOpen(item)}
-                                                    className={`icon md delete mt-12 ${item.state === "Submitted" ? "c-pointer" : ''} `}
+                                                    className={`icon md delete ${item.state === "Submitted" ? "c-pointer" : ''} `}
                                                   />
                                                 </span>
                                               )}
