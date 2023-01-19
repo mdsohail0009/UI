@@ -297,6 +297,7 @@ input:-webkit-autofill:active{
 .crypto-card.select .ant-card-body .select-currency .ant-select-single .ant-select-selector .ant-select-selection-item{line-height: 42px !important;}
 .profile-img-style .profile-info .loader-antd{padding: 36px 30px 30px 30px !important;}
 .newcase-style{margin-bottom: 16px;align-items: center;}
+.ant-alert-with-description{align-items: center !important;}
 /*Common css End*/
 
 /*Coin Selection End*/
@@ -559,6 +560,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .custom-alert-width .pop-btn{width:auto;}
 .adbook-newdesign{width: 100%;}
 .file-label.doc-def{margin-right: 12px;}
+.transacton-drpdwn .ant-dropdown-menu{max-width: 170px !important;min-width: 200px !important;}
 /* .font-size-align */
 .abbook-title-mt{margin-top: 16px;}
 /*Send Address End*/
@@ -864,7 +866,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .case-val{color:var(--white) !important;font-size: 16px;font-weight:500;}
 .requested{background-color: #3653E4;}
 .gridLink{color: var(--viewAll);}
-td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
+td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;padding: 8px 12px;}
 .gridLink{cursor: pointer;display: inline-block;}
 .pay-list.modal-listbr{border-bottom: 1px solid var(--borderColor);padding: 16px 0px;}    
 .ant-modal{top:36%;}

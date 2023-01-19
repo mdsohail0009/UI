@@ -6,7 +6,7 @@ import CryptoJS from "crypto-js";
 import { ExcelExport } from '@progress/kendo-react-excel-export'
 import { savePDF, PDFExport } from '@progress/kendo-react-pdf';
 import logColor from '../../assets/images/logo-color.png';
-import { Dropdown} from 'antd';
+import {Button, Dropdown,Menu,} from 'antd';
 const filterOperators = {
     'text': [
         { text: 'grid.filterContainsOperator', operator: 'contains' },
@@ -40,6 +40,32 @@ const filterOperators = {
         { text: 'grid.filterEqOperator', operator: 'eq' }
     ]
 }
+const items = [
+    {
+      key: '1',
+      label: (
+        <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+          1st menu item
+        </a>
+      ),
+    },
+    {
+      key: '2',
+      label: (
+        <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+          2nd menu item
+        </a>
+      ),
+    },
+    {
+      key: '3',
+      label: (
+        <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
+          3rd menu item
+        </a>
+      ),
+    },
+  ];
 export function withState(WrappedGrid) {
     return class StatefullGrid extends React.Component {
         constructor(props) {
@@ -116,10 +142,12 @@ export function withState(WrappedGrid) {
             }
 
         }
+        
         render() {
             return (
                 <div >
-                   <div style={{height:"0",overflow:"hidden"}}>
+                    <div>
+                   <div style={{height:"0",overflow:"hidden", width:"100%"}}>
                         <PDFExport margin={5} scale={0.55} paperSize="A4" repeatHeaders={true} fileName='Transaction History' ref={this.tempRef}>
                             <table width="100%">
                                 <tr>
@@ -139,40 +167,53 @@ export function withState(WrappedGrid) {
                                 }
                             </div>
                             <div>
-                                <table className="transaction-pdf-template">
+                                <table className="transaction-pdf-template" style={{ width:"100%"}}>
                                     <thead style={{ background: "#cccccc" }}>
-                                        <th >Transaction ID</th>
-                                        <th >Date</th>
-                                        <th >Type</th>
-                                        <th >Wallet</th>
-                                        <th >Value</th>
-                                        <th >Sender/Recipient Full Name</th>
-                                        <th >Bank Account Number /IBAN</th>
-                                        <th>Hash</th>
-                                        <th >Status</th>
+                                        <th style={{ width:"150px"}}>Transaction ID</th>
+                                        <th style={{ width:"150px"}}>Date</th>
+                                        <th style={{ width:"100px"}}>Type</th>
+                                        <th style={{ width:"90px"}}>Wallet</th>
+                                        <th style={{ width:"90px"}}>Value</th>
+                                        <th style={{ width:"140px"}}>Sender/Recipient Full Name</th>
+                                        <th style={{ width:"150px"}}>Bank Account Number /IBAN</th>
+                                        <th style={{ width:"100px"}}>Hash</th>
+                                        <th style={{ width:"60px"}}>Status</th>
                                     </thead>
-                                    <tbody className='pdt-data'>
+                                    <tbody className='pdt-data'style={{ width:"100%"}}>
                                         {this.state?.data?.map(item => <tr>
-                                            <td>{item.transactionId}</td>
-                                            <td >{moment(item.date).format("DD/MM/YYYY hh:mm a")}</td>
-                                            <td >{item.docType}</td>
-                                            <td >{item.wallet}</td>
-                                            <td >{this.getCombineFieldValue(item, ["debit","credit"])}</td>
-                                            <td >{this.getCombineFieldValue(item, ["senderName", "beneficiryName"])}</td>
-                                            <td >{this.getCombineFieldValue(item, ["accountnumber", "iban"])}</td>
-                                            <td >{item.hash}</td>
-                                            <td >{item.state}</td>
+                                            <td style={{ width:"190px"}}>{item.transactionId}</td>
+                                            <td style={{ width:"150px"}}>{moment(item.date).format("DD/MM/YYYY hh:mm a")}</td>
+                                            <td style={{ width:"100px"}}>{item.docType}</td>
+                                            <td style={{ width:"90px"}}>{item.wallet}</td>
+                                            <td style={{ width:"90px"}}>{this.getCombineFieldValue(item, ["debit","credit"])}</td>
+                                            <td style={{ width:"140px"}}>{this.getCombineFieldValue(item, ["senderName", "beneficiryName"])}</td>
+                                            <td style={{ width:"150px"}}>{this.getCombineFieldValue(item, ["accountnumber", "iban"])}</td>
+                                            <td style={{ width:"100px"}}>{item.hash}</td>
+                                            <td style={{ width:"60px"}}>{item.state}</td>
                                         </tr>)}
                                     </tbody>
                                 </table>
                             </div>
                         </PDFExport>
                     </div>
+                    </div>
                     <div className="cust-list main-container">
                     {this.state.isLoading && this.loadingPanel}
                     {this.props.showExcelExport && <div className='text-right secureDropdown export-pdf'>
-                        
-                       <Dropdown.Button
+                     <Dropdown
+                      overlayClassName="secureDropdown depwith-drpdown transacton-drpdwn"
+                       overlay={<Menu >
+                        <ul className="drpdwn-list pl-0">
+                        <li onClick={this.handleExcelExport}><a>Export to Excel</a></li>
+                            <li onClick={this.exportToPDF}><a>Export to Pdf</a></li>
+
+                        </ul>
+                    </Menu>}
+                        placement="bottomLeft"
+                        >
+                        <Button>Download Transaction<span className='icon md excel-export'></span></Button>
+                        </Dropdown>
+                       {/* <Dropdown.Button
                         className=""
                           overlay={<div className='ant-dropdown-menu history-excel'>
                             <ul className='pl-0 drpdwn-list'>
@@ -185,7 +226,7 @@ export function withState(WrappedGrid) {
                           overlayClassName=""
                         >
                              Download Transaction History<span className='icon md excel-export'></span>
-                        </Dropdown.Button>                       
+                        </Dropdown.Button>                        */}
                     </div>}
                     {this.props.showExcelExport ? <ExcelExport data={this.state.data} ref={this.excelRef} fileName={this.props?.excelFileName}>
 
