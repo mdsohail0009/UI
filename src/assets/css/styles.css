@@ -164,7 +164,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 
 .trade-btn{border-radius: 5px;  line-height: normal; height: 20px;padding: 0 4px;}
 /* Buy/sell */
-.side-drawer .ant-drawer-body, .side-drawer .ant-drawer-header, .side-drawer-full .ant-drawer-header, .side-drawer-full .ant-drawer-body, .side-drawer-full .ant-table-cell, .side-drawer-full .ant-table-tbody > tr.ant-table-row:hover > td, .side-drawer-full .ant-table-thead th.ant-table-column-sort, .side-drawer-full .ant-table-thead th.ant-table-column-has-sorters:hover{background-color: var(--bgGrey);}
+/* .side-drawer .ant-drawer-body, .side-drawer .ant-drawer-header, .side-drawer-full .ant-drawer-header, .side-drawer-full .ant-drawer-body, .side-drawer-full .ant-table-cell, .side-drawer-full .ant-table-tbody > tr.ant-table-row:hover > td, .side-drawer-full .ant-table-thead th.ant-table-column-sort, .side-drawer-full .ant-table-thead th.ant-table-column-has-sorters:hover{background-color: var(--bgGrey);} */
 .side-drawer .ant-drawer-mask, .side-drawer-full .ant-drawer-mask{background-color: var(--bgDarkGrey-95);}
 .side-drawer .ant-drawer-header,.side-drawer-full .ant-drawer-header, .crypto-list-tabs .ant-tabs-nav::before{border: none;}
 .side-drawer-header.custom-drawer-header{padding: 30px 46px 30px 0px !important;}
