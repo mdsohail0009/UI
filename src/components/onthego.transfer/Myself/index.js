@@ -376,7 +376,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         </div>
 
         <h2  className="adbook-head">Bank Details</h2>
-        {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Row>
+        {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Row className="validateiban-content">
         {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
             <div className="custom-btn-error">
             <Form.Item
@@ -394,7 +394,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 }}
             >
                 <Input
-                    className="cust-input"
+                    className="cust-input iban-input"
                     placeholder='IBAN'
                     maxLength={30}/>                      
             </Form.Item>
@@ -403,7 +403,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             </div>
         </Col>}
         {(currency === 'EUR'||addressOptions.tabType === 'internationalIBAN') &&<Col xs={24} md={10} lg={10} xl={10} xxl={10}>
-            <Button className={`pop-btn dbchart-link pop-validate-btn`}
+            <Button className={`pop-btn dbchart-link pop-validate-btn iban-validate`}
             type="primary"
                 // loading={isValidateLoading}
                 onClick={() => onIbanValidate(enteredIbanData)} >
@@ -417,7 +417,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 <Form.Item
                     className="custom-forminput custom-label"
                     name="accountNumber"
-                    label='Account Number' required
+                    label='Account Number' 
+                    required
                     rules={[
                         {
                             required: true,
@@ -545,7 +546,11 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             {
                                 required: true,
                                 message: apiCalls.convertLocalLang("is_required"),
-                            }, {
+                            }, 
+                            {
+                                whitespace:true,
+                                message: apiCalls.convertLocalLang("is_required"),
+                         },{
                                 validator: validateContentRule,
                             },
                         ]}>

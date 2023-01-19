@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography,Input, message, Spin,Button,Image,  } from 'antd';
+import { Typography,Input, message, Spin,Button,  } from 'antd';
 import Translate from 'react-translate-component';
 import { getData } from './api';
 import NumberFormat from 'react-number-format';
@@ -8,8 +8,7 @@ import { connect } from 'react-redux';
 import { withRouter,Link } from 'react-router-dom';
 import { dashboardTransactionSub } from '../../utils/pubsub';
 import TransactionsHistory from "../transactions.history.component";
-import apiCalls from '../../api/apiCalls';
-import { getcoinDetails } from './api';
+
 
 class Portfolio extends Component {
     chart;
@@ -35,7 +34,6 @@ class Portfolio extends Component {
         this.setState({ ...this.state, loading: true });
         let response = await getData();
         if (response.ok) {
-            console.log(response.data)
             this.setState({ ...this.state, dashBoardTransactions:response.data, transactionData: response.data, loading: false });
         } else {
             message.destroy();
@@ -100,7 +98,7 @@ class Portfolio extends Component {
   
     render() {
         const { Title } = Typography;
-        const { gridUrl, loading } = this.state;
+        const {  loading } = this.state;
         const { Search } = Input;
         return (<>
             <div className='market-panel-newstyle'></div>
@@ -109,7 +107,6 @@ class Portfolio extends Component {
                     <div className='transaction-title'>
                     <Translate component={Title} content="transactions_history" className="db-titles" />
                     <div className = 'search-box'>
-                        {/* <input className = "search-text" type="text" placeholder = "Search Anything" /> */}
                         <Search
                             placeholder="Search Wallet"
                             onChange={(value)=>this.handleSearch(value)}
@@ -120,14 +117,6 @@ class Portfolio extends Component {
                       <span className="icon lg search-angle icon-space" />
                       </div>
                   </div> 
-                   {/* <div class="search-container">
-               
-               <input class="search" id="searchleft" type="search" name="q" placeholder="Search">
-               <input className = "search-left"  type="search" name="q" placeholder="Search" />
-               <label class="button searchbutton" for="searchleft">
-               <span className="icon lg search-angle icon-space"  />        
-           </label>
-           </div> */}
                   </div>
                     <Button className="dbchart-link"  >
                         <Link to="/transactions"><Translate content="cockpit" /></Link>
@@ -151,7 +140,7 @@ class Portfolio extends Component {
                                         <th style={{width: "5%"}}></th>
                                         <th style={{width: "18%"}}>Date</th>
                                         <th style={{width: "15%"}}>Wallet</th>
-                                        {/* <th style={{width: "35%"}}>Type</th> */}
+                                       
                                         <th style={{width: "15%"}}>Value</th>
                                         <th style={{width: "15%"}}>Status</th>
                                     </tr>
@@ -175,7 +164,7 @@ class Portfolio extends Component {
                                                     <>
                                                      <tr key={idx}>
                                                         <td style={{ width: "100px" }}><span className={``}></span></td>
-                                                        {/* {`crypto-icon c-pointer ${item.coin}`} */}
+                                                        
                                                         <td style={{ width: "100px" }}>
                                                      <div className='ts-tbdate'>
                                                         <Title className='ts-date'>{item?.date }</Title></div>
@@ -183,10 +172,7 @@ class Portfolio extends Component {
                                                      <td><div className='ts-wallet'>
                                                         <Title className='ts-coin'>{item.wallet}</Title>
                                                      <Title className='ts-type'>{item.type}</Title></div></td>
-                                                    
-                                                        
-                                                        {/* <td style={{ width: "50px" }}>{item.type}</td> */}
-                                                        
+
                                                         <td>{this.getNumberVal(item)}</td>
                                                         <td>{item.state} </td>
                                                     </tr>
@@ -205,7 +191,7 @@ class Portfolio extends Component {
                           <tr>
                             <td
                               colSpan="8"
-                              className="p-16 text-center"
+                              className="p-16 text-center no-transaction"
                               style={{width: 300 }}
                             >
                              No transaction details available

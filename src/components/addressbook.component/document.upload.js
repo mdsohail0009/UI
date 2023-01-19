@@ -121,8 +121,8 @@ class AddressDocumnet extends Component {
                     <>
                     	<div className="cust-pop-up-btn crypto-pop">
                         <Button
-                            style={{ margin: "0 8px" }}
-                            className="primary-btn pop-cancel btn-width"
+                            style={{ margin: "0 8px" ,width: 120, height: 50 }}
+                            className="primary-btn cust-cancel-btn"
                             onClick={() => { this.setState({ ...this.state, showDeleteModal: false }) }}>
                             NO
                         </Button>

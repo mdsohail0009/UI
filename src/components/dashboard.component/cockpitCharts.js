@@ -1,24 +1,18 @@
 import React, { Component } from 'react'
-import { Card,List,Button, Row, Col,Empty, Menu,Dropdown,Input,Typography, Radio, Spin,Space,Drawer } from 'antd';
+import { List,Button, Empty, Menu,Dropdown,Input,Typography,Space,Drawer,Image } from 'antd';
 import apiCalls from "../../api/apiCalls";
 import { connect } from 'react-redux';
-import PieChart from '../trading.components/piechart';
 import { Link } from 'react-router-dom';
-import BChart from '../trading.components/bar.Chart';
-import LChart from '../trading.components/line.Chart';
 import Translate from 'react-translate-component';
 import Loader from "../../Shared/loader";
-import SendReceive from '../send.component'
 import Currency from '../shared/number.formate';
-import BuySell from '../buy.component';
 import TransactionsHistory from "../transactions.history.component";
 import { setWithdrawfiatenaable, setStep } from '../../reducers/sendreceiveReducer'
 import {setReceiveFiatHead, setSendFiatHead} from '../../reducers/buyFiatReducer';
-import { setdepositCurrency, getCurrencieswithBankDetails } from '../../reducers/depositReducer'
+import { setdepositCurrency } from '../../reducers/depositReducer'
 import OnthegoFundTransfer from '../onthego.transfer';
 import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
 import MassPayment from '../buyfiat.component'
-import { buyFiatSteps as config } from '../buyfiat.component/config';
 import { getScreenName } from '../../reducers/feturesReducer';
 const { Title, Paragraph, Text } = Typography;
 
@@ -258,17 +252,7 @@ class CockpitCharts extends Component {
                   }
                 >
                   <List.Item.Meta
-                    avatar={<div className='crypto-bg'>
-                      <span
-                        className={`crypto-icon c-pointer ${item.walletCode.toLowerCase()}`}
-                        onClick={() =>
-                          this.props.history.push(
-                            "/coindetails/" + item.walletCode.toLowerCase()
-                          )
-                        }
-                      />
-                      </div>
-                    }
+                     avatar={<Image preview={false} src={item.imagePath} />}
                     title={
                       <div className="crypto-card-design">
                         <div className='crypto-values'>
@@ -289,20 +273,6 @@ class CockpitCharts extends Component {
                                 ? "price-valgreen"
                                 : "price-valred"
                             }`}>
-                        <Currency
-                            defaultValue={item.amount}
-                            type={"text"}
-                            className={`lg-fontsize ${
-                              item.amount > 0
-                                ? "text-green pg-text"
-                                : "text-red red-text"
-                            }`}
-                          />
-                          <span className={`icon sm  ${
-                              item.amount > 0
-                                ? "valupp-icon pg-arrow"
-                                : "valdown-icon red-arrow"
-                            }`} />
                             </div>
                       </div>
                     }

@@ -141,12 +141,6 @@ class cryptocoinsView extends Component {
           this.props.dispatch(setSendCrypto(true));
           this.props.changeStep('withdraw_crypto_selected');
           this.props.dispatch(getScreenName({getScreen:"withdraw"}))
-         
-          
-        //   this.setState({
-        //     ...this.state,
-        //     sendDrawer: true
-        // })
       } else {
         this.props.dispatch(setSendCrypto(false));
         this.props.dispatch(setWithdrawfiatenaable(false));
@@ -158,7 +152,6 @@ class cryptocoinsView extends Component {
              const response = await createCryptoDeposit({ customerId: this.props.userProfile?.id, walletCode: coin, network: selectedObj?.netWork });
              if (response.ok) {
                 this.props.dispatch(setWalletAddress(response.data));
-               // this.props.dispatch(fetchDashboardcalls(this.props.userProfile?.id));
              }
 
           this.setState({
@@ -194,7 +187,6 @@ class cryptocoinsView extends Component {
         filterTransactionList =  this.props.dashboard.cryptoPortFolios.data.filter(item => item.coin.toLowerCase().includes(value.toLowerCase()));
         this.setState({...this.state,searchVal:value})
     }
-    //this.props.dispatch(fetchYourPortfoliodata({loading:false,data:filterTransactionList}));
     this.setState({...this.state,coinData:filterTransactionList})
   }
   showTransactionDrawer =(item) => {
@@ -203,9 +195,6 @@ class cryptocoinsView extends Component {
      menuBar = (item) => (
       <Menu>
           <ul className="drpdwn-list">
-              {/* <li  onClick={() =>  this.showSendReceiveDrawer(1, item)}>
-                  <Link value={1} className="c-pointer">Receive</Link>
-              </li> */}
               <li onClick={() => this.showBuyDrawer(item, "buy")}>
                   <Link  value={2} className="c-pointer">
                   <Translate content="buy" />
@@ -309,7 +298,7 @@ class cryptocoinsView extends Component {
                   <List.Item.Meta
                     avatar={<div className='crypto-bg'>
                       <span
-                        className={`crypto-icon c-pointer ${item.coin}`}
+                        className={`crypto-icon ${item.coin}`}
                       />
                       </div>
                     }

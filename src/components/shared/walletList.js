@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Select, List,Empty } from 'antd';
+import { Select, List,Empty ,Image} from 'antd';
 import { setStep } from '../../reducers/buysellReducer';
 import { Link ,} from "react-router-dom";
 import Translate from "react-translate-component";
@@ -50,8 +50,8 @@ class WalletList extends Component {
                         }}>
                           
                             <Link>
-                                <List.Item.Meta className='drawer-coin'
-                                    avatar={<div className='crypto-bg'><span className='crypto-icon c-pointer ETH'></span></div>}
+                                <List.Item.Meta
+                                    avatar={<Image preview={false} src={item.imagePath} />}
 
                                     title={<div className="wallet-title">{item.currencyCode}</div>}
                                 />

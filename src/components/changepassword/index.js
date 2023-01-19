@@ -24,6 +24,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
   })
   const { Text } = Typography;
   const [form] = Form.useForm();
+  const useDivRef = React.useRef(null);
   const [changePasswordResponse, setChangePasswordResponse] = useState({ error: false, messsage: "", isLoading: false });
   useEffect(() => {
     if (userProfile && userProfile?.isNew) {
@@ -41,6 +42,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
       setBtnDisabled(false)
       setChangePasswordResponse({ error: false, messsage: "", isLoading: false });
       passwordResponce(true, "Current password and New password should not be same", false);
+      useDivRef.current?.scrollIntoView(0,0)
     } else {
       setBtnDisabled(true);
       passwordResponce(false, '', false);
@@ -66,6 +68,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
         setBtnDisabled(false);
         setChangePasswordResponse({ error: false, messsage: "", isLoading: false });
         passwordResponce(true, isErrorDispaly(result), false);
+        useDivRef.current?.scrollIntoView(0,0)
       }
     }
   }
@@ -82,6 +85,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
 
   const passwordResponce = (isError, msg, isloading) => {
     setChangePasswordResponse({ error: isError, messsage: msg, isLoading: isloading });
+    useDivRef.current?.scrollIntoView(0,0)
   }
   const handleChange = (prop, val) => {
     let object = { ...initialValues };
@@ -103,6 +107,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
           "Password": "",
           "ConfirmPassword": ""
         }} onFinish={(values) => saveUserPass(values)} enableReinitialize>
+          <div ref={useDivRef}></div>
         {changePasswordResponse.messsage !== "" && (
           <Typography>
             <Alert
@@ -136,7 +141,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
           ]}
         >
 
-          <Input.Password placeholder={apiClient.convertLocalLang('Type_your_current_pass_word')} value={initialValues.CurrentPassword} className="cust-input change-space" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ? <EyeOutlined  /> : <EyeInvisibleOutlined />)} />
+          <Input.Password placeholder={apiClient.convertLocalLang('Type_your_current_pass_word')} maxLength={15} value={initialValues.CurrentPassword} className="cust-input change-space" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ? <EyeOutlined  /> : <EyeInvisibleOutlined />)} />
         </Form.Item>
         <div className="d-flex">
           <Translate
@@ -177,6 +182,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
 
           <Input.Password
             placeholder={apiClient.convertLocalLang('Type_your_new_pass_word')}
+            maxLength={15}
             value={initialValues.Password}
             onChange={(e) => handleChange("Password", e)}
             className="cust-input change-space pass-onhover" iconRender={visible => (visible ? <EyeOutlined  /> : <EyeInvisibleOutlined />)}
@@ -216,6 +222,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
 
           <Input.Password
             placeholder={apiClient.convertLocalLang('Re_type_your_new_pass_word')}
+            maxLength={15}
             value={initialValues.ConfirmPassword}
             onChange={(e) => handleChange("ConfirmPassword", e)}
             className="cust-input change-space" iconRender={visible => (visible ? <EyeOutlined /> : <EyeInvisibleOutlined />)}
