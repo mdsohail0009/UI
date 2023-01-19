@@ -126,7 +126,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .profile-btn, .profile-btn:hover, .profile-btn:active, .profile-btn:focus{background: transparent;border: 1px solid var(--green) !important;height: 27px;border-radius: 8px;color: var(--green);font-size: 14px;width: 127px;font-weight: 500;text-align: center;display: flex;align-items: center;padding: 6px 10px;margin-bottom: 10px;font-style: italic;}
 .profile-info{width: 96px;height: 96px;padding: 5px;border-radius: 50%;text-align: left;position: relative;background-color: var(--profilebgImg);}
 .profile-info .user-profile{width:100%;height: 100%; border-radius: 50%;padding: 6px;object-fit: cover;}
-.profile-info .img-upld{position: absolute;right: -5px;bottom: 20px;background-color:#F1F2F6;border:0;}
+.profile-info .img-upld{position: absolute;right: -14px;bottom: 10px;background-color:#F1F2F6;border:0;}
 .profile-info .img-upld:focus{background-color:#F1F2F6;}
 .basic-info,.contact-info{padding: 24px;}
 .dash-info.basic-info{padding: 6px !important;}
@@ -295,7 +295,7 @@ input:-webkit-autofill:active{
 .ant-form-item-has-error .ant-input:not(.ant-input-disabled), .ant-form-item-has-error .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled), .ant-form-item-has-error .ant-input:not(.ant-input-disabled):hover, .ant-form-item-has-error .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover{background-color: transparent;}
 .crypto-card.select .ant-card-body .select-currency .cust-input .ant-select-selector{line-height: 44px !important;}
 .crypto-card.select .ant-card-body .select-currency .ant-select-single .ant-select-selector .ant-select-selection-item{line-height: 42px !important;}
-.profile-img-style .profile-info .loader-antd{padding: 30px !important;}
+.profile-img-style .profile-info .loader-antd{padding: 36px 30px 30px 30px !important;}
 .newcase-style{margin-bottom: 16px;align-items: center;}
 /*Common css End*/
 
