@@ -493,7 +493,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .drawer-title-style{display: flex;align-items: center;justify-content:center;margin-bottom: 50px;}
 .selctcoin-style{margin-bottom: 50px;}
 .drawer-crypto-bg{margin-right: 21px;}
-.label-style.drawer-subtextstyle{font-weight: 400;font-size: 16px;color: var(--paraBg);margin-top: 18px;}
+.label-style.drawer-subtextstyle{font-weight: 400;font-size: 16px;color: var(--paraBg);}
 .crypto-coin-mbspace,.swap-custinputfield{margin-bottom: 10px;}
 .crypto-coin-mtspace{margin-top:12px;display: inline-block;}
 /*Buy/sell drawer End*/
@@ -938,6 +938,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .markets-grid tr:last-child td:last-child{border-bottom-right-radius: 20px;}
 .markets-grid .ant-table-tbody{border-bottom-left-radius: 20px;border-bottom-right-radius: 20px;}
 .markets-grid .side-drawer-header{padding: 0 16px 0 0;}
+.header-space{margin-bottom: 0 !important;}
 /* batchpayments end */
 .no-transaction{padding-top: 18px !important;}
 .search-box .ant-input, .search-box .ant-input:focus,.search-box .ant-input:hover{color: var(--textWhite); border: 0;}
