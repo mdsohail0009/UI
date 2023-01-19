@@ -689,7 +689,7 @@ class AddressBook extends Component {
 						    </Tabs>
 							</div>
 					</div>
-					<div className="main-container p-0">
+					<div className="main-container grid-error">
 					{this.state.errorWorning && (
 						<div className="custom-alert">
 							<Alert
@@ -700,7 +700,7 @@ class AddressBook extends Component {
 						</div>
 					)}
 					</div>
-					<div className="cust-list main-container"> 
+					<div className="cust-list main-containerz"> 
 					{cryptoFiat ? (
 						<List
 							className="address-clear"

@@ -26,10 +26,7 @@ import TransactionsHistory from "../../transactions.history.component";
 import AuditLogs from "../../auditlogs.component";
 import Notifications from "../../../notifications";
 import Wallets from "../../wallets.component.js";
-import Batchpayments from "../../batchpayment.component";
-import { useThemeSwitcher } from 'react-css-theme-switcher';
 import TheamSwitch from "./theamSwitch"
-// Action Steps
 import {
     setStepcode as transforSetStep
 } from "../../../reducers/tranfor.Reducer";
@@ -59,7 +56,6 @@ import { KEY_URL_MAP } from "./config";
 import { getFeaturePermissionsByKey } from "./permissionService";
 import { headerSubscriber } from "../../../utils/pubsub";
 import { checkCustomerState } from "../../../utils/service";
-import { saveSettingsData } from "../../../api/apiServer";
 
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
@@ -348,36 +344,10 @@ class HeaderPermissionMenu extends Component {
         }
     }
     render() {
-        // const { switcher, themes } = useThemeSwitcher();
         const userProfileMenu = (
             <Menu>
                 <div className="profile-dropdown">
-                    {/* {this.props.userConfig?.imageURL != null && (
-                        <img
-                            src={
-                                this.props.userConfig?.imageURL
-                                    ? this.props.userConfig?.imageURL
-                                    : DefaultUser
-                            }
-                            className="user-profile"
-                            alt={"image"}
-                        />
-                    )}
-                    {this.props.userConfig?.imageURL === null && (
-                        <img
-                            src={
-                                this.props.userConfig?.imageURL
-                                    ? this.props.userConfig?.imageURL
-                                    : DefaultUser
-                            }
-                            className="user-profile"
-                            alt={"image"}
-                        />
-                    )} */}
-                    {/* <p className="mb-15 ml-8 profile-value" style={{ flexGrow: 12, marginTop: "5px" }}>
-                        {this.props.userConfig.isBusiness ? this.props.userConfig.businessName :
-                            <>{this.props.userConfig.firstName}{" "}{" "}{this.props.userConfig.lastName}</>}
-                    </p> */}
+                    
                     <Translate
                         content={`${this.props.userConfig?.isBusiness === true ? "business_account" : "manage_account"}`}
                         component={Button}
@@ -515,12 +485,10 @@ class HeaderPermissionMenu extends Component {
                 <Menu.Item>
                     <Translate
                         content="header_title"
-                        // onClick={this.routeToCockpit}
                         onClick={this.props.routeToCockpit}
                         onMouseOver={()=>{this.handleHover()}}
                         component={Text}
                         className={this.props.menuItems.getScreen?.getScreen=="dashboard"?"custom-header":"custom-inactive"}
-                    //    style={{color:this.props.menuItems.getScreen.getScreen=="dashboard"?"white":"gray"}}
                     />
                 </Menu.Item>
                 {data?.map((item, indx) => <React.Fragment>
@@ -570,13 +538,9 @@ class HeaderPermissionMenu extends Component {
                 onSelect={(key) => {
                     this.props.dispatch(setHeaderTab(key.key));
                 }}>
-                {/* <Menu.Item key="13"> USD
-                </Menu.Item>  
-                <Menu.Item key="14"><Text className="pipeline">|</Text> English
-                </Menu.Item>   */}
+               
                 <Menu.Item key="15">
-                    {/* <Text className="pipeline">|</Text> */}
-                    {/* <span className="icon md theme-icon" onClick={() => this.themeSwitch()} /> */}
+                   
                     <TheamSwitch theamFlag={this.state.theamFalge} />
 
                 </Menu.Item>

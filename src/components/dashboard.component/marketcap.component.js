@@ -93,7 +93,7 @@ const MarketCap = ({ member }) => {
             </div>
             <Drawer
                 title={[<div className="side-drawer-header">
-                    <Translate content="markets_title" component={Title} className="fs-26 fw-400 mb-0 text-white-30" />
+                    <Translate content="markets_title" component={Title} className="grid-title" />
                     <span onClick={() => onClose()} className="icon md close-white c-pointer" />
                 </div>]}
                 placement="right"
@@ -104,7 +104,7 @@ const MarketCap = ({ member }) => {
                 onClose={() => setIsOpen(false)}
                 className="side-drawer-full"
                 destroyOnClose={true}
-            >
+            > 
                 <div className="markets-panel mr-0 markets-popup">
                     <div className="full-screenable-node" >
                   
@@ -113,7 +113,7 @@ const MarketCap = ({ member }) => {
                         </div>
                     </div>
                 </div>
-            </Drawer>
+                </Drawer>
         {/* </div> */}
     </>
 

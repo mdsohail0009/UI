@@ -82,6 +82,7 @@ class Wallets extends Component {
         }else if(e===3){
             this.props.history.push(`/payments/${value.walletCode}`)
         }else {
+            this.props.dispatch(getScreenName({getScreen:"dashboard"}))
             this.props.history.push(`/internaltransfer`)
         }
         

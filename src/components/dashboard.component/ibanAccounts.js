@@ -11,7 +11,6 @@ import TransactionsHistory from "../transactions.history.component";
 import { setWithdrawfiatenaable, setWithdrawfiat, setStep } from '../../reducers/sendreceiveReducer'
 import { setdepositCurrency, getCurrencieswithBankDetails } from '../../reducers/depositReducer'
 import OnthegoFundTransfer from '../onthego.transfer';
-import BankWallets from '../bankui.component';
 import {setReceiveFiatHead, setSendFiatHead} from '../../reducers/buyFiatReducer';
 import Loader from "../../Shared/loader";
 import { buyFiatSteps as config } from '../buyfiat.component/config';
@@ -79,6 +78,7 @@ class Iban extends Component {
         }else if(e===3){
             this.props.history.push(`/payments/${value.walletCode}`)
         }else {
+            this.props.dispatch(getScreenName({getScreen:"dashboard"}))
             this.props.history.push(`/internaltransfer`)
         }
         
@@ -116,7 +116,6 @@ class Iban extends Component {
     }
     render() {
         const { wallets } = this.props.dashboard;
-        const { totalCryptoValue, totalFiatValue } = this.props.dashboard.portFolio.data;
 
         return (
             <>
