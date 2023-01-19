@@ -179,7 +179,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .theme-txt{font-size: 16px; font-weight: 500; color: var(--coinPrice);margin-left: 4px;}
 .switch-circle, .theme-txt{margin-bottom: 0 !important;}
 /* .theme-active .theme-txt{color: var(--textWhite);font-weight: 400;} */
-.info-details{font-weight: 700;font-size: 20px;color: var(--tablesub);}
+.info-details{font-weight: 700;font-size: 16px;color: var(--tablesub);}
 /*profile css end*/
 
 /* manual addressbook start */
@@ -922,10 +922,13 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .custom-header{color:var(--white) !important;}
 .custom-inactive{color:var(--sbCardText) !important}
 .sumsub-content{margin: 10px 0;}
+.icon.md.refresh-icon{background-position: -271px -33px;}
+.cust-cancel-btn.pop-space{margin-right: 8px;margin-bottom: 0;}
 /* batchpayments end */
 .no-transaction{padding-top: 18px !important;}
 .search-box .ant-input, .search-box .ant-input:focus,.search-box .ant-input:hover{color: var(--textWhite); border: 0;}
 .ant-btn.dbchart-link{padding-left: 0px;padding-right: 0px; margin-right: 8px;background-color: transparent;border: 0;}
+.main-container.grid-error{padding: 0 16px;}
 /*@media start*/
 @media (min-width: 768px){
     .listitems-design{width: 340px;}
@@ -1003,6 +1006,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
     .transctns-grid .ant-drawer-header, .transctns-grid .ant-drawer-body{padding-left: 100px;padding-right: 100px;}
     .adbook-scroll{max-height: calc(100vh - 418px);overflow-y: auto;}
     .your-card{margin-top: 8px;}
+    .batchpayment-summary{padding: 0 16px;}
 }
 @media (min-width: 1400px){
     .main-container{max-width: 1300px; }

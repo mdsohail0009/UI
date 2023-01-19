@@ -244,7 +244,7 @@ downLoadPreview=()=>{
             title={[<div className="side-drawer-header">
                 <span></span>
                 <div className="text-center">
-                {!this.state.isCoinsListHide && <> <div className='drawer-maintitle'>Batch Payment</div> </>}
+                {!this.state.isCoinsListHide && <> <Paragraph className='drawer-maintitle'>Batch Payment</Paragraph> </>}
                 </div>
                 {!this.state.isCoinsListHide &&<span onClick={this.closeDrawer} className="icon md close-white c-pointer" />}
                 {this.state.isCoinsListHide &&<span onClick={this.uploadCancel} className="icon md close-white c-pointer" />}
