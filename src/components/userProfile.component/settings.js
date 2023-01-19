@@ -131,13 +131,6 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
                             { required: true, message: "Is required" },
                         ]}
                     >
-                        {/* <Select placeholder="Select Language" bordered={false}
-                            className="cust-input cust-select mb-0"
-                            dropdownClassName="select-drpdwn"
-                            onChange={(e) => { settingsObj.Language = e; setSettingsObj(settingsObj); form.setFieldsValue({ ...settingsObj }) }}>
-                            {SettingsLu.languageLookup?.map((item, idx) => <Option key={idx} value={item}>{item.toUpperCase()}
-                            </Option>)}
-                        </Select></Form.Item> */}
                         <Select placeholder="Select Language" bordered={false}
                             className="cust-input cust-select mb-0"
                             dropdownClassName="select-drpdwn"
@@ -161,7 +154,7 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
                             className="cust-input cust-select mb-0"
                             dropdownClassName="select-drpdwn"
                             onChange={(e) => { settingsObj.currency = e; setSettingsObj(settingsObj); form.setFieldsValue({ ...settingsObj }) }}>
-                            {SettingsLu.currencyLookup?.map((item, idx) => <Option key={idx} value={item}>{item}
+                            {SettingsLu.currencyLookup?.map((item, idx) => <Option key={idx} value={item}>{item.toUpperCase()}
                             </Option>)}
                         </Select></Form.Item>
                 </Col>
