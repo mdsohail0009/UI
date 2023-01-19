@@ -937,7 +937,7 @@ input[type=number]::-webkit-outer-spin-button {-webkit-appearance: none;-moz-app
 .secureDropdown .ant-menu-root{min-width: 180px;max-width: 180px;}
 .secureDropdown .ant-menu-title-content{line-height: 23px;}
 .ant-result-title, .ant-result-subtitle{color: var(--textWhite);}
-.crypto-card .ant-image-img{width: 70%; margin-right: 0;}
+.crypto-card .ant-image-img{ margin-right: 0;border: 4px solid var(--coinBg);border-radius: 50%;}
 .with-min{position: absolute;top: 52px;right: 46px;}
 .with-max{position: absolute;top: 52px;right: 0;}
 .crypto-list-custom li {color: #fff;}

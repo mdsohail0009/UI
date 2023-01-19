@@ -113,10 +113,10 @@ class TransactionsHistory extends Component {
     },
     { field: "docType", title: "Type", filter: true,width: 260,
     customCell: (props) => (
-      <td className="d-flex justify-content">
-      <div className="gridLink c-pointer	" onClick={() => this.transactionModal(props?.dataItem)}>
+      <td className="">
+     <a className="gridLink c-pointer	"> <span className="gridLink c-pointer	" onClick={() => this.transactionModal(props?.dataItem)}>
       {props?.dataItem?.docType}
-      </div>
+      </span></a>
     </td>
     ), },
     { field: "wallet", title: "Wallet", filter: true,width: 260, },
