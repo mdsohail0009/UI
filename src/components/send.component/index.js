@@ -76,7 +76,7 @@ class SendReceive extends Component {
             selectCrypto: <span  />,
             withdraw_crypto_liveness: <span  />,
             withdraw_crpto_summary: <span  />,
-            withdraw_crpto_success: null,
+            withdraw_crpto_success: <span  />,
             sendMoney: <span />
         }
         return stepcodes[config[this.props.sendReceive.stepcode]]
