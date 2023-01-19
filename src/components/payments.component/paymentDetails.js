@@ -544,8 +544,8 @@ class PaymentDetails extends Component {
                                         <span>{" - - "}</span>
                                       )}
                                     </td>
-                                    <td className="doc-def" style={{ width: '350px' }}>
-                                      <div className="d-flex align-center justify-content" style={{ width: '350px' }}>
+                                    <td className="doc-def" >
+                                      <div className="d-flex align-center justify-content">
                                         <span>
                                           <Tooltip title={item.bankname}>
                                             <span className='pay-docs'>{item.bankname}</span>
