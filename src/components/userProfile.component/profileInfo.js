@@ -178,7 +178,7 @@ class ProfileInfo extends Component {
                   type="primary"
                   className="img-upld"
                   size="large"
-                  icon={<span className="icon md camera" />}
+                  icon={<span className="icon lg camera" />}
                 />
               </Upload>
             </>
