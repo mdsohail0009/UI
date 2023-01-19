@@ -117,9 +117,19 @@ withdrawFiatSummaryBack = () => {
                 title={[
                     <div className="side-drawer-header">
                         {this.renderTitle()}
-                        <div className="text-center">
+                        
+                        {this.renderIcon()}
+                    </div>
+                ]}
+                placement="right"
+                closable={true}
+                visible={this.props.showDrawer}
+                closeIcon={null}
+                className="side-drawer custom-fait-sidedrawer"
+                destroyOnClose={true}
+            >
+                <div className="text-center">
                             {this.props.buyFiat?.receiveFiatHeader && <>
-                               {/* <Translate className="drawer-maintitle text-center selctcoin-style" content="DepositandFiat"  component={Paragraph} /> */}
                                <div className='text-center selctcoin-style'><div className='drawer-maintitle'>Receive Fiat</div>
                       <Translate content="receive_fiat_text" component={Paragraph} className="label-style drawer-subtextstyle" /></div> 
                                <Translate className="" content={this.props.buyFiat.stepSubTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
@@ -131,16 +141,6 @@ withdrawFiatSummaryBack = () => {
                             </>
                             }
                             </div>
-                        {this.renderIcon()}
-                    </div>
-                ]}
-                placement="right"
-                closable={true}
-                visible={this.props.showDrawer}
-                closeIcon={null}
-                className="side-drawer custom-fait-sidedrawer"
-                destroyOnClose={true}
-            >
                 {this.renderContent()}
             </Drawer>
         );
