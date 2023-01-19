@@ -592,6 +592,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .bash-market-table .pay-grid thead  tr th{border-bottom: 0;}
 .bash-market-table .pay-grid tbody tr:last-child td, .bash-market-table .pay-grid tbody tr:first-child td{border-bottom: 0 !important;}
 .detail-popbtn{width: auto;margin-top: 16px;}
+.paynow-btn-ml{margin-left: 12px;}
 .ant-popover-inner-content .iban-hov:hover{background-color: var(--bgDark);}
 .ant-popover-arrow{background: transparent !important;border-color: transparent;}
 .ant-popover-arrow{border-color: var(--profileMenu) !important;}

@@ -802,7 +802,7 @@ class PaymentDetails extends Component {
                     <Button
                     block
                       htmlType="submit"
-                      className="pop-btn detail-popbtn"
+                      className="pop-btn detail-popbtn paynow-btn-ml"
                       loading={this.state.btnDisabled}
                       onClick={() => {
                         this.savePayment();
@@ -812,7 +812,7 @@ class PaymentDetails extends Component {
                     </Button>
                   }
                   <Button
-                    className="cust-cancel-btn pay-cust-btn detail-popbtn"
+                    className="cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
                     onClick={this.backToPayments}
                   >
                     Cancel
