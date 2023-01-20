@@ -504,7 +504,7 @@ const AddressFiatView = (props) => {
 													
 												</div>
 												{item?.documents?.details.map((file) => (
-													<Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+													<Col xs={12} sm={12} md={12} lg={12} xxl={12}>
 														<div
 															className="docfile"
 															key={file.id}>

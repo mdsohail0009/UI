@@ -132,7 +132,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         {!mainLoader && <>
             <div ref={useDivRef}></div>
             {showDeclartion &&<div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
-                <Image width={80} preview={false} src={alertIcon} className="confirm-icon" />
+                <Image  preview={false} src={alertIcon} className="confirm-icon" />
                 <Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${props.userProfile?.email}. 
                 Please review and sign the document in your email to whitelist your address.
