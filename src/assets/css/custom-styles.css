@@ -743,7 +743,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .new-add button{border-left: 1px solid var(--white) !important; padding-left: 20px; }
 .new-add button:hover{border-left: 1px solid var(--white) !important;}
 .cust-input.custom-add-select:hover{border-color: var(--subText);}
-.custom-send.sell-btc-btn span{color: var(--white);}
+.custom-send.sell-btc-btn span{color: #ffffff;}
 .new-add button span{color: var(--termsText); font-size: 16px; font-weight: 700;}
 .new-add .check-ml-align{margin-left: 24px;}
 .verification-text{color: var(--white) !important;font-weight: 400;  font-size: 14px;}
