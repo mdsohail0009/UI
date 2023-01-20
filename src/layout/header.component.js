@@ -22,14 +22,11 @@ import {
   updateReceiveCoinDetails,
   updateSwapdata,
   clearSwapData,
-  //setStep 
 } from "../reducers/swapReducer";
 import { connect } from "react-redux";
 import DefaultUser from "../assets/images/defaultuser.jpg";
 import { setHeaderTab} from "../reducers/buysellReducer";
-// import {
-//   setStep as sendSetStep,
-// } from "../reducers/sendreceiveReducer";
+
 import { readNotification as readNotifications } from "../notifications/api";
 import apiCalls from "../api/apiCalls";
 import { setNotificationCount } from "../reducers/dashboardReducer";
@@ -92,7 +89,6 @@ class Header extends Component {
     this.props.dispatch(clearPermissions());
     window.$zoho?.salesiq?.chat.complete();
     window.$zoho?.salesiq?.reset();
-    // this.props.dispatch(clearUserInfo());
     userManager.signoutRedirect();
     apiCalls.trackEvent({
       Type: "User",
@@ -110,7 +106,6 @@ class Header extends Component {
     this.trackEvent();
   }
   readNotification() {
-    //let isRead = apiCalls.encryptValue("true", this.props.userConfig?.sk);
     readNotifications().then(() => {
       this.props.dispatch(setNotificationCount(0));
     });
@@ -139,32 +134,7 @@ class Header extends Component {
     const userProfileMenu = (
       <Menu>
         <div className="profile-dropdown">
-          {/* {this.props.userConfig?.imageURL != null && (
-            <img
-              src={
-                this.props.userConfig?.imageURL
-                  ? this.props.userConfig?.imageURL
-                  : DefaultUser
-              }
-              className="user-profile"
-              alt={"image"}
-            />
-          )}
-          {this.props.userConfig?.imageURL === null && (
-            <img
-              src={
-                this.props.userConfig?.imageURL
-                  ? this.props.userConfig?.imageURL
-                  : DefaultUser
-              }
-              className="user-profile"
-              alt={"image"}
-            />
-          )} */}
-          {/* <p className="profile-value" style={{ flexGrow: 12, marginTop: "5px" }}>
-            {this.props.userConfig.isBusiness ? this.props.userConfig.businessName :
-              <>{this.props.userConfig.firstName}{" "}{" "}{this.props.userConfig.lastName}</>}
-          </p> */}
+
           <Translate
           content={`${this.props.userConfig?.isBusiness===true?"business_account":"manage_account"}`}
             component={Button}
@@ -204,15 +174,6 @@ class Header extends Component {
                       className="text-white" key="1"
                     />
                   </Link><span className="icon c-pointer md rarrow-white ml-12" /></div></>} >
-                <Link>
-                  <Translate
-                    content="get_your_own_iban"
-                    component={Text}
-                    className="text-white"
-                  />
-                  <span className="icon md rarrow-white" />
-                </Link>
-
               </Popover>
             </li>
             <li
@@ -315,26 +276,6 @@ class Header extends Component {
                     />
                   }
                 </li>
-
-                {/* <li className="mobile-user ml-8">
-                  <Translate
-                    content="header_title"
-                    onClick={this.routeToCockpit}
-                    component={Text}
-                    className="text-white fs-20 c-pointer cp-link mb-d-none"
-                  />
-                  <Text className="text-white-30 fs-24 ">|</Text>
-                  <Translate
-                    content="user_type"
-                    with={{
-                      lable: this.props.userConfig?.isBusiness
-                        ? "Business"
-                        : "Personal"
-                    }}
-                    component={Text}
-                    className="text-white-30 fs-20 ml-16 fw-300"
-                  />
-                </li> */}
 
               </ul>
               <Menu
