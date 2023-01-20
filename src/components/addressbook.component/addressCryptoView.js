@@ -220,7 +220,7 @@ const AddressCryptoView = (props) => {
 												))}
 									</Col>
 								</Row>
-								<div className="text-right">
+								<div className="text-right view-level-btn">
 								<Button
 									className="pop-btn "
 									block

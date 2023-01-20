@@ -546,7 +546,7 @@ const AddressFiatView = (props) => {
 										</Row>
 									</Col>
 								</Row>
-								<div className="text-right">
+								<div className="text-right view-level-btn">
 								<Button
 								block
 									className="pop-btn"

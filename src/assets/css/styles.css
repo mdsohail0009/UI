@@ -340,9 +340,9 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .custom-switch{border-bottom: none;}
 .agree .ant-form-item-explain-error{text-align: left;}
 #memberWalletId .ant-select-selector, #currency .ant-select-selector{border-radius: 25px !important;height: 49px !important;}
-#memberWalletId .ant-form-item-has-error,  #currency .ant-form-item-has-error{border: 1px solid #ff4d4f !important;}
+#memberWalletId .ant-form-item-has-error,  #currency .ant-form-item-has-error{border: 1px solid var(--red) !important;}
 .custom-formcard{width: 500px;margin: 0px auto;background: #515A64;border-radius: 50px;padding-left: 40px;padding-right: 40px;padding-top: 50px;padding-bottom: 50px;}
-.ant-form-item-has-error .cust-input{background-color: transparent !important;border-color: #ff4d4f !important}
+.ant-form-item-has-error .cust-input{background-color: transparent !important;border-color: var(--red) !important}
 .ant-form-item-explain-error{text-align: left;}
 .ant-input-suffix, .anticon-eye-invisible.ant-input-password-icon{color: var(--bgWhite);}
 .coin.XRP {background-position: -2px -60px;}
