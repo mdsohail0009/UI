@@ -10,10 +10,11 @@ import Translate from 'react-translate-component';
 import Wallets from '../dashboard.component/wallets.component';
 import YourPortfolio from '../dashboard.component/yourportfolio.component';
 import apiCalls from '../../api/apiCalls';
+import Notices from './notices';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 import BankWallets from '../bankui.component'
 import SbCard from './sbCard';
-const { Title, Paragraph } = Typography;
+const { Title } = Typography;
 class Home extends Component {
     state = {
         loading: false,
@@ -97,8 +98,8 @@ class Home extends Component {
                         <SbCard />
                         {this.state.permissions?.Bank &&  <div className='marketcap-mt'>
                        <BankWallets/> 
-                       {/* <Iban/> */}
                        </div>}
+                       {this.state.permissions.Notices && <Notices />}
                         {this.state.permissions.Markets && 
                             <MarketCap />
                        }
