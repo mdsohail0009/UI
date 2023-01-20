@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');
-* { scrollbar-width: thin; scrollbar-color: var(--cardBG);}
+* { scrollbar-width: thin; scrollbar-color: var(--scroll);}
 *::-webkit-scrollbar { width: 12px;height: 10px;  }
-*::-webkit-scrollbar-thumb {background-color: var(--cardBG);border-radius: 20px;}
-html, .auto-scroll, .ant-table-body, .ant-drawer-body, .mobile-list, .k-grid-content{scrollbar-color: var(--cardBG);}
+*::-webkit-scrollbar-thumb {background-color: var(--scroll);border-radius: 20px;}
+html, .auto-scroll, .ant-table-body, .ant-drawer-body, .mobile-list, .k-grid-content{scrollbar-color: var(--scroll);}
 .loader-antd{padding: 30px 50px;text-align: center;color: var(--white);}
     
 body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !important;}
