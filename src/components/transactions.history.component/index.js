@@ -67,7 +67,6 @@ class TransactionsHistory extends Component {
 
   componentDidMount() {
     this.props.dispatch(getScreenName({getScreen:"dashboard"}))
-    // this.props.dispatch(getScreenName({getScreen:"dashboard"}))
     getFeaturePermissionsByKey('transactions', this.loadInfo)
   }
 

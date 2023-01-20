@@ -209,13 +209,13 @@ class Summary extends Component {
 						</div>
 					)}
 				</div>
-					<div className="cust-summary-text">
+					{/* <div className="cust-summary-text"> */}
 						<Translate
 							className="text-style"
 							content="final_Amount"
 							component={Title}
 						/>
-					</div>
+					{/* </div> */}
 					{permissions &&
 					<div className="d-flex agree-check">
 						<label>

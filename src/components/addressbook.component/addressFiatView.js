@@ -299,14 +299,6 @@ const AddressFiatView = (props) => {
 													</div>
 												</div>
 											</Col>
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle">
-													<label className="kpi-label"></label>
-													<div className="kpi-val">
-														
-													</div>
-												</div>
-											</Col>
 											
 										</Row>
 										<Title className="basicinfo  abbook-title-mt">

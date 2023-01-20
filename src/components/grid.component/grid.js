@@ -152,8 +152,8 @@ export function withState(WrappedGrid) {
                             <table width="100%">
                                 <tr>
 
-                                    <td colspan="2" style={{ fontSize: "26px", fontWeight: 700, textAlign: "center"}}><h1>Suissebase Account Statement</h1></td>
-
+                                    <td colspan="2" style={{width:"100%"}}><h1 style={{ fontSize: "26px", fontWeight: 700, textAlign: "center", marginLeft:"100px"}}>Transaction History</h1></td>
+                                    <td></td>
                                 </tr>
                             </table>
                             <div className='statement-header logo-content'>
@@ -169,7 +169,7 @@ export function withState(WrappedGrid) {
                             <div>
                                 <table className="transaction-pdf-template" style={{ width:"100%"}}>
                                     <thead style={{ background: "#cccccc" }}>
-                                        <th style={{ width:"150px"}}>Transaction ID</th>
+                                        <th >Transaction ID</th>
                                         <th style={{ width:"150px"}}>Date</th>
                                         <th style={{ width:"100px"}}>Type</th>
                                         <th style={{ width:"90px"}}>Wallet</th>
@@ -181,7 +181,7 @@ export function withState(WrappedGrid) {
                                     </thead>
                                     <tbody className='pdt-data'style={{ width:"100%"}}>
                                         {this.state?.data?.map(item => <tr>
-                                            <td style={{ width:"190px"}}>{item.transactionId}</td>
+                                            <td >{item.transactionId}</td>
                                             <td style={{ width:"150px"}}>{moment(item.date).format("DD/MM/YYYY hh:mm a")}</td>
                                             <td style={{ width:"100px"}}>{item.docType}</td>
                                             <td style={{ width:"90px"}}>{item.wallet}</td>

@@ -1,5 +1,4 @@
-import { Table, Tooltip, Input, Empty, Drawer, Typography } from 'antd';
-import { FullscreenOutlined, ReloadOutlined } from '@ant-design/icons'
+import { Table, Input, Empty, Drawer, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import Translate from 'react-translate-component';
 import { fetchMarketCaps } from './api';
@@ -39,20 +38,6 @@ const MarketCap = ({ member }) => {
 
     }
 
-    const showDrawer = () => {
-        setIsOpen(true);
-        setSearchVal("");
-        let _data = [...originalMarketCaps]
-        setFullViewLoading(true);
-        setTimeout(() => {
-            setFullViewData(_data);
-            setFullViewLoading(false);
-        }, 1000)
-        marketsTack();
-    }
-    const marketsTack = () => {
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'Markets page view', "Username": member?.userName, "customerId": member?.id, "Feature": 'Markets', "Remarks": 'Markets page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Markets' });
-    }
     const onClose = () => {
         setSearchVal("");
         setMarketCaps([...originalMarketCaps]);
@@ -63,7 +48,7 @@ const MarketCap = ({ member }) => {
     return <>
         <div className='market-panel-newstyle'></div>
             <div className="full-screenable-node marketcap-mt" >
-
+                <div className="d-flex justify-content align-center">
                 <div className="d-flex">
                     <div className="d-flex align-center">
                         <Translate content="markets_title" component={Title} className="db-titles" />
@@ -81,10 +66,7 @@ const MarketCap = ({ member }) => {
                     </div> 
                     </div>
                 </div>
-                    <div className="market-actions">
-                        <Tooltip title={apiCalls.convertLocalLang('full_screen')}><FullscreenOutlined onClick={() => showDrawer()} className="fs-18 text-white ml-8 fw-500" /></Tooltip>
-                        <Tooltip title={apiCalls.convertLocalLang('reload')}><ReloadOutlined onClick={fetchMarketCapsInfo} className="fs-18 text-white ml-16 fw-500" /></Tooltip>
-                    </div>
+                </div>
                 <div className='bash-market-table responsive_table bg-none dashb-btmtable'>
                 
                 
@@ -114,7 +96,7 @@ const MarketCap = ({ member }) => {
                     </div>
                 </div>
                 </Drawer>
-        {/* </div> */}
+
     </>
 
 }

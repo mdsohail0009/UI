@@ -143,8 +143,9 @@ class AddressBook extends Component {
 			customCell: (props) => (
 				<td className="d-flex justify-content">
 					<div>
+					<Tooltip title= {props?.dataItem?.whiteListName}>
 					<Text className="gridLink c-pointer	gridlink-data" onClick={() => this.addressFiatView(props)}>{props?.dataItem?.whiteListName}</Text>
-					</div>
+					</Tooltip></div>
 					<Text className="file-label ml-8 fs-12 add-lbl">
 						{this.addressTypeNames(props?.dataItem?.addressType)}
 					</Text>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Select, Input, Row, Col, Form, Button, Typography, List, Divider, Image, Alert, Spin, Empty } from 'antd';
+import { Select, Input, Row, Col, Form, Button, Typography, List, Divider, Image, Alert, Spin, Empty,Radio,Tabs } from 'antd';
 import apicalls from "../../api/apiCalls";
 import AddressDocumnet from "../addressbook.component/document.upload";
 import oops from '../../assets/images/oops.png'
@@ -519,6 +519,15 @@ saveWithdrawdata = async () => {
           {this.state?.loading && <Loader />}
           {!this.state.loading && (
             <>
+            <div className="addressbook-grid">
+					<Tabs className="cust-tabs-fait" 
+					// defaultValue={(this.props?.activeFiat||this.state.cryptoFiat) ? 2 : 1}
+					// 		onChange={this.handleWithdrawToggle}
+							>					
+                                <Tabs.TabPane tab="Address Book" content="withdrawCrypto" key={1} className=""  component={Radio.Button}/>
+                                <Tabs.TabPane tab="Past Recipients" content="withdrawFiat" key={2} className="" component={Radio.Button}/>
+						    </Tabs>
+							</div>
              <Title className="adbook-head">Address Book</Title>
               {/* <Divider className="cust-divide" /> */}
 
@@ -791,7 +800,7 @@ saveWithdrawdata = async () => {
                   </div>
                   <div className="cust-summary-new">
                 <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">Save Whitelist name as</div>
+                                    <div className="summary-liststyle">Whitelist Name </div>
                                     <Text className="summarybal">{this.state.reviewDetails?.favouriteName}</Text>
                   </div>
                

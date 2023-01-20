@@ -493,9 +493,9 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .sell-radiobtn-style{flex: 0 0 236px;}
 .selection-currency-list{margin-bottom: 50px;}
 .drawer-title-style{display: flex;align-items: center;justify-content:center;margin-bottom: 50px;}
-.selctcoin-style{margin-bottom: 50px;}
+/* .selctcoin-style{margin-bottom: 50px;} */
 .drawer-crypto-bg{margin-right: 21px;}
-.label-style.drawer-subtextstyle{font-weight: 400;font-size: 16px;color: var(--paraBg);margin-top: 18px;}
+.label-style.drawer-subtextstyle{font-weight: 400;font-size: 16px;color: var(--paraBg);}
 .crypto-coin-mbspace,.swap-custinputfield{margin-bottom: 10px;}
 .crypto-coin-mtspace{margin-top:12px;display: inline-block;}
 /*Buy/sell drawer End*/
@@ -528,7 +528,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .recive-text, .recive-text .list-dot{font-weight: 400;font-size: 14px;color: var(--tableText);}
 .recive-runtext{font-weight: 400;font-size: 14px;color: var(--tableText);}
 .list-dot{list-style: initial;margin-bottom: 16px !important;}
-.recive-share{margin-top: 100px;font-size: 16px;font-weight: 500;color: var(--tableText);margin-bottom: 18px;}
+.recive-share{margin-top: 30px;font-size: 16px;font-weight: 500;color: var(--tableText);margin-bottom: 18px;}
 .network-display{display: flex;align-items: center;justify-content: center;}
 .ant-btn:focus, .ant-btn:active{box-shadow: none !important;}
 .ant-btn-loading-icon:focus, .ant-btn-loading-icon:active{box-shadow: none !important;}
@@ -633,7 +633,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .pay-list{padding: 12px 0;}
 .cust-coin-value{font-weight: 500;font-size: 45px;text-align: center;color: var(--white);}
 .cust-summary-text{text-align: left;margin-top: 16px;}
-.text-style{font-weight: 400 !important;font-size: 16px !important;color:var(--checksub) !important;margin-top: 16px !important;height: 106px;}
+.text-style{font-weight: 400 !important;font-size: 16px !important;color:var(--checksub) !important;margin-top: 16px !important;}
 .terms-link{color:var(--termsText) !important;font-weight: 700;}
 .faitcurrency-style{font-weight: 700;font-size: 16px;color: var(--white);text-align: center;margin-bottom: 30px;}
 .summary-liststyle{font-weight: 700;font-size: 16px;color: var(--coinBal);text-transform: capitalize;}
@@ -720,7 +720,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .upload-empty-div{margin-top: -6px;}
 .hy-align, .code-tooltip-align{margin:auto 0; display: flex;align-items: center;}
 .send-crypto-enrty{border-radius:5px;margin-bottom: 12px;}
-.transfer-designstyle{margin-top: 106px;}
+.transfer-designstyle{margin-top: 30px;}
 .inputfont-style::placeholder{font-size: 12px;}
 /* send crypto end */
 
@@ -742,7 +742,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* crypto sucess start  */
 .success-title{font-weight: 800; font-size: 26px; color: var(--white);}
 .success-content{font-weight: 500;font-size: 16px;line-height: 180%; color: var(--white);opacity: 0.8;}
-.send-crypto-sumry .d-flex.agree-check{margin-top: 150px;}
+/* .send-crypto-sumry .d-flex.agree-check{margin-top: 150px;} */
 .ant-checkbox.ant-checkbox-checked{border: none !important;}
 .ant-custumcheck .ant-checkbox-checked , label:hover .ant-checkbox-checked, .ant-checkbox-checked::after{ border-color:transparent !important;}
 /* crypto success end  */
@@ -942,11 +942,14 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .markets-grid tr:last-child td:last-child{border-bottom-right-radius: 20px;}
 .markets-grid .ant-table-tbody{border-bottom-left-radius: 20px;border-bottom-right-radius: 20px;}
 .markets-grid .side-drawer-header{padding: 0 16px 0 0;}
+.header-space{margin-bottom: 0 !important;}
 /* batchpayments end */
 .no-transaction{padding-top: 18px !important;}
 .search-box .ant-input, .search-box .ant-input:focus,.search-box .ant-input:hover{color: var(--textWhite); border: 0;}
 .ant-btn.dbchart-link{padding-left: 0px;padding-right: 0px; margin-right: 8px;background-color: transparent;border: 0;}
 .main-container.grid-error{padding: 0 16px;}
+.fait-subtext .ant-typography-copy,.custom-copy .ant-typography-copy{transform: scale(0.8);}
+.fait-subtext .ant-typography-copy svg,.custom-copy .ant-typography-copy svg{margin-bottom: 5px;}
 /*@media start*/
 @media (min-width: 768px){
     .listitems-design{width: 340px;}
@@ -958,7 +961,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .agree-check input[type=checkbox]:checked+span:hover{background-position:-153px -519px;}
     .agree-check input[type=checkbox]:checked+span{background-position:-153px -519px;}
     .agree-check input[type=checkbox]+span:hover{background-position: -190.5px -519px;}
-    .text-style{height: 230px;margin-top: 16px !important;}
+    .text-style{margin-top: 16px !important;}
     .successsubtext{height: 400px;}
     .round-pills .ant-radio-button-wrapper{line-height: 30px;}
     /* .select-currency{height: 400px;} */
@@ -992,9 +995,9 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .agree-check input[type=checkbox]+span:hover{background-position:-190.5px -513px;}
     .agree-check input[type=checkbox]:checked+span:hover{background-position:-153px -513px;}
     .successsubtext{height: 130px;}
-    .text-style{margin-top: 30px !important;}
+    .text-style{margin: 30px 0 !important;}
     /* .select-currency {height: 122px;} */
-    .text-style{height: 140px;}
+    /* .text-style{height: 140px;} */
     /* .full-screenable-node{overflow: auto;} */
     .val-updown{top: 45px;right: 18px;}
     .enter-val-container.swap-com{margin-bottom: 4px;}
@@ -1022,7 +1025,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .custom-radiobtn .ant-radio-button-wrapper{padding: 0 15px;}
     /* .ant-popover.ant-popover-placement-left{left: 872px !important;} */
     .transctns-grid .ant-drawer-header, .transctns-grid .ant-drawer-body{padding-left: 100px;padding-right: 100px;}
-    .adbook-scroll{max-height: 418px;}
+    .adbook-scroll{max-height: 418px;overflow: auto;}
     .your-card{margin-top: 8px;}
     .batchpayment-summary{padding: 0 16px;}
 }
