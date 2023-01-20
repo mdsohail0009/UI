@@ -68,7 +68,7 @@ class Cases extends Component {
           
                 <Translate content="case" component={Paragraph} className="grid-title" /> </div>
                 {/* <div className=""> */}
-                    <List className="address-clear" url={gridUrl} ref={this.gridRef} columns={this.columnGrid} />
+                    <List className="address-clear cases-grid-style" url={gridUrl} ref={this.gridRef} columns={this.columnGrid} />
                     {/* </div> */}
                
             

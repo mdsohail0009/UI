@@ -158,6 +158,8 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .security-align, .crypto-address{display: flex;align-items: center;justify-content: space-between;}
 .custom-toggle.ant-switch-checked{background-color: var(--profiletab) !important;}
 .custom-toggle.ant-switch{background-color: #4E505A;}
+.cases-grid-style .k-grid-header .k-grid-header-wrap table{width: 100% !important;}
+.cases-grid-style .k-grid-container .k-grid-content .k-grid-table{width: 100% !important;}
 /* .small-btn{min-width: 90px;font-weight: 700;font-size: 15px;color: var(--white);border: 1px solid var(--pfsmbtn);border-radius: 5px;padding: 12px 28px;display: inline-block;} */
 .profile-sm-btn{text-transform: capitalize;height: 46px;min-width: 120px;font-weight: 700;font-size: 15px;color: var(--white);border: 1px solid var(--pfsmbtn);border-radius: 5px;padding: 4px 28px;}
 .passwrd-chang-btn{margin-top: 26px;}
