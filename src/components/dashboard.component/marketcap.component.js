@@ -63,7 +63,7 @@ const MarketCap = ({ member }) => {
     return <>
         <div className='market-panel-newstyle'></div>
             <div className="full-screenable-node marketcap-mt" >
-
+                <div className="d-flex justify-content align-center">
                 <div className="d-flex">
                     <div className="d-flex align-center">
                         <Translate content="markets_title" component={Title} className="db-titles" />
@@ -84,7 +84,7 @@ const MarketCap = ({ member }) => {
                     <div className="market-actions">
                         <Tooltip title={apiCalls.convertLocalLang('full_screen')}><FullscreenOutlined onClick={() => showDrawer()} className="fs-18 text-white ml-8 fw-500" /></Tooltip>
                         <Tooltip title={apiCalls.convertLocalLang('reload')}><ReloadOutlined onClick={fetchMarketCapsInfo} className="fs-18 text-white ml-16 fw-500" /></Tooltip>
-                    </div>
+                    </div></div>
                 <div className='bash-market-table responsive_table bg-none dashb-btmtable'>
                 
                 

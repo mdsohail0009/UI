@@ -387,7 +387,7 @@ class FaitDeposit extends Component {
                       <Paragraph className="walletadrs">
                         {BankInfo.depReferenceNo}
                         <CopyToClipboard text={BankInfo.depReferenceNo} options={{ format: 'text/plain' }}>
-                          <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="custom-display"   ></Text>
+                          <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="custom-display custom-copy"   ></Text>
                         </CopyToClipboard>
                       </Paragraph>
                     </div>}</div>

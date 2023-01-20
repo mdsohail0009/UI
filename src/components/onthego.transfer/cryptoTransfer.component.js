@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Input, Row, Col, Form, Button, Typography, Divider, Alert } from 'antd';
+import { Input, Row, Col, Form, Button, Typography, Divider, Alert,Tabs,Radio} from 'antd';
 import apicalls from "../../api/apiCalls";
 import oops from '../../assets/images/oops.png';
 import NumberFormat from "react-number-format";
@@ -455,9 +455,18 @@ class OnthegoCryptoTransfer extends Component {
             </Col>
             {this.state?.loading && <Loader />}
             {(!this.state.loading) && <>
+                <div className="addressbook-grid">
+					<Tabs className="cust-tabs-fait" 
+					// defaultValue={(this.props?.activeFiat||this.state.cryptoFiat) ? 2 : 1}
+					// 		onChange={this.handleWithdrawToggle}
+							>					
+                                <Tabs.TabPane tab="Address Book" content="withdrawCrypto" key={1} className=""  component={Radio}/>
+                                <Tabs.TabPane tab="Past Recipients" content="withdrawFiat" key={2} className="" component={Radio}/>
+						    </Tabs>
+							</div>
                  <Title className="sub-title address-book">Address Book</Title>
 
-                <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
+                <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList adbook-scroll">
                 {(filterObj.length > 0) && filterObj?.map((item, idx) =>
                             <>{<Row className="fund-border c-pointer " onClick={async () => {
                                 if (!["myself", "1stparty", 'ownbusiness'].includes(item.addressType?.toLowerCase())) {
@@ -492,7 +501,7 @@ class OnthegoCryptoTransfer extends Component {
 
                 <Title className="sub-title address-book">Past Recipients</Title>
                 {/* <Divider className="cust-divide" /> */}
-                <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
+                <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList adbook-scroll">
                 {(pastPayees.length > 0) && pastPayees?.map((item, idx) =>
                      <Row className="fund-border c-pointer" onClick={async () => {
                         if (!["myself", "1stparty", "ownbusiness"].includes(item.addressType?.toLowerCase())) {
