@@ -1012,6 +1012,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .basicprofile-info{width: 510px;}
     .swap-entryvalue{flex: 0 0 305px;}
     .swap-text-sub{margin-top: -4px;}
+    .new-swap-subtext.send-crypto-enrty{margin-bottom: 24px;}
  
 }
 
