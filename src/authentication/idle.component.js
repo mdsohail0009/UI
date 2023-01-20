@@ -12,7 +12,7 @@ class IdleCmp extends Component {
     timeInterval;
     state = {
         counter: 15,
-        showIdleModal: false,
+        showIdleModal: true,
         showRefreshPage: false,
     }
     handleOnIdle = () => {
@@ -53,13 +53,14 @@ class IdleCmp extends Component {
                     footer={[
                         <>
 
-                            
+                        <div className="cust-pop-up-btn crypto-pop">
                             <Button  block
                                 className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
                                 onClick={() => this.handleCancel()}>Cancel</Button>
                             <Button block className="primary-btn pop-btn detail-popbtn "
                                 // style={{ width: 100, height: 50 }}
                                 onClick={() => {userManager.signoutRedirect() }}>Ok</Button>
+                        </div>
                         </>
                     ]} >
                     <h4 className="summary-liststyle">You're session will be logged out in {counter}</h4>

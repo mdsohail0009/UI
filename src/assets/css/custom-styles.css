@@ -622,6 +622,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .docdetails.pay-docdetails{margin-left: 0;width: 100px;}
 .cust-cancel-btn.pay-cust-btn{margin-top: 16px;}
 .dashb-btmtable,.mobile-list{margin-top: 10px;}
+.cust-pop-up-btn.crypto-pop .detail-popbtn{width: 100px;}
 /* --Payments End--*/
 
 /*--Zoho start--*/

@@ -1089,17 +1089,17 @@ class WithdrawSummary extends Component {
 								footer={
 									<div className="cust-pop-up-btn crypto-pop">	
 										<Button
-											className="pop-btn" block
+											className="primary-btn pop-btn detail-popbtn" block
 											onClick={() => this.onModalOk()}
 										>
 											Yes
 										</Button>
 										<Button block
-											className="cust-cancel-btn"
+											className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
 											onClick={() => this.onModalCancel()}
 
 										>
-											NO
+											No
 										</Button>
 									</div>
 								}>
