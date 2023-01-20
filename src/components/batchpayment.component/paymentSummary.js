@@ -9,6 +9,7 @@ import {proceedTransaction} from './api'
 const { Title, Paragraph, Text } = Typography
 
 class PaymentSummary extends Component {
+	myRef = React.createRef();
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -24,7 +25,6 @@ class PaymentSummary extends Component {
 		  loading:false,
 		}
 	}
-
 	showDeclaration=async()=>{	
 		this.setState({...this.state,loading:true,errorMessage:null})
 		if (this.state.verifyData?.verifyData) {
@@ -34,6 +34,7 @@ class PaymentSummary extends Component {
 						...this.state,
 						errorMessage: "Please verify phone verification code",loading:false
 					});
+					this.myRef.current.scrollIntoView();
 					return;
 				}
 			}
@@ -43,6 +44,7 @@ class PaymentSummary extends Component {
 						...this.state,
 						errorMessage: "Please verify  email verification code",loading:false
 					});
+					this.myRef.current.scrollIntoView();
 					return;
 				}
 			}
@@ -52,6 +54,7 @@ class PaymentSummary extends Component {
 						...this.state,
 						errorMessage: "Please verify authenticator code",loading:false
 					});
+					this.myRef.current.scrollIntoView();
 					return;
 				}
 			}
@@ -65,6 +68,7 @@ class PaymentSummary extends Component {
 					errorMessage:
 						"Without Verifications you can't send. Please select send verifications from security section",loading:false
 				});
+				this.myRef.current.scrollIntoView();
 				return
 			}
 		} else {
@@ -73,6 +77,7 @@ class PaymentSummary extends Component {
 				errorMessage:
 					"Without Verifications you can't Proceed.",loading:false
 			});
+			this.myRef.current.scrollIntoView();
 			return
 		}
 		let response= await proceedTransaction(this.props?.id || this.props?.fileData?.id)
@@ -147,6 +152,7 @@ class PaymentSummary extends Component {
           visible={this.props.showDrawer}
 		  className="side-drawer w-50p"
         >
+			  <div ref={this.myRef}></div>
 			<Spin spinning={this.state.reviewDetailsLoading}>
 			{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
 				<div>
