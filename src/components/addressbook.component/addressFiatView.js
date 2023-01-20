@@ -115,9 +115,9 @@ const AddressFiatView = (props) => {
 									<Col xl={24} xxl={24} className="bank-view">
 										<Row className="kpi-List">
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle">
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Whitelist Name</label>
-													<div className=" kpi-val">
+													<div className=" kpi-val adview-name">
 														{fiatAddress?.favouriteName === " " ||
 															fiatAddress?.favouriteName === null
 															? "-"
@@ -126,7 +126,7 @@ const AddressFiatView = (props) => {
 												</div>
 											</Col>
 											{fiatAddress?.addressType && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle">
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Address Type</label>
 													{<div className=" kpi-val">
 														{fiatAddress?.addressType === " " ||
@@ -141,7 +141,7 @@ const AddressFiatView = (props) => {
 												</div>
 											</Col>}
 											{fiatAddress?.transferType && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle">
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Transfer Type</label>
 													{<div className=" kpi-val">
 														{fiatAddress?.transferType === " " ||
@@ -155,7 +155,7 @@ const AddressFiatView = (props) => {
 											</Col>}
 
 											{fiatAddress?.firstName &&<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle">
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">First Name</label>
 													<div className=" kpi-val">
 														{fiatAddress?.firstName === " " ||
@@ -166,7 +166,7 @@ const AddressFiatView = (props) => {
 												</div>
 											</Col>}
 											{fiatAddress?.lastName &&<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle">
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Last Name</label>
 													<div className=" kpi-val">
 														{fiatAddress?.lastName === " " ||
@@ -177,7 +177,7 @@ const AddressFiatView = (props) => {
 												</div>
 											</Col>}
 											 {fiatAddress?.addressType != "individuals" && fiatAddress?.beneficiaryName &&<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle">
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Beneficiary Name</label>
 													<div className=" kpi-val">
 														{fiatAddress?.beneficiaryName === " " ||
@@ -188,7 +188,7 @@ const AddressFiatView = (props) => {
 												</div>
 											</Col>}
 											{fiatAddress?.relation &&<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle">
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Relationship To Beneficiary</label>
 													<div className=" kpi-val">
 														{fiatAddress?.relation === " " ||
@@ -199,7 +199,7 @@ const AddressFiatView = (props) => {
 												</div>
 											</Col>}
 											{fiatAddress?.phoneNumber && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle">
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Phone Number</label>
 													{<div className=" kpi-val">
 														{fiatAddress?.phoneNumber === " " ||
@@ -212,7 +212,7 @@ const AddressFiatView = (props) => {
 											</Col>}
 
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle">
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">
 														Address Line 1
 													</label>
@@ -225,7 +225,7 @@ const AddressFiatView = (props) => {
 												</div>
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle">
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Address Line 2</label>
 													{<div className="kpi-val">
 														{fiatAddress?.line2 === " " ||
@@ -235,7 +235,7 @@ const AddressFiatView = (props) => {
 												</div>
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle">
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Address Line 3</label>
 													{<div className="kpi-val">
 														{fiatAddress?.line3 === " " ||
@@ -246,7 +246,7 @@ const AddressFiatView = (props) => {
 											</Col>
 
 											{fiatAddress?.country && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle">
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Country</label>
 													<div className="kpi-val">
 														{fiatAddress?.country === " " ||
@@ -257,7 +257,7 @@ const AddressFiatView = (props) => {
 												</div>
 											</Col>}
 											{fiatAddress?.state && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle">
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">State</label>
 													<div className=" kpi-val">
 														{fiatAddress?.state === " " ||
@@ -269,7 +269,7 @@ const AddressFiatView = (props) => {
 												</div>
 											</Col>}
 											{fiatAddress?.city && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle">
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">City</label>
 													<div className="kpi-val">
 
@@ -281,7 +281,7 @@ const AddressFiatView = (props) => {
 												</div>
 											</Col>}
 											{fiatAddress?.postalCode && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle">
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Postal Code</label>
 													<div className="kpi-val">
 														{fiatAddress?.postalCode === " " ||
@@ -292,7 +292,7 @@ const AddressFiatView = (props) => {
 												</div>
 											</Col>}
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle">
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Address State</label>
 													<div className="kpi-val">
 														{bankDetailes[0]?.addressState}

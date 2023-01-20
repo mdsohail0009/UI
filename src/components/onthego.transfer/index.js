@@ -905,7 +905,7 @@ saveWithdrawdata = async () => {
                 Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
             </div></div>,
        successpage: <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
-       <Image width={80} preview={false} src={success}  className="confirm-icon" />
+       <Image preview={false} src={success}  className="confirm-icon" />
        <Title level={2} className="successsubtext">Your transaction has been processed successfully</Title>
    </div></div>
     }

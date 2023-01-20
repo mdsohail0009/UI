@@ -801,7 +801,7 @@ class AddressBook extends Component {
 						</Tooltip>
 					}
 					footer={
-						<div className="cust-pop-up-btn">
+						<div className="cust-pop-up-btn ad-popup">
 							<Button
 							className="pop-btn"
 							block
