@@ -63,7 +63,7 @@ class Cases extends Component {
         const { gridUrl } = this.state;
 
         return (<>
-        <div className="cust-list main-container">
+        <div className="cust-list main-container case-demo">
         <div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/cockpit" /><span className="back-btnarrow">Back</span></div>
           
                 <Translate content="case" component={Paragraph} className="grid-title" /> </div>

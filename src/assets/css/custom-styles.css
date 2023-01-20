@@ -554,7 +554,9 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .sub-abovesearch{color: var(--subText) !important;font-weight: 400 !important;font-size: 14px !important;margin-bottom: 6px !important;text-transform: capitalize;}
 .uplaod-inner{color: var(--white) !important;}
 .upload .ant-upload-text{font-weight: 600;color: var(--white) !important;font-size: 16px;}
-.imprt-bg{background-color: var(--cardBG);padding: 24px;border-radius: 10px;margin-bottom: 36px;}
+.imprt-bg{
+    /* background-color: var(--cardBG);padding: 24px;border-radius: 10px; */
+    margin-bottom: 16px;}
 .ab-note-style{font-weight: 700;font-size: 16px;color: var(--gridcontent);}
 .note-cont{font-weight: 400;font-size: 16px;color: var(--gridcontent);}
 .addressbook-grid .cust-tabs-fait .ant-tabs-nav{width: 100%;}
@@ -757,7 +759,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .admin-actions{display: flex;padding: 0;list-style: none;margin-bottom: 0px;}
 /* .admin-actions li{margin-right: 16px;} */
 .admin-actions li:last-child{margin-right: 0;}
-.addressbook-mb{margin-bottom: 0 !important;}
+.addressbook-mb{margin-bottom: 0 !important;font-weight: 800 !important;font-size: 28px !important;color: var(--white) !important;}
 .new-custom-radiobtn, .new-custom-radiobtn .ant-radio-button-wrapper, .new-custom-radiobtn .ant-radio-button.ant-radio-button-checked, .new-custom-radiobtn .ant-radio-button-wrapper:first-child, .new-custom-radiobtn .ant-radio-button-wrapper:not(:first-child)::before, .new-custom-radiobtn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){background: none;border: 0;}
 .new-custom-radiobtn .ant-radio-button-wrapper-checked, .new-custom-radiobtn .ant-radio-button-wrapper{font-weight: 500;font-size: 16px;color: var( --radiocheccolor);text-transform: capitalize;}
 .new-custom-radiobtn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active{color: var( --radiocheccolor);border-color: transparent;}
@@ -835,7 +837,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .coin-info{padding: 16px 0;border-top: 1px solid var(--coinViewborder);font-size: 16px;display: flex;justify-content: space-between;}
 .backarrow-mr{margin-right: 16px;}
 .back-btnarrow{font-size: 20px;font-weight: 500;color: var(--white);}
-.backbtn-arrowmb{margin-bottom: 36px;}
+.backbtn-arrowmb{margin-bottom: 12px;}
 .billpaycoin-style .coin-viewstyle{margin-bottom: 0 !important;}
 .billpaycoin-style{display: flex;align-items: center;}
 .bill-grid .custom-checkbox input{display: none;}
@@ -950,6 +952,8 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .main-container.grid-error{padding: 0 16px;}
 .fait-subtext .ant-typography-copy,.custom-copy .ant-typography-copy{transform: scale(0.8);}
 .fait-subtext .ant-typography-copy svg,.custom-copy .ant-typography-copy svg{margin-bottom: 5px;}
+.main-container.grid-demo{padding-top: 0;}
+.cust-list.main-container.case-demo{padding-bottom: 0;}
 /*@media start*/
 @media (min-width: 768px){
     .listitems-design{width: 340px;}
