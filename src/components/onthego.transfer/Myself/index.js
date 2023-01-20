@@ -589,7 +589,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 <label className="kpi-label">
                         Bank Name
                 </label>
-                <div ><Text className="kpi-val">{(bankDetails?.bankName!==''&&bankDetails?.bankName!==null)?bankDetails?.bankName:'-'}</Text></div>
+                <div class><Text className="kpi-val">{(bankDetails?.bankName!==''&&bankDetails?.bankName!==null)?bankDetails?.bankName:'-'}</Text></div>
                 </div>
             </Col>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">

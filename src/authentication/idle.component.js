@@ -12,7 +12,7 @@ class IdleCmp extends Component {
     timeInterval;
     state = {
         counter: 15,
-        showIdleModal: true,
+        showIdleModal: false,
         showRefreshPage: false,
     }
     handleOnIdle = () => {
