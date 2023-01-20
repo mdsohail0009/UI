@@ -139,10 +139,7 @@ class OnthegoCryptoTransfer extends Component {
             this.setState({ ...this.state, errorMsg: null, error: apicalls.convertLocalLang('amount_min') + " " + withdrawMinValue });
             this.myRef.current.scrollIntoView();
         } 
-        // else if (amt > withdrawMaxValue) {
-        //     this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('amount_max') + " " + withdrawMaxValue });
-        //     this.myRef.current.scrollIntoView();
-        // } 
+ 
         else if (amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
             this.setState({ ...this.state, errorMsg: null, error: " " + apicalls.convertLocalLang('insufficient_balance') });
             this.myRef.current.scrollIntoView();
@@ -257,6 +254,7 @@ class OnthegoCryptoTransfer extends Component {
     goToAddressBook = () => {
         let _amt = this.enteramtForm.current.getFieldsValue().amount
         _amt = typeof _amt == 'string' ? _amt.replace(/,/g, '') : _amt
+
         this.setState({ ...this.state, errorMsg: null, error: null })
         if (_amt > 0) {
             if (_amt < this.props.selectedWallet?.withdrawMinValue) {
@@ -307,14 +305,8 @@ class OnthegoCryptoTransfer extends Component {
             if (!_amt && _amt != 0) {
                 this.enteramtForm.current.validateFields()
             } else {
-                if ((this.state.CryptoAmnt == '0') || (_amt == "")) {
-                    this.setState({
-                        ...this.state,
-                        errorMsg: null,
-                        error: ' ' + apicalls.convertLocalLang('enter_amount'),
-                    })
-                    this.myRef.current.scrollIntoView()
-                } else if (this.state.CryptoAmnt == '0' || _amt == 0) {
+                
+                if ((this.state.CryptoAmnt == '0' || _amt == 0) && !(_amt == "")) {
                     this.setState({
                         ...this.state,
                         errorMsg: null,
@@ -355,9 +347,7 @@ class OnthegoCryptoTransfer extends Component {
                 )}
                 <Row gutter={[16, 16]} className="align-center send-crypto-err mx-4">
 
-                {/* <Title className="fs-30 fw-400 text-white-30 text-yellow  mb-0 mt-4">
-                  {this.props.selectedWallet?.coin}
-                </Title> */}
+            
 
                 <div className="enter-val-container swap-com swap-text-sub new-swap-subtext  send-crypto-enrty">
                   <div className='swap-entryvalue send-crypto-style'>    <Form.Item
@@ -389,7 +379,7 @@ class OnthegoCryptoTransfer extends Component {
                         this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: null,error: null })
                     }}
                   />
-                  {/* <div className='swapcoin-alignemnt crypto-coin-mbspace'><span>{this.props.selectedWallet?.coin}</span></div> */}
+
                   
 
                 </Form.Item></div>
@@ -397,7 +387,7 @@ class OnthegoCryptoTransfer extends Component {
 </div>
               </Row>
               <div className="display-items">
-                <div className='display-items' >
+              <div class="text-center mr-16 small-btns">
                                 <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills sell-radiobtn-style text-left" onChange={({ target: { value } }) => {
                                     this.clickMinamnt(value)
                                 }}>

@@ -666,13 +666,13 @@ class AddressBook extends Component {
 
 		return (
 			<>
-			<div className="main-container">
+			<div className="main-container grid-demo">
 			<div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/cockpit" /><span className="back-btnarrow">Back</span></div>
 			<div className="security-align adbs-mb">
 				<Translate
 					content="address_book"
 					component={Title}
-					className="grid-title addressbook-mb"
+					className="addressbook-mb"
 				/>
 				<div className="mb-right">
 					<ActionsToolbar featureKey="addressbook" onActionClick={(key) => this.onActionClick(key)} />

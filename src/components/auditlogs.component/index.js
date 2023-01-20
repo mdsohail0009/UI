@@ -202,7 +202,7 @@ class AuditLogs extends Component {
           destoryOnClose={true}
         >
            </Drawer>
-           <div className="main-container">
+           <div className="main-container grid-demo">
 			<div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/" /><span className="back-btnarrow">Back</span></div>
       <span className="grid-title"><Translate content="AuditLogs" component={Drawer.span} className="text-white" /></span>
       </div>
@@ -213,7 +213,7 @@ class AuditLogs extends Component {
               ref={this.formRef}
             >
               <Row className="align-center">
-                <Col xs={24} sm={24} md={7} className="px-8">
+                <Col xs={24} sm={24} md={6} xl={6} className="px-8">
                   <Form.Item
                     name="timeSpan"
                     className="input-label selectcustom-input mb-0"
@@ -232,7 +232,7 @@ class AuditLogs extends Component {
                   </Form.Item>
                 </Col>
 
-                {this?.state?.isCustomDate ? <Col xs={24} sm={24} md={7} className="px-8">
+                {this?.state?.isCustomDate ? <Col xs={24} sm={24} md={6} xl={6} className="px-8">
                   <Form.Item
                     name="selectedTimespan"
                     className="input-label selectcustom-input mb-0"
@@ -241,7 +241,7 @@ class AuditLogs extends Component {
                     <Input disabled placeholder="DD/MM/YYYY" className="cust-input cust-adon mb-0" addonAfter={<i className="icon md date-white c-pointer" onClick={(e) => { this.datePopup(e, 'searchObj') }} />} />
                   </Form.Item>
                 </Col> : ""}
-                <Col xs={24} sm={24} md={7} className="px-8">
+                <Col xs={24} sm={24} md={6} xl={6}  className="px-8">
                   <Form.Item
                     name="feature"
                     className="input-label selectcustom-input mb-0"
