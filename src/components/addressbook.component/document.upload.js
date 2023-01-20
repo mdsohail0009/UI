@@ -121,13 +121,13 @@ class AddressDocumnet extends Component {
                     <>
                     	<div className="cust-pop-up-btn crypto-pop">
                         <Button
-                            style={{ margin: "0 8px" ,width: 120, height: 50 }}
-                            className="primary-btn cust-cancel-btn"
+                            // style={{ margin: "0 8px" ,width: 120, height: 50 }}
+                            className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
                             onClick={() => { this.setState({ ...this.state, showDeleteModal: false }) }}>
-                            NO
+                            No
                         </Button>
                         <Button
-                            className="primary-btn pop-btn"
+                            className="primary-btn pop-btn detail-popbtn"
                             onClick={() => {
                                 let { documents: docs } = this.state;
                                 let files = docs.details;
@@ -153,7 +153,8 @@ class AddressDocumnet extends Component {
                                 docs.details=Object.assign([],obj)
                                 this.props?.onDocumentsChange(docs);
                             }}
-                            style={{ width: 120, height: 50 }}>
+                            // style={{ width: 120, height: 50 }}
+                            >
                             {apiCalls.convertLocalLang("Yes")}
                         </Button>
                         </div>

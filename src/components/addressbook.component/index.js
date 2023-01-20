@@ -146,9 +146,9 @@ class AddressBook extends Component {
 					<Tooltip title= {props?.dataItem?.whiteListName}>
 					<Text className="gridLink c-pointer	gridlink-data" onClick={() => this.addressFiatView(props)}>{props?.dataItem?.whiteListName}</Text>
 					</Tooltip></div>
-					<Text className="file-label ml-8 fs-12 add-lbl">
-						{this.addressTypeNames(props?.dataItem?.addressType)}
-					</Text>
+					<div>
+						<span  className="file-label add-lbl">{this.addressTypeNames(props?.dataItem?.addressType)}</span>
+					</div>
 				</td>
 			),
 		},
@@ -801,21 +801,22 @@ class AddressBook extends Component {
 						</Tooltip>
 					}
 					footer={
-						<div className="cust-pop-up-btn">
+						<div className="cust-pop-up-btn crypto-pop">
 							<Button
-							className="pop-btn"
+							// style={{border: "1px solid #f2f2f2",width:'150px',height: '46px' }}
+							className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
+							onClick={this.handleCancel}>
+							No
+						</Button>
+							<Button
+							className="primary-btn pop-btn detail-popbtn"
 							block
 							onClick={this.handleSatatuSave}
 							// style={{ width: '150px', height: '46px' }}
 							loading={btnDisabled}>
 							{apiCalls.convertLocalLang("Yes")}
 						</Button>
-						<Button
-							// style={{border: "1px solid #f2f2f2",width:'150px',height: '46px' }}
-							className="cust-cancel-btn"
-							onClick={this.handleCancel}>
-							NO
-						</Button>
+						
 						
 					</div>
 					}>

@@ -622,6 +622,12 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .docdetails.pay-docdetails{margin-left: 0;width: 100px;}
 .cust-cancel-btn.pay-cust-btn{margin-top: 16px;}
 .dashb-btmtable,.mobile-list{margin-top: 10px;}
+.cust-pop-up-btn.crypto-pop .detail-popbtn{width: 100px;}
+.des-mr{margin-right: 12px;}
+.view-level-btn .pop-btn{width: 136px;}
+.docdetails.doc-view{margin-left: 0 !important;}
+.detail-popbtn.paynow-btn-ml{width:136px;}
+.alert-info-custom.kpi-List.adbook-newdesign, .docfile.address-book-viewlevel{background-color:var(--coinviewradio) !important;}
 /* --Payments End--*/
 
 /*--Zoho start--*/
@@ -956,6 +962,9 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .fait-subtext .ant-typography-copy svg,.custom-copy .ant-typography-copy svg{margin-bottom: 5px;}
 .main-container.grid-demo{padding-top: 0;}
 .cust-list.main-container.case-demo{padding-bottom: 0;}
+.cust-pop-up-btn.ad-popup button:nth-child(2){margin-left: 0;}
+.kpi-divstyle.ad-rec-detyails{border-bottom: transparent;}
+.kpi-val.adview-name{width: 225px;}
 /*@media start*/
 @media (min-width: 768px){
     .listitems-design{width: 340px;}

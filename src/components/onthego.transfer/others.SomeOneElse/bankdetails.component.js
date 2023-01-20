@@ -125,7 +125,7 @@ class PayeeBankDetails extends Component {
                         }}
                     >
                         <Input
-                            className="cust-input"
+                            className="cust-input iban-input"
                             placeholder={apicalls.convertLocalLang(
                                 "Bank_account_iban"
                             )}
@@ -134,67 +134,80 @@ class PayeeBankDetails extends Component {
                     </div>
                     </Col>
                     <Col xs={24} md={10} lg={10} xl={10} xxl={10}>
-                       <Button className={`pop-btn dbchart-link pop-validate-btn`} style={{width:"150px",marginTop:"32px",height:"42px"}}
-                                    // loading={this.state.isValidateLoading}
+                       {/* <Button className={`pop-btn dbchart-link pop-validate-btn`} style={{width:"150px",marginTop:"32px",height:"42px"}}
+                                    loading={this.state.isValidateLoading}
                                     onClick={() => this.onIbanValidate(this.props?.form.current?.getFieldValue(["payeeAccountModels","iban"]))} >
                                     <Translate content="validate" />
-                                </Button>
+                                </Button> */}
+                                 <Button className={`pop-btn dbchart-link pop-validate-btn iban-validate`}
+                             type="primary"
+                                // loading={isValidateLoading}
+                                onClick={() => this.onIbanValidate(this.props?.form.current?.getFieldValue(["payeeAccountModels","iban"]))} >
+                            <Translate content="validate" />
+                    </Button>  
                          
                 </Col>
                 </>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 
-                    <div className="box basic-info alert-info-custom mt-16">
+                    <div className="box basic-info alert-info-custom mt-16 kpi-List">
                     <Spin spinning={this.state.IbanLoader}>
                     {this.state.isValidIban && !this.props?.isAddTabCange && <Row>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-12 fw-500 ">
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                            <div className="kpi-divstyle">
+                                <label className="kpi-label ">
                                     Bank Name
                                 </label>
-                                <div className="pr-24"><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.bankName||'---'}</Text></div>
-
+                                <div className=""><Text className="kpi-val">{this.state.iBanDetals?.bankName||'---'}</Text></div>
+                            </div>
                             </Col>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-12 fw-500 ">
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                            <div className="kpi-divstyle">
+                                <label className="kpi-label ">
                                     BIC
                                 </label>
-                                <div className="pr-24"><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.bic||'---'}</Text></div>
-
+                                <div className=""><Text className="kpi-val">{this.state.iBanDetals?.bic||'---'}</Text></div>
+                                </div>
                             </Col>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-12 fw-500 ">
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                            <div className="kpi-divstyle">
+                                <label className="kpi-label ">
                                     Branch
                                 </label>
-                                <div className="pr-24"><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.bankBranch||'---'}</Text></div>
-
+                                <div className=""><Text className="kpi-val">{this.state.iBanDetals?.bankBranch||'---'}</Text></div>
+                                </div>
                             </Col>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-12 fw-500 ">
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                            <div className="kpi-divstyle">
+                                <label className="kpi-label ">
                                     Country
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.country||'---'}</Text></div>
-
+                                <div><Text className="kpi-val">{this.state.iBanDetals?.country||'---'}</Text></div>
+                                </div>
                             </Col>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-12 fw-500 ">
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                            <div className="kpi-divstyle">
+                                <label className="kpi-label ">
                                     State
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.state||'---'}</Text></div>
-
+                                <div><Text className="kpi-val">{this.state.iBanDetals?.state||'---'}</Text></div>
+                                </div>
                             </Col>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-12 fw-500 ">
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                            <div className="kpi-divstyle">
+                                <label className="kpi-label ">
                                     City
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.city||'---'}</Text></div>
-
+                                <div><Text className="kpi-val">{this.state.iBanDetals?.city||'---'}</Text></div>
+                                </div>
                             </Col>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-12 fw-500 ">
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                            <div className="kpi-divstyle">
+                                <label className="kpi-label ">
                                     Zip
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.postalCode||'---'}</Text></div>
-
+                                <div><Text className="kpi-val">{this.state.iBanDetals?.postalCode||'---'}</Text></div>
+                                </div>
                             </Col>
                         </Row>}
                         {(!this.state.isValidIban || this.props?.isAddTabCange)&&<span className="info-details">No bank details available</span>}

@@ -849,10 +849,10 @@ class PaymentDetails extends Component {
           footer={[
             <>
             <div className='cust-pop-up-btn crypto-pop bill-pop'>
-              <Button block className="pop-btn"
+              <Button block className="primary-btn pop-btn detail-popbtn"
                 onClick={() => this.deleteDetials(this.state.selectData, this.state.paymentsData)}>Yes</Button>
                 <Button
-                className="cust-cancel-btn"
+                className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
                 onClick={this.handleCancel}>No</Button>
                 </div>
             </>

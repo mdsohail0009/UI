@@ -234,7 +234,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     {!isLoading &&
         <Form layout="vertical" form={form} onFinish={saveTransfer} initialValues={{createTransfer}} scrollToFirstError>
         {showDeclartion &&  <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
-                <Image width={80} preview={false} src={alertIcon} className="confirm-icon" />
+                <Image preview={false} src={alertIcon} className="confirm-icon" />
                 <Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${props.userProfile?.email}. 
                 Please review and sign the document in your email to whitelist your address.
@@ -589,7 +589,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 <label className="kpi-label">
                         Bank Name
                 </label>
-                <div ><Text className="kpi-val">{(bankDetails?.bankName!==''&&bankDetails?.bankName!==null)?bankDetails?.bankName:'-'}</Text></div>
+                <div class><Text className="kpi-val">{(bankDetails?.bankName!==''&&bankDetails?.bankName!==null)?bankDetails?.bankName:'-'}</Text></div>
                 </div>
             </Col>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
