@@ -1,5 +1,4 @@
-import { Table, Tooltip, Input, Empty, Drawer, Typography } from 'antd';
-import { FullscreenOutlined, ReloadOutlined } from '@ant-design/icons'
+import { Table, Input, Empty, Drawer, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import Translate from 'react-translate-component';
 import { fetchMarketCaps } from './api';
@@ -39,20 +38,6 @@ const MarketCap = ({ member }) => {
 
     }
 
-    const showDrawer = () => {
-        setIsOpen(true);
-        setSearchVal("");
-        let _data = [...originalMarketCaps]
-        setFullViewLoading(true);
-        setTimeout(() => {
-            setFullViewData(_data);
-            setFullViewLoading(false);
-        }, 1000)
-        marketsTack();
-    }
-    const marketsTack = () => {
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'Markets page view', "Username": member?.userName, "customerId": member?.id, "Feature": 'Markets', "Remarks": 'Markets page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Markets' });
-    }
     const onClose = () => {
         setSearchVal("");
         setMarketCaps([...originalMarketCaps]);
@@ -80,7 +65,8 @@ const MarketCap = ({ member }) => {
                         </a>
                     </div> 
                     </div>
-                </div> 
+                </div>
+                </div>
                 <div className='bash-market-table responsive_table bg-none dashb-btmtable'>
                 
                 
@@ -110,7 +96,7 @@ const MarketCap = ({ member }) => {
                     </div>
                 </div>
                 </Drawer>
-        {/* </div> */}
+
     </>
 
 }
