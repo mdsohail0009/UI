@@ -312,7 +312,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .crypto-coin{width: 72px; margin-right: 16px;}
 .crypto-search.ant-input-search .ant-input-group .ant-input-group-addon{background-color: var(--bgDark) !important;border-radius: 0 20px 20px 0;}
 .crypto-search .anticon-search{font-size: 18px; color: var(--textWhite);margin-right: 12px !important;}
-.confirm-icon{width: 124px; height: 124px; margin-bottom:50px;}
+.confirm-icon{width: 124px; height: 124px; margin-bottom:36px;}
 .loader{position: fixed;top: 0; right: 0; bottom: 0; left: 0;display: flex; align-items: center;font-size: 36px;color: var(--textWhite);
     /* background-color: var(--bgDarkGrey); */
     justify-content: center;}
