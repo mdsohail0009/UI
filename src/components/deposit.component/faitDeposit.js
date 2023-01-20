@@ -368,7 +368,7 @@ class FaitDeposit extends Component {
                       component={Text}
                       with={{ value: BankInfo.bankAddress }} />
                       </div>
-                      <div className='fait-box kpi-divstyle'>   {BankInfo.referenceNo != null && BankInfo.referenceNo != '' && 
+                      {BankInfo.referenceNo != null && BankInfo.referenceNo != '' && <div className='fait-box kpi-divstyle'>   {BankInfo.referenceNo != null && BankInfo.referenceNo != '' && 
                    <Translate
                       className="fait-title"
                       content="bank_Reference_No"
@@ -376,7 +376,7 @@ class FaitDeposit extends Component {
                     />}
                     {BankInfo.referenceNo != null && BankInfo.referenceNo != '' &&
                     <Text className="fait-subtext">{BankInfo.referenceNo}</Text>}
-                    </div>
+                    </div>}
                     </div>
                     <div className='alert-info-custom kpi-List'>  {BankInfo.depReferenceNo !== '' && <div className="receive-fait">
                       <Translate
