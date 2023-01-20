@@ -199,7 +199,7 @@ class OthersBusiness extends Component {
         }
         if (this.state.showDeclartion) {
             return  <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
-                <Image width={80} preview={false} src={alertIcon} className="confirm-icon" />
+                <Image  preview={false} src={alertIcon} className="confirm-icon" />
                 <Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                 Please review and sign the document in your email to whitelist your address.
@@ -345,7 +345,7 @@ class OthersBusiness extends Component {
                                 ]}
                             >
                                 <Input
-                                    className="cust-input"
+                                    className="cust-input iban-input"
                                     placeholder={"IBAN"}
                                     onChange={this.handleIbanChange}
                                     maxLength={30}/>
@@ -354,18 +354,24 @@ class OthersBusiness extends Component {
                             </div>
                        </Col>
                        <Col xs={24} md={10} lg={10} xl={10} xxl={10}>
-                       <Button className={`pop-btn dbchart-link pop-validate-btn`}
-                            // loading={this.state.isValidateLoading} 
+                       {/* <Button className={`pop-btn dbchart-link pop-validate-btn`}
+                            loading={this.state.isValidateLoading} 
                              onClick={() => this.onIbanValidate(this.state?.enteredIbanData)} >
                                 <Translate content="validate" />
-                            </Button>
+                            </Button> */}
+                    <Button className={`pop-btn dbchart-link pop-validate-btn iban-validate`}
+                             type="primary"
+                                // loading={isValidateLoading}
+                                onClick={() => this.onIbanValidate(this.state?.enteredIbanData)} >
+                            <Translate content="validate" />
+                    </Button>    
                         </Col>
                          
                     </Row>
                     <div className="box basic-info alert-info-custom mt-16 kpi-List">
                         <Spin spinning={this.state.ibanDetailsLoading}>
                         {this.state.iBanValid && <Row>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
                             <div className="kpi-divstyle">
                                 <label className="kpi-label">
                                     Bank Name
@@ -373,7 +379,7 @@ class OthersBusiness extends Component {
                                 <div ><Text className="kpi-val">{this.state.ibanDetails?.bankName || "-"}</Text></div>
                             </div>
                             </Col>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
                             <div className="kpi-divstyle">
                                 <label className="kpi-label ">
                                 BIC
@@ -381,7 +387,7 @@ class OthersBusiness extends Component {
                                 <div ><Text className="kpi-val">{this.state.ibanDetails?.routingNumber || "-"}</Text></div>
                                 </div>
                             </Col>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
                             <div className="kpi-divstyle">
                                 <label className="kpi-label ">
                                     Branch
@@ -389,7 +395,7 @@ class OthersBusiness extends Component {
                                 <div ><Text className="kpi-val">{this.state?.ibanDetails?.branch || "-"}</Text></div>
                                 </div>
                             </Col>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
                             <div className="kpi-divstyle">
                                 <label className="kpi-label ">
                                     Country
@@ -397,7 +403,7 @@ class OthersBusiness extends Component {
                                 <div><Text className="kpi-val">{this.state?.ibanDetails?.country || "-"}</Text></div>
                                 </div>
                             </Col>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
                             <div className="kpi-divstyle">
                                 <label className="kpi-label ">
                                     State
@@ -405,17 +411,17 @@ class OthersBusiness extends Component {
                                 <div><Text className="kpi-val">{this.state?.ibanDetails?.state || "-"}</Text></div>
                                 </div>
                             </Col>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
                             <div className="kpi-divstyle">
-                                <label className="fs-12 fw-500 ">
+                                <label className="kpi-label ">
                                     City
                                 </label>
                                 <div><Text className="kpi-val">{this.state?.ibanDetails?.city || "-"}</Text></div>
                                 </div>
                             </Col>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
                             <div className="kpi-divstyle">
-                                <label className="fs-12 fw-500 ">
+                                <label className="kpi-label ">
                                     Zip
                                 </label>
                                 <div><Text className="kpi-val">{this.state?.ibanDetails?.zipCode || "-"}</Text></div>
