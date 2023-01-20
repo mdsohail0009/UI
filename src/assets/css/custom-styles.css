@@ -625,6 +625,9 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .cust-pop-up-btn.crypto-pop .detail-popbtn{width: 100px;}
 .des-mr{margin-right: 12px;}
 .view-level-btn .pop-btn{width: 136px;}
+.docdetails.doc-view{margin-left: 0 !important;}
+.detail-popbtn.paynow-btn-ml{width:136px;}
+.alert-info-custom.kpi-List.adbook-newdesign, .docfile.address-book-viewlevel{background-color:var(--coinviewradio) !important;}
 /* --Payments End--*/
 
 /*--Zoho start--*/
