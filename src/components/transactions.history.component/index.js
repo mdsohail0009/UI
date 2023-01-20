@@ -344,7 +344,7 @@ isErrorDispaly = (objValue) => {
         >
     
         </Drawer>
-        <div className="main-container">
+        <div className="main-container grid-demo">
 			<div className="backbtn-arrowmb" onClick={handleBack}>
         <Link className="icon md leftarrow c-pointer backarrow-mr" to="/" />
         <span className="back-btnarrow">Back</span></div>
