@@ -928,7 +928,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .pay-list .file-name+div{text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
 .icon.md.back{margin-right: 8px;}
 .preview-back{margin-right: 8px;}
-.buysell-balances{text-align: center;margin: 0 0 12px 0 !important;}
+.buysell-balances{text-align: center;margin: 0 0 20px 0 !important;}
 .faitwallet-cards .ant-list-items li:nth-child(n+3){display: none;}
 .cust-cancel-btn.back-btn-sumsub{margin-top: 12px !important;}
 .header-right .ant-menu-title-content:hover,.header-right .ant-typography.custom-header:hover{color:var(--white);}
@@ -967,7 +967,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     /* .select-currency{height: 400px;} */
     .val-updown{right: 20px;top:45px;}
     .import-note{width: auto;}
-    .side-drawer .ant-drawer-header{padding:12px 30px !important}
+    .side-drawer .ant-drawer-header{padding:12px 30px 0px 30px !important}
     .inputfont-style{font-size:36px;}
     .buy-paragraph{width: 300px;margin: auto;}
     .crypto-card .ant-card-body{padding: 16px 14px;height: 94px;}
@@ -1034,7 +1034,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .iban-list .ant-list-items{display: flex;}
     .listitems-design{width:376px;}
     .listitems-design.iban-style{width: 242px;}
-    .side-drawer .ant-drawer-body{padding: 16px 30px;}
+    .side-drawer .ant-drawer-body{padding: 0 30px 16px 30px;}
     .agree-check{height: 100px;}
     .successsubtext{height: calc(100vh - 592px);}
     .custom-height {max-height: calc(100vh - 926px);}
