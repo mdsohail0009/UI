@@ -796,7 +796,7 @@ class WithdrawSummary extends Component {
 											</Text>
 											<Text
 												className="fs-12 text-red fw-200"
-												style={{ float: "right", color: "var(--textRed)" }}>
+												style={{ float: "right"}}>
 												{this.state.invalidcode}
 											</Text>
 										</div>
@@ -872,7 +872,7 @@ class WithdrawSummary extends Component {
 											</Text>
 											<Text
 												className="fs-12 text-red fw-200"
-												style={{ float: "right", color: "var(--textRed)" }}>
+												style={{ float: "right"}}>
 												{this.state.invalidcode}
 											</Text>
 										</div>
