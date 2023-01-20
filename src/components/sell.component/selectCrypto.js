@@ -183,20 +183,6 @@ class SelectSellCrypto extends Component {
                 <div ref={this.myRef}>  {this.state?.errorMessage !== null && this.state?.errorMessage !== '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="error" message={apicalls.convertLocalLang('sellCrypto')} description={this.state?.errorMessage} />}
                     <div className="selectcrypto-container">
                         {coinDetailData && <Card className="crypto-card select " bordered={false}>
-                            {/* <div className='d-flex justify-content'> */}
-                            {/* <div>
-                            <span className="d-flex align-center mb-4">
-                                <Image preview={false} src={coinDetailData.impageWhitePath}/>
-                                <Text className="crypto-percent textc-white">{coinDetailData.percentage}<sup className="percent textc-white">%</sup></Text>
-                            </span>
-                            <Text className="fs-24 textc-white crypto-name ml-4">{coinDetailData.coinFullName}</Text>
-                        </div> */}
-                            {/* <div className="crypto-amount">
-                                <div className="fs-16 textc-white fw-200 crypto-amount">
-                                <div className="crypto-details"><span className='buycoin-style'>{coinDetailData.coin}</span><Currency prefix={""} defaultValue={coinDetailData.coinBalance} suffixText={""} className="buycoin-style marginL" /></div>
-                                <div className='crypto-details'><div className='sellcrypto-style'>Balance:</div> <Currency prefix={"$ "} defaultValue={coinDetailData.coinValueinNativeCurrency} suffixText="" className="marginL sellbal-style" /></div>
-                            </div> */}
-                            {/* </div></div> */}
                             { <div> <LocalCryptoSwapperCmp
                                 cryptoAmt={this.state.CryptoAmnt}
                                 localAmt={this.state.USDAmnt}
@@ -214,20 +200,18 @@ class SelectSellCrypto extends Component {
                                     this.clickMinamnt(value)
                                 }}>
                                     <Translate value="min" content="min" component={Radio.Button} />
-                                    {/* <Translate value="half" content="half" component={Radio.Button} /> */}
+                                    
                                     <Translate value="all" content="all" component={Radio.Button} />
                                 </Radio.Group>
                                 { <div className='crypto-details'><div className='sellcrypto-style'>Balance:
                                 </div> <Currency prefix={"$ "} defaultValue={coinDetailData.coinValueinNativeCurrency} suffixText="" className="marginL sellbal-style" /></div>} </div>
                                 
-                               
-                                {/* <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50" />
-                    <WalletList isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)} /> */}
+                            
 
                             </div>}
 
                             <div className="select-currency">
-                                {/* <Translate content="sell_select_currency" component={Paragraph} className="label-style" /> */}
+                               
                                 <WalletList placeholder="Select Currency" onWalletSelect={(e) => this.handleWalletSelection(e)} />
                             </div>
 

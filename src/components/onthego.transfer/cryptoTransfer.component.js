@@ -14,6 +14,7 @@ import AddressCrypto from "../addressbook.component/addressCrypto";
 import { rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
 import Currency from '../shared/number.formate';
 import { setAddressStep } from "../../reducers/addressBookReducer";
+import Translate from 'react-translate-component';
 
 const { Text, Title } = Typography;
 
@@ -396,14 +397,16 @@ class OnthegoCryptoTransfer extends Component {
 </div>
               </Row>
               <div className="display-items">
-                  <div class="text-center mr-16 small-btns">
-                    <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn " onClick={() => this.clickMinamnt("min")}>
-                                        <span >Min</span>
-                                    </button>
-                                    <button type="button" class="ant-btn ant-btn-text ant-btn-sm min-btn " onClick={() => this.clickMinamnt("all")}>
-                                        <span>Max</span>
-                                    </button>
-                  </div>
+                <div className='display-items' >
+                                <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills sell-radiobtn-style text-left" onChange={({ target: { value } }) => {
+                                    this.clickMinamnt(value)
+                                }}>
+                                    <Translate value="min" content="min" component={Radio.Button} />
+                                    
+                                    <Translate value="all" content="all" component={Radio.Button} />
+                                </Radio.Group>
+        </div>
+                            
                   <div className='crypto-details'><div className='sellcrypto-style'>Balance:</div> <Currency defaultValue={this.props?.selectedWallet?.coinBalance} prefix={""} type={"text"} suffixText={this.props?.selectedWallet?.coin} className="marginL sellbal-style" /></div>
                   </div>
               <Row gutter={[16,0]} className="text-center transfer-designstyle">
@@ -457,8 +460,6 @@ class OnthegoCryptoTransfer extends Component {
             {(!this.state.loading) && <>
                 <div className="addressbook-grid">
 					<Tabs className="cust-tabs-fait" 
-					// defaultValue={(this.props?.activeFiat||this.state.cryptoFiat) ? 2 : 1}
-					// 		onChange={this.handleWithdrawToggle}
 							>					
                                 <Tabs.TabPane tab="Address Book" content="withdrawCrypto" key={1} className=""  component={Radio}/>
                                 <Tabs.TabPane tab="Past Recipients" content="withdrawFiat" key={2} className="" component={Radio}/>
@@ -486,9 +487,6 @@ class OnthegoCryptoTransfer extends Component {
                            <label className="address-name">{item?.name} ({item.walletAddress?.length > 0 ? item.walletAddress.substring(0,4)+ `......`+ item.walletAddress.slice(-4):""})</label>
                            {item.walletAddress && <div><Text className="address-subtext">{item.walletCode} ({item.network})</Text></div>}
                             </Col>
-                            {/* <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
-                              <span class="icon md rarrow-white"></span>
-                            </Col> */}
                             </Row>}</>
                     )}
                   {(!filterObj.length > 0) && <div className="success-pop text-center declaration-content">
@@ -500,7 +498,7 @@ class OnthegoCryptoTransfer extends Component {
                 </ul>
 
                 <Title className="sub-title address-book">Past Recipients</Title>
-                {/* <Divider className="cust-divide" /> */}
+   
                 <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList adbook-scroll">
                 {(pastPayees.length > 0) && pastPayees?.map((item, idx) =>
                      <Row className="fund-border c-pointer" onClick={async () => {
@@ -521,9 +519,7 @@ class OnthegoCryptoTransfer extends Component {
                         <label className="address-name">{item?.name} ({item.walletAddress?.length > 0 ? item.walletAddress.substring(0,4)+ `......`+ item.walletAddress.slice(-4):""})</label>
                         <div><Text className="address-subtext">{item?.walletCode} ({item.network})</Text></div>
                         </Col>
-                        {/* <Col xs={24} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
-                          <span class="icon md rarrow-white"></span>
-                        </Col> */}
+                       
                       </Row>
 
                     )}
