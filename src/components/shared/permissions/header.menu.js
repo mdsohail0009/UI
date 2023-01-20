@@ -387,16 +387,7 @@ class HeaderPermissionMenu extends Component {
                                             className="text-white" key="1"
                                         />
                                     </Link><span className="icon c-pointer md rarrow-white ml-12" /></div></>} >
-                                <Link>
-                                    <Translate
-                                        content="get_your_own_iban"
-                                        component={Text}
-                                        className="text-white"
-                                    />
-                                    <span className="icon md rarrow-white" />
-                                </Link>
-
-                            </Popover>
+                                </Popover>
                         </li>
                         <li
                             onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/auditlogs" })}
