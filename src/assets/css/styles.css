@@ -108,7 +108,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .icon.md.notifyIcon.cases{background-position: -213px -332px;}
 .icon.md.notifyIcon.payments{background-position: -481px -3px;}
 .icon.sm{width: 12px; height: 12px;}
-.icon.sm.downarrow{background-position: -107px -4px;}
+.icon.sm.downarrow{background-position: -107px -4px;margin-left: 8px;}
 .icon.sm.uparrow{background-position: -87px -4px;}
 .icon.sm.rightarrow{background-position: -78px -40px;}
 .icon.sm.leftarrow{background-position: -92px -40px;}
@@ -312,7 +312,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .crypto-coin{width: 72px; margin-right: 16px;}
 .crypto-search.ant-input-search .ant-input-group .ant-input-group-addon{background-color: var(--bgDark) !important;border-radius: 0 20px 20px 0;}
 .crypto-search .anticon-search{font-size: 18px; color: var(--textWhite);margin-right: 12px !important;}
-.confirm-icon{width: 124px; height: 124px; margin-bottom:50px;}
+.confirm-icon{width: 124px; height: 124px; margin-bottom:36px;}
 .loader{position: fixed;top: 0; right: 0; bottom: 0; left: 0;display: flex; align-items: center;font-size: 36px;color: var(--textWhite);
     /* background-color: var(--bgDarkGrey); */
     justify-content: center;}
@@ -340,9 +340,9 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .custom-switch{border-bottom: none;}
 .agree .ant-form-item-explain-error{text-align: left;}
 #memberWalletId .ant-select-selector, #currency .ant-select-selector{border-radius: 25px !important;height: 49px !important;}
-#memberWalletId .ant-form-item-has-error,  #currency .ant-form-item-has-error{border: 1px solid #ff4d4f !important;}
+#memberWalletId .ant-form-item-has-error,  #currency .ant-form-item-has-error{border: 1px solid var(--red) !important;}
 .custom-formcard{width: 500px;margin: 0px auto;background: #515A64;border-radius: 50px;padding-left: 40px;padding-right: 40px;padding-top: 50px;padding-bottom: 50px;}
-.ant-form-item-has-error .cust-input{background-color: transparent !important;border-color: #ff4d4f !important}
+.ant-form-item-has-error .cust-input{background-color: transparent !important;border-color: var(--red) !important}
 .ant-form-item-explain-error{text-align: left;}
 .ant-input-suffix, .anticon-eye-invisible.ant-input-password-icon{color: var(--bgWhite);}
 .coin.XRP {background-position: -2px -60px;}
@@ -937,7 +937,7 @@ input[type=number]::-webkit-outer-spin-button {-webkit-appearance: none;-moz-app
 .secureDropdown .ant-menu-root{min-width: 180px;max-width: 180px;}
 .secureDropdown .ant-menu-title-content{line-height: 23px;}
 .ant-result-title, .ant-result-subtitle{color: var(--textWhite);}
-.crypto-card .ant-image-img{ margin-right: 0;border: 4px solid var(--coinBg);border-radius: 50%;}
+.crypto-card .ant-image-img{ margin-top:5px;margin-right: 0;border: 4px solid var(--coinBg);border-radius: 50%;}
 .with-min{position: absolute;top: 52px;right: 46px;}
 .with-max{position: absolute;top: 52px;right: 0;}
 .crypto-list-custom li {color: #fff;}

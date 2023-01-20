@@ -10,7 +10,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children?.slice(0, children.length - suffixCount).trim();
     const suffix = children?.slice(-suffixCount).trim();
     return (
-        <Text className="mb-0 fs-14 docnames c-pointer d-block file-label fs-12 text-yellow fw-400"
+        <Text className="docnames c-pointer d-block file-label "
             style={{ maxWidth: '100% !important' }} ellipsis={{ suffix }}>
             {start}
         </Text>
@@ -141,8 +141,8 @@ class PaymentsView extends Component {
                                         <>
                                           {paymentsData.length > 0? <> <tr key={idx}>
                                           <td className="doc-def" >{item?.beneficiaryAccountName}</td>
-                                                <td className="doc-def" style={{ width: '350px' }}>
-                                      <div className="d-flex align-center ">
+                                                <td className="doc-def" >
+                                      <div className="d-flex align-center">
                                         <span>
                                           <Tooltip title={item.bankname}>
                                             <span className='pay-docs'>{item.bankname}</span>
@@ -189,7 +189,7 @@ class PaymentsView extends Component {
                                                     {item.documents?.details.map((file) =>
                                                    <>
                                                    {file.documentName !== null && (
-                                                     <div className='docdetails'  onClick={() => this.filePreview(file)}>
+                                                     <div className='docdetails pay-docdetails'  onClick={() => this.filePreview(file)}>
                                                                                                         <Tooltip title={file.documentName}>
                                                       {file.documentName?.split(".")[0].length>4&&<EllipsisMiddle>
                                                         {file.documentName.slice(0,4) + "..." +file.documentName.split(".")[1]}

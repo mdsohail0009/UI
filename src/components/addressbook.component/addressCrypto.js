@@ -176,7 +176,7 @@ class AddressCrypto extends Component {
     }
     if (showDeclartion) {
       return<div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
-          <Image width={80} preview={false} src={alertIcon} />
+          <Image  preview={false} src={alertIcon} />
           <Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                 Please review and sign the document in your email to whitelist your address.
