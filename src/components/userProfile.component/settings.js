@@ -27,7 +27,6 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
     const [isLoading,setIsLoading]=useState(false);
     useEffect(() => {
         getSettingsLu()
-        switcher({ theme: customer?.theme === 'Light Theme' ? themes.LHT : themes.DRT });
         settingsTrack();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -58,7 +57,6 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
             message.destroy()
             message.success({ content: <Translate content="settings_msg" />, className: 'custom-msg',duration:3 });
             getmemeberInfoa(customer.userId)
-            switcher({ theme: theme ? themes.LHT : themes.DRT });
             counterpart.setLocale(settingsObj.Language);
             setErrorMsg(null);
             setIsLoading(false);
@@ -82,21 +80,6 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
           return "Something went wrong please try again!";
         }
       };
-    const themeSwitch = async () => {
-        settingsObj.Theme = !theme ? 'Light Theme' : 'Dark Theme';
-        settingsObj.Language = settingsObj.Language?.toLowerCase();
-        settingsObj.customerId = customer?.id;
-        settingsObj.info = JSON.stringify(trackAuditLogData)
-        let res = await saveSettingsData(settingsObj);
-        if (res.ok) {
-            message.destroy()
-            getmemeberInfoa(customer.userId)
-            counterpart.setLocale(settingsObj.Language);
-            setTheme(!theme)
-            switcher({ theme: theme ? themes.DRT : themes.LHT });
-        }
-    }
-
         const antIcon = (
             <LoadingOutlined
                 style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
@@ -159,21 +142,6 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
                         </Select></Form.Item>
                 </Col>
             </Row>
-            {/* <div className="">
-                <Translate content="theme" className="label-style" component={Text} />
-                <div className="custom-theme-btn">
-                    <div className="theme-switch theme-active mobile-mb-16 c-pointer" onClick={() => theme ? themeSwitch() : ''}>
-                        <div className="d-flex align-center " >
-                            <p className="switch-circle" >{!theme && <span className="icon lg radio-check c-pointer"></span>}{theme && <span className='icon radio lg c-pointer'></span>}</p>
-                            <p className="theme-txt"><Translate content="dark_theme" className="theme-txt" component={Text.p} /></p></div>
-                    </div>
-                    <div className={"theme-switch c-pointer" + (theme ? " themeSwitchOn " : " themeSwitchOff ")} onClick={() => !theme ? themeSwitch() : ''}>
-                        <div className="d-flex align-center c-pointer" >
-                            <p className="switch-circle c-pointer" >{theme && <span className="icon lg radio-check c-pointer"></span>}{!theme && <span className='icon radio lg c-pointer'></span>}</p>
-                            <p className="theme-txt"><Translate content="light_theme" className="theme-txt" component={Text.p} /></p></div>
-                    </div>
-                </div>
-            </div> */}
             <div className="text-center">
                     <Button
                         htmlType="submit"

@@ -26,7 +26,7 @@ import {
 import { connect } from "react-redux";
 import DefaultUser from "../assets/images/defaultuser.jpg";
 import { setHeaderTab} from "../reducers/buysellReducer";
-
+import { getScreenName } from "../reducers/feturesReducer";
 import { readNotification as readNotifications } from "../notifications/api";
 import apiCalls from "../api/apiCalls";
 import { setNotificationCount } from "../reducers/dashboardReducer";
@@ -111,6 +111,7 @@ class Header extends Component {
     });
   }
   routeToHome = () => {
+    this.props.dispatch(getScreenName({getScreen:"dashboard"}))
     this.routeToCockpit();
   };
   routeToCockpit = () => {
