@@ -116,9 +116,9 @@ const AddressCryptoView = (props) => {
 									<Col xl={24} xxl={24} className="bank-view">
 										<Row className="kpi-List">
 										<Col xs={24} sm={24} md={12} lg={14} xxl={14}>
-												<div className="kpi-divstyle">
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Whitelist Name</label>
-													<div className=" kpi-val">
+													<div className=" kpi-val adview-name">
 														{cryptoAddress?.saveWhiteListName === " " ||
 															cryptoAddress?.saveWhiteListName === null
 															? "-"
@@ -127,9 +127,9 @@ const AddressCryptoView = (props) => {
 												</div>
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={5} xxl={5}>
-												<div className="kpi-divstyle">
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Token</label>
-													<div className=" kpi-val">
+													<div className=" kpi-val adview-name">
 														{cryptoAddress?.token === " " ||
 															cryptoAddress?.token === null
 															? "-"
@@ -138,9 +138,9 @@ const AddressCryptoView = (props) => {
 												</div>
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={5} xxl={5}>
-												<div className="kpi-divstyle">
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Network</label>
-													<div className=" kpi-val">
+													<div className=" kpi-val adview-name">
 														{cryptoAddress?.network === " " ||
 															cryptoAddress?.network === null
 															? "-"
@@ -150,9 +150,9 @@ const AddressCryptoView = (props) => {
 											</Col>
 											
 											<Col xs={24} sm={24} md={12} lg={14} xxl={14}>
-												<div className="kpi-divstyle">
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Wallet Address</label>
-													<div className=" kpi-val">
+													<div className=" kpi-val adview-name">
 														{cryptoAddress?.walletAddress === " " ||
 															cryptoAddress?.walletAddress === null
 															? "-"
@@ -161,9 +161,9 @@ const AddressCryptoView = (props) => {
 												</div>
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={5} xxl={5}>
-												<div className="kpi-divstyle">
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Address State</label>
-													<div className=" kpi-val">
+													<div className=" kpi-val adview-name">
 														{cryptoAddress?.adressstate === " " ||
 															cryptoAddress?.adressstate === null
 															? "-"
@@ -172,9 +172,9 @@ const AddressCryptoView = (props) => {
 												</div>
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={5} xxl={5}>
-												<div className="kpi-divstyle">
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label"></label>
-													<div className=" kpi-val">
+													<div className=" kpi-val adview-name">
 														
 													</div>
 												</div>
@@ -222,7 +222,7 @@ const AddressCryptoView = (props) => {
 								</Row>
 								<div className="text-right view-level-btn">
 								<Button
-									className="pop-btn "
+									className="cust-cancel-btn"
 									block
 									onClick={backToAddressBook}>
 									Cancel

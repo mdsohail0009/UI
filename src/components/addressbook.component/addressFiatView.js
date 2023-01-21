@@ -549,7 +549,7 @@ const AddressFiatView = (props) => {
 								<div className="text-right view-level-btn">
 								<Button
 								block
-									className="pop-btn"
+									className="cust-cancel-btn"
 									
 									onClick={backToAddressBook}>
 									Cancel

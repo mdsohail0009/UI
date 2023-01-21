@@ -587,7 +587,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .ant-popover-arrow{border-color: var(--bgGloom) !important;}
 .payment-docs .accordian .ant-collapse-content-box, .payment-docs .accordian .ant-collapse-item{background-color: var(--bgGrey);border-radius: 24px;}
 .payment-docs .accordian .ant-collapse-item:last-child > .ant-collapse-content{background-color: var(--bgGrey);border-radius: 30px;}
-.file-label{border: 1px solid var(--borderColor);border-radius: 6px;padding: 2px 8px;color: var(--viewAll);background-color: var(--bgDarkGrey);width:100px}
+.file-label{border: 1px solid var(--borderColor);border-radius: 6px;padding: 2px 8px;color: var(--viewAll) !important;background-color: var(--bgDarkGrey);width:100px;margin-bottom: 5px;}
 .delete-btn{color: var(--textWhite30);background-color: transparent !important;font-size: 14px;border: none;}
 .delete-btn:hover{background-color: transparent !important; color:white;border:none;}
 .delete-btn:focus{border:none !important;}
@@ -624,7 +624,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .dashb-btmtable,.mobile-list{margin-top: 10px;}
 .cust-pop-up-btn.crypto-pop .detail-popbtn{width: 100px;}
 .des-mr{margin-right: 12px;}
-.view-level-btn .pop-btn{width: 136px;}
+.view-level-btn .cust-cancel-btn{width: 136px;margin-top: 16px;}
 .docdetails.doc-view{margin-left: 0 !important;}
 .detail-popbtn.paynow-btn-ml{width:136px;}
 .alert-info-custom.kpi-List.adbook-newdesign, .docfile.address-book-viewlevel{background-color:var(--coinviewradio) !important;}
@@ -715,6 +715,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .iban-validate{border-left-color: var(--inputBg)!important; height: 50px !important;border-top-left-radius: 0 !important;border-bottom-left-radius: 0 !important;border-top: 1px solid var(--labelBorder) !important;border-right: 1px solid var(--labelBorder) !important;border-bottom: 1px solid var(--labelBorder) !important;background: var(--inputBg) !important;margin-top: 26px !important;}
 .iban-validate span{border-left: 1px solid var(--white) !important;color: var(--termsText);font-size: 16px;font-weight: 700;padding-left: 20px !important;display: inline-block;}
 .iban-validate::after{box-shadow: transparent !important;}
+.iban-validate{width: 186px;margin-right: 0 !important;}
 .validateiban-content:hover input,.validateiban-content:hover button{border-color: #CCC3FF !important;}
 /* send fiat end */
 /* send crypto start */
@@ -954,6 +955,8 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .markets-grid .ant-table-tbody{border-bottom-left-radius: 20px;border-bottom-right-radius: 20px;}
 .markets-grid .side-drawer-header{padding: 0 16px 0 0;}
 .header-space{margin-bottom: 0 !important;}
+.basicinfo.batch-style{margin-left: 20px;}
+/* .cust-list.main-container .bill-grid{margin-top: -25px !important;} */
 /* batchpayments end */
 .no-transaction{padding-top: 18px !important;}
 .search-box .ant-input, .search-box .ant-input:focus,.search-box .ant-input:hover{color: var(--textWhite); border: 0;}
@@ -966,6 +969,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .cust-pop-up-btn.ad-popup button:nth-child(2){margin-left: 0;}
 .kpi-divstyle.ad-rec-detyails{border-bottom: transparent;}
 .kpi-val.adview-name{width: 225px;}
+.batchpayment-summary ~.ant-alert-with-description {width: 97% !important;margin-left: 20px;}
 .preview-grid .cust-list,.box.text-white .cust-list{padding: 0;}
 .Supporting-Documents{margin-top: 30px;}
 /*@media start*/

@@ -1024,7 +1024,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .pop-btn.withdraw-popcancel{width: 150px; height: 46px;  border: transparent; color: var(--textYellow); background-color: transparent;}
 .pop-btn.withdraw-popcancel:hover{border: 1px solid #f2f2f2 !important;}
 .pop-btn.withdraw-popcancel span{color: var(--textYellow); font-weight: 400;}
-.file-label.add-lbl{width: 140px; text-align: center;}
+.file-label.add-lbl{width: 140px; text-align: center;display: inline-block;}
 .gridlink-data{max-width:130px ;}
 .custom-btn:hover span{color: white;}
 .custom-crypto-btns .custom-bnt span{color: var(--textWhite); font-weight: 400;}
