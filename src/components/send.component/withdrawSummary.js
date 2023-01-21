@@ -912,7 +912,7 @@ class WithdrawSummary extends Component {
 												</Tooltip>
 											)}
 
-
+{this.state.verifyEmailOtp === true &&
 											<Button
 												type="text"
 												style={{ color: "black", margin: "0 auto" }}
@@ -925,7 +925,7 @@ class WithdrawSummary extends Component {
 													<span className="icon md greenCheck" />
 													</>)}
 											</Button>
-
+		  }
 
 										</div>
 									</div>
