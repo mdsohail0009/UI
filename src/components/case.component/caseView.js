@@ -425,15 +425,22 @@ class CaseView extends Component {
                                     <div className="reply-body">
                                         <Text className="reply-username">{reply.repliedBy}</Text><Text className="reply-date"><Moment format="DD MMM YY hh:mm A">{reply.repliedDate}</Moment> </Text>
                                         <p className="reply-txt">{reply.reply}</p>
-                                        <div className="docfile-container">
-                                            {reply?.path?.map((file, idx1) => <div key={idx1} className="docfile uploaddoc-margin">
+                                        
+                                            <div className="docfile-container">
+                                            {reply?.path?.map((file, idx1) =>
+                                        <Col lg={12} xl={12} xxl={12}> <div key={idx1} className="docfile uploaddoc-margin">
                                                 <span className={`icon xl ${(file.filename.slice(-3) === "zip" ? "file" : "") || (file.filename.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                                 <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
                                                     <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>
                                                     <span className="file-sizestyle">{this.formatBytes(file.size)}</span>
                                                 </div>
-                                            </div>)}
+                                            </div>
+                                            
+                                            </Col>
+                                        )}
                                         </div>
+                                            
+                                       
                                     </div>
                                 </div>)}
                                 {(!this.state.documentReplies[doc.id]?.loading && doc.state !== "Approved" && this.state.docDetails.caseState !== 'Approved' && this.state.docDetails.caseState !== 'Cancelled')&&
@@ -443,7 +450,7 @@ class CaseView extends Component {
                                         >
                                             <div>
                                                     <Form.Item
-                                                     className="fs-12 text-white-50 d-block mb-12 fw-200"
+                                                     className="d-block error-mt"
                                                         name=""
                                                        label="Reply"
                                                         rules={[
@@ -479,7 +486,7 @@ class CaseView extends Component {
                                                 {this.state.errorWarning !== undefined && this.state.errorWarning !== null && (
                                                     <div style={{ width: '100%' }}>
                                                         <Alert
-                                                            className="newcase-style"
+                                                            className="newcase-style error-style"
                                                             type="warning"
                                                             description={this.state.errorWarning}
                                                             showIcon
@@ -500,23 +507,28 @@ class CaseView extends Component {
                                                 </Dragger>
                                                 {this.state.uploadLoader && <Loader />}
                                             </div>
+                                            
                                             <div className="docfile-container">
-                                                {this.getUploadedFiles(doc.id)?.path?.map((file, idx1) => <div key={idx1} className="docfile uploaddoc-margin">
+                                                {this.getUploadedFiles(doc.id)?.path?.map((file, idx1) =>
+                                            <Col lg={12} xl={12} xxl={12}> <div key={idx1} className="docfile uploaddoc-margin">
                                                     <span className={`icon xl ${(file.filename.slice(-3) === "zip" ? "file" : "") || (file.filename.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                                     <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
                                                         <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>
                                                         <span className="file-sizestyle">{this.formatBytes(file.size)}</span>
                                                     </div>
                                                     <span className="icon md close c-pointer" onClick={() => this.deleteDocument(this.getUploadedFiles(doc.id), idx1, true)} />
-                                                </div>)}
+                                                </div>
+                                                </Col>
+                                           )}
                                             </div>
+                                           
                         
-                                            <Form.Item className="">
+                                            <Form.Item className="text-right  view-level-btn">
                                                 <Button
                                                     htmlType="submit"
                                                     size="large"
-                                                    block
-                                                    className="pop-btn"
+                                                    // block
+                                                    className="pop-btn  detail-popbtn paynow-btn-ml"
                                                     loading={this.state.btnLoading}
                                                     // style={{ width: "300px" }}
                                                 >
@@ -549,9 +561,11 @@ class CaseView extends Component {
                     destroyOnClose={true}
                     closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.docPreviewClose} /></Tooltip>}
                     footer={<>
-                        
-                        <Button className="pop-btn" block onClick={() => this.fileDownload()}>Download</Button>
-                        <Button type="primary" block onClick={this.docPreviewClose} className="cust-cancel-btn">Close</Button>
+                        <div className="cust-pop-up-btn crypto-pop">
+                       
+                        <Button onClick={this.docPreviewClose} className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml">Close</Button>
+                        <Button className="primary-btn pop-btn detail-popbtn" onClick={() => this.fileDownload()}>Download</Button></div> 
+                   
                     </>}
                 >
                     <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null, mimeType: this.state?.previewPath?.includes(".pdf") ? 'application/pdf' : '' }} />

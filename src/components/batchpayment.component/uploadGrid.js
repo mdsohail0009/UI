@@ -294,18 +294,21 @@ const filePreviewPath = () => {
 			}
 			footer={
 				<>
+                <div className="cust-pop-up-btn crypto-pop">
+                
 					<Button
-						className="cust-cancel-btn preview-back"
-						style={{ width: 148, height: 48 }}
+						className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
+						
 						onClick={() => setPreviewModal(false)}>
 						Close
 					</Button>
 					<Button
-						className="pop-btn custom-send sell-btc-btn ml-8"
-						style={{ width: 148, height: 48 }}
+						className="primary-btn pop-btn detail-popbtn"
+						
 						onClick={() => window.open(previewPath, "_blank")}>
 						Download
 					</Button>
+                    </div>
 				</>
 			}>
 			<FilePreviewer
@@ -376,7 +379,7 @@ const filePreviewPath = () => {
                     </div>
                     {docIdentityProofObjs?.map((file) =>
                                                 <>{file ? <div className="docfile">
-                                                    <span className={`icon xl file mr-16`} />
+                                                    <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "":(file.documentName?.slice(-3) === "zip" ? "file" : "")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                                     <div className="docdetails c-pointer" onClick={() => docPreview(file)}>
                                                         <EllipsisMiddle suffixCount={6}>{file.documentName}</EllipsisMiddle>
                                                         <span className="fs-12 text-white">{formatBytes(file ? file.remarks : "")}</span>
@@ -406,7 +409,7 @@ const filePreviewPath = () => {
                     </div>
                     {docTransferObjs?.map((file) =>
                                                 <>{file ? <div className="docfile">
-                                                    <span className={`icon xl file mr-16`} />
+                                                    <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "":(file.documentName?.slice(-3) === "zip" ? "file" : "")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                                     <div className="docdetails c-pointer" onClick={() => docPreview(file)}>
                                                         <EllipsisMiddle suffixCount={6}>{file.documentName}</EllipsisMiddle>
                                                         <span className="fs-12 text-white">{formatBytes(file ? file.remarks : "")}</span>
