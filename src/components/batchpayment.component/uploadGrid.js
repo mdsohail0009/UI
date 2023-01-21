@@ -294,18 +294,21 @@ const filePreviewPath = () => {
 			}
 			footer={
 				<>
+                <div className="cust-pop-up-btn crypto-pop">
+                
 					<Button
-						className="cust-cancel-btn preview-back"
-						style={{ width: 148, height: 48 }}
+						className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
+						
 						onClick={() => setPreviewModal(false)}>
 						Close
 					</Button>
 					<Button
-						className="pop-btn custom-send sell-btc-btn ml-8"
-						style={{ width: 148, height: 48 }}
+						className="primary-btn pop-btn detail-popbtn"
+						
 						onClick={() => window.open(previewPath, "_blank")}>
 						Download
 					</Button>
+                    </div>
 				</>
 			}>
 			<FilePreviewer

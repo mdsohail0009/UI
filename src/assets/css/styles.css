@@ -484,7 +484,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .custom-label .ant-form-item-label > label::after{color: transparent !important;}
 .custom-label .ant-form-item-label,.custom-label.ant-row{display: block !important;}
 .cust-adon .ant-input.ant-input-disabled{cursor:default;}
-.staus-lbl{display: inline-block;color: var(--textPureWhite);background-color: var(--bgGreen);font-size: 12px;padding: 2px 8px;border-radius: 4px;font-weight: 500;}
+.staus-lbl{display: inline-block;color: #ffffff;background-color: var(--bgGreen);font-size: 12px;padding: 2px 8px;border-radius: 4px;font-weight: 500;}
 .approved{background-color: var(--bgGreen);}
 .rejected{background-color: #ff0000;}
 .submitted{background-color: #0038FF;}
@@ -1073,7 +1073,8 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .transaction_resp .cust-label .ant-select-selection-item{cursor: pointer !important;}
 .pay-list.transaction-details h1{flex: 1; word-break: break-all;}
 .ant-alert-info .ant-alert-icon{color: #ff4d4f;}
-.ant-alert-info{background-color: #fff2f0; border: 1px solid #ffccc7;}
+/* .ant-alert-info{background-color: #fff2f0; border: 1px solid #ffccc7;} */
+.accordian.mb-togglespace .docfile{background-color:var(--drawerBG) !important;}
 .docfile.address-upload{background-color: var(--uploadcard) !important;}
 .statement-header{display: flex; justify-content: space-between; align-items: baseline;margin: 20px 0 20px 0;width: 100%;}
 .header{font-weight: 500;margin-bottom: 0;}
