@@ -356,20 +356,20 @@ downLoadPreview=()=>{
                  footer={[
                     <>
                         <div className="cust-pop-up-btn crypto-pop bill-pop">
-                        <Button block
-                            className="primary-btn pop-btn detail-popbtn"
-                            onClick={this.refreshTransaction}  disabled={uploadLoader}
-                            loading={refreshBtnLoader}
-                          >
-                            Refresh
-                          </Button>
+                       
                           <Button
                             className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
                             onClick={this.goToGrid}   
                           >
                             Exit
                           </Button>
-                          
+                          <Button block
+                            className="primary-btn pop-btn detail-popbtn"
+                            onClick={this.refreshTransaction}  disabled={uploadLoader}
+                            loading={refreshBtnLoader}
+                          >
+                            Refresh
+                          </Button>
                         </div>
                     </>
                   ]}
