@@ -304,6 +304,7 @@ input:-webkit-autofill:active{
 .ant-alert-with-description{align-items: center !important;}
 .summarybal .gridLink:hover{color: var(--viewAll);}
 .pay-list.modal-listbr .summarybal .gridLink{word-break: break-all;text-align: right;width: 326px;}
+.paste-rece-style{padding-top: 0 !important;margin-top: 16px !important;}
 /*Common css End*/
 
 /*Coin Selection End*/
