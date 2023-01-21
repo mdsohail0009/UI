@@ -244,7 +244,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .ant-form-item-label > label{margin-bottom: 4px !important;}
 .ant-card.crypto-card{background: none;}
 .ant-select-item .ant-select-option-active, .ant-select-item-option-content, .ant-select-selection-item{color:var(--menuFont) ;}
-.ant-alert-error, .ant-alert-warning{background-color: var(--alertBG);border: 1px solid #ff5747;}
+.ant-alert-error, .ant-alert-warning, .ant-alert-info{background-color: var(--alertBG);border: 1px solid #ff5747;}
 .ant-alert-error .ant-alert-icon, .ant-alert-warning .ant-alert-icon{color: #ff4d4f;}
 .ant-alert-message{color: #ff5747 !important;}
 .ant-alert-description {font-size: 16px !important;color: var(--red) !important}
@@ -304,6 +304,7 @@ input:-webkit-autofill:active{
 .ant-alert-with-description{align-items: center !important;}
 .summarybal .gridLink:hover{color: var(--viewAll);}
 .pay-list.modal-listbr .summarybal .gridLink{word-break: break-all;text-align: right;width: 326px;}
+.paste-rece-style{padding-top: 0 !important;margin-top: 16px !important;}
 /*Common css End*/
 
 /*Coin Selection End*/
@@ -323,7 +324,7 @@ input:-webkit-autofill:active{
 .custom-btn.sec{background: transparent;background-image: none;border: 1px solid var(--subText); color: var(--textWhite);margin-left: 16px;}
 .custom-btn.sec:hover{background-color: #3653E4;}
 .cust-cancel-btn{border: 1px solid var(--inputBorder);border-radius: 5px;height: 46px;background-color: transparent;color:var(--white);font-weight: 600;transition: 0.3s ease;font-size: 16px;width:100%;margin-bottom: 20px;}
-.cust-cancel-btn.ant-btn:hover, .cust-cancel-btn.ant-btn:focus, .cust-cancel-btn.ant-btn:active{border: 1px solid #CCC3FF;border-radius: 5px;height: 42px;background-color: transparent;color: var(--white);font-weight: 600;transition: 0.3s ease;font-size: 16px;}
+.cust-cancel-btn.ant-btn:hover, .cust-cancel-btn.ant-btn:focus, .cust-cancel-btn.ant-btn:active{border: 1px solid #CCC3FF;border-radius: 5px;height: 46px;background-color: transparent;color: var(--white);font-weight: 600;transition: 0.3s ease;font-size: 16px;}
 /* button styles end */
 /*Kendo start*/
 .k-grid-header .k-header > .k-link{font-size: 16px;font-weight: 700;color: var(--gridtitle);}
@@ -633,6 +634,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .wrap-text-width{width: 66%;}
 .gridLink.grid-level-style{display: block;}
 .alert-info-custom.kpi-List.adbook-newdesign, .docfile.address-book-viewlevel{background-color:var(--coinviewradio) !important;}
+.error-style{margin-top: 16px;}
 /* --Payments End--*/
 
 /*--Zoho start--*/
@@ -722,6 +724,10 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .iban-validate::after{box-shadow: transparent !important;}
 .iban-validate{width: 186px;margin-right: 0 !important;}
 .validateiban-content:hover input,.validateiban-content:hover button{border-color: #CCC3FF !important;}
+.slick-slider.docreq-slider.slick-initialized .slick-dots li.slick-active button{background: var(--cardBG) !important;color: var(--primary);}
+.docreq-slider .slick-dots li button{color: var(--secondary);}
+.cases-lefttext::before{border-color: 1px solid #ccc;}
+.ant-form-item-explain.ant-form-item-explain-error{color: var(--red);}
 /* send fiat end */
 /* send crypto start */
 .min-btn{border: 1px solid rgba(0, 0, 0, 0.3);background: var(--radioBg) !important;height: 36px;border-radius: 10px;min-width: 60px;line-height: 30px;color: var(--coinPrice);font-size: 16px;font-weight: 500; margin: 0 10px 10px 0;}
@@ -806,6 +812,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .icon.md.search-angle{background-position:-360.5px -488px; margin-left: 8px;}
 .custom-model-label .ant-form-item-label > label{height: 20px;}
 .marketcap-coinsize .ant-table-cell img{width: 24px !important;height: 24px !important;}
+.btn-right{float:right;}
 /* transactions end  */
 /* audit logs start  */
 .addressbook-grid .custom-checkbox input{display: none;}
@@ -894,15 +901,15 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .accordian.ant-collapse > .ant-collapse-item{border-bottom: 0;}
 .accordian.ant-collapse{background: none;border: none;margin-bottom: 10px;}
 .accordian.ant-collapse > .ant-collapse-item:last-child, .ant-collapse > .ant-collapse-item:last-child > .ant-collapse-header{border-radius: 20px;}
-.accordian .ant-collapse-item:last-child > .ant-collapse-content{border-color: var(--borderGrey);background-color: var(--bgDarkGrey);border: 0;}
-.accordian .ant-collapse-header{border-radius: 20px !important;font-size: 18px;font-weight: 600;background-color:var(--searchBg);color: var(--textWhite30) !important;padding: 16px 20px 16px 24px !important;text-transform: capitalize;}
+.accordian .ant-collapse-item:last-child > .ant-collapse-content{border-color: var(--borderGrey);background-color: var(--addressList);border: 0;}
+.accordian .ant-collapse-header{border-radius: 20px !important;font-size: 18px;font-weight: 600;background-color:var(--scroll);color: var(--textWhite30) !important;padding: 16px 20px 16px 24px !important;text-transform: capitalize;}
 .accordian{border-color: var(--bgOrion) !important;border-radius: 24px;}
 .accordian .ant-collapse-header .icon.downangle{position: relative;margin-right: 34px !important;}
 .accordian .ant-collapse-header .icon.downangle::after{content: '';position: absolute; right: -16px; top: 0; border-right: 1px solid var(--borderGrey);height: 20px;}
 .accordian .ant-collapse-item.ant-collapse-item-active .ant-collapse-header{border-radius: 20px 20px 0 0 !important;}
 .accordian .ant-collapse-arrow{vertical-align: text-bottom !important;}
 .accordian .ant-collapse-item.ant-collapse-item-active .downangle{background-position: -329px 0;}
-.accordian .ant-collapse-content-box{padding: 20px;background-color: var(--drawerBG);border-radius: 0 0 24px 24px;border-bottom: 1px solid var(--drawerBG);}
+.accordian .ant-collapse-content-box{padding: 20px;background-color: var(--addressList);border-radius: 0 0 24px 24px;border-bottom: 1px solid var(--drawerBG);}
 .accordian .ant-collapse-item:last-child > .ant-collapse-content{border-radius: 0 0 24px 24px;}
 .ant-empty-description{color: var(--white);text-transform: capitalize;}
 .case-ribbon{background-color:var(--addressList);padding: 20px;border-radius: 16px;}
@@ -910,9 +917,9 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .cases-lefttext{margin-left: 16px;}
 .case-stripe, .case-remarksstyle{border: 1px dashed var(--borderColor); padding: 16px 20px; border-radius: 16px; margin-bottom: 16px}
 .ribbon-item{display: flex; align-items: center;margin-bottom: 16px;border-right: 1px solid var(--borderColor);}
-.case-val.cases-subtext{word-break: break-all;}
+.case-val.cases-subtext{word-break: break-all; padding-right: 12px;}
 .ant-upload-hint.upload-text{color: var(--sbCardText) !important;font-size: 14px !important;}
-.notify-alerticon .ant-alert-icon{margin: 0px 15px 18px 0px !important;}
+/* .notify-alerticon .ant-alert-icon{margin: 0px 15px 18px 0px !important;} */
 .btn-textstyle{display: block !important;color: var(--white) !important;font-size: 16px;font-weight: 500;}
 .file-sizestyle{font-weight: 500;font-size: 14px;color: var(--sbCardText);}
 .case-remarksstyle{margin-top: 10px;}
@@ -938,7 +945,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .approvebg .ant-list-item-meta-avatar, .depositbg .ant-list-item-meta-avatar, .buybg .ant-list-item-meta-avatar, .deposit.fiatbg .ant-list-item-meta-avatar, .deposit.cryptobg .ant-list-item-meta-avatar, .paymentsbg .ant-list-item-meta-avatar{background-color: var(--bgDarkGreen);}
 .withdrawbg .ant-list-item-meta-avatar, .depositsbg .ant-list-item-meta-avatar, .sellbg .ant-list-item-meta-avatar, .withdraw.fiatbg .ant-list-item-meta-avatar, .withdraw.cryptobg .ant-list-item-meta-avatar{background-color: var(--bgDarkRed);}
 .requestbg .ant-list-item-meta-avatar, .documentsbg .ant-list-item-meta-avatar, .cutomersbg .ant-list-item-meta-avatar, .casesbg .ant-list-item-meta-avatar{background-color: var(--bgBlue);}
-.ant-alert-with-description{width: 100%; align-items:start;}
+.ant-alert-with-description{width: 100%; align-items:center;}
 /* batchpayments start  */
 .download-excel a{color: var(--termsText);}
 .pay-list .file-name{width: 400px;word-break: break-all;}
@@ -960,7 +967,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .markets-grid .side-drawer-header{padding: 0 16px 0 0;}
 .header-space{margin-bottom: 0 !important;}
 .basicinfo.batch-style{margin-left: 20px;}
-/* .cust-list.main-container .bill-grid{margin-top: -25px !important;} */
+.bill-payment.bill-margin{margin-bottom: 10px !important;}
 /* batchpayments end */
 .no-transaction{padding-top: 18px !important;}
 .search-box .ant-input, .search-box .ant-input:focus,.search-box .ant-input:hover{color: var(--textWhite); border: 0;}

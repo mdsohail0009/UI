@@ -73,18 +73,21 @@ const AddressFiatView = (props) => {
 			}
 			footer={
 				<>
+				<div className="cust-pop-up-btn crypto-pop">
+					
 					<Button
-						className="pop-btn"
-						block
-						onClick={() => window.open(previewPath, "_blank")}>
-						Download
-					</Button>
-					<Button
-						className="cust-cancel-btn"
-						block
+						className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
+						// block
 						onClick={() => setPreviewModal(false)}>
 						Close
 					</Button>
+					<Button
+						className="primary-btn pop-btn detail-popbtn"
+						// block
+						onClick={() => window.open(previewPath, "_blank")}>
+						Download
+					</Button>
+					</div>
 				</>
 			}>
 			<FilePreviewer

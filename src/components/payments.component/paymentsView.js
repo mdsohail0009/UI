@@ -272,11 +272,14 @@ class PaymentsView extends Component {
             visible={this.state.previewModal}
             closeIcon={<Tooltip title="Close"><span className="icon md close-white c-pointer" onClick={this.docPreviewClose} /></Tooltip>}
             footer={<>
+             <div className="cust-pop-up-btn crypto-pop">
              
-              <Button  className="pop-btn" block
+                        
+                         <Button  className="primary-btn pop-btn detail-popbtn paynow-btn-ml" 
                        onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>
-                        <Button block  onClick={this.docPreviewClose} className="cust-cancel-btn"
+                       <Button  onClick={this.docPreviewClose} className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
                         >Close</Button>
+                        </div>
             </>}
           >
             <FilePreviewer
