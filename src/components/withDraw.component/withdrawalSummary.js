@@ -683,7 +683,7 @@ const WithdrawalFiatSummary = ({
 											disabled={verifyPhone === true || verifyTextotp}>
 											{verifyOtp[verifyOtpText]}
 											{verifyTextotp === true && (
-												<span className="icon md greenCheck" />
+												<span className="icon md greenCheck check-ml-align" />
 											)}
 										</Button>
 									</div>
@@ -756,7 +756,7 @@ const WithdrawalFiatSummary = ({
 												disabled={verifyEmail === true || verifyEmailOtp === true}>
 												{verifyText[verifyEmailText]}
 												{verifyEmailOtp === true && (
-													<span className="icon md greenCheck" />
+													<span className="icon md greenCheck check-ml-align" />
 												)}
 
 											</Button>
@@ -823,7 +823,7 @@ const WithdrawalFiatSummary = ({
 											onClick={getAuthenticator}
 											disabled={authDisable||verifyAuthCode}>
 											{verifyAuthCode ? (
-												<span className="icon md greenCheck"  />
+												<span className="icon md greenCheck check-ml-align"  />
 											) : (
 												"Click here to verify"
 											)}
