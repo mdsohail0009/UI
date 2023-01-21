@@ -142,7 +142,7 @@ class QRScan extends Component {
                     <QRCodeComponent value={this.props?.sendReceive?.depositWallet?.walletAddress} size={150} />
                 </div>
                 <div className="recive-lable">
-                    <Translate className="recive-lable" content="address" component={Text} />{" "}({this.props?.sendReceive?.depositWallet?.network})
+                    <Translate className="recive-lable" content="address" component={Text} />{" "}<span className='recive-copy'>({this.props?.sendReceive?.depositWallet?.network})</span>
 
                     <div className="recive-copy">{this.props?.sendReceive?.depositWallet?.walletAddress}
                         <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.walletAddress} options={{ format: 'text/plain' }}>
