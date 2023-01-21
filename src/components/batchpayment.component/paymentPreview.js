@@ -146,7 +146,7 @@ isErrorDispaly = (objValue) => {
           width="100%"
           onClose={this.props.onClose}
           visible={this.props.showDrawer}
-          className="side-drawer-full custom-gridresponsive transctns-grid"
+          className="side-drawer-full custom-gridresponsive transctns-grid preview-grid"
         >
 
           
