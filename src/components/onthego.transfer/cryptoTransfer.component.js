@@ -387,7 +387,7 @@ class OnthegoCryptoTransfer extends Component {
 </div>
               </Row>
               <div className="display-items">
-              <div class="text-center mr-16 small-btns">
+              <div class="text-center mr-16">
                                 <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills sell-radiobtn-style text-left" onChange={({ target: { value } }) => {
                                     this.clickMinamnt(value)
                                 }}>

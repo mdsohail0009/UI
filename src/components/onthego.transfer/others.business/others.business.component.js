@@ -348,7 +348,7 @@ class OthersBusiness extends Component {
                                     className="cust-input iban-input"
                                     placeholder={"IBAN"}
                                     onChange={this.handleIbanChange}
-                                    maxLength={30}/>
+                                    maxLength={50}/>
 
                             </Form.Item>
                             </div>
