@@ -1008,33 +1008,17 @@ class WithdrawSummary extends Component {
 								required
 							>
 								{this.state.permissions?.Send &&
-								// <div className="d-flex agree-check">
-								//  <label className="">
-								// 	<Checkbox className={`agree-check ${!agreeRed ? "check-red" : " "}`} />
-								// 	<span className="withdraw-check"></span>
-									
-								// </label>
-								// <Translate
-								// 		content="agree_to_suissebase"
-								// 		with={{ link }}
-								// 		component={Paragraph}
-								// 		className="cust-agreecheck"
-								// 		style={{ flex: 1 }}
-								// 	/>
-								// </div>
+
 
 								<div className="d-flex agree-check">
 						<label>
 							<input
 								type="checkbox"
 								id="agree-check"
-								// checked={onCheked}
-								// onChange={({ currentTarget: { checked } }) => {
-								// 	this.props?.onTermsChange(checked);
-								// }}
+								
 							/>
 							<span for="agree-check"  />
-							{/* // className={`${error?.agreeRed===false ? "checkbox-red":""}`} */}
+	
 							
 						</label>
 						<Paragraph
@@ -1088,19 +1072,20 @@ class WithdrawSummary extends Component {
 								}
 								footer={
 									<div className="cust-pop-up-btn crypto-pop">	
-										<Button
-											className="primary-btn pop-btn detail-popbtn" block
-											onClick={() => this.onModalOk()}
-										>
-											Yes
-										</Button>
-										<Button block
+									<Button block
 											className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
 											onClick={() => this.onModalCancel()}
 
 										>
 											No
 										</Button>
+										<Button
+											className="primary-btn pop-btn detail-popbtn" block
+											onClick={() => this.onModalOk()}
+										>
+											Yes
+										</Button>
+										
 									</div>
 								}>
 									<div className="text-white fs-16">

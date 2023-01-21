@@ -546,7 +546,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /*Send Address start*/
 .thank-subtext{font-size: 16px;font-weight: 400;color:#ffffff;}
 .adbook-head{font-weight: 700 !important;font-size: 18px !important;color: var(--checkText) !important;margin-bottom: 18px !important;margin-top: 30px;}
-.fund-border{margin-top: 15px;padding: 8px;background: var(--addressList);border: 2px solid  var(--addressList);border-radius: 13px;padding: 22px;cursor: pointer !important;align-items: center !important;}
+.fund-border{margin-top: 15px;padding: 8px;background: var(--addressList);margin-right: 12px;border: 2px solid  var(--addressList);border-radius: 13px;padding: 22px;cursor: pointer !important;align-items: center !important;}
 .fund-border:first-child{margin-top: 0;}
 .fund-border:hover{background-color: var(--radioFill);border: 2px solid var(--radioBorderfill);}
 .fund-circle{width: 44px;height: 44px;border-radius: 50%;text-align: center;padding: 11px;background-color: var(--borderColor);margin-right: 12px;}

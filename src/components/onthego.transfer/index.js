@@ -21,7 +21,9 @@ import { connect } from "react-redux";
 import { getFeaturePermissionsByKeyName } from "../shared/permissions/permissionService";
 import { setSendFiatHead } from "../../reducers/buyFiatReducer";
 import {validateContentRule} from '../../utils/custom.validator'
-import {hideSendCrypto} from '../../reducers/sendreceiveReducer'
+import {hideSendCrypto,rejectWithdrawfiat, setWithdrawfiatenaable ,setClearAmount} from '../../reducers/sendreceiveReducer'
+import { setStep } from '../../reducers/buysellReducer';
+import WithdrawalSuccess from '../../components/withDraw.component/withdrwSuccess';
 const { Text, Title } = Typography; 
 const { Option } = Select
 class OnthegoFundTransfer extends Component {
@@ -294,7 +296,9 @@ saveWithdrawdata = async () => {
     }
 
   }
-
+   goBack = async () => {
+    this.chnageStep('selectcurrency');
+}
   handleCurrencyChange = (e) => {
  this.setState({ ...this.state, selectedCurrency: e });
   }
@@ -452,6 +456,7 @@ saveWithdrawdata = async () => {
                           onKeyDown={this.keyDownHandler}
                           addonBefore={<Select defaultValue={this.state.selectedCurrency} className="currecny-drpdwn"
                               onChange={(e) => this.handleCurrencyChange(e)}
+                              className="sendfiat-dropdown"
                               placeholder="Select">
                               <option value="USD">USD</option>
                               <option value="EUR">EUR</option>
@@ -889,8 +894,10 @@ saveWithdrawdata = async () => {
                 Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
             </div></div>,
        successpage: <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
+        {/* <WithdrawalSuccess/> */}
        <Image  preview={false} src={success}  className="confirm-icon" />
        <Title level={2} className="successsubtext">Your transaction has been processed successfully</Title>
+       <Translate content="crypto_with_draw_success" className=" cust-cancel-btn" component={Button} size="large" onClick={() => { this.goBack() }} />
    </div></div>
     }
     return steps[this.state.step];
@@ -915,6 +922,13 @@ const connectDispatchToProps = (dispatch) => {
     changeInternalStep: (stepcode) => {
       // dispatch(setInternalStep(stepcode))
     },
+      changeStep: (stepcode) => {
+          dispatch(setStep(stepcode))
+      },
+      amountReset: () => {
+          dispatch(setClearAmount())
+      },
+
     dispatch
   }
 }

@@ -117,7 +117,7 @@ class SendReceive extends Component {
                       {!["step1","withdraw_crpto_summary"].includes(this.props.sendReceive.stepcode) && (this.props?.isSendTab || this.props?.sendReceive?.sendCryptoEnable)&& ((this.props.sendReceive.stepcode === "withdraw_crpto_summary"||this.props.sendReceive.stepcode ==="withdraw_crypto_selected")&&this.props.sendReceive?.subTitle!=="") &&
                      <Image preview={false} src={this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.impagePath ||this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.imagePath} />
                      }
-                     {(this.props.sendReceive.stepcode !== "withdraw_crypto_liveness") &&
+                     {(this.props.sendReceive.stepcode !== "withdraw_crpto_success") &&
                     <Translate 
                     with={{ coin: this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin}}
                     className="drawer-maintitle buy-sellprocess header-space" 
