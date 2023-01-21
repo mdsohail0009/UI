@@ -972,6 +972,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .batchpayment-summary ~.ant-alert-with-description {width: 97% !important;margin-left: 20px;}
 .preview-grid .cust-list,.box.text-white .cust-list{padding: 0;}
 .Supporting-Documents{margin-top: 30px;}
+.icon.md.Batch{background-position: -738px -37px;}
 /*@media start*/
 @media (min-width: 768px){
     .listitems-design{width: 340px;}
