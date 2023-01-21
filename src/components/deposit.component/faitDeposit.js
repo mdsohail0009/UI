@@ -15,15 +15,6 @@ import apicalls from '../../api/apiCalls';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 import OnthegoFundTransfer from '../onthego.transfer';
 
-// const LinkValue = (props) => {
-//   return (
-//     <Translate className="textpure-yellow text-underline c-pointer"
-//       content={props.content}
-//       component={Link}
-//       onClick={() => window.open("https://www.iubenda.com/terms-and-conditions/42856099", '_blank')}
-//     />
-//   )
-// }
 const { Option } = Select;
 class FaitDeposit extends Component {
   formRef = createRef();
@@ -101,13 +92,6 @@ class FaitDeposit extends Component {
         if (currencyLu[k].walletCode === this.props.depositInfo?.depositCurrency) {
           if (currencyLu[k].bankDetailModel?.length === 1) {
             this.setState({ ...this.state, Loader: true })
-            // let reqdepositObj = await requestDepositFiat(currencyLu[k].bankDetailModel[0].bankId, this.props.member?.id);
-            // if (reqdepositObj.ok === true) {
-            //   this.setState({
-            //     ...this.state, fiatDepEur: this.props.depositInfo?.depositCurrency === "EUR", BankInfo: reqdepositObj.data, BankDetails: [], Loader: false, isTermsAgreed: false, faitdeposit: tabKey === 2,
-            //     tabValue: tabKey,
-            //   });
-            // }
           } else {
             this.setState({
               ...this.state, fiatDepEur: this.props.depositInfo?.depositCurrency === "EUR", BankDetails: currencyLu[k].bankDetailModel, BankInfo: null, isTermsAgreed: false, faitdeposit: tabKey === 2,
@@ -218,7 +202,6 @@ class FaitDeposit extends Component {
 
   render() {
     const { Paragraph, Text, Title } = Typography;
-    // const link = <LinkValue content="terms_service" />;
     const { faitdeposit, BankInfo, depObj } = this.state;
     const { currenciesWithBankInfo } = this.props.depositInfo;
     return (
@@ -233,7 +216,7 @@ class FaitDeposit extends Component {
               {this.state?.errorMessage !== null && this.state?.errorMessage !== '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="error" message="" description={this.state?.errorMessage} closable />}
               {!this.state.showSuccessMsg && <Translate
                 className="drawer-subtext"
-                // content={this.props.sendReceive.withdrawFiatEnable ?  "send_fiat_text": "receive_fiat_text"}
+              
                 component={Paragraph}
               />}
              
@@ -276,8 +259,7 @@ class FaitDeposit extends Component {
                 {(this.state.BankInfo && !this.state.bankLoader) &&
                   <div className="fiatdep-info fiat-list-items">
                   <div className='alert-info-custom kpi-List'>
-                    {/* <div className="d-flex"> */}
-                      {/* <div style={{ flex: 1 }}> */}
+                    
                         <div className='fait-box kpi-divstyle'>
                           <Translate
                       className="fait-title"
@@ -302,9 +284,7 @@ class FaitDeposit extends Component {
                       component={Text}
                       with={{ value: BankInfo.accountAddress }} />
                       </div>
-                      {/* </div> */}
-                      
-                    {/* </div> */}
+                     
                     <div className='fait-box kpi-divstyle'>
                     {BankInfo.currencyCode === "USD" && <span className="fait-title">Beneficiary Account No. </span>}
                     {BankInfo.currencyCode === "EUR" && <span className="fait-title">Beneficiary IBAN No. </span>}
@@ -427,7 +407,6 @@ const connectDispatchToProps = dispatch => {
       dispatch(setStep(stepcode))
     },
     fetchCurrencyWithBankDetails: () => {
-      // dispatch(getCurrencieswithBankDetails())
     },
     dispatch
   }
