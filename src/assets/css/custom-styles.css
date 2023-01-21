@@ -941,8 +941,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .ant-alert-with-description{width: 100%; align-items:start;}
 /* batchpayments start  */
 .download-excel a{color: var(--termsText);}
-.pay-list .file-name{width: 300px;}
-.pay-list .file-name+div{text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+.pay-list .file-name{width: 400px;word-break: break-all;}
 .icon.md.back{margin-right: 8px;}
 .preview-back{margin-right: 8px;}
 .buysell-balances{text-align: center;margin: 0 0 20px 0 !important;}
@@ -974,7 +973,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .cust-pop-up-btn.ad-popup button:nth-child(2){margin-left: 0;}
 .kpi-divstyle.ad-rec-detyails{border-bottom: transparent;}
 .kpi-val.adview-name{width: 225px;}
-.batchpayment-summary ~.ant-alert-with-description {width: 97% !important;margin-left: 20px;}
+/* .batchpayment-summary ~.ant-alert-with-description {width: 97% !important;margin-left: 20px;} */
 .preview-grid .cust-list,.box.text-white .cust-list{padding: 0;}
 .Supporting-Documents{margin-top: 30px;}
 .icon.md.Batch{background-position: -738px -37px;}
