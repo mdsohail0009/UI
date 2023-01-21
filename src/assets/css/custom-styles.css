@@ -1053,7 +1053,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .transctns-grid .ant-drawer-header, .transctns-grid .ant-drawer-body{padding-left: 100px;padding-right: 100px;}
     .adbook-scroll{max-height: 418px;overflow: auto;}
     .your-card{margin-top: 8px;}
-    /* .batchpayment-summary{padding: 0 20px;} */
+    .gridLink.batch-filename{padding-left: 0;}
 }
 @media (min-width: 1400px){
     .main-container{max-width: 1300px; }
