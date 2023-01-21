@@ -396,7 +396,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 <Input
                     className="cust-input iban-input"
                     placeholder='IBAN'
-                    maxLength={30}/>                      
+                    maxLength={50}/>                      
             </Form.Item>
                                         
                
