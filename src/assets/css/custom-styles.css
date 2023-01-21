@@ -630,8 +630,8 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .view-level-btn .cust-cancel-btn{width: 136px;margin-top: 16px;}
 .docdetails.doc-view{margin-left: 0 !important;}
 .detail-popbtn.paynow-btn-ml{width:136px;}
-.text-wrap-style{width: 100%;}
-.wrap-text-width{width: 66%;}
+.text-wrap-style{max-width: 100%;min-width: 149px;}
+.wrap-text-width{max-width: 100%;min-width: 129px;}
 .gridLink.grid-level-style{display: block;}
 .alert-info-custom.kpi-List.adbook-newdesign, .docfile.address-book-viewlevel{background-color:var(--coinviewradio) !important;}
 .error-style{margin-top: 16px;}
@@ -654,7 +654,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .terms-link{color:var(--termsText) !important;font-weight: 700;}
 .faitcurrency-style{font-weight: 700;font-size: 16px;color: var(--white);text-align: center;margin-bottom: 30px;}
 .summary-liststyle{font-weight: 700;font-size: 16px;color: var(--coinBal);text-transform: capitalize;}
-.summarybal{font-weight: 400;font-size: 16px;color:var(--coinBal);}
+.summarybal{font-weight: 400;font-size: 16px;color:var(--coinBal);word-break: break-all;}
 .cust-agreecheck{font-weight: 400;font-size: 14px;color: var( --checkText);}
 .agree-check label{height: 34px;margin-right: 14px;}
 .agree-check input[type=checkbox]{display: none;}
@@ -1043,6 +1043,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .swap-entryvalue{flex: 0 0 305px;}
     .swap-text-sub{margin-top: -4px;}
     .new-swap-subtext.send-crypto-enrty{margin-bottom: 24px;}
+    .summary-liststyle{margin-right: 26px;}
  
 }
 
