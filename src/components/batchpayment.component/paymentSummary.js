@@ -239,7 +239,7 @@ class PaymentSummary extends Component {
 						{this.state.showDeclaration && <>
 					
 							<div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
-							<img src={pending} alt={`Processed`}  width={80}/>
+							<img src={pending} alt={`Processed`} className="confirm-icon"/>
 							<Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                 Please review and sign the document in your email to whitelist your address.

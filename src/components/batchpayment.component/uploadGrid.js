@@ -369,7 +369,7 @@ const filePreviewPath = () => {
                                 <span className="icon xxxl doc-upload" />
                             </p>
                             <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
-                            <p className="ant-upload-hint text-secondary fs-12">
+                            <p className="ant-upload-hint text-white fs-12">
                                 PNG, JPG,JPEG and PDF files are allowed
                             </p>
                         </Dragger>
@@ -379,13 +379,13 @@ const filePreviewPath = () => {
                                                     <span className={`icon xl file mr-16`} />
                                                     <div className="docdetails c-pointer" onClick={() => docPreview(file)}>
                                                         <EllipsisMiddle suffixCount={6}>{file.documentName}</EllipsisMiddle>
-                                                        <span className="fs-12 text-secondary">{formatBytes(file ? file.remarks : "")}</span>
+                                                        <span className="fs-12 text-white">{formatBytes(file ? file.remarks : "")}</span>
                                                     </div>
                                                     <span className="icon md close c-pointer" onClick={() => deleteDocument(file,"IDENTITYPROOF")} />
                                                 </div> : ""}</>
                                             )}
                          {upLoader && <Loader />}
-                    <div className='my-16'>
+                    <div className='Supporting-Documents'>
                         <Paragraph className="mb-8 fs-14 text-white fw-500 ml-12 text-left">Please upload supporting documents to justify your transfer request:</Paragraph>
                         <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                             className="upload mt-4"
@@ -399,7 +399,7 @@ const filePreviewPath = () => {
                                 <span className="icon xxxl doc-upload" />
                             </p>
                             <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
-                            <p className="ant-upload-hint text-secondary fs-12">
+                            <p className="ant-upload-hint text-white fs-12">
                                 PNG, JPG,JPEG and PDF files are allowed
                             </p>
                         </Dragger>
@@ -409,7 +409,7 @@ const filePreviewPath = () => {
                                                     <span className={`icon xl file mr-16`} />
                                                     <div className="docdetails c-pointer" onClick={() => docPreview(file)}>
                                                         <EllipsisMiddle suffixCount={6}>{file.documentName}</EllipsisMiddle>
-                                                        <span className="fs-12 text-secondary">{formatBytes(file ? file.remarks : "")}</span>
+                                                        <span className="fs-12 text-white">{formatBytes(file ? file.remarks : "")}</span>
                                                     </div>
                                                     <span className="icon md close c-pointer" onClick={() => deleteDocument(file,"TransferProof")} />
                                                 </div> : ""}</>
@@ -427,13 +427,16 @@ const filePreviewPath = () => {
           footer={[
             <>
             <div className='cust-pop-up-btn crypto-pop bill-pop'>
-              <Button
+             
+             
+                 <Button
                 className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
                 onClick={() => deleteModalCancel()}>No</Button>
-              <Button className="primary-btn pop-btn detail-popbtn"
+                 <Button className="primary-btn pop-btn detail-popbtn"
                 onClick={() => deleteGridDocuments()}
                 loading={isLoad}
-                >Yes</Button></div>
+                >Yes</Button>
+                </div>
             </>
           ]}
         >

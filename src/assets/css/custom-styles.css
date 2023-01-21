@@ -706,6 +706,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .network .swap-fontsize{color: var(--white);}
 .custom-height {max-height: calc(100vh - 926px);}
 .nodata-text{margin-top: 10px !important;display: inline-block;color:var(--termsText);}
+.nodata-text:hover{color:var(--termsText);}
 .cust-input.change-space .ant-input{height: 34px !important;}
 .nodata-image{margin-bottom: 10px;}
 .custom-upload{ margin: 12px 0px 4px 0;}
@@ -968,6 +969,8 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .kpi-divstyle.ad-rec-detyails{border-bottom: transparent;}
 .kpi-val.adview-name{width: 225px;}
 .batchpayment-summary ~.ant-alert-with-description {width: 97% !important;margin-left: 20px;}
+.preview-grid .cust-list,.box.text-white .cust-list{padding: 0;}
+.Supporting-Documents{margin-top: 30px;}
 /*@media start*/
 @media (min-width: 768px){
     .listitems-design{width: 340px;}
@@ -1046,7 +1049,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .transctns-grid .ant-drawer-header, .transctns-grid .ant-drawer-body{padding-left: 100px;padding-right: 100px;}
     .adbook-scroll{max-height: 418px;overflow: auto;}
     .your-card{margin-top: 8px;}
-    .batchpayment-summary{padding: 0 20px;}
+    /* .batchpayment-summary{padding: 0 20px;} */
 }
 @media (min-width: 1400px){
     .main-container{max-width: 1300px; }
