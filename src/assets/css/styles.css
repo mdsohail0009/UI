@@ -81,7 +81,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .icon.md.date-white{background-position: -480px -37px;}
 .icon.md.search-white{background-position: -197px 0;}
 .icon.md.load{background-position: -242px 0;float: right; margin-top: 2px;}
-.icon.md.info{background-position: -74px -331px;transform: scale(0.8); width: 28px;height: 28px;}
+.icon.md.info{background-position: -74px -327px;transform: scale(0.8); width: 28px;height: 28px;}
 .icon.md.lftarw-white{background-position: -377px 0;}
 .icon.md.downarrow-icon{background-position: -350px 0;}
 .icon.md.history-white{background-position:-272px -33px;}
@@ -1024,7 +1024,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .pop-btn.withdraw-popcancel{width: 150px; height: 46px;  border: transparent; color: var(--textYellow); background-color: transparent;}
 .pop-btn.withdraw-popcancel:hover{border: 1px solid #f2f2f2 !important;}
 .pop-btn.withdraw-popcancel span{color: var(--textYellow); font-weight: 400;}
-.file-label.add-lbl{width: 140px; text-align: center;}
+.file-label.add-lbl{width: 140px; text-align: center;display: inline-block;}
 .gridlink-data{max-width:130px ;}
 .custom-btn:hover span{color: white;}
 .custom-crypto-btns .custom-bnt span{color: var(--textWhite); font-weight: 400;}

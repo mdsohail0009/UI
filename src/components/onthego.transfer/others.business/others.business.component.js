@@ -428,12 +428,10 @@ class OthersBusiness extends Component {
                                 </div>
                             </Col>
                         </Row>}
-                        {!this.state.iBanValid && !this.state.ibanDetailsLoading && <Row>
-                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
+                        {!this.state.iBanValid && !this.state.ibanDetailsLoading && 
                                 <div><Text className="info-details">No bank details available</Text></div>
 
-                            </Col>
-                        </Row>}
+                            }
                         </Spin>
                        
                     </div>

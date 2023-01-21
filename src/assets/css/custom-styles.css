@@ -624,7 +624,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .dashb-btmtable,.mobile-list{margin-top: 10px;}
 .cust-pop-up-btn.crypto-pop .detail-popbtn{width: 100px;}
 .des-mr{margin-right: 12px;}
-.view-level-btn .pop-btn{width: 136px;}
+.view-level-btn .cust-cancel-btn{width: 136px;margin-top: 16px;}
 .docdetails.doc-view{margin-left: 0 !important;}
 .detail-popbtn.paynow-btn-ml{width:136px;}
 .alert-info-custom.kpi-List.adbook-newdesign, .docfile.address-book-viewlevel{background-color:var(--coinviewradio) !important;}
@@ -715,6 +715,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .iban-validate{border-left-color: var(--inputBg)!important; height: 50px !important;border-top-left-radius: 0 !important;border-bottom-left-radius: 0 !important;border-top: 1px solid var(--labelBorder) !important;border-right: 1px solid var(--labelBorder) !important;border-bottom: 1px solid var(--labelBorder) !important;background: var(--inputBg) !important;margin-top: 26px !important;}
 .iban-validate span{border-left: 1px solid var(--white) !important;color: var(--termsText);font-size: 16px;font-weight: 700;padding-left: 20px !important;display: inline-block;}
 .iban-validate::after{box-shadow: transparent !important;}
+.iban-validate{width: 186px;margin-right: 0 !important;}
 .validateiban-content:hover input,.validateiban-content:hover button{border-color: #CCC3FF !important;}
 /* send fiat end */
 /* send crypto start */
@@ -1049,7 +1050,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .transctns-grid .ant-drawer-header, .transctns-grid .ant-drawer-body{padding-left: 100px;padding-right: 100px;}
     .adbook-scroll{max-height: 418px;overflow: auto;}
     .your-card{margin-top: 8px;}
-    /* .batchpayment-summary{padding: 0 20px;} */
+    .gridLink.batch-filename{padding-left: 0;}
 }
 @media (min-width: 1400px){
     .main-container{max-width: 1300px; }
