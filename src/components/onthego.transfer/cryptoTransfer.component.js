@@ -451,12 +451,8 @@ class OnthegoCryptoTransfer extends Component {
                 <div className="addressbook-grid">
 					<Tabs className="cust-tabs-fait" 
 							>					
-                                <Tabs.TabPane tab="Address Book" content="withdrawCrypto" key={1} className=""  component={Radio}/>
-                                <Tabs.TabPane tab="Past Recipients" content="withdrawFiat" key={2} className="" component={Radio}/>
-						    </Tabs>
-							</div>
-                 <Title className="sub-title address-book">Address Book</Title>
-
+                                <Tabs.TabPane tab="Address Book" content="withdrawCrypto" key={1} className=""  component={Radio}>
+                                <Title className=" adbook-head paste-rece-style">Address Book</Title>
                 <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList adbook-scroll">
                 {(filterObj.length > 0) && filterObj?.map((item, idx) =>
                             <>{<Row className="fund-border c-pointer " onClick={async () => {
@@ -486,9 +482,9 @@ class OnthegoCryptoTransfer extends Component {
                             <a onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</a>
                         </div>}
                 </ul>
-
-                <Title className="sub-title address-book">Past Recipients</Title>
-   
+              </Tabs.TabPane>
+                                <Tabs.TabPane tab="Past Recipients" content="withdrawFiat" key={2} className="" component={Radio}>
+                                <Title className=" adbook-head paste-rece-style">Past Recipients</Title>   
                 <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList adbook-scroll">
                 {(pastPayees.length > 0) && pastPayees?.map((item, idx) =>
                      <Row className="fund-border c-pointer" onClick={async () => {
@@ -518,7 +514,9 @@ class OnthegoCryptoTransfer extends Component {
                             <h1 className="success-title" > {apicalls.convertLocalLang('oops')}</h1>
                             <p className="successsubtext"> {'You have no past recipients'} </p>
                         </div>}
-                </ul>
+                </ul> </Tabs.TabPane>
+						    </Tabs>
+							</div>
               </>}
           </>
         </React.Fragment>

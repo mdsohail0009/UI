@@ -337,7 +337,6 @@ saveWithdrawdata = async () => {
     } else {
       if (!_amt) {
         this.enteramtForm.current.validateFields()
-        // this.setState({ ...this.state, errorMessage:'Please enter amount'})
       } else {
         this.setState({
           ...this.state,
@@ -359,10 +358,7 @@ saveWithdrawdata = async () => {
               <div
                  className='label-style'>Send from your Suissebase FIAT Wallet</div>
               </div>
-              {/* <Col xs={24} md={24} lg={24} xl={24} xxl={24}> */}
               <Search placeholder="Search Currency" value={this.state.searchFiatVal} prefix={<span className="icon lg search-angle drawer-search" />} onChange={this.handleFiatSearch} size="middle" bordered={false} className="cust-search" />
-              {/* <Search value={searchVal} placeholder={apiCalls.convertLocalLang('searchCurrency')} prefix={<span className="icon lg search-angle drawer-search" />}  onChange={({ currentTarget }) => { setSearchVal(currentTarget.value); handleSearch(currentTarget.value) }} size="middle" bordered={false} className="cust-search" /> */}
-              {/* </Col> */}
               <List
                 itemLayout="horizontal"
                 dataSource={this.state.fiatWallets}
@@ -476,7 +472,6 @@ saveWithdrawdata = async () => {
                           htmlType="submit"
                           size="large"
                           className="newtransfer-card"
-                          // style={{ width: '100%' }}
                           loading={this.state.newtransferLoader}
                           disabled={this.state.addressLoader}
                         >
@@ -490,7 +485,6 @@ saveWithdrawdata = async () => {
                           htmlType="button"
                           size="large"
                           className="newtransfer-card"
-                          // style={{ width: '100% ' }}
                           loading={this.state.addressLoader}
                           disabled={this.state.newtransferLoader}
                           onClick={this.goToAddressBook}
@@ -514,24 +508,17 @@ saveWithdrawdata = async () => {
           </div>
           <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
           <Search placeholder="Search for Payee" value={this.state.searchVal} prefix={<span className="icon lg search-angle drawer-search" />} onChange={this.handleSearch} size="middle" bordered={false} className="cust-search" />
-          {/* <Search placeholder="Search for Payee" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className=" text-center" /> */}
           </Col>
           {this.state?.loading && <Loader />}
           {!this.state.loading && (
             <>
             <div className="addressbook-grid">
 					<Tabs className="cust-tabs-fait" 
-					// defaultValue={(this.props?.activeFiat||this.state.cryptoFiat) ? 2 : 1}
-					// 		onChange={this.handleWithdrawToggle}
+			
 							>					
-                                <Tabs.TabPane tab="Address Book" content="withdrawCrypto" key={1} className=""  component={Radio.Button}/>
-                                <Tabs.TabPane tab="Past Recipients" content="withdrawFiat" key={2} className="" component={Radio.Button}/>
-						    </Tabs>
-							</div>
-             <Title className="adbook-head">Address Book</Title>
-              {/* <Divider className="cust-divide" /> */}
-
-              <ul className="addCryptoList adbook-scroll" >
+                                <Tabs.TabPane tab="Address Book" content="withdrawCrypto" key={1} className=""  component={Radio.Button}>
+                                <Title className="adbook-head paste-rece-style">Address Book</Title>
+                <ul className="addCryptoList adbook-scroll" >
                 {filterObj.length > 0 &&
                   filterObj?.map((item, idx) => (
                     <>
@@ -587,9 +574,6 @@ saveWithdrawdata = async () => {
                                     <label className="address-name">{item.name}</label>
                                     {item.accountNumber && <div><Text className="address-subtext">{this.state.selectedCurrency} account ending with {item.accountNumber?.substr(item.accountNumber.length - 4)}</Text></div>}
                                 </Col>
-                                {/* <Col xs={4} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
-                            <span class="icon md rarrow-white"></span>
-                          </Col> */}
                         </Row>}</>
                   ))}
                   {(!filterObj.length > 0) && <div className="success-pop text-center declaration-content" >
@@ -599,9 +583,11 @@ saveWithdrawdata = async () => {
                             <a onClick={() => this.chnageStep("newtransfer")} className="nodata-text" >Click here to make new transfer</a>
                         </div>}
               </ul>
-
-              <Title className="adbook-head adbs-paste-recepients">Past Recipients</Title>
-              {/* <Divider className="cust-divide" /> */}
+              </Tabs.TabPane>
+                                <Tabs.TabPane tab="Past Recipients" content="withdrawFiat" key={2} className="" component={Radio.Button}>
+						   
+                                <Title className="adbook-head adbs-paste-recepients paste-rece-style">Past Recipients</Title>
+             
               <ul
                 style={{ listStyle: 'none', paddingLeft: 0 }}
                 className="addCryptoList adbook-scroll"
@@ -642,18 +628,19 @@ saveWithdrawdata = async () => {
                                     <label className="address-name">{item.name}</label>
                                     <div><Text className="address-subtext">{this.state.selectedCurrency} account ending with {item.accountNumber?.substr(item.accountNumber?.length - 4)}</Text></div>
                       </Col>
-                      {/* <Col xs={4} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
-                        <span class="icon md rarrow-white"></span>
-                      </Col> */}
                     </Row>
                   ))}
                {(!pastPayees.length > 0) && <div className="success-pop text-center declaration-content" >
                             <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
                             <h1 className="success-title" > {apicalls.convertLocalLang('oops')}</h1>
                             <p className="successsubtext custom-height"> {'You have no past recipients'} </p>
-                            {/* <a onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</a> */}
                             </div>}
               </ul>
+              </Tabs.TabPane>
+                </Tabs>
+							</div>
+          
+          
             </>
           )}
         </React.Fragment>
