@@ -795,68 +795,68 @@ saveWithdrawdata = async () => {
 
                   </div>
                  
-                                <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
+                                <div className="d-flex  justify-content">
                                     <div className="adbook-head">Recipient details</div>
                   </div>
-                  <div className="cust-summary-new">
-                <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">Whitelist Name </div>
-                                    <Text className="summarybal">{this.state.reviewDetails?.favouriteName}</Text>
+                  <div className="cust-summary-new kpi-List sendfiat-summarystyle">
+                <div className="kpi-divstyle" >
+                                    <div className="kpi-label">Whitelist Name </div>
+                                   <div> <Text className="kpi-val">{this.state.reviewDetails?.favouriteName}</Text></div>
                   </div>
                
                 {this.state.reviewDetails?.name &&
-                                <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">Beneficiary Name</div>
-                                    <Text className="summarybal">{this.state.reviewDetails?.name}</Text>
+                                <div className="kpi-divstyle" >
+                                    <div className="kpi-label">Beneficiary Name</div>
+                                   <div> <Text className="kpi-val">{this.state.reviewDetails?.name}</Text></div>
                                 </div>
                            }
                 {this.state.reviewDetails?.firstName && 
-                                <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">First Name</div>
-                                    <Text className="summarybal">{this.state.reviewDetails?.firstName}</Text>
+                                <div className="kpi-divstyle" >
+                                    <div className="kpi-label">First Name</div>
+                                   <div> <Text className="kpi-val">{this.state.reviewDetails?.firstName}</Text></div>
                                 </div>
                           }
                 {this.state.reviewDetails?.lastName && 
-                                <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">Last Name</div>
-                                    <Text className="summarybal">{this.state.reviewDetails?.lastName}</Text>
+                                <div className="kpi-divstyle" >
+                                    <div className="kpi-label">Last Name</div>
+                                   <div> <Text className="kpi-val">{this.state.reviewDetails?.lastName}</Text></div>
                                 </div>
                            }
                  {this.state.reviewDetails?.iban &&
-                                <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">IBAN </div>
-                                    <Text className="summarybal">{this.state.reviewDetails?.iban}</Text>
+                                <div className="kpi-divstyle" >
+                                    <div className="kpi-label">IBAN </div>
+                                    <div> <Text className="kpi-val">{this.state.reviewDetails?.iban}</Text></div>
                                 </div>
                            }
                {this.state.reviewDetails?.customerRemarks &&
-                                <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">Reason For Transfer </div>
-                                    <Text className="summarybal">{this.state.reviewDetails?.customerRemarks || "-"}</Text>
+                                <div className="kpi-divstyle" >
+                                    <div className="kpi-label">Reason For Transfer </div>
+                                    <div>  <Text className="kpi-val">{this.state.reviewDetails?.customerRemarks || "-"}</Text></div>
                                 </div>
                           }
 
 {this.state.reviewDetails?.abaRoutingCode &&
-                                <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">ABA Routing code</div>
-                                    <Text className="summarybal">{this.state.reviewDetails?.abaRoutingCode || "-"}</Text>
+                                <div className="kpi-divstyle" >
+                                    <div className="kpi-label">ABA Routing code</div>
+                                    <div> <Text className="kpi-val">{this.state.reviewDetails?.abaRoutingCode || "-"}</Text></div>
                                 </div>
     }
                 {this.state.reviewDetails?.swiftRouteBICNumber &&
-                                <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">SWIFT / BIC Code</div>
-                                    <Text className="summarybal">{this.state.reviewDetails?.swiftRouteBICNumber || "-"}</Text>
+                                <div className="kpi-divstyle" >
+                                    <div className="kpi-label">SWIFT / BIC Code</div>
+                                    <div>  <Text className="kpi-val">{this.state.reviewDetails?.swiftRouteBICNumber || "-"}</Text></div>
                                 </div>
                             }
                 {this.state.reviewDetails?.accountNumber &&
-                                <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">Account Number </div>
-                                    <Text className="summarybal">{this.state.reviewDetails?.accountNumber || "-"}</Text>
+                                <div className="kpi-divstyle" >
+                                    <div className="kpi-label">Account Number </div>
+                                    <div>  <Text className="kpi-val">{this.state.reviewDetails?.accountNumber || "-"}</Text></div>
                                 </div>
                            }
                 {this.state.reviewDetails?.bankName &&
-                                <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">Bank Name </div>
-                                    <Text className="summarybal">{this.state?.reviewDetails?.bankName || "-"}</Text>
+                                <div className="kpi-divstyle" >
+                                    <div className="kpi-label">Bank Name </div>
+                                    <div>  <Text className="kpi-val">{this.state?.reviewDetails?.bankName || "-"}</Text></div>
                                 </div>
                             }
                             </div>
