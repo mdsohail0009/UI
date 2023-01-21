@@ -274,10 +274,11 @@ class PaymentsView extends Component {
             footer={<>
              <div className="cust-pop-up-btn crypto-pop">
              
-                        <Button  onClick={this.docPreviewClose} className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
-                        >Close</Button>
-                         <Button  className="primary-btn pop-btn detail-popbtn" 
+                        
+                         <Button  className="primary-btn pop-btn detail-popbtn paynow-btn-ml" 
                        onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>
+                       <Button  onClick={this.docPreviewClose} className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
+                        >Close</Button>
                         </div>
             </>}
           >

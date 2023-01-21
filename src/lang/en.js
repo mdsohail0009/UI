@@ -470,7 +470,7 @@ export default {
 	Start_Date: "Start Date",
 	End_Date: "End Date",
 	Select_Date: "Select Date",
-	ok: "OK",
+	ok: "Ok",
 	funds_to_swap: "Insufficiant funds to swap",
 	No_data: "No Data Found",
 	confirm_button: "Confirm",
