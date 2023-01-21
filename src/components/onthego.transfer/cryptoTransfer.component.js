@@ -452,7 +452,6 @@ class OnthegoCryptoTransfer extends Component {
 					<Tabs className="cust-tabs-fait" 
 							>					
                                 <Tabs.TabPane tab="Address Book" content="withdrawCrypto" key={1} className=""  component={Radio}>
-                                <Title className=" adbook-head paste-rece-style">Address Book</Title>
                 <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList adbook-scroll">
                 {(filterObj.length > 0) && filterObj?.map((item, idx) =>
                             <>{<Row className="fund-border c-pointer " onClick={async () => {
@@ -476,15 +475,14 @@ class OnthegoCryptoTransfer extends Component {
                             </Row>}</>
                     )}
                   {(!filterObj.length > 0) && <div className="success-pop text-center declaration-content">
-                            <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
-                            <h1 className="success-title" > {apicalls.convertLocalLang('oops')}</h1>
-                            <p className="successsubtext"> {apicalls.convertLocalLang('address_available')} </p>
-                            <a onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</a>
+                            <img src={oops} className="confirm-icon nodata-image" style={{ marginBottom: '10px' }} alt="Confirm" />
+                            <h1 className="success-title oops-title" > {apicalls.convertLocalLang('oops')}</h1>
+                            <p className="successsubtext custom-height"> {apicalls.convertLocalLang('address_available')} </p>
+                            <a onClick={() => this.chnageStep("newtransfer")} className="nodata-text">Click here to make new transfer</a>
                         </div>}
                 </ul>
               </Tabs.TabPane>
-                                <Tabs.TabPane tab="Past Recipients" content="withdrawFiat" key={2} className="" component={Radio}>
-                                <Title className=" adbook-head paste-rece-style">Past Recipients</Title>   
+                                <Tabs.TabPane tab="Past Recipients" content="withdrawFiat" key={2} className="" component={Radio}> 
                 <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList adbook-scroll">
                 {(pastPayees.length > 0) && pastPayees?.map((item, idx) =>
                      <Row className="fund-border c-pointer" onClick={async () => {
@@ -510,9 +508,9 @@ class OnthegoCryptoTransfer extends Component {
 
                     )}
                   {(!pastPayees.length > 0) && <div className="success-pop text-center declaration-content">
-                            <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
-                            <h1 className="success-title" > {apicalls.convertLocalLang('oops')}</h1>
-                            <p className="successsubtext"> {'You have no past recipients'} </p>
+                            <img src={oops} className="confirm-icon nodata-image" style={{ marginBottom: '10px' }} alt="Confirm" />
+                            <h1 className="success-title oops-title" > {apicalls.convertLocalLang('oops')}</h1>
+                            <p className="successsubtext custom-height"> {'You have no past recipients'} </p>
                         </div>}
                 </ul> </Tabs.TabPane>
 						    </Tabs>

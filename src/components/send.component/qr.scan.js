@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, message, Dropdown, Menu, Button, Alert } from 'antd';
+import { Typography, message, Menu, Alert } from 'antd';
 import { setStep, setWalletAddress } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
@@ -124,7 +124,7 @@ class QRScan extends Component {
                                         {this.networkTypeNames(network.code)}
                                         </div>
                                 </Link>}
-                                {netWorkData.length === 1 &&  `${network.code}`}
+                                {netWorkData.length === 1 &&  `${this.networkTypeNames(network.code)}`}
                             </div>
                            
                         </>
@@ -135,7 +135,7 @@ class QRScan extends Component {
                 </div>
                 <div className="recive-lable">
                     <Translate className="recive-lable" content="address" component={Text} />{" "}
-                    ({this.networkTypeNames(this.props?.sendReceive?.depositWallet?.network)})
+                  <span className='recive-copy'>  ({this.networkTypeNames(this.props?.sendReceive?.depositWallet?.network)})</span>
 
                     <div className="recive-copy">{this.props?.sendReceive?.depositWallet?.walletAddress}
                         <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.walletAddress} options={{ format: 'text/plain' }}>

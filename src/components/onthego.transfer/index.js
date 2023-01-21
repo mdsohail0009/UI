@@ -450,7 +450,7 @@ saveWithdrawdata = async () => {
                           allowNegative={false}
                           thousandSeparator={","}
                           onKeyDown={this.keyDownHandler}
-                          addonBefore={<Select defaultValue={this.state.selectedCurrency}
+                          addonBefore={<Select defaultValue={this.state.selectedCurrency} className="currecny-drpdwn"
                               onChange={(e) => this.handleCurrencyChange(e)}
                               className="sendfiat-dropdown"
                               placeholder="Select">
@@ -517,8 +517,7 @@ saveWithdrawdata = async () => {
 					<Tabs className="cust-tabs-fait" 
 			
 							>					
-                                <Tabs.TabPane tab="Address Book" content="withdrawCrypto" key={1} className=""  component={Radio.Button}>
-                                <Title className="adbook-head paste-rece-style">Address Book</Title>
+              <Tabs.TabPane tab="Address Book" content="withdrawCrypto" key={1} className=""  component={Radio.Button}>
                 <ul className="addCryptoList adbook-scroll" >
                 {filterObj.length > 0 &&
                   filterObj?.map((item, idx) => (
@@ -586,8 +585,6 @@ saveWithdrawdata = async () => {
               </ul>
               </Tabs.TabPane>
                                 <Tabs.TabPane tab="Past Recipients" content="withdrawFiat" key={2} className="" component={Radio.Button}>
-						   
-                                <Title className="adbook-head adbs-paste-recepients paste-rece-style">Past Recipients</Title>
              
               <ul
                 style={{ listStyle: 'none', paddingLeft: 0 }}
@@ -632,8 +629,8 @@ saveWithdrawdata = async () => {
                     </Row>
                   ))}
                {(!pastPayees.length > 0) && <div className="success-pop text-center declaration-content" >
-                            <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
-                            <h1 className="success-title" > {apicalls.convertLocalLang('oops')}</h1>
+                            <img src={oops} className="confirm-icon nodata-image" style={{ marginBottom: '10px' }} alt="Confirm" />
+                            <h1 className="success-title oops-title" > {apicalls.convertLocalLang('oops')}</h1>
                             <p className="successsubtext custom-height"> {'You have no past recipients'} </p>
                             </div>}
               </ul>
