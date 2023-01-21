@@ -456,6 +456,7 @@ saveWithdrawdata = async () => {
                           onKeyDown={this.keyDownHandler}
                           addonBefore={<Select defaultValue={this.state.selectedCurrency} className="currecny-drpdwn"
                               onChange={(e) => this.handleCurrencyChange(e)}
+                              className="sendfiat-dropdown"
                               placeholder="Select">
                               <option value="USD">USD</option>
                               <option value="EUR">EUR</option>

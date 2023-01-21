@@ -279,7 +279,7 @@ const Verifications = (props) => {
                 style={{ color: "black", margin: "0 auto" }}
                 disabled={true}
             ><Text className="text-yellow pr-24"> Verified </Text>
-                <span className="icon md greenCheck check-ml-align" />
+                <span className="icon md greenCheck " />
             </Button>
 
         ),
@@ -329,7 +329,7 @@ const Verifications = (props) => {
                 style={{ color: "black", margin: "0 auto" }}
                 disabled={true}
             ><Text className="text-yellow pr-24"> Verified </Text>
-                <span className="icon md greenCheck  check-ml-align" />
+                <span className="icon md greenCheck " />
             </Button>
 
         ),
@@ -352,7 +352,7 @@ const Verifications = (props) => {
                 style={{ color: "black", margin: "0 auto" }}
                 disabled={true}
             ><Text className="text-yellow pr-24"> Verified </Text>
-                <span className="icon md greenCheck  check-ml-align" />
+                <span className="icon md greenCheck" />
             </Button>
 
         ),
