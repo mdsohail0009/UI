@@ -54,7 +54,8 @@ class OnthegoFundTransfer extends Component {
     isShowGreyButton: false,
     permissions: {},
     filtercoinsList: [],
-    searchFiatVal: ""
+    searchFiatVal: "",
+    successLoad:false
   }
   componentDidMount() {
     this.verificationCheck()
@@ -299,6 +300,15 @@ saveWithdrawdata = async () => {
    goBack = async () => {
     this.chnageStep('selectcurrency');
     this.props.dispatch(setSendFiatHead(false));
+    if(this.state.fiatWalletsLoading===false){
+      this.setState({ ...this.state, fiatWalletsLoading: true,successLoad:true });
+    }
+    setTimeout(()=>{
+      this.chnageStep('selectcurrency');
+    this.props.dispatch(setSendFiatHead(false));
+      this.setState({ ...this.state, fiatWalletsLoading: false,successLoad:false });
+    },1000)
+ 
 }
   handleCurrencyChange = (e) => {
  this.setState({ ...this.state, selectedCurrency: e });
@@ -898,7 +908,7 @@ saveWithdrawdata = async () => {
        successpage: <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
        <Image  preview={false} src={success}  className="confirm-icon" />
        <Title level={2} className="successsubtext">Your transaction has been processed successfully</Title>
-       <Translate content="Back_to_Withdrawfiat" className=" cust-cancel-btn" component={Button} size="large" onClick={() => { this.goBack() }} />
+       <Translate content="Back_to_Withdrawfiat" className=" cust-cancel-btn" component={Button} size="large" onClick={() => { this.goBack() }} loading={this.state.successLoad} />
    </div></div>
     }
     return steps[this.state.step];
