@@ -706,6 +706,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .network .swap-fontsize{color: var(--white);}
 .custom-height {max-height: calc(100vh - 926px);}
 .nodata-text{margin-top: 10px !important;display: inline-block;color:var(--termsText);}
+.nodata-text:hover{color:var(--termsText);}
 .cust-input.change-space .ant-input{height: 34px !important;}
 .nodata-image{margin-bottom: 10px;}
 .custom-upload{ margin: 12px 0px 4px 0;}
