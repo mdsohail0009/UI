@@ -516,8 +516,7 @@ saveWithdrawdata = async () => {
 					<Tabs className="cust-tabs-fait" 
 			
 							>					
-                                <Tabs.TabPane tab="Address Book" content="withdrawCrypto" key={1} className=""  component={Radio.Button}>
-                                <Title className="adbook-head paste-rece-style">Address Book</Title>
+              <Tabs.TabPane tab="Address Book" content="withdrawCrypto" key={1} className=""  component={Radio.Button}>
                 <ul className="addCryptoList adbook-scroll" >
                 {filterObj.length > 0 &&
                   filterObj?.map((item, idx) => (
@@ -585,8 +584,6 @@ saveWithdrawdata = async () => {
               </ul>
               </Tabs.TabPane>
                                 <Tabs.TabPane tab="Past Recipients" content="withdrawFiat" key={2} className="" component={Radio.Button}>
-						   
-                                <Title className="adbook-head adbs-paste-recepients paste-rece-style">Past Recipients</Title>
              
               <ul
                 style={{ listStyle: 'none', paddingLeft: 0 }}

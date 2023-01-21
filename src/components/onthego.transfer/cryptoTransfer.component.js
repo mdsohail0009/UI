@@ -452,7 +452,6 @@ class OnthegoCryptoTransfer extends Component {
 					<Tabs className="cust-tabs-fait" 
 							>					
                                 <Tabs.TabPane tab="Address Book" content="withdrawCrypto" key={1} className=""  component={Radio}>
-                                <Title className=" adbook-head paste-rece-style">Address Book</Title>
                 <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList adbook-scroll">
                 {(filterObj.length > 0) && filterObj?.map((item, idx) =>
                             <>{<Row className="fund-border c-pointer " onClick={async () => {
@@ -483,8 +482,7 @@ class OnthegoCryptoTransfer extends Component {
                         </div>}
                 </ul>
               </Tabs.TabPane>
-                                <Tabs.TabPane tab="Past Recipients" content="withdrawFiat" key={2} className="" component={Radio}>
-                                <Title className=" adbook-head paste-rece-style">Past Recipients</Title>   
+                                <Tabs.TabPane tab="Past Recipients" content="withdrawFiat" key={2} className="" component={Radio}> 
                 <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList adbook-scroll">
                 {(pastPayees.length > 0) && pastPayees?.map((item, idx) =>
                      <Row className="fund-border c-pointer" onClick={async () => {
