@@ -738,7 +738,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .hy-align, .code-tooltip-align{margin:auto 0; display: flex;align-items: center;}
 .send-crypto-enrty{border-radius:5px;margin-bottom: 12px;}
 .transfer-designstyle{margin-top: 30px;}
-.inputfont-style::placeholder{font-size: 12px;}
+.inputfont-style::placeholder{font-size: 20px;}
 /* send crypto end */
 
 /* crypto summary start */
@@ -977,6 +977,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .preview-grid .cust-list,.box.text-white .cust-list{padding: 0;}
 .Supporting-Documents{margin-top: 30px;}
 .icon.md.Batch{background-position: -738px -37px;}
+.notkyc a{color:var(--viewAll);}
 /*@media start*/
 @media (min-width: 768px){
     .listitems-design{width: 340px;}
