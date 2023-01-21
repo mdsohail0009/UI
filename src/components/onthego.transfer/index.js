@@ -21,7 +21,9 @@ import { connect } from "react-redux";
 import { getFeaturePermissionsByKeyName } from "../shared/permissions/permissionService";
 import { setSendFiatHead } from "../../reducers/buyFiatReducer";
 import {validateContentRule} from '../../utils/custom.validator'
-import {hideSendCrypto} from '../../reducers/sendreceiveReducer'
+import {hideSendCrypto,rejectWithdrawfiat, setWithdrawfiatenaable ,setClearAmount} from '../../reducers/sendreceiveReducer'
+import { setStep } from '../../reducers/buysellReducer';
+import WithdrawalSuccess from '../../components/withDraw.component/withdrwSuccess';
 const { Text, Title } = Typography; 
 const { Option } = Select
 class OnthegoFundTransfer extends Component {
@@ -294,7 +296,10 @@ saveWithdrawdata = async () => {
     }
 
   }
-
+   goBack = async () => {
+    this.chnageStep('selectcurrency');
+    this.props.dispatch(setSendFiatHead(false));
+}
   handleCurrencyChange = (e) => {
  this.setState({ ...this.state, selectedCurrency: e });
   }
@@ -450,8 +455,9 @@ saveWithdrawdata = async () => {
                           allowNegative={false}
                           thousandSeparator={","}
                           onKeyDown={this.keyDownHandler}
-                          addonBefore={<Select defaultValue={this.state.selectedCurrency} className="currecny-drpdwn"
+                          addonBefore={<Select defaultValue={this.state.selectedCurrency} 
                               onChange={(e) => this.handleCurrencyChange(e)}
+                              className="currecny-drpdwn sendfiat-dropdown"
                               placeholder="Select">
                               <option value="USD">USD</option>
                               <option value="EUR">EUR</option>
@@ -887,10 +893,12 @@ saveWithdrawdata = async () => {
                 <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                 Please review and sign the document in your email to whitelist your address.
                 Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
-            </div></div>,
+           
+           <Translate content="Back_to_Withdrawfiat" className=" cust-cancel-btn send-crypto-btn" component={Button} size="large" onClick={() => { this.goBack() }} /> </div></div>,
        successpage: <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
        <Image  preview={false} src={success}  className="confirm-icon" />
        <Title level={2} className="successsubtext">Your transaction has been processed successfully</Title>
+       <Translate content="Back_to_Withdrawfiat" className=" cust-cancel-btn" component={Button} size="large" onClick={() => { this.goBack() }} />
    </div></div>
     }
     return steps[this.state.step];
@@ -913,8 +921,14 @@ const connectStateToProps = ({ sendReceive, userConfig, menuItems, oidc }) => {
 const connectDispatchToProps = (dispatch) => {
   return {
     changeInternalStep: (stepcode) => {
-      // dispatch(setInternalStep(stepcode))
     },
+      changeStep: (stepcode) => {
+          dispatch(setStep(stepcode))
+      },
+      amountReset: () => {
+          dispatch(setClearAmount())
+      },
+
     dispatch
   }
 }

@@ -789,6 +789,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .new-custom-radiobtn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):focus-within{box-shadow:none;}
 .new-custom-radiobtn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{color: var( --radiocheccolor);}
 .addCryptoList.adbook-scroll .declaration-content .successsubtext{height:50px !important;}
+.search-space{padding-left: 0!important;padding-right: 0!important;}
 /* send crypto addressbook end */
 
 /* transactions start  */

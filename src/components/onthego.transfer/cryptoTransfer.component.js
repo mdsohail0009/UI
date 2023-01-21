@@ -443,7 +443,7 @@ class OnthegoCryptoTransfer extends Component {
                     <text Paragraph
                         className='label-style' >Who are you sending crypto to?</text>
                 </div>
-            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}  className="search-space">
             <Search placeholder="Search For Beneficiary" value={this.state.searchVal} prefix={<span className="icon lg search-angle drawer-search" />} onChange={this.handleSearch} size="middle" bordered={false} className="cust-search" />
             </Col>
             {this.state?.loading && <Loader />}
