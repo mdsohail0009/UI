@@ -64,12 +64,14 @@ const fetchPreview = ({ coin, wallet, amount, isCrypto = false }) => {
         }
     }
 }
-const fetchMemberFiat = (member_id) => {
+const fetchMemberFiat = (member_id, callback) => {
     return async (dispatch) => {
         dispatch(handleFetch({ key: "memberFiat", loading: true, data: [] }));
         const response = await getMemberfiat(member_id);
         if (response.ok) {
             dispatch(handleFetch({ key: "memberFiat", loading: false, data: response.data }));
+            if (callback)
+                callback();
         } else {
             dispatch(handleFetch({ key: "memberFiat", loading: false, data: [], error: response.originalError.message }));
         }

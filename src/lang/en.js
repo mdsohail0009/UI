@@ -8,7 +8,7 @@ export default {
 	markets_title: "Markets",
 	markets_subtitle: "Trade your crypto into any currency",
 	deposit: "Receive",
-	withdraw: "Send",
+	withdraw: "Send %(coin)s",
 	buy: "Buy",
 	sell: "Sell",
 	load_more: "Load more ...",

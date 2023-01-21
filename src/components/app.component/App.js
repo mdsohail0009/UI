@@ -64,7 +64,9 @@ function App(props) {
       t = d.getElementsByTagName('script')[0];
       t.parentNode.insertBefore(s, t);
     });
-    connectToHub();
+
+    //this should be unComment to STG and LIVE Only connectToHub
+    // connectToHub(); 
   }, [])// eslint-disable-line react-hooks/exhaustive-deps
   return (
     <OidcProvider userManager={userManager} store={store}>
