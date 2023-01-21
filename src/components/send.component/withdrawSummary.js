@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { Typography, Button, Alert, Form, Input,Modal, Tooltip, Checkbox, Image,Space } from "antd";
 import { connect } from "react-redux";
-import alertIcon from '../../assets/images/success-check.svg';
+import alertIcon from '../../assets/images/pending.png';
 import Translate from "react-translate-component";
 import Loader from "../../Shared/loader";
 import Currency from "../shared/number.formate";
@@ -657,7 +657,7 @@ class WithdrawSummary extends Component {
                 Please review and sign the document in your email to whitelist your address.
                 Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
 				 
-                        <Translate content="crypto_with_draw_success" className="cust-cancel-btn send-crypto-btn" component={Button} onClick={this.onBackSend} />
+                       <div className="send-cypto-summary"> <Translate content="crypto_with_draw_success" className="cust-cancel-btn send-crypto-btn" component={Button} onClick={this.onBackSend} /></div>
                    
 			</div></div>
 		  }
