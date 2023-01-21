@@ -248,6 +248,8 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .ant-alert-error .ant-alert-icon, .ant-alert-warning .ant-alert-icon{color: #ff4d4f;}
 .ant-alert-message{color: #ff5747 !important;}
 .ant-alert-description {font-size: 16px !important;color: var(--red) !important}
+.ant-alert-description span{font-size: 16px !important;color: var(--red) !important}
+.ant-alert-description span a{color:var(--termsText) !important}
 .ant-alert{border-radius: 5px;}
 .ant-notification-rtl{z-index:9999;top:75px !important;}
 .ant-notification-notice .ant-notification-close-icon{color: var(--textWhite30);}
