@@ -304,6 +304,7 @@ input:-webkit-autofill:active{
 .ant-alert-with-description{align-items: center !important;}
 .summarybal .gridLink:hover{color: var(--viewAll);}
 .pay-list.modal-listbr .summarybal .gridLink{word-break: break-all;text-align: right;width: 326px;}
+.paste-rece-style{padding-top: 0 !important;margin-top: 16px !important;}
 /*Common css End*/
 
 /*Coin Selection End*/
@@ -723,6 +724,10 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .iban-validate::after{box-shadow: transparent !important;}
 .iban-validate{width: 186px;margin-right: 0 !important;}
 .validateiban-content:hover input,.validateiban-content:hover button{border-color: #CCC3FF !important;}
+.slick-slider.docreq-slider.slick-initialized .slick-dots li.slick-active button{background: var(--cardBG) !important;color: var(--primary);}
+.docreq-slider .slick-dots li button{color: var(--secondary);}
+.cases-lefttext::before{border-color: 1px solid #ccc;}
+.ant-form-item-explain.ant-form-item-explain-error{color: var(--red);}
 /* send fiat end */
 /* send crypto start */
 .min-btn{border: 1px solid rgba(0, 0, 0, 0.3);background: var(--radioBg) !important;height: 36px;border-radius: 10px;min-width: 60px;line-height: 30px;color: var(--coinPrice);font-size: 16px;font-weight: 500; margin: 0 10px 10px 0;}
@@ -912,9 +917,9 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .cases-lefttext{margin-left: 16px;}
 .case-stripe, .case-remarksstyle{border: 1px dashed var(--borderColor); padding: 16px 20px; border-radius: 16px; margin-bottom: 16px}
 .ribbon-item{display: flex; align-items: center;margin-bottom: 16px;border-right: 1px solid var(--borderColor);}
-.case-val.cases-subtext{word-break: break-all;}
+.case-val.cases-subtext{word-break: break-all; padding-right: 12px;}
 .ant-upload-hint.upload-text{color: var(--sbCardText) !important;font-size: 14px !important;}
-.notify-alerticon .ant-alert-icon{margin: 0px 15px 18px 0px !important;}
+/* .notify-alerticon .ant-alert-icon{margin: 0px 15px 18px 0px !important;} */
 .btn-textstyle{display: block !important;color: var(--white) !important;font-size: 16px;font-weight: 500;}
 .file-sizestyle{font-weight: 500;font-size: 14px;color: var(--sbCardText);}
 .case-remarksstyle{margin-top: 10px;}
@@ -940,7 +945,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .approvebg .ant-list-item-meta-avatar, .depositbg .ant-list-item-meta-avatar, .buybg .ant-list-item-meta-avatar, .deposit.fiatbg .ant-list-item-meta-avatar, .deposit.cryptobg .ant-list-item-meta-avatar, .paymentsbg .ant-list-item-meta-avatar{background-color: var(--bgDarkGreen);}
 .withdrawbg .ant-list-item-meta-avatar, .depositsbg .ant-list-item-meta-avatar, .sellbg .ant-list-item-meta-avatar, .withdraw.fiatbg .ant-list-item-meta-avatar, .withdraw.cryptobg .ant-list-item-meta-avatar{background-color: var(--bgDarkRed);}
 .requestbg .ant-list-item-meta-avatar, .documentsbg .ant-list-item-meta-avatar, .cutomersbg .ant-list-item-meta-avatar, .casesbg .ant-list-item-meta-avatar{background-color: var(--bgBlue);}
-.ant-alert-with-description{width: 100%; align-items:start;}
+.ant-alert-with-description{width: 100%; align-items:center;}
 /* batchpayments start  */
 .download-excel a{color: var(--termsText);}
 .pay-list .file-name{width: 400px;word-break: break-all;}
@@ -962,7 +967,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .markets-grid .side-drawer-header{padding: 0 16px 0 0;}
 .header-space{margin-bottom: 0 !important;}
 .basicinfo.batch-style{margin-left: 20px;}
-/* .cust-list.main-container .bill-grid{margin-top: -25px !important;} */
+.bill-payment.bill-margin{margin-bottom: 10px !important;}
 /* batchpayments end */
 .no-transaction{padding-top: 18px !important;}
 .search-box .ant-input, .search-box .ant-input:focus,.search-box .ant-input:hover{color: var(--textWhite); border: 0;}
