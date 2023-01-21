@@ -376,8 +376,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         </div>
 
         <h2  className="adbook-head">Bank Details</h2>
-        {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <div className="validateiban-content">
-        {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && 
+        {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Row className="validateiban-content">
+        {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
             <div className="custom-btn-error">
             <Form.Item
                 className="custom-forminput custom-label "
@@ -396,23 +396,21 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 <Input
                     className="cust-input iban-input"
                     placeholder='IBAN'
-                    maxLength={30}/>   
-
-                     {(currency === 'EUR'||addressOptions.tabType === 'internationalIBAN') &&
+                    maxLength={50}/>                      
+            </Form.Item>
+                                        
+               
+            </div>
+        </Col>}
+        {(currency === 'EUR'||addressOptions.tabType === 'internationalIBAN') &&<Col xs={24} md={10} lg={10} xl={10} xxl={10}>
             <Button className={`pop-btn dbchart-link pop-validate-btn iban-validate`}
             type="primary"
                 // loading={isValidateLoading}
                 onClick={() => onIbanValidate(enteredIbanData)} >
                 <Translate content="validate" />
             </Button>      
-        }                   
-            </Form.Item>
-                                        
-               
-            </div>
-        }
-       
-        </div>}
+        </Col>}
+        </Row>}
 
         <Row>
             {(currency == 'USD' && addressOptions.tabType !== 'internationalIBAN')  && <> <Col xs={24} md={24} lg={24} xl={24} xxl={24}>

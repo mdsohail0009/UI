@@ -187,7 +187,7 @@ const getCurrencyLookup = async () => {
           
         </div>
        
-        <div className='bill-payment'> 
+        <div className='bill-payment bill-margin'> 
         <Select
                   className="cust-input cust-disable"
                   placeholder="Select Currency"

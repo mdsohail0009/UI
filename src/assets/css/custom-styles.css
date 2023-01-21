@@ -304,6 +304,7 @@ input:-webkit-autofill:active{
 .ant-alert-with-description{align-items: center !important;}
 .summarybal .gridLink:hover{color: var(--viewAll);}
 .pay-list.modal-listbr .summarybal .gridLink{word-break: break-all;text-align: right;width: 326px;}
+.paste-rece-style{padding-top: 0 !important;margin-top: 16px !important;}
 /*Common css End*/
 
 /*Coin Selection End*/
@@ -735,7 +736,6 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .newtransfer-card{background: var(--drawerList);border-radius: 13px;border: 2px solid transparent;height: 90px;padding: 10px 43px !important;font-size: 16px; font-weight: 700; color: var(--coinBal);width: 100%;text-align: center;}
 .newtransfer-card:hover,.newtransfer-card:active{background-color: var(--radioFill) !important;border: 2px solid var(--radioBorderfill);color: var(--coinPrice) !important;}
 .newtransfer-card::before{ background: var(--drawerList) !important;}
-.small-btns{margin-top: 20px !important;}
 .addcrypto-whitelist{margin-bottom: 45px;}
 .sub-title{font-weight: 700 !important; font-size: 18px !important;margin-bottom: 26px !important; color: var(--white) !important;}
 .addcrypto-benficiary .ant-form-item{margin-bottom: 16px;}
@@ -743,7 +743,8 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .hy-align, .code-tooltip-align{margin:auto 0; display: flex;align-items: center;}
 .send-crypto-enrty{border-radius:5px;margin-bottom: 12px;}
 .transfer-designstyle{margin-top: 30px;}
-.inputfont-style::placeholder{font-size: 12px;}
+.inputfont-style::placeholder{font-size: 20px;}
+.new-swap-subtext.send-crypto-enrty{width:97%;margin:0 auto;}
 /* send crypto end */
 
 /* crypto summary start */
@@ -787,6 +788,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .new-custom-radiobtn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){border-color: transparent;}
 .new-custom-radiobtn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):focus-within{box-shadow:none;}
 .new-custom-radiobtn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{color: var( --radiocheccolor);}
+.addCryptoList.adbook-scroll .declaration-content .successsubtext{height:50px !important;}
 /* send crypto addressbook end */
 
 /* transactions start  */
@@ -966,7 +968,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .markets-grid .side-drawer-header{padding: 0 16px 0 0;}
 .header-space{margin-bottom: 0 !important;}
 .basicinfo.batch-style{margin-left: 20px;}
-/* .cust-list.main-container .bill-grid{margin-top: -25px !important;} */
+.bill-payment.bill-margin{margin-bottom: 10px !important;}
 /* batchpayments end */
 .no-transaction{padding-top: 18px !important;}
 .search-box .ant-input, .search-box .ant-input:focus,.search-box .ant-input:hover{color: var(--textWhite); border: 0;}
@@ -983,6 +985,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .preview-grid .cust-list,.box.text-white .cust-list{padding: 0;}
 .Supporting-Documents{margin-top: 30px;}
 .icon.md.Batch{background-position: -738px -37px;}
+.notkyc a{color:var(--viewAll);}
 /*@media start*/
 @media (min-width: 768px){
     .listitems-design{width: 340px;}
@@ -1140,6 +1143,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .ant-tabs-tab + .ant-tabs-tab{margin: 0 0 0 26px;}
     .display-items{display: block;}
     .crypto-details{justify-content: center;}
+   
 }
 
 /*@media end*/
