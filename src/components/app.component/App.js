@@ -66,7 +66,7 @@ function App(props) {
     });
 
     //this should be unComment to STG and LIVE Only connectToHub
-    // connectToHub(); 
+    connectToHub(); 
   }, [])// eslint-disable-line react-hooks/exhaustive-deps
   return (
     <OidcProvider userManager={userManager} store={store}>
