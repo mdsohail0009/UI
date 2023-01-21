@@ -143,7 +143,7 @@ class AddressBook extends Component {
 			width: 300,
 			customCell: (props) => (
 				<td >
-					<div className="d-flex align-center text-wrap-style">
+					<div className="d-flex align-center text-wrap-style justify-content">
 					<div className="wrap-text-width">
 					<Tooltip title= {props?.dataItem?.whiteListName}>
 					<Text className="gridLink c-pointer grid-level-style" onClick={() => this.addressFiatView(props)}>{props?.dataItem?.whiteListName}</Text>
