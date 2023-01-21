@@ -627,6 +627,9 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .view-level-btn .cust-cancel-btn{width: 136px;margin-top: 16px;}
 .docdetails.doc-view{margin-left: 0 !important;}
 .detail-popbtn.paynow-btn-ml{width:136px;}
+.text-wrap-style{width: 100%;}
+.wrap-text-width{width: 66%;}
+.gridLink.grid-level-style{display: block;}
 .alert-info-custom.kpi-List.adbook-newdesign, .docfile.address-book-viewlevel{background-color:var(--coinviewradio) !important;}
 /* --Payments End--*/
 

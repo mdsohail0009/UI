@@ -142,13 +142,15 @@ class AddressBook extends Component {
 			filter: true,
 			width: 300,
 			customCell: (props) => (
-				<td className="d-flex justify-content align-center">
-					<div>
+				<td >
+					<div className="d-flex align-center text-wrap-style">
+					<div className="wrap-text-width">
 					<Tooltip title= {props?.dataItem?.whiteListName}>
-					<Text className="gridLink c-pointer	gridlink-data" onClick={() => this.addressFiatView(props)}>{props?.dataItem?.whiteListName}</Text>
+					<Text className="gridLink c-pointer grid-level-style" onClick={() => this.addressFiatView(props)}>{props?.dataItem?.whiteListName}</Text>
 					</Tooltip></div>
 					<div>
 						<span  className="file-label add-lbl">{this.addressTypeNames(props?.dataItem?.addressType)}</span>
+					</div>
 					</div>
 				</td>
 			),
