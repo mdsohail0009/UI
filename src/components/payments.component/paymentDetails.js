@@ -836,8 +836,9 @@ class PaymentDetails extends Component {
           footer={<>
              <div className="cust-pop-up-btn crypto-pop">
             
-            <Button onClick={this.docPreviewClose} className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml">Close</Button>
+            
             <Button className="primary-btn pop-btn detail-popbtn" onClick={() => this.fileDownload()}>Download</Button>
+            <Button onClick={this.docPreviewClose} className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml">Close</Button>
             </div>
           </>}
         >
