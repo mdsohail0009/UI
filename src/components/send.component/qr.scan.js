@@ -48,7 +48,14 @@ class QRScan extends Component {
             this.setState({ error: response.data });
         }
     }
-
+    networkTypeNames = (type) => {
+		const stepcodes = {
+			"BTC": "BTC",
+			"ERC-20": "ERC - 20",
+			"TRC-20": "TRC - 20",
+		};
+		return stepcodes[type];
+	};
     onNetworkView = async (netWork) => {
         this.setState({...this.state, isLoading: true})
         const response = await createCryptoDeposit({customerId: this.props.userProfile?.id,walletCode:this.props?.sendReceive?.depositWallet?.walletCode, network: netWork?.code});
@@ -85,21 +92,6 @@ class QRScan extends Component {
                     <EmailIcon size={32} round={true} />
                 </EmailShareButton>
             </Menu.Item>
-            {/* <Menu.Item>
-                <TwitterShareButton url={process.env.REACT_APP_WEB_URL} title={this.walletAddress} >
-                    <TwitterIcon size={32} round={true} />
-                </TwitterShareButton>
-            </Menu.Item>
-            <Menu.Item>
-                <FacebookShareButton url={process.env.REACT_APP_WEB_URL} quote={this.walletAddress} >
-                    <FacebookIcon size={32} round={true} />
-                </FacebookShareButton>
-            </Menu.Item>
-            <Menu.Item>
-                <TelegramShareButton url={process.env.REACT_APP_WEB_URL} title={this.walletAddress} >
-                    <TelegramIcon size={32} round={true} />
-                </TelegramShareButton>
-            </Menu.Item> */}
         </Menu>
     }
     render() {
@@ -129,7 +121,7 @@ class QRScan extends Component {
                             <div className=  {network.code === this.props?.sendReceive?.depositWallet?.network ? "cust-networkstyle" : "network" }>
                                {netWorkData.length>1 &&<Link onClick={() => this.onNetworkView(network)}>
                                     <div className='swap-fontsize'>
-                                        {network.code}
+                                        {this.networkTypeNames(network.code)}
                                         </div>
                                 </Link>}
                                 {netWorkData.length === 1 &&  `${network.code}`}
@@ -142,7 +134,8 @@ class QRScan extends Component {
                     <QRCodeComponent value={this.props?.sendReceive?.depositWallet?.walletAddress} size={150} />
                 </div>
                 <div className="recive-lable">
-                    <Translate className="recive-lable" content="address" component={Text} />{" "}({this.props?.sendReceive?.depositWallet?.network})
+                    <Translate className="recive-lable" content="address" component={Text} />{" "}
+                    ({this.networkTypeNames(this.props?.sendReceive?.depositWallet?.network)})
 
                     <div className="recive-copy">{this.props?.sendReceive?.depositWallet?.walletAddress}
                         <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.walletAddress} options={{ format: 'text/plain' }}>
@@ -174,14 +167,6 @@ class QRScan extends Component {
                 <span className='icon lg mail-app c-pointer' />
                 </EmailShareButton>
                 </div>
-
-
-                {/* <Dropdown overlay={this.shareMenu}>
-                    <Button className="pop-btn mt-36" block>Share</Button>
-                    <Button
-                        style={{ borderRadius: 25, height: 50 }}
-                        className="mt-36 text-upper share-btn fw-600 fs-14" block>{apicalls.convertLocalLang('button')}</Button>
-                </Dropdown> */}
             </div>
             </>
         )
