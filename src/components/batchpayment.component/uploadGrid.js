@@ -295,14 +295,14 @@ const filePreviewPath = () => {
 			footer={
 				<>
 					<Button
-						className="pop-btn px-36"
-						style={{ margin: "0 8px" }}
+						className="cust-cancel-btn preview-back"
+						style={{ width: 148, height: 48 }}
 						onClick={() => setPreviewModal(false)}>
 						Close
 					</Button>
 					<Button
-						className="pop-btn px-36"
-						style={{ margin: "0 8px" }}
+						className="pop-btn custom-send sell-btc-btn ml-8"
+						style={{ width: 148, height: 48 }}
 						onClick={() => window.open(previewPath, "_blank")}>
 						Download
 					</Button>

@@ -72,7 +72,7 @@ const Batchpayments = (props) => {
         { field: "status", title: 'Status', filter: true, width: 150, },
         { field: "numberOfTransactions", title: 'Number of Transactions', filter: true, width: 250,dataType: "number", filterType: "numeric", 
         customCell: (properites) => (<td>
-        {properites?.dataItem?.numberOfTransactions!==0? <div className="gridLink" onClick={()=>docPreview(properites.dataItem)}
+        {properites?.dataItem?.numberOfTransactions!==0? <div className="gridLink batch-filename" onClick={()=>docPreview(properites.dataItem)}
         >{properites?.dataItem?.numberOfTransactions} 
         </div>:<>{properites?.dataItem?.numberOfTransactions}</>}</td>) 
      },
