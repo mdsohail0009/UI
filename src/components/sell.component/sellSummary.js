@@ -10,6 +10,7 @@ import apicalls from '../../api/apiCalls';
 import { setCurrentAction } from '../../reducers/actionsReducer';
 
 class SellSummary extends Component {
+    myRef = React.createRef();
     state = {
          sellpreviewData: {},
           loader: true,
@@ -39,7 +40,7 @@ class SellSummary extends Component {
     refreshPage() {
         if (!this.state.isTermsAgree) {
             this.setState({ ...this.state, error: { valid: false, message: 'Please accept terms of service' } })
-
+            this.myRef.current.scrollIntoView();
         } else {
             this.setState({ ...this.state, loader: true, error: { valid: true, message: '' } })
             this.fetchPreviewData()
@@ -53,6 +54,7 @@ class SellSummary extends Component {
                     valid: false, message: apicalls.convertLocalLang('accept_terms'), title: apicalls.convertLocalLang('sellCrypto'),agreeRed:false
                 }
             })
+            this.myRef.current.scrollIntoView();
 
         } else {
             this.setState({ ...this.state, isLoading: true, error: { valid: true, message: '',agreeRed:true } })
@@ -75,6 +77,7 @@ class SellSummary extends Component {
                 this.props.fetchMarketCoinDataValue();
             } else {
                 this.setState({ ...this.state, loader: false,isLoading: false, disableConfirm: false, error: { valid: false, message: this.isErrorDispaly(res),title: apicalls.convertLocalLang('sellCrypto'),agreeRed:false }  } )
+                this.myRef.current.scrollIntoView();
             }
         }
     }
@@ -118,7 +121,9 @@ class SellSummary extends Component {
             />
         )}
       
-        return <Summary
+        return (
+        <div id="divScroll" ref={this.myRef}>
+            <Summary
         permissions={this.state.permissions?.Sell}
          loading={this.state.loader}
             coin={coin}
@@ -136,6 +141,8 @@ class SellSummary extends Component {
             onTermsChange={(checked) => { this.setState({ ...this.state, isTermsAgree: checked }) }}
             onCheked={this.state.isTermsAgree}
             onErrorClose={() => this.setState({ ...this.state, error: { valid: true, message: null } })} />
+            </div>
+            )
     }
 }
 

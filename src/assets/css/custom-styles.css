@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');
-* { scrollbar-width: thin; scrollbar-color: var(--cardBG);}
+* { scrollbar-width: thin; scrollbar-color: var(--scroll);}
 *::-webkit-scrollbar { width: 12px;height: 10px;  }
-*::-webkit-scrollbar-thumb {background-color: var(--cardBG);border-radius: 20px;}
-html, .auto-scroll, .ant-table-body, .ant-drawer-body, .mobile-list, .k-grid-content{scrollbar-color: var(--cardBG);}
+*::-webkit-scrollbar-thumb {background-color: var(--scroll);border-radius: 20px;}
+html, .auto-scroll, .ant-table-body, .ant-drawer-body, .mobile-list, .k-grid-content{scrollbar-color: var(--scroll);}
 .loader-antd{padding: 30px 50px;text-align: center;color: var(--white);}
     
 body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !important;}
@@ -624,6 +624,10 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .dashb-btmtable,.mobile-list{margin-top: 10px;}
 .cust-pop-up-btn.crypto-pop .detail-popbtn{width: 100px;}
 .des-mr{margin-right: 12px;}
+.view-level-btn .pop-btn{width: 136px;}
+.docdetails.doc-view{margin-left: 0 !important;}
+.detail-popbtn.paynow-btn-ml{width:136px;}
+.alert-info-custom.kpi-List.adbook-newdesign, .docfile.address-book-viewlevel{background-color:var(--coinviewradio) !important;}
 /* --Payments End--*/
 
 /*--Zoho start--*/
@@ -702,6 +706,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .network .swap-fontsize{color: var(--white);}
 .custom-height {max-height: calc(100vh - 926px);}
 .nodata-text{margin-top: 10px !important;display: inline-block;color:var(--termsText);}
+.nodata-text:hover{color:var(--termsText);}
 .cust-input.change-space .ant-input{height: 34px !important;}
 .nodata-image{margin-bottom: 10px;}
 .custom-upload{ margin: 12px 0px 4px 0;}
@@ -739,7 +744,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .new-add button{border-left: 1px solid var(--white) !important; padding-left: 20px; }
 .new-add button:hover{border-left: 1px solid var(--white) !important;}
 .cust-input.custom-add-select:hover{border-color: var(--subText);}
-.custom-send.sell-btc-btn span{color: var(--white);}
+.custom-send.sell-btc-btn span{color: #ffffff;}
 .new-add button span{color: var(--termsText); font-size: 16px; font-weight: 700;}
 .new-add .check-ml-align{margin-left: 24px;}
 .verification-text{color: var(--white) !important;font-weight: 400;  font-size: 14px;}

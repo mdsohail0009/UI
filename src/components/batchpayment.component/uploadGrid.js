@@ -427,13 +427,16 @@ const filePreviewPath = () => {
           footer={[
             <>
             <div className='cust-pop-up-btn crypto-pop bill-pop'>
-              <Button
+             
+             
+                 <Button
                 className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
                 onClick={() => deleteModalCancel()}>No</Button>
-              <Button className="primary-btn pop-btn detail-popbtn"
+                 <Button className="primary-btn pop-btn detail-popbtn"
                 onClick={() => deleteGridDocuments()}
                 loading={isLoad}
-                >Yes</Button></div>
+                >Yes</Button>
+                </div>
             </>
           ]}
         >

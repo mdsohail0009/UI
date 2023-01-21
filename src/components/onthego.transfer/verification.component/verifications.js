@@ -400,7 +400,7 @@ const Verifications = (props) => {
                                         </Text>
                                         <Text
                                             className="fs-14 text-red fw-400"
-                                            style={{ float: "right", color: "var(--textRed)" }}>
+                                            style={{ float: "right" }}>
                                             {phone.errorMsg}
                                         </Text>
                                     </div>
@@ -442,7 +442,7 @@ const Verifications = (props) => {
                                         </Text>
                                         <Text
                                             className="fs-14 text-red fw-400"
-                                            style={{ float: "right", color: "var(--textRed)" }}>
+                                            style={{ float: "right"}}>
                                             {email.errorMsg}
                                         </Text>
                                     </div>
@@ -484,7 +484,7 @@ const Verifications = (props) => {
                                         </Text>
                                         <Text
                                             className="fs-14 text-red fw-400"
-                                            style={{ float: "right", color: "var(--textRed)" }}>
+                                            style={{ float: "right"}}>
                                             {authenticator.errorMsg}
                                         </Text>
                                     </div>

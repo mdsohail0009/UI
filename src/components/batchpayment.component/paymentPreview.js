@@ -56,7 +56,7 @@ returnDashboard=()=>{
     </td>
   )
   },
-  { field: "amount", title: "Amount in USD", filter: true,width: 250},
+  { field: "amount", title: "Amount", filter: true,width: 250},
   { field: "accountNumber", title: 'Account Number/IBAN', filter: true, width: 260},
   { field: "abaShiftCode", title: 'ABA Routing/ Swift / BIC Code', filter: true, width: 300 },
   { field: "bankName", title: 'Bank Name', filter: true, width: 200},

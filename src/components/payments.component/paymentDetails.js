@@ -545,7 +545,7 @@ class PaymentDetails extends Component {
                                       )}
                                     </td>
                                     <td className="doc-def" >
-                                      <div className="d-flex align-center justify-content">
+                                      <div className="d-flex align-center">
                                         <span>
                                           <Tooltip title={item.bankname}>
                                             <span className='pay-docs'>{item.bankname}</span>
@@ -797,6 +797,13 @@ class PaymentDetails extends Component {
             <div className="text-right mt-36">
               {paymentsData.length > 0 ? (
                 <div>
+                   <Button
+                    className="cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
+                    onClick={this.backToPayments}
+                  >
+                    Cancel
+                  </Button>
+
                   {(this.props.match.params.id ===
                     "00000000-0000-0000-0000-000000000000" || this.props.match.params.state === "Submitted" || this.props.match.params.state === "Pending") &&
                     <Button
@@ -811,13 +818,7 @@ class PaymentDetails extends Component {
                       Pay Now
                     </Button>
                   }
-                  <Button
-                    className="cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
-                    onClick={this.backToPayments}
-                  >
-                    Cancel
-                  </Button>
-
+                 
                 </div>
               ) : (
                 ""
@@ -849,11 +850,12 @@ class PaymentDetails extends Component {
           footer={[
             <>
             <div className='cust-pop-up-btn crypto-pop bill-pop'>
-              <Button block className="primary-btn pop-btn detail-popbtn"
-                onClick={() => this.deleteDetials(this.state.selectData, this.state.paymentsData)}>Yes</Button>
+             
                 <Button
                 className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
                 onClick={this.handleCancel}>No</Button>
+                 <Button block className="primary-btn pop-btn detail-popbtn"
+                onClick={() => this.deleteDetials(this.state.selectData, this.state.paymentsData)}>Yes</Button>
                 </div>
             </>
           ]}

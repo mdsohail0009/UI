@@ -506,7 +506,7 @@ const AddressFiatView = (props) => {
 												{item?.documents?.details.map((file) => (
 													<Col xs={12} sm={12} md={12} lg={12} xxl={12}>
 														<div
-															className="docfile"
+															className="docfile address-book-viewlevel"
 															key={file.id}>
 															<span
 																className={`icon xl ${(file.documentName?.slice(-3) === "zip" &&
@@ -546,7 +546,7 @@ const AddressFiatView = (props) => {
 										</Row>
 									</Col>
 								</Row>
-								<div className="text-right">
+								<div className="text-right view-level-btn">
 								<Button
 								block
 									className="pop-btn"
