@@ -125,7 +125,7 @@ class BuySummary extends Component {
           agreeRed:false,
         },
       });
-      this.myRef.current.scrollIntoView();
+      this.myRef.current?.scrollIntoView();
 
     }
   };
