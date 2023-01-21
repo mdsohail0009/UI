@@ -966,7 +966,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .cust-pop-up-btn.ad-popup button:nth-child(2){margin-left: 0;}
 .kpi-divstyle.ad-rec-detyails{border-bottom: transparent;}
 .kpi-val.adview-name{width: 225px;}
-.preview-grid .cust-list{padding: 0;}
+.preview-grid .cust-list,.box.text-white .cust-list{padding: 0;}
 .Supporting-Documents{margin-top: 30px;}
 /*@media start*/
 @media (min-width: 768px){
@@ -1046,7 +1046,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .transctns-grid .ant-drawer-header, .transctns-grid .ant-drawer-body{padding-left: 100px;padding-right: 100px;}
     .adbook-scroll{max-height: 418px;overflow: auto;}
     .your-card{margin-top: 8px;}
-    .batchpayment-summary{padding: 0 16px;}
+    /* .batchpayment-summary{padding: 0 16px;} */
 }
 @media (min-width: 1400px){
     .main-container{max-width: 1300px; }
