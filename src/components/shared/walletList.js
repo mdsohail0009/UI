@@ -35,7 +35,7 @@ class WalletList extends Component {
                     <List
                         itemLayout="horizontal"
                         dataSource={this.props.buyInfo.memberFiat?.data}
-                        className="crypto-list auto-scroll wallet-list selection-currency-list"
+                        className="crypto-list auto-scroll wallet-list selection-currency-list conlist-c-pointer"
                         locale={{
                             emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
                                 <Translate content="No_data" />
@@ -53,7 +53,7 @@ class WalletList extends Component {
                                 }}>
 
 
-                                <Link>
+                                <Link className={(this.props.buyInfo?.selectedWallet?.currencyCode === item?.currencyCode || this.props.buyInfo?.selectedWallet?.toWalletCode === item?.currencyCode) ? "c-notallowed" : ""}>
                                     <List.Item.Meta
                                         avatar={<Image preview={false} src={item.imagePath} />}
 
