@@ -380,7 +380,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
             <div className="custom-btn-error">
             <Form.Item
-                className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
+                className="custom-forminput custom-label "
                 name="iban"
                 required
                 rules={[
@@ -538,7 +538,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
 
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label "
                         name="line1"
                         label='Bank Address 1'
                         required
@@ -564,7 +564,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 </Col>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label "
                         name="line2"
                         label='Bank Address 2'
                         rules={[ {
