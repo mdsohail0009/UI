@@ -450,7 +450,7 @@ saveWithdrawdata = async () => {
                           allowNegative={false}
                           thousandSeparator={","}
                           onKeyDown={this.keyDownHandler}
-                          addonBefore={<Select defaultValue={this.state.selectedCurrency}
+                          addonBefore={<Select defaultValue={this.state.selectedCurrency} className="currecny-drpdwn"
                               onChange={(e) => this.handleCurrencyChange(e)}
                               placeholder="Select">
                               <option value="USD">USD</option>
