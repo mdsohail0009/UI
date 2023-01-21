@@ -322,7 +322,7 @@ input:-webkit-autofill:active{
 .custom-btn.prime:hover,.ant-btn-primary[disabled], .ant-btn-primary[disabled]:hover{background-color: #7087FF;}
 .custom-btn.sec{background: transparent;background-image: none;border: 1px solid var(--subText); color: var(--textWhite);margin-left: 16px;}
 .custom-btn.sec:hover{background-color: #3653E4;}
-.cust-cancel-btn{border: 1px solid var(--inputBorder);border-radius: 5px;height: 42px;background-color: transparent;color:var(--white);font-weight: 600;transition: 0.3s ease;font-size: 16px;width:100%;margin-bottom: 20px;}
+.cust-cancel-btn{border: 1px solid var(--inputBorder);border-radius: 5px;height: 46px;background-color: transparent;color:var(--white);font-weight: 600;transition: 0.3s ease;font-size: 16px;width:100%;margin-bottom: 20px;}
 .cust-cancel-btn.ant-btn:hover, .cust-cancel-btn.ant-btn:focus, .cust-cancel-btn.ant-btn:active{border: 1px solid #CCC3FF;border-radius: 5px;height: 42px;background-color: transparent;color: var(--white);font-weight: 600;transition: 0.3s ease;font-size: 16px;}
 /* button styles end */
 /*Kendo start*/

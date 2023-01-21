@@ -79,7 +79,7 @@ const Batchpayments = (props) => {
      { field: "validTransactionCount", title: 'Valid Transactions', filter: true, dataType: "number", filterType: "numeric", width: 210, },
      { field: "invalidTransactionCount", title: 'Invalid Transactions', filter: true, dataType: "number", filterType: "numeric", width: 210,
          customCell: (properites) => (
-         <td>{properites?.dataItem?.invalidTransactionCount!==0?<div onClick={()=>getInvalidTransaction(properites?.dataItem)} className="gridLink" >{properites?.dataItem?.invalidTransactionCount}
+         <td>{properites?.dataItem?.invalidTransactionCount!==0?<div onClick={()=>getInvalidTransaction(properites?.dataItem)} className="gridLink batch-filename" >{properites?.dataItem?.invalidTransactionCount}
            </div>:<>{properites?.dataItem?.invalidTransactionCount}</>}
            
            </td>)
