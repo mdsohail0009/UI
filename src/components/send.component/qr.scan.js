@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, message, Dropdown, Menu, Button, Alert } from 'antd';
+import { Typography, message, Menu, Alert } from 'antd';
 import { setStep, setWalletAddress } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
@@ -124,7 +124,7 @@ class QRScan extends Component {
                                         {this.networkTypeNames(network.code)}
                                         </div>
                                 </Link>}
-                                {netWorkData.length === 1 &&  `${network.code}`}
+                                {netWorkData.length === 1 &&  `${this.networkTypeNames(network.code)}`}
                             </div>
                            
                         </>
