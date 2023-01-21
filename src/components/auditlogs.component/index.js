@@ -343,8 +343,8 @@ class AuditLogs extends Component {
                 </div>
                 <Form.Item className="mb-0">
                   <div className="text-right">
-                  <Button type="button" block key="submit" className="primary-btn pop-btn" htmlType="submit"><span><Translate content="ok" /></span></Button>
-                    <Button type="button" block className="cust-cancel-btn" onClick={this.handleCancel} ><span><Translate content="cancel" /></span></Button>         
+                  <Button type="button" block key="submit" className="primary-btn pop-btn detail-popbtn paynow-btn-ml" htmlType="submit"><span><Translate content="ok" /></span></Button>
+                    <Button type="button" block className="cust-cancel-btn detail-popbtn paynow-btn-ml" onClick={this.handleCancel} ><span><Translate content="cancel" /></span></Button>         
                   </div>
                 </Form.Item>
               </Form>

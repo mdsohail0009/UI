@@ -962,7 +962,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .markets-grid .side-drawer-header{padding: 0 16px 0 0;}
 .header-space{margin-bottom: 0 !important;}
 .basicinfo.batch-style{margin-left: 20px;}
-/* .cust-list.main-container .bill-grid{margin-top: -25px !important;} */
+.bill-payment.bill-margin{margin-bottom: 10px !important;}
 /* batchpayments end */
 .no-transaction{padding-top: 18px !important;}
 .search-box .ant-input, .search-box .ant-input:focus,.search-box .ant-input:hover{color: var(--textWhite); border: 0;}
