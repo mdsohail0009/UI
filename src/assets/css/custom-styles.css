@@ -760,6 +760,8 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .new-add button span{color: var(--termsText); font-size: 16px; font-weight: 700;}
 .new-add .check-ml-align{margin-left: 4px;margin-bottom:4px;}
 .verification-text{color: var(--white) !important;font-weight: 400;  font-size: 14px;}
+.sendfiat-summarystyle .kpi-divstyle{padding-top: 20px;}
+.sendfiat-summarystyle{padding-top: 0 !important;}
 /* crypto summary end  */
 
 /* crypto sucess start  */
