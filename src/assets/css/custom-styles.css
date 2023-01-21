@@ -248,6 +248,8 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .ant-alert-error .ant-alert-icon, .ant-alert-warning .ant-alert-icon{color: #ff4d4f;}
 .ant-alert-message{color: #ff5747 !important;}
 .ant-alert-description {font-size: 16px !important;color: var(--red) !important}
+.ant-alert-description span{font-size: 16px !important;color: var(--red) !important}
+.ant-alert-description span a{color:var(--termsText) !important}
 .ant-alert{border-radius: 5px;}
 .ant-notification-rtl{z-index:9999;top:75px !important;}
 .ant-notification-notice .ant-notification-close-icon{color: var(--textWhite30);}
@@ -358,7 +360,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /*Kendo End*/
 /*Modal start*/
 .ant-modal-content{border-radius: 24px;}
-.ant-modal-header{border-radius: 24px 24px 0 0;padding: 16px 24px;border-color: var(--borderGrey);}
+.ant-modal-header{border-radius: 24px 24px 0 0;padding: 16px 24px;border-bottom:1px solid #4E505A !important;}
 .ant-modal-header, .ant-modal-content{background: var(--drawerBG);}
 .ant-modal-title{font-size: 24px; line-height: 34px;color: var(--white);text-transform:capitalize;}
 .ant-modal-body p{font-size: 16px;color: var(--white);font-weight: 400;}
@@ -627,6 +629,9 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .view-level-btn .cust-cancel-btn{width: 136px;margin-top: 16px;}
 .docdetails.doc-view{margin-left: 0 !important;}
 .detail-popbtn.paynow-btn-ml{width:136px;}
+.text-wrap-style{width: 100%;}
+.wrap-text-width{width: 66%;}
+.gridLink.grid-level-style{display: block;}
 .alert-info-custom.kpi-List.adbook-newdesign, .docfile.address-book-viewlevel{background-color:var(--coinviewradio) !important;}
 /* --Payments End--*/
 
