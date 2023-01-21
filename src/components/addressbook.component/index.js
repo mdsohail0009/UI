@@ -65,6 +65,7 @@ class AddressBook extends Component {
 		this.props.dispatch(setSelectedFeatureMenu(getFeatureId("/addressBook"), this.props.userConfig.id));
 	}
 	componentDidMount() {
+		this.setState({...this.state,cryptoFiat:false})
 		this.props.dispatch(getScreenName({getScreen:null}))
 		this.permissionsInterval = setInterval(this.loadPermissions, 200);
 		if(!this.state.cryptoFiat){
@@ -237,7 +238,7 @@ class AddressBook extends Component {
 			customCell: (props) => (
 				<td>
 					<div>
-						<span className="gridLink c-pointer batch-filename" onClick={() => this.addressCryptoView(props)}>{props.dataItem?.whiteListName}</span>
+						<span className="gridLink c-pointer batch-filename" onClick={() => this.addressCryptoView(props)}><Tooltip title= {props?.dataItem?.whiteListName}>{props.dataItem?.whiteListName}</Tooltip></span>
 					</div>
 				</td>
 			),
