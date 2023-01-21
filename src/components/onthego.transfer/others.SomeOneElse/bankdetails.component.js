@@ -107,7 +107,7 @@ class PayeeBankDetails extends Component {
             sepa: <>
             <>
             <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
-                       <div className=" custom-btn-error">
+                       <div className=" custom-btn-error fsdf">
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
                         name={["payeeAccountModels","iban"]}
@@ -492,7 +492,7 @@ class PayeeBankDetails extends Component {
         //const { countries, states, isLoading } = this.state;
         
         return <>
-            <Row >
+            <Row className="validateiban-content">
                 {this.renderAddress(domesticType === "internationalIBAN" ? "sepa" : transferType)}
             </Row>
             </>
