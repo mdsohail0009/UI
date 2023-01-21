@@ -85,7 +85,7 @@ gridEURColumns = [
       </Text>
     </td>
   )},
-  { field: "amount", title: "Amount in EUR", filter: true,width: 250},
+  { field: "amount", title: "Amount", filter: true,width: 250},
   { field: "accountNumber", title: "IBAN", filter: true,width: 250},
   { field: "reasonforTransfer", title: 'Reason For Transfer', filter: true, width: 200},
   { field: "reference", title: 'Reference', filter: true, width: 250 },
