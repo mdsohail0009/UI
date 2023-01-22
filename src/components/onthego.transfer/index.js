@@ -62,21 +62,26 @@ class OnthegoFundTransfer extends Component {
     getFeaturePermissionsByKeyName(`send_fiat`);
     this.permissionsInterval = setInterval(this.loadPermissions, 200);
     if (!this.state.selectedCurrency) {
+      this.fetchMemberWallet();
+    }
+    if (this.state.selectedCurrency) {
+      this.getPayees();
+    }
+  }
+
+  fetchMemberWallet= async()=>{
+    debugger
+    
       this.setState({ ...this.state, fiatWalletsLoading: true });
-      fetchMemberWallets().then(res => {
+       fetchMemberWallets().then(res => {
         if (res.ok) {
             this.setState({ ...this.state, fiatWallets: res.data, filtercoinsList: res.data, fiatWalletsLoading: false });
         } else {
             this.setState({ ...this.state, fiatWallets: [], filtercoinsList: [], fiatWalletsLoading: false });
         }
       });
-    }
-    if (this.state.selectedCurrency) {
-      this.getPayees();
-    }
-    //  this.getCoinDetails()
+    
   }
-
   loadPermissions = () => {
     if (this.props.withdrawCryptoPermissions) {
       clearInterval(this.permissionsInterval);
@@ -300,6 +305,7 @@ saveWithdrawdata = async () => {
    goBack = async () => {
     this.chnageStep('selectcurrency');
     this.props.dispatch(setSendFiatHead(false));
+    this.fetchMemberWallet();
     if(this.state.fiatWalletsLoading===false){
       this.setState({ ...this.state, fiatWalletsLoading: true,successLoad:true });
     }
