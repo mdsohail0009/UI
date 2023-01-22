@@ -250,7 +250,7 @@ class PaymentsView extends Component {
                         </div>
                         </div>
                         {!loading &&
-                        <div className="text-right">
+                        <div className="text-right cust-pop-up-btn crypto-pop">
                         {paymentsData?.length > 0 &&
                             <Button
                             block

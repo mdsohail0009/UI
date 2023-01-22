@@ -411,19 +411,22 @@ const Verifications = (props) => {
                                 <Input
                                             type="text"
 
-                                            className="cust-input custom-add-select mb-0"
+                                            className="cust-input custom-add-select mb-0 ibanborder-field"
                                             placeholder={"Enter code"}
                                             maxLength={6}
 
                                             style={{ width: "100%" }}
                                             disabled={phone.btnName === 'get_otp' || phone.btnName === 'verified'}
                                             onChange={(e) => handlephoneinputChange(e)}
+                                            addonAfter={<div className="new-add  hy-align">
+                                            {phone_btnList[phone.btnName]}
+                                        </div>}
                                         />
                                    
                                  
-                                    <div className="new-add c-pointer get-code text-yellow hy-align">
+                                    {/* <div className="new-add c-pointer get-code text-yellow hy-align">
                                         {phone_btnList[phone.btnName]}
-                                    </div>
+                                    </div> */}
                                 </div>
                             </Form.Item>
                         </>
@@ -453,19 +456,22 @@ const Verifications = (props) => {
                                 <Input
                                             type="text"
 
-                                            className="cust-input custom-add-select mb-0"
+                                            className="cust-input custom-add-select mb-0 ibanborder-field"
                                             placeholder={"Enter code"}
                                             maxLength={6}
 
                                             style={{ width: "100%" }}
                                             disabled={email.btnName === 'get_otp' || email.btnName === 'verified'}
                                             onChange={(e) => handleEmailinputChange(e)}
+                                            addonAfter={<div className="new-add  hy-align">
+                                            {email_btnList[email.btnName]}
+                                        </div>}
                                         />
                                     
                                  
-                                    <div className="new-add c-pointer get-code text-yellow hy-align">
+                                    {/* <div className="new-add c-pointer get-code text-yellow hy-align">
                                         {email_btnList[email.btnName]}
-                                    </div>
+                                    </div> */}
                                 </div>
                             </Form.Item>
                         </>
@@ -483,8 +489,8 @@ const Verifications = (props) => {
                                             {authenticator.showRuleMsg}
                                         </Text>
                                         <Text
-                                            className="fs-14 text-red fw-400"
-                                            style={{ float: "right"}}>
+                                            className="fs-14 text-red fw-500"
+                                            style={{ float: "right",position: "absolute",right: "2px",top: "54px"}}>
                                             {authenticator.errorMsg}
                                         </Text>
                                     </div>
@@ -500,18 +506,21 @@ const Verifications = (props) => {
                                 <Input
                                             type="text"
 
-                                            className="cust-input custom-add-select mb-0"
+                                            className="cust-input custom-add-select mb-0 ibanborder-field"
                                             placeholder={"Enter code"}
                                             maxLength={6}
 
                                             style={{ width: "100%" }}
                                             disabled={authenticator.btnName === 'get_otp' || authenticator.btnName === 'verified'}
                                             onChange={(e) => handleAuthenticatorinputChange(e)}
+                                            addonAfter={ <div className="new-add hy-align">
+                                            {authenticator_btnList[authenticator.btnName]}
+                                        </div>}
                                         />                                    
                                   
-                                    <div className="new-add c-pointer get-code text-yellow hy-align">
+                                    {/* <div className="new-add c-pointer get-code text-yellow hy-align">
                                         {authenticator_btnList[authenticator.btnName]}
-                                    </div>
+                                    </div> */}
                                 </div>
                             </Form.Item>
                         </>
