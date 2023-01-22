@@ -70,7 +70,6 @@ class OnthegoFundTransfer extends Component {
   }
 
   fetchMemberWallet= async()=>{
-    debugger
     
       this.setState({ ...this.state, fiatWalletsLoading: true });
        fetchMemberWallets().then(res => {
