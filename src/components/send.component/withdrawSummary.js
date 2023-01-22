@@ -702,7 +702,7 @@ class WithdrawSummary extends Component {
 								suffixText={"USD"}
 							/>
 						</div>
-						<div className="cust-summary-new">
+						<div className="cust-summary-new withdraw-style-chnage">
 						<div className="pay-list">
 							<Translate
 								className="summary-liststyle"
@@ -761,7 +761,7 @@ class WithdrawSummary extends Component {
 								component={Text}
 							/>
 								<CopyToClipboard text={this.props.sendReceive.withdrawCryptoObj?.toWalletAddress} options={{ format: 'text/plain' }}>
-									<Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="summary-liststyle" >{this.props.sendReceive.withdrawCryptoObj?.toWalletAddress?.length>0?this.props.sendReceive.withdrawCryptoObj?.toWalletAddress.substring(0,4)+`................`+this.props.sendReceive.withdrawCryptoObj?.toWalletAddress.slice(-4):"-"}</Text>
+									<Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="summarybal" >{this.props.sendReceive.withdrawCryptoObj?.toWalletAddress?.length>0?this.props.sendReceive.withdrawCryptoObj?.toWalletAddress.substring(0,4)+`................`+this.props.sendReceive.withdrawCryptoObj?.toWalletAddress.slice(-4):"-"}</Text>
 								</CopyToClipboard>
 						</div>
 						<div className="pay-list">
@@ -770,7 +770,7 @@ class WithdrawSummary extends Component {
 								content="network"
 								component={Text}
 							/>
-							<Text className="summary-liststyle">
+							<Text className="summarybal">
 							{this.props.sendReceive.withdrawCryptoObj?.network || '-'}
 							</Text>
 						</div></div>
@@ -852,39 +852,7 @@ class WithdrawSummary extends Component {
 											</Button>
 										</div>}
 										/>
-										{/* <div className="new-add phn-code get-code text-yellow hy-align">
-											{!this.state.verifyTextotp && (
-												<Button
-													type="text"
-													className="loading-btn c-pointer"
-													loading={this.state.phoneLoading}
-													style={{ color: "black" }}
-													onClick={this.getOTP}
-													disabled={this.state.disable}>
-													{btnList[this.state.buttonText]}
-												</Button>
-											)}
-											{this.state.tooltipVisible === true && (
-												<Tooltip
-													placement="topRight"
-													title={`Haven't received code? Request new code in ${seconds} seconds. The code will expire after 2 Min.`}>
-
-													<span className="icon md info mr-16 c-pointer" />
-												</Tooltip>
-											)}
-											<Button
-												type="text" className=""
-												loading={this.state.phoneVerifyLoading}
-												style={{ color: "black", margin: "0 auto" }}
-												onClick={this.getOtpVerification}
-												disabled={this.state.verifyPhone === true||this.state.verifyTextotp === true}>
-												{verifyOtpText[this.state.verifyOtpText]}
-												{this.state.verifyTextotp === true && (<>
-													<Text className="text-yellow pr-24"> Verified </Text>
-													<span className="icon md greenCheck" />
-													</>)}
-											</Button>
-										</div> */}
+										
 									</div>
 								</Form.Item>
 							)}
@@ -961,41 +929,7 @@ class WithdrawSummary extends Component {
 
 										</div>}
 										/>
-										{/* <div className="new-add phn-code c-pointer get-code text-yellow hy-align">
-											{!this.state.verifyEmailOtp && (
-												<Button
-													type="text"
-													style={{ color: "black", margin: "0 auto" }}
-													loading={this.state.emailLoading}
-													onClick={this.getEmail}>
-													{emailBtn[this.state.emailText]}
-												</Button>
-											)}
-											{this.state.tooltipEmail === true && (
-												<Tooltip
-													placement="topRight"
-													title={`Haven't received code? Request new code in ${seconds2} seconds. The code will expire after 2 Min.`}>
-
-													<span className="icon md info mr-8" />
-												</Tooltip>
-											)}
-
-{this.state.verifyEmailOtp === true &&
-											<Button
-												type="text"
-												style={{ color: "black", margin: "0 auto" }}
-												loading={this.state.emailVerifyLoading}
-												onClick={(e) => this.getEmailVerification(e)}
-												disabled={this.state.verifyEmail === true||this.state.verifyEmailOtp === true}>
-												{verifyText[this.state.verifyText]}
-												{this.state.verifyEmailOtp === true && (<>
-													<Text className="text-yellow pr-24"> Verified </Text>
-													<span className="icon md greenCheck" />
-													</>)}
-											</Button>
-		  }
-
-										</div> */}
+										
 									</div>
 								</Form.Item>
 							)}
@@ -1065,21 +999,7 @@ class WithdrawSummary extends Component {
 											</Button>
 										</div>}
 										/>
-										{/* <div className="new-add get-code text-yellow hy-align" >
-											<Button
-												type="text" className=" "
-												loading={this.state.faLoading}
-												style={{ color: "black", margin: "0 auto" }}
-												onClick={this.getAuthenticator}
-												disabled={this.state.verifyAuthCode}>
-												{this.state.verifyAuthCode ? ( <>
-													<Text className="text-yellow pr-24"> Verified </Text>
-													<span className="icon md greenCheck" />
-													</>) : (
-													"Click here to verify"
-												)}
-											</Button>
-										</div> */}
+										
 									</div>
 								</Form.Item>
 							)}
@@ -1108,15 +1028,7 @@ class WithdrawSummary extends Component {
 							className="cust-agreecheck"
 							style={{ flex: 1 }}>
 							<Translate className="cust-agreecheck" with={{ link }} content="agree_to_suissebase" component="Paragraph" />{" "}
-							{/* <a
-								className="terms-link"
-								href="https://www.iubenda.com/terms-and-conditions/42856099"
-								target="_blank">
-								<Translate content="terms" component="Text" />
-							</a> */}
-							{" "}
-							
-							{/* <Translate content="refund_cancellation" component="Text" /> */}
+
 						</Paragraph>
 					</div>
 								}
