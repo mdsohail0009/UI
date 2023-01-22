@@ -812,14 +812,13 @@ class WithdrawSummary extends Component {
 											decimalScale={0}
 											allowNegative={false}
 											allowLeadingZeros={true}
-											className="cust-input custom-add-select mb-0"
+											className="cust-input custom-add-select mb-0 ibanborder-field"
 											placeholder={"Enter code"}
 											maxLength={6}
 											style={{ width: "100%" }}
 											onValueChange={(e) => this.handleChange(e.value)}
 											disabled={this.state.inputDisable}
-										/>
-										<div className="new-add phn-code get-code text-yellow hy-align">
+											addonAfter={<div className="new-add hy-align">
 											{!this.state.verifyTextotp && (
 												<Button
 													type="text"
@@ -851,7 +850,41 @@ class WithdrawSummary extends Component {
 													<span className="icon md greenCheck" />
 													</>)}
 											</Button>
-										</div>
+										</div>}
+										/>
+										{/* <div className="new-add phn-code get-code text-yellow hy-align">
+											{!this.state.verifyTextotp && (
+												<Button
+													type="text"
+													className="loading-btn c-pointer"
+													loading={this.state.phoneLoading}
+													style={{ color: "black" }}
+													onClick={this.getOTP}
+													disabled={this.state.disable}>
+													{btnList[this.state.buttonText]}
+												</Button>
+											)}
+											{this.state.tooltipVisible === true && (
+												<Tooltip
+													placement="topRight"
+													title={`Haven't received code? Request new code in ${seconds} seconds. The code will expire after 2 Min.`}>
+
+													<span className="icon md info mr-16 c-pointer" />
+												</Tooltip>
+											)}
+											<Button
+												type="text" className=""
+												loading={this.state.phoneVerifyLoading}
+												style={{ color: "black", margin: "0 auto" }}
+												onClick={this.getOtpVerification}
+												disabled={this.state.verifyPhone === true||this.state.verifyTextotp === true}>
+												{verifyOtpText[this.state.verifyOtpText]}
+												{this.state.verifyTextotp === true && (<>
+													<Text className="text-yellow pr-24"> Verified </Text>
+													<span className="icon md greenCheck" />
+													</>)}
+											</Button>
+										</div> */}
 									</div>
 								</Form.Item>
 							)}
@@ -883,7 +916,7 @@ class WithdrawSummary extends Component {
 										<Input
 											type="text"
 
-											className="cust-input custom-add-select mb-0"
+											className="cust-input custom-add-select mb-0 ibanborder-field"
 											placeholder={"Enter code"}
 											maxLength={6}
 											style={{ width: "100%" }}
@@ -892,8 +925,43 @@ class WithdrawSummary extends Component {
 											}
 											onChange={(e) => this.handleEmailChange(e, "emailCodeVal")}
 											disabled={this.state.inputEmailDisable}
+											addonAfter={<div className="new-add hy-align">
+											{!this.state.verifyEmailOtp && (
+												<Button
+													type="text"
+													style={{ margin: "0 auto" }}
+													loading={this.state.emailLoading}
+													onClick={this.getEmail}>
+													{emailBtn[this.state.emailText]}
+												</Button>
+											)}
+											{this.state.tooltipEmail === true && (
+												<Tooltip
+													placement="topRight"
+													title={`Haven't received code? Request new code in ${seconds2} seconds. The code will expire after 2 Min.`}>
+
+													<span className="icon md info mr-8" />
+												</Tooltip>
+											)}
+
+{this.state.verifyEmailOtp === true &&
+											<Button
+												type="text"
+												style={{ color: "black", margin: "0 auto" }}
+												loading={this.state.emailVerifyLoading}
+												onClick={(e) => this.getEmailVerification(e)}
+												disabled={this.state.verifyEmail === true||this.state.verifyEmailOtp === true}>
+												{verifyText[this.state.verifyText]}
+												{this.state.verifyEmailOtp === true && (<>
+													<Text className="text-yellow pr-24"> Verified </Text>
+													<span className="icon md greenCheck" />
+													</>)}
+											</Button>
+		  }
+
+										</div>}
 										/>
-										<div className="new-add phn-code c-pointer get-code text-yellow hy-align">
+										{/* <div className="new-add phn-code c-pointer get-code text-yellow hy-align">
 											{!this.state.verifyEmailOtp && (
 												<Button
 													type="text"
@@ -927,7 +995,7 @@ class WithdrawSummary extends Component {
 											</Button>
 		  }
 
-										</div>
+										</div> */}
 									</div>
 								</Form.Item>
 							)}
@@ -973,7 +1041,7 @@ class WithdrawSummary extends Component {
 									<div className="p-relative d-flex align-center">
 										<Input
 											type="text"
-											className="cust-input custom-add-select mb-0"
+											className="cust-input custom-add-select mb-0 ibanborder-field"
 											placeholder={"Enter code"}
 											maxLength={6}
 											onChange={(e) =>
@@ -981,8 +1049,7 @@ class WithdrawSummary extends Component {
 											}
 											style={{ width: "100%" }}
 											disabled={this.state.inputAuthDisable === true}
-										/>
-										<div className="new-add get-code text-yellow hy-align" >
+											addonAfter={<div className="new-add hy-align" >
 											<Button
 												type="text" className=" "
 												loading={this.state.faLoading}
@@ -996,7 +1063,23 @@ class WithdrawSummary extends Component {
 													"Click here to verify"
 												)}
 											</Button>
-										</div>
+										</div>}
+										/>
+										{/* <div className="new-add get-code text-yellow hy-align" >
+											<Button
+												type="text" className=" "
+												loading={this.state.faLoading}
+												style={{ color: "black", margin: "0 auto" }}
+												onClick={this.getAuthenticator}
+												disabled={this.state.verifyAuthCode}>
+												{this.state.verifyAuthCode ? ( <>
+													<Text className="text-yellow pr-24"> Verified </Text>
+													<span className="icon md greenCheck" />
+													</>) : (
+													"Click here to verify"
+												)}
+											</Button>
+										</div> */}
 									</div>
 								</Form.Item>
 							)}

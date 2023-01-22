@@ -106,7 +106,7 @@ class PayeeBankDetails extends Component {
         const _templates = {
             sepa: <>
             <>
-            <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                        <div className=" custom-btn-error fsdf">
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
@@ -125,28 +125,35 @@ class PayeeBankDetails extends Component {
                         }}
                     >
                         <Input
-                            className="cust-input iban-input"
+                            className="cust-input ibanborder-field"
                             placeholder={apicalls.convertLocalLang(
                                 "Bank_account_iban"
                             )}
-                            maxLength={50}/>
+                            maxLength={50}
+                            addonAfter={ <Button className={``}
+                            type="primary"
+                               // loading={isValidateLoading}
+                               onClick={() => this.onIbanValidate(this.props?.form.current?.getFieldValue(["payeeAccountModels","iban"]))} >
+                           <Translate content="validate" />
+                   </Button>  }
+                            />
                     </Form.Item>
                     </div>
                     </Col>
-                    <Col xs={24} md={10} lg={10} xl={10} xxl={10}>
+                    {/* <Col xs={24} md={10} lg={10} xl={10} xxl={10}> */}
                        {/* <Button className={`pop-btn dbchart-link pop-validate-btn`} style={{width:"150px",marginTop:"32px",height:"42px"}}
                                     loading={this.state.isValidateLoading}
                                     onClick={() => this.onIbanValidate(this.props?.form.current?.getFieldValue(["payeeAccountModels","iban"]))} >
                                     <Translate content="validate" />
                                 </Button> */}
-                                 <Button className={`pop-btn dbchart-link pop-validate-btn iban-validate`}
+                                 {/* <Button className={`pop-btn dbchart-link pop-validate-btn iban-validate`}
                              type="primary"
                                 // loading={isValidateLoading}
                                 onClick={() => this.onIbanValidate(this.props?.form.current?.getFieldValue(["payeeAccountModels","iban"]))} >
                             <Translate content="validate" />
-                    </Button>  
+                    </Button>   */}
                          
-                </Col>
+                {/* </Col> */}
                 </>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 

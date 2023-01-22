@@ -331,7 +331,7 @@ class OthersBusiness extends Component {
                     <h2  className="adbook-head">Bank Details</h2>
                   
                     <Row className="validateiban-content">
-                   <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
+                   <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                        <div className=" custom-btn-error">
                             <Form.Item
                                 className="custom-forminput custom-label"
@@ -345,27 +345,34 @@ class OthersBusiness extends Component {
                                 ]}
                             >
                                 <Input
-                                    className="cust-input iban-input"
+                                    className="cust-input ibanborder-field"
                                     placeholder={"IBAN"}
                                     onChange={this.handleIbanChange}
-                                    maxLength={50}/>
+                                    maxLength={50}
+                                    addonAfter={<Button className={``}
+                                    type="primary"
+                                       // loading={isValidateLoading}
+                                       onClick={() => this.onIbanValidate(this.state?.enteredIbanData)} >
+                                   <Translate content="validate" />
+                           </Button>  }
+                                    />
 
                             </Form.Item>
                             </div>
                        </Col>
-                       <Col xs={24} md={10} lg={10} xl={10} xxl={10}>
+                       {/* <Col xs={24} md={10} lg={10} xl={10} xxl={10}> */}
                        {/* <Button className={`pop-btn dbchart-link pop-validate-btn`}
                             loading={this.state.isValidateLoading} 
                              onClick={() => this.onIbanValidate(this.state?.enteredIbanData)} >
                                 <Translate content="validate" />
                             </Button> */}
-                    <Button className={`pop-btn dbchart-link pop-validate-btn iban-validate`}
+                    {/* <Button className={`pop-btn dbchart-link pop-validate-btn iban-validate`}
                              type="primary"
                                 // loading={isValidateLoading}
                                 onClick={() => this.onIbanValidate(this.state?.enteredIbanData)} >
                             <Translate content="validate" />
                     </Button>    
-                        </Col>
+                        </Col> */}
                          
                     </Row>
                     <div className="box basic-info alert-info-custom mt-16 kpi-List">

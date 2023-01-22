@@ -762,7 +762,17 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .verification-text{color: var(--white) !important;font-weight: 400;  font-size: 14px;}
 .sendfiat-summarystyle .kpi-divstyle{padding-top: 20px;}
 .sendfiat-summarystyle{padding-top: 0 !important;}
+
 /* crypto summary end  */
+/* validations */
+.ibanborder-field .ant-input-group .ant-input{border:0;border-right: 1px solid  var(--white);}
+.ibanborder-field .ant-input-group .ant-input-group-addon{border: 0;}
+.ibanborder-field .ant-input-group .ant-input-group-addon .ant-btn.ant-btn-primary{border: 0;}
+.ibanborder-field .ant-input-group .ant-input-group-addon .ant-btn.ant-btn-primary span{color: var(--termsText);font-size: 16px;font-weight: 700;}
+.cust-input.ibanborder-field{border-top-right-radius: 5 !important;border-bottom-right-radius: 5 !important;border-right: 1 !important;}
+.custom-add-select.mb-0.ibanborder-field .new-add{padding: 0 !important;}
+.custom-add-select.mb-0.ibanborder-field .ant-input{border-right: 0;}
+.custom-add-select.mb-0.ibanborder-field{border-right: 1px solid var(--labelBorder);border-radius: 5px !important;}
 
 /* crypto sucess start  */
 .success-title{font-weight: 800; font-size: 26px; color: var(--white);}
