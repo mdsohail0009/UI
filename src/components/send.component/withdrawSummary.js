@@ -838,7 +838,8 @@ class WithdrawSummary extends Component {
 													<span className="icon md info mr-16 c-pointer" />
 												</Tooltip>
 											)}
-											<Button
+									
+											{verifyOtpText[this.state.verifyOtpText] && <Button
 												type="text" className="btn-clickable-style"
 												loading={this.state.phoneVerifyLoading}
 												style={{ color: "black", margin: "0 auto" }}
@@ -849,7 +850,8 @@ class WithdrawSummary extends Component {
 													<Text className="text-yellow pr-24"> Verified </Text>
 													<span className="icon md greenCheck" />
 													</>)}
-											</Button>
+											</Button>}
+											
 										</div>}
 										/>
 										
@@ -912,7 +914,7 @@ class WithdrawSummary extends Component {
 												</Tooltip>
 											)}
 
-{this.state.verifyEmailOtp === true &&
+{verifyText[this.state.verifyText] &&
 											<Button
 												type="text"
 												style={{ color: "black", margin: "0 auto" }}
