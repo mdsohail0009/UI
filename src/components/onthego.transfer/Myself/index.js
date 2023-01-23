@@ -399,7 +399,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     maxLength={50}
                     addonAfter={ <Button className={``}
                     type="primary"
-                        // loading={isValidateLoading}
+                        loading={isValidateLoading}
                         onClick={() => onIbanValidate(enteredIbanData)} >
                         <Translate content="validate" />
                     </Button>     }
