@@ -301,7 +301,7 @@ saveWithdrawdata = async () => {
 
   }
    goBack = async () => {
-    if(this.state.fiatWalletsLoading===false){
+    if(this.state.fiatWalletsLoading===false || this.state.fiatWalletsLoading===undefined){
       this.fetchMemberWallet();
     }
     setTimeout(()=>{
@@ -896,7 +896,7 @@ saveWithdrawdata = async () => {
                     fiatHeadingUpdate={this.fiatHeading}
                     onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} />
             </>,
-      declaration: <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
+      declaration: <div className="custom-declaraton wg"> <div className="success-pop text-center declaration-content">
       <Image preview={false} src={alertIcon} className="confirm-icon"  />
       <Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
@@ -904,7 +904,7 @@ saveWithdrawdata = async () => {
                 Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
            
            <Translate content="Back_to_Withdrawfiat" className=" cust-cancel-btn send-crypto-btn" component={Button} size="large" onClick={() => { this.goBack() }} /> </div></div>,
-       successpage: <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
+       successpage: <div className="custom-declaraton send-success"> <div className="success-pop text-center declaration-content">
        <Image  preview={false} src={success}  className="confirm-icon" />
        <Title level={2} className="successsubtext">Your transaction has been processed successfully</Title>
        <Translate content="Back_to_Withdrawfiat" className=" cust-cancel-btn" component={Button} size="large" onClick={() => { this.goBack() }}  />

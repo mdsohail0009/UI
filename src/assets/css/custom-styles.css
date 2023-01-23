@@ -789,7 +789,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* crypto success end  */
 
 /* send crypto addressbook start */
-.batchpayment-summary, .batch-style{margin-bottom: 16px !important;}
+/* .batchpayment-summary, .batch-style{margin-bottom: 16px !important;} */
 .batchpayment-summary{justify-content: space-between;align-items: center;}
 .admin-actions.address-icons li{margin-left: 20px;}
 .sub-title.address-book{ margin: 36px 0 16px 0 !important;}
@@ -1008,6 +1008,9 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .icon.md.Batch{background-position: -738px -37px;}
 .notkyc a{color:var(--viewAll);}
 .thank-you-btn{margin-top: 70px;}
+.proceed-section{margin-bottom: 34px;}
+.custom-declaraton.send-success{margin-top: 40px;}
+.custom-declaraton.send-success button{margin-top: 26px;}
 /*@media start*/
 @media (min-width: 768px){
     .listitems-design{width: 340px;}
@@ -1165,6 +1168,8 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .ant-tabs-tab + .ant-tabs-tab{margin: 0 0 0 26px;}
     .display-items{display: block;}
     .crypto-details{justify-content: center;}
+    .batch-actions{margin-top: 16px;}
+    /* .k-loading-image::before, .k-loading-image::after{top:60% !important;position: absolute !important;} */
    
 }
 
