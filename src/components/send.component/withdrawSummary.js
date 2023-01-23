@@ -839,7 +839,7 @@ class WithdrawSummary extends Component {
 												</Tooltip>
 											)}
 											<Button
-												type="text" className=""
+												type="text" className="btn-clickable-style"
 												loading={this.state.phoneVerifyLoading}
 												style={{ color: "black", margin: "0 auto" }}
 												onClick={this.getOtpVerification}

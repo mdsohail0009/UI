@@ -676,6 +676,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .custom-declaraton .declaration-content{width: 600px;}
 .side-drawer .side-drawer-header{align-items: flex-start;}
 .cust-summary-new.kpi-List.sendfiat-summarystyle{margin-top: 0 !important;}
+.new-add .loading-btn + .btn-clickable-style{position: unset !important;}
 /* success end */
 
 /* crypto-coins */
