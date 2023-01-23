@@ -236,6 +236,7 @@ class CockpitCharts extends Component {
                         type="primary"
                         onClick={() => { this.showSendReceiveDrawer(2, item.walletCode) }}
                         className="custom-btn sec"
+                        disabled={item.amount > 0 ? false : true}
                       />
                       
                       <Dropdown 
