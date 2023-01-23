@@ -1010,7 +1010,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .thank-you-btn{margin-top: 70px;}
 .proceed-section{margin-bottom: 34px;}
 .custom-declaraton.send-success{margin-top: 40px;}
-.custom-declaraton.send-success button{margin-top: 26px;}
+.custom-declaraton.send-success button,.success-pop.sell-success{margin-top: 26px;}
 /*@media start*/
 @media (min-width: 768px){
     .listitems-design{width: 340px;}

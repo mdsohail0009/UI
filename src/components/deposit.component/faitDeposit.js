@@ -190,7 +190,7 @@ class FaitDeposit extends Component {
  
   renderModalContent = () => {
     return <>
-      <div className="success-pop text-center">
+      <div className="success-pop text-center aSCCV">
         <img src={success} className="confirm-icon" alt={'success'} />
         <Translate className="fs-30 mb-4 d-block text-white-30" content="Deposit_success" component='Deposit' />
         <Link onClick={() => this.setState({ ...this.state, showSuccessMsg: false })} className="f-16 mt-16 text-underline text-green">Back to Deposit<span className="icon md diag-arrow ml-4" /></Link>

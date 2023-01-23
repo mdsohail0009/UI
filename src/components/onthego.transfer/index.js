@@ -590,7 +590,7 @@ saveWithdrawdata = async () => {
                                 </Col>
                         </Row>}</>
                   ))}
-                  {(!filterObj.length > 0) && <div className="success-pop text-center declaration-content" >
+                  {(!filterObj.length > 0) && <div className="success-pop text-center declaration-content asdfv" >
                             <img src={oops} className="confirm-icon nodata-image"  alt="Confirm" />
                             <h1 className="success-title oops-title" > {apicalls.convertLocalLang('oops')}</h1>
                             <p className="successsubtext custom-height"> {apicalls.convertLocalLang('address_available')} </p>

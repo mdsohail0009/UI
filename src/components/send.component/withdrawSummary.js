@@ -650,7 +650,7 @@ class WithdrawSummary extends Component {
 			return <Loader />;
 		}
 		if (showDeclartion) {
-			return <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
+			return <div className="custom-declaraton send-success"> <div className="text-center mt-36 declaration-content">
 			  <Image preview={false} src={alertIcon} className="confirm-icon"/>
 			  <Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
