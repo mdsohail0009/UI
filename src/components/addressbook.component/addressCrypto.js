@@ -39,7 +39,7 @@ class AddressCrypto extends Component {
   getCryptoData = async () => {
     let id = this.props?.addressBookReducer?.selectedRowData?.id || "00000000-0000-0000-0000-000000000000";
     this.setState({ ...this.state, isLoading: true })
-    let response = await getCryptoData(id, this.props.userProfile?.id);
+    let response = await getCryptoData(id);
     if (response.ok) {
       this.setState({ ...this.state, cryptoData: response.data, isLoading: false })
     }
@@ -79,9 +79,9 @@ class AddressCrypto extends Component {
       let val=this.props.sendReceive?.withdrawFiatObj?.walletCode
       this.handleTokenChange(val);
     }
-    else if(this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !=" "
+    else if(this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !==" "
     ||this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !=null||
-    this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !=undefined){
+    this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !==undefined){
       let val=this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin
       this.form?.current?.setFieldsValue({token:val});
       this.handleTokenChange(val);
@@ -97,9 +97,10 @@ class AddressCrypto extends Component {
     let networkLu = [];
     if(value) {
       this.state.coinsList?.filter(function (item){
-        if(item.walletCode == value) {
+        if(item.walletCode === value) {
         return networkLu = item?.network;
         }
+         return false;
       })
     }
     this.setState({ ...this.state, networksList: networkLu})
@@ -153,7 +154,7 @@ class AddressCrypto extends Component {
       let coinType = this.form?.current?.getFieldValue("token");
       if (coinType) {
         const validAddress = WAValidator.validate(address, coinType, "both");
-          if (!validAddress && coinType != "USDT") {
+          if (!validAddress && coinType !== "USDT") {
             return Promise.reject(
               "Address is not valid, Please enter a valid address according to the token selected"
             );
@@ -176,16 +177,10 @@ class AddressCrypto extends Component {
     if (showDeclartion) {
       return<div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
         <Image width={80} preview={false} src={alertIcon} />
-        <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully </Title>
-        <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
-             Please sign using link received in email to whitelist your address. `}</Text>
-        <Text className="text-white-30">{`Please note that your send will only be processed once your whitelisted address has been approved`}</Text>
-       
-        {/* <div className="my-25 custom-back-btn"><Button
-          onClick={this.props.onCancel}
-          style={{width:"150px",height:"46px"}}
-          type="" className="mt-36 pop-cancel ">BACK</Button>
-          </div> */}
+       <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent!</Title>
+       <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}.              Please review and sign the document in your email to whitelist your address.
+        Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
+
       </div>
       </div>
     }
@@ -311,7 +306,7 @@ class AddressCrypto extends Component {
           </Form>
       </>
     }
-  };
+  }
 
 }
 const connectStateToProps = ({ sendReceive, userConfig, addressBookReducer }) => {

@@ -5,14 +5,13 @@ import { loadUser, OidcProvider } from 'redux-oidc';
 import { useEffect, useState } from "react";
 import { userManager } from "../../authentication";
 import ErrorBoundary from "antd/lib/alert/ErrorBoundary";
-import { AppInsightsContext } from "@microsoft/applicationinsights-react-js";
-import { reactPlugin } from "../../Shared/appinsights";
 import Notifications from "../../notifications";
 import { startConnection } from "../../utils/signalR";
 import { useThemeSwitcher } from "react-css-theme-switcher";
 import apiCalls from '../../api/apiCalls';
 import { updatetwofactor } from "../../reducers/configReduser";
 import SecurityLogin from "../../authentication/temp.security";
+import ConnectStateProps from "../../utils/state.connect";
 function App(props) {
   const { switcher, themes } = useThemeSwitcher()
   const [loading, setLoading] = useState(true);
@@ -21,7 +20,7 @@ function App(props) {
     setTimeout(() => {
       const { userConfig: { userProfileInfo } } = store.getState();
       if (userProfileInfo?.id) {
-        apiCalls.twofactor(userProfileInfo?.id).then(res => {
+        apiCalls.twofactor().then(res => {
           if (res.ok) {
             store.dispatch(updatetwofactor({ loading: false, isEnabled: res.data }));
           }
@@ -70,17 +69,16 @@ function App(props) {
   return (
     <OidcProvider userManager={userManager} store={store}>
       <Router basename={process.env.PUBLIC_URL}>
-        <AppInsightsContext.Provider value={reactPlugin}>
-          <SecurityLogin>
-            <ErrorBoundary>
-              {loading ? <div className="loader">Loading....</div> : <><Layout /></>}
-            </ErrorBoundary>
-          </SecurityLogin>
-        </AppInsightsContext.Provider>
+        <SecurityLogin>
+          <ErrorBoundary>
+            {loading ? <div className="loader">Loading....</div> : <>
+              <Layout /></>}
+          </ErrorBoundary>
+        </SecurityLogin>
         <Notifications showDrawer={showNotifications} onClose={() => setNotifications(false)} />
       </Router>
     </OidcProvider>
   );
 }
 
-export default App;
+export default ConnectStateProps(App);

@@ -22,14 +22,14 @@ import {
   updateReceiveCoinDetails,
   updateSwapdata,
   clearSwapData,
-  setStep as swapSetStep
+  //setStep 
 } from "../reducers/swapReducer";
 import { connect } from "react-redux";
 import DefaultUser from "../assets/images/defaultuser.jpg";
-import { setHeaderTab, setStep } from "../reducers/buysellReducer";
-import {
-  setStep as sendSetStep,
-} from "../reducers/sendreceiveReducer";
+import { setHeaderTab} from "../reducers/buysellReducer";
+// import {
+//   setStep as sendSetStep,
+// } from "../reducers/sendreceiveReducer";
 import { readNotification as readNotifications } from "../notifications/api";
 import apiCalls from "../api/apiCalls";
 import { setNotificationCount } from "../reducers/dashboardReducer";
@@ -110,8 +110,8 @@ class Header extends Component {
     this.trackEvent();
   }
   readNotification() {
-    let isRead = apiCalls.encryptValue("true", this.props.userConfig?.sk);
-    readNotifications(this.props.userConfig.id).then(() => {
+    //let isRead = apiCalls.encryptValue("true", this.props.userConfig?.sk);
+    readNotifications().then(() => {
       this.props.dispatch(setNotificationCount(0));
     });
   }
@@ -204,14 +204,14 @@ class Header extends Component {
                       className="text-white-30" key="1"
                     />
                   </Link><span className="icon c-pointer md rarrow-white ml-12" /></div></>} >
-                <Link>
+                {/* <Link>
                   <Translate
                     content="get_your_own_iban"
                     component={Text}
                     className="text-white-30"
                   />
                   <span className="icon md rarrow-white" />
-                </Link>
+                </Link> */}
 
               </Popover>
             </li>
@@ -350,7 +350,7 @@ class Header extends Component {
                     onClick={() => this.readNotification()}
                   >
                     {this.props.dashboard?.notificationCount != null &&
-                      this.props.dashboard?.notificationCount != 0 && (
+                      this.props.dashboard?.notificationCount !== 0 && (
                         <span>{this.props.dashboard?.notificationCount}</span>
                       )}
                   </span>

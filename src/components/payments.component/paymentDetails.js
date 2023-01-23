@@ -5,17 +5,14 @@ import { getCurrencyLu, getPaymentsData, savePayments, getBankData, creatPayment
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 import Loader from '../../Shared/loader';
-import { warning } from '../../utils/message';
 import FilePreviewer from 'react-file-previewer';
-
-const { confirm } = Modal;
 const { Option } = Select;
 const { Title, Text, Paragraph } = Typography;
 const EllipsisMiddle = ({ suffixCount, children }) => {
   const start = children?.slice(0, children.length - suffixCount).trim();
   const suffix = children?.slice(-suffixCount).trim();
   return (
-    <Text className="mb-0 fs-14 docnames c-pointer d-block file-label fs-12 text-yellow fw-400"
+    <Text className="mb-0 fs-14 docnames c-pointer d-block file-label fs-12 fw-400 amt-label"
       style={{ maxWidth: '100% !important' }} ellipsis={{ suffix }}>
       {start}
     </Text>
@@ -71,10 +68,9 @@ class PaymentDetails extends Component {
 
   handleCurrencyChange = async (val) => {
     this.setState({ ...this.state, currency: val, paymentsData: [], errorMessage: null, errorWarning: null,loading:true });
-    if ((this.state.currency = val)) {
+    if ((this.state.currency = val)) { //don't add === here
       let response = await getPaymentsData(
         "00000000-0000-0000-0000-000000000000",
-        this.props.userConfig?.id,
         this.state.currency
       );
       if (response.ok) {
@@ -86,12 +82,12 @@ class PaymentDetails extends Component {
       } else {
         message.destroy();
         this.setState({ ...this.state, errorMessage: response.data, loading: false });
-        this.useDivRef.current.scrollIntoView();
+        this.useDivRef.current.scrollIntoView(0,0);
       }
     }
   };
   getCurrencyLookup = async () => {
-    let response = await getCurrencyLu(this.props.userConfig?.id);
+    let response = await getCurrencyLu();
     if (response.ok) {
       this.setState({ ...this.state, currencylu: response.data });
     } else {
@@ -105,7 +101,6 @@ class PaymentDetails extends Component {
     if (this.props.match.params.id === "00000000-0000-0000-0000-000000000000") {
       let response = await getPaymentsData(
         "00000000-0000-0000-0000-000000000000",
-        this.props.userConfig?.id,
         this.state.currency
       );
       if (response.ok) {
@@ -120,10 +115,10 @@ class PaymentDetails extends Component {
         message.destroy();
         this.setState({
           ...this.state,
-          errorMessage: response.data,
+          errorMessage: this.isErrorDispaly(response),
           loading: false,
         });
-        this.useDivRef.current.scrollIntoView();
+        this.useDivRef.current.scrollIntoView(0,0);
       }
     } else {
       let response = await creatPayment(this.props.match.params.id);
@@ -143,10 +138,10 @@ class PaymentDetails extends Component {
         message.destroy();
         this.setState({
           ...this.state,
-          errorMessage: response.data,
+          errorMessage: this.isErrorDispaly(response),
           loading: false,
         });
-        this.useDivRef.current.scrollIntoView();
+        this.useDivRef.current.scrollIntoView(0,0);
       }
     }
   };
@@ -168,6 +163,7 @@ class PaymentDetails extends Component {
     if (obj.currency != null) {
       if (objAmount) {
         this.setState({ ...this.state, errorWarning: null, errorMessage: "Amount must be greater than zero." });
+        this.useDivRef.current.scrollIntoView(0,0);
       } else {
         this.setState({ btnDisabled: true });
         if (
@@ -186,6 +182,7 @@ class PaymentDetails extends Component {
           } else {
             message.destroy();
             this.setState({ ...this.state, btnDisabled: false, loading: false, errorWarning: null, errorMessage: this.isErrorDispaly(response) })
+            this.useDivRef.current.scrollIntoView(0,0);
           }
         }
         else {
@@ -196,6 +193,7 @@ class PaymentDetails extends Component {
             }
             if (!PaymentDetail[i].amount) {
               this.setState({ ...this.state, errorWarning: null, errorMessage: "Please enter amount." });
+              this.useDivRef.current.scrollIntoView(0,0);
               return
             }
           }
@@ -212,11 +210,13 @@ class PaymentDetails extends Component {
           } else {
             message.destroy();
             this.setState({ ...this.state, btnDisabled: false, loading: false, errorWarning: null, errorMessage: this.isErrorDispaly(response) });
+            this.useDivRef.current.scrollIntoView(0,0);
           }
         }
       }
     } else {
       this.setState({ ...this.state, errorWarning: null, errorMessage: "Please select currency" });
+      this.useDivRef.current.scrollIntoView(0,0);
     }
   };
   isErrorDispaly = (objValue) => {
@@ -262,6 +262,7 @@ class PaymentDetails extends Component {
     this.setState({ ...this.state, errorWarning: null, errorMessage: null });
     if (file.name.split('.').length > 2) {
       this.setState({ ...this.state, isValidFile: true, isUploading: false, errorMessage: null, errorWarning: "File don't allow double extension" });
+      this.useDivRef.current.scrollIntoView(0,0);
       return
     }
     let fileType = {
@@ -279,6 +280,7 @@ class PaymentDetails extends Component {
       return true;
     } else {
       this.setState({ ...this.state, isValidFile: true, isUploading: false, errorMessage: null, errorWarning: "File is not allowed. You can upload jpg, png, jpeg and PDF files" });
+      this.useDivRef.current.scrollIntoView(0,0);
       return Upload.LIST_IGNORE;
     }
   };
@@ -357,12 +359,14 @@ class PaymentDetails extends Component {
     return this.state.previewPath;
   }
   addressTypeNames = (type) => {
-    const stepcodes = {
-      "1stparty": "1st Party",
-      "3rdparty": "3rd Party",
-    }
-    return stepcodes[type]
-  }
+		const stepcodes = {
+			"ownbusiness": "My Company",
+			"individuals": "Individuals",
+			"otherbusiness": "Other Business",
+			"myself": "My Self"
+		};
+		return stepcodes[type];
+	};
   moreInfoPopover = async (id) => {
     this.setState({...this.state,isloading:true});
     let response = await getBankData(id);
@@ -379,33 +383,33 @@ class PaymentDetails extends Component {
   };
   handleVisibleChange = () => {
     this.setState({ ...this.state, visible: false });
-    if(this.state.visible== false){
+    if(this.state.visible=== false){
       this.setState({ ...this.state, isloading: false });
     }
   };
   popOverContent = () => {
-    const { moreBankInfo, tooltipLoad,isloading, currency } = this.state;
+    const { moreBankInfo,isloading} = this.state;
     if (!isloading) {
       return <Spin />;
     } else {
       return (
         <div className="more-popover">
-          {/* <Text className="lbl text-white">Bank Label</Text>
-          <Text className="val text-white">{moreBankInfo?.bankLabel}</Text> */}
-          {this.state.currency == "USD" &&<Text className="lbl text-white">BIC/SWIFT/ABARouting Number</Text>}
-          {this.state.currency == "USD" &&<Text className="val text-white">{moreBankInfo?.routingNumber}</Text>}
-          {this.state.currency == "USD" && <Text className="lbl text-white">Bank Address</Text>}
-          {this.state.currency == "USD" && <Text className="val text-white">{moreBankInfo?.beneficiaryAccountAddress}</Text>}
-          {/* <Text className="lbl text-white">Beneficiary Account Name</Text>
-          <Text className="val text-white">{moreBankInfo?.beneficiaryAccountName}</Text> */}
-          {this.state.currency == "EUR" && <Text className="lbl text-white">Country</Text>}
-          {this.state.currency == "EUR" && <Text className="val text-white">{moreBankInfo?.country}</Text>}
-          {this.state.currency == "EUR" && <Text className="lbl text-white">State</Text>}
-          {this.state.currency == "EUR" &&<Text className="val text-white">{moreBankInfo?.state}</Text>}
-          {this.state.currency == "EUR" &&<Text className="lbl text-white">City</Text>}
-          {this.state.currency == "EUR" &&<Text className="val text-white">{moreBankInfo?.city}</Text>}
-          {this.state.currency == "EUR" &&<Text className="lbl text-white">Postal Code</Text>}
-          {this.state.currency == "EUR" &&<Text className="val text-white">{moreBankInfo?.postalCode}</Text>}
+          <Text className="lbl text-white">BIC/SWIFT/ABA Routing Code</Text>
+          <Text className="val text-white">{moreBankInfo?.routingNumber}</Text>
+          {this.state.currency === "USD" && moreBankInfo?.transferType!=="internationalIBAN"&&
+          <>
+          <Text className="lbl text-white">Bank Address</Text><br/>
+          <Text className="lbl text-white">Address Line 1</Text> 
+          <Text className="val text-white">{moreBankInfo?.bankAddress1}</Text>
+          {moreBankInfo?.bankAddress2!==null &&<>
+            <Text className="lbl text-white">Address Line 2</Text>
+          <Text className="val text-white">{moreBankInfo?.bankAddress2}</Text>
+          </>}
+          </>}
+          {(moreBankInfo?.transferType==="sepa" || moreBankInfo?.transferType==="internationalIBAN" ) && 
+          <>
+          <Text className="lbl text-white">Bank Address</Text>
+          <Text className="val text-white">{moreBankInfo?.bankBranch}{","}{moreBankInfo?.country}{","}{moreBankInfo?.state}{","}{moreBankInfo?.city}{","}{moreBankInfo?.postalCode}</Text></>}
         </div>
       );
     }
@@ -423,13 +427,7 @@ class PaymentDetails extends Component {
         <div ref={this.useDivRef}></div>
         <div className="main-container">
           <div className="mb-16">
-            <Title className="basicinfo mb-0">
-              <Translate
-                content="menu_payments"
-                component={Text}
-                className="basicinfo"
-              />
-            </Title>
+             <Title className="basicinfo mb-0"><span onClick={() => this.props.history?.push(`/payments/All`)} className='icon md c-pointer back mr-8'></span><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
           </div>
           <div className="box basic-info text-white">
             {this.state.errorMessage && (
@@ -449,12 +447,15 @@ class PaymentDetails extends Component {
               />
             )}
             <Form autoComplete="off">
+            {(this.props.match.params.id ===
+                        "00000000-0000-0000-0000-000000000000"
+                      ) &&
               <Form.Item>
                 <Select
                   className="cust-input cust-disable"
                   placeholder="Select Currency"
                   onChange={(e) => this.handleCurrencyChange(e)}
-                  style={{ width: 280 }}
+                  // style={{ width: 280 }}
                   dropdownClassName="select-drpdwn"
                   bordered={false}
                   showArrow={true}
@@ -484,11 +485,12 @@ class PaymentDetails extends Component {
                   ))}
                 </Select>
               </Form.Item>
+  }
               <div className='responsive_table'>
                 <table className="pay-grid">
                   <thead>
                     <tr>
-                      <th className="doc-def" style={{ width: '250px' }}>Favorite Name</th>
+                      <th className="doc-def" style={{ width: '250px' }}>Whitelist Name</th>
                       <th className="doc-def" style={{ width: '410px' }}>Bank Name</th>
                       <th style={{ width: '250px' }}>Bank Account Number/IBAN</th>
                       {(this.props.match.params.id !==
@@ -515,7 +517,7 @@ class PaymentDetails extends Component {
                       {paymentsData?.length > 0 ? (
                         <tbody className="mb-0">
                           {paymentsData?.map((item, i) => {
-                            if (item.recordStatus != 'Deleted') {
+                            if (item.recordStatus !== 'Deleted') {
                               return (
                                 <>
                                   <tr
@@ -676,12 +678,15 @@ class PaymentDetails extends Component {
                                           </div> : item.documents?.details.map((file) => (
                                             <>
                                               {file.documentName !== null && (
-                                                <div className='docdetails' style={{ width: "80px" }}>
+                                                <div className='docdetails'>
                                                   <div onClick={() => this.docPreview(file)}>
-                                                    <Tooltip title={file.documentName} >
-                                                      <EllipsisMiddle suffixCount={4}>
+                                                    <Tooltip title={file.documentName}>
+                                                      {file.documentName?.split(".")[0].length>4&&<EllipsisMiddle>
+                                                        {file.documentName.slice(0,4) + "..." +file.documentName.split(".")[1]}
+                                                      </EllipsisMiddle>}
+                                                      {file.documentName?.split(".")[0].length<=4&&<EllipsisMiddle>
                                                         {file.documentName}
-                                                      </EllipsisMiddle>
+                                                      </EllipsisMiddle>}
                                                     </Tooltip>
                                                   </div>
                                                 </div>
@@ -720,6 +725,9 @@ class PaymentDetails extends Component {
                                 </>
                               );
                             }
+                            else{
+                              return <></>;
+                            }
                           })}
                         </tbody>
                       ) : (
@@ -741,12 +749,12 @@ class PaymentDetails extends Component {
                     <tfoot>
                       <tr>
                         {(this.props.match.params.id ===
-                          "00000000-0000-0000-0000-000000000000" || this.props.match.params.state === "Submitted" || this.props.match.params.state === "Pending"|| this.props.match.params.state == "Approved"|| this.props.match.params.state == "Cancelled") && <>
+                          "00000000-0000-0000-0000-000000000000" || this.props.match.params.state === "Submitted" || this.props.match.params.state === "Pending"|| this.props.match.params.state === "Approved"|| this.props.match.params.state === "Cancelled") && <>
                             <td></td>
-                            {/* <td></td> */}
+                          
                           </>
                         }
-                        {(this.props.match.params.id !== "00000000-0000-0000-0000-000000000000"|| this.props.match.params.state == "Approved"|| this.props.match.params.state == "Cancelled") && <>
+                        {(this.props.match.params.id !== "00000000-0000-0000-0000-000000000000"|| this.props.match.params.state === "Approved"|| this.props.match.params.state === "Cancelled") && <>
                         <td></td>
                         </> }
                         <td></td>
@@ -781,12 +789,12 @@ class PaymentDetails extends Component {
             </Form>
             <div className="text-right mt-36">
               {paymentsData.length > 0 ? (
-                <div>
+                <div className='btn-mobile'>
                   {(this.props.match.params.id ===
                     "00000000-0000-0000-0000-000000000000" || this.props.match.params.state === "Submitted" || this.props.match.params.state === "Pending") &&
                     <Button
                       htmlType="submit"
-                      className="pop-btn px-36"
+                      className="pop-btn"
                       loading={this.state.btnDisabled}
                       onClick={() => {
                         this.savePayment();
@@ -796,8 +804,8 @@ class PaymentDetails extends Component {
                     </Button>
                   }
                   <Button
-                    className="pop-btn px-36"
-                    style={{ margin: "0 8px" }}
+                    className="pop-btn btn-space"
+                    // style={{ margin: "0 8px" }}
                     onClick={this.backToPayments}
                   >
                     Cancel
@@ -824,11 +832,10 @@ class PaymentDetails extends Component {
         >
           <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null, mimeType: this.state?.previewPath?.includes(".pdf") ? 'application/pdf' : '' }} />
         </Modal>
-        <Modal title="Delete Payment"
+        <Modal title="Confirm Delete"
           destroyOnClose={true}
           closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.handleCancel} /></Tooltip>}
-          // closable={false}
-          // closeIcon={false}
+         
           visible={this.state.modal}
           className="payments-modal"
           footer={[
@@ -836,21 +843,13 @@ class PaymentDetails extends Component {
             <div className='cust-pop-up-btn crypto-pop bill-pop'>
               <Button
                 className="pop-cancel btn-width  bill-cancel"
-                onClick={this.handleCancel}>Cancel</Button>
+                onClick={this.handleCancel}>No</Button>
               <Button className="pop-btn px-36 btn-width"
-                // className="primary-btn pop-btn"
-
-                onClick={() => this.deleteDetials(this.state.selectData, this.state.paymentsData)}>Ok</Button></div>
+                onClick={() => this.deleteDetials(this.state.selectData, this.state.paymentsData)}>Yes</Button></div>
             </>
           ]}
         >
-          <div className="fs-14 text-white-50">
-            <Title className='fs-18 text-white-50'><span class="icon lg info-icon"></span> Delete Payment?</Title>
-            <Paragraph className="fs-14 text-white-50 modal-para">Are you sure do you want to
-              delete Payment ?</Paragraph>
-
-
-          </div>
+             <Paragraph className="text-white">Are you sure, do you really want to delete ?</Paragraph>
         </Modal>
 
       </>

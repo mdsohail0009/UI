@@ -3,7 +3,7 @@ import {
   Drawer,
   Typography,
   Button,
-  Row, Col, Select, Form,Modal,DatePicker,Tooltip,Alert,Input,message} from "antd";
+  Row, Col, Select, Form,Input,Tooltip} from "antd";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
@@ -43,7 +43,6 @@ class TransactionsHistory extends Component {
       searchObj: {
         type: "All",
         docType: "All",
-        customerId: this.props.customer?.id,
         currency: this.props?.selectWallet || "All",
         status:"All",
         timeSpan: "All",
@@ -92,6 +91,13 @@ class TransactionsHistory extends Component {
     }
   }
   gridColumns = [
+    {
+    field: "transactionId",
+    title: "Transaction ID",
+    filter: true,
+    locked: true,
+    width: 210,
+  },
     {
       field: "date", title: "Date", filter: true, filterType: "date", locked: true, width: 210,
       customCell: (props) => (
@@ -185,13 +191,13 @@ class TransactionsHistory extends Component {
   handleChange = (value, prop) => {
     var val = "";
     let { customerData, searchObj } = this.state;
-    if (prop == "customerId") {
-      let index = customerData.findIndex(function (o) { return o.name == value; });
+    if (prop === "customerId") {
+      let index = customerData.findIndex(function (o) { return o.name === value; });
       val = customerData[index].id;
     }
-    searchObj[prop] = prop == "customerId" ? val : value;
+    searchObj[prop] = prop === "customerId" ? val : value;
     this.setState({ ...this.state, searchObj });
-    if (prop == "currency") {
+    if (prop === "currency") {
       const searchVal = `${value ? value : "All"}`;
       this.setState({ ...this.state, searchObj: { ...this.state.searchObj, currency: searchVal || "All" } })
     }
@@ -263,7 +269,7 @@ class TransactionsHistory extends Component {
       this.formDateRef.current.resetFields();
     }
   }
-transactionModal= async (data)=>{
+transactionModal=async(data)=>{
   this.setState({ ...this.state, showModal:true,modalData:data,viewLoader:true ,
     isLoading:false  })
     let response = await transactionsView(data.id,data.docType);
@@ -271,7 +277,8 @@ transactionModal= async (data)=>{
       this.setState({ ...this.state, showModal:true,viewData:response.data ,
         isLoading:false,viewLoader:false  })
     }
-}
+  }
+
 handleCancel=()=>{
   this.setState({ ...this.state, showModal:false,downloadError:"" })
 }
@@ -329,8 +336,8 @@ isErrorDispaly = (objValue) => {
               <Col xs={24} sm={24} md={7} lg={7} xl={5} className="px-8 transaction_resp">
               <Form.Item
                     name="timeSpan"
-                    className="input-label selectcustom-input"
-                    label={<Translate content="Date" component={Form.label} className="input-label selectcustom-input date-mobile" />}
+                    className="input-label selectcustom-input mb-0"
+                    label={<Translate content="Date" component={Form.label} className="input-label selectcustom-inputdate-mobile" />}
                   >
                     <Select
                       className="cust-input mb-0 custom-search"

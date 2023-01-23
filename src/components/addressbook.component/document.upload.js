@@ -41,7 +41,7 @@ class AddressDocumnet extends Component {
     }
   
     render() {
-        if(this.props.refreshData != this.state.refreshData){
+        if(this.props.refreshData !== this.state.refreshData){
             let propsDocument = JSON.stringify(this.props?.documents) == JSON.stringify({'transfer': '', 'payee': ''}) ? null : this.props?.documents
             this.setState({ ...this.state, errorMessage: null, documents: propsDocument || document(), filesList: propsDocument ? [...this.props?.documents?.details] : [], refreshData:this.props.refreshData })
         }
@@ -54,7 +54,7 @@ class AddressDocumnet extends Component {
                      {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
                     <Form.Item name={"files"} rules={[{
                         validator: (_, value) => {
-                                const isValidFiles = this.state.filesList.filter(item => (item.name || item.documentName).indexOf(".") != (item.name || item.documentName).lastIndexOf(".")).length == 0;
+                                const isValidFiles = this.state.filesList.filter(item => (item.name || item.documentName).indexOf(".") !== (item.name || item.documentName).lastIndexOf(".")).length === 0;
                                 if (isValidFiles) { return Promise.resolve(); } else {
                                     this.setState({...this.state,isDocLoading:false,errorMessage:null })
                                     return Promise.reject("File don't allow double extension");
@@ -100,7 +100,7 @@ class AddressDocumnet extends Component {
                         </Dragger>
                     </Form.Item>
                     {this.state?.filesList?.map((file, indx) => <div>
-                        {((file.status === "done" || file.status == true)&& file.state !='Deleted') && <> <div className="docfile">
+                        {((file.status === "done" || file.status === true)&& file.state !=='Deleted') && <> <div className="docfile address-upload">
                             <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "":(file.documentName?.slice(-3) === "zip" ? "file" : "")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                             <div className="docdetails">
                                 <EllipsisMiddle suffixCount={6}>{file.name || file.documentName}</EllipsisMiddle>
@@ -133,7 +133,7 @@ class AddressDocumnet extends Component {
                                 let { documents: docs } = this.state;
                                 let files = docs.details;
                                 for(var k in files){
-                                    if(files[k].id==this.state.selectedObj?.id){
+                                    if(files[k].id===this.state.selectedObj?.id){
                                         files[k].state='Deleted';
                                         files[k].isChecked=false;
                                     }
@@ -145,7 +145,7 @@ class AddressDocumnet extends Component {
                                     obj.splice(this.state.selectedFileIdx, 1);
                                 }
                                 files?.map((file, indx) =>{
-                                    if (file.id == "00000000-0000-0000-0000-000000000000"&& indx == this.state.selectedFileIdx &&  file.state != "Deleted"  && this.state?.isEdit) {
+                                    if (file.id === "00000000-0000-0000-0000-000000000000"&& indx === this.state.selectedFileIdx &&  file.state !== "Deleted"  && this.state?.isEdit) {
                                         filesList.splice(indx, 1);
                                         obj.splice(indx, 1);
                                     }

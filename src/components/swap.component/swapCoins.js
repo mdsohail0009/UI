@@ -49,7 +49,7 @@ class SwapCoins extends Component {
     async setOneCoinValue() {
         this.setState({ ...this.props.swapStore.swapdata, fromValue: (this.state.fromValue || this.props.swapStore.fromCoinInputValue) })
         if (this.props.swapStore.coinDetailData.coin && this.props.swapStore.coinReceiveDetailData.coin) {
-            let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, 1, this.props.userProfile.id);
+            let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, 1);
             if (res.ok) {
                 this.setState({ ...this.state, price: res.data })
             }
@@ -58,7 +58,7 @@ class SwapCoins extends Component {
     }
     async setSwapOneCoinValue(fromCoin, toCoin) {
         if (fromCoin && toCoin) {
-            let res = await fetchCurrConvertionValue(fromCoin, toCoin, 1, this.props.userProfile.id);
+            let res = await fetchCurrConvertionValue(fromCoin, toCoin, 1);
             if (res.ok) {
                 this.setState({ ...this.state, price: res.data })
             }
@@ -73,11 +73,11 @@ class SwapCoins extends Component {
             if (this.props.swapStore.coinDetailData.coin && this.props.swapStore.coinReceiveDetailData.coin) {
                 if (e) {
                     this.setState({ ...this.state, loadingToValue: true })
-                    let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, e, this.props.userProfile.id, 'swap');
+                    let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, e, 'swap');
                     if (res.ok) {
                         let { config: { url } } = res;
                         const _val = url.split("/");
-                        if (_val[5] == this.state.fromValue) { // this need to changed when parametrs change happen
+                        if (_val[5] === this.state.fromValue) { // this need to changed when parametrs change happen
                             this.setState({ ...this.state, receiveValue: res.data, errorMessage: null, loadingToValue: false })
                             this.props.updateSwapdataobj({ ...this.state, receiveValue: res.data })
                         }
@@ -156,7 +156,7 @@ class SwapCoins extends Component {
         this.state.receiveValue = e;
         if (this.props.swapStore.coinDetailData.coin && this.props.swapStore.coinReceiveDetailData.coin) {
             this.setState({ ...this.state, loadingFromValue: true })
-            let res = await fetchCurrConvertionValue(this.props.swapStore.coinReceiveDetailData.coin, this.props.swapStore.coinDetailData.coin, e, this.props.userProfile.id, 'swap');
+            let res = await fetchCurrConvertionValue(this.props.swapStore.coinReceiveDetailData.coin, this.props.swapStore.coinDetailData.coin, e, 'swap');
             if (res.ok) {
                 this.setState({ ...this.state, fromValue: res.data, errorMessage: null, loadingFromValue: false })
                 this.props.updateSwapdataobj({ ...this.state, fromValue: res.data })

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Card, Alert, message,Image,Select } from 'antd';
+import { Typography, Card, Alert, message,Image } from 'antd';
 import WalletList from '../shared/walletList';
 import { changeStep, setTab } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
@@ -14,7 +14,7 @@ import Currency from '../shared/number.formate';
 import apicalls from '../../api/apiCalls';
 import {  getPreview } from './api'
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
-const { Option } = Select;
+
 class SelectCrypto extends Component {
     myRef = React.createRef();
     swapRef = React.createRef();
@@ -41,7 +41,6 @@ class SelectCrypto extends Component {
     }
     componentDidMount() {
         getFeaturePermissionsByKeyName(`trade_buy`)
-        this.props.getCoinsList(this.props.userProfileInfo?.id);
         this.props.setTabKey();
         this.EventTrack()
     }
@@ -66,6 +65,7 @@ class SelectCrypto extends Component {
         });
     }
     handleConvertion = async () => {
+        
         const { coin } = this.props.buyInfo?.selectedCoin?.data;
         const { isSwaped, localValue, cryptoValue } = this.state.swapValues;
         this.setState({ ...this.state, swapValues: { ...this.state.swapValues, isConvertionLoading: true } });
@@ -78,12 +78,13 @@ class SelectCrypto extends Component {
             screenName: "buy"
         });
         if (response.ok) {
+            this.setState({...this.state,isConvertionLoading:false})
             const { isSwaped, localValue, cryptoValue } = this.state.swapValues;
             let _nativeValue = localValue, _cryptoValue = cryptoValue;
             const { data: value, config: { url } } = response;
             const _obj = url.split("CryptoFiatConverter")[1].split("/");
             const _val = isSwaped ? cryptoValue : localValue;
-            if (_obj[4] == _val || _obj[4] == 0) {
+            if (_obj[3] == _val || _obj[3] == 0) {
                 if (!isSwaped) {
                     _cryptoValue = value || 0;
                 } else { _nativeValue = value || 0; }
@@ -102,7 +103,7 @@ class SelectCrypto extends Component {
     }
 
     handlePreview = async() => {
-        // return
+
         const { localValue, cryptoValue, isSwaped } = this.state.swapValues;
         const { buyMin, buyMax, coin, gbpInUsd, eurInUsd } = this.props.buyInfo?.selectedCoin?.data;
         const _vaidator = validatePreview({ localValue, cryptValue: cryptoValue, wallet: this.state.selectedWallet, maxPurchase: buyMax, minPurchase: buyMin, gbpInUsd, eurInUsd })
@@ -116,7 +117,7 @@ class SelectCrypto extends Component {
 
         }
         this.setState({...this.state,btnLoading:true})
-        const response = await getPreview({ coin, currency: this.state.selectedWallet.currencyCode, amount:(isSwaped ? cryptoValue : localValue), isCrypto:!isSwaped, customer_id:this.props?.userProfileInfo.id });
+        const response = await getPreview({ coin, currency: this.state.selectedWallet.currencyCode, amount:(isSwaped ? cryptoValue : localValue), isCrypto:!isSwaped });
         if (response.ok) {
             this.props.preview(this.state.selectedWallet, coin, (isSwaped ? cryptoValue : localValue), !isSwaped, this.props?.userProfileInfo.id);
             this.props.setStep('step3');
@@ -198,10 +199,7 @@ class SelectCrypto extends Component {
 
                     <Translate content="thousandKText" component={Paragraph} className="text-center f-16 text-yellow fw-400 mb-0" />
                     <Translate content="contact_amount_text" component={Paragraph} className="text-center f-16 text-yellow fw-400 mb-4" />
-                    {/* <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50 pt-16" />
-                    <WalletList onWalletSelect={(e) => this.handleWalletSelection(e)} /> */}
-                    {/* <div className="fs-12 text-white-30 text-center mt-24"><Translate content="change_10Sec_amount" component={Paragraph} className="fs-12 text-white-30 text-center mt-24" /></div> */}
-                    <div className="mt-16 buy-usdt-btn">
+                  <div className="mt-16 buy-usdt-btn">
                         <SuisseBtn title="PreviewBuy" loading={this.state.btnLoading} onRefresh={() => this.refresh()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
                     </div>
                     </div>}
@@ -225,8 +223,8 @@ const connectDispatchToProps = dispatch => {
         setWallet: (wallet) => {
             dispatch(setWallet(wallet))
         },
-        getCoinsList: (id) => {
-            dispatch(fetchMemberFiat(id));
+        getCoinsList: () => {
+            dispatch(fetchMemberFiat());
         },
         setTabKey: () => dispatch(setTab(1))
 

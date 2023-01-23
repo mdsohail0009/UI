@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Typography, Button, Upload, message, Tooltip, Spin, Alert } from "antd";
 import { connect } from "react-redux";
-import Moment from "react-moment";
 import { uploadClient } from "../../api";
 import { ProfileImageSave } from "../../api/apiServer";
 import { getmemeberInfo, getIpRegisteryData } from "../../reducers/configReduser";
@@ -114,7 +113,7 @@ class ProfileInfo extends Component {
     }
     else {
       this.setState({ ...this.state, fileLoader: true });
-      let res = await apiCalls.downloadKyc(this.props.userConfig?.id);
+      let res = await apiCalls.downloadKyc();
       if (res.ok) {
         window.open(res.data);
         message.destroy();
@@ -152,7 +151,7 @@ class ProfileInfo extends Component {
                       : DefaultUser
                   }
                   className="user-profile"
-                  alt={"image"}
+                  alt="profile"
                 />
               )}
               {this.props.userConfig.imageURL == null && (
@@ -163,7 +162,7 @@ class ProfileInfo extends Component {
                       : DefaultUser
                   }
                   className="user-profile"
-                  alt={"image"}
+                  alt="profile"
                 />
               )}
               <Upload

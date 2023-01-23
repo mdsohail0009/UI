@@ -35,7 +35,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
   }, []);//eslint-disable-line react-hooks/exhaustive-deps
   const getVerifyData = async () => {
     setIsLoading(true);
-    let response = await apiCalls.getVerificationFields(userConfig.id);
+    let response = await apiCalls.getVerificationFields();
     if (response.ok) {
       setPhone(response.data?.isPhoneVerified);
       setEmail(response.data?.isEmailVerification);

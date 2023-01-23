@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Radio } from 'antd';
+
 import config from '../../config/config';
-import Translate from 'react-translate-component';
+
 import { handleSendFetch, setStep, setSubTitle, setAddress, rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import CryptoDeposit from '../deposit.component/crypto.deposit';
@@ -26,7 +26,7 @@ class DepositeCrypto extends Component {
         apicalls.trackEvent({
             "Type": 'User', "Action": 'Deposit Crypto page view', "Username": this.props.userProfile.userName, "customerId": this.props.userProfile.id, "Feature": 'Deposit Crypto', "Remarks": "Deposit Crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Crypto'
         })
-        if (this.props.sendReceive?.cryptoWithdraw?.activeKey == 2) {
+        if (this.props.sendReceive?.cryptoWithdraw?.activeKey === 2) {
             apicalls.trackEvent({
                 "Type": 'User', "Action": 'Withdraw Crypto page view', "Username": this.props.userProfile?.userName, "customerId": this.props.userProfile?.id, "Feature": 'Withdraw Crypto', "Remarks": "Withdraw Crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto'
             });
@@ -47,12 +47,12 @@ class DepositeCrypto extends Component {
         this.trackEventLogs(e);
     }
     trackEventLogs = (e) => {
-        if (e.target.value == 1) {
+        if (e.target.value === 1) {
             apicalls.trackEvent({
                 "Type": 'User', "Action": 'Deposit Crypto page view', "Username": this.props.userProfile.userName, "customerId": this.props.userProfile.id, "Feature": 'Deposit Crypto', "Remarks": "Deposit Crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Crypto'
             });
 
-        } else if (e.target.value == 2) {
+        } else if (e.target.value === 2) {
             apicalls.trackEvent({
                 "Type": 'User', "Action": 'Withdraw Crypto page view', "Username": this.props.userProfile?.userName, "customerId": this.props.userProfile?.id, "Feature": 'Withdraw Crypto', "Remarks": "Withdraw Crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto'
             });

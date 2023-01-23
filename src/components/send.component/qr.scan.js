@@ -10,12 +10,10 @@ import apicalls from '../../api/apiCalls';
 import { getNetworkLu } from './api';
 import {
     EmailShareButton, EmailIcon,
-    FacebookShareButton, FacebookIcon,
-    TelegramShareButton, TelegramIcon,
-    TwitterShareButton, TwitterIcon,
     WhatsappShareButton, WhatsappIcon
 } from "react-share";
 import { createCryptoDeposit } from '../deposit.component/api';
+import { Link } from 'react-router-dom';
 class QRScan extends Component {
     constructor(props) {
         super(props);
@@ -68,7 +66,7 @@ class QRScan extends Component {
     get walletCode() {
         let selectedWalletCode = this.props?.sendReceive?.depositWallet?.walletCode;
         if((selectedWalletCode === "USDT" || selectedWalletCode === "ETH" || selectedWalletCode === "USDC") && this.props?.sendReceive?.depositWallet?.network ){
-            return this.props?.sendReceive?.depositWallet?.walletCode + " " + "(" + this.props?.sendReceive?.depositWallet?.network  + ")";
+            return `${this.props?.sendReceive?.depositWallet?.walletCode} + " " + "(" + ${this.props?.sendReceive?.depositWallet?.network}  + ")"`;
         }
         else {
             return this.props?.sendReceive?.depositWallet?.walletCode;
@@ -127,13 +125,13 @@ class QRScan extends Component {
                <div className="text-center f-12 mt-16 text-white custom-crypto-btns">
                     {netWorkData && netWorkData.map((network) => {
                         return <>
-                            <span className=  {network.code == this.props?.sendReceive?.depositWallet?.network ? "mr-16 custom-bnt text-white-30" : "ant-btn ant-btn-primary custom-btn sec network" }>
-                               {netWorkData.length>1 &&<a onClick={() => this.onNetworkView(network)}>
+                            <span className=  {network.code === this.props?.sendReceive?.depositWallet?.network ? "mr-16 custom-bnt text-white-30" : "ant-btn ant-btn-primary custom-btn sec network" }>
+                               {netWorkData.length>1 &&<Link onClick={() => this.onNetworkView(network)}>
                                     <span className='fw-500'>
                                         {network.code}
                                         </span>
-                                </a>}
-                                {netWorkData.length == 1 &&  `${network.code}`}
+                                </Link>}
+                                {netWorkData.length === 1 &&  `${network.code}`}
                             </span>
                         </>
                     })}

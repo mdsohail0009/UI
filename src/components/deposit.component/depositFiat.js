@@ -9,8 +9,7 @@ class DepositFiat extends Component {
     state = {
         buyToggle: 'From Fiat'
     }
-    handleDepositToggle = e => {
-    }
+   
 
     render() {
         const { Paragraph, Text } = Typography;
