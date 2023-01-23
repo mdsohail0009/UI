@@ -351,7 +351,7 @@ class OthersBusiness extends Component {
                                     maxLength={50}
                                     addonAfter={<Button className={``}
                                     type="primary"
-                                       // loading={isValidateLoading}
+                                       loading={this.state.isValidateLoading}
                                        onClick={() => this.onIbanValidate(this.state?.enteredIbanData)} >
                                    <Translate content="validate" />
                            </Button>  }

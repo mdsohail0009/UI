@@ -132,7 +132,7 @@ class PayeeBankDetails extends Component {
                             maxLength={50}
                             addonAfter={ <Button className={``}
                             type="primary"
-                               // loading={isValidateLoading}
+                               loading={this.state.isValidateLoading}
                                onClick={() => this.onIbanValidate(this.props?.form.current?.getFieldValue(["payeeAccountModels","iban"]))} >
                            <Translate content="validate" />
                    </Button>  }

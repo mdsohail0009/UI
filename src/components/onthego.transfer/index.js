@@ -301,7 +301,7 @@ saveWithdrawdata = async () => {
 
   }
    goBack = async () => {
-    if(this.state.fiatWalletsLoading===false){
+    if(this.state.fiatWalletsLoading===false || this.state.fiatWalletsLoading===undefined){
       this.fetchMemberWallet();
     }
     setTimeout(()=>{

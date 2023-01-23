@@ -113,7 +113,7 @@ class Wallets extends Component {
         </Menu>
     )
     closeDrawer = () => {
-        debugger
+   
         this.props.dispatch(getScreenName({getScreen:"dashboard"}))
         this.setState({
             buyFiatDrawer: false,

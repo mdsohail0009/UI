@@ -30,7 +30,10 @@ async function start(id) {
         await start(userProfileInfo?.id);
     });
     connection.on("sendToUser", (user, message, title, text) => {
-        openNotification(message, user);
+        if(!message){
+            openNotification(message, user);
+        }
+       
         const { dashboard: { notificationCount } } = store.getState();
         store.dispatch(setNotificationCount(notificationCount ? notificationCount + 1 : 1));
     });
