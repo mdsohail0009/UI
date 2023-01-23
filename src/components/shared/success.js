@@ -29,11 +29,7 @@ class SuccessMsg extends Component {
                     <img src={success} className="confirm-icon" alt={"success"} />
                     <Translate content="success_msg" component={Title} className="success-title" />
                     <Paragraph className="successsubtext"><Translate content="sucessText1" component={Text} className="successsubtext" /> {bd.tovalue} {bd.toWalletCode} <Translate content="sucessText2" className="successsubtext" component={Text} /></Paragraph>
-                    {/* <Translate content="success_decr" component={Paragraph} className="fs-16 text-white-30 fw-200" /> */}
-                    {/* <Space direction="vertical" size="large"> */}
-                        {/* <Translate content="return_to_buy" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => this.onBuyCancel()} /> */}
                         <Translate content="return_to_buy" component={Button} onClick={() => this.onBuyCancel()}  size="large"className="cust-cancel-btn"/>
-                    {/* </Space> */}
                 </div>
                 </div>
             </>
