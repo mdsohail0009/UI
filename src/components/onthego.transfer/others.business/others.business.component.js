@@ -360,20 +360,7 @@ class OthersBusiness extends Component {
                             </Form.Item>
                             </div>
                        </Col>
-                       {/* <Col xs={24} md={10} lg={10} xl={10} xxl={10}> */}
-                       {/* <Button className={`pop-btn dbchart-link pop-validate-btn`}
-                            loading={this.state.isValidateLoading} 
-                             onClick={() => this.onIbanValidate(this.state?.enteredIbanData)} >
-                                <Translate content="validate" />
-                            </Button> */}
-                    {/* <Button className={`pop-btn dbchart-link pop-validate-btn iban-validate`}
-                             type="primary"
-                                // loading={isValidateLoading}
-                                onClick={() => this.onIbanValidate(this.state?.enteredIbanData)} >
-                            <Translate content="validate" />
-                    </Button>    
-                        </Col> */}
-                         
+                      
                     </Row>
                     <div className="box basic-info alert-info-custom mt-16 kpi-List">
                         <Spin spinning={this.state.ibanDetailsLoading}>
