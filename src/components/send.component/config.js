@@ -12,4 +12,5 @@ export const sendreceiveSteps = {
   withdraw_crypto_liveness: "withdraw_crypto_liveness",
   withdraw_crpto_summary:"withdraw_crpto_summary",
   withdraw_crpto_success:"withdraw_crpto_success",
+  withdraw_crpto_Delcaration:"withdraw_crpto_Delcaration"
 }

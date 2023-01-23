@@ -55,7 +55,6 @@ class OnthegoFundTransfer extends Component {
     permissions: {},
     filtercoinsList: [],
     searchFiatVal: "",
-    successLoad:false
   }
   componentDidMount() {
     this.verificationCheck()
@@ -302,18 +301,13 @@ saveWithdrawdata = async () => {
 
   }
    goBack = async () => {
-    this.chnageStep('selectcurrency');
-    this.props.dispatch(setSendFiatHead(false));
-    this.fetchMemberWallet();
     if(this.state.fiatWalletsLoading===false){
-      this.setState({ ...this.state, fiatWalletsLoading: true,successLoad:true });
+      this.fetchMemberWallet();
     }
     setTimeout(()=>{
       this.chnageStep('selectcurrency');
     this.props.dispatch(setSendFiatHead(false));
-      this.setState({ ...this.state, fiatWalletsLoading: false,successLoad:false });
-    },1000)
- 
+    },400)
 }
   handleCurrencyChange = (e) => {
  this.setState({ ...this.state, selectedCurrency: e });
@@ -865,11 +859,11 @@ saveWithdrawdata = async () => {
                                 </div>
                             }
                             </div>
-                {/* <Col xs={24} sm={24} md={24} lg={24} xxl={24}> */}
+             
                 <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} />
-                {/* </Col> */}
+                
                 {this.state.permissions?.Send && 
-                // <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+            
                     <div className="text-right mt-36 create-account">
                       <Form.Item className="mb-0 mt-16">
                       <Button
@@ -913,7 +907,7 @@ saveWithdrawdata = async () => {
        successpage: <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
        <Image  preview={false} src={success}  className="confirm-icon" />
        <Title level={2} className="successsubtext">Your transaction has been processed successfully</Title>
-       <Translate content="Back_to_Withdrawfiat" className=" cust-cancel-btn" component={Button} size="large" onClick={() => { this.goBack() }} loading={this.state.successLoad} />
+       <Translate content="Back_to_Withdrawfiat" className=" cust-cancel-btn" component={Button} size="large" onClick={() => { this.goBack() }}  />
    </div></div>
     }
     return steps[this.state.step];
