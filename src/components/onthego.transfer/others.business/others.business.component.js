@@ -68,13 +68,13 @@ class OthersBusiness extends Component {
         }
     }
     handleIbanChange = async ({ target: { value,isNext } }) => {
-        this.setState({ ...this.state, ibanDetails: {}, enteredIbanData: value, isShowValid: false,errorMessage: null});
+     //   this.setState({ ...this.state, ibanDetails: {}, enteredIbanData: value, isShowValid: false,errorMessage: null});
         if (value?.length >= 10 && isNext) {
-            this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true,iBanValid:true });
+            this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true,iBanValid:true ,ibanDetails: {}, enteredIbanData: value, isShowValid: false,errorMessage: null,isValidateLoading:true});
             const response = await fetchIBANDetails(value);
             if (response.ok) {
                 if(response.data && (response.data?.routingNumber || response.data?.bankName)){
-                    this.setState({ ...this.state, ibanDetails: response.data, enteredIbanData: value, ibanDetailsLoading: false, errorMessage: null, iBanValid:true, isValidateLoading: false });
+                    this.setState({ ...this.state, ibanDetails: response.data, enteredIbanData: value, ibanDetailsLoading: false, errorMessage: null, iBanValid:true, isValidateLoading: false,isValidateLoading:false });
                 }else{
                     if(this.state.ibanDetails && !this.state.ibanDetails?.routingNumber|| !this.state.ibanDetails?.bankName) {
                         this.setState({ ...this.state, ibanDetails: {}, ibanDetailsLoading: false, errorMessage: null, iBanValid:false, isValidateLoading: false });
@@ -351,7 +351,7 @@ class OthersBusiness extends Component {
                                     maxLength={50}
                                     addonAfter={<Button className={``}
                                     type="primary"
-                                       loading={this.state.isValidateLoading}
+                                    loading={this.state.isValidateLoading}
                                        onClick={() => this.onIbanValidate(this.state?.enteredIbanData)} >
                                    <Translate content="validate" />
                            </Button>  }
