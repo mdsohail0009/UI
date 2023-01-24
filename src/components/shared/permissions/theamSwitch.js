@@ -9,6 +9,7 @@ const TheamSwitch = ({customer,theamFlag}) => {
     const [screenTheme,setScreenTheme]=useState("lightMode")
     const [settingsObj, setSettingsObj] = useState({ customerId: '', Language: customer?.language ? customer.language?.toUpperCase() : 'EN', currency: customer?.currency ? customer.currency : 'USD', Theme: customer?.theme ? customer.theme : null })
     
+    
     useEffect(() => {
         switcher({ theme: customer?.theme === 'Light Theme' ? themes.LHT : themes.DRT });
         // eslint-disable-next-line react-hooks/exhaustive-deps
