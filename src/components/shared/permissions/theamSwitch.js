@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useThemeSwitcher } from 'react-css-theme-switcher';
 import { connect } from 'react-redux';
-import Translate from 'react-translate-component';
+import { getmemeberInfo } from '../../../reducers/configReduser';
 import { saveSettingsData } from '../../../api/apiServer';
-const TheamSwitch = ({customer,theamFlag}) => {
+const TheamSwitch = ({customer,theamFlag,getmemeberInfoa}) => {
     const { switcher, themes } = useThemeSwitcher();
     const [theme, setTheme] = useState(customer?.theme === 'Light Theme' ? true : false);
     const [screenTheme,setScreenTheme]=useState("lightMode")
@@ -26,14 +26,10 @@ const TheamSwitch = ({customer,theamFlag}) => {
         }else{
             setScreenTheme("darkMode") 
         }
-        //settingsObj.info = JSON.stringify(trackAuditLogData)
-
         let res = await saveSettingsData(settingsObj);
         if (res.ok) {
-            
-            // message.destroy()
-            // getmemeberInfoa(customer.userId)
-            // counterpart.setLocale(settingsObj.Language);
+            getmemeberInfoa(customer.userId)
+           
         }
     }
   return (
@@ -62,8 +58,10 @@ const connectStateToProps = ({ userConfig }) => {
 }
 const connectDispatchToProps = dispatch => {
     return {
-        
-        dispatch
+        getmemeberInfoa: (useremail) => {
+            dispatch(getmemeberInfo(useremail));
+        }
     }
 }
+
 export default connect(connectStateToProps, connectDispatchToProps) (TheamSwitch)

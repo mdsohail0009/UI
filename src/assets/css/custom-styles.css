@@ -590,7 +590,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .ant-popover-arrow{border-color: var(--bgGloom) !important;}
 .payment-docs .accordian .ant-collapse-content-box, .payment-docs .accordian .ant-collapse-item{background-color: var(--bgGrey);border-radius: 24px;}
 .payment-docs .accordian .ant-collapse-item:last-child > .ant-collapse-content{background-color: var(--bgGrey);border-radius: 30px;}
-.file-label{border: 1px solid var(--borderColor);border-radius: 6px;padding: 2px 8px;color: var(--viewAll) !important;background-color: var(--bgDarkGrey);width:100px;margin-bottom: 5px;}
+.file-label{border: 1px solid var(--borderColor);border-radius: 6px;padding: 2px 8px;color: var(--viewAll) !important;background-color: var(--bgDarkGrey);width:115px;margin-bottom: 5px;}
 .delete-btn{color: var(--textWhite30);background-color: transparent !important;font-size: 14px;border: none;}
 .delete-btn:hover{background-color: transparent !important; color:white;border:none;}
 .delete-btn:focus{border:none !important;}
@@ -1007,10 +1007,11 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .Supporting-Documents{margin-top: 30px;}
 .icon.md.Batch{background-position: -738px -37px;}
 .notkyc a{color:var(--viewAll);}
-.thank-you-btn{margin-top: 70px;}
+.thank-you-btn{margin-top: 40px;}
 .proceed-section{margin-bottom: 34px;}
 .custom-declaraton.send-success{margin-top: 40px;}
 .custom-declaraton.send-success button,.success-pop.sell-success{margin-top: 26px;}
+.transaction-custom-table .pay-docs.bill-bank{text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width: 50%;}
 /*@media start*/
 @media (min-width: 768px){
     .listitems-design{width: 340px;}
@@ -1170,6 +1171,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .crypto-details{justify-content: center;}
     .batch-actions{margin-top: 16px;}
     /* .k-loading-image::before, .k-loading-image::after{top:60% !important;position: absolute !important;} */
+    .custom-theme-btn{display: flex;}
    
 }
 
