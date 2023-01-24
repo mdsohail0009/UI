@@ -26,7 +26,7 @@ class SuccessMsg extends Component {
 
         return (
             <>
-                <div className="success-pop text-center mt-36">
+                <div className="success-pop text-center sell-success">
                     <img src={success} className="confirm-icon" alt={"success"} />
                     <Translate content="success_msg" component={Title} className="success-title" />
                     <Paragraph className="successsubtext"><Translate content="sucessText1" component={Text} className="successsubtext" /> {cd.totalValue} {cd.walletCode} <Translate content="sucessText3" component={Text} className="successsubtext" /></Paragraph>

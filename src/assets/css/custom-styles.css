@@ -103,7 +103,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .cust-check-outline input[type='radio'], .ant-form .cust-check-outline input[type='checkbox'], .custom-checkbox.cust-check-outline input[type='checkbox']{display: none;}
 /* .new-custom-radiobtn  input[type=radio]:checked+span{background-position:-324px -521px;} */
 /*Header start*/
-.notification-conunt .bell span{position: absolute;right: -8px;top: -8px;width: 18px;height: 18px;background: #3653E4;border-radius: 50%;line-height: 18px;text-align: center;font-size: 10px;font-weight: 600;}
+.notification-conunt .bell span{ color: white; position: absolute;right: -8px;top: -8px;width: 18px;height: 18px;background: #3653E4;border-radius: 50%;line-height: 18px;text-align: center;font-size: 10px;font-weight: 600;}
 .haead-main{background-color: var(--secondary);position: fixed; z-index: 9999;left: 0; right: 0;}
 .tlv-header ul{background-color: transparent; border-bottom: 0;}
 .tlv-header ul li{font-weight: 500;}
@@ -258,7 +258,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .ant-notification-rtl .ant-notification-notice-close{left: auto;right: 15px;}
 .ant-notification-notice-message{color: var(--textWhite30)!important;}
 .ant-notification-notice-description{color: var(--textSecondary)!important;}
-.ant-notification-notice{background-color: var(--black);border-radius: 10px;font-size: 14px;}
+.ant-notification-notice{border-radius: 10px;font-size: 14px;background: var(--accountType);}
 .notify{padding: 16px;margin-bottom: 36px;}
 .notify .ant-alert-action{margin: 15px 30px 0 30px;}
 .notify .ant-alert-action .ant-btn{color: var(--viewAll);font-size: 18px;font-weight: 500;}
@@ -789,7 +789,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* crypto success end  */
 
 /* send crypto addressbook start */
-.batchpayment-summary, .batch-style{margin-bottom: 16px !important;}
+/* .batchpayment-summary, .batch-style{margin-bottom: 16px !important;} */
 .batchpayment-summary{justify-content: space-between;align-items: center;}
 .admin-actions.address-icons li{margin-left: 20px;}
 .sub-title.address-book{ margin: 36px 0 16px 0 !important;}
@@ -1007,6 +1007,10 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .Supporting-Documents{margin-top: 30px;}
 .icon.md.Batch{background-position: -738px -37px;}
 .notkyc a{color:var(--viewAll);}
+.thank-you-btn{margin-top: 70px;}
+.proceed-section{margin-bottom: 34px;}
+.custom-declaraton.send-success{margin-top: 40px;}
+.custom-declaraton.send-success button,.success-pop.sell-success{margin-top: 26px;}
 /*@media start*/
 @media (min-width: 768px){
     .listitems-design{width: 340px;}
@@ -1164,6 +1168,8 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .ant-tabs-tab + .ant-tabs-tab{margin: 0 0 0 26px;}
     .display-items{display: block;}
     .crypto-details{justify-content: center;}
+    .batch-actions{margin-top: 16px;}
+    /* .k-loading-image::before, .k-loading-image::after{top:60% !important;position: absolute !important;} */
    
 }
 

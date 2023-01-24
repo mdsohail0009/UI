@@ -306,7 +306,10 @@ isErrorDispaly = (objValue) => {
     return "Something went wrong please try again!";
   }
 };
+backToDashboard=()=>{
+  debugger
 
+}
   render() {
     const { Title } = Typography;
     const {  doctypeData, currenyData, gridUrl, searchObj,showModal,modalData,timeListSpan,statusData,isLoading,viewData } = this.state;
@@ -326,6 +329,13 @@ isErrorDispaly = (objValue) => {
 
    const  handleBack = () => {
       this.props.dispatch(getScreenName({getScreen:"dashboard"}))
+      if (!this.props?.customer?.isKYC) {
+        this.props.history.push("/notkyc");
+        return;
+    }
+      else{
+        this.props.history.push("/");
+      }
   }
 
     return (
@@ -342,11 +352,10 @@ isErrorDispaly = (objValue) => {
           visible={this.props.showDrawer}
           className="side-drawer-full custom-gridresponsive transctns-grid"
         >
-    
         </Drawer>
         <div className="main-container grid-demo">
 			<div className="backbtn-arrowmb" onClick={handleBack}>
-        <Link className="icon md leftarrow c-pointer backarrow-mr" to="/" />
+        <Link className="icon md leftarrow c-pointer backarrow-mr" to="/"/>
         <span className="back-btnarrow">Back</span></div>
         <Translate content="transactions_history" component={Title} className="grid-title" />
             <Form

@@ -218,13 +218,12 @@ const Batchpayments = (props) => {
       return (
         <>
           <div className='main-container'>
-                  <div className='batchpayment-summary'>
-                
-                      <Title className="basicinfo mb-0"><span className='icon md c-pointer back' onClick={gotoDashboard}></span>
-                      <Translate content="batch_payments" component={Text} className="basicinfo" />  
-                      <div className='batch-title-align'>
-                      <Text className='webkit-color'> Proceed{" "}(<span className="icon md process-icon"/>)</Text>
-                      <Text className='text-white fw-400 mb-12'>: To proceed the transaction,{" "}please click on proceed icon</Text>  </div>      
+          <div className="backbtn-arrowmb"><span className="icon md leftarrow c-pointer backarrow-mr" onClick={gotoDashboard}></span><span className="back-btnarrow">Back</span></div>
+                  <div className='batchpayment-summary d-flex'>
+                  
+                      <Title className="basicinfo mb-0">                     
+                      <Translate content="batch_payments" component={Text} className="addressbook-mb" />  
+                          
                       </Title>
                       <div className='batch-actions'>
                   <div className="mb-right">
@@ -232,6 +231,9 @@ const Batchpayments = (props) => {
           </div>
                   </div>
               </div>
+              <div className='proceed-section'>
+                      <Text className='webkit-color'> Proceed{" "}(<span className="icon md process-icon"/>)</Text>
+                      <Text className='note-cont'>: To proceed the transaction,{" "}please click on proceed icon</Text>  </div> 
               {errorWarning !== null && (
             <Alert
               className="mb-12"

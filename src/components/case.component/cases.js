@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import List from '../grid.component'
 import {
-    Form, Typography, Input, Button, Alert, Spin, message, Select, Checkbox, Tooltip, Modal,
-    Radio, Row, Col, AutoComplete,  Image, Tabs, Drawer
+     Typography
   } from "antd";
 import {Link,  withRouter } from "react-router-dom";
 import Translate from 'react-translate-component';
@@ -52,7 +51,15 @@ class Cases extends Component {
      viewCase = ({dataItem}) => {
 		this.props.history.push(`/caseView/${dataItem.id}`);
 	};
-
+    backToDashboard=()=>{
+        if (!this.props?.userProfileInfo?.isKYC) {
+            this.props.history.push("/notkyc");
+            return;
+        }
+          else{
+            this.props.history.push("/");
+          }
+    }
     handleAllDocuments = e => {
         this.setState({
             allDocs: e.target.value === 1
@@ -63,8 +70,8 @@ class Cases extends Component {
         const { gridUrl } = this.state;
 
         return (<>
-        <div className="cust-list main-container case-demo">
-        <div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/cockpit" /><span className="back-btnarrow">Back</span></div>
+        <div className="cust-list main-container case-demo" onClick={this.backToDashboard}>
+        <div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/cockpit"/><span className="back-btnarrow">Back</span></div>
           
                 <Translate content="case" component={Paragraph} className="grid-title" /> </div>
                 {/* <div className=""> */}

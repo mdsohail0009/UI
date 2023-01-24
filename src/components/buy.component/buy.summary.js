@@ -114,7 +114,7 @@ class BuySummary extends Component {
           error: { valid: false, message: this.isErrorDispaly(response),agreeRed:true, }
         });
       }
-      this.myRef.current.scrollIntoView();
+      this.myRef?.current?.scrollIntoView();
       this.setState({ isLoading: false });
     } else {
       this.setState({
@@ -125,7 +125,7 @@ class BuySummary extends Component {
           agreeRed:false,
         },
       });
-      this.myRef.current?.scrollIntoView();
+      this.myRef?.current?.scrollIntoView();
 
     }
   };

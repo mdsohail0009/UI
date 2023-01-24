@@ -55,7 +55,6 @@ class OnthegoFundTransfer extends Component {
     permissions: {},
     filtercoinsList: [],
     searchFiatVal: "",
-    successLoad:false
   }
   componentDidMount() {
     this.verificationCheck()
@@ -302,18 +301,13 @@ saveWithdrawdata = async () => {
 
   }
    goBack = async () => {
-    this.chnageStep('selectcurrency');
-    this.props.dispatch(setSendFiatHead(false));
-    this.fetchMemberWallet();
-    if(this.state.fiatWalletsLoading===false){
-      this.setState({ ...this.state, fiatWalletsLoading: true,successLoad:true });
+    if(this.state.fiatWalletsLoading===false || this.state.fiatWalletsLoading===undefined){
+      this.fetchMemberWallet();
     }
     setTimeout(()=>{
       this.chnageStep('selectcurrency');
     this.props.dispatch(setSendFiatHead(false));
-      this.setState({ ...this.state, fiatWalletsLoading: false,successLoad:false });
-    },1000)
- 
+    },400)
 }
   handleCurrencyChange = (e) => {
  this.setState({ ...this.state, selectedCurrency: e });
@@ -604,7 +598,7 @@ saveWithdrawdata = async () => {
                                 </Col>
                         </Row>}</>
                   ))}
-                  {(!filterObj.length > 0) && <div className="success-pop text-center declaration-content" >
+                  {(!filterObj.length > 0) && <div className="success-pop text-center declaration-content asdfv" >
                             <img src={oops} className="confirm-icon nodata-image"  alt="Confirm" />
                             <h1 className="success-title oops-title" > {apicalls.convertLocalLang('oops')}</h1>
                             <p className="successsubtext custom-height"> {apicalls.convertLocalLang('address_available')} </p>
@@ -873,11 +867,11 @@ saveWithdrawdata = async () => {
                                 </div>
                             }
                             </div>
-                {/* <Col xs={24} sm={24} md={24} lg={24} xxl={24}> */}
+             
                 <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} />
-                {/* </Col> */}
+                
                 {this.state.permissions?.Send && 
-                // <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+            
                     <div className="text-right mt-36 create-account">
                       <Form.Item className="mb-0 mt-16">
                       <Button
@@ -910,7 +904,7 @@ saveWithdrawdata = async () => {
                     fiatHeadingUpdate={this.fiatHeading}
                     onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} />
             </>,
-      declaration: <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
+      declaration: <div className="custom-declaraton send-success"> <div className="success-pop text-center declaration-content">
       <Image preview={false} src={alertIcon} className="confirm-icon"  />
       <Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
@@ -918,10 +912,10 @@ saveWithdrawdata = async () => {
                 Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
            
            <Translate content="Back_to_Withdrawfiat" className=" cust-cancel-btn send-crypto-btn" component={Button} size="large" onClick={() => { this.goBack() }} /> </div></div>,
-       successpage: <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
+       successpage: <div className="custom-declaraton send-success"> <div className="success-pop text-center declaration-content">
        <Image  preview={false} src={success}  className="confirm-icon" />
        <Title level={2} className="successsubtext">Your transaction has been processed successfully</Title>
-       <Translate content="Back_to_Withdrawfiat" className=" cust-cancel-btn" component={Button} size="large" onClick={() => { this.goBack() }} loading={this.state.successLoad} />
+       <Translate content="Back_to_Withdrawfiat" className=" cust-cancel-btn" component={Button} size="large" onClick={() => { this.goBack() }}  />
    </div></div>
     }
     return steps[this.state.step];

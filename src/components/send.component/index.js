@@ -17,6 +17,7 @@ import SuccessMsg from '../withdraw.crypto.component/success';
 import SelectAddress from '../withdraw.crypto.component/selectAddress';
 import OnthegoCryptoTransfer from '../onthego.transfer/cryptoTransfer.component';
 import { getScreenName } from '../../reducers/feturesReducer';
+import DelcarationForm from '../withdraw.crypto.component/delcarationForm';
 import { connect } from 'react-redux';
 const { Paragraph } = Typography
 class SendReceive extends Component {
@@ -58,7 +59,8 @@ class SendReceive extends Component {
             withdraw_crypto_liveness: <WithdrawaCryptolLive />,
             withdraw_crpto_summary: <WithdrawSummary onClose={() => this.closeDrawer()} onBackCLick={() => this.props.dispatch(setStep("step1"))} />,
             withdraw_crpto_success: <SuccessMsg onBackCLick={() => this.props.dispatch(setStep("step1"))} />,
-            sendMoney: <OnthegoCryptoTransfer />
+            sendMoney: <OnthegoCryptoTransfer />,
+            withdraw_crpto_Delcaration:<DelcarationForm onBackCLick={() => this.props.dispatch(setStep("step1"))}/>
 
         }
         return stepcodes[config[this.props.sendReceive.stepcode]]
@@ -77,7 +79,8 @@ class SendReceive extends Component {
             withdraw_crypto_liveness: <span  />,
             withdraw_crpto_summary: <span  />,
             withdraw_crpto_success: <span  />,
-            sendMoney: <span />
+            sendMoney: <span />,
+            withdraw_crpto_Delcaration:<span/>
         }
         return stepcodes[config[this.props.sendReceive.stepcode]]
     }
@@ -96,7 +99,7 @@ class SendReceive extends Component {
             withdraw_crpto_summary: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             withdraw_crpto_success: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             sendMoney:<span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
-
+            withdraw_crpto_Delcaration:<span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
         }
         return stepcodes[config[this.props.sendReceive.stepcode]]
     }
@@ -117,7 +120,7 @@ class SendReceive extends Component {
                       {!["step1","withdraw_crpto_summary"].includes(this.props.sendReceive.stepcode) && (this.props?.isSendTab || this.props?.sendReceive?.sendCryptoEnable)&& ((this.props.sendReceive.stepcode === "withdraw_crpto_summary"||this.props.sendReceive.stepcode ==="withdraw_crypto_selected")&&this.props.sendReceive?.subTitle!=="") &&
                      <Image preview={false} src={this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.impagePath ||this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.imagePath} />
                      }
-                     {(this.props.sendReceive.stepcode !== "withdraw_crpto_success") &&
+                     {!(this.props.sendReceive.stepcode === "withdraw_crpto_success" || this.props.sendReceive.stepcode === "withdraw_crpto_Delcaration") &&
                     <Translate 
                     with={{ coin: this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin}}
                     className="drawer-maintitle buy-sellprocess header-space" 

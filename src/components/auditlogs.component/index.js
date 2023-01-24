@@ -51,9 +51,6 @@ class AuditLogs extends Component {
   componentDidMount = async () => {
     this.auditlogsTrack();
     this.props.dispatch(getScreenName({getScreen:null}))
-    //setTimeout(() => this.gridRef?.current?.refreshGrid(), 200);             -- code commneted for duplicate calls issue
-
-
     this.TransactionFeatureSearch(this.props.userProfile?.userName);
   };
   auditlogsTrack = () => {
@@ -85,7 +82,15 @@ class AuditLogs extends Component {
       moreAuditLogs: false, logRowData: {}
     })
   }
-
+  backToDashboard=()=>{
+    if (!this.props?.userProfile?.isKYC) {
+        this.props.history.push("/notkyc");
+        return;
+    }
+      else{
+        this.props.history.push("/");
+      }
+}
   TransactionUserSearch = async (userVal) => {
     let response = await userNameLuSearch(userVal);
     if (response.ok) {
@@ -202,7 +207,7 @@ class AuditLogs extends Component {
           destoryOnClose={true}
         >
            </Drawer>
-           <div className="main-container grid-demo">
+           <div className="main-container grid-demo" onClick={this.backToDashboard}>
 			<div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/" /><span className="back-btnarrow">Back</span></div>
       <span className="grid-title"><Translate content="AuditLogs" component={Drawer.span} className="text-white" /></span>
       </div>

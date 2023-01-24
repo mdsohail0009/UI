@@ -60,5 +60,12 @@
         "beneficiaryName":"Beneficiary’s Name ",
         "beneficiaryIBAN":"Beneficiary Account Number/IBAN",
         "state":"Status"
+    },
+    "Digital Transfer Fiat":{
+        "date":"Date and Time",
+        "docType":"Transaction Type",
+        "amount":"Amount",
+        "sbFee":"SB Fee",
+        "state":"Status"
     }
 }

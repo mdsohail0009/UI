@@ -253,38 +253,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 </Col>
             </Row>
         </>}
-        {/* <Row gutter={[16, 4]} className="send-drawerbtn tabs-innertabs">
-
-                  <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
-                      <Form.Item className="text-center form-marginB">
-                        <Button
-                          htmlType="submit"
-                          size="large"
-                          className="newtransfer-card"
-                          // style={{ width: '100%' }}
-                        //   loading={this.state.newtransferLoader}
-                        //   disabled={this.state.addressLoader}
-                        >
-                          New Transfer
-                        </Button>
-                      </Form.Item>
-                    </Col>
-                     <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
-                      <Form.Item className="text-center form-marginB">
-                        <Button
-                          htmlType="button"
-                          size="large"
-                          className="newtransfer-card"
-                          // style={{ width: '100% ' }}
-                        //   loading={this.state.addressLoader}
-                        //   disabled={this.state.newtransferLoader}
-                        //   onClick={this.goToAddressBook}
-                        >
-                          Address book
-                        </Button>
-                      </Form.Item>
-                    </Col>
-                  </Row> */}
+       
         
         {currency == 'EUR' && <h2 className="adbook-head" >SEPA Transfer</h2>}
         
@@ -399,7 +368,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     maxLength={50}
                     addonAfter={ <Button className={``}
                     type="primary"
-                        // loading={isValidateLoading}
+                        loading={isValidateLoading}
                         onClick={() => onIbanValidate(enteredIbanData)} >
                         <Translate content="validate" />
                     </Button>     }
@@ -409,14 +378,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                
             </div>
         </Col>}
-        {/* {(currency === 'EUR'||addressOptions.tabType === 'internationalIBAN') &&<Col xs={24} md={10} lg={10} xl={10} xxl={10}>
-            <Button className={`pop-btn dbchart-link pop-validate-btn iban-validate`}
-            type="primary"
-                // loading={isValidateLoading}
-                onClick={() => onIbanValidate(enteredIbanData)} >
-                <Translate content="validate" />
-            </Button>      
-        </Col>} */}
+       
         </Row>}
 
         <Row>

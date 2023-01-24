@@ -650,7 +650,7 @@ class WithdrawSummary extends Component {
 			return <Loader />;
 		}
 		if (showDeclartion) {
-			return <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
+			return <div className="custom-declaraton send-success"> <div className="text-center mt-36 declaration-content">
 			  <Image preview={false} src={alertIcon} className="confirm-icon"/>
 			  <Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
@@ -838,7 +838,8 @@ class WithdrawSummary extends Component {
 													<span className="icon md info mr-16 c-pointer" />
 												</Tooltip>
 											)}
-											<Button
+									
+											{verifyOtpText[this.state.verifyOtpText] && <Button
 												type="text" className="btn-clickable-style"
 												loading={this.state.phoneVerifyLoading}
 												style={{ color: "black", margin: "0 auto" }}
@@ -849,7 +850,8 @@ class WithdrawSummary extends Component {
 													<Text className="text-yellow pr-24"> Verified </Text>
 													<span className="icon md greenCheck" />
 													</>)}
-											</Button>
+											</Button>}
+											
 										</div>}
 										/>
 										
@@ -912,7 +914,7 @@ class WithdrawSummary extends Component {
 												</Tooltip>
 											)}
 
-{this.state.verifyEmailOtp === true &&
+{verifyText[this.state.verifyText] &&
 											<Button
 												type="text"
 												style={{ color: "black", margin: "0 auto" }}
