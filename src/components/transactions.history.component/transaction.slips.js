@@ -79,17 +79,20 @@ class TransactionSlips extends Component {
           }
           footer={[
             <>{!loader&&<>
-              <Button style={{ width: 100 }}
-                className=" pop-cancel cancel-btn pop-btn"
-                onClick={() => this.handleModalCancel()}
-
-              >Cancel</Button>
-             {(viewData?.state==="Approved" || viewData?.state==="Approved (Sent)") &&
+            {(viewData?.state==="Approved" || viewData?.state==="Approved (Sent)") &&
               <Button className="primary-btn pop-btn"
+              block
                 loading={this.state.isLoading}
                 onClick={() => this.handleDownload()}
               > Download </Button>
-             }</>}
+             }
+              <Button 
+              block
+                className=" cust-cancel-btn"
+                onClick={() => this.handleModalCancel()}
+
+              >Cancel</Button>
+             </>}
             </>
           ]} >
           <>
@@ -97,11 +100,11 @@ class TransactionSlips extends Component {
              {loader && <Loader/>}
             {!loader&&transactionSlipData && Object?.keys(transactionSlipData)?.map((key) => <>
               <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                <div className="pay-list py-4 transaction-details" style={{ alignItems: 'baseline' }} key={key}>
-                  <Title className="fs-14 text-white fw-400">{typeof transactionSlipData[key] === "object" ? key : transactionSlipData[key]}</Title>
-                  <Title className="fs-14 text-white fw-500  text-right trn-sumtext">
-                  {(viewData[key] === null || viewData[key] === "") ? '-' : (transactionSlipData[key] === 'Date') ? moment.utc(viewData[key]).local().format("DD/MM/YYYY hh:mm:ss A") : (typeof transactionSlipData[key] === "object") ? `${this.getCombinedValues(transactionSlipData[key])}` : viewData[key]}
-                  </Title>
+                <div className="pay-list modal-listbr" key={key}>
+                  <div className="summary-liststyle">{typeof transactionSlipData[key] === "object" ? key : transactionSlipData[key]}</div>
+                  <div className="summarybal">
+                            {(viewData[key] === null || viewData[key] === "") ? '-' : (transactionSlipData[key] === 'Date') ? moment.utc(viewData[key]).local().format("DD/MM/YYYY hh:mm:ss A") : (typeof transactionSlipData[key] === "object") ? `${this.getCombinedValues(transactionSlipData[key])}` : (transactionSlipData[key] === "Hash") ? this.getHashLink(transactionSlipData[key]) : viewData[key]}
+                  </div>
                 </div>
               </Col></>)}
           </>

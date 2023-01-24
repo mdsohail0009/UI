@@ -6,9 +6,16 @@ const UPDATE_PERMISSIONS = "updatePermissions";
 const CLEAR_PERMISSIONS = "clearPermissions";
 const SET_SELECTED_FEATUREID = "setSelectedFeatureMenu";
 const UPDATE_ACCESSDENIED = "updateAccessdenied";
+const GET_SCREEN_NAME="getScreenName";
 const getData = (payload) => {
     return {
         type: GET_DATA,
+        payload
+    }
+}
+const getScreenName=(payload)=>{
+    return {
+        type:GET_SCREEN_NAME,
         payload
     }
 }
@@ -84,7 +91,8 @@ const fetchFeaturePermissions = (feature_id, customer_id, callback) => {
 const initialState = {
     features: { loading: true, data: [], error: null },
     featurePermissions: { loading: true, data: [], error: null, selectedScreenFeatureId: null },
-    accessDenied: false
+    accessDenied: false,
+    getScreen:null
 }
 const featuresReducer = (state = initialState, action) => {
 
@@ -105,10 +113,12 @@ const featuresReducer = (state = initialState, action) => {
         case CLEAR_PERMISSIONS:
             state = { ...state, featurePermissions: { data: [], error: null, loading: true, selectedScreenFeatureId: null } };
             return state;
+            case GET_SCREEN_NAME:
+                state={...state,getScreen:action.payload}
         default:
             return state;
     }
 }
 
 export default featuresReducer;
-export { fetchFeatures, fetchFeaturePermissions, clearPermissions, updatePermissions, setSelectedFeatureMenu, updateAccessdenied };
+export { fetchFeatures, fetchFeaturePermissions, clearPermissions, updatePermissions, setSelectedFeatureMenu, updateAccessdenied,getScreenName };

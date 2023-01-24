@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Collapse, Button, Typography, Modal, Tooltip, message, Input, Upload, Spin, Empty, Alert } from 'antd';
+import { Collapse, Button, Typography, Modal, Tooltip, message, Input, Upload, Spin, Empty, Alert,Row,Col } from 'antd';
 import { approveDoc, getDocDetails, getDocumentReplies, saveDocReply, uuidv4, getFileURL } from './api';
 import Loader from '../../Shared/loader';
 import Moment from 'react-moment';
@@ -348,7 +348,7 @@ class RequestedDocs extends Component {
         return <>
             <div className="main-container">
                 {(!this.state.docDetails?.details || this.state.docDetails?.details.length === 0) && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div>}
-                <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile/4" />{this.state?.docDetails?.note}</div>
+                <div className=""><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile/4" />{this.state?.docDetails?.note}</div>
                 <div className="bank-view">
                     {this.state.docDetails?.details?.map((doc, idx) => <Collapse onChange={(key) => { if (key) { this.loadDocReplies(doc.id) } }} accordion className="accordian mb-24" defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
                         <Panel header={doc.documentName} key={idx + 1} extra={doc.status ? (<span className={`${doc.status ? doc.status.toLowerCase() + " staus-lbl" : ""}`}>{doc.status}</span>) : ""}>
@@ -358,15 +358,19 @@ class RequestedDocs extends Component {
                                 <div className="reply-body">
                                     <Text className="reply-username">{reply.repliedBy}</Text><Text className="reply-date"><Moment format="DD MMM YY hh:mm A">{reply.repliedDate}</Moment> </Text>
                                     <p className="reply-txt">{reply.reply}</p>
+                                    
                                     <div className="docfile-container">
-                                        {reply?.path?.map((file, idx1) => <div key={idx1} className="docfile">
+                                        {reply?.path?.map((file, idx1) =>
+                                    <Col lg={12} xl={12} xxl={12}><div key={idx1} className="docfile">
                                             <span className={`icon xl ${(file.filename.slice(-3) === "zip" ? "file" : "") || (file.filename.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                             <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
                                                 <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>
-                                                <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
+                                                <span className="file-sizestyle">{this.formatBytes(file.size)}</span>
                                             </div>
-                                        </div>)}
+                                        </div> </Col>
+                               )}
                                     </div>
+                                   
                                 </div>
                             </div>)}
                             {!this.state.documentReplies[doc.id]?.loading && doc.status !== "Approved" && <><div>
@@ -390,26 +394,30 @@ class RequestedDocs extends Component {
                                     <p className="ant-upload-drag-icon">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
-                                    <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
-                                    <p className="ant-upload-hint text-secondary fs-12">
+                                    <p className="ant-upload-text upload-title">Drag and drop or browse to choose file</p>
+                                    <p className="ant-upload-hint upload-text">
                                         PNG, JPG,JPEG and PDF files are allowed
                                     </p>
                                 </Dragger>
                                 {this.state.uploadLoader && <Loader />}
                             </div>
+                            
                                 <div className="docfile-container">
-                                    {this.getUploadedFiles(doc.id)?.path?.map((file, idx1) => <div key={idx1} className="docfile">
+                                    {this.getUploadedFiles(doc.id)?.path?.map((file, idx1) => 
+                            <Col lg={12} xl={12} xxl={12}><div key={idx1} className="docfile">
                                         <span className={`icon xl ${(file.filename.slice(-3) === "zip" ? "file" : "") || (file.filename.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                         <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
                                             <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>
-                                            <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
+                                            <span className="file-sizestyle">{this.formatBytes(file.size)}</span>
                                         </div>
                                         <span className="icon md close c-pointer" onClick={() => this.deleteDocument(this.getUploadedFiles(doc.id), idx1, true)} />
-                                    </div>)}
+                                    </div> </Col>
+                                )}
                                 </div>
+                               
                                 <div className="text-center my-36">
 
-                                    <Button disabled={this.state.isSubmitting} className="pop-btn px-36" onClick={() => this.docReject(doc)}>Submit</Button>
+                                    <Button disabled={this.state.isSubmitting} className="cust-cancel-btn" onClick={() => this.docReject(doc)}>Submit</Button>
                                 </div>
                             </>}
                         </Panel>
@@ -424,8 +432,11 @@ class RequestedDocs extends Component {
                     destroyOnClose={true}
                     closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.docPreviewClose} /></Tooltip>}
                     footer={<>
-                        <Button type="primary" onClick={this.docPreviewClose} className="text-center text-white-30 pop-cancel fw-400 mr-36">Close</Button>
-                        <Button className="pop-btn px-36" onClick={() => this.fileDownload()}>Download</Button>
+                         <div className="cust-pop-up-btn crypto-pop">
+                        
+                        <Button   onClick={this.docPreviewClose} className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml">Close</Button></div>
+                   
+                        <Button className="primary-btn pop-btn detail-popbtn" onClick={() => this.fileDownload()}>Download</Button>
                     </>}
                 >
                     <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null, mimeType: this.state?.previewPath?.includes(".pdf") ? 'application/pdf' : '' }} />

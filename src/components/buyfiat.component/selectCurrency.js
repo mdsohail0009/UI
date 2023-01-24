@@ -48,39 +48,39 @@ class SelectCurrency extends Component {
               </div>
             </div>
             <Translate
-              className=" fw-200 text-white-30 fs-16 "
+              className=" "
               content="BICcode"
               component={Text}
             />
             <Translate
-              className="fs-20 text-white-30 l-height-normal d-block mb-24"
+              className=" l-height-normal d-block "
               content="EPUALT"
               component={Text}
             />
             <Translate
-              className="fw-200 text-white-30 fs-16"
+              className=""
               content="account_holder_name"
               component={Text}
             />
             <Translate
-              className="fs-20 text-white-30 l-height-normal d-block mb-24"
+              className="l-height-normal d-block"
               content="innovative_concepts"
               component={Text}
             />
 
 
-            <div className="crypto-address mb-36 mx-0">
+            <div className="crypto-address">
               <Translate
-                className="mb-0 fw-400 fs-14 text-secondary"
+                className=""
                 content="reference"
                 component={Text}
               />
-              <div className="mb-0 fs-16 fw-500 text-textDark">
+              <div className="">
                 wire_16_ZBPHXFHI
               </div>
             </div>
             <Paragraph
-              className="fs-14 text-white-30 fw-200 l-height-normal"
+              className="l-height-normal"
             ><span className="textpure-yellow">IMPORTANT:</span> This code identifies your deposit include this code when submitting the wire transfer in the transaction description or purpose</Paragraph>
             <Translate className="text-white-30 f-12 " content="note" component={Paragraph} />
           </form>

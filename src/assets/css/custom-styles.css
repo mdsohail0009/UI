@@ -1,0 +1,1178 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');
+* { scrollbar-width: thin; scrollbar-color: var(--scroll);}
+*::-webkit-scrollbar { width: 12px;height: 10px;  }
+*::-webkit-scrollbar-thumb {background-color: var(--scroll);border-radius: 20px;}
+html, .auto-scroll, .ant-table-body, .ant-drawer-body, .mobile-list, .k-grid-content{scrollbar-color: var(--scroll);}
+.loader-antd{padding: 30px 50px;text-align: center;color: var(--white);}
+    
+body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !important;}
+.d-flex{display: flex !important;}
+.p-relative{position: relative !important;}
+.c-pointer{cursor: pointer !important;}
+.d-block{display: block !important;}
+
+.ant-spin-dot-item{background-color: var(--primary);}
+.icon.md.theme-icon{background-position: -8px -486px;margin-right: 4px;}
+.icon.sm.valupp-icon{background-position: -87px -5px;margin-left: 8px;}
+.icon.sm.valdown-icon{background-position: -108px -4px;margin-left: 8px;}
+.icon.lg.whats-app{background-position: -9px -658px;margin-right: 14px;}
+.icon.lg.mail-app{background-position: -52px -658px;}
+
+/*----Font Sizes----*/
+
+.main-head{font-size: 32px;font-weight: 800;}
+.sub-head{font-size: 22px;font-weight: 700;}
+.header-menu{font-size: 18px;font-weight: 800;}
+.header-menulist, 
+.drawer-subtext, 
+.coinselect-coinprice{font-size: 16px;font-weight: 400;}
+.header-menusub{font-size: 14px;font-weight: 400;}
+.drawer-head{font-size: 26px;font-weight: 800;}
+.coinselect-name, 
+.coinselect-balance{font-size: 16px;font-weight: 700;}
+
+
+
+/*--Font Weights--*/
+.fw-100{font-weight: 100 !important;}
+.fw-200{font-weight: 200 !important;}
+.fw-300{font-weight: 300 !important;}
+.fw-400{font-weight: 400 !important;}
+.fw-500{font-weight: 500 !important;}
+.fw-600{font-weight: 600 !important;}
+.fw-700{font-weight: 700 !important;}
+.fw-800{font-weight: 800 !important;}
+
+/*--Alignments--*/
+.text-center{text-align: center !important;}
+.text-right{text-align: right !important;}
+.text-left{text-align: left !important;}
+.text-upper{text-transform: uppercase !important;}
+.text-captz{text-transform: capitalize !important;}
+.align-center{align-items: center;}
+.justify-content{justify-content: space-between;}
+.display-items{display: flex;align-items: center;justify-content: space-between;}
+
+.text-underline{text-decoration: underline !important;}
+.valign-initial{vertical-align: initial;}
+
+/*--Text Colors--*/
+.text-white{color: var(--textWhite) !important;}
+
+
+
+/*----Padding Utilities----*/
+.p-0{padding: 0 !important;}
+
+/*----Margin Utilities----*/
+.m-0{margin: 0 !important;}
+/* icons start */
+.new-custom-radiobtn .ant-radio-button-wrapper-checked .icon.lg{background-position:-324px -521px !important;}
+.new-custom-radiobtn .ant-radio-button-wrapper .icon.lg{background-position:-324px -485px;}
+.icon.md.add-icon-black{background-position: -397px -71px;}
+.icon.md.excel-export{background-position: -664px -3px;}
+.icon.lg.radio-check{background-position:-324px -521px;}
+.icon.lg.radio{background-position:-324px -485px;}
+.icon.lg.download{background-position:-234px -518px;}
+.icon.lg.search-angle{background-position:-128px -480px;}
+.icon.md.bell{background-position:-39px -486px;}
+.icon.lg.menu-bar{background-position: -97px -484px;}
+.icon.lg.search-angle.drawer-search{background-position:-295px -484px ;}
+.icon.sm.valupp-icon.pg-arrow{background-position:-10px -692px;}
+.icon.sm.valupp-icon.red-arrow{background-position:-28px -692px;}
+.icon.lg.profile-icon{background-position:-9px -556px}
+.icon.lg.security-icon{background-position:-52px -556px}
+.icon.lg.settings-icon{background-position:-173px -556px}
+.icon.lg.info-icon{background-position:-73px -330px}
+.icon.lg.logout-icon{background-position:-73px -330px}
+.icon.lg.documents-icon{background-position:-176px -329px;}
+.icon.lg.addressbook-icon{background-position: -140px -329px}
+.icon.lg.cases-icon{background-position:-210px -329px;}
+.icon.lg.referral-icon{background-position:-139px -555px;}
+.user-labels.active .icon.lg.profile-icon,.user-labels:hover .icon.lg.profile-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.profile-icon, .ant-tabs-tab:hover .icon.lg.profile-icon{background-position:-9px -590px;} 
+.user-labels.active .icon.lg.security-icon, .user-labels:hover .icon.lg.security-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.security-icon,.ant-tabs-tab:hover .icon.lg.security-icon{background-position:-52px -589px}
+.user-labels.active .icon.lg.settings-icon, .user-labels:hover .icon.lg.settings-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.settings-icon,.ant-tabs-tab:hover .icon.lg.settings-icon{background-position:-173px -589px}
+.user-labels.active .icon.lg.documents-icon, .user-labels:hover .icon.lg.documents-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.documents-icon,.ant-tabs-tab:hover .icon.lg.documents-icon{background-position:-176px -363px}
+.user-labels.active .icon.lg.addressbook-icon, .user-labels:hover .icon.lg.addressbook-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.addressbook-icon,.ant-tabs-tab:hover .icon.lg.addressbook-icon{background-position:-140px -363px}
+.user-labels.active .icon.lg.cases-icon, .user-labels:hover .icon.lg.cases-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.cases-icon,.ant-tabs-tab:hover .icon.lg.cases-icon{background-position:-210px -362px;}
+.user-labels.active .icon.lg.notification-icon, .user-labels:hover .icon.lg.notification-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.notification-icon,.ant-tabs-tab:hover .icon.lg.notification-icon{background-position: -184px -134px;}
+.user-labels.active .icon.lg.referral-icon, .user-labels:hover .icon.lg.referral-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.referral-icon,.ant-tabs-tab:hover .icon.lg.referral-icon{background-position:-139px -589px;}
+/* .custom-checkbox input[type=checkbox] { display: block;position: absolute;zoom: 1.5;margin: 0; opacity: 0;} */
+.cust-check-outline.custom-checkbox input[type=checkbox]:checked+span {width: 24px; height: 24px;cursor: pointer;background-position:-157px -518px !important;}
+.cust-check-outline.custom-checkbox input[type=checkbox]+span{width: 24px;height: 24px;background-position: -120px -517px !important;}
+.cust-check-outline input[type='radio'], .ant-form .cust-check-outline input[type='checkbox'], .custom-checkbox.cust-check-outline input[type='checkbox']{display: none;}
+/* .new-custom-radiobtn  input[type=radio]:checked+span{background-position:-324px -521px;} */
+/*Header start*/
+.notification-conunt .bell span{ color: white; position: absolute;right: -8px;top: -8px;width: 18px;height: 18px;background: #3653E4;border-radius: 50%;line-height: 18px;text-align: center;font-size: 10px;font-weight: 600;}
+.haead-main{background-color: var(--secondary);position: fixed; z-index: 9999;left: 0; right: 0;}
+.tlv-header ul{background-color: transparent; border-bottom: 0;}
+.tlv-header ul li{font-weight: 500;}
+.tlv-header .main-menu li{border-radius: 5px;}
+.tlv-header .main-menu li.ant-menu-item-selected, .tlv-header .main-menu li:hover{background-color: var(--primary) !important; color: var(--textWhite) !important;}
+.tlv-header li::after, .tlv-header li:hover:after{border: none !important;}
+.tlv-header ul li .cp-link{padding: 6px 0;margin-right: 8px;}
+/* .tlv-header ul li .cp-link:hover{background-image: linear-gradient(99.09deg, var(--btnGrad1), var(--btnGrad2)); color: var(--textPureWhite) !important;filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25));border-radius: 5px;} */
+.header-right li{color: var(--sbCardText) !important;}
+/*Header End*/
+
+/*profile css start*/
+.ant-input-search .ant-input:hover, .ant-input-search .ant-input:focus{border-color: transparent !important;}
+.ant-alert-with-description{align-items: center;}
+.secureDropdown.export-pdf .excel-export{margin-left: 8px;}
+.user-profile{ border-radius: 50%;object-fit: cover;}
+.profile-dropdown .user-profile{width:112px;height: 112px; border-radius: 50%;display: block;margin: 0 auto;}
+.profile-dropdown {text-align: center;padding:12px 24px;}
+.profile-dropdown .drpdwn-list{padding-top: 0px; padding-left: 0; padding-right: 0; margin-left: -24px; margin-right: -24px;}
+.profile-btn, .profile-btn:hover, .profile-btn:active, .profile-btn:focus{background: transparent;border: 1px solid var(--green) !important;height: 27px;border-radius: 8px;color: var(--green);font-size: 14px;width: 127px;font-weight: 500;text-align: center;display: flex;align-items: center;padding: 6px 10px;margin-bottom: 10px;font-style: italic;}
+.profile-info{width: 96px;height: 96px;padding: 5px;border-radius: 50%;text-align: left;position: relative;background-color: var(--profilebgImg);}
+.profile-info .user-profile{width:100%;height: 100%; border-radius: 50%;padding: 6px;object-fit: cover;}
+.profile-info .img-upld{position: absolute;right: -14px;bottom: 10px;background-color:#F1F2F6;border:0;}
+.profile-info .img-upld:focus{background-color:#F1F2F6;}
+.basic-info,.contact-info{padding: 24px;}
+.dash-info.basic-info{padding: 6px !important;}
+.basicinfo{font-weight: 700 !important;font-size: 18px !important;color: var(--menuFont) !important;margin-bottom: 0 !important;}
+.basic-decs{font-weight: 500;font-size: 14px;color: var(--marketTitle);margin-top: 12px;}
+.profile-label{font-weight: 500;font-size: 14px;color: var(--marketTitle);}
+.profile-value{font-weight: 500;font-size: 16px;color: var(--white);margin-bottom: 0 !important;}
+.profileinfo{border-top:1px solid var(--borderColor);padding-top: 24px;padding-bottom: 24px;}
+.profileinfo:first-child{border-top:0}
+/* .profileinfo.active, .profileinfo:hover{background: var(--bgOrient1); margin-left: -32px; margin-right: -32px;} */
+/* .profileinfo.active .profile-block, .profileinfo:hover .profile-block{padding: 0 32px} */
+.ant-popover-inner-content .personal-popup, .ant-popover-inner{padding: 8px 12px;}
+.ant-popover-inner{background-color: var(--profileMenu);border-radius: 10px;padding: 0;}
+.ant-popover-inner-content .personal-popup:hover{background: var(--drpdwnHover);padding: 8px 12px !important;}
+.user-tablist .ant-tabs-tab, .user-tablist .ant-tabs-tab.ant-tabs-tab-active, .user-tablist .ant-tabs-tab:hover{padding: 12px 16px 12px 12px !important;}
+.user-list .ant-tabs-tab{font-size: 16px; font-weight: 600; color: var(--textWhite); margin-bottom: 0;padding: 12px !important;}
+.user-list.ant-tabs-left > .ant-tabs-content-holder{border-left: 0 !important;}
+.user-list .ant-tabs-content.ant-tabs-content-left{padding-left: 65px;}
+.user-list .ant-tabs-tab.ant-tabs-tab-active,.user-list .ant-tabs-tab:hover {background: var(--profiletab);
+    border-radius: 8px;;font-weight: 600;  padding:12px; color: #ffffff;}
+.user-list .ant-tabs-ink-bar {background: transparent !important;}
+.user-list .ant-tabs-tab .tabtitle{font-weight: 700;font-size: 18px;color: var(--coinPrice);margin-left: 14px;}
+.profile-image-content{display: flex;align-items: center;}
+.download-content{font-weight: 700;font-size: 16px;color: var(--tabLine);}
+.profile-img-style{margin-right: 98px;}
+.dwnl-content-style{margin-top: 66px;display: flex;}
+.basicprofile-info{background: var(--addressList);border-radius: 13px;padding: 24px;margin-top: 26px;width: 510px;}
+.profile-ul{padding-left: 0 !important;list-style: none;}
+.security-align, .crypto-address{display: flex;align-items: center;justify-content: space-between;}
+.custom-toggle.ant-switch-checked{background-color: var(--profiletab) !important;}
+.custom-toggle.ant-switch{background-color: #4E505A;}
+.cases-grid-style .k-grid-header .k-grid-header-wrap table{width: 100% !important;}
+.cases-grid-style .k-grid-container .k-grid-content .k-grid-table{width: 100% !important;}
+/* .small-btn{min-width: 90px;font-weight: 700;font-size: 15px;color: var(--white);border: 1px solid var(--pfsmbtn);border-radius: 5px;padding: 12px 28px;display: inline-block;} */
+.profile-sm-btn{text-transform: capitalize;height: 46px;min-width: 120px;font-weight: 700;font-size: 15px;color: var(--white);border: 1px solid var(--pfsmbtn);border-radius: 5px;padding: 4px 28px;}
+.passwrd-chang-btn{margin-top: 26px;}
+.custom-msg .ant-message-notice-content{background:var(--black); color: var(--textPureWhite); padding: 20px 40px; min-width: 200px;}
+.security-label-style{font-weight: 400;font-size: 14px;color: var(--checkText);margin-left: 12px;}
+.user-list .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn .tabtitle, .user-list  .ant-tabs-tab-btn:hover .tabtitle{color: #ffffff;}
+.user-list .ant-tabs-tab:hover .tabtitle{color: #fff;}
+.profile-sm-btn:hover, .profile-sm-btn:focus{color: var(--btnhover);border-color: var(--btnhover);}
+/* .theme-switch.theme-active{background: var(--bgDark);} */
+.theme-switch {border-radius: 30px;height: 52px; padding: 7px 4px;}
+.custom-theme-btn{display: flex;align-items: center;}
+.setting-btn{margin-top: 36px;}
+.mb-copy{color: var(--marketTitle) !important;}
+.referral-bg-style.basicprofile-info{padding: 18px 24px;margin-top: 16px;}
+.refferral-share-btn{margin-top: 26px;font-weight: 500;font-size: 16px;color: var(--coinPrice);margin-bottom: 20px;}
+.crypto-address.share-width-align{width: 510px;}
+.referral-patner-btn{margin-top: 26px;}
+/* .crypto-address .custom-display{position: absolute;top: 6px;right: 8px;} */
+.theme-txt{font-size: 16px; font-weight: 500; color: var(--coinPrice);margin-left: 4px;}
+.switch-circle, .theme-txt{margin-bottom: 0 !important;}
+/* .theme-active .theme-txt{color: var(--textWhite);font-weight: 400;} */
+.info-details{font-weight: 700;font-size: 16px;color: var(--tablesub);}
+/*profile css end*/
+
+/* manual addressbook start */
+.custom-forminput .ant-form-item-label > label{height: auto;}
+.ant-tooltip-arrow-content{background-color: transparent;}
+/* manual addressbook end */
+
+/*Common css start*/
+/* a{color: var(--viewAll);font-size: 18px;font-weight: 500;} */
+[data-theme='DRT'] .header-logo img, [data-theme='LHT'] .header-logo img{display: none;}
+[data-theme='DRT'] .header-logo img.dark, [data-theme='LHT'] .header-logo img.light {display: inline-block;}
+.ant-input-group-addon .ant-select.ant-select-single:not(.ant-select-customize-input) .ant-select-selector{border: 0 !important;}
+.newtransfer-card.ant-btn[disabled], .newtransfer-card.ant-btn[disabled]:hover, .newtransfer-card.ant-btn[disabled]:focus, .newtransfer-card.ant-btn[disabled]:active{background: var(--drawerList);border: 2px solid transparent;color: var(--coinBal) !important;}
+.ant-btn:hover, .ant-btn:focus, .ant-btn:active{background-color: transparent;}
+.icon, .k-i-more-vertical.k-icon,.ant-select-arrow, .cust-check-outline.custom-checkbox input[type=checkbox]+span{background: var(--lightThemeIcons) no-repeat; display: inline-block; vertical-align: middle;}
+.ant-select-arrow .anticon{display: none;}
+.ant-select-arrow{width: 20px;height: 20px;background-position: -351px -5px;opacity: 0.5;}
+.main-container{padding: 24px 16px; margin: auto;}
+.main-container .k-loading-color{background-color: transparent !important;}
+.text-white{color: #FFFFFF;}
+/* body{background:var(--bodyBg);} */
+/* url(../images/dark-bg2.0.svg) no-repeat top center; */
+.loader{background-color: #000000;position: fixed;top: 0; right: 0; bottom: 0; left: 0;display: flex; align-items: center;font-size: 36px;color: var(--textWhite);justify-content: center;}
+.side-drawer .ant-drawer-mask, .side-drawer-full .ant-drawer-mask{background: var(--drawerMask);}
+.side-drawer .ant-drawer-body, .side-drawer .ant-drawer-header{background-color: var(--drawerBG);}
+.cust-input, .expiry-input, .cust-input .ant-input{background: var( --inputBg);color: var(--white);height: 50px;margin-bottom: 6px;font-size: 16px;border: 1px solid var(--labelBorder);border-radius: 5px;text-align: left;}
+.ant-select-selection-placeholder{color: var(--white);}
+.ant-select-dropdown{background-color:var(--profileMenu);border-radius: 5px;}
+.select-drpdwn .ant-select-item:hover, .select-drpdwn .ant-select-item.ant-select-item-option-active, .select-drpdwn .ant-select-item.ant-select-item-option-selected, .select-drpdwn .ant-select-item.ant-select-item-option-active.ant-select-item-option-selected{background-color: var(--drpdwnHover);}
+.ant-drawer-content{ background-color: var(--drawerBG);}
+.ant-drawer-header{border-radius: 0;background-color: transparent;}
+.side-drawer .ant-drawer-content-wrapper{width: 100% !important;}
+.ant-drawer-wrapper-body{padding-top:90px;}
+.ant-layout{background: none;}
+.ant-btn{background-color: transparent;}
+.custom-btn{font-weight:600;font-size: 15px;color: #FFFFFF;}
+.drpdwn-list{padding-left: 0;}
+.text-green{color: var(--green);}
+.text-red{color: var(--red);}
+.fait-wallets-style{display: flex;align-items: center;justify-content: space-between;margin-top: 36px;}
+.ant-table{background-color: transparent;}
+.ant-table-tbody > tr.ant-table-row:hover > td{background-color: transparent;}
+.ant-table-thead > tr > th{background-color:var(--grid) !important;border-bottom: 0;}
+.ant-table-tbody > tr > td{border-bottom:rgba(255, 255, 255, 0.2) ;}
+.ant-table-container table > thead > tr:first-child th:first-child{border-top-left-radius: 20px;}
+.currency-style{color: var(--coinPrice);font-weight: 400;font-size: 24px;}
+.coin-style{font-weight: 700;font-size: 16px;color: var(--coinBal);}
+.coinbal-style{font-weight: 400;font-size: 16px;color:var(--coinPrice);}
+.ant-table-thead th.ant-table-column-has-sorters:hover{background:var(--grid);}
+.ant-input-group-addon{background-color:transparent ;}
+.cust-search .ant-input-affix-wrapper{background-color: var(--searchBg) !important;border: 1px solid var(--subText) !important;border-radius: 10px !important;height: 48px;}
+.cust-search::placeholder{color: var(--placeholders);font-weight: 400;font-size: 16px;}
+.cust-search .ant-input{color: var(--primary);font-weight: 400;font-size: 16px;}
+.drawer-list-font{font-weight: 700;font-size: 16px;color: var(--coinPrice);}
+.drawer-coin .ant-image, .crypto-curr-align .ant-image, .listitems-design .ant-image, .cytpo-list-style .ant-image, .crypto-bg, .drawer-list-fiat .ant-image-img{border: 4px solid var(--coinBg);border-radius: 50%;}
+.drawer-coin .ant-image-img, .crypto-curr-align .ant-image-img, .listitems-design .ant-image-img, .cytpo-list-style .ant-image-img, .crypto-bg, .drawer-list-fiat .ant-image{border-radius: 50%;}
+.cytpo-list-style .ant-list-item-meta{align-items: center;}
+.crypto-bg{width: 52px;height: 52px;}
+.label-style, .ant-form-item-label > label{color: var(--subText); font-weight: 400;font-size: 14px;margin-bottom:4px !important;text-transform: capitalize;}
+.ant-form-item-label > label{margin-bottom: 4px !important;}
+.ant-card.crypto-card{background: none;}
+.ant-select-item .ant-select-option-active, .ant-select-item-option-content, .ant-select-selection-item{color:var(--menuFont) ;}
+.ant-alert-error, .ant-alert-warning, .ant-alert-info{background-color: var(--alertBG);border: 1px solid #ff5747;}
+.ant-alert-error .ant-alert-icon, .ant-alert-warning .ant-alert-icon{color: #ff4d4f;}
+.ant-alert-message{color: #ff5747 !important;}
+.ant-alert-description {font-size: 16px !important;color: var(--red) !important}
+.ant-alert-description span{font-size: 16px !important;color: var(--red) !important}
+.ant-alert-description span a{color:var(--termsText) !important}
+.ant-alert{border-radius: 5px;}
+.ant-notification-rtl{z-index:9999;top:75px !important;}
+.ant-notification-notice .ant-notification-close-icon{color: var(--textWhite30);}
+.ant-notification{direction: ltr;}
+.ant-notification-notice-closable .ant-notification-notice-message{padding-left: 0 !important;}
+.ant-notification-rtl .ant-notification-notice-close{left: auto;right: 15px;}
+.ant-notification-notice-message{color: var(--textWhite30)!important;}
+.ant-notification-notice-description{color: var(--textSecondary)!important;}
+.ant-notification-notice{border-radius: 10px;font-size: 14px;background: var(--accountType);}
+.notify{padding: 16px;margin-bottom: 36px;}
+.notify .ant-alert-action{margin: 15px 30px 0 30px;}
+.notify .ant-alert-action .ant-btn{color: var(--viewAll);font-size: 18px;font-weight: 500;}
+.notify .ant-alert-close-icon{font-size: 18px;color: var(--textDark) !important;}
+.custom-notify.cust-input .ant-select-selection-item, .cust-input .ant-select-selector, .cust-input .ant-input, .ant-select-single .ant-select-selector .ant-select-selection-item, .ant-select-single .ant-select-selector .ant-select-selection-placeholder{line-height: 36px !important;height: 38px !important;margin-top:3px;}
+.drawer-balnstyle{font-size: 16px;font-weight: 700;color: var(--coinBal);}
+.newtransfer-card.ant-btn:hover, .newtransfer-card.ant-btn:focus, .newtransfer-card.ant-btn:active{background-color: var(--radioFill) !important; border: 2px solid var(--radioBorderfill);color: var(--coinPrice) !important;}
+.fund-transfer-input{margin-bottom: 0 !important;}
+.send-drawerbtn{margin: 36px;}
+.input-subtext{font-weight: 400 !important;font-size: 16px !important;color: var(--checksub) !important;}
+.custom-radiobtn{background: var(--tabBg);border: 1px solid var(--inputBorder);border-radius: 8px;padding:6px}
+.custom-radiobtn .ant-radio-button-wrapper.ant-radio-button-wrapper-checked{background: #3653E4;border-radius: 5px; border: 0;height: auto; padding: 6px 10px;color: #FFFFFF;font-weight: 700;font-size: 16px;}
+.custom-radiobtn .ant-radio-button-wrapper{font-weight: 500;font-size: 16px;color: var(--marketTitle);background-color: transparent;border: 0;text-transform: capitalize;padding: 0 8px;}
+.custom-radiobtn .ant-radio-button-wrapper:not(:first-child)::before{content: none;}
+.custom-radiobtn .ant-radio-button-wrapper-checked:not([class*=' ant-radio-button-wrapper-disabled']).ant-radio-button-wrapper:first-child{border: transparent;}
+.custom-radiobtn .ant-radio-button-wrapper:first-child{border: 0;}
+.custom-radiobtn .ant-radio-button-wrapper:hover{color: var(--marketTitle);}
+.custom-radiobtn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active{color: #FFFFFF;}
+.custom-radiobtn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{color: #FFFFFF;border-color: transparent;}
+.custom-label .ant-form-item-label, .custom-label.ant-row{display: block !important;padding: 0 0 0px !important;}
+.send-fiat-input .ant-form-item-label > label{height: 22px;}
+.ant-form-item-label{text-align: left !important;}
+.ant-input:focus, .ant-input-focused, .ant-input:hover{border: 1px solid #CCC3FF;box-shadow:none;}
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow:none;
+}
+.round-pills .ant-radio-button-wrapper-checked:not([class*=' ant-radio-button-wrapper-disabled']).ant-radio-button-wrapper:first-child{border-color: var(--radioBorderfill);}
+/* .ant-tooltip.ant-tooltip-placement-top{left: 660px !important;top: 321px  !important;} */
+.ant-tooltip-inner{background-color: var(--profileMenu);color: var(--white);}
+.footer-links a, .footer-links span{font-size: 14px; color: var(--white); font-weight: 500; display: inline-block;margin-right: 30px;text-align: center;}
+.footer-links a:hover{color: var(--textAqua) !important;}
+.ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover, .cust-input:hover{border-color: #CCC3FF;}
+.custom-forminput .cust-input .ant-input{text-align: left;}
+.cust-input .ant-select-selector, .cust-input .ant-input{background-color: transparent;}
+.ant-form-item-has-error .ant-input:not(.ant-input-disabled), .ant-form-item-has-error .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled), .ant-form-item-has-error .ant-input:not(.ant-input-disabled):hover, .ant-form-item-has-error .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover{background-color: transparent;}
+.crypto-card.select .ant-card-body .select-currency .cust-input .ant-select-selector{line-height: 44px !important;}
+.crypto-card.select .ant-card-body .select-currency .ant-select-single .ant-select-selector .ant-select-selection-item{line-height: 42px !important;}
+.profile-img-style .profile-info .loader-antd{padding: 36px 30px 30px 30px !important;}
+.newcase-style{margin-bottom: 16px;align-items: center;}
+.ant-alert-with-description{align-items: center !important;}
+.summarybal .gridLink:hover{color: var(--viewAll);}
+.pay-list.modal-listbr .summarybal .gridLink{word-break: break-all;text-align: right;width: 326px;}
+.paste-rece-style{padding-top: 0 !important;margin-top: 16px !important;}
+/*Common css End*/
+
+/*Coin Selection End*/
+.wallet-list.ant-list-split .ant-list-item{background: var(--drawerList);border-radius: 13px;border:2px solid transparent;height: 90px;padding: 10px 24px !important;}
+.wallet-list .ant-list-item:hover, .wallet-list .ant-list-item.select, .addCryptoList li.select{background: rgba(92, 97, 255, 0.35);border: 2px solid #CCC3FF !important;border-radius: 13px;}
+.wallet-list.ant-list-split .ant-list-item:last-child{border:2px solid transparent;}
+.code-lbl{margin-bottom: 4px !important;margin-left: 4px;}
+.fiatdep-info.fiat-list-items .alert-info-custom.kpi-List .fait-box.kpi-divstyle:last-child{border: 0;}
+/*Coin Selection End*/
+/* button styles start */
+.select-drpdwn .ant-select-item:hover, .select-drpdwn .ant-select-item.ant-select-item-option-active, .select-drpdwn .ant-select-item.ant-select-item-option-selected, .select-drpdwn .ant-select-item.ant-select-item-option-active.ant-select-item-option-selected, .ant-select-item-option-selected:not(.ant-select-item-option-disabled), .ant-select-item-option-active:not(.ant-select-item-option-disabled){background-color: var(--drpdwnHover)}
+.ant-select-item.ant-select-item-option.ant-select-item-option-active{background-color: var(--drpdwnHover) ;}
+.btn-dropdown button, .pop-btn{background-color: #3653E4; border-color: #3653E4; border-radius: 5px;height: 42px;font-weight: 600; transition: 0.3s ease;font-size: 16px;color: #FFFFFF;}
+.btn-dropdown button, .pop-btn:hover, .pop-btn:focus, .pop-btn:active{background-color:#7087FF;color: #FFFFFF;border-color: #7087FF;}
+.custom-btn.prime, .ant-btn-primary[disabled], .ant-btn-primary[disabled]:hover{background-color: #3653E4;font-weight:600;font-size: 15px;color: #FFFFFF;}
+.custom-btn.prime:hover,.ant-btn-primary[disabled], .ant-btn-primary[disabled]:hover{background-color: #7087FF;}
+.custom-btn.sec{background: transparent;background-image: none;border: 1px solid var(--subText); color: var(--textWhite);margin-left: 16px;}
+.custom-btn.sec:hover{background-color: #3653E4;}
+.cust-cancel-btn{border: 1px solid var(--inputBorder);border-radius: 5px;height: 46px;background-color: transparent;color:var(--white);font-weight: 600;transition: 0.3s ease;font-size: 16px;width:100%;margin-bottom: 20px;}
+.cust-cancel-btn.ant-btn:hover, .cust-cancel-btn.ant-btn:focus, .cust-cancel-btn.ant-btn:active{border: 1px solid #CCC3FF;border-radius: 5px;height: 46px;background-color: transparent;color: var(--white);font-weight: 600;transition: 0.3s ease;font-size: 16px;}
+/* button styles end */
+/*Kendo start*/
+.k-grid-header .k-header > .k-link{font-size: 16px;font-weight: 700;color: var(--gridtitle);}
+.k-grid td{font-size: 14px;font-weight: 400;}
+/* .ant-form-item-label > label{color: var(--subText);font-weight: 400;font-size: 14px;margin-bottom: 2px !important;text-transform: capitalize;} */
+h1.sub-heading {text-transform: capitalize;padding-left:4px; padding-right:4px;font-size:18px;font-weight:500;margin-top: 10px;color:var(--textWhite);margin-bottom: 26px !important;}
+h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom: 16px;padding-left:4px; padding-right:4px;}
+.pop-btn, .confirm-btn{height: 46px;margin-bottom: 20px;}
+.sidebar-push{padding:30px 16px 24px;}
+.k-grid-header .k-header > .k-link{padding: 8px;margin: 0;}
+.k-pager-numbers .k-link.k-state-selected,.k-list .k-item.k-state-selected, .k-list-optionlabel.k-state-selected ,.k-list .k-item.k-state-selected:hover,.k-list-optionlabel.k-state-selected:hover{background-color: #3653E4;color: #ffffff !important;}
+.k-pager-numbers .k-link{color: var(--white);} 
+.k-button, .k-textbox, .k-pager-numbers .k-link, .k-pager-numbers .k-link.k-state-selected{border-radius: 30px;}
+.k-i-sort-asc-sm::before, .k-i-sort-desc-sm::before,.k-i-arrow-60-left::before,.k-i-arrow-60-right::before, .k-i-arrow-end-left::before,.k-i-arrow-end-right::before{color: var(--white);}
+.k-button.k-primary.excel-btn{background: #3653E4; color: #fff; border-color: #3653E4;padding: 10px 24px;font-weight: 500;text-transform: uppercase;}
+.k-button.k-primary{background: #3653E4; color: #fff; border-color: #3653E4;padding: 4px 24px;font-weight: 500;text-transform: uppercase;}
+.k-button.k-primary:active, .k-button.k-primary:hover{background: #7087FF; color: #fff; border-color: #7087FF;}
+.k-grid thead{}.k-i-more-vertical.k-icon{width:20px; height: 20px; background-position: -350px -1px; transform: scale(0.9);margin-top: 10px;}
+.k-grouping-row .k-i-collapse::before, .k-grouping-row .k-i-expand::before, .k-i-more-vertical:before{display: none;}
+.ant-picker-suffix{color: var(--textWhite);}
+.k-pager-sizes .k-dropdown .k-dropdown-wrap, .k-dropdowntree .k-dropdown-wrap, .k-pager-sizes .k-dropdown .k-dropdown-wrap:hover{background: var(--bgDarkGrey);color: var(--textWhite);}
+.k-pager-nav.k-link:hover{background-color: var(--drawerList);border-radius: 50%;}
+.fiatdep-info .anticon-copy, .fiatdep-info .anticon-check{font-size: 16px;}
+.ant-select:not(.ant-select-customize-input) .ant-select-selector{background: transparent !important; border: 0;}
+.k-grid-header, .k-grouping-header, .k-grid-add-row, .k-grid-footer{color: var(--textWhite) !important;background-color: transparent !important;}
+.k-grid-content, .k-grid{background-color: transparent !important;color: var(--textWhite) !important;}
+.k-grid-content{margin-right: -12px;}
+.k-grid-header{padding-right: 0;}
+.k-grid tbody tr:hover, .k-grid tbody tr.k-state-hover,.markets-grid tbody tr:hover{background-color: var( --drawerList) !important;}
+.k-pager-wrap{color: var(--white);background-color: transparent;}
+.k-actions.k-actions-stretched .k-button.k-button-md.k-button-solid.k-button-solid-base.k-rounded-md{background-color:#E8E8E8 !important ;border-radius: 30px;}
+.k-actions.k-actions-stretched .k-button-solid-primary.k-disabled{background-color:#3653E4 !important ;border-radius: 30px;border:transparent;color:#000;text-transform: uppercase;font-weight: 500;}
+.k-actions.k-actions-stretched .k-button-solid-primary{background-color:#3653E4 !important ;border-radius: 30px;border:transparent;color:#000;text-transform: uppercase;font-weight: 500;}
+/*Kendo End*/
+/*Modal start*/
+.ant-modal-content{border-radius: 24px;}
+.ant-modal-header{border-radius: 24px 24px 0 0;padding: 16px 24px;border-bottom:1px solid #4E505A !important;}
+.ant-modal-header, .ant-modal-content{background: var(--drawerBG);}
+.ant-modal-title{font-size: 24px; line-height: 34px;color: var(--white);text-transform:capitalize;}
+.ant-modal-body p{font-size: 16px;color: var(--white);font-weight: 400;}
+.ant-modal-footer{padding:16px 24px;border-color: transparent;}
+.cust-adon .ant-input-group, .cust-adon .ant-input-group .ant-input:focus, .cust-adon .ant-input, .cust-adon .ant-input-group-addon{border: none !important;box-shadow: none;padding: 0;background: transparent;}
+.cust-adon .ant-input{line-height: 45px !important;height: 47px !important;background-color: transparent !important; padding:0 1px !important;margin-bottom:0}
+/* .ant-drawer{z-index: 999 !important;} */
+.ant-modal-confirm-btns button:first-child{background-color: transparent;border: none;color: var(--white);}
+.ant-modal-confirm-btns button:nth-child(2){background-color: var(--bgYellow) !important;border: none;color: var(--textDark);border-radius: 16px;padding: 4px 30px}
+.ant-modal-confirm-btns button:first-child:hover{color: var(--textYellow);}
+/* .ant-picker-input > input, .ant-form-item-label > label{color: var(--textWhite);} */
+.search-bg{border: 1px solid rgba(0,0,0,.08);color: #313c46 !important;background-color: var(--gridheader) !important;padding: 15px 10px;border-radius: 20px;}
+.newcust-bg{background: var(--secondary);opacity: 0.9;border: 1px solid rgba(255, 255, 255, 0.6);border-radius: 8px;}
+.down-tansactions{font-weight: 700;background: transparent;margin-bottom: 6px;cursor: pointer;font-size: 16px;color: var(--termsText);}
+.anticon-copy svg, .anticon-check svg{color: transparent;background: var(--lightThemeIcons) no-repeat !important; display: inline-block; vertical-align: middle;width: 26px;height: 26px;background-position: -8px -624px !important;}
+/*Modal End*/
+
+/* Dashboard start */
+.new-viewpage{justify-content: flex-start;}
+.price-valgreen{display: flex;align-items: center; height: 36px;padding: 4px 8px;margin-left: 16px;border-radius: 5px;}
+.pg-text{color: var(--priceVal);}
+.price-valred{display: flex;align-items: center; height: 36px;padding: 4px 8px;margin-left: 16px;border-radius: 5px;}
+.red-text{color: var(--priceRed);}
+.acount-type{padding: 8px 16px;background: var(--accountType);border-radius: 5px;height: 36px;color: var(--coinPrice);font-weight: 400;font-size: 16px;align-items: center;display: flex;margin-left: 16px;margin-bottom: 40px;}
+.tlv-logo{height: 60px;padding-left: 20px;}
+.user-left{margin-left: 16px !important;}
+.ant-list-split .ant-list-item.cytpo-list-style{background: var(--cardBG);border-radius: 13px;margin-bottom: 10px;padding: 12px 20px !important;border-bottom:0;}
+.db-titles{font-weight: 700 !important;color:var(--primary) !important;font-size: 22px !important;}
+.secureDropdown .ant-dropdown-menu{background-color: var(--profileMenu);box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.35);border-radius: 10px;min-width: 239px; max-width: 239px; padding: 14px 0;}
+.depwith-drpdown .ant-dropdown-menu{min-width: 173px !important; max-width: 173px !important;}
+.drpdwn-list li:hover{background-color: var(--drpdwnHover);}
+/* .drpdwn-list li:hover span.icon{margin-right: -3px ;} */
+.secureDropdown .ant-dropdown-arrow{display:none;}
+.secureDropdown .ant-dropdown-arrow{border-color: var(--bgGloom) !important;}
+.drpdwn-list{list-style: none;}
+.drpdwn-list li{font-size: 14px; padding: 0 22px; transition: 0.3s ease;cursor: pointer;}
+.drpdwn-list li a{color: var(--menuFont);display: flex; align-items: center; padding: 10px 0 10px 10px;}
+.personal-popup a{color: var(--menuFont);}
+.crypto-card-design{display: flex;align-items: center;}
+.custlist-align{margin-left: 26px;}
+.listitems-design{border-radius: 13px;margin-bottom: 10px;padding: 14px 20px !important;display: block;width:356px;float: left;margin-right: 16px;border-bottom: 0 !important;background: var(--faitGradGreen) !important;}
+.listitems-design:nth-child(even) {margin-right: 0;background: var(--faitGradeBlue)!important;}
+.crypto-btn-top{margin-top: 28px;}
+.dbchart-link span{color: var(--viewAll);font-size: 18px;font-weight: 500;}
+.market-panel-newstyle{clear: both;}
+.icon-space{margin-left: 12px;margin-bottom: 12px;}
+.pipeline{color: var(--tableText);margin-right: 10px;}
+.sb-card{border-radius: 20px;}
+.sb-innercard{padding:24px;}
+.sb-text{color: var(--sbCardText);letter-spacing: 5px;font-weight: 700;font-size: 24px;}
+.sb-accounts{padding: 2px;}
+.cardlogo-height{margin-bottom: 109px;}
+.transaction-panel, .crypto-style{margin-top: 50px;}
+.transaction-title{display: flex;align-items: center;width: 100%;}
+.trans-align{display: flex;align-items: center;justify-content: space-between;}
+.bash-market-table{background-color: var(--cardBG);border-top-left-radius: 20px;padding-bottom:16px;border-top-right-radius: 20px;border-bottom-left-radius: 20px;border-bottom-right-radius: 20px;}
+.ant-table-container table > thead > tr:first-child th:last-child{border-top-right-radius: 20px;}
+.db-main-title{font-weight: 800 !important;font-size: 32px !important;color: var(--menuFont) !important;margin-bottom: 40px !important;}
+.marketcap-mt{margin-top: 46px;}
+.crypto-curr-align{display: flex;justify-content: space-between;align-items: center;}
+.iban-list .ant-list-item-meta{display:block;}
+.ts-wallet .ts-coin{font-weight: 500;font-size: 14px;color: var(--tablesub);margin-bottom: 4px;}
+.ts-wallet .ts-type{font-weight: 400;font-size: 14px;color: var(--tableInner);margin: 0 !important;}
+.ts-tbdate .ts-date{font-weight: 400;font-size: 14px;color: var(--tableText);margin: 0 !important;}
+.crypto-btns .ant-space-item, .crypto-curr-align .ant-space-item{margin-left:4px;}
+.listitems-design.iban-style .ant-list-item-meta-avatar{margin-right:0 !important;}
+.listitems-design.iban-style{background: var(--cardBG) !important;}
+.bash-market-table .ant-table-column-sorters .ant-table-column-title{color: var(--marketTitle);font-weight: 700;font-size: 16px;}
+.bash-market-table .ant-table-column-sorters .ant-table-column-sorter{color: var(--marketTitle);}
+.dashbord-space{padding-top: 0px !important;}
+.ac-topspace{padding-top: 10px;}
+.listitems-design.iban-style .ant-list-item-meta-content{width: 100%;height: 70px;}
+.fund-transfer-input .ant-form-item-label{text-align: left;}
+.ant-btn.ant-btn-block.profile-btn:focus, .ant-btn.ant-btn-block.profile-btn:active{border: 1px solid var(--green) !important;}
+.coin-typo, .coin-price-style{text-align: right;}
+.crypto-values{min-width: 120px;}
+.mobile-list.dash-mobile-list ul li:last-child{display: none;}
+.mobile-list.dash-mobile-list ul li:last-child{margin-bottom: 0}
+.side-drawer-full .ant-table-cell:nth-child(2) .ant-table-column-title{width: 105px;}
+.side-drawer-full .ant-table-cell:nth-child(3) .ant-table-column-title{width: 100px;}
+.side-drawer-full tr th{border: none;}
+.side-drawer-full tr th.ant-table-cell-scrollbar{box-shadow: none;}
+.side-drawer-full .ant-table-tbody p.fs-16{line-height: normal;}
+.side-drawer-full .ant-pagination-disabled .ant-pagination-item-link, .side-drawer-full .ant-pagination-disabled:hover .ant-pagination-item-link, .side-drawer-full .ant-pagination-disabled:focus-visible .ant-pagination-item-link{color: rgb(255 251 251 / 25%);background-color: transparent;}
+.side-drawer-full .ant-pagination-item-active{border-color: #ffffff !important;background: transparent;}
+.side-drawer-full .ant-pagination-item-active a, .ant-table-column-sorter-up.active, .ant-table-column-sorter-down.active{color: #3653E4 !important;}
+.side-drawer-full .ant-table-column-title{text-transform: capitalize;font-size: 16px;font-weight: 500;}
+/* .ant-table-thead th.ant-table-column-sort{background: var(--iconBg);} */
+.db-titles.internal-titles{font-size: 36px !important;margin-top: 16px;}
+/* Dashboard end */
+
+/*Buy/sell drawer start*/
+.drawer-maintitle{font-weight: 800;font-size: 26px;color: var(--menuFont);text-transform: capitalize;}
+.crypto-list.auto-scroll.wallet-list{margin-top: 30px;}
+.crypto-list .ant-list-item, .wallet-list .ant-list-item{margin-bottom: 8px;}
+.search-style{color: var(--menuFont);font-weight: 600;font-size: 18px;margin-bottom: 2px !important;text-transform: capitalize;}
+.buycoin-style{font-weight: 700;font-size: 16px;color: var(--coinBal);}
+.coin-entryval{display: flex;align-items: center;}
+.marginL{margin-left: 4px;}
+.crypto-details{display: flex;justify-content: right;align-items: center;}
+.buy-para-bg{border-radius: 10px;background-color: var(--cardBG);padding: 8px 28px;margin: auto;margin-top: 20px;}
+/* .auto-scroll{overflow-y: auto;} */
+.enter-val-container.swap-com{display: flex;align-items: center;justify-content: center;}
+.inputfont-style{font-weight: 500;font-size: 26px;color: var(--white);white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
+/* .inputbg-fonts{background: var( --inputBg);height: 50px;margin-bottom: 6px;border: 1px solid var(--subText);border-radius: 5px;}
+.inputbg-fonts:hover, .inputbg-fonts:focus, .inputbg-fonts.ant-input-borderless:focus{background: var( --inputBg);height: 50px;margin-bottom: 6px;border: 1px solid var(--subText);border-radius: 5px;} */
+.buy-paragraph{color: var( --paraBg);font-weight: 500;font-size: 16px;text-align: center;margin-bottom: 0 !important;margin-top:4px;}
+.crycoin-bal{font-weight: 400 !important;font-size: 16px !important;color: var(--coinPrice) !important;}
+.pop-btn{margin-top: 16px;margin-bottom: 16px;}
+.select-currency{margin-top: 50px;}
+.swap-text-sub{text-align: left;font-weight: 500;font-size: 22px;color: var(--white);}
+.enrty-field-style{margin-bottom: 12px;}
+.sellcrypto-style{color:var(--coinPrice);font-weight: 400;font-size: 16px;}
+.sellbal-style{font-weight: 700;font-size: 16px;color: var(--balInput);word-break: break-all;}
+.round-pills{width: 100%;text-align: center;}
+.round-pills .ant-radio-button-wrapper{background: var(--radioBg);height: 36px;border-radius: 10px;min-width: 60px; line-height: 34px;color: var(--coinPrice);border:1px solid rgba(0, 0, 0, 0.3);;font-size: 16px;font-weight: 500;margin: 0 16px 0px 0;text-align: center;}
+.round-pills .ant-radio-button-wrapper-checked, .default-radio .ant-radio-button-wrapper-checked, .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled),  .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{background-color: var(--radioFill) !important; color:var(--balInput) !important;font-size: 16px;font-weight:500;border: 2px solid var(--radioBorderfill);}
+.round-pills .ant-radio-button-wrapper::before, .default-radio .ant-radio-button-wrapper::before{content: none;}
+.val-updown{position: absolute;right: 0;top: 100px;width: 34px;height: 35px;border-radius: 10px;background-color: var(--gridborder);text-align: center;line-height: 34px;}
+.val-updown:hover .swaparrow, .swap-updown:hover .swaparrow{transform: rotate(180deg);transition: 0.5s;background-position: -237px -35px;}
+.buy-balance{font-weight: 400;font-size: 16px;color: var(--coinPrice);}
+.crypto-amount{margin-bottom: 14px;}
+.kpi-List .kpi-label, .adressbook-fiatview .kpi-label{font-weight: 500;font-size: 14px;color: var(--sbCardText);}
+.kpi-List .kpi-val, .adressbook-fiatview .kpi-val{font-size: 16px;font-weight: 500;color: var(--white);word-break: break-all;}
+.kpi-List .ant-col{margin-bottom: 20px;display: flex;}
+.receiveank-inner{padding-bottom: 20px;}
+.new-swap-design{border-radius: 5px;}
+.new-swap-subtext{background: var(--swapBg);height: 62px;border-radius: 5px 5px 0 0;display: flex;align-items: center;padding: 0 12px;margin-top: 0 !important;}
+.swap-entryvalue{flex: 0 0 175px;text-align: left;font-size: 26px;margin-top: 12px;}
+.swapcoin-alignemnt{ flex: auto;text-align: right;color: var(--sbCardText);font-size: 24px;}
+.swap-currencytext{background: var(--swapvalBg);height:62px;border-radius: 0 0 5px 5px;display: flex;align-items: center;padding: 0 12px;}
+.swap-custinputfield{border: 0 !important;padding: 0 !important;}
+.buy-usdt-btn .pop-btn, .sell-btn-style .pop-btn{margin-top: 20px;}
+.sell-radiobtn-style{flex: 0 0 236px;}
+.selection-currency-list{margin-bottom: 50px;}
+.drawer-title-style{display: flex;align-items: center;justify-content:center;margin-bottom: 50px;}
+/* .selctcoin-style{margin-bottom: 50px;} */
+.drawer-crypto-bg{margin-right: 21px;}
+.label-style.drawer-subtextstyle{font-weight: 400;font-size: 16px;color: var(--paraBg);}
+.crypto-coin-mbspace,.swap-custinputfield{margin-bottom: 10px;}
+.crypto-coin-mtspace{margin-top:12px;display: inline-block;}
+/*Buy/sell drawer End*/
+/* receive fait start */
+.drawer-subtext{font-weight: 700;font-size: 18px;color: var(--tablesub);}
+.fait-title{font-weight: 500 !important;font-size: 14px !important;color: var(--subText) !important;}
+.fait-subtext{display: block !important;font-size: 16px !important;font-weight: 500 !important;color: var(--white) !important;}
+.fait-box{margin-bottom: 20px;}
+.fait-maintext{font-weight: 700;font-size: 18px;color: var(--tablesub);margin-bottom: 16px !important;margin-top: 41px;}
+.refer-text{font-weight: 400;font-size: 16px;color: var(--tableText);}
+.walletadrs{font-weight: 700;font-size: 16px;color: var(--coinPrice);}
+.import-note{background-color: var(--cardBG);width: auto;border-radius: 10px;padding: 24px 70px 24px 24px;color: var(--tablesub);font-weight: 400;font-size: 20px;margin-top: 38px;}
+.imp-note{font-weight: 700;font-size: 20px;color: var(--tablesub);}
+.custom-display{margin-left: 12px;}
+.cust-tabs-fait .ant-tabs-tab + .ant-tabs-tab{margin: 0 0 0 0px;}
+.cust-tabs-fait .ant-tabs-nav{margin: 0 auto;justify-content: center;margin-bottom: 26px;width: 480px;} 
+.form-marginB{margin-bottom: 0;}
+.send-drawerbtn.tabs-innertabs{margin: 16px 0 40px;}
+.swap-entryvalue.send-crypto-style{margin-top: 0;}
+.coin-name-mb{margin-bottom: 0;}
+/* width: 350px; */
+/* .cust-tabs-fait .ant-tabs-nav{width: 350px;margin: 0 auto;justify-content: center;margin-bottom: 26px;} */
+/* receive fait end */
+/* receive crypto start */
+.rec-bottom{margin-bottom: 18px !important;}
+.recive-subtext{font-weight: 400;font-size: 16px;color: var(--sbCardText);margin-bottom: 16px;}
+.scanner-img{width: 170px; height: 170px; margin: 35px auto 60px; padding: 10px;background-color: var(--bgWhite);border-radius: 6px;}
+.recive-lable{font-weight: 400;font-size: 16px;color: var(--tableText);}
+.recive-copy{font-weight: 700;font-size: 16px;color: var(--coinPrice);margin-top: 12px;margin-bottom: 50px;}
+.recive-text, .recive-text .list-dot{font-weight: 400;font-size: 14px;color: var(--tableText);}
+.recive-runtext{font-weight: 400;font-size: 14px;color: var(--tableText);}
+.list-dot{list-style: initial;margin-bottom: 16px !important;}
+.recive-share{margin-top: 30px;font-size: 16px;font-weight: 500;color: var(--tableText);margin-bottom: 18px;}
+.network-display{display: flex;align-items: center;justify-content: center;}
+.ant-btn:focus, .ant-btn:active{box-shadow: none !important;}
+.ant-btn-loading-icon:focus, .ant-btn-loading-icon:active{box-shadow: none !important;}
+.ant-btn-loading:before, .ant-btn-loading-icon:after{background: none;box-shadow: none;}
+.pop-validate-btn .ant-btn-loading-icon:after{background: none;box-shadow: none;}
+.ant-btn::after + .ant-btn:focus  {background: none;box-shadow: none;}
+.ant-btn::after:focus{background: none;box-shadow: none;}
+.img-upld:hover{background-color: #F1F2F6;}
+/* receive Crypto end */
+/*Send Address start*/
+.thank-subtext{font-size: 16px;font-weight: 400;color:#ffffff;}
+.adbook-head{font-weight: 700 !important;font-size: 18px !important;color: var(--checkText) !important;margin-bottom: 18px !important;margin-top: 30px;}
+.fund-border{margin-top: 15px;padding: 8px;background: var(--addressList);margin-right: 12px;border: 2px solid  var(--addressList);border-radius: 13px;padding: 22px;cursor: pointer !important;align-items: center !important;}
+.fund-border:first-child{margin-top: 0;}
+.fund-border:hover{background-color: var(--radioFill);border: 2px solid var(--radioBorderfill);}
+.fund-circle{width: 44px;height: 44px;border-radius: 50%;text-align: center;padding: 11px;background-color: var(--borderColor);margin-right: 12px;}
+.address-name{font-weight: 700;font-size: 16px;color: var(--coinBal);cursor: pointer;}
+.address-subtext{font-weight: 700;font-size: 12px;color: var(--coinPrice);}
+.addCryptoList{list-style: none; padding-left: 0;max-height: 436px;}
+.adbs-paste-recepients{padding-top: 30px;}
+.addCryptoList li{padding:10px; color: var(--textWhite);border-bottom: 1px solid var(--borderLight);font-size: 16px;}
+.addCryptoList li:hover{background-color:var(--bgBlu); cursor: pointer;}
+.sub-abovesearch{color: var(--subText) !important;font-weight: 400 !important;font-size: 14px !important;margin-bottom: 6px !important;text-transform: capitalize;}
+.uplaod-inner{color: var(--white) !important;}
+.upload .ant-upload-text{font-weight: 600;color: var(--white) !important;font-size: 16px;}
+.imprt-bg{
+    /* background-color: var(--cardBG);padding: 24px;border-radius: 10px; */
+    margin-bottom: 16px;}
+.ab-note-style{font-weight: 700;font-size: 16px;color: var(--gridcontent);}
+.note-cont{font-weight: 400;font-size: 16px;color: var(--gridcontent);}
+.addressbook-grid .cust-tabs-fait .ant-tabs-nav{width: 100%;}
+.custom-alert-width{padding: 28px 22px;background-color:var(--addressList) !important;border-radius: 13px;color: var(--textWhite);}
+.kpi-List, .adressbook-fiatview{margin-top: 16px;}
+.custom-alert-width .pop-btn{width:auto;}
+.adbook-newdesign{width: 100%;}
+.file-label.doc-def{margin-right: 12px;}
+.transacton-drpdwn .ant-dropdown-menu{max-width: 170px !important;min-width: 200px !important;}
+/* .font-size-align */
+.abbook-title-mt{margin-top: 16px;}
+/*Send Address End*/
+/* --Payments Start--*/
+.pay-grid thead th{padding: 8px;width: 250px; color: var(--textWhite30);font-weight: 500;text-align: left;font-size: 16px;}
+.pay-grid thead th:last-child{width: 500px;}
+.pay-grid tbody td{padding: 8px; color: var(--menuFont);font-weight: 500;font-size: 14px ;}
+.ant-table-placeholder:hover, .ant-table-placeholder:hover .ant-table-cell{background: #2a2a2a26 !important;}
+.pay-grid {width: 100%;}
+/* .ant-popover-inner{background-color: var(--bgGloom); border-radius: 10px;} */
+/* . .ant-popover */
+.pay-list{display: flex;justify-content: space-between;align-items: center;}
+.ant-table-placeholder:hover{background: transparent;}
+/* .ant-popover-inner{background-color: var(--bgGloom); border-radius: 10px;} */
+.more-popover .lbl{font-size: 12px; color: var(--textWhite50);font-weight: 100;}
+.more-popover .val{font-size: 14px; color: var(--textWhite30);display: block;margin-bottom: 16px; line-height: normal;}
+.ant-popover-arrow{border-color: var(--bgGloom) !important;}
+.payment-docs .accordian .ant-collapse-content-box, .payment-docs .accordian .ant-collapse-item{background-color: var(--bgGrey);border-radius: 24px;}
+.payment-docs .accordian .ant-collapse-item:last-child > .ant-collapse-content{background-color: var(--bgGrey);border-radius: 30px;}
+.file-label{border: 1px solid var(--borderColor);border-radius: 6px;padding: 2px 8px;color: var(--viewAll) !important;background-color: var(--bgDarkGrey);width:115px;margin-bottom: 5px;}
+.delete-btn{color: var(--textWhite30);background-color: transparent !important;font-size: 14px;border: none;}
+.delete-btn:hover{background-color: transparent !important; color:white;border:none;}
+.delete-btn:focus{border:none !important;}
+.ant-modal-footer .delete-btn{padding: 0 30px;}
+.pay-list{display: flex;justify-content: space-between;align-items: center;}
+.transaction-custom-table{background: var(--cardBG);border-radius: 20px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;}
+.transaction-custom-table .pay-grid tbody td{border: 0;}
+.transaction-custom-table .pay-grid tr{border-bottom: 1px solid var(--tableborder);}
+.transaction-custom-table .pay-grid tr:last-child{border-bottom: 0;}
+.transaction-custom-table .pay-grid thead tr, .bash-market-table .pay-grid tbody tr td{border-bottom: 1px solid var(--tableborder) !important;}
+.transaction-custom-table .pay-grid thead tr th:first-child{padding-left: 30px;}
+.transaction-custom-table .pay-grid tbody tr td:first-child{padding-left: 30px;}
+.bash-market-table .pay-grid thead  tr th{border-bottom: 0;}
+.bash-market-table .pay-grid tbody tr:last-child td, .bash-market-table .pay-grid tbody tr:first-child td{border-bottom: 0 !important;}
+.detail-popbtn{width: auto;margin-top: 16px;}
+.paynow-btn-ml{margin-left: 12px;}
+.total-align{padding: 8px; color: var(--menuFont);}
+.amt-field.icons-display{display: flex;align-items: center;}
+.delete-btn.delete-disable, .btn-upload-style{margin-left: 12px;}
+.ant-popover-inner-content .iban-hov:hover{background-color: var(--bgDark);}
+.ant-popover-arrow{background: transparent !important;border-color: transparent;}
+.ant-popover-arrow{border-color: var(--profileMenu) !important;}
+.ant-popover-inner{background-color: var(--profileMenu); border-radius: 10px;}
+.ant-popover-inner-content{padding: 10px 0px !important;}
+.ant-popover-inner{padding: 8px 9px;}
+.ant-popover-inner-content .rarrow-white{margin-left: 0px!important;}  
+.more-popover.payments-card, .more-popover.payments-card:hover{background-color:transparent !important;}
+.ant-popover{z-index: 9999;}
+.popover-mb-12{margin-bottom: 12px;}
+.attach-iconalign{margin-top: 12px;margin-left: 8px;}
+.amt-field .form-margin-bottom{margin-bottom: 0;}
+.docdetails.pay-docdetails{margin-left: 0;width: 100px;}
+.cust-cancel-btn.pay-cust-btn{margin-top: 16px;}
+.dashb-btmtable,.mobile-list{margin-top: 10px;}
+.cust-pop-up-btn.crypto-pop .detail-popbtn{width: 100px;}
+.des-mr{margin-right: 12px;}
+.view-level-btn .cust-cancel-btn{width: 136px;margin-top: 16px;}
+.docdetails.doc-view{margin-left: 0 !important;}
+.detail-popbtn.paynow-btn-ml{width:136px;}
+.text-wrap-style{max-width: 100%;min-width: 149px;}
+.wrap-text-width{max-width: 100%;min-width: 129px;}
+.gridLink.grid-level-style{display: block;}
+.alert-info-custom.kpi-List.adbook-newdesign, .docfile.address-book-viewlevel{background-color:var(--coinviewradio) !important;}
+.error-style{margin-top: 16px;}
+/* --Payments End--*/
+
+/*--Zoho start--*/
+.zsiq_flt_rel{width: 50px !important; height: 50px !important;bottom: 8px;right: -10px;}
+.zsiq_theme1 .siqico-chat:before{font-size: 20px !important; line-height: 50px !important;}
+.ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector, .ant-radio-disabled + span{color: var(--textWhite30);}
+
+/*--Zoho end--*/
+
+/* summary start */
+.cust-summary-new{background: var(--drawerList);border-radius: 13px;padding-left: 20px;padding-right: 20px;padding-bottom: 46px;padding-top: 26px;}
+.pay-list:last-child{border:0;padding-bottom: 0;}
+.pay-list{padding: 12px 0;}
+.cust-coin-value{font-weight: 500;font-size: 45px;text-align: center;color: var(--white);}
+.cust-summary-text{text-align: left;margin-top: 16px;}
+.text-style{font-weight: 400 !important;font-size: 16px !important;color:var(--checksub) !important;margin-top: 16px !important;}
+.terms-link{color:var(--termsText) !important;font-weight: 700;}
+.faitcurrency-style{font-weight: 700;font-size: 16px;color: var(--white);text-align: center;margin-bottom: 30px;}
+.summary-liststyle{font-weight: 700;font-size: 16px;color: var(--coinBal);text-transform: capitalize;}
+.summarybal{font-weight: 400;font-size: 16px;color:var(--coinBal);word-break: break-all;}
+.cust-agreecheck{font-weight: 400;font-size: 14px;color: var( --checkText);}
+.agree-check label{height: 34px;margin-right: 14px;}
+.agree-check input[type=checkbox]{display: none;}
+.agree-check input[type=checkbox]+span{background: var(--lightThemeIcons);background-position:-115px -513px;transform:scale(1.5);display: inline-block;width: 34px;height: 34px;vertical-align: text-top;cursor: pointer;}
+.agree-check input[type=checkbox]:checked+span{background: var(--lightThemeIcons);background-position:-153px -513px;border-color: transparent !important;}
+.agree-check input[type=checkbox]+span:hover{background-position:-190.5px -513px;}
+.agree-check input[type=checkbox]:checked+span:hover{background-position:-153px -513px;}
+.pay-list{padding: 16px 0; border-bottom: 1px solid var(--borderColor);}
+/* summary end */
+
+/* success start */
+.cryptosummary-container{max-height: calc(100vh - 0px);}
+.success-title{font-weight: 800 !important;font-size: 26px !important;color: var(--white) !important;}
+.successsubtext{font-weight: 500;font-size: 16px;color: var(--coinPrice) !important;height: 330px;}
+.custom-declaraton{
+    /* height: calc(100vh - 225px); */
+    align-items: center;display: flex;justify-content: center;}
+.pop-cancel span{color:var(--textYellow);text-transform: uppercase;font-weight: 700;}
+.custom-declaraton .declaration-content{width: 600px;}
+.side-drawer .side-drawer-header{align-items: flex-start;}
+.cust-summary-new.kpi-List.sendfiat-summarystyle{margin-top: 0 !important;}
+.new-add .loading-btn + .btn-clickable-style{position: unset !important;}
+.addCryptoList.adbook-scroll.paste-recept-style .success-title.oops-title{margin-bottom: 0;}
+.addCryptoList.adbook-scroll.paste-recept-style{height: 210px;}
+/* success end */
+
+/* crypto-coins */
+.crypto-icon{ height: 44px; width:44px;}
+  .crypto-icon{background: var(--coinBg) url(../images/cryptoicons.svg)  no-repeat; display: inline-block;border-radius: 100%;}
+  .crypto-icon.BTC{background-position:-56px -6px; }
+  .crypto-icon.ETH{background-position: -106px -6px;}
+  .crypto-icon.USDT{background-position:-208px -6px;}
+  .crypto-icon.USDC{background-position: -157px -6px;}
+  .dash-mobile-list .ant-list-item-meta{align-items: center;}
+/* crypto-coins end   */
+/* send fiat start */
+.fund-transfer-input .tfunds-inputgroup .ant-select{width: 122px;}
+/* .fund-transfer-input .tfunds-inputgroup .ant-select-selection-item{} */
+.alert-info-custom{background-color:var(--addressList) !important;border-radius: 13px;color: var(--textWhite);padding: 28px 22px;}
+.kpi-divstyle{border-bottom:1px solid var(--borderColor);padding-bottom: 20px;width: 100%;}
+.custom-forminput.custom-label{margin-bottom: 16px;}
+.upload-btn-mt{margin-top: 16px;}
+.cust-tabs-fait .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{color: var(--tabLine) !important;font-size: 16px;font-weight: 700;}
+.cust-tabs-fait  .ant-tabs-ink-bar{background: var(--tabLine);}
+.ant-upload-drag.upload{border-radius: 10px !important;background-color: var(--upload) !important;border-color:var( --borderColor) !important;}
+.upload .ant-upload{padding: 30px 0 !important;}
+.cust-tabs-fait .ant-tabs-tab .ant-tabs-tab-btn{color: var(--sbCardText)!important;font-size: 16px;font-weight: 400;}
+.ant-tabs-top > .ant-tabs-nav::before, .ant-tabs-bottom > .ant-tabs-nav::before, .ant-tabs-top > div > .ant-tabs-nav::before, .ant-tabs-bottom > div > .ant-tabs-nav::before{border-bottom: 1px solid var(--inputBorder);}
+.cust-tabs-fait .ant-tabs-tab{padding-left: 10px;padding-right: 10px;}
+.pop-validate-btn{width:150px;margin-top:30px; height:42px;}
+.verify-btn-from, .crypto-summaryform{margin-top: 36px;margin-bottom: 18px;}
+.small-text-align{margin-left: 8px;}
+.docfile{background-color:var(--addressList) !important;border-radius: 20px;padding: 16px;display: flex;align-items: center;margin: 12px 6px 4px 0;flex: 1 0 240px;}
+.docdetails{flex: 1; margin-left: 12px;}
+.cust-upload-sy{margin-bottom: 20px !important;}
+.docdetails .docname{font-weight: 700;color: var(--textWhite30); line-height: 16px;max-width: 150px !important;}
+.docfile-container{display: flex; flex-wrap: wrap;}
+.upload-filesize{font-weight: 700;font-size: 16px;color: var(--coinPrice);}
+.cust-networkstyle{background-color: var(--profiletab);padding: 10px 20px;border-radius: 10px;color: #FFFFFF;font-weight: 700;font-size: 16px;}
+.swap-fontsize{color: #ffffff;font-weight: 700;font-size: 16px;}
+.network{background-color: var(--drpdwnHover);padding: 10px 20px;border-radius: 10px;margin: 0 12px}
+.network .swap-fontsize{color: var(--white);}
+.custom-height {max-height: calc(100vh - 926px);}
+.nodata-text{margin-top: 10px !important;display: inline-block;color:var(--termsText);}
+.nodata-text:hover{color:var(--termsText);}
+.cust-input.change-space .ant-input{height: 34px !important;}
+.nodata-image{margin-bottom: 10px;}
+.custom-upload{ margin: 12px 0px 4px 0;}
+.send-fiatform .ant-alert-with-description{margin-top: 20px;}
+.cust-input.iban-input{border-top-right-radius: 0 !important;border-bottom-right-radius: 0 !important;border-right: 0 !important;}
+.iban-validate{border-left-color: var(--inputBg)!important; height: 50px !important;border-top-left-radius: 0 !important;border-bottom-left-radius: 0 !important;border-top: 1px solid var(--labelBorder) !important;border-right: 1px solid var(--labelBorder) !important;border-bottom: 1px solid var(--labelBorder) !important;background: var(--inputBg) !important;margin-top: 26px !important;}
+.iban-validate span{border-left: 1px solid var(--white) !important;color: var(--termsText);font-size: 16px;font-weight: 700;padding-left: 20px !important;display: inline-block;}
+.iban-validate::after{box-shadow: transparent !important;}
+.iban-validate{width: 186px;margin-right: 0 !important;}
+.validateiban-content:hover input,.validateiban-content:hover button{border-color: #CCC3FF !important;}
+.slick-slider.docreq-slider.slick-initialized .slick-dots li.slick-active button{background: var(--cardBG) !important;color: var(--primary);}
+.docreq-slider .slick-dots li button{color: var(--secondary);}
+.cases-lefttext::before{border-color: 1px solid #ccc;}
+.ant-form-item-explain.ant-form-item-explain-error{color: var(--red);}
+/* send fiat end */
+/* send crypto start */
+.min-btn{border: 1px solid rgba(0, 0, 0, 0.3);background: var(--radioBg) !important;height: 36px;border-radius: 10px;min-width: 60px;line-height: 30px;color: var(--coinPrice);font-size: 16px;font-weight: 500; margin: 0 10px 10px 0;}
+.min-btn:active ,.min-btn:focus{background-color: var(--radioFill) !important;border: 2px solid var(--radioBorderfill) !important;font-size: 16px;font-weight: 500 !important;color: var(--coinPrice) !important;}
+.min-btn:hover{border-color: rgba(0, 0, 0, 0.3) !important;color: var(--coinPrice) !important;}
+.newtransfer-card{background: var(--drawerList);border-radius: 13px;border: 2px solid transparent;height: 90px;padding: 10px 43px !important;font-size: 16px; font-weight: 700; color: var(--coinBal);width: 100%;text-align: center;}
+.newtransfer-card:hover,.newtransfer-card:active{background-color: var(--radioFill) !important;border: 2px solid var(--radioBorderfill);color: var(--coinPrice) !important;}
+.newtransfer-card::before{ background: var(--drawerList) !important;}
+.addcrypto-whitelist{margin-bottom: 45px;}
+.sub-title{font-weight: 700 !important; font-size: 18px !important;margin-bottom: 26px !important; color: var(--white) !important;}
+.addcrypto-benficiary .ant-form-item{margin-bottom: 16px;}
+.upload-empty-div{margin-top: -6px;}
+.hy-align, .code-tooltip-align{margin:auto 0; display: flex;align-items: center;}
+.send-crypto-enrty{border-radius:5px;margin-bottom: 12px;}
+.transfer-designstyle{margin-top: 60px;}
+.inputfont-style::placeholder{font-size: 20px;}
+.new-swap-subtext.send-crypto-enrty{width:97%;margin:0 auto;}
+/* send crypto end */
+
+/* crypto summary start */
+/* .crypto-summaryform{padding-top: 32px;} */
+.get-code{ text-align: center;border: 1px solid var(--borderLight);color: var(--textWhite30);font-size: 16px;height: 50px;background: var( --inputBg);}
+.cust-input.custom-add-select{margin-bottom: 0 !important; border-radius: 0 !important; border-top-left-radius: 5px !important;border-bottom-left-radius: 5px !important; border-right: transparent;}
+.new-add{padding: 14px;border-bottom-right-radius: 5px; border-top-right-radius: 5px; border-left: transparent;}
+.cust-input[disabled]{background: var( --inputBg);color: var(--textSecondary);}
+.new-add button{border-left: 1px solid var(--white) !important; padding-left: 20px; }
+.new-add button:hover{border-left: 1px solid var(--white) !important;}
+.cust-input.custom-add-select:hover{border-color: var(--subText);}
+.custom-send.sell-btc-btn span{color: #ffffff;}
+.new-add button span{color: var(--termsText); font-size: 16px; font-weight: 700;}
+.new-add .check-ml-align{margin-left: 4px;margin-bottom:4px;}
+.verification-text{color: var(--white) !important;font-weight: 400;  font-size: 14px;}
+.sendfiat-summarystyle .kpi-divstyle{padding-top: 20px;}
+.sendfiat-summarystyle{padding-top: 0 !important;}
+
+/* crypto summary end  */
+/* validations */
+.ibanborder-field .ant-input-group .ant-input{border:0;border-right: 1px solid  var(--white);}
+.ibanborder-field .ant-input-group .ant-input-group-addon{border: 0;}
+.ibanborder-field .ant-input-group .ant-input-group-addon .ant-btn.ant-btn-primary{border: 0;}
+.ibanborder-field .ant-input-group .ant-input-group-addon .ant-btn.ant-btn-primary span{color: var(--termsText);font-size: 16px;font-weight: 700;}
+.cust-input.ibanborder-field{border-top-right-radius: 5 !important;border-bottom-right-radius: 5 !important;border-right: 1 !important;}
+.custom-add-select.mb-0.ibanborder-field .new-add{padding: 0 !important;}
+.custom-add-select.mb-0.ibanborder-field .ant-input{border-right: 0;}
+.custom-add-select.mb-0.ibanborder-field{border-right: 1px solid var(--labelBorder);border-radius: 5px !important;}
+.batch-title-align{margin-left:26px;}
+/* crypto sucess start  */
+.success-title{font-weight: 800; font-size: 26px; color: var(--white);}
+.success-content{font-weight: 500;font-size: 16px;line-height: 180%; color: var(--white);opacity: 0.8;}
+/* .send-crypto-sumry .d-flex.agree-check{margin-top: 150px;} */
+.ant-checkbox.ant-checkbox-checked{border: none !important;}
+.ant-custumcheck .ant-checkbox-checked , label:hover .ant-checkbox-checked, .ant-checkbox-checked::after{ border-color:transparent !important;}
+/* crypto success end  */
+
+/* send crypto addressbook start */
+/* .batchpayment-summary, .batch-style{margin-bottom: 16px !important;} */
+.batchpayment-summary{justify-content: space-between;align-items: center;}
+.admin-actions.address-icons li{margin-left: 20px;}
+.sub-title.address-book{ margin: 36px 0 16px 0 !important;}
+.box{overflow: hidden; margin-bottom: 28px;}
+.adressbook-style{margin-bottom: 16px;}
+.admin-actions{display: flex;padding: 0;list-style: none;margin-bottom: 0px;}
+/* .admin-actions li{margin-right: 16px;} */
+.admin-actions li:last-child{margin-right: 0;}
+.addressbook-mb{margin-bottom: 0 !important;font-weight: 800 !important;font-size: 28px !important;color: var(--white) !important;}
+.new-custom-radiobtn, .new-custom-radiobtn .ant-radio-button-wrapper, .new-custom-radiobtn .ant-radio-button.ant-radio-button-checked, .new-custom-radiobtn .ant-radio-button-wrapper:first-child, .new-custom-radiobtn .ant-radio-button-wrapper:not(:first-child)::before, .new-custom-radiobtn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){background: none;border: 0;}
+.new-custom-radiobtn .ant-radio-button-wrapper-checked, .new-custom-radiobtn .ant-radio-button-wrapper{font-weight: 500;font-size: 16px;color: var( --radiocheccolor);text-transform: capitalize;}
+.new-custom-radiobtn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active{color: var( --radiocheccolor);border-color: transparent;}
+.new-custom-radiobtn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover::before{background-color: transparent;}
+.new-custom-radiobtn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){border-color: transparent;}
+.new-custom-radiobtn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):focus-within{box-shadow:none;}
+.new-custom-radiobtn .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{color: var( --radiocheccolor);}
+.addCryptoList.adbook-scroll .declaration-content .successsubtext{height:50px !important;}
+.search-space{padding-left: 0!important;padding-right: 0!important;}
+/* send crypto addressbook end */
+
+/* transactions start  */
+.grid-title{font-weight: 800 !important;font-size: 28px !important;color: var(--white) !important;margin-bottom: 24px !important;}
+.cust-list .k-grid{border-radius: 20px;}
+.cust-list{padding-top: 0 !important;}
+.cust-list .k-grid-header-wrap,.markets-drawer .ant-table-header{border-top-left-radius: 20px;border-top-right-radius: 20px;background-color: var(--gridheader);}
+.ant-select-selection-item{font-weight: 500;font-size: 14px;color: var(--white);}
+.filter-content{align-items:center}
+.pop-btn.search-btn{margin: 22px 0 0 12px; height: 48px; width: 148px;}
+.ant-picker-dropdown{z-index: 9999;}
+.excel-button{margin-top: 20px;}
+.k-grid-table,.ant-table-tbody{background-color: var(--tablebody);}
+.k-grid td,.markets-grid td{border-right: 1px solid var(--gridborder) !important;border-bottom: 1px solid var(--gridborder) !important; color: var(--gridcontent);}
+.k-grid th,.markets-grid th{border-right: 1px solid  var(--tableborder) !important;}
+.custom-gridresponsive .ant-drawer-header,.custom-gridresponsive .ant-drawer-body{background: var(--bodyBg) !important;}
+.k-pager-wrap.k-pager.k-widget.k-grid-pager{background: var(--gridheader);border-bottom-left-radius: 20px;border-bottom-right-radius: 20px;}
+.k-pager-numbers .k-link:hover{background-color: #3653E4;color: #ffffff !important;}
+/* .k-grid th,.k-grid td{padding: 8px 20px;} */
+.k-grid th:last-child,.k-grid td:last-child,.markets-grid td:last-child,.markets-grid th:last-child{border-right-color: transparent !important;}
+.cust-input.cust-adon .ant-input-wrapper.ant-input-group{padding: 0 11px;}
+.icon.md.search-angle{background-position:-360.5px -488px; margin-left: 8px;}
+.custom-model-label .ant-form-item-label > label{height: 20px;}
+.marketcap-coinsize .ant-table-cell img{width: 24px !important;height: 24px !important;}
+.btn-right{float:right;}
+/* transactions end  */
+/* audit logs start  */
+.addressbook-grid .custom-checkbox input{display: none;}
+.addressbook-content .search-bg{margin-bottom: 24px;}
+.k-pager-wrap .k-link{background-color: transparent;}
+.k-pager-numbers-wrap .k-pager-numbers.k-reset li{margin: 0 2px !important;}
+.ant-picker:hover{border-color: #CCC3FF;}
+/* audit logs end  */
+/* coin detail view start*/
+.coin-details{background-color: var(--addressList);border-radius: 24px;padding: 30px;}
+.coin-titlestyle{color: var(--coinPrice) !important;font-size: 24px !important;font-weight: 700 !important;}
+.coin-date{display: block;text-align: right;color: var(--coindate);font-weight: 400;font-size: 10px;}
+.coin-green-ml{margin-left: 8px;}
+.sell-title-styels{display: flex;justify-content: center;}
+.sell-title-styels .ant-image{margin-right: 12px;}
+.sell-title-styels .ant-image .ant-image-img{border: 4px solid var(--coinBg);background-color:var(--coinBg);border-radius: 50%;}
+.ant-input-group-addon .ant-select.currecny-drpdwn{margin: -5px -11px -11px 0px;}
+.currecny-drpdwn .ant-select-arrow{top: 22px;}
+/* coin detail view end */
+/* coin view start */
+.trade-graph .ant-radio-button-wrapper{background-color: var(--coinviewradio);border-color: var(--coinviewradio) !important;}
+.trade-graph .ant-radio-button-wrapper:first-child{border-radius: 8px 0 0 8px;}
+.trade-graph .ant-radio-button-wrapper:last-child{border-radius: 0 8px 8px 0;}
+.trade-graph .ant-radio-button-wrapper-checked{background-color: var(--coinviewradio);border-color:var(--coinviewradio) !important;}
+.trade-graph .ant-radio-button-wrapper:not(:first-child)::before{content: none;}
+/* .trade-graph .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{background: none;} */
+.trade-graph .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active{color: var(--white);border-color: var(--coinviewradio);}
+/* .trade-graph .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){background: none;color: var(--textDark) !important;} */
+.trade-graph .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){color: var(--white);font-size: 14px;font-weight: 700;}
+.trade-graph .ant-radio-button-wrapper{color: var(--marketTitle);font-size: 14px;font-weight: 500;}
+.coin-viewstyle {font-size: 28px;font-weight: 800;color: var(--white);margin-bottom: 36px;text-transform: capitalize;}
+.summary-count{margin-left: 12px;}
+.summary-count .coin-balstyle, .coin-name{font-size: 24px;font-weight: 800;color: var(--white);margin-bottom: 0;}
+.coin-name{margin-left:8px;}
+.coin-subbalval{color: var(--marketTitle);font-size: 14px;font-weight: 500;}
+.value-up, .value-down{margin-left: 16px;}
+.cust-tabs-fait.coinview-tabs .ant-tabs-nav{width: 100%;}
+.coin-bal ul li div{width: 40px;height: 40px;border-radius: 50%;background-color:#3653E4;margin: 0 auto 6px;line-height: 38px;box-shadow: 0 3px 16px rgba(0, 0, 0, 0.15);}
+.coin-bal ul li div:hover{background-color:#7087FF;}
+.walletsdrawer .mobile-list{margin: 0;}
+.wallet-head{padding: 8px 16px; background-color: var(--bgDarkGrey);border-radius: 10px;margin-bottom: 6px;}
+.crypto-wallets .ant-list-item-meta-content{width: auto;}
+.minmax{ position: relative;top: -75px;right: 13px;}
+.coin-fs{font-weight: 700;font-size: 16px;color: var(--white);}
+.coin-details-spin{display: flex;align-items: center;justify-content: center;min-height: 400px;}
+.coin-info{padding: 16px 0;border-top: 1px solid var(--coinViewborder);font-size: 16px;display: flex;justify-content: space-between;}
+.backarrow-mr{margin-right: 16px;}
+.back-btnarrow{font-size: 20px;font-weight: 500;color: var(--white);}
+.backbtn-arrowmb{margin-bottom: 12px;}
+.billpaycoin-style .coin-viewstyle{margin-bottom: 0 !important;}
+.billpaycoin-style{display: flex;align-items: center;}
+.bill-grid .custom-checkbox input{display: none;}
+.ant-checkbox-checked::after, .ant-checkbox-checked .ant-checkbox-inner::after{display: none;}
+.pop-btn.custmodel-pop{margin-top: 0;}
+.addicon-content{font-size: 16px;color: #FFFFFF;font-weight: 600;margin-right: 12px;}
+.coin-bal ul{ margin-top: 16px !important; text-align: center;}
+.graph{border-radius: 20px;margin-bottom: 16px;background-color:var(--addressList);border-color:var(--addressList);padding: 30px;}
+.graph .graph-title{border-bottom: 1px solid var(--addressList);padding: 16px;}
+.graph .graph-body{min-height: 430px;padding: 8px;}
+.db-container{padding: 0;}
+.db-kpi{background-color: var(--addressList);border-radius: 20px;padding: 16px 24px;margin-bottom: 16px;min-height: 112px;}
+.db-kpi-label{font-size: 14px;color: var(--sbCardText);display: block;font-weight: 500;}
+.db-kpi-val{font-size: 24px;color:var(--white);font-weight: 500;line-height: 34px;margin: 0 16px 3px 0;display: block;}
+.db-kpi .badge{background-color:var(--gridheader);padding: 3px 10px;font-size: 12px;font-weight: 500;color: #D13F00;border-radius: 16px;vertical-align: text-bottom;display: inline-block;}
+.db-kpi .icon-bg{width: 48px;height: 48px;border-radius: 8px;background-color: var(--bgDarkGrey);margin-right: 20px;text-align: center; line-height: 48px;}
+.db-kpi.vthicon{display: flex;align-items: center;min-height: 112px;}
+.custom-radiobtn.coin-alldetail{margin-top: 16px;margin-bottom: 16px;}
+.ant-modal-footer .ant-btn + .ant-btn:not(.ant-dropdown-trigger){margin-left: 12px;}
+.inputfont-style:hover, .inputfont-style:focus{border: 0;}
+/* coin view end */
+/* expand search */
+.search-box {position:relative;height: 46px;padding: 10px;flex:300px 0 0 ;display: flex;align-items: center;}
+.search-box:hover > .search-text{width: 240px;padding: 6px;border-radius: 0px 10px 10px 0px;border-left: 0;}
+.search-box:focus, .search-box:hover{border:1px solid var(--subText);border-radius: 10px;margin-left: 12px;}
+.search-btnexpand {position: absolute;left:0 ;z-index:1;transition: 0.4s;cursor: pointer;text-decoration: none;}
+.search-text {border: none;background: none;outline: none;padding: 0;color: white;font-size: 16px;font-weight: normal;transition: 0.4s;line-height: 26px;width: 0px;margin-left:29px;}
+.search-text::placeholder{color: var(--placeholders);}
+/* expand search end */
+/* cases */
+.case-lbl{font-weight: 500; font-size:14px; color: var(--sbCardText);}
+.case-val{color:var(--white) !important;font-size: 16px;font-weight:500;}
+.requested{background-color: #3653E4;}
+.gridLink{color: var(--viewAll);}
+td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;padding: 8px 12px;}
+.gridLink{cursor: pointer;display: inline-block;}
+.pay-list.modal-listbr{border-bottom: 1px solid var(--borderColor);padding: 16px 0px;}    
+.ant-modal{top:36%;}
+.accordian.ant-collapse > .ant-collapse-item{border-bottom: 0;}
+.accordian.ant-collapse{background: none;border: none;margin-bottom: 10px;}
+.accordian.ant-collapse > .ant-collapse-item:last-child, .ant-collapse > .ant-collapse-item:last-child > .ant-collapse-header{border-radius: 20px;}
+.accordian .ant-collapse-item:last-child > .ant-collapse-content{border-color: var(--borderGrey);background-color: var(--addressList);border: 0;}
+.accordian .ant-collapse-header{border-radius: 20px !important;font-size: 18px;font-weight: 600;background-color:var(--scroll);color: var(--textWhite30) !important;padding: 16px 20px 16px 24px !important;text-transform: capitalize;}
+.accordian{border-color: var(--bgOrion) !important;border-radius: 24px;}
+.accordian .ant-collapse-header .icon.downangle{position: relative;margin-right: 34px !important;}
+.accordian .ant-collapse-header .icon.downangle::after{content: '';position: absolute; right: -16px; top: 0; border-right: 1px solid var(--borderGrey);height: 20px;}
+.accordian .ant-collapse-item.ant-collapse-item-active .ant-collapse-header{border-radius: 20px 20px 0 0 !important;}
+.accordian .ant-collapse-arrow{vertical-align: text-bottom !important;}
+.accordian .ant-collapse-item.ant-collapse-item-active .downangle{background-position: -329px 0;}
+.accordian .ant-collapse-content-box{padding: 20px;background-color: var(--addressList);border-radius: 0 0 24px 24px;border-bottom: 1px solid var(--drawerBG);}
+.accordian .ant-collapse-item:last-child > .ant-collapse-content{border-radius: 0 0 24px 24px;}
+.ant-empty-description{color: var(--white);text-transform: capitalize;}
+.case-ribbon{background-color:var(--addressList);padding: 20px;border-radius: 16px;}
+.faitview-btn{margin-top: 36px;}
+.cases-lefttext{margin-left: 16px;}
+.case-stripe, .case-remarksstyle{border: 1px dashed var(--borderColor); padding: 16px 20px; border-radius: 16px; margin-bottom: 16px}
+.ribbon-item{display: flex; align-items: center;margin-bottom: 16px;border-right: 1px solid var(--borderColor);}
+.case-val.cases-subtext{word-break: break-all; padding-right: 12px;}
+.ant-upload-hint.upload-text{color: var(--sbCardText) !important;font-size: 14px !important;}
+/* .notify-alerticon .ant-alert-icon{margin: 0px 15px 18px 0px !important;} */
+.btn-textstyle{display: block !important;color: var(--white) !important;font-size: 16px;font-weight: 500;}
+.file-sizestyle{font-weight: 500;font-size: 14px;color: var(--sbCardText);}
+.case-remarksstyle{margin-top: 10px;}
+.case-lbl.remark-casestyle{word-break: break-all;}
+.reply-date{color: var(--coindate);font-weight: 400;font-size: 10px;}
+.reply-container{display: flex;margin-bottom: 24px;}
+.reply-container .user-shortname{width: 46px; height: 46px; border-radius: 50%;background-color: #3653E4;margin-right: 16px;color: #FFFFFF;font-size: 18px;text-align: center;line-height: 46px;font-weight: 500;text-transform: uppercase;}
+.reply-body{flex: 1;}
+.reply-txt{font-size: 14px;color: var(--marketTitle);font-weight: 500;margin-bottom: 0;word-break: break-all;}
+.reply-username{color: var(--white) !important;font-size: 16px;font-weight: 500;display: inline-block;margin-right: 10px;}
+.send-circle{background: var(--bgYellow); width: 40px;height: 40px; line-height: 40px; text-align: center;border-radius: 50%;}
+.chat-send{display: flex;border: 1px solid var(--borderLight); padding:12px; border-radius: 20px; justify-content: space-between; align-items: center;margin-bottom: 16px;}
+.chat-send input{border:0; flex: 1;font-size: 16px;color: var(--textWhite30);font-weight: 200;}
+.chat-send input:focus{outline: none;}
+/* cases */
+/* notifications */
+.buybg.mb-0{margin-bottom: 0 !important;}
+.notifications-list .ant-list-item{padding:16px 0; border-bottom: 1px solid var(--borderColor) !important;}
+.notifications-list .ant-list-item-meta-avatar{border-radius: 50%;width: 38px;height: 38px;text-align: center;line-height: 38px;}
+.notifications-list .ant-list-item-meta-title{margin-bottom: 0 !important;}
+.notifications-list .ant-list-item-meta{align-items: center;}
+
+.approvebg .ant-list-item-meta-avatar, .depositbg .ant-list-item-meta-avatar, .buybg .ant-list-item-meta-avatar, .deposit.fiatbg .ant-list-item-meta-avatar, .deposit.cryptobg .ant-list-item-meta-avatar, .paymentsbg .ant-list-item-meta-avatar{background-color: var(--bgDarkGreen);}
+.withdrawbg .ant-list-item-meta-avatar, .depositsbg .ant-list-item-meta-avatar, .sellbg .ant-list-item-meta-avatar, .withdraw.fiatbg .ant-list-item-meta-avatar, .withdraw.cryptobg .ant-list-item-meta-avatar{background-color: var(--bgDarkRed);}
+.requestbg .ant-list-item-meta-avatar, .documentsbg .ant-list-item-meta-avatar, .cutomersbg .ant-list-item-meta-avatar, .casesbg .ant-list-item-meta-avatar{background-color: var(--bgBlue);}
+.ant-alert-with-description{width: 100%; align-items:center;}
+/* batchpayments start  */
+.download-excel a{color: var(--termsText);}
+.pay-list .file-name{width: 400px;word-break: break-all;}
+.icon.md.back{margin-right: 8px;}
+.preview-back{margin-right: 8px;}
+.buysell-balances{text-align: center;margin: 0 0 20px 0 !important;}
+.faitwallet-cards .ant-list-items li:nth-child(n+3){display: none;}
+.cust-cancel-btn.back-btn-sumsub{margin-top: 12px !important;}
+.header-right .ant-menu-title-content:hover,.header-right .ant-typography.custom-header:hover{color:var(--white);}
+.custom-header{color:var(--white) !important;}
+.custom-inactive{color:var(--sbCardText) !important}
+.sumsub-content{margin: 10px 0;}
+.icon.md.refresh-icon{background-position: -271px -33px;}
+.cust-cancel-btn.pop-space{margin-right: 8px;margin-bottom: 0;}
+.markets-drawer .ant-drawer-wrapper-body{background: var(--bodyBg) url(../images/dark-bg2.0.svg) no-repeat top center !important;}
+.markets-grid tr:last-child td:first-child{border-bottom-left-radius: 20px;}
+.markets-grid tr:last-child td:last-child{border-bottom-right-radius: 20px;}
+.markets-grid .ant-table-tbody{border-bottom-left-radius: 20px;border-bottom-right-radius: 20px;}
+.markets-grid .side-drawer-header{padding: 0 16px 0 0;}
+.header-space{margin-bottom: 0 !important;}
+.basicinfo.batch-style{margin-left: 20px;}
+.bill-payment.bill-margin{margin-bottom: 10px !important;}
+/* batchpayments end */
+.no-transaction{padding-top: 18px !important;}
+.search-box .ant-input, .search-box .ant-input:focus,.search-box .ant-input:hover{color: var(--textWhite); border: 0;}
+.ant-btn.dbchart-link{padding-left: 0px;padding-right: 0px; margin-right: 8px;background-color: transparent;border: 0;}
+.main-container.grid-error{padding: 0 16px;}
+.fait-subtext .ant-typography-copy,.custom-copy .ant-typography-copy{transform: scale(0.8);}
+.fait-subtext .ant-typography-copy svg,.custom-copy .ant-typography-copy svg{margin-bottom: 5px;}
+.main-container.grid-demo{padding-top: 0;}
+.cust-list.main-container.case-demo{padding-bottom: 0;}
+.cust-pop-up-btn.ad-popup button:nth-child(2){margin-left: 0;}
+.kpi-divstyle.ad-rec-detyails{border-bottom: transparent;}
+.kpi-val.adview-name{width: 225px;}
+/* .batchpayment-summary ~.ant-alert-with-description {width: 97% !important;margin-left: 20px;} */
+.preview-grid .cust-list,.box.text-white .cust-list{padding: 0;}
+.Supporting-Documents{margin-top: 30px;}
+.icon.md.Batch{background-position: -738px -37px;}
+.notkyc a{color:var(--viewAll);}
+.thank-you-btn{margin-top: 40px;}
+.proceed-section{margin-bottom: 34px;}
+.custom-declaraton.send-success{margin-top: 40px;}
+.custom-declaraton.send-success button,.success-pop.sell-success{margin-top: 26px;}
+.transaction-custom-table .pay-docs.bill-bank{text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width: 50%;}
+/*@media start*/
+@media (min-width: 768px){
+    .listitems-design{width: 340px;}
+    .tlv-header{height: 90px !important;}
+    .header-logo{padding-left: 0 !important;}
+    .visible-mobile{padding-left: 16px !important;}
+    .agree-check input[type=checkbox]+span{background-position: -115px -519px;}
+    .agree-check input[type=checkbox]:checked+span:hover{background-position: -153px -519px;}
+    .agree-check input[type=checkbox]:checked+span:hover{background-position:-153px -519px;}
+    .agree-check input[type=checkbox]:checked+span{background-position:-153px -519px;}
+    .agree-check input[type=checkbox]+span:hover{background-position: -190.5px -519px;}
+    .text-style{margin-top: 16px !important;}
+    .successsubtext{height: 400px;}
+    .round-pills .ant-radio-button-wrapper{line-height: 30px;}
+    /* .select-currency{height: 400px;} */
+    .val-updown{right: 20px;top:45px;}
+    .import-note{width: auto;}
+    .side-drawer .ant-drawer-header{padding:12px 30px 0px 30px !important}
+    .inputfont-style{font-size:36px;}
+    .buy-paragraph{width: 300px;margin: auto;}
+    .crypto-card .ant-card-body{padding: 16px 14px;height: 94px;}
+    .custom-radiobtn .ant-radio-button-wrapper.ant-radio-button-wrapper-checked{padding:10px 36px;}
+    .custom-radiobtn .ant-radio-button-wrapper{padding: 0 15px;}
+    .basicprofile-info{width: auto;}
+    .moble-mb-style{margin-bottom: 16px;}
+    .arrow-ml{margin-left: 12px;}
+    
+}
+@media (min-width: 992px){
+    .profile-alert-style{width: 510px !important;align-items: center;}
+    .bill-payment{display: flex; align-items: center; justify-content: space-between;margin-bottom: 36px;}
+    .visible-mobile, .sideropen{display: none;}
+    .bill-grid .k-grid-header table{width: 1266px !important;}
+    .bill-grid .k-grid-content table{width: 1266px !important;}
+    .side-drawer .ant-drawer-content-wrapper{width: 524px !important;}
+    /* .buycoin-style{font-size: 50px;} */
+    .cryptosummary-container{max-height: calc(100vh - 76px);}
+    /* .successsubtext{height:230px;} */
+    /* .auto-scroll{overflow-y: auto;padding-right: 10px;} */
+    .agree-check input[type=checkbox]+span {background-position: -115px -513px;}   
+    .agree-check input[type=checkbox]+span{background: var(--lightThemeIcons);background-position:-115px -513px;transform:scale(1.5);display: inline-block;width: 34px;height: 34px;vertical-align: text-top;cursor: pointer;}
+    .agree-check input[type=checkbox]:checked+span{background: var(--lightThemeIcons);background-position:-153px -513px;border-color: transparent !important;}
+    .agree-check input[type=checkbox]+span:hover{background-position:-190.5px -513px;}
+    .agree-check input[type=checkbox]:checked+span:hover{background-position:-153px -513px;}
+    .successsubtext{height: 130px;}
+    .text-style{margin: 30px 0 !important;}
+    /* .select-currency {height: 122px;} */
+    /* .text-style{height: 140px;} */
+    /* .full-screenable-node{overflow: auto;} */
+    .val-updown{top: 45px;right: 18px;}
+    .enter-val-container.swap-com{margin-bottom: 4px;}
+    .import-note{width: 463px;}
+    .tlv-header{max-width: 1200px;margin: auto;padding: 12px 0 !important;align-items: center;}
+    .basicprofile-info{width: 510px;}
+    .swap-entryvalue{flex: 0 0 305px;}
+    .swap-text-sub{margin-top: -4px;}
+    .new-swap-subtext.send-crypto-enrty{margin-bottom: 24px;}
+    .summary-liststyle{margin-right: 26px;}
+ 
+}
+
+@media (min-width: 1024px){
+
+}
+@media (min-width: 1200px){
+    .coinveiw-newpage{width: 900px;margin:0 auto ;}
+    /* .sb-card{width: 482px;} */
+    .iban-list .iban-style{width: auto !important;float: unset; padding: 12px !important;flex: 1;margin-right: 0;}
+    .iban-list .ant-list-items{display: flex;gap: 16px;}
+    .iban-list .custom-btn{min-width: 81px;}
+    .main-container{max-width: 1200px; padding: 30px 16px 24px;}
+    .crypto-list .ant-list-item, .wallet-list .ant-list-item{margin-top:12px;}
+    .inputfont-style{font-size: 36px;}
+    .custom-radiobtn .ant-radio-button-wrapper.ant-radio-button-wrapper-checked{padding:10px 36px;}
+    .custom-radiobtn .ant-radio-button-wrapper{padding: 0 15px;}
+    /* .ant-popover.ant-popover-placement-left{left: 872px !important;} */
+    .transctns-grid .ant-drawer-header, .transctns-grid .ant-drawer-body{padding-left: 100px;padding-right: 100px;}
+    .adbook-scroll{max-height: 418px;overflow: auto;}
+    .your-card{margin-top: 8px;}
+    .gridLink.batch-filename{padding-left: 0;}
+}
+@media (min-width: 1400px){
+    .main-container{max-width: 1300px; }
+    .iban-list .ant-list-items{display: flex;}
+    .listitems-design{width:376px;}
+    .listitems-design.iban-style{width: 242px;}
+    .side-drawer .ant-drawer-body{padding: 0 30px 16px 30px;}
+    .agree-check{height: 100px;}
+    .successsubtext{height: calc(100vh - 592px);}
+    .custom-height {max-height: calc(100vh - 926px);}
+    /* .select-currency {height: calc(100vh - 590px);} */
+    .iban-list .ant-list-items{display: 238px;}
+    /* .full-screenable-node{width: 430px;} */
+    .crypto-list .ant-list-item, .wallet-list .ant-list-item{margin-top: 16px;}
+    .inputfont-style{font-size: 36px;}
+    .side-drawer .ant-drawer-content-wrapper{width: 524px !important;}
+    .val-updown{top:45px;right: 20px;}
+    .iban-list .iban-style{padding: 14px 20px;}
+    .addCryptoList{max-height: 590px;}
+    .addCryptoList .xxl-fs{font-size:14px !important;}
+    .addCryptoList .xxl-fs-16{font-size:16px !important;}
+    .tlv-header{max-width: 1300px; }
+    .cust-col-design{flex: 0 0 482px;}
+    .db-flex-style{flex:1;}
+    .adbook-scroll{max-height: 610px;}
+    
+}
+@media (max-width: 991.98px){
+    .visible-mobile .ant-tabs-top > .ant-tabs-nav::before{border-bottom: 0 !important;}
+    .visible-mobile .user-list .ant-tabs-nav{width: auto;}
+    .visible-mobile{padding-left: 8px;padding-right: 24px;}
+    .tlv-header .sideropen {background: var(--profileMenu) !important;}
+    .sideropen{margin-left: -16px;padding: 12px;margin-top: 14px;border-radius: 0;min-height: 100vh;
+        /* border-top-right-radius: 6px;border-bottom-right-radius: 6px; */  
+    }
+    .sideropen .ant-menu-vertical,.ant-menu-vertical{border-right: 0 !important;}
+    .sideropen .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected{background-color: transparent;}
+    .sideropen .list-item.ant-menu-item-selected .ant-menu-title-content{min-width: 150px !important; padding: 8px 5px 8px 5px !important}
+    .login-user{width: 100%;padding: 2px 0;}  
+}
+@media (max-width: 767.98px){
+    .new-viewpage .search-box{margin-left: 0;}
+    .fait-wallets-style.new-viewpage{display: block !important;}
+    .footer-links a{margin-right: 20px !important;}
+    .sidebar-push{margin: 62px 0 0 !important;}
+    .visible-mobile .side-drawer .side-drawer-header.change_password{align-items: self-start !important;}
+    /* .visible-mobile{margin-right: 24px;padding-left: 24px;padding-right: 24px;} */
+    .main-container{padding-left: 0 !important;padding-right: 0 !important;}
+    .listitems-design{width: 344px;}
+    .val-updown{top: 46px;right: 18px;}
+    .footer-links{text-align: center;margin: 0 10px;}
+    .fund-border{padding: 12px;}
+    .small-text-align{margin-left: 18px;}
+    .address-name{font-size: 14px;}
+    .mobile-btn-pd .ant-form-item{margin-bottom: 16px;}
+    .profile-image-content{display: block;}
+    .dwnl-content-style{margin-top: 16px;}
+    .profile-info{margin: 0 auto;}
+    .profile-img-style{margin-right: 0;}
+    .basicprofile-info{width: auto;}
+    .security-align{display: block;}
+    .moble-mb-style{margin-bottom: 16px;}
+    .arrow-ml{margin-left: 12px;}
+    .crypto-address.share-width-align{width: auto;}
+    .profile-value.mv-profile-value{word-break: break-all;}
+    .custom-display{margin-left: 0;}
+    .crypto-address.share-width-align, .adbs-mb{display: flex;}
+    .coin-bal ul{padding: 0;}
+    .search-box:hover > .search-text{width: 120px;}
+    .sb-innercard{padding: 16px;}
+    .coin-bal{display: block !important;}
+    /* .kpi-divstyle:last-child{border-bottom: 0;} */
+    .theme-switch{width: auto;margin-bottom: 0;}
+    .walletadrs{margin-left: 30px;}
+    .ant-tabs-tab + .ant-tabs-tab{margin: 0 0 0 26px;}
+    .display-items{display: block;}
+    .crypto-details{justify-content: center;}
+    .batch-actions{margin-top: 16px;}
+    /* .k-loading-image::before, .k-loading-image::after{top:60% !important;position: absolute !important;} */
+    .custom-theme-btn{display: flex;}
+   
+}
+
+/*@media end*/

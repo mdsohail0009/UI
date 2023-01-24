@@ -10,7 +10,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children?.slice(0, children.length - suffixCount).trim();
     const suffix = children?.slice(-suffixCount).trim();
     return (
-        <Text className="mb-0 fs-14 docnames c-pointer d-block file-label fs-12 fw-400"
+        <Text className="docnames c-pointer d-block file-label "
             style={{ maxWidth: '100% !important' }} ellipsis={{ suffix }}>
             {start}
         </Text>
@@ -76,23 +76,24 @@ class PaymentsView extends Component {
       return <Spin />;
     } else {
       return (
-        <div className="more-popover">
-          <Text className="lbl text-white">BIC/SWIFT/ABA Routing Code</Text>
-          <Text className="val text-white">{moreBankInfo?.routingNumber}</Text>
-           {(moreBankInfo?.transferType!=="internationalIBAN" && moreBankInfo?.transferType!=="sepa")&& <>
-          <Text className="lbl text-white">Bank Address</Text><br/>
-          <Text className="lbl text-white">Address Line 1</Text>
-          <Text className="val text-white">{moreBankInfo?.bankAddress1}</Text>
-          {moreBankInfo?.bankAddress2!==null &&<>
-            <Text className="lbl text-white">Address Line 2</Text>
-          <Text className="val text-white">{moreBankInfo?.bankAddress2}</Text>
-          </>}
-          </>}
-          {(moreBankInfo?.transferType==="sepa" || moreBankInfo?.transferType==="internationalIBAN" ) && 
-          <>
-           <Text className="lbl text-white">Bank Address</Text>
-           <Text className="val text-white">{moreBankInfo?.bankBranch || "-"}{","}{moreBankInfo?.country}{","}{moreBankInfo?.state}{","}{moreBankInfo?.city}{","}{moreBankInfo?.postalCode}</Text></>}
-        </div>
+        <div className="more-popover payments-card kpi-List">
+        <div className='popover-mb-12'>
+        <label className="kpi-label">BIC/SWIFT/ABA Routing Code</label>
+        <span className="kpi-val d-block">{moreBankInfo?.routingNumber}</span></div>
+         {(moreBankInfo?.transferType!=="internationalIBAN" && moreBankInfo?.transferType!=="sepa")&& <>
+         <div className='popover-mb-12'> <label className="basicinfo">Bank Address</label>
+        <label className="kpi-label d-block">Address Line 1</label>
+        <span className="kpi-val d-block">{moreBankInfo?.bankAddress1}</span></div>
+        {moreBankInfo?.bankAddress2!==null &&<>
+          <div className='popover-mb-12'>  <label className="kpi-label">Address Line 2</label>
+        <span className="kpi-val d-block">{moreBankInfo?.bankAddress2}</span></div>
+        </>}
+        </>}
+        {(moreBankInfo?.transferType==="sepa" || moreBankInfo?.transferType==="internationalIBAN" ) && 
+        <>
+        <div className='popover-mb-12'><label className="kpi-label">Bank Address</label>
+         <span className="kpi-val d-block">{moreBankInfo?.bankBranch || "-"}{","}{moreBankInfo?.country}{","}{moreBankInfo?.state}{","}{moreBankInfo?.city}{","}{moreBankInfo?.postalCode}</span> </div></>}
+         </div>
       );
     }
   };
@@ -121,8 +122,9 @@ class PaymentsView extends Component {
             <>
              <div ref={this.useDivRef}></div>
                 <div className="main-container">
-                    <Title className="basicinfo mb-16"><span onClick={() => this.props.history?.push(`/payments/All`)} className='icon md c-pointer back mr-8'></span><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
-                    <div className="box basic-info responsive_table bg-none">
+                    <Title className="adbook-head"><span onClick={() => this.props.history?.push(`/payments/All`)} className='icon md c-pointer back backarrow-mr'/><Translate content="menu_payments" component={Text} className="adbook-head" /></Title>
+                    <div className='transaction-custom-table'>
+                    <div className="responsive_table db-ts-grid">
                         <table className='pay-grid view mb-view'>
                             <thead>
                                 <tr>
@@ -139,15 +141,17 @@ class PaymentsView extends Component {
                                         <>
                                           {paymentsData.length > 0? <> <tr key={idx}>
                                           <td className="doc-def" >{item?.beneficiaryAccountName}</td>
-                                                <td className="doc-def" style={{ width: '350px' }}>
-                                      <div className="d-flex align-center justify-content" style={{ width: '350px' }}>
-                                        <span>
-                                          <Tooltip title={item.bankname}>
+                                                <td className="doc-def" >
+                                      <div className="d-flex align-center">
+                                        <span className='pay-docs bill-bank'>
+                                      <Tooltip title={item.bankname}>
                                             <span className='pay-docs'>{item.bankname}</span>
-                                          </Tooltip>
+                                          </Tooltip></span>
+                                        <span>
+                                          
                                           <Text
                                             size="small"
-                                            className="file-label doc-def ml-8"
+                                            className="file-label add-lbl doc-def"
                                           >
                                             {this.addressTypeNames(item.addressType)}{" "}
                                           </Text>
@@ -187,7 +191,7 @@ class PaymentsView extends Component {
                                                     {item.documents?.details.map((file) =>
                                                    <>
                                                    {file.documentName !== null && (
-                                                     <div className='docdetails'  style={{width:"80px"}} onClick={() => this.filePreview(file)}>
+                                                     <div className='docdetails pay-docdetails'  onClick={() => this.filePreview(file)}>
                                                                                                         <Tooltip title={file.documentName}>
                                                       {file.documentName?.split(".")[0].length>4&&<EllipsisMiddle>
                                                         {file.documentName.slice(0,4) + "..." +file.documentName.split(".")[1]}
@@ -206,7 +210,17 @@ class PaymentsView extends Component {
                                         :"No bank details available."}</>
                                     )
                                 })}
-
+                                {paymentsData?.length == 0 && !loading&&
+                                <tr>
+                                <td
+                                  colSpan="8"
+                                  className="p-16 text-center"
+                                  style={{ width: 300 }}
+                                >
+                                 No bank details available
+                                </td>
+                              </tr>
+                                  }
                                 {loading && <tr>
                                     <td colSpan='6' className='text-center p-16'><Spin size='default' /></td></tr>}
                             </tbody>
@@ -217,10 +231,10 @@ class PaymentsView extends Component {
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td >
-                                            <span className='text-white fs-24 ml-8'> Total:</span>
+                                        <td className='total-align'>
+                                            <span className=''> Total:</span>
                                         </td>
-                                        <td><span className='text-white fs-24'> <NumberFormat className=" text-right"
+                                        <td className='total-align font-size-align'><span className=''> <NumberFormat className=" text-right"
                                             customInput={Text} thousandSeparator={true} prefix={""}
                                             decimalScale={2}
                                             allowNegative={false}
@@ -236,12 +250,14 @@ class PaymentsView extends Component {
                             </tfoot>
                         </table>
                         </div>
+                        </div>
                         {!loading &&
-                        <div className="text-right mt-36">
+                        <div className="text-right cust-pop-up-btn crypto-pop">
                         {paymentsData?.length > 0 &&
                             <Button
-                                className="pop-btn px-36"
-                                style={{ margin: "0 8px" }}
+                            block
+                                className="detail-popbtn cust-cancel-btn"
+                                
                                 onClick={this.backToPayments}
                             >
                                 Cancel
@@ -258,10 +274,14 @@ class PaymentsView extends Component {
             visible={this.state.previewModal}
             closeIcon={<Tooltip title="Close"><span className="icon md close-white c-pointer" onClick={this.docPreviewClose} /></Tooltip>}
             footer={<>
-              <Button  onClick={this.docPreviewClose} className="text-center text-white-30 pop-cancel fw-400 mr-36"
-                         style={{ margin: "0 8px" }}>Close</Button>
-              <Button  className="pop-btn px-36"
-                         style={{ margin: "0 8px" }}onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>
+             <div className="cust-pop-up-btn crypto-pop">
+             
+             <Button  onClick={this.docPreviewClose} className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
+                        >Close</Button>
+                         <Button  className="primary-btn pop-btn detail-popbtn paynow-btn-ml" 
+                       onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>
+                       
+                        </div>
             </>}
           >
             <FilePreviewer

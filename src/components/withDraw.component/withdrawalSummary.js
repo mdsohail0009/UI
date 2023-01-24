@@ -650,14 +650,44 @@ const WithdrawalFiatSummary = ({
 											decimalScale={0}
 											allowNegative={false}
 											allowLeadingZeros={true}
-											className="cust-input custom-add-select mb-0"
+											className="cust-input custom-add-select mb-0 ibanborder-field"
 											placeholder={"Enter code"}
 											maxLength={6}
 									style={{ width: "100%"  }}
 									onValueChange={(e) => handleChange(e.value)}
 									disabled={inputDisable}
+									addonAfter={<div className="new-add hy-align">
+									{!verifyTextotp && (
+										<Button
+											type="text"
+											style={{color:"black"}}
+											loading={phoneLoading}
+											onClick={getOTP}
+											disabled={disable}>
+											{btnList[buttonText]}
+										</Button>
+									 )} 
+									{tooltipVisible === true && (
+										<Tooltip
+											placement="topRight"
+											title={`Haven't received code ? Request new code in ${seconds} seconds. The code will expire after 30mins.`}>
+											<span className="icon md info mr-8" />
+										</Tooltip>
+									)}
+									<Button
+										type="text"
+										 loading={phoneVerifyLoading}
+										style={{color:"black", margin:"0 auto"}}
+										onClick={getOtpVerification}
+										disabled={verifyPhone === true || verifyTextotp}>
+										{verifyOtp[verifyOtpText]}
+										{verifyTextotp === true && (
+											<span className="icon md greenCheck check-ml-align" />
+										)}
+									</Button>
+								</div>}
 								/>
-								<div className="new-add c-pointer get-code text-yellow hy-align">
+								{/* <div className="new-add c-pointer get-code text-yellow hy-align">
 										{!verifyTextotp && (
 											<Button
 												type="text"
@@ -683,10 +713,10 @@ const WithdrawalFiatSummary = ({
 											disabled={verifyPhone === true || verifyTextotp}>
 											{verifyOtp[verifyOtpText]}
 											{verifyTextotp === true && (
-												<span className="icon md greenCheck" />
+												<span className="icon md greenCheck check-ml-align" />
 											)}
 										</Button>
-									</div>
+									</div> */}
 									</div>
 							</Form.Item>
 						)}
@@ -756,7 +786,7 @@ const WithdrawalFiatSummary = ({
 												disabled={verifyEmail === true || verifyEmailOtp === true}>
 												{verifyText[verifyEmailText]}
 												{verifyEmailOtp === true && (
-													<span className="icon md greenCheck" />
+													<span className="icon md greenCheck check-ml-align" />
 												)}
 
 											</Button>
@@ -823,7 +853,7 @@ const WithdrawalFiatSummary = ({
 											onClick={getAuthenticator}
 											disabled={authDisable||verifyAuthCode}>
 											{verifyAuthCode ? (
-												<span className="icon md greenCheck"  />
+												<span className="icon md greenCheck check-ml-align"  />
 											) : (
 												"Click here to verify"
 											)}

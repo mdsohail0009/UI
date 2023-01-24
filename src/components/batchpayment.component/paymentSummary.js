@@ -9,6 +9,7 @@ import {proceedTransaction} from './api'
 const { Title, Paragraph, Text } = Typography
 
 class PaymentSummary extends Component {
+	myRef = React.createRef();
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -24,7 +25,6 @@ class PaymentSummary extends Component {
 		  loading:false,
 		}
 	}
-
 	showDeclaration=async()=>{	
 		this.setState({...this.state,loading:true,errorMessage:null})
 		if (this.state.verifyData?.verifyData) {
@@ -34,6 +34,7 @@ class PaymentSummary extends Component {
 						...this.state,
 						errorMessage: "Please verify phone verification code",loading:false
 					});
+					this.myRef.current.scrollIntoView();
 					return;
 				}
 			}
@@ -43,6 +44,7 @@ class PaymentSummary extends Component {
 						...this.state,
 						errorMessage: "Please verify  email verification code",loading:false
 					});
+					this.myRef.current.scrollIntoView();
 					return;
 				}
 			}
@@ -52,6 +54,7 @@ class PaymentSummary extends Component {
 						...this.state,
 						errorMessage: "Please verify authenticator code",loading:false
 					});
+					this.myRef.current.scrollIntoView();
 					return;
 				}
 			}
@@ -65,6 +68,7 @@ class PaymentSummary extends Component {
 					errorMessage:
 						"Without Verifications you can't send. Please select send verifications from security section",loading:false
 				});
+				this.myRef.current.scrollIntoView();
 				return
 			}
 		} else {
@@ -73,6 +77,7 @@ class PaymentSummary extends Component {
 				errorMessage:
 					"Without Verifications you can't Proceed.",loading:false
 			});
+			this.myRef.current.scrollIntoView();
 			return
 		}
 		let response= await proceedTransaction(this.props?.id || this.props?.fileData?.id)
@@ -138,7 +143,7 @@ class PaymentSummary extends Component {
 			<div>
 			<Drawer destroyOnClose={true}
             title={[<div className="side-drawer-header"><span></span>
-			{!this.state.showDeclaration &&<><Title className='mb-8 text-white-30 fw-600 text-captz fs-24'>Payment Summary</Title>
+			{!this.state.showDeclaration &&<><div className='drawer-maintitle rec-bottom'>Payment Summary</div>
 			 <span onClick={this.props.onClose} className="icon md close-white c-pointer" /></>}
 			 {this.state.showDeclaration &&<span onClick={this.handleBack} className="icon md close-white c-pointer" />}
           </div>]}
@@ -147,97 +152,101 @@ class PaymentSummary extends Component {
           visible={this.props.showDrawer}
 		  className="side-drawer w-50p"
         >
+			  <div ref={this.myRef}></div>
 			<Spin spinning={this.state.reviewDetailsLoading}>
 			{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
 				<div>
 				{!this.state.showDeclaration && <>
 				<div>
-					<div> <Title className='sub-heading p-0 mt-24'>Transfer Details</Title></div>
+					<div className='adbook-head'>Transfer Details</div>
+					<div className='alert-info-custom kpi-List'>
 					<div className='pay-list fs-14'>
-						<div><label className='fw-500 text-white'> Payment</label></div>
+						<div><label className='summary-liststyle'> Payment</label></div>
 						<div>
 							
-						<NumberFormat className='fw-500 text-white-30'
+						<NumberFormat className='summarybal'
                                         value={`${this.props?.getPaymentDetails.amount}`}
                                         thousandSeparator={true} displayType={"text"} />
 							</div>
 					</div>
 					<div className='pay-list fs-14'>
-						<div><label className='fw-500 text-white'> Fee</label></div>
+						<div><label className='summary-liststyle'> Fee</label></div>
 						<div>
-						<NumberFormat className='fw-500 text-white-30'
+						<NumberFormat className='summarybal'
                                         value={`${this.props?.getPaymentDetails.commission}`}
                                         thousandSeparator={true} displayType={"text"} />
 							
 							</div>
 					</div>
 					<div className='pay-list fs-14'>
-						<div><label className='fw-500 text-white'> Total Amount</label></div>
+						<div><label className='summary-liststyle'> Total Amount</label></div>
 						<div>
-						<NumberFormat className='fw-500 text-white-30'
+						<NumberFormat className='summarybal'
                                         value={`${this.props?.getPaymentDetails.totalAmonunt}`}
                                         thousandSeparator={true} displayType={"text"} />
 							
 							</div>
 					</div>
 					<div className='pay-list fs-14'>
-						<div><label className='fw-500 text-white'>Balance Before</label></div>
+						<div><label className='summary-liststyle'>Balance Before</label></div>
 						<div>
-						<NumberFormat className='fw-500 text-white-30'
+						<NumberFormat className='summarybal'
                                         value={`${this.props?.getPaymentDetails.beforeAmount}`}
                                         thousandSeparator={true} displayType={"text"} />
 							</div>
 					</div>
 					<div className='pay-list fs-14'>
-						<div><label className='fw-500 text-white'>Balance After Payment</label></div>
+						<div><label className='summary-liststyle'>Balance After Payment</label></div>
 						<div>
-						<NumberFormat className='fw-500 text-white-30'
+						<NumberFormat className='summarybal'
                                         value={`${this.props?.getPaymentDetails.afterPaymentAmount}`}
                                         thousandSeparator={true} displayType={"text"} />
 							</div>
-					</div>
+					</div></div>
 
-					<div> <Title className='sub-heading p-0 mt-24'>Recipients Details</Title></div>
-
+					<div> <Title className='adbook-head'>Recipients Details</Title></div>
+					<div className='alert-info-custom kpi-List'>
 					<div className='pay-list fs-14'>
-						<div><label className='fw-500 text-white'>File Name</label></div>
-						<div><Text className='fw-500 text-white-30'>{this.props?.getPaymentDetails.fileName}</Text></div>
+						<div className='file-name'><label className='summary-liststyle'>File Name</label></div>
+						<div><Text className='summarybal'>{this.props?.getPaymentDetails.fileName}</Text></div>
 					</div>
 					<div className='pay-list fs-14'>
-						<div><label className='fw-500 text-white'>Number of Recipients</label></div>
-						<div><Text className='fw-500 text-white-30'>{this.props?.getPaymentDetails.noOfPayments}</Text></div>
-					</div>
+						<div><label className='summary-liststyle'>Number of Recipients</label></div>
+						<div><Text className='summarybal'>{this.props?.getPaymentDetails.noOfPayments}</Text></div>
+					</div></div>
 					
                            <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} />
 					    
-						   <div className="cust-pop-up-btn crypto-pop text-right">
-							<Button
-								className="primary-btn pop-cancel btn-width"
-								style={{ margin: "0 8px" }}
-								onClick={this.props.onClose}
-							>
-								Back
-							</Button>
-							<Button
-								className="pop-btn custom-send"
-                                style={{ backgroundColor: !isShowGreyButton && '#ccc', borderColor: !isShowGreyButton && '#3d3d3d' }}
+						   <div className="cust-pop-up-btn crypto-pop">
+						   <Button block
+								className="pop-btn"
+                                // style={{ backgroundColor: !isShowGreyButton && '#ccc', borderColor: !isShowGreyButton && '#3d3d3d' }}
 								onClick={this.showDeclaration}
 								loading={loading}
 							>
 								Continue
 							</Button>
+							<Button
+								className="cust-cancel-btn"
+								onClick={this.props.onClose}
+							>
+								Back
+							</Button>
+							
 						</div>
 						</div> 
 						</>}
 						{this.state.showDeclaration && <>
 					
-	          <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
-								<img src={pending} alt={`Processed`}  width={80}/>
-									<Title className='text-white-30 my-16 mb-0'>Declaration form sent successfully</Title>
-								<Paragraph className='text-white'>Declaration form has been sent to {this.props.customer?.email}. 
-									Please review and sign the document in your email to whitelist your address.
-									Please note that your withdrawal will only be processed once the address has been approved by compliance. </Paragraph>
-							</div></div>
+							<div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
+							<img src={pending} alt={`Processed`} className="confirm-icon"/>
+							<Title level={2} className="success-title">Declaration form sent successfully</Title>
+                <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
+                Please review and sign the document in your email to whitelist your address.
+                Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
+
+      </div>
+      </div>
 						</>}
 					</div>
 					</Spin>

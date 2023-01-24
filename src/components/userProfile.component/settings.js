@@ -12,6 +12,7 @@ import Translate from 'react-translate-component';
 import apiCalls from '../../api/apiCalls';
 import { LoadingOutlined } from "@ant-design/icons";
 
+const { Title, Paragraph, Text } = Typography;
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
 counterpart.registerTranslations('my', my);
@@ -26,7 +27,6 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
     const [isLoading,setIsLoading]=useState(false);
     useEffect(() => {
         getSettingsLu()
-        switcher({ theme: customer?.theme === 'Light Theme' ? themes.LHT : themes.DRT });
         settingsTrack();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -57,7 +57,6 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
             message.destroy()
             message.success({ content: <Translate content="settings_msg" />, className: 'custom-msg',duration:3 });
             getmemeberInfoa(customer.userId)
-            switcher({ theme: theme ? themes.LHT : themes.DRT });
             counterpart.setLocale(settingsObj.Language);
             setErrorMsg(null);
             setIsLoading(false);
@@ -81,21 +80,6 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
           return "Something went wrong please try again!";
         }
       };
-    const themeSwitch = async () => {
-        setTheme(!theme)
-        switcher({ theme: theme ? themes.DRT : themes.LHT });
-        settingsObj.Theme = !theme ? 'Light Theme' : 'Dark Theme';
-        settingsObj.Language = settingsObj.Language?.toLowerCase();
-        settingsObj.customerId = customer?.id;
-        settingsObj.info = JSON.stringify(trackAuditLogData)
-        let res = await saveSettingsData(settingsObj);
-        if (res.ok) {
-            message.destroy()
-            getmemeberInfoa(customer.userId)
-            counterpart.setLocale(settingsObj.Language);
-        }
-    }
-
         const antIcon = (
             <LoadingOutlined
                 style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
@@ -114,14 +98,14 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
         />
       )}
     <Form layout="vertical" initialValues={{ ...settingsObj }} onFinish={saveSettings} form={form}>
-        <div className="box basic-info">
-            <Translate content="settings" className="basicinfo" />
+        <div className="basicprofile-info">
+            <Translate content="settings" className="basicinfo" component={Title}/>
             <Paragraph className="basic-decs"><Translate content="User_customized_settings" className="basic-decs" /></Paragraph>
-            <Row className="py-16 border-bottom add-custom">
-                <Col sm={24} md={12} className="mr-4">
-                    <Text className="input-label"><Translate content="language" /></Text>
+            <Row className="order-bottom add-custom">
+                <Col sm={24} md={24} xs={24} xl={24} className="">
+                    <Text className="label-style"><Translate content="language" /></Text>
                     <Form.Item
-                        className="custom-forminput mb-24"
+                        className="custom-forminput custom-label"
 
                         name="Language"
                         required
@@ -138,10 +122,10 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
                             </Option>)}
                         </Select></Form.Item>
                 </Col>
-                <Col sm={24} md={12} className="ml-4">
-                    <Text className="input-label"><Translate content="currency" /></Text>
+                <Col sm={24} md={24} xs={24} xl={24} className="ml-4">
+                    <Text className="label-style"><Translate content="currency" /></Text>
                     <Form.Item
-                        className="custom-forminput mb-24"
+                        className="custom-forminput custom-label"
                         name="currency"
                         required
                         id="currency"
@@ -153,33 +137,19 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
                             className="cust-input cust-select mb-0"
                             dropdownClassName="select-drpdwn"
                             onChange={(e) => { settingsObj.currency = e; setSettingsObj(settingsObj); form.setFieldsValue({ ...settingsObj }) }}>
-                            {SettingsLu.currencyLookup?.map((item, idx) => <Option key={idx} value={item}>{item}
+                            {SettingsLu.currencyLookup?.map((item, idx) => <Option key={idx} value={item}>{item.toUpperCase()}
                             </Option>)}
                         </Select></Form.Item>
                 </Col>
             </Row>
-            <div className="pt-16 border-bottom pb-36">
-                <Translate content="theme" className="input-label" component={Text} />
-                <div className="custom-theme-btn mb-36">
-                    <div className="theme-switch theme-active mobile-mb-16 c-pointer" onClick={() => theme ? themeSwitch() : ''}>
-                        <div className="d-flex align-center " >
-                            <p className="switch-circle mb-0" >{!theme && <span className="icon md check-arrow c-pointer"></span>}{theme && <span></span>}</p>
-                            <p className="mb-0 ml-16 theme-txt"><Translate content="dark_theme" className="mb-0 ml-16 theme-txt" component={Text.p} /></p></div>
-                    </div>
-                    <div className={"theme-switch c-pointer" + (theme ? " themeSwitchOn " : " themeSwitchOff ")} onClick={() => !theme ? themeSwitch() : ''}>
-                        <div className="d-flex align-center c-pointer" >
-                            <p className="switch-circle mb-0 c-pointer" >{theme && <span className="icon md check-arrow c-pointer"></span>}{!theme && <span></span>}</p>
-                            <p className="mb-0 ml-16 theme-txt"><Translate content="light_theme" className="mb-0 ml-16 theme-txt" component={Text.p} /></p></div>
-                    </div>
-                </div>
-            </div>
             <div className="text-center">
                     <Button
                         htmlType="submit"
                         size="large"
-                        className="pop-btn mt-36"
+                        className="pop-btn setting-btn"
                         loading={btnDisabled}
-                        style={{ minWidth: 300 }}>
+                        block
+                        >
                         {isLoading && <Spin indicator={antIcon} />}{" "}
                         <Translate content="Save_btn_text" />
                     </Button>

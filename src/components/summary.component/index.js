@@ -69,7 +69,7 @@ class Summary extends Component {
 		if (this.props?.loading) {
 			return <Loader />;
 		}
-		const { Paragraph, Text } = Typography;
+		const { Paragraph, Text,Title } = Typography;
 		const {
 			coin,
 			oneCoinValue,
@@ -107,19 +107,19 @@ class Summary extends Component {
 					/>
 				)}
 
-				<div className="cryptosummary-container">
+				<div className="cryptosummary-container">					
 					<div
-						className="fs-36 text-white-30 fw-200 text-center"
-						style={{ lineHeight: "36px" }}>
+						className="cust-coin-value"
+						>
 						<Currency
-							prefix={""}
+							suffixText={coin}
 							decimalPlaces={decimalPlaces}
 							defaultValue={amount}
-							suffixText={coin}
+							prefix={""}
 						/>{" "}
 					</div>
 					{showEstimated && (
-						<div className="text-white-50 fw-400 text-center fs-14 mb-16">
+						<div className="faitcurrency-style">
 							<Currency
 								defaultValue={amountNativeCurrency}
 								prefix={""}
@@ -129,9 +129,10 @@ class Summary extends Component {
 							/>
 						</div>
 					)}
-					<div className="pay-list fs-14">
+					<div className="cust-summary-new">
+					<div className="pay-list">
 						<Translate
-							className="fw-400 text-white"
+							className="summary-liststyle"
 							content="exchange_rate"
 							component={Text}
 						/>
@@ -139,14 +140,14 @@ class Summary extends Component {
 							defaultValue={oneCoinValue}
 							decimalPlaces={decimalPlaces}
 							prefix={""}
-							className="fw-500 text-white-50"
+							className="summarybal"
 							prefixText={`1 ${exchangeCoin || coin} = ${nativeCurrency}`}
 						/>
 					</div>
 					{showConvert && (
-						<div className="pay-list fs-14">
+						<div className="pay-list">
 							<Translate
-								className="fw-400 text-white"
+								className="summary-liststyle"
 								content="convert"
 								component={Text}
 							/>
@@ -154,14 +155,14 @@ class Summary extends Component {
 								defaultValue={convertValue}
 								prefix={""}
 								decimalPlaces={decimalPlaces}
-								className="fw-400 text-white-30"
+								className="summarybal"
 								suffixText={convertCoin}
 							/>
 						</div>
 					)}
-					<div className="pay-list fs-14">
+					<div className="pay-list">
 						<Translate
-							className="fw-400 text-white"
+							className="summary-liststyle"
 							content={amountTitle || "amount"}
 							component={Text}
 						/>
@@ -170,14 +171,14 @@ class Summary extends Component {
 							decimalPlaces={decimalPlaces}
 							prefix={""}
 							type={"text"}
-							className="fw-400 text-white-30"
+							className="summarybal"
 							suffixText={coin}
 						/>
 					</div>
 					{showFee && (
-						<div className="pay-list fs-14">
+						<div className="pay-list">
 							<Translate
-								className="fw-400 text-white"
+								className="summary-liststyle"
 								content={`suissebase_fee`}
 								component={Text}>
 								<Tooltip title="Suissebase Fee">
@@ -193,32 +194,31 @@ class Summary extends Component {
 						</div>
 					)}
 					{showEstimatedTotal && (
-						<div className="pay-list fs-14">
+						<div className="pay-list">
 							<Translate
-								className="fw-400 text-white"
+								className="summary-liststyle"
 								content="estimated_total"
 								component={Text}
 							/>
 							<Currency
 								defaultValue={amountNativeCurrency}
 								prefix={""}
-								className="fw-400 text-white-30"
+								className="summarybal"
 								suffixText={nativeCurrency}
 							/>
 						</div>
 					)}
-
-					<div className="text-center my-16">
+				</div>
+					{/* <div className="cust-summary-text"> */}
 						<Translate
-							className="fs-12 fw-200 text-white"
+							className="text-style"
 							content="final_Amount"
-							component={Text}
+							component={Title}
 						/>
-					</div>
+					{/* </div> */}
 					{permissions &&
-					<div className="d-flex p-16 mb-24 agree-check">
-						<label
-						>
+					<div className="d-flex agree-check">
+						<label>
 							<input
 								type="checkbox"
 								id="agree-check"
@@ -230,11 +230,11 @@ class Summary extends Component {
 							<span for="agree-check" className={`${error?.agreeRed===false ? "checkbox-red":""}`} />
 						</label>
 						<Paragraph
-							className="fs-14 text-white-30 ml-16 mb-0"
+							className="cust-agreecheck"
 							style={{ flex: 1 }}>
-							<Translate content="agree_sell" component="Paragraph" />{" "}
+							<Translate className="cust-agreecheck" content="agree_sell" component="Paragraph" />{" "}
 							<a
-								className="textpure-yellow"
+								className="terms-link"
 								href="https://www.iubenda.com/terms-and-conditions/42856099"
 								target="_blank">
 								<Translate content="terms" component="Text" />
@@ -246,18 +246,8 @@ class Summary extends Component {
 					
 					
 
-					<div className="align-center btn-content btn-container">
-					<div className="text-center mt-16 cust-pop-up-btn sell-btc-btn">
-						<Translate
-							content="cancel"
-							component={Button}
-							onClick={() => { this.onBackSell() }}
-							type="text"
-							size="large"
-							className="text-white-30 fw-400 pop-btn custom-send mb-12 cancel-btn mr-8 ml-0 primary-btn pop-cancel"
-						/>
-					</div>
-					{(okBtnTitle === "buy" && permissions) &&
+					<div className="">
+					{(okBtnTitle == "buy" && permissions) &&
 					<SuisseBtn
 						className={"pop-btn custom-send sell-btc-btn"}
 						onRefresh={() => this.props.onRefresh()}
@@ -275,7 +265,19 @@ class Summary extends Component {
 						loading={isButtonLoad}
 						autoDisable={true}
 						onClick={() => this.props.onClick()}
-					/></div>}</div>
+					/></div>}
+					
+					<SuisseBtn
+					title="cancel"
+							content="cancel"
+							component={Button}
+							onClick={() => { this.onBackSell() }}
+							type="text"
+							size="large"
+							className="cust-cancel-btn"
+						/>
+					
+					</div>
 				</div>
 			</>
 		);

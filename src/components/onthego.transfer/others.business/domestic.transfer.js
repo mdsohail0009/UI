@@ -5,8 +5,8 @@ import { validateContentRule } from "../../../utils/custom.validator";
 const { TextArea } = Input;
 class DomesticTransfer extends Component {
     render() {
-        return <Row gutter={[8, 8]}>
-            <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+        return <Row >
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                     className="fw-300 mb-4 text-white-50 py-4 custom-forminput custom-label"
                     name="accountNumber"
@@ -40,7 +40,7 @@ class DomesticTransfer extends Component {
 
                 </Form.Item>
             </Col>
-            <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                     className="fw-300 mb-4 text-white-50 py-4 custom-forminput custom-label"
                     name="abaRoutingCode"
@@ -51,6 +51,7 @@ class DomesticTransfer extends Component {
                             required: true,
                             message: apiCalls.convertLocalLang("is_required"),
                         },
+                       
                         {
                             validator: (_, value) => {
                                 if (
@@ -74,9 +75,9 @@ class DomesticTransfer extends Component {
 
                 </Form.Item>
             </Col>
-            <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="fw-300 mb-4 text-white-50 py-4 custom-forminput custom-label"
+                    className="custom-forminput custom-label"
                     name="bankName"
                     label={"Bank Name"}
                     required
@@ -106,7 +107,7 @@ class DomesticTransfer extends Component {
           
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="fw-300 mb-4 text-white-50 py-4 custom-forminput custom-label"
+                    className="custom-forminput custom-label"
                     name="bankAddress1"
                     required
                     rules={[
@@ -137,7 +138,7 @@ class DomesticTransfer extends Component {
             </Col>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="fw-300 mb-4 text-white-50 py-4 custom-forminput custom-label"
+                    className="custom-forminput custom-label"
                     name="bankAddress2"
                     rules={[
                         {
@@ -159,7 +160,7 @@ class DomesticTransfer extends Component {
             </Col>
             {this.props.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="custom-forminput custom-label mb-0"
+                    className="custom-forminput custom-label"
                     name="reasonOfTransfer"
                     required
                     rules={[

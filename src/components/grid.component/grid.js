@@ -4,6 +4,9 @@ import { store } from '../../store'
 import moment from 'moment';
 import CryptoJS from "crypto-js";
 import { ExcelExport } from '@progress/kendo-react-excel-export'
+import { savePDF, PDFExport } from '@progress/kendo-react-pdf';
+import logColor from '../../assets/images/logo-color.png';
+import {Button, Dropdown,Menu,} from 'antd';
 const filterOperators = {
     'text': [
         { text: 'grid.filterContainsOperator', operator: 'contains' },
@@ -37,18 +40,46 @@ const filterOperators = {
         { text: 'grid.filterEqOperator', operator: 'eq' }
     ]
 }
+const items = [
+    {
+      key: '1',
+      label: (
+        <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+          1st menu item
+        </a>
+      ),
+    },
+    {
+      key: '2',
+      label: (
+        <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+          2nd menu item
+        </a>
+      ),
+    },
+    {
+      key: '3',
+      label: (
+        <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
+          3rd menu item
+        </a>
+      ),
+    },
+  ];
 export function withState(WrappedGrid) {
     return class StatefullGrid extends React.Component {
         constructor(props) {
             super(props);
-            this.state = { dataState: { skip: 0, take: 10 }, additionalParams: null, data: [], isLoading: false };
+            this.state = { dataState: { skip: 0, take: 10 }, additionalParams: null, data: [], isLoading: false, profile: store.getState().userConfig?.userProfileInfo };
             this.excelRef = React.createRef();
+            this.gridref = React.createRef(null);
+            this.tempRef = React.createRef(null)
         }
         numberWithCommas(x) {
-            if(!x){
+            if (!x) {
                 return ''
-            }else if((typeof x) === 'string'){
-               return x 
+            } else if ((typeof x) === 'string') {
+                return x
             }
             x = (typeof x) == 'string' ? x : x.toString();
             var arParts = x.split('.');
@@ -56,15 +87,9 @@ export function withState(WrappedGrid) {
             var decPart = (arParts.length > 1 ? arParts[1] : '');
             return '' + intPart + (decPart ? ('.' + decPart) : '');
         }
-        // numberWithCommas(x) {
-        //     return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-        // }
         refreshGrid() {
             this.fetchData(this.state.dataState);
         }
-        //     componentWillUnmount() {
-        //         this.exportSubscriber.unsubscribe();
-        //   }
         loadingPanel = (
             <div className="k-loading-mask">
                 <span className="k-loading-text">Loading</span>
@@ -72,57 +97,126 @@ export function withState(WrappedGrid) {
                 <div className="k-loading-color"></div>
             </div>
         );
+        exportToPDF = () => {
+            if (this.tempRef.current)
+                this.tempRef.current.save();
+        }
+        getPDFROWS = () => {
+
+        }
+        getCombineFieldValue = (dataItem, fields) => {
+            for (const i in this.props.columns) {
+                if (this.props.columns[i].filterType === "numeric") {
+                    dataItem[fields[0]] = this.numberWithCommas(dataItem[fields[0]])
+                    dataItem[fields[1]] = this.numberWithCommas(dataItem[fields[1]])
+                }
+            }
+            return dataItem[fields[0]] && dataItem[fields[1]] ? `${dataItem[fields[0]]} / ${dataItem[fields[1]]}` : (dataItem[fields[0]] || dataItem[fields[1]]);
+        }
+        handleExcelExport = () => {
+
+            if (this.excelRef) {
+                if (this.excelRef?.current.save) {
+                    let workbook = this.excelRef.current.workbookOptions();
+                    workbook.sheets[0].rows.map((item, index) => {
+                        if (item.type === "data") {
+                            for (const i in this.props.columns) {
+                                const idx = this.props.columns.length === item.cells.length ? i : (i - 1);
+                                if (this.props.columns[i].filterType === "date") {
+                                    if (item.cells[idx].value)
+                                        item.cells[idx].value = moment(item.cells[idx].value).format("DD/MM/YYYY hh:mm a")
+                                }
+                                if (this.props.columns[i].filterType === "numeric") {
+                                    if (item.cells[idx].value)
+                                        item.cells[idx].value = this.numberWithCommas(item.cells[idx].value);
+                                    item.cells[idx].textAlign = "right";
+                                }
+                                if (this.props.columns[i]?.combine) {
+                                    item.cells[idx].value = this.getCombineFieldValue(this.excelRef?.current.props.data[index - 1], this.props.columns[i].combineFields)
+                                }
+                            }
+                        }
+                    });
+                    this.excelRef.current.save(workbook);
+                }
+            }
+
+        }
+        
         render() {
             return (
-                <div style={{ position: 'relative' }}>
-                    {this.state.isLoading && this.loadingPanel}
-                    {this.props.showExcelExport && <div className='text-right'> <button
-                        title={this.props?.exExportTitle || "Export Excel"}
-                        className="k-button k-button-md k-rounded-md k-button-solid  mt-16 mb-16 mr-16 search-btn primary-btn excel-btn"
-                        onClick={() => {
-                            const getCombineFieldValue = (dataItem, fields) => {
-                                for (const i in this.props.columns) {
-                                if(this.props.columns[i].filterType === "numeric"){
-                                    dataItem[fields[0]] = this.numberWithCommas(dataItem[fields[0]])
-                                    dataItem[fields[1]] = this.numberWithCommas(dataItem[fields[1]])
-                                   }
-                                }
-                                return dataItem[fields[0]] && dataItem[fields[1]] ? `${dataItem[fields[0]]} / ${dataItem[fields[1]]}` : (dataItem[fields[0]] || dataItem[fields[1]]);
-                            }
-                            if (this.excelRef) {
-                                if (this.excelRef?.current.save) {
-                                    let workbook = this.excelRef.current.workbookOptions(); // get the workbook.
-                                    workbook.sheets[0].rows.map((item, index) => {
-                                        if (item.type === "data") {
-                                            for (const i in this.props.columns) {
-                                                const idx = this.props.columns.length === item.cells.length ? i : (i - 1);
-                                                if (this.props.columns[i].filterType === "date") {
-                                                    if (item.cells[idx].value)
-                                                        item.cells[idx].value = moment(item.cells[idx].value).format("DD/MM/YYYY hh:mm a")
-                                                }
-                                                if (this.props.columns[i].filterType === "numeric") {
-                                                    if (item.cells[idx].value)
-                                                        item.cells[idx].value = this.numberWithCommas(item.cells[idx].value);
-                                                    item.cells[idx].textAlign = "right";
-                                                }
-                                                if (this.props.columns[i]?.combine) {
-                                                    item.cells[idx].value = getCombineFieldValue(this.excelRef?.current.props.data[index-1], this.props.columns[i].combineFields)
-                                                }
-                                            }
-                                        }
-                                    });
-                                    this.excelRef.current.save(workbook);
-                                }
-                            }
+                <div >
+                    <div>
+                   <div style={{height:"0",overflow:"hidden", width:"100%"}}>
+                        <PDFExport margin={5} scale={0.55} paperSize="A4" repeatHeaders={true} fileName='Transaction History' ref={this.tempRef}>
+                            <table width="100%">
+                                <tr>
 
-                        }}
-                    >
-                       {this.props?.exExportTitle || "Export Excel"}
-                    </button>
+                                    <td colspan="2" style={{width:"100%"}}><h1 style={{ fontSize: "26px", fontWeight: 700, textAlign: "center", marginLeft:"100px"}}>Transactions History</h1></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                            <div className='statement-header logo-content'>
+                                <div> <img src={logColor} className="logo" /></div>
+                                {
+                                    <ul style={{ fontWeight: 500, margin: "0", padding: "0" }}>
+                                        <li> Name : {`${this.state.profile.firstName} ${this.state.profile.lastName}`}</li>
+                                        <li> Email : {this.state.profile.email}</li>
+                                        <li> Phone : {this.state.profile.phoneNo || this.state.profile.phoneNumber}</li>
+                                    </ul>
+                                }
+                            </div>
+                            <div>
+                                <table className="transaction-pdf-template" style={{ width:"100%"}}>
+                                    <thead style={{ background: "#cccccc" }}>
+                                        <th >Transaction ID</th>
+                                        <th style={{ width:"150px"}}>Date</th>
+                                        <th style={{ width:"100px"}}>Type</th>
+                                        <th style={{ width:"90px"}}>Wallet</th>
+                                        <th style={{ width:"90px"}}>Value</th>
+                                        <th style={{ width:"140px"}}>Sender/Recipient Full Name</th>
+                                        <th style={{ width:"150px"}}>Bank Account Number /IBAN</th>
+                                        <th style={{ width:"100px"}}>Hash</th>
+                                        <th style={{ width:"70px"}}>Status</th>
+                                    </thead>
+                                    <tbody className='pdt-data'style={{ width:"100%"}}>
+                                        {this.state?.data?.map(item => <tr>
+                                            <td >{item.transactionId}</td>
+                                            <td style={{ width:"150px"}}>{moment(item.date).format("DD/MM/YYYY hh:mm a")}</td>
+                                            <td style={{ width:"100px"}}>{item.docType}</td>
+                                            <td style={{ width:"90px"}}>{item.wallet}</td>
+                                            <td style={{ width:"90px"}}>{this.getCombineFieldValue(item, ["debit","credit"])}</td>
+                                            <td style={{ width:"140px"}}>{this.getCombineFieldValue(item, ["senderName", "beneficiryName"])}</td>
+                                            <td style={{ width:"150px"}}>{this.getCombineFieldValue(item, ["accountnumber", "iban"])}</td>
+                                            <td style={{ width:"100px"}}>{item.hash}</td>
+                                            <td style={{ width:"70px"}}>{item.state}</td>
+                                        </tr>)}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </PDFExport>
+                    </div>
+                    </div>
+                    <div className="cust-list main-container">
+                    {this.state.isLoading && this.loadingPanel}
+                    {this.props.showExcelExport && <div className='text-right secureDropdown export-pdf'>
+                     <Dropdown
+                      overlayClassName="secureDropdown depwith-drpdown transacton-drpdwn"
+                       overlay={<Menu >
+                        <ul className="drpdwn-list pl-0">
+                        <li onClick={this.handleExcelExport}><a>Export to Excel</a></li>
+                            <li onClick={this.exportToPDF}><a>Export to Pdf</a></li>
+
+                        </ul>
+                    </Menu>}
+                        placement="bottomLeft"
+                        >
+                        <Button>Download Transaction<span className='icon md excel-export'></span></Button>
+                        </Dropdown>
                     </div>}
                     {this.props.showExcelExport ? <ExcelExport data={this.state.data} ref={this.excelRef} fileName={this.props?.excelFileName}>
 
-                        <WrappedGrid
+                        <WrappedGrid ref={this.gridref}
                             sortable={true}
                             resizable={true}
                             filterOperators={filterOperators}
@@ -136,7 +230,7 @@ export function withState(WrappedGrid) {
                             sort={this.state.dataState.sort}
                             onDataStateChange={this.handleDataStateChange}
                         />
-                    </ExcelExport> : <WrappedGrid
+                    </ExcelExport> : <WrappedGrid ref={this.gridref}
                         sortable={true}
                         resizable={true}
                         filterOperators={filterOperators}
@@ -151,13 +245,12 @@ export function withState(WrappedGrid) {
                         onDataStateChange={this.handleDataStateChange}
                     />}
                 </div>
+                </div>
             );
         }
-
         componentDidMount() {
             this.fetchData(this.state.dataState);
         }
-
         handleDataStateChange = (changeEvent) => {
             let _dataState = changeEvent.dataState;
             if (isNaN(_dataState.take)) {
@@ -166,7 +259,6 @@ export function withState(WrappedGrid) {
             this.setState({ dataState: _dataState });
             this.fetchData(_dataState);
         }
-
         _encrypt = (msg, key) => {
             msg = typeof (msg) == 'object' ? JSON.stringify(msg) : msg;
             var salt = CryptoJS.lib.WordArray.random(128 / 8);
@@ -186,7 +278,6 @@ export function withState(WrappedGrid) {
             });
             return ((salt.toString()) + (iv.toString()) + (encrypted.toString()));
         }
-
         fetchData = (dataState) => {
             if (dataState.filter) {
                 dataState.filter.filters?.map((item) => {

@@ -65,9 +65,10 @@ const Notifications = ({
     <>
       <Drawer
         title={[
-          <div className="side-drawer-header p-0">
+          <div className="side-drawer-header">
+            <div></div>
             <Translate
-              className="text-white-30 fs-20 fw-500"
+              className="drawer-maintitle"
               component={Text}
               content="notifications"
             />
@@ -109,7 +110,7 @@ const Notifications = ({
           {notifications?.map((item, indx) => (
             <List.Item
               key={indx}
-              style={{ borderWidth: "0px" }}
+              // style={{ borderWidth: "0px" }}
             >
               <List.Item.Meta
                 className={`${item?.action?.toLowerCase()}bg mb-0`}
@@ -120,8 +121,8 @@ const Notifications = ({
                 }
                 title={
                   <div className="d-flex justify-content align-center">
-                    <Text className="text-white-30 fs-14">{item.action}</Text>
-                    <Text className="text-secondary fs-12">
+                    <Text className="profile-value">{item.action}</Text>
+                    <Text className="profile-label">
                       <Moment format={"DD MMM YY hh:mm A"}>
                         {item.notifiedDate ? convertUTCToLocalTime(item.notifiedDate) : item.notifiedDate}
                       </Moment>
@@ -130,7 +131,7 @@ const Notifications = ({
                 }
                 description={
                   <Text
-                    className={`text-white-50 ${!item.isRead ? "fw-200" : "fw-500"
+                    className={`profile-value ${!item.isRead ? "fw-500" : "fw-500"
                       } fs-12`}
                   >
                     {item?.message}{" "}
