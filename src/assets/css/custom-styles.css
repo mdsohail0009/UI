@@ -1195,6 +1195,10 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .mobile-scroll{max-height: fit-content !important;}
     .paste-recept-style.mobile-scroll{height: fit-content !important;}
     .checkbox-mobile{margin-top: 16px;}
+    .ant-drawer-header{padding-bottom: 0px;}
+    .moblie-order.buy-sell-mobile .sell-radiobtn-style { flex: 0 0 0px;}
+    .moblie-order.buy-sell-mobile .round-pills.sell-radiobtn-style{width: fit-content;margin-top: 16px;}
+    .mobile-receive-fiat{margin-left: 0px;}
 }
 
 /*@media end*/
