@@ -1211,6 +1211,10 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
    .transaction_resp .ant-form-item-label > label{ height: auto !important;}
    .transaction_resp .ant-form-item .ant-form-item-label{ padding-bottom: 0 !important;}
    .transaction_resp .search-btn{ float: right;}
+    .ant-drawer-header{padding-bottom: 0px;}
+    .moblie-order.buy-sell-mobile .sell-radiobtn-style { flex: 0 0 0px;}
+    .moblie-order.buy-sell-mobile .round-pills.sell-radiobtn-style{width: fit-content;margin-top: 16px;}
+    .mobile-receive-fiat{margin-left: 0px;}
 }
 
 /*@media end*/
