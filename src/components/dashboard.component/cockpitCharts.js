@@ -194,7 +194,7 @@ class CockpitCharts extends Component {
                             onChange={(value)=>this.handleSearch(value)}
                             size="middle"
                             bordered={false}
-                            className="search-text" />
+                            className="search-text search-view" />
                       <div className = "search-btnexpand">
                       <span className="icon lg search-angle icon-space" />
                       </div>

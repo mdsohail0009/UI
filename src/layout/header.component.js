@@ -36,6 +36,7 @@ import { clearPermissions } from "../reducers/feturesReducer";
 import { handleHeaderProfileMenuClick } from "../utils/pubsub";
 import Notifications from "../notifications";
 import { checkCustomerState } from "../utils/service";
+import TheamSwitch from "../components/shared/permissions/theamSwitch"
 
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
@@ -299,6 +300,11 @@ class Header extends Component {
                       )}
                   </span>
                 </Menu.Item>
+                <Menu.Item key="15">
+                   
+                   <TheamSwitch theamFlag={this.state.theamFalge} />
+
+               </Menu.Item>
                 <Dropdown
                   trigger={["click"]}
                   overlay={userProfileMenu}

@@ -137,7 +137,7 @@ class Portfolio extends Component {
                             <table className='pay-grid view mb-view'>
                                 <thead>
                                     <tr>
-                                        <th style={{width: "5%"}}></th>
+                                        {/* <th style={{width: "5%"}}></th> */}
                                         <th style={{width: "18%"}}>Date</th>
                                         <th style={{width: "15%"}}>Wallet</th>
                                        
@@ -163,7 +163,7 @@ class Portfolio extends Component {
                                                     {this.state.transactionData.length > 0 ? 
                                                     <>
                                                      <tr key={idx}>
-                                                        <td style={{ width: "100px" }}><span className={``}></span></td>
+                                                        {/* <td style={{ width: "100px" }}><span className={``}></span></td> */}
                                                         
                                                         <td style={{ width: "100px" }}>
                                                      <div className='ts-tbdate'>
