@@ -237,6 +237,8 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .cust-search .ant-input{color: var(--primary);font-weight: 400;font-size: 16px;}
 .drawer-list-font{font-weight: 700;font-size: 16px;color: var(--coinPrice);}
 .drawer-coin .ant-image, .crypto-curr-align .ant-image, .listitems-design .ant-image, .cytpo-list-style .ant-image, .crypto-bg, .drawer-list-fiat .ant-image-img{border: 4px solid var(--coinBg);border-radius: 50%;}
+.sendfiat-coins .ant-image-img{ border: none !important;}
+.sendfiat-coins .ant-list-item-meta-avatar{height: 46px;}
 .drawer-coin .ant-image-img, .crypto-curr-align .ant-image-img, .listitems-design .ant-image-img, .cytpo-list-style .ant-image-img, .crypto-bg, .drawer-list-fiat .ant-image{border-radius: 50%;}
 .cytpo-list-style .ant-list-item-meta{align-items: center;}
 .crypto-bg{width: 52px;height: 52px;}
@@ -308,7 +310,7 @@ input:-webkit-autofill:active{
 /*Common css End*/
 
 /*Coin Selection End*/
-.wallet-list.ant-list-split .ant-list-item{background: var(--drawerList);border-radius: 13px;border:2px solid transparent;height: 90px;padding: 10px 24px !important;}
+.wallet-list.ant-list-split .ant-list-item{background: var(--drawerList);border-radius: 13px;border:2px solid transparent;height: 75px;padding: 10px 18px !important;}
 .wallet-list .ant-list-item:hover, .wallet-list .ant-list-item.select, .addCryptoList li.select{background: rgba(92, 97, 255, 0.35);border: 2px solid #CCC3FF !important;border-radius: 13px;}
 .wallet-list.ant-list-split .ant-list-item:last-child{border:2px solid transparent;}
 .code-lbl{margin-bottom: 4px !important;margin-left: 4px;}
@@ -480,7 +482,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .round-pills .ant-radio-button-wrapper{background: var(--radioBg);height: 36px;border-radius: 10px;min-width: 60px; line-height: 34px;color: var(--coinPrice);border:1px solid rgba(0, 0, 0, 0.3);;font-size: 16px;font-weight: 500;margin: 0 16px 0px 0;text-align: center;}
 .round-pills .ant-radio-button-wrapper-checked, .default-radio .ant-radio-button-wrapper-checked, .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled),  .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{background-color: var(--radioFill) !important; color:var(--balInput) !important;font-size: 16px;font-weight:500;border: 2px solid var(--radioBorderfill);}
 .round-pills .ant-radio-button-wrapper::before, .default-radio .ant-radio-button-wrapper::before{content: none;}
-.val-updown{position: absolute;right: 0;top: 100px;width: 34px;height: 35px;border-radius: 10px;background-color: var(--gridborder);text-align: center;line-height: 34px;}
+.val-updown{position: absolute;right: 0;top: 100px;width: 28px;height: 28px;border-radius: 10px;background-color: var(--gridborder);text-align: center;line-height: 34px;}
 .val-updown:hover .swaparrow, .swap-updown:hover .swaparrow{transform: rotate(180deg);transition: 0.5s;background-position: -237px -35px;}
 .buy-balance{font-weight: 400;font-size: 16px;color: var(--coinPrice);}
 .crypto-amount{margin-bottom: 14px;}
@@ -490,7 +492,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .receiveank-inner{padding-bottom: 20px;}
 .new-swap-design{border-radius: 5px;}
 .new-swap-subtext{background: var(--swapBg);height: 62px;border-radius: 5px 5px 0 0;display: flex;align-items: center;padding: 0 12px;margin-top: 0 !important;}
-.swap-entryvalue{flex: 0 0 175px;text-align: left;font-size: 26px;margin-top: 12px;}
+.swap-entryvalue{flex: 0 0 175px;text-align: left;font-size: 26px;}
 .swapcoin-alignemnt{ flex: auto;text-align: right;color: var(--sbCardText);font-size: 24px;}
 .swap-currencytext{background: var(--swapvalBg);height:62px;border-radius: 0 0 5px 5px;display: flex;align-items: center;padding: 0 12px;}
 .swap-custinputfield{border: 0 !important;padding: 0 !important;}
@@ -501,8 +503,8 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* .selctcoin-style{margin-bottom: 50px;} */
 .drawer-crypto-bg{margin-right: 21px;}
 .label-style.drawer-subtextstyle{font-weight: 400;font-size: 16px;color: var(--paraBg);}
-.crypto-coin-mbspace,.swap-custinputfield{margin-bottom: 10px;}
-.crypto-coin-mtspace{margin-top:12px;display: inline-block;}
+/* .crypto-coin-mbspace,.swap-custinputfield{margin-bottom: 10px;} */
+.crypto-coin-mtspace{display: inline-block;}
 /*Buy/sell drawer End*/
 /* receive fait start */
 .drawer-subtext{font-weight: 700;font-size: 18px;color: var(--tablesub);}
@@ -527,12 +529,12 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* receive crypto start */
 .rec-bottom{margin-bottom: 18px !important;}
 .recive-subtext{font-weight: 400;font-size: 16px;color: var(--sbCardText);margin-bottom: 16px;}
-.scanner-img{width: 170px; height: 170px; margin: 35px auto 60px; padding: 10px;background-color: var(--bgWhite);border-radius: 6px;}
+.scanner-img{width: 170px; height: 170px; margin: 35px auto 40px; padding: 10px;background-color: var(--bgWhite);border-radius: 6px;}
 .recive-lable{font-weight: 400;font-size: 16px;color: var(--tableText);}
-.recive-copy{font-weight: 700;font-size: 16px;color: var(--coinPrice);margin-top: 12px;margin-bottom: 50px;}
+.recive-copy{font-weight: 700;font-size: 16px;color: var(--coinPrice);margin-top: 12px;margin-bottom: 30px;}
 .recive-text, .recive-text .list-dot{font-weight: 400;font-size: 14px;color: var(--tableText);}
 .recive-runtext{font-weight: 400;font-size: 14px;color: var(--tableText);}
-.list-dot{list-style: initial;margin-bottom: 16px !important;}
+.list-dot{list-style: initial;margin-bottom: 10px !important;}
 .recive-share{margin-top: 30px;font-size: 16px;font-weight: 500;color: var(--tableText);margin-bottom: 18px;}
 .network-display{display: flex;align-items: center;justify-content: center;}
 .ant-btn:focus, .ant-btn:active{box-shadow: none !important;}
@@ -645,7 +647,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /*--Zoho end--*/
 
 /* summary start */
-.cust-summary-new{background: var(--drawerList);border-radius: 13px;padding-left: 20px;padding-right: 20px;padding-bottom: 46px;padding-top: 26px;}
+.cust-summary-new{background: var(--drawerList);border-radius: 13px;padding-left: 20px;padding-right: 20px;padding-bottom: 20px;padding-top: 10px;}
 .pay-list:last-child{border:0;padding-bottom: 0;}
 .pay-list{padding: 12px 0;}
 .cust-coin-value{font-weight: 500;font-size: 45px;text-align: center;color: var(--white);}
@@ -693,7 +695,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* send fiat start */
 .fund-transfer-input .tfunds-inputgroup .ant-select{width: 122px;}
 /* .fund-transfer-input .tfunds-inputgroup .ant-select-selection-item{} */
-.alert-info-custom{background-color:var(--addressList) !important;border-radius: 13px;color: var(--textWhite);padding: 28px 22px;}
+.alert-info-custom{background-color:var(--addressList) !important;border-radius: 13px;color: var(--textWhite);padding: 20px 22px;}
 .kpi-divstyle{border-bottom:1px solid var(--borderColor);padding-bottom: 20px;width: 100%;}
 .custom-forminput.custom-label{margin-bottom: 16px;}
 .upload-btn-mt{margin-top: 16px;}
@@ -1204,6 +1206,11 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .mobile-scroll{max-height: fit-content !important;}
     .paste-recept-style.mobile-scroll{height: fit-content !important;}
     .checkbox-mobile{margin-top: 16px;}
+    .sb-text{font-size: 18px;}
+    .tlv-logo{height: 40px;}
+   .transaction_resp .ant-form-item-label > label{ height: auto !important;}
+   .transaction_resp .ant-form-item .ant-form-item-label{ padding-bottom: 0 !important;}
+   .transaction_resp .search-btn{ float: right;}
 }
 
 /*@media end*/

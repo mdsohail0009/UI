@@ -393,7 +393,7 @@ saveWithdrawdata = async () => {
                 }}
                 renderItem={item => (
 
-                    <List.Item className="drawer-list-fiat" onClick={() => this.setState({ ...this.state, selectedCurrency: item.walletCode }, () => { this.getPayees(); this.chnageStep("enteramount") })}>
+                    <List.Item className="drawer-list-fiat sendfiat-coins" onClick={() => this.setState({ ...this.state, selectedCurrency: item.walletCode }, () => { this.getPayees(); this.chnageStep("enteramount") })}>
                     <Link>
                       <List.Item.Meta className='drawer-coin'
                         avatar={<Image preview={false} src={item.imagePath} />}
