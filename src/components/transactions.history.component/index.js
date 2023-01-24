@@ -354,8 +354,8 @@ backToDashboard=()=>{
         >
         </Drawer>
         <div className="main-container grid-demo">
-			<div className="backbtn-arrowmb" onClick={handleBack}>
-        <Link className="icon md leftarrow c-pointer backarrow-mr" to="/"/>
+			<div className="backbtn-arrowmb" >
+        <Link className="icon md leftarrow c-pointer backarrow-mr" to="/" onClick={handleBack}/>
         <span className="back-btnarrow">Back</span></div>
         <Translate content="transactions_history" component={Title} className="grid-title" />
             <Form
