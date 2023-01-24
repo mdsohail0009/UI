@@ -8,7 +8,7 @@ import {
   Button, Popover
 } from "antd";
 import { Link, withRouter } from "react-router-dom";
-import logoWhite from "../assets/images/logo-white.png";
+import logoWhite from "../assets/images/SuisseBase.png";
 import logoColor from "../assets/images/logo-color.png";
 import counterpart from "counterpart";
 import Translate from "react-translate-component";
@@ -22,14 +22,11 @@ import {
   updateReceiveCoinDetails,
   updateSwapdata,
   clearSwapData,
-  //setStep 
 } from "../reducers/swapReducer";
 import { connect } from "react-redux";
 import DefaultUser from "../assets/images/defaultuser.jpg";
 import { setHeaderTab} from "../reducers/buysellReducer";
-// import {
-//   setStep as sendSetStep,
-// } from "../reducers/sendreceiveReducer";
+import { getScreenName } from "../reducers/feturesReducer";
 import { readNotification as readNotifications } from "../notifications/api";
 import apiCalls from "../api/apiCalls";
 import { setNotificationCount } from "../reducers/dashboardReducer";
@@ -92,7 +89,6 @@ class Header extends Component {
     this.props.dispatch(clearPermissions());
     window.$zoho?.salesiq?.chat.complete();
     window.$zoho?.salesiq?.reset();
-    // this.props.dispatch(clearUserInfo());
     userManager.signoutRedirect();
     apiCalls.trackEvent({
       Type: "User",
@@ -110,12 +106,12 @@ class Header extends Component {
     this.trackEvent();
   }
   readNotification() {
-    //let isRead = apiCalls.encryptValue("true", this.props.userConfig?.sk);
     readNotifications().then(() => {
       this.props.dispatch(setNotificationCount(0));
     });
   }
   routeToHome = () => {
+    this.props.dispatch(getScreenName({getScreen:"dashboard"}))
     this.routeToCockpit();
   };
   routeToCockpit = () => {
@@ -139,41 +135,16 @@ class Header extends Component {
     const userProfileMenu = (
       <Menu>
         <div className="profile-dropdown">
-          {this.props.userConfig?.imageURL != null && (
-            <img
-              src={
-                this.props.userConfig?.imageURL
-                  ? this.props.userConfig?.imageURL
-                  : DefaultUser
-              }
-              className="user-profile"
-              alt={"image"}
-            />
-          )}
-          {this.props.userConfig?.imageURL === null && (
-            <img
-              src={
-                this.props.userConfig?.imageURL
-                  ? this.props.userConfig?.imageURL
-                  : DefaultUser
-              }
-              className="user-profile"
-              alt={"image"}
-            />
-          )}
-          <p className="mb-15 ml-8 profile-value" style={{ flexGrow: 12, marginTop: "5px" }}>
-            {this.props.userConfig.isBusiness ? this.props.userConfig.businessName :
-              <>{this.props.userConfig.firstName}{" "}{" "}{this.props.userConfig.lastName}</>}
-          </p>
+
           <Translate
-            content="manage_account"
+          content={`${this.props.userConfig?.isBusiness===true?"business_account":"manage_account"}`}
             component={Button}
             size="medium"
             block
             className="profile-btn"
             onClick={() => this.userProfile()}
           />
-          <ul className="pl-0 drpdwn-list">
+          <ul className="drpdwn-list">
             <li
               onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/modal" })}
             >
@@ -181,19 +152,19 @@ class Header extends Component {
                 <Translate
                   content="transactions_history"
                   component={Text}
-                  className="text-white-30"
+                  className="text-white"
                 />
                 <span className="icon md rarrow-white" />
               </Link>
             </li>
             <li
             >
-              <Popover placement="left" content={<><div onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/6120197cdc204d9ddb882e4d")}>
+              <Popover className="menulist-items-style" placement="left" content={<><div onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/6120197cdc204d9ddb882e4d")}>
                 <Link>
                   <Translate
                     content="personal_account"
                     component={Text}
-                    className="text-white-30" key="1"
+                    className="text-white" key="1"
                   />
                 </Link><span className="icon c-pointer md rarrow-white ml-12" /></div>
                 <div onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/611b3ed20414885a6fc64fa7")}>
@@ -201,18 +172,9 @@ class Header extends Component {
                     <Translate
                       content="business_account"
                       component={Text}
-                      className="text-white-30" key="1"
+                      className="text-white" key="1"
                     />
                   </Link><span className="icon c-pointer md rarrow-white ml-12" /></div></>} >
-                {/* <Link>
-                  <Translate
-                    content="get_your_own_iban"
-                    component={Text}
-                    className="text-white-30"
-                  />
-                  <span className="icon md rarrow-white" />
-                </Link> */}
-
               </Popover>
             </li>
             <li
@@ -222,7 +184,7 @@ class Header extends Component {
                 <Translate
                   content="AuditLogs"
                   component={Text}
-                  className="text-white-30"
+                  className="text-white"
                 />
                 <span className="icon md rarrow-white" />
               </Link>
@@ -234,7 +196,7 @@ class Header extends Component {
                 <Translate
                   content="address_book"
                   component={Text}
-                  className="text-white-30"
+                  className="text-white"
                 />
                 <span className="icon md rarrow-white" />
               </Link>
@@ -246,7 +208,7 @@ class Header extends Component {
                 <Translate
                   content="case"
                   component={Text}
-                  className="text-white-30"
+                  className="text-white"
                 />
                 <span className="icon md rarrow-white" />
               </Link>
@@ -259,12 +221,12 @@ class Header extends Component {
                   <Translate
                     content="upload_documents"
                     component={Text}
-                    className="d-block text-white-30"
+                    className="d-block text-white"
                   />
                   <Translate
                     content='compliance'
                     component={Text}
-                    className="text-white-30"
+                    className="text-white"
                   />
                 </span>
                 <span className="icon md rarrow-white" />
@@ -275,7 +237,7 @@ class Header extends Component {
                 <span>
                   <Translate
                     content="logout"
-                    className="text-white-30"
+                    className="text-white"
                     component={Text}
                   />
                 </span>
@@ -288,10 +250,12 @@ class Header extends Component {
     return (
       <>
         <Layout className="layout">
+          <section className="haead-main">
           <div className="tlv-header" id="area">
+            
             <div className="login-user">
               <ul className="header-logo pl-0">
-                <li className="visible-mobile pr-24 p-relative" onClick={this.showToggle}>
+                <li className="visible-mobile p-relative" onClick={this.showToggle}>
                   {this.state.collapsed ?
                     <span className="icon lg hamburg " /> : <span className="icon md close-white " />}
                 </li>
@@ -312,26 +276,6 @@ class Header extends Component {
                       onClick={this.routeToHome}
                     />
                   }
-                </li>
-
-                <li className="mobile-user ml-8">
-                  <Translate
-                    content="header_title"
-                    onClick={this.routeToCockpit}
-                    component={Text}
-                    className="text-white-30 fs-20 c-pointer cp-link mb-d-none"
-                  />
-                  <Text className="text-white-30 fs-24 ">|</Text>
-                  <Translate
-                    content="user_type"
-                    with={{
-                      lable: this.props.userConfig?.isBusiness
-                        ? "Business"
-                        : "Personal"
-                    }}
-                    component={Text}
-                    className="text-white-30 fs-20 ml-16 fw-300"
-                  />
                 </li>
 
               </ul>
@@ -393,6 +337,7 @@ class Header extends Component {
             <HeaderPermissionMenu collapsed={this.state.collapsed} isShowSider={this.state.isShowSider} routeToCockpit={this.routeToCockpit} />
 
           </div>
+          </section>
         </Layout>
         <Drawer
           title={[
@@ -403,9 +348,9 @@ class Header extends Component {
                 }
                 className="icon md close-white c-pointer"
               />
-              <div className="text-center fs-14">
+              <div className="text-center">
                 <Translate
-                  className="mb-0 text-white-30 fw-600 text-upper"
+                  className="drawer-maintitle"
                   content="change_pass_word"
                   component={Paragraph}
                 />

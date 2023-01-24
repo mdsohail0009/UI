@@ -49,8 +49,8 @@ class BeneficiaryDrawer extends Component {
         return (<Drawer
             title={[<div className="side-drawer-header">
                 {this.renderTitle()}
-                <div className="text-center fs-16">
-                    <Translate className="mb-0 text-white-30 fw-600 text-upper" content={this.props.paymentsStore.stepTitles[config[this.props.paymentsStore.stepcode]]} component={Paragraph} />
+                <div className="text-center">
+                    <Translate className=" drawer-maintitle" content={this.props.paymentsStore.stepTitles[config[this.props.paymentsStore.stepcode]]} component={Paragraph} />
                 </div>
                 {this.renderIcon()}</div>]}
             placement="right"

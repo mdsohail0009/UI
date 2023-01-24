@@ -17,6 +17,7 @@ import { getcoinDetails } from './api';
 import {createCryptoDeposit} from "../deposit.component/api";
 import TransactionsHistory from "../transactions.history.component";
 import Loader from "../../Shared/loader";
+import { getScreenName } from '../../reducers/feturesReducer';
 
 class YourPortfolio extends Component {
     state = {
@@ -45,7 +46,7 @@ class YourPortfolio extends Component {
         }
     }
     cockpitCharts=()=>{
-      this.props.history.push("/cockpitCharts");
+      this.props.history.push("/cryptocoinsView");
     }
     showBuyDrawer = (item, key) => {
         if (!this.props?.userProfile?.isKYC) {
@@ -68,12 +69,14 @@ class YourPortfolio extends Component {
                 this.props.dispatch(setExchangeValue({ key: item.coin, value: val }));
             });
             this.props.dispatch(setSellHeaderHide(false));
+            this.props.dispatch(getScreenName({getScreen:"menu_buy_sell"}))
             this.props.dispatch(setStep("step2"));
         } else if (key === "sell") {
           this.props.dispatch(setSellHeaderHide(false));
             this.props.dispatch(setCoin(item));
             this.props.dispatch(setExchangeValue({ key: item.coin, value: item.oneCoinValue }));
             this.props.dispatch(updateCoinDetail(item))
+            this.props.dispatch(getScreenName({getScreen:"menu_buy_sell"}))
             this.props.dispatch(setStep("step10"));
         }
         this.setState({
@@ -93,6 +96,7 @@ class YourPortfolio extends Component {
         this.props.history.push("/notkyc");
         return;
     }else{
+      this.props.dispatch(getScreenName({getScreen:"dashboard"}))
       this.props.history.push(`/internalTransfer`)
     }}
   
@@ -129,23 +133,19 @@ class YourPortfolio extends Component {
           this.props.dispatch(setWithdrawfiat({ walletCode: coin }))
           this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
           this.props.dispatch(setSendCrypto(true));
+           this.props.dispatch(getScreenName({getScreen:"withdraw"}))
           this.props.changeStep('withdraw_crypto_selected');
-        //   this.setState({
-        //     ...this.state,
-        //     sendDrawer: true
-        // })
       } else {
         this.props.dispatch(setSendCrypto(false));
         this.props.dispatch(setWithdrawfiatenaable(false));
         this.props.dispatch(hideSendCrypto(false));
           this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
-        
+         this.props.dispatch(getScreenName({getScreen:"deposit"}))
           this.props.dispatch(setStep("step7"));
           this.props.dispatch(setSubTitle(`${coin}` + " " + "balance" +" "+ ":" +" "+ `${selectedObj.coinBalance ?  selectedObj.coinBalance : '0'}`+`${" "}`+`${coin}`));
              const response = await createCryptoDeposit({ customerId: this.props.userProfile?.id, walletCode: coin, network: selectedObj?.netWork });
              if (response.ok) {
                 this.props.dispatch(setWalletAddress(response.data));
-               // this.props.dispatch(fetchDashboardcalls(this.props.userProfile?.id));
              }
 
           this.setState({
@@ -165,6 +165,7 @@ class YourPortfolio extends Component {
       })
   }
     closeDrawer = () => {
+      this.props.dispatch(getScreenName({getScreen:"dashboard"}))
       this.props.dispatch(rejectWithdrawfiat())
       this.setState({
           buyDrawer: false,
@@ -177,10 +178,8 @@ class YourPortfolio extends Component {
 }
      menuBar = (item) => (
       <Menu>
-          <ul className="pl-0 drpdwn-list">
-              {/* <li  onClick={() =>  this.showSendReceiveDrawer(1, item)}>
-                  <Link value={1} className="c-pointer">Receive</Link>
-              </li> */}
+          <ul className="drpdwn-list">
+            
               <li onClick={() => this.showBuyDrawer(item, "buy")}>
                   <Link  value={2} className="c-pointer">
                   <Translate content="buy" />
@@ -201,41 +200,24 @@ class YourPortfolio extends Component {
       </Menu>
   )
     render() {
-        const { Text } = Typography;
+        const { Text,Title } = Typography;
         const { cryptoPortFolios } = this.props.dashboard
         return (
-          <div className="" style={{borderTop:'1px solid #c2c2c2'}}>
-{/*            
-           <div  className="portfolio-title mb-8">
-           <div className='portfolio-data' >
-            <Translate
-              content="your_portfolio"
-              component={Title}
-              className="fs-24 text-white mb-0 fw-600 mr-8"
-            />
-            <Currency prefix={"$"} defaultValue={totalCryptoValue}  className={`text-white-30 fs-16 m-0 ${totalCryptoValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '18px' }} />
-            </div>
-              <div>
-              <Link to="/cockpitCharts" className="dbchart-link fs-14 fw-500">
-                <Translate content="cockpit" />
-                <span className="icon sm right-angle ml-4" />
-              </Link>
-
-               <Button className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
-                  <Translate content="cockpit" />
-                  <span className="icon sm right-angle ml-4" />
-              </Button> 
+          <div className="" >
+            <div className='fait-wallets-style m-0'>
+            <Translate content="suissebase_title" component={Title} className="db-titles" />
+              <Button className="dbchart-link"   >
+                  <Translate content="cockpit" onClick={() => this.cockpitCharts()}/>
+              </Button>   
                     
               </div>
-            </div> */}
-        {cryptoPortFolios?.loading ? (
+                {cryptoPortFolios?.loading ? (
                <Loader />
         ) : (
             <List
               className="mobile-list dash-mobile-list"
               itemLayout="horizontal"
               dataSource={cryptoPortFolios.data}
-              //loading={cryptoPortFolios.loading}
               locale={{
                 emptyText: (
                   <Empty
@@ -246,16 +228,11 @@ class YourPortfolio extends Component {
               }}
               renderItem={(item) => (
                 <List.Item
-                  className=""
+                  className="cytpo-list-style"
                   extra={
                     <div className='crypto-btns'>
                       
-                      {/* <Translate
-                        content="sell"
-                        component={Button}
-                        className="custom-btn sec ml-16"
-                        onClick={() => this.showBuyDrawer(item, "sell")}
-                      /> */}
+                      
                         <Translate
                         content="deposit"
                         component={Button}
@@ -273,60 +250,66 @@ class YourPortfolio extends Component {
                       <Dropdown overlay={this.menuBar(item)} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
                         <Link onClick={e => e.preventDefault()}>
                           <Space>
-                          <span class="icon md menu-bar ml-4 p-relative"></span>
-                          {/* <DownOutlined /> */}
+                          <span class="icon lg menu-bar p-relative"></span>
+                          
                         </Space>
                       </Link>
                     </Dropdown>
-                     {/* <span class="icon md bell ml-4 p-relative"></span> */}
-                     {/* <Dropdown overlay={this.depostWithdrawMenu} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
-                     <span class="icon md bell ml-4 p-relative"></span>
-                    </Dropdown> */}
+                        
+                    
                     </div>
                   }
                 >
-                  {/* to={"/coindetails/" + item.coinFullName.toLowerCase()} */}
+                 
                   <List.Item.Meta
-                    avatar={
+                    avatar={<div className='crypto-bg'>
                       <span
-                        className={`coin c-pointer ${item.coin}`}
-                        onClick={() =>
-                          this.props.history.push(
-                            "/coindetails/" + item.coinFullName.toLowerCase()
-                          )
-                        }
+                        className={`crypto-icon  ${item.coin}`}
+                       
                       />
+                      </div>
                     }
                     title={
-                      <div className="mr-16">
+                      <div className="crypto-card-design">
+                        <div className='crypto-values'>
                         <div style={{ display: "flex", alignItems: "center" }}>
-                          <Text className="fs-16 fw-600 text-upper text-white">
+                          <Text className="coin-style">
                             {item.coin}
                           </Text>
-                          <Text className="fs-14 px-8 text-secondary">|</Text>
-                          <Currency
+                         
+                          
+                        </div>
+                        <Currency
+                          defaultValue={item.coinBalance}
+                          className="coinbal-style"
+                          type={"text"}
+                          prefix={""}
+                        />
+                        </div>
+                        <div  className={` ${
+                              item.coinValueinNativeCurrency > 0
+                                ? "price-valgreen"
+                                : "price-valred"
+                            }`}>
+                        <Currency
                             defaultValue={item.coinValueinNativeCurrency}
                             type={"text"}
                             className={`lg-fontsize ${
                               item.coinValueinNativeCurrency > 0
-                                ? "text-green"
-                                : "text-red"
+                                ? "text-green pg-text"
+                                : "text-red red-text"
                             }`}
                           />
-                        </div>
-                        <Currency
-                          defaultValue={item.coinBalance}
-                          className="text-white fs-18 text-left"
-                          type={"text"}
-                          prefix={""}
-                        />
+                          <span className={`icon sm  ${
+                              item.coinValueinNativeCurrency > 0
+                                ? "valupp-icon pg-arrow"
+                                : "valdown-icon red-arrow"
+                            }`} />
+                            </div>
                       </div>
                     }
                   />
-                  {/* <div className='text-right fs-20 text-white'>
-                                <Currency defaultValue={item.coinBalance} type={"text"} prefix={""} />
-                                <Currency defaultValue={item.coinValueinNativeCurrency} type={"text"} className={`fs-16 ${item.coinValueinNativeCurrency > 0 ? "text-green" : "text-red"}`} />
-                            </div> */}
+                
                 </List.Item>
               )}
             />
@@ -361,4 +344,3 @@ const connectDispatchToProps = dispatch => {
 }
 
 export default connect(connectStateToProps, connectDispatchToProps)(withRouter(YourPortfolio));
-//export default ConnectStateProps(withRouter(YourPortfolio));

@@ -34,9 +34,9 @@ const Notices = () => {
     if (error.hasError) {
         return <Alert type="error" message="Alert" description={error.message || "Something went wrong please try again!"} showIcon />
     }
-    return <Carousel autoplay className="mb-16">
+    return <Carousel autoplay className="">
         {notices.map((notice, indx) => <div key={indx} className="p-28 carousel-card">
-            <div className="fs-16 text-black mb-24 carosel-content" dangerouslySetInnerHTML={{__html: notice.notice}}></div>
+            <div className=" carosel-content" dangerouslySetInnerHTML={{__html: notice.notice}}></div>
         </div>)}
     </Carousel>
 }

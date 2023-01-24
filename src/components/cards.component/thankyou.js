@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Image, Typography, Button } from "antd";
-import success from "../../assets/images/success.png";
+import success from "../../assets/images/success.svg";
 import inprogress from "../../assets/images/pending1.png";
 import rejected from "../../assets/images/reject.png";
 import { Link } from 'react-router-dom';

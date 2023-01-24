@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import { Typography, List, Button, Image, Dropdown, Space, Menu, Drawer } from 'antd';
 import Translate from 'react-translate-component';
@@ -14,6 +15,7 @@ import OnthegoFundTransfer from '../onthego.transfer';
 import {setReceiveFiatHead, setSendFiatHead} from '../../reducers/buyFiatReducer';
 import Loader from "../../Shared/loader";
 import { buyFiatSteps as config } from '../buyfiat.component/config';
+import { getScreenName } from '../../reducers/feturesReducer';
 const { Title, Paragraph } = Typography;
 
 class Wallets extends Component {
@@ -61,10 +63,12 @@ class Wallets extends Component {
             this.props.dispatch(setReceiveFiatHead(false));
             this.props.dispatch(setSendFiatHead(false));
             this.setState({ ...this.setState, showFuntransfer: true, selectedCurrency:value })
+            this.props.dispatch(getScreenName({getScreen:"withdraw"}))
         } else if (e === 1) {
             this.props.dispatch(setReceiveFiatHead(true));
             this.props.dispatch(setWithdrawfiatenaable(false))
             this.props.dispatch(setdepositCurrency(value))
+            this.props.dispatch(getScreenName({getScreen:"deposit"}))
             this.setState({
                 valNum: e
             }, () => {
@@ -78,6 +82,7 @@ class Wallets extends Component {
         }else if(e===3){
             this.props.history.push(`/payments/${value.walletCode}`)
         }else {
+            this.props.dispatch(getScreenName({getScreen:"dashboard"}))
             this.props.history.push(`/internaltransfer`)
         }
         
@@ -87,16 +92,17 @@ class Wallets extends Component {
     }
     menuBar = (item) => (
         <Menu>
-            <ul className="pl-0 drpdwn-list">
+            <ul className="drpdwn-list">
                 <li onClick={() => this.showSendReceiveDrawer(3, item)}>
                     <Link value={3} className="c-pointer">
                     <Translate content="menu_payments" />
                     </Link>
                 </li>
                 <li onClick={() => this.showTransactionDrawer(item)}>
-                    <Link value={4} className="c-pointer">
-                    <Translate content="transactions_history" />
-                    </Link>
+                   
+                    
+                    <Link to="/transactions" value={4} className="c-pointer"><Translate content="transactions_history" /></Link>
+                   
                 </li>
                 <li onClick={() => this.showSendReceiveDrawer(5, item)}>
                     <Link value={5} className="c-pointer">
@@ -107,9 +113,12 @@ class Wallets extends Component {
         </Menu>
     )
     closeDrawer = () => {
+   
+        this.props.dispatch(getScreenName({getScreen:"dashboard"}))
         this.setState({
             buyFiatDrawer: false,
-            transactions: false
+            transactions: false,
+            showFuntransfer:false
         })
     }
     render() {
@@ -117,12 +126,11 @@ class Wallets extends Component {
 
         return (
             <>
-            <div className="d-flex justify-content">
-                <Translate content="suissebase_title" component={Title} className="fs-24 fw-600 text-white px-4 mb-16 mt-4" />
+            <div className="fait-wallets-style">
+            <Translate content="fait_walets" component={Title} className="db-titles" />
                 <div>
-              <Button className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}} onClick={() => this.cockpitCharts()} >
-                  <Translate content="cockpit" />
-                  <span className="icon sm right-angle ml-4" />
+              <Button className="dbchart-link" style={{ height: 36,}}  >
+                  <Translate content="cockpit" onClick={() => this.cockpitCharts()}  />
               </Button>
                     
               </div>
@@ -134,26 +142,31 @@ class Wallets extends Component {
                     itemLayout="horizontal"
                     dataSource={wallets.data}
                     bordered={false}
-                    className="mobile-list"
+                    className="mobile-list faitwallet-cards"
                     renderItem={item =>
-                        <List.Item className="py-10 px-0">
+                        <List.Item className="listitems-design">
                             <List.Item.Meta
                                 avatar={<Image preview={false} src={item.imagePath} />}
-                                title={<div className="fs-16 fw-600 text-upper text-white-30 l-height-normal">{item.walletCode}</div>}
-                                description={<Currency className="fs-16 text-white-30 m-0" defaultValue={Math.abs(item.amount) > 999999 ? Math.sign(item.amount)*((Math.abs(item.amount)/1000000).toFixed(1)) : Math.sign(item.amount)*Math.abs(item.amount)} suffixText={Math.abs(item.amount) > 999999?"M":null} prefix={(item?.walletCode === "USD" ? "$" : null) || (item?.walletCode === "GBP" ? "£" : null) || (item?.walletCode === "EUR" ? "€" : null)} decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />}
+                                title={<><div className='crypto-curr-align'><div><div className="coin-style">{item.walletCode}</div>
+                            <Currency className="currency-style" defaultValue={Math.abs(item.amount) > 999999 ? Math.sign(item.amount)*((Math.abs(item.amount)/1000000).toFixed(1)) : Math.sign(item.amount)*Math.abs(item.amount)} suffixText={Math.abs(item.amount) > 999999?"M":null} prefix={(item?.walletCode == "USD" ? "$" : null) || (item?.walletCode == "GBP" ? "£" : null) || (item?.walletCode == "EUR" ? "€" : null)} decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />
+                            </div>
+                                <Dropdown 
+                                overlay={this.menuBar(item)}
+                                 trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
+                            <a onClick={e => e.preventDefault()}>
+                              <Space>
+                              <span class="icon lg menu-bar p-relative"></span>
+                          
+                            </Space>
+                          </a>
+                        </Dropdown></div></>}
+                                
                             />
-                            <div className="crypto-btns">
+                            <div className="crypto-btns crypto-btn-top">
                                 <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
                                 <Translate content="withdraw" onClick={() => { this.showSendReceiveDrawer(2, item.walletCode) }} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} />
-                            <Dropdown 
-                            overlay={this.menuBar(item)}
-                             trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
-                        <Link onClick={e => e.preventDefault()}>
-                          <Space>
-                          <span class="icon md menu-bar ml-4 p-relative"></span>
-                        </Space>
-                      </Link>
-                    </Dropdown>
+                               
+                           
                     </div>
                         </List.Item>}
                 />
@@ -170,16 +183,16 @@ class Wallets extends Component {
                     destroyOnClose={true}
                     title={[<div className="side-drawer-header">
                         <span></span>
-                        {!this.props.buyFiat?.sendFiatHeader && <div className="text-center fs-24">
-                            <Translate className="mb-0 text-white-30 fw-600" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
+                        {!this.props.buyFiat?.sendFiatHeader && <div className="text-center">
+                            <Translate className="drawer-maintitle" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
                             </div>
                         }
-                        <span onClick={() => this.setState({ ...this.state, showFuntransfer: false })} className="icon md close-white c-pointer" />
+                        <span onClick={() => this.closeDrawer()} className="icon md close-white c-pointer" />
                     </div>]}
-                    className="side-drawer w-50p"
+                    className="side-drawer"
                     visible={this.state.showFuntransfer}
                 >
-                    <OnthegoFundTransfer selectedCurrency={this.state.selectedCurrency} ontheGoType={"Onthego"} onClosePopup={() => this.setState({ ...this.state, showFuntransfer: false })}  />
+                    <OnthegoFundTransfer selectedCurrency={this.state.selectedCurrency} ontheGoType={"Onthego"} onClosePopup={() => this.closeDrawer()}  />
                 </Drawer>
             </>
         );

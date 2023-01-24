@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import '@progress/kendo-theme-default/dist/all.css';
 import reportWebVitals from './reportWebVitals';
-import 'antd/dist/antd.css'
+import 'antd/dist/antd.css';
 import './assets/css/styles.css';
-import './assets/css/framework.css';
+import './assets/css/custom-styles.css';
+// import './assets/css/framework.css';
 import { ThemeSwitcherProvider } from 'react-css-theme-switcher';
 import IdleCmp from './authentication/idle.component';
 import { Provider } from 'react-redux';
@@ -18,11 +19,11 @@ const onUpdate = () => {
 }
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeSwitcherProvider defaultTheme="DRT" themeMap={{ DRT: "./dark-theme.css", LHT: "./light-theme.css" }}>
-      <Provider store={store}>
-        <CookiesProvider>
-          <IdleCmp />
-        </CookiesProvider>
+    <ThemeSwitcherProvider defaultTheme="DRT" themeMap={{ DRT: "./custom-dark2.0.css", LHT: "./custom-light2.0.css" }}>
+     <Provider store={store}>
+     <CookiesProvider>
+      <IdleCmp />
+      </CookiesProvider>
       </Provider>
     </ThemeSwitcherProvider>
   </React.StrictMode>,

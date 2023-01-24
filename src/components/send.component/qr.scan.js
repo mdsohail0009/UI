@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, message, Dropdown, Menu, Button, Alert } from 'antd';
+import { Typography, message, Menu, Alert } from 'antd';
 import { setStep, setWalletAddress } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
@@ -48,7 +48,14 @@ class QRScan extends Component {
             this.setState({ error: response.data });
         }
     }
-
+    networkTypeNames = (type) => {
+		const stepcodes = {
+			"BTC": "BTC",
+			"ERC-20": "ERC - 20",
+			"TRC-20": "TRC - 20",
+		};
+		return stepcodes[type];
+	};
     onNetworkView = async (netWork) => {
         this.setState({...this.state, isLoading: true})
         const response = await createCryptoDeposit({customerId: this.props.userProfile?.id,walletCode:this.props?.sendReceive?.depositWallet?.walletCode, network: netWork?.code});
@@ -66,7 +73,7 @@ class QRScan extends Component {
     get walletCode() {
         let selectedWalletCode = this.props?.sendReceive?.depositWallet?.walletCode;
         if((selectedWalletCode === "USDT" || selectedWalletCode === "ETH" || selectedWalletCode === "USDC") && this.props?.sendReceive?.depositWallet?.network ){
-            return `${this.props?.sendReceive?.depositWallet?.walletCode} + " " + "(" + ${this.props?.sendReceive?.depositWallet?.network}  + ")"`;
+            return `${this.props?.sendReceive?.depositWallet?.walletCode}` + " " + "(" + `${this.props?.sendReceive?.depositWallet?.network}`  + ")";
         }
         else {
             return this.props?.sendReceive?.depositWallet?.walletCode;
@@ -85,21 +92,6 @@ class QRScan extends Component {
                     <EmailIcon size={32} round={true} />
                 </EmailShareButton>
             </Menu.Item>
-            {/* <Menu.Item>
-                <TwitterShareButton url={process.env.REACT_APP_WEB_URL} title={this.walletAddress} >
-                    <TwitterIcon size={32} round={true} />
-                </TwitterShareButton>
-            </Menu.Item>
-            <Menu.Item>
-                <FacebookShareButton url={process.env.REACT_APP_WEB_URL} quote={this.walletAddress} >
-                    <FacebookIcon size={32} round={true} />
-                </FacebookShareButton>
-            </Menu.Item>
-            <Menu.Item>
-                <TelegramShareButton url={process.env.REACT_APP_WEB_URL} title={this.walletAddress} >
-                    <TelegramIcon size={32} round={true} />
-                </TelegramShareButton>
-            </Menu.Item> */}
         </Menu>
     }
     render() {
@@ -122,29 +114,32 @@ class QRScan extends Component {
               )}
         
             <div>
-               <div className="text-center f-12 mt-16 text-white custom-crypto-btns">
+               <div className="network-display">
                     {netWorkData && netWorkData.map((network) => {
                         return <>
-                            <span className=  {network.code === this.props?.sendReceive?.depositWallet?.network ? "mr-16 custom-bnt text-white-30" : "ant-btn ant-btn-primary custom-btn sec network" }>
+                       
+                            <div className=  {network.code === this.props?.sendReceive?.depositWallet?.network ? "cust-networkstyle" : "network" }>
                                {netWorkData.length>1 &&<Link onClick={() => this.onNetworkView(network)}>
-                                    <span className='fw-500'>
-                                        {network.code}
-                                        </span>
+                                    <div className='swap-fontsize'>
+                                        {this.networkTypeNames(network.code)}
+                                        </div>
                                 </Link>}
-                                {netWorkData.length === 1 &&  `${network.code}`}
-                            </span>
+                                {netWorkData.length === 1 &&  `${this.networkTypeNames(network.code)}`}
+                            </div>
+                           
                         </>
                     })}
                 </div>
                 <div className="scanner-img">
                     <QRCodeComponent value={this.props?.sendReceive?.depositWallet?.walletAddress} size={150} />
                 </div>
-                <div className="crypto-address text-white">
-                    <Translate className="mb-0 fw-400 text-secondary" content="address" component={Text} />{" "}({this.props?.sendReceive?.depositWallet?.network})
+                <div className="recive-lable">
+                    <Translate className="recive-lable" content="address" component={Text} />{" "}
+                  <span className='recive-copy'>  ({this.networkTypeNames(this.props?.sendReceive?.depositWallet?.network)})</span>
 
-                    <div className="mb-0 fw-600 text-white-30 walletadrs mb-copy">{this.props?.sendReceive?.depositWallet?.walletAddress}
+                    <div className="recive-copy">{this.props?.sendReceive?.depositWallet?.walletAddress}
                         <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.walletAddress} options={{ format: 'text/plain' }}>
-                            <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 custom-display"></Text>
+                            <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 custom-display custom-copy"></Text>
                         </CopyToClipboard>
                     </div>
                 </div>
@@ -157,18 +152,21 @@ class QRScan extends Component {
                         </CopyToClipboard></div>
                 </div>}
                 <Paragraph>
-                    <ul className="text-white mt-24">
-                        <li className="list-dot"><Translate className=" f-12 text-white fw-200 mt-16" content="address_hint_text" component={Text} /></li>
-                        <li className="list-dot"><Translate className="f-12 text-white fw-200 mt-16" content="address_hint_text_1" component={Text} /></li>
-                        <li className="list-dot"><Text className=" f-12 text-yellow fw-200 mt-16">Note: {this.props?.sendReceive?.depositWallet?.note} </Text></li>
+                    <ul className="recive-text">
+                        <li className="list-dot"><Translate className="recive-runtext" content="address_hint_text" component={Text} /></li>
+                        <li className="list-dot"><Translate className="recive-runtext" content="address_hint_text_1" component={Text} /></li>
+                        <li className="list-dot"><Text className="recive-runtext">{this.props?.sendReceive?.depositWallet?.note} </Text></li>
                     </ul>
                 </Paragraph>
-                <Dropdown overlay={this.shareMenu}>
-                    {/* <Button className="pop-btn mt-36" block>Share</Button> */}
-                    <Button
-                        style={{ borderRadius: 25, height: 50 }}
-                        className="mt-36 text-upper share-btn fw-600 fs-14" block>{apicalls.convertLocalLang('button')}</Button>
-                </Dropdown>
+                <div className='recive-share'>Share</div>
+                <div>
+                <WhatsappShareButton te url={process.env.REACT_APP_WEB_URL} title={`Hello, I would like to share my ${this.walletCode} address for receiving  ${this.walletAddress}. Note: Please make sure you are using the correct protocol otherwise you are risking losing the funds. I am using Suissebase. Thank you.`} >
+                <span className='icon lg whats-app c-pointer'/>
+                </WhatsappShareButton>
+                <EmailShareButton url={process.env.REACT_APP_WEB_URL} subject={"Wallet Address"} body={`Hello, I would like to share my ${this.walletCode} address for receiving  ${this.walletAddress}. Note: Please make sure you are using the correct protocol otherwise you are risking losing the funds. I am using Suissebase. Thank you.`}  >
+                <span className='icon lg mail-app c-pointer' />
+                </EmailShareButton>
+                </div>
             </div>
             </>
         )

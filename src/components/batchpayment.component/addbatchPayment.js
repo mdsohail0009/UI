@@ -244,7 +244,7 @@ downLoadPreview=()=>{
             title={[<div className="side-drawer-header">
                 <span></span>
                 <div className="text-center">
-                {!this.state.isCoinsListHide && <> <div className='text-white fs-24 fw-500'>Batch Payment</div> </>}
+                {!this.state.isCoinsListHide && <> <Paragraph className='drawer-maintitle'>Batch Payment</Paragraph> </>}
                 </div>
                 {!this.state.isCoinsListHide &&<span onClick={this.closeDrawer} className="icon md close-white c-pointer" />}
                 {this.state.isCoinsListHide &&<span onClick={this.uploadCancel} className="icon md close-white c-pointer" />}
@@ -263,11 +263,11 @@ downLoadPreview=()=>{
             {this.state.fiatWalletsLoading &&<Loader />}
           {!this.state.fiatWalletsLoading && !isVerificationEnable && (<>
             <div className="mt-8">
-                <Title
-                    className='sub-heading code-lbl'>Make Payments</Title>
+                <div
+                    className='label-style'>Make Payments</div>
             </div>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                <Search placeholder="Search Currency" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className="text-center mb-16" />
+                <Search placeholder="Search Currency" value={this.state.searchVal} prefix={<span className="icon lg search-angle drawer-search" />} onChange={this.handleSearch} size="middle" bordered={false} className="cust-search"  />
             </Col>
             <List
                 itemLayout="horizontal"
@@ -280,16 +280,16 @@ downLoadPreview=()=>{
                     } />
                 }}
                 renderItem={item => (
-                    <List.Item onClick={
+                    <List.Item className="drawer-list-fiat" onClick={
                         () => this.setState({ ...this.state, selectedCurrency: item.walletCode, isCoinsListHide: true})}>
                     <Link>
-                      <List.Item.Meta
+                      <List.Item.Meta className='drawer-coin'
                         avatar={<Image preview={false} src={item.imagePath} />}
 
                         title={<div className="wallet-title">{item.walletCode}</div>}
                       />
                        <><div className="text-right coin-typo">
-                                        <NumberFormat value={item.amount} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={item.walletCode === 'USD' ? '$' : '€'} renderText={(value, props) => <div {...props} >{value}</div>} />
+                                        <NumberFormat value={item.amount} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={item.walletCode === 'USD' ? '$' : '€'} renderText={(value, props) => <div {...props} >{value}</div>} />
 
                                     </div></>
                     </Link>
@@ -320,7 +320,7 @@ downLoadPreview=()=>{
               <div className='drawer-content'>
                
                 <div className='text-center makepayment-section'>
-            <Title className='text-white fs-24 fw-500'>Send {this.state.selectedCurrency} to Multiple Addresses</Title>
+            <div className='drawer-maintitle'>Send {this.state.selectedCurrency} to Multiple Addresses</div>
                                              <Upload
                                               type="dashed"
                                               size="large"
@@ -340,7 +340,7 @@ downLoadPreview=()=>{
                                               >
                                               <Button className='pop-btn mt-24'>Upload Excel</Button>
                                 </Upload>{" "}
-            <Paragraph className='text-white-30'>To download the excel, <a className='fw-700' onClick={this.downLoadPreview} href> click here</a></Paragraph>
+            <Paragraph className='text-white download-excel'>To download the excel, <a className='fw-700' onClick={this.downLoadPreview} href> click here</a></Paragraph>
             <Button className='pop-btn px-36' onClick={this.selectWhitelist}>Select from Whitelisted Addresses</Button>
                                 
             </div>
@@ -356,14 +356,15 @@ downLoadPreview=()=>{
                  footer={[
                     <>
                         <div className="cust-pop-up-btn crypto-pop bill-pop">
+                       
                           <Button
-                            className="pop-cancel btn-width  bill-cancel"
+                            className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
                             onClick={this.goToGrid}   
                           >
                             Exit
                           </Button>
-                          <Button
-                            className="pop-btn px-36 btn-space"
+                          <Button block
+                            className="primary-btn pop-btn detail-popbtn"
                             onClick={this.refreshTransaction}  disabled={uploadLoader}
                             loading={refreshBtnLoader}
                           >
@@ -432,9 +433,9 @@ downLoadPreview=()=>{
                     
                         <div className='text-center pt-16'>
                             <Paragraph className='text-white fs-18'>
-                            <div>Excel has been uploaded.</div>
-                            <div>We have detected {this.state.file?.invalidTransactionCount} errors out of</div>
-                            <div>the {this.state.file?.transactionCount} transactions requested.</div></Paragraph>
+                            Excel has been uploaded.
+                            We have detected {this.state.file?.invalidTransactionCount} errors out of
+                            the <br/>{this.state.file?.transactionCount} transactions requested.</Paragraph>
                             {this.state?.file.validTransactionCount > 0 &&(
                            <div> <Button className="primary-btn pop-btn"  onClick={() => this.setState({ ...this.state, showModal: false, uploadErrorModal: false, paymentPreview: true })}>
                             Proceed with {" "} {this.state.file?.validTransactionCount} transactions

@@ -52,15 +52,18 @@ class IdleCmp extends Component {
                     closeIcon={false}
                     footer={[
                         <>
-                            <Button style={{ width: 100 }}
-                                className=" pop-cancel"
+
+                        <div className="cust-pop-up-btn crypto-pop">
+                            <Button  block
+                                className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
                                 onClick={() => this.handleCancel()}>Cancel</Button>
-                            <Button className="primary-btn pop-btn"
-                                style={{ width: 100, height: 50 }}
+                            <Button block className="primary-btn pop-btn detail-popbtn "
+                                // style={{ width: 100, height: 50 }}
                                 onClick={() => {userManager.signoutRedirect() }}>Ok</Button>
+                        </div>
                         </>
                     ]} >
-                    <h4 className="text-white fs-16 fw-400">You're session will be logged out in {counter}</h4>
+                    <h4 className="summary-liststyle">You're session will be logged out in {counter}</h4>
                 </Modal>
                 <Modal
                     title="Oops !" visible={showRefreshPage}
@@ -70,13 +73,13 @@ class IdleCmp extends Component {
                         <>
                             
                             <Button className="primary-btn pop-btn"
-                                style={{ width: 100, height: 50 }}
+                                // style={{ width: 100, height: 50 }}
                                 onClick={() => {window.location.reload() }}>Refresh</Button>
                         </>
                     ]} >
                         <div className='text-center'>
                         <img src={swwicon} alt={"error"} />
-                    <h4 className="text-white fs-16 fw-400">Something went wrong please refresh the page.</h4>
+                    <h4 className="summary-liststyle">Something went wrong please refresh the page.</h4>
                     </div>
                 </Modal>
             </div >

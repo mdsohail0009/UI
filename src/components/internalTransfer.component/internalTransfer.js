@@ -1,18 +1,32 @@
-import React from "react"
+import { useEffect } from "react"
 import comingsoon from '../../assets/images/comingsoon.png'
 import {Typography} from "antd";
+import { getScreenName } from "../../reducers/feturesReducer";
+import { connect } from "react-redux";
+import { withRouter } from 'react-router-dom';
 
 const { Text } = Typography;
 
-const InternalTransfer = () => {
-
+const InternalTransfer = (props) => {
+    useEffect(() => {
+       props.dispatch(getScreenName({getScreen:"dashboard"}))
+    }, []);
+    
     return <div className="text-center intertrans">
         <div className="">
-        <img src={comingsoon} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
-        <div><Text className="text-center fw-700 fs-40 textpure-yellow">Coming soon</Text></div>
+        <img src={comingsoon} className="" style={{ marginBottom: '10px' }} alt="Confirm" />
+        <div><Text className="db-titles internal-titles">Coming soon</Text></div>
         </div>
 
         </div>
 
 }
-export default InternalTransfer;
+
+const connectDispatchToProps = dispatch => {
+    return {
+        dispatch
+    }
+  }
+  
+ export default connect(connectDispatchToProps)(withRouter(InternalTransfer));
+
