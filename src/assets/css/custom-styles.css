@@ -601,8 +601,8 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .transaction-custom-table .pay-grid tr{border-bottom: 1px solid var(--tableborder);}
 .transaction-custom-table .pay-grid tr:last-child{border-bottom: 0;}
 .transaction-custom-table .pay-grid thead tr, .bash-market-table .pay-grid tbody tr td{border-bottom: 1px solid var(--tableborder) !important;}
-.transaction-custom-table .pay-grid thead tr th:first-child{padding-left: 30px;}
-.transaction-custom-table .pay-grid tbody tr td:first-child{padding-left: 30px;}
+/* .transaction-custom-table .pay-grid thead tr th:first-child{padding-left: 30px;} */
+/* .transaction-custom-table .pay-grid tbody tr td:first-child{padding-left: 30px;} */
 .bash-market-table .pay-grid thead  tr th{border-bottom: 0;}
 .bash-market-table .pay-grid tbody tr:last-child td, .bash-market-table .pay-grid tbody tr:first-child td{border-bottom: 0 !important;}
 .detail-popbtn{width: auto;margin-top: 16px;}
@@ -906,7 +906,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* expand search */
 .search-box {position:relative;height: 46px;padding: 10px;flex:300px 0 0 ;display: flex;align-items: center;}
 .search-box:hover > .search-text{width: 240px;padding: 6px;border-radius: 0px 10px 10px 0px;border-left: 0;}
-.search-box:focus, .search-box:hover{border:1px solid var(--subText);border-radius: 10px;margin-left: 12px;}
+.search-box:focus, .search-box:hover{border:1px solid var(--subText);border-radius: 10px;margin-left: 10px; margin-right: 6px;}
 .search-btnexpand {position: absolute;left:0 ;z-index:1;transition: 0.4s;cursor: pointer;text-decoration: none;}
 .search-text {border: none;background: none;outline: none;padding: 0;color: white;font-size: 16px;font-weight: normal;transition: 0.4s;line-height: 26px;width: 0px;margin-left:29px;}
 .search-text::placeholder{color: var(--placeholders);}
@@ -1172,7 +1172,13 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .batch-actions{margin-top: 16px;}
     /* .k-loading-image::before, .k-loading-image::after{top:60% !important;position: absolute !important;} */
     .custom-theme-btn{display: flex;}
-   
+    .search-box:hover > .search-text.search-view input{width: 300px;}
+    .search-box.markets-search,.search-box.markets-search:hover > .search-text input{width: 280px;}
+    .theme-text{display: none;}
+    .price-valgreen div.lg-fontsize {width: 68px; word-break: break-all;}
+    .mobile-viewall{margin-bottom: 11px;}
+    .bill-payment {display: flex;justify-content: space-between;align-items: center;margin-bottom: 8px;
+    }
 }
 
 /*@media end*/
