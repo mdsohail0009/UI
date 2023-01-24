@@ -329,6 +329,14 @@ saveWithdrawdata = async () => {
   submitHandler = (e) => {
     e.preventDefault()
   }
+
+
+  handleTabChange = (key) => {
+    this.setState({ ...this.state, selectedTab: key})
+}
+
+
+
   goToAddressBook = () => {
     let _amt = this.enteramtForm.current.getFieldsValue().amount
     _amt = _amt.replace(/,/g, '')
@@ -527,17 +535,17 @@ saveWithdrawdata = async () => {
           <div>
             <Title className='sub-abovesearch code-lbl'>Who are you sending money to?</Title>
           </div>
-          <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+         {this.state.selectedTab != 2 && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
           <Search placeholder="Search for Payee" value={this.state.searchVal} prefix={<span className="icon lg search-angle drawer-search" />} onChange={this.handleSearch} size="middle" bordered={false} className="cust-search" />
-          </Col>
+          </Col>}
           {this.state?.loading && <Loader />}
           {!this.state.loading && (
             <>
             <div className="addressbook-grid">
-					<Tabs className="cust-tabs-fait" 
-			
-							>					
-              <Tabs.TabPane tab="Address Book" content="withdrawCrypto" key={1} className=""  component={Radio.Button}>
+					<Tabs className="cust-tabs-fait" 			
+          activeKey={this.selectedTab}
+          onChange={this.handleTabChange}>					
+              <Tabs.TabPane tab="Address Book" content="withdrawCrypto" key={"withdrawCrypto"}  value="withdrawCrypto" className=""  component={Radio.Button}>
                 <ul className="addCryptoList adbook-scroll" >
                 {filterObj.length > 0 &&
                   filterObj?.map((item, idx) => (

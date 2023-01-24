@@ -317,6 +317,9 @@ class OnthegoCryptoTransfer extends Component {
             }
         }
     }
+    handleTabChange = (key) => {
+        this.setState({ ...this.state, selectedTab: key})
+    }
 
     renderStep = (step) => {
         const { filterObj, pastPayees } = this.state;
@@ -443,14 +446,15 @@ class OnthegoCryptoTransfer extends Component {
                     <text Paragraph
                         className='label-style' >Who are you sending crypto to?</text>
                 </div>
-            <Col xs={24} md={24} lg={24} xl={24} xxl={24}  className="search-space">
+           {this.state.selectedTab != 2 && <Col xs={24} md={24} lg={24} xl={24} xxl={24}  className="search-space">
             <Search placeholder="Search For Beneficiary" value={this.state.searchVal} prefix={<span className="icon lg search-angle drawer-search" />} onChange={this.handleSearch} size="middle" bordered={false} className="cust-search" />
-            </Col>
+            </Col>}
             {this.state?.loading && <Loader />}
             {(!this.state.loading) && <>
                 <div className="addressbook-grid">
 					<Tabs className="cust-tabs-fait" 
-							>					
+							  activeKey={this.selectedTab}
+                              onChange={this.handleTabChange}>					
                                 <Tabs.TabPane tab="Address Book" content="withdrawCrypto" key={1} className=""  component={Radio}>
                 <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList adbook-scroll">
                 {(filterObj.length > 0) && filterObj?.map((item, idx) =>
