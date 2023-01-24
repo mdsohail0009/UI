@@ -28,7 +28,7 @@ const TransactionTimeSpan=(props)=> {
                 ref={formDateRef}
               >
                 {message && <Alert showIcon type="info" description={message} closable={false} />}
-                <div className="mb-24">
+                <div className="custom-model-label">
                   <Form.Item
                     name="fromdate"
                     className="input-label"
@@ -73,11 +73,11 @@ const TransactionTimeSpan=(props)=> {
                     />
                   </Form.Item>
                 </div>
-                <Form.Item className="mb-0">
-                  <div className="text-right">
-                    <Button type="button" className="c-pointer text-center text-white-30 fw-400 mr-8 cancel-btn pop-btn" onClick={handleDateCancel} ><span><Translate content="cancel" /></span></Button>
-                    <Button type="button" style={{ width: 100 }} key="submit" className="c-pointer pop-btn ant-btn px-24" htmlType="submit"><span><Translate content="ok" /></span></Button>
-                  </div>
+                <Form.Item className="m-0">
+  
+                  <div className="btn-right"> <Button block type="button" key="submit" className="pop-btn detail-popbtn paynow-btn-ml" htmlType="submit"><span><Translate content="ok" /></span></Button>
+                    <Button block type="button" className="cust-cancel-btn detail-popbtn paynow-btn-ml" onClick={handleDateCancel} ><span><Translate content="cancel" /></span></Button></div>
+               
                 </Form.Item>
               </Form>
           </div>

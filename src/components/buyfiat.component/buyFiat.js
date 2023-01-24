@@ -64,7 +64,7 @@ class BuyFiat extends Component {
                                 </div>
                             </div>
                         </Card>
-                        <Card className="crypto-card select mb-36 c-pointer" bordered={false}>
+                        <Card className="crypto-card select c-pointer" bordered={false}>
                             <div className="crypto-card-top">
                                 <span className="d-flex align-center">
                                     <span className="coin-circle coin md eur-white" />

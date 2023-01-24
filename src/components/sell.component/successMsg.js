@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import success from '../../assets/images/success.png';
-import { Typography, Space } from 'antd';
+import success from '../../assets/images/success.svg';
+import { Typography, Space, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import Translate from 'react-translate-component';
 import { setStep, setSellHeaderHide, setSelectedSellCoin } from '../../reducers/buysellReducer';
@@ -24,14 +24,15 @@ class SuccessMsg extends Component {
         const { sellFinalRes: sd } = this.props.sellInfo;
         return (
             <>
-                <div className="success-pop text-center">
+            <div className='custom-declaraton'>
+
+            
+                <div className="success-pop text-center declaration-content">
                     <img src={success} className="confirm-icon" alt={"success"} />
-                    <Translate content="success_msg" component={Title} className="text-white-30 fs-36 fw-200 mb-4" />
-                    <Paragraph className="fs-14 text-white-30 fw-200"><Translate content="sucessText1" component={Text} className="fs-14 text-white-30 fw-200" /> {sd.tovalue} {sd.toWalletCode} <Translate content="sucessText2" component={Text} className="fs-14 text-white-30 fw-200" /></Paragraph>
-                    {/* <Translate content="success_decr" component={Paragraph} className="fs-16 text-white-30 fw-200" /> */}
-                    <Space direction="vertical" size="large">
-                        <Translate content="return_to_sell" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => this.onSellCancel()} />
-                    </Space>
+                    <Translate content="success_msg" component={Title} className="success-title" />
+                    <Paragraph className="successsubtext"><Translate content="sucessText1" component={Text} className="successsubtext" /> {sd.tovalue} {sd.toWalletCode} <Translate content="sucessText2" component={Text} className="successsubtext" /></Paragraph>
+                    <Translate content="return_to_sell" component={Button} onClick={() => this.onSellCancel()}  size="large"className="cust-cancel-btn"/>
+                </div>
                 </div>
             </>
         );

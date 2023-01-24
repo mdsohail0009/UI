@@ -258,7 +258,7 @@ const Verifications = (props) => {
                 onClick={() => getphoneOTP()}
             ><Text className="text-yellow" >Click here to resend code</Text></Button>
         ),
-        code_Sent: (<div style={{ margin: "0 auto"}} className="code-sent-tool-tip">
+        code_Sent: (<div style={{ margin: "0 auto"}} className="code-sent-tool-tip code-tooltip-align">
             <Button
                 type="text"
                 style={{ color: "black",margin: "0 auto" }}
@@ -279,7 +279,7 @@ const Verifications = (props) => {
                 style={{ color: "black", margin: "0 auto" }}
                 disabled={true}
             ><Text className="text-yellow pr-24"> Verified </Text>
-                <span className="icon md greenCheck " />
+                <span className="icon md greenCheck check-ml-align" />
             </Button>
 
         ),
@@ -329,7 +329,7 @@ const Verifications = (props) => {
                 style={{ color: "black", margin: "0 auto" }}
                 disabled={true}
             ><Text className="text-yellow pr-24"> Verified </Text>
-                <span className="icon md greenCheck " />
+                <span className="icon md greenCheck  check-ml-align" />
             </Button>
 
         ),
@@ -352,7 +352,7 @@ const Verifications = (props) => {
                 style={{ color: "black", margin: "0 auto" }}
                 disabled={true}
             ><Text className="text-yellow pr-24"> Verified </Text>
-                <span className="icon md greenCheck " />
+                <span className="icon md greenCheck  check-ml-align" />
             </Button>
 
         ),
@@ -380,15 +380,14 @@ const Verifications = (props) => {
             {(
                 <>
                     <Form
-                        className="mt-36"
+                        className="verify-btn-from"
                         name="advanced_search"
                         form={form}
                         onFinish={transferDetials}
                         autoComplete="off">
                             <>
-                            {console.log(permissions)}
-                        {verifyData.isPhoneVerified === true  && (<>
-                            <Text className="fw-500 mb-8 px-4 text-white pt-16">
+                        {verifyData.isPhoneVerified === true && (<>
+                            <Text className="label-style">
                             Phone Verification Code *
                             </Text>
                             <Form.Item
@@ -396,12 +395,12 @@ const Verifications = (props) => {
                                 className="input-label otp-verify"
                                 extra={
                                     <div>
-                                        <Text className="fs-12 text-white-30 fw-200">
+                                        <Text className="verification-text">
                                             {phone.showRuleMsg}
                                         </Text>
                                         <Text
-                                            className="fs-12 text-red fw-200"
-                                            style={{ float: "right", color: "var(--textRed)" }}>
+                                            className="fs-14 text-red fw-400"
+                                            style={{ float: "right" }}>
                                             {phone.errorMsg}
                                         </Text>
                                     </div>
@@ -412,25 +411,28 @@ const Verifications = (props) => {
                                 <Input
                                             type="text"
 
-                                            className="cust-input custom-add-select mb-0"
+                                            className="cust-input custom-add-select mb-0 ibanborder-field"
                                             placeholder={"Enter code"}
                                             maxLength={6}
 
                                             style={{ width: "100%" }}
                                             disabled={phone.btnName === 'get_otp' || phone.btnName === 'verified'}
                                             onChange={(e) => handlephoneinputChange(e)}
+                                            addonAfter={<div className="new-add  hy-align">
+                                            {phone_btnList[phone.btnName]}
+                                        </div>}
                                         />
                                    
                                  
-                                    <div className="new-add c-pointer get-code text-yellow hy-align">
+                                    {/* <div className="new-add c-pointer get-code text-yellow hy-align">
                                         {phone_btnList[phone.btnName]}
-                                    </div>
+                                    </div> */}
                                 </div>
                             </Form.Item>
                         </>
                         )}
-                        {verifyData.isEmailVerification === true  && (<>
-                            <Text className="fs-14 mb-8 text-white d-block fw-500">
+                        {verifyData.isEmailVerification === true && (<>
+                            <Text className="label-style">
                                 Email Verification Code *
                             </Text>
                             <Form.Item
@@ -442,8 +444,8 @@ const Verifications = (props) => {
                                             {email.showRuleMsg}
                                         </Text>
                                         <Text
-                                            className="fs-12 text-red fw-200"
-                                            style={{ float: "right", color: "var(--textRed)" }}>
+                                            className="fs-14 text-red fw-400"
+                                            style={{ float: "right"}}>
                                             {email.errorMsg}
                                         </Text>
                                     </div>
@@ -454,25 +456,28 @@ const Verifications = (props) => {
                                 <Input
                                             type="text"
 
-                                            className="cust-input custom-add-select mb-0"
+                                            className="cust-input custom-add-select mb-0 ibanborder-field"
                                             placeholder={"Enter code"}
                                             maxLength={6}
 
                                             style={{ width: "100%" }}
                                             disabled={email.btnName === 'get_otp' || email.btnName === 'verified'}
                                             onChange={(e) => handleEmailinputChange(e)}
+                                            addonAfter={<div className="new-add  hy-align">
+                                            {email_btnList[email.btnName]}
+                                        </div>}
                                         />
                                     
                                  
-                                    <div className="new-add c-pointer get-code text-yellow hy-align">
+                                    {/* <div className="new-add c-pointer get-code text-yellow hy-align">
                                         {email_btnList[email.btnName]}
-                                    </div>
+                                    </div> */}
                                 </div>
                             </Form.Item>
                         </>
                         )}
                         {verifyData.twoFactorEnabled === true && (<>
-                            <Text className="mb-8 px-4 fw-500 text-white pt-16">
+                            <Text className="label-style">
                             Authenticator Code *
                             </Text>
                             <Form.Item
@@ -484,8 +489,8 @@ const Verifications = (props) => {
                                             {authenticator.showRuleMsg}
                                         </Text>
                                         <Text
-                                            className="fs-12 text-red fw-200"
-                                            style={{ float: "right", color: "var(--textRed)" }}>
+                                            className="fs-14 text-red fw-500"
+                                            style={{ float: "right",position: "absolute",right: "2px",top: "54px"}}>
                                             {authenticator.errorMsg}
                                         </Text>
                                     </div>
@@ -501,18 +506,21 @@ const Verifications = (props) => {
                                 <Input
                                             type="text"
 
-                                            className="cust-input custom-add-select mb-0"
+                                            className="cust-input custom-add-select mb-0 ibanborder-field"
                                             placeholder={"Enter code"}
                                             maxLength={6}
 
                                             style={{ width: "100%" }}
                                             disabled={authenticator.btnName === 'get_otp' || authenticator.btnName === 'verified'}
                                             onChange={(e) => handleAuthenticatorinputChange(e)}
+                                            addonAfter={ <div className="new-add hy-align">
+                                            {authenticator_btnList[authenticator.btnName]}
+                                        </div>}
                                         />                                    
                                   
-                                    <div className="new-add c-pointer get-code text-yellow hy-align">
+                                    {/* <div className="new-add c-pointer get-code text-yellow hy-align">
                                         {authenticator_btnList[authenticator.btnName]}
-                                    </div>
+                                    </div> */}
                                 </div>
                             </Form.Item>
                         </>

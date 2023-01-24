@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Alert, Button } from 'antd';
+import { Alert, Button,Image,Typography, } from 'antd';
 import { setStep, setSubTitle, setWithdrawcrypto, setCryptoFinalRes } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
@@ -7,7 +7,6 @@ import LiveNessSumsub from '../sumSub.component/liveness'
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { withDrawCrypto } from '../send.component/api';
 import { publishBalanceRfresh } from '../../utils/pubsub';
-
 const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep, dispatch, trackAuditLogData }) => {
   const [livefacerecognization, setLivefacerecognization] = useState({});
   const [isLoding, setIsLoding] = useState(false);
@@ -25,12 +24,22 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep, dispatch, t
     saveObj.info = JSON.stringify(trackAuditData)
     let withdrawal = await withDrawCrypto(saveObj)
     if (withdrawal.ok) {
-      dispatch(setCryptoFinalRes(withdrawal.data));
-      dispatch(fetchDashboardcalls(userConfig.id))
-      dispatch(setWithdrawcrypto(null))
-      dispatch(setSubTitle(""));
-      changeStep('withdraw_crpto_success');
-      publishBalanceRfresh("success");
+      if(saveObj?.isShowDeclaration){
+        dispatch(setCryptoFinalRes(withdrawal.data));
+        dispatch(fetchDashboardcalls(userConfig.id));
+        dispatch(setWithdrawcrypto(null));
+        dispatch(setSubTitle(""));
+        changeStep('withdraw_crpto_Delcaration');
+        publishBalanceRfresh("success");
+      }else{
+        dispatch(setCryptoFinalRes(withdrawal.data));
+        dispatch(fetchDashboardcalls(userConfig.id))
+        dispatch(setWithdrawcrypto(null))
+        dispatch(setSubTitle(""));
+        changeStep('withdraw_crpto_success');
+        publishBalanceRfresh("success");
+      }
+     
     } else {
       setErrorMessage(withdrawal.data?.message || withdrawal.data || withdrawal.originalError?.message || "Something went wrong please try after sometime :)");
       divRef.current.scrollIntoView();
@@ -56,7 +65,7 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep, dispatch, t
       >
         <Translate content="confirm_button" />
       </Button>}
-      <Translate content="back" component={Button} onClick={() => Cancel()} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />
+      <Translate content="back" component={Button} onClick={() => Cancel()} type="text" size="large" className="cust-cancel-btn back-btn-sumsub" block />
     </div>
   )
 }

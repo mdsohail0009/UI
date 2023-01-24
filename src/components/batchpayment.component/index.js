@@ -37,7 +37,7 @@ const Batchpayments = (props) => {
           width: 50,
           customCell: (prop) => (
             <td className="text-center">
-              <label className="text-center custom-checkbox c-pointer">
+              <label className="text-center custom-checkbox c-pointer cust-check-outline">
                 <input
                   id={prop.dataItem.id}
                   name="check"
@@ -72,14 +72,14 @@ const Batchpayments = (props) => {
         { field: "status", title: 'Status', filter: true, width: 150, },
         { field: "numberOfTransactions", title: 'Number of Transactions', filter: true, width: 250,dataType: "number", filterType: "numeric", 
         customCell: (properites) => (<td>
-        {properites?.dataItem?.numberOfTransactions!==0? <div className="gridLink" onClick={()=>docPreview(properites.dataItem)}
+        {properites?.dataItem?.numberOfTransactions!==0? <div className="gridLink batch-filename" onClick={()=>docPreview(properites.dataItem)}
         >{properites?.dataItem?.numberOfTransactions} 
         </div>:<>{properites?.dataItem?.numberOfTransactions}</>}</td>) 
      },
      { field: "validTransactionCount", title: 'Valid Transactions', filter: true, dataType: "number", filterType: "numeric", width: 210, },
      { field: "invalidTransactionCount", title: 'Invalid Transactions', filter: true, dataType: "number", filterType: "numeric", width: 210,
          customCell: (properites) => (
-         <td>{properites?.dataItem?.invalidTransactionCount!==0?<div onClick={()=>getInvalidTransaction(properites?.dataItem)} className="gridLink" >{properites?.dataItem?.invalidTransactionCount}
+         <td>{properites?.dataItem?.invalidTransactionCount!==0?<div onClick={()=>getInvalidTransaction(properites?.dataItem)} className="gridLink batch-filename" >{properites?.dataItem?.invalidTransactionCount}
            </div>:<>{properites?.dataItem?.invalidTransactionCount}</>}
            
            </td>)
@@ -218,18 +218,22 @@ const Batchpayments = (props) => {
       return (
         <>
           <div className='main-container'>
-                  <div className='batchpayment-summary justify-content align-center mb-16'>
-                
-                      <Title className="basicinfo mb-0"><span className='icon md c-pointer back mr-8' onClick={gotoDashboard}></span><Translate content="batch_payments" component={Text} className="basicinfo" />
-                                      
-                      <Text className='ml-4 fs-16 webkit-color'> Proceed{" "}(<span className="icon md process-icon"/>)</Text><Text className='fs-14 text-white fw-400 mb-12'>: To proceed the transaction,{" "}please click on proceed icon</Text>           
+          <div className="backbtn-arrowmb"><span className="icon md leftarrow c-pointer backarrow-mr" onClick={gotoDashboard}></span><span className="back-btnarrow">Back</span></div>
+                  <div className='batchpayment-summary d-flex'>
+                  
+                      <Title className="basicinfo mb-0">                     
+                      <Translate content="batch_payments" component={Text} className="addressbook-mb" />  
+                          
                       </Title>
                       <div className='batch-actions'>
-                  <span className="mb-right">
+                  <div className="mb-right">
           <ActionsToolbar featureKey="Batch_Payment" onActionClick={(key) => onActionClick(key)}/>
-          </span>
+          </div>
                   </div>
               </div>
+              <div className='proceed-section'>
+                      <Text className='webkit-color'> Proceed{" "}(<span className="icon md process-icon"/>)</Text>
+                      <Text className='note-cont'>: To proceed the transaction,{" "}please click on proceed icon</Text>  </div> 
               {errorWarning !== null && (
             <Alert
               className="mb-12"
@@ -246,7 +250,7 @@ const Batchpayments = (props) => {
               showIcon
             />
           )}
-              <div className="box basic-info text-white" style={{ clear: 'both' }}>
+              <div className="box text-white" style={{ clear: 'both' }}>
                   <List
                       className="bill-grid"
                       showActionBar={false}
@@ -284,13 +288,16 @@ const Batchpayments = (props) => {
           footer={[
             <>
             <div className='cust-pop-up-btn crypto-pop bill-pop'>
-              <Button
-                className="pop-cancel btn-width  bill-cancel"
+             
+              
+                 <Button
+                className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
                 onClick={()=>deleteModalCancel()}>No</Button>
-              <Button className="pop-btn px-36 btn-width"
+                <Button className="primary-btn pop-btn detail-popbtn"
                 onClick={deleteDetials}
                 loading={isLoad}
-                >Yes</Button></div>
+                >Yes</Button>
+                </div>
             </>
           ]}
         >

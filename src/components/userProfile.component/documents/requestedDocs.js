@@ -120,6 +120,7 @@ class RequestedDocs extends Component {
                                 </p>
                             </Dragger>
                         </div>
+                        
                         <div className="docfile-container">
                             <div className="docfile">
                                 <span className="icon xl image mr-16" />
@@ -155,10 +156,10 @@ class RequestedDocs extends Component {
                             </div>
                         </div>
                         <div className="text-center my-36">
-                            <Button type="primary" onClick={this.docReject} className="text-center text-white-30 pop-cancel fw-400 mr-36">
+                            <Button type="primary" onClick={this.docReject} className="cust-cancel-btn">
                                 Cancel
                             </Button>
-                            <Button className="pop-btn px-36" onClick={this.docApprove}>Submit</Button>
+                            <Button className="cust-cancel-btn" onClick={this.docApprove}>Submit</Button>
                         </div>
                         <div className="reply-container">
                             <img src={profile} className="mr-16" />
@@ -251,10 +252,11 @@ class RequestedDocs extends Component {
                             </div>
                         </div>
                         <div className="text-center">
-                            <Button type="primary" onClick={this.docReject} className="text-center text-white-30 pop-cancel fw-400 text-captz mr-36">
+                           
+                            <Button className="pop-btn" onClick={this.docApprove}>Approve</Button>
+                            <Button type="primary" onClick={this.docReject} className="cust-cancel-btn">
                                 Reject
                             </Button>
-                            <Button className="pop-btn px-36" onClick={this.docApprove}>Approve</Button>
                         </div>
                     </Panel>
                 </Collapse>
@@ -270,8 +272,11 @@ class RequestedDocs extends Component {
                 visible={this.state.previewModal}
                 closeIcon={<Tooltip title="Close"><span className="icon md close" onClick={this.docPreviewClose} /></Tooltip>}
                 footer={<>
-                    <Button type="primary" onClick={this.docPreviewClose} className="text-center text-white-30 pop-cancel fw-400 text-captz mr-36">Close</Button>
-                    <Button className="pop-btn px-36">Download</Button>
+                <div className="cust-pop-up-btn crypto-pop">
+                    
+                    <Button onClick={this.docPreviewClose} className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml">Close</Button>
+                    <Button  className="primary-btn pop-btn detail-popbtn">Download</Button>
+                    </div>
                 </>}
             >
                 <img style={{ width: "100%" }} src={uploadImage} alt="User" />

@@ -19,6 +19,7 @@ import Translate from 'react-translate-component';
 import Mome from 'moment'
 import { success, warning } from '../../utils/messages';
 import { LoadingOutlined } from "@ant-design/icons";
+import { getScreenName } from '../../reducers/feturesReducer';
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
 const { Dragger } = Upload;
@@ -26,8 +27,9 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
     const suffix = children.slice(-suffixCount).trim();
     return (
-        <Text className="mb-0 fs-14 docnames c-pointer d-block"
-            style={{ maxWidth: '100%' }} ellipsis={{ suffix }}>
+        <Text className="btn-textstyle"
+            // style={{ maxWidth: '100%' }} 
+            ellipsis={{ suffix }}>
             {start}
         </Text>
     );
@@ -56,6 +58,7 @@ class CaseView extends Component {
         errorWarning: null,
     }
     componentDidMount() {
+        this.props.dispatch(getScreenName({getScreen:null}))
         this.getCaseData(this.props?.match.params?.id);
     }
     getDocument = async (id) => {
@@ -329,7 +332,7 @@ class CaseView extends Component {
         }
         return <>
             <div className="main-container">
-                <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/cases" />{caseData?.documents?.customerCaseTitle}</div>
+                <div className="coin-viewstyle"><Link className="icon md leftarrow backarrow-mr c-pointer" to="/cases" />{caseData?.documents?.customerCaseTitle}</div>
                 <div className='case-stripe'>
                     <Row gutter={[16, 16]}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8} xxl={8}>
@@ -374,14 +377,13 @@ class CaseView extends Component {
                     <div className="ribbon-item">
                       <span
                         className={`icon md 
-                            ${key === null ? "Decription" : ((key === "Currency" && value === "EUR") ? "EURS" : (key === "Amount" ? 'Currency' : (key === "Currency" && value === "USD") ? "USDS" : key))
-                                                }`}
-                                        />
-                                        <div className="ml-16" style={{ flex: 1 }}>
-                        <Text className="fw-300 text-white-50 fs-12">
+                            ${key === null ? "Decription" : ((key === "Currency" && value === "EUR") ? "EURS" : (key == "Amount" ? 'Currency' : (key == "Currency" && value == "USD") ? "USDS" : key))
+                              }`} />
+                            <div className="cases-lefttext" style={{ flex: 1 }}>
+                        <Text className="case-lbl">
                           {key}
                         </Text>
-                                <div className='fw-600 text-white-30 fs-16 l-height-normal' style={{ wordBreak: "break-all" }} >
+                                <div className='case-val cases-subtext'>
                                     {(value == null || value === " " || value === "") ? '-' : (isNaN(value) || (key === 'Transaction Id' || key === 'Bank Account number/IBAN' || key === "Bank Account Number/IBAN" || key === "Wallet Address"
                                         || key === 'Bank Name') ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
                                 </div>
@@ -394,12 +396,12 @@ class CaseView extends Component {
                         )}
                     </Row>
                 </div>
-                <div className="px-16">
-                    <Translate Component={Text} content="remarks" className="fw-300 text-white-50 fs-12" />
-                    <Title level={5} className='case-val' style={{ marginTop: '3px' }} maxLength={500} rows={4}>{caseData.remarks ? caseData.remarks : '-'}</Title>
+                <div className="case-remarksstyle">
+                    <Translate Component={Text} content="remarks" className="basicinfo" />
+                    <div className='case-lbl remark-casestyle'  maxLength={500} rows={4}>{caseData.remarks ? caseData.remarks : '-'}</div>
                 </div>
 
-                <Divider />
+                {/* <Divider /> */}
                 {(!this.state.docDetails?.details || this.state.docDetails?.details.length === 0) && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No documents available" /></div>}
                 <div className="bank-view">
                     {this.state.docDetails?.details?.map((doc, idx) =>
@@ -414,7 +416,7 @@ class CaseView extends Component {
                             }
                         }}
                             collapsible
-                            accordion className="accordian mb-24 mb-togglespace "
+                            accordion className="accordian  mb-togglespace "
                             defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
                             <Panel header={doc.documentName} key={idx + 1} extra={doc.state ? (<span className={`${doc.state ? doc.state.toLowerCase() + " staus-lbl" : ""}`}>{doc.state}</span>) : ""}>
                                 {/* {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>} */}
@@ -423,15 +425,22 @@ class CaseView extends Component {
                                     <div className="reply-body">
                                         <Text className="reply-username">{reply.repliedBy}</Text><Text className="reply-date"><Moment format="DD MMM YY hh:mm A">{reply.repliedDate}</Moment> </Text>
                                         <p className="reply-txt">{reply.reply}</p>
-                                        <div className="docfile-container">
-                                            {reply?.path?.map((file, idx1) => <div key={idx1} className="docfile uploaddoc-margin">
+                                        
+                                            <div className="docfile-container">
+                                            {reply?.path?.map((file, idx1) =>
+                                        <Col lg={12} xl={12} xxl={12}> <div key={idx1} className="docfile uploaddoc-margin">
                                                 <span className={`icon xl ${(file.filename.slice(-3) === "zip" ? "file" : "") || (file.filename.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                                 <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
                                                     <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>
-                                                    <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
+                                                    <span className="file-sizestyle">{this.formatBytes(file.size)}</span>
                                                 </div>
-                                            </div>)}
+                                            </div>
+                                            
+                                            </Col>
+                                        )}
                                         </div>
+                                            
+                                       
                                     </div>
                                 </div>)}
                                 {(!this.state.documentReplies[doc.id]?.loading && doc.state !== "Approved" && this.state.docDetails.caseState !== 'Approved' && this.state.docDetails.caseState !== 'Cancelled')&&
@@ -441,7 +450,7 @@ class CaseView extends Component {
                                         >
                                             <div>
                                                     <Form.Item
-                                                     className="fs-12 text-white-50 d-block mb-12 fw-200"
+                                                     className="d-block error-mt"
                                                         name=""
                                                        label="Reply"
                                                         rules={[
@@ -477,12 +486,12 @@ class CaseView extends Component {
                                                 {this.state.errorWarning !== undefined && this.state.errorWarning !== null && (
                                                     <div style={{ width: '100%' }}>
                                                         <Alert
-                                                            className="w-100 mb-16"
+                                                            className="newcase-style error-style"
                                                             type="warning"
                                                             description={this.state.errorWarning}
                                                             showIcon
                                                             closable={false}
-                                                            style={{ marginBottom: 0, marginTop: '16px' }}
+                                                           
                                                         />
                                                     </div>
                                                 )}
@@ -491,31 +500,37 @@ class CaseView extends Component {
                                                     <p className="ant-upload-drag-icon">
                                                         <span className="icon xxxl doc-upload" />
                                                     </p>
-                                                    <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
-                                                    <p className="ant-upload-hint text-secondary fs-12">
+                                                    <p className="ant-upload-text upload-title">Drag and drop or browse to choose file</p>
+                                                    <p className="ant-upload-hint upload-text">
                                                         PNG, JPG,JPEG and PDF files are allowed
                                                     </p>
                                                 </Dragger>
                                                 {this.state.uploadLoader && <Loader />}
                                             </div>
+                                            
                                             <div className="docfile-container">
-                                                {this.getUploadedFiles(doc.id)?.path?.map((file, idx1) => <div key={idx1} className="docfile uploaddoc-margin">
+                                                {this.getUploadedFiles(doc.id)?.path?.map((file, idx1) =>
+                                            <Col lg={12} xl={12} xxl={12}> <div key={idx1} className="docfile uploaddoc-margin">
                                                     <span className={`icon xl ${(file.filename.slice(-3) === "zip" ? "file" : "") || (file.filename.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                                     <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
                                                         <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>
-                                                        <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
+                                                        <span className="file-sizestyle">{this.formatBytes(file.size)}</span>
                                                     </div>
                                                     <span className="icon md close c-pointer" onClick={() => this.deleteDocument(this.getUploadedFiles(doc.id), idx1, true)} />
-                                                </div>)}
+                                                </div>
+                                                </Col>
+                                           )}
                                             </div>
+                                           
                         
-                                            <Form.Item className="text-center my-36">
+                                            <Form.Item className="text-right  view-level-btn">
                                                 <Button
                                                     htmlType="submit"
                                                     size="large"
-                                                    className="pop-btn mb-36 px-36"
+                                                    // block
+                                                    className="pop-btn  detail-popbtn paynow-btn-ml"
                                                     loading={this.state.btnLoading}
-                                                    style={{ width: "300px" }}
+                                                    // style={{ width: "300px" }}
                                                 >
                                                     Submit
                                                 </Button>
@@ -546,8 +561,11 @@ class CaseView extends Component {
                     destroyOnClose={true}
                     closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.docPreviewClose} /></Tooltip>}
                     footer={<>
-                        <Button type="primary" onClick={this.docPreviewClose} className="doc-cancelbtn text-center text-white-30 pop-cancel fw-400 mr-8 pop-btn px-36 ">Close</Button>
-                        <Button className="pop-btn px-36" onClick={() => this.fileDownload()}>Download</Button>
+                        <div className="cust-pop-up-btn crypto-pop">
+                       
+                        <Button onClick={this.docPreviewClose} className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml">Close</Button>
+                        <Button className="primary-btn pop-btn detail-popbtn" onClick={() => this.fileDownload()}>Download</Button></div> 
+                   
                     </>}
                 >
                     <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null, mimeType: this.state?.previewPath?.includes(".pdf") ? 'application/pdf' : '' }} />

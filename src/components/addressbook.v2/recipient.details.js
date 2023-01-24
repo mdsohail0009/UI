@@ -14,7 +14,7 @@ class RecipientAddress extends Component {
 
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                    className="custom-forminput custom-label"
                     name="line1"
                     required
                     rules={[
@@ -42,7 +42,7 @@ class RecipientAddress extends Component {
             </Col>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                    className="custom-forminput custom-label"
                     name="line2"
                     rules={[
 
@@ -62,7 +62,7 @@ class RecipientAddress extends Component {
             </Col>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                    className="custom-forminput custom-label"
                     name="line3"
                     rules={[
                         {
@@ -88,7 +88,7 @@ class RecipientDetails extends Component {
     render() {
         const { payeeLu } = this.props;
         return <React.Fragment>
-            <Col xs={24} md={12} lg={12} xl={12} xxl={12} id="favoriteName">
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24} id="favoriteName">
                 <Form.Item
                     className="fw-300 mb-8 px-4 text-white-50 custom-forminput custom-label"
                     name="favouriteName"
@@ -124,9 +124,9 @@ class RecipientDetails extends Component {
                     </AutoComplete>
                 </Form.Item>
             </Col>
-            <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                    className="custom-forminput custom-label"
                     name="firstName"
                     required
                     rules={[
@@ -153,9 +153,9 @@ class RecipientDetails extends Component {
                     />
                 </Form.Item>
             </Col>
-            <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
-                    className="custom-forminput custom-label fw-300 mb-8 px-4 text-white-50 py-4"
+                    className="custom-forminput custom-label"
                     name="lastName"
                     required
                     rules={[

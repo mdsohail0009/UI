@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import List from '../grid.component'
-import { withRouter } from 'react-router';
+import {
+     Typography
+  } from "antd";
+import {Link,  withRouter } from "react-router-dom";
 import Translate from 'react-translate-component';
 import apiCalls from "../../api/apiCalls";
 import Moment from 'react-moment';
+import { getScreenName } from '../../reducers/feturesReducer';
+
+const { Text, Paragraph, Title } = Typography;
 class Cases extends Component {
     constructor(props) {
         super(props);
@@ -39,10 +45,21 @@ class Cases extends Component {
 		{field: "customerCaseTitle",title: apiCalls.convertLocalLang("title"),filter: true,width: 450},
 		{field: "state",title:apiCalls.convertLocalLang("state"),filter: true,width: 275,},
 	];
+    componentDidMount() {
+        this.props.dispath(getScreenName({getScreen:null}))
+    }
      viewCase = ({dataItem}) => {
 		this.props.history.push(`/caseView/${dataItem.id}`);
 	};
-
+    backToDashboard=()=>{
+        if (!this.props?.userProfileInfo?.isKYC) {
+            this.props.history.push("/notkyc");
+            return;
+        }
+          else{
+            this.props.history.push("/");
+          }
+    }
     handleAllDocuments = e => {
         this.setState({
             allDocs: e.target.value === 1
@@ -53,14 +70,15 @@ class Cases extends Component {
         const { gridUrl } = this.state;
 
         return (<>
-        <div className="main-container">
-            <div className="box basic-info">
-                <Translate content="case" className="basicinfo mb-12 d-block " />
-                <div className="mb-16 cases-grid-view">
-                    <List className="address-clear" url={gridUrl} ref={this.gridRef} columns={this.columnGrid} />
-                </div>
-            </div>
-            </div>
+        <div className="cust-list main-container case-demo" onClick={this.backToDashboard}>
+        <div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/cockpit"/><span className="back-btnarrow">Back</span></div>
+          
+                <Translate content="case" component={Paragraph} className="grid-title" /> </div>
+                {/* <div className=""> */}
+                    <List className="address-clear cases-grid-style" url={gridUrl} ref={this.gridRef} columns={this.columnGrid} />
+                    {/* </div> */}
+               
+            
         </>
         );
     }

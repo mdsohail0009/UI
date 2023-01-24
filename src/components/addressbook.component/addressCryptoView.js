@@ -43,7 +43,6 @@ const AddressCryptoView = (props) => {
 	};
 
 	const docPreview = async (file) => {
-		debugger
 		let res = await getFileURL({ url: file.path });
 		if (res.ok) {
 			setPreviewModal(true);
@@ -72,18 +71,21 @@ const AddressCryptoView = (props) => {
 			}
 			footer={
 				<>
+					<div className="cust-pop-up-btn crypto-pop">
+					
 					<Button
-						className="pop-btn px-36"
-						style={{ margin: "0 8px" }}
+						className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
+						// block
 						onClick={() => setPreviewModal(false)}>
 						Close
 					</Button>
 					<Button
-						className="pop-btn px-36"
-						style={{ margin: "0 8px" }}
+						className="primary-btn pop-btn detail-popbtn"
+						// block
 						onClick={() => window.open(previewPath, "_blank")}>
 						Download
 					</Button>
+					</div>
 				</>
 			}>
 			<FilePreviewer
@@ -99,10 +101,9 @@ const AddressCryptoView = (props) => {
 	return (
 		<>
 			<div className="main-container cust-cypto-view">
-			<Title className="basicinfo mb-12">
-				Beneficiary Details
-			</Title>
-				<div className="box basic-info ">
+			
+				<div className="">
+				
 					{loading ? (
 						<Loader />
 					) : (
@@ -110,13 +111,16 @@ const AddressCryptoView = (props) => {
 							
 							{cryptoAddress && (
 								<div className="custom-alert-width">
+									<Title className="basicinfo">
+										Beneficiary Details
+									</Title>
 								<Row gutter={8}>
 									<Col xl={24} xxl={24} className="bank-view">
 										<Row className="kpi-List">
-											<Col xs={24} sm={24} md={12} lg={14} xxl={14}>
-												<div>
+										<Col xs={24} sm={24} md={12} lg={14} xxl={14}>
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Whitelist Name</label>
-													<div className=" kpi-val">
+													<div className=" kpi-val adview-name">
 														{cryptoAddress?.saveWhiteListName === " " ||
 															cryptoAddress?.saveWhiteListName === null
 															? "-"
@@ -125,9 +129,9 @@ const AddressCryptoView = (props) => {
 												</div>
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={5} xxl={5}>
-												<div>
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Token</label>
-													<div className=" kpi-val">
+													<div className=" kpi-val adview-name">
 														{cryptoAddress?.token === " " ||
 															cryptoAddress?.token === null
 															? "-"
@@ -136,9 +140,9 @@ const AddressCryptoView = (props) => {
 												</div>
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={5} xxl={5}>
-												<div>
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Network</label>
-													<div className=" kpi-val">
+													<div className=" kpi-val adview-name">
 														{cryptoAddress?.network === " " ||
 															cryptoAddress?.network === null
 															? "-"
@@ -148,9 +152,9 @@ const AddressCryptoView = (props) => {
 											</Col>
 											
 											<Col xs={24} sm={24} md={12} lg={14} xxl={14}>
-												<div>
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Wallet Address</label>
-													<div className=" kpi-val">
+													<div className=" kpi-val adview-name">
 														{cryptoAddress?.walletAddress === " " ||
 															cryptoAddress?.walletAddress === null
 															? "-"
@@ -159,13 +163,21 @@ const AddressCryptoView = (props) => {
 												</div>
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={5} xxl={5}>
-												<div>
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Address State</label>
-													<div className=" kpi-val">
+													<div className=" kpi-val adview-name">
 														{cryptoAddress?.adressstate === " " ||
 															cryptoAddress?.adressstate === null
 															? "-"
 															: cryptoAddress?.adressstate}
+													</div>
+												</div>
+											</Col>
+											<Col xs={24} sm={24} md={12} lg={5} xxl={5}>
+												<div className="kpi-divstyle ad-rec-detyails">
+													<label className="kpi-label"></label>
+													<div className=" kpi-val adview-name">
+														
 													</div>
 												</div>
 											</Col>
@@ -210,16 +222,17 @@ const AddressCryptoView = (props) => {
 												))}
 									</Col>
 								</Row>
-								</div>
-							)}
-							<div className="text-right mt-24">
+								<div className="text-right view-level-btn">
 								<Button
-									className="pop-btn px-36"
-									style={{ margin: "0 8px",width:'250px'}}
+									className="cust-cancel-btn"
+									block
 									onClick={backToAddressBook}>
 									Cancel
 								</Button>
 							</div>
+								</div>
+							)}
+							
 						</>
 					)}
 				</div>

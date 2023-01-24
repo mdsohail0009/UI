@@ -46,7 +46,6 @@ const AddressFiatView = (props) => {
 	};
 
 	const docPreview = async (file) => {
-		debugger
 		let res = await getFileURL({ url: file.path });
 		if (res.ok) {
 			setPreviewModal(true);
@@ -74,18 +73,21 @@ const AddressFiatView = (props) => {
 			}
 			footer={
 				<>
+				<div className="cust-pop-up-btn crypto-pop">
+					
 					<Button
-						className="pop-btn px-36"
-						style={{ margin: "0 8px" }}
+						className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
+						// block
 						onClick={() => setPreviewModal(false)}>
 						Close
 					</Button>
 					<Button
-						className="pop-btn px-36"
-						style={{ margin: "0 8px" }}
+						className="primary-btn pop-btn detail-popbtn"
+						// block
 						onClick={() => window.open(previewPath, "_blank")}>
 						Download
 					</Button>
+					</div>
 				</>
 			}>
 			<FilePreviewer
@@ -109,16 +111,16 @@ const AddressFiatView = (props) => {
 							
 							{fiatAddress && (
 								<div className="custom-alert-width">
-									<Title className="basic-info p-0 basicinfo">
+									<Title className="basicinfo">
 									Recipient Details
-														</Title>
+									</Title>
 								<Row gutter={8}>
 									<Col xl={24} xxl={24} className="bank-view">
 										<Row className="kpi-List">
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Whitelist Name</label>
-													<div className=" kpi-val">
+													<div className=" kpi-val adview-name">
 														{fiatAddress?.favouriteName === " " ||
 															fiatAddress?.favouriteName === null
 															? "-"
@@ -127,7 +129,7 @@ const AddressFiatView = (props) => {
 												</div>
 											</Col>
 											{fiatAddress?.addressType && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Address Type</label>
 													{<div className=" kpi-val">
 														{fiatAddress?.addressType === " " ||
@@ -142,7 +144,7 @@ const AddressFiatView = (props) => {
 												</div>
 											</Col>}
 											{fiatAddress?.transferType && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Transfer Type</label>
 													{<div className=" kpi-val">
 														{fiatAddress?.transferType === " " ||
@@ -156,7 +158,7 @@ const AddressFiatView = (props) => {
 											</Col>}
 
 											{fiatAddress?.firstName &&<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">First Name</label>
 													<div className=" kpi-val">
 														{fiatAddress?.firstName === " " ||
@@ -167,7 +169,7 @@ const AddressFiatView = (props) => {
 												</div>
 											</Col>}
 											{fiatAddress?.lastName &&<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Last Name</label>
 													<div className=" kpi-val">
 														{fiatAddress?.lastName === " " ||
@@ -178,7 +180,7 @@ const AddressFiatView = (props) => {
 												</div>
 											</Col>}
 											 {fiatAddress?.addressType != "individuals" && fiatAddress?.beneficiaryName &&<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Beneficiary Name</label>
 													<div className=" kpi-val">
 														{fiatAddress?.beneficiaryName === " " ||
@@ -189,7 +191,7 @@ const AddressFiatView = (props) => {
 												</div>
 											</Col>}
 											{fiatAddress?.relation &&<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Relationship To Beneficiary</label>
 													<div className=" kpi-val">
 														{fiatAddress?.relation === " " ||
@@ -200,7 +202,7 @@ const AddressFiatView = (props) => {
 												</div>
 											</Col>}
 											{fiatAddress?.phoneNumber && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Phone Number</label>
 													{<div className=" kpi-val">
 														{fiatAddress?.phoneNumber === " " ||
@@ -213,7 +215,7 @@ const AddressFiatView = (props) => {
 											</Col>}
 
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">
 														Address Line 1
 													</label>
@@ -226,7 +228,7 @@ const AddressFiatView = (props) => {
 												</div>
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Address Line 2</label>
 													{<div className="kpi-val">
 														{fiatAddress?.line2 === " " ||
@@ -236,7 +238,7 @@ const AddressFiatView = (props) => {
 												</div>
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Address Line 3</label>
 													{<div className="kpi-val">
 														{fiatAddress?.line3 === " " ||
@@ -247,7 +249,7 @@ const AddressFiatView = (props) => {
 											</Col>
 
 											{fiatAddress?.country && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Country</label>
 													<div className="kpi-val">
 														{fiatAddress?.country === " " ||
@@ -258,7 +260,7 @@ const AddressFiatView = (props) => {
 												</div>
 											</Col>}
 											{fiatAddress?.state && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">State</label>
 													<div className=" kpi-val">
 														{fiatAddress?.state === " " ||
@@ -270,7 +272,7 @@ const AddressFiatView = (props) => {
 												</div>
 											</Col>}
 											{fiatAddress?.city && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">City</label>
 													<div className="kpi-val">
 
@@ -282,7 +284,7 @@ const AddressFiatView = (props) => {
 												</div>
 											</Col>}
 											{fiatAddress?.postalCode && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Postal Code</label>
 													<div className="kpi-val">
 														{fiatAddress?.postalCode === " " ||
@@ -293,7 +295,7 @@ const AddressFiatView = (props) => {
 												</div>
 											</Col>}
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
+												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Address State</label>
 													<div className="kpi-val">
 														{bankDetailes[0]?.addressState}
@@ -302,192 +304,212 @@ const AddressFiatView = (props) => {
 											</Col>
 											
 										</Row>
-										<Title className="basic-info p-0 basicinfo">
+										<Title className="basicinfo  abbook-title-mt">
 										   Recipient Bank Details
 										</Title>
-										<Row>
+										<Row className="adressbook-fiatview">
 											{bankDetailes?.map((item, idx) => (
-												<><div
-													style={{
-														border: "2px dashed var(--borderLight)",
-														padding: "12px 16px",
-														borderRadius: 10,
-														marginBottom: 16,
-														width: "100%"
-													}}>
-													<Row gutter={[16, 16]} key={idx}>
-														
-														<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
-															<Text className="fw-300 text-white-50 fs-12">
+												<><div className="alert-info-custom kpi-List adbook-newdesign"
+													>
+													{/* <div class="fait-box kpi-divstyle"> */}
+															<div className="fait-box kpi-divstyle">
+															<Text className="kpi-label">
 																Currency
 															</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
+															<div level={5} className="kpi-val"   >
 
 																{item.walletCode === " " ||
 																	item.walletCode === null
 																	? "-"
 																	: item.walletCode}
-															</Title>
-														</Col>
-														{item.iban &&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
-															<Text className="fw-300 text-white-50 fs-12">
+															</div>
+															</div>
+															{/* </div> */}
+														{item.iban &&
+														<div className="fait-box kpi-divstyle">
+															<Text className="kpi-label">
 																IBAN
 															</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
+															<div level={5} className="kpi-val"   >
 
 																{item.iban === " " ||
 																	item.iban === null
 																	? "-"
 																	: item.iban}
-															</Title>
-														</Col>}
+															</div>
+															</div>
+														}
 														
-														{item?.bankType && <Col xs={24} md={24} lg={14} xl={8} xxl={4}>
-															<Text className="fw-300 text-white-50 fs-12">
+														{item?.bankType && 
+														<div className="fait-box kpi-divstyle">
+															<Text className="kpi-label">
 																Bank Type
 															</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
+															<div level={5} className="kpi-val"   >
 
 																{item.bankType === " " ||
 																	item.bankType === null
 																	? "-"
 																	: item.bankType}
-															</Title>
-														</Col>}
-														{(item?.accountNumber && fiatAddress?.transferType !== "internationalIBAN" && item?.walletCode !="EUR")&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
-															<Text className="fw-300 text-white-50 fs-12">
-																Bank Account Number/IBAN
+															</div>
+															</div>
+														}
+														{(item?.accountNumber && fiatAddress?.transferType !== "internationalIBAN" && item?.walletCode !="EUR")&&
+														<div className="fait-box kpi-divstyle">
+															<Text className="kpi-label">
+																Bank Account Number / IBAN
 															</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
+															<div level={5} className="kpi-val"   >
 
 																{item.accountNumber === " " ||
 																	item.accountNumber === null
 																	? "-"
 																	: item.accountNumber}
-															</Title>
-														</Col>}
-														{((item?.swiftRouteBICNumber!=null|| item?.abaRoutingCode!=null) && (item?.iban ==null || item?.iban =="")) && <Col xs={24} md={24} lg={14} xl={8} xxl={4}>
-															<Text className="fw-300 text-white-50 fs-12">
+															</div>
+															</div>
+														}
+														{((item?.swiftRouteBICNumber!=null|| item?.abaRoutingCode!=null) && (item?.iban ==null || item?.iban =="")) && 
+														<div className="fait-box kpi-divstyle">
+															<Text className="kpi-label">
 															BIC/SWIFT/ABA Routing Code
 															</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
+															<div level={5} className="kpi-val"   >
 																   {((item?.swiftRouteBICNumber !=null && item?.swiftRouteBICNumber != "" ) ? item?.swiftRouteBICNumber : item?.abaRoutingCode)}
-															</Title>
-														</Col>}														
-														{item?.bankName && <Col xs={24} md={24} lg={14} xl={8} xxl={4}>
-															<Text className="fw-300 text-white-50 fs-12">
+															</div>
+															</div>
+														}
+														{item?.bankName && 
+														<div className="fait-box kpi-divstyle">
+															<Text className="kpi-label">
 																Bank Name
 															</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
+															<div level={5} className="kpi-val"   >
 
 																{item.bankName === " " ||
 																	item.bankName === null
 																	? "-"
 																	: item.bankName}
-															</Title>
-														</Col>}
-														{item.bic &&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
-															<Text className="fw-300 text-white-50 fs-12">
+															</div>
+															</div>
+														}
+														{item.bic &&
+														<div className="fait-box kpi-divstyle">
+															<Text className="kpi-label">
 																BIC
 															</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
+															<div level={5} className="kpi-val"   >
 
 																{item.bic === " " ||
 																	item.bic === null
 																	? "-"
 																	: item.bic}
-															</Title>
-														</Col>}
-														{item?.bankBranch && <Col xs={24} md={24} lg={14} xl={8} xxl={4}>
-															<Text className="fw-300 text-white-50 fs-12">
+															</div>
+															</div>
+														}
+														{item?.bankBranch && 
+														<div className="fait-box kpi-divstyle">
+															<Text className="kpi-label">
 															Branch
 															</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
+															<div level={5} className="kpi-val"   >
 
 																{item.bankBranch === " " ||
 																	item.bankBranch === null
 																	? "-"
 																	: item.bankBranch}
-															</Title>
-														</Col>}
-														{item?.country && <Col xs={24} md={24} lg={14} xl={8} xxl={4}>
-															<Text className="fw-300 text-white-50 fs-12">
+															</div>
+															</div>
+														}
+														{item?.country && 
+														<div className="fait-box kpi-divstyle">
+															<Text className="kpi-label">
 																Country
 															</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
+															<div level={5} className="kpi-val"   >
 
 																{item.country === " " ||
 																	item.country === null
 																	? "-"
 																	: item.country}
-															</Title>
-														</Col>}
-														{item?.state && <Col xs={24} md={24} lg={14} xl={8} xxl={4}>
-															<Text className="fw-300 text-white-50 fs-12">
+															</div>
+															</div>
+														}
+														{item?.state && 
+														<div className="fait-box kpi-divstyle">
+															<Text className="kpi-label">
 																State
 															</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
+															<div level={5} className="kpi-val"   >
 
 																{item.state === "" || item.state === " " ||
 																	item.state === null
 																	? "-"
 																	: item.state}
-															</Title>
-														</Col>}
-														{item?.city&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
-															<Text className="fw-300 text-white-50 fs-12">
+															</div>
+															</div>
+														}
+														{item?.city&&
+														<div className="fait-box kpi-divstyle">
+															<Text className="kpi-label">
 																City
 															</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
+															<div level={5} className="kpi-val"   >
 
 																{item.city === " " ||
 																	item.city === null
 																	? "-"
 																	: item.city}
-															</Title>
-														</Col>}
-														{item?.postalCode &&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
-															<Text className="fw-300 text-white-50 fs-12">
+															</div>
+															</div>
+														}
+														{item?.postalCode &&
+														<div className="fait-box kpi-divstyle">
+															<Text className="kpi-label">
 																Zip
 															</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
+															<div level={5} className="kpi-val"   >
 
 																{item.postalCode === "" || item.postalCode === " " ||
 																	item.postalCode === null
 																	? "-"
 																	: item.postalCode}
-															</Title>
-														</Col>}
-														 {(item.walletCode!=='EUR'&& fiatAddress?.transferType !== "internationalIBAN")&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
-															<Text className="fw-300 text-white-50 fs-12">
+															</div>
+															</div>
+														}
+														 {(item.walletCode!=='EUR'&& fiatAddress?.transferType !== "internationalIBAN")&&
+														 <div className="fait-box kpi-divstyle">
+															<Text className="kpi-label">
 															Bank Address 1
 															</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
+															<div level={5} className="kpi-val"   >
 																{item.line1 === " " ||
 																	item.line1 === null
 																	? "-"
 																	: item.line1}
-															</Title>
-														</Col>}
-														{(item.walletCode!=='EUR'&& fiatAddress?.transferType !== "internationalIBAN")&&<Col xs={24} md={24} lg={14} xl={8} xxl={4}>
-															<Text className="fw-300 text-white-50 fs-12">
+															</div>
+															</div>
+														}
+														{(item.walletCode!=='EUR'&& fiatAddress?.transferType !== "internationalIBAN")&&
+														<div className="fait-box kpi-divstyle">
+															<Text className="kpi-label">
 															Bank Address 2
 															</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal text-white-50"   >
+															<div level={5} className="kpi-val"   >
 																{item.line2 === " " ||
 																	item.line2 === null
 																	? "-"
 																	: item.line2}
-															</Title>
-														</Col>}
+															</div>
+															</div>
+														}
 
 
-													</Row>
+													
 												</div>
 												{item?.documents?.details.map((file) => (
-													<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+													<Col xs={12} sm={12} md={12} lg={12} xxl={12}>
 														<div
-															className="docfile mr-0 d-flex ml-8"
+															className="docfile address-book-viewlevel"
 															key={file.id}>
 															<span
 																className={`icon xl ${(file.documentName?.slice(-3) === "zip" &&
@@ -527,16 +549,18 @@ const AddressFiatView = (props) => {
 										</Row>
 									</Col>
 								</Row>
-								</div>
-							)}
-							<div className="text-right mt-24">
+								<div className="text-right view-level-btn">
 								<Button
-									className="pop-btn px-36"
-									style={{ margin: "0 8px",width:'250px' }}
+								block
+									className="cust-cancel-btn"
+									
 									onClick={backToAddressBook}>
 									Cancel
 								</Button>
 							</div>
+								</div>
+							)}
+							
 						</>
 					)}
 				</div>

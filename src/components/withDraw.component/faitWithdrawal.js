@@ -21,7 +21,7 @@ import {
   getCountryStateLu,
   getStateLookup, getAccountHolder, getAccountWallet, getAccountBankDetails
 } from "../../api/apiServer";
-import success from "../../assets/images/success.png";
+import success from "../../assets/images/success.svg";
 import { fetchDashboardcalls } from "../../reducers/dashboardReducer";
 import { handleFavouritAddress } from "../../reducers/addressBookReducer";
 import {
@@ -879,21 +879,21 @@ const FaitWithdrawal = ({ props,
             {confirmationStep !== "step2" && (
               <div className="text-right withdraw-footer">
                 <Button
-                  key="back"
-                  type="text"
-                  className="text-white-30 pop-cancel fw-400 text-captz text-center"
-                  onClick={handleCancel}
-                  disabled={loading}
-                >
-                  Cancel
-                </Button>
-                <Button
                   key="submit"
-                  className="pop-btn px-36 ml-36"
+                  className="pop-btn"
                   onClick={handleOk}
                   loading={loading}
                 >
                   Confirm
+                </Button>
+                <Button
+                  key="back"
+                  type="text"
+                  className="cust-cancel-btn"
+                  onClick={handleCancel}
+                  disabled={loading}
+                >
+                  Cancel
                 </Button>
               </div>
             )}
@@ -909,7 +909,7 @@ const FaitWithdrawal = ({ props,
         title={[<div className="side-drawer-header">
           <span />
           <div className="text-center">
-            <Paragraph className="mb-0 text-white-30 fw-600 text-upper"><Translate content="AddFiatAddress" component={Paragraph} className="mb-0 text-white-30 fw-600 text-upper" /></Paragraph>
+            <Paragraph className="drawer-maintitle"><Translate content="AddFiatAddress" component={Paragraph} className="drawer-maintitle" /></Paragraph>
           </div>
           <span onClick={closeBuyDrawer} className="icon md close-white c-pointer" />
         </div>]}
@@ -917,7 +917,7 @@ const FaitWithdrawal = ({ props,
         closable={true}
         visible={beneficiaryDetails}
         closeIcon={null}
-        className=" side-drawer w-50p"
+        className=" side-drawer"
         size="large"
       >
         <AddressCommonCom checkThirdParty={checkRadio} onCancel={() => closeBuyDrawer()} props={props} />

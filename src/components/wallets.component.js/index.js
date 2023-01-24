@@ -18,8 +18,8 @@ class Wallets extends Component {
         return (<Drawer destroyOnClose={true}
             title={[<div className="side-drawer-header">
                 <span />
-                <div className="text-center fs-16">
-                    <Translate className="mb-0 text-white-30 fw-600" content="menu_wallets" component={Paragraph} />
+                <div className="text-center">
+                    <Translate className="drawer-maintitle" content="menu_wallets" component={Paragraph} />
                 </div>
                 <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" /></div>]}
             placement="right"
