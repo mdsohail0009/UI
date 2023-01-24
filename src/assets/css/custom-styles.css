@@ -258,7 +258,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .ant-notification-rtl .ant-notification-notice-close{left: auto;right: 15px;}
 .ant-notification-notice-message{color: var(--textWhite30)!important;}
 .ant-notification-notice-description{color: var(--textSecondary)!important;}
-.ant-notification-notice{background-color: var(--black);border-radius: 10px;font-size: 14px;}
+.ant-notification-notice{border-radius: 10px;font-size: 14px;background: var(--accountType);}
 .notify{padding: 16px;margin-bottom: 36px;}
 .notify .ant-alert-action{margin: 15px 30px 0 30px;}
 .notify .ant-alert-action .ant-btn{color: var(--viewAll);font-size: 18px;font-weight: 500;}
