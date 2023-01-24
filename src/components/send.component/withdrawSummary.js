@@ -839,7 +839,8 @@ class WithdrawSummary extends Component {
 												</Tooltip>
 											)}
 									
-											{verifyOtpText[this.state.verifyOtpText] && <Button
+											{/* {verifyOtpText[this.state.verifyOtpText] &&  */}
+											<Button
 												type="text" className="btn-clickable-style"
 												loading={this.state.phoneVerifyLoading}
 												style={{ color: "black", margin: "0 auto" }}
@@ -850,7 +851,8 @@ class WithdrawSummary extends Component {
 													<Text className="text-yellow pr-24"> Verified </Text>
 													<span className="icon md greenCheck" />
 													</>)}
-											</Button>}
+											</Button>
+											{/* } */}
 											
 										</div>}
 										/>
