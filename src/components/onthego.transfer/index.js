@@ -896,7 +896,7 @@ saveWithdrawdata = async () => {
                     fiatHeadingUpdate={this.fiatHeading}
                     onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} />
             </>,
-      declaration: <div className="custom-declaraton wg"> <div className="success-pop text-center declaration-content">
+      declaration: <div className="custom-declaraton send-success"> <div className="success-pop text-center declaration-content">
       <Image preview={false} src={alertIcon} className="confirm-icon"  />
       <Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
