@@ -1015,7 +1015,7 @@ class WithdrawSummary extends Component {
 								{this.state.permissions?.Send &&
 
 
-								<div className="d-flex agree-check">
+								<div className="d-flex agree-check checkbox-mobile">
 						<label>
 							<input
 								type="checkbox"

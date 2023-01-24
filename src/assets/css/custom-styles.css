@@ -1191,6 +1191,19 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .db-titles.your-card{margin-top: 50px;}
     .search-box.mobile-hide{display: none;}
     .search-box.mobile-search{margin: 0;}
+    .cust-tabs-fait .ant-tabs-nav{width: 308px;overflow: auto;} .cust-heightmbl{height: fit-content;}
+    .send-minmax{margin-top: 15px;}
+    .moblie-order {display: flex;flex-direction: column-reverse;margin-top: 20px;}
+    .crypto-card.select.space-hide{display: none;}
+    .send-crypto-mobile .swap-entryvalue {flex: 0 0 200px;}
+    .send-crypto-mobile .swap-text-sub, .send-crypto-mobile .swapcoin-alignemnt{font-size: 18px;}
+    .send-crypto-err .custom-forminput .ant-form-item-control .ant-form-item-explain-error {  position: absolute; bottom: -41px !important;}
+    .crypto-btn-mobile{margin-top: 40px;}
+    .adbook-mobile{margin-left: 8px;}
+    .adbook-mobile.past-respnt{margin-left: 16px;}
+    .mobile-scroll{max-height: fit-content !important;}
+    .paste-recept-style.mobile-scroll{height: fit-content !important;}
+    .checkbox-mobile{margin-top: 16px;}
 }
 
 /*@media end*/
