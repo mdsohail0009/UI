@@ -988,7 +988,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .markets-grid .ant-table-tbody{border-bottom-left-radius: 20px;border-bottom-right-radius: 20px;}
 .markets-grid .side-drawer-header{padding: 0 16px 0 0;}
 .header-space{margin-bottom: 0 !important;}
-.basicinfo.batch-style{margin-left: 20px;}
+.basicinfo.batch-style{margin-bottom: 18px !important;}
 .bill-payment.bill-margin{margin-bottom: 10px !important;}
 /* batchpayments end */
 .no-transaction{padding-top: 18px !important;}
@@ -1182,6 +1182,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .gridLink.batch-filename{padding-left: 0;}
     .preview-grid .grid-title{margin-bottom: 0 !important;}
     .new-custom-radiobtn .ant-radio-button-wrapper{padding:0 2px;}
+    .cust-tabs-fait .ant-tabs-nav{width: 308px;overflow: auto;}
 }
 
 /*@media end*/
