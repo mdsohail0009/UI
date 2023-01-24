@@ -103,7 +103,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .cust-check-outline input[type='radio'], .ant-form .cust-check-outline input[type='checkbox'], .custom-checkbox.cust-check-outline input[type='checkbox']{display: none;}
 /* .new-custom-radiobtn  input[type=radio]:checked+span{background-position:-324px -521px;} */
 /*Header start*/
-.notification-conunt .bell span{position: absolute;right: -8px;top: -8px;width: 18px;height: 18px;background: #3653E4;border-radius: 50%;line-height: 18px;text-align: center;font-size: 10px;font-weight: 600;}
+.notification-conunt .bell span{ color: white; position: absolute;right: -8px;top: -8px;width: 18px;height: 18px;background: #3653E4;border-radius: 50%;line-height: 18px;text-align: center;font-size: 10px;font-weight: 600;}
 .haead-main{background-color: var(--secondary);position: fixed; z-index: 9999;left: 0; right: 0;}
 .tlv-header ul{background-color: transparent; border-bottom: 0;}
 .tlv-header ul li{font-weight: 500;}
