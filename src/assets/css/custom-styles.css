@@ -1012,6 +1012,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .custom-declaraton.send-success{margin-top: 40px;}
 .custom-declaraton.send-success button,.success-pop.sell-success{margin-top: 26px;}
 .transaction-custom-table .pay-docs.bill-bank{text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width: 50%;}
+.cust-cancel-btn.transaction-cancelbtn{margin-left: 0 !important;}
 /*@media start*/
 @media (min-width: 768px){
     .listitems-design{width: 340px;}
@@ -1070,6 +1071,8 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .swap-text-sub{margin-top: -4px;}
     .new-swap-subtext.send-crypto-enrty{margin-bottom: 24px;}
     .summary-liststyle{margin-right: 26px;}
+    .search-box.mobile-search{display: none;}
+
  
 }
 
@@ -1183,6 +1186,11 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .preview-grid .grid-title{margin-bottom: 0 !important;}
     .new-custom-radiobtn .ant-radio-button-wrapper{padding:0 2px;}
     .cust-tabs-fait .ant-tabs-nav{width: 308px;overflow: auto;}
+    .ant-drawer-header{padding: 0 24px;}
+    .ant-drawer-body{padding-top: 0;}
+    .db-titles.your-card{margin-top: 50px;}
+    .search-box.mobile-hide{display: none;}
+    .search-box.mobile-search{margin: 0;}
 }
 
 /*@media end*/

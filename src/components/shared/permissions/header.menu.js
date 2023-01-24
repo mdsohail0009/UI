@@ -390,7 +390,7 @@ class HeaderPermissionMenu extends Component {
                                 </Popover>
                         </li>
                         <li
-                            onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/auditlogs" })}
+                            onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/transactions" })}
 
                         >
                             <Link>
@@ -642,7 +642,7 @@ class HeaderPermissionMenu extends Component {
                 isShowSendFiat={this.state.drawerMenu.sendFiatTab}
                 onClose={() => this.closeDrawer("send")}
             />
-            {this.state.drawerMenu.transactions && (
+            {/* {this.state.drawerMenu.transactions && (
                 <TransactionsHistory
                     showDrawer={this.state.drawerMenu.transactions}
                     onClose={() => {
@@ -654,7 +654,8 @@ class HeaderPermissionMenu extends Component {
                     }}
                     thref={(cd) => (this.child1 = cd)}
                 />
-            )}
+                 <Link to="/transactions" value={4} className="c-pointer"></Link>
+            )} */}
 
             <Drawer
                 title={[

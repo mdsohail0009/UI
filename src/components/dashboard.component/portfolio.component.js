@@ -106,7 +106,7 @@ class Portfolio extends Component {
                     <div className='trans-align'>
                     <div className='transaction-title'>
                     <Translate component={Title} content="transactions_history" className="db-titles" />
-                    <div className = 'search-box'>
+                    <div className = 'search-box mobile-hide'>
                         <Search
                             placeholder="Search Wallet"
                             onChange={(value)=>this.handleSearch(value)}
@@ -121,6 +121,17 @@ class Portfolio extends Component {
                     <Button className="dbchart-link"  >
                         <Link to="/transactions"><Translate content="cockpit" /></Link>
                     </Button></div>
+                    <div className = 'search-box mobile-search'>
+                        <Search
+                            placeholder="Search Wallet"
+                            onChange={(value)=>this.handleSearch(value)}
+                            size="middle"
+                            bordered={false}
+                            className="search-text" />
+                      <div className = "search-btnexpand">
+                      <span className="icon lg search-angle icon-space" />
+                      </div>
+                  </div> 
                        {this.state.transactions &&
                        <TransactionsHistory
                         showDrawer={this.state.transactions}
