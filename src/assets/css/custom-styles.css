@@ -454,7 +454,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* Dashboard end */
 
 /*Buy/sell drawer start*/
-.drawer-maintitle{font-weight: 800;font-size: 26px;color: var(--menuFont);text-transform: capitalize;}
+.drawer-maintitle{font-weight: 800;font-size: 26px;color: var(--menuFont) !important;text-transform: capitalize;}
 .crypto-list.auto-scroll.wallet-list{margin-top: 30px;}
 .crypto-list .ant-list-item, .wallet-list .ant-list-item{margin-bottom: 8px;}
 .search-style{color: var(--menuFont);font-weight: 600;font-size: 18px;margin-bottom: 2px !important;text-transform: capitalize;}
@@ -1177,8 +1177,11 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .theme-text{display: none;}
     .price-valgreen div.lg-fontsize {width: 68px; word-break: break-all;}
     .mobile-viewall{margin-bottom: 11px;}
-    .bill-payment {display: flex;justify-content: space-between;align-items: center;margin-bottom: 8px;
-    }
+    .bill-payment {display: flex;justify-content: space-between;align-items: center;margin-bottom: 8px;}
+    .addressbook-mb{font-size: 22px !important;}
+    .gridLink.batch-filename{padding-left: 0;}
+    .preview-grid .grid-title{margin-bottom: 0 !important;}
+    .new-custom-radiobtn .ant-radio-button-wrapper{padding:0 2px;}
 }
 
 /*@media end*/

@@ -320,7 +320,7 @@ downLoadPreview=()=>{
               <div className='drawer-content'>
                
                 <div className='text-center makepayment-section'>
-            <div className='drawer-maintitle'>Send {this.state.selectedCurrency} to Multiple Addresses</div>
+            <Title className='drawer-maintitle'>Send {this.state.selectedCurrency} to Multiple Addresses</Title>
                                              <Upload
                                               type="dashed"
                                               size="large"
