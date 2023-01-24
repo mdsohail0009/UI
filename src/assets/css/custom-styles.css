@@ -1208,9 +1208,9 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .checkbox-mobile{margin-top: 16px;}
     .sb-text{font-size: 18px;}
     .tlv-logo{height: 40px;}
-   .transaction_resp .ant-form-item-label > label{ height: auto !important;}
-   .transaction_resp .ant-form-item .ant-form-item-label{ padding-bottom: 0 !important;}
-   .transaction_resp .search-btn{ float: right;}
+   .transaction_resp .ant-form-item-label > label,.customaudit-select .selectcustom-input .ant-form-item-label > label{ height: auto !important;}
+   .transaction_resp .ant-form-item .ant-form-item-label,.customaudit-select .selectcustom-input.ant-form-item .ant-form-item-label{ padding-bottom: 0 !important;}
+   .transaction_resp .search-btn,.customaudit-select .search-btn{ float: right;}
     .ant-drawer-header{padding-bottom: 0px;}
     .moblie-order.buy-sell-mobile .sell-radiobtn-style { flex: 0 0 0px;}
     .moblie-order.buy-sell-mobile .round-pills.sell-radiobtn-style{width: fit-content;margin-top: 16px;}
