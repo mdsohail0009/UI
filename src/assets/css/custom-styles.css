@@ -1216,6 +1216,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .moblie-order.buy-sell-mobile .round-pills.sell-radiobtn-style{width: fit-content;margin-top: 16px;}
     .mobile-receive-fiat{margin-left: 0px;}
     .mobile-transaction{left: 144px !important;}
+    .new-custom-radiobtn .ant-radio-button-wrapper-checked, .new-custom-radiobtn .ant-radio-button-wrapper{font-size: 14px;}
 }
 
 /*@media end*/
