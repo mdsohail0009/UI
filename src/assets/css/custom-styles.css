@@ -979,10 +979,15 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .buysell-balances{text-align: center;margin: 0 0 20px 0 !important;}
 .faitwallet-cards .ant-list-items li:nth-child(n+3){display: none;}
 .cust-cancel-btn.back-btn-sumsub{margin-top: 12px !important;}
-.header-right .ant-menu-title-content:hover,.header-right .ant-typography.custom-header:hover{color:var(--white);}
-.custom-header{color:var(--white) !important;}
-ul .mobile-header-default:active span{color:var(--white) !important}
-.custom-inactive{color:var(--sbCardText) !important}
+/* .header-right .ant-menu-title-content:hover,.header-right .ant-typography.custom-header:hover, .header-right .ant-typography.custom-header:active, .ant-menu-item.ant-menu-item-active{color:var(--white);} */
+/* .header-right .ant-menu-title-content{color:var(--coinPrice)!important;}
+.header-right .ant-menu-title-content .custom-header{color:var(--textWhite30) !important;}
+.header-right .ant-menu-title-content .custom-inactive{color:var(--coinPrice) !important;}
+.header-right .ant-menu-title-content.ant-menu-item-active.ant-menu-item-selected.ant-menu-item-only-child{color: var(--white);}
+.header-right .ant-menu-title-content.ant-menu-item-active.ant-menu-item-selected.ant-menu-item-only-child .custom-header{color: var(--white);} */
+/* .custom-header{color:var(--coinPrice) !important;} */
+/* ul .mobile-header-default:active span{color:var(--white) !important} */
+/* .custom-inactive{color:var(--sbCardText) !important} */
 .sumsub-content{margin: 10px 0;}
 .icon.md.refresh-icon{background-position: -271px -33px;}
 .cust-cancel-btn.pop-space{margin-right: 8px;margin-bottom: 0;}

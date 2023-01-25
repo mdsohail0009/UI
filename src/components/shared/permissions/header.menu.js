@@ -482,17 +482,19 @@ class HeaderPermissionMenu extends Component {
                     this.props.dispatch(setHeaderTab(key.key));
                 }}
             >
-                <Menu.Item>
+                <Menu.Item 
+                        className={this.props.menuItems.getScreen?.getScreen == "dashboard" ? "active" : "custom-inactive"}
+                        >
                     <Translate
                         content="header_title"
                         onClick={this.props.routeToCockpit}
                         onMouseOver={() => { this.handleHover() }}
-                        component={Text}
-                        className={this.props.menuItems.getScreen?.getScreen == "dashboard" ? "custom-header" : "custom-inactive"}
+                        // component={Text}
+                        className={this.props.menuItems.getScreen?.getScreen == "dashboard" ? "active" : "custom-inactive"}
                     />
                 </Menu.Item>
                 {data?.map((item, indx) => <React.Fragment>
-                    {item.isTab ? <Menu.Item key={item.id} onMouseOver={() => this.handleSelecte(item)}>
+                    {item.isTab ? <Menu.Item key={item.id} onClick={() => this.handleSelecte(item)}>
                         <Dropdown
                             onClick={() =>
                                 this.setState({ ...this.state, visbleProfileMenu: false })
@@ -517,7 +519,7 @@ class HeaderPermissionMenu extends Component {
                                 content={item.content}
                                 component={Menu.Item}
                                 key="4"
-                                className={item.content == this.props.menuItems.getScreen?.getScreen ? "custom-header" : "active"}
+                                className={item.content == this.props.menuItems.getScreen?.getScreen ?  "active":"custom-header"}
 
                             />
                         </Dropdown>
