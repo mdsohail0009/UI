@@ -43,7 +43,7 @@ const theme={lightTheme:":root {--bgYellow: #FFDB1A;--textWhite: #FFFFFF;--textW
                         console.log('WebSDK onError', error)
                     },
                     uiConf: {
-                        customCssStr:theme[props.userConfig?.theme.replace(" ","")] 
+                        customCssStr:theme[props.userConfig?.theme?.replace(" ","")] 
                     }
                 }).onMessage((type, payload) => {
                     if (type === 'idCheck.onResize') {
