@@ -88,7 +88,7 @@ class TransactionSlips extends Component {
              }
               <Button 
               block
-                className=" cust-cancel-btn"
+                className=" cust-cancel-btn transaction-cancelbtn"
                 onClick={() => this.handleModalCancel()}
 
               >Cancel</Button>

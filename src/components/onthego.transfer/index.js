@@ -393,7 +393,7 @@ saveWithdrawdata = async () => {
                 }}
                 renderItem={item => (
 
-                    <List.Item className="drawer-list-fiat" onClick={() => this.setState({ ...this.state, selectedCurrency: item.walletCode }, () => { this.getPayees(); this.chnageStep("enteramount") })}>
+                    <List.Item className="drawer-list-fiat sendfiat-coins" onClick={() => this.setState({ ...this.state, selectedCurrency: item.walletCode }, () => { this.getPayees(); this.chnageStep("enteramount") })}>
                     <Link>
                       <List.Item.Meta className='drawer-coin'
                         avatar={<Image preview={false} src={item.imagePath} />}
@@ -540,7 +540,7 @@ saveWithdrawdata = async () => {
           activeKey={this.selectedTab}
           onChange={this.handleTabChange}>					
               <Tabs.TabPane tab="Address Book" content="withdrawCrypto" key={"withdrawCrypto"}  value="withdrawCrypto" className=""  component={Radio.Button}>
-                <ul className="addCryptoList adbook-scroll" >
+                <ul className="addCryptoList mobile-scroll" >
                 {filterObj.length > 0 &&
                   filterObj?.map((item, idx) => (
                     <>
@@ -610,7 +610,7 @@ saveWithdrawdata = async () => {
              
               <ul
                 style={{ listStyle: 'none', paddingLeft: 0 }}
-                className="addCryptoList adbook-scroll paste-recept-style"
+                className="addCryptoList paste-recept-style mobile-scroll"
               >
                 {pastPayees.length > 0 &&
                   pastPayees?.map((item, idx) => (
@@ -914,7 +914,7 @@ saveWithdrawdata = async () => {
            <Translate content="Back_to_Withdrawfiat" className=" cust-cancel-btn send-crypto-btn" component={Button} size="large" onClick={() => { this.goBack() }} /> </div></div>,
        successpage: <div className="custom-declaraton send-success"> <div className="success-pop text-center declaration-content">
        <Image  preview={false} src={success}  className="confirm-icon" />
-       <Title level={2} className="successsubtext">Your transaction has been processed successfully</Title>
+       <Title level={2} className="successsubtext cust-heightmbl">Your transaction has been processed successfully</Title>
        <Translate content="Back_to_Withdrawfiat" className=" cust-cancel-btn" component={Button} size="large" onClick={() => { this.goBack() }}  />
    </div></div>
     }

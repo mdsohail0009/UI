@@ -88,7 +88,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .icon.md.card{background-position: -480px -1px;}
 .icon.md.phone{background-position: 0px -35px;}
 .icon.md.qrcode{background-position: -140px -34px;}
-.icon.md.swaparrow{background-position: -236px -35px}
+.icon.md.swaparrow{background-position: -236px -35px;margin-bottom: 6px;}
 .icon.md.sentarrow{background-position: -307px -35px}
 .icon.md.recivearrow{background-position: -338px -35px}
 .icon.md.check-arrow{background-position: -366px -36px}
@@ -563,6 +563,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .icon.md.USDS{background-position: -213px -102px;}
 .visible-flex{display: flex; justify-content: space-between;align-items: center;}
 .addressbook-grid .cust-list>div{position: unset !important;}
+.transaction-grid td .gridLink,.cases-grid-style td .gridLink,.address-clear td .gridLink{padding:5px 0 0 0 !important; line-height: normal;}
 @media (min-width: 320px){
     .tlv-header{padding: 8px 8px !important;}
     .header-dropdown{margin-right: 24px;}
@@ -709,7 +710,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
    .sidebar-push .ant-alert{align-items: baseline;}
    .custom-label.ant-form-item{margin-bottom: 16px;}
    .mb-flex-none{display: block !important;}
-   .mb-view tfoot{background: #515a64 !important;}
+   /* .mb-view tfoot{background: #515a64 !important;} */
    .cust-cypto-view{width: auto !important;}
    .custom-alert-width{width: auto !important;}
 }

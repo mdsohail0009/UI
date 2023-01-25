@@ -21,6 +21,7 @@ const { Option } = Select;
 class TransactionsHistory extends Component {
   formRef = React.createRef();
   formDateRef = React.createRef();
+  useDivRef = React.createRef();
   constructor(props) {
     super(props);
     this.state = {
@@ -68,6 +69,7 @@ class TransactionsHistory extends Component {
   componentDidMount() {
     this.props.dispatch(getScreenName({getScreen:"dashboard"}))
     getFeaturePermissionsByKey('transactions', this.loadInfo)
+    this.useDivRef.current?.scrollIntoView(0,0)
   }
 
   loadInfo = () => {
@@ -200,6 +202,15 @@ class TransactionsHistory extends Component {
 
     }
   }
+  backToDashboard=()=>{
+    if (!this.props?.customer?.isKYC) {
+        this.props.history.push("/notkyc");
+        return;
+    }
+      else{
+        this.props.history.push("/");
+      }
+}
   handleChange = (value, prop) => {
     var val = "";
     let { customerData, searchObj } = this.state;
@@ -306,10 +317,6 @@ isErrorDispaly = (objValue) => {
     return "Something went wrong please try again!";
   }
 };
-backToDashboard=()=>{
-  debugger
-
-}
   render() {
     const { Title } = Typography;
     const {  doctypeData, currenyData, gridUrl, searchObj,showModal,modalData,timeListSpan,statusData,isLoading,viewData } = this.state;
@@ -340,6 +347,7 @@ backToDashboard=()=>{
 
     return (
       <>
+      <div ref={this.useDivRef}></div>
         <Drawer
           title={[<div className="side-drawer-header">
             <Translate content="transactions_history" component={Title} className="grid-title" />
@@ -354,9 +362,9 @@ backToDashboard=()=>{
         >
         </Drawer>
         <div className="main-container grid-demo">
-			<div className="backbtn-arrowmb" >
-        <Link className="icon md leftarrow c-pointer backarrow-mr" to="/" onClick={handleBack}/>
-        <span className="back-btnarrow">Back</span></div>
+			<div className="backbtn-arrowmb">
+       <span className="icon md leftarrow c-pointer backarrow-mr" onClick={()=>this.backToDashboard()} />
+        <span className="back-btnarrow c-pointer" onClick={()=>this.backToDashboard()}>Back</span></div>
         <Translate content="transactions_history" component={Title} className="grid-title" />
             <Form
               initialValues={this.state.customerData}

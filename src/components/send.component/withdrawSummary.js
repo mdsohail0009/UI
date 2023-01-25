@@ -317,8 +317,8 @@ class WithdrawSummary extends Component {
 				EmailCode: response.data,
 				verifyEmail: true,
 				verifyEmailOtp: true,
-				verifyOtpText: null,
-				verifyText: null,
+				//verifyOtpText: null,
+				//verifyText: null,
 				emailText: null,
 				inputEmailDisable: true,
 				isEmailVerification: true,
@@ -353,7 +353,7 @@ class WithdrawSummary extends Component {
 				OtpVerification: response.data,
 				verifyPhone: true,
 				verifyTextotp: true,
-				verifyOtpText: null,
+				//verifyOtpText: null,
 				buttonText: null,
 				inputDisable: true,
 				isPhoneVerification: true,
@@ -846,7 +846,7 @@ class WithdrawSummary extends Component {
 												style={{ color: "black", margin: "0 auto" }}
 												onClick={this.getOtpVerification}
 												disabled={this.state.verifyPhone === true||this.state.verifyTextotp === true}>
-												{verifyOtpText[this.state.verifyOtpText]}
+												{!this.state.verifyTextotp&&verifyOtpText[this.state.verifyOtpText]}
 												{this.state.verifyTextotp === true && (<>
 													<Text className="text-yellow pr-24"> Verified </Text>
 													<span className="icon md greenCheck" />
@@ -923,7 +923,7 @@ class WithdrawSummary extends Component {
 												loading={this.state.emailVerifyLoading}
 												onClick={(e) => this.getEmailVerification(e)}
 												disabled={this.state.verifyEmail === true||this.state.verifyEmailOtp === true}>
-												{verifyText[this.state.verifyText]}
+												{!this.state.verifyEmailOtp&&verifyText[this.state.verifyText]}
 												{this.state.verifyEmailOtp === true && (<>
 													<Text className="text-yellow pr-24"> Verified </Text>
 													<span className="icon md greenCheck" />
@@ -1017,7 +1017,7 @@ class WithdrawSummary extends Component {
 								{this.state.permissions?.Send &&
 
 
-								<div className="d-flex agree-check">
+								<div className="d-flex agree-check checkbox-mobile">
 						<label>
 							<input
 								type="checkbox"

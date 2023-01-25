@@ -136,13 +136,13 @@ class BusinessTransfer extends Component {
     }
    
     handleIbanChange = async ({ target: { value,isNext } }) => {
-        this.setState({ ...this.state, enteredIbanData: value, isShowValid: false, ibanDetails: {}});
+      //  this.setState({ ...this.state, enteredIbanData: value, isShowValid: false, ibanDetails: {}});
         if (value?.length >= 10 && isNext) {
-            this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true,iBanValid:true });
+            this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true,iBanValid:true,enteredIbanData: value, isShowValid: false, ibanDetails: {},isValidateLoading:true});
             const response = await fetchIBANDetails(value);
             if (response.ok) {
                 if(response.data && (response.data?.routingNumber || response.data?.bankName)){
-                    this.setState({ ...this.state, enteredIbanData: value, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:true, isValidateLoading: false });
+                    this.setState({ ...this.state, enteredIbanData: value, ibanDetails: response.data, ibanDetailsLoading: false, errorMessage: null, iBanValid:true, isValidateLoading: false});
                 }else{
                     if(this.state.ibanDetails && !this.state.ibanDetails?.routingNumber|| !this.state.ibanDetails?.bankName) {
                         this.setState({ ...this.state, errorMessage: "No bank details are available for this IBAN number", enteredIbanData: value, ibanDetails:{}, ibanDetailsLoading: false,  iBanValid:false, isValidateLoading: false });
@@ -160,6 +160,7 @@ class BusinessTransfer extends Component {
     }
     onIbanValidate = (e) => {
         let value = e ? e: this.form.current?.getFieldValue('iban');
+      //  this.state.isValidateLoading = true;
         if (value?.length >= 10) {
             if (value &&!/^[A-Za-z0-9]+$/.test(value)) {
                 this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true, isValidateMsg: true, errorMessage: null});

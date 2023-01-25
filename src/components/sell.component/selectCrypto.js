@@ -196,7 +196,7 @@ class SelectSellCrypto extends Component {
                                 isConvertionLoad={this.state.isConvertionLoading}
                                 isSwaped={this.state.isSwap}
                             />
-                                <div className='display-items' >
+                                <div className='display-items moblie-order buy-sell-mobile' >
                                     <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills sell-radiobtn-style text-left" onChange={({ target: { value } }) => {
                                         this.clickMinamnt(value)
                                     }}>

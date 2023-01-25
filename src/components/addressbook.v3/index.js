@@ -7,6 +7,7 @@ import Translate from "react-translate-component";
 import { fetchMemberWallets } from '../dashboard.component/api'
 import ConnectStateProps from "../../utils/state.connect";
 import NumberFormat from "react-number-format";
+import Loader from "../../Shared/loader";
 class AddressBookV3 extends Component {
     state = {
         currency: this.props.selectedAddress?.currency || null,
@@ -29,11 +30,12 @@ class AddressBookV3 extends Component {
     render() {
         if (!this.state.currency) {
             return <React.Fragment>
+                {this.state.fiatWalletsLoading && <Loader />}
+                {!this.state.fiatWalletsLoading &&
                 <List
                     itemLayout="horizontal"
                     dataSource={this.state.fiatWallets}
                     className="crypto-list auto-scroll wallet-list"
-                    loading={this.state.fiatWalletsLoading}
                     locale={{
                         emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
                             <Translate content="No_data" />
@@ -56,6 +58,7 @@ class AddressBookV3 extends Component {
                         </List.Item>
                     )}
                 />
+                    }
             </React.Fragment>
         }
         else if (this.props.isFiat)

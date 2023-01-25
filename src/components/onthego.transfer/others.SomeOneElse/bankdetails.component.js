@@ -37,10 +37,10 @@ class PayeeBankDetails extends Component {
         }
     }
     handleIban = async (ibannumber,isNext) => {
-        this.setState({ ...this.state, enteredIbanData: ibannumber, isShowValid: false, iBanDetals: null});
+      //  this.setState({ ...this.state, enteredIbanData: ibannumber, isShowValid: false, iBanDetals: null});
         this.props.getIbandata(null);
         if (ibannumber?.length >= 10 && isNext) {
-            this.setState({ ...this.state, iBanDetals: null, IbanLoader: true, isValidIban: true })
+            this.setState({ ...this.state, iBanDetals: null, IbanLoader: true, isValidIban: true, enteredIbanData: ibannumber,  isShowValid: false,isValidateLoading:true})
             const ibanget = await apicalls.getIBANData(ibannumber)
             if (ibanget.ok) {
                 if (ibanget.data && (ibanget.data?.routingNumber || ibanget.data?.bankName)) {
@@ -66,7 +66,7 @@ class PayeeBankDetails extends Component {
     onIbanValidate = (e) => {
         if (e?.length >= 10) {
             if (e &&!/^[A-Za-z0-9]+$/.test(e)) {
-                this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {},isValidateLoading: true});
+                this.setState({ ...this.state,isValidateLoading: true, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}});
                 this.props.getIbandata(null);
                 this.props.form?.current?.validateFields([["payeeAccountModels","iban"]], this.validateIbanType);
             }

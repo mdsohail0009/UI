@@ -185,7 +185,7 @@ class CockpitCharts extends Component {
 
            
             <div className='coinveiw-newpage'>
-            <div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/" /><span className="back-btnarrow">Back</span></div>
+            <div className="backbtn-arrowmb"><Link  to="/cockpit"><span className="icon md leftarrow c-pointer backarrow-mr"></span><span className="back-btnarrow c-pointer">Back</span></Link></div>
             <div className='fait-wallets-style m-0 new-viewpage'>
             <Translate content="fait_walets" component={Title} className="db-titles" />
             <div className = 'search-box'>
@@ -194,7 +194,7 @@ class CockpitCharts extends Component {
                             onChange={(value)=>this.handleSearch(value)}
                             size="middle"
                             bordered={false}
-                            className="search-text" />
+                            className="search-text search-view" />
                       <div className = "search-btnexpand">
                       <span className="icon lg search-angle icon-space" />
                       </div>
