@@ -27,6 +27,18 @@ const theme={lightTheme:":root {--bgYellow: #FFDB1A;--textWhite: #FFFFFF;--textW
                 }
             }
         }, [props.userConfig?.theme]);
+        const getThemeName=()=>{
+            if(props.userConfig?.theme) {
+                if(typeof props.userConfig?.theme=="string"){
+                    return props.userConfig?.theme?.replace(" ","")
+                }else{
+                    return "DarkTheme"
+                }
+               }else{
+          return "DarkTheme"
+        }
+            
+        }
   const launchWebSdk = async () => {
     setState({ ...state, loading: true })
         apicalls.sumsubacesstoken(props.userConfig.userId, props.userConfig.isBusiness ? "SuisseBase_KYB_Flow" : "SuisseBase_KYC_Flow").then((res) => {
@@ -43,7 +55,7 @@ const theme={lightTheme:":root {--bgYellow: #FFDB1A;--textWhite: #FFFFFF;--textW
                         console.log('WebSDK onError', error)
                     },
                     uiConf: {
-                        customCssStr:theme[props.userConfig?.theme?.replace(" ","")] 
+                        customCssStr:theme[getThemeName()]
                     }
                 }).onMessage((type, payload) => {
                     if (type === 'idCheck.onResize') {
