@@ -440,7 +440,7 @@ const Verifications = (props) => {
                                 className="input-label otp-verify"
                                 extra={
                                     <div>
-                                        <Text className="fs-12 text-white-30 fw-200">
+                                        <Text className="verification-text">
                                             {email.showRuleMsg}
                                         </Text>
                                         <Text
@@ -485,7 +485,7 @@ const Verifications = (props) => {
                                 className="input-label otp-verify"
                                 extra={
                                     <div>
-                                        <Text className="fs-12 text-white-30 fw-200">
+                                        <Text className="verification-text">
                                             {authenticator.showRuleMsg}
                                         </Text>
                                         <Text

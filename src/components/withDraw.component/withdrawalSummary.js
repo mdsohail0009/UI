@@ -623,7 +623,7 @@ const WithdrawalFiatSummary = ({
 								className="input-label otp-verify"
 								extra={
 									<div>
-										<Text className="fs-12 text-white-30 fw-200">
+										<Text className="verification-text">
 											{verificationText}
 										</Text>
 										<Text
@@ -731,7 +731,7 @@ const WithdrawalFiatSummary = ({
 								className="input-label otp-verify"
 								extra={
 									<div>
-										<Text className="fs-12 text-white-30 fw-200">
+										<Text className="verification-text">
 											{emailVerificationText}
 										</Text>
 										<Text

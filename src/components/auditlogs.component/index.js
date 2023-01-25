@@ -207,8 +207,8 @@ class AuditLogs extends Component {
           destoryOnClose={true}
         >
            </Drawer>
-           <div className="main-container grid-demo" >
-			<div className="backbtn-arrowmb"><Link to="/cockpit" ><span className="icon md leftarrow c-pointer backarrow-mr" /><span className="back-btnarrow  c-pointer">Back</span></Link></div>
+           <div className="main-container grid-demo">
+			<div className="backbtn-arrowmb" onClick={()=>this.backToDashboard()}><span className="icon md leftarrow c-pointer backarrow-mr" /><span className="back-btnarrow  c-pointer" >Back</span></div>
       <span className="grid-title"><Translate content="AuditLogs" component={Drawer.span} className="text-white" /></span>
       </div>
           <div className="cust-list main-container">
