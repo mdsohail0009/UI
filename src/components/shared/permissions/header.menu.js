@@ -63,6 +63,9 @@ counterpart.registerTranslations("my", my);
 const { Paragraph, Text } = Typography;
 const { Sider } = Layout;
 class MobileHeaderMenu extends Component {
+    componentDidMount(){
+        this.props.dispatch(getScreenName({getScreen:"dashboard"}))   
+    }
     render() {
         const { onMenuItemClick, features: { features: { data } } } = this.props;
 
@@ -75,12 +78,12 @@ class MobileHeaderMenu extends Component {
                 this.props.dispatch(setHeaderTab(key.key));
             }}
         >
-
             <Translate
                 content="header_title"
                 onClick={this.props.routeToCockpit}
                 component={Menu.Item}
-                className="list-item"
+          
+                className={this.props.features?.getScreen?.getScreen==="dashboard"?"mobile-header-default":"custom-inactive"}
             />
             {data?.map((item, indx) => item.menuitemType === "dropdown" ?
                 <><Translate
