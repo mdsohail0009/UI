@@ -63,8 +63,8 @@ counterpart.registerTranslations("my", my);
 const { Paragraph, Text } = Typography;
 const { Sider } = Layout;
 class MobileHeaderMenu extends Component {
-    componentDidMount(){
-        this.props.dispatch(getScreenName({getScreen:"dashboard"}))   
+    componentDidMount() {
+        this.props.dispatch(getScreenName({ getScreen: "dashboard" }))
     }
     render() {
         const { onMenuItemClick, features: { features: { data } } } = this.props;
@@ -82,8 +82,8 @@ class MobileHeaderMenu extends Component {
                 content="header_title"
                 onClick={this.props.routeToCockpit}
                 component={Menu.Item}
-          
-                className={this.props.features?.getScreen?.getScreen==="dashboard"?"mobile-header-default":"custom-inactive"}
+
+                className={this.props.features?.getScreen?.getScreen === "dashboard" ? "mobile-header-default" : "custom-inactive"}
             />
             {data?.map((item, indx) => item.menuitemType === "dropdown" ?
                 <><Translate
@@ -141,13 +141,13 @@ class HeaderPermissionMenu extends Component {
             receive_crypto: false,
             sendFiatTab: false,
             theamFalge: 'darkTheam',
-            tabColour:false
+            tabColour: false
 
         },
-        previousDrawerKey:""
+        previousDrawerKey: ""
     }
     componentDidMount() {
-        this.props.dispatch(getScreenName({getScreen:"dashboard"}))
+        this.props.dispatch(getScreenName({ getScreen: "dashboard" }))
         this.props.dispatch(fetchFeatures(this.props.userConfig.appId || "178A3680-3B6F-44AD-9EF2-69EA040C16CC"));
         this.menuClickSub = headerSubscriber.subscribe(({ menuitem, menuKey }) => this.onMenuItemClick(menuitem, menuKey));
     }
@@ -232,9 +232,13 @@ class HeaderPermissionMenu extends Component {
                 default:
                     break;
             }
-            this.closeDrawer(this.state.previousDrawerKey)
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true, selectedTab: menuKey === "trade_sell" ? true : false, sendCryptoTab: menuKey === "send_crypto" ? true : false, sendFiatTab: menuKey === "send_fiat" ? true : false,previousDrawerKey:menuKey } });
+            this.closeDrawer(this.state.previousDrawerKey, () => {
+                this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true, selectedTab: menuKey === "trade_sell" ? true : false, sendCryptoTab: menuKey === "send_crypto" ? true : false, sendFiatTab: menuKey === "send_fiat" ? true : false }, previousDrawerKey: menuKey });
+            });
         } else if (menuItem.path) {
+            if(this.state.previousDrawerKey){
+                this.closeDrawer(this.state.previousDrawerKey)
+            }
             this.props.history.push(menuItem.path);
         }
     }
@@ -274,7 +278,7 @@ class HeaderPermissionMenu extends Component {
             }
         }
     }
-    closeDrawer = (key) => {
+    closeDrawer = (key, callback = () => { }) => {
         if (this.props.menuItems?.featurePermissions?.[KEY_URL_MAP[window.location.pathname]]?.featureId) {
             this.props.dispatch(setSelectedFeatureMenu(this.props.menuItems?.featurePermissions?.[KEY_URL_MAP[window.location.pathname]]?.featureId));
         }
@@ -292,13 +296,13 @@ class HeaderPermissionMenu extends Component {
         });
         this.props.clearSwapfullData();
         if (key === "send") {
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, send_crypto: false, send_fiat: false, receive_fiat: false, receive_crypto: false } });
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, send_crypto: false, send_fiat: false, receive_fiat: false, receive_crypto: false } }, callback);
         }
         else if (key === "trade") {
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, "trade_buy": false, "trade_sell": false } });
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, "trade_buy": false, "trade_sell": false } }, callback);
         }
         else {
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [key]: false } });
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [key]: false } }, callback);
         }
     }
     readNotification() {
@@ -330,7 +334,7 @@ class HeaderPermissionMenu extends Component {
             FullFeatureName: "Logout"
         });
     }
-    
+
     themeSwitch = () => {
         if (this.props.userConfig?.theme == "Light Theme") {
             this.setState({ ...this.state, theamFalge: "darkTheam" })
@@ -338,21 +342,21 @@ class HeaderPermissionMenu extends Component {
             this.setState({ ...this.state, theamFalge: "lightTheam" })
         }
     }
-    handleHover=()=>{
-        this.setState({...this.state,tabColour:"blue"})
-        this.props.dispatch(getScreenName({getScreen:"dashboard"}))
+    handleHover = () => {
+        this.setState({ ...this.state, tabColour: "blue" })
+        this.props.dispatch(getScreenName({ getScreen: "dashboard" }))
     }
-    handleSelecte=(items)=>{
-        this.props.dispatch(getScreenName({getScreen:null}))
-        if(items){
-            this.props.dispatch(getScreenName({getScreen:items.content}))
+    handleSelecte = (items) => {
+        this.props.dispatch(getScreenName({ getScreen: null }))
+        if (items) {
+            this.props.dispatch(getScreenName({ getScreen: items.content }))
         }
     }
     render() {
         const userProfileMenu = (
             <Menu>
                 <div className="profile-dropdown">
-                    
+
                     <Translate
                         content={`${this.props.userConfig?.isBusiness === true ? "business_account" : "manage_account"}`}
                         component={Button}
@@ -392,11 +396,11 @@ class HeaderPermissionMenu extends Component {
                                             className="text-white" key="1"
                                         />
                                     </Link><span className="icon c-pointer md rarrow-white ml-12" /></div></>} >
-                                </Popover>
+                            </Popover>
                         </li>
                         <li
-                        // onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/transactions" })}
-                            onClick={()=>this.props.history.push("/auditlogs")}
+                            // onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/transactions" })}
+                            onClick={() => this.props.history.push("/auditlogs")}
 
                         >
                             <Link>
@@ -483,22 +487,22 @@ class HeaderPermissionMenu extends Component {
                     <Translate
                         content="header_title"
                         onClick={this.props.routeToCockpit}
-                        onMouseOver={()=>{this.handleHover()}}
+                        onMouseOver={() => { this.handleHover() }}
                         component={Text}
-                        className={this.props.menuItems.getScreen?.getScreen=="dashboard"?"custom-header":"custom-inactive"}
+                        className={this.props.menuItems.getScreen?.getScreen == "dashboard" ? "custom-header" : "custom-inactive"}
                     />
                 </Menu.Item>
                 {data?.map((item, indx) => <React.Fragment>
-                    {item.isTab ? <Menu.Item key={item.id} onMouseOver={()=>this.handleSelecte(item)}> 
+                    {item.isTab ? <Menu.Item key={item.id} onMouseOver={() => this.handleSelecte(item)}>
                         <Dropdown
                             onClick={() =>
                                 this.setState({ ...this.state, visbleProfileMenu: false })
                             }
                             overlay={<Menu >
                                 <ul className="drpdwn-list ">
-                                    {item.subMenu.map(subitem => <li  onClick={() => this.onMenuItemClick(subitem.key, subitem)}>
+                                    {item.subMenu.map(subitem => <li onClick={() => this.onMenuItemClick(subitem.key, subitem)}>
                                         <Link value={2} className="c-pointer">
-                                            <Translate content={subitem.content}  />
+                                            <Translate content={subitem.content} />
                                         </Link>
                                     </li>)}
 
@@ -514,17 +518,17 @@ class HeaderPermissionMenu extends Component {
                                 content={item.content}
                                 component={Menu.Item}
                                 key="4"
-                                className={item.content==this.props.menuItems.getScreen?.getScreen?"custom-header":"active"}
-                                
+                                className={item.content == this.props.menuItems.getScreen?.getScreen ? "custom-header" : "active"}
+
                             />
                         </Dropdown>
-                    </Menu.Item> : 
-                    <Menu.Item onClick={() => this.onMenuItemClick(item.key, item)}>
+                    </Menu.Item> :
+                        <Menu.Item onClick={() => this.onMenuItemClick(item.key, item)}>
 
-                        <Translate content={item.content}
-                            component={Menu.Item}
-                            className="fs-20 custom-header" />
-                    </Menu.Item>}
+                            <Translate content={item.content}
+                                component={Menu.Item}
+                                className="fs-20 custom-header" />
+                        </Menu.Item>}
                 </React.Fragment>)}
             </Menu>
             <Menu
@@ -535,9 +539,9 @@ class HeaderPermissionMenu extends Component {
                 onSelect={(key) => {
                     this.props.dispatch(setHeaderTab(key.key));
                 }}>
-               
+
                 <Menu.Item key="15">
-                   
+
                     <TheamSwitch theamFlag={this.state.theamFalge} />
 
                 </Menu.Item>
