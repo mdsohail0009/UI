@@ -1200,7 +1200,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .db-titles.your-card{margin-top: 50px;}
     .search-box.mobile-hide{display: none;}
     .search-box.mobile-search{margin: 0;}
-    .cust-tabs-fait .ant-tabs-nav{width: 308px;overflow: auto;} .cust-heightmbl{height: fit-content;}
+    .cust-tabs-fait .ant-tabs-nav{width: 100%;overflow: auto;} .cust-heightmbl{height: fit-content;}
     .send-minmax{margin-top: 15px;}
     .moblie-order {display: flex;flex-direction: column-reverse;margin-top: 20px;}
     .crypto-card.select.space-hide{display: none;}
