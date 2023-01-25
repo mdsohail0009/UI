@@ -64,7 +64,7 @@ const { Paragraph, Text } = Typography;
 const { Sider } = Layout;
 class MobileHeaderMenu extends Component {
     render() {
-        const { onMenuItemClick, features: { features: { data } } } = this.props;
+        const { onMenuItemClick, features: { features: { data },getScreen },dispatch } = this.props;
 
         return <> <Menu
             theme="light"
@@ -79,7 +79,7 @@ class MobileHeaderMenu extends Component {
                 content="header_title"
                 onClick={this.props.routeToCockpit}
                 component={Menu.Item}
-                className={this.props.features?.getScreen?.getScreen === "dashboard" ? "active" : "custom-inactive"}
+                className={getScreen?.getScreen === "dashboard" ? "active" : "custom-inactive"}
             />
             {data?.map((item, indx) => item.menuitemType === "dropdown" ?
                 <><Translate
@@ -89,7 +89,14 @@ class MobileHeaderMenu extends Component {
                     className="mr-16"
                 /><Menu>
                         <ul className="drpdwn-list">
-                            {item?.subMenu?.map((subItem) => <li onClick={() => onMenuItemClick(subItem.key, subItem)}>
+                            {item?.subMenu?.map((subItem) => <li
+                                className={getScreen?.getScreen === item.content ? "active" : "custom-inactive"}
+
+                                onClick={() => {
+                                    onMenuItemClick(subItem.key, subItem);
+                                    dispatch(getScreenName(item.content))
+
+                                }}>
                                 <Link>
                                     <Translate content={subItem.content} conmponent={Text} />{" "}
                                     <span className="icon md rarrow-white" />
@@ -151,11 +158,11 @@ class HeaderPermissionMenu extends Component {
         this.menuClickSub.unsubscribe();
     }
     userProfile() {
-        if(this.state.previousDrawerKey&&this.state.drawerMenu[this.state.previousDrawerKey]){
+        if (this.state.previousDrawerKey && this.state.drawerMenu[this.state.previousDrawerKey]) {
             this.closeDrawer(this.state.previousDrawerKey);
         }
         this.props.history.push("/userprofile");
-       
+
         if (this.props.oidc.user.profile?.sub) {
             this.props.getmemeberInfoa(this.props.oidc.user.profile.sub);
         }
@@ -235,7 +242,7 @@ class HeaderPermissionMenu extends Component {
                 this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true, selectedTab: menuKey === "trade_sell" ? true : false, sendCryptoTab: menuKey === "send_crypto" ? true : false, sendFiatTab: menuKey === "send_fiat" ? true : false }, previousDrawerKey: menuKey });
             });
         } else if (menuItem.path) {
-            if(this.state.previousDrawerKey){
+            if (this.state.previousDrawerKey) {
                 this.closeDrawer(this.state.previousDrawerKey)
             }
             this.props.history.push(menuItem.path);
@@ -482,9 +489,9 @@ class HeaderPermissionMenu extends Component {
                     this.props.dispatch(setHeaderTab(key.key));
                 }}
             >
-                <Menu.Item 
-                        className={this.props.menuItems.getScreen?.getScreen == "dashboard" ? "active" : "custom-inactive"}
-                        >
+                <Menu.Item
+                    className={this.props.menuItems.getScreen?.getScreen == "dashboard" ? "active" : "custom-inactive"}
+                >
                     <Translate
                         content="header_title"
                         onClick={this.props.routeToCockpit}
@@ -519,7 +526,7 @@ class HeaderPermissionMenu extends Component {
                                 content={item.content}
                                 component={Menu.Item}
                                 key="4"
-                                className={item.content == this.props.menuItems.getScreen?.getScreen ?  "active":"custom-header"}
+                                className={item.content == this.props.menuItems.getScreen?.getScreen ? "active" : "custom-header"}
 
                             />
                         </Dropdown>
