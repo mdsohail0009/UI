@@ -362,9 +362,9 @@ isErrorDispaly = (objValue) => {
         >
         </Drawer>
         <div className="main-container grid-demo">
-			<div className="backbtn-arrowmb" onClick={()=>this.backToDashboard()}>
-       <span className="icon md leftarrow c-pointer backarrow-mr" />
-        <span className="back-btnarrow c-pointer">Back</span></div>
+			<div className="backbtn-arrowmb">
+       <span className="icon md leftarrow c-pointer backarrow-mr" onClick={()=>this.backToDashboard()} />
+        <span className="back-btnarrow c-pointer" onClick={()=>this.backToDashboard()}>Back</span></div>
         <Translate content="transactions_history" component={Title} className="grid-title" />
             <Form
               initialValues={this.state.customerData}
