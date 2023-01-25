@@ -869,6 +869,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .summary-count{margin-left: 12px;}
 .summary-count .coin-balstyle, .coin-name{font-size: 24px;font-weight: 800;color: var(--white);margin-bottom: 0;}
 .coin-name{margin-left:8px;}
+.active span{color:var(--white) !important}
 .coin-subbalval{color: var(--marketTitle);font-size: 14px;font-weight: 500;}
 .value-up, .value-down{margin-left: 16px;}
 .cust-tabs-fait.coinview-tabs .ant-tabs-nav{width: 100%;}
