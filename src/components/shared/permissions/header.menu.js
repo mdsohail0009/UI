@@ -141,6 +141,7 @@ class HeaderPermissionMenu extends Component {
             tabColour:false
 
         },
+        previousDrawerKey:""
     }
     componentDidMount() {
         this.props.dispatch(getScreenName({getScreen:"dashboard"}))
@@ -228,7 +229,8 @@ class HeaderPermissionMenu extends Component {
                 default:
                     break;
             }
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true, selectedTab: menuKey === "trade_sell" ? true : false, sendCryptoTab: menuKey === "send_crypto" ? true : false, sendFiatTab: menuKey === "send_fiat" ? true : false } });
+            this.closeDrawer(this.state.previousDrawerKey)
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true, selectedTab: menuKey === "trade_sell" ? true : false, sendCryptoTab: menuKey === "send_crypto" ? true : false, sendFiatTab: menuKey === "send_fiat" ? true : false,previousDrawerKey:menuKey } });
         } else if (menuItem.path) {
             this.props.history.push(menuItem.path);
         }
