@@ -50,8 +50,8 @@ const WithdrawalFiatSummary = ({
 	const [otpCode, setOtpCode] = useState("");
 	const [verifyOtpText, setVerifyOtpText] = useState("");
 	const [verifyEmailText, setVerifyEmailText] = useState("");
-	const [seconds, setSeconds] = useState(30);
-	const [seconds2, setSeconds2] = useState(30);
+	const [seconds, setSeconds] = useState(120);
+	const [seconds2, setSeconds2] = useState(120);
 	//const [seconds, setSeconds] = useState("02:00");
 	const [emailOtp, setEmailOtp] = useState("");
 	const [invalidData, setInvalidData] = useState(false);
@@ -158,12 +158,12 @@ const WithdrawalFiatSummary = ({
 	}
 	let cleartime;
 	let timeInterval;
-	let count = 30;
+	let count = 120;
 	const startTimer = () => {
 		let timer = count - 1;
 		let seconds;
 		timeInterval = setInterval(function () {
-			seconds = parseInt(timer % 30);
+			seconds = parseInt(timer % 120);
 			setSeconds(seconds);
 			if (--timer < 0) {
 				timer = count;
@@ -176,12 +176,12 @@ const WithdrawalFiatSummary = ({
 	
 	};
 	let timeInterval2;
-	let count2 = 30;
+	let count2 = 120;
 	const startTimer2 = () => {
 		let timer2 = count2 - 1;
 		let seconds2;
 		timeInterval2 = setInterval(function () {
-			seconds2 = parseInt(timer2 % 30);
+			seconds2 = parseInt(timer2 % 120);
 			setSeconds2(seconds2);
 			if (--timer2 < 0) {
 				timer2 = count2;
@@ -670,7 +670,7 @@ const WithdrawalFiatSummary = ({
 									{tooltipVisible === true && (
 										<Tooltip
 											placement="topRight"
-											title={`Haven't received code ? Request new code in ${seconds} seconds. The code will expire after 30mins.`}>
+											title={`Haven't received code ? Request new code in ${seconds} seconds. The code will expire after 2 Min.`}>
 											<span className="icon md info mr-8" />
 										</Tooltip>
 									)}
@@ -774,7 +774,7 @@ const WithdrawalFiatSummary = ({
 										{tooltipEmail === true && (
 											<Tooltip
 												placement="topRight"
-												title={`Haven't received code? Request new code in ${seconds2} seconds. The code will expire after 5mins.`}>
+												title={`Haven't received code? Request new code in ${seconds2} seconds. The code will expire after 2 Min.`}>
 												<span className="icon md info mr-8" />
 											</Tooltip>
 										)}
