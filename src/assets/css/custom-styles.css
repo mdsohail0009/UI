@@ -1218,6 +1218,9 @@ ul .mobile-header-default:active span{color:var(--white) !important}
     .mobile-receive-fiat{margin-left: 0px;}
     .mobile-transaction{left: 144px !important;}
     .new-custom-radiobtn .ant-radio-button-wrapper-checked, .new-custom-radiobtn .ant-radio-button-wrapper{font-size: 14px;}
+    .sideropen .ant-menu-vertical > .ant-menu-item{height: 30px; line-height: 30px;}
+    .sideropen .drpdwn-list li a{padding: 6px 0 6px 6px;}
+    .transacton-drpdwn{position: relative;}
 }
 
 /*@media end*/
