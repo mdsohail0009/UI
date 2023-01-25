@@ -27,10 +27,10 @@ const theme={lightTheme:":root {--bgYellow: #FFDB1A;--textWhite: #FFFFFF;--textW
                 }
             }
         }, [props.userConfig?.theme]);
-       
   const launchWebSdk = async () => {
-    console.log(props.userConfig?.theme)
+    setState({ ...state, loading: true })
         apicalls.sumsubacesstoken(props.userConfig.userId, props.userConfig.isBusiness ? "SuisseBase_KYB_Flow" : "SuisseBase_KYC_Flow").then((res) => {
+            setState({...state, loading: false })
             let snsWebSdkInstance = snsWebSdk.init(
                 res.data.token,
                 () => res.data.token
@@ -61,7 +61,6 @@ const theme={lightTheme:":root {--bgYellow: #FFDB1A;--textWhite: #FFFFFF;--textW
 
                 }).build()
             snsWebSdkInstance.launch('#sumsub-websdk-container')
-            setState({ loading: false })
         })
         setState({ ...state, loading: true })
     }
@@ -70,7 +69,7 @@ const theme={lightTheme:":root {--bgYellow: #FFDB1A;--textWhite: #FFFFFF;--textW
             <p className='p-0' style={{ wordBreak: 'break-all' }}>After Sumsub completed, Please refresh the page or reLogin</p></div>
         return (
             <>
-                {state.loading && <div className="loader">Loading .....</div>}
+                {state.loading==true && <div className="loader">Loading .....</div>}
                 {!state.loading && props?.userConfig?.isKYC && !state.isAccountApproved && <AccountStatus customerState={props?.userConfig}/>}
                 {(state.sumSubConfirm === true) ? <>({sumSubConfirms})</> : (<div id="sumsub-websdk-container"></div>)}
                 {/* <div id="sumsub-websdk-container"></div> */}
