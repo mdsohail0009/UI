@@ -318,7 +318,7 @@ class WithdrawSummary extends Component {
 				verifyEmail: true,
 				verifyEmailOtp: true,
 				//verifyOtpText: null,
-				verifyText: null,
+				//verifyText: null,
 				emailText: null,
 				inputEmailDisable: true,
 				isEmailVerification: true,
@@ -921,7 +921,7 @@ class WithdrawSummary extends Component {
 												loading={this.state.emailVerifyLoading}
 												onClick={(e) => this.getEmailVerification(e)}
 												disabled={this.state.verifyEmail === true||this.state.verifyEmailOtp === true}>
-												{verifyText[this.state.verifyText]}
+												{!this.state.verifyEmailOtp&&verifyText[this.state.verifyText]}
 												{this.state.verifyEmailOtp === true && (<>
 													<Text className="text-yellow pr-24"> Verified </Text>
 													<span className="icon md greenCheck" />
