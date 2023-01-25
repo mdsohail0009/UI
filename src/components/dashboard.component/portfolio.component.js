@@ -106,7 +106,7 @@ class Portfolio extends Component {
                     <div className='trans-align'>
                     <div className='transaction-title'>
                     <Translate component={Title} content="transactions_history" className="db-titles" />
-                    <div className = 'search-box'>
+                    <div className = 'search-box mobile-hide'>
                         <Search
                             placeholder="Search Wallet"
                             onChange={(value)=>this.handleSearch(value)}
@@ -121,6 +121,17 @@ class Portfolio extends Component {
                     <Button className="dbchart-link"  >
                         <Link to="/transactions"><Translate content="cockpit" /></Link>
                     </Button></div>
+                    <div className = 'search-box mobile-search'>
+                        <Search
+                            placeholder="Search Wallet"
+                            onChange={(value)=>this.handleSearch(value)}
+                            size="middle"
+                            bordered={false}
+                            className="search-text" />
+                      <div className = "search-btnexpand">
+                      <span className="icon lg search-angle icon-space" />
+                      </div>
+                  </div> 
                        {this.state.transactions &&
                        <TransactionsHistory
                         showDrawer={this.state.transactions}
@@ -137,7 +148,7 @@ class Portfolio extends Component {
                             <table className='pay-grid view mb-view'>
                                 <thead>
                                     <tr>
-                                        <th style={{width: "5%"}}></th>
+                                        {/* <th style={{width: "5%"}}></th> */}
                                         <th style={{width: "18%"}}>Date</th>
                                         <th style={{width: "15%"}}>Wallet</th>
                                        
@@ -163,7 +174,7 @@ class Portfolio extends Component {
                                                     {this.state.transactionData.length > 0 ? 
                                                     <>
                                                      <tr key={idx}>
-                                                        <td style={{ width: "100px" }}><span className={``}></span></td>
+                                                        {/* <td style={{ width: "100px" }}><span className={``}></span></td> */}
                                                         
                                                         <td style={{ width: "100px" }}>
                                                      <div className='ts-tbdate'>

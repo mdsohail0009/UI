@@ -36,6 +36,7 @@ import { clearPermissions } from "../reducers/feturesReducer";
 import { handleHeaderProfileMenuClick } from "../utils/pubsub";
 import Notifications from "../notifications";
 import { checkCustomerState } from "../utils/service";
+import TheamSwitch from "../components/shared/permissions/theamSwitch"
 
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
@@ -146,7 +147,7 @@ class Header extends Component {
           />
           <ul className="drpdwn-list">
             <li
-              onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/modal" })}
+              onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/transactions" })}
             >
               <Link>
                 <Translate
@@ -178,7 +179,7 @@ class Header extends Component {
               </Popover>
             </li>
             <li
-              onClick={() => this.onMenuItemClick("auditLogs", { key: "auditLogs", path: "/modal" })}
+            onClick={()=>this.props.history.push("/auditLogs")}
             >
               <Link>
                 <Translate
@@ -299,6 +300,11 @@ class Header extends Component {
                       )}
                   </span>
                 </Menu.Item>
+                <Menu.Item key="15">
+                   
+                   <TheamSwitch theamFlag={this.state.theamFalge} />
+
+               </Menu.Item>
                 <Dropdown
                   trigger={["click"]}
                   overlay={userProfileMenu}

@@ -201,7 +201,7 @@ export function withState(WrappedGrid) {
                     {this.state.isLoading && this.loadingPanel}
                     {this.props.showExcelExport && <div className='text-right secureDropdown export-pdf'>
                      <Dropdown
-                      overlayClassName="secureDropdown depwith-drpdown transacton-drpdwn"
+                      overlayClassName="secureDropdown depwith-drpdown transacton-drpdwn mobile-transaction"
                        overlay={<Menu >
                         <ul className="drpdwn-list pl-0">
                         <li onClick={this.handleExcelExport}><a>Export to Excel</a></li>

@@ -67,8 +67,8 @@ class WithdrawSummary extends Component {
 		otpCode: "",
 		authCode: "",
 		verifyData: "",
-		seconds: 30,
-		seconds2: 30,
+		seconds: 120,
+		seconds2: 120,
 		inValidData: false,
 		authenticator: "",
 		EmailCode: "",
@@ -136,11 +136,11 @@ class WithdrawSummary extends Component {
 
 	startTimer = () => {
 		let timeInterval;
-		let count = 30;
+		let count = 120;
 		let timer = count - 1;
 		let seconds;
 		timeInterval = setInterval(() => {
-			seconds = parseInt(timer % 30);
+			seconds = parseInt(timer % 120);
 			this.setState({ ...this.state, seconds: seconds })
 			if (--timer < 0) {
 				timer = count;
@@ -151,11 +151,11 @@ class WithdrawSummary extends Component {
 	};
 	startTimer2 = () => {
 		let timeInterval2;
-		let count2 = 30;
+		let count2 = 120;
 		let timer2 = count2 - 1;
 		let seconds2;
 		timeInterval2 = setInterval(() => {
-			seconds2 = parseInt(timer2 % 30);
+			seconds2 = parseInt(timer2 % 120);
 			this.setState({ ...this.state, seconds2: seconds2 })
 			if (--timer2 < 0) {
 				timer2 = count2;
@@ -317,8 +317,8 @@ class WithdrawSummary extends Component {
 				EmailCode: response.data,
 				verifyEmail: true,
 				verifyEmailOtp: true,
-				verifyOtpText: null,
-				verifyText: null,
+				//verifyOtpText: null,
+				//verifyText: null,
 				emailText: null,
 				inputEmailDisable: true,
 				isEmailVerification: true,
@@ -353,7 +353,7 @@ class WithdrawSummary extends Component {
 				OtpVerification: response.data,
 				verifyPhone: true,
 				verifyTextotp: true,
-				verifyOtpText: null,
+				//verifyOtpText: null,
 				buttonText: null,
 				inputDisable: true,
 				isPhoneVerification: true,
@@ -833,26 +833,24 @@ class WithdrawSummary extends Component {
 											{this.state.tooltipVisible === true && (
 												<Tooltip
 													placement="topRight"
-													title={`Haven\'t received code? Request new code in ${seconds} seconds. The code will expire after 30mins.`}>
+													title={`Haven't received code? Request new code in ${seconds} seconds. The code will expire after 2 Min.`}>
 
 													<span className="icon md info mr-16 c-pointer" />
 												</Tooltip>
 											)}
 									
-											{/* {verifyOtpText[this.state.verifyOtpText] &&  */}
-											<Button
+											{verifyOtpText[this.state.verifyOtpText] && <Button
 												type="text" className="btn-clickable-style"
 												loading={this.state.phoneVerifyLoading}
 												style={{ color: "black", margin: "0 auto" }}
 												onClick={this.getOtpVerification}
 												disabled={this.state.verifyPhone === true||this.state.verifyTextotp === true}>
-												{verifyOtpText[this.state.verifyOtpText]}
+												{!this.state.verifyTextotp&&verifyOtpText[this.state.verifyOtpText]}
 												{this.state.verifyTextotp === true && (<>
 													<Text className="text-yellow pr-24"> Verified </Text>
 													<span className="icon md greenCheck" />
 													</>)}
-											</Button>
-											{/* } */}
+											</Button>}
 											
 										</div>}
 										/>
@@ -910,7 +908,7 @@ class WithdrawSummary extends Component {
 											{this.state.tooltipEmail === true && (
 												<Tooltip
 													placement="topRight"
-													title={`Haven\'t received code? Request new code in ${seconds2} seconds. The code will expire after 5mins.`}>
+													title={`Haven't received code? Request new code in ${seconds2} seconds. The code will expire after 2 Min.`}>
 
 													<span className="icon md info mr-8" />
 												</Tooltip>
@@ -923,7 +921,7 @@ class WithdrawSummary extends Component {
 												loading={this.state.emailVerifyLoading}
 												onClick={(e) => this.getEmailVerification(e)}
 												disabled={this.state.verifyEmail === true||this.state.verifyEmailOtp === true}>
-												{verifyText[this.state.verifyText]}
+												{!this.state.verifyEmailOtp&&verifyText[this.state.verifyText]}
 												{this.state.verifyEmailOtp === true && (<>
 													<Text className="text-yellow pr-24"> Verified </Text>
 													<span className="icon md greenCheck" />
@@ -1017,7 +1015,7 @@ class WithdrawSummary extends Component {
 								{this.state.permissions?.Send &&
 
 
-								<div className="d-flex agree-check">
+								<div className="d-flex agree-check checkbox-mobile">
 						<label>
 							<input
 								type="checkbox"
