@@ -202,6 +202,15 @@ class TransactionsHistory extends Component {
 
     }
   }
+  backToDashboard=()=>{
+    if (!this.props?.userProfile?.isKYC) {
+        this.props.history.push("/notkyc");
+        return;
+    }
+      else{
+        this.props.history.push("/");
+      }
+}
   handleChange = (value, prop) => {
     var val = "";
     let { customerData, searchObj } = this.state;
@@ -308,10 +317,6 @@ isErrorDispaly = (objValue) => {
     return "Something went wrong please try again!";
   }
 };
-backToDashboard=()=>{
-  debugger
-
-}
   render() {
     const { Title } = Typography;
     const {  doctypeData, currenyData, gridUrl, searchObj,showModal,modalData,timeListSpan,statusData,isLoading,viewData } = this.state;
@@ -357,9 +362,9 @@ backToDashboard=()=>{
         >
         </Drawer>
         <div className="main-container grid-demo">
-			<div className="backbtn-arrowmb" >
-        <Link  to="/cockpit" ><span className="icon md leftarrow c-pointer backarrow-mr" />
-        <span className="back-btnarrow c-pointer">Back</span></Link></div>
+			<div className="backbtn-arrowmb" onClick={()=>this.backToDashboard()}>
+       <span className="icon md leftarrow c-pointer backarrow-mr" />
+        <span className="back-btnarrow c-pointer">Back</span></div>
         <Translate content="transactions_history" component={Title} className="grid-title" />
             <Form
               initialValues={this.state.customerData}

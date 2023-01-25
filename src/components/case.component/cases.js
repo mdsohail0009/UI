@@ -71,7 +71,7 @@ class Cases extends Component {
 
         return (<>
         <div className="cust-list main-container case-demo" >
-        <div className="backbtn-arrowmb"><Link  to="/cockpit" ><span className="icon md leftarrow c-pointer backarrow-mr"></span><span className="back-btnarrow c-pointer">Back</span></Link></div>
+        <div className="backbtn-arrowmb" onClick={()=>this.backToDashboard()}><span className="icon md leftarrow c-pointer backarrow-mr"></span><span className="back-btnarrow c-pointer">Back</span></div>
           
                 <Translate content="case" component={Paragraph} className="grid-title" /> </div>
                     <List className="address-clear cases-grid-style" url={gridUrl} ref={this.gridRef} columns={this.columnGrid} />
