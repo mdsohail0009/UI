@@ -540,7 +540,7 @@ saveWithdrawdata = async () => {
           activeKey={this.selectedTab}
           onChange={this.handleTabChange}>					
               <Tabs.TabPane tab="Address Book" content="withdrawCrypto" key={"withdrawCrypto"}  value="withdrawCrypto" className=""  component={Radio.Button}>
-                <ul className="addCryptoList mobile-scroll" >
+                <ul className="addCryptoList mobile-scroll adbook-scroll" >
                 {filterObj.length > 0 &&
                   filterObj?.map((item, idx) => (
                     <>
