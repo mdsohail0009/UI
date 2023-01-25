@@ -233,7 +233,7 @@ class cryptocoinsView extends Component {
                <Loader />
         ) : (
             <div className='coinveiw-newpage'>
-            <div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/" /><span className="back-btnarrow">Back</span></div>
+            <div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/cockpit"><span className="back-btnarrow c-pointer">Back</span></Link></div>
             <div className='fait-wallets-style m-0 new-viewpage'>
             <Translate content="suissebase_title" component={Title} className="db-titles" />
             <div className = 'search-box'>

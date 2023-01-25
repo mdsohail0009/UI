@@ -1003,7 +1003,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .cust-list.main-container.case-demo{padding-bottom: 0;}
 .cust-pop-up-btn.ad-popup button:nth-child(2){margin-left: 0;}
 .kpi-divstyle.ad-rec-detyails{border-bottom: transparent;}
-.kpi-val.adview-name{width: 225px;}
+/* .kpi-val.adview-name{width: 225px;} */
 /* .batchpayment-summary ~.ant-alert-with-description {width: 97% !important;margin-left: 20px;} */
 .preview-grid .cust-list,.box.text-white .cust-list{padding: 0;}
 .Supporting-Documents{margin-top: 30px;}
@@ -1177,7 +1177,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .batch-actions{margin-top: 16px;}
     /* .k-loading-image::before, .k-loading-image::after{top:60% !important;position: absolute !important;} */
     .custom-theme-btn{display: flex;}
-    .search-box:hover > .search-text.search-view input{width: 300px;}
+    .search-box:hover > .search-text.search-view input,.search-box.mobile-search:hover > .search-text input{width: 300px;}
     .search-box.markets-search,.search-box.markets-search:hover > .search-text input{width: 280px;}
     .theme-text{display: none;}
     .price-valgreen div.lg-fontsize {width: 68px; word-break: break-all;}
@@ -1215,6 +1215,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .moblie-order.buy-sell-mobile .sell-radiobtn-style { flex: 0 0 0px;}
     .moblie-order.buy-sell-mobile .round-pills.sell-radiobtn-style{width: fit-content;margin-top: 16px;}
     .mobile-receive-fiat{margin-left: 0px;}
+    .mobile-transaction{left: 144px !important;}
 }
 
 /*@media end*/
