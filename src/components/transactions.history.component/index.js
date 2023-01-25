@@ -21,6 +21,7 @@ const { Option } = Select;
 class TransactionsHistory extends Component {
   formRef = React.createRef();
   formDateRef = React.createRef();
+  useDivRef = React.createRef();
   constructor(props) {
     super(props);
     this.state = {
@@ -68,6 +69,7 @@ class TransactionsHistory extends Component {
   componentDidMount() {
     this.props.dispatch(getScreenName({getScreen:"dashboard"}))
     getFeaturePermissionsByKey('transactions', this.loadInfo)
+    this.useDivRef.current?.scrollIntoView(0,0)
   }
 
   loadInfo = () => {
@@ -340,6 +342,7 @@ backToDashboard=()=>{
 
     return (
       <>
+      <div ref={this.useDivRef}></div>
         <Drawer
           title={[<div className="side-drawer-header">
             <Translate content="transactions_history" component={Title} className="grid-title" />
