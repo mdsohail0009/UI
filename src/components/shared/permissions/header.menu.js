@@ -63,6 +63,9 @@ counterpart.registerTranslations("my", my);
 const { Paragraph, Text } = Typography;
 const { Sider } = Layout;
 class MobileHeaderMenu extends Component {
+    componentDidMount(){
+        this.props.dispatch(getScreenName({getScreen:"dashboard"}))   
+    }
     render() {
         const { onMenuItemClick, features: { features: { data } } } = this.props;
 
@@ -75,12 +78,12 @@ class MobileHeaderMenu extends Component {
                 this.props.dispatch(setHeaderTab(key.key));
             }}
         >
-
             <Translate
                 content="header_title"
                 onClick={this.props.routeToCockpit}
                 component={Menu.Item}
-                className="list-item"
+          
+                className={this.props.features?.getScreen?.getScreen==="dashboard"?"mobile-header-default":"custom-inactive"}
             />
             {data?.map((item, indx) => item.menuitemType === "dropdown" ?
                 <><Translate
@@ -141,6 +144,7 @@ class HeaderPermissionMenu extends Component {
             tabColour:false
 
         },
+        previousDrawerKey:""
     }
     componentDidMount() {
         this.props.dispatch(getScreenName({getScreen:"dashboard"}))
@@ -228,7 +232,8 @@ class HeaderPermissionMenu extends Component {
                 default:
                     break;
             }
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true, selectedTab: menuKey === "trade_sell" ? true : false, sendCryptoTab: menuKey === "send_crypto" ? true : false, sendFiatTab: menuKey === "send_fiat" ? true : false } });
+            this.closeDrawer(this.state.previousDrawerKey)
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true, selectedTab: menuKey === "trade_sell" ? true : false, sendCryptoTab: menuKey === "send_crypto" ? true : false, sendFiatTab: menuKey === "send_fiat" ? true : false,previousDrawerKey:menuKey } });
         } else if (menuItem.path) {
             this.props.history.push(menuItem.path);
         }

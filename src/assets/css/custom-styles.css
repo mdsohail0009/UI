@@ -980,6 +980,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .cust-cancel-btn.back-btn-sumsub{margin-top: 12px !important;}
 .header-right .ant-menu-title-content:hover,.header-right .ant-typography.custom-header:hover{color:var(--white);}
 .custom-header{color:var(--white) !important;}
+ul .mobile-header-default:active span{color:var(--white) !important}
 .custom-inactive{color:var(--sbCardText) !important}
 .sumsub-content{margin: 10px 0;}
 .icon.md.refresh-icon{background-position: -271px -33px;}
