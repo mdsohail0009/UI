@@ -972,7 +972,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .ant-alert-with-description{width: 100%; align-items:center;}
 /* batchpayments start  */
 .download-excel a{color: var(--termsText);}
-.pay-list .file-name{width: 400px;word-break: break-all;}
+.pay-list .file-name{width: 250px;word-break: break-all;}
 .icon.md.back{margin-right: 8px;}
 .preview-back{margin-right: 8px;}
 .buysell-balances{text-align: center;margin: 0 0 20px 0 !important;}
