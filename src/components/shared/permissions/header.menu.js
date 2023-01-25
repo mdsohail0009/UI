@@ -151,8 +151,11 @@ class HeaderPermissionMenu extends Component {
         this.menuClickSub.unsubscribe();
     }
     userProfile() {
+        if(this.state.previousDrawerKey&&this.state.drawerMenu[this.state.previousDrawerKey]){
+            this.closeDrawer(this.state.previousDrawerKey);
+        }
         this.props.history.push("/userprofile");
-
+       
         if (this.props.oidc.user.profile?.sub) {
             this.props.getmemeberInfoa(this.props.oidc.user.profile.sub);
         }
