@@ -179,7 +179,7 @@ class Header extends Component {
               </Popover>
             </li>
             <li
-              onClick={() => this.onMenuItemClick("auditLogs", { key: "auditLogs", path: "/modal" })}
+            onClick={()=>this.props.history.push("/auditLogs")}
             >
               <Link>
                 <Translate
