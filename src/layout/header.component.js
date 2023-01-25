@@ -147,7 +147,7 @@ class Header extends Component {
           />
           <ul className="drpdwn-list">
             <li
-              onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/modal" })}
+              onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/transactions" })}
             >
               <Link>
                 <Translate
