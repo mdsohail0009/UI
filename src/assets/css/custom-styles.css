@@ -1092,8 +1092,8 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .suissebasefait-newbtn{margin-top:85px;}
 .crypto-style{margin-top:47px}
 .fait-wallets-style{margin-top:36px;}
-.notices-style .db-titles{margin-bottom: 22px;}
-.fait-wallets-style.notices-style{margin-top: 38px;}
+.notices-style .db-titles{margin-bottom:16px;}
+.fait-wallets-style.notices-style, .full-screenable-node.marketcap-mt{margin-top: 36px;}
 .addressbook-crypto-view .ad-rec-detyails{margin-right: 24PX;}
 .cust-tabs-fait .ant-tabs-nav{width: 100%;}
 }
