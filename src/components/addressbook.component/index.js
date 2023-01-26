@@ -670,7 +670,7 @@ class AddressBook extends Component {
 		return (
 			<>
 			<div className="main-container grid-demo">
-			<div className="backbtn-arrowmb"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/cockpit" /><span className="back-btnarrow">Back</span></div>
+			<div className="backbtn-arrowmb"><Link  to="/cockpit"><span className="icon md leftarrow c-pointer backarrow-mr"></span><span className="back-btnarrow c-pointer">Back</span></Link></div>
 			<div className="security-align adbs-mb">
 				<Translate
 					content="address_book"

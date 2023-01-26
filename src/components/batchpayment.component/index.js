@@ -6,6 +6,7 @@ import List from "../grid.component";
 import AddBatchPayment from './addbatchPayment';
 import PaymentPreview from './paymentPreview';
 import moment from "moment/moment";
+import { withRouter,Link } from "react-router-dom";
 import {deleteBatchPayments,getInvalidTransactionData} from './api'
 
 import ActionsToolbar from "../toolbar.component/actions.toolbar";
@@ -218,7 +219,7 @@ const Batchpayments = (props) => {
       return (
         <>
           <div className='main-container'>
-          <div className="backbtn-arrowmb"><span className="icon md leftarrow c-pointer backarrow-mr" onClick={gotoDashboard}></span><span className="back-btnarrow">Back</span></div>
+          <div className="backbtn-arrowmb"><Link to="/cockpit"><span className="icon md leftarrow c-pointer backarrow-mr"></span><span className="back-btnarrow c-pointer">Back</span></Link></div>
                   <div className='batchpayment-summary d-flex'>
                   
                       <Title className="basicinfo mb-0">                     

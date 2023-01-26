@@ -305,8 +305,7 @@ class OnthegoCryptoTransfer extends Component {
             if (!_amt && _amt != 0) {
                 this.enteramtForm.current.validateFields()
             } else {
-                
-                if ((this.state.CryptoAmnt == '0' || _amt == 0) && !(_amt == "")) {
+                if ((this.state.CryptoAmnt == '0' || _amt == 0)) {
                     this.setState({
                         ...this.state,
                         errorMsg: null,
@@ -352,7 +351,7 @@ class OnthegoCryptoTransfer extends Component {
 
             
 
-                <div className="enter-val-container swap-com swap-text-sub new-swap-subtext  send-crypto-enrty">
+                <div className="enter-val-container swap-com swap-text-sub new-swap-subtext  send-crypto-enrty send-crypto-mobile">
                   <div className='swap-entryvalue send-crypto-style'>    <Form.Item
                   className="custom-forminput custom-label fund-transfer-input send-crypto-input crypto-blc-inpt " 
                   name="amount"
@@ -389,9 +388,9 @@ class OnthegoCryptoTransfer extends Component {
                 <div className='swapcoin-alignemnt crypto-coin-mbspace coin-name-mb'><span>{this.props.selectedWallet?.coin}</span></div>
 </div>
               </Row>
-              <div className="display-items">
+              <div className="display-items moblie-order">
               <div class="text-center mr-16">
-                                <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills sell-radiobtn-style text-left" onChange={({ target: { value } }) => {
+                                <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills sell-radiobtn-style text-left send-minmax" onChange={({ target: { value } }) => {
                                     this.clickMinamnt(value)
                                 }}>
                                     <Translate value="min" content="min" component={Radio.Button} />
@@ -456,7 +455,7 @@ class OnthegoCryptoTransfer extends Component {
 							  activeKey={this.selectedTab}
                               onChange={this.handleTabChange}>					
                                 <Tabs.TabPane tab="Address Book" content="withdrawCrypto" key={1} className=""  component={Radio}>
-                <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList adbook-scroll">
+                <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList mobile-scroll adbook-scroll">
                 {(filterObj.length > 0) && filterObj?.map((item, idx) =>
                             <>{<Row className="fund-border c-pointer " onClick={async () => {
                                 if (!["myself", "1stparty", 'ownbusiness'].includes(item.addressType?.toLowerCase())) {
@@ -472,7 +471,7 @@ class OnthegoCryptoTransfer extends Component {
                               }
                             }}>
                            <Col xs={4} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name?.charAt(0).toUpperCase()}</div></Col>
-                           <Col xs={19} md={22} lg={22} xl={19} xxl={19} className="small-text-align">
+                           <Col xs={19} md={22} lg={22} xl={19} xxl={19} className="small-text-align adbook-mobile">
                            <label className="address-name">{item?.name} ({item.walletAddress?.length > 0 ? item.walletAddress.substring(0,4)+ `......`+ item.walletAddress.slice(-4):""})</label>
                            {item.walletAddress && <div><Text className="address-subtext">{item.walletCode} ({item.network})</Text></div>}
                             </Col>
@@ -487,7 +486,7 @@ class OnthegoCryptoTransfer extends Component {
                 </ul>
               </Tabs.TabPane>
                                 <Tabs.TabPane tab="Past Recipients" content="withdrawFiat" key={2} className="" component={Radio}> 
-                <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList adbook-scroll paste-recept-style">
+                <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList paste-recept-style mobile-scroll">
                 {(pastPayees.length > 0) && pastPayees?.map((item, idx) =>
                      <Row className="fund-border c-pointer" onClick={async () => {
                         if (!["myself", "1stparty", "ownbusiness"].includes(item.addressType?.toLowerCase())) {
@@ -503,7 +502,7 @@ class OnthegoCryptoTransfer extends Component {
                           }
                         }}>
                         <Col xs={3} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name?.charAt(0).toUpperCase()}</div></Col>
-                        <Col xs={19} md={24} lg={24} xl={19} xxl={19} className=" small-text-align">
+                        <Col xs={19} md={24} lg={24} xl={19} xxl={19} className=" small-text-align adbook-mobile past-respnt">
                         <label className="address-name">{item?.name} ({item.walletAddress?.length > 0 ? item.walletAddress.substring(0,4)+ `......`+ item.walletAddress.slice(-4):""})</label>
                         <div><Text className="address-subtext">{item?.walletCode} ({item.network})</Text></div>
                         </Col>

@@ -40,13 +40,13 @@ const TheamSwitch = ({customer,theamFlag,getmemeberInfoa}) => {
                     <div className="theme-switch theme-active mobile-mb-16 c-pointer" onClick={() =>  themeSwitch() }>
                         <div className="d-flex align-center " >
                             {/* <p className="switch-circle" >{!theme && <span className="icon lg radio-check c-pointer"></span>}{theme && <span className='icon radio lg c-pointer'></span>}</p> */}
-                            <p className="theme-txt"><span className="icon md theme-icon" />Light Mode</p></div>
+                            <p className="theme-txt"><span className="icon md theme-icon" /><span className='theme-text'>Light Mode</span></p></div>
                     </div>}
          {screenTheme != 'darkMode' &&            
                     <div className={"theme-switch c-pointer" + (theme ? " themeSwitchOn " : " themeSwitchOff ")} onClick={() =>  themeSwitch() }>
                         <div className="d-flex align-center c-pointer" >
                             {/* <p className="switch-circle c-pointer" >{theme && <span className="icon lg radio-check c-pointer"></span>}{!theme && <span className='icon radio lg c-pointer'></span>}</p> */}
-                            <p className="theme-txt"><span className="icon md theme-icon" />Dark Mode</p>
+                            <p className="theme-txt"><span className="icon md theme-icon" /><span className='theme-text'>Dark Mode</span></p>
                             </div>
                     </div>}
                 </div>

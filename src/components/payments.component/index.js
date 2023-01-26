@@ -174,7 +174,7 @@ const getCurrencyLookup = async () => {
     <>
       <div className="main-container">
       <div className="backbtn-arrowmb" onClick={handleBack}>
-        <Link className="icon md leftarrow c-pointer backarrow-mr" to="/cockpit" /><span className="back-btnarrow">Back</span>
+        <Link  to="/cockpit"><span className="icon md leftarrow c-pointer backarrow-mr"></span><span className="back-btnarrow c-pointer">Back</span></Link>
         </div>
         <div className='bill-payment'> 
           

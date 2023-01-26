@@ -52,7 +52,7 @@ const MarketCap = ({ member }) => {
                 <div className="d-flex">
                     <div className="d-flex align-center">
                         <Translate content="markets_title" component={Title} className="db-titles" />
-                        <div className = 'search-box'>
+                        <div className = 'search-box markets-search'>
                         <Search
                             placeholder={apiCalls.convertLocalLang('search_currency')} 
                             value={searchVal}

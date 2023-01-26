@@ -130,7 +130,7 @@ class PaymentsView extends Component {
                                 <tr>
                                 <th className="doc-def">Whitelist Name</th>
                                     <th className="doc-def" style={{width: "410px"}}>Bank Name</th>
-                                    <th className="doc-def" style={{width: "410px"}}>Bank Account Number/IBAN</th>
+                                    <th className="doc-def" style={{width: "300px"}}>Bank Account Number/IBAN</th>
                                     <th>State</th>
                                     <th>Amount</th>
                                 </tr>
@@ -140,7 +140,7 @@ class PaymentsView extends Component {
                                     return (
                                         <>
                                           {paymentsData.length > 0? <> <tr key={idx}>
-                                          <td className="doc-def" >{item?.beneficiaryAccountName}</td>
+                                          <td className="doc-def">{item?.beneficiaryAccountName}</td>
                                                 <td className="doc-def" >
                                       <div className="d-flex align-center">
                                         <span className='pay-docs bill-bank'>
