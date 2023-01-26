@@ -455,7 +455,7 @@ class OnthegoCryptoTransfer extends Component {
 							  activeKey={this.selectedTab}
                               onChange={this.handleTabChange}>					
                                 <Tabs.TabPane tab="Address Book" content="withdrawCrypto" key={1} className=""  component={Radio}>
-                <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList mobile-scroll">
+                <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList mobile-scroll adbook-scroll">
                 {(filterObj.length > 0) && filterObj?.map((item, idx) =>
                             <>{<Row className="fund-border c-pointer " onClick={async () => {
                                 if (!["myself", "1stparty", 'ownbusiness'].includes(item.addressType?.toLowerCase())) {
