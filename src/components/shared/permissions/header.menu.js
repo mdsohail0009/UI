@@ -310,6 +310,9 @@ class HeaderPermissionMenu extends Component {
         else {
             this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [key]: false } }, callback);
         }
+        if(["/","/cockpit"].includes(window.location.pathname)){
+            this.props.dispatch(getScreenName({getScreen:"dashboard"}));
+        }
     }
     readNotification() {
         apicalls.encryptValue("true", this.props.userConfig?.sk);
