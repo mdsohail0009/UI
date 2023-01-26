@@ -680,5 +680,6 @@ export default {
 	sb_card_title:"Your card",
 	Dashboard:"Dashboard",
 	iban:"Suissebase Accounts (IBAN)",
+	notices:"Notices",
 	
 };

@@ -48,7 +48,7 @@ const MarketCap = ({ member }) => {
     return <>
         <div className='market-panel-newstyle'></div>
             <div className="full-screenable-node marketcap-mt" >
-                <div className="d-flex justify-content align-center">
+                {/* <div className="d-flex justify-content align-center"> */}
                 <div className="d-flex">
                     <div className="d-flex align-center">
                         <Translate content="markets_title" component={Title} className="db-titles" />
@@ -66,7 +66,7 @@ const MarketCap = ({ member }) => {
                     </div> 
                     </div>
                 </div>
-                </div>
+                {/* </div> */}
                 <div className='bash-market-table responsive_table bg-none dashb-btmtable'>
                 
                 

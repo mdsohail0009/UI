@@ -129,7 +129,7 @@ class Wallets extends Component {
             <div className="fait-wallets-style">
             <Translate content="fait_walets" component={Title} className="db-titles" />
                 <div>
-              <Button className="dbchart-link mobile-viewall" style={{ height: 36,}}  >
+              <Button className="dbchart-link mobile-viewall"  >
                   <Translate content="cockpit" onClick={() => this.cockpitCharts()}  />
               </Button>
                     
@@ -162,7 +162,7 @@ class Wallets extends Component {
                         </Dropdown></div></>}
                                 
                             />
-                            <div className="crypto-btns crypto-btn-top">
+                            <div className="crypto-btns crypto-btn-top suissebasefait-newbtn">
                                 <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
                                 <Translate content="withdraw" onClick={() => { this.showSendReceiveDrawer(2, item.walletCode) }} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} />
                                

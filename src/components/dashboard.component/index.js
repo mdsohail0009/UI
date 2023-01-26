@@ -87,6 +87,7 @@ class Home extends Component {
                                 <Wallets />
                             </div>                     
                         </>}
+                        {this.state.permissions.Notices && <Notices />}
                         {this.state.permissions.Transactions && <Portfolio
                             crypto="Bitcoin"
                             crypto_value='0.00'
@@ -99,7 +100,7 @@ class Home extends Component {
                         {this.state.permissions?.Bank &&  <div className='marketcap-mt'>
                        <BankWallets/> 
                        </div>}
-                       {this.state.permissions.Notices && <Notices />}
+                       
                         {this.state.permissions.Markets && 
                             <MarketCap />
                        }
