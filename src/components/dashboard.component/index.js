@@ -14,6 +14,7 @@ import Notices from './notices';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 import BankWallets from '../bankui.component'
 import SbCard from './sbCard';
+import { getScreenName } from '../../reducers/feturesReducer';
 const { Title } = Typography;
 class Home extends Component {
     state = {
@@ -29,6 +30,7 @@ class Home extends Component {
         this.getNotices();
         this.dashboardTrack();
         this.permissionsInterval = setInterval(this.loadPermissions, 200);
+        this.props.dispatch(getScreenName({ getScreen: "dashboard" }));
     }
     loadPermissions = () => {
         if (this.props.cockpitPermissions) {
@@ -87,6 +89,7 @@ class Home extends Component {
                                 <Wallets />
                             </div>                     
                         </>}
+                        {this.state.permissions.Notices && <Notices />}
                         {this.state.permissions.Transactions && <Portfolio
                             crypto="Bitcoin"
                             crypto_value='0.00'
@@ -99,7 +102,7 @@ class Home extends Component {
                         {this.state.permissions?.Bank &&  <div className='marketcap-mt'>
                        <BankWallets/> 
                        </div>}
-                       {this.state.permissions.Notices && <Notices />}
+                       
                         {this.state.permissions.Markets && 
                             <MarketCap />
                        }
@@ -113,6 +116,6 @@ class Home extends Component {
     }
 }
 const mapStateToProps = ({ userConfig, dashboard, menuItems }) => {
-    return { userProfileInfo: userConfig.userProfileInfo, dashboard, twoFA: userConfig.twoFA, cockpitPermissions: menuItems?.featurePermissions?.cockpit }
+    return { userProfileInfo: userConfig.userProfileInfo, dashboard, twoFA: userConfig.twoFA, cockpitPermissions: menuItems?.featurePermissions?.cockpit,menuItems }
 }
 export default connect(mapStateToProps, (dispatch) => { return { dispatch } })(Home);

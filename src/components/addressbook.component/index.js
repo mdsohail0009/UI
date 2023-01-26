@@ -182,21 +182,15 @@ class AddressBook extends Component {
 		},
 		{
 			field: "addressState",
-			title: apiCalls.convertLocalLang("addressState"),
+			title: apiCalls.convertLocalLang("Whitelisting_Status"),
 			filter: true,
-			width: 180,
-		},
-		{
-			field: "status",
-			title: apiCalls.convertLocalLang("Status"),
-			filter: true,
-			width: 100,
+			width: 200,
 		},
 		{
 			field: "digitallySigned",
 			customCell: (props) => (
 				<td>
-					{props.dataItem?.digitallySigned==="Signed" && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <><Link onClick={() => {
+					{props.dataItem?.digitallySigned==="Signed" && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <> <Link onClick={() => {
 						if (!this.state.isDownloading)
 							this.downloadDeclarationForm(props?.dataItem);
 					}} ><DownloadOutlined /></Link> {props.dataItem?.digitallySigned}</>}
@@ -207,6 +201,12 @@ class AddressBook extends Component {
 			title: apiCalls.convertLocalLang("whitelist"),
 			filter: true,
 			width: 200,
+		},
+		{
+			field: "status",
+			title: apiCalls.convertLocalLang("Status"),
+			filter: true,
+			width: 100,
 		},
 	];
 	columnsCrypto = [
@@ -266,21 +266,15 @@ class AddressBook extends Component {
 		
 		{
 			field: "addressState",
-			title: apiCalls.convertLocalLang("addressState"),
+			title: apiCalls.convertLocalLang("Whitelisting_Status"),
 			filter: true,
-			width: 180,
-		},
-		{
-			field: "status",
-			title: apiCalls.convertLocalLang("Status"),
-			filter: true,
-			width: 100,
+			width: 200,
 		},
 		{
 			field: "digitallySigned",
 			customCell: (props) => (
 				<td>
-					{props.dataItem?.digitallySigned==="Signed" && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <> <Link onClick={() => {
+					{props.dataItem?.digitallySigned==="Signed" && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <><Link onClick={() => {
 						if (!this.state.isDownloading)
 							this.downloadDeclarationForm(props?.dataItem);
 					}} ><DownloadOutlined /></Link> {props.dataItem?.digitallySigned}</>}
@@ -291,6 +285,12 @@ class AddressBook extends Component {
 			title: apiCalls.convertLocalLang("whitelist"),
 			filter: true,
 			width: 200,
+		},
+		{
+			field: "status",
+			title: apiCalls.convertLocalLang("Status"),
+			filter: true,
+			width: 100,
 		},
 	];
 	async downloadDeclarationForm(dataItem) {

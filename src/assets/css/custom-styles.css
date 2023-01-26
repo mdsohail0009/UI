@@ -202,6 +202,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .main-container{padding: 24px 16px; margin: auto;}
 .main-container .k-loading-color{background-color: transparent !important;}
 .text-white{color: #FFFFFF;}
+.ant-menu-item.ant-menu-item-only-child .ant-menu-title-content:hover{color:var(--white)}
 /* body{background:var(--bodyBg);} */
 /* url(../images/dark-bg2.0.svg) no-repeat top center; */
 .loader{background-color: #000000;position: fixed;top: 0; right: 0; bottom: 0; left: 0;display: flex; align-items: center;font-size: 36px;color: var(--textWhite);justify-content: center;}
@@ -416,13 +417,15 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .sb-text{color: var(--sbCardText);letter-spacing: 5px;font-weight: 700;font-size: 24px;}
 .sb-accounts{padding: 2px;}
 .cardlogo-height{margin-bottom: 109px;}
-.transaction-panel, .crypto-style{margin-top: 50px;}
+.crypto-style{margin-top: 50px;}
+.transaction-panel{margin-top: 40px;}
 .transaction-title{display: flex;align-items: center;width: 100%;}
 .trans-align{display: flex;align-items: center;justify-content: space-between;}
 .bash-market-table{background-color: var(--cardBG);border-top-left-radius: 20px;padding-bottom:16px;border-top-right-radius: 20px;border-bottom-left-radius: 20px;border-bottom-right-radius: 20px;}
 .ant-table-container table > thead > tr:first-child th:last-child{border-top-right-radius: 20px;}
 .db-main-title{font-weight: 800 !important;font-size: 32px !important;color: var(--menuFont) !important;margin-bottom: 40px !important;}
 .marketcap-mt{margin-top: 46px;}
+.full-screenable-node.marketcap-mt{margin-top: 30px;}
 .crypto-curr-align{display: flex;justify-content: space-between;align-items: center;}
 .iban-list .ant-list-item-meta{display:block;}
 .ts-wallet .ts-coin{font-weight: 500;font-size: 14px;color: var(--tablesub);margin-bottom: 4px;}
@@ -1022,6 +1025,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .custom-declaraton.send-success button,.success-pop.sell-success{margin-top: 26px;}
 .transaction-custom-table .pay-docs.bill-bank{text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width: 50%;}
 .cust-cancel-btn.transaction-cancelbtn{margin-left: 0 !important;}
+.value-description{font-weight: 400;color:var(--marketTitle);font-size: 14px;}
 /*@media start*/
 @media (min-width: 768px){
     .listitems-design{width: 340px;}
@@ -1081,8 +1085,18 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .new-swap-subtext.send-crypto-enrty{margin-bottom: 24px;}
     .summary-liststyle{margin-right: 26px;}
     .search-box.mobile-search{display: none;}
-
- 
+    .suissebasefait-newbtn{margin-top: 75px;}
+    .full-screenable-node.marketcap-mt .db-titles,.full-screenable-node.marketcap-mt .icon-space{margin-bottom: 0 !important;}
+    .markets-panel.transaction-panel .db-titles, .markets-panel.transaction-panel .icon-space, .fait-wallets-style .db-titles{margin-bottom: 0;}
+    .marketcap-mt .db-titles.crypto-style{margin-bottom:0}
+    .full-screenable-node.marketcap-mt, .transaction-panel{margin-top:30px;}
+.suissebasefait-newbtn{margin-top:85px;}
+.crypto-style{margin-top:47px}
+.fait-wallets-style{margin-top:36px;}
+.notices-style .db-titles{margin-bottom:16px;}
+.fait-wallets-style.notices-style, .full-screenable-node.marketcap-mt{margin-top: 36px;}
+.addressbook-crypto-view .ad-rec-detyails{margin-right: 24PX;}
+.cust-tabs-fait .ant-tabs-nav{width: 100%;}
 }
 
 @media (min-width: 1024px){
@@ -1187,7 +1201,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .search-box:hover > .search-text.search-view input,.search-box.mobile-search:hover > .search-text input{width: 300px;}
     .search-box.markets-search,.search-box.markets-search:hover > .search-text input{width: 280px;}
     .theme-text{display: none;}
-    .price-valgreen div.lg-fontsize {width: 68px; word-break: break-all;}
+    .price-valgreen div.lg-fontsize { word-break: break-all;}
     .mobile-viewall{margin-bottom: 11px;}
     .bill-payment {display: flex;justify-content: space-between;align-items: center;margin-bottom: 8px;}
     .addressbook-mb{font-size: 22px !important;}
@@ -1227,6 +1241,9 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .sideropen .ant-menu-vertical > .ant-menu-item{height: 30px; line-height: 30px;}
     .sideropen .drpdwn-list li a{padding: 6px 0 6px 6px;}
     .transacton-drpdwn{position: relative;}
+    .new-crypto-style .cytpo-list-style .crypto-card-design{display: block;}
+    .new-crypto-style .cytpo-list-style .crypto-card-design .price-valgreen{margin-left: 0px;padding: 4px;}
+    .transaction-panel, .crypto-style{margin-top: 30px;}
 }
 
 /*@media end*/

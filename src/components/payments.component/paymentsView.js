@@ -92,7 +92,8 @@ class PaymentsView extends Component {
         {(moreBankInfo?.transferType==="sepa" || moreBankInfo?.transferType==="internationalIBAN" ) && 
         <>
         <div className='popover-mb-12'><label className="kpi-label">Bank Address</label>
-         <span className="kpi-val d-block">{moreBankInfo?.bankBranch || "-"}{","}{moreBankInfo?.country}{","}{moreBankInfo?.state}{","}{moreBankInfo?.city}{","}{moreBankInfo?.postalCode}</span> </div></>}
+         <span className="kpi-val d-block">{moreBankInfo?.bankBranch || "-"}{moreBankInfo?.bankBranch && ","}
+          {moreBankInfo?.country} { moreBankInfo?.country && ","}{moreBankInfo?.state}{moreBankInfo?.state && ","}{moreBankInfo?.city}{moreBankInfo?.city && ","}{moreBankInfo?.postalCode}</span> </div></>}
          </div>
       );
     }
@@ -122,7 +123,7 @@ class PaymentsView extends Component {
             <>
              <div ref={this.useDivRef}></div>
                 <div className="main-container">
-                    <Title className="adbook-head"><span onClick={() => this.props.history?.push(`/payments/All`)} className='icon md c-pointer back backarrow-mr'/><Translate content="menu_payments" component={Text} className="adbook-head" /></Title>
+                    <Title className="basicinfo"><span onClick={() => this.props.history?.push(`/payments/All`)} className='icon md c-pointer back backarrow-mr'/><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
                     <div className='transaction-custom-table'>
                     <div className="responsive_table db-ts-grid">
                         <table className='pay-grid view mb-view'>

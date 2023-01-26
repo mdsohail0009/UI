@@ -413,7 +413,8 @@ class PaymentDetails extends Component {
           <>
           <div className='popover-mb-12'>
           <label className="kpi-label">Bank Address</label>
-          <span className="kpi-val d-block">{moreBankInfo?.bankBranch}{","}{moreBankInfo?.country}{","}{moreBankInfo?.state}{","}{moreBankInfo?.city}{","}{moreBankInfo?.postalCode}</span></div></>}
+          <span className="kpi-val d-block">{moreBankInfo?.bankBranch || "-"}{moreBankInfo?.bankBranch && ","}
+          {moreBankInfo?.country} { moreBankInfo?.country && ","}{moreBankInfo?.state}{moreBankInfo?.state && ","}{moreBankInfo?.city}{moreBankInfo?.city && ","}{moreBankInfo?.postalCode}</span></div></>}
         </div>
       );
     }
