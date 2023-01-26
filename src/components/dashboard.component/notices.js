@@ -36,10 +36,13 @@ const Notices = () => {
     return( 
     <>
  <div className='market-panel-newstyle'></div>
+   {notices.length>=1 &&<>
     <div className="fait-wallets-style notices-style">
             <Translate content="notices" component={Title} className="db-titles" />
                </div>
                {loading && <Loader/>}
+               </>
+  }
     <Carousel autoplay className="">
         {notices.map((notice, indx) => <div key={indx} className="p-28 carousel-card">
             <div className=" carosel-content" dangerouslySetInnerHTML={{__html: notice.notice}}></div>

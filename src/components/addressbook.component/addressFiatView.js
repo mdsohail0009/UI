@@ -115,7 +115,7 @@ const AddressFiatView = (props) => {
 									Recipient Details
 									</Title>
 								<Row gutter={8}>
-									<Col xl={24} xxl={24} className="bank-view">
+									<Col xl={24} xxl={24} className="bank-view addressbook-crypto-view">
 										<Row className="kpi-List">
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">

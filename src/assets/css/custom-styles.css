@@ -1093,6 +1093,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .fait-wallets-style{margin-top:36px;}
 .notices-style .db-titles{margin-bottom: 22px;}
 .fait-wallets-style.notices-style{margin-top: 38px;}
+.addressbook-crypto-view .ad-rec-detyails{margin-right: 24PX;}
 }
 
 @media (min-width: 1024px){
