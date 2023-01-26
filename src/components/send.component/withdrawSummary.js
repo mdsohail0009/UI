@@ -266,7 +266,7 @@ class WithdrawSummary extends Component {
 				this.setState({
 					buttonText: "resendotp",
 					tooltipVisible: false,
-					verifyOtpText: null,
+					// verifyOtpText: null,
 				});
 			}, 120000);
 		} else {
@@ -296,7 +296,7 @@ class WithdrawSummary extends Component {
 				this.setState({
 					emailText: "resendEmail",
 					tooltipEmail: false,
-					verifyText: null,
+					// verifyText: null,
 				});
 			}, 30000);
 		} else {
