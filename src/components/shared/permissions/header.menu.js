@@ -90,7 +90,7 @@ class MobileHeaderMenu extends Component {
                 /><Menu>
                         <ul className="drpdwn-list">
                             {item?.subMenu?.map((subItem) => <li
-                                className={getScreen?.getScreen === item.content ? "active" : "custom-inactive"}
+                                className={getScreen?.getScreen === item.content ? "" : "custom-inactive"}
 
                                 onClick={() => {
                                     onMenuItemClick(subItem.key, subItem);
@@ -500,7 +500,7 @@ class HeaderPermissionMenu extends Component {
                         onClick={this.props.routeToCockpit}
                         onMouseOver={() => { this.handleHover() }}
                         // component={Text}
-                        className={this.props.menuItems.getScreen?.getScreen == "dashboard" ? "active" : "custom-inactive"}
+                        className={this.props.menuItems.getScreen?.getScreen == "dashboard" ? "" : "custom-inactive"}
                     />
                 </Menu.Item>
                 {data?.map((item, indx) => <React.Fragment>
@@ -529,7 +529,7 @@ class HeaderPermissionMenu extends Component {
                                 content={item.content}
                                 component={Menu.Item}
                                 key="4"
-                                className={item.content == this.props.menuItems.getScreen?.getScreen ? "active" : "custom-header"}
+                                className={item.content == this.props.menuItems.getScreen?.getScreen ? "" : "custom-header"}
 
                             />
                         </Dropdown>

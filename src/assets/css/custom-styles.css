@@ -202,6 +202,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .main-container{padding: 24px 16px; margin: auto;}
 .main-container .k-loading-color{background-color: transparent !important;}
 .text-white{color: #FFFFFF;}
+.ant-menu-item.ant-menu-item-only-child .ant-menu-title-content:hover{color:var(--white)}
 /* body{background:var(--bodyBg);} */
 /* url(../images/dark-bg2.0.svg) no-repeat top center; */
 .loader{background-color: #000000;position: fixed;top: 0; right: 0; bottom: 0; left: 0;display: flex; align-items: center;font-size: 36px;color: var(--textWhite);justify-content: center;}
