@@ -57,6 +57,13 @@ class TransactionSlips extends Component {
     return _value;
 
   }
+  getHashLink=(key)=>{
+    const {viewData } = this.props;
+    if(key==="Hash"){
+      return <><a className='gridLink c-pointer ' href={`${viewData.hashUrl}`} target="_blank">{viewData.hashId}</a></>
+    }
+
+  }
   render() {
     const { Title } = Typography;
     const { downloadError } = this.state;
