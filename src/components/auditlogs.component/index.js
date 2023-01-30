@@ -7,7 +7,6 @@ import { userNameLuSearch, getFeatureLuSearch, getAuditLogInfo } from './api';
 import moment from 'moment';
 import Translate from 'react-translate-component';
 import apicalls from '../../api/apiCalls';
-import { withRouter,Link } from "react-router-dom";
 import { getScreenName } from "../../reducers/feturesReducer";
 
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Typography,Row,Col,Avatar, List } from 'antd';
+import { Row,Col,Avatar, List } from 'antd';
 const data = [
     {
       title: 'Ant Design Title 1',
@@ -8,8 +8,8 @@ const data = [
       title: 'Ant Design Title 2',
     },
   ];
-const { Text,Title, Paragraph } = Typography;
-class SbCard extends Component {
+
+  class SbCard extends Component {
 
     render() {
         return (<>

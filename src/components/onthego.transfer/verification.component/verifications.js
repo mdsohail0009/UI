@@ -68,7 +68,6 @@ const Verifications = (props) => {
         }, 1000);
     };
     const transferDetials = async (values) => {
-        // setAgreeRed(true);
     };
 
    const loadPermissions = () => {

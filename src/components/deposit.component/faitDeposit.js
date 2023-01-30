@@ -34,7 +34,6 @@ class FaitDeposit extends Component {
   componentDidMount() {
     this.props.fiatRef(this)
     this.setState({ ...this.state, Loader: true })
-    this.props.fetchCurrencyWithBankDetails()
     if (this.props.sendReceive.withdrawFiatEnable||this.props?.isShowSendFiat) {
       getFeaturePermissionsByKeyName(`send_fiat`);
       this.handleshowTab(2);
@@ -53,7 +52,6 @@ class FaitDeposit extends Component {
     }
   }
   clearfiatValues = () => {
-    this.props.fetchCurrencyWithBankDetails()
     this.setState({
       buyDrawer: false,
       crypto: config.tlvCoinsList,
@@ -68,7 +66,6 @@ class FaitDeposit extends Component {
   handleBuySellToggle = e => {
     this.handleshowTab(e.target.value)
     if (e.target.value === 1) {
-      this.props.fetchCurrencyWithBankDetails()
       this.props.dispatch(rejectWithdrawfiat())
       this.props.dispatch(setWithdrawfiatenaable(false))
 
@@ -406,8 +403,7 @@ const connectDispatchToProps = dispatch => {
     changeStep: (stepcode) => {
       dispatch(setStep(stepcode))
     },
-    fetchCurrencyWithBankDetails: () => {
-    },
+   
     dispatch
   }
 }

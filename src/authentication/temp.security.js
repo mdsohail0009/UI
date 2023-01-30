@@ -11,7 +11,7 @@ class SecurityLogin extends Component {
     componentDidMount() {
         apiClient.axiosInstance.interceptors.response.use((response) => { return response; }, (error) => {
             const stCode = error.response?.status;
-            if (stCode === 409) { this.setState({ ...this.state, isRelogin: true }); };
+            if (stCode === 409) { this.setState({ ...this.state, isRelogin: true }); }
             return error;
         });
     }

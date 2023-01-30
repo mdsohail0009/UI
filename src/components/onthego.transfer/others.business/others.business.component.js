@@ -68,7 +68,6 @@ class OthersBusiness extends Component {
         }
     }
     handleIbanChange = async ({ target: { value,isNext } }) => {
-     //   this.setState({ ...this.state, ibanDetails: {}, enteredIbanData: value, isShowValid: false,errorMessage: null});
         if (value?.length >= 10 && isNext) {
             this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true,iBanValid:true ,ibanDetails: {}, enteredIbanData: value, isShowValid: false,isValidateLoading:true});
             const response = await fetchIBANDetails(value);

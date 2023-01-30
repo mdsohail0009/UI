@@ -6,7 +6,7 @@ import List from "../grid.component";
 import AddBatchPayment from './addbatchPayment';
 import PaymentPreview from './paymentPreview';
 import moment from "moment/moment";
-import { withRouter,Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {deleteBatchPayments,getInvalidTransactionData} from './api'
 
 import ActionsToolbar from "../toolbar.component/actions.toolbar";
@@ -192,9 +192,7 @@ const Batchpayments = (props) => {
       setErrorWarning(null)
       setSelection([])
     }
-   const gotoDashboard=()=>{
-      props.history.push('/cockpit')
-    }
+  
     const onActionClick = (key) => {
       const actions = {
         Refresh:refreshPayment,

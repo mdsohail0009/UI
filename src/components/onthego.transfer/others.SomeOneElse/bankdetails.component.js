@@ -3,16 +3,10 @@ import { Row, Col, Form, Input, Typography, Button, Spin } from 'antd';
 import apicalls from "../../../api/apiCalls";
 import { validateContentRule } from "../../../utils/custom.validator";
 import Translate from "react-translate-component";
-//import { LoadingOutlined } from "@ant-design/icons";
 
 const {  Text } = Typography;
 const { TextArea } = Input;
-// const antIcon = (
-//     <LoadingOutlined
-//         style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
-//         spin
-//     />
-// );
+
 class PayeeBankDetails extends Component {
     state = {
         emailExist: false,
@@ -37,7 +31,6 @@ class PayeeBankDetails extends Component {
         }
     }
     handleIban = async (ibannumber,isNext) => {
-      //  this.setState({ ...this.state, enteredIbanData: ibannumber, isShowValid: false, iBanDetals: null});
         this.props.getIbandata(null);
         if (ibannumber?.length >= 10 && isNext) {
             this.setState({ ...this.state, iBanDetals: null, IbanLoader: true, isValidIban: true, enteredIbanData: ibannumber,  isShowValid: false,isValidateLoading:true})
@@ -140,20 +133,7 @@ class PayeeBankDetails extends Component {
                     </Form.Item>
                     </div>
                     </Col>
-                    {/* <Col xs={24} md={10} lg={10} xl={10} xxl={10}> */}
-                       {/* <Button className={`pop-btn dbchart-link pop-validate-btn`} style={{width:"150px",marginTop:"32px",height:"42px"}}
-                                    loading={this.state.isValidateLoading}
-                                    onClick={() => this.onIbanValidate(this.props?.form.current?.getFieldValue(["payeeAccountModels","iban"]))} >
-                                    <Translate content="validate" />
-                                </Button> */}
-                                 {/* <Button className={`pop-btn dbchart-link pop-validate-btn iban-validate`}
-                             type="primary"
-                                // loading={isValidateLoading}
-                                onClick={() => this.onIbanValidate(this.props?.form.current?.getFieldValue(["payeeAccountModels","iban"]))} >
-                            <Translate content="validate" />
-                    </Button>   */}
-                         
-                {/* </Col> */}
+                   
                 </>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 
@@ -496,7 +476,7 @@ class PayeeBankDetails extends Component {
     }
     render() {
         const {  transferType,   domesticType } = this.props;
-        //const { countries, states, isLoading } = this.state;
+   
         
         return <>
             <Row className="validateiban-content">

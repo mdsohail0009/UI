@@ -4,7 +4,7 @@ import { store } from '../../store'
 import moment from 'moment';
 import CryptoJS from "crypto-js";
 import { ExcelExport } from '@progress/kendo-react-excel-export'
-import { savePDF, PDFExport } from '@progress/kendo-react-pdf';
+import { PDFExport } from '@progress/kendo-react-pdf';
 import logColor from '../../assets/images/logo-color.png';
 import {Button, Dropdown,Menu,} from 'antd';
 const filterOperators = {
@@ -101,9 +101,7 @@ export function withState(WrappedGrid) {
             if (this.tempRef.current)
                 this.tempRef.current.save();
         }
-        getPDFROWS = () => {
-
-        }
+      
         getCombineFieldValue = (dataItem, fields) => {
             for (const i in this.props.columns) {
                 if (this.props.columns[i].filterType === "numeric") {

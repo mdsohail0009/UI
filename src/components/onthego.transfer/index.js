@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Select, Input, Row, Col, Form, Button, Typography, List, Divider, Image, Alert, Spin, Empty,Radio,Tabs } from 'antd';
+import { Select, Input, Row, Col, Form, Button, Typography, List, Image, Alert, Spin, Empty,Radio,Tabs } from 'antd';
 import apicalls from "../../api/apiCalls";
 import AddressDocumnet from "../addressbook.component/document.upload";
 import oops from '../../assets/images/oops.png'
@@ -21,11 +21,10 @@ import { connect } from "react-redux";
 import { getFeaturePermissionsByKeyName } from "../shared/permissions/permissionService";
 import { setSendFiatHead } from "../../reducers/buyFiatReducer";
 import {validateContentRule} from '../../utils/custom.validator'
-import {hideSendCrypto,rejectWithdrawfiat, setWithdrawfiatenaable ,setClearAmount} from '../../reducers/sendreceiveReducer'
+import {hideSendCrypto,setClearAmount} from '../../reducers/sendreceiveReducer'
 import { setStep } from '../../reducers/buysellReducer';
-import WithdrawalSuccess from '../../components/withDraw.component/withdrwSuccess';
+
 const { Text, Title } = Typography; 
-const { Option } = Select
 class OnthegoFundTransfer extends Component {
   enteramtForm = React.createRef();
   reasonForm = React.createRef();
@@ -313,7 +312,6 @@ saveWithdrawdata = async () => {
  this.setState({ ...this.state, selectedCurrency: e });
   }
 
-  fiatHeading = (data) => {}
   keyDownHandler = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault()
@@ -353,7 +351,6 @@ saveWithdrawdata = async () => {
                 'addressLoader',
               ),
             )
-            .catch((error) => {})
         },
       )
     } else {
@@ -369,7 +366,7 @@ saveWithdrawdata = async () => {
   }
 
   renderStep = (step) => {
-    const { filterObj, pastPayees, isVarificationLoader, isVerificationEnable, isPhMail, isShowGreyButton, isAuthMail } = this.state;
+    const { filterObj, pastPayees, isVarificationLoader, isVerificationEnable, isShowGreyButton } = this.state;
     const steps = {
       selectcurrency: (
         <React.Fragment>
@@ -886,7 +883,6 @@ saveWithdrawdata = async () => {
                        </Button>
                       </Form.Item>
                     </div>
-                  // </Col>
                   }
               
             </Form>
@@ -937,8 +933,7 @@ const connectStateToProps = ({ sendReceive, userConfig, menuItems, oidc }) => {
 };
 const connectDispatchToProps = (dispatch) => {
   return {
-    changeInternalStep: (stepcode) => {
-    },
+  
       changeStep: (stepcode) => {
           dispatch(setStep(stepcode))
       },

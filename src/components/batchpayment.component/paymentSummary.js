@@ -138,7 +138,7 @@ class PaymentSummary extends Component {
 		this.setState({ ...this.state, reviewDetailsLoading: val })
 	  }
 	render() {
-		const {  isShowGreyButton,errorMessage,loading } = this.state;
+		const {  errorMessage,loading } = this.state;
 		return (<>
 			<div>
 			<Drawer destroyOnClose={true}
