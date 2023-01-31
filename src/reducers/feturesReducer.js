@@ -69,7 +69,7 @@ const fetchFeatures = (app_id) => {
             dispatch(fetchFeaturePermissions(_cockpit?.id, _userConfig?.id))
         } else {
             dispatch(setData({ data: null, loading: false, error: response.data?.message || response.data || response.originalError.message, key: "features" }));
-        };
+        }
 
     }
 

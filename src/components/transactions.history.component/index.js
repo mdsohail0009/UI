@@ -11,7 +11,7 @@ import List from "../grid.component";
 import { getTransactionSearch, getTransactionCurrency,transactionsView } from './api';
 import { setCurrentAction } from "../../reducers/actionsReducer";
 import { getFeaturePermissionsByKey } from '../shared/permissions/permissionService';
-import { withRouter,Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { getScreenName, setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 import NumberFormat from "react-number-format";
 import moment from "moment/moment";
@@ -334,16 +334,7 @@ isErrorDispaly = (objValue) => {
       <Option key={d.code} value={d.code}>{d.code}</Option>
     ));
 
-   const  handleBack = () => {
-      this.props.dispatch(getScreenName({getScreen:"dashboard"}))
-      if (!this.props?.customer?.isKYC) {
-        this.props.history.push("/notkyc");
-        return;
-    }
-      else{
-        this.props.history.push("/");
-      }
-  }
+
 
     return (
       <>

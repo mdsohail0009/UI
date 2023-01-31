@@ -7,7 +7,7 @@ import Moment from 'react-moment';
 import moment from 'moment';
 import List from "../grid.component";
 import BeneficiaryDrawer from './beneficiaryDrawer';
-import {Link,  withRouter } from "react-router-dom";
+import {Link } from "react-router-dom";
 import { setHeaderTab } from "../../reducers/buysellReducer"
 import ActionsToolbar from "../toolbar.component/actions.toolbar";
 import { getCurrencyLu} from './api'
@@ -68,7 +68,7 @@ const Payments = (props) => {
   }, []);//eslint-disable-line react-hooks/exhaustive-deps
   useEffect(()=>{
     gridRef.current?.refreshGrid();
-  },[walletType]);;//eslint-disable-line react-hooks/exhaustive-deps
+  },[walletType]);//eslint-disable-line react-hooks/exhaustive-deps
   const gridColumns = [
     {
       field: "",
