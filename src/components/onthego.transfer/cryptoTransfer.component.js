@@ -15,7 +15,7 @@ import Currency from '../shared/number.formate';
 import { setAddressStep } from "../../reducers/addressBookReducer";
 import Translate from 'react-translate-component';
 
-const { Text, Title } = Typography;
+const { Text } = Typography;
 
 class OnthegoCryptoTransfer extends Component {
     enteramtForm = React.createRef();
@@ -88,7 +88,7 @@ class OnthegoCryptoTransfer extends Component {
             this.setState({ ...this.state, filterObj, searchVal: val });
         }
         else
-        this.setState({ ...this.state, filterObj: this.state.payees, searchVal: val });
+       {this.setState({ ...this.state, filterObj: this.state.payees, searchVal: val })}
     }
 
     handlePreview = (item) => {

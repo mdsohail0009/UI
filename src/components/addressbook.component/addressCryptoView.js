@@ -121,10 +121,8 @@ const AddressCryptoView = (props) => {
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Whitelist Name</label>
 													<div className=" kpi-val adview-name">
-														{cryptoAddress?.saveWhiteListName === " " ||
-															cryptoAddress?.saveWhiteListName === null
-															? "-"
-															: cryptoAddress?.saveWhiteListName}
+															{(cryptoAddress?.saveWhiteListName === " " ||cryptoAddress?.saveWhiteListName === null) && "-"}
+															{!(cryptoAddress?.saveWhiteListName === " " ||cryptoAddress?.saveWhiteListName === null) && cryptoAddress?.saveWhiteListName}
 													</div>
 												</div>
 											</Col>
@@ -132,10 +130,8 @@ const AddressCryptoView = (props) => {
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Token</label>
 													<div className=" kpi-val adview-name">
-														{cryptoAddress?.token === " " ||
-															cryptoAddress?.token === null
-															? "-"
-															: cryptoAddress?.token}
+															{(cryptoAddress?.token === " " ||cryptoAddress?.token === null) && "-"}
+															{!(cryptoAddress?.token === " " ||cryptoAddress?.token === null) && cryptoAddress?.token}
 													</div>
 												</div>
 											</Col>
@@ -143,10 +139,8 @@ const AddressCryptoView = (props) => {
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Network</label>
 													<div className=" kpi-val adview-name">
-														{cryptoAddress?.network === " " ||
-															cryptoAddress?.network === null
-															? "-"
-															: cryptoAddress?.network}
+															{(cryptoAddress?.network === " " ||cryptoAddress?.network === null) && "-"}
+															{!(cryptoAddress?.network === " " ||cryptoAddress?.network === null) && cryptoAddress?.network}
 													</div>
 												</div>
 											</Col>
@@ -155,10 +149,8 @@ const AddressCryptoView = (props) => {
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Wallet Address</label>
 													<div className=" kpi-val adview-name">
-														{cryptoAddress?.walletAddress === " " ||
-															cryptoAddress?.walletAddress === null
-															? "-"
-															: cryptoAddress?.walletAddress}
+															{(cryptoAddress?.walletAddress === " " ||cryptoAddress?.walletAddress === null) && "-"}
+															{!(cryptoAddress?.walletAddress === " " ||cryptoAddress?.walletAddress === null) && cryptoAddress?.walletAddress}
 													</div>
 												</div>
 											</Col>
@@ -166,10 +158,8 @@ const AddressCryptoView = (props) => {
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Address State</label>
 													<div className=" kpi-val adview-name">
-														{cryptoAddress?.adressstate === " " ||
-															cryptoAddress?.adressstate === null
-															? "-"
-															: cryptoAddress?.adressstate}
+															{(cryptoAddress?.adressstate === " " ||cryptoAddress?.adressstate === null) && "-"}
+															{!(cryptoAddress?.adressstate === " " ||cryptoAddress?.adressstate === null) && cryptoAddress?.adressstate}
 													</div>
 												</div>
 											</Col>

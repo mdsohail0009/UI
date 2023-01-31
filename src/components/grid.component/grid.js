@@ -281,7 +281,11 @@ export function withState(WrappedGrid) {
                 dataState.filter.filters?.map((item) => {
                     return item.filters?.map((value) => {
                         if (value.operator === "gte" || value.operator === "gt" || value.operator === "lte" || value.operator === "lt") {
-                            value.value = value.value ? ((value.operator === 'lte' || value.operator === "gt") ? new Date(moment(value.value).format('YYYY-MM-DDT23:59:59')) : new Date(moment(value.value).format('YYYY-MM-DDT00:00:00'))) : null;
+                            value.value = 
+                            value.value ? 
+                            ((value.operator === 'lte' || value.operator === "gt") ? new Date(moment(value.value).format('YYYY-MM-DDT23:59:59')) : new Date(moment(value.value).format('YYYY-MM-DDT00:00:00')))
+                            
+                            : null;
                         }
                     })
                 })

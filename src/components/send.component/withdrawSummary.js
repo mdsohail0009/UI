@@ -575,9 +575,7 @@ class WithdrawSummary extends Component {
 	address = this.props.sendReceive.withdrawCryptoObj?.toWalletAddress;
 	firstAddress = this.address?.slice(0, 4);
 	lastAddress = this.address?.slice(-4);
-	renderIcon=()=>{
-
-	}
+	
 
 
 	render() {

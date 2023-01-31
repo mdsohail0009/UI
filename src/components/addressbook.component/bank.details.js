@@ -52,9 +52,7 @@ class BankDetails extends Component {
                                 },
                             },
                         ]}
-                        onBlur={(e) => {
-                            //handleIban(e.target.value)
-                        }}
+                      
                     >
                         <Input
                             className="cust-input"

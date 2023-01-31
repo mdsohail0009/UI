@@ -1244,11 +1244,11 @@ const AddressCommonCom = (props) => {
                           onChange={(e) => handleCountry(e)}
                           bordered={false}
                         >
-                          {country?.map((item, indx) => (
+                          {country?.map((item, indx)=>(
                             <Option key={indx} value={item.name}>
                               {item.name}
                             </Option>
-                          ))}
+                          ))} 
                         </Select>
                       </Form.Item>
                     </Col>

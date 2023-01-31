@@ -7,6 +7,7 @@ const NewFiatAddress = (props) => {
   const [isEdit, setEdit] = useState(false);
   const [state, setstate] = useState()
   useEffect(() => {
+    debugger
     if (
       props?.addressBookReducer?.selectedRowData?.id !==
       "00000000-0000-0000-0000-000000000000" &&

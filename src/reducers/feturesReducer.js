@@ -113,8 +113,9 @@ const featuresReducer = (state = initialState, action) => {
         case CLEAR_PERMISSIONS:
             state = { ...state, featurePermissions: { data: [], error: null, loading: true, selectedScreenFeatureId: null } };
             return state;
-            case GET_SCREEN_NAME:
+        case GET_SCREEN_NAME:
                 state={...state,getScreen:action.payload}
+            return state;
         default:
             return state;
     }
