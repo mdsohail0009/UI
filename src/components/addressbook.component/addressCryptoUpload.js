@@ -74,6 +74,7 @@ class AddressCryptoDocument extends Component {
                             onChange={({ file }) => {
                                 this.setState({ ...this.state, isDocLoading: true });
                                 if (file.status === "done") {
+                                    debugger
                                     let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true, 'video/mp4':true,"application/mp4" : true }
                                     if (fileType[file.type]) {
                                         let { filesList: files } = this.state;
@@ -95,7 +96,7 @@ class AddressCryptoDocument extends Component {
                             </p>
                             <p className="ant-upload-text">Drag and drop or browse to choose file</p>
                             <p className="ant-upload-hint uplaod-inner">
-                                PNG, JPG,JPEG and PDF files are allowed
+                                PNG, JPG,JPEG, PDF, Mp4 files are allowed
                             </p>
                         </Dragger>
                     </Form.Item>
@@ -122,7 +123,7 @@ class AddressCryptoDocument extends Component {
                     <>
                     	<div className="cust-pop-up-btn crypto-pop">
                         <Button
-                            // style={{ margin: "0 8px" ,width: 120, height: 50 }}
+                           
                             className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
                             onClick={() => { this.setState({ ...this.state, showDeleteModal: false }) }}>
                             No
@@ -154,7 +155,7 @@ class AddressCryptoDocument extends Component {
                                 docs.details=Object.assign([],obj)
                                 this.props?.onDocumentsChange(docs);
                             }}
-                            // style={{ width: 120, height: 50 }}
+                        
                             >
                             {apiCalls.convertLocalLang("Yes")}
                         </Button>

@@ -9,7 +9,8 @@ import Loader from '../../Shared/loader';
 import WAValidator from "multicoin-address-validator";
 import { validateContentRule } from "../../utils/custom.validator";
 import Translate from "react-translate-component";
-import AddressCryptoDocument from './document.upload';
+import AddressCryptoDocument from './addressCryptoUpload';
+import apiCalls from "../../api/apiCalls";
 const { Text, Title, Paragraph } = Typography;
 const { Option } = Select;
 
@@ -124,6 +125,15 @@ if (res.ok){
 }
   }
   submit = async (values) => {
+    if (!values.proofOfOwnerShip) {
+			this.setState({
+				...this.state,
+				errorMessage: apiCalls.convertLocalLang("agree_termsofservice"),
+				agreeRed: false,
+			});
+			this.useDivRef.current.scrollIntoView(0, 0);
+		}
+    else{
     let obj = {
       id: "00000000-0000-0000-0000-000000000000",
       saveWhiteListName: values.saveWhiteListName,
@@ -164,6 +174,7 @@ if (res.ok){
         this.useDivRef.current.scrollIntoView();
       this.setState({ ...this.state, isBtnLoading: false,  errorMessage: this.isErrorDispaly(response), });
     }
+  }
   }
   validateAddressType = (_, value) => {
     if (value) {
@@ -337,7 +348,7 @@ if (res.ok){
             <Form.Item
              className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="walletAddress1"
-              label="Wallet Address1"
+              label="You have selected others for Wallet Source. Please specify"
               required
               rules={[
                 {
@@ -349,14 +360,14 @@ if (res.ok){
                 className="cust-input"
                 maxLength={100}
 
-                placeholder="Wallet Address1"
+                placeholder="Wallet Source"
               />
             </Form.Item>
             </Col>}
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item
 								className="custom-forminput mb-36 agree send-crypto-sumry"
-								name="isAccept"
+								name="proofOfOwnerShip"
 								valuePropName="checked"
 								required
 							>				
@@ -382,7 +393,7 @@ if (res.ok){
 							</Form.Item>
             </Col>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
+                            <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload a screenshot or video to prove you are the owner of the address</Paragraph>
                             <AddressCryptoDocument 
                             documents={this.state?.documents || null} 
                             editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
