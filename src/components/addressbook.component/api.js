@@ -77,6 +77,9 @@ const getFavData = (payeeId) => {
 
     );
 };
+const getWalletSource= () => {
+    return apiClient.get(ApiControllers.common + `controlcodes?codecategory=Wallet Sources`);
+};
 const saveAddressBook = (obj,bilPay) => {
 	if(bilPay==="Fiat"){
 		return apiClient.post(ApiControllers.addressbook + `BillPaymentPayee`, obj);
@@ -153,7 +156,8 @@ export {
 	downloadDeclForm,
 	getCryptoData,
 	saveCryptoData,
-	networkLu
+	networkLu,
+	getWalletSource
 };
 
 

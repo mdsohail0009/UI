@@ -1,14 +1,15 @@
 import React, { Component} from "react";
-import { Form, Typography, Input, Button, Select, Image, Alert,Row,Col } from "antd";
+import { Form, Typography, Input, Button, Select, Image, Alert,Row,Col,Checkbox } from "antd";
 import alertIcon from '../../assets/images/pending.png';
 import { setAddressStep } from "../../reducers/addressBookReducer";
 import { setAddress, setStep, setWithdrawcrypto,rejectWithdrawfiat, setSendCrypto, hideSendCrypto } from "../../reducers/sendreceiveReducer";
 import { connect } from "react-redux";
-import { getCryptoData, saveCryptoData, getCoinList } from "./api";
+import { getCryptoData, saveCryptoData, getCoinList,getWalletSource } from "./api";
 import Loader from '../../Shared/loader';
 import WAValidator from "multicoin-address-validator";
 import { validateContentRule } from "../../utils/custom.validator";
 import Translate from "react-translate-component";
+import AddressCryptoDocument from './document.upload';
 const { Text, Title, Paragraph } = Typography;
 const { Option } = Select;
 
@@ -29,12 +30,18 @@ class AddressCrypto extends Component {
       iBanValid: false,
       cryptoData: {},
       coinsList: [],
-      networksList: []
+      networksList: [],
+      wallet:[],
+      isEdit:false,
+      documents:null,
+      walletSource:null,
+
     };
   }
 
   componentDidMount() {
     this.getCryptoData();
+    this.handleWallet();
   }
   getCryptoData = async () => {
     let id = this.props?.addressBookReducer?.selectedRowData?.id || "00000000-0000-0000-0000-000000000000";
@@ -106,6 +113,16 @@ class AddressCrypto extends Component {
     this.setState({ ...this.state, networksList: networkLu})
   };
 
+  handleWalletSource=(value)=>{
+    this.setState({...this.state,walletSource:value})
+  }
+
+  handleWallet=async()=>{
+let res= await getWalletSource();
+if (res.ok){
+  this.setState({...this.state,wallet:res.data})
+}
+  }
   submit = async (values) => {
     let obj = {
       id: "00000000-0000-0000-0000-000000000000",
@@ -290,6 +307,90 @@ class AddressCrypto extends Component {
               />
             </Form.Item>
             </Col>
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
+              name="walletSource"
+              label="Wallet Source"
+              rules={[
+                {
+                  required: true,
+                  message: "Is required",
+                },
+              ]}
+            >
+              <Select
+                className="cust-input"
+                maxLength={100}
+                placeholder="Select Wallet Source"
+                optionFilterProp="children"
+                onChange={this.handleWalletSource}
+              >
+                {this.state.wallet?.map((item, idx) => (
+                  <Option key={idx} value={item.name}>
+                    {item.name}
+                  </Option>
+                ))}
+              </Select> 
+            </Form.Item>
+            </Col>
+           { this.state.walletSource === "Others" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            <Form.Item
+             className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
+              name="walletAddress1"
+              label="Wallet Address1"
+              required
+              rules={[
+                {
+                  validator: this.validateAddressType,
+                },
+              ]}
+            >
+              <Input
+                className="cust-input"
+                maxLength={100}
+
+                placeholder="Wallet Address1"
+              />
+            </Form.Item>
+            </Col>}
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            <Form.Item
+								className="custom-forminput mb-36 agree send-crypto-sumry"
+								name="isAccept"
+								valuePropName="checked"
+								required
+							>				
+
+								<div className="d-flex agree-check checkbox-mobile">
+						<label>
+							<input
+								type="checkbox"
+								id="agree-check"
+								
+							/>
+							<span for="agree-check"  />
+	
+							
+						</label>
+						<Paragraph
+							className="cust-agreecheck"
+							style={{ flex: 1 }}>
+             I'm The Owener Of This Wallet Address
+						</Paragraph>
+					</div>
+								
+							</Form.Item>
+            </Col>
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
+                            <AddressCryptoDocument 
+                            documents={this.state?.documents || null} 
+                            editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
+                                this.setState({ ...this.state, details: { ...this.state.details } })
+                            }} 
+                            />
+                        </ Col>
+          
             </Row>
             <Form.Item className="">
               <Button
@@ -298,7 +399,6 @@ class AddressCrypto extends Component {
                 block
                 className="pop-btn"
                 loading={this.state.isBtnLoading}
-                // style={{ width: "150px" }}
               >
                 {this.props.type === "manual" && "Save"}
                 {this.props.type !== "manual" && <Translate content="continue" />}
