@@ -73,9 +73,9 @@ class AddressCryptoDocument extends Component {
                             headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
                             onChange={({ file }) => {
                                 this.setState({ ...this.state, isDocLoading: true });
+                                debugger
                                 if (file.status === "done") {
-                                    debugger
-                                    let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true, 'video/mp4':true,"application/mp4" : true }
+                                    let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true, 'video/mp4':true,"application/mp4":true,'audio/mp4' : true }
                                     if (fileType[file.type]) {
                                         let { filesList: files } = this.state;
                                         files.push(file);
