@@ -59,7 +59,7 @@ bankClient.axiosInstance.interceptors.request.use((config) => {
     return config;
 });
 uploadClient.axiosInstance.interceptors.request.use((config) => {
-    const { oidc: { user }, userConfig: {  }, currentAction: {  },
+    const { oidc: { user }, 
     } = store.getState()
     config.headers.Authorization = `Bearer ${user.access_token}`
     return config;
