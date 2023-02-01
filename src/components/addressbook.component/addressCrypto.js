@@ -248,7 +248,8 @@ if (res.ok){
                 },
               ]}
             >
-              <Input className="cust-input" maxLength={100} placeholder="Save Whitelist Name As" />
+              <Input className="cust-input" maxLength={100} placeholder="Save Whitelist Name As" 
+            disabled={this.state.cryptoData.adressstate ==="Approved"  ? true : false }/>
             </Form.Item>
             <div className="">
             <Title className="adbook-head">Beneficiary Details</Title>
@@ -270,7 +271,7 @@ if (res.ok){
                 placeholder="Select Token"
                 optionFilterProp="children"
                 maxLength={50}
-                disabled={(this.props?.sendReceive?.withdrawFiatObj?.walletCode ||this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin) ? true:false}>
+                disabled={(this.props?.sendReceive?.withdrawFiatObj?.walletCode ||this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin || this.state.cryptoData.adressstate ==="Approved") ? true:false}>
                 {coinsList?.map((item, idx) => (
                   <Option key={idx} value={item.walletCode}>
                     {item.walletCode}
@@ -295,6 +296,7 @@ if (res.ok){
                 maxLength={100}
                 placeholder="Select Network"
                 optionFilterProp="children"
+                disabled={this.state.cryptoData.adressstate ==="Approved"  ? true : false }
               >
                 {networksList?.map((item, idx) => (
                   <Option key={idx} value={item.name}>
@@ -319,8 +321,8 @@ if (res.ok){
               <Input
                 className="cust-input"
                 maxLength={100}
-
                 placeholder="Wallet Address"
+                disabled={this.state.cryptoData.adressstate ==="Approved"  ? true : false }
               />
             </Form.Item>
             </Col>
@@ -341,6 +343,7 @@ if (res.ok){
                 placeholder="Select Wallet Source"
                 optionFilterProp="children"
                 onChange={this.handleWalletSource}
+                disabled={this.state.cryptoData.adressstate ==="Approved"  ? true : false }
               >
                 {this.state.wallet?.map((item, idx) => (
                   <Option key={idx} value={item.name}>
@@ -366,6 +369,7 @@ if (res.ok){
                 className="cust-input"
                 maxLength={100}
                 placeholder="Wallet Source"
+                disabled={this.state.cryptoData.adressstate ==="Approved"  ? true : false }
               />
             </Form.Item>
             </Col>}
