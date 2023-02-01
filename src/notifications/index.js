@@ -131,8 +131,7 @@ const Notifications = ({
                 }
                 description={
                   <Text
-                    className={`profile-value value-description ${!item.isRead && "" 
-                      } fs-12`}
+                    className={`profile-value value-description fs-12`}
                   >
                     {item?.message}{" "}
                   </Text>
