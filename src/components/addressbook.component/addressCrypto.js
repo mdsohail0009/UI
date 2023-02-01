@@ -131,7 +131,7 @@ if (res.ok){
 				errorMessage: apiCalls.convertLocalLang("agree_termsofservice"),
 				agreeRed: false,
 			});
-			this.useDivRef.current.scrollIntoView(0, 0);
+			this.useDivRef.current?.scrollIntoView(0, 0);
 		}
     else{
     let obj = {
@@ -150,6 +150,7 @@ if (res.ok){
       customerId: this.props.userProfile.id,
       proofofOwnership:values.proofofOwnership,
       walletSource:values.walletSource,
+      otherWallet:values.otherWallet,
       documents:this.state.details.documents
       
     }
@@ -175,7 +176,7 @@ if (res.ok){
     }
     else {
       this.setState({ ...this.state, errorMessage: response.data, loading: false });
-        this.useDivRef.current.scrollIntoView();
+        this.useDivRef.current?.scrollIntoView();
       this.setState({ ...this.state, isBtnLoading: false,  errorMessage: this.isErrorDispaly(response), });
     }
   }
@@ -348,10 +349,10 @@ if (res.ok){
               </Select> 
             </Form.Item>
             </Col>
-           { this.state.walletSource === "Others" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+           { this.state.walletSource === "Others" || this.state.cryptoData?.otherWallet  && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item
              className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
-              name="walletAddress1"
+              name="otherWallet"
               label="You have selected others for Wallet Source. Please specify"
               required
               rules={[
@@ -363,7 +364,6 @@ if (res.ok){
               <Input
                 className="cust-input"
                 maxLength={100}
-
                 placeholder="Wallet Source"
               />
             </Form.Item>
