@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Collapse, Button, Typography, Modal, Tooltip, message, Input, Upload, Spin, Empty, Alert,Row,Col } from 'antd';
+import { Collapse, Button, Typography, Modal, Tooltip, message, Input, Upload, Spin, Empty, Alert,Col } from 'antd';
 import { approveDoc, getDocDetails, getDocumentReplies, saveDocReply, uuidv4, getFileURL } from './api';
 import Loader from '../../Shared/loader';
 import Moment from 'react-moment';
@@ -266,7 +266,6 @@ class RequestedDocs extends Component {
         }
         else if (file.status === 'error') {
             message.error({ content: `${file.response}`, className: 'custom-msg' })
-            // this.setState({ ...this.state, uploadLoader: false, errorMessage: file.response,  isSubmitting: false  })
             this.setState({ ...this.state, uploadLoader: false, isSubmitting: false })
         }
         else if (!this.state.isValidFile) {
@@ -276,7 +275,6 @@ class RequestedDocs extends Component {
     beforeUpload = (file) => {
 
         let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
-        //  let isFileName = (file.name.split('.')).length > 2 ? false : true;
         if (fileType[file.type]) {
             this.setState({ ...this.state, isValidFile: true, })
             return true

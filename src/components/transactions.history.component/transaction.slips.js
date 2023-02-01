@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button, Col, Modal, Tooltip, Alert, message } from "antd";
+import { Button, Col, Modal, Tooltip, Alert, message } from "antd";
 import moment from "moment/moment";
 import { downloadTransaction } from './api';
 import TransactionSlip from "./transactionSlip.json";
@@ -65,7 +65,6 @@ class TransactionSlips extends Component {
 
   }
   render() {
-    const { Title } = Typography;
     const { downloadError } = this.state;
     const { modalData, showModal,viewData,loader } = this.props;
     const transactionSlipData = TransactionSlip[modalData?.copyType]

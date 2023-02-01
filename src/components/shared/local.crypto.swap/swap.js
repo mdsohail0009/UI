@@ -2,11 +2,7 @@ import { Input, Spin } from 'antd';
 import React, { useState } from 'react';
 import NumberFormat from 'react-number-format';
 const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "USD", cryptoCurrency, onChange, isConvertionLoad, isSwaped, onCurrencySwap }) => {
-    const [symbols] = useState({
-        "EUR": "€",
-        "USD": "$",
-        "GBP": "£"
-    });
+    
     return (
       <div className="p-relative enrty-field-style new-swap-design">
         <div className="enter-val-container swap-com swap-text-sub new-swap-subtext">

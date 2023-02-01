@@ -68,7 +68,6 @@ const Verifications = (props) => {
         }, 1000);
     };
     const transferDetials = async (values) => {
-        // setAgreeRed(true);
     };
 
    const loadPermissions = () => {
@@ -231,9 +230,7 @@ const Verifications = (props) => {
         }
     };
 
-    // const verifyLiveVerification = () =>{
-    //     setLiveverification({...liveverification,isLiveEnable:true})
-    // }
+    
     const verifyLiveness = (data) =>{
         if(data.verifed===true){
             setLiveverification({ ...liveverification, errorMsg: '', verified: true, btnName:'verified', btnLoader:false,isLiveEnable:false });
@@ -424,9 +421,6 @@ const Verifications = (props) => {
                                         />
                                    
                                  
-                                    {/* <div className="new-add c-pointer get-code text-yellow hy-align">
-                                        {phone_btnList[phone.btnName]}
-                                    </div> */}
                                 </div>
                             </Form.Item>
                         </>
@@ -469,9 +463,6 @@ const Verifications = (props) => {
                                         />
                                     
                                  
-                                    {/* <div className="new-add c-pointer get-code text-yellow hy-align">
-                                        {email_btnList[email.btnName]}
-                                    </div> */}
                                 </div>
                             </Form.Item>
                         </>
@@ -517,10 +508,7 @@ const Verifications = (props) => {
                                             {authenticator_btnList[authenticator.btnName]}
                                         </div>}
                                         />                                    
-                                  
-                                    {/* <div className="new-add c-pointer get-code text-yellow hy-align">
-                                        {authenticator_btnList[authenticator.btnName]}
-                                    </div> */}
+                                 
                                 </div>
                             </Form.Item>
                         </>
@@ -549,8 +537,7 @@ const connectStateToProps = ({ userConfig, oidc, menuItems }) => {
 };
 const connectDispatchToProps = dispatch => {
     return {
-        changeInternalStep: (stepcode) => {
-        },
+       
         dispatch
     }
 

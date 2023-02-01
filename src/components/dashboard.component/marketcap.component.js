@@ -15,7 +15,6 @@ const MarketCap = ({ member }) => {
     const [searchVal, setSearchVal] = useState([])
     const [originalMarketCaps, setOriginalMarketCaps] = useState([]);
     const [fullViewData, setFullViewData] = useState([]);
-    const [fullViewLoading, setFullViewLoading] = useState(false);
     useEffect(() => {
         fetchMarketCapsInfo();
     }, [])
@@ -91,7 +90,7 @@ const MarketCap = ({ member }) => {
                     <div className="full-screenable-node" >
                   
                         <div style={{ marginBottom: '8px', textAlign: 'right' }}>
-                            <Table className='markets-grid' locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }} sortDirections={["ascend", "descend"]}  pagination={false} columns={detailInfoColumns}  dataSource={fullViewData} loading={fullViewLoading} />
+                            <Table className='markets-grid' locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }} sortDirections={["ascend", "descend"]}  pagination={false} columns={detailInfoColumns}  dataSource={fullViewData}  />
                         </div>
                     </div>
                 </div>

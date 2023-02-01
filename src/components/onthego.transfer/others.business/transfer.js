@@ -1,5 +1,4 @@
-import { Alert, Tabs } from "antd";
-import { Form, Row, Col, Typography, Input, Button, Image, Spin } from "antd";
+import { Form, Row, Col, Typography, Input, Button, Image, Spin, Alert, Tabs } from "antd";
 import React, { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
 import Loader from "../../../Shared/loader";
@@ -136,7 +135,6 @@ class BusinessTransfer extends Component {
     }
    
     handleIbanChange = async ({ target: { value,isNext } }) => {
-      //  this.setState({ ...this.state, enteredIbanData: value, isShowValid: false, ibanDetails: {}});
         if (value?.length >= 10 && isNext) {
             this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true,iBanValid:true,enteredIbanData: value, isShowValid: false, ibanDetails: {},isValidateLoading:true});
             const response = await fetchIBANDetails(value);
@@ -160,7 +158,6 @@ class BusinessTransfer extends Component {
     }
     onIbanValidate = (e) => {
         let value = e ? e: this.form.current?.getFieldValue('iban');
-      //  this.state.isValidateLoading = true;
         if (value?.length >= 10) {
             if (value &&!/^[A-Za-z0-9]+$/.test(value)) {
                 this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true, isValidateMsg: true, errorMessage: null});
@@ -216,38 +213,7 @@ class BusinessTransfer extends Component {
 
             <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"} disabled={this.state.isEdit}>
                 <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
-                {/* <Row gutter={[16, 4]} className="send-drawerbtn tabs-innertabs">
-
-                  <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
-                      <Form.Item className="text-center form-marginB">
-                        <Button
-                          htmlType="submit"
-                          size="large"
-                          className="newtransfer-card"
-                          // style={{ width: '100%' }}
-                        //   loading={this.state.newtransferLoader}
-                        //   disabled={this.state.addressLoader}
-                        >
-                          New Transfer
-                        </Button>
-                      </Form.Item>
-                    </Col>
-                     <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
-                      <Form.Item className="text-center form-marginB">
-                        <Button
-                          htmlType="button"
-                          size="large"
-                          className="newtransfer-card"
-                          // style={{ width: '100% ' }}
-                        //   loading={this.state.addressLoader}
-                        //   disabled={this.state.newtransferLoader}
-                        //   onClick={this.goToAddressBook}
-                        >
-                          Address book
-                        </Button>
-                      </Form.Item>
-                    </Col>
-                  </Row> */}
+              
                 <Form initialValues={details}
                     className="custom-label  mb-0"
                     ref={this.form}
@@ -286,7 +252,6 @@ class BusinessTransfer extends Component {
                         </Col>
                     </Row>
                     <h2 className="adbook-head">Recipient's Details</h2>
-                    {/* <Divider /> */}
                     <Row>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
@@ -387,33 +352,7 @@ class BusinessTransfer extends Component {
             </Tabs.TabPane>
             <Tabs.TabPane tab="International USD Swift" key={"international"} disabled={this.state.isEdit}>
             <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
-            {/* <Row gutter={[16, 4]} className="send-drawerbtn tabs-innertabs">
-                <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
-                    <Form.Item className="text-center form-marginB">
-                        <Button
-                            htmlType="submit"
-                            size="large"
-                            className="newtransfer-card"
-                            // style={{ width: '100%' }}
-                            //   loading={this.state.newtransferLoader}
-                            //   disabled={this.state.addressLoader}
-                        >New Transfer</Button>
-                    </Form.Item>
-                </Col>
-                <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
-                    <Form.Item className="text-center form-marginB">
-                        <Button
-                            htmlType="button"
-                            size="large"
-                            className="newtransfer-card"
-                            // style={{ width: '100% ' }}
-                            //   loading={this.state.addressLoader}
-                            //   disabled={this.state.newtransferLoader}
-                            //   onClick={this.goToAddressBook}
-                        > Address book</Button>
-                    </Form.Item>
-                </Col>
-            </Row> */}
+           
                 <Form initialValues={details}
                     className="custom-label  mb-0"
                     ref={this.form}
@@ -550,38 +489,7 @@ class BusinessTransfer extends Component {
 
             <Tabs.TabPane tab="International USD IBAN" key={"internationalIBAN"} disabled={this.state.isEdit}>
             <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
-            {/* <Row gutter={[16, 4]} className="send-drawerbtn tabs-innertabs">
-
-<Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
-    <Form.Item className="text-center form-marginB">
-      <Button
-        htmlType="submit"
-        size="large"
-        className="newtransfer-card"
-        // style={{ width: '100%' }}
-      //   loading={this.state.newtransferLoader}
-      //   disabled={this.state.addressLoader}
-      >
-        New Transfer
-      </Button>
-    </Form.Item>
-  </Col>
-   <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
-    <Form.Item className="text-center form-marginB">
-      <Button
-        htmlType="button"
-        size="large"
-        className="newtransfer-card"
-        // style={{ width: '100% ' }}
-      //   loading={this.state.addressLoader}
-      //   disabled={this.state.newtransferLoader}
-      //   onClick={this.goToAddressBook}
-      >
-        Address book
-      </Button>
-    </Form.Item>
-  </Col>
-</Row> */}
+         
                 <Form initialValues={details}
                     className="custom-label  mb-0"
                     ref={this.form}
@@ -619,7 +527,6 @@ class BusinessTransfer extends Component {
                         </Col>
                     </Row>
                     <Paragraph className="adbook-head"  >Recipient's Details</Paragraph>
-                    {/* <Divider /> */}
                     <Row>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
@@ -722,19 +629,7 @@ class BusinessTransfer extends Component {
                             </Form.Item>
                             </div>
                        </Col>
-                       {/* <Col xs={24} md={10} lg={10} xl={10} xxl={10}> */}
-                       {/* <Button className={`pop-btn dbchart-link pop-validate-btn`} 
-                            loading={this.state.isValidateLoading} 
-                             onClick={() => this.onIbanValidate(this.state?.enteredIbanData)} >
-                                <Translate content="validate" />
-                            </Button> */}
-                             {/* <Button className={`pop-btn dbchart-link pop-validate-btn iban-validate`}
-                             type="primary"
-                                // loading={isValidateLoading}
-                                onClick={() => this.onIbanValidate(this.state?.enteredIbanData)} >
-                            <Translate content="validate" />
-                    </Button>  
-                        </Col> */}
+                       
                          
                     </Row>
                     <div className="box basic-info alert-info-custom mt-16 kpi-List">

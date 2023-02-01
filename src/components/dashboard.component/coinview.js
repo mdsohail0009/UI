@@ -192,7 +192,7 @@ componentWillUnmount(){
                 <Col lg={14} xl={14} xxl={14}>
                     <div className="box coin-bal coin-details">
                     {this.state.loading&& this.state.coinData ?<Spin className="text-center"/>:<>
-                        {this.state.coinData ?
+                        {this.state.coinData &&
                         <> 
                         <div className="d-flex align-center">
                             <Image preview={false} src={coinData.imagePath} />
@@ -216,7 +216,10 @@ componentWillUnmount(){
                                 <li><div onClick={() => this.showSendReceiveDrawer(1, coinData)} value={1} className="c-pointer"><span className="icon md withdraw" /></div><span className='coin-fs'>RECEIVE</span></li>
                                 <li><div onClick={() => this.showSendReceiveDrawer(2, coinData)} value={2} className="c-pointer"><span className="icon md deposit" /></div><span className='coin-fs'>SEND</span></li>
                             </ul>
-                            </> : <div className="text-center"><Spin className="text-center"/></div>}</>}
+                            </> }
+                            {!this.state.coinData &&
+                            (<div className="text-center"><Spin className="text-center"/></div>)}
+                            </>}
                     </div>
                     <Tabs className="cust-tabs-fait coinview-tabs" onChange={(e) => this.setState({ ...this.state, type: e })}>
                                 <Tabs.TabPane tab="Price" className="" key={"prices"} ></Tabs.TabPane>

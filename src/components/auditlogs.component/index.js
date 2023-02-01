@@ -7,12 +7,11 @@ import { userNameLuSearch, getFeatureLuSearch, getAuditLogInfo } from './api';
 import moment from 'moment';
 import Translate from 'react-translate-component';
 import apicalls from '../../api/apiCalls';
-import { withRouter,Link } from "react-router-dom";
 import { getScreenName } from "../../reducers/feturesReducer";
 
 
 const { Option } = Select;
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 class AuditLogs extends Component {
   formRef = React.createRef();
@@ -36,8 +35,6 @@ class AuditLogs extends Component {
       searchObj: {
         timeSpan: "Last 1 Day",
         feature: "All Features",
-       // admin: "user",
-       // user: "user",
         fromdate: '',
         todate: '',
       },

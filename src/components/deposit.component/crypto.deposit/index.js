@@ -14,7 +14,7 @@ import Loader from "../../../Shared/loader";
 const {  Paragraph } = Typography;
 const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {
     useEffect(() => { fetchMemberCoins();
-       getFeaturePermissionsByKeyName(`send_crypto`)}, []);;//eslint-disable-line react-hooks/exhaustive-deps
+       getFeaturePermissionsByKeyName(`send_crypto`)}, []);//eslint-disable-line react-hooks/exhaustive-deps
     const [errorMsg,seterrorMsg] = useState(null)
     const [loading,setLoading] = useState(null)
     const useDivRef = React.useRef(null);

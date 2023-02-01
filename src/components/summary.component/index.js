@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Typography, Button, Alert, Tooltip } from "antd";
-// import { Link } from "react-router-dom";
 import Translate from "react-translate-component";
 import Loader from "../../Shared/loader";
 import SuisseBtn from "../shared/butons";
@@ -9,21 +8,7 @@ import apicalls from "../../api/apiCalls";
 import { connect } from 'react-redux';
 import { setCurrentAction } from "../../reducers/actionsReducer";
 import {setSellHeaderHide, setSelectedSellCoin} from "../../reducers/buysellReducer";
-// const LinkValue = (props) => {
-// 	return (
-// 		<Translate
-// 			className="textpure-yellow text-underline c-pointer"
-// 			content={props.content}
-// 			component={Link}
-// 			onClick={() =>
-// 				window.open(
-// 					"https://www.iubenda.com/terms-and-conditions/42856099",
-// 					"_blank"
-// 				)
-// 			}
-// 		/>
-// 	);
-// };
+
 class Summary extends Component {
 	
 	state = {
@@ -209,13 +194,11 @@ class Summary extends Component {
 						</div>
 					)}
 				</div>
-					{/* <div className="cust-summary-text"> */}
 						<Translate
 							className="text-style"
 							content="final_Amount"
 							component={Title}
 						/>
-					{/* </div> */}
 					{permissions &&
 					<div className="d-flex agree-check">
 						<label>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
-  Form, Typography, Input, Button, Alert, Spin, message, Select, Checkbox, Tooltip, Modal,
+  Form, Typography, Input, Button, Alert, Spin, message, Select, Tooltip, Modal,
   Radio, Row, Col, AutoComplete,  Image, Drawer
 } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -56,31 +56,23 @@ const AddressCommonCom = (props) => {
   const [errorWarning, setErrorWarning] = useState(null);
   const [isEdit, setEdit] = useState(false);
   const [emailExist] = useState(false);
-  const [bankType, setBankType] = useState("");
   const [PayeeLu, setPayeeLu] = useState([]);
   const [editBankDetsils, setEditBankDetails] = useState(false)
   const [bankObj, setBankObj] = useState({})
-  const [bankChange, SetBankChange] = useState(null)
   const [coinDetails, setCoinDetails] = useState([])
   const [country, setCountry] = useState([])
-  const [state, setState] = useState([]);
-  const [ibanValue, setIbanValue] = useState(null)
   const [favouriteDetails, setFavouriteDetails] = useState({})
   const [deleteItem, setDeleteItem] = useState({})
-  const [agreeRed, setAgreeRed] = useState(true)
   const [bilPay, setBilPay] = useState(null);
-  const [newStates, setNewStates] = useState([]);
   const [isSignRequested, setSignRequested] = useState(false);
   const [recrdStatus, setRecrdStatus] = useState(null);
   const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType: "sepa" });
-  const addressState = null;
   const handleshowModal = (item) => {
     setEditBankDetails(true)
     let data = bankmodalData.find((items) => items.id === item.id)
     handleCountryChange(data?.payeeAccountCountry);
     setIsCryptoModalVisible(true);
     setBankObj(data)
-    SetBankChange(data?.bankType);
     if (props?.addressBookReducer?.cryptoTab === true) {
       form.setFieldsValue({
         toCoin: data.walletCode,
@@ -200,8 +192,6 @@ const AddressCommonCom = (props) => {
   const handleCancel = () => {
     setIsCryptoModalVisible(false);
     bankDetailForm.resetFields();
-    SetBankChange("BankAccount");
-    setNewStates([]);
   };
 
   const radioChangeHandler = (e) => {
@@ -214,7 +204,6 @@ const AddressCommonCom = (props) => {
       getFavs("00000000-0000-0000-0000-000000000000", props?.userConfig?.id)
     }
     setIsLoading(false);
-    setAgreeRed(true);
     setErrorMsg(null);
     setErrorWarning(null);
   
@@ -233,7 +222,6 @@ const AddressCommonCom = (props) => {
         phoneNo: props?.userConfig.phoneNo,
         email: props?.userConfig.email,
       });
-      setBankType("bank");
       setSelectParty(false);
     } else {
       form.setFieldsValue({
@@ -241,7 +229,6 @@ const AddressCommonCom = (props) => {
         beneficiaryAccountName: null,
         bankType: "bank",
       });
-      setBankType("bank");
       setSelectParty(true);
     }
   };
@@ -286,7 +273,6 @@ const AddressCommonCom = (props) => {
     let code = e;
     form.setFieldsValue({ "state": null });
     let states = country?.filter((item) => item.name?.toLowerCase() === code.toLowerCase());
-    setState(states[0]?.stateLookUp);
   }
 
   const getCountry = async () => {
@@ -295,7 +281,6 @@ const AddressCommonCom = (props) => {
       setCountry(response.data);
       form.getFieldValue("country");
       let states = response.data?.filter((item) => item.name.toLowerCase());
-      setState(states[0]?.stateLookUp);
     }
   }
   const isErrorDispaly = (objValue) => {
@@ -364,8 +349,6 @@ const AddressCommonCom = (props) => {
     }
     setIsCryptoModalVisible(false);
     bankDetailForm.resetFields();
-    SetBankChange("BankAccount");
-    setNewStates([]);
   }
   const handleDeleteCancel = () => {
     setIsModalDelete(false)
@@ -403,15 +386,11 @@ const AddressCommonCom = (props) => {
     values["type"] = type;
     values["info"] = JSON.stringify(props?.trackAuditLogData);
     let Id = "00000000-0000-0000-0000-000000000000";
-    let favaddrId = props?.addressBookReducer?.selectedRowData
-      ? favouriteDetails.id
-      : Id;
-    let namecheck = values.favouriteName;
+   
     if (!values.isAgree) {
       setBtnDisabled(false);
       useDivRef.current.scrollIntoView();
       setErrorMsg(apiCalls.convertLocalLang("agree_termsofservice"));
-      setAgreeRed(false);
     }
 
     else {
@@ -422,7 +401,6 @@ const AddressCommonCom = (props) => {
         saveObj.documents = cryptoAddress?.documents;
         saveObj.TransferType=props?.cryptoTab === 1&&"Crypto"
       let response = await saveAddressBook(saveObj);
-      setAgreeRed(true);
       if (response.ok) {
         setBtnDisabled(false);
         useDivRef.current.scrollIntoView();
@@ -453,10 +431,8 @@ const AddressCommonCom = (props) => {
     }
   };
 
-  const handleIban = (e) => {
-    setIbanValue(e)
-    getIbanData(e)
-  }
+  
+  
 
   const getIbanData = async (Val) => {
     bankDetailForm.setFieldsValue({
@@ -500,7 +476,6 @@ const AddressCommonCom = (props) => {
     bankDetailForm.setFieldsValue({ "payeeAccountState": null });
     let Country = countryValues ? countryValues : country;
     let states = Country?.filter((item) => item.name?.toLowerCase() === code?.toLowerCase());
-    setNewStates(states[0]?.stateLookUp);
   }
 
 
@@ -913,7 +888,9 @@ const AddressCommonCom = (props) => {
                         setAddressOptions({ ...addressOptions, addressType: value.target.value })
                       }}
                     >
-                      <Radio.Button value="myself" className=""><span className="lg icon" />{props.userConfig?.isBusiness ? "Own Business" : "My Self"}</Radio.Button>
+                      <Radio.Button value="myself" className=""><span className="lg icon" />
+                      {props.userConfig?.isBusiness ? "Own Business" : "My Self"}
+                      </Radio.Button>
                       <Radio.Button value="individuals" className=""><span className="lg icon" />INDIVIDUALS</Radio.Button>
                       <Radio.Button value="otherbusiness" className=""><span className="lg icon" />OTHER BUSINESS</Radio.Button>
                     </Radio.Group>
@@ -974,8 +951,6 @@ const AddressCommonCom = (props) => {
                         ]}
                       >
                         <AutoComplete
-                          onChange={(e) => {
-                          }}
                           maxLength={20}
                           className="cust-input"
                           placeholder={apiCalls.convertLocalLang("favorite_name")}
@@ -1268,11 +1243,11 @@ const AddressCommonCom = (props) => {
                           onChange={(e) => handleCountry(e)}
                           bordered={false}
                         >
-                          {country?.map((item, indx) => (
+                          {country?.map((item, indx)=>(
                             <Option key={indx} value={item.name}>
                               {item.name}
                             </Option>
-                          ))}
+                          ))} 
                         </Select>
                       </Form.Item>
                     </Col>

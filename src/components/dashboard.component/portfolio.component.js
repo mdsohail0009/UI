@@ -148,7 +148,6 @@ class Portfolio extends Component {
                             <table className='pay-grid view mb-view'>
                                 <thead>
                                     <tr>
-                                        {/* <th style={{width: "5%"}}></th> */}
                                         <th style={{width: "18%"}}>Date</th>
                                         <th style={{width: "15%"}}>Wallet</th>
                                        
@@ -166,7 +165,7 @@ class Portfolio extends Component {
                                     </tbody>
                                 ) : (
                                     <>
-                                   {this.state.transactionData.length > 0 ?
+                                   {this.state.transactionData.length > 0 &&
                                     <tbody>
                                         {this.state.transactionData?.map((item, idx) => {
                                             return (
@@ -198,7 +197,9 @@ class Portfolio extends Component {
 
                                         {loading && <tr>
                                             <td colSpan='5' className='text-center p-16'><Spin size='default' /></td></tr>}
-                                    </tbody>:<tbody>
+                                    </tbody>}
+                                    {!(this.state.transactionData.length > 0) &&
+                                    <tbody>
                           <tr>
                             <td
                               colSpan="8"
@@ -208,7 +209,8 @@ class Portfolio extends Component {
                              No transaction details available
                             </td>
                           </tr>{" "}
-                        </tbody>}
+                        </tbody>
+                        }
                                     </>
                                     )}
                             </table>

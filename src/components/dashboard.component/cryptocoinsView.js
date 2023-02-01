@@ -23,12 +23,13 @@ class cryptocoinsView extends Component {
     state = {
         loading: true,
         initLoading: true,
-        portfolioData: [], buyDrawer: false, coinData: null,sendDrawer: false,
+        portfolioData: [], 
+        buyDrawer: false, 
+        sendDrawer: false,
         selectedWallet: '',
         searchVal:[],
         coinData:[],
         transactionData: this.props.dashboard.cryptoPortFolios.data,
-        searchVal:[],
         fullViewData:[],
         marketCaps:[],
         dashBoardTransactions:this.props.dashboard.cryptoPortFolios.data

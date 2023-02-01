@@ -307,7 +307,7 @@ class AddressCrypto extends Component {
           </Form>
       </>
     }
-  };
+  }
 
 }
 const connectStateToProps = ({ sendReceive, userConfig, addressBookReducer }) => {

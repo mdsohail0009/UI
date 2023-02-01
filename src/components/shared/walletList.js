@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Select, List, Empty, Image } from 'antd';
+import { List, Empty, Image } from 'antd';
 import { setStep } from '../../reducers/buysellReducer';
 import { Link, } from "react-router-dom";
 import Translate from "react-translate-component";
