@@ -6,6 +6,7 @@ import { document } from "../onthego.transfer/api";
 import apiCalls from "../../api/apiCalls";
 import { bytesToSize } from "../../utils/service";
 import ConnectStateProps from "../../utils/state.connect";
+import {getFileURL} from './api';
 
 const { Dragger } = Upload;
 const { Paragraph, Text } = Typography;
@@ -24,6 +25,7 @@ class AddressCryptoDocument extends Component {
         documents: {}, showDeleteModal: false, isDocLoading: false,selectedObj:{},errorMessage:null
     }
     componentDidMount() {
+        console.log(this.props?.documents?.details);
         let propsDocument = JSON.stringify(this.props?.documents) == JSON.stringify({'transfer': '', 'payee': ''}) ? null : this.props?.documents
         this.setState({ ...this.state, documents: propsDocument || document(), isEdit: this.props?.editDocument, filesList: propsDocument ? [...this.props?.documents?.details] : [],refreshData:this.props?.refreshData })
     }
@@ -40,7 +42,13 @@ class AddressCryptoDocument extends Component {
             "path": doc?.response[0]
         }
     }
-  
+    docPreview = async (file) => {
+        let res = await getFileURL({ url: file.path });
+        if (res.ok) {
+            this.state.PreviewFilePath = file.path;
+            this.setState({ ...this.state, previewModal: true, previewPath: res.data });
+        }
+    }
     render() {
         if(this.props.refreshData !== this.state.refreshData){
             let propsDocument = JSON.stringify(this.props?.documents) == JSON.stringify({'transfer': '', 'payee': ''}) ? null : this.props?.documents
@@ -102,7 +110,7 @@ class AddressCryptoDocument extends Component {
                     {this.state?.filesList?.map((file, indx) => <div>
                         {((file.status === "done" || file.status == true)&& file.state !='Deleted') && <> <div className="docfile custom-upload cust-upload-sy">
                             <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "mp4":(file.documentName?.slice(-3) === "zip" ? "file" : "mp4")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
-                            <div className="docdetails">
+                            <div className="docdetails" onClick={() => this.docPreview(file)}>
                                 <EllipsisMiddle suffixCount={6}>{file.name || file.documentName}</EllipsisMiddle>
                                 <span className="upload-filesize">{(file.size || file?.remarks) ? bytesToSize(file.size || file?.remarks) : ""}</span>
                             </div>
