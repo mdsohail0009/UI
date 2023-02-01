@@ -147,7 +147,11 @@ if (res.ok){
       adressstate: "fd",
       currencyType: "Crypto",
       walletAddress:  values.walletAddress.trim(),
-      customerId: this.props.userProfile.id
+      customerId: this.props.userProfile.id,
+      proofOfOwnerShip:values.proofOfOwnerShip,
+      walletSource:values.walletSource,
+      documents:this.state.details.documents
+      
     }
     if (this.state.cryptoData.id !== "00000000-0000-0000-0000-000000000000") {
       obj.id = this.state.cryptoData.id;
@@ -397,7 +401,13 @@ if (res.ok){
                             <AddressCryptoDocument 
                             documents={this.state?.documents || null} 
                             editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
-                                this.setState({ ...this.state, details: { ...this.state.details } })
+                                let { documents } = this.state.details;
+                                if(this.state.isEdit){
+                                    documents = docs;
+                                } else{
+                                    documents = docs;
+                                }
+                                this.setState({ ...this.state, details: { ...this.state.details, documents } })
                             }} 
                             />
                         </ Col>
