@@ -25,7 +25,7 @@ class AddressCryptoDocument extends Component {
         documents: {}, showDeleteModal: false, isDocLoading: false,selectedObj:{},errorMessage:null
     }
     componentDidMount() {
-        console.log(this.props?.documents?.details);
+        console.log(this.props?.documentDetails);
         let propsDocument = JSON.stringify(this.props?.documents) == JSON.stringify({'transfer': '', 'payee': ''}) ? null : this.props?.documents
         this.setState({ ...this.state, documents: propsDocument || document(), isEdit: this.props?.editDocument, filesList: propsDocument ? [...this.props?.documents?.details] : [],refreshData:this.props?.refreshData })
     }
@@ -91,7 +91,7 @@ class AddressCryptoDocument extends Component {
                                         docs?.details?.push(this.docDetail(file));
                                         this.props?.onDocumentsChange(docs);
                                     }else{
-                                        this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg and PDF  files" }) 
+                                        this.setState({ ...this.state, isDocLoading: false, errorMessage: "“File is not allowed. You can upload jpg, png, jpeg, pdf, mp4, mov, wme, avi files" }) 
                                     }
                                 }else if(file.status ==='error'){
                                     this.setState({ ...this.state, isDocLoading: false,errorMessage:file?.response });
@@ -103,7 +103,7 @@ class AddressCryptoDocument extends Component {
                             </p>
                             <p className="ant-upload-text">Drag and drop or browse to choose file</p>
                             <p className="ant-upload-hint uplaod-inner">
-                                PNG, JPG,JPEG, PDF, Mp4 files are allowed
+                            JPG, PNG, JPEG, PDF, MP4, MOV, WME, AVI files are allowed
                             </p>
                         </Dragger>
                     </Form.Item>
@@ -120,6 +120,21 @@ class AddressCryptoDocument extends Component {
                             }} />
                         </div></>}
                     </div>)}
+
+                  {  this.props?.documentDetails && <>
+                  {this.props?.documentDetails?.map((file, indx) => <div>
+                    {((file.status === "done" || file.status == true)&& file.state !='Deleted') && <> <div className="docfile custom-upload cust-upload-sy">
+                        <span className={`icon xl ${(file.documentName?file.documentName.slice(-3) === "zip" ? "file" : "mp4":(file.documentName?.slice(-3) === "zip" ? "file" : "mp4")) || file.documentName?(file.documentName.slice(-3) === "pdf" ? "file" : "image"):(file.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
+                        <div className="docdetails" onClick={() => this.docPreview(file)}>
+                            <EllipsisMiddle suffixCount={6}>{file.documentName || file.documentName}</EllipsisMiddle>
+                            <span className="upload-filesize">{(file.size || file?.remarks) ? bytesToSize(file.size || file?.remarks) : ""}</span>
+                        </div>
+                        <span className="icon md close c-pointer" onClick={() => {
+                            this.setState({ ...this.state, showDeleteModal: true, selectedFileIdx: indx,selectedObj:file })
+
+                        }} />
+                    </div></>}
+                </div>)}</>}
                     {this.state.isDocLoading && <Loader />}
                 </div>
             </Col>
