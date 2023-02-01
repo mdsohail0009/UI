@@ -125,7 +125,7 @@ if (res.ok){
 }
   }
   submit = async (values) => {
-    if (!values.proofOfOwnerShip) {
+    if (!values.proofofOwnership) {
 			this.setState({
 				...this.state,
 				errorMessage: apiCalls.convertLocalLang("agree_termsofservice"),
@@ -148,7 +148,7 @@ if (res.ok){
       currencyType: "Crypto",
       walletAddress:  values.walletAddress.trim(),
       customerId: this.props.userProfile.id,
-      proofOfOwnerShip:values.proofOfOwnerShip,
+      proofofOwnership:values.proofofOwnership,
       walletSource:values.walletSource,
       documents:this.state.details.documents
       
@@ -371,17 +371,16 @@ if (res.ok){
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item
 								className="custom-forminput mb-36 agree send-crypto-sumry"
-								name="proofOfOwnerShip"
+								name="proofofOwnership"
 								valuePropName="checked"
 								required
 							>				
-
 								<div className="d-flex agree-check checkbox-mobile">
 						<label>
 							<input
 								type="checkbox"
 								id="agree-check"
-								
+								checked={this.state.cryptoData?.proofofOwnership}
 							/>
 							<span for="agree-check"  />
 	
