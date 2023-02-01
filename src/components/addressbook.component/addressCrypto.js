@@ -50,7 +50,6 @@ class AddressCrypto extends Component {
     let response = await getCryptoData(id);
     if (response.ok) {
       this.setState({ ...this.state, cryptoData: response.data, isLoading: false })
-      console.log(response.data.detaildocuments);
     }
     else {
       this.setState({ ...this.state, isLoading: false, errorMessage: this.isErrorDispaly(response) })

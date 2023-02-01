@@ -49,6 +49,44 @@ class AddressCryptoDocument extends Component {
             this.setState({ ...this.state, previewModal: true, previewPath: res.data });
         }
     }
+    deleteDoc=()=>{
+        let { documents: docs } = this.state;
+        if(this.props?.documentDetails===null){
+        let files = docs.details;
+        for(var k in files){
+            if(files[k].id===this.state.selectedObj?.id){
+                files[k].state='Deleted';
+                files[k].isChecked=false;
+            }
+        }
+        let obj=Object.assign([],files)
+        let {filesList}=this.state
+        if(!this.state?.isEdit){
+            filesList.splice(this.state.selectedFileIdx, 1);
+            obj.splice(this.state.selectedFileIdx, 1);
+        }
+        files?.map((file, indx) =>{
+            if (file.id === "00000000-0000-0000-0000-000000000000"&& indx === this.state.selectedFileIdx &&  file.state !== "Deleted"  && this.state?.isEdit) {
+                filesList.splice(indx, 1);
+                obj.splice(indx, 1);
+            }
+        })
+        this.setState({ ...this.state, filesList, showDeleteModal: false });
+        docs.details=Object.assign([],obj)
+        this.props?.onDocumentsChange(docs);
+        }else{
+            let { documentDetails: doc } = this.props;
+            let files = doc;
+            for(var k in files){
+                if(files[k].id===this.state.selectedObj?.id){
+                    files[k].state='Deleted';
+                    files[k].isChecked=false;
+                }
+            }
+            this.setState({ ...this.state, showDeleteModal: false });
+            this.props?.onDocumentsChange(files);
+        }
+    }
     render() {
         if(this.props.refreshData !== this.state.refreshData){
             let propsDocument = JSON.stringify(this.props?.documents) == JSON.stringify({'transfer': '', 'payee': ''}) ? null : this.props?.documents
@@ -152,31 +190,8 @@ class AddressCryptoDocument extends Component {
                         </Button>
                         <Button
                             className="primary-btn pop-btn detail-popbtn"
-                            onClick={() => {
-                                let { documents: docs } = this.state;
-                                let files = docs.details;
-                                for(var k in files){
-                                    if(files[k].id===this.state.selectedObj?.id){
-                                        files[k].state='Deleted';
-                                        files[k].isChecked=false;
-                                    }
-                                }
-                                let obj=Object.assign([],files)
-                                let {filesList}=this.state
-                                if(!this.state?.isEdit){
-                                    filesList.splice(this.state.selectedFileIdx, 1);
-                                    obj.splice(this.state.selectedFileIdx, 1);
-                                }
-                                files?.map((file, indx) =>{
-                                    if (file.id === "00000000-0000-0000-0000-000000000000"&& indx === this.state.selectedFileIdx &&  file.state !== "Deleted"  && this.state?.isEdit) {
-                                        filesList.splice(indx, 1);
-                                        obj.splice(indx, 1);
-                                    }
-                                })
-                                this.setState({ ...this.state, filesList, showDeleteModal: false });
-                                docs.details=Object.assign([],obj)
-                                this.props?.onDocumentsChange(docs);
-                            }}
+                            onClick={() =>this.deleteDoc()}
+                               
                         
                             >
                             {apiCalls.convertLocalLang("Yes")}
