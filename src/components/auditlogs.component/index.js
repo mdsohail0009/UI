@@ -41,7 +41,8 @@ class AuditLogs extends Component {
       logRowData: null,
       timeListSpan: ["Last 1 Day", "Last One Week", "Custom"],
       gridUrl: process.env.REACT_APP_GRID_API + "AuditLogs/Accounts",
-      featureName: ''
+      featureName: '',
+      errorMessage:null
     };
     this.gridRef = React.createRef();
   }
@@ -65,13 +66,15 @@ class AuditLogs extends Component {
   }
   fetchAuditLoginfo = async (id, e) => {
     this.setState({
-      ...this.state, isLoading: false, moreAuditLogs: true, featureName: e.dataItem.feature
+      ...this.state, isLoading: false, moreAuditLogs: true, featureName: e.dataItem.feature,errorMessage:null
     })
     let res = await getAuditLogInfo(id);
     if (res.ok) {
       this.setState({
-        ...this.state, logRowData: res.data, isLoading: false
+        ...this.state, logRowData: res.data, isLoading: false,errorMessage:null
       })
+    }else{
+      this.setState({...this.state,errorMessage:apicalls.isErrorDispaly(res)})
     }
   }
   hideMoreAuditLogs = () => {
@@ -89,20 +92,26 @@ class AuditLogs extends Component {
       }
 }
   TransactionUserSearch = async (userVal) => {
+    this.setState({...this.state,errorMessage:null})
     let response = await userNameLuSearch(userVal);
     if (response.ok) {
       this.setState({
-        userData: response.data,
+        userData: response.data,errorMessage:null
       });
+    }else{
+      this.setState({...this.state,errorMessage:apicalls.isErrorDispaly(response)})
     }
   };
 
   TransactionFeatureSearch = async (userVal) => {
+    this.setState({...this.state,errorMessage:null})
     let response = await getFeatureLuSearch(userVal);
     if (response.ok) {
       this.setState({
-        featureData: response.data
+        featureData: response.data,errorMessage:null
       });
+    }else{
+      this.setState({...this.state,errorMessage:apicalls.isErrorDispaly(response)})
     }
   };
 
@@ -189,6 +198,8 @@ class AuditLogs extends Component {
 
     return (
       <>
+      {this.state.errorMessage && <Alert type="error" showIcon closable={false} description={this.state.errorMessage} />}
+
         <Drawer
           title={[<div className="side-drawer-header">
             <span className="grid-title"><Translate content="AuditLogs" component={Drawer.span} className="text-white" /></span>

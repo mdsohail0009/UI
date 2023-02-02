@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography,Input, message, Spin,Button,  } from 'antd';
+import { Typography,Input, message, Spin,Button,Alert  } from 'antd';
 import Translate from 'react-translate-component';
 import { getData } from './api';
 import NumberFormat from 'react-number-format';
@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { withRouter,Link } from 'react-router-dom';
 import { dashboardTransactionSub } from '../../utils/pubsub';
 import TransactionsHistory from "../transactions.history.component";
+import apicalls from '../../api/apiCalls';
 
 
 class Portfolio extends Component {
@@ -27,15 +28,17 @@ class Portfolio extends Component {
             searchVal:[],
             fullViewData:[],
             marketCaps:[],
-            dashBoardTransactions:[]
+            dashBoardTransactions:[],
+            errorMessage:null
         }
     }
     getTransactionData = async () => {
-        this.setState({ ...this.state, loading: true });
+        this.setState({ ...this.state, loading: true ,errorMessage:null});
         let response = await getData();
         if (response.ok) {
-            this.setState({ ...this.state, dashBoardTransactions:response.data, transactionData: response.data, loading: false });
+            this.setState({ ...this.state, dashBoardTransactions:response.data, transactionData: response.data, loading: false ,errorMessage:null});
         } else {
+            this.setState({...this.state,errorMessage:apicalls.isErrorDispaly(response)})
             message.destroy();
 
         }
@@ -100,7 +103,14 @@ class Portfolio extends Component {
         const { Title } = Typography;
         const {  loading } = this.state;
         const { Search } = Input;
+       
         return (<>
+         {this.state.errorMessage != null && <Alert
+            description={this.state.errorMessage}
+            type="error"
+            showIcon
+            closable={false}
+        />}
             <div className='market-panel-newstyle'></div>
                 <div className="markets-panel transaction-panel">
                     <div className='trans-align'>
