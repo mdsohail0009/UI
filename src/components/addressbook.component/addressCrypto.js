@@ -403,7 +403,7 @@ if (res.ok){
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload a screenshot or video to prove you are the owner of the address</Paragraph>
                             <AddressCryptoDocument 
                             documents={this.state?.documents || null}
-                            documentDetails={this.state.cryptoData?.detaildocuments || null} 
+                            documentDetails={this.state.cryptoData?.documents || null} 
                             editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
                                 let { documents } = this.state.details;
                                 if(this.state.isEdit){

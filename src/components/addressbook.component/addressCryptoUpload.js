@@ -76,7 +76,7 @@ class AddressCryptoDocument extends Component {
         this.props?.onDocumentsChange(docs);
         }else{
             let { documentDetails: doc } = this.props;
-            let files = doc;
+            let files = doc.details;
             for(var k in files){
                 if(files[k].id===this.state.selectedObj?.id){
                     files[k].state='Deleted';
@@ -84,7 +84,7 @@ class AddressCryptoDocument extends Component {
                 }
             }
             this.setState({ ...this.state, showDeleteModal: false });
-            this.props?.onDocumentsChange(files);
+            this.props?.onDocumentsChange(doc);
         }
     }
     render() {
@@ -160,7 +160,7 @@ class AddressCryptoDocument extends Component {
                     </div>)}
 
                   {  this.props?.documentDetails && <>
-                  {this.props?.documentDetails?.map((file, indx) => <div>
+                  {this.props?.documentDetails?.details?.map((file, indx) => <div>
                     {((file.status === "done" || file.status == true)&& file.state !='Deleted') && <> <div className="docfile custom-upload cust-upload-sy">
                         <span className={`icon xl ${(file.documentName?file.documentName.slice(-3) === "zip" ? "file" : "mp4":(file.documentName?.slice(-3) === "zip" ? "file" : "mp4")) || file.documentName?(file.documentName.slice(-3) === "pdf" ? "file" : "image"):(file.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                         <div className="docdetails" onClick={() => this.docPreview(file)}>
