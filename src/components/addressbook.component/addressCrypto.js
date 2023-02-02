@@ -1,14 +1,16 @@
 import React, { Component} from "react";
-import { Form, Typography, Input, Button, Select, Image, Alert,Row,Col } from "antd";
+import { Form, Typography, Input, Button, Select, Image, Alert,Row,Col,Checkbox } from "antd";
 import alertIcon from '../../assets/images/pending.png';
 import { setAddressStep } from "../../reducers/addressBookReducer";
 import { setAddress, setStep, setWithdrawcrypto,rejectWithdrawfiat, setSendCrypto, hideSendCrypto } from "../../reducers/sendreceiveReducer";
 import { connect } from "react-redux";
-import { getCryptoData, saveCryptoData, getCoinList } from "./api";
+import { getCryptoData, saveCryptoData, getCoinList,getWalletSource } from "./api";
 import Loader from '../../Shared/loader';
 import WAValidator from "multicoin-address-validator";
 import { validateContentRule } from "../../utils/custom.validator";
 import Translate from "react-translate-component";
+import AddressCryptoDocument from './addressCryptoUpload';
+import apiCalls from "../../api/apiCalls";
 const { Text, Title, Paragraph } = Typography;
 const { Option } = Select;
 
@@ -29,12 +31,18 @@ class AddressCrypto extends Component {
       iBanValid: false,
       cryptoData: {},
       coinsList: [],
-      networksList: []
+      networksList: [],
+      wallet:[],
+      isEdit:false,
+      documents:null,
+      walletSource:null,
+
     };
   }
 
   componentDidMount() {
     this.getCryptoData();
+    this.handleWallet();
   }
   getCryptoData = async () => {
     let id = this.props?.addressBookReducer?.selectedRowData?.id || "00000000-0000-0000-0000-000000000000";
@@ -106,7 +114,26 @@ class AddressCrypto extends Component {
     this.setState({ ...this.state, networksList: networkLu})
   };
 
+  handleWalletSource=(value)=>{
+    this.setState({...this.state,walletSource:value})
+  }
+
+  handleWallet=async()=>{
+let res= await getWalletSource();
+if (res.ok){
+  this.setState({...this.state,wallet:res.data})
+}
+  }
   submit = async (values) => {
+    if (!values.isProofofOwnership) {
+			this.setState({
+				...this.state,
+				errorMessage: apiCalls.convertLocalLang("agree_termsofservice"),
+				agreeRed: false,
+			});
+			this.useDivRef.current?.scrollIntoView(0, 0);
+		}
+    else{
     let obj = {
       id: "00000000-0000-0000-0000-000000000000",
       saveWhiteListName: values.saveWhiteListName,
@@ -120,7 +147,12 @@ class AddressCrypto extends Component {
       adressstate: "fd",
       currencyType: "Crypto",
       walletAddress:  values.walletAddress.trim(),
-      customerId: this.props.userProfile.id
+      customerId: this.props.userProfile.id,
+      isProofofOwnership:values.isProofofOwnership,
+      walletSource:values.walletSource,
+      otherWallet:values.otherWallet,
+      documents:this.state.details.documents
+      
     }
     if (this.state.cryptoData.id !== "00000000-0000-0000-0000-000000000000") {
       obj.id = this.state.cryptoData.id;
@@ -144,9 +176,20 @@ class AddressCrypto extends Component {
     }
     else {
       this.setState({ ...this.state, errorMessage: response.data, loading: false });
-        this.useDivRef.current.scrollIntoView();
+        this.useDivRef.current?.scrollIntoView();
       this.setState({ ...this.state, isBtnLoading: false,  errorMessage: this.isErrorDispaly(response), });
     }
+  }
+  }
+  editDocuments=(docs)=>{
+      let { documents } = this.state.details;
+      if(this.state.isEdit){
+          documents = docs;
+      } else{
+          documents = docs;
+      }
+      this.setState({ ...this.state, details: { ...this.state.details, documents } })
+  
   }
   validateAddressType = (_, value) => {
     if (value) {
@@ -214,7 +257,8 @@ class AddressCrypto extends Component {
                 },
               ]}
             >
-              <Input className="cust-input" maxLength={100} placeholder="Save Whitelist Name As" />
+              <Input className="cust-input" maxLength={100} placeholder="Save Whitelist Name As" 
+            disabled={this.state.cryptoData.adressstate ==="Approved"  ? true : false }/>
             </Form.Item>
             <div className="">
             <Title className="adbook-head">Beneficiary Details</Title>
@@ -236,7 +280,7 @@ class AddressCrypto extends Component {
                 placeholder="Select Token"
                 optionFilterProp="children"
                 maxLength={50}
-                disabled={(this.props?.sendReceive?.withdrawFiatObj?.walletCode ||this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin) ? true:false}>
+                disabled={(this.props?.sendReceive?.withdrawFiatObj?.walletCode ||this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin || this.state.cryptoData.adressstate ==="Approved") ? true:false}>
                 {coinsList?.map((item, idx) => (
                   <Option key={idx} value={item.walletCode}>
                     {item.walletCode}
@@ -261,6 +305,7 @@ class AddressCrypto extends Component {
                 maxLength={100}
                 placeholder="Select Network"
                 optionFilterProp="children"
+                disabled={this.state.cryptoData.adressstate ==="Approved"  ? true : false }
               >
                 {networksList?.map((item, idx) => (
                   <Option key={idx} value={item.name}>
@@ -285,11 +330,94 @@ class AddressCrypto extends Component {
               <Input
                 className="cust-input"
                 maxLength={100}
-
                 placeholder="Wallet Address"
+                disabled={this.state.cryptoData.adressstate ==="Approved"  ? true : false }
               />
             </Form.Item>
             </Col>
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
+              name="walletSource"
+              label="Wallet Source"
+              rules={[
+                {
+                  required: true,
+                  message: "Is required",
+                },
+              ]}
+            >
+              <Select
+                className="cust-input"
+                maxLength={100}
+                placeholder="Select Wallet Source"
+                optionFilterProp="children"
+                onChange={this.handleWalletSource}
+                disabled={this.state.cryptoData.adressstate ==="Approved"  ? true : false }
+              >
+                {this.state.wallet?.map((item, idx) => (
+                  <Option key={idx} value={item.name}>
+                    {item.name}
+                  </Option>
+                ))}
+              </Select> 
+            </Form.Item>
+            </Col>
+           { (this.state.walletSource === "Others" || this.state.cryptoData?.otherWallet ) && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            <Form.Item
+             className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
+              name="otherWallet"
+              label="You have selected others for Wallet Source. Please specify"
+              required
+              rules={[
+                {
+                  validator: this.validateAddressType,
+                },
+              ]}
+            >
+              <Input
+                className="cust-input"
+                maxLength={100}
+                placeholder="Wallet Source"
+                disabled={this.state.cryptoData.adressstate ==="Approved"  ? true : false }
+              />
+            </Form.Item>
+            </Col>}
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            <Form.Item
+								className="custom-forminput mb-36 agree send-crypto-sumry"
+								name="isProofofOwnership"
+								valuePropName="checked"
+								required
+							>				
+								<div className="d-flex agree-check checkbox-mobile align-center">
+						<label>
+							<input
+								type="checkbox"
+								id="agree-check"
+								checked={this.state.cryptoData?.isProofofOwnership}
+							/>
+							<span for="agree-check"  />
+	
+							
+						</label>
+						<div
+							className="cust-agreecheck d-flex align-center"
+							>
+             I'm The Owener Of This Wallet Address <span className="cust-start-style">*</span>
+						</div>
+					</div>
+								
+							</Form.Item>
+            </Col>
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload a screenshot or video to prove you are the owner of the address</Paragraph>
+                            <AddressCryptoDocument 
+                            documents={this.state?.documents || null}
+                            documentDetails={this.state.cryptoData?.documents || null} 
+                            editDocument={this.state.isEdit} onDocumentsChange={(docs) =>this.editDocuments(docs) } 
+                            />
+                        </ Col>
+          
             </Row>
             <Form.Item className="">
               <Button
@@ -298,7 +426,6 @@ class AddressCrypto extends Component {
                 block
                 className="pop-btn"
                 loading={this.state.isBtnLoading}
-                // style={{ width: "150px" }}
               >
                 {this.props.type === "manual" && "Save"}
                 {this.props.type !== "manual" && <Translate content="continue" />}

@@ -183,7 +183,7 @@ const AddressCryptoView = (props) => {
 											</Col>
 												
 										</Row>
-										{cryptoAddress?.documents?.details.map((file) => (
+										{cryptoAddress?.documents?.details?.map((file) => (
 													<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 														<div
 															className="docfile mr-0 d-flex ml-8"
