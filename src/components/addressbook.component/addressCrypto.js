@@ -125,7 +125,7 @@ if (res.ok){
 }
   }
   submit = async (values) => {
-    if (!values.proofofOwnership) {
+    if (!values.isProofofOwnership) {
 			this.setState({
 				...this.state,
 				errorMessage: apiCalls.convertLocalLang("agree_termsofservice"),
@@ -148,7 +148,7 @@ if (res.ok){
       currencyType: "Crypto",
       walletAddress:  values.walletAddress.trim(),
       customerId: this.props.userProfile.id,
-      proofofOwnership:values.proofofOwnership,
+      isProofofOwnership:values.isProofofOwnership,
       walletSource:values.walletSource,
       otherWallet:values.otherWallet,
       documents:this.state.details.documents
@@ -352,7 +352,7 @@ if (res.ok){
               </Select> 
             </Form.Item>
             </Col>
-           { this.state.walletSource === "Others" || this.state.cryptoData?.otherWallet  && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+           { (this.state.walletSource === "Others" || this.state.cryptoData?.otherWallet ) && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item
              className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="otherWallet"
@@ -375,7 +375,7 @@ if (res.ok){
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item
 								className="custom-forminput mb-36 agree send-crypto-sumry"
-								name="proofofOwnership"
+								name="isProofofOwnership"
 								valuePropName="checked"
 								required
 							>				
@@ -384,7 +384,7 @@ if (res.ok){
 							<input
 								type="checkbox"
 								id="agree-check"
-								checked={this.state.cryptoData?.proofofOwnership}
+								checked={this.state.cryptoData?.isProofofOwnership}
 							/>
 							<span for="agree-check"  />
 	
