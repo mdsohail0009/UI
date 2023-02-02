@@ -125,7 +125,7 @@ if (res.ok){
 }
   }
   submit = async (values) => {
-    if (!values.isProofofOwnership) {
+    if (!values.isOwnerOfWalletAddress) {
 			this.setState({
 				...this.state,
 				errorMessage: apiCalls.convertLocalLang("agree_termsofservice"),
@@ -148,7 +148,7 @@ if (res.ok){
       currencyType: "Crypto",
       walletAddress:  values.walletAddress.trim(),
       customerId: this.props.userProfile.id,
-      isProofofOwnership:values.isProofofOwnership,
+      isOwnerOfWalletAddress:values.isOwnerOfWalletAddress,
       walletSource:values.walletSource,
       otherWallet:values.otherWallet,
       documents:this.state.details.documents
@@ -292,7 +292,7 @@ if (res.ok){
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="network"
-              label="Network"
+              label="Network (Any coins on the selected network will be whitelisted)"
               rules={[
                 {
                   required: true,
@@ -385,7 +385,7 @@ if (res.ok){
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item
 								className="custom-forminput mb-36 agree send-crypto-sumry"
-								name="isProofofOwnership"
+								name="isOwnerOfWalletAddress"
 								valuePropName="checked"
 								required
 							>				
@@ -394,7 +394,7 @@ if (res.ok){
 							<input
 								type="checkbox"
 								id="agree-check"
-								checked={this.state.cryptoData?.isProofofOwnership}
+								checked={this.state.cryptoData?.isOwnerOfWalletAddress}
 							/>
 							<span for="agree-check"  />
 	

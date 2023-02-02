@@ -117,7 +117,7 @@ const AddressCryptoView = (props) => {
 								<Row gutter={8}>
 									<Col xl={24} xxl={24} className="bank-view">
 										<Row className="kpi-List">
-										<Col xs={24} sm={24} md={12} lg={14} xxl={14}>
+										<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Whitelist Name</label>
 													<div className=" kpi-val adview-name">
@@ -128,7 +128,7 @@ const AddressCryptoView = (props) => {
 													</div>
 												</div>
 											</Col>
-											<Col xs={24} sm={24} md={12} lg={5} xxl={5}>
+											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Token</label>
 													<div className=" kpi-val adview-name">
@@ -139,7 +139,7 @@ const AddressCryptoView = (props) => {
 													</div>
 												</div>
 											</Col>
-											<Col xs={24} sm={24} md={12} lg={5} xxl={5}>
+											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Network</label>
 													<div className=" kpi-val adview-name">
@@ -151,7 +151,7 @@ const AddressCryptoView = (props) => {
 												</div>
 											</Col>
 											
-											<Col xs={24} sm={24} md={12} lg={14} xxl={14}>
+											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Wallet Address</label>
 													<div className=" kpi-val adview-name">
@@ -162,7 +162,15 @@ const AddressCryptoView = (props) => {
 													</div>
 												</div>
 											</Col>
-											<Col xs={24} sm={24} md={12} lg={5} xxl={5}>
+											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+												<div className="kpi-divstyle ad-rec-detyails">
+													<label className="kpi-label">Wallet Source</label>
+													<div className=" kpi-val adview-name">
+													{cryptoAddress?.walletSource==="Others"? `${cryptoAddress?.walletSource } (${cryptoAddress?.otherWallet})` :cryptoAddress?.walletSource|| "-"}
+													</div>
+												</div>
+											</Col>
+											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Address State</label>
 													<div className=" kpi-val adview-name">
