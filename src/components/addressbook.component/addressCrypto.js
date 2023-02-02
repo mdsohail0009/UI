@@ -292,7 +292,7 @@ if (res.ok){
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="network"
-              label="Network"
+              label="Network (Any coins on the selected network will be whitelisted)"
               rules={[
                 {
                   required: true,

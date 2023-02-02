@@ -263,7 +263,7 @@ class AddressBook extends Component {
 			filter: true,
 			width: 380,
 		},
-		
+		{ field: "walletSource", title: "Wallet Source", width: 150, filter: true },
 		{
 			field: "addressState",
 			title: apiCalls.convertLocalLang("Whitelisting_Status"),
