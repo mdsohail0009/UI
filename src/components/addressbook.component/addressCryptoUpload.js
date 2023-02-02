@@ -1,12 +1,13 @@
 
 import { Component } from "react";
-import { Row, Col, Typography, Upload, Form, Modal, Button,Alert } from 'antd';
+import { Row, Col, Typography, Upload, Form, Modal, Button,Alert,Tooltip } from 'antd';
 import Loader from "../../Shared/loader";
 import { document } from "../onthego.transfer/api";
 import apiCalls from "../../api/apiCalls";
 import { bytesToSize } from "../../utils/service";
 import ConnectStateProps from "../../utils/state.connect";
 import {getFileURL} from './api';
+import FilePreviewer from "react-file-previewer";
 
 const { Dragger } = Upload;
 const { Paragraph, Text } = Typography;
@@ -22,7 +23,10 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 class AddressCryptoDocument extends Component {
     state = {
         filesList: [],
-        documents: {}, showDeleteModal: false, isDocLoading: false,selectedObj:{},errorMessage:null
+        documents: {}, showDeleteModal: false, isDocLoading: false,selectedObj:{},errorMessage:null,
+        previewModal:false,
+        previewPath:null,
+
     }
     componentDidMount() {
         let propsDocument = JSON.stringify(this.props?.documents) == JSON.stringify({'transfer': '', 'payee': ''}) ? null : this.props?.documents
@@ -86,6 +90,33 @@ class AddressCryptoDocument extends Component {
             this.props?.onDocumentsChange(doc);
         }
     }
+    docPreview = async (file) => {
+        debugger
+        let res = await getFileURL({ url: file.response[0] });
+        if (res.ok) {
+          this.state.PreviewFilePath =file.response[0];
+          this.setState({ ...this.state, previewModal: true, previewPath: res.data });
+        }
+      }
+      docPreviewClose = () => {
+        this.setState({ ...this.state, previewModal: false, previewPath: null })
+      }
+      DownloadUpdatedFile = async () => {
+        let res = await getFileURL({ url: this.state.PreviewFilePath });
+        if (res.ok) {
+          this.setState({ ...this.state, previewModal: true, previewPath: res.data });
+          window.open(res.data, "_blank")
+        }
+      }
+      fileDownload = async () => {
+        let res = await getFileURL({ url: this.state.previewPath });
+        if (res.ok) {
+          this.DownloadUpdatedFile()
+        }
+      }
+      filePreviewPath() {
+        return this.state.previewPath;
+      }
     render() {
         if(this.props.refreshData !== this.state.refreshData){
             let propsDocument = JSON.stringify(this.props?.documents) == JSON.stringify({'transfer': '', 'payee': ''}) ? null : this.props?.documents
@@ -201,6 +232,24 @@ class AddressCryptoDocument extends Component {
 
                 <Paragraph className="text-white">Are you sure, do you really want to delete ?</Paragraph>
             </Modal>
+            <Modal
+          className="documentmodal-width"
+          title="Preview"
+          width={1000}
+          visible={this.state.previewModal}
+          destroyOnClose={true}
+          closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.docPreviewClose} /></Tooltip>}
+          footer={<>
+             <div className="cust-pop-up-btn crypto-pop">
+            
+             <Button onClick={this.docPreviewClose} className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml">Close</Button>
+            <Button className="primary-btn pop-btn detail-popbtn" onClick={() => this.fileDownload()}>Download</Button>
+            
+            </div>
+          </>}
+        >
+          <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null, mimeType: this.state?.previewPath?.includes(".pdf") ? 'application/pdf' : '' }} />
+        </Modal>
         </Row>
     }
 }
