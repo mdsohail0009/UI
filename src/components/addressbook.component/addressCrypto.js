@@ -115,6 +115,7 @@ class AddressCrypto extends Component {
   };
 
   handleWalletSource=(value)=>{
+    this.form?.current?.setFieldsValue({otherWallet:null});
     this.setState({...this.state,walletSource:value})
   }
 
@@ -128,7 +129,7 @@ if (res.ok){
     if (!values.isOwnerOfWalletAddress) {
 			this.setState({
 				...this.state,
-				errorMessage: apiCalls.convertLocalLang("agree_termsofservice"),
+        errorMessage:"Please select owner check box",
 				agreeRed: false,
 			});
 			this.useDivRef.current?.scrollIntoView(0, 0);
@@ -370,8 +371,8 @@ if (res.ok){
               required
               rules={[
                 {
-                  validator: this.validateAddressType,
-                },
+                  validator: validateContentRule,
+              },
               ]}
             >
               <Input
