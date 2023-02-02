@@ -576,6 +576,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .adbook-newdesign{width: 100%;}
 .file-label.doc-def{margin-right: 12px;}
 .transacton-drpdwn .ant-dropdown-menu{max-width: 170px !important;min-width: 200px !important;}
+.cust-start-style{font-size: 20px;color: var(--subText);font-weight: 400;margin-top: 6px;margin-left: 2px;}
 /* .font-size-align */
 .abbook-title-mt{margin-top: 16px;}
 /*Send Address End*/

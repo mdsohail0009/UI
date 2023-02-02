@@ -379,7 +379,7 @@ if (res.ok){
 								valuePropName="checked"
 								required
 							>				
-								<div className="d-flex agree-check checkbox-mobile">
+								<div className="d-flex agree-check checkbox-mobile align-center">
 						<label>
 							<input
 								type="checkbox"
@@ -390,11 +390,11 @@ if (res.ok){
 	
 							
 						</label>
-						<Paragraph
-							className="cust-agreecheck"
-							style={{ flex: 1 }}>
-             I'm The Owener Of This Wallet Address
-						</Paragraph>
+						<div
+							className="cust-agreecheck d-flex align-center"
+							>
+             I'm The Owener Of This Wallet Address <span className="cust-start-style">*</span>
+						</div>
 					</div>
 								
 							</Form.Item>
