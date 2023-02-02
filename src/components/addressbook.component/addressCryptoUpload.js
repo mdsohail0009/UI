@@ -91,7 +91,6 @@ class AddressCryptoDocument extends Component {
         }
     }
     docPreview = async (file) => {
-        debugger
         let res = await getFileURL({ url: file.response[0] });
         if (res.ok) {
           this.state.PreviewFilePath =file.response[0];
