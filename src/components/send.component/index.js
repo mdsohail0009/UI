@@ -127,7 +127,8 @@ class SendReceive extends Component {
                     content={(this.props?.isSendTab || this.props?.sendReceive?.sendCryptoEnable) ? (this.props.sendReceive.stepcode == "withdraw_crpto_summary" ?  this.props.sendReceive.stepTitles[config[this.props.sendReceive.stepcode]] : (this.props.sendReceive.stepcode==="withdraw_crypto_selected" ? "withdraw" : "send_crypto")) :  this.props.sendReceive.stepTitles[config[this.props.sendReceive.stepcode]]} component={Paragraph} />
                      } 
                      </div>
-                    <Paragraph className="recive-subtext label-style drawer-subtextstyle buysell-balances" >{this.props.sendReceive?.subTitle} {this.props.sendReceive?.selectedCoin?.coin} </Paragraph> 
+                    <Paragraph className="recive-subtext label-style drawer-subtextstyle buysell-balances" >
+                    {this.props.sendReceive?.selectedCoin?.coin} </Paragraph> 
                     </>}
                     
             </>
