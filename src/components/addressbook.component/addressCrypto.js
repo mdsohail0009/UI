@@ -181,6 +181,16 @@ if (res.ok){
     }
   }
   }
+  editDocuments=(docs)=>{
+      let { documents } = this.state.details;
+      if(this.state.isEdit){
+          documents = docs;
+      } else{
+          documents = docs;
+      }
+      this.setState({ ...this.state, details: { ...this.state.details, documents } })
+  
+  }
   validateAddressType = (_, value) => {
     if (value) {
       let address = value.trim();
@@ -404,15 +414,7 @@ if (res.ok){
                             <AddressCryptoDocument 
                             documents={this.state?.documents || null}
                             documentDetails={this.state.cryptoData?.documents || null} 
-                            editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
-                                let { documents } = this.state.details;
-                                if(this.state.isEdit){
-                                    documents = docs;
-                                } else{
-                                    documents = docs;
-                                }
-                                this.setState({ ...this.state, details: { ...this.state.details, documents } })
-                            }} 
+                            editDocument={this.state.isEdit} onDocumentsChange={(docs) =>this.editDocuments(docs) } 
                             />
                         </ Col>
           
