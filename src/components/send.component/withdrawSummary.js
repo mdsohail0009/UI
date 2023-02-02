@@ -266,7 +266,7 @@ class WithdrawSummary extends Component {
 				this.setState({
 					buttonText: "resendotp",
 					tooltipVisible: false,
-					// verifyOtpText: null,
+					verifyOtpText: this.state.verifyTextotp === true?"Verified":null
 				});
 			}, 120000);
 		} else {
@@ -296,7 +296,7 @@ class WithdrawSummary extends Component {
 				this.setState({
 					emailText: "resendEmail",
 					tooltipEmail: false,
-					// verifyText: null,
+					verifyText:this.state.verifyEmailOtp===true?"Verified":null,
 				});
 			}, 30000);
 		} else {
@@ -317,8 +317,7 @@ class WithdrawSummary extends Component {
 				EmailCode: response.data,
 				verifyEmail: true,
 				verifyEmailOtp: true,
-				//verifyOtpText: null,
-				//verifyText: null,
+				verifyText: "Verified",
 				emailText: null,
 				inputEmailDisable: true,
 				isEmailVerification: true,
@@ -353,7 +352,7 @@ class WithdrawSummary extends Component {
 				OtpVerification: response.data,
 				verifyPhone: true,
 				verifyTextotp: true,
-				//verifyOtpText: null,
+				verifyOtpText: "Verified",
 				buttonText: null,
 				inputDisable: true,
 				isPhoneVerification: true,
@@ -563,7 +562,6 @@ class WithdrawSummary extends Component {
 	onBackSend = () => {
 		 this.props.dispatch(hideSendCrypto(false));
 		 this.props.dispatch(setSendCrypto(true));
-		 //this.props.dispatch(setWithdrawfiatenaable(true));
 		 this.props?.onBackCLick("step1"); 
 		 this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: 2 }));
 	}
@@ -614,6 +612,12 @@ class WithdrawSummary extends Component {
 					content="verify_button"
 				/>
 			),
+			Verified:(
+				<
+            ><Text className="text-yellow pr-24"> Verified </Text>
+                <span className="icon md greenCheck  check-ml-align" />
+            </>
+			),
 		};
 		const emailBtn = {
 			get_email: (
@@ -642,6 +646,12 @@ class WithdrawSummary extends Component {
 					className={`pl-0 ml-0 text-yellow-50 `}
 					content="verify_btn"
 				/>
+			),
+			Verified:(
+				<
+            ><Text className="text-yellow pr-24"> Verified </Text>
+                <span className="icon md greenCheck  check-ml-align" />
+            </>
 			),
 		};
 
@@ -845,11 +855,7 @@ class WithdrawSummary extends Component {
 												style={{ color: "black", margin: "0 auto" }}
 												onClick={this.getOtpVerification}
 												disabled={this.state.verifyPhone === true||this.state.verifyTextotp === true}>
-												{!this.state.verifyTextotp&&verifyOtpText[this.state.verifyOtpText]}
-												{this.state.verifyTextotp === true && (<>
-													<Text className="text-yellow pr-24"> Verified </Text>
-													<span className="icon md greenCheck" />
-													</>)}
+												{verifyOtpText[this.state.verifyOtpText]}
 											</Button>}
 											
 										</div>}
@@ -921,11 +927,9 @@ class WithdrawSummary extends Component {
 												loading={this.state.emailVerifyLoading}
 												onClick={(e) => this.getEmailVerification(e)}
 												disabled={this.state.verifyEmail === true||this.state.verifyEmailOtp === true}>
-												{!this.state.verifyEmailOtp&&verifyText[this.state.verifyText]}
-												{this.state.verifyEmailOtp === true && (<>
-													<Text className="text-yellow pr-24"> Verified </Text>
-													<span className="icon md greenCheck" />
-													</>)}
+												
+												{verifyText[this.state.verifyText]}
+												
 											</Button>
 		  }
 
