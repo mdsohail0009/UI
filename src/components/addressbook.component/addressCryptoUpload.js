@@ -159,7 +159,7 @@ class AddressCryptoDocument extends Component {
                                         docs?.details?.push(this.docDetail(file));
                                         this.props?.onDocumentsChange(docs);
                                     }else{
-                                        this.setState({ ...this.state, isDocLoading: false, errorMessage: "“File is not allowed. You can upload jpg, png, jpeg, pdf, mp4, mov, wme, avi files" }) 
+                                        this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg, pdf, mp4, mov, wme, avi files" }) 
                                     }
                                 }else if(file.status ==='error'){
                                     this.setState({ ...this.state, isDocLoading: false,errorMessage:file?.response });
