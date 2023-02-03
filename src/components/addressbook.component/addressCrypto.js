@@ -36,8 +36,8 @@ class AddressCrypto extends Component {
       isEdit:false,
       documents:null,
       walletSource:null,
+      walletSourse:null,
       check:false,
-      otherWalletHide:false,
 
     };
   }
@@ -51,7 +51,7 @@ class AddressCrypto extends Component {
     this.setState({ ...this.state, isLoading: true })
     let response = await getCryptoData(id);
     if (response.ok) {
-      this.setState({ ...this.state, cryptoData: response.data, isLoading: false,isEdit:true,check:response.data.isOwnerOfWalletAddress })
+      this.setState({ ...this.state, cryptoData: response.data, isLoading: false,isEdit:true,check:response.data.isOwnerOfWalletAddress ,walletSourse: response.data?.walletSource})
     }
     else {
       this.setState({ ...this.state, isLoading: false, errorMessage: this.isErrorDispaly(response) })
@@ -117,8 +117,10 @@ class AddressCrypto extends Component {
   };
 
   handleWalletSource=(value)=>{
-    this.form?.current?.setFieldsValue({otherWallet:null});
-    this.setState({...this.state,walletSource:value})
+    if(this.state.cryptoData?.id === "00000000-0000-0000-0000-000000000000"){
+      this.form?.current?.setFieldsValue({otherWallet:null});
+    }
+    this.setState({...this.state,walletSourse:value})
   }
 
   handleWallet=async()=>{
@@ -369,7 +371,8 @@ if (res.ok){
               </Select> 
             </Form.Item>
             </Col>
-           { (this.state.walletSource === "Others" || this.state.cryptoData?.otherWallet ) && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+
+           {this.state.walletSourse === "Others"  && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item
              className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="otherWallet"
