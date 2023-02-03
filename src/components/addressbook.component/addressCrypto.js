@@ -49,7 +49,7 @@ class AddressCrypto extends Component {
     this.setState({ ...this.state, isLoading: true })
     let response = await getCryptoData(id);
     if (response.ok) {
-      this.setState({ ...this.state, cryptoData: response.data, isLoading: false })
+      this.setState({ ...this.state, cryptoData: response.data, isLoading: false,isEdit:true })
     }
     else {
       this.setState({ ...this.state, isLoading: false, errorMessage: this.isErrorDispaly(response) })
@@ -152,7 +152,7 @@ if (res.ok){
       isOwnerOfWalletAddress:values.isOwnerOfWalletAddress,
       walletSource:values.walletSource,
       otherWallet:values.otherWallet,
-      documents:this.state.cryptoData?.documents
+      documents:this.state.cryptoData?.documents ||this.state.details.documents
       
     }
     if (this.state.cryptoData.id !== "00000000-0000-0000-0000-000000000000") {
