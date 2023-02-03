@@ -431,7 +431,7 @@ if (res.ok){
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload a screenshot or video to prove you are the owner of the address  <Popover
                                           className="more-popover"
-                                          trigger="click"
+                                          trigger=""
                                           placement="top"
                                         >
                                             <Tooltip title="MP4, AVI, MWV, MOV files size maximum allow  25MB">
