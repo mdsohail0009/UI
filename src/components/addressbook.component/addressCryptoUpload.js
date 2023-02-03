@@ -91,9 +91,15 @@ class AddressCryptoDocument extends Component {
         }
     }
     docPreview = async (file) => {
-        let res = await getFileURL({ url: file.response[0] });
+        let path;
+        if(file.path){
+            path=file.path;
+        }else{
+       path=file.response[0];
+        }
+        let res = await getFileURL({ url: path});
         if (res.ok) {
-          this.state.PreviewFilePath =file.response[0];
+          this.state.PreviewFilePath =path;
           this.setState({ ...this.state, previewModal: true, previewPath: res.data });
         }
       }
