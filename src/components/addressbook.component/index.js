@@ -464,7 +464,7 @@ class AddressBook extends Component {
 		else if(obj.status === "Inactive") {
 			this.setState({ ...this.state, errorWorning: "Record is inactive so you can't edit" });
 		}
-		else if (this.state.selectedObj.type ==="Fiat" || this.state.selectedObj.type === "fiat" || this.state.selectedObj.proofofOwnership === false  ?
+		else if (this.state.selectedObj.type ==="Fiat" || this.state.selectedObj.type === "fiat" || this.state.selectedObj.isProofofOwnership === true  ?
 			obj.addressState === "Approved" ||
 			obj.addressState === "Rejected" ||
 			obj.addressState === "Reject" :

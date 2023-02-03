@@ -102,7 +102,6 @@ const AddressCryptoView = (props) => {
 					</div>
 				</>
 			}>
-				{mimeType?
 			<FilePreviewer
 				hideControls={true}
 				file={{
@@ -110,9 +109,6 @@ const AddressCryptoView = (props) => {
 					mimeType: previewPath?.includes(".pdf") ? "application/pdf" : "",
 				}}
 			/>
-			:<video width="320" height="240" controls={true}>
-			<source src={previewPath ? filePreviewPath() : null} type="video/mp4"/>
-		  </video>}
 		</Modal>
 	);
 
@@ -220,7 +216,7 @@ const AddressCryptoView = (props) => {
 																		"file") ||
 																	(file.documentName?.slice(-3) !== "zip" &&
 																		"") ||
-																		(file.documentName?.slice(-3) === "mp4" &&
+																		((file.documentName?.slice(-3) === "mp4"||																file.documentName?.slice(-3) === "wmv"||file.documentName?.slice(-3) === "avi"||file.documentName?.slice(-3) === "mov") &&
 																		"video")||
 																	((file.documentName?.slice(-3) === "pdf" ||
 																		file.documentName?.slice(-3) === "PDF") &&

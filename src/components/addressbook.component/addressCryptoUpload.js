@@ -132,7 +132,7 @@ class AddressCryptoDocument extends Component {
 
                     }
                     ]}>
-                        <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG ,.mp4"
+                        <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG ,.mp4,.wmv,.avi,.mov"
                             className="upload mt-4"
                             multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                             showUploadList={false}
@@ -142,7 +142,8 @@ class AddressCryptoDocument extends Component {
                             onChange={({ file }) => {
                                 this.setState({ ...this.state, isDocLoading: true });
                                 if (file.status === "done") {
-                                    let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true, 'video/mp4':true,"application/mp4":true,'audio/mp4' : true }
+                                    let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true,
+ 'video/mp4':true,"application/mp4":true,'audio/mp4' : true, 'application/x-troff-msvideo':true, 'video/avi':true, 'video/msvideo':true, 'video/x-msvideo':true, 'video/quicktime':true,'video/x-ms-wmv':true }
                                     if (fileType[file.type]) {
                                         let { filesList: files } = this.state;
                                         files.push(file);
@@ -151,7 +152,7 @@ class AddressCryptoDocument extends Component {
                                         docs?.details?.push(this.docDetail(file));
                                         this.props?.onDocumentsChange(docs);
                                     }else{
-                                        this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg, pdf, mp4, mov, wme, avi files" }) 
+                                        this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg, pdf, mp4, mov, wmv, avi files" }) 
                                     }
                                 }else if(file.status ==='error'){
                                     this.setState({ ...this.state, isDocLoading: false,errorMessage:file?.response });
@@ -163,13 +164,29 @@ class AddressCryptoDocument extends Component {
                             </p>
                             <p className="ant-upload-text">Drag and drop or browse to choose file</p>
                             <p className="ant-upload-hint uplaod-inner">
-                            JPG, PNG, JPEG, PDF, MP4, MOV, WME, AVI files are allowed
+                            JPG, PNG, JPEG, PDF, MP4, MOV, WMV, AVI files are allowed
                             </p>
                         </Dragger>
                     </Form.Item>
                     {this.state?.filesList?.map((file, indx) => <div>
                         {((file.status === "done" || file.status == true)&& file.state !='Deleted') && <> <div className="docfile custom-upload cust-upload-sy">
-                            <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "":(file.documentName?.slice(-3) === "zip" ? "file" : "")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
+                            <span 
+                            
+className={`icon xl ${(file.name?.slice(-3) === "zip" &&
+"file") ||
+(file.name?.slice(-3) !== "zip" &&
+"") ||
+((file.documentName?.slice(-3) === "mp4" || file.name?.slice(-3)==="mp4" || file.documentName?.slice(-3) === "mov"||file.name?.slice(-3)==="mov"||file.name?.slice(-3)==="avi" || file.documentName?.slice(-3) === "avi"||
+file.name?.slice(-3)==="wmv" || file.documentName?.slice(-3) === "wmv") &&
+"video")||
+((file.name?.slice(-3) === "pdf" ||
+file.name?.slice(-3) === "PDF") &&
+"file") ||
+(file.name?.slice(-3) !== "pdf" &&
+file.name?.slice(-3) !== "PDF" &&
+"image")
+} mr-16`}
+ />
                             <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
                                 <EllipsisMiddle suffixCount={6}>{file.name || file.documentName}</EllipsisMiddle>
                                 <span className="upload-filesize c-pointer">{(file.size || file?.remarks) ? bytesToSize(file.size || file?.remarks) : ""}</span>
