@@ -434,7 +434,7 @@ if (res.ok){
                                           trigger=""
                                           placement="top"
                                         >
-                                            <Tooltip title="MP4, AVI, WMV, MOV files size maximum allow  25MB">
+                                            <Tooltip title="MP4, MOV, WMV, AVI files size maximum allow  25MB">
                                           <span
                                             className="icon md info c-pointer ml-4"
                                           />
