@@ -370,6 +370,13 @@ if (res.ok){
               label="You have selected others for Wallet Source. Please specify"
               required
               rules={[
+                {whitespace: true,
+                  message: "Is required",
+                },
+                {
+                  required: true,
+                  message: "Is required",
+                },
                 {
                   validator: validateContentRule,
               },
@@ -404,7 +411,7 @@ if (res.ok){
 						<div
 							className="cust-agreecheck d-flex align-center"
 							>
-             I'm The Owener Of This Wallet Address <span className="cust-start-style">*</span>
+              I'm the owner of this wallet address check box <span className="cust-start-style">*</span>
 						</div>
 					</div>
 								

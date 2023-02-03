@@ -191,8 +191,9 @@ const AddressCryptoView = (props) => {
 											</Col>
 												
 										</Row>
+										<Row>
 										{cryptoAddress?.documents?.details?.map((file) => (
-													<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+													<Col xs={12} sm={12} md={12} lg={8} xxl={8}>
 														<div
 															className="docfile mr-0 d-flex ml-8"
 															key={file.id}>
@@ -226,8 +227,9 @@ const AddressCryptoView = (props) => {
 																</span>
 															</div>
 														</div>
-													</Col>
+													   </Col>
 												))}
+												 </Row>
 									</Col>
 								</Row>
 								<div className="text-right view-level-btn">
