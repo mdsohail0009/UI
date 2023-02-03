@@ -1,5 +1,5 @@
 import React, { Component} from "react";
-import { Form, Typography, Input, Button, Select, Image, Alert,Row,Col,Checkbox } from "antd";
+import { Form, Typography, Input, Button, Select, Image, Alert,Row,Col,Popover,Tooltip } from "antd";
 import alertIcon from '../../assets/images/pending.png';
 import { setAddressStep } from "../../reducers/addressBookReducer";
 import { setAddress, setStep, setWithdrawcrypto,rejectWithdrawfiat, setSendCrypto, hideSendCrypto } from "../../reducers/sendreceiveReducer";
@@ -429,7 +429,17 @@ if (res.ok){
 							</Form.Item>
             </Col>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload a screenshot or video to prove you are the owner of the address</Paragraph>
+                            <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload a screenshot or video to prove you are the owner of the address  <Popover
+                                          className="more-popover"
+                                          trigger="click"
+                                          placement="top"
+                                        >
+                                            <Tooltip title="MP4, AVI, MWV, MOV files size maximum allow  25MB">
+                                          <span
+                                            className="icon md info c-pointer ml-4"
+                                          />
+                                            </Tooltip>
+                                        </Popover></Paragraph>
                             <AddressCryptoDocument 
 
                             documents={this.state.cryptoData?.documents|| null}
