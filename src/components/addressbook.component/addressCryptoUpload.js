@@ -151,7 +151,7 @@ class AddressCryptoDocument extends Component {
                                         docs?.details?.push(this.docDetail(file));
                                         this.props?.onDocumentsChange(docs);
                                     }else{
-                                        this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg, pdf, mp4, mov, wme, avi files" }) 
+                                        this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg, pdf, mp4, mov, wmv, avi files" }) 
                                     }
                                 }else if(file.status ==='error'){
                                     this.setState({ ...this.state, isDocLoading: false,errorMessage:file?.response });
@@ -163,7 +163,7 @@ class AddressCryptoDocument extends Component {
                             </p>
                             <p className="ant-upload-text">Drag and drop or browse to choose file</p>
                             <p className="ant-upload-hint uplaod-inner">
-                            JPG, PNG, JPEG, PDF, MP4, MOV, WME, AVI files are allowed
+                            JPG, PNG, JPEG, PDF, MP4, MOV, WMV, AVI files are allowed
                             </p>
                         </Dragger>
                     </Form.Item>
