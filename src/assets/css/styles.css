@@ -912,7 +912,7 @@ input[type=number]::-webkit-outer-spin-button {-webkit-appearance: none;-moz-app
 .basic-info .ant-table-thead > tr > th{border-bottom: transparent;}
 /* multi selection */
 .ant-select-multiple .ant-select-selection-item-remove, .ant-select-multiple .ant-select-selection-item-content{color:var(--textWhite);}
-.ant-select-item-option-active:not(.ant-select-item-option-disabled){background-color: var(--bgDarkGrey);color:#fff;}
+.ant-select-item-option-active:not(.ant-select-item-option-disabled){background-color: var(--profileMenu);color:#fff;}
 .ant-select-dropdown{background-color: var(--bgGloom);}
 .ant-select-item-option-selected:not(.ant-select-item-option-disabled){background-color: var(--bgDarkGrey);color:#fff;}
 .ant-select-item{color:#ffff;}

@@ -263,7 +263,7 @@ class AddressBook extends Component {
 			filter: true,
 			width: 380,
 		},
-		
+		{ field: "walletSource", title: "Wallet Source", width: 150, filter: true },
 		{
 			field: "addressState",
 			title: apiCalls.convertLocalLang("Whitelisting_Status"),
@@ -464,9 +464,11 @@ class AddressBook extends Component {
 		else if(obj.status === "Inactive") {
 			this.setState({ ...this.state, errorWorning: "Record is inactive so you can't edit" });
 		}
-		else if (
+		else if (this.state.selectedObj.type ==="Fiat" || this.state.selectedObj.type === "fiat" || this.state.selectedObj.isProofofOwnership === true  ?
 			obj.addressState === "Approved" ||
 			obj.addressState === "Rejected" ||
+			obj.addressState === "Reject" :
+		   obj.addressState === "Rejected" ||
 			obj.addressState === "Reject"
 		) {
 			this.setState({
