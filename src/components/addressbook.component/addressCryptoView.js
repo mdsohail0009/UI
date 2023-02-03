@@ -24,6 +24,7 @@ const AddressCryptoView = (props) => {
 	const [cryptoAddress, setCryptoAddress] = useState({});
 	const [previewPath, setPreviewPath] = useState(null);
 	const [previewModal, setPreviewModal] = useState(false);
+	const [mimeType,setMimeType]=useState(false);
 
 
 	useEffect(() => {
@@ -41,12 +42,25 @@ const AddressCryptoView = (props) => {
 		props?.history?.push("/addressbook");
 		props?.dispatch(addressTabUpdate(false));
 	};
-
 	const docPreview = async (file) => {
+		const mimeType = {
+		"pdf": "pdf",
+		"jpg": "jpg",
+		"jpeg": "jpeg",
+		"png": "png",
+		 "PDF": "PDF",
+		"PNG": "PNG",
+		 "JPEG": "JPEG" };
 		let res = await getFileURL({ url: file.path });
 		if (res.ok) {
 			setPreviewModal(true);
 			setPreviewPath(res.data);
+		const documentName=file.documentName.split(".")
+			if(mimeType[documentName[1]])
+			{
+				setMimeType(true);
+			}
+			
 		}
 	};
 	const filePreviewPath = () => {
@@ -75,19 +89,20 @@ const AddressCryptoView = (props) => {
 					
 					<Button
 						className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
-						// block
+					
 						onClick={() => setPreviewModal(false)}>
 						Close
 					</Button>
 					<Button
 						className="primary-btn pop-btn detail-popbtn"
-						// block
+					
 						onClick={() => window.open(previewPath, "_blank")}>
 						Download
 					</Button>
 					</div>
 				</>
 			}>
+				{mimeType?
 			<FilePreviewer
 				hideControls={true}
 				file={{
@@ -95,6 +110,9 @@ const AddressCryptoView = (props) => {
 					mimeType: previewPath?.includes(".pdf") ? "application/pdf" : "",
 				}}
 			/>
+			:<video width="320" height="240" controls={true}>
+			<source src={previewPath ? filePreviewPath() : null} type="video/mp4"/>
+		  </video>}
 		</Modal>
 	);
 
@@ -202,6 +220,8 @@ const AddressCryptoView = (props) => {
 																		"file") ||
 																	(file.documentName?.slice(-3) !== "zip" &&
 																		"") ||
+																		(file.documentName?.slice(-3) === "mp4" &&
+																		"video")||
 																	((file.documentName?.slice(-3) === "pdf" ||
 																		file.documentName?.slice(-3) === "PDF") &&
 																		"file") ||
@@ -227,9 +247,9 @@ const AddressCryptoView = (props) => {
 																</span>
 															</div>
 														</div>
-													   </Col>
+													</Col>
 												))}
-												 </Row>
+												</Row>
 									</Col>
 								</Row>
 								<div className="text-right view-level-btn">

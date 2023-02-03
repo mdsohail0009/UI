@@ -54,7 +54,6 @@ class AddressCryptoDocument extends Component {
     }
     deleteDoc=()=>{
         let { documents: docs } = this.state;
-        if(this.props?.documentDetails===null){
         let files = docs.details;
         for(var k in files){
             if(files[k].id===this.state.selectedObj?.id){
@@ -77,18 +76,6 @@ class AddressCryptoDocument extends Component {
         this.setState({ ...this.state, filesList, showDeleteModal: false });
         docs.details=Object.assign([],obj)
         this.props?.onDocumentsChange(docs);
-        }else{
-            let { documentDetails: doc } = this.props;
-            let files = doc.details;
-            for(var k in files){
-                if(files[k].id===this.state.selectedObj?.id){
-                    files[k].state='Deleted';
-                    files[k].isChecked=false;
-                }
-            }
-            this.setState({ ...this.state, showDeleteModal: false });
-            this.props?.onDocumentsChange(doc);
-        }
     }
     docPreview = async (file) => {
         let path;
@@ -182,7 +169,7 @@ class AddressCryptoDocument extends Component {
                     </Form.Item>
                     {this.state?.filesList?.map((file, indx) => <div>
                         {((file.status === "done" || file.status == true)&& file.state !='Deleted') && <> <div className="docfile custom-upload cust-upload-sy">
-                            <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "mp4":(file.documentName?.slice(-3) === "zip" ? "file" : "mp4")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
+                            <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "":(file.documentName?.slice(-3) === "zip" ? "file" : "")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                             <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
                                 <EllipsisMiddle suffixCount={6}>{file.name || file.documentName}</EllipsisMiddle>
                                 <span className="upload-filesize c-pointer">{(file.size || file?.remarks) ? bytesToSize(file.size || file?.remarks) : ""}</span>
@@ -193,21 +180,6 @@ class AddressCryptoDocument extends Component {
                             }} />
                         </div></>}
                     </div>)}
-
-                  {  this.props?.documentDetails && <>
-                  {this.props?.documentDetails?.details?.map((file, indx) => <div>
-                    {((file.status === "done" || file.status == true)&& file.state !='Deleted') && <> <div className="docfile custom-upload cust-upload-sy">
-                        <span className={`icon xl ${(file.documentName?file.documentName.slice(-3) === "zip" ? "file" : "mp4":(file.documentName?.slice(-3) === "zip" ? "file" : "mp4")) || file.documentName?(file.documentName.slice(-3) === "pdf" ? "file" : "image"):(file.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
-                        <div className="docdetails" onClick={() => this.docPreview(file)}>
-                            <EllipsisMiddle suffixCount={6}>{file.documentName || file.documentName}</EllipsisMiddle>
-                            <span className="upload-filesize">{(file.size || file?.remarks) ? bytesToSize(file.size || file?.remarks) : ""}</span>
-                        </div>
-                        <span className="icon md close c-pointer" onClick={() => {
-                            this.setState({ ...this.state, showDeleteModal: true, selectedFileIdx: indx,selectedObj:file })
-
-                        }} />
-                    </div></>}
-                </div>)}</>}
                     {this.state.isDocLoading && <Loader />}
                 </div>
             </Col>
