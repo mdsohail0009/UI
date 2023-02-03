@@ -152,7 +152,7 @@ if (res.ok){
       isOwnerOfWalletAddress:values.isOwnerOfWalletAddress,
       walletSource:values.walletSource,
       otherWallet:values.otherWallet,
-      documents:this.state.details.documents
+      documents:this.state.cryptoData?.documents
       
     }
     if (this.state.cryptoData.id !== "00000000-0000-0000-0000-000000000000") {
@@ -420,8 +420,8 @@ if (res.ok){
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload a screenshot or video to prove you are the owner of the address</Paragraph>
                             <AddressCryptoDocument 
-                            documents={this.state?.documents || null}
-                            documentDetails={this.state.cryptoData?.documents || null} 
+
+                            documents={this.state.cryptoData?.documents|| null}
                             editDocument={this.state.isEdit} onDocumentsChange={(docs) =>this.editDocuments(docs) } 
                             />
                         </ Col>
