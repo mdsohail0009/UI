@@ -36,6 +36,8 @@ class AddressCrypto extends Component {
       isEdit:false,
       documents:null,
       walletSource:null,
+      check:false,
+      otherWalletHide:false,
 
     };
   }
@@ -49,7 +51,7 @@ class AddressCrypto extends Component {
     this.setState({ ...this.state, isLoading: true })
     let response = await getCryptoData(id);
     if (response.ok) {
-      this.setState({ ...this.state, cryptoData: response.data, isLoading: false,isEdit:true })
+      this.setState({ ...this.state, cryptoData: response.data, isLoading: false,isEdit:true,check:response.data.isOwnerOfWalletAddress })
     }
     else {
       this.setState({ ...this.state, isLoading: false, errorMessage: this.isErrorDispaly(response) })
@@ -124,6 +126,10 @@ let res= await getWalletSource();
 if (res.ok){
   this.setState({...this.state,wallet:res.data})
 }
+  }
+  handleCheck=(e)=>{
+    this.setState({...this.state,check:e.target.checked})
+
   }
   submit = async (values) => {
     if (!values.isOwnerOfWalletAddress) {
@@ -402,7 +408,9 @@ if (res.ok){
 							<input
 								type="checkbox"
 								id="agree-check"
-								checked={this.state.cryptoData?.isOwnerOfWalletAddress}
+								checked={this.state.check}
+                onClick={(e)=>this.handleCheck(e)}
+                disabled={this.state.cryptoData.adressstate ==="Approved"  ? true : false }
 							/>
 							<span for="agree-check"  />
 	
