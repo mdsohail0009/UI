@@ -429,17 +429,15 @@ if (res.ok){
 							</Form.Item>
             </Col>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload a screenshot or video to prove you are the owner of the address  <Popover
-                                          className="more-popover"
-                                          trigger="click"
-                                          placement="top"
-                                        >
-                                            <Tooltip title="MP4, AVI, MWV, MOV files size maximum allow  25MB">
+                            <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload a screenshot or video to prove you are the owner of the address  
+                            
+                                            <Tooltip title="MP4, MOV, WMV, AVI files size maximum allow  25MB">
                                           <span
                                             className="icon md info c-pointer ml-4"
                                           />
                                             </Tooltip>
-                                        </Popover></Paragraph>
+                                      
+                                        </Paragraph>
                             <AddressCryptoDocument 
 
                             documents={this.state.cryptoData?.documents|| null}
