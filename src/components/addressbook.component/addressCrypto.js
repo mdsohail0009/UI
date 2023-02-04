@@ -120,6 +120,9 @@ class AddressCrypto extends Component {
     if(this.state.cryptoData?.id === "00000000-0000-0000-0000-000000000000"){
       this.form?.current?.setFieldsValue({otherWallet:null});
     }
+    else if(this.state.cryptoData?.id != "00000000-0000-0000-0000-000000000000" && this.state.cryptoData.walletSource != "Others"){
+      this.form?.current?.setFieldsValue({otherWallet:null});
+    }
     this.setState({...this.state,walletSourse:value})
   }
 
