@@ -51,15 +51,21 @@ class SelectSellCrypto extends Component {
     }
     clickMinamnt(type) {
         let cryptoamnt;
+        const {  USDAmnt: localValue, } = this.state;
+        let _nativeValue = localValue;
         let obj = Object.assign({}, this.props.sellData.coinDetailData)
         if (type === 'half') {
             cryptoamnt = (obj.coinBalance / 2)
             this.setState({ ...this.state, USDAmnt: "0", CryptoAmnt: cryptoamnt, minmaxTab: type, isSwap: true, });
         } else if (type === 'all') {
             cryptoamnt = obj.coinBalance ? obj.coinBalance : 0;
-            this.setState({ ...this.state, USDAmnt: "0", CryptoAmnt: cryptoamnt, minmaxTab: type, isSwap: true, });
+            this.setState({ ...this.state, USDAmnt: _nativeValue, CryptoAmnt: cryptoamnt, minmaxTab: type, isSwap: true, }, () => {
+                this.handleConvertion();
+            });
         } else {
-            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: "0", isSwap: true, minmaxTab: type });
+            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: _nativeValue, isSwap: true, minmaxTab: type }, () => {
+                this.handleConvertion();
+            });
         }
     }
     previewSellData() {
