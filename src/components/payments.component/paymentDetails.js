@@ -433,7 +433,7 @@ class PaymentDetails extends Component {
       <>
         <div ref={this.useDivRef}></div>
         <div className="main-container">
-          <div className="coin-viewstyle">
+          <div className="">
           <Title className="basicinfo mb-0">
           <span onClick={() => this.props.history?.push(`/payments/All`)} className='icon md c-pointer back backarrow-mr'></span>
           <Translate content="menu_payments" component={Text} className="coin-viewstyle" />

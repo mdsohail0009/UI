@@ -869,7 +869,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* .trade-graph .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){background: none;color: var(--textDark) !important;} */
 .trade-graph .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){color: var(--white);font-size: 14px;font-weight: 700;}
 .trade-graph .ant-radio-button-wrapper{color: var(--marketTitle);font-size: 14px;font-weight: 500;}
-.coin-viewstyle {font-size: 28px;font-weight: 800;color: var(--white);margin-bottom: 36px;text-transform: capitalize;}
+.coin-viewstyle {font-size: 28px !important;font-weight: 800 !important;color: var(--white);margin-bottom: 36px;text-transform: capitalize;}
 .summary-count{margin-left: 12px;}
 .summary-count .coin-balstyle, .coin-name{font-size: 24px;font-weight: 800;color: var(--white);margin-bottom: 0;}
 .coin-name{margin-left:8px;}
@@ -1028,6 +1028,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .cust-cancel-btn.transaction-cancelbtn{margin-left: 0 !important;}
 .value-description{font-weight: 400;color:var(--marketTitle);font-size: 14px;}
 .icon.xl.video{background-position: -241px -241px;}
+.kpi-val.adview-name{width: 230px;}
 /*@media start*/
 @media (min-width: 768px){
     .listitems-design{width: 340px;}

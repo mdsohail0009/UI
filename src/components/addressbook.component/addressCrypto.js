@@ -409,16 +409,17 @@ if (res.ok){
 								valuePropName="checked"
 								required
 							>				
-								<div className="d-flex agree-check checkbox-mobile align-center">
+								<div className={`d-flex  agree-check checkbox-mobile align-center`}>
 						<label>
 							<input
+              
 								type="checkbox"
 								id="agree-check"
 								checked={this.state.check}
                 onClick={(e)=>this.handleCheck(e)}
                 disabled={this.state.cryptoData.adressstate ==="Approved"  ? true : false }
 							/>
-							<span for="agree-check"  />
+							<span for="agree-check" className={`${this.state.cryptoData.adressstate ==="Approved"  ? "c-notallowed" : "c-pointer"}`} />
 	
 							
 						</label>

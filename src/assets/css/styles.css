@@ -877,7 +877,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .sell .ant-list-item-meta-avatar{background-color: var(--bgDarkRed);}
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {-webkit-appearance: none;-moz-appearance: none;appearance: none;margin: 0;}
-.c-notallowed{cursor:not-allowed;}
+.c-notallowed{cursor:not-allowed !important;}
 .sumSub-confirm{background: var(--bgGrey);color: var(--black); padding: 50px 40px 16px;width: 500px;height:350px;margin: 80px auto;border-radius: 14px;}
 .sumSub-error{color: var(--black); padding: 50px 40px 16px;height:225px;margin: 50px 0 100px 0;border-radius: 14px;}
 .sumSub-review{font-size: 22px;font-weight: 700;line-height: 1.29;}
@@ -1096,7 +1096,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .upload-disable{cursor: not-allowed;}
 .file-label.batch-upload{width: 100%;}
 .icon.md.close.batch-close{transform: scale(0.7);}
-.gridLink.batch-filename{display: block;}
+.gridLink.batch-filename{display: inline;}
 .draft-filename{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .btn-space{margin-left: 8px;}
 .webkit-color{-webkit-text-fill-color: #3653E4}
