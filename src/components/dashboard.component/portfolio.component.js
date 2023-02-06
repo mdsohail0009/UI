@@ -38,7 +38,7 @@ class Portfolio extends Component {
         if (response.ok) {
             this.setState({ ...this.state, dashBoardTransactions:response.data, transactionData: response.data, loading: false ,errorMessage:null});
         } else {
-            this.setState({...this.state,errorMessage:apicalls.isErrorDispaly(response)})
+            this.setState({...this.state,errorMessage:apicalls.isErrorDispaly(response),loading: false})
             message.destroy();
 
         }
