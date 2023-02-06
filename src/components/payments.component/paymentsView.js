@@ -81,7 +81,7 @@ class PaymentsView extends Component {
         <label className="kpi-label">BIC/SWIFT/ABA Routing Code</label>
         <span className="kpi-val d-block">{moreBankInfo?.routingNumber}</span></div>
          {(moreBankInfo?.transferType!=="internationalIBAN" && moreBankInfo?.transferType!=="sepa")&& <>
-         <div className='popover-mb-12'> <label className="basicinfo">Bank Address</label>
+         <div className='popover-mb-12'> <label className="kpi-label">Bank Address</label>
         <label className="kpi-label d-block">Address Line 1</label>
         <span className="kpi-val d-block">{moreBankInfo?.bankAddress1}</span></div>
         {moreBankInfo?.bankAddress2!==null &&<>
