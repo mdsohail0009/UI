@@ -400,7 +400,7 @@ class PaymentDetails extends Component {
           {this.state.currency === "USD" && moreBankInfo?.transferType!=="internationalIBAN"&&
           <>
            <div className='popover-mb-12'>
-          <label className="basicinfo">Bank Address</label>
+          <label className="kpi-label">Bank Address</label>
           <label className="kpi-label d-block">Address Line 1</label> 
           <span className="kpi-val d-block">{moreBankInfo?.bankAddress1}</span></div>
           {moreBankInfo?.bankAddress2!==null &&<>
