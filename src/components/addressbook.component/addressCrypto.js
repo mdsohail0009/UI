@@ -287,7 +287,7 @@ if (res.ok){
                 },
               ]} >
               <Select
-                className="cust-input"
+                className={`cust-input ${(this.props?.sendReceive?.withdrawFiatObj?.walletCode ||this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin || this.state.cryptoData.adressstate ==="Approved") ? "input-disabled-style" :""}`}
                 onChange={this.handleTokenChange}
                 placeholder="Select Token"
                 optionFilterProp="children"
@@ -313,7 +313,7 @@ if (res.ok){
               ]}
             >
               <Select
-                className="cust-input"
+                className={`cust-input ${this.state.cryptoData.adressstate ==="Approved"  ? "input-disabled-style" :"" }`}
                 maxLength={100}
                 placeholder="Select Network"
                 optionFilterProp="children"
@@ -359,7 +359,7 @@ if (res.ok){
               ]}
             >
               <Select
-                className="cust-input"
+                className={`cust-input ${this.state.cryptoData.adressstate ==="Approved"  ? "input-disabled-style" :"" }`}
                 maxLength={100}
                 placeholder="Select Wallet Source"
                 optionFilterProp="children"

@@ -1029,6 +1029,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .value-description{font-weight: 400;color:var(--marketTitle);font-size: 14px;}
 .icon.xl.video{background-position: -241px -241px;}
 .kpi-val.adview-name{width: 230px;}
+.input-disabled-style .ant-select-selection-item{color: var(--textSecondary);}
 /*@media start*/
 @media (min-width: 768px){
     .listitems-design{width: 340px;}

@@ -23,7 +23,7 @@ class SecurityLogin extends Component {
                     <Title level={4} className="security-text">Due to security reasons please logout and relogin</Title>
                     <div className="text-center">
                         <Button
-                            className="primary-btn pop-cancel"
+                            className="pop-btn"
                             style={{ width: '250px' }}
                             onClick={() => { userManager.signoutRedirect(); }}>
 
