@@ -422,7 +422,7 @@ if (res.ok){
 						<div
 							className="cust-agreecheck d-flex align-center"
 							>
-              I'm the owner of this wallet address check box <span className="cust-start-style">*</span>
+              I'm the owner of this wallet address <span className="cust-start-style">*</span>
 						</div>
 					</div>
 								
