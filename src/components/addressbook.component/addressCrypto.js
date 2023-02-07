@@ -1,5 +1,5 @@
 import React, { Component} from "react";
-import { Form, Typography, Input, Button, Select, Image, Alert,Row,Col,Popover,Tooltip } from "antd";
+import { Form, Typography, Input, Button, Select, Image, Alert,Row,Col,Tooltip } from "antd";
 import alertIcon from '../../assets/images/pending.png';
 import { setAddressStep } from "../../reducers/addressBookReducer";
 import { setAddress, setStep, setWithdrawcrypto,rejectWithdrawfiat, setSendCrypto, hideSendCrypto } from "../../reducers/sendreceiveReducer";
@@ -10,7 +10,6 @@ import WAValidator from "multicoin-address-validator";
 import { validateContentRule } from "../../utils/custom.validator";
 import Translate from "react-translate-component";
 import AddressCryptoDocument from './addressCryptoUpload';
-import apiCalls from "../../api/apiCalls";
 const { Text, Title, Paragraph } = Typography;
 const { Option } = Select;
 
@@ -38,6 +37,8 @@ class AddressCrypto extends Component {
       walletSource:null,
       walletSourse:null,
       check:false,
+      showDeclartionApproved:false,
+      approvedAddress:false,
 
     };
   }
@@ -174,7 +175,14 @@ if (res.ok){
     if (response.ok) {
       this.setState({ ...this.state, isBtnLoading: false })
       if (window?.location?.pathname.includes('addressbook')&& this.props.type === "manual") {
-        this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
+        if(!(this.state.cryptoData.adressstate ==="Approved" && this.state.cryptoData.isProofofOwnership===false)){
+          this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true,showDeclartionApproved: false,approvedAddress:false });
+        }else if(obj.documents===undefined &&this.state.cryptoData.adressstate ==="Approved" && this.state.cryptoData.isProofofOwnership===false){
+          this.setState({ ...this.state, errorMessage: null, isBtnLoading: false,showDeclartion:false, showDeclartionApproved: false,approvedAddress:true });
+        }
+        else{
+          this.setState({ ...this.state, errorMessage: null, isBtnLoading: false,showDeclartion:false, showDeclartionApproved: true,approvedAddress:false });
+        }
         this.props.headingUpdate(true)
       }
       else {
@@ -225,7 +233,7 @@ if (res.ok){
   };
 
   render() {
-    const { isLoading, errorMessage, showDeclartion, cryptoData, coinsList, networksList } = this.state;
+    const { isLoading, errorMessage, showDeclartion, cryptoData, coinsList, networksList,showDeclartionApproved ,approvedAddress} = this.state;
     if (isLoading) {
       return <Loader />
     }
@@ -236,6 +244,19 @@ if (res.ok){
                 <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                 Please review and sign the document in your email to whitelist your address.
                 Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
+      </div>
+      </div>
+    }else if(showDeclartionApproved){
+      return<div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
+          <Image  preview={false} src={alertIcon} className="confirm-icon"/>
+          <Title level={2} className="success-title">Document uploaded successfully</Title>
+      </div>
+      </div>
+    }
+    else if(approvedAddress){
+      return<div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
+          <Image  preview={false} src={alertIcon} className="confirm-icon"/>
+          <Title level={2} className="success-title">Addressed Saved Successfuly</Title>
       </div>
       </div>
     }
@@ -426,7 +447,7 @@ if (res.ok){
 						<div
 							className="cust-agreecheck d-flex align-center"
 							>
-              I'm the owner of this wallet address check box <span className="cust-start-style">*</span>
+              I'm the owner of this wallet address <span className="cust-start-style">*</span>
 						</div>
 					</div>
 								
