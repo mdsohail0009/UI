@@ -1,6 +1,7 @@
 import React, { Component} from "react";
 import { Form, Typography, Input, Button, Select, Image, Alert,Row,Col,Tooltip } from "antd";
 import alertIcon from '../../assets/images/pending.png';
+import success from '../../assets/images/success.svg';
 import { setAddressStep } from "../../reducers/addressBookReducer";
 import { setAddress, setStep, setWithdrawcrypto,rejectWithdrawfiat, setSendCrypto, hideSendCrypto } from "../../reducers/sendreceiveReducer";
 import { connect } from "react-redux";
@@ -248,15 +249,15 @@ if (res.ok){
       </div>
     }else if(showDeclartionApproved){
       return<div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
-          <Image  preview={false} src={alertIcon} className="confirm-icon"/>
+         <Image src={success} className="confirm-icon" alt={"success"} />
           <Title level={2} className="success-title">Document uploaded successfully</Title>
       </div>
       </div>
     }
     else if(approvedAddress){
       return<div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
-          <Image  preview={false} src={alertIcon} className="confirm-icon"/>
-          <Title level={2} className="success-title">Addressed Saved Successfuly</Title>
+            <Image src={success} className="confirm-icon" alt={"success"} />
+          <Title level={2} className="success-title">Address Saved Successfuly</Title>
       </div>
       </div>
     }
