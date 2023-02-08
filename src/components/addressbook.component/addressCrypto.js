@@ -9,6 +9,7 @@ import Loader from '../../Shared/loader';
 import WAValidator from "multicoin-address-validator";
 import { validateContentRule } from "../../utils/custom.validator";
 import Translate from "react-translate-component";
+import apicalls from "../../api/apiCalls";
 const { Text, Title, Paragraph } = Typography;
 const { Option } = Select;
 
@@ -38,36 +39,24 @@ class AddressCrypto extends Component {
   }
   getCryptoData = async () => {
     let id = this.props?.addressBookReducer?.selectedRowData?.id || "00000000-0000-0000-0000-000000000000";
-    this.setState({ ...this.state, isLoading: true })
+    this.setState({ ...this.state, isLoading: true,errorMessage:null })
     let response = await getCryptoData(id);
     if (response.ok) {
-      this.setState({ ...this.state, cryptoData: response.data, isLoading: false })
+      this.setState({ ...this.state, cryptoData: response.data, isLoading: false,errorMessage:null })
     }
     else {
-      this.setState({ ...this.state, isLoading: false, errorMessage: this.isErrorDispaly(response) })
+      this.setState({ ...this.state, isLoading: false, errorMessage: apicalls.isErrorDispaly(response) })
     }
     this.form?.current?.setFieldsValue(response.data);
     this.coinList();
   }
 
-  isErrorDispaly = (objValue) => {
-    if (objValue.data && typeof objValue.data === "string") {
-      return objValue.data;
-    } else if (
-      objValue.originalError &&
-      typeof objValue.originalError.message === "string"
-    ) {
-      return objValue.originalError.message;
-    } else {
-      return "Something went wrong please try again!";
-    }
-  };
   coinList = async () => {
     let response = await getCoinList("All")
     if (response.ok) {
-      this.setState({ ...this.state, coinsList: response.data, isLoading: false })
+      this.setState({ ...this.state, coinsList: response.data, isLoading: false,errorMessage:null })
     } else {
-      this.setState({ ...this.state, coinsList: [], isLoading: false })
+      this.setState({ ...this.state, coinsList: [], isLoading: false,errorMessage: apicalls.isErrorDispaly(response) })
     }
     if(this.state.cryptoData.network){
       let val=this.state.cryptoData.token
@@ -145,7 +134,7 @@ class AddressCrypto extends Component {
     else {
       this.setState({ ...this.state, errorMessage: response.data, loading: false });
         this.useDivRef.current.scrollIntoView();
-      this.setState({ ...this.state, isBtnLoading: false,  errorMessage: this.isErrorDispaly(response), });
+      this.setState({ ...this.state, isBtnLoading: false,  errorMessage: apicalls.isErrorDispaly(response), });
     }
   }
   validateAddressType = (_, value) => {

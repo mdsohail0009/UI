@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Typography, Button, Modal, Tooltip } from "antd";
+import { Row, Col, Typography, Button, Modal, Tooltip,Alert } from "antd";
 import Loader from "../../Shared/loader";
 import { getFileURL, getViewData, } from "./api";
 import { connect } from "react-redux";
 import FilePreviewer from "react-file-previewer";
 import { bytesToSize } from "../../utils/service";
 import { addressTabUpdate, setAddressStep } from "../../reducers/addressBookReducer";
+import apicalls from "../../api/apiCalls";
 const { Title, Text } = Typography;
 const EllipsisMiddle = ({ suffixCount, children }) => {
 	const start = children?.slice(0, children.length - suffixCount).trim();
@@ -25,6 +26,7 @@ const AddressFiatView = (props) => {
 	const [previewPath, setPreviewPath] = useState(null);
 	const [previewModal, setPreviewModal] = useState(false);
 	const [bankDetailes, setBankDetailes] = useState([]);
+    const [errorMsg,setErrorMsg]=useState(null)
 
 
 	useEffect(() => {
@@ -36,6 +38,8 @@ const AddressFiatView = (props) => {
 		if (response.ok) {	
 			setFiatAddress(response.data);
 			setBankDetailes(response.data.payeeAccountModels)
+		}else{
+			setErrorMsg(apicalls.isErrorDispaly(response))
 		}
 		setIsLoading(false)
 	};
@@ -50,6 +54,8 @@ const AddressFiatView = (props) => {
 		if (res.ok) {
 			setPreviewModal(true);
 			setPreviewPath(res.data);
+		}else{
+			setErrorMsg(apicalls.isErrorDispaly(res))
 		}
 	};
 	const filePreviewPath = () => {
@@ -101,6 +107,14 @@ const AddressFiatView = (props) => {
 	);
 	return (
 		<>
+		  {errorMsg !== null && (
+              <Alert
+                type="error"
+                description={errorMsg}
+                onClose={() => setErrorMsg(null)}
+                showIcon
+              />
+            )}
 			<div className="main-container cust-cypto-view">
 			
 				<div className="box bg-box">

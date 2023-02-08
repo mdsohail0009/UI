@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Col, Form, Input, Typography, Button, Spin } from 'antd';
+import { Row, Col, Form, Input, Typography, Button, Spin,Alert } from 'antd';
 import apicalls from "../../../api/apiCalls";
 import { validateContentRule } from "../../../utils/custom.validator";
 import Translate from "react-translate-component";
@@ -21,7 +21,8 @@ class PayeeBankDetails extends Component {
         isShowValid: false,
         isValidateLoading: false,
         isValidCheck: false,
-        ibannumber: null
+        ibannumber: null,
+        errorMessage:null
     }
     componentDidMount(){
         if (this?.props?.selectedAddress?.id && this.props?.createPayeeObj) {
@@ -33,26 +34,26 @@ class PayeeBankDetails extends Component {
     handleIban = async (ibannumber,isNext) => {
         this.props.getIbandata(null);
         if (ibannumber?.length >= 10 && isNext) {
-            this.setState({ ...this.state, iBanDetals: null, IbanLoader: true, isValidIban: true, enteredIbanData: ibannumber,  isShowValid: false,isValidateLoading:true})
+            this.setState({ ...this.state, iBanDetals: null, IbanLoader: true, isValidIban: true, enteredIbanData: ibannumber,  isShowValid: false,isValidateLoading:true,errorMessage:null})
             const ibanget = await apicalls.getIBANData(ibannumber)
             if (ibanget.ok) {
                 if (ibanget.data && (ibanget.data?.routingNumber || ibanget.data?.bankName)) {
                     const bankdetails = { bankName: ibanget.data.bankName, bic: ibanget.data.routingNumber, bankBranch: ibanget.data.branch, country: ibanget.data.country, state: ibanget.data.state, city: ibanget.data.city, postalCode: ibanget.data.zipCode, line1: ibanget.data.bankAddress }
-                    this.setState({ ...this.state, iBanDetals: bankdetails, enteredIbanData: ibannumber, IbanLoader: false, isValidIban: true, isShowValid: false, isValidateLoading: false, isValidCheck: true })
+                    this.setState({ ...this.state, iBanDetals: bankdetails, enteredIbanData: ibannumber, IbanLoader: false, isValidIban: true, isShowValid: false, isValidateLoading: false, isValidCheck: true,errorMessage:null })
                     this.props.getIbandata(bankdetails);
                     this.props.form.current?.setFieldsValue({ iban: ibannumber })
                 } else {
-                    this.setState({ ...this.state, IbanLoader: false, isValidIban: false, isValidateLoading: false })
+                    this.setState({ ...this.state, IbanLoader: false, isValidIban: false, isValidateLoading: false,errorMessage:null })
                     const bankData = {bankName: "", routingNumber: ""}
                     this.props.getIbandata(bankData);
                 }
             } else {
-                this.setState({ ...this.state, IbanLoader: false, isValidIban: false, isValidateLoading: false })
+                this.setState({ ...this.state, IbanLoader: false, isValidIban: false, isValidateLoading: false,errorMessage:apicalls.isErrorDispaly(ibanget) })
                 this.props.getIbandata(null);
             }
         } else {
             this.props.form.current?.setFieldsValue({ iban: ibannumber })
-            this.setState({ ...this.state, enteredIbanData: ibannumber, isShowValid: false, IbanLoader: false, isValidIban: false, isValidateLoading: false })
+            this.setState({ ...this.state, enteredIbanData: ibannumber, isShowValid: false, IbanLoader: false, isValidIban: false, isValidateLoading: false,errorMessage:null })
         }
     }
 
@@ -479,6 +480,7 @@ class PayeeBankDetails extends Component {
    
         
         return <>
+        {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
             <Row className="validateiban-content">
                 {this.renderAddress(domesticType === "internationalIBAN" ? "sepa" : transferType)}
             </Row>

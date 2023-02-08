@@ -64,7 +64,7 @@ class OthersBusiness extends Component {
                 this.setState({ ...this.state, isLoading: false, isEdit: edit, isSelectedId:  response.data?.id });
             });
         } else {
-            this.setState({ ...this.state, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, details: {} });
+            this.setState({ ...this.state, errorMessage: apiCalls.isErrorDispaly(response), isLoading: false, details: {} });
         }
     }
     handleIbanChange = async ({ target: { value,isNext } }) => {
@@ -83,7 +83,7 @@ class OthersBusiness extends Component {
                     }
                 }
             } else {
-                this.setState({ ...this.state, enteredIbanData: value, ibanDetailsLoading: false,iBanValid:false, errorMessage: response.data || response.data?.message || response.originalError?.message, isValidateLoading: false, ibanDetails: {}});
+                this.setState({ ...this.state, enteredIbanData: value, ibanDetailsLoading: false,iBanValid:false, errorMessage: apiCalls.isErrorDispaly(response), isValidateLoading: false, ibanDetails: {}});
             }
         }
         else{
@@ -176,7 +176,7 @@ class OthersBusiness extends Component {
                     this.props.onContinue(confirmRes.data);
                     this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
                 } else {
-                    this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false, isBtnLoading: false });
+                    this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: apiCalls.isErrorDispaly(confirmRes), isLoading: false, isBtnLoading: false });
                   window.scrollTo(0, 0);
                 }
             } else {
@@ -187,7 +187,7 @@ class OthersBusiness extends Component {
             }
 
         } else {
-            this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, isBtnLoading: false });
+            this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: apiCalls.isErrorDispaly(response), isLoading: false, isBtnLoading: false });
         }
 
     }

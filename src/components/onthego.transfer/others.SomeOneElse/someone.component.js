@@ -32,8 +32,10 @@ const [isSelectedId,setIsSelectedId] = useState(null);
     }, []);//eslint-disable-line react-hooks/exhaustive-deps
     const getpayeeCreate = async () => {
         setMailLoader(true);
+        setErrorMessage(null)
         const createPayeeData = await createPayee(props.selectedAddress?.id || "", addressOptions.addressType);
         if (createPayeeData.ok) {
+            setErrorMessage(null)
             let edit = false;
             setCreatePayeeObj(createPayeeData.data);
             if (props.selectedAddress?.id) {
@@ -49,9 +51,11 @@ const [isSelectedId,setIsSelectedId] = useState(null);
 
         } else {
             setMailLoader(false)
+            setErrorMessage(apiCalls.isErrorDispaly(createPayeeData))
         }
     }
     const onSubmit = async (values) => {
+        setErrorMessage(null)
         if (Object.hasOwn(values?.payeeAccountModels, 'iban')) {
             setErrorMessage(null);
             if ((!bankdetails || Object.keys(bankdetails).length === 0)) {
@@ -78,40 +82,32 @@ const [isSelectedId,setIsSelectedId] = useState(null);
        
         let payeesave = await savePayee(obj)
         if (payeesave.ok) {
+            setErrorMessage(null)
             if (props.type !== "manual") {
                 const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer, documents: documents?.transfer })
                 if (confirmRes.ok) {
                     setBtnLoading(false);
                     props.onContinue(confirmRes.data);
+                    setErrorMessage(null)
                 } else {
                     setBtnLoading(false);
-                    setErrorMessage(isErrorDispaly(confirmRes));
+                    setErrorMessage(apiCalls.isErrorDispaly(confirmRes));
                     useDivRef.current.scrollIntoView();
                 }
             } else {
                 props.headingUpdate(true);
                 setShowDeclartion(true);
                 props.isHideTabs(false)
+                setErrorMessage(null)
             }
         } else {
             setBtnLoading(false);
-            setErrorMessage(isErrorDispaly(payeesave));
+            setErrorMessage(apiCalls.isErrorDispaly(payeesave));
             useDivRef.current.scrollIntoView();
         }
     
     }
-    const isErrorDispaly = (objValue) => {
-        if (objValue.data && typeof objValue.data === "string") {
-            return objValue.data;
-        } else if (
-            objValue.originalError &&
-            typeof objValue.originalError.message === "string"
-        ) {
-            return objValue.originalError.message;
-        } else {
-            return "Something went wrong please try again!";
-        }
-    };
+    
     const getIbandata = (data) => {
         setErrorMessage(null);
         if (data && !data?.bankName) {
@@ -154,38 +150,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         </Col>
                     </Row>
                 </>}
-                {/* <Row gutter={[16, 4]} className="send-drawerbtn tabs-innertabs">
-
-                  <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
-                      <Form.Item className="text-center form-marginB">
-                        <Button
-                          htmlType="submit"
-                          size="large"
-                          className="newtransfer-card"
-                          // style={{ width: '100%' }}
-                        //   loading={this.state.newtransferLoader}
-                        //   disabled={this.state.addressLoader}
-                        >
-                          New Transfer
-                        </Button>
-                      </Form.Item>
-                    </Col>
-                     <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
-                      <Form.Item className="text-center form-marginB">
-                        <Button
-                          htmlType="button"
-                          size="large"
-                          className="newtransfer-card"
-                          // style={{ width: '100% ' }}
-                        //   loading={this.state.addressLoader}
-                        //   disabled={this.state.newtransferLoader}
-                        //   onClick={this.goToAddressBook}
-                        >
-                          Address book
-                        </Button>
-                      </Form.Item>
-                    </Col>
-                  </Row> */}
+              
                 {props.currency == 'EUR' && <h2 className="adbook-head">SEPA Transfer</h2>}
                 {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
             <Form

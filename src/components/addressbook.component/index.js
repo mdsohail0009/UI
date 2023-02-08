@@ -26,6 +26,7 @@ import { getFeatureId } from "../shared/permissions/permissionService";
 import { setCurrentAction } from '../../reducers/actionsReducer'
 import AddressBookV3 from "../addressbook.v3";
 import AddressCrypto from "./addressCrypto"
+import apicalls from "../../api/apiCalls";
 const { Paragraph, Text, Title } = Typography;
 
 class AddressBook extends Component {
@@ -299,6 +300,8 @@ class AddressBook extends Component {
 		if (response.ok) {
 			window.open(response.data, "_blank");
 			this.setState({ ...this.state, isDownloading: false, selectedDeclaration: null });
+		}else{
+			this.setState({...this.state,errorWorning:apicalls.isErrorDispaly(response)})
 		}
 	}
 
@@ -397,7 +400,7 @@ class AddressBook extends Component {
 				selection: [],
 				isCheck: false,
 				btnDisabled: false,
-				errorWorning: response.data,
+				errorWorning: apicalls.isErrorDispaly(response),
 				obj: {
 					id: [],
 					tableName: "Common.PayeeAccounts",
@@ -663,11 +666,12 @@ class AddressBook extends Component {
 	};
 
 	render() {
-		const { cryptoFiat, gridUrlCrypto, gridUrlFiat, btnDisabled } =
+		const { cryptoFiat, gridUrlCrypto, gridUrlFiat, btnDisabled ,errorMessage} =
 			this.state;
 
 		return (
 			<>
+
 			<div className="main-container grid-demo">
 			<div className="backbtn-arrowmb"><Link  to="/cockpit"><span className="icon md leftarrow c-pointer backarrow-mr"></span><span className="back-btnarrow c-pointer">Back</span></Link></div>
 			<div className="security-align adbs-mb">

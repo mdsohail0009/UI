@@ -19,6 +19,7 @@ import Mome from 'moment'
 import { success, warning } from '../../utils/messages';
 import { LoadingOutlined } from "@ant-design/icons";
 import { getScreenName } from '../../reducers/feturesReducer';
+import apicalls from '../../api/apiCalls';
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
 const { Dragger } = Upload;
@@ -66,7 +67,7 @@ class CaseView extends Component {
             this.loadDocReplies(response.data?.details[0]?.id)
             this.setState({ ...this.state, docDetails: response.data, loading: false });
         } else {
-            this.setState({ ...this.state, loading: false, error: response.data });
+            this.setState({ ...this.state, loading: false, error: apicalls.isErrorDispaly(response) });
         }
     }
     loadDocReplies = async (id) => {
@@ -84,27 +85,40 @@ class CaseView extends Component {
                 }
             });
         } else {
-            this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: false, data: [], error: response.data } } });
+            this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: false, data: [], error: apicalls.isErrorDispaly(response) } } });
         }
     }
     docPreview = async (file) => {
+        this.setState({...this.state,error:null})
         let res = await getFileURL({ url: file.path });
         if (res.ok) {
             this.state.PreviewFilePath = file.path;
             this.setState({ ...this.state, previewModal: true, previewPath: res.data });
+        }else{
+            this.setState({...this.state,error:apicalls.isErrorDispaly(res)})
         }
     }
     DownloadUpdatedFile = async () => {
+        this.setState({...this.state,error:null})
         let res = await getFileURL({ url: this.state.PreviewFilePath });
         if (res.ok) {
-            this.setState({ ...this.state, previewModal: true, previewPath: res.data });
+            this.setState({ ...this.state, previewModal: true, previewPath: res.data,error:null });
             window.open(res.data, "_blank")
+        }else{
+            this.setState({...this.state,error:apicalls.isErrorDispaly(res)})
+
         }
     }
     fileDownload = async () => {
+        this.setState({...this.state,error:null})
         let res = await getFileURL({ url: this.state.previewPath });
         if (res.ok) {
             this.DownloadUpdatedFile()
+            this.setState({...this.state,error:null})
+
+        }else{
+            this.setState({...this.state,error:apicalls.isErrorDispaly(res)})
+
         }
     }
     docPreviewClose = () => {
@@ -121,7 +135,8 @@ class CaseView extends Component {
             success('Document has been approved');
             this.loadDocReplies(doc.id);
         } else {
-            warning(response.data);
+            this.setState({...this.state,error:apicalls.isErrorDispaly(response)})
+
         }
     }
     updateDocRepliesStatus = (doc, Status) => {
@@ -167,7 +182,8 @@ class CaseView extends Component {
             this.loadDocReplies(doc.id)
             this.setState({errorWarning:null })
         } else {
-            warning(response.data);
+            this.setState({...this.state,error:apicalls.isErrorDispaly(response)})
+
         }
         let objs = [...this.state.docReplyObjs];
         objs = objs.filter(obj => obj.docunetDetailId !== doc.id);
@@ -193,7 +209,8 @@ class CaseView extends Component {
             objs = objs.filter(item1 => item1.docunetDetailId !== doc.id);
             this.setState({ ...this.state, docReplyObjs: objs });
         } else {
-            warning(response.data);
+            this.setState({...this.state,error:apicalls.isErrorDispaly(response)})
+
         }
     }
     isDocExist(lstObj, id) {

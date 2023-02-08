@@ -69,6 +69,8 @@ class CryptoWithDrawWallet extends Component {
                     minVerifications = minVerifications + 1;
                 }
             }
+        }else{
+            this.setState({...this.state,error:apiCalls.isErrorDispaly(verfResponse)})
         }
         this.setState({ ...this.state, isVerificationLoading: false });
         return minVerifications >= 2;
@@ -87,7 +89,7 @@ class CryptoWithDrawWallet extends Component {
             this.props.dispatch(setSubTitle(apicalls.convertLocalLang('wallet_address')));
         }
         else {
-            this.setState({ ...this.state, isVerificationMethodsChecked: isVerified });
+            this.setState({ ...this.state, isVerificationMethodsChecked: isVerified ,error:apiCalls.isErrorDispaly(isVerified)});
         }
         getFeaturePermissionsByKeyName(`send_crypto`)
         this.trackevent();
@@ -236,7 +238,7 @@ class CryptoWithDrawWallet extends Component {
                     ...this.state, visible: true, errorWorning: null, errorMsg: null, [loader]: false, showFuntransfer: true
                 });
             } else {
-                this.setState({ ...this.state, loading: false, [loader]: false, errorMsg: this.isErrorDispaly(res) })
+                this.setState({ ...this.state, loading: false, [loader]: false, errorMsg: apiCalls.isErrorDispaly(res) })
                 this.myRef.current.scrollIntoView();
             }
     
@@ -318,21 +320,12 @@ class CryptoWithDrawWallet extends Component {
             this.props.dispatch(setWithdrawcrypto(obj))
             this.props.changeStep('withdraw_crpto_summary');
         } else {
-            this.setState({ ...this.state, loading: false, errorMsg: this.isErrorDispaly(response) });
+            this.setState({ ...this.state, loading: false, errorMsg: apiCalls.isErrorDispaly(response) });
             this.myRef.current.scrollIntoView()
         }
 
     }
-    isErrorDispaly = (objValue) => {
-        if (objValue.data && typeof objValue.data === "string") {
-            return objValue.data;
-        } else if (objValue.originalError && typeof objValue.originalError.message === "string"
-        ) {
-            return objValue.originalError.message;
-        } else {
-            return "Something went wrong please try again!";
-        }
-    };
+    
     renderModalContent = () => {
         if (!this.props?.sendReceive?.cryptoWithdraw?.selectedWallet) { return null }
         const { walletAddress, CryptoAmnt, confirmationStep } = this.state;

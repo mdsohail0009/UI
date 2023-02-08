@@ -3,7 +3,7 @@ import {
   Drawer,
   Typography,
   Button,
-  Row, Col, Select, Form,Input,Tooltip} from "antd";
+  Row, Col, Select, Form,Input,Tooltip,Alert} from "antd";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
@@ -17,6 +17,7 @@ import NumberFormat from "react-number-format";
 import moment from "moment/moment";
 import TransactionSlips from "./transaction.slips";
 import TransactionTimeSpan from "./transactionTimeSpan";
+import apicalls from "../../api/apiCalls";
 const { Option } = Select;
 class TransactionsHistory extends Component {
   formRef = React.createRef();
@@ -59,6 +60,7 @@ class TransactionsHistory extends Component {
       downloadError:"",
       viewData:{},
       viewLoader:false,
+      errorMessage:null
     };
     this.props.dispatch(setSelectedFeatureMenu(this.props.transactionsPermissions?.featureId || this.props.customer?.id));
     this.gridRef = React.createRef();
@@ -170,15 +172,19 @@ class TransactionsHistory extends Component {
 
   ]
   TransactionSearch = async () => {
+    this.setState({...this.state,errorMessage:null})
     let response = await getTransactionSearch();
     if (response.ok) {
       this.setState({
         doctypeData: response.data.docTypes,
-        statusData:response.data.status
+        statusData:response.data.status,errorMessage:null
       });
+    }else{
+      this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
     }
   };
   transactionCurrency = async () => {
+    this.setState({...this.state,errorMessage:null})
     let response = await getTransactionCurrency();
     if (response.ok) {
       let obj = { code: "All" }
@@ -186,9 +192,12 @@ class TransactionsHistory extends Component {
       walletList.push(obj);
       walletList = [...walletList, ...response.data]
       this.setState({
-        currenyData: walletList || response.data,
+        currenyData: walletList || response.data,errorMessage:null
 
       });
+    }else{
+      this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
+
     }
   };
   handleTimeSpan = (val, id) => {
@@ -294,29 +303,20 @@ class TransactionsHistory extends Component {
   }
 transactionModal=async(data)=>{
   this.setState({ ...this.state, showModal:true,modalData:data,viewLoader:true ,
-    isLoading:false  })
+    isLoading:false,errorMessage:null  })
     let response = await transactionsView(data.id,data.docType);
     if(response.ok){
       this.setState({ ...this.state, showModal:true,viewData:response.data ,
-        isLoading:false,viewLoader:false  })
+        isLoading:false,viewLoader:false,errorMessage:null  })
+    }else{
+      this.setState({...this.state,errorMessage:apicalls.isErrorDispaly(response)})
     }
   }
 
 handleCancel=()=>{
   this.setState({ ...this.state, showModal:false,downloadError:"" })
 }
-isErrorDispaly = (objValue) => {
-  if (objValue.data && typeof objValue.data === "string") {
-    return objValue.data;
-  } else if (
-    objValue.originalError &&
-    typeof objValue.originalError.message === "string"
-  ) {
-    return objValue.originalError.message;
-  } else {
-    return "Something went wrong please try again!";
-  }
-};
+
   render() {
     const { Title } = Typography;
     const {  doctypeData, currenyData, gridUrl, searchObj,showModal,modalData,timeListSpan,statusData,isLoading,viewData } = this.state;
@@ -339,6 +339,8 @@ isErrorDispaly = (objValue) => {
     return (
       <>
       <div ref={this.useDivRef}></div>
+      {this.state.errorMessage && <Alert type="error" showIcon closable={false} description={this.state.errorMessage} />}
+
         <Drawer
           title={[<div className="side-drawer-header">
             <Translate content="transactions_history" component={Title} className="grid-title" />

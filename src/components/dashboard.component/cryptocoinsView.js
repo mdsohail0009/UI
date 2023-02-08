@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { List, Button,Input, Typography, Empty,Dropdown, Menu, Space } from 'antd';
+import { List, Button,Input, Typography, Empty,Dropdown, Menu, Space,Alert } from 'antd';
 import Translate from 'react-translate-component';
 import BuySell from '../buy.component';
 import SendReceive from '../send.component'
@@ -32,20 +32,24 @@ class cryptocoinsView extends Component {
         transactionData: this.props.dashboard.cryptoPortFolios.data,
         fullViewData:[],
         marketCaps:[],
-        dashBoardTransactions:this.props.dashboard.cryptoPortFolios.data
+        dashBoardTransactions:this.props.dashboard.cryptoPortFolios.data,
+        errorMessage:null
     }
     componentDidMount() {
         this.loadCryptos();
         this.loadCoinDetailData();
     }
     loadCoinDetailData = async () => {
-      this.setState({ ...this.state, loading: true})
+      this.setState({ ...this.state, loading: true,errorMessage:null})
       this.props.dispatch(fetchMarketCoinData(false))
       const response = await getcoinDetails(this.props.match.params?.coinName);
       if (response.ok) {
-          this.setState({ ...this.state, coinData: response.data },
+          this.setState({ ...this.state, coinData: response.data,errorMessage:null },
           )
-      }
+      }else{
+        this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
+
+    }
       this.setState({ ...this.state, loading: false})
   }
     loadCryptos = () => {
@@ -109,6 +113,7 @@ class cryptocoinsView extends Component {
     }}
   
     showSendReceiveDrawer = async(e, value) => {
+      this.setState({...this.state,errorMessage:null})
       let selectedObj = { ...value };
       selectedObj.coin = selectedObj.coin?.toUpperCase();
       this.props.dispatch(fetchWithDrawWallets({ customerId: this.props?.userProfile?.id }));
@@ -154,7 +159,11 @@ class cryptocoinsView extends Component {
              const response = await createCryptoDeposit({ customerId: this.props.userProfile?.id, walletCode: coin, network: selectedObj?.netWork });
              if (response.ok) {
                 this.props.dispatch(setWalletAddress(response.data));
-             }
+                this.setState({...this.state,errorMessage:null})
+             }else{
+              this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
+  
+          }
 
           this.setState({
               ...this.state,
@@ -228,8 +237,15 @@ class cryptocoinsView extends Component {
         const { Text,Title } = Typography;
         const { cryptoPortFolios } = this.props.dashboard
         const { Search } = Input;
+       
         return (
           <div className="main-container" >
+             {this.state.errorMessage != null && <Alert
+          description={this.state.errorMessage}
+          type="error"
+          showIcon
+          closable={false}
+      />}
             {cryptoPortFolios?.loading ? (
                <Loader />
         ) : (

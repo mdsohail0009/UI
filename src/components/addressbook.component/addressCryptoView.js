@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Typography, Button, Modal, Tooltip } from "antd";
+import { Row, Col, Typography, Button, Modal, Tooltip,Alert } from "antd";
 import Loader from "../../Shared/loader";
 import { getFileURL, getCryptoData } from "./api";
 import { connect } from "react-redux";
 import FilePreviewer from "react-file-previewer";
 import { bytesToSize } from "../../utils/service";
 import { addressTabUpdate} from "../../reducers/addressBookReducer";
+import apicalls from "../../api/apiCalls";
 const { Title, Text } = Typography;
 const EllipsisMiddle = ({ suffixCount, children }) => {
 	const start = children?.slice(0, children.length - suffixCount).trim();
@@ -24,7 +25,7 @@ const AddressCryptoView = (props) => {
 	const [cryptoAddress, setCryptoAddress] = useState({});
 	const [previewPath, setPreviewPath] = useState(null);
 	const [previewModal, setPreviewModal] = useState(false);
-
+    const [errorMsg,setErrorMsg]=useState(null)
 
 	useEffect(() => {
 		loadDataAddress();
@@ -34,6 +35,8 @@ const AddressCryptoView = (props) => {
 		let response = await getCryptoData(props?.match?.params?.id);
 		if (response.ok) {
 			setCryptoAddress(response.data);
+		}else{
+			setErrorMsg(apicalls.isErrorDispaly(response))
 		}
 		setIsLoading(false)
 	};
@@ -47,6 +50,9 @@ const AddressCryptoView = (props) => {
 		if (res.ok) {
 			setPreviewModal(true);
 			setPreviewPath(res.data);
+		}else{
+			setErrorMsg(apicalls.isErrorDispaly(res))
+
 		}
 	};
 	const filePreviewPath = () => {
@@ -100,6 +106,14 @@ const AddressCryptoView = (props) => {
 
 	return (
 		<>
+		  {errorMsg !== null && (
+              <Alert
+                type="error"
+                description={errorMsg}
+                onClose={() => setErrorMsg(null)}
+                showIcon
+              />
+            )}
 			<div className="main-container cust-cypto-view">
 			
 				<div className="">

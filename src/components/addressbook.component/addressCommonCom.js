@@ -20,6 +20,7 @@ import { addressTabUpdate, fetchAddressCrypto, setAddressStep } from "../../redu
 import WAValidator from "multicoin-address-validator";
 import success from "../../assets/images/success.svg";
 import BankDetails from "./bank.details";
+import apicalls from "../../api/apiCalls";
 const { Text, Paragraph, Title } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
@@ -236,6 +237,8 @@ const AddressCommonCom = (props) => {
     let response = await getPayeeLu( withdraeTab, (type === true || type === false) ? type : true);
     if (response.ok) {
       setPayeeLu(response.data)
+    }else{
+      setErrorMsg(apicalls.isErrorDispaly(response))
     }
 
   }
@@ -266,6 +269,8 @@ const AddressCommonCom = (props) => {
       setFavouriteDetails(obj)
       obj.favouriteName = obj?.favouriteName === null ? "" : obj?.favouriteName;
       form.setFieldsValue(obj)
+    }else{
+      setErrorMsg(apicalls.isErrorDispaly(response))
     }
     getCountry()
   }
@@ -281,20 +286,10 @@ const AddressCommonCom = (props) => {
       setCountry(response.data);
       form.getFieldValue("country");
       let states = response.data?.filter((item) => item.name.toLowerCase());
+    }else{
+      setErrorMsg(apicalls.isErrorDispaly(response))
     }
   }
-  const isErrorDispaly = (objValue) => {
-    if (objValue.data && typeof objValue.data === "string") {
-      return objValue.data;
-    } else if (
-      objValue.originalError &&
-      typeof objValue.originalError.message === "string"
-    ) {
-      return objValue.originalError.message;
-    } else {
-      return "Something went wrong please try again!";
-    }
-  };
 
   const saveModalwithdrawal = (values) => {
     let obj = {
@@ -423,7 +418,7 @@ const AddressCommonCom = (props) => {
         props?.dispatch(setHeaderTab(""));
         props?.props?.history?.push("/userprofile");
       } else {
-        setErrorMsg(isErrorDispaly(response));
+        setErrorMsg(apicalls.isErrorDispaly(response));
         setIsLoading(false);
         setBtnDisabled(false);
         useDivRef.current.scrollIntoView();
@@ -459,6 +454,10 @@ const AddressCommonCom = (props) => {
         });
         handleCountryChange(response.data.country);
       }
+      else{
+        setErrorMsg(apicalls.isErrorDispaly(response))
+
+      }
     } else {
       bankDetailForm.setFieldsValue({
         country: ""
@@ -470,6 +469,8 @@ const AddressCommonCom = (props) => {
     let response = await getCoinList("All");
     if (response.ok) {
       setCoinDetails(response.data)
+    }else{
+      setErrorMsg(apicalls.isErrorDispaly(response))
     }
   }
   const handleCountryChange = (code, countryValues) => {
