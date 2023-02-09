@@ -31,6 +31,8 @@ import { readNotification as readNotifications } from "../notifications/api";
 import apiCalls from "../api/apiCalls";
 import { setNotificationCount } from "../reducers/dashboardReducer";
 import { getmemeberInfo } from "../reducers/configReduser";
+import HeaderPermissionMenu from '../components/shared/permissions/header.menu'
+import AppConfig from "../utils/app_config";
 import HeaderPermissionMenu from '../components/shared/permissions/header.menu';
 import { clearPermissions } from "../reducers/feturesReducer";
 import { handleHeaderProfileMenuClick } from "../utils/pubsub";
@@ -77,11 +79,11 @@ class Header extends Component {
     var url = "";
     if (status) {
       url =
-        process.env.REACT_APP_AUTHORITY +
+        AppConfig.REACT_APP_AUTHORITY +
         "/account/login?returnUrl=/manage/EnableAuthenticator";
     } else {
       url =
-        process.env.REACT_APP_AUTHORITY +
+        AppConfig.REACT_APP_AUTHORITY +
         "/account/login?returnUrl=/manage/Disable2faWarning";
     }
     window.open(url);

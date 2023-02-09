@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import List from "../../grid.component";
 import { Link } from 'react-router-dom';
 import Translate from 'react-translate-component';
+import AppConfig from '../../../utils/app_config';
 class Documents extends Component {
     constructor(props) {
         super(props);
@@ -28,7 +29,7 @@ class Documents extends Component {
                     onActionClick={(key) => this.onActionClick(key)}
                     pKey={"alerts"}
                     ref={this.gridRef}
-                    url={process.env.REACT_APP_GRID_API + "Alert/GetAlertK"}
+                    url={AppConfig.REACT_APP_GRID_API + "Alert/GetAlertK"}
                     columns={this.gridColumns}
                 />
             </div>

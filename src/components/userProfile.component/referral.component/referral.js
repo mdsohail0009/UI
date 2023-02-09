@@ -8,6 +8,8 @@ import {
 } from "react-share";
 import apicalls from "../../../api/apiCalls"
 import { connect } from "react-redux";
+import AppConfig from "../../../utils/app_config";
+
 import Loader from "../../../Shared/loader";
 const { Title, Paragraph, Text } = Typography;
 class Referral extends Component {

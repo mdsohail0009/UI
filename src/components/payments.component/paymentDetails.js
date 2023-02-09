@@ -6,6 +6,7 @@ import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 import Loader from '../../Shared/loader';
 import FilePreviewer from 'react-file-previewer';
+import AppConfig from '../../utils/app_config';
 const { Option } = Select;
 const { Title, Text, Paragraph } = Typography;
 const EllipsisMiddle = ({ suffixCount, children }) => {
@@ -43,7 +44,7 @@ class PaymentDetails extends Component {
       type: this.props.match.params.type,
       state: this.props.match.params.state,
       billPaymentData: null,
-      uploadUrl: process.env.REACT_APP_UPLOAD_API + "UploadFile",
+      uploadUrl: AppConfig.REACT_APP_UPLOAD_API + "UploadFile",
       isUploading: false,
       modal: false,
       selectData: null,

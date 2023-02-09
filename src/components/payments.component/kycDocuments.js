@@ -5,6 +5,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { setStep } from '../../reducers/paymentsReducer';
 import { validateContentRule } from '../../utils/custom.validator'
 import Translate from 'react-translate-component';
+import AppConfig from '../../utils/app_config';
 
 const { Dragger } = Upload;
 const { Paragraph, Text } = Typography;
@@ -29,7 +30,7 @@ const KycDocuments = (props) => {
                 >Please provide your identity proof</Paragraph>
                 <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                     className="upload mt-4"
-                    multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
+                    multiple={false} action={AppConfig.REACT_APP_UPLOAD_API + "UploadFile"}
                     showUploadList={false}
                     beforeUpload={(props) => { this.beforeUpload(props) }}
                 headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
@@ -57,7 +58,7 @@ const KycDocuments = (props) => {
                 >Please provide your address proof</Paragraph>
                 <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                     className="upload mt-4"
-                    multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
+                    multiple={false} action={AppConfig.REACT_APP_UPLOAD_API + "UploadFile"}
                     showUploadList={false}
                     beforeUpload={(props) => { this.beforeUpload(props) }}
                 headers={{Authorization : `Bearer ${this.props.user.access_token}`}}

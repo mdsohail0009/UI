@@ -11,6 +11,7 @@ import Moment from "react-moment";
 import apiCalls from "../../api/apiCalls";
 import { LoadingOutlined } from "@ant-design/icons";
 import Loader from "../../Shared/loader";
+import AppConfig from "../../utils/app_config";
 const { Title, Paragraph, Text } = Typography;
 const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA }) => {
   const [form] = Form.useForm();
@@ -81,11 +82,11 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
     var url = "";
     if (status) {
       url =
-        process.env.REACT_APP_AUTHORITY +
+        AppConfig.REACT_APP_AUTHORITY +
         "/account/login?returnUrl=/manage/EnableAuthenticator";
     } else {
       url =
-        process.env.REACT_APP_AUTHORITY +
+        AppConfig.REACT_APP_AUTHORITY +
         "/account/login?returnUrl=/manage/Disable2faWarning";
     }
     window.open(url, "_self");

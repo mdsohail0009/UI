@@ -4,6 +4,7 @@ import { updateDocRequest } from '../reducers/configReduser';
 import { fetchDashboardcalls, setNotificationCount } from '../reducers/dashboardReducer';
 import { clearPermissions } from '../reducers/feturesReducer';
 import { store } from '../store';
+import AppConfig from './app_config';
 function openNotification(message, title) {
     const args = {
         message: title,
@@ -16,7 +17,7 @@ function openNotification(message, title) {
 }
 async function start(id) {
     const connection = new SignalR.HubConnectionBuilder()
-        .withUrl(process.env.REACT_APP_NOTIFICATION_HUB + "NotificationHub?userid=" + id)
+        .withUrl(AppConfig.REACT_APP_NOTIFICATION_HUB + "NotificationHub?userid=" + id)
         .configureLogging(SignalR.LogLevel.Information)
         .build();
     try {

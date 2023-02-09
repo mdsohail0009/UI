@@ -4,12 +4,13 @@ import List from '../grid.component'
 import { withRouter } from 'react-router';
 import Translate from 'react-translate-component';
 import apiCalls from '../../api/apiCalls';
+import AppConfig from '../../utils/app_config';
 
 class Documents extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            gridUrl: process.env.REACT_APP_GRID_API + "Documents/Accounts",
+            gridUrl: AppConfig.REACT_APP_GRID_API + "Documents/Accounts",
             alert: false,
             errorMessage: "",
             allDocs: false,

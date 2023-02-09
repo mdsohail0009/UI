@@ -19,6 +19,7 @@ import Translate from 'react-translate-component';
 import Mome from 'moment'
 import { success, warning } from '../../utils/messages';
 import { LoadingOutlined } from "@ant-design/icons";
+import AppConfig from '../../utils/app_config';
 import { getScreenName } from '../../reducers/feturesReducer';
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
@@ -495,7 +496,7 @@ class CaseView extends Component {
                                                         />
                                                     </div>
                                                 )}
-                                                <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-4" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} onChange={(props) => { this.handleUpload(props, doc) }}
+                                            <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-4" multiple={false} action={AppConfig.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} onChange={(props) => { this.handleUpload(props, doc) }}
                                                     headers={{ Authorization: `Bearer ${this.props.user.access_token}` }}>
                                                     <p className="ant-upload-drag-icon">
                                                         <span className="icon xxxl doc-upload" />

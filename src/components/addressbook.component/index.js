@@ -26,6 +26,7 @@ import { getFeatureId } from "../shared/permissions/permissionService";
 import { setCurrentAction } from '../../reducers/actionsReducer'
 import AddressBookV3 from "../addressbook.v3";
 import AddressCrypto from "./addressCrypto"
+import AppConfig from "../../utils/app_config";
 const { Paragraph, Text, Title } = Typography;
 
 class AddressBook extends Component {
@@ -57,8 +58,8 @@ class AddressBook extends Component {
 			},
 			customerId: this.props.userConfig.id,
 
-			gridUrlCrypto: process.env.REACT_APP_GRID_API + "Address/AddressCrypto",
-			gridUrlFiat: process.env.REACT_APP_GRID_API + "Address/AddressFiat",
+			gridUrlCrypto: AppConfig.REACT_APP_GRID_API + "Address/AddressCrypto",
+			gridUrlFiat: AppConfig.REACT_APP_GRID_API + "Address/AddressFiat",
 		};
 		this.gridFiatRef = React.createRef();
 		this.gridCryptoRef = React.createRef();

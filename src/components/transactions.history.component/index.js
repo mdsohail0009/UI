@@ -14,6 +14,7 @@ import { getFeaturePermissionsByKey } from '../shared/permissions/permissionServ
 import { withRouter,Link } from "react-router-dom";
 import { getScreenName, setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 import NumberFormat from "react-number-format";
+import AppConfig from "../../utils/app_config";
 import moment from "moment/moment";
 import TransactionSlips from "./transaction.slips";
 import TransactionTimeSpan from "./transactionTimeSpan";
@@ -52,7 +53,7 @@ class TransactionsHistory extends Component {
       },
       tranObj: {},
       loader: true,
-      gridUrl: process.env.REACT_APP_GRID_API + `Transaction/Customers`,
+        gridUrl: AppConfig.REACT_APP_GRID_API + `Transaction/Customers`,
       showModal:false,
       modalData:{},
       modalPoupData:{},

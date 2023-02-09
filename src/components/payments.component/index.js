@@ -13,6 +13,7 @@ import ActionsToolbar from "../toolbar.component/actions.toolbar";
 import { getCurrencyLu} from './api'
 import {getFeaturePermissionsByKey} from '../shared/permissions/permissionService'
 import apicalls from '../../api/apiCalls';
+import AppConfig from '../../utils/app_config';
 import AddressbookV3 from '../addressbook.v3';
 import { getScreenName } from '../../reducers/feturesReducer';
 
@@ -224,7 +225,7 @@ const getCurrencyLookup = async () => {
           <List
            className="bill-grid"
             showActionBar={false}
-            url={process.env.REACT_APP_GRID_API + `MassPayments/UserPayments`}
+              url={AppConfig.REACT_APP_GRID_API + `MassPayments/UserPayments`}
                        additionalParams={{type:walletType}}
             columns={gridColumns}
             ref={gridRef}

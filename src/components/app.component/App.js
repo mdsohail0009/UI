@@ -10,6 +10,8 @@ import { startConnection } from "../../utils/signalR";
 import { useThemeSwitcher } from "react-css-theme-switcher";
 import apiCalls from '../../api/apiCalls';
 import { updatetwofactor } from "../../reducers/configReduser";
+import AppConfig from "../../utils/app_config";
+
 import SecurityLogin from "../../authentication/temp.security";
 import ConnectStateProps from "../../utils/state.connect";
 function App(props) {
@@ -33,7 +35,7 @@ function App(props) {
     }, 2000)
 
   }
-
+console.log(process.env)
   useEffect(() => {
     localStorage.setItem("__url", window.location.pathname);
     loadUser(store, userManager).then(user => {
@@ -42,7 +44,7 @@ function App(props) {
       window.$zoho = window.$zoho || {};
       window.$zoho.salesiq?.reset();
       window.$zoho.salesiq = window.$zoho.salesiq || {
-        widgetcode: process.env.REACT_APP_ZOHO_WIDGET_CODE,
+        widgetcode: AppConfig.REACT_APP_ZOHO_WIDGET_CODE,
         values: {},
         ready: function () {
           window.$zoho.salesiq.chatbutton.click(function () {
@@ -59,7 +61,7 @@ function App(props) {
       s.type = 'text/javascript';
       s.id = 'zsiqscript';
       s.defer = true;
-      s.src = process.env.REACT_APP_ZOHO_WIDGET_URL;
+      s.src = AppConfig.REACT_APP_ZOHO_WIDGET_URL;
       let t;
       t = d.getElementsByTagName('script')[0];
       t.parentNode.insertBefore(s, t);
@@ -70,7 +72,7 @@ function App(props) {
   }, [])// eslint-disable-line react-hooks/exhaustive-deps
   return (
     <OidcProvider userManager={userManager} store={store}>
-      <Router basename={process.env.PUBLIC_URL}>
+          <Router basename={AppConfig.PUBLIC_URL}>
         <SecurityLogin>
           <ErrorBoundary>
             {loading ? <div className="loader">Loading....</div> : <>

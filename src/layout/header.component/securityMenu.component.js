@@ -3,6 +3,7 @@ import { Typography,Switch,Menu,Dropdown} from 'antd';
 import Translate from 'react-translate-component';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import AppConfig from '../../utils/app_config';
 
 const { Title,Paragraph } = Typography;
 class SecurityMenu extends Component {
@@ -10,9 +11,9 @@ class SecurityMenu extends Component {
     <ul className="drpdwn-list">
         <li className="no-hover dropdown-flex text-white fs-14 pb-16">2FA<Switch size="small" checked={this.props.userConfig?.twofactorVerified} onChange={(status)=>{
             if(status){
-                window.open(process.env.REACT_APP_AUTHORITY+ "/account/login?returnUrl=/manage/EnableAuthenticator","_self");
+                window.open(AppConfig.REACT_APP_AUTHORITY+ "/account/login?returnUrl=/manage/EnableAuthenticator","_self");
             }else{
-                window.open(process.env.REACT_APP_AUTHORITY+ "/account/login?returnUrl=/manage/Disable2faWarning","_self");
+                window.open(AppConfig.REACT_APP_AUTHORITY+ "/account/login?returnUrl=/manage/Disable2faWarning","_self");
             }
         }} /> </li>
         <li className="">
