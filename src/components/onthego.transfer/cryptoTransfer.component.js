@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Input, Row, Col, Form, Button, Typography, Divider, Alert,Tabs,Radio} from 'antd';
+import { Input, Row, Col, Form, Button, Typography, Alert,Tabs,Radio} from 'antd';
 import apicalls from "../../api/apiCalls";
 import oops from '../../assets/images/oops.png';
 import NumberFormat from "react-number-format";
@@ -9,14 +9,13 @@ import { withRouter } from "react-router-dom/cjs/react-router-dom.min";
 import { fetchMemberWallets } from "../dashboard.component/api";
 import { connect } from "react-redux";
 import { validateCryptoAmount } from '../onthego.transfer/api';
-import { setStep, setSubTitle, setWithdrawcrypto, setAddress, hideSendCrypto } from '../../reducers/sendreceiveReducer';
+import { setStep, setSubTitle, setWithdrawcrypto, setAddress, hideSendCrypto,rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
 import AddressCrypto from "../addressbook.component/addressCrypto";
-import { rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
 import Currency from '../shared/number.formate';
 import { setAddressStep } from "../../reducers/addressBookReducer";
 import Translate from 'react-translate-component';
 
-const { Text, Title } = Typography;
+const { Text } = Typography;
 
 class OnthegoCryptoTransfer extends Component {
     enteramtForm = React.createRef();
@@ -69,18 +68,18 @@ class OnthegoCryptoTransfer extends Component {
         this.setState({ ...this.state, loading: true })
         let response = await apicalls.getPayeeCryptoLu(this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin);
         if (response.ok) {
-            this.setState({ ...this.state, loading: false, payeesLoading: false, filterObj: response.data, payees: response.data });
+            this.setState({ ...this.state, loading: false, payeesLoading: false, filterObj: response.data, payees: response.data ,errorMessage:null});
         }
         else {
-            this.setState({ ...this.state, loading: false, payeesLoading: false, filterObj: [] });
+            this.setState({ ...this.state, loading: false, payeesLoading: false, filterObj: [],errorMessage:apicalls.isErrorDispaly(response) });
         }
 
         let res = await apicalls.getPayeeCrypto(this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin);
         if (res.ok) {
-            this.setState({ ...this.state, loading: false, pastPayees: res.data });
+            this.setState({ ...this.state, loading: false, pastPayees: res.data,errorMessage:null });
         }
         else {
-            this.setState({ ...this.state, loading: false, pastPayees: [] });
+            this.setState({ ...this.state, loading: false, pastPayees: [] ,errorMessage:apicalls.isErrorDispaly(response)});
         }
     }
     handleSearch = ({ target: { value: val } }) => {
@@ -89,7 +88,7 @@ class OnthegoCryptoTransfer extends Component {
             this.setState({ ...this.state, filterObj, searchVal: val });
         }
         else
-        this.setState({ ...this.state, filterObj: this.state.payees, searchVal: val });
+       {this.setState({ ...this.state, filterObj: this.state.payees, searchVal: val })}
     }
 
     handlePreview = (item) => {
@@ -105,7 +104,7 @@ class OnthegoCryptoTransfer extends Component {
                 showCrypto = !obj?.close;
             else
                 showFiat = !obj?.close;
-        };
+        }
         this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat });
         this.props.dispatch(setAddressStep("step1"));
     };
@@ -149,18 +148,7 @@ class OnthegoCryptoTransfer extends Component {
             
         } 
     } 
-    isErrorDispaly = (objValue) => {
-        if (objValue.data && typeof objValue.data === "string") {
-            return objValue.data;
-        } else if (
-            objValue.originalError &&
-            typeof objValue.originalError.message === "string"
-        ) {
-            return objValue.originalError.message;
-        } else {
-            return "Something went wrong please try again!";
-        }
-    };
+  
   
     validateAmt = async (amt, type, values, loader) => {
         this.getPayees();
@@ -194,7 +182,7 @@ class OnthegoCryptoTransfer extends Component {
                 ...this.state, visible: true, errorWorning: null, errorMsg: null, [loader]: false, showFuntransfer: true
             }, () => this.chnageStep(type, values));
         } else {
-            this.setState({ ...this.state, loading: false, [loader]: false, error: null, errorMsg: this.isErrorDispaly(res) })
+            this.setState({ ...this.state, loading: false, [loader]: false, error: null, errorMsg: apicalls.isErrorDispaly(res) })
             this.myRef.current.scrollIntoView();
         }
 
@@ -297,7 +285,6 @@ class OnthegoCryptoTransfer extends Component {
                                     'addressLoader',
                                 ),
                             )
-                            .catch((error) => { })
                     },
                 )
             }
@@ -464,9 +451,9 @@ class OnthegoCryptoTransfer extends Component {
                                 this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item, codeDetails: { ...this.state.codeDetails, ...item } });
                                 const res = await apicalls.confirmCryptoTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount });
                                 if (!res.ok) {
-                                    this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => {this.handlePreview(item)});
+                                    this.setState({ ...this.state, reviewDetails: res.data, loading: false ,errorMessage:null}, () => {this.handlePreview(item)});
                                 } else {
-                                    this.setState({ ...this.state, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
+                                    this.setState({ ...this.state, loading: false, errorMessage: apicalls.isErrorDispaly(res) });
                                 }
                               }
                             }}>
@@ -495,9 +482,9 @@ class OnthegoCryptoTransfer extends Component {
                             this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item });
                             const res = await apicalls.confirmCryptoTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount });
                             if (res.ok) {
-                                this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => {this.handlePreview(item)});
+                                this.setState({ ...this.state, reviewDetails: res.data, loading: false,errorMessage:null }, () => {this.handlePreview(item)});
                             } else {
-                                this.setState({ ...this.state, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
+                                this.setState({ ...this.state, loading: false, errorMessage: apicalls.isErrorDispaly(res) });
                             }
                           }
                         }}>

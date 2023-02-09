@@ -679,7 +679,6 @@ export default {
 	fait_walets:"Suissebase Fiat Wallets",
 	sb_card_title:"Your card",
 	Dashboard:"Dashboard",
-	iban:"Suissebase Accounts (IBAN)",
 	notices:"Notices",
 	
 };

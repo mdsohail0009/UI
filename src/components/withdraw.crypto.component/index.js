@@ -15,7 +15,6 @@ const WithdrawCrypto = ({ dispatch, userProfile, sendReceive, props, changeStep 
     const loadData = () => {
         dispatch(fetchWithDrawWallets({ customerId: userProfile?.id }));
         dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
-       // dispatch(setSubTitle(apicalls.convertLocalLang("selectCurrencyinWallet")));
     }
     const { cryptoWithdraw: { wallets } } = sendReceive;
 

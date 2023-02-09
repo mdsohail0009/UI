@@ -34,22 +34,13 @@ const clearUserInfo = () => {
 }
 const getmemeberInfo = () => {
     return async (dispatch) => {
-        // let twofa;
-        // apiCalls.twofactor(userid).then(res => {
-        //     if (res.ok) {
-        //         twofa = res.data;
-        //     }
-        // });
+        
         apiCalls.getMember().then((res) => {
             if (res.ok) {
                 dispatch(userInfo(res.data));
                 dispatch(setNotificationCount(res.data?.unReadCount))
                 dispatch(updatetwofactor({ loading: false, isEnabled: res.data.twofactorVerified }));
-                // apiCalls.twofactor(res.data.id).then(tofares => {
-                //     if (tofares.ok) {
-                //         dispatch(updatetwofactor({ loading: false, isEnabled: tofares.data }));
-                //     }
-                // });
+              
             }
         });
     }

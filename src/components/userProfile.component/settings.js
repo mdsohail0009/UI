@@ -3,7 +3,6 @@ import { Typography, Select, Form, Button, message, Row, Col,Alert,Spin } from '
 import { getSettingsLuData, saveSettingsData } from '../../api/apiServer'
 import { connect } from 'react-redux';
 import { getmemeberInfo } from '../../reducers/configReduser';
-import { useThemeSwitcher } from 'react-css-theme-switcher';
 import counterpart from 'counterpart';
 import en from '../../lang/en';
 import ch from '../../lang/ch';
@@ -12,12 +11,11 @@ import Translate from 'react-translate-component';
 import apiCalls from '../../api/apiCalls';
 import { LoadingOutlined } from "@ant-design/icons";
 
-const { Title, Paragraph, Text } = Typography;
+const { Title } = Typography;
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
 counterpart.registerTranslations('my', my);
 const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
-    const { switcher, themes } = useThemeSwitcher();
     const [btnDisabled, setBtnDisabled] = useState(false);
     const [form] = Form.useForm();
     const [SettingsLu, setSettingsLu] = useState('')

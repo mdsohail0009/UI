@@ -36,8 +36,10 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     }, []);//eslint-disable-line react-hooks/exhaustive-deps
     const getRecipientDetails = async () => {
         setLoader(true)
+        seterrorMessage(null)
         const response = await apiCalls.getRecipientData( props.selectedAddress?.id || "00000000-0000-0000-0000-000000000000",isBusiness ? 'OwnBusiness' : 'MySelf');
         if (response.ok) {
+            seterrorMessage(null)
             if (props.selectedAddress?.id) {
                 setLoader(false);setRecipientDetails(response.data)
                 setsaveObj(response.data)
@@ -57,7 +59,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 setRecipientDetails(response.data); setLoader(false)
             }
         } else {
-            seterrorMessage(isErrorDispaly(response)); setLoader(false)
+            seterrorMessage(apiCalls.isErrorDispaly(response));
+             setLoader(false)
         }
     }
     const saveTransfer = async(values) => {
@@ -102,14 +105,16 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         }
         const response = await apiCalls.saveTransferData(saveObj);
         if (response.ok) {
+            seterrorMessage(null)
             if (props.type !== "manual") {
                 const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: onTheGoObj?.amount, reasonOfTransfer: null })
                 if (confirmRes.ok) {
+                    seterrorMessage(null)
                     setBtnLoading(false);
                     props.onContinue(confirmRes.data);
                 } else {
                     setBtnLoading(false);
-                    seterrorMessage(isErrorDispaly(confirmRes));
+                    seterrorMessage(apiCalls.isErrorDispaly(confirmRes));
                     useDivRef.current.scrollIntoView();
                 }
             }
@@ -118,7 +123,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 props.isHideTabs(false)
             }
             props.headingUpdate(true)
-        }else{seterrorMessage(isErrorDispaly(response));
+        }else{seterrorMessage(apiCalls.isErrorDispaly(response));
             useDivRef.current.scrollIntoView();
 		setBtnLoading(false);
         }
@@ -152,7 +157,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 }
               setIbanLoader(false)
             }else{
-                seterrorMessage(isErrorDispaly(response));
+                seterrorMessage(apiCalls.isErrorDispaly(response));
                 setbankDetails({})
                 setIbanLoader(false)
                 setValidIban(false)
@@ -214,18 +219,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         }
     };
 
-    const isErrorDispaly = (objValue) => {
-        if (objValue.data && typeof objValue.data === "string") {
-          return objValue.data;
-        } else if (
-          objValue.originalError &&
-          typeof objValue.originalError.message === "string"
-        ) {
-          return objValue.originalError.message;
-        } else {
-          return "Something went wrong please try again!";
-        }
-      };
+  
     return <>
     <div ref={useDivRef}></div>
     {isLoading &&<Loader /> }

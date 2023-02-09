@@ -138,7 +138,7 @@ class PaymentSummary extends Component {
 		this.setState({ ...this.state, reviewDetailsLoading: val })
 	  }
 	render() {
-		const {  isShowGreyButton,errorMessage,loading } = this.state;
+		const {  errorMessage,loading } = this.state;
 		return (<>
 			<div>
 			<Drawer destroyOnClose={true}
@@ -220,7 +220,6 @@ class PaymentSummary extends Component {
 						   <div className="cust-pop-up-btn crypto-pop">
 						   <Button block
 								className="pop-btn"
-                                // style={{ backgroundColor: !isShowGreyButton && '#ccc', borderColor: !isShowGreyButton && '#3d3d3d' }}
 								onClick={this.showDeclaration}
 								loading={loading}
 							>

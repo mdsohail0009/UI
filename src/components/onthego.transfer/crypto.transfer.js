@@ -4,7 +4,7 @@ import apiCalls from "../../api/apiCalls";
 import { validateContentRule } from "../../utils/custom.validator";
 import {  setStep} from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
-//import Translate from "react-translate-component";
+
 const { Option } = Select;
 const { Paragraph } = Typography;
 const CryptoTransfer = (props) => {

@@ -26,6 +26,7 @@ import { getFeatureId } from "../shared/permissions/permissionService";
 import { setCurrentAction } from '../../reducers/actionsReducer'
 import AddressBookV3 from "../addressbook.v3";
 import AddressCrypto from "./addressCrypto"
+import apicalls from "../../api/apiCalls";
 const { Paragraph, Text, Title } = Typography;
 
 class AddressBook extends Component {
@@ -299,6 +300,8 @@ class AddressBook extends Component {
 		if (response.ok) {
 			window.open(response.data, "_blank");
 			this.setState({ ...this.state, isDownloading: false, selectedDeclaration: null });
+		}else{
+			this.setState({...this.state,errorWorning:apicalls.isErrorDispaly(response)})
 		}
 	}
 
@@ -358,7 +361,6 @@ class AddressBook extends Component {
 		} else {
 			statusObj.status.push("InActive")
 		}
-		// statusObj.status.push(this.state.selectedObj.status);
 		statusObj.type = this.state.cryptoFiat ? "fiat" : "crypto";
 		statusObj.info = JSON.stringify(this.props.trackLogs);
 		let response = await activeInactive(statusObj);
@@ -398,7 +400,7 @@ class AddressBook extends Component {
 				selection: [],
 				isCheck: false,
 				btnDisabled: false,
-				errorWorning: response.data,
+				errorWorning: apicalls.isErrorDispaly(response),
 				obj: {
 					id: [],
 					tableName: "Common.PayeeAccounts",
@@ -534,7 +536,7 @@ class AddressBook extends Component {
 			else
 				showFiat = !obj?.close;
 		};
-		this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat, selectedObj: {}});
+		this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat, selectedObj: {}})
 		setTimeout(() => this.setState({ ...this.state,showHeading:false,hideFiatHeading:false}), 2000);
 		
 		this.props.rejectCoinWallet();
@@ -555,7 +557,7 @@ class AddressBook extends Component {
 				showCrypto = !obj?.close;
 			
 		};
-		this.setState({ ...this.state, visible: showCrypto, selectedObj: {} });
+		this.setState({ ...this.state, visible: showCrypto, selectedObj: {} })
 		this.props.rejectCoinWallet();
 		this.props.clearFormValues();
 		this.props.clearCrypto();
@@ -666,11 +668,12 @@ class AddressBook extends Component {
 	};
 
 	render() {
-		const { cryptoFiat, gridUrlCrypto, gridUrlFiat, customerId, btnDisabled } =
+		const { cryptoFiat, gridUrlCrypto, gridUrlFiat, btnDisabled ,errorMessage} =
 			this.state;
 
 		return (
 			<>
+
 			<div className="main-container grid-demo">
 			<div className="backbtn-arrowmb"><Link  to="/cockpit"><span className="icon md leftarrow c-pointer backarrow-mr"></span><span className="back-btnarrow c-pointer">Back</span></Link></div>
 			<div className="security-align adbs-mb">
@@ -736,7 +739,7 @@ class AddressBook extends Component {
 								<Translate
 									className="drawer-maintitle"
 									content={
-										this.state.showHeading!=true&&(
+										!this.state.showHeading &&(
 										this.props.addressBookReducer.stepTitles[
 										config[this.props.addressBookReducer.stepcode]
 										])
@@ -771,7 +774,7 @@ class AddressBook extends Component {
 							<div className="text-center">
 								<Paragraph className="drawer-maintitle">
 									<Translate
-									content={this.state.hideFiatHeading !=true && "AddFiatAddress"}
+									content={!this.state.hideFiatHeading  && "AddFiatAddress"}
 										component={Paragraph}
 										className="drawer-maintitle"
 									/>

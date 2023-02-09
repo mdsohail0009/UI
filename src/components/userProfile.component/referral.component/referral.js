@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import Translate from "react-translate-component";
-import { Typography, Button, message, Dropdown,Menu, Spin, Alert } from 'antd';
+import { Typography, Button, message, Alert } from 'antd';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import {
-    EmailShareButton, EmailIcon,
-    WhatsappShareButton, WhatsappIcon
+    EmailShareButton,
+    WhatsappShareButton
 } from "react-share";
 import apicalls from "../../../api/apiCalls"
 import { connect } from "react-redux";
 import Loader from "../../../Shared/loader";
-const { Title, Paragraph, Text } = Typography;
+const { Title,Text } = Typography;
 class Referral extends Component {
     state = {
         referaldata:null,
@@ -48,7 +48,6 @@ class Referral extends Component {
 		}
 	  };
 	render() {
-        const { Text } = Typography;
 		return (
       <>
        {this.state.isLoading ? (

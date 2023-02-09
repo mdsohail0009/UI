@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { Typography, Row, Col, Spin, Radio,Tabs,Image } from "antd";
+import { Typography, Row, Col, Spin, Radio,Tabs,Image,Alert } from "antd";
 import { Link, withRouter } from "react-router-dom";
 import { getcoinDetails, getCoinChatData } from './api'
 import LineChart from './lineChart';
@@ -26,7 +26,8 @@ class CoinView extends React.Component {
     buyDrawer: false,
     sendDrawer: false,
     coin:"",
-    loading:false
+    loading:false,
+    errorMessage:null
 }
     componentDidMount() {
         window.scrollTo(0, 0)
@@ -43,13 +44,16 @@ componentWillUnmount(){
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Coin page view', "Username": this.props.userProfileInfo?.userName, "customerId": this.props.userProfileInfo?.id, "Feature": 'Cockpit', "Remarks": 'Coin page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Cockpit' });
     }
     loadCoinDetailData = async () => {
-        this.setState({ ...this.state, loading: true})
+        this.setState({ ...this.state, loading: true,errorMessage:null})
         this.props.dispatch(fetchMarketCoinData(false))
         const response = await getcoinDetails(this.props.match.params?.coinName);
         if (response.ok) {
-            this.setState({ ...this.state, coinData: response.data },
+            this.setState({ ...this.state, coinData: response.data,errorMessage:null },
                  () => {this.coinChartData(1); }
             )
+        }else{
+            this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
+
         }
         this.setState({ ...this.state, loading: false})
     }
@@ -58,7 +62,10 @@ componentWillUnmount(){
         if (this.state.coinData) {
             const response = await getCoinChatData(this.state.coinData.id, 'usd', days);
             if (response.ok) {
-                this.setState({ ...this.state, chatData: { ...response.data, coinType: `USD To ${this.state.coinData?.symbol.toUpperCase()}` } })
+                this.setState({ ...this.state, chatData: { ...response.data, coinType: `USD To ${this.state.coinData?.symbol.toUpperCase()}`,errorMessage:null } })
+            }else{
+                this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
+    
             }
         }
     }
@@ -154,7 +161,11 @@ componentWillUnmount(){
              if (response.ok) {
                 this.props.dispatch(setWalletAddress(response.data));
                 this.props.dispatch(fetchDashboardcalls(this.props.userProfile?.id));
-             }
+                this.setState({...this.state,errorMessage:null})
+             }else{
+                this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
+    
+            }
             this.setState({
                 ...this.state,
                 sendDrawer: true
@@ -185,14 +196,21 @@ componentWillUnmount(){
         if (this.props.dashboard.isCoinViewChange) {
             this.loadCoinDetailData();
         }
+      
         return <div className="main-container">
             <>
+            {this.state.errorMessage != null && <Alert
+            description={this.state.errorMessage}
+            type="error"
+            showIcon
+            closable={false}
+        />}
             <div className="coin-viewstyle"><Link className="icon md leftarrow c-pointer backarrow-mr" to="/cockpit" /><span>{coinData?.name} ({coinData?.symbol.toUpperCase()})</span></div>
             <Row gutter={[24, 24]}>
                 <Col lg={14} xl={14} xxl={14}>
                     <div className="box coin-bal coin-details">
                     {this.state.loading&& this.state.coinData ?<Spin className="text-center"/>:<>
-                        {this.state.coinData ?
+                        {this.state.coinData &&
                         <> 
                         <div className="d-flex align-center">
                             <Image preview={false} src={coinData.imagePath} />
@@ -216,7 +234,10 @@ componentWillUnmount(){
                                 <li><div onClick={() => this.showSendReceiveDrawer(1, coinData)} value={1} className="c-pointer"><span className="icon md withdraw" /></div><span className='coin-fs'>RECEIVE</span></li>
                                 <li><div onClick={() => this.showSendReceiveDrawer(2, coinData)} value={2} className="c-pointer"><span className="icon md deposit" /></div><span className='coin-fs'>SEND</span></li>
                             </ul>
-                            </> : <div className="text-center"><Spin className="text-center"/></div>}</>}
+                            </> }
+                            {!this.state.coinData &&
+                            (<div className="text-center"><Spin className="text-center"/></div>)}
+                            </>}
                     </div>
                     <Tabs className="cust-tabs-fait coinview-tabs" onChange={(e) => this.setState({ ...this.state, type: e })}>
                                 <Tabs.TabPane tab="Price" className="" key={"prices"} ></Tabs.TabPane>
