@@ -26,6 +26,7 @@ const AddressCryptoView = (props) => {
 	const [previewPath, setPreviewPath] = useState(null);
 	const [previewModal, setPreviewModal] = useState(false);
     const [errorMsg,setErrorMsg]=useState(null)
+	const [mimeType,setMimeType]=useState(false);
 
 	useEffect(() => {
 		loadDataAddress();
@@ -46,10 +47,23 @@ const AddressCryptoView = (props) => {
 	};
 
 	const docPreview = async (file) => {
+		const mimeType = {
+			"pdf": "pdf",
+			"jpg": "jpg",
+			"jpeg": "jpeg",
+			"png": "png",
+			 "PDF": "PDF",
+			"PNG": "PNG",
+			 "JPEG": "JPEG" };
 		let res = await getFileURL({ url: file.path });
 		if (res.ok) {
 			setPreviewModal(true);
 			setPreviewPath(res.data);
+			const documentName=file.documentName.split(".")
+			if(mimeType[documentName[1]])
+			{
+				setMimeType(true);
+			}
 		}else{
 			setErrorMsg(apicalls.isErrorDispaly(res))
 
@@ -81,13 +95,11 @@ const AddressCryptoView = (props) => {
 					
 					<Button
 						className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
-						// block
 						onClick={() => setPreviewModal(false)}>
 						Close
 					</Button>
 					<Button
 						className="primary-btn pop-btn detail-popbtn"
-						// block
 						onClick={() => window.open(previewPath, "_blank")}>
 						Download
 					</Button>
@@ -131,7 +143,7 @@ const AddressCryptoView = (props) => {
 								<Row gutter={8}>
 									<Col xl={24} xxl={24} className="bank-view">
 										<Row className="kpi-List">
-										<Col xs={24} sm={24} md={12} lg={14} xxl={14}>
+										<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Whitelist Name</label>
 													<div className=" kpi-val adview-name">
@@ -187,9 +199,10 @@ const AddressCryptoView = (props) => {
 											</Col>
 												
 										</Row>
-										{cryptoAddress?.documents?.details.map((file) => (
-													<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-														<div
+										<Row>
+										{cryptoAddress?.documents?.details?.map((file) => (
+													<Col xs={12} sm={12} md={12} lg={8} xxl={8}>
+													<div
 															className="docfile mr-0 d-flex ml-8"
 															key={file.id}>
 															<span
@@ -197,6 +210,8 @@ const AddressCryptoView = (props) => {
 																		"file") ||
 																	(file.documentName?.slice(-3) !== "zip" &&
 																		"") ||
+																		((file.documentName?.slice(-3) === "mp4"||																file.documentName?.slice(-3) === "wmv"||file.documentName?.slice(-3) === "avi"||file.documentName?.slice(-3) === "mov") &&
+																		"video")||
 																	((file.documentName?.slice(-3) === "pdf" ||
 																		file.documentName?.slice(-3) === "PDF") &&
 																		"file") ||
@@ -224,6 +239,7 @@ const AddressCryptoView = (props) => {
 														</div>
 													</Col>
 												))}
+									</Row>
 									</Col>
 								</Row>
 								<div className="text-right view-level-btn">
