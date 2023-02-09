@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Typography, Button, Modal, Tooltip } from "antd";
+import { Row, Col, Typography, Button, Modal, Tooltip,Alert } from "antd";
 import Loader from "../../Shared/loader";
 import { getFileURL, getCryptoData } from "./api";
 import { connect } from "react-redux";
 import FilePreviewer from "react-file-previewer";
 import { bytesToSize } from "../../utils/service";
 import { addressTabUpdate} from "../../reducers/addressBookReducer";
+import apicalls from "../../api/apiCalls";
 const { Title, Text } = Typography;
 const EllipsisMiddle = ({ suffixCount, children }) => {
 	const start = children?.slice(0, children.length - suffixCount).trim();
@@ -24,8 +25,8 @@ const AddressCryptoView = (props) => {
 	const [cryptoAddress, setCryptoAddress] = useState({});
 	const [previewPath, setPreviewPath] = useState(null);
 	const [previewModal, setPreviewModal] = useState(false);
+    const [errorMsg,setErrorMsg]=useState(null)
 	const [mimeType,setMimeType]=useState(false);
-
 
 	useEffect(() => {
 		loadDataAddress();
@@ -35,6 +36,8 @@ const AddressCryptoView = (props) => {
 		let response = await getCryptoData(props?.match?.params?.id);
 		if (response.ok) {
 			setCryptoAddress(response.data);
+		}else{
+			setErrorMsg(apicalls.isErrorDispaly(response))
 		}
 		setIsLoading(false)
 	};
@@ -42,25 +45,28 @@ const AddressCryptoView = (props) => {
 		props?.history?.push("/addressbook");
 		props?.dispatch(addressTabUpdate(false));
 	};
+
 	const docPreview = async (file) => {
 		const mimeType = {
-		"pdf": "pdf",
-		"jpg": "jpg",
-		"jpeg": "jpeg",
-		"png": "png",
-		 "PDF": "PDF",
-		"PNG": "PNG",
-		 "JPEG": "JPEG" };
+			"pdf": "pdf",
+			"jpg": "jpg",
+			"jpeg": "jpeg",
+			"png": "png",
+			 "PDF": "PDF",
+			"PNG": "PNG",
+			 "JPEG": "JPEG" };
 		let res = await getFileURL({ url: file.path });
 		if (res.ok) {
 			setPreviewModal(true);
 			setPreviewPath(res.data);
-		const documentName=file.documentName.split(".")
+			const documentName=file.documentName.split(".")
 			if(mimeType[documentName[1]])
 			{
 				setMimeType(true);
 			}
-			
+		}else{
+			setErrorMsg(apicalls.isErrorDispaly(res))
+
 		}
 	};
 	const filePreviewPath = () => {
@@ -89,13 +95,11 @@ const AddressCryptoView = (props) => {
 					
 					<Button
 						className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
-					
 						onClick={() => setPreviewModal(false)}>
 						Close
 					</Button>
 					<Button
 						className="primary-btn pop-btn detail-popbtn"
-					
 						onClick={() => window.open(previewPath, "_blank")}>
 						Download
 					</Button>
@@ -114,6 +118,14 @@ const AddressCryptoView = (props) => {
 
 	return (
 		<>
+		  {errorMsg !== null && (
+              <Alert
+                type="error"
+                description={errorMsg}
+                onClose={() => setErrorMsg(null)}
+                showIcon
+              />
+            )}
 			<div className="main-container cust-cypto-view">
 			
 				<div className="">
@@ -135,63 +147,45 @@ const AddressCryptoView = (props) => {
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Whitelist Name</label>
 													<div className=" kpi-val adview-name">
-														{cryptoAddress?.saveWhiteListName === " " ||
-															cryptoAddress?.saveWhiteListName === null
-															? "-"
-															: cryptoAddress?.saveWhiteListName}
+															{(cryptoAddress?.saveWhiteListName === " " ||cryptoAddress?.saveWhiteListName === null) && "-"}
+															{!(cryptoAddress?.saveWhiteListName === " " ||cryptoAddress?.saveWhiteListName === null) && cryptoAddress?.saveWhiteListName}
 													</div>
 												</div>
 											</Col>
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+											<Col xs={24} sm={24} md={12} lg={5} xxl={5}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Token</label>
 													<div className=" kpi-val adview-name">
-														{cryptoAddress?.token === " " ||
-															cryptoAddress?.token === null
-															? "-"
-															: cryptoAddress?.token}
+															{(cryptoAddress?.token === " " ||cryptoAddress?.token === null) && "-"}
+															{!(cryptoAddress?.token === " " ||cryptoAddress?.token === null) && cryptoAddress?.token}
 													</div>
 												</div>
 											</Col>
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+											<Col xs={24} sm={24} md={12} lg={5} xxl={5}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Network</label>
 													<div className=" kpi-val adview-name">
-														{cryptoAddress?.network === " " ||
-															cryptoAddress?.network === null
-															? "-"
-															: cryptoAddress?.network}
+															{(cryptoAddress?.network === " " ||cryptoAddress?.network === null) && "-"}
+															{!(cryptoAddress?.network === " " ||cryptoAddress?.network === null) && cryptoAddress?.network}
 													</div>
 												</div>
 											</Col>
 											
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+											<Col xs={24} sm={24} md={12} lg={14} xxl={14}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Wallet Address</label>
 													<div className=" kpi-val adview-name">
-														{cryptoAddress?.walletAddress === " " ||
-															cryptoAddress?.walletAddress === null
-															? "-"
-															: cryptoAddress?.walletAddress}
+															{(cryptoAddress?.walletAddress === " " ||cryptoAddress?.walletAddress === null) && "-"}
+															{!(cryptoAddress?.walletAddress === " " ||cryptoAddress?.walletAddress === null) && cryptoAddress?.walletAddress}
 													</div>
 												</div>
 											</Col>
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+											<Col xs={24} sm={24} md={12} lg={5} xxl={5}>
 												<div className="kpi-divstyle ad-rec-detyails">
-													<label className="kpi-label">Wallet Source</label>
+													<label className="kpi-label">Address State</label>
 													<div className=" kpi-val adview-name">
-													{cryptoAddress?.walletSource==="Others"? `${cryptoAddress?.walletSource } (${cryptoAddress?.otherWallet})` :cryptoAddress?.walletSource|| "-"}
-													</div>
-												</div>
-											</Col>
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle ad-rec-detyails">
-													<label className="kpi-label">Whitelisting Status</label>
-													<div className=" kpi-val adview-name">
-														{cryptoAddress?.adressstate === " " ||
-															cryptoAddress?.adressstate === null
-															? "-"
-															: cryptoAddress?.adressstate}
+															{(cryptoAddress?.adressstate === " " ||cryptoAddress?.adressstate === null) && "-"}
+															{!(cryptoAddress?.adressstate === " " ||cryptoAddress?.adressstate === null) && cryptoAddress?.adressstate}
 													</div>
 												</div>
 											</Col>
@@ -208,7 +202,7 @@ const AddressCryptoView = (props) => {
 										<Row>
 										{cryptoAddress?.documents?.details?.map((file) => (
 													<Col xs={12} sm={12} md={12} lg={8} xxl={8}>
-														<div
+													<div
 															className="docfile mr-0 d-flex ml-8"
 															key={file.id}>
 															<span
@@ -245,7 +239,7 @@ const AddressCryptoView = (props) => {
 														</div>
 													</Col>
 												))}
-												</Row>
+									</Row>
 									</Col>
 								</Row>
 								<div className="text-right view-level-btn">
