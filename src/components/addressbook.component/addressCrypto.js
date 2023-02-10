@@ -40,7 +40,8 @@ class AddressCrypto extends Component {
       check:false,
       showDeclartionApproved:false,
       approvedAddress:false,
-
+      isDocCheck:false,
+      isDocDeleteCheck:false,
     };
   }
 
@@ -53,7 +54,7 @@ class AddressCrypto extends Component {
     this.setState({ ...this.state, isLoading: true })
     let response = await getCryptoData(id);
     if (response.ok) {
-      this.setState({ ...this.state, cryptoData: response.data, isLoading: false,isEdit:true,check:response.data.isOwnerOfWalletAddress ,walletSourse: response.data?.walletSource})
+      this.setState({ ...this.state, cryptoData: response.data, isLoading: false,isEdit:true,check:response.data.isOwnerOfWalletAddress,isDocCheck:response.data.isDocumentUpload ,walletSourse: response.data?.walletSource})
     }
     else {
       this.setState({ ...this.state, isLoading: false, errorMessage: this.isErrorDispaly(response) })
@@ -139,6 +140,7 @@ if (res.ok){
 
   }
   submit = async (values) => {
+    let data=this.state.details.documents?.details.filter((item)=>item.state!=="Deleted")?.length===0 ;
     if (!values.isOwnerOfWalletAddress) {
 			this.setState({
 				...this.state,
@@ -146,7 +148,15 @@ if (res.ok){
 				agreeRed: false,
 			});
 			this.useDivRef.current?.scrollIntoView(0, 0);
-		}
+		}else if((values.isDocumentUpload===true && ((this.state.cryptoData?.documents===null &&this.state.isEdit===true && values.files===undefined) ||this.state.cryptoData?.documents?.details?.length==0||
+      this.state.details.documents?.details?.length ==0 || data===true))){
+      this.setState({
+				...this.state,
+        errorMessage:"At least one document is required",
+				
+			});
+this.useDivRef.current?.scrollIntoView(0, 0);
+}
     else{
     let obj = {
       id: "00000000-0000-0000-0000-000000000000",
@@ -165,6 +175,7 @@ if (res.ok){
       isOwnerOfWalletAddress:values.isOwnerOfWalletAddress,
       walletSource:values.walletSource,
       otherWallet:values.otherWallet,
+      isDocumentUpload:values.isDocumentUpload,
       documents:this.state.cryptoData?.documents ||this.state.details.documents
       
     }
@@ -176,9 +187,9 @@ if (res.ok){
     if (response.ok) {
       this.setState({ ...this.state, isBtnLoading: false })
       if (window?.location?.pathname.includes('addressbook')&& this.props.type === "manual") {
-        if(!(this.state.cryptoData.adressstate ==="Approved" && this.state.cryptoData.isProofofOwnership===false)){
+        if(!(this.state.cryptoData.adressstate ==="Approved" && this.state.cryptoData.isProofofOwnership===false) ||(this.state.cryptoData.walletSource===null && this.state.cryptoData.isOwnerOfWalletAddress===null)){
           this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true,showDeclartionApproved: false,approvedAddress:false });
-        }else if(obj.documents===undefined &&this.state.cryptoData.adressstate ==="Approved" && this.state.cryptoData.isProofofOwnership===false){
+        }else if((obj.documents?.details?.length===0 ||obj.documents===undefined || this.state.cryptoData?.documents===undefined) && this.state.cryptoData.adressstate ==="Approved" && this.state.cryptoData.isProofofOwnership===false){
           this.setState({ ...this.state, errorMessage: null, isBtnLoading: false,showDeclartion:false, showDeclartionApproved: false,approvedAddress:true });
         }
         else{
@@ -212,6 +223,9 @@ if (res.ok){
       this.setState({ ...this.state, details: { ...this.state.details, documents } })
   
   }
+  handleDocCheck=(e)=>{
+this.setState({...this.state,isDocCheck:e.target.checked})
+  }
   validateAddressType = (_, value) => {
     if (value) {
       let address = value.trim();
@@ -234,7 +248,7 @@ if (res.ok){
   };
 
   render() {
-    const { isLoading, errorMessage, showDeclartion, cryptoData, coinsList, networksList,showDeclartionApproved ,approvedAddress} = this.state;
+    const { isLoading, errorMessage, showDeclartion, cryptoData, coinsList, networksList,showDeclartionApproved ,approvedAddress,isDocCheck} = this.state;
     if (isLoading) {
       return <Loader />
     }
@@ -248,15 +262,15 @@ if (res.ok){
       </div>
       </div>
     }else if(showDeclartionApproved){
-      return<div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
-         <Image src={success} className="confirm-icon" alt={"success"} />
+      return<div className="custom-declaraton travel-success"> <div className="success-pop text-center declaration-content">
+         <Image src={success} className="confirm-icon" alt={"success"} preview={false} />
           <Title level={2} className="success-title">Document uploaded successfully</Title>
       </div>
       </div>
     }
     else if(approvedAddress){
-      return<div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
-            <Image src={success} className="confirm-icon" alt={"success"} />
+      return<div className="custom-declaraton travel-success"> <div className="success-pop text-center declaration-content">
+            <Image src={success} className="confirm-icon" alt={"success"} preview={false} />
           <Title level={2} className="success-title">Address Saved Successfuly</Title>
       </div>
       </div>
@@ -381,12 +395,12 @@ if (res.ok){
               ]}
             >
               <Select
-                className={`cust-input ${this.state.cryptoData.adressstate ==="Approved"  ? "input-disabled-style" :"" }`}
+                className={`cust-input ${(this.state.cryptoData.adressstate ==="Approved" && this.state.cryptoData.walletSource !==null)  ? "input-disabled-style" :"" }`}
                 maxLength={100}
                 placeholder="Select Wallet Source"
                 optionFilterProp="children"
                 onChange={this.handleWalletSource}
-                disabled={this.state.cryptoData.adressstate ==="Approved"  ? true : false }
+                disabled={(this.state.cryptoData.adressstate ==="Approved" && this.state.cryptoData.walletSource !==null) ? true : false }
               >
                 {this.state.wallet?.map((item, idx) => (
                   <Option key={idx} value={item.name}>
@@ -420,7 +434,7 @@ if (res.ok){
                 className="cust-input"
                 maxLength={100}
                 placeholder="Wallet Source"
-                disabled={this.state.cryptoData.adressstate ==="Approved"  ? true : false }
+                disabled={(this.state.cryptoData.adressstate ==="Approved" && this.state.cryptoData.walletSource !==null)  ? true : false }
               />
             </Form.Item>
             </Col>}
@@ -439,9 +453,9 @@ if (res.ok){
 								id="agree-check"
 								checked={this.state.check}
                 onClick={(e)=>this.handleCheck(e)}
-                disabled={this.state.cryptoData.adressstate ==="Approved"  ? true : false }
+                disabled={(this.state.cryptoData.adressstate ==="Approved" && this.state.cryptoData.walletSource !==null) ? true : false }
 							/>
-							<span for="agree-check" className={`${this.state.cryptoData.adressstate ==="Approved"  ? "c-notallowed" : "c-pointer"}`} />
+							<span for="agree-check" className={`${(this.state.cryptoData.adressstate ==="Approved" && this.state.cryptoData.walletSource !==null)  ? "c-notallowed" : "c-pointer"}`} />
 	
 							
 						</label>
@@ -455,7 +469,34 @@ if (res.ok){
 							</Form.Item>
             </Col>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload a screenshot or video to prove you are the owner of the address  
+            <Form.Item
+								className="custom-forminput mb-36 agree send-crypto-sumry"
+								name="isDocumentUpload"
+								valuePropName="checked"
+								required
+							>				
+								<div className={`d-flex  agree-check checkbox-mobile align-center`}>
+						<label>
+							<input
+								type="checkbox"
+								id="agree-check1"
+								checked={this.state.isDocCheck}
+                onClick={(e)=>this.handleDocCheck(e)}
+							/>
+							<span for="agree-check"  className="c-pointer"
+              />
+						</label>
+						<div
+							className="cust-agreecheck d-flex align-center"
+							>
+               I may perform transactions greater than 15,000 CHF with this address
+						</div>
+					</div>
+								
+							</Form.Item>
+            </Col>
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload a screenshot or video to prove you are the owner of the address{isDocCheck===true&&<span className="cust-start-style">*</span>}  
                             
                                             <Tooltip title="MP4, MOV, WMV, AVI files size maximum allow  25MB">
                                           <span
