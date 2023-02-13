@@ -52,9 +52,12 @@ class AddressCrypto extends Component {
     this.getNetWorkData();
   }
   getNetWorkData=async()=>{
-    let res = await getNetWorkLucup();
-    if(res.ok){
-    this.setState({...this.state,netWorkData:res.data})
+    this.setState({ ...this.state, isLoading: true })
+    let response = await getNetWorkLucup();
+    if(response.ok){
+    this.setState({...this.state,isLoading: false,netWorkData:response.data})
+    } else {
+      this.setState({ ...this.state,isLoading: false, errorMessage: this.isErrorDispaly(response) })
     }
   }
   getCryptoData = async () => {
