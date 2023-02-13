@@ -879,7 +879,7 @@ saveWithdrawdata = async () => {
                          onClick={() => { this.saveWithdrawdata(); }}
                          size="large"
                          block
-                         className="pop-btn custom-send"
+                         className="pop-btn custom-send cust-disabled"
                         style={{ backgroundColor: !isShowGreyButton && '#7087FF', borderColor: !isShowGreyButton && '#7087FF' }}
                         loading={this.state.isBtnLoading} 
                         disabled={!isShowGreyButton}>
