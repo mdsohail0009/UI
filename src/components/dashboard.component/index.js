@@ -51,6 +51,15 @@ class Home extends Component {
     getNotices = async () => {
         this.props.dispatch(fetchNotices(this.props.userProfileInfo.id))
     }
+    goToDetails=(data)=>{
+        if(data.isReqforDoc)
+        {
+            this.props.history.push(`/caseView/${data.typeId}`)
+        }else{
+            this.props.history.push(`/addressbook`)
+        }
+       
+    }
     render() {
         const { data: notices } = this.props.dashboard?.notices;
         return (
@@ -67,7 +76,7 @@ class Home extends Component {
                     {notices?.map((notice, idx) => <div key={idx} className="notify-alerticon">
                         <AlertConfirmation type="error" title={notice.title} showIcon description="Our Compliance Team is requesting documents in line with your recent transaction, Please click View Details. Thank you for your patience."
                             action={
-                                <Button className='notify-viewbtn' size="small" type="text" onClick={() => this.props.history.push(`/caseView/${notice.typeId}`)}>
+                                <Button className='notify-viewbtn' size="small" type="text" onClick={() => this.goToDetails(notice)}>
                                     View Details
                                 </Button>
                             } />

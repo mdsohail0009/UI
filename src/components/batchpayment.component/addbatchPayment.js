@@ -453,6 +453,7 @@ downLoadPreview=()=>{
                             id={this.state.file?.id}
                         onClose={this.props.onClose}
                         fileData={this.state.file}
+                        currency={this.state.selectedCurrency}
                     />
                        }
         </div>

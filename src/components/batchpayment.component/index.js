@@ -57,8 +57,8 @@ const Batchpayments = (props) => {
           customCell: (properites) => (
             <td>
               {properites?.dataItem.status==="Draft"?<div  className='draft-filename'> {properites?.dataItem?.fileName}</div>:
-             <div className="gridLink batch-filename" onClick={()=>viewMode(properites)} >
-              {properites?.dataItem?.fileName}</div>}
+             <span className="gridLink batch-filename" onClick={()=>viewMode(properites)} >
+              {properites?.dataItem?.fileName}</span>}
               </td>) 
         },
         { field: "createdDate", title: "Date Created", filter: true, filterType: "date", width: 200, 
@@ -73,15 +73,15 @@ const Batchpayments = (props) => {
         { field: "status", title: 'Status', filter: true, width: 150, },
         { field: "numberOfTransactions", title: 'Number of Transactions', filter: true, width: 250,dataType: "number", filterType: "numeric", 
         customCell: (properites) => (<td>
-        {properites?.dataItem?.numberOfTransactions!==0? <div className="gridLink batch-filename" onClick={()=>docPreview(properites.dataItem)}
+        {properites?.dataItem?.numberOfTransactions!==0? <span className="gridLink batch-filename" onClick={()=>docPreview(properites.dataItem)}
         >{properites?.dataItem?.numberOfTransactions} 
-        </div>:<>{properites?.dataItem?.numberOfTransactions}</>}</td>) 
+        </span>:<>{properites?.dataItem?.numberOfTransactions}</>}</td>) 
      },
      { field: "validTransactionCount", title: 'Valid Transactions', filter: true, dataType: "number", filterType: "numeric", width: 210, },
      { field: "invalidTransactionCount", title: 'Invalid Transactions', filter: true, dataType: "number", filterType: "numeric", width: 210,
          customCell: (properites) => (
-         <td>{properites?.dataItem?.invalidTransactionCount!==0?<div onClick={()=>getInvalidTransaction(properites?.dataItem)} className="gridLink batch-filename" >{properites?.dataItem?.invalidTransactionCount}
-           </div>:<>{properites?.dataItem?.invalidTransactionCount}</>}
+         <td>{properites?.dataItem?.invalidTransactionCount!==0?<span onClick={()=>getInvalidTransaction(properites?.dataItem)} className="gridLink batch-filename" >{properites?.dataItem?.invalidTransactionCount}
+           </span>:<>{properites?.dataItem?.invalidTransactionCount}</>}
            
            </td>)
      },
