@@ -826,7 +826,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .pop-btn.search-btn{margin: 22px 0 0 12px; height: 48px; width: 148px;}
 .ant-picker-dropdown{z-index: 9999;}
 .excel-button{margin-top: 20px;}
-.k-grid-table,.ant-table-tbody{background-color: var(--tablebody);}
+/* .k-grid-table,.ant-table-tbody{background-color: var(--tablebody);} */
 .k-grid td,.markets-grid td{border-right: 1px solid var(--gridborder) !important;border-bottom: 1px solid var(--gridborder) !important; color: var(--gridcontent);}
 .k-grid th,.markets-grid th{border-right: 1px solid  var(--tableborder) !important;}
 .custom-gridresponsive .ant-drawer-header,.custom-gridresponsive .ant-drawer-body{background: var(--bodyBg) !important;}
@@ -1031,6 +1031,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .kpi-val.adview-name{width: 230px;}
 .input-disabled-style .ant-select-selection-item{color: var(--textSecondary);}
 .travel-success{margin-top: 65px;}
+.dashbord-space .notices-content{margin-bottom: 36px;}.db-transactions thead{ background-color: var(--grid) !important;}.db-transactions{padding-top: 0;margin-top: 14px;height: 505px;}.db-transactions thead tr:first-child{border-bottom: none !important;}
 /*@media start*/
 @media (min-width: 768px){
     .listitems-design{width: 340px;}
