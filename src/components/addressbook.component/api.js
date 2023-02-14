@@ -67,7 +67,9 @@ const getPayeeLu = (type,is1stParty) => {
     );
 };
 
-
+const getNetWorkLucup=()=>{
+	return apiClient.get(ApiControllers.markets+`Coins/network`);
+}
 
 const getFavData = (payeeId) => {
 
@@ -157,9 +159,7 @@ export {
 	getCryptoData,
 	saveCryptoData,
 	networkLu,
-	getWalletSource
+	getWalletSource,
+	getNetWorkLucup
 };
 
-
-////https://devapi.suissebase.io/api/v1/addressbook/Crypto/{id}/{customerId}
-//https://devapi.suissebase.io/api/v1/Common/NetWorkLU/BTC

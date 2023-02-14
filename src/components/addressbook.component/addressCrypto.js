@@ -5,7 +5,7 @@ import success from '../../assets/images/success.svg';
 import { setAddressStep } from "../../reducers/addressBookReducer";
 import { setAddress, setStep, setWithdrawcrypto,rejectWithdrawfiat, setSendCrypto, hideSendCrypto } from "../../reducers/sendreceiveReducer";
 import { connect } from "react-redux";
-import { getCryptoData, saveCryptoData, getCoinList,getWalletSource } from "./api";
+import { getCryptoData, saveCryptoData, getCoinList,getWalletSource,getNetWorkLucup } from "./api";
 import Loader from '../../Shared/loader';
 import WAValidator from "multicoin-address-validator";
 import { validateContentRule } from "../../utils/custom.validator";
@@ -42,12 +42,23 @@ class AddressCrypto extends Component {
       approvedAddress:false,
       isDocCheck:false,
       isDocDeleteCheck:false,
+      netWorkData:[],
     };
   }
 
   componentDidMount() {
     this.getCryptoData();
     this.handleWallet();
+    this.getNetWorkData();
+  }
+  getNetWorkData=async()=>{
+    this.setState({ ...this.state, isLoading: true })
+    let response = await getNetWorkLucup();
+    if(response.ok){
+    this.setState({...this.state,isLoading: false,netWorkData:response.data})
+    } else {
+      this.setState({ ...this.state,isLoading: false, errorMessage: this.isErrorDispaly(response) })
+    }
   }
   getCryptoData = async () => {
     let id = this.props?.addressBookReducer?.selectedRowData?.id || "00000000-0000-0000-0000-000000000000";
@@ -314,31 +325,6 @@ this.setState({...this.state,isDocCheck:e.target.checked})
             <Row className="addcrypto-benficiary">
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
-              name="token"
-              label="Token"
-              rules={[
-                {
-                  required: true,
-                  message: "Is required",
-                },
-              ]} >
-              <Select
-                className={`cust-input ${(this.props?.sendReceive?.withdrawFiatObj?.walletCode ||this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin || this.state.cryptoData.adressstate ==="Approved") ? "input-disabled-style" :""}`}
-                onChange={this.handleTokenChange}
-                placeholder="Select Token"
-                optionFilterProp="children"
-                maxLength={50}
-                disabled={(this.props?.sendReceive?.withdrawFiatObj?.walletCode ||this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin || this.state.cryptoData.adressstate ==="Approved") ? true:false}>
-                {coinsList?.map((item, idx) => (
-                  <Option key={idx} value={item.walletCode}>
-                    {item.walletCode}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-            </Col>
-            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-            <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="network"
               label="Network (Any coins on the selected network will be whitelisted)"
               rules={[
@@ -355,9 +341,9 @@ this.setState({...this.state,isDocCheck:e.target.checked})
                 optionFilterProp="children"
                 disabled={this.state.cryptoData.adressstate ==="Approved"  ? true : false }
               >
-                {networksList?.map((item, idx) => (
-                  <Option key={idx} value={item.name}>
-                    {item.name}
+                {this.state.netWorkData?.map((item, idx) => (
+                  <Option key={idx} value={item.walletCode}>
+                    {item.walletCode}
                   </Option>
                 ))}
               </Select>
@@ -371,7 +357,8 @@ this.setState({...this.state,isDocCheck:e.target.checked})
               required
               rules={[
                 {
-                  validator: this.validateAddressType,
+                  required: true,
+                  message: "Is required",
                 },
               ]}
             >
