@@ -31,10 +31,15 @@ const Verifications = (props) => {
     useEffect(() => {
         if(phoneSeconds===0 && phone.btnName==='code_Sent'){
             setPhone({ ...phone, btnName: 'resendotp', code: '' });
-        }
+        } else if(phoneSeconds===0 && phone.btnName=== 'verifyOtpBtn'){
+                setPhone({ ...phone, btnName: 'resendotp', code: '' });
+            }
     }, [phoneSeconds]);//eslint-disable-line react-hooks/exhaustive-deps
     useEffect(() => {
+        debugger
         if(emailSeconds===0 && email.btnName==='code_Sent'){
+            setEmail({ ...email, btnName: 'resendotp', code: '' });
+        }else if(emailSeconds===0 && email.btnName=== 'verifyOtpBtn'){
             setEmail({ ...email, btnName: 'resendotp', code: '' });
         }
     }, [emailSeconds]);//eslint-disable-line react-hooks/exhaustive-deps
@@ -96,6 +101,7 @@ const Verifications = (props) => {
     };
 
     const sendEmailOTP = async (val) => {
+        debugger
         setEmail({ ...email, errorMsg: '', showRuleMsg: '',btnLoader:true })
         let response = await sendEmail( email.requestType);
         if (response.ok) {
@@ -132,10 +138,15 @@ const Verifications = (props) => {
     }
     };
     const handleEmailinputChange = (e) => {
+        debugger
         if (e.target.value) {
             setEmail({ ...email, btnName: 'verifyOtpBtn', code: e.target.value })
-        } else {
+        } else if(emailSeconds===0 && email.btnName==='code_Sent'){
             setEmail({ ...email, btnName: 'resendotp', code: '' })
+        } else if(emailSeconds===0 && email.btnName==='verifyOtpBtn' && e.target.value == "") {// && phone.btnName==='code_Sent'
+            setEmail({ ...email, btnName: 'resendotp', code: '' })
+        } else {
+            setEmail({ ...email, btnName: 'code_Sent', code: '' })
         }
     };
     const getphoneOTP = async (val) => {
@@ -152,9 +163,14 @@ const Verifications = (props) => {
     const handlephoneinputChange = (e) => {
         if (e.target.value) {
             setPhone({ ...phone, btnName: 'verifyOtpBtn', code: e.target.value })
-        } else {
+        } else if(phoneSeconds===0 && phone.btnName==='code_Sent') {
             setPhone({ ...phone, btnName: 'resendotp', code: '' })
         }
+        else if(phoneSeconds===0 && phone.btnName==='verifyOtpBtn' && e.target.value == "") {// && phone.btnName==='code_Sent'
+            setPhone({ ...phone, btnName: 'resendotp', code: '' })
+        }else {
+            setPhone({ ...phone, btnName: 'code_Sent', code: '' })
+        }       
     };
     const verifyPhoneOtp = async () => {
         if(!phone.code){

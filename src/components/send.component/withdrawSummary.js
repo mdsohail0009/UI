@@ -390,7 +390,8 @@ class WithdrawSummary extends Component {
 	handleSendOtp = (val) => {
 		this.setState({
 			...this.state,
-			emailOtp: val.emailCode,
+			//emailOtp: val.emailCode,
+			emailOtp: val,
 			verifyText: "verifyBtn",
 			tooltipEmail: false,
 			emailText: "",
@@ -431,6 +432,7 @@ class WithdrawSummary extends Component {
 		}
 	};
 	handleChange = (e) => {
+		debugger
 		if (e) {
 			this.handleOtp(e)
 			this.setState({
@@ -439,9 +441,12 @@ class WithdrawSummary extends Component {
 				tooltipVisible: false,
 				verifyOtpText: "verifyOtpBtn",
 			})
-		} else {
+			
+		} else if(this.state.seconds == 0 && this.state.verifyOtpText=="verifyOtpBtn"){
+			this.setState({...this.state,verifyOtpText:"resendotp",buttonText: "resendotp",})	
+		}else {
 			this.setState({
-				buttonText: "resendotp",
+				buttonText: "sent_verification",
 				tooltipVisible: false,
 				verifyOtpText: null,
 			});
@@ -451,7 +456,8 @@ class WithdrawSummary extends Component {
 		this.setState({ ...this.state, authCode: e.target.value, faLoading: false });
 	};
 	handleEmailChange = (e) => {
-		this.setState({ ...this.state, emailCodeVal: e.target.value });
+		debugger
+		this.setState({ ...this.state, emailCodeVal: e.target.value ,verifyText: "verifyBtn",});
 	};
 	saveWithdrwal = async (values) => {
 		if (!values.isAccept) {
