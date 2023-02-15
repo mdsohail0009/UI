@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { Row, Col, Button, Carousel,Typography, } from 'antd';
+import { Row, Col, Button, Carousel,Typography,Drawer } from 'antd';
 import Portfolio from './portfolio.component';
 import MarketCap from './marketcap.component';
 import AlertConfirmation from '../shared/alertconfirmation';
@@ -14,15 +14,25 @@ import Notices from './notices';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 import BankWallets from '../bankui.component'
 import SbCard from './sbCard';
+import AddressCrypto from "../addressbook.component/addressCrypto"
+import {
+	rejectCoin,
+	clearValues,
+	clearCryptoValues,
+} from '../../reducers/addressBookReducer';
 import { getScreenName } from '../../reducers/feturesReducer';
-const { Title } = Typography;
+
+const { Title,Paragraph } = Typography;
 class Home extends Component {
     state = {
         loading: false,
         initLoading: true,
-        visible: false,
         childrenDrawer: false,
-        permissions: {}
+        permissions: {},
+        hideFiatHeading:false,
+        beneficiaryDetails:false,
+        cryptoFiat:false,
+        cryptoId:"",
     };
     permissionsInterval;
     componentDidMount() {
@@ -56,12 +66,23 @@ class Home extends Component {
         {
             this.props.history.push(`/caseView/${data.typeId}`)
         }else{
-            this.props.history.push(`/addressbook`)
+            this.setState({...this.state,hideFiatHeading:false,beneficiaryDetails:true,cryptoId:data.docTypeId})
         }
        
     }
+    closeCryptoDrawer=()=>{
+		this.setState({ ...this.state, beneficiaryDetails: false, selectedObj: {} });
+        this.props.dispatch(rejectCoin());
+		this.props.dispatch(clearValues());
+		this.props.dispatch(clearCryptoValues());
+		
+	}
+    headingChange=(data)=>{
+		this.setState({...this.state,hideFiatHeading:data})
+	}
     render() {
         const { data: notices } = this.props.dashboard?.notices;
+        const {beneficiaryDetails,hideFiatHeading}=this.state;
         return (
             <div className="main-container dashbord-space case-carsl">
                 {this.props?.twoFA && ((!this.props?.twoFA?.isEnabled) && (!this.props?.twoFA?.loading)) && <div>
@@ -118,6 +139,24 @@ class Home extends Component {
                        
                     </Col>
                 </Row>
+                <Drawer
+          destroyOnClose={true}
+          title={[<div className="side-drawer-header">
+            <span />
+            <div className="text-center" key={""}>
+              <Paragraph className="drawer-maintitle"><Translate content={hideFiatHeading !==true && "cryptoAddress"}component={Paragraph} className="drawer-maintitle" /></Paragraph>
+            </div>
+            <span onClick={this.closeCryptoDrawer} className="icon md close-white c-pointer" />
+          </div>]}
+          placement="right"
+          closable={true}
+          visible={beneficiaryDetails}
+          closeIcon={null}
+          className=" side-drawer"
+          size="large"
+        >
+          <AddressCrypto type="manual" cryptoTab={1} onCancel={(obj) => this.closeCryptoDrawer(obj)} props={this.props} selectedAddress={this.state.selectedObj} headingUpdate={this.headingChange} isSave={true} cryptoId={this.state.cryptoId}/>
+        </Drawer>
             </div >
         );
 
