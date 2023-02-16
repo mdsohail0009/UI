@@ -11,6 +11,7 @@ import apiCalls from '../../api/apiCalls';
 import { validateContent } from "../../utils/custom.validator";
 import Translate from 'react-translate-component';
 import Mome from 'moment'
+import apicalls from '../../api/apiCalls';
 const { Panel } = Collapse;
 const { Text } = Typography;
 const { Dragger } = Upload;

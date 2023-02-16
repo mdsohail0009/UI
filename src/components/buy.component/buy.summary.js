@@ -9,7 +9,6 @@ import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboa
 import apicalls from '../../api/apiCalls';
 import {Alert} from 'antd'
 import { setCurrentAction } from '../../reducers/actionsReducer';
-import apicalls from '../../api/apiCalls';
 class BuySummary extends Component {
   myRef = React.createRef();
   constructor(props) {

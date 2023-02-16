@@ -14,7 +14,6 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import apicalls from '../../api/apiCalls';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 import OnthegoFundTransfer from '../onthego.transfer';
-import apicalls from '../../api/apiCalls';
 const { Option } = Select;
 class FaitDeposit extends Component {
   formRef = createRef();

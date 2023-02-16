@@ -13,7 +13,6 @@ import Currency from '../shared/number.formate';
 import apicalls from '../../api/apiCalls';
 import {  getPreview } from './api'
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
-import apicalls from '../../api/apiCalls';
 class SelectCrypto extends Component {
     myRef = React.createRef();
     swapRef = React.createRef();

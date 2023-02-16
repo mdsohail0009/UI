@@ -8,7 +8,6 @@ import {Alert} from 'antd'
 import { setSellFinalRes } from '../../reducers/sellReducer'
 import apicalls from '../../api/apiCalls';
 import { setCurrentAction } from '../../reducers/actionsReducer';
-import apicalls from '../../api/apiCalls';
 
 class SellSummary extends Component {
     myRef = React.createRef();

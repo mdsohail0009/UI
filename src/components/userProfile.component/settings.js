@@ -8,7 +8,7 @@ import en from '../../lang/en';
 import ch from '../../lang/ch';
 import my from '../../lang/my';
 import Translate from 'react-translate-component';
-import apiCalls from '../../api/apiCalls';
+import apicalls from '../../api/apiCalls';
 import { LoadingOutlined } from "@ant-design/icons";
 const { Title } = Typography;
 counterpart.registerTranslations('en', en);
@@ -28,7 +28,7 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const settingsTrack = () => {
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'Settings page view', "Username": customer?.userName, "customerId": customer?.id, "Feature": 'Settings', "Remarks": 'Settings page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Settings' });
+        apicalls.trackEvent({ "Type": 'User', "Action": 'Settings page view', "Username": customer?.userName, "customerId": customer?.id, "Feature": 'Settings', "Remarks": 'Settings page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Settings' });
     }
     const getSettingsLu = async () => {
         let res = await getSettingsLuData();
