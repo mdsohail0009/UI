@@ -184,7 +184,6 @@ const convertUTCToLocalTime = (dateString) => {
 	return ;
 };
 const isErrorDispaly = (objValue) => {
-	debugger
 	if ((objValue.status >= 400 && objValue.status < 500) && objValue.status != 401) {
 		return "Something went wrong please try again!";
 	} else {
