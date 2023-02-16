@@ -31,14 +31,14 @@ class AddressDocumnet extends Component {
     docDetail = (doc) => {
         return {
             "id": doc.id || "00000000-0000-0000-0000-000000000000",
-            "documentId": this.state.documents.id,
-            "documentName": doc.name,
-            "status": true,
-            "recorder": 0,
-            "remarks":  doc.size,
-            "isChecked": true,
+            //"documentId": this.state.documents.id,
+            "fileName": doc.name,
+           // "status": true,
+           // "recorder": 0,
+            //"remarks":  doc.size,
+           // "isChecked": true,
             "state": "",
-            "path": doc?.response[0]
+           // "path": doc?.response[0]
         }
     }
   
@@ -55,7 +55,7 @@ class AddressDocumnet extends Component {
                      {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
                     <Form.Item name={"files"} required rules={[{
                         validator: (_, value) => {
-                                const isValidFiles = this.state.filesList.filter(item => (item.name || item.documentName).indexOf(".") != (item.name || item.documentName).lastIndexOf(".")).length == 0;
+                                const isValidFiles = this.state.filesList.filter(item => (item.name || item.fileName).indexOf(".") != (item.name || item.fileName).lastIndexOf(".")).length == 0;
                                 if (isValidFiles) { return Promise.resolve(); } else {
                                     this.setState({...this.state,isDocLoading:false,errorMessage:null })
                                     return Promise.reject("File don't allow double extension");
@@ -79,6 +79,7 @@ class AddressDocumnet extends Component {
                             }}
                             headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
                             onChange={({ file }) => {
+                                debugger
                                 this.setState({ ...this.state, isDocLoading: true });
                                 if (file.status === "done") {
                                     let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
@@ -88,7 +89,8 @@ class AddressDocumnet extends Component {
                                         this.setState({ ...this.state, filesList: files, isDocLoading: false, errorMessage: null });
                                         let { documents: docs } = this.state;
                                         docs?.details?.push(this.docDetail(file));
-                                        this.props?.onDocumentsChange(docs);
+                                        console.log(docs.details)
+                                        this.props?.onDocumentsChange(docs.details);
                                     }else{
                                         this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg and PDF  files" }) 
                                     }
@@ -108,9 +110,9 @@ class AddressDocumnet extends Component {
                     </Form.Item>
                     {this.state?.filesList?.map((file, indx) => <div>
                         {((file.status === "done" || file.status == true)&& file.state !='Deleted') && <> <div className="docfile custom-upload cust-upload-sy">
-                            <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "":(file.documentName?.slice(-3) === "zip" ? "file" : "")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
+                            <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "":(file.fileName?.slice(-3) === "zip" ? "file" : "")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.fileName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                             <div className="docdetails">
-                                <EllipsisMiddle suffixCount={6}>{file.name || file.documentName}</EllipsisMiddle>
+                                <EllipsisMiddle suffixCount={6}>{file.name || file.fileName}</EllipsisMiddle>
                                 <span className="upload-filesize">{(file.size || file?.remarks) ? bytesToSize(file.size || file?.remarks) : ""}</span>
                             </div>
                             <span className="icon md close c-pointer" onClick={() => {

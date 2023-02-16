@@ -30,6 +30,7 @@ const BatchpaymentView = (props) => {
     const [data,setData]=useState({});
     const [deleteGridDoc,setDeleteGridDoc]=useState(null);
     const [isLoad,setIsLoad]=useState(false);
+    
     const gridRef = React.useRef();
     const gridColumns = [
         { field: "whiteListName", title: "Whitelist Name", filter: true,width: 200},
