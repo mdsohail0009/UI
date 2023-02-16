@@ -133,7 +133,18 @@ const networkLu = (coinName) => {
         ApiControllers.common + `NetWorkLU/${coinName}`
     );
 };
-
+const isErrorDispaly = (objValue) => {
+    if (objValue.data && typeof objValue.data === "string") {
+      return objValue.data;
+    } else if (
+      objValue.originalError &&
+      typeof objValue.originalError.message === "string"
+    ) {
+      return objValue.originalError.message;
+    } else {
+      return "Something went wrong please try again!";
+    }
+  };
 export {
 	emailCheck,
 	getPayeeLu,
@@ -160,6 +171,6 @@ export {
 	saveCryptoData,
 	networkLu,
 	getWalletSource,
-	getNetWorkLucup
+	getNetWorkLucup,isErrorDispaly
 };
 
