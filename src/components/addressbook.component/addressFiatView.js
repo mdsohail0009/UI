@@ -506,21 +506,21 @@ const AddressFiatView = (props) => {
 
 													
 												</div>
-												{item?.documents?.details.map((file) => (
+												{item?.docrepoitory.map((file) => (
 													<Col xs={12} sm={12} md={12} lg={12} xxl={12}>
 														<div
 															className="docfile address-book-viewlevel"
 															key={file.id}>
 															<span
-																className={`icon xl ${(file.documentName?.slice(-3) === "zip" &&
+																className={`icon xl ${(file.fileName?.slice(-3) === "zip" &&
 																		"file") ||
-																	(file.documentName?.slice(-3) !== "zip" &&
+																	(file.fileName?.slice(-3) !== "zip" &&
 																		"") ||
-																	((file.documentName?.slice(-3) === "pdf" ||
-																		file.documentName?.slice(-3) === "PDF") &&
+																	((file.fileName?.slice(-3) === "pdf" ||
+																		file.fileName?.slice(-3) === "PDF") &&
 																		"file") ||
-																	(file.documentName?.slice(-3) !== "pdf" &&
-																		file.documentName?.slice(-3) !== "PDF" &&
+																	(file.fileName?.slice(-3) !== "pdf" &&
+																		file.fileName?.slice(-3) !== "PDF" &&
 																		"image")
 																	} mr-16`}
 															/>
@@ -529,7 +529,7 @@ const AddressFiatView = (props) => {
 																onClick={() => docPreview(file)}>
 																{file.name !== null ? (
 																	<EllipsisMiddle suffixCount={4}>
-																		{file.documentName}
+																		{file.fileName}
 																	</EllipsisMiddle>
 																) : (
 																	<EllipsisMiddle suffixCount={4}>

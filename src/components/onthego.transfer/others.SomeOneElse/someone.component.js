@@ -31,7 +31,6 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         getpayeeCreate();
     }, []);//eslint-disable-line react-hooks/exhaustive-deps
     const getpayeeCreate = async () => {
-        debugger
         setMailLoader(true);
         const createPayeeData = await createPayee(props.selectedAddress?.id || "", addressOptions.addressType);
         if (createPayeeData.ok) {
@@ -39,8 +38,10 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             setCreatePayeeObj(createPayeeData.data);
             if (props.selectedAddress?.id) {
                 setIntialObj({ ...createPayeeData.data, payeeAccountModels: createPayeeData?.data?.payeeAccountModels[0] })
-                setDocuments(createPayeeData?.data?.payeeAccountModels[0]?.documents)
+                // setDocuments(createPayeeData?.data?.payeeAccountModels[0]?.documents)
                 
+                setDocuments(createPayeeData?.data?.payeeAccountModels[0]?.docrepoitory)
+
                 
                 setAddressOptions({ ...addressOptions, domesticType: createPayeeData.data.transferType });
                 edit = true;
@@ -55,8 +56,6 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         }
     }
     const onSubmit = async (values) => {
-        debugger
-        
         if (Object.hasOwn(values?.payeeAccountModels, 'iban')) {
             setErrorMessage(null);
             if ((!bankdetails || Object.keys(bankdetails).length === 0)) {
@@ -69,7 +68,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         obj.payeeAccountModels = [payeeAccountObj()];
         obj.payeeAccountModels[0] = { ...obj.payeeAccountModels[0], ...bankdetails, ...values.payeeAccountModels };
         obj.payeeAccountModels[0].currencyType = "Fiat";
-        obj.payeeAccountModels[0].docrepoitory = documents?.payee;
+        obj.payeeAccountModels[0].docrepoitory = documents;
 
         obj.payeeAccountModels[0].walletCode = props.currency;
         if (props.selectedAddress?.id) { obj.payeeAccountModels[0].id = createPayeeObj.payeeAccountModels[0].id; }
@@ -85,7 +84,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         let payeesave = await savePayee(obj)
         if (payeesave.ok) {
             if (props.type !== "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer, documents: documents?.transfer })
+                const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer, documents: documents })
                 if (confirmRes.ok) {
                     setBtnLoading(false);
                     props.onContinue(confirmRes.data);
@@ -334,8 +333,9 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                         <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
                             <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
-                                    let temp = {...documents, "payee": docs}
-                                    setDocuments(temp)
+                                    //let temp = {...documents, "payee": docs}
+                                    //let temp = {...documents,docs}
+                                    setDocuments(docs)
                                 }} refreshData = {addressOptions?.domesticType}/>
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -420,8 +420,8 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                 (<React.Fragment>
                         <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
                     <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
-                            let temp = {...documents, "transfer": docs}
-                            setDocuments(temp)
+                            //let temp = {...documents, "transfer": docs}
+                            setDocuments(docs)
                         }} refreshData = {addressOptions?.domesticType}/>
                 </React.Fragment>)
                 }

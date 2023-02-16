@@ -55,8 +55,8 @@ const AddressCryptoView = (props) => {
 		if (res.ok) {
 			setPreviewModal(true);
 			setPreviewPath(res.data);
-		const documentName=file.documentName.split(".")
-			if(mimeType[documentName[1]])
+		const fileName=file.fileName.split(".")
+			if(mimeType[fileName[1]])
 			{
 				setMimeType(true);
 			}
@@ -206,23 +206,23 @@ const AddressCryptoView = (props) => {
 
 										</Row>
 										<Row>
-										{cryptoAddress?.documents?.details?.map((file) => (
+										{cryptoAddress?.docRepositories?.map((file) => (
 													<Col xs={12} sm={12} md={12} lg={8} xxl={8}>
 														<div
 															className="docfile mr-0 d-flex ml-8"
 															key={file.id}>
 															<span
-																className={`icon xl ${(file.documentName?.slice(-3) === "zip" &&
+																className={`icon xl ${(file.fileName?.slice(-3) === "zip" &&
 																		"file") ||
-																	(file.documentName?.slice(-3) !== "zip" &&
+																	(file.fileName?.slice(-3) !== "zip" &&
 																		"") ||
-																		((file.documentName?.slice(-3) === "mp4"||																file.documentName?.slice(-3) === "wmv"||file.documentName?.slice(-3) === "avi"||file.documentName?.slice(-3) === "mov") &&
+																		((file.fileName?.slice(-3) === "mp4"||																file.fileName?.slice(-3) === "wmv"||file.fileName?.slice(-3) === "avi"||file.fileName?.slice(-3) === "mov") &&
 																		"video")||
-																	((file.documentName?.slice(-3) === "pdf" ||
-																		file.documentName?.slice(-3) === "PDF") &&
+																	((file.fileName?.slice(-3) === "pdf" ||
+																		file.fileName?.slice(-3) === "PDF") &&
 																		"file") ||
-																	(file.documentName?.slice(-3) !== "pdf" &&
-																		file.documentName?.slice(-3) !== "PDF" &&
+																	(file.fileName?.slice(-3) !== "pdf" &&
+																		file.fileName?.slice(-3) !== "PDF" &&
 																		"image")
 																	} mr-16`}
 															/>
@@ -231,7 +231,7 @@ const AddressCryptoView = (props) => {
 																onClick={() => docPreview(file)}>
 																{file.name !== null ? (
 																	<EllipsisMiddle suffixCount={4}>
-																		{file.documentName}
+																		{file.fileName}
 																	</EllipsisMiddle>
 																) : (
 																	<EllipsisMiddle suffixCount={4}>
