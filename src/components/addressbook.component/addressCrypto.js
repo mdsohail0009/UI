@@ -11,6 +11,7 @@ import WAValidator from "multicoin-address-validator";
 import { validateContentRule } from "../../utils/custom.validator";
 import Translate from "react-translate-component";
 import AddressCryptoDocument from './addressCryptoUpload';
+import apicalls from "../../api/apiCalls";
 const { Text, Title, Paragraph } = Typography;
 const { Option } = Select;
 
@@ -57,7 +58,7 @@ class AddressCrypto extends Component {
     if(response.ok){
     this.setState({...this.state,isLoading: false,netWorkData:response.data})
     } else {
-      this.setState({ ...this.state,isLoading: false, errorMessage: this.isErrorDispaly(response) })
+      this.setState({ ...this.state,isLoading: false, errorMessage: apicalls.isErrorDispaly(response) })
     }
   }
   getCryptoData = async () => {
@@ -68,24 +69,13 @@ class AddressCrypto extends Component {
       this.setState({ ...this.state, cryptoData: response.data, isLoading: false,isEdit:true,check:response.data.isOwnerOfWalletAddress,isDocCheck:response.data.isDocumentUpload ,walletSourse: response.data?.walletSource})
     }
     else {
-      this.setState({ ...this.state, isLoading: false, errorMessage: this.isErrorDispaly(response) })
+      this.setState({ ...this.state, isLoading: false, errorMessage: apicalls.isErrorDispaly(response) })
     }
     this.form?.current?.setFieldsValue(response.data);
     this.coinList();
   }
 
-  isErrorDispaly = (objValue) => {
-    if (objValue.data && typeof objValue.data === "string") {
-      return objValue.data;
-    } else if (
-      objValue.originalError &&
-      typeof objValue.originalError.message === "string"
-    ) {
-      return objValue.originalError.message;
-    } else {
-      return "Something went wrong please try again!";
-    }
-  };
+  
   coinList = async () => {
     let response = await getCoinList("All")
     if (response.ok) {
@@ -218,9 +208,8 @@ this.useDivRef.current?.scrollIntoView(0, 0);
       }
     }
     else {
-      this.setState({ ...this.state, errorMessage: response.data, loading: false });
         this.useDivRef.current?.scrollIntoView();
-      this.setState({ ...this.state, isBtnLoading: false,  errorMessage: this.isErrorDispaly(response), });
+      this.setState({ ...this.state, isBtnLoading: false,  errorMessage: apicalls.isErrorDispaly(response),loading: false });
     }
   }
   }
