@@ -131,7 +131,9 @@ const networkLu = (coinName) => {
         ApiControllers.common + `NetWorkLU/${coinName}`
     );
 };
-
+const getNetWorkLucup=()=>{
+	return apiClient.get(ApiControllers.markets+`Coins/network`);
+}
 export {
 	emailCheck,
 	getPayeeLu,
@@ -157,7 +159,7 @@ export {
 	getCryptoData,
 	saveCryptoData,
 	networkLu,
-	getWalletSource
+	getWalletSource,getNetWorkLucup
 };
 
 
