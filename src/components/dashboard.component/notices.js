@@ -4,6 +4,7 @@ import Loader from "../../Shared/loader";
 import connectStateProps from "../../utils/state.connect";
 import { getNotices } from "./api";
 import Translate from 'react-translate-component';
+import apicalls from "../../api/apiCalls";
 const {Title}=Typography;
 const Notices = () => {
     const [loading, setLoading] = useState(true);
@@ -15,20 +16,11 @@ const Notices = () => {
         if (response.ok) {
             setNotices(response.data);
         } else {
-            setError({ hasError: true, message: isErrorDispaly(response) });
+            setError({ hasError: true, message: apicalls.isErrorDispaly(response) });
         }
         setLoading(false)
     }
-    const isErrorDispaly = (objValue) => {
-        if (objValue.data && typeof objValue.data === "string") {
-            return objValue.data;
-        } else if (objValue.originalError && typeof objValue.originalError.message === "string"
-        ) {
-            return objValue.originalError.message;
-        } else {
-            return "Something went wrong please try again!";
-        }
-    };
+    
     
     if (error.hasError) {
         return <Alert type="error" message="Alert" description={error.message || "Something went wrong please try again!"} showIcon />
