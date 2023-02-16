@@ -29,8 +29,9 @@ class AddressDocumnet extends Component {
         this.setState({ ...this.state, documents: propsDocument || document(), isEdit: this.props?.editDocument, filesList: propsDocument ? [...this.props?.documents?.details] : [],refreshData:this.props?.refreshData })
     }
     docDetail = (doc) => {
+        debugger
         return {
-            "id": doc.id || "00000000-0000-0000-0000-000000000000",
+            "id": doc?.response?.id || "00000000-0000-0000-0000-000000000000",
             //"documentId": this.state.documents.id,
             "fileName": doc.name,
            // "status": true,
