@@ -5,6 +5,7 @@ import { document } from "../onthego.transfer/api";
 import apiCalls from "../../api/apiCalls";
 import { bytesToSize } from "../../utils/service";
 import ConnectStateProps from "../../utils/state.connect";
+import {ApiControllers} from '../../api/config'
 
 const { Dragger } = Upload;
 const { Paragraph, Text } = Typography;
@@ -15,6 +16,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
         <Text className="mb-0 fs-14 docname d-block" style={{ maxWidth: '100%' }} ellipsis={{ suffix }}>
             {start}
         </Text>
+
     );
 };
 class AddressDocumnet extends Component {
@@ -65,7 +67,13 @@ class AddressDocumnet extends Component {
                     ]}>
                         <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                             className="upload mt-4"
-                            multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
+                            multiple={false}
+                             action={
+                                process.env.REACT_APP_UPLOAD_API +
+                                "api/v1/" +
+                                ApiControllers.common +
+                                "UploadFileNew?screenName=AddressBook&fieldName=uploadfile&tableName=Common.Payeeaccounts"
+                              }
                             showUploadList={false}
                             beforeUpload={(props) => {
                             }}

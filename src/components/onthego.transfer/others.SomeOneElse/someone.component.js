@@ -24,6 +24,7 @@ const SomeoneComponent = (props) => {
     const [intialObj, setIntialObj] = useState(false);
     const [isTabChange,setIsTabChange] = useState(false);
     const [form] = Form.useForm();
+    const [documentDetails,setDocumentDetails]=useState({})
     const useDivRef = React.useRef(null);
 const [edit,setEdit]=useState(false);
 const [isSelectedId,setIsSelectedId] = useState(null);
@@ -31,6 +32,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         getpayeeCreate();
     }, []);//eslint-disable-line react-hooks/exhaustive-deps
     const getpayeeCreate = async () => {
+        debugger
         setMailLoader(true);
         const createPayeeData = await createPayee(props.selectedAddress?.id || "", addressOptions.addressType);
         if (createPayeeData.ok) {
@@ -39,6 +41,9 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             if (props.selectedAddress?.id) {
                 setIntialObj({ ...createPayeeData.data, payeeAccountModels: createPayeeData?.data?.payeeAccountModels[0] })
                 setDocuments(createPayeeData?.data?.payeeAccountModels[0]?.documents)
+                
+                setDocumentDetails(createPayeeData?.data?.payeeAccountModels[0]?.documents?.payee)
+                
                 setAddressOptions({ ...addressOptions, domesticType: createPayeeData.data.transferType });
                 edit = true;
                 props?.onEdit(edit);
@@ -52,6 +57,8 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         }
     }
     const onSubmit = async (values) => {
+        debugger
+        console.log(documentDetails)
         if (Object.hasOwn(values?.payeeAccountModels, 'iban')) {
             setErrorMessage(null);
             if ((!bankdetails || Object.keys(bankdetails).length === 0)) {
@@ -64,7 +71,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         obj.payeeAccountModels = [payeeAccountObj()];
         obj.payeeAccountModels[0] = { ...obj.payeeAccountModels[0], ...bankdetails, ...values.payeeAccountModels };
         obj.payeeAccountModels[0].currencyType = "Fiat";
-        obj.payeeAccountModels[0].documents = documents?.payee;
+        obj.payeeAccountModels[0].docrepoitory = documents?.payee?.details[0];
         obj.payeeAccountModels[0].walletCode = props.currency;
         if (props.selectedAddress?.id) { obj.payeeAccountModels[0].id = createPayeeObj.payeeAccountModels[0].id; }
         obj['customerId'] = props.userProfile.id;
