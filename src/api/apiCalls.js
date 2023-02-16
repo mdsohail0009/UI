@@ -183,6 +183,24 @@ const convertUTCToLocalTime = (dateString) => {
 	const localTime = new Date(milliseconds);
 	return ;
 };
+const isErrorDispaly = (objValue) => {
+	if ((objValue.status >= 400 && objValue.status < 500) && objValue.status != 401) {
+		return "Something went wrong please try again!";
+	} else {
+		if (objValue.data && typeof objValue.data === "string") {
+			return objValue.data;
+		} else if (objValue.data && objValue.data.title && typeof objValue.data.title) {
+			return objValue.data.title;
+		} else if (
+			objValue.originalError &&
+			typeof objValue.originalError.message === "string"
+		) {
+			return objValue.originalError.message;
+		} else {
+			return "Something went wrong please try again!";
+		}
+	}
+};
 let apicalls = {
 	getportfolio,
 	getCryptos,
@@ -217,6 +235,6 @@ let apicalls = {
 	getPayeeCryptoLu,
 	getPayeeCrypto,
 	confirmCryptoTransaction,
-	convertUTCToLocalTime
+	convertUTCToLocalTime,isErrorDispaly
 };
 export default apicalls;
