@@ -10,7 +10,6 @@ import my from '../../lang/my';
 import Translate from 'react-translate-component';
 import apiCalls from '../../api/apiCalls';
 import { LoadingOutlined } from "@ant-design/icons";
-
 const { Title } = Typography;
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -38,7 +37,7 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
         }
         else
         {
-            setErrorMsg(isErrorDispaly(res))
+            setErrorMsg(apicalls.isErrorDispaly(res))
         }
     }
     const saveSettings = async () => {
@@ -61,23 +60,12 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
             
         }
         else{
-            setErrorMsg(isErrorDispaly(res))
+            setErrorMsg(apicalls.isErrorDispaly(res))
             setIsLoading(false);
             setBtnDisabled(false);
         }
     }
-    const isErrorDispaly = (objValue) => {
-        if (objValue.data && typeof objValue.data === "string") {
-          return objValue.data;
-        } else if (
-          objValue.originalError &&
-          typeof objValue.originalError.message === "string"
-        ) {
-          return objValue.originalError.message;
-        } else {
-          return "Something went wrong please try again!";
-        }
-      };
+   
         const antIcon = (
             <LoadingOutlined
                 style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}

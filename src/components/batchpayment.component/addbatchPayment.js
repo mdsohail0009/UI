@@ -11,6 +11,7 @@ import PaymentPreview from './paymentPreview';
 import pending1 from '../../assets/images/pending1.png'
 import Loader from '../../Shared/loader';
 import { getVerificationFields } from "../onthego.transfer/verification.component/api"
+import apicalls from '../../api/apiCalls';
 const { Title, Paragraph, Text } = Typography
 class AddBatchPayment extends Component {
     useDivRef = React.createRef()
@@ -70,7 +71,7 @@ class AddBatchPayment extends Component {
               this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: true })
           }
         } else {
-          this.setState({ ...this.state, isVarificationLoader: false, errorMessage: this.isErrorDispaly(verfResponse) })
+          this.setState({ ...this.state, isVarificationLoader: false, errorMessage: apicalls.isErrorDispaly(verfResponse) })
         }
         }
     handleSearch = ({ target: { value: val } }) => {
@@ -170,22 +171,11 @@ handleUpload = ({ file }) => {
           }
     }
       else{
-        this.setState({...this.state,insufficientModal:true,showInprogressModal:true,errorMessage:(this.isErrorDispaly(response)),worningMessage:null, paymentSummary:false,uploadErrorModal:false})
+        this.setState({...this.state,insufficientModal:true,showInprogressModal:true,errorMessage:(apicalls.isErrorDispaly(response)),worningMessage:null, paymentSummary:false,uploadErrorModal:false})
       }
     
     }
-      isErrorDispaly = (objValue) => {
-        if (objValue.data && typeof objValue.data === "string") {
-          return objValue.data;
-        } else if (
-          objValue.originalError &&
-          typeof objValue.originalError.message === "string"
-        ) {
-          return objValue.originalError.message;
-        } else {
-          return "Something went wrong please try again!";
-        }
-      };
+    
 goToGrid=()=>{
     this.closeDrawer();
     this.setState({...this.state,showInprogressModal:false,errorMessage:null,worningMessage:null,isCoinsListHide:false})
@@ -213,7 +203,7 @@ downLoadPreview=()=>{
             this.setState({...this.state,refreshBtnLoader:false,reefreshData:res.data,showInprogressModal:false,showModal:true,errorMessage:null})
         }
         }else{
-            this.setState({...this.state,errorMessage:this.isErrorDispaly(res),refreshBtnLoader:false,})
+            this.setState({...this.state,errorMessage:apicalls.isErrorDispaly(res),refreshBtnLoader:false,})
         }
 }
     }
@@ -224,7 +214,7 @@ downLoadPreview=()=>{
             this.setState({ ...this.state, showModal: false,errorMessage:null, uploadErrorModal: false, paymentPreview: true,worningMessage:null,btnloader:false })
         }
         else{
-            this.setState({...this.state,errorMessage:this.isErrorDispaly(res),btnloader:false})
+            this.setState({...this.state,errorMessage:apicalls.isErrorDispaly(res),btnloader:false})
         }
     }
     confirmTransaction=async(id)=>{

@@ -8,6 +8,7 @@ import {Alert} from 'antd'
 import { setSellFinalRes } from '../../reducers/sellReducer'
 import apicalls from '../../api/apiCalls';
 import { setCurrentAction } from '../../reducers/actionsReducer';
+import apicalls from '../../api/apiCalls';
 
 class SellSummary extends Component {
     myRef = React.createRef();
@@ -75,23 +76,13 @@ class SellSummary extends Component {
                 this.props.fetchDashboardData(this.props.customer.id)
                 this.props.fetchMarketCoinDataValue();
             } else {
-                this.setState({ ...this.state, loader: false,isLoading: false, disableConfirm: false, error: { valid: false, message: this.isErrorDispaly(res),title: apicalls.convertLocalLang('sellCrypto'),agreeRed:false }  } )
+                this.setState({ ...this.state, loader: false,isLoading: false, disableConfirm: false, error: { valid: false, message: apicalls.isErrorDispaly(res),title: apicalls.convertLocalLang('sellCrypto'),agreeRed:false }  } )
                 this.myRef.current.scrollIntoView();
             }
         }
     }
-    isErrorDispaly = (objValue) => {
-        if (objValue.data && typeof objValue.data === "string") {
-          return objValue.data;
-        } else if (
-          objValue.originalError &&
-          typeof objValue.originalError.message === "string"
-        ) {
-          return objValue.originalError.message;
-        } else {
-          return "Something went wrong please try again!";
-        }
-      };
+    
+    
       loadPermissions = () => {
 		if (this.props.buySellPermissions) {
 			clearInterval(this.permissionsInterval);

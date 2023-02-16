@@ -5,6 +5,7 @@ import List from "../grid.component";
 import FilePreviewer from "react-file-previewer";
 import{uploadDocuments,getFileURL,deleteDocumentDetails} from './api';
 import Loader from '../../Shared/loader';
+import apicalls from '../../api/apiCalls';
 const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
     const suffix = children.slice(-suffixCount).trim();
@@ -188,24 +189,13 @@ const BatchpaymentView = (props) => {
               });
         }
         else{
-            setErrorMessage(isErrorDispaly(res));
+            setErrorMessage(apicalls.isErrorDispaly(res));
             gridRef?.current?.refreshGrid();
             setIsLoad(false);
             setDeleteModal(false);
         }
     }
- const isErrorDispaly = (objValue) => {
-		if (objValue.data && typeof objValue.data === "string") {
-		  return objValue.data;
-		} else if (
-		  objValue.originalError &&
-		  typeof objValue.originalError.message === "string"
-		) {
-		  return objValue.originalError.message;
-		} else {
-		  return "Something went wrong please try again!";
-		}
-	  };
+ 
     const uploadDocument= async()=>{
         setIsLoad(true);
         setErrorMessage(null);
@@ -242,7 +232,7 @@ const BatchpaymentView = (props) => {
                   });
              }
                 else{
-                    setErrorMessage(isErrorDispaly(res))
+                    setErrorMessage(apicalls.isErrorDispaly(res))
                     gridRef?.current?.refreshGrid();
                     setIsLoad(false);
                 }

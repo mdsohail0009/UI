@@ -77,21 +77,10 @@ class RequestedDocs extends Component {
                 }
             });
         } else {
-            this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: false, data: [], error: this.isErrorDispaly(response) } } });
+            this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: false, data: [], error: apicalls.isErrorDispaly(response) } } });
         }
     }
-    isErrorDispaly = (objValue) => {
-        if (objValue.data && typeof objValue.data === "string") {
-          return objValue.data;
-        } else if (
-          objValue.originalError &&
-          typeof objValue.originalError.message === "string"
-        ) {
-          return objValue.originalError.message;
-        } else {
-          return "Something went wrong please try again!";
-        }
-      };
+
     docPreview = async (file) => {
         let res = await getFileURL({ url: file.path });
         if (res.ok) {

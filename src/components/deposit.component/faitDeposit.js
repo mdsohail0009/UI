@@ -14,7 +14,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import apicalls from '../../api/apiCalls';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 import OnthegoFundTransfer from '../onthego.transfer';
-
+import apicalls from '../../api/apiCalls';
 const { Option } = Select;
 class FaitDeposit extends Component {
   formRef = createRef();
@@ -99,18 +99,7 @@ class FaitDeposit extends Component {
       }
     }
   }
-  isErrorDispaly = (objValue) => {
-    if (objValue.data && typeof objValue.data === "string") {
-      return objValue.data;
-    } else if (
-      objValue.originalError &&
-      typeof objValue.originalError.message === "string"
-    ) {
-      return objValue.originalError.message;
-    } else {
-      return "Something went wrong please try again!";
-    }
-  };
+
   handlFiatDep = async (e, currencyLu) => {
     let { depObj } = this.state;
     depObj.currency = e;
@@ -127,7 +116,7 @@ class FaitDeposit extends Component {
             });
           } else {
             this.setState({
-              ...this.state, bankLoader: false, errorMessage: this.isErrorDispaly(reqdepositObj)
+              ...this.state, bankLoader: false, errorMessage: apicalls.isErrorDispaly(reqdepositObj)
             });
           }
         } else {

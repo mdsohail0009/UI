@@ -25,7 +25,7 @@ class Referral extends Component {
         if(res.ok){
             this.setState({...this.state,referaldata:res.data,isLoading:false,errorMsg:null})
         }else{
-            this.setState({...this.state,isLoading:false,errorMsg:this.isErrorDispaly(res)})
+            this.setState({...this.state,isLoading:false,errorMsg:apicalls.isErrorDispaly(res)})
         }
     }
     success = () => {
@@ -35,18 +35,7 @@ class Referral extends Component {
         return 
       
     }
-	isErrorDispaly = (objValue) => {
-		if (objValue.data && typeof objValue.data === "string") {
-		  return objValue.data;
-		} else if (
-		  objValue.originalError &&
-		  typeof objValue.originalError.message === "string"
-		) {
-		  return objValue.originalError.message;
-		} else {
-		  return "Something went wrong please try again!";
-		}
-	  };
+
 	render() {
 		return (
       <>

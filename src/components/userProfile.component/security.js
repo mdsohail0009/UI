@@ -11,6 +11,7 @@ import Moment from "react-moment";
 import apiCalls from "../../api/apiCalls";
 import { LoadingOutlined } from "@ant-design/icons";
 import Loader from "../../Shared/loader";
+import apicalls from "../../api/apiCalls";
 const { Title, Paragraph, Text } = Typography;
 const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA }) => {
   const [form] = Form.useForm();
@@ -45,21 +46,10 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
       form.setFieldsValue(response.data);
     }
     else{
-      return setError(isErrorDispaly(response));
+      return setError(apicalls.isErrorDispaly(response));
     }
   }
-  const isErrorDispaly = (objValue) => {
-    if (objValue.data && typeof objValue.data === "string") {
-      return objValue.data;
-    } else if (
-      objValue.originalError &&
-      typeof objValue.originalError.message === "string"
-    ) {
-      return objValue.originalError.message;
-    } else {
-      return "Something went wrong please try again!";
-    }
-  };
+  
   const securityTrack = () => {
     apiCalls.trackEvent({
       Type: "User",
@@ -128,12 +118,12 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
 
         } else if(email||phone||factor||live===false){
           useDivRef.current.scrollIntoView(0,0);
-          setError(isErrorDispaly(response));
+          setError(apicalls.isErrorDispaly(response));
            setIsLoading(false)
            setBtnDisabled(false)
         }
         else {
-          setError(isErrorDispaly(response))
+          setError(apicalls.isErrorDispaly(response))
           setIsLoading(false)
           setBtnDisabled(false)
         }

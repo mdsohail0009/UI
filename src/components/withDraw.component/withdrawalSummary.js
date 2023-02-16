@@ -16,6 +16,7 @@ import {
 import { LoadingOutlined } from "@ant-design/icons";
 import NumberFormat from "react-number-format";
 import { setCurrentAction } from "../../reducers/actionsReducer";
+import apicalls from "../../api/apiCalls";
 const WithdrawalFiatSummary = ({
 	sendReceive,
 	userConfig,
@@ -265,23 +266,12 @@ const WithdrawalFiatSummary = ({
 			setIsLoding(false);
 			changeStep("step7");
 		} else {
-			setMsg(isErrorDispaly(withdrawal));
+			setMsg(apicalls.isErrorDispaly(withdrawal));
 			setIsLoding(false);
 			setDisableSave(false);
 		}
 	};
-	const isErrorDispaly = (objValue) => {
-		if (objValue.data && typeof objValue.data === "string") {
-		  return objValue.data;
-		} else if (
-		  objValue.originalError &&
-		  typeof objValue.originalError.message === "string"
-		) {
-		  return objValue.originalError.message;
-		} else {
-		  return "Something went wrong please try again!";
-		}
-	  };
+
 	const fullNumber = oidc.phone_number;
 	const last4Digits = fullNumber?.slice(-4);
 	const maskedNumber = last4Digits?.padStart(fullNumber.length, "*");

@@ -6,6 +6,7 @@ import pending from '../../assets/images/pending.png';
 import NumberFormat from "react-number-format";
 import Verifications from "../onthego.transfer/verification.component/verifications"
 import {proceedTransaction} from './api'
+import apicalls from '../../api/apiCalls';
 const { Title, Paragraph, Text } = Typography
 
 class PaymentSummary extends Component {
@@ -88,23 +89,12 @@ class PaymentSummary extends Component {
 				this.setState({ ...this.state, showDeclaration:false,insufficientModal:true,loading:false});
 			}
 		}else{
-			this.setState({ ...this.state,  errorMessage: this.isErrorDispaly(response) ,loading:false})
+			this.setState({ ...this.state,  errorMessage: apicalls.isErrorDispaly(response) ,loading:false})
 
 		}
 	}
 	
-	isErrorDispaly = (objValue) => {
-		if (objValue.data && typeof objValue.data === "string") {
-		  return objValue.data;
-		} else if (
-		  objValue.originalError &&
-		  typeof objValue.originalError.message === "string"
-		) {
-		  return objValue.originalError.message;
-		} else {
-		  return "Something went wrong please try again!";
-		}
-	  };
+
 	handleBack=()=>{
 		this.props.history.push('/cockpit');
 	}

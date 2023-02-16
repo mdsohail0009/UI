@@ -9,7 +9,7 @@ import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboa
 import apicalls from '../../api/apiCalls';
 import {Alert} from 'antd'
 import { setCurrentAction } from '../../reducers/actionsReducer';
-
+import apicalls from '../../api/apiCalls';
 class BuySummary extends Component {
   myRef = React.createRef();
   constructor(props) {
@@ -111,7 +111,7 @@ class BuySummary extends Component {
 
         this.setState({
           ...this.state,
-          error: { valid: false, message: this.isErrorDispaly(response),agreeRed:true, }
+          error: { valid: false, message: apicalls.isErrorDispaly(response),agreeRed:true, }
         });
       }
       this.myRef?.current?.scrollIntoView();
@@ -129,18 +129,7 @@ class BuySummary extends Component {
 
     }
   };
-  isErrorDispaly = (objValue) => {
-    if (objValue.data && typeof objValue.data === "string") {
-      return objValue.data;
-    } else if (
-      objValue.originalError &&
-      typeof objValue.originalError.message === "string"
-    ) {
-      return objValue.originalError.message;
-    } else {
-      return "Something went wrong please try again!";
-    }
-  };
+ 
   loadPermissions = () => {
 		if (this.props.buySellPermissions) {
 			clearInterval(this.permissionsInterval);

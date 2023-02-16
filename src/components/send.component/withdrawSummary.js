@@ -27,7 +27,6 @@ import NumberFormat from "react-number-format";
 import { setCurrentAction } from "../../reducers/actionsReducer";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import apicalls from '../../api/apiCalls';
-
 const { Title } = Typography;
 
 class WithdrawSummary extends Component {
@@ -542,7 +541,7 @@ class WithdrawSummary extends Component {
 				else {
 					this.setState({
 						...this.state,
-						errorMsg: this.isErrorDispaly(withdrawal), btnLoading: false
+						errorMsg: apicalls.isErrorDispaly(withdrawal), btnLoading: false
 					});
 				}
 			}
@@ -554,16 +553,7 @@ class WithdrawSummary extends Component {
 			}
 		}
 	};
-	isErrorDispaly = (objValue) => {
-		if (objValue.data && typeof objValue.data === "string") {
-			return objValue.data;
-		} else if (objValue.originalError && typeof objValue.originalError.message === "string"
-		) {
-			return objValue.originalError.message;
-		} else {
-			return "Something went wrong please try again!";
-		}
-	};
+	
 
 	onBackSend = () => {
 		 this.props.dispatch(hideSendCrypto(false));

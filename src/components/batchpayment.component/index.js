@@ -8,7 +8,7 @@ import PaymentPreview from './paymentPreview';
 import moment from "moment/moment";
 import { Link } from "react-router-dom";
 import {deleteBatchPayments,getInvalidTransactionData} from './api'
-
+import apicalls from '../../api/apiCalls';
 import ActionsToolbar from "../toolbar.component/actions.toolbar";
 const { Title, Text, Paragraph } = Typography;
 const Batchpayments = (props) => {
@@ -167,7 +167,7 @@ const Batchpayments = (props) => {
         });
       }
       else{
-        setErrorMessage(isErrorDispaly(res));
+        setErrorMessage(apicalls.isErrorDispaly(res));
         gridRef?.current?.refreshGrid();
         setDeleteModal(false);
         setIsLoad(false);
@@ -202,18 +202,7 @@ const Batchpayments = (props) => {
       };
       actions[key]();
     };
-   const isErrorDispaly = (objValue) => {
-      if (objValue.data && typeof objValue.data === "string") {
-        return objValue.data;
-      } else if (
-        objValue.originalError &&
-        typeof objValue.originalError.message === "string"
-      ) {
-        return objValue.originalError.message;
-      } else {
-        return "Something went wrong please try again!";
-      }
-    };
+   
       return (
         <>
           <div className='main-container'>
