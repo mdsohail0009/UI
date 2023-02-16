@@ -68,6 +68,15 @@ class AddressBook extends Component {
 		this.setState({...this.state,cryptoFiat:false})
 		this.props.dispatch(getScreenName({getScreen:null}))
 		this.permissionsInterval = setInterval(this.loadPermissions, 200);
+		if (process.env.REACT_APP_ISTR=="false") {
+			const obj=[{field: "walletSource", title: "Wallet Source", width: 150, filter:true},{ field: "isProofofOwnership", title: "Proof Of Ownership", width: 200, 
+			customCell: (props) => (
+				<td>
+					{props.dataItem?.isProofofOwnership===true?"Yes":"No"}
+				</td>
+			)}]
+			this.columnsCrypto.splice(5,0,...obj)     
+		 }
 		if(!this.state.cryptoFiat){
 			this.props.changeStep("step1");
 		}
@@ -264,13 +273,6 @@ class AddressBook extends Component {
 			width: 380,
 		},
 		
-		 { field: "walletSource", title: "Wallet Source", width: 150, filter: true },
-		 { field: "isProofofOwnership", title: "Proof Of Ownership", width: 200,
-		customCell: (props) => (
-			<td>
-				{props.dataItem?.isProofofOwnership===true?"Yes":"No"}
-			</td>
-		) },
 		{
 			field: "addressState",
 			title: apiCalls.convertLocalLang("Whitelisting_Status"),
