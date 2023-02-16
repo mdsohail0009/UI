@@ -61,7 +61,7 @@ class AddressCrypto extends Component {
     }
   }
   getCryptoData = async () => {
-    let id = this.props?.addressBookReducer?.selectedRowData?.id || "00000000-0000-0000-0000-000000000000";
+    let id = this.props?.addressBookReducer?.selectedRowData?.id ||this.props.cryptoId || "00000000-0000-0000-0000-000000000000";
     this.setState({ ...this.state, isLoading: true })
     let response = await getCryptoData(id);
     if (response.ok) {
@@ -197,7 +197,7 @@ this.useDivRef.current?.scrollIntoView(0, 0);
     let response = await saveCryptoData(obj)
     if (response.ok) {
       this.setState({ ...this.state, isBtnLoading: false })
-      if (window?.location?.pathname.includes('addressbook')&& this.props.type === "manual") {
+      if ((window?.location?.pathname.includes('addressbook') || this.props.isSave)&& this.props.type === "manual") {
         if(!(this.state.cryptoData.adressstate ==="Approved" && this.state.cryptoData.isProofofOwnership===false) ||(this.state.cryptoData.walletSource===null && this.state.cryptoData.isOwnerOfWalletAddress===null)){
           this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true,showDeclartionApproved: false,approvedAddress:false });
         }else if((obj.documents?.details?.length===0 ||obj.documents===undefined || this.state.cryptoData?.documents===undefined) && this.state.cryptoData.adressstate ==="Approved" && this.state.cryptoData.isProofofOwnership===false){
