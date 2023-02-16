@@ -1,476 +1,836 @@
-import React, { Component } from "react";
-import { Form, Typography, Input, Button, Select, Image, Alert, Row, Col, Popover, Tooltip } from "antd";
-import alertIcon from '../../assets/images/pending.png';
-import { setAddressStep } from "../../reducers/addressBookReducer";
-import { setAddress, setStep, setWithdrawcrypto, rejectWithdrawfiat, setSendCrypto, hideSendCrypto } from "../../reducers/sendreceiveReducer";
+import React, { useEffect, useState } from "react";
+import {
+	Form,
+	Input,
+	Row,
+	Col,
+	Select,
+	Typography,
+	Button,
+	Modal,
+	Alert,
+	Tooltip,
+	message
+} from "antd";
+import { publishShowActions } from "../grid.component/subscribir";
+import { handleCurrency } from "../../reducers/bankReducer";
+import {
+	getCoinList,
+	getCurrency,
+	getPayeeData,
+	getFileURL,
+   savePayeeAccounts 
+
+} from "./api";
 import { connect } from "react-redux";
-import { getCryptoData, saveCryptoData, getCoinList, getWalletSource } from "./api";
-import Loader from '../../Shared/loader';
-import WAValidator from "multicoin-address-validator";
+import { bytesToSize } from "../../utils/service";
+import Loader from "../loader.component";
 import { validateContentRule } from "../../utils/custom.validator";
-import Translate from "react-translate-component";
-import AddressCryptoDocument from './addressCryptoUpload';
-import apicalls from "../../api/apiCalls";
+import FilePreviewer from "react-file-previewer";
+import apiCalls from "../../api/apiCalls";
 
-const { Text, Title, Paragraph } = Typography;
+
 const { Option } = Select;
+const { Text } = Typography;
+const EllipsisMiddle = ({ suffixCount, children }) => {
+	const start = children.slice(0, children.length - suffixCount).trim();
+	const suffix = children.slice(-suffixCount).trim();
+	return (
+		<Text
+			className="mb-0 fs-14 docnames c-pointer d-block"
+			style={{ maxWidth: "100% !important" }}
+			ellipsis={{ suffix }}>
+			{start}
+		</Text>
+	);
+};
+function AddressBookDetails(props, { trackAuditLogData }) {
+	const [form] = Form.useForm();
+	const [isLoading, setIsLoading] = useState(false);
+	const [cryptoAddress, setCryptoAddress] = useState({});
+	const [fiatAddress, setFiatAddress] = useState({});
+	const [coinList, setCoinList] = useState([]);
+	const [currency, setCurrency] = useState([]);
+	const [files, setFiles] = useState([]);
+	const [errorMsg, setErrorMsg] = useState(null);
+	const [previewPath, setPreviewPath] = useState(null);
+	const [previewModal, setPreviewModal] = useState(false);
+	const [isEdit, setIsEdit] = useState(false);
+	const [isAddress, setIsAddress] = useState("");
+	const [isBtnLoading, setBtnLoading] = useState(false);
+	const [bankType, setBankType] = useState("");
 
-class AddressCrypto extends Component {
-  form = React.createRef();
-  useDivRef = React.createRef()
-  constructor(props) {
-    super(props);
-    this.state = {
-      errorMessage: null,
-      ibanDetailsLoading: false,
-      isLoading: true,
-      details: {},
-      ibanDetails: {},
-      docDetails: {},
-      isBtnLoading: false,
-      showDeclartion: false,
-      iBanValid: false,
-      cryptoData: {},
-      coinsList: [],
-      networksList: [],
-      wallet: [],
-      isEdit: false,
-      documents: null,
-      walletSource: null,
-      walletSourse: null,
-      check: false,
+	useEffect(() => {
+		publishShowActions(false);
+		if (props.match.params?.type === "Crypto") {
+			getCoinData();
+		}
+		getCurrencyData();
+		loadData();
+	}, []);//eslint-disable-line react-hooks/exhaustive-deps
+	const loadData = async () => {
+		setIsLoading(true);
+		let response = await getPayeeData(props.match.params.payeeId,props.match.params.id);
+		if (response.ok) {
+			setErrorMsg(null)
+			setCryptoAddress(response.data);
+			setFiatAddress(response.data);
+			setIsAddress(response.data.addressState);
+			response.data.addressState === "Approved" ||
+				response.data.addressState === "Rejected"
+				? setIsEdit(true)
+				: setIsEdit(false);
 
-    };
-  }
+			//!---------- this code is for multiple documents ---------
+			let fileDetails = response.data.details;
+			if (fileDetails) {
+				if (fileDetails.length !== 0) {
+					fileDetails.forEach((item) => {
+						let obj = {};
+						obj.id = item.id;
+						obj.name = item.documentName;
+						obj.size = item.remarks;
+						obj.response = [item.path];
 
-  componentDidMount() {
-    this.getCryptoData();
-    this.handleWallet();
-  }
-  getCryptoData = async () => {
-    let id = this.props?.addressBookReducer?.selectedRowData?.id || "00000000-0000-0000-0000-000000000000";
-    this.setState({ ...this.state, isLoading: true, errorMessage: null })
-    let response = await getCryptoData(id);
-    if (response.ok) {
-      this.setState({ ...this.state, cryptoData: response.data, isLoading: false, errorMessage: null })
-    }
-    else {
-      this.setState({ ...this.state, isLoading: false, errorMessage: apicalls.isErrorDispaly(response) })
-    }
-    this.form?.current?.setFieldsValue(response.data);
-    this.coinList();
-  }
+						setFiles((preState) => [...preState, obj]);
+					});
+				}
+			}
+			setBankType(response.data?.walletCode);
+			form.setFieldsValue({
+				...response.data, addressType: addressTypeNames(response.data.addressType),
+			});
 
-  coinList = async () => {
-    let response = await getCoinList("All")
-    if (response.ok) {
-      this.setState({ ...this.state, coinsList: response.data, isLoading: false, errorMessage: null })
-    } else {
-      this.setState({ ...this.state, coinsList: [], isLoading: false, errorMessage: apicalls.isErrorDispaly(response) })
-    }
-    if (this.state.cryptoData.network) {
-      let val = this.state.cryptoData.token
-      this.handleTokenChange(val);
-      this.form?.current?.setFieldsValue({ network: this.state.cryptoData.network })
-    }
-    else if (this.props.sendReceive?.withdrawFiatObj?.walletCode) {
-      this.form?.current?.setFieldsValue({ token: this.props.sendReceive?.withdrawFiatObj?.walletCode })
-      let val = this.props.sendReceive?.withdrawFiatObj?.walletCode
-      this.handleTokenChange(val);
-    }
-    else if (this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !== " "
-      || this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin != null ||
-      this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin !== undefined) {
-      let val = this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin
-      this.form?.current?.setFieldsValue({ token: val });
-      this.handleTokenChange(val);
-    }
-  }
+		} else {
+			setErrorMsg(apiCalls.isErrorDispaly(response));
+			setIsLoading(false);
+		}
+		setIsLoading(false);
+	};
 
-  handleTokenChange = (value) => {
-    this.form?.current?.setFieldsValue({ network: null });
-    let walletAddress = this.form?.current?.getFieldValue("walletAddress");
-    if (value && walletAddress) {
-      this.form?.current?.validateFields(["walletAddress"], this.validateAddressType(value))
-    }
-    let networkLu = [];
-    if (value) {
-      this.state.coinsList?.filter(function (item) {
-        if (item.walletCode === value) {
-          return networkLu = item?.network;
-        }
-        return false;
-      })
-    }
-    this.setState({ ...this.state, networksList: networkLu })
-  };
-  handleWalletSource = (value) => {
-    if (this.state.cryptoData?.id === "00000000-0000-0000-0000-000000000000") {
-      this.form?.current?.setFieldsValue({ otherWallet: null });
-    }
-    this.setState({ ...this.state, walletSourse: value })
-  }
+	const addressTypeNames = (type) => {
+		if (props.match.params.type === "Crypto") {
+			const stepcodes = {
+				"1stparty": "first_Party",
+				"3rdparty": "third_Party",
+			};
+			return stepcodes[type];
+		}
+		else {
+			const stepcodes = {
+				"ownbusiness": "Own Business",
+				"individuals": "Individuals",
+				"otherbusiness": "Other Business",
+				"myself": "My Self"
+			}
+			return stepcodes[type];
+		}
+		
+	};
+	const getCoinData = async () => {
+		let res = await getCoinList("All");
+		if (res.ok) {
+			setErrorMsg(null)
+			setCoinList(res.data);
+		} else {
+			setErrorMsg(apiCalls.isErrorDispaly(res));
+		}
+	};
+	const getCurrencyData = async () => {
+		let res = await getCurrency();
+		if (res.ok) {
+			setErrorMsg(null)
+			setCurrency(res.data);
+		} else {
+			setErrorMsg(apiCalls.isErrorDispaly(res));
+		}
+	};
+	const saveAddressBook = async (values) => {
+		setIsLoading(false);
+		setBtnLoading(true);	
+		
+		values["id"] = props.match.params.payeeId;
+		values["payeeId"] = props.match.params.id;
+		values["modifiedBy"] = props.userConfig.userName;
+		values["type"] = props.match.params.type === "Crypto" ? "Crypto" : "Fiat";
+			let saveObj = Object.assign({}, values);
+			saveObj.customerId = props.userConfig?.id;
+			saveObj.info = JSON.stringify(props.trackAuditLogData);
+			saveObj.adminId = props?.userConfig?.id;
+			let response = await savePayeeAccounts(saveObj);
+			if (response.ok) {
+				setBtnLoading(true);
+				message.destroy();
+				setErrorMsg(null)
+				message.success({
+					content: "Address Book details saved successfully",
+					className: "custom-msg",
+					duration: 3
+				});
+				props.history.push("/addressbook");
+				form.resetFields();
+			} else {
+				setBtnLoading(false);
+				message.destroy();
+				setErrorMsg(apiCalls.isErrorDispaly(response));
+			}
+			setIsLoading(false);
+		
+	};
+	
+	const backToAddressBook = () => {
+		props.history.push("/addressbook");
+	};
+	const options = coinList?.map((item, idx) => (
+		<option key={idx} value={item.walletCode}>
+			{item.walletCode}
+		</option>
+	));
+	const addressTypeName = (type) => {
+		const stepcodes = {
+			"Reject": "Rejected",
+			"Rejected": "Rejected",
+			"Approved": "Approved",
+			"Approve": "Approved"
+		}
+		return stepcodes[type]
+	}
+	const handleStateChange = (val) => {
+		setErrorMsg(null);
+		let values = addressTypeName(val)
+		setFiatAddress({ ...fiatAddress, addressState: values });
+	};
+	const handleChangeCrypto = (value) => {
 
-  handleWallet = async () => {
-    let res = await getWalletSource();
-    if (res.ok) {
-      this.setState({ ...this.state, wallet: res.data })
-    }
-  }
-  handleCheck = (e) => {
-    this.setState({ ...this.state, check: e.target.checked })
+		let values = addressTypeName(value)
+		setCryptoAddress({ ...cryptoAddress, addressState: values })
 
-  }
+	}
+	const docPreview = async (file) => {
+		let res = await getFileURL({ url: file.response[0] });
+		if (res.ok) {
+			setErrorMsg(null)
+			setPreviewModal(true);
+			setPreviewPath(res.data);
+		} else {
+			setErrorMsg(apiCalls.isErrorDispaly(response));
+		}
+	};
+	const filePreviewPath = () => {
+		return previewPath;
+	};
+	const filePreviewModal = (
+		<Modal
+			className="documentmodal-width"
+			destroyOnClose={true}
+			title="Preview"
+			width={1000}
+			visible={previewModal}
+			closeIcon={
+				<Tooltip title="Close">
+					<span className="icon md x c-pointer" onClick={() => setPreviewModal(false)} />
+				</Tooltip>
+			}
+			footer={
+				<>
+					<Button
+						type="primary"
+						onClick={() => setPreviewModal(false)}
+						className="primary-btn cancel-btn">
+						Close
+					</Button>
+					<Button
+						type="primary"
+						className="primary-btn"
+						onClick={() => window.open(previewPath, "_blank")}>
+						Download
+					</Button>
+				</>
+			}>
+			<FilePreviewer
+				hideControls={true}
+				file={{
+					url: previewPath ? filePreviewPath() : null,
+					mimeType: previewPath?.includes(".pdf") ? "application/pdf" : "",
+				}}
+			/>
+		</Modal>
+	);
 
-  submit = async (values) => {
-    if (!values.isOwnerOfWalletAddress) {
-      this.setState({
-        ...this.state,
-        errorMessage: "Please select owner check box",
-        agreeRed: false,
-      });
-      this.useDivRef.current?.scrollIntoView(0, 0);
-    }
-    else {
-      let obj = {
-        id: "00000000-0000-0000-0000-000000000000",
-        saveWhiteListName: values.saveWhiteListName,
-        token: values.token,
-        network: values.network,
-        createddate: new Date(),
-        userCreated: this.props.userProfile.userName,
-        modifiedDate: new Date(),
-        modifiedBy: this.props.userProfile.userName,
-        status: 1,
-        adressstate: "fd",
-        currencyType: "Crypto",
-        walletAddress: values.walletAddress.trim(),
-        customerId: this.props.userProfile.id,
-        isOwnerOfWalletAddress: values.isOwnerOfWalletAddress,
-        walletSource: values.walletSource,
-        otherWallet: values.otherWallet,
-        documents: this.state.cryptoData?.documents || this.state.details.documents
-      }
-      if (this.state.cryptoData.id !== "00000000-0000-0000-0000-000000000000") {
-        obj.id = this.state.cryptoData.id;
-      }
-      this.setState({ ...this.state, isBtnLoading: true })
-      let response = await saveCryptoData(obj)
-      if (response.ok) {
-        this.setState({ ...this.state, isBtnLoading: false })
-        if (window?.location?.pathname.includes('addressbook') && this.props.type === "manual") {
-          this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
-          this.props.headingUpdate(true)
-        }
-        else {
-          let _obj = this.props.sendReceive?.withdrawCryptoObj;
-          this.props?.dispatch(setWithdrawcrypto({ ..._obj, addressBookId: response.data?.payeeAccountId || response.data?.id, toWalletAddress: values?.walletAddress, network: values?.network, isShowDeclaration: true }));
-          this.props.dispatch(rejectWithdrawfiat());
-          this.props.dispatch(hideSendCrypto(false));
-          this.props.dispatch(setSendCrypto(true));
-          this.props.changeStep('withdraw_crpto_summary');
-        }
-      }
-      else {
-        this.setState({ ...this.state, errorMessage: response.data, loading: false });
-        this.useDivRef.current.scrollIntoView();
-        this.setState({ ...this.state, isBtnLoading: false, errorMessage: apicalls.isErrorDispaly(response), });
-      }
-    }
-  }
-  editDocuments = (docs) => {
-    let { documents } = this.state.details;
-    if (this.state.isEdit) {
-      documents = docs;
-    } else {
-      documents = docs;
-    }
-    this.setState({ ...this.state, details: { ...this.state.details, documents } })
-
-  }
-
-  validateAddressType = (_, value) => {
-    if (value) {
-      let address = value.trim();
-      let coinType = this.form?.current?.getFieldValue("token");
-      if (coinType) {
-        const validAddress = WAValidator.validate(address, coinType, "both");
-        if (!validAddress && coinType != "USDT") {
-          return Promise.reject(
-            "Address is not valid, Please enter a valid address according to the token selected"
-          );
-        } else {
-          return Promise.resolve();
-        }
-      } else {
-        return Promise.reject("Please select a token first");
-      }
-    } else {
-      return Promise.reject('Is required');
-    }
-  };
-
-  render() {
-    const { isLoading, errorMessage, showDeclartion, cryptoData, coinsList, networksList } = this.state;
-    if (isLoading) {
-      return <Loader />
-    }
-    if (showDeclartion) {
-      return <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
-        <Image preview={false} src={alertIcon} className="confirm-icon" />
-        <Title level={2} className="success-title">Declaration form sent successfully</Title>
-        <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
-                Please review and sign the document in your email to whitelist your address.
-                Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
-      </div>
-      </div>
-    }
-    else {
-      return <>
-        {this.props?.isShowheading && <div className="text-center">
-          <Paragraph className='drawer-maintitle' >Add Crypto Address</Paragraph>
-        </div>}
-        <div ref={this.useDivRef}></div>
-        {errorMessage && <Alert type="error" description={errorMessage} showIcon />}
-        <Form
-          initialValues={cryptoData}
-          className="custom-label"
-          ref={this.form}
-          onFinish={this.submit}
-          scrollToFirstError
-        >
-          <Form.Item className="custom-forminput custom-label sc-error addcrypto-whitelist"
-            name="saveWhiteListName"
-            label="Save Whitelist Name As"
-            rules={[
-              {
-                whitespace: true,
-                message: "Is required",
-              },
-              {
-                required: true,
-                message: "Is required",
-              },
-              {
-                validator: validateContentRule,
-              },
-            ]}
-          >
-            <Input className="cust-input" maxLength={100} placeholder="Save Whitelist Name As"
-              disabled={this.state.cryptoData.adressstate === "Approved" ? true : false} />
-          </Form.Item>
-          <div className="">
-            <Title className="adbook-head">Beneficiary Details</Title>
-          </div>
-          <Row className="addcrypto-benficiary">
-            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-              <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
-                name="token"
-                label="Token"
-                rules={[
-                  {
-                    required: true,
-                    message: "Is required",
-                  },
-                ]} >
-                <Select
-                  className="cust-input"
-                  onChange={this.handleTokenChange}
-                  placeholder="Select Token"
-                  optionFilterProp="children"
-                  maxLength={50}
-                  disabled={(this.props?.sendReceive?.withdrawFiatObj?.walletCode || this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin || this.state.cryptoData.adressstate === "Approved") ? true : false}>
-                  {coinsList?.map((item, idx) => (
-                    <Option key={idx} value={item.walletCode}>
-                      {item.walletCode}
-                    </Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-              <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
-                name="network"
-                label="Network (Any coins on the selected network will be whitelisted)"
-                rules={[
-                  {
-                    required: true,
-                    message: "Is required",
-                  },
-                ]}
-              >
-                <Select
-                  className="cust-input"
-                  maxLength={100}
-                  placeholder="Select Network"
-                  optionFilterProp="children"
-                  disabled={this.state.cryptoData.adressstate === "Approved" ? true : false}
-
-                >
-                  {networksList?.map((item, idx) => (
-                    <Option key={idx} value={item.name}>
-                      {item.name}
-                    </Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-              <Form.Item
-                className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
-                name="walletAddress"
-                label="Wallet Address"
-                required
-                rules={[
-                  {
-                    validator: this.validateAddressType,
-                  },
-                ]}
-              >
-                <Input
-                  className="cust-input"
-                  maxLength={100}
-
-                  placeholder="Wallet Address"
-                  disabled={this.state.cryptoData.adressstate === "Approved" ? true : false}
-
-                />
-
-              </Form.Item>
-            </Col>
-            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-              <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
-                name="walletSource"
-                label="Wallet Source"
-                rules={[
-                  {
-                    required: true,
-                    message: "Is required",
-                  },
-                ]}
-              >
-                <Select
-                  className="cust-input"
-                  maxLength={100}
-                  placeholder="Select Wallet Source"
-                  optionFilterProp="children"
-                  onChange={this.handleWalletSource}
-                  disabled={this.state.cryptoData.adressstate === "Approved" ? true : false}
-                >
-                  {this.state.wallet?.map((item, idx) => (
-                    <Option key={idx} value={item.name}>
-                      {item.name}
-                    </Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Col>
-            {this.state.walletSourse === "Others" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-              <Form.Item
-                className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
-                name="otherWallet"
-                label="You have selected others for Wallet Source. Please specify"
-                required
-                rules={[
-                  {
-                    whitespace: true,
-                    message: "Is required",
-                  },
-                  {
-                    required: true,
-                    message: "Is required",
-                  },
-                  {
-                    validator: validateContentRule,
-                  },
-                ]}
-              >
-                <Input
-                  className="cust-input"
-                  maxLength={100}
-                  placeholder="Wallet Source"
-                  disabled={this.state.cryptoData.adressstate === "Approved" ? true : false}
-                />
-              </Form.Item>
-            </Col>}
-            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-              <Form.Item
-                className="custom-forminput mb-36 agree send-crypto-sumry"
-                name="isOwnerOfWalletAddress"
-                valuePropName="checked"
-                required
-              >
-                <div className="d-flex agree-check checkbox-mobile align-center">
-                  <label>
-                    <input
-                      type="checkbox"
-                      id="agree-check"
-                      checked={this.state.check}
-                      onClick={(e) => this.handleCheck(e)}
-                      disabled={this.state.cryptoData.adressstate === "Approved" ? true : false}
-                    />
-                    <span for="agree-check" />
-
-
-                  </label>
-                  <div
-                    className="cust-agreecheck d-flex align-center"
-                  >
-                    I'm the owner of this wallet address <span className="cust-start-style">*</span>
-                  </div>
-                </div>
-
-              </Form.Item>
-            </Col>
-            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-              <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload a screenshot or video to prove you are the owner of the address
-
-                <Tooltip title="MP4, MOV, WMV, AVI files size maximum allow  25MB">
-                  <span
-                    className="icon md info c-pointer ml-4"
-                  />
-                </Tooltip>
-
-              </Paragraph>
-              <AddressCryptoDocument
-
-                documents={this.state.cryptoData?.documents || null}
-                editDocument={this.state.isEdit} onDocumentsChange={(docs) => this.editDocuments(docs)}
-              />
-            </ Col>
-          </Row>
-          <Form.Item className="">
-            <Button
-              htmlType="submit"
-              size="large"
-              block
-              className="pop-btn"
-              loading={this.state.isBtnLoading}
-            >
-              {this.props.type === "manual" && "Save"}
-              {this.props.type !== "manual" && <Translate content="continue" />}
-            </Button>
-          </Form.Item>
-        </Form>
-      </>
-    }
-  }
-
+	if (props.match.params.type === "Crypto") {
+		return (
+			<>
+				{errorMsg && (
+					<Alert
+						closable
+						type="error"
+						description={errorMsg}
+						onClose={() => setErrorMsg(null)}
+						showIcon
+					/>
+				)}
+				{isLoading && <Loader />}
+				<Form
+					form={form}
+					initialValues={cryptoAddress}
+					onFinish={saveAddressBook}
+					autoComplete="off">
+					<Row gutter={[16, 16]}>
+						<Col xs={24} sm={24} md={12} xl={6} xxl={6}>
+							<Form.Item
+								label="Address Label"
+								name="label"
+								className="input-label mb-0"
+								rules={[
+									{
+										whitespace: true,
+										message: "Is required",
+									},
+									{
+										validator: validateContentRule,
+									},
+								]}>
+								<Input
+									className="cust-input"
+									maxLength={20}
+									placeholder="Address Label"
+									disabled={true}
+								/>
+							</Form.Item>
+						</Col>
+						<Col xs={24} sm={24} md={12} xl={6} xxl={6}>
+							<Form.Item
+								label="Wallet Address"
+								name="walletAddress"
+								className="input-label mb-0">
+								<Input
+									className="cust-input"
+									maxLength={100}
+									placeholder="Wallet Address"
+									disabled={true}
+								/>
+							</Form.Item>
+						</Col>
+						<Col xs={24} sm={24} md={12} xl={6} xxl={6}>
+							<Form.Item
+								label="Address Type"
+								name="addressType"
+								className="input-label mb-0">
+								<Select
+									className="cust-input"
+									maxLength={100}
+									placeholder="Select Address Type"
+									dropdownClassName="select-drpdwn"
+									showArrow={true}
+									disabled={true}>
+									<Option value="first_Party">1st Party</Option>
+									<Option value="third_Party">3rd Party</Option>
+									
+								</Select>
+							</Form.Item>
+						</Col>
+						<Col xs={24} sm={24} md={12} xl={6} xxl={6}>
+							<Form.Item
+								label="Coin"
+								name="walletCode"
+								className="input-label mb-0">
+								<Select
+									className="cust-input"
+									maxLength={100}
+									placeholder="Select Coin"
+									dropdownClassName="select-drpdwn"
+									showArrow={true}
+									disabled={true}>
+									{options}
+								</Select>
+							</Form.Item>
+						</Col>
+						<Col xs={24} sm={24} md={12} xl={6} xxl={6}>
+							<Form.Item
+								label="Address State"
+								name="addressState"
+								className="input-label mb-0"
+								rules={[{ required: true, message: "Is required" }]}>
+								<Select
+									className="cust-input"
+									maxLength={100}
+									placeholder="Select Address State"
+									dropdownClassName="select-drpdwn"
+									showArrow={true}
+									onChange={(e) => handleChangeCrypto(e)}
+									disabled={isEdit === true}>
+									<Option value="Approve">Approve</Option>
+									<Option value="Rejected">
+										{isAddress === "Rejected" ? "Rejected" : "Reject"}
+									</Option>
+								</Select>
+							</Form.Item>
+						</Col>
+					</Row>
+					<Row>
+					{files.length !== 0 &&
+						files.map((file) => (
+							<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+							<div className="docfile mr-0 mt-24 d-flex align-center" key={file.id}>
+								<span
+									className={`icon xl ${(file.name?.slice(-3) === "zip" && "file") ||
+										(file.name?.slice(-3) !== "zip" && "") ||
+										((file.name?.slice(-3) === "pdf" ||
+											file.name?.slice(-3) === "PDF") &&
+											"file") ||
+										(file.name?.slice(-3) !== "pdf" &&
+											file.name?.slice(-3) !== "PDF" &&
+											"image")
+										} mr-16`}
+								/>
+								<div
+									className="docdetails c-pointer"
+									onClick={() => docPreview(file)}>
+									{file.name !== null ? (
+										<EllipsisMiddle suffixCount={6}>{file.name}</EllipsisMiddle>
+									) : (
+										<EllipsisMiddle suffixCount={6}>Name</EllipsisMiddle>
+									)}
+									<span className="fs-12 text-secondary">
+										{bytesToSize(file.size)}
+									</span>
+								</div>
+							</div>
+							</Col>
+						))}
+						</Row>
+					<div className="text-right mt-36">
+						{(isEdit !== true
+						) && (
+							<Button type="primary" className="primary-btn" htmlType="submit" disabled={cryptoAddress.addressState === "Submitted"} loading={isBtnLoading}>
+								Save
+								</Button>)}
+						<Button
+							type="primary"
+							className="primary-btn cancel-btn"
+							style={{ margin: "0 8px" }}
+							onClick={backToAddressBook}>
+							Cancel
+						</Button>
+					</div>
+				</Form>
+				{filePreviewModal}
+			</>
+		);
+	} else {
+		return (
+			<>
+				{errorMsg && (
+					<Alert
+						closable
+						type="error"
+						description={errorMsg}
+						onClose={() => setErrorMsg(null)}
+						showIcon
+					/>
+				)}
+				{isLoading && <Loader />}
+				<Form
+					form={form}
+					onFinish={saveAddressBook}
+					autoComplete="off">
+					<Text className="fs-6 fw-600 text-white-30">
+						BENEFICIARY BANK DETAILS
+					</Text>
+					<Row gutter={[16, 16]} className="mb-36">
+						<Col xs={24} sm={24} md={12} xl={6} xxl={6}>
+							<Form.Item
+								label="Whitelist Name"
+								name="whiteListName"
+								className="input-label mb-0"
+								rules={[
+									{
+										whitespace: true,
+										message: "Is required",
+									},
+									{
+										validator: validateContentRule,
+									},
+								]}>
+								<Input
+									className="cust-input"
+									maxLength="20"
+									placeholder="Address Label"
+									disabled={true}
+								/>
+							</Form.Item>
+						</Col>
+						<Col xs={24} sm={24} md={12} xl={6} xxl={6}>
+							<Form.Item
+								label="Address Type"
+								name="addressType"
+								className="input-label mb-0">
+								<Select
+									className="cust-input"
+									maxLength={100}
+									disabled={true}
+									placeholder="Select Address Type"
+									dropdownClassName="select-drpdwn"
+									showArrow={true}>
+									<Option value="ownbusiness">Own Business</Option>
+									<Option value="individuals">Individuals</Option>
+									<Option value="otherbusiness">Other Business</Option>
+									<Option value="myself">My Self</Option>
+								</Select>
+							</Form.Item>
+						</Col>
+						<Col xs={24} sm={24} md={12} xl={6} xxl={6}>
+							<Form.Item
+								label="Currency"
+								name="walletCode"
+								className="input-label mb-0">
+								<Select
+									disabled={true}
+									className="cust-input"
+									maxLength={100}
+									placeholder="Select Currency"
+									dropdownClassName="select-drpdwn"
+									showArrow={true}>
+									{currency?.map((item, idx) => (
+										<Option key={idx} value={item.name}>
+											{item.name}
+										</Option>
+									))}
+								</Select>
+							</Form.Item>
+						</Col>
+						<Col xs={24} sm={24} md={12} xl={6} xxl={6}>
+							<Form.Item
+								label={
+									bankType === "EUR"
+										? "IBAN"
+									: "Bank Account Number"
+								}
+								name="accountNumber"
+								className="input-label mb-0"
+								rules={[
+									{
+										pattern: /^[A-Za-z0-9]+$/,
+										message: "Invalid account number",
+									},
+								]}>
+								<Input
+									className="cust-input"
+									maxLength={100}
+									placeholder={
+										bankType === "EUR" ? "IBAN" : "Bank Account Number"
+									}
+									disabled={true}
+								/>
+							</Form.Item>
+						</Col>
+						<Col xs={24} sm={24} md={12} xl={6} xxl={6}>
+							<Form.Item
+								label={fiatAddress.walletCode==="EUR"?"BIC":"BIC/SWIFT/Routing Number"}
+								name="swiftRouteBICNumber"
+								className="input-label mb-0"
+								rules={[
+									{
+										pattern: /^[A-Za-z0-9]+$/,
+										message: "Invalid BIC/SWIFT/Routing number",
+									},
+								]}>
+								<Input
+									className="cust-input"
+									maxLength={100}
+									placeholder={fiatAddress.walletCode==="EUR"?"BIC":"BIC/SWIFT/Routing Number"}
+									disabled={true}
+								/>
+							</Form.Item>
+						</Col>
+						<Col xs={24} sm={24} md={12} xl={6} xxl={6}>
+							<Form.Item
+								label="Bank Name"
+								name="bankName"
+								className="input-label mb-0"
+								rules={[
+									{
+										whitespace: true,
+										message: "Is required",
+									},
+									{
+										validator: validateContentRule,
+									},
+								]}>
+								<Input
+									className="cust-input"
+									maxLength={100}
+									placeholder="Bank Name"
+									disabled={true}
+								/>
+							</Form.Item>
+						</Col>
+						{fiatAddress.walletCode==="EUR"&&<>
+						<Col xs={24} sm={24} md={12} xl={6} xxl={6}>
+							<Form.Item
+								label="Branch"
+								name="bankBranch"
+								className="input-label mb-0"
+								rules={[
+									{
+										whitespace: true,
+										message: "Is required",
+									},
+									{
+										validator: validateContentRule,
+									},
+								]}>
+								<Input
+									className="cust-input"
+									maxLength={100}
+									placeholder="Bank Name"
+									disabled={true}
+								/>
+							</Form.Item>
+						</Col>
+						<Col xs={24} sm={24} md={12} xl={6} xxl={6}>
+							<Form.Item
+								label="Country"
+								name="country"
+								className="input-label mb-0"
+								rules={[
+									{
+										whitespace: true,
+										message: "Is required",
+									},
+									{
+										validator: validateContentRule,
+									},
+								]}>
+								<Input
+									className="cust-input"
+									maxLength={100}
+									placeholder="Bank Name"
+									disabled={true}
+								/>
+							</Form.Item>
+						</Col>
+						<Col xs={24} sm={24} md={12} xl={6} xxl={6}>
+							<Form.Item
+								label="State"
+								name="state"
+								className="input-label mb-0"
+								rules={[
+									{
+										whitespace: true,
+										message: "Is required",
+									},
+									{
+										validator: validateContentRule,
+									},
+								]}>
+								<Input
+									className="cust-input"
+									maxLength={100}
+									placeholder="Bank Name"
+									disabled={true}
+								/>
+							</Form.Item>
+						</Col>
+						<Col xs={24} sm={24} md={12} xl={6} xxl={6}>
+							<Form.Item
+								label="City"
+								name="city"
+								className="input-label mb-0"
+								rules={[
+									{
+										whitespace: true,
+										message: "Is required",
+									},
+									{
+										validator: validateContentRule,
+									},
+								]}>
+								<Input
+									className="cust-input"
+									maxLength={100}
+									placeholder="Bank Name"
+									disabled={true}
+								/>
+							</Form.Item>
+						</Col>
+						<Col xs={24} sm={24} md={12} xl={6} xxl={6}>
+							<Form.Item
+								label="Postal Code"
+								name="postCode"
+								className="input-label mb-0"
+								rules={[
+									{
+										whitespace: true,
+										message: "Is required",
+									},
+									{
+										validator: validateContentRule,
+									},
+								]}>
+								<Input
+									className="cust-input"
+									maxLength={100}
+									placeholder="Bank Name"
+									disabled={true}
+								/>
+							</Form.Item>
+						</Col></>}
+						{fiatAddress.walletCode ==="USD" && <Col xs={24} sm={24} md={12} xl={12} xxl={12}>
+							<Form.Item
+								label="Bank Address "
+								name="bankaddress"
+								className="input-label mb-0"
+								rules={[
+									{
+										validator: validateContentRule,
+									},
+								]}>
+								<Input
+									className="cust-input"
+									maxLength={100}
+									placeholder="Bank address "
+									disabled={true}
+								/>
+							</Form.Item>
+						</Col>}
+					</Row>
+					<Text className="fs-6 fw-600 text-white-30">BENEFICIARY DETAILS</Text>
+					<Row gutter={[16, 16]}>
+						<Col xs={24} sm={24} md={12} xl={6} xxl={6}>
+							<Form.Item
+								label={
+									(fiatAddress.accountType === "Business"&& "Business Name") ||
+									(fiatAddress.accountType !== "Business" &&
+										"Recipient Full Name")
+								}
+								name="name"
+								className="input-label mb-0">
+								<Input
+									className="cust-input"
+									maxLength={100}
+									placeholder={
+										(fiatAddress.accountType === "Business" &&
+											"Business Name") ||
+										(fiatAddress.accountType !== "Business" &&
+											"Recipient Full Name")
+									}
+									disabled={true}
+								/>
+							</Form.Item>
+						</Col>
+						<Col xs={24} sm={24} md={24} xl={12} xxl={12}>
+							<Form.Item
+								label="Recipient Address "
+								name="recipientAddress"
+								className="input-label mb-0"
+								rules={[
+									{
+										validator: validateContentRule,
+									},
+								]}>
+								<Input
+									className="cust-input"
+									maxLength={100}
+									placeholder="Recipient address "
+									disabled={true}
+								/>
+							</Form.Item>
+						</Col>
+						<Col xs={24} sm={24} md={12} xl={6} xxl={6}>
+							<Form.Item
+								label="Address State"
+								name="addressState"
+								className="input-label mb-0"
+								rules={[{ required: true, message: "Is required" }]}>
+								<Select
+									className="cust-input"
+									maxLength={100}
+									placeholder="Select Address State"
+									dropdownClassName="select-drpdwn"
+									showArrow={true}
+									onChange={(e) => handleStateChange(e)}
+									disabled={isEdit === true}>
+									<Option value="Approve">Approve</Option>
+									<Option value="Rejected">
+										{isAddress === "Rejected" ? "Rejected" : "Reject"}
+									</Option>
+								</Select>
+							</Form.Item>
+						</Col>
+					</Row>
+					<Row>
+					{files.length !== 0 &&
+						files.map((file) => (
+							<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+							<div className="docfile mr-0 mt-24 d-flex align-center" key={file.id}>
+								<span
+									className={`icon xl ${(file.name?.slice(-3) === "zip" && "file") ||
+										(file.name?.slice(-3) !== "zip" && "") ||
+										((file.name?.slice(-3) === "pdf" ||
+											file.name?.slice(-3) === "PDF") &&
+											"file") ||
+										(file.name?.slice(-3) !== "pdf" &&
+											file.name?.slice(-3) !== "PDF" &&
+											"image")
+										} mr-16`}
+								/>
+								<div
+									className="docdetails c-pointer"
+									onClick={() => docPreview(file)}>
+									{file.name !== null ? (
+										<EllipsisMiddle suffixCount={6}>{file.name}</EllipsisMiddle>
+									) : (
+										<EllipsisMiddle suffixCount={6}>Name</EllipsisMiddle>
+									)}
+									<span className="fs-12 text-secondary">
+										{bytesToSize(file.size)}
+									</span>
+								</div>
+							</div>
+							</Col>
+						))}
+						</Row>
+					<div className="text-right mt-36">
+						{(isEdit !== true) && (
+							<Button
+								type="primary"
+								className="primary-btn"
+								htmlType="submit"
+								disabled={fiatAddress.addressState === "Submitted"}
+								loading={isBtnLoading}
+								>
+								Save
+							</Button>
+						)}
+						<Button
+							type="primary"
+							className="primary-btn cancel-btn"
+							style={{ margin: "0 8px" }}
+							onClick={backToAddressBook}>
+							Cancel
+						</Button>
+					</div>
+				</Form>
+				{filePreviewModal}
+			</>
+		);
+	}
 }
-const connectStateToProps = ({ sendReceive, userConfig, addressBookReducer }) => {
-  return { addressBookReducer, sendReceive, userProfile: userConfig.userProfileInfo }
-}
-const connectDispatchToProps = dispatch => {
-  return {
-    changeStep: (stepcode) => {
-      dispatch(setAddressStep(stepcode)); dispatch(setStep(stepcode))
-    },
-    SelectedAddress: (addressObj) => {
-      dispatch(setAddress(addressObj));
-    },
-
-    dispatch
-  }
-}
-
-export default connect(connectStateToProps, connectDispatchToProps)(AddressCrypto);
+const connectStateToProps = ({ userConfig }) => {
+	return {
+		userConfig: userConfig.userProfileInfo,
+		trackAuditLogData: userConfig.trackAuditLogData,
+	};
+};
+const connectDispatchToProps = (dispatch) => {
+	return {
+		fetchCurrencyData: () => {
+			dispatch(handleCurrency());
+		},
+	};
+};
+export default connect(
+	connectStateToProps,
+	connectDispatchToProps
+)(AddressBookDetails);
