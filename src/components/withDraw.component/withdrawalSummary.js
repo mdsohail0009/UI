@@ -28,11 +28,10 @@ const WithdrawalFiatSummary = ({
 	const { Text } = Typography;
 	const [isLoding, setIsLoding] = useState(false);
 	const [form] = Form.useForm();
-	const [otp, setOtp] = useState(false);
 	const useOtpRef = React.useRef(null);
 	const [buttonText, setButtonText] = useState("get_otp");
 	const [verificationText, setVerificationText] = useState("");
-	const [isResend, setIsResend] = useState(true);
+	const [isResend] = useState(true);
 	const [invalidcode, setInvalidCode] = useState("");
 	const [verifyData, setVerifyData] = useState({});
 	const [disable, setDisable] = useState(false);
@@ -52,9 +51,6 @@ const WithdrawalFiatSummary = ({
 	const [verifyEmailText, setVerifyEmailText] = useState("");
 	const [seconds, setSeconds] = useState(120);
 	const [seconds2, setSeconds2] = useState(120);
-	//const [seconds, setSeconds] = useState("02:00");
-	const [emailOtp, setEmailOtp] = useState("");
-	const [invalidData, setInvalidData] = useState(false);
 	const [validData, setValidData] = useState(false);
 	const [verify, setVerify] = useState(false);
 	const [emailCode, setEmailCode] = useState("");
@@ -76,9 +72,7 @@ const WithdrawalFiatSummary = ({
 	const [isAuthenticatorVerification, setIsAuthenticatorVerification] =useState(false);
     const [isLoading,setIsLoading]=useState(false);
 	const[permissions,setPermessions] = useState({});
-// const [authenticatorCodeVerificationStage,setauthenticatorCodeVerificationStage]=useState('Verify')
-// const [phoneCodeVerificationStage,setPhoneCodeVerificationStage]=useState('getPhoneCode')
-// const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getEmailCode')
+
 	const btnList = {
 		get_otp: (
 			<Translate className="pl-0 ml-0 text-yellow-50" content="get_code" />
@@ -87,7 +81,6 @@ const WithdrawalFiatSummary = ({
 			<Translate
 				className="pl-0 ml-0 text-yellow-50"
 				content="resend_code"
-				//with={{ counter: `${disable ? "(" + seconds + ")" : ""}` }}
 			/>
 		),
 		sentVerify: (
@@ -124,7 +117,6 @@ const WithdrawalFiatSummary = ({
 			<Translate
 				className={`pl-0 ml-0 text-yellow-50 `}
 				content="resend_email"
-				// with={{ counter: `${disable ? "(" + seconds + ")" : ""}` }}
 			/>
 		),
 		sentVerification: (
@@ -241,18 +233,7 @@ const WithdrawalFiatSummary = ({
 				return;
 			}
 		}
-		// if (
-		// 	verifyData.isPhoneVerified == "" &&
-		// 	verifyData.isEmailVerification == "" &&
-		// 	verifyData.twoFactorEnabled == ""
-		// ) {
-		// 	this.setState({
-		// 		...this.state,
-		// 		errorMsg:
-		// 			"Without Verifications you can't withdraw. Please select withdraw verifications from security section",
-		// 	});
-		// }
-
+		
 		let Obj = Object.assign({}, sendReceive.withdrawFiatObj);
 		Obj.accountNumber = apiCalls.encryptValue(
 			Obj.accountNumber,
@@ -339,11 +320,7 @@ const WithdrawalFiatSummary = ({
 				setTooltipVisible(false);
 				setVerifyOtpText(null);
 			}, 30000);
-			// setTimeout(() => {
-			// 	setButtonText("resendotp");
-			// 	setTooltipVisible(false);
-			// 	setVerifyOtpText(null);
-			// }, 30000);
+			
 			setTimeout(() => {
 				setVerifyEmailText(null);
 			}, 30000);
@@ -386,7 +363,6 @@ const WithdrawalFiatSummary = ({
 		/>
 	  );
 	const handleSendOtp = (val) => {
-		setEmailOtp(val.emailCode);
 		setVerifyEmailText("verifyTextBtn");
 		setTooltipEmail(false);
 		setEmailText(null);
@@ -435,7 +411,6 @@ const WithdrawalFiatSummary = ({
 		let response = await apiCalls.getVerification(otpCode);
 		if (response.ok) {
 			setMsg(null)
-			// clearTimeout(cleartime);
 		
 			setVerifyPhone(true);
 			setPhoneVerifyLoading(false)
@@ -471,7 +446,6 @@ const WithdrawalFiatSummary = ({
 	};
 
 	const handleOtp = (val) => {
-		setOtp(val);
 		setVerifyOtpText("verifyOtpBtn");
 		setTooltipVisible(false);
 		setButtonText(null);
@@ -687,36 +661,7 @@ const WithdrawalFiatSummary = ({
 									</Button>
 								</div>}
 								/>
-								{/* <div className="new-add c-pointer get-code text-yellow hy-align">
-										{!verifyTextotp && (
-											<Button
-												type="text"
-												style={{color:"black"}}
-												loading={phoneLoading}
-												onClick={getOTP}
-												disabled={disable}>
-												{btnList[buttonText]}
-											</Button>
-										 )} 
-										{tooltipVisible === true && (
-											<Tooltip
-												placement="topRight"
-												title={`Haven't received code ? Request new code in ${seconds} seconds. The code will expire after 30mins.`}>
-												<span className="icon md info mr-8" />
-											</Tooltip>
-										)}
-										<Button
-											type="text"
-											 loading={phoneVerifyLoading}
-											style={{color:"black", margin:"0 auto"}}
-											onClick={getOtpVerification}
-											disabled={verifyPhone === true || verifyTextotp}>
-											{verifyOtp[verifyOtpText]}
-											{verifyTextotp === true && (
-												<span className="icon md greenCheck check-ml-align" />
-											)}
-										</Button>
-									</div> */}
+							
 									</div>
 							</Form.Item>
 						)}

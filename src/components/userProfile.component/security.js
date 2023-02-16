@@ -198,28 +198,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
         <ul className="profile-ul">
           <li className="profileinfo">
             <div className="profile-block">
-              {/* <label className="mb-0 profile-label ">
-                <Translate
-                  content="FA_tag"
-                  component={Paragraph.label}
-                  className="mb-0 profile-label"
-                />
-              </label> */}
-              {/* <p className="profile-value" style={{ flexGrow: 12 }}>
-                {twoFA?.isEnabled ? (
-                  <Translate
-                    content="Enabled"
-                    component={Paragraph.p}
-                    className="profile-value"
-                  />
-                ) : (
-                  <Translate
-                    content="Disabled"
-                    component={Paragraph.p}
-                    className="profile-value"
-                  />
-                )}
-              </p> */}
+          
               <div>
                 <Switch
                   onChange={(status) => enableDisable2fa(status)}

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Typography, Button, Modal, Tooltip } from "antd";
+import { Row, Col, Typography, Button, Modal, Tooltip,Alert } from "antd";
 import Loader from "../../Shared/loader";
 import { getFileURL, getViewData, } from "./api";
 import { connect } from "react-redux";
 import FilePreviewer from "react-file-previewer";
 import { bytesToSize } from "../../utils/service";
 import { addressTabUpdate, setAddressStep } from "../../reducers/addressBookReducer";
+import apicalls from "../../api/apiCalls";
 const { Title, Text } = Typography;
 const EllipsisMiddle = ({ suffixCount, children }) => {
 	const start = children?.slice(0, children.length - suffixCount).trim();
@@ -25,6 +26,7 @@ const AddressFiatView = (props) => {
 	const [previewPath, setPreviewPath] = useState(null);
 	const [previewModal, setPreviewModal] = useState(false);
 	const [bankDetailes, setBankDetailes] = useState([]);
+    const [errorMsg,setErrorMsg]=useState(null)
 
 
 	useEffect(() => {
@@ -36,6 +38,8 @@ const AddressFiatView = (props) => {
 		if (response.ok) {	
 			setFiatAddress(response.data);
 			setBankDetailes(response.data.payeeAccountModels)
+		}else{
+			setErrorMsg(apicalls.isErrorDispaly(response))
 		}
 		setIsLoading(false)
 	};
@@ -50,6 +54,8 @@ const AddressFiatView = (props) => {
 		if (res.ok) {
 			setPreviewModal(true);
 			setPreviewPath(res.data);
+		}else{
+			setErrorMsg(apicalls.isErrorDispaly(res))
 		}
 	};
 	const filePreviewPath = () => {
@@ -101,6 +107,14 @@ const AddressFiatView = (props) => {
 	);
 	return (
 		<>
+		  {errorMsg !== null && (
+              <Alert
+                type="error"
+                description={errorMsg}
+                onClose={() => setErrorMsg(null)}
+                showIcon
+              />
+            )}
 			<div className="main-container cust-cypto-view">
 			
 				<div className="box bg-box">
@@ -121,10 +135,12 @@ const AddressFiatView = (props) => {
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Whitelist Name</label>
 													<div className=" kpi-val adview-name">
-														{fiatAddress?.favouriteName === " " ||
-															fiatAddress?.favouriteName === null
-															? "-"
-															: fiatAddress?.favouriteName}
+														
+															{(fiatAddress?.favouriteName === " " ||
+															fiatAddress?.favouriteName === null)&& "-"}
+															
+															{!(fiatAddress?.favouriteName === " " ||
+															fiatAddress?.favouriteName === null)&& fiatAddress?.favouriteName }
 													</div>
 												</div>
 											</Col>
@@ -132,14 +148,16 @@ const AddressFiatView = (props) => {
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Address Type</label>
 													{<div className=" kpi-val">
-														{fiatAddress?.addressType === " " ||
-															fiatAddress?.addressType === null
-															? "-"
-															:((fiatAddress?.addressType?.toLowerCase()==="myself")&&"My Self")||
+													
+														{(fiatAddress?.addressType === " " ||
+															fiatAddress?.addressType === null)&& "-"}
+															
+															{!(fiatAddress?.addressType === " " ||
+															fiatAddress?.addressType === null)&& 
+															((fiatAddress?.addressType?.toLowerCase()==="myself")&&"My Self")||
 															 ((fiatAddress?.addressType?.toLowerCase()==="individuals")&&"Individuals")||
 															((fiatAddress?.addressType?.toLowerCase()==="ownbusiness")&&"My Company")||
-															((fiatAddress?.addressType?.toLowerCase()==="otherbusiness")&&"Other Business")}
-
+															((fiatAddress?.addressType?.toLowerCase()==="otherbusiness")&&"Other Business") }
 													</div>}
 												</div>
 											</Col>}
@@ -147,11 +165,15 @@ const AddressFiatView = (props) => {
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Transfer Type</label>
 													{<div className=" kpi-val">
-														{fiatAddress?.transferType === " " ||
-															fiatAddress?.transferType === null
-															? "-"
-															: ((fiatAddress?.transferType === "internationalIBAN") && "International USD IBAN") ||
-															fiatAddress?.transferType.toUpperCase()}
+												
+															{(fiatAddress?.transferType === " " ||
+															fiatAddress?.transferType === null) && "-"}
+
+															{!(fiatAddress?.transferType === " " ||
+															fiatAddress?.transferType === null) && 
+															((fiatAddress?.transferType === "internationalIBAN") && "International USD IBAN") ||
+															fiatAddress?.transferType.toUpperCase()
+															}
 
 													</div>}
 												</div>
@@ -161,10 +183,11 @@ const AddressFiatView = (props) => {
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">First Name</label>
 													<div className=" kpi-val">
-														{fiatAddress?.firstName === " " ||
-															fiatAddress?.firstName === null
-															? "-"
-															: fiatAddress?.firstName}
+													
+															{(fiatAddress?.firstName === " " ||
+															fiatAddress?.firstName === null) && "-"}
+															{!(fiatAddress?.firstName === " " ||
+															fiatAddress?.firstName === null) && fiatAddress?.firstName}
 													</div>
 												</div>
 											</Col>}
@@ -172,10 +195,11 @@ const AddressFiatView = (props) => {
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Last Name</label>
 													<div className=" kpi-val">
-														{fiatAddress?.lastName === " " ||
-															fiatAddress?.lastName === null
-															? "-"
-															: fiatAddress?.lastName}
+														
+															{(fiatAddress?.lastName === " " ||
+															fiatAddress?.lastName === null) && "-"}
+															{!(fiatAddress?.lastName === " " ||
+															fiatAddress?.lastName === null) && fiatAddress?.lastName}
 													</div>
 												</div>
 											</Col>}
@@ -183,10 +207,11 @@ const AddressFiatView = (props) => {
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Beneficiary Name</label>
 													<div className=" kpi-val">
-														{fiatAddress?.beneficiaryName === " " ||
-															fiatAddress?.beneficiaryName === null
-															? "-"
-															: fiatAddress?.beneficiaryName}
+														
+															{(fiatAddress?.beneficiaryName === " " ||
+															fiatAddress?.beneficiaryName === null) && "-"}
+															{!(fiatAddress?.beneficiaryName === " " ||
+															fiatAddress?.beneficiaryName === null) &&  fiatAddress?.beneficiaryName}
 													</div>
 												</div>
 											</Col>}
@@ -194,10 +219,11 @@ const AddressFiatView = (props) => {
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Relationship To Beneficiary</label>
 													<div className=" kpi-val">
-														{fiatAddress?.relation === " " ||
-															fiatAddress?.relation === null
-															? "-"
-															: fiatAddress?.relation}
+														
+															{(fiatAddress?.relation === " " ||
+															fiatAddress?.relation === null) && "-"}
+															{!(fiatAddress?.relation === " " ||
+															fiatAddress?.relation === null) && fiatAddress?.relation}
 													</div>
 												</div>
 											</Col>}
@@ -205,10 +231,11 @@ const AddressFiatView = (props) => {
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Phone Number</label>
 													{<div className=" kpi-val">
-														{fiatAddress?.phoneNumber === " " ||
-															fiatAddress?.phoneNumber === null
-															? "-"
-															: fiatAddress?.phoneNumber}
+														
+															{(fiatAddress?.phoneNumber === " " ||
+															fiatAddress?.phoneNumber === null) && "-"}
+															{!(fiatAddress?.phoneNumber === " " ||
+															fiatAddress?.phoneNumber === null) && fiatAddress?.phoneNumber}
 
 													</div>}
 												</div>
@@ -220,10 +247,11 @@ const AddressFiatView = (props) => {
 														Address Line 1
 													</label>
 													{<div className=" kpi-val">
-														{fiatAddress?.line1 === " " ||
-															fiatAddress?.line1 === null
-															? "-"
-															: fiatAddress?.line1}
+														
+															{(fiatAddress?.line1 === " " ||
+															fiatAddress?.line1 === null) && "-"}
+															{!(fiatAddress?.line1 === " " ||
+															fiatAddress?.line1 === null) && fiatAddress?.line1}
 													</div>}
 												</div>
 											</Col>
@@ -231,20 +259,27 @@ const AddressFiatView = (props) => {
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Address Line 2</label>
 													{<div className="kpi-val">
-														{fiatAddress?.line2 === " " ||
-															fiatAddress?.line2 === null
-															? "-"
-															: fiatAddress?.line2}</div>}
+														
+															{(fiatAddress?.line2 === " " ||
+															fiatAddress?.line2 === null) && "-"}
+															{!(fiatAddress?.line2 === " " ||
+															fiatAddress?.line2 === null) && fiatAddress?.line2}
+															</div>}
+
+															
 												</div>
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Address Line 3</label>
 													{<div className="kpi-val">
-														{fiatAddress?.line3 === " " ||
-															fiatAddress?.line3 === null
-															? "-"
-															: fiatAddress?.line3}</div>}
+														
+															{(fiatAddress?.line3 === " " ||
+															fiatAddress?.line3 === null) && "-"}
+															{!(fiatAddress?.line3 === " " ||
+															fiatAddress?.line3 === null) && fiatAddress?.line3 }
+															
+															</div>}
 												</div>
 											</Col>
 
@@ -252,10 +287,11 @@ const AddressFiatView = (props) => {
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Country</label>
 													<div className="kpi-val">
-														{fiatAddress?.country === " " ||
-															fiatAddress?.country === null
-															? "-"
-															: fiatAddress?.country}
+														
+															{(fiatAddress?.country === " " ||
+															fiatAddress?.country === null) && "-"}
+															{!(fiatAddress?.country === " " ||
+															fiatAddress?.country === null) && fiatAddress?.country}
 													</div>
 												</div>
 											</Col>}
@@ -263,10 +299,11 @@ const AddressFiatView = (props) => {
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">State</label>
 													<div className=" kpi-val">
-														{fiatAddress?.state === " " ||
-															fiatAddress?.state === null
-															? "-"
-															: fiatAddress?.state}
+														
+															{(fiatAddress?.state === " " ||
+															fiatAddress?.state === null) && "-"}
+															{!(fiatAddress?.state === " " ||
+															fiatAddress?.state === null) && fiatAddress?.state}
 
 													</div>
 												</div>
@@ -276,10 +313,10 @@ const AddressFiatView = (props) => {
 													<label className="kpi-label">City</label>
 													<div className="kpi-val">
 
-														{fiatAddress?.city === " " ||
-															fiatAddress?.city === null
-															? "-"
-															: fiatAddress?.city}
+															{(fiatAddress?.city === " " ||
+															fiatAddress?.city === null) && "-"}
+															{!(fiatAddress?.city === " " ||
+															fiatAddress?.city === null) && fiatAddress?.city}
 													</div>
 												</div>
 											</Col>}
@@ -287,10 +324,11 @@ const AddressFiatView = (props) => {
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Postal Code</label>
 													<div className="kpi-val">
-														{fiatAddress?.postalCode === " " ||
-															fiatAddress?.postalCode === null
-															? "-"
-															: fiatAddress?.postalCode}
+
+															{(fiatAddress?.postalCode === " " ||
+															fiatAddress?.postalCode === null) && "-"}
+															{!(fiatAddress?.postalCode === " " ||
+															fiatAddress?.postalCode === null) && fiatAddress?.postalCode}
 													</div>
 												</div>
 											</Col>}

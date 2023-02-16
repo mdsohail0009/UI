@@ -3,7 +3,7 @@ import { Typography, Button, Form, Input, Alert, Tooltip} from "antd";
 import { getCode, getVerification, sendEmail, verifyEmailCode, getAuthenticator, getVerificationFields } from "./api";
 import { connect } from 'react-redux';
 import LiveNessSumsub from '../../sumSub.component/liveness'
-
+import apicalls from "../../../api/apiCalls";
 const Verifications = (props) => {
     const [verifyData, setVerifyData] = useState({});
     const [email, setEmail] = useState({ showRuleMsg: '', errorMsg: '', btnName: 'get_otp', requestType: 'Send', code: '', verified: false,btnLoader:false });
@@ -73,7 +73,6 @@ const Verifications = (props) => {
         }, 1000);
     };
     const transferDetials = async (values) => {
-        // setAgreeRed(true);
     };
 
    const loadPermissions = () => {
@@ -88,10 +87,12 @@ const Verifications = (props) => {
 
     const getVerifyData = async () => {
         props.onReviewDetailsLoading(true)
+        setMsg(null)
         let response = await getVerificationFields();
         if (response.ok) {
             setVerifyData(response.data);
             props.onReviewDetailsLoading(false)
+            setMsg(null)
         } else {
             setMsg(
                 "Without Verifications you can't withdraw.Please select withdraw verifications from security section"
@@ -103,6 +104,7 @@ const Verifications = (props) => {
     const sendEmailOTP = async (val) => {
         debugger
         setEmail({ ...email, errorMsg: '', showRuleMsg: '',btnLoader:true })
+        setMsg(null)
         let response = await sendEmail( email.requestType);
         if (response.ok) {
         let emailData = { ...email, errorMsg: '', btnName: 'code_Sent', requestType: 'Resend', showRuleMsg: `Enter 6 digit code sent to your Email Id`,btnLoader:false }
@@ -110,12 +112,13 @@ const Verifications = (props) => {
         
         startemailTimer('emailSeconds')
         } else {
-            setEmail({ ...email, errorMsg: isErrorDispaly(response), showRuleMsg: '',btnLoader:false })
+            setEmail({ ...email, errorMsg: apicalls.isErrorDispaly(response), showRuleMsg: '',btnLoader:false })
          
         }
     };
 
     const verifyEmailOtp = async (values) => {
+        setMsg(null)
         if(!email.code){
             setEmail({ ...email, errorMsg: 'Please enter email verification code', verified:false});
         }
@@ -157,7 +160,7 @@ const Verifications = (props) => {
         setPhone(phoneData)
         startphoneTimer('phoneSeconds')
         } else {
-            setPhone({ ...phone, errorMsg: isErrorDispaly(response), showRuleMsg: '', btnLoader:false })
+            setPhone({ ...phone, errorMsg: apicalls.isErrorDispaly(response), showRuleMsg: '', btnLoader:false })
         }
     };
     const handlephoneinputChange = (e) => {
@@ -195,19 +198,7 @@ const Verifications = (props) => {
         }
     };
 
-    const isErrorDispaly = (objValue) => {
-        if (objValue.data && typeof objValue.data === "string") {
-            return objValue.data;
-        } else if (
-            objValue.originalError &&
-            typeof objValue.originalError.message === "string"
-        ) {
-            return objValue.originalError.message;
-        } else {
-            return "Something went wrong please try again!";
-        }
-    };
-
+ 
     const updateverifyObj = (val, name) => {
         if (name === 'isEmailVerification') {
             props.onchangeData({ verifyData: verifyData,phBtn:phbtnColor, isEmailVerification: val, isAuthenticatorVerification: authenticator.verified, isPhoneVerification: phone.verified })
@@ -247,9 +238,7 @@ const Verifications = (props) => {
         }
     };
 
-    // const verifyLiveVerification = () =>{
-    //     setLiveverification({...liveverification,isLiveEnable:true})
-    // }
+    
     const verifyLiveness = (data) =>{
         if(data.verifed===true){
             setLiveverification({ ...liveverification, errorMsg: '', verified: true, btnName:'verified', btnLoader:false,isLiveEnable:false });
@@ -440,9 +429,6 @@ const Verifications = (props) => {
                                         />
                                    
                                  
-                                    {/* <div className="new-add c-pointer get-code text-yellow hy-align">
-                                        {phone_btnList[phone.btnName]}
-                                    </div> */}
                                 </div>
                             </Form.Item>
                         </>
@@ -485,9 +471,6 @@ const Verifications = (props) => {
                                         />
                                     
                                  
-                                    {/* <div className="new-add c-pointer get-code text-yellow hy-align">
-                                        {email_btnList[email.btnName]}
-                                    </div> */}
                                 </div>
                             </Form.Item>
                         </>
@@ -533,10 +516,7 @@ const Verifications = (props) => {
                                             {authenticator_btnList[authenticator.btnName]}
                                         </div>}
                                         />                                    
-                                  
-                                    {/* <div className="new-add c-pointer get-code text-yellow hy-align">
-                                        {authenticator_btnList[authenticator.btnName]}
-                                    </div> */}
+                                 
                                 </div>
                             </Form.Item>
                         </>
@@ -565,8 +545,7 @@ const connectStateToProps = ({ userConfig, oidc, menuItems }) => {
 };
 const connectDispatchToProps = dispatch => {
     return {
-        changeInternalStep: (stepcode) => {
-        },
+       
         dispatch
     }
 

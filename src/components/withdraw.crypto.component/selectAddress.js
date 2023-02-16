@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input,Drawer,Typography } from 'antd';
+import { Input,Drawer,Typography ,Alert} from 'antd';
 import { favouriteFiatAddress } from '../addressbook.component/api';
 import { setAddress, setStep, setWithdrawcrypto } from '../../reducers/sendreceiveReducer';
 import oops from '../../assets/images/oops.png'
@@ -15,7 +15,8 @@ class SelectAddress extends Component {
         addressLu: [],
         filterObj: [],
         loading: false,
-        showFuntransfer:false
+        showFuntransfer:false,
+        errorMessage:null
     }
     async componentDidMount() {
         this.getAddressLu();
@@ -27,13 +28,13 @@ class SelectAddress extends Component {
         });
     }
     getAddressLu = async () => {
-        this.setState({ ...this.state, loading: true })
+        this.setState({ ...this.state, loading: true ,errorMessage:null})
         let coin_code = this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coin;
         let recAddress = await favouriteFiatAddress('crypto', coin_code)
         if (recAddress.ok) {
-            this.setState({ ...this.state, addressLu: recAddress.data, loading: false, filterObj: recAddress.data });
+            this.setState({ ...this.state, addressLu: recAddress.data, loading: false, filterObj: recAddress.data ,errorMessage:null});
         }
-        else { this.setState({ ...this.state, loading: true }) }
+        else { this.setState({ ...this.state, loading: true,errorMessage:apicalls.isErrorDispaly(recAddress) }) }
     }
     handleSearch = (value) => {
         let filteraddresslabel;
@@ -53,7 +54,6 @@ class SelectAddress extends Component {
   
     selectCrypto = (type) => {
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
-        //this.props.dispatch(setSubTitle(apicalls.convertLocalLang('select_address')));
         let obj = {
             "customerId": this.props.userProfile.id,
             "customerWalletId": id,
@@ -72,18 +72,19 @@ class SelectAddress extends Component {
         } else {
             this.setState({
                 ...this.state, showFuntransfer: true, errorWorning: null
-                // , selection: [],
-                // isCheck: false,
+                
             });
         }
 
 
     }
     render() {
-        const { filterObj, loading } = this.state;
+        const { filterObj, loading,errorMessage } = this.state;
         const { Search } = Input;
         return (
             <>
+                    {errorMessage && <Alert type="error" description={errorMessage} showIcon />}
+
                 {loading ? <Loader /> : <>
                     <Search placeholder={apicalls.convertLocalLang('searchAddress')}
                         addonAfter={<span className="icon md search-white" />} onChange={({ currentTarget }) => { this.handleSearch(currentTarget.value) }} size="middle" bordered={false} className="my-16" />
@@ -104,7 +105,6 @@ class SelectAddress extends Component {
                             <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
                             <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
                             <p className="fs-16 text-white-30 fw-200 mb-0"> {apicalls.convertLocalLang('address_available')} </p>
-                            {/* <a onClick={() => this.selectCrypto()}>Click hear to make New Transfer</a> */}
                         </div>}
                     </>
                  

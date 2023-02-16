@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Select, Input, Row, Col, Form, Button, Typography, List, Divider, Image, Alert, Spin, Empty,Radio,Tabs } from 'antd';
+import { Select, Input, Row, Col, Form, Button, Typography, List, Image, Alert, Spin, Empty,Radio,Tabs } from 'antd';
 import apicalls from "../../api/apiCalls";
 import AddressDocumnet from "../addressbook.component/document.upload";
 import oops from '../../assets/images/oops.png'
@@ -21,11 +21,10 @@ import { connect } from "react-redux";
 import { getFeaturePermissionsByKeyName } from "../shared/permissions/permissionService";
 import { setSendFiatHead } from "../../reducers/buyFiatReducer";
 import {validateContentRule} from '../../utils/custom.validator'
-import {hideSendCrypto,rejectWithdrawfiat, setWithdrawfiatenaable ,setClearAmount} from '../../reducers/sendreceiveReducer'
+import {hideSendCrypto,setClearAmount} from '../../reducers/sendreceiveReducer'
 import { setStep } from '../../reducers/buysellReducer';
-import WithdrawalSuccess from '../../components/withDraw.component/withdrwSuccess';
+
 const { Text, Title } = Typography; 
-const { Option } = Select
 class OnthegoFundTransfer extends Component {
   enteramtForm = React.createRef();
   reasonForm = React.createRef();
@@ -91,12 +90,7 @@ class OnthegoFundTransfer extends Component {
     }
   }
 
-  getCoinDetails = async () => {
-    let response = await getCoinwithBank()
-    if (response.ok) {
-      //let obj = response.data
-    }
-  }
+ 
   getPayees() {
     fetchPayees( this.state.selectedCurrency).then((response) => {
         if (response.ok) {
@@ -125,7 +119,7 @@ class OnthegoFundTransfer extends Component {
                 this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: false })
       }
     } else {
-        this.setState({ ...this.state, isVarificationLoader: false, errorMessage: this.isErrorDispaly(verfResponse) })
+        this.setState({ ...this.state, isVarificationLoader: false, errorMessage: apicalls.isErrorDispaly(verfResponse) })
     }
   }
   chnageStep = (step, values) => {
@@ -165,7 +159,7 @@ handleFiatSearch = ({ target: { value: val } }) => {
         this.setState({ ...this.state, fiatWallets: this.state.filtercoinsList, searchFiatVal: val });
 }
 saveWithdrawdata = async () => {
-    this.setState({ ...this.state, isBtnLoading: true })
+    this.setState({ ...this.state, isBtnLoading: true ,errorMessage:null})
     if (this.state.verifyData?.verifyData) {
         if (this.state.verifyData.verifyData.isPhoneVerified) {
             if (!this.state.verifyData.isPhoneVerification) {
@@ -234,11 +228,11 @@ saveWithdrawdata = async () => {
         this.chnageStep(this.state.isNewTransfer ? "declaration" : "successpage")
         this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id))
         this.props.dispatch(fetchMarketCoinData(true))
-        this.setState({ ...this.state, isBtnLoading: false })
+        this.setState({ ...this.state, isBtnLoading: false,errorMessage:null })
       } else {
         this.setState({
           ...this.state,
-          errorMessage: this.isErrorDispaly(saveRes), isBtnLoading: false
+          errorMessage: apicalls.isErrorDispaly(saveRes), isBtnLoading: false
         });
       }
     }
@@ -269,18 +263,7 @@ saveWithdrawdata = async () => {
     }
 
 }
-  isErrorDispaly = (objValue) => {
-    if (objValue.data && typeof objValue.data === "string") {
-        return objValue.data;
-    } else if (
-        objValue.originalError &&
-        typeof objValue.originalError.message === "string"
-    ) {
-        return objValue.originalError.message;
-    } else {
-        return "Something went wrong please try again!";
-    }
-};
+
   onReviewDetailsLoading = (val) => {
     this.setState({ ...this.state, reviewDetailsLoading: val })
   }
@@ -296,7 +279,7 @@ saveWithdrawdata = async () => {
     if (res.ok) {
         this.setState({ ...this.state, [loader]: false, errorMessage: null }, () => this.chnageStep(step, values));
     } else {
-        this.setState({ ...this.state, [loader]: false, errorMessage: this.isErrorDispaly(res) })
+        this.setState({ ...this.state, [loader]: false, errorMessage: apicalls.isErrorDispaly(res) })
     }
 
   }
@@ -313,7 +296,6 @@ saveWithdrawdata = async () => {
  this.setState({ ...this.state, selectedCurrency: e });
   }
 
-  fiatHeading = (data) => {}
   keyDownHandler = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault()
@@ -353,7 +335,6 @@ saveWithdrawdata = async () => {
                 'addressLoader',
               ),
             )
-            .catch((error) => {})
         },
       )
     } else {
@@ -369,7 +350,7 @@ saveWithdrawdata = async () => {
   }
 
   renderStep = (step) => {
-    const { filterObj, pastPayees, isVarificationLoader, isVerificationEnable, isPhMail, isShowGreyButton, isAuthMail } = this.state;
+    const { filterObj, pastPayees, isVarificationLoader, isVerificationEnable, isShowGreyButton } = this.state;
     const steps = {
       selectcurrency: (
         <React.Fragment>
@@ -585,9 +566,9 @@ saveWithdrawdata = async () => {
                                 amount: this.state.amount,
                               })
                               if (res.ok) {
-                                this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
+                                this.setState({ ...this.state, reviewDetails: res.data, loading: false,errorMessage:null }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
                               } else {
-                                this.setState({ ...this.state, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
+                                this.setState({ ...this.state, loading: false, errorMessage: apicalls.isErrorDispaly(res) });
                               }
                             }
                           }}>
@@ -637,9 +618,9 @@ saveWithdrawdata = async () => {
                             this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item });
                             const res = await confirmTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount });
                           if (res.ok) {
-                            this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
+                            this.setState({ ...this.state, reviewDetails: res.data, loading: false,errorMessage:null }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
                           } else {
-                            this.setState({ ...this.state, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
+                            this.setState({ ...this.state, loading: false, errorMessage: apicalls.isErrorDispaly(res) });
                           }
                         }
                       }}>
@@ -741,9 +722,9 @@ saveWithdrawdata = async () => {
                           }
                           const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasionOfTransfer, amount: this.state.amount, documents: this.state.codeDetails?.documents });
                           if (res.ok) {
-                            this.setState({ ...this.state, reviewDetails: res.data, loading: false }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
+                            this.setState({ ...this.state, reviewDetails: res.data, loading: false,errorMessage:null }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
                           } else {
-                            this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, ...fieldValues }, loading: false, errorMessage: res.data?.message || res.data || res.originalError.message });
+                            this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, ...fieldValues }, loading: false, errorMessage: apicalls.isErrorDispaly(res) });
                           }
 
                         }).catch(() => { });
@@ -886,7 +867,6 @@ saveWithdrawdata = async () => {
                        </Button>
                       </Form.Item>
                     </div>
-                  // </Col>
                   }
               
             </Form>
@@ -937,8 +917,7 @@ const connectStateToProps = ({ sendReceive, userConfig, menuItems, oidc }) => {
 };
 const connectDispatchToProps = (dispatch) => {
   return {
-    changeInternalStep: (stepcode) => {
-    },
+  
       changeStep: (stepcode) => {
           dispatch(setStep(stepcode))
       },

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Card, Radio, Alert, Image } from 'antd';
+import { Typography, Card, Radio, Alert } from 'antd';
 import { setStep, setTab } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';

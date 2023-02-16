@@ -1,4 +1,4 @@
-import { Table, Input, Empty, Drawer, Typography } from 'antd';
+import { Table, Input, Empty, Drawer, Typography,Alert } from 'antd';
 import React, { useEffect, useState } from 'react';
 import Translate from 'react-translate-component';
 import { fetchMarketCaps } from './api';
@@ -15,11 +15,12 @@ const MarketCap = ({ member }) => {
     const [searchVal, setSearchVal] = useState([])
     const [originalMarketCaps, setOriginalMarketCaps] = useState([]);
     const [fullViewData, setFullViewData] = useState([]);
-    const [fullViewLoading, setFullViewLoading] = useState(false);
+    const [errorMessage,setErrorMessage]=useState(null)
     useEffect(() => {
         fetchMarketCapsInfo();
     }, [])
     const fetchMarketCapsInfo = async () => {
+        setErrorMessage(null)
         setIsLoading(true);
         setSearchVal("");
         const response = await fetchMarketCaps({ pageNo: 1 });
@@ -27,6 +28,9 @@ const MarketCap = ({ member }) => {
             setMarketCaps(response.data);
             setOriginalMarketCaps(response.data);
             setIsLoading(false);
+            setErrorMessage(null)
+        }else{
+            setErrorMessage(apiCalls.isErrorDispaly(response))
         }
     }
     const onSearch = ({ currentTarget: { value } }, isFullScreen) => {
@@ -46,10 +50,14 @@ const MarketCap = ({ member }) => {
     }
 
     return <>
+     {errorMessage !== undefined && errorMessage !==null && errorMessage !=="" && (
+                <div style={{ width: '100%' }}>
+                <Alert className="w-100 mb-16 align-center" type="error" showIcon description={errorMessage} />
+                </div>
+              )}
         <div className='market-panel-newstyle'></div>
             <div className="full-screenable-node marketcap-mt" >
-                {/* <div className="d-flex justify-content align-center"> */}
-                {/* <div className="d-flex"> */}
+               
                     <div className="d-flex align-center">
                         <Translate content="markets_title" component={Title} className="db-titles" />
                         <div className = 'search-box markets-search'>
@@ -65,8 +73,7 @@ const MarketCap = ({ member }) => {
                         </a>
                     </div> 
                     </div>
-                {/* </div> */}
-                {/* </div> */}
+                
                 <div className='bash-market-table responsive_table bg-none dashb-btmtable'>
                 
                 
@@ -91,7 +98,7 @@ const MarketCap = ({ member }) => {
                     <div className="full-screenable-node" >
                   
                         <div style={{ marginBottom: '8px', textAlign: 'right' }}>
-                            <Table className='markets-grid' locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }} sortDirections={["ascend", "descend"]}  pagination={false} columns={detailInfoColumns}  dataSource={fullViewData} loading={fullViewLoading} />
+                            <Table className='markets-grid' locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }} sortDirections={["ascend", "descend"]}  pagination={false} columns={detailInfoColumns}  dataSource={fullViewData}  />
                         </div>
                     </div>
                 </div>

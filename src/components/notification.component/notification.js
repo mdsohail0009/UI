@@ -155,7 +155,7 @@ class NotificationScreen extends Component {
                       <th style={{ width: 180 }}>Subscribe</th>
                     </tr>
                   </thead>
-                  {this.state.notification.length !== 0 ? <>
+                  {this.state.notification.length !== 0 && <>
                     <tbody>
                       {this.state.notification?.map((item, i) => {
                         return (
@@ -222,7 +222,9 @@ class NotificationScreen extends Component {
 
                         )
                       })}
-                    </tbody> </> : <>
+                    </tbody> </>}
+                    {this.state.notification.length === 0 &&
+                      <>
                     <tbody>
                       <tr>
                         <td
@@ -234,7 +236,8 @@ class NotificationScreen extends Component {
                         </td>
                       </tr>{" "}
                     </tbody>
-                  </>}
+                  </>
+                  }
                 </table>
 
                 <div className="text-center">

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Card, Typography } from 'antd';
-import logoColor from "../../assets/images/logo-color.png";
+import { Typography } from 'antd';
 import logoWhite from "../../assets/images/SuisseBase.png";
 import Translate from 'react-translate-component';
 import { withRouter } from 'react-router-dom';
 
-const { Text,Title, Paragraph } = Typography;
+const { Text,Title } = Typography;
 class SbCard extends Component {
     handleClick=()=>{
         this.props.history.push(`/sbcard`)

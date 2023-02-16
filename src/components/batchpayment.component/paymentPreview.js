@@ -3,7 +3,7 @@ import {
   Drawer,
   Typography,
   Button,
-   Alert,Modal,Tooltip} from "antd";
+   Alert,Modal} from "antd";
 import Translate from "react-translate-component";
 import { withRouter } from "react-router-dom";
 import PaymentSummary from "./paymentSummary";

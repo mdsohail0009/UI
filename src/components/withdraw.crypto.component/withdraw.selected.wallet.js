@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { Typography, Button, Drawer, Card, Input,  Alert, Row, Col, Form, Modal, Image } from 'antd';
+import { Typography, Button, Drawer, Card, Input,  Alert, Row, Col, Form, Modal } from 'antd';
 import { handleSendFetch, setStep, setSubTitle, setWithdrawcrypto, setAddress,rejectWithdrawfiat, hideSendCrypto } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import {
@@ -69,6 +69,8 @@ class CryptoWithDrawWallet extends Component {
                     minVerifications = minVerifications + 1;
                 }
             }
+        }else{
+            this.setState({...this.state,error:apiCalls.isErrorDispaly(verfResponse)})
         }
         this.setState({ ...this.state, isVerificationLoading: false });
         return minVerifications >= 2;
@@ -81,14 +83,13 @@ class CryptoWithDrawWallet extends Component {
                 this.enteramtForm.current?.handleConvertion({ cryptoValue: this.props.sendReceive?.withdrawCryptoObj?.totalValue, localValue: 0 })
                 this.setState({ ...this.state, walletAddress: this.props.sendReceive.withdrawCryptoObj.toWalletAddress, amountPercentageType: this.props.sendReceive.withdrawCryptoObj.amounttype });
             } else {
-                //this.enteramtForm.current?.handleConvertion({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 })
             }
             this.enteramtForm?.current?.setFieldsValue({amount:this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue});
             this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 2 }))
             this.props.dispatch(setSubTitle(apicalls.convertLocalLang('wallet_address')));
         }
         else {
-            this.setState({ ...this.state, isVerificationMethodsChecked: isVerified });
+            this.setState({ ...this.state, isVerificationMethodsChecked: isVerified ,error:apiCalls.isErrorDispaly(isVerified)});
         }
         getFeaturePermissionsByKeyName(`send_crypto`)
         this.trackevent();
@@ -108,7 +109,7 @@ class CryptoWithDrawWallet extends Component {
                 showCrypto = !obj?.close;
             else
                 showFiat = !obj?.close;
-        };
+        }
         this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat });
 
         this.props.dispatch(rejectWithdrawfiat());
@@ -237,7 +238,7 @@ class CryptoWithDrawWallet extends Component {
                     ...this.state, visible: true, errorWorning: null, errorMsg: null, [loader]: false, showFuntransfer: true
                 });
             } else {
-                this.setState({ ...this.state, loading: false, [loader]: false, errorMsg: this.isErrorDispaly(res) })
+                this.setState({ ...this.state, loading: false, [loader]: false, errorMsg: apiCalls.isErrorDispaly(res) })
                 this.myRef.current.scrollIntoView();
             }
     
@@ -252,11 +253,9 @@ class CryptoWithDrawWallet extends Component {
             cryptoamnt = obj.coinBalance ? obj.coinBalance : 0;
             this.setState({ ...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt, amountPercentageType: 'all' });
             this.enteramtForm?.current?.setFieldsValue({amount:obj.coinBalance});
-           // this.enteramtForm.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
         } else {
             this.setState({ ...this.state, CryptoAmnt: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, amountPercentageType: 'min' });
             this.enteramtForm?.current?.setFieldsValue({amount:this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue});
-           // this.enteramtForm.current.changeInfo({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 });
         }
     }
     handlePreview = () => {
@@ -321,22 +320,12 @@ class CryptoWithDrawWallet extends Component {
             this.props.dispatch(setWithdrawcrypto(obj))
             this.props.changeStep('withdraw_crpto_summary');
         } else {
-            this.setState({ ...this.state, loading: false, errorMsg: this.isErrorDispaly(response) });
+            this.setState({ ...this.state, loading: false, errorMsg: apiCalls.isErrorDispaly(response) });
             this.myRef.current.scrollIntoView()
         }
-        //this.props.dispatch(setSubTitle(apicalls.convertLocalLang('withdrawSummary')));
 
     }
-    isErrorDispaly = (objValue) => {
-        if (objValue.data && typeof objValue.data === "string") {
-            return objValue.data;
-        } else if (objValue.originalError && typeof objValue.originalError.message === "string"
-        ) {
-            return objValue.originalError.message;
-        } else {
-            return "Something went wrong please try again!";
-        }
-    };
+    
     renderModalContent = () => {
         if (!this.props?.sendReceive?.cryptoWithdraw?.selectedWallet) { return null }
         const { walletAddress, CryptoAmnt, confirmationStep } = this.state;
@@ -451,22 +440,7 @@ class CryptoWithDrawWallet extends Component {
 
 {!this.state.isHideCard && <Card className="crypto-card select space-hide" bordered={false}>
 
-                        {/* <div className="crypto-details d-flex"> */}
-                            {/* <div>
-                                <span className="d-flex align-center mb-4">
-                                    <Image preview={false} src={selectedWallet?.impageWhitePath} />
-                                    <Text className="crypto-percent">{selectedWallet?.percentage}<sup className="percent fw-700">%</sup></Text>
-                                </span>
-                                <Text className="fs-24 text-purewhite ml-4">{selectedWallet?.coinFullName}</Text>
-
-                            </div> */}
-                            {/* <div> */}
-
-                                {/* <div className="crypto-amount" >
-                                <div className="crypto-details"><span className='buycoin-style'>{selectedWallet?.coin}</span><Currency defaultValue={selectedWallet?.coinBalance} prefix={""} type={"text"} className="buycoin-style marginL" /></div>
-                                <div className='crypto-details'><div className='sellcrypto-style'>Balance:</div>     <Currency defaultValue={selectedWallet?.coinValueinNativeCurrency} prefix={"$ "} type={"text"} className="marginL sellbal-style" /></div>
-                                </div> */}
-                            {/* </div></div> */}
+                      
                     </Card>}
                     {!this.state.isVerificationLoading &&
                      <OnthegoCryptoTransfer onTransfer={this.newTransferClick} selectedWallet= {selectedWallet} sendReceive={this.props.sendReceive} addressBookReducer= {this.props.addressBookReducer}/>

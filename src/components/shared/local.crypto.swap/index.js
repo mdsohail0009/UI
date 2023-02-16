@@ -2,7 +2,6 @@ import { Input, Spin } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { convertCurrencyDuplicate } from '../../buy.component/buySellService';
-import { setStep, setAddress } from '../../../reducers/sendreceiveReducer';
 import NumberFormat from 'react-number-format';
 const LocalCryptoSwapper = (props, ref) => {
     const { localAmt = 0, cryptoAmt = 0, localCurrency = "USD", cryptoCurrency, onChange, sellData, showSwap = true, selectedCoin = null, showConvertion = true } = props;
@@ -97,8 +96,7 @@ const LocalCryptoSwapper = (props, ref) => {
                 allowNegative={false}
             />
         
-            {/* <div className='with-min'>Min</div>
-            <div className='with-max'>Max</div> */}
+          
         </div>
         {showConvertion && <><NumberFormat value={isSwaped ? localvalue : cryptovalue} displayType={'text'} thousandSeparator={true} prefix={isSwaped ? symbols[localCurrency] : ""} renderText={(value, props) => <div {...props} className="fs-14 text-white-30 text-center d-block mb-36">{value} {isSwaped ? localCurrency : cryptoCurrency} {isConvertionLoad && <Spin size="small" />}</div>
         } />
@@ -111,22 +109,5 @@ const LocalCryptoSwapper = (props, ref) => {
     </div>
 
 }
-const connectStateToProps = ({ sendReceive, userConfig, addressBookReducer }) => {
-    return {addressBookReducer, sendReceive, userProfile: userConfig.userProfileInfo }
-}
-const connectDispatchToProps = dispatch => {
-    return {
-        // changeStep: (stepcode) => {
-        //     dispatch(setAddressStep(stepcode))
-        // },
-        changeStep: (stepcode) => {
-            dispatch(setStep(stepcode))
-        },
-        clearAddress: (stepcode) => {
-            dispatch(setAddress(stepcode))
-        },
-        dispatch
-    }
-}
-//export default connect(connectStateToProps, connectDispatchToProps)(LocalCryptoSwapper);
+
  export default forwardRef(LocalCryptoSwapper);

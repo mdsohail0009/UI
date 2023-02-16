@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import {
     Collapse, Button, Typography, Modal, Tooltip, Input, Upload, Spin, Empty, Alert, Row, Col,
-    Divider,
     Form
 } from 'antd';
 import {
@@ -20,6 +19,7 @@ import Mome from 'moment'
 import { success, warning } from '../../utils/messages';
 import { LoadingOutlined } from "@ant-design/icons";
 import { getScreenName } from '../../reducers/feturesReducer';
+import apicalls from '../../api/apiCalls';
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
 const { Dragger } = Upload;
@@ -28,7 +28,6 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
     const suffix = children.slice(-suffixCount).trim();
     return (
         <Text className="btn-textstyle"
-            // style={{ maxWidth: '100%' }} 
             ellipsis={{ suffix }}>
             {start}
         </Text>
@@ -68,7 +67,7 @@ class CaseView extends Component {
             this.loadDocReplies(response.data?.details[0]?.id)
             this.setState({ ...this.state, docDetails: response.data, loading: false });
         } else {
-            this.setState({ ...this.state, loading: false, error: response.data });
+            this.setState({ ...this.state, loading: false, error: apicalls.isErrorDispaly(response) });
         }
     }
     loadDocReplies = async (id) => {
@@ -86,27 +85,40 @@ class CaseView extends Component {
                 }
             });
         } else {
-            this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: false, data: [], error: response.data } } });
+            this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: false, data: [], error: apicalls.isErrorDispaly(response) } } });
         }
     }
     docPreview = async (file) => {
+        this.setState({...this.state,error:null})
         let res = await getFileURL({ url: file.path });
         if (res.ok) {
             this.state.PreviewFilePath = file.path;
             this.setState({ ...this.state, previewModal: true, previewPath: res.data });
+        }else{
+            this.setState({...this.state,error:apicalls.isErrorDispaly(res)})
         }
     }
     DownloadUpdatedFile = async () => {
+        this.setState({...this.state,error:null})
         let res = await getFileURL({ url: this.state.PreviewFilePath });
         if (res.ok) {
-            this.setState({ ...this.state, previewModal: true, previewPath: res.data });
+            this.setState({ ...this.state, previewModal: true, previewPath: res.data,error:null });
             window.open(res.data, "_blank")
+        }else{
+            this.setState({...this.state,error:apicalls.isErrorDispaly(res)})
+
         }
     }
     fileDownload = async () => {
+        this.setState({...this.state,error:null})
         let res = await getFileURL({ url: this.state.previewPath });
         if (res.ok) {
             this.DownloadUpdatedFile()
+            this.setState({...this.state,error:null})
+
+        }else{
+            this.setState({...this.state,error:apicalls.isErrorDispaly(res)})
+
         }
     }
     docPreviewClose = () => {
@@ -123,7 +135,8 @@ class CaseView extends Component {
             success('Document has been approved');
             this.loadDocReplies(doc.id);
         } else {
-            warning(response.data);
+            this.setState({...this.state,error:apicalls.isErrorDispaly(response)})
+
         }
     }
     updateDocRepliesStatus = (doc, Status) => {
@@ -169,7 +182,8 @@ class CaseView extends Component {
             this.loadDocReplies(doc.id)
             this.setState({errorWarning:null })
         } else {
-            warning(response.data);
+            this.setState({...this.state,error:apicalls.isErrorDispaly(response)})
+
         }
         let objs = [...this.state.docReplyObjs];
         objs = objs.filter(obj => obj.docunetDetailId !== doc.id);
@@ -195,7 +209,8 @@ class CaseView extends Component {
             objs = objs.filter(item1 => item1.docunetDetailId !== doc.id);
             this.setState({ ...this.state, docReplyObjs: objs });
         } else {
-            warning(response.data);
+            this.setState({...this.state,error:apicalls.isErrorDispaly(response)})
+
         }
     }
     isDocExist(lstObj, id) {
@@ -306,7 +321,6 @@ class CaseView extends Component {
     formatBytes(bytes) { // <-----(bytes, decimals = 2)
         if (bytes === 0) return '0 Bytes';
         const k = 1024;
-        // const dm = decimals < 0 ? 0 : decimals;
         const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         const i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed()) + ' ' + sizes[i];
@@ -352,17 +366,6 @@ class CaseView extends Component {
                 <div className='case-ribbon mb-16'>
                     <Row gutter={[16, 16]}>
                         
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
                          {commonModel ? (
                 Object.entries(commonModel).map(([key, value], idx) => (
                   <Col
@@ -401,7 +404,6 @@ class CaseView extends Component {
                     <div className='case-lbl remark-casestyle'  maxLength={500} rows={4}>{caseData.remarks ? caseData.remarks : '-'}</div>
                 </div>
 
-                {/* <Divider /> */}
                 {(!this.state.docDetails?.details || this.state.docDetails?.details.length === 0) && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No documents available" /></div>}
                 <div className="bank-view">
                     {this.state.docDetails?.details?.map((doc, idx) =>
@@ -419,7 +421,6 @@ class CaseView extends Component {
                             accordion className="accordian  mb-togglespace "
                             defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
                             <Panel header={doc.documentName} key={idx + 1} extra={doc.state ? (<span className={`${doc.state ? doc.state.toLowerCase() + " staus-lbl" : ""}`}>{doc.state}</span>) : ""}>
-                                {/* {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>} */}
                                 {this.state.documentReplies[doc.id]?.data?.map((reply, ix) => <div key={ix} className="reply-container">
                                     <div className="user-shortname">{reply?.repliedBy?.slice(0, 2)}</div>
                                     <div className="reply-body">
@@ -527,10 +528,8 @@ class CaseView extends Component {
                                                 <Button
                                                     htmlType="submit"
                                                     size="large"
-                                                    // block
                                                     className="pop-btn  detail-popbtn paynow-btn-ml"
                                                     loading={this.state.btnLoading}
-                                                    // style={{ width: "300px" }}
                                                 >
                                                     Submit
                                                 </Button>
@@ -541,7 +540,7 @@ class CaseView extends Component {
                                      <> 
                                    
                                     {((!this.state?.documentReplies[doc.id]?.data ||
-                                        this.state?.documentReplies[doc.id]?.data?.length === 0)&&(( doc.state === "Approved" || this.state.docDetails.caseState === 'Approved' || this.state.docDetails.caseState === 'Cancelled'))
+                                        this.state?.documentReplies[doc.id]?.data?.length === 0)&&( doc.state === "Approved" || this.state.docDetails.caseState === 'Approved' || this.state.docDetails.caseState === 'Cancelled')
                                         ) && (
                                             <Empty
                                                  image={Empty.PRESENTED_IMAGE_SIMPLE}

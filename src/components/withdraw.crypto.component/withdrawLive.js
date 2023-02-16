@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Alert, Button,Image,Typography, } from 'antd';
+import { Alert, Button } from 'antd';
 import { setStep, setSubTitle, setWithdrawcrypto, setCryptoFinalRes } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
@@ -7,6 +7,7 @@ import LiveNessSumsub from '../sumSub.component/liveness'
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { withDrawCrypto } from '../send.component/api';
 import { publishBalanceRfresh } from '../../utils/pubsub';
+import apicalls from '../../api/apiCalls';
 const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep, dispatch, trackAuditLogData }) => {
   const [livefacerecognization, setLivefacerecognization] = useState({});
   const [isLoding, setIsLoding] = useState(false);
@@ -41,7 +42,7 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep, dispatch, t
       }
      
     } else {
-      setErrorMessage(withdrawal.data?.message || withdrawal.data || withdrawal.originalError?.message || "Something went wrong please try after sometime :)");
+      setErrorMessage(apicalls.isErrorDispaly(withdrawal))
       divRef.current.scrollIntoView();
     }
 
