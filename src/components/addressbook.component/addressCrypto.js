@@ -42,26 +42,16 @@ class AddressCrypto extends Component {
       approvedAddress:false,
       isDocCheck:false,
       isDocDeleteCheck:false,
-      netWorkData:[],
     };
   }
 
   componentDidMount() {
     this.getCryptoData();
     this.handleWallet();
-    this.getNetWorkData();
   }
-  getNetWorkData=async()=>{
-    this.setState({ ...this.state, isLoading: true })
-    let response = await getNetWorkLucup();
-    if(response.ok){
-    this.setState({...this.state,isLoading: false,netWorkData:response.data})
-    } else {
-      this.setState({ ...this.state,isLoading: false, errorMessage: this.isErrorDispaly(response) })
-    }
-  }
+
   getCryptoData = async () => {
-    let id = this.props?.addressBookReducer?.selectedRowData?.id ||this.props.cryptoId || "00000000-0000-0000-0000-000000000000";
+    let id = this.props?.addressBookReducer?.selectedRowData?.id || "00000000-0000-0000-0000-000000000000";
     this.setState({ ...this.state, isLoading: true })
     let response = await getCryptoData(id);
     if (response.ok) {
@@ -152,7 +142,7 @@ if (res.ok){
   }
   submit = async (values) => {
     let data=this.state.details.documents?.details.filter((item)=>item.state!=="Deleted")?.length===0 ;
-    if (!values.isOwnerOfWalletAddress) {
+    if (!values.isOwnerOfWalletAddress && process.env.REACT_APP_ISTR == "true") {
 			this.setState({
 				...this.state,
         errorMessage:"Please select owner check box",
@@ -197,7 +187,7 @@ this.useDivRef.current?.scrollIntoView(0, 0);
     let response = await saveCryptoData(obj)
     if (response.ok) {
       this.setState({ ...this.state, isBtnLoading: false })
-      if ((window?.location?.pathname.includes('addressbook') || this.props.isSave)&& this.props.type === "manual") {
+      if (window?.location?.pathname.includes('addressbook')&& this.props.type === "manual") {
         if(!(this.state.cryptoData.adressstate ==="Approved" && this.state.cryptoData.isProofofOwnership===false) ||(this.state.cryptoData.walletSource===null && this.state.cryptoData.isOwnerOfWalletAddress===null)){
           this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true,showDeclartionApproved: false,approvedAddress:false });
         }else if((obj.documents?.details?.length===0 ||obj.documents===undefined || this.state.cryptoData?.documents===undefined) && this.state.cryptoData.adressstate ==="Approved" && this.state.cryptoData.isProofofOwnership===false){
@@ -325,6 +315,31 @@ this.setState({...this.state,isDocCheck:e.target.checked})
             <Row className="addcrypto-benficiary">
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
+              name="token"
+              label="Token"
+              rules={[
+                {
+                  required: true,
+                  message: "Is required",
+                },
+              ]} >
+              <Select
+                className={`cust-input ${(this.props?.sendReceive?.withdrawFiatObj?.walletCode ||this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin || this.state.cryptoData.adressstate ==="Approved") ? "input-disabled-style" :""}`}
+                onChange={this.handleTokenChange}
+                placeholder="Select Token"
+                optionFilterProp="children"
+                maxLength={50}
+                disabled={(this.props?.sendReceive?.withdrawFiatObj?.walletCode ||this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin || this.state.cryptoData.adressstate ==="Approved") ? true:false}>
+                {coinsList?.map((item, idx) => (
+                  <Option key={idx} value={item.walletCode}>
+                    {item.walletCode}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+            </Col>
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="network"
               label="Network (Any coins on the selected network will be whitelisted)"
               rules={[
@@ -341,9 +356,9 @@ this.setState({...this.state,isDocCheck:e.target.checked})
                 optionFilterProp="children"
                 disabled={this.state.cryptoData.adressstate ==="Approved"  ? true : false }
               >
-                {this.state.netWorkData?.map((item, idx) => (
-                  <Option key={idx} value={item.walletCode}>
-                    {item.walletCode}
+                {networksList?.map((item, idx) => (
+                  <Option key={idx} value={item.name}>
+                    {item.name}
                   </Option>
                 ))}
               </Select>
@@ -357,8 +372,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
               required
               rules={[
                 {
-                  required: true,
-                  message: "Is required",
+                  validator: this.validateAddressType,
                 },
               ]}
             >
@@ -370,7 +384,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
               />
             </Form.Item>
             </Col>
-            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+           {process.env.REACT_APP_ISTR == "true" && <> <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="walletSource"
               label="Wallet Source"
@@ -497,7 +511,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
                             documents={this.state.cryptoData?.documents|| null}
                             editDocument={this.state.isEdit} onDocumentsChange={(docs) =>this.editDocuments(docs) } 
                             />
-                        </ Col>
+                        </ Col></>}
           
             </Row>
             <Form.Item className="">

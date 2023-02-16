@@ -264,13 +264,13 @@ class AddressBook extends Component {
 			width: 380,
 		},
 		
-		{ field: "walletSource", title: "Wallet Source", width: 150, filter: true },
-		{ field: "isProofofOwnership", title: "Proof Of Ownership", width: 200,
+		(process.env.REACT_APP_ISTR == "true" && { field: "walletSource", title: "Wallet Source", width: 150, filter: true }),
+		process.env.REACT_APP_ISTR == "true" && { field: "isProofofOwnership", title: "Proof Of Ownership", width: 200,
 		customCell: (props) => (
 			<td>
 				{props.dataItem?.isProofofOwnership===true?"Yes":"No"}
 			</td>
-		), },
+		) },
 		{
 			field: "addressState",
 			title: apiCalls.convertLocalLang("Whitelisting_Status"),
