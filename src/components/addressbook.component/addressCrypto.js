@@ -43,6 +43,7 @@ class AddressCrypto extends Component {
       approvedAddress:false,
       isDocCheck:false,
       isDocDeleteCheck:false,
+      documentChekUpload:false,
     };
   }
 
@@ -131,6 +132,7 @@ if (res.ok){
 
   }
   submit = async (values) => {
+    debugger
     let data=this.state.details.documents?.details.filter((item)=>item.state!=="Deleted")?.length===0 ;
     if (!values.isOwnerOfWalletAddress && process.env.REACT_APP_ISTR == "true") {
 			this.setState({
@@ -143,9 +145,15 @@ if (res.ok){
       this.state.details.documents?.details?.length ==0 || data===true))){
       this.setState({
 				...this.state,
-        errorMessage:"At least one document is required",
-				
+        errorMessage:"At least one document is required"
 			});
+this.useDivRef.current?.scrollIntoView(0, 0);
+}else if(this.state.documentChekUpload || this.state.isDocCheck){
+this.setState({
+  ...this.state,
+  errorMessage:"Please select greater than 15,000 CHF check box"
+  
+});
 this.useDivRef.current?.scrollIntoView(0, 0);
 }
     else{
@@ -203,6 +211,9 @@ this.useDivRef.current?.scrollIntoView(0, 0);
     }
   }
   }
+  documentCheck=(data)=>{
+    this.setState({ ...this.state, documentChekUpload:data})
+  }
   editDocuments=(docs)=>{
       let { documents } = this.state.details;
       if(this.state.isEdit){
@@ -214,7 +225,12 @@ this.useDivRef.current?.scrollIntoView(0, 0);
   
   }
   handleDocCheck=(e)=>{
-this.setState({...this.state,isDocCheck:e.target.checked})
+    if(e.target.checked===false){
+      this.setState({...this.state,isDocCheck:e.target.checked,documentChekUpload:false});
+    }else{
+      this.setState({...this.state,isDocCheck:e.target.checked});
+    }
+
   }
   validateAddressType = (_, value) => {
     if (value) {
@@ -434,7 +450,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
 								valuePropName="checked"
 								required
 							>				
-								<div className={`d-flex  agree-check checkbox-mobile align-center`}>
+								<div className={`d-flex  agree-check checkbox-mobile align-center travel-custcheck`}>
 						<label>
 							<input
               
@@ -464,7 +480,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
 								valuePropName="checked"
 								required
 							>				
-								<div className={`d-flex  agree-check checkbox-mobile align-center`}>
+								<div className={`d-flex  agree-check checkbox-mobile align-center travel-custcheck`}>
 						<label>
 							<input
 								type="checkbox"
@@ -495,7 +511,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
                                       
                                         </Paragraph>
                             <AddressCryptoDocument 
-
+                            docCheck={this.documentCheck}
                             documents={this.state.cryptoData?.documents|| null}
                             editDocument={this.state.isEdit} onDocumentsChange={(docs) =>this.editDocuments(docs) } 
                             />

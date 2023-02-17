@@ -151,6 +151,7 @@ class AddressCryptoDocument extends Component {
                                         let { documents: docs } = this.state;
                                         docs?.details?.push(this.docDetail(file));
                                         this.props?.onDocumentsChange(docs);
+                                        this.props?.docCheck(true);
                                     }else{
                                         this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg, pdf, mp4, mov, wmv, avi files" }) 
                                     }
@@ -168,7 +169,7 @@ class AddressCryptoDocument extends Component {
                             </p>
                         </Dragger>
                     </Form.Item>
-                    {this.state?.filesList?.map((file, indx) => <div>
+                    {this.state?.filesList?.map((file, indx) => <div key={indx}>
                         {((file.status === "done" || file.status == true)&& file.state !='Deleted') && <> <div className="docfile custom-upload cust-upload-sy">
                             <span 
                             
