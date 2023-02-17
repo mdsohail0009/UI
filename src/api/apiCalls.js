@@ -183,6 +183,9 @@ const convertUTCToLocalTime = (dateString) => {
 	const localTime = new Date(milliseconds);
 	return ;
 };
+const getFileURL = (docId) => {
+    return apiClient.get(ApiControllers.common + `FilePreview/${docId}`);
+  };
 let apicalls = {
 	getportfolio,
 	getCryptos,
@@ -217,6 +220,6 @@ let apicalls = {
 	getPayeeCryptoLu,
 	getPayeeCrypto,
 	confirmCryptoTransaction,
-	convertUTCToLocalTime
+	convertUTCToLocalTime,getFileURL
 };
 export default apicalls;

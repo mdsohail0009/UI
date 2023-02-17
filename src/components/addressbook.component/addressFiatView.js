@@ -3,10 +3,12 @@ import { Row, Col, Typography, Button, Modal, Tooltip } from "antd";
 import Loader from "../../Shared/loader";
 import { getFileURL, getViewData, } from "./api";
 import { connect } from "react-redux";
-import FilePreviewer from "react-file-previewer";
+//import FilePreviewer from "react-file-previewer";
 import { bytesToSize } from "../../utils/service";
 import { addressTabUpdate, setAddressStep } from "../../reducers/addressBookReducer";
+import DocumentPreview from '../../Shared/docPreview'
 const { Title, Text } = Typography;
+
 const EllipsisMiddle = ({ suffixCount, children }) => {
 	const start = children?.slice(0, children.length - suffixCount).trim();
 	const suffix = children?.slice(-suffixCount).trim();
@@ -25,12 +27,14 @@ const AddressFiatView = (props) => {
 	const [previewPath, setPreviewPath] = useState(null);
 	const [previewModal, setPreviewModal] = useState(false);
 	const [bankDetailes, setBankDetailes] = useState([]);
-
+	const [docPreviewDetails, setDocPreviewDetails] = useState(null)
+	const [docPreviewModal, setDocPreviewModal] = useState(false)
 
 	useEffect(() => {
 		loadDataAddress();
 	}, []);// eslint-disable-line react-hooks/exhaustive-deps
 	const loadDataAddress = async () => {
+		debugger
 		setIsLoading(true)
 		let response = await getViewData(props?.match?.params?.id, props?.match?.params?.type);
 		if (response.ok) {	
@@ -45,60 +49,71 @@ const AddressFiatView = (props) => {
 
 	};
 
-	const docPreview = async (file) => {
-		let res = await getFileURL({ url: file.path });
-		if (res.ok) {
-			setPreviewModal(true);
-			setPreviewPath(res.data);
-		}
-	};
-	const filePreviewPath = () => {
-		return previewPath;
+	// const docPreview = async (file) => {
+	// 	let res = await getFileURL({ url: file.path });
+	// 	if (res.ok) {
+	// 		setPreviewModal(true);
+	// 		setPreviewPath(res.data);
+	// 	}
+	// };
+	// const filePreviewPath = () => {
+	// 	return previewPath;
 
-	};
-	const filePreviewModal = (
-		<Modal
-			className="documentmodal-width"
-			destroyOnClose={true}
-			title="Preview"
-			width={1000}
-			visible={previewModal}
-			closeIcon={
-				<Tooltip title="Close">
-					<span
-						className="icon md close-white c-pointer"
-						onClick={() => setPreviewModal(false)}
-					/>
-				</Tooltip>
-			}
-			footer={
-				<>
-				<div className="cust-pop-up-btn crypto-pop">
+	// };
+	const docPreviewOpen = (data) => {
+		debugger
+		setDocPreviewModal(true)
+		setDocPreviewDetails({ id: data.id, fileName: data.fileName })
+	  }
+	  console.log(docPreviewDetails)
+
+	const docPreviewClose = () => {
+		setDocPreviewModal(false)
+		setDocPreviewDetails(null)
+	  }
+	// const filePreviewModal = (
+	// 	<Modal
+	// 		className="documentmodal-width"
+	// 		destroyOnClose={true}
+	// 		title="Preview"
+	// 		width={1000}
+	// 		visible={previewModal}
+	// 		closeIcon={
+	// 			<Tooltip title="Close">
+	// 				<span
+	// 					className="icon md close-white c-pointer"
+	// 					onClick={() => setPreviewModal(false)}
+	// 				/>
+	// 			</Tooltip>
+	// 		}
+	// 		footer={
+	// 			<>
+	// 			<div className="cust-pop-up-btn crypto-pop">
 					
-					<Button
-						className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
-						// block
-						onClick={() => setPreviewModal(false)}>
-						Close
-					</Button>
-					<Button
-						className="primary-btn pop-btn detail-popbtn"
-						// block
-						onClick={() => window.open(previewPath, "_blank")}>
-						Download
-					</Button>
-					</div>
-				</>
-			}>
-			<FilePreviewer
-				hideControls={true}
-				file={{
-					url: previewPath ? filePreviewPath() : null,
-					mimeType: previewPath?.includes(".pdf") ? "application/pdf" : "",
-				}}
-			/>
-		</Modal>
-	);
+	// 				<Button
+	// 					className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
+	// 					// block
+	// 					onClick={() => setPreviewModal(false)}>
+	// 					Close
+	// 				</Button>
+	// 				<Button
+	// 					className="primary-btn pop-btn"
+	// 					// block
+	// 					onClick={() => window.open(previewPath, "_blank")}>
+	// 					Download
+	// 				</Button>
+	// 				</div>
+	// 			</>
+	// 		}>
+	// 		<FilePreviewer
+	// 			hideControls={true}
+	// 			file={{
+	// 				url: previewPath ? filePreviewPath() : null,
+	// 				mimeType: previewPath?.includes(".pdf") ? "application/pdf" : "",
+	// 			}}
+	// 		/>
+	// 	</Modal>
+	// );
 	return (
 		<>
 			<div className="main-container cust-cypto-view">
@@ -526,7 +541,9 @@ const AddressFiatView = (props) => {
 															/>
 															<div
 																className="docdetails c-pointer"
-																onClick={() => docPreview(file)}>
+																//onClick={() => docPreview(file)}
+																onClick={() => docPreviewOpen(file)}
+																>
 																{file.name !== null ? (
 																	<EllipsisMiddle suffixCount={4}>
 																		{file.fileName}
@@ -552,7 +569,7 @@ const AddressFiatView = (props) => {
 								<div className="text-right view-level-btn">
 								<Button
 								block
-									className="cust-cancel-btn"
+								className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
 									
 									onClick={backToAddressBook}>
 									Cancel
@@ -565,7 +582,15 @@ const AddressFiatView = (props) => {
 					)}
 				</div>
 			</div>
-			{filePreviewModal}
+			{/* {filePreviewModal} */}
+			{docPreviewModal &&
+      <DocumentPreview
+        previewModal={docPreviewModal}
+        handleCancle={docPreviewClose}
+        upLoadResponse={docPreviewDetails}
+      />
+    }
+    {console.log(docPreviewModal)}
 		</>
 	);
 };

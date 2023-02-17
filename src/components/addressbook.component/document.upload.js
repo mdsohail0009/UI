@@ -72,7 +72,7 @@ class AddressDocumnet extends Component {
                                 process.env.REACT_APP_UPLOAD_API +
                                 "api/v1/" +
                                 ApiControllers.common +
-                                "UploadFileNew?screenName=AddressBook&fieldName=uploadfile&tableName=Common.Payeeaccounts"
+                               `UploadFileNew?screenName=AddressBook&fieldName=uploadfile&tableName=Common.Payeeaccounts`
                               }
                             showUploadList={false}
                             beforeUpload={(props) => {
