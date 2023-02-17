@@ -5,6 +5,9 @@ import List from "../grid.component";
 import FilePreviewer from "react-file-previewer";
 import{uploadDocuments,getFileURL,deleteDocumentDetails} from './api';
 import Loader from '../../Shared/loader';
+import {ApiControllers} from '../../api/config'
+import DocumentPreview from '../../Shared/docPreview'
+
 const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
     const suffix = children.slice(-suffixCount).trim();
@@ -30,9 +33,11 @@ const BatchpaymentView = (props) => {
     const [data,setData]=useState({});
     const [deleteGridDoc,setDeleteGridDoc]=useState(null);
     const [isLoad,setIsLoad]=useState(false);
-    
+    const [docPreviewDetails, setDocPreviewDetails] = useState(null)
+	const [docPreviewModal, setDocPreviewModal] = useState(false)
     const gridRef = React.useRef();
     const gridColumns = [
+      
         { field: "whiteListName", title: "Whitelist Name", filter: true,width: 200},
         { field: "beneficiaryName", title: "Beneficiary Name", filter: true,width: 200},
         {
@@ -46,12 +51,16 @@ const BatchpaymentView = (props) => {
         { field: "transactionStatus", title: 'Transaction Status', filter: true, width: 200},
         { field: "uploadedDocuments", title: 'Uploaded Documents', width: 290,sortable:false,
     	customCell: (properites) => (
+         
             <td>
-               {properites.dataItem.beneficiarydetail?.map(item=>
+               {properites.dataItem.documents?.map(item=>
               <>
               <div className={`file-label d-flex justify-content mb-8 py-4 batch-upload`}
              >
-              <span className="mb-0 fs-14 docnames  fs-12 fw-400 amt-label c-pointer"  onClick={() => docPreview(item)}><Tooltip title={item.documentName}>{item.documentName}</Tooltip></span>
+              <span className="mb-0 fs-14 docnames  fs-12 fw-400 amt-label c-pointer"  
+              //onClick={() => docPreview(item)}
+              onClick={() => docPreviewOpen(item)}
+              ><Tooltip title={item.fileName}>{item.fileName}</Tooltip></span>
               <span className="delete-disable"
                disabled={
                 properites.dataItem.transactionStatus==="Approved" ||
@@ -72,6 +81,7 @@ const BatchpaymentView = (props) => {
         },
       ];
     const beforeUpload=(file)=>{ 
+        debugger
         if (file.name.split('.').length > 2) {
             setUploader(false)
            setDocUpload(false)
@@ -107,19 +117,20 @@ const BatchpaymentView = (props) => {
 
     }
   const handleUpload = ({ file },type) => {
+    debugger
     let identityProofObj=Object.assign([],docIdentityProofObjs)
     let transferProof=Object.assign([],docTransferObjs)
     let obj = {
-        "id": "00000000-0000-0000-0000-000000000000",
-        "documentId": "00000000-0000-0000-0000-000000000000",
-        "documentName": `${file.name}`,
-        "status": true,
-        "isChecked": file.name === "" ? false : true,
-        "remarks": `${file.size}`,
+        "id":`${file.response?.id}` ,
+        //"documentId": "00000000-0000-0000-0000-000000000000",
+        "fileName": `${file.name}`,
+       // "status": true,
+        //"isChecked": file.name === "" ? false : true,
+        //"remarks": `${file.size}`,
         "state": "Submitted",
-        "recorder": 0,
-        "path": `${file.response}`,
-        "uid":file.uid,
+        //"recorder": 0,
+        //"path": `${file.response}`,
+        //"uid":file.uid,
     } 
     if (file.name.split('.').length > 2 ||file.type==="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ) {
         setUploader(false);
@@ -271,6 +282,17 @@ const filePreviewPath = () => {
         setDeleteModal(false)
       
       }
+      const docPreviewOpen = (data) => {
+        debugger
+		setDocPreviewModal(true)
+		setDocPreviewDetails({ id: data.id, fileName: data.fileName })
+	  }
+
+	const docPreviewClose = () => {
+		setDocPreviewModal(false)
+		setDocPreviewDetails(null)
+	  }
+	
       const uploadCancel=()=>{
         gridRef?.current?.refreshGrid();
         setUploadModal(false)
@@ -363,10 +385,18 @@ const filePreviewPath = () => {
                         <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                             className="upload mt-4"
                             multiple={false}
-                            action={process.env.REACT_APP_UPLOAD_API +"/UploadFile"}
+                            //action={process.env.REACT_APP_UPLOAD_API +"/UploadFile"}
+                            action={
+                                process.env.REACT_APP_UPLOAD_API +
+                                "api/v1/" +
+                                ApiControllers.common +
+                               `UploadFileNew?screenName=BatchPayments&fieldName=uploadfile&tableName=TransactionDetail`
+                              //`UploadFileNew?screenName=AddressBook&fieldName=uploadfile&tableName=Common.Payeeaccounts`
 
+                              }
                             showUploadList={false}
                          beforeUpload={(prop) => { beforeUpload(prop) }}
+                         headers={{Authorization : `Bearer ${props.user.access_token}`}}
                          onChange={(prop) => {handleUpload(prop,"IDENTITYPROOF") }}
                         >
                             <p className="ant-upload-drag-icon">
@@ -380,10 +410,13 @@ const filePreviewPath = () => {
                     </div>
                     {docIdentityProofObjs?.map((file) =>
                                                 <>{file ? <div className="docfile">
-                                                    <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "":(file.documentName?.slice(-3) === "zip" ? "file" : "")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
-                                                    <div className="docdetails c-pointer" onClick={() => docPreview(file)}>
-                                                        <EllipsisMiddle suffixCount={6}>{file.documentName}</EllipsisMiddle>
-                                                        <span className="fs-12 text-white">{formatBytes(file ? file.remarks : "")}</span>
+                                                    <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "":(file.fileName?.slice(-3) === "zip" ? "file" : "")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.fileName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
+                                                    <div className="docdetails c-pointer" 
+                                                    //onClick={() => docPreview(file)}
+                                                    onClick={() => docPreviewOpen(file)}
+                                                    >
+                                                        <EllipsisMiddle suffixCount={6}>{file.fileName}</EllipsisMiddle>
+                                                        <span className="fs-12 text-white"> {formatBytes(file ? file.remarks : "")}</span>
                                                     </div>
                                                     <span className="icon md close c-pointer" onClick={() => deleteDocument(file,"IDENTITYPROOF")} />
                                                 </div> : ""}</>
@@ -394,9 +427,17 @@ const filePreviewPath = () => {
                         <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                             className="upload mt-4"
                             multiple={false}
-                            action={process.env.REACT_APP_UPLOAD_API +"/UploadFile"}
+                            //action={process.env.REACT_APP_UPLOAD_API +"/UploadFile"}
+                            action={
+                                process.env.REACT_APP_UPLOAD_API +
+                                "api/v1/" +
+                                ApiControllers.common +
+                               `UploadFileNew?screenName=BatchPayments&fieldName=uploadfile&tableName=TransactionDetail`
+
+                              }
                             showUploadList={false}
                          beforeUpload={(prop) => {beforeUpload(prop) }}
+                         headers={{Authorization : `Bearer ${props.user.access_token}`}}
                          onChange={(prop) => {handleUpload(prop,"TransferProof") }}
                         >
                             <p className="ant-upload-drag-icon">
@@ -410,10 +451,16 @@ const filePreviewPath = () => {
                     </div>
                     {docTransferObjs?.map((file) =>
                                                 <>{file ? <div className="docfile">
-                                                    <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "":(file.documentName?.slice(-3) === "zip" ? "file" : "")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
-                                                    <div className="docdetails c-pointer" onClick={() => docPreview(file)}>
-                                                        <EllipsisMiddle suffixCount={6}>{file.documentName}</EllipsisMiddle>
-                                                        <span className="fs-12 text-white">{formatBytes(file ? file.remarks : "")}</span>
+                                                    <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "":(file.fileName?.slice(-3) === "zip" ? "file" : "")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.fileName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
+                                                    <div className="docdetails c-pointer"
+                                                     //onClick={() => docPreview(file)}
+                                                     onClick={() => docPreviewOpen(file)}
+
+                                                     >
+                                                        <EllipsisMiddle suffixCount={6}>{file.fileName}</EllipsisMiddle>
+                                                        <span className="fs-12 text-white">
+                                                            {formatBytes(file ? file.remarks : "")}
+                                                            </span>
                                                     </div>
                                                     <span className="icon md close c-pointer" onClick={() => deleteDocument(file,"TransferProof")} />
                                                 </div> : ""}</>
@@ -447,7 +494,14 @@ const filePreviewPath = () => {
              <Paragraph className="text-white">Are you sure, do you really want to delete ?</Paragraph>
         </Modal>
         </div>
-        {filePreviewModal}
+        {/* {filePreviewModal} */}
+        {docPreviewModal &&
+      <DocumentPreview
+        previewModal={docPreviewModal}
+        handleCancle={docPreviewClose}
+        upLoadResponse={docPreviewDetails}
+      />
+    }
         </>
     )
 

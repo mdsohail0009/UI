@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { bytesToSize } from "../../utils/service";
 import { addressTabUpdate, setAddressStep } from "../../reducers/addressBookReducer";
 import DocumentPreview from '../../Shared/docPreview'
+
 const { Title, Text } = Typography;
 
 const EllipsisMiddle = ({ suffixCount, children }) => {
