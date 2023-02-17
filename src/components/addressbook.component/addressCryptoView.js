@@ -26,7 +26,6 @@ const AddressCryptoView = (props) => {
 	const [previewModal, setPreviewModal] = useState(false);
 	const [mimeType,setMimeType]=useState(false);
 
-
 	useEffect(() => {
 		loadDataAddress();
 	}, []);// eslint-disable-line react-hooks/exhaustive-deps
@@ -176,7 +175,7 @@ const AddressCryptoView = (props) => {
 													</div>
 												</div>
 											</Col>
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+											{process.env.REACT_APP_ISTR == "true" &&<><Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Wallet Source</label>
 													<div className=" kpi-val adview-name">
@@ -191,7 +190,7 @@ const AddressCryptoView = (props) => {
 													{cryptoAddress?.isProofofOwnership===true?"Yes": "No" || "-"}
 													</div>
 												</div>
-											</Col>
+											</Col></>}
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Whitelisting Status</label>
@@ -205,7 +204,7 @@ const AddressCryptoView = (props) => {
 											</Col>
 
 										</Row>
-										<Row>
+									{process.env.REACT_APP_ISTR == "true" &&	<Row>
 										{cryptoAddress?.documents?.details?.map((file) => (
 													<Col xs={12} sm={12} md={12} lg={8} xxl={8}>
 														<div
@@ -245,7 +244,7 @@ const AddressCryptoView = (props) => {
 														</div>
 													</Col>
 												))}
-												</Row>
+												</Row>}
 									</Col>
 								</Row>
 								<div className="text-right view-level-btn">
