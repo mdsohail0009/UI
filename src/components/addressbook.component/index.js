@@ -68,7 +68,7 @@ class AddressBook extends Component {
 		this.setState({...this.state,cryptoFiat:false})
 		this.props.dispatch(getScreenName({getScreen:null}))
 		this.permissionsInterval = setInterval(this.loadPermissions, 200);
-		if (process.env.REACT_APP_ISTR=="false") {
+		if (process.env.REACT_APP_ISTR=="true") {
 			const obj=[{field: "walletSource", title: "Wallet Source", width: 150, filter:true},{ field: "isProofofOwnership", title: "Proof Of Ownership", width: 200, 
 			customCell: (props) => (
 				<td>
