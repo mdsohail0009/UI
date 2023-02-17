@@ -151,7 +151,6 @@ class AddressCryptoDocument extends Component {
                                         let { documents: docs } = this.state;
                                         docs?.details?.push(this.docDetail(file));
                                         this.props?.onDocumentsChange(docs);
-                                        this.props?.docCheck(true);
                                     }else{
                                         this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg, pdf, mp4, mov, wmv, avi files" }) 
                                     }

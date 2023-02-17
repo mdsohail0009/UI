@@ -43,7 +43,6 @@ class AddressCrypto extends Component {
       approvedAddress:false,
       isDocCheck:false,
       isDocDeleteCheck:false,
-      documentChekUpload:false,
     };
   }
 
@@ -132,7 +131,6 @@ if (res.ok){
 
   }
   submit = async (values) => {
-    debugger
     let data=this.state.details.documents?.details.filter((item)=>item.state!=="Deleted")?.length===0 ;
     if (!values.isOwnerOfWalletAddress && process.env.REACT_APP_ISTR == "true") {
 			this.setState({
@@ -145,15 +143,9 @@ if (res.ok){
       this.state.details.documents?.details?.length ==0 || data===true))){
       this.setState({
 				...this.state,
-        errorMessage:"At least one document is required"
+        errorMessage:"At least one document is required",
+				
 			});
-this.useDivRef.current?.scrollIntoView(0, 0);
-}else if(this.state.documentChekUpload || this.state.isDocCheck){
-this.setState({
-  ...this.state,
-  errorMessage:"Please select greater than 15,000 CHF check box"
-  
-});
 this.useDivRef.current?.scrollIntoView(0, 0);
 }
     else{
@@ -175,7 +167,7 @@ this.useDivRef.current?.scrollIntoView(0, 0);
       walletSource:values.walletSource,
       otherWallet:values.otherWallet,
       isDocumentUpload:values.isDocumentUpload,
-      documents:this.state.cryptoData?.documents ||this.state.details.documents
+      documents:this.state.isDocCheck===true?this.state.cryptoData?.documents ||this.state.details.documents:null
       
     }
     if (this.state.cryptoData.id !== "00000000-0000-0000-0000-000000000000") {
@@ -211,9 +203,6 @@ this.useDivRef.current?.scrollIntoView(0, 0);
     }
   }
   }
-  documentCheck=(data)=>{
-    this.setState({ ...this.state, documentChekUpload:data})
-  }
   editDocuments=(docs)=>{
       let { documents } = this.state.details;
       if(this.state.isEdit){
@@ -225,12 +214,7 @@ this.useDivRef.current?.scrollIntoView(0, 0);
   
   }
   handleDocCheck=(e)=>{
-    if(e.target.checked===false){
-      this.setState({...this.state,isDocCheck:e.target.checked,documentChekUpload:false});
-    }else{
-      this.setState({...this.state,isDocCheck:e.target.checked});
-    }
-
+this.setState({...this.state,isDocCheck:e.target.checked})
   }
   validateAddressType = (_, value) => {
     if (value) {
@@ -500,6 +484,7 @@ this.useDivRef.current?.scrollIntoView(0, 0);
 								
 							</Form.Item>
             </Col>
+            {isDocCheck===true &&
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload a screenshot or video to prove you are the owner of the address{isDocCheck===true&&<span className="cust-start-style">*</span>}  
                             
@@ -511,11 +496,11 @@ this.useDivRef.current?.scrollIntoView(0, 0);
                                       
                                         </Paragraph>
                             <AddressCryptoDocument 
-                            docCheck={this.documentCheck}
+
                             documents={this.state.cryptoData?.documents|| null}
                             editDocument={this.state.isEdit} onDocumentsChange={(docs) =>this.editDocuments(docs) } 
                             />
-                        </ Col></>}
+                        </ Col>}</>}
           
             </Row>
             <Form.Item className="">
