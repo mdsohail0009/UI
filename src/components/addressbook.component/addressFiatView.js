@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Typography, Button, Modal, Tooltip } from "antd";
 import Loader from "../../Shared/loader";
-import { getFileURL, getViewData, } from "./api";
+import { getViewData, } from "./api";
 import { connect } from "react-redux";
-//import FilePreviewer from "react-file-previewer";
 import { bytesToSize } from "../../utils/service";
 import { addressTabUpdate, setAddressStep } from "../../reducers/addressBookReducer";
 import DocumentPreview from '../../Shared/docPreview'
@@ -24,8 +23,6 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 const AddressFiatView = (props) => {
 	const [loading, setIsLoading] = useState(false);
 	const [fiatAddress, setFiatAddress] = useState({});
-	const [previewPath, setPreviewPath] = useState(null);
-	const [previewModal, setPreviewModal] = useState(false);
 	const [bankDetailes, setBankDetailes] = useState([]);
 	const [docPreviewDetails, setDocPreviewDetails] = useState(null)
 	const [docPreviewModal, setDocPreviewModal] = useState(false)
@@ -34,7 +31,6 @@ const AddressFiatView = (props) => {
 		loadDataAddress();
 	}, []);// eslint-disable-line react-hooks/exhaustive-deps
 	const loadDataAddress = async () => {
-		debugger
 		setIsLoading(true)
 		let response = await getViewData(props?.match?.params?.id, props?.match?.params?.type);
 		if (response.ok) {	
@@ -49,71 +45,17 @@ const AddressFiatView = (props) => {
 
 	};
 
-	// const docPreview = async (file) => {
-	// 	let res = await getFileURL({ url: file.path });
-	// 	if (res.ok) {
-	// 		setPreviewModal(true);
-	// 		setPreviewPath(res.data);
-	// 	}
-	// };
-	// const filePreviewPath = () => {
-	// 	return previewPath;
-
-	// };
+	
 	const docPreviewOpen = (data) => {
-		debugger
 		setDocPreviewModal(true)
 		setDocPreviewDetails({ id: data.id, fileName: data.fileName })
 	  }
-	  console.log(docPreviewDetails)
 
 	const docPreviewClose = () => {
 		setDocPreviewModal(false)
 		setDocPreviewDetails(null)
 	  }
-	// const filePreviewModal = (
-	// 	<Modal
-	// 		className="documentmodal-width"
-	// 		destroyOnClose={true}
-	// 		title="Preview"
-	// 		width={1000}
-	// 		visible={previewModal}
-	// 		closeIcon={
-	// 			<Tooltip title="Close">
-	// 				<span
-	// 					className="icon md close-white c-pointer"
-	// 					onClick={() => setPreviewModal(false)}
-	// 				/>
-	// 			</Tooltip>
-	// 		}
-	// 		footer={
-	// 			<>
-	// 			<div className="cust-pop-up-btn crypto-pop">
-					
-	// 				<Button
-	// 					className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
-	// 					// block
-	// 					onClick={() => setPreviewModal(false)}>
-	// 					Close
-	// 				</Button>
-	// 				<Button
-	// 					className="primary-btn pop-btn"
-	// 					// block
-	// 					onClick={() => window.open(previewPath, "_blank")}>
-	// 					Download
-	// 				</Button>
-	// 				</div>
-	// 			</>
-	// 		}>
-	// 		<FilePreviewer
-	// 			hideControls={true}
-	// 			file={{
-	// 				url: previewPath ? filePreviewPath() : null,
-	// 				mimeType: previewPath?.includes(".pdf") ? "application/pdf" : "",
-	// 			}}
-	// 		/>
-	// 	</Modal>
-	// );
+	
 	return (
 		<>
 			<div className="main-container cust-cypto-view">
@@ -326,7 +268,6 @@ const AddressFiatView = (props) => {
 											{bankDetailes?.map((item, idx) => (
 												<><div className="alert-info-custom kpi-List adbook-newdesign"
 													>
-													{/* <div class="fait-box kpi-divstyle"> */}
 															<div className="fait-box kpi-divstyle">
 															<Text className="kpi-label">
 																Currency
@@ -582,7 +523,6 @@ const AddressFiatView = (props) => {
 					)}
 				</div>
 			</div>
-			{/* {filePreviewModal} */}
 			{docPreviewModal &&
       <DocumentPreview
         previewModal={docPreviewModal}
@@ -590,7 +530,6 @@ const AddressFiatView = (props) => {
         upLoadResponse={docPreviewDetails}
       />
     }
-    {console.log(docPreviewModal)}
 		</>
 	);
 };

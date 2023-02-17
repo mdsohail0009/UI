@@ -31,14 +31,8 @@ class AddressDocumnet extends Component {
     docDetail = (doc) => {
         return {
             "id": doc?.response?.id || "00000000-0000-0000-0000-000000000000" || this.state.documents.id,
-            //"documentId": this.state.documents.id,
             "fileName": doc.name,
-           // "status": true,
-           // "recorder": 0,
-            //"remarks":  doc.size,
-           // "isChecked": true,
             "state": "",
-           // "path": doc?.response[0]
         }
     }
   
@@ -134,7 +128,6 @@ class AddressDocumnet extends Component {
                     <>
                     	<div className="cust-pop-up-btn crypto-pop">
                         <Button
-                            // style={{ margin: "0 8px" ,width: 120, height: 50 }}
                             className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
                             onClick={() => { this.setState({ ...this.state, showDeleteModal: false }) }}>
                             No
@@ -142,13 +135,11 @@ class AddressDocumnet extends Component {
                         <Button
                             className="primary-btn pop-btn detail-popbtn"
                             onClick={() => {
-                                debugger
                                 let { documents: docs } = this.state;
                                 let files = docs;
                                 for(var k in files){
                                     if(files[k].id===this.state.selectedObj?.id){
                                         files[k].state='Deleted';
-                                        //files[k].isChecked=false;
                                     }
                                 }
                                 let obj=Object.assign([],files)
@@ -160,15 +151,13 @@ class AddressDocumnet extends Component {
                                 files?.map((file, indx) =>{
                                     if (file.id === "00000000-0000-0000-0000-000000000000"&& indx === this.state.selectedFileIdx &&  file.state !== "Deleted"  && this.state?.isEdit) {
                                         filesList.splice(indx, 1);
-                                        let deletedObj=obj.splice(indx, 1);
-                                        console.log(deletedObj)
+                                        obj.splice(indx, 1);
                                     }
                                 })
                                 this.setState({ ...this.state, filesList, showDeleteModal: false });
                                 docs=Object.assign([],obj)
                                 this.props?.onDocumentsChange(docs);
                             }}
-                            // style={{ width: 120, height: 50 }}
                             >
                             {apiCalls.convertLocalLang("Yes")}
                         </Button>
