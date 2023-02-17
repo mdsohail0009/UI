@@ -16,9 +16,8 @@ import apiCalls from "../../api/apiCalls";
 import { bytesToSize } from "../../utils/service";
 import ConnectStateProps from "../../utils/state.connect";
 import { getFileURL } from "./api";
-import FilePreviewer from "react-file-previewer";
 import { ApiControllers } from "../../api/config";
-import { debounce } from "rxjs";
+import DocumentPreview from '../../Shared/docPreview'
 
 const { Dragger } = Upload;
 const { Paragraph, Text } = Typography;
@@ -44,7 +43,7 @@ class AddressCryptoDocument extends Component {
     selectedObj: {},
     errorMessage: null,
     previewModal: false,
-    previewPath: null
+    previewPath: null, docPreviewDetails: null,
   };
   componentDidMount() {
     let propsDocument =
@@ -61,17 +60,10 @@ class AddressCryptoDocument extends Component {
     });
   }
   docDetail = (doc) => {
-debugger
     return {
       id: doc?.response?.id || "00000000-0000-0000-0000-000000000000",
-      //documentId: this.state.documents.id,
       fileName: doc?.response?.fileName,
-      //status: true,
-      //recorder: 0,
-      //remarks: doc.size,
-      //isChecked: true,
       state: "",
-      //path: doc?.response[0]
     };
   };
   docPreview = async (file) => {
@@ -115,26 +107,15 @@ debugger
     docs = Object.assign([], obj);
     this.props?.onDocumentsChange(docs);
   };
-  docPreview = async (file) => {
-    let path;
-    if (file.path) {
-      path = file.path;
-    } else {
-      path = file.response[0];
-    }
-    let res = await getFileURL({ url: path });
-    if (res.ok) {
-      this.state.PreviewFilePath = path;
-      this.setState({
-        ...this.state,
-        previewModal: true,
-        previewPath: res.data
-      });
-    }
-  };
+
+
   docPreviewClose = () => {
-    this.setState({ ...this.state, previewModal: false, previewPath: null });
+    this.setState({ ...this.state, previewModal: false, docPreviewDetails: null });
   };
+  docPreviewOpen = (data) => {
+    this.setState({ ...this.state, previewModal: true, docPreviewDetails: { id: data?.response?.id, fileName: data?.response?.fileName } });
+  };
+
   DownloadUpdatedFile = async () => {
     let res = await getFileURL({ url: this.state.PreviewFilePath });
     if (res.ok) {
@@ -228,7 +209,6 @@ debugger
                   Authorization: `Bearer ${this.props.user.access_token}`
                 }}
                 onChange={({ file }) => {
-                    debugger
                   this.setState({ ...this.state, isDocLoading: true });
                   if (file.status === "done") {
                     let fileType = {
@@ -321,7 +301,7 @@ debugger
                         />
                         <div
                           className="docdetails c-pointer"
-                          onClick={() => this.docPreview(file)}
+                          onClick={() => this.docPreviewOpen(file)}
                         >
                           <EllipsisMiddle suffixCount={6}>
                             {file.name || file.fileName}
@@ -413,15 +393,14 @@ debugger
             </>
           }
         >
-          <FilePreviewer
-            hideControls={true}
-            file={{
-              url: this.state.previewPath ? this.filePreviewPath() : null,
-              mimeType: this.state?.previewPath?.includes(".pdf")
-                ? "application/pdf"
-                : ""
-            }}
+          
+           {this.state.previewModal && (
+          <DocumentPreview
+            previewModal={this.state.previewModal}
+            handleCancle={this.docPreviewClose}
+            upLoadResponse={this.state.docPreviewDetails}
           />
+        )}
         </Modal>
       </Row>
     );

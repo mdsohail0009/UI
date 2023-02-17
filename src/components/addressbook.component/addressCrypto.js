@@ -93,7 +93,6 @@ class AddressCrypto extends Component {
     }
   };
   getCryptoData = async () => {
-    debugger;
     let id =
       this.props?.addressBookReducer?.selectedRowData?.id ||
       "00000000-0000-0000-0000-000000000000";
