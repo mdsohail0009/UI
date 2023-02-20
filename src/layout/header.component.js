@@ -33,7 +33,6 @@ import { setNotificationCount } from "../reducers/dashboardReducer";
 import { getmemeberInfo } from "../reducers/configReduser";
 import HeaderPermissionMenu from '../components/shared/permissions/header.menu'
 import AppConfig from "../utils/app_config";
-import HeaderPermissionMenu from '../components/shared/permissions/header.menu';
 import { handleHeaderProfileMenuClick } from "../utils/pubsub";
 import Notifications from "../notifications";
 import { checkCustomerState } from "../utils/service";

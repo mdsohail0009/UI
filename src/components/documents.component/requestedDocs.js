@@ -378,7 +378,6 @@ class RequestedDocs extends Component {
                                     closable={false}
                                     style={{ marginBottom: 0, marginTop: '16px' }}
                                 />}
-                                <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-4" multiple={false} action={AppConfig.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} onChange={(props) => { this.handleUpload(props, doc) }}>
                                 <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-4" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} onChange={(props) => { this.handleUpload(props, doc) }}
                                  headers={{Authorization : `Bearer ${this.props.user.access_token}`}}>
                                     <p className="ant-upload-drag-icon">
