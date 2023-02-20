@@ -651,6 +651,7 @@ class PaymentDetails extends Component {
                                               style={{
                                                 backgroundColor: "transparent",
                                               }}
+                                              accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                                               multiple={false}
                                               action={this.state.uploadUrl}
                                               showUploadList={false}
