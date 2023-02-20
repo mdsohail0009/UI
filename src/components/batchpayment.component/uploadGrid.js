@@ -123,7 +123,7 @@ const BatchpaymentView = (props) => {
     let obj = {
         "id":`${file.response?.id}` ,
         //"documentId": "00000000-0000-0000-0000-000000000000",
-        "fileName": `${file.name}`,
+        "fileName": `${file.response?.fileName}`,
        // "status": true,
         //"isChecked": file.name === "" ? false : true,
         //"remarks": `${file.size}`,
