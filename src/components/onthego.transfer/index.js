@@ -610,7 +610,7 @@ saveWithdrawdata = async () => {
              
               <ul
                 style={{ listStyle: 'none', paddingLeft: 0 }}
-                className="addCryptoList paste-recept-style mobile-scroll adbook-scroll"
+                className="addCryptoList paste-recept-style mobile-scroll"
               >
                 {pastPayees.length > 0 &&
                   pastPayees?.map((item, idx) => (
