@@ -141,7 +141,7 @@ class Home extends Component {
                 </Row>
                 <Drawer
           destroyOnClose={true}
-          title={[<div className="side-drawer-header">
+          title={[<div className="side-drawer-header" key={""}>
             <span />
             <div className="text-center" key={""}>
               <Paragraph className="drawer-maintitle"><Translate content={hideFiatHeading !==true && "cryptoAddress"}component={Paragraph} className="drawer-maintitle" /></Paragraph>
