@@ -167,7 +167,7 @@ this.useDivRef.current?.scrollIntoView(0, 0);
       walletSource:values.walletSource,
       otherWallet:values.otherWallet,
       isDocumentUpload:values.isDocumentUpload,
-      documents:this.state.cryptoData?.documents ||this.state.details.documents
+      documents:this.state.isDocCheck===true?this.state.cryptoData?.documents ||this.state.details.documents:null
       
     }
     if (this.state.cryptoData.id !== "00000000-0000-0000-0000-000000000000") {
@@ -434,7 +434,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
 								valuePropName="checked"
 								required
 							>				
-								<div className={`d-flex  agree-check checkbox-mobile align-center`}>
+								<div className={`d-flex  agree-check checkbox-mobile align-center travel-custcheck`}>
 						<label>
 							<input
               
@@ -464,7 +464,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
 								valuePropName="checked"
 								required
 							>				
-								<div className={`d-flex  agree-check checkbox-mobile align-center`}>
+								<div className={`d-flex  agree-check checkbox-mobile align-center travel-custcheck`}>
 						<label>
 							<input
 								type="checkbox"
@@ -484,6 +484,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
 								
 							</Form.Item>
             </Col>
+            {isDocCheck===true &&
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload a screenshot or video to prove you are the owner of the address{isDocCheck===true&&<span className="cust-start-style">*</span>}  
                             
@@ -499,7 +500,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
                             documents={this.state.cryptoData?.documents|| null}
                             editDocument={this.state.isEdit} onDocumentsChange={(docs) =>this.editDocuments(docs) } 
                             />
-                        </ Col></>}
+                        </ Col>}</>}
           
             </Row>
             <Form.Item className="">

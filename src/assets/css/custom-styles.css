@@ -456,6 +456,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .side-drawer-full .ant-table-column-title{text-transform: capitalize;font-size: 16px;font-weight: 500;}
 /* .ant-table-thead th.ant-table-column-sort{background: var(--iconBg);} */
 .db-titles.internal-titles{font-size: 36px !important;margin-top: 16px;}
+.ant-carousel .notices-content .slick-dots-bottom{bottom: -25px !important;}
 /* Dashboard end */
 
 /*Buy/sell drawer start*/
@@ -837,7 +838,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .cust-input.cust-adon .ant-input-wrapper.ant-input-group{padding: 0 11px;}
 .icon.md.search-angle{background-position:-360.5px -488px; margin-left: 8px;}
 .custom-model-label .ant-form-item-label > label{height: 20px;}
-.marketcap-coinsize .ant-table-cell img{width: 24px !important;height: 24px !important;}
+.marketcap-coinsize .ant-table-cell img{width:18px !important;height:18px !important;}
 .btn-right{float:right;}
 /* transactions end  */
 /* audit logs start  */
@@ -1132,6 +1133,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .listitems-design.iban-style{width: 242px;}
     .side-drawer .ant-drawer-body{padding: 0 30px 16px 30px;}
     .agree-check{height: 100px;}
+    .travel-custcheck{height: auto;}
     .successsubtext{height: calc(100vh - 592px);}
     .custom-height {max-height: calc(100vh - 926px);}
     /* .select-currency {height: calc(100vh - 590px);} */

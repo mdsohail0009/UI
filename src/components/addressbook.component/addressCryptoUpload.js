@@ -168,7 +168,7 @@ class AddressCryptoDocument extends Component {
                             </p>
                         </Dragger>
                     </Form.Item>
-                    {this.state?.filesList?.map((file, indx) => <div>
+                    {this.state?.filesList?.map((file, indx) => <div key={indx}>
                         {((file.status === "done" || file.status == true)&& file.state !='Deleted') && <> <div className="docfile custom-upload cust-upload-sy">
                             <span 
                             
