@@ -43,14 +43,23 @@ class AddressCrypto extends Component {
       approvedAddress:false,
       isDocCheck:false,
       isDocDeleteCheck:false,
+      netWorkData:[],
     };
   }
 
   componentDidMount() {
     this.getCryptoData();
     this.handleWallet();
+    this.getNetWorkData();
   }
-
+  getNetWorkData=async()=>{
+    let response = await getNetWorkLucup();
+    if(response.ok){
+    this.setState({...this.state,netWorkData:response.data})
+    }else {
+      this.setState({ ...this.state, errorMessage: apicalls.isErrorDispaly(response) })
+    }
+  }
   getCryptoData = async () => {
     let id = this.props?.addressBookReducer?.selectedRowData?.id ||this.props.cryptoId || "00000000-0000-0000-0000-000000000000";
     this.setState({ ...this.state, isLoading: true })
@@ -302,7 +311,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
             <Title className="adbook-head">Beneficiary Details</Title>
             </div>
             <Row className="addcrypto-benficiary">
-            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            {/* <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="token"
               label="Token"
@@ -326,7 +335,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
                 ))}
               </Select>
             </Form.Item>
-            </Col>
+            </Col> */}
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="network"
@@ -345,9 +354,9 @@ this.setState({...this.state,isDocCheck:e.target.checked})
                 optionFilterProp="children"
                 disabled={this.state.cryptoData.adressstate ==="Approved"  ? true : false }
               >
-                {networksList?.map((item, idx) => (
-                  <Option key={idx} value={item.name}>
-                    {item.name}
+                 {this.state.netWorkData?.map((item, idx) => (
+                  <Option key={idx} value={item.walletCode}>
+                    {item.walletCode}
                   </Option>
                 ))}
               </Select>
@@ -361,7 +370,8 @@ this.setState({...this.state,isDocCheck:e.target.checked})
               required
               rules={[
                 {
-                  validator: this.validateAddressType,
+                  required: true,
+                  message: "Is required",
                 },
               ]}
             >

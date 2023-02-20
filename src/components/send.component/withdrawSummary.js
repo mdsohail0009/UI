@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Typography, Button, Alert, Form, Input,Modal, Tooltip, Image } from "antd";
+import { Typography, Button, Alert, Form, Input,Modal, Tooltip, Image} from "antd";
 import { connect } from "react-redux";
 import alertIcon from '../../assets/images/pending.png';
 import Translate from "react-translate-component";
@@ -297,7 +297,7 @@ class WithdrawSummary extends Component {
 					tooltipEmail: false,
 					verifyText:this.state.verifyEmailOtp===true?"Verified":null,
 				});
-			}, 30000);
+			}, 120000);
 		} else {
 			this.setState({
 				...this.state,
@@ -431,7 +431,6 @@ class WithdrawSummary extends Component {
 		}
 	};
 	handleChange = (e) => {
-		debugger
 		if (e) {
 			this.handleOtp(e)
 			this.setState({
@@ -443,10 +442,12 @@ class WithdrawSummary extends Component {
 			
 		} else if(this.state.seconds == 0 && this.state.verifyOtpText=="verifyOtpBtn"){
 			this.setState({...this.state,verifyOtpText:"resendotp",buttonText: "resendotp",})	
-		}else {
+		}else if(this.state.seconds == 0  && e=="") {
+			this.setState({...this.state,verifyOtpText:"resendotp",buttonText: "resendotp",})	}
+			else{
 			this.setState({
-				buttonText: "sent_verification",
-				tooltipVisible: false,
+				buttonText: "sentVerify",
+				tooltipVisible: true,
 				verifyOtpText: null,
 			});
 		}
@@ -455,8 +456,16 @@ class WithdrawSummary extends Component {
 		this.setState({ ...this.state, authCode: e.target.value, faLoading: false });
 	};
 	handleEmailChange = (e) => {
-		debugger
-		this.setState({ ...this.state, emailCodeVal: e.target.value ,verifyText: "verifyBtn",});
+		if(e.target.value){
+			this.handleSendOtp(e)
+			this.setState({ ...this.state, emailCodeVal: e.target.value ,verifyText: "verifyBtn",emailText:"verifyBtn",tooltipEmail:false});
+		}else if(this.state.seconds2 == 0 &&  this.state.verifyText =="verifyBtn"){
+			this.setState({...this.state,verifyText:"resendEmail",emailText:"resendEmail"})
+		}else if(this.state.seconds2 == 0 &&  e.target.value == ""){
+			this.setState({...this.state,verifyText:"resendEmail",emailText:"resendEmail"})
+		}else{
+			this.setState({verifyText: "sentVerification",emailText:"sentVerification",tooltipEmail: true,});
+		}
 	};
 	saveWithdrwal = async (values) => {
 		if (!values.isAccept) {
@@ -890,9 +899,6 @@ class WithdrawSummary extends Component {
 											placeholder={"Enter code"}
 											maxLength={6}
 											style={{ width: "100%" }}
-											onClick={(event) =>
-												this.handleSendOtp(event.currentTarget.value)
-											}
 											onChange={(e) => this.handleEmailChange(e, "emailCodeVal")}
 											disabled={this.state.inputEmailDisable}
 											addonAfter={<div className="new-add hy-align">
