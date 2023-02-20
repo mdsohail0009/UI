@@ -22,7 +22,6 @@ import SwapCrypto from "../../swap.component";
 import Transfor from "../../transfor.component";
 import MassPayment from "../../buyfiat.component";
 import Changepassword from "../../changepassword";
-import TransactionsHistory from "../../transactions.history.component";
 import AuditLogs from "../../auditlogs.component";
 import Notifications from "../../../notifications";
 import Wallets from "../../wallets.component.js";
@@ -35,7 +34,6 @@ import {
     updateReceiveCoinDetails,
     updateSwapdata,
     clearSwapData,
-    setStep as swapSetStep
 } from "../../../reducers/swapReducer";
 import { setStep as byFiatSetStep, setReceiveFiatHead, setSendFiatHead } from "../../../reducers/buyFiatReducer";
 import {
@@ -263,7 +261,6 @@ class HeaderPermissionMenu extends Component {
         if (perIgnoreLst.includes(menuKey)) { this.navigate(menuKey, menuItem) }
         else {
             const ignoreKycLst = ["transactions"];
-            //const ignoreKybLst = ["Batch_Payment"]
             if ((this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled && checkCustomerState(this.props.userConfig)) || ignoreKycLst.includes(menuItem.key)) {
                 if (!this.props.menuItems.featurePermissions[menuItem.key]) {
                     getFeaturePermissionsByKey(menuItem.key, (data) => {
@@ -664,21 +661,7 @@ class HeaderPermissionMenu extends Component {
                 isShowSendFiat={this.state.drawerMenu.sendFiatTab}
                 onClose={() => this.closeDrawer("send")}
             />
-            {/* {this.state.drawerMenu.transactions && (
-                <TransactionsHistory
-                    showDrawer={this.state.drawerMenu.transactions}
-                    onClose={() => {
-                        this.props.dispatch(setHeaderTab(" "))
-                        this.closeDrawer("transactions");
-                        if (this.child1) {
-                            this.child1.setKy();
-                        }
-                    }}
-                    thref={(cd) => (this.child1 = cd)}
-                />
-                 <Link to="/transactions" value={4} className="c-pointer"></Link>
-            )} */}
-
+           
             <Drawer
                 title={[
                     <div className="side-drawer-header">

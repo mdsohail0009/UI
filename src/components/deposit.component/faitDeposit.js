@@ -14,7 +14,6 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import apicalls from '../../api/apiCalls';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 import OnthegoFundTransfer from '../onthego.transfer';
-
 const { Option } = Select;
 class FaitDeposit extends Component {
   formRef = createRef();
@@ -34,7 +33,6 @@ class FaitDeposit extends Component {
   componentDidMount() {
     this.props.fiatRef(this)
     this.setState({ ...this.state, Loader: true })
-    this.props.fetchCurrencyWithBankDetails()
     if (this.props.sendReceive.withdrawFiatEnable||this.props?.isShowSendFiat) {
       getFeaturePermissionsByKeyName(`send_fiat`);
       this.handleshowTab(2);
@@ -53,7 +51,6 @@ class FaitDeposit extends Component {
     }
   }
   clearfiatValues = () => {
-    this.props.fetchCurrencyWithBankDetails()
     this.setState({
       buyDrawer: false,
       crypto: config.tlvCoinsList,
@@ -68,7 +65,6 @@ class FaitDeposit extends Component {
   handleBuySellToggle = e => {
     this.handleshowTab(e.target.value)
     if (e.target.value === 1) {
-      this.props.fetchCurrencyWithBankDetails()
       this.props.dispatch(rejectWithdrawfiat())
       this.props.dispatch(setWithdrawfiatenaable(false))
 
@@ -102,18 +98,7 @@ class FaitDeposit extends Component {
       }
     }
   }
-  isErrorDispaly = (objValue) => {
-    if (objValue.data && typeof objValue.data === "string") {
-      return objValue.data;
-    } else if (
-      objValue.originalError &&
-      typeof objValue.originalError.message === "string"
-    ) {
-      return objValue.originalError.message;
-    } else {
-      return "Something went wrong please try again!";
-    }
-  };
+
   handlFiatDep = async (e, currencyLu) => {
     let { depObj } = this.state;
     depObj.currency = e;
@@ -130,7 +115,7 @@ class FaitDeposit extends Component {
             });
           } else {
             this.setState({
-              ...this.state, bankLoader: false, errorMessage: this.isErrorDispaly(reqdepositObj)
+              ...this.state, bankLoader: false, errorMessage: apicalls.isErrorDispaly(reqdepositObj)
             });
           }
         } else {
@@ -406,8 +391,7 @@ const connectDispatchToProps = dispatch => {
     changeStep: (stepcode) => {
       dispatch(setStep(stepcode))
     },
-    fetchCurrencyWithBankDetails: () => {
-    },
+   
     dispatch
   }
 }

@@ -6,9 +6,9 @@ import List from "../grid.component";
 import AddBatchPayment from './addbatchPayment';
 import PaymentPreview from './paymentPreview';
 import moment from "moment/moment";
-import { withRouter,Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {deleteBatchPayments,getInvalidTransactionData} from './api'
-
+import apicalls from '../../api/apiCalls';
 import ActionsToolbar from "../toolbar.component/actions.toolbar";
 const { Title, Text, Paragraph } = Typography;
 const Batchpayments = (props) => {
@@ -57,8 +57,8 @@ const Batchpayments = (props) => {
           customCell: (properites) => (
             <td>
               {properites?.dataItem.status==="Draft"?<div  className='draft-filename'> {properites?.dataItem?.fileName}</div>:
-             <div className="gridLink batch-filename" onClick={()=>viewMode(properites)} >
-              {properites?.dataItem?.fileName}</div>}
+             <span className="gridLink batch-filename" onClick={()=>viewMode(properites)} >
+              {properites?.dataItem?.fileName}</span>}
               </td>) 
         },
         { field: "createdDate", title: "Date Created", filter: true, filterType: "date", width: 200, 
@@ -73,15 +73,15 @@ const Batchpayments = (props) => {
         { field: "status", title: 'Status', filter: true, width: 150, },
         { field: "numberOfTransactions", title: 'Number of Transactions', filter: true, width: 250,dataType: "number", filterType: "numeric", 
         customCell: (properites) => (<td>
-        {properites?.dataItem?.numberOfTransactions!==0? <div className="gridLink batch-filename" onClick={()=>docPreview(properites.dataItem)}
+        {properites?.dataItem?.numberOfTransactions!==0? <span className="gridLink batch-filename" onClick={()=>docPreview(properites.dataItem)}
         >{properites?.dataItem?.numberOfTransactions} 
-        </div>:<>{properites?.dataItem?.numberOfTransactions}</>}</td>) 
+        </span>:<>{properites?.dataItem?.numberOfTransactions}</>}</td>) 
      },
      { field: "validTransactionCount", title: 'Valid Transactions', filter: true, dataType: "number", filterType: "numeric", width: 210, },
      { field: "invalidTransactionCount", title: 'Invalid Transactions', filter: true, dataType: "number", filterType: "numeric", width: 210,
          customCell: (properites) => (
-         <td>{properites?.dataItem?.invalidTransactionCount!==0?<div onClick={()=>getInvalidTransaction(properites?.dataItem)} className="gridLink batch-filename" >{properites?.dataItem?.invalidTransactionCount}
-           </div>:<>{properites?.dataItem?.invalidTransactionCount}</>}
+         <td>{properites?.dataItem?.invalidTransactionCount!==0?<span onClick={()=>getInvalidTransaction(properites?.dataItem)} className="gridLink batch-filename" >{properites?.dataItem?.invalidTransactionCount}
+           </span>:<>{properites?.dataItem?.invalidTransactionCount}</>}
            
            </td>)
      },
@@ -167,7 +167,7 @@ const Batchpayments = (props) => {
         });
       }
       else{
-        setErrorMessage(isErrorDispaly(res));
+        setErrorMessage(apicalls.isErrorDispaly(res));
         gridRef?.current?.refreshGrid();
         setDeleteModal(false);
         setIsLoad(false);
@@ -192,9 +192,7 @@ const Batchpayments = (props) => {
       setErrorWarning(null)
       setSelection([])
     }
-   const gotoDashboard=()=>{
-      props.history.push('/cockpit')
-    }
+  
     const onActionClick = (key) => {
       const actions = {
         Refresh:refreshPayment,
@@ -204,18 +202,7 @@ const Batchpayments = (props) => {
       };
       actions[key]();
     };
-   const isErrorDispaly = (objValue) => {
-      if (objValue.data && typeof objValue.data === "string") {
-        return objValue.data;
-      } else if (
-        objValue.originalError &&
-        typeof objValue.originalError.message === "string"
-      ) {
-        return objValue.originalError.message;
-      } else {
-        return "Something went wrong please try again!";
-      }
-    };
+   
       return (
         <>
           <div className='main-container'>

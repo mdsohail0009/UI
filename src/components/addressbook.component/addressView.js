@@ -2,6 +2,7 @@ import React, {useEffect, useState } from 'react';
 import { Row, Col, Typography,Button } from 'antd';
 import {getAddress,} from "./api";
 import { connect } from 'react-redux';
+import apicalls from '../../api/apiCalls';
 
 const { Title,Text } = Typography
 const EllipsisMiddle = ({ suffixCount, children }) => {
@@ -18,6 +19,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 };
 const AddressFiatView=(props)=> {
     const [fiatAddress, setFiatAddress] = useState({});
+    const [errorMsg,setErrorMsg]=useState(null)
 
   useEffect(() => {
 		loadDataAddress();
@@ -50,6 +52,8 @@ const AddressFiatView=(props)=> {
             }
       
             setIsLoading(false)
+        }else{
+          setErrorMsg(apicalls.isErrorDispaly(response))
         }
     }
 const backToAddressBook = () => {
@@ -58,7 +62,14 @@ const backToAddressBook = () => {
 
 
     return (<>
-      
+      {errorMsg !== null && (
+              <Alert
+                type="error"
+                description={errorMsg}
+                onClose={() => setErrorMsg(null)}
+                showIcon
+              />
+            )}
       <Title className="page-title">BENEFICIARY BANK DETAILS VIEW</Title>
       {fiatAddress && <Row gutter={8}>
         <Col xl={24} xxl={24} className="bank-view">

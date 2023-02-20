@@ -4,14 +4,14 @@ import List from '../grid.component'
 import {
      Typography
   } from "antd";
-import {Link,  withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import Translate from 'react-translate-component';
 import apiCalls from "../../api/apiCalls";
 import Moment from 'react-moment';
 import AppConfig from '../../utils/app_config';
 import { getScreenName } from '../../reducers/feturesReducer';
 
-const { Text, Paragraph, Title } = Typography;
+const { Paragraph} = Typography;
 class Cases extends Component {
     constructor(props) {
         super(props);
@@ -27,7 +27,6 @@ class Cases extends Component {
     columnGrid = [
         {
             field: "createdDate",
-            // title: "Date",
             title: apiCalls.convertLocalLang("Date"),
             width: 200,
             filter: true,

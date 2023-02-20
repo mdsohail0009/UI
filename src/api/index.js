@@ -52,22 +52,15 @@ apiClient.axiosInstance.interceptors.request.use((config) => {
     return config;
 });
 bankClient.axiosInstance.interceptors.request.use((config) => {
-
     const { oidc: { user }, userConfig: { userProfileInfo }, currentAction: { action },
-
         menuItems } = store.getState()
-
     config.headers.Authorization = `Bearer ${user.access_token}`
-
     if (userProfileInfo?.id) config.headers.AuthInformation = userProfileInfo?.id ? _encrypt(`{CustomerId:"${userProfileInfo?.id}", Action:"${action || "view"
-
         }", FeatureId:"${menuItems?.featurePermissions?.selectedScreenFeatureId}"}`, userProfileInfo.sk) : ''
-
     return config;
-
 });
 uploadClient.axiosInstance.interceptors.request.use((config) => {
-    const { oidc: { user }, userConfig: { userProfileInfo }, currentAction: { action },
+    const { oidc: { user }, 
     } = store.getState()
     config.headers.Authorization = `Bearer ${user.access_token}`
     return config;

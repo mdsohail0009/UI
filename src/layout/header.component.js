@@ -26,7 +26,7 @@ import {
 import { connect } from "react-redux";
 import DefaultUser from "../assets/images/defaultuser.jpg";
 import { setHeaderTab} from "../reducers/buysellReducer";
-import { getScreenName } from "../reducers/feturesReducer";
+import { getScreenName ,clearPermissions} from "../reducers/feturesReducer";
 import { readNotification as readNotifications } from "../notifications/api";
 import apiCalls from "../api/apiCalls";
 import { setNotificationCount } from "../reducers/dashboardReducer";
@@ -34,7 +34,6 @@ import { getmemeberInfo } from "../reducers/configReduser";
 import HeaderPermissionMenu from '../components/shared/permissions/header.menu'
 import AppConfig from "../utils/app_config";
 import HeaderPermissionMenu from '../components/shared/permissions/header.menu';
-import { clearPermissions } from "../reducers/feturesReducer";
 import { handleHeaderProfileMenuClick } from "../utils/pubsub";
 import Notifications from "../notifications";
 import { checkCustomerState } from "../utils/service";

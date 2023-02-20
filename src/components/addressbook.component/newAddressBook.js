@@ -20,14 +20,8 @@ const LinkValue = (props) => {
 };
 const link = <LinkValue content="terms_service" />;
 const NewAddressBook = (props) => {
-  const [isEdit, setEdit] = useState(false);
-  const [state, setstate] = useState({data:"Fiat"})
   useEffect(() => {
-    if (
-      props?.addressBookReducer?.selectedRowData?.id !==
-      "00000000-0000-0000-0000-000000000000" &&
-      props?.addressBookReducer?.selectedRowData?.id
-    ) { setEdit(true); }
+    
     addressbkTrack();
 
 

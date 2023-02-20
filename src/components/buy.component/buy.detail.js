@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Card, Alert, message,Image } from 'antd';
+import { Typography, Card, Alert, message } from 'antd';
 import WalletList from '../shared/walletList';
 import { changeStep, setTab } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
@@ -13,7 +13,6 @@ import Currency from '../shared/number.formate';
 import apicalls from '../../api/apiCalls';
 import {  getPreview } from './api'
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
-
 class SelectCrypto extends Component {
     myRef = React.createRef();
     swapRef = React.createRef();
@@ -78,7 +77,6 @@ class SelectCrypto extends Component {
         });
         if (response.ok) {
             this.setState({...this.state,isConvertionLoading:false})
-            const { isSwaped, localValue, cryptoValue } = this.state.swapValues;
             let _nativeValue = localValue, _cryptoValue = cryptoValue;
             const { data: value, config: { url } } = response;
             const _obj = url.split("CryptoFiatConverter")[1].split("/");
@@ -122,21 +120,12 @@ class SelectCrypto extends Component {
             this.props.setStep('step3');
             this.setState({...this.state,btnLoading:false})
         } else {
-            this.setState({ ...this.state,errorMsg:this.isErrorDispaly(response),btnLoading:false})
+            this.setState({ ...this.state,errorMsg:apicalls.isErrorDispaly(response),btnLoading:false})
             this.divScroll?.current?.scrollIntoView()
         }
         
     }
-    isErrorDispaly = (objValue) => {
-		if (objValue.data && typeof objValue.data === "string") {
-			return objValue.data;
-		} else if (objValue.originalError && typeof objValue.originalError.message === "string"
-		) {
-			return objValue.originalError.message;
-		} else {
-			return "Something went wrong please try again!";
-		}
-	};
+   
     selectBuyCurrency = () => {
        this.setState({ ...this.state, isShowCoinsData: true})
     }

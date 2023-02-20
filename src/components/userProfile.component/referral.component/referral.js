@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import Translate from "react-translate-component";
-import { Typography, Button, message, Dropdown,Menu, Spin, Alert } from 'antd';
+import { Typography, Button, message, Alert } from 'antd';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import {
-    EmailShareButton, EmailIcon,
-    WhatsappShareButton, WhatsappIcon
+    EmailShareButton,
+    WhatsappShareButton
 } from "react-share";
 import apicalls from "../../../api/apiCalls"
 import { connect } from "react-redux";
 import AppConfig from "../../../utils/app_config";
 
 import Loader from "../../../Shared/loader";
-const { Title, Paragraph, Text } = Typography;
+const { Title,Text } = Typography;
 class Referral extends Component {
     state = {
         referaldata:null,
@@ -27,7 +27,7 @@ class Referral extends Component {
         if(res.ok){
             this.setState({...this.state,referaldata:res.data,isLoading:false,errorMsg:null})
         }else{
-            this.setState({...this.state,isLoading:false,errorMsg:this.isErrorDispaly(res)})
+            this.setState({...this.state,isLoading:false,errorMsg:apicalls.isErrorDispaly(res)})
         }
     }
     success = () => {
@@ -37,20 +37,8 @@ class Referral extends Component {
         return 
       
     }
-	isErrorDispaly = (objValue) => {
-		if (objValue.data && typeof objValue.data === "string") {
-		  return objValue.data;
-		} else if (
-		  objValue.originalError &&
-		  typeof objValue.originalError.message === "string"
-		) {
-		  return objValue.originalError.message;
-		} else {
-		  return "Something went wrong please try again!";
-		}
-	  };
+
 	render() {
-        const { Text } = Typography;
 		return (
       <>
        {this.state.isLoading ? (

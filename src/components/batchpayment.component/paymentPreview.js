@@ -3,13 +3,14 @@ import {
   Drawer,
   Typography,
   Button,
-   Alert,Modal,Tooltip} from "antd";
+   Alert,Modal} from "antd";
 import Translate from "react-translate-component";
 import { withRouter } from "react-router-dom";
 import PaymentSummary from "./paymentSummary";
 import List from "../grid.component";
 import NumberFormat from "react-number-format";
 import {confirmGetDetails} from './api'
+import apicalls from "../../api/apiCalls";
 const { Paragraph,Text } = Typography
 class PaymentPreview extends Component {
   constructor(props) {
@@ -111,22 +112,11 @@ confirmPreview = async () => {
     }
     
   }else{
-    this.setState({...this.state,isLoad:false,errorMessage:this.isErrorDispaly(response), paymentSummary:false})
+    this.setState({...this.state,isLoad:false,errorMessage:apicalls.isErrorDispaly(response), paymentSummary:false})
   }
 
 }
-isErrorDispaly = (objValue) => {
-  if (objValue.data && typeof objValue.data === "string") {
-    return objValue.data;
-  } else if (
-    objValue.originalError &&
-    typeof objValue.originalError.message === "string"
-  ) {
-    return objValue.originalError.message;
-  } else {
-    return "Something went wrong please try again!";
-  }
-  };
+
   render() {
     const { Title } = Typography;
     return (

@@ -54,7 +54,7 @@ class CryptoComponent extends Component {
         this.props.changeStep("step2");
     }
     render() {
-        const { Paragraph,Title } = Typography;
+        const { Paragraph } = Typography;
         const { coins: coinListdata } = this.props?.buyInfo;
         if (coinListdata["All"]?.loading) { return <Loader /> }
         return (

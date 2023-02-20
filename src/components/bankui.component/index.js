@@ -102,8 +102,7 @@ class BankWallets extends Component {
   );
 
   render() {
-    const { Title, Text } = Typography;
-    const { wallets } = this.props.dashboard;
+    const { Title } = Typography;
     return (
       <><div className='market-panel-newstyle'></div>
         <Title className="db-titles crypto-style">
@@ -115,7 +114,6 @@ class BankWallets extends Component {
           <List
             itemLayout="horizontal"
             dataSource={this.state.customerData}
-            //bordered={false}
             className="mobile-list custom-fund-buttons iban-list"
             renderItem={(item) => (
               <List.Item className="listitems-design iban-style">

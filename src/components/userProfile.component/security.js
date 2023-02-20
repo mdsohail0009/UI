@@ -11,6 +11,7 @@ import Moment from "react-moment";
 import apiCalls from "../../api/apiCalls";
 import { LoadingOutlined } from "@ant-design/icons";
 import Loader from "../../Shared/loader";
+import apicalls from "../../api/apiCalls";
 import AppConfig from "../../utils/app_config";
 const { Title, Paragraph, Text } = Typography;
 const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA }) => {
@@ -46,21 +47,10 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
       form.setFieldsValue(response.data);
     }
     else{
-      return setError(isErrorDispaly(response));
+      return setError(apicalls.isErrorDispaly(response));
     }
   }
-  const isErrorDispaly = (objValue) => {
-    if (objValue.data && typeof objValue.data === "string") {
-      return objValue.data;
-    } else if (
-      objValue.originalError &&
-      typeof objValue.originalError.message === "string"
-    ) {
-      return objValue.originalError.message;
-    } else {
-      return "Something went wrong please try again!";
-    }
-  };
+  
   const securityTrack = () => {
     apiCalls.trackEvent({
       Type: "User",
@@ -129,12 +119,12 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
 
         } else if(email||phone||factor||live===false){
           useDivRef.current.scrollIntoView(0,0);
-          setError(isErrorDispaly(response));
+          setError(apicalls.isErrorDispaly(response));
            setIsLoading(false)
            setBtnDisabled(false)
         }
         else {
-          setError(isErrorDispaly(response))
+          setError(apicalls.isErrorDispaly(response))
           setIsLoading(false)
           setBtnDisabled(false)
         }
@@ -199,28 +189,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
         <ul className="profile-ul">
           <li className="profileinfo">
             <div className="profile-block">
-              {/* <label className="mb-0 profile-label ">
-                <Translate
-                  content="FA_tag"
-                  component={Paragraph.label}
-                  className="mb-0 profile-label"
-                />
-              </label> */}
-              {/* <p className="profile-value" style={{ flexGrow: 12 }}>
-                {twoFA?.isEnabled ? (
-                  <Translate
-                    content="Enabled"
-                    component={Paragraph.p}
-                    className="profile-value"
-                  />
-                ) : (
-                  <Translate
-                    content="Disabled"
-                    component={Paragraph.p}
-                    className="profile-value"
-                  />
-                )}
-              </p> */}
+          
               <div>
                 <Switch
                   onChange={(status) => enableDisable2fa(status)}

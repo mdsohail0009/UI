@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { List,Button, Empty, Menu,Dropdown,Input,Typography,Space,Drawer,Image } from 'antd';
+import { List,Button, Empty, Menu,Dropdown,Input,Typography,Space,Drawer,Image,Alert } from 'antd';
 import apiCalls from "../../api/apiCalls";
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -35,6 +35,7 @@ class CockpitCharts extends Component {
         selctedVal: '',
         valNum: 1,
         showFuntransfer: false,
+        errorMessage:null
     }
 
     componentDidMount() {
@@ -50,27 +51,37 @@ class CockpitCharts extends Component {
         await Promise.all([
             apiCalls.getdshcumulativePnl(Days).then(_response => {
                 if (_response.ok) {
-                    this.setState({ ...this.state, cumulativePNL: _response.data })
+                    this.setState({ ...this.state, cumulativePNL: _response.data,errorMessage:null })
+                }else{
+                    this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(_response)})
                 }
             }),
             apiCalls.getprofits(Days).then(_res => {
                 if (_res.ok) {
                     this.setState({ ...this.state, profits: _res.data })
+                }else{
+                    this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(_res)})
                 }
             }),
             apiCalls.getdailypnl(Days).then(_dailyPnlres => {
                 if (_dailyPnlres.ok) {
                     this.setState({ ...this.state, dailyPnl: _dailyPnlres.data })
+                }else{
+                    this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(_dailyPnlres)})
                 }
             }),
             apiCalls.getAssetNetwroth(Days).then(assetnetWorthres => {
                 if (assetnetWorthres.ok) {
                     this.setState({ ...this.state, assetnetWorth: assetnetWorthres.data })
+                }else{
+                    this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(assetnetWorthres)})
                 }
             }),
             apiCalls.getAssetAllowcation(Days).then(assetAlloctionres => {
                 if (assetAlloctionres.ok) {
                     this.setState({ ...this.state, assetAlloction: assetAlloctionres.data })
+                }else{
+                    this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(assetAlloctionres)})
                 }
             }),
         ]);
@@ -78,16 +89,19 @@ class CockpitCharts extends Component {
     loadData = async () => {
         let response = await apiCalls.getreports('getReports');
         if (response.ok) {
-            this.setState({ reports: response.data })
+            this.setState({ reports: response.data,errorMessage:null })
+        }else{
+            this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
         }
     }
     loadKpis = async () => {
         this.setState({...this.state,isLoading:true})
         let response = await apiCalls.getdshKpis();
         if (response.ok) {
-            this.setState({ ...this.state, kpis: response.data })
-            this.setState({...this.state,isLoading:false})
+            this.setState({ ...this.state, kpis: response.data ,errorMessage:null,isLoading:false})
 
+        }else{
+            this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
         }
     }
 
@@ -180,7 +194,14 @@ class CockpitCharts extends Component {
     render() {
         const { Search } = Input;
         const { wallets } = this.props.dashboard;
+        
         return (<>
+        {this.state.errorMessage != null && <Alert
+            description={this.state.errorMessage}
+            type="error"
+            showIcon
+            closable={false}
+        />}
             <div className="main-container" >
 
            

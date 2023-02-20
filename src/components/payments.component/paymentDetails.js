@@ -6,6 +6,7 @@ import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 import Loader from '../../Shared/loader';
 import FilePreviewer from 'react-file-previewer';
+import apicalls from '../../api/apiCalls';
 import AppConfig from '../../utils/app_config';
 const { Option } = Select;
 const { Title, Text, Paragraph } = Typography;
@@ -116,7 +117,7 @@ class PaymentDetails extends Component {
         message.destroy();
         this.setState({
           ...this.state,
-          errorMessage: this.isErrorDispaly(response),
+          errorMessage: apicalls.isErrorDispaly(response),
           loading: false,
         });
         this.useDivRef.current.scrollIntoView(0,0);
@@ -139,7 +140,7 @@ class PaymentDetails extends Component {
         message.destroy();
         this.setState({
           ...this.state,
-          errorMessage: this.isErrorDispaly(response),
+          errorMessage: apicalls.isErrorDispaly(response),
           loading: false,
         });
         this.useDivRef.current.scrollIntoView(0,0);
@@ -182,7 +183,7 @@ class PaymentDetails extends Component {
             this.props.history.push(`/payments/${"All"}`);
           } else {
             message.destroy();
-            this.setState({ ...this.state, btnDisabled: false, loading: false, errorWarning: null, errorMessage: this.isErrorDispaly(response) })
+            this.setState({ ...this.state, btnDisabled: false, loading: false, errorWarning: null, errorMessage: apicalls.isErrorDispaly(response) })
             this.useDivRef.current.scrollIntoView(0,0);
           }
         }
@@ -210,7 +211,7 @@ class PaymentDetails extends Component {
             this.props.history.push(`/payments/${"All"}`);
           } else {
             message.destroy();
-            this.setState({ ...this.state, btnDisabled: false, loading: false, errorWarning: null, errorMessage: this.isErrorDispaly(response) });
+            this.setState({ ...this.state, btnDisabled: false, loading: false, errorWarning: null, errorMessage: apicalls.isErrorDispaly(response) });
             this.useDivRef.current.scrollIntoView(0,0);
           }
         }
@@ -220,18 +221,7 @@ class PaymentDetails extends Component {
       this.useDivRef.current.scrollIntoView(0,0);
     }
   };
-  isErrorDispaly = (objValue) => {
-    if (objValue.data && typeof objValue.data === "string") {
-      return objValue.data;
-    } else if (
-      objValue.originalError &&
-      typeof objValue.originalError.message === "string"
-    ) {
-      return objValue.originalError.message;
-    } else {
-      return "Something went wrong please try again!";
-    }
-  };
+
   deleteDetials = async (id, paymentsData) => {
 
     let data = paymentsData;
@@ -401,7 +391,7 @@ class PaymentDetails extends Component {
           {this.state.currency === "USD" && moreBankInfo?.transferType!=="internationalIBAN"&&
           <>
            <div className='popover-mb-12'>
-          <label className="basicinfo">Bank Address</label>
+          <label className="kpi-label">Bank Address</label>
           <label className="kpi-label d-block">Address Line 1</label> 
           <span className="kpi-val d-block">{moreBankInfo?.bankAddress1}</span></div>
           {moreBankInfo?.bankAddress2!==null &&<>
@@ -434,7 +424,7 @@ class PaymentDetails extends Component {
       <>
         <div ref={this.useDivRef}></div>
         <div className="main-container">
-          <div className="coin-viewstyle">
+          <div className="">
           <Title className="basicinfo mb-0">
           <span onClick={() => this.props.history?.push(`/payments/All`)} className='icon md c-pointer back backarrow-mr'></span>
           <Translate content="menu_payments" component={Text} className="coin-viewstyle" />

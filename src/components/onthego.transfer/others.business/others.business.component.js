@@ -64,17 +64,16 @@ class OthersBusiness extends Component {
                 this.setState({ ...this.state, isLoading: false, isEdit: edit, isSelectedId:  response.data?.id });
             });
         } else {
-            this.setState({ ...this.state, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, details: {} });
+            this.setState({ ...this.state, errorMessage: apiCalls.isErrorDispaly(response), isLoading: false, details: {} });
         }
     }
     handleIbanChange = async ({ target: { value,isNext } }) => {
-     //   this.setState({ ...this.state, ibanDetails: {}, enteredIbanData: value, isShowValid: false,errorMessage: null});
         if (value?.length >= 10 && isNext) {
-            this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true,iBanValid:true ,ibanDetails: {}, enteredIbanData: value, isShowValid: false,errorMessage: null,isValidateLoading:true});
+            this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true,iBanValid:true ,ibanDetails: {}, enteredIbanData: value, isShowValid: false,isValidateLoading:true});
             const response = await fetchIBANDetails(value);
             if (response.ok) {
                 if(response.data && (response.data?.routingNumber || response.data?.bankName)){
-                    this.setState({ ...this.state, ibanDetails: response.data, enteredIbanData: value, ibanDetailsLoading: false, errorMessage: null, iBanValid:true, isValidateLoading: false,isValidateLoading:false });
+                    this.setState({ ...this.state, ibanDetails: response.data, enteredIbanData: value, ibanDetailsLoading: false, errorMessage: null, iBanValid:true, isValidateLoading: false });
                 }else{
                     if(this.state.ibanDetails && !this.state.ibanDetails?.routingNumber|| !this.state.ibanDetails?.bankName) {
                         this.setState({ ...this.state, ibanDetails: {}, ibanDetailsLoading: false, errorMessage: null, iBanValid:false, isValidateLoading: false });
@@ -84,7 +83,7 @@ class OthersBusiness extends Component {
                     }
                 }
             } else {
-                this.setState({ ...this.state, enteredIbanData: value, ibanDetailsLoading: false,iBanValid:false, errorMessage: response.data || response.data?.message || response.originalError?.message, isValidateLoading: false, ibanDetails: {}});
+                this.setState({ ...this.state, enteredIbanData: value, ibanDetailsLoading: false,iBanValid:false, errorMessage: apiCalls.isErrorDispaly(response), isValidateLoading: false, ibanDetails: {}});
             }
         }
         else{
@@ -177,7 +176,7 @@ class OthersBusiness extends Component {
                     this.props.onContinue(confirmRes.data);
                     this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
                 } else {
-                    this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false, isBtnLoading: false });
+                    this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: apiCalls.isErrorDispaly(confirmRes), isLoading: false, isBtnLoading: false });
                   window.scrollTo(0, 0);
                 }
             } else {
@@ -188,7 +187,7 @@ class OthersBusiness extends Component {
             }
 
         } else {
-            this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, isBtnLoading: false });
+            this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: apiCalls.isErrorDispaly(response), isLoading: false, isBtnLoading: false });
         }
 
     }
@@ -202,8 +201,7 @@ class OthersBusiness extends Component {
                 <Image  preview={false} src={alertIcon} className="confirm-icon" />
                 <Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
-                Please review and sign the document in your email to whitelist your address.
-                Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
+                Please sign using link received in email to whitelist your address. Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved. `}</Text>
                 <div className="my-25">
                     </div>
             </div></div>

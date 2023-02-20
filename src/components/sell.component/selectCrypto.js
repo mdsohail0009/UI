@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Card, Radio, Alert, Image } from 'antd';
+import { Typography, Card, Radio, Alert } from 'antd';
 import { setStep, setTab } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
@@ -51,15 +51,21 @@ class SelectSellCrypto extends Component {
     }
     clickMinamnt(type) {
         let cryptoamnt;
+        const {  USDAmnt: localValue, } = this.state;
+        let _nativeValue = localValue;
         let obj = Object.assign({}, this.props.sellData.coinDetailData)
         if (type === 'half') {
             cryptoamnt = (obj.coinBalance / 2)
             this.setState({ ...this.state, USDAmnt: "0", CryptoAmnt: cryptoamnt, minmaxTab: type, isSwap: true, });
         } else if (type === 'all') {
             cryptoamnt = obj.coinBalance ? obj.coinBalance : 0;
-            this.setState({ ...this.state, USDAmnt: "0", CryptoAmnt: cryptoamnt, minmaxTab: type, isSwap: true, });
+            this.setState({ ...this.state, USDAmnt: _nativeValue, CryptoAmnt: cryptoamnt, minmaxTab: type, isSwap: true, }, () => {
+                this.handleConvertion();
+            });
         } else {
-            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: "0", isSwap: true, minmaxTab: type });
+            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: _nativeValue, isSwap: true, minmaxTab: type }, () => {
+                this.handleConvertion();
+            });
         }
     }
     previewSellData() {
@@ -77,32 +83,32 @@ class SelectSellCrypto extends Component {
             this.setState({
                 ...this.state, errorMessage: apicalls.convertLocalLang('enter_amount')
             })
-            this.myRef.current.scrollIntoView();
+            this.myRef.current.scrollIntoView(0,0);
         }
         else if ((parseFloat(this.state.USDAmnt) === 0 || parseFloat(this.state.CryptoAmnt) === 0)) {
             this.setState({
                 ...this.state, errorMessage: apicalls.convertLocalLang('amount_greater_zero')
             })
-            this.myRef.current.scrollIntoView();
+            this.myRef.current.scrollIntoView(0,0);
         }
         else if (!obj.toWalletId) {
             this.setState({
                 ...this.state, errorMessage: apicalls.convertLocalLang('pleaseSelectWallet')
             })
-            this.myRef.current.scrollIntoView();
+            this.myRef.current.scrollIntoView(0,0);
             return;
         }
         else if (this.state.CryptoAmnt > this.props.sellData.coinDetailData.coinBalance) {
             this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('insufficientFunds') })
-            this.myRef.current.scrollIntoView();
+            this.myRef.current.scrollIntoView(0,0);
             return;
         } else if (parseFloat(this.state.CryptoAmnt) < sellMinValue) {
-            this.myRef.current.scrollIntoView();
+            this.myRef.current.scrollIntoView(0,0);
             this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_minvalue') + sellMinValue })
             return;
         }
         else if (purchaseCurrencyMaxAmt[obj.toWalletCode] > maxUSDT) {
-            this.myRef.current.scrollIntoView();
+            this.myRef.current.scrollIntoView(0,0);
             this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_maxvalue') + maxAmtMesage })
             return;
         }
@@ -181,10 +187,12 @@ class SelectSellCrypto extends Component {
         const { coinDetailData } = this.props.sellData;
         return (
             <>
-                <div ref={this.myRef}>  {this.state?.errorMessage !== null && this.state?.errorMessage !== '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="error" message={apicalls.convertLocalLang('sellCrypto')} description={this.state?.errorMessage} />}
+                <div ref={this.myRef}> </div>
+                 {this.state?.errorMessage !== null && this.state?.errorMessage !== '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="error" message={apicalls.convertLocalLang('sellCrypto')} description={this.state?.errorMessage} />}
                     <div className="selectcrypto-container">
                         {coinDetailData && <Card className="crypto-card select " bordered={false}>
-                            {<div> <LocalCryptoSwapperCmp
+                            {<div> 
+                                <LocalCryptoSwapperCmp
                                 cryptoAmt={this.state.CryptoAmnt}
                                 localAmt={this.state.USDAmnt}
                                 cryptoCurrency={coinDetailData?.coin}
@@ -227,7 +235,7 @@ class SelectSellCrypto extends Component {
                     </div>
 
 
-                </div>
+                
 
 
             </>

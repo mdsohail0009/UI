@@ -2,7 +2,6 @@ import * as SignalR from '@microsoft/signalr';
 import { notification } from 'antd';
 import { updateDocRequest } from '../reducers/configReduser';
 import { fetchDashboardcalls, setNotificationCount } from '../reducers/dashboardReducer';
-import { clearPermissions } from '../reducers/feturesReducer';
 import { store } from '../store';
 import AppConfig from './app_config';
 function openNotification(message, title) {
@@ -48,14 +47,12 @@ async function start(id) {
         store.dispatch(fetchDashboardcalls(userProfileInfo?.id));
     });
     connection.on("SendRoleUpdatedMessage", () => {
-        //   store.dispatch(clearPermissions());
-        //   store.dispatch(updateAccessdenied(true));
+        
     });
 }
 
 
 
-// Start the connection.
 function startConnection(id) {
     start(id);
 }
