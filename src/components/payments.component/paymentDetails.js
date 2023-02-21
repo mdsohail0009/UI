@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import Loader from '../../Shared/loader';
 import {ApiControllers} from '../../api/config'
 import DocumentPreview from "../../Shared/docPreview";
-
+import apicalls from '../../api/apiCalls';
 const { Option } = Select;
 const { Title, Text, Paragraph } = Typography;
 const EllipsisMiddle = ({ suffixCount, children }) => {
@@ -122,7 +122,7 @@ class PaymentDetails extends Component {
         message.destroy();
         this.setState({
           ...this.state,
-          errorMessage: this.isErrorDispaly(response),
+          errorMessage: apicalls.isErrorDispaly(response),
           loading: false,
         });
         this.useDivRef.current.scrollIntoView(0,0);
@@ -145,7 +145,7 @@ class PaymentDetails extends Component {
         message.destroy();
         this.setState({
           ...this.state,
-          errorMessage: this.isErrorDispaly(response),
+          errorMessage: apicalls.isErrorDispaly(response),
           loading: false,
         });
         this.useDivRef.current.scrollIntoView(0,0);
@@ -188,7 +188,7 @@ class PaymentDetails extends Component {
             this.props.history.push(`/payments/${"All"}`);
           } else {
             message.destroy();
-            this.setState({ ...this.state, btnDisabled: false, loading: false, errorWarning: null, errorMessage: this.isErrorDispaly(response) })
+            this.setState({ ...this.state, btnDisabled: false, loading: false, errorWarning: null, errorMessage: apicalls.isErrorDispaly(response) })
             this.useDivRef.current.scrollIntoView(0,0);
           }
         }
@@ -216,7 +216,7 @@ class PaymentDetails extends Component {
             this.props.history.push(`/payments/${"All"}`);
           } else {
             message.destroy();
-            this.setState({ ...this.state, btnDisabled: false, loading: false, errorWarning: null, errorMessage: this.isErrorDispaly(response) });
+            this.setState({ ...this.state, btnDisabled: false, loading: false, errorWarning: null, errorMessage: apicalls.isErrorDispaly(response) });
             this.useDivRef.current.scrollIntoView(0,0);
           }
         }
@@ -226,18 +226,7 @@ class PaymentDetails extends Component {
       this.useDivRef.current.scrollIntoView(0,0);
     }
   };
-  isErrorDispaly = (objValue) => {
-    if (objValue.data && typeof objValue.data === "string") {
-      return objValue.data;
-    } else if (
-      objValue.originalError &&
-      typeof objValue.originalError.message === "string"
-    ) {
-      return objValue.originalError.message;
-    } else {
-      return "Something went wrong please try again!";
-    }
-  };
+
   deleteDetials = async (id, paymentsData) => {
 
     let data = paymentsData;
