@@ -98,7 +98,7 @@ const Payments = (props) => {
     },
     { field: "currency", title: apicalls.convertLocalLang("currency"), filter: true,width: 200, },
     { field: "totalAmount", title: 'Total Amount', filter: true, width: 200,dataType: "number", filterType: "numeric" },
-    { field: "approvedAmount", title: 'Approved Amount', filter: true, width: 237, },
+    { field: "approvedAmount", title: 'Approved Amount', filter: true, width: 237,dataType: "number", filterType: "numeric"  },
     { field: "count", title: 'Count', filter: true, width: 150,dataType: "number", filterType: "numeric" },
     { field: "state", title: 'State', filter: true, width: 200, },
   ];

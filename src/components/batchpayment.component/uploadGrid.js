@@ -42,7 +42,7 @@ const BatchpaymentView = (props) => {
 			width: 210,
 		},
         { field: "accountNumber", title: 'Account Number/IBAN', filter: true, width: 250 },
-        { field: "amount", title: 'Amount', filter: true, width: 200},
+        { field: "amount", title: 'Amount', filter: true, width: 200,dataType: "number", filterType: "numeric"},
         { field: "transactionStatus", title: 'Transaction Status', filter: true, width: 200},
         { field: "uploadedDocuments", title: 'Uploaded Documents', width: 290,sortable:false,
     	customCell: (properites) => (
