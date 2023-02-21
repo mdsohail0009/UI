@@ -65,7 +65,7 @@ class AddressCrypto extends Component {
       this.setState({
         ...this.state,
         isLoading: false,
-        errorMessage: apicalls.isErrorDispaly(response)
+        errorMessage: this.isErrorDispaly(response)
       });
     }
   };
