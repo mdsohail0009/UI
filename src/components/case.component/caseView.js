@@ -58,7 +58,7 @@ class CaseView extends Component {
         commonModel: {},
         assignedTo: [],
         btnLoading:false,
-        errorWarning: null,caseDetails:[],detailsItem:[],docrepositories:[]
+        errorWarning: null,caseDetails:[],detailsItem:[],docrepositories:[],casedoc:[]
     }
     componentDidMount() {
         this.props.dispatch(getScreenName({getScreen:null}))
@@ -147,17 +147,19 @@ class CaseView extends Component {
     }
     docReject = async (doc) => {
         debugger
-        let docData = Object.assign([], this.state?.caseDetails);
+        //let docData = Object.assign([], this.state?.caseDetails);
         let val=[]
-    for (let i in this.state?.caseDetails) {
-      //if (this.state?.caseDetails[i].id == doc.id) {
-        let list =this.state.caseDetails.filter((item)=>item.isChecked == true)     
-           console.log(list)
+    for (let i of this.state?.caseDetails) {
+      if (this.state?.caseDetails[i].id == doc.id) {
+        // let list =this.state.caseDetails.filter((item)=>item.isChecked == true)     
+        //    console.log(list)
       val.push({typeId:doc.id,fileName:this.state.docrepositories[i].fileName,size:this.state.docrepositories[i].size,id:this.state.docrepositories[i].id})
-      console.log(val)  
-    //}
+      console.log(val)
+      this.setState({...this.state,casedoc:val})
+  
     }
-        
+    }
+    console.log(this.state.casedoc)
         let item = this.isDocExist(this.state.docReplyObjs, doc.id);
         this.setState({ ...this.state, isMessageError: null });
         if (!validateContent(item?.reply)) {
