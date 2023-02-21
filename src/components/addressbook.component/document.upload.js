@@ -5,6 +5,7 @@ import { document } from "../onthego.transfer/api";
 import apiCalls from "../../api/apiCalls";
 import { bytesToSize } from "../../utils/service";
 import ConnectStateProps from "../../utils/state.connect";
+import {ApiControllers} from '../../api/config'
 
 const { Dragger } = Upload;
 const { Paragraph, Text } = Typography;
@@ -15,35 +16,30 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
         <Text className="mb-0 fs-14 docname d-block" style={{ maxWidth: '100%' }} ellipsis={{ suffix }}>
             {start}
         </Text>
+
     );
 };
 class AddressDocumnet extends Component {
     state = {
         filesList: [],
-        documents: {}, showDeleteModal: false, isDocLoading: false,selectedObj:{},errorMessage:null
+        documents: [], showDeleteModal: false, isDocLoading: false,selectedObj:{},errorMessage:null
     }
     componentDidMount() {
         let propsDocument = JSON.stringify(this.props?.documents) == JSON.stringify({'transfer': '', 'payee': ''}) ? null : this.props?.documents
-        this.setState({ ...this.state, documents: propsDocument || document(), isEdit: this.props?.editDocument, filesList: propsDocument ? [...this.props?.documents?.details] : [],refreshData:this.props?.refreshData })
+        this.setState({ ...this.state, documents: propsDocument || document(), isEdit: this.props?.editDocument, filesList: propsDocument ? [...this.props?.documents] : [],refreshData:this.props?.refreshData })
     }
     docDetail = (doc) => {
         return {
-            "id": doc.id || "00000000-0000-0000-0000-000000000000",
-            "documentId": this.state.documents.id,
-            "documentName": doc.name,
-            "status": true,
-            "recorder": 0,
-            "remarks":  doc.size,
-            "isChecked": true,
+            "id": doc?.response?.id || "00000000-0000-0000-0000-000000000000" || this.state.documents.id,
+            "fileName": doc.name,
             "state": "",
-            "path": doc?.response[0]
         }
     }
   
     render() {
         if(this.props.refreshData !== this.state.refreshData){
             let propsDocument = JSON.stringify(this.props?.documents) == JSON.stringify({'transfer': '', 'payee': ''}) ? null : this.props?.documents
-            this.setState({ ...this.state, errorMessage: null, documents: propsDocument || document(), filesList: propsDocument ? [...this.props?.documents?.details] : [], refreshData:this.props.refreshData })
+            this.setState({ ...this.state, errorMessage: null, documents: propsDocument || document(), filesList: propsDocument ? [...this.props?.documents] : [], refreshData:this.props.refreshData })
         }
         return <Row >
             <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
@@ -53,7 +49,7 @@ class AddressDocumnet extends Component {
                      {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
                     <Form.Item name={"files"} required rules={[{
                         validator: (_, value) => {
-                                const isValidFiles = this.state.filesList.filter(item => (item.name || item.documentName).indexOf(".") != (item.name || item.documentName).lastIndexOf(".")).length == 0;
+                                const isValidFiles = this.state?.filesList.filter(item => (item.name || item.fileName).indexOf(".") != (item.name || item.fileName).lastIndexOf(".")).length == 0;
                                 if (isValidFiles) { return Promise.resolve(); } else {
                                     this.setState({...this.state,isDocLoading:false,errorMessage:null })
                                     return Promise.reject("File don't allow double extension");
@@ -65,9 +61,16 @@ class AddressDocumnet extends Component {
                     ]}>
                         <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                             className="upload mt-4"
-                            multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
+                            multiple={false}
+                             action={
+                                process.env.REACT_APP_UPLOAD_API +
+                                "api/v1/" +
+                                ApiControllers.common +
+                               `UploadFileNew?screenName=AddressBook&fieldName=uploadfile&tableName=Common.Payeeaccounts`
+                              }
                             showUploadList={false}
-                          
+                            beforeUpload={(props) => {
+                            }}
                             headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
                             onChange={({ file }) => {
                                 this.setState({ ...this.state, isDocLoading: true });
@@ -79,7 +82,7 @@ class AddressDocumnet extends Component {
                                         this.setState({ ...this.state, filesList: files, isDocLoading: false, errorMessage: null });
                                         let { documents: docs } = this.state;
                                         docs?.details?.push(this.docDetail(file));
-                                        this.props?.onDocumentsChange(docs);
+                                        this.props?.onDocumentsChange(docs.details);
                                     }else{
                                         this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg and PDF  files" }) 
                                     }
@@ -98,10 +101,14 @@ class AddressDocumnet extends Component {
                         </Dragger>
                     </Form.Item>
                     {this.state?.filesList?.map((file, indx) => <div>
-                        {((file.status === "done" || file.status )&& file.state !='Deleted') && <> <div className="docfile custom-upload cust-upload-sy">
-                            <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "":(file.documentName?.slice(-3) === "zip" ? "file" : "")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
+                        
+                        {/* {((file.status === "done" || file.status == true)&& file.state !='Deleted') &&  */}
+                        {file.state != 'Deleted' && 
+                        <> 
+                        <div className="docfile custom-upload cust-upload-sy">
+                            <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "":(file.fileName?.slice(-3) === "zip" ? "file" : "")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.fileName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                             <div className="docdetails">
-                                <EllipsisMiddle suffixCount={6}>{file.name || file.documentName}</EllipsisMiddle>
+                                <EllipsisMiddle suffixCount={6}>{file.name || file.fileName}</EllipsisMiddle>
                                 <span className="upload-filesize">{(file.size || file?.remarks) ? bytesToSize(file.size || file?.remarks) : ""}</span>
                             </div>
                             <span className="icon md close c-pointer" onClick={() => {
@@ -109,6 +116,7 @@ class AddressDocumnet extends Component {
 
                             }} />
                         </div></>}
+                        {/* } */}
                     </div>)}
                     {this.state.isDocLoading && <Loader />}
                 </div>
@@ -120,7 +128,6 @@ class AddressDocumnet extends Component {
                     <>
                     	<div className="cust-pop-up-btn crypto-pop">
                         <Button
-                            // style={{ margin: "0 8px" ,width: 120, height: 50 }}
                             className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
                             onClick={() => { this.setState({ ...this.state, showDeleteModal: false }) }}>
                             No
@@ -129,11 +136,10 @@ class AddressDocumnet extends Component {
                             className="primary-btn pop-btn detail-popbtn"
                             onClick={() => {
                                 let { documents: docs } = this.state;
-                                let files = docs.details;
+                                let files = docs;
                                 for(var k in files){
                                     if(files[k].id===this.state.selectedObj?.id){
                                         files[k].state='Deleted';
-                                        files[k].isChecked=false;
                                     }
                                 }
                                 let obj=Object.assign([],files)
@@ -149,10 +155,9 @@ class AddressDocumnet extends Component {
                                     }
                                 })
                                 this.setState({ ...this.state, filesList, showDeleteModal: false });
-                                docs.details=Object.assign([],obj)
+                                docs=Object.assign([],obj)
                                 this.props?.onDocumentsChange(docs);
                             }}
-                            // style={{ width: 120, height: 50 }}
                             >
                             {apiCalls.convertLocalLang("Yes")}
                         </Button>

@@ -201,6 +201,9 @@ const isErrorDispaly = (objValue) => {
 		}
 	}
 };
+const getFileURL = (docId) => {
+    return apiClient.get(ApiControllers.common + `FilePreview/${docId}`);
+  };
 let apicalls = {
 	getportfolio,
 	getCryptos,
@@ -235,6 +238,6 @@ let apicalls = {
 	getPayeeCryptoLu,
 	getPayeeCrypto,
 	confirmCryptoTransaction,
-	convertUTCToLocalTime,isErrorDispaly
+	convertUTCToLocalTime,isErrorDispaly,getFileURL
 };
 export default apicalls;
