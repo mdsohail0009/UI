@@ -57,7 +57,7 @@ returnDashboard=()=>{
     </td>
   )
   },
-  { field: "amount", title: "Amount", filter: true,width: 250},
+  { field: "amount", title: "Amount", filter: true,width: 250,dataType: "number", filterType: "numeric"},
   { field: "accountNumber", title: 'Account Number/IBAN', filter: true, width: 260},
   { field: "abaShiftCode", title: 'ABA Routing/ Swift / BIC Code', filter: true, width: 300 },
   { field: "bankName", title: 'Bank Name', filter: true, width: 200},
@@ -86,7 +86,7 @@ gridEURColumns = [
       </Text>
     </td>
   )},
-  { field: "amount", title: "Amount", filter: true,width: 250},
+  { field: "amount", title: "Amount", filter: true,width: 250,dataType: "number", filterType: "numeric"},
   { field: "accountNumber", title: "IBAN", filter: true,width: 250},
   { field: "reasonforTransfer", title: 'Reason For Transfer', filter: true, width: 200},
   { field: "reference", title: 'Reference', filter: true, width: 250 },
