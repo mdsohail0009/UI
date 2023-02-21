@@ -58,7 +58,7 @@ class CaseView extends Component {
         commonModel: {},
         assignedTo: [],
         btnLoading:false,
-        errorWarning: null,caseDetails:[],detailsItem:[]
+        errorWarning: null,caseDetails:[],detailsItem:[],docrepositories:[]
     }
     componentDidMount() {
         this.props.dispatch(getScreenName({getScreen:null}))
@@ -137,7 +137,7 @@ class CaseView extends Component {
         }
     }
     updateDocRepliesStatus = (doc, Status) => {
-        let docDetails = [...this.state.docDetails.details];
+        let docDetails = [...this.state.caseDetails];
         for (let item of docDetails) {
             if (item.id === doc.id) {
                 item.state = Status;
@@ -146,6 +146,18 @@ class CaseView extends Component {
         this.setState({ ...this.state, docDetails: { ...this.state.docDetails, details: docDetails } });
     }
     docReject = async (doc) => {
+        debugger
+        let docData = Object.assign([], this.state?.caseDetails);
+        let val=[]
+    for (let i in this.state?.caseDetails) {
+      //if (this.state?.caseDetails[i].id == doc.id) {
+        let list =this.state.caseDetails.filter((item)=>item.isChecked == true)     
+           console.log(list)
+      val.push({typeId:doc.id,fileName:this.state.docrepositories[i].fileName,size:this.state.docrepositories[i].size,id:this.state.docrepositories[i].id})
+      console.log(val)  
+    //}
+    }
+        
         let item = this.isDocExist(this.state.docReplyObjs, doc.id);
         this.setState({ ...this.state, isMessageError: null });
         if (!validateContent(item?.reply)) {
@@ -163,12 +175,14 @@ class CaseView extends Component {
             }
         };   
         this.setState({ ...this.state, btnLoading: true });
+        
         item.path = itemPath();
         item.status = "Submitted";
         item.repliedBy = `${(this.props.userProfileInfo?.isBusiness===true)?this.props.userProfileInfo?.businessName:this.props.userProfileInfo?.firstName}`;
         item.repliedDate = Mome().format("YYYY-MM-DDTHH:mm:ss");
         item.info = JSON.stringify(this.props.trackAuditLogData);
         item.customerId=this.props.userProfileInfo.id;
+        item.repositories=this.state.docrepositories
       
 
          
@@ -276,12 +290,14 @@ class CaseView extends Component {
                         obj.path = ObjPath();
                         obj.repliedDate = new Date();
                         obj.path.push({ fileName: file?.response?.fileName, size: file?.response?.fileSize,id:file?.response?.id });
+                        this.setState({...this.state,docrepositories:obj.path})
                         obj.repliedBy = this.props.userProfileInfo?.firstName;
                         replyObjs = this.uopdateReplyObj(obj, replyObjs);
                     } else {
                         obj = this.messageObject(doc.id);
                         obj.repliedDate = new Date();
                         obj.path.push({ fileName: file?.response?.fileName, size: file?.response?.fileSize,id:file?.response?.id  });
+                        this.setState({...this.state,docrepositories:obj.path[0]})
                         obj.repliedBy = this.props.userProfileInfo?.firstName;
                         replyObjs.push(obj);
                     }
