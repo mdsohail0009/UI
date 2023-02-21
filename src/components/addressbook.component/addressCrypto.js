@@ -150,7 +150,6 @@ if (res.ok){
 
   }
   submit = async (values) => {
-    debugger
     let data =
       this.state?.details?.documents?.filter(
         (item) => item.state !== "Deleted"

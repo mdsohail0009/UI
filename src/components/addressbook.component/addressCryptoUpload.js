@@ -272,8 +272,7 @@ class AddressCryptoDocument extends Component {
             </Form.Item>
             {this.state?.filesList?.map((file, indx) => (
               <div>
-                {/* {(file.status === "done" || file.status == true) &&
-                  file.state != "Deleted" && ( */}
+                
                   {(file.state !== 'Deleted' && 
                     <>
                       {" "}
