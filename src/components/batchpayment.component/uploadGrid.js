@@ -58,7 +58,6 @@ const BatchpaymentView = (props) => {
               <div className={`file-label d-flex justify-content mb-8 py-4 batch-upload`}
              >
               <span className="mb-0 fs-14 docnames  fs-12 fw-400 amt-label c-pointer"  
-              //onClick={() => docPreview(item)}
               onClick={() => docPreviewOpen(item)}
               ><Tooltip title={item.fileName}>{item.fileName}</Tooltip></span>
               <span className="delete-disable"
@@ -81,7 +80,6 @@ const BatchpaymentView = (props) => {
         },
       ];
     const beforeUpload=(file)=>{ 
-        debugger
         if (file.name.split('.').length > 2) {
             setUploader(false)
            setDocUpload(false)
@@ -117,20 +115,12 @@ const BatchpaymentView = (props) => {
 
     }
   const handleUpload = ({ file },type) => {
-    debugger
     let identityProofObj=Object.assign([],docIdentityProofObjs)
     let transferProof=Object.assign([],docTransferObjs)
     let obj = {
         "id":`${file.response?.id}` ,
-        //"documentId": "00000000-0000-0000-0000-000000000000",
         "fileName": `${file.response?.fileName}`,
-       // "status": true,
-        //"isChecked": file.name === "" ? false : true,
-        //"remarks": `${file.size}`,
         "state": "Submitted",
-        //"recorder": 0,
-        //"path": `${file.response}`,
-        //"uid":file.uid,
     } 
     if (file.name.split('.').length > 2 ||file.type==="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ) {
         setUploader(false);
@@ -272,7 +262,6 @@ const filePreviewPath = () => {
       
       }
       const docPreviewOpen = (data) => {
-        debugger
 		setDocPreviewModal(true)
 		setDocPreviewDetails({ id: data.id, fileName: data.fileName })
 	  }
@@ -442,7 +431,6 @@ const filePreviewPath = () => {
                                                 <>{file ? <div className="docfile">
                                                     <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "":(file.fileName?.slice(-3) === "zip" ? "file" : "")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.fileName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                                     <div className="docdetails c-pointer"
-                                                     //onClick={() => docPreview(file)}
                                                      onClick={() => docPreviewOpen(file)}
 
                                                      >
@@ -483,7 +471,6 @@ const filePreviewPath = () => {
              <Paragraph className="text-white">Are you sure, do you really want to delete ?</Paragraph>
         </Modal>
         </div>
-        {/* {filePreviewModal} */}
         {docPreviewModal &&
       <DocumentPreview
         previewModal={docPreviewModal}
