@@ -69,7 +69,7 @@ const Batchpayments = (props) => {
           </td>
         )
       },
-        { field: "currency", title: 'Currency', filter: true, width: 150,dataType: "number", filterType: "numeric" },
+        { field: "currency", title: 'Currency', filter: true, width: 150,},
         { field: "status", title: 'Status', filter: true, width: 150, },
         { field: "numberOfTransactions", title: 'Number of Transactions', filter: true, width: 250,dataType: "number", filterType: "numeric", 
         customCell: (properites) => (<td>
