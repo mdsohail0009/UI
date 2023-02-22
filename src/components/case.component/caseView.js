@@ -149,16 +149,16 @@ class CaseView extends Component {
         debugger
         //let docData = Object.assign([], this.state?.caseDetails);
         let val=[]
-    for (let i of this.state?.caseDetails) {
-      if (this.state?.caseDetails[i].id == doc.id) {
+    //for (let i of this.state?.caseDetails) {
+      //if (this.state?.caseDetails[i].id == doc.id) {
         // let list =this.state.caseDetails.filter((item)=>item.isChecked == true)     
         //    console.log(list)
-      val.push({typeId:doc.id,fileName:this.state.docrepositories[i].fileName,size:this.state.docrepositories[i].size,id:this.state.docrepositories[i].id})
-      console.log(val)
-      this.setState({...this.state,casedoc:val})
+      //val.push({typeId:doc.id,fileName:this.state.docrepositories[i].fileName,size:this.state.docrepositories[i].size,id:this.state.docrepositories[i].id})
+      //console.log(val)
+      //this.setState({...this.state,casedoc:val})
   
-    }
-    }
+   // }
+   // }
     console.log(this.state.casedoc)
         let item = this.isDocExist(this.state.docReplyObjs, doc.id);
         this.setState({ ...this.state, isMessageError: null });
@@ -178,7 +178,7 @@ class CaseView extends Component {
         };   
         this.setState({ ...this.state, btnLoading: true });
         
-        item.path = itemPath();
+       // item.path = itemPath();
         item.status = "Submitted";
         item.repliedBy = `${(this.props.userProfileInfo?.isBusiness===true)?this.props.userProfileInfo?.businessName:this.props.userProfileInfo?.firstName}`;
         item.repliedDate = Mome().format("YYYY-MM-DDTHH:mm:ss");
