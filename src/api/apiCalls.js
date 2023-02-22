@@ -201,6 +201,18 @@ const isErrorDispaly = (objValue) => {
 		}
 	}
 };
+
+const uploadErrorDisplay = (objValue)=>{
+	if ((objValue.status >= 400 && objValue.status < 500) && objValue.status != 401) {
+		return "Something went wrong please try again!";
+	} else {
+		if ( objValue.title && typeof objValue.title) {
+			return objValue.title;
+		}   else {
+			return "Something went wrong please try again!";
+		}
+	}
+}
 let apicalls = {
 	getportfolio,
 	getCryptos,
@@ -235,6 +247,6 @@ let apicalls = {
 	getPayeeCryptoLu,
 	getPayeeCrypto,
 	confirmCryptoTransaction,
-	convertUTCToLocalTime,isErrorDispaly
+	convertUTCToLocalTime,isErrorDispaly,uploadErrorDisplay
 };
 export default apicalls;

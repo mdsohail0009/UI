@@ -5,6 +5,7 @@ import { document } from "../onthego.transfer/api";
 import apiCalls from "../../api/apiCalls";
 import { bytesToSize } from "../../utils/service";
 import ConnectStateProps from "../../utils/state.connect";
+import apicalls from "../../api/apiCalls";
 
 const { Dragger } = Upload;
 const { Paragraph, Text } = Typography;
@@ -84,7 +85,7 @@ class AddressDocumnet extends Component {
                                         this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg and PDF  files" }) 
                                     }
                                 }else if(file.status ==='error'){
-                                    this.setState({ ...this.state, isDocLoading: false,errorMessage:file?.response });
+                                    this.setState({ ...this.state, isDocLoading: false,errorMessage:apicalls.uploadErrorDisplay(file?.response) });
                                 }
                             }}
                         >

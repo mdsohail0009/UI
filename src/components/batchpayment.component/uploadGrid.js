@@ -21,6 +21,7 @@ const { Title, Text, Paragraph } = Typography;
 const BatchpaymentView = (props) => {
     const [uplaodModal, setUploadModal] = useState(false);
     const [errorMessage,setErrorMessage]=useState(null)
+    const [errorMsg,setErrorMsg]=useState(null)
     const [docIdentityProofObjs,setDocIdentityProofObjs]=useState([])
     const [docTransferObjs,setDocTransferObjs]=useState([]);
     const [upLoader,setUploader]=useState(false);
@@ -42,7 +43,7 @@ const BatchpaymentView = (props) => {
 			width: 210,
 		},
         { field: "accountNumber", title: 'Account Number/IBAN', filter: true, width: 250 },
-        { field: "amount", title: 'Amount', filter: true, width: 200,dataType: "number", filterType: "numeric"},
+        { field: "amount", title: 'Amount', filter: true, width: 200},
         { field: "transactionStatus", title: 'Transaction Status', filter: true, width: 200},
         { field: "uploadedDocuments", title: 'Uploaded Documents', width: 290,sortable:false,
     	customCell: (properites) => (
@@ -92,10 +93,15 @@ const BatchpaymentView = (props) => {
             setErrorMessage(null)
           return true
         } else if(fileType=="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
+            setUploader(false)
+            setDocUpload(false)
             setErrorMessage("File is not allowed. You can upload jpg, png, jpeg and PDF files");
         }else{
+            setUploader(false)
+            setDocUpload(false)
             setErrorMessage("File is not allowed. You can upload jpg, png, jpeg and PDF files");
             return Upload.LIST_IGNORE;
+           
         }
     }
     const showUploadModal = (prop) =>{
@@ -126,7 +132,7 @@ const BatchpaymentView = (props) => {
         setDocUpload(false);
     }else{
         if (type === "IDENTITYPROOF") {
-            setUploader(true)
+            setUploader(false)
             if (file?.status === "done" && file.response !== undefined) {
                 setUploader(false)
                 identityProofObj?.push(obj);
@@ -181,7 +187,7 @@ const BatchpaymentView = (props) => {
             gridRef?.current?.refreshGrid();
             setIsLoad(false);
             setDeleteModal(false);
-            setErrorMessage(null);
+            setErrorMsg(null);
             message.success({
                 content:"Document deleted successfully",
                 className: "custom-msg",
@@ -189,7 +195,7 @@ const BatchpaymentView = (props) => {
               });
         }
         else{
-            setErrorMessage(apicalls.isErrorDispaly(res));
+            setErrorMsg(apicalls.isErrorDispaly(res));
             gridRef?.current?.refreshGrid();
             setIsLoad(false);
             setDeleteModal(false);
@@ -314,8 +320,8 @@ const filePreviewPath = () => {
         <>
         < div className='main-container'>
             <div className="basicinfo batch-style"><div className="basicinfo "><span className='icon md c-pointer back backarrow-mr' onClick={() => props.history.push('/batchpayment')}/>{props.match.params.fileName} / { props.match.params.currency}</div></div>
-            {errorMessage !== null && (
-            <Alert type="error" description={errorMessage}  showIcon/>
+            {errorMsg !== null && (
+            <Alert type="error" description={errorMsg}  showIcon/>
                  )}
             <div className="box  text-white" style={{ clear: 'both' }}>
                 <List

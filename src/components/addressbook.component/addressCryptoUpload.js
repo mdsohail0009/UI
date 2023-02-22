@@ -8,6 +8,7 @@ import { bytesToSize } from "../../utils/service";
 import ConnectStateProps from "../../utils/state.connect";
 import {getFileURL} from './api';
 import FilePreviewer from "react-file-previewer";
+import apicalls from "../../api/apiCalls";
 
 const { Dragger } = Upload;
 const { Paragraph, Text } = Typography;
@@ -155,7 +156,7 @@ class AddressCryptoDocument extends Component {
                                         this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg, pdf, mp4, mov, wmv, avi files" }) 
                                     }
                                 }else if(file.status ==='error'){
-                                    this.setState({ ...this.state, isDocLoading: false,errorMessage:file?.response });
+                                    this.setState({ ...this.state, isDocLoading: false,errorMessage: apicalls.uploadErrorDisplay(file?.response) });
                                 }
                             }}
                         >
