@@ -260,7 +260,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
     else if(approvedAddress){
       return<div className="custom-declaraton travel-success"> <div className="success-pop text-center declaration-content">
             <Image src={success} className="confirm-icon" alt={"success"} preview={false} />
-          <Title level={2} className="success-title">Address Saved Successfuly</Title>
+          <Title level={2} className="success-title">Address Saved successfully</Title>
       </div>
       </div>
     }
