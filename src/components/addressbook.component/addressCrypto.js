@@ -43,7 +43,7 @@ class AddressCrypto extends Component {
       approvedAddress:false,
       isDocCheck:false,
       isDocDeleteCheck:false,
-      netWorkData: []
+      netWorkData:[],
     };
   }
 
@@ -52,24 +52,14 @@ class AddressCrypto extends Component {
     this.handleWallet();
     this.getNetWorkData();
   }
-  getNetWorkData = async () => {
-    this.setState({ ...this.state, isLoading: true });
+  getNetWorkData=async()=>{
     let response = await getNetWorkLucup();
-    if (response.ok) {
-      this.setState({
-        ...this.state,
-        isLoading: false,
-        netWorkData: response.data
-      });
-    } else {
-      this.setState({
-        ...this.state,
-        isLoading: false,
-        errorMessage: this.isErrorDispaly(response)
-      });
+    if(response.ok){
+    this.setState({...this.state,netWorkData:response.data})
+    }else {
+      this.setState({ ...this.state, errorMessage: apicalls.isErrorDispaly(response) })
     }
-  };
-
+  }
   getCryptoData = async () => {
     let id = this.props?.addressBookReducer?.selectedRowData?.id ||this.props.cryptoId || "00000000-0000-0000-0000-000000000000";
     this.setState({ ...this.state, isLoading: true })
@@ -150,122 +140,73 @@ if (res.ok){
 
   }
   submit = async (values) => {
-    let data =
-      this.state?.details?.documents?.filter(
-        (item) => item.state !== "Deleted"
-      )?.length === 0;
-    if (!values.isOwnerOfWalletAddress) {
+    let data=this.state.details.documents?.details.filter((item)=>item.state!=="Deleted")?.length===0 ;
+    if (!values.isOwnerOfWalletAddress && process.env.REACT_APP_ISTR == "true") {
+			this.setState({
+				...this.state,
+        errorMessage:"Please select owner check box",
+				agreeRed: false,
+			});
+			this.useDivRef.current?.scrollIntoView(0, 0);
+		}else if((values.isDocumentUpload===true && ((this.state.cryptoData?.documents===null &&this.state.isEdit===true && values.files===undefined) ||this.state.cryptoData?.documents?.details?.length==0||
+      this.state.details.documents?.details?.length ==0 || data===true))){
       this.setState({
-        ...this.state,
-        errorMessage: "Please select owner check box",
-        agreeRed: false
-      });
-      this.useDivRef.current?.scrollIntoView(0, 0);
-    } else if (
-      values.isDocumentUpload === true &&
-      ((this.state.cryptoData?.docRepositories === null &&
-        this.state.isEdit === true &&
-        values.files === undefined) ||
-        this.state.cryptoData?.docRepositories?.length == 0 ||
-        this.state.details?.documents?.length == 0 ||
-        data === true)
-    ) {
-      this.setState({
-        ...this.state,
-        errorMessage: "At least one document is required"
-      });
-      this.useDivRef.current?.scrollIntoView(0, 0);
-    } else {
-      let obj = {
-        id: "00000000-0000-0000-0000-000000000000",
-        saveWhiteListName: values.saveWhiteListName,
-        token: values.token,
-        network: values.network,
-        createddate: new Date(),
-        userCreated: this.props.userProfile.userName,
-        modifiedDate: new Date(),
-        modifiedBy: this.props.userProfile.userName,
-        status: 1,
-        adressstate: "fd",
-        currencyType: "Crypto",
-        walletAddress: values.walletAddress.trim(),
-        customerId: this.props.userProfile.id,
-        isOwnerOfWalletAddress: values.isOwnerOfWalletAddress,
-        walletSource: values.walletSource,
-        otherWallet: values.otherWallet,
-        isDocumentUpload: values.isDocumentUpload,
-        docRepositories: this.state.details?.documents
-      };
-      if (this.state.cryptoData.id !== "00000000-0000-0000-0000-000000000000") {
-        obj.id = this.state.cryptoData.id;
-      }
-      this.setState({ ...this.state, isBtnLoading: true });
-      let response = await saveCryptoData(obj);
-      if (response.ok) {
-        this.setState({ ...this.state, isBtnLoading: false });
-        if (
-          window?.location?.pathname.includes("addressbook") &&
-          this.props.type === "manual"
-        ) {
-          if (
-            !(
-              this.state.cryptoData.adressstate === "Approved" &&
-              this.state.cryptoData.isProofofOwnership === false
-            ) ||
-            (this.state.cryptoData.walletSource === null &&
-              this.state.cryptoData.isOwnerOfWalletAddress === null)
-          ) {
-            this.setState({
-              ...this.state,
-              errorMessage: null,
-              isBtnLoading: false,
-              showDeclartion: true,
-              showDeclartionApproved: false,
-              approvedAddress: false
-            });
-          } else if (
-            (obj.documents?.length === 0 ||
-              obj.documents === undefined ||
-              this.state.cryptoData?.docRepositories === undefined) &&
-            this.state.cryptoData.adressstate === "Approved" &&
-            this.state.cryptoData.isProofofOwnership === false
-          ) {
-            this.setState({
-              ...this.state,
-              errorMessage: null,
-              isBtnLoading: false,
-              showDeclartion: false,
-              showDeclartionApproved: false,
-              approvedAddress: true
-            });
-          } else {
-            this.setState({
-              ...this.state,
-              errorMessage: null,
-              isBtnLoading: false,
-              showDeclartion: false,
-              showDeclartionApproved: true,
-              approvedAddress: false
-            });
-          }
-          this.props.headingUpdate(true);
-        } else {
-          let _obj = this.props.sendReceive?.withdrawCryptoObj;
-          this.props?.dispatch(
-            setWithdrawcrypto({
-              ..._obj,
-              addressBookId: response.data?.payeeAccountId || response.data?.id,
-              toWalletAddress: values?.walletAddress,
-              network: values?.network,
-              isShowDeclaration: true
-            })
-          );
-          this.props.dispatch(rejectWithdrawfiat());
-          this.props.dispatch(hideSendCrypto(false));
-          this.props.dispatch(setSendCrypto(true));
-          this.props.changeStep("withdraw_crpto_summary");
+				...this.state,
+        errorMessage:"At least one document is required",
+				
+			});
+this.useDivRef.current?.scrollIntoView(0, 0);
+}
+    else{
+    let obj = {
+      id: "00000000-0000-0000-0000-000000000000",
+      saveWhiteListName: values.saveWhiteListName,
+      token: values.token,
+      network: values.network,
+      createddate: new Date(),
+      userCreated: this.props.userProfile.userName,
+      modifiedDate: new Date(),
+      modifiedBy: this.props.userProfile.userName,
+      status: 1,
+      adressstate: "fd",
+      currencyType: "Crypto",
+      walletAddress:  values.walletAddress.trim(),
+      customerId: this.props.userProfile.id,
+      isOwnerOfWalletAddress:values.isOwnerOfWalletAddress,
+      walletSource:values.walletSource,
+      otherWallet:values.otherWallet,
+      isDocumentUpload:values.isDocumentUpload,
+      documents:this.state.cryptoData?.documents ||this.state.details.documents
+      
+    }
+    if (this.state.cryptoData.id !== "00000000-0000-0000-0000-000000000000") {
+      obj.id = this.state.cryptoData.id;
+    }
+    this.setState({ ...this.state, isBtnLoading: true })
+    let response = await saveCryptoData(obj)
+    if (response.ok) {
+      this.setState({ ...this.state, isBtnLoading: false })
+      if ((window?.location?.pathname.includes('addressbook') || this.props.isSave)&& this.props.type === "manual") {
+        if(!(this.state.cryptoData.adressstate ==="Approved" && this.state.cryptoData.isProofofOwnership===false) ||(this.state.cryptoData.walletSource===null && this.state.cryptoData.isOwnerOfWalletAddress===null)){
+          this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true,showDeclartionApproved: false,approvedAddress:false });
+        }else if((obj.documents?.details?.length===0 ||obj.documents===undefined || this.state.cryptoData?.documents===undefined) && this.state.cryptoData.adressstate ==="Approved" && this.state.cryptoData.isProofofOwnership===false){
+          this.setState({ ...this.state, errorMessage: null, isBtnLoading: false,showDeclartion:false, showDeclartionApproved: false,approvedAddress:true });
         }
-      }else {
+        else{
+          this.setState({ ...this.state, errorMessage: null, isBtnLoading: false,showDeclartion:false, showDeclartionApproved: true,approvedAddress:false });
+        }
+        this.props.headingUpdate(true)
+      }
+      else {
+        let _obj = this.props.sendReceive?.withdrawCryptoObj;
+        this.props?.dispatch(setWithdrawcrypto({..._obj, addressBookId: response.data?.payeeAccountId || response.data?.id, toWalletAddress: values?.walletAddress,  network: values?.network, isShowDeclaration: true}));
+        this.props.dispatch(rejectWithdrawfiat());
+        this.props.dispatch(hideSendCrypto(false));
+        this.props.dispatch(setSendCrypto(true));
+        this.props.changeStep('withdraw_crpto_summary');
+      }
+    }
+    else {
         this.useDivRef.current?.scrollIntoView();
       this.setState({ ...this.state, isBtnLoading: false,  errorMessage: apicalls.isErrorDispaly(response),loading: false });
     }
@@ -370,7 +311,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
             <Title className="adbook-head">Beneficiary Details</Title>
             </div>
             <Row className="addcrypto-benficiary">
-            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            {/* <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="token"
               label="Token"
@@ -394,7 +335,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
                 ))}
               </Select>
             </Form.Item>
-            </Col>
+            </Col> */}
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="network"
@@ -413,9 +354,9 @@ this.setState({...this.state,isDocCheck:e.target.checked})
                 optionFilterProp="children"
                 disabled={this.state.cryptoData.adressstate ==="Approved"  ? true : false }
               >
-                {networksList?.map((item, idx) => (
-                  <Option key={idx} value={item.name}>
-                    {item.name}
+                 {this.state.netWorkData?.map((item, idx) => (
+                  <Option key={idx} value={item.walletCode}>
+                    {item.walletCode}
                   </Option>
                 ))}
               </Select>
@@ -429,7 +370,8 @@ this.setState({...this.state,isDocCheck:e.target.checked})
               required
               rules={[
                 {
-                  validator: this.validateAddressType,
+                  required: true,
+                  message: "Is required",
                 },
               ]}
             >
