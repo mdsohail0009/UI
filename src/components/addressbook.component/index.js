@@ -255,12 +255,12 @@ class AddressBook extends Component {
 				</td>
 			),
 		},
-		{
-			field: "coin",
-			title: "Token",
-			filter: true,
-			width: 120,
-		},
+		// {
+		// 	field: "coin",
+		// 	title: "Token",
+		// 	filter: true,
+		// 	width: 120,
+		// },
 		{
 			field: "network",
 			title: "Network",
