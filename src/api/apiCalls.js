@@ -201,8 +201,10 @@ const isErrorDispaly = (objValue) => {
 		}
 	}
 };
-
-const uploadErrorDisplay = (objValue)=>{
+const getFileURL = (docId) => {
+    return apiClient.get(ApiControllers.common + `FilePreview/${docId}`);
+  };
+  const uploadErrorDisplay = (objValue)=>{
 	if ((objValue.status >= 400 && objValue.status < 500) && objValue.status != 401) {
 		return "Something went wrong please try again!";
 	} else {
@@ -247,6 +249,6 @@ let apicalls = {
 	getPayeeCryptoLu,
 	getPayeeCrypto,
 	confirmCryptoTransaction,
-	convertUTCToLocalTime,isErrorDispaly,uploadErrorDisplay
+	convertUTCToLocalTime,isErrorDispaly,uploadErrorDisplay,getFileURL
 };
 export default apicalls;
