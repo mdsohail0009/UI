@@ -40,7 +40,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             setCreatePayeeObj(createPayeeData.data);
             if (props.selectedAddress?.id) {
                 setIntialObj({ ...createPayeeData.data, payeeAccountModels: createPayeeData?.data?.payeeAccountModels[0] })
-                setDocuments(createPayeeData?.data?.payeeAccountModels[0]?.documents)
+                setDocuments(createPayeeData?.data?.payeeAccountModels[0]?.docrepoitory)
                 setAddressOptions({ ...addressOptions, domesticType: createPayeeData.data.transferType });
                 edit = true;
                 props?.onEdit(edit);
@@ -68,7 +68,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         obj.payeeAccountModels = [payeeAccountObj()];
         obj.payeeAccountModels[0] = { ...obj.payeeAccountModels[0], ...bankdetails, ...values.payeeAccountModels };
         obj.payeeAccountModels[0].currencyType = "Fiat";
-        obj.payeeAccountModels[0].documents = documents?.payee;
+        obj.payeeAccountModels[0].docrepoitory = documents;
         obj.payeeAccountModels[0].walletCode = props.currency;
         if (props.selectedAddress?.id) { obj.payeeAccountModels[0].id = createPayeeObj.payeeAccountModels[0].id; }
         obj['customerId'] = props.userProfile.id;
@@ -291,11 +291,11 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                         <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
-                            <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
-                                    let temp = {...documents, "payee": docs}
-                                    setDocuments(temp)
-                                }} refreshData = {addressOptions?.domesticType}/>
-                        </Col>
+                        <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
+
+setDocuments(docs)
+}} refreshData={addressOptions?.domesticType} />
+</Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label"
@@ -371,18 +371,18 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                     </Row>
                 </>
                 <Paragraph className="adbook-head" >Bank Details</Paragraph>
-                {((props.selectedAddress?.id && createPayeeObj)||!props.selectedAddress?.id ) &&
-                 <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} isAddTabCange={isTabChange}/>}
-                 
-                 {props.type !== "manual" && 
-                (<React.Fragment>
-                        <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
-                    <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
-                            let temp = {...documents, "transfer": docs}
-                            setDocuments(temp)
-                        }} refreshData = {addressOptions?.domesticType}/>
-                </React.Fragment>)
-                }
+                    {((props.selectedAddress?.id && createPayeeObj) || !props.selectedAddress?.id) &&
+                        <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data) => getIbandata(data)} isAddTabCange={isTabChange} />}
+
+                    {props.type !== "manual" &&
+                        (<React.Fragment>
+                            <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
+                            <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
+                                setDocuments(docs)
+                            }} refreshData={addressOptions?.domesticType} />
+                        </React.Fragment>)
+                    }
+
 
                                     <div className="">
                     <Button

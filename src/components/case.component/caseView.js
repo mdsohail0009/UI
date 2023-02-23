@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import {
     Collapse, Button, Typography, Modal, Tooltip, Input, Upload, Spin, Empty, Alert, Row, Col,
+    Divider,
     Form
 } from 'antd';
 import {
@@ -19,7 +20,9 @@ import Mome from 'moment'
 import { success, warning } from '../../utils/messages';
 import { LoadingOutlined } from "@ant-design/icons";
 import { getScreenName } from '../../reducers/feturesReducer';
-import apicalls from '../../api/apiCalls';
+import { ApiControllers } from "../../api/config";
+import DocumentPreview from '../../Shared/docPreview'
+
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
 const { Dragger } = Upload;
@@ -28,6 +31,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
     const suffix = children.slice(-suffixCount).trim();
     return (
         <Text className="btn-textstyle"
+            // style={{ maxWidth: '100%' }} 
             ellipsis={{ suffix }}>
             {start}
         </Text>
@@ -43,18 +47,18 @@ class CaseView extends Component {
         errorMessage: null,
         documentReplies: {},
         docReplyObjs: [],
-        previewPath: null,
+        previewrepositories: null,
         isSubmitting: false,
         uploadLoader: false,
         isMessageError: null,
         isValidFile: true,
         validHtmlError: false,
-        PreviewFilePath: null,
+        PreviewFilerepositories: null,
         caseData: {},
         commonModel: {},
         assignedTo: [],
         btnLoading:false,
-        errorWarning: null,
+        errorWarning: null,caseDetails:[],detailsItem:[],docrepositories:[],casedoc:[]
     }
     componentDidMount() {
         this.props.dispatch(getScreenName({getScreen:null}))
@@ -67,7 +71,7 @@ class CaseView extends Component {
             this.loadDocReplies(response.data?.details[0]?.id)
             this.setState({ ...this.state, docDetails: response.data, loading: false });
         } else {
-            this.setState({ ...this.state, loading: false, error: apicalls.isErrorDispaly(response) });
+            this.setState({ ...this.state, loading: false, error: response.data });
         }
     }
     loadDocReplies = async (id) => {
@@ -79,51 +83,36 @@ class CaseView extends Component {
                 ...this.state, documentReplies: {
                     ...this.state.documentReplies, [id]: {
                         loading: false, data: response.data.map(item => {
-                            return { ...item, path: item.path && item?.path !== "string" ? JSON.parse(item.path) : [] }
+                            return { ...item, repositories: item.repositories && item?.repositories !== "string" ? JSON.parse(item.repositories) : [] }
                         }), error: null
                     }
                 }
             });
         } else {
-            this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: false, data: [], error: apicalls.isErrorDispaly(response) } } });
+            this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: false, data: [], error: response.data } } });
         }
     }
-    docPreview = async (file) => {
-        this.setState({...this.state,error:null})
-        let res = await getFileURL({ url: file.path });
-        if (res.ok) {
-            this.state.PreviewFilePath = file.path;
-            this.setState({ ...this.state, previewModal: true, previewPath: res.data });
-        }else{
-            this.setState({...this.state,error:apicalls.isErrorDispaly(res)})
-        }
-    }
+    
     DownloadUpdatedFile = async () => {
-        this.setState({...this.state,error:null})
-        let res = await getFileURL({ url: this.state.PreviewFilePath });
+        let res = await getFileURL({ url: this.state.PreviewFilerepositories });
         if (res.ok) {
-            this.setState({ ...this.state, previewModal: true, previewPath: res.data,error:null });
+            this.setState({ ...this.state, previewModal: true, previewrepositories: res.data });
             window.open(res.data, "_blank")
-        }else{
-            this.setState({...this.state,error:apicalls.isErrorDispaly(res)})
-
         }
     }
     fileDownload = async () => {
-        this.setState({...this.state,error:null})
-        let res = await getFileURL({ url: this.state.previewPath });
+        let res = await getFileURL({ url: this.state.previewrepositories });
         if (res.ok) {
             this.DownloadUpdatedFile()
-            this.setState({...this.state,error:null})
-
-        }else{
-            this.setState({...this.state,error:apicalls.isErrorDispaly(res)})
-
         }
     }
+    
     docPreviewClose = () => {
-        this.setState({ ...this.state, previewModal: false, previewPath: null })
-    }
+        this.setState({ ...this.state, previewModal: false, docPreviewDetails: null });
+      };
+    docPreviewOpen = (data) => {
+        this.setState({ ...this.state, previewModal: true, docPreviewDetails: { id: data.id, fileName: data.fileName } });
+      };
     docApprove = async (doc) => {
         const response = await approveDoc({
             "id": this.state.docDetails.id,
@@ -135,12 +124,11 @@ class CaseView extends Component {
             success('Document has been approved');
             this.loadDocReplies(doc.id);
         } else {
-            this.setState({...this.state,error:apicalls.isErrorDispaly(response)})
-
+            warning(response.data);
         }
     }
     updateDocRepliesStatus = (doc, Status) => {
-        let docDetails = [...this.state.docDetails.details];
+        let docDetails = [...this.state.caseDetails];
         for (let item of docDetails) {
             if (item.id === doc.id) {
                 item.state = Status;
@@ -149,24 +137,11 @@ class CaseView extends Component {
         this.setState({ ...this.state, docDetails: { ...this.state.docDetails, details: docDetails } });
     }
     docReject = async (doc) => {
-        let item = this.isDocExist(this.state.docReplyObjs, doc.id);
-        this.setState({ ...this.state, isMessageError: null });
-        if (!validateContent(item?.reply)) {
-            this.setState({ ...this.state, validHtmlError: true, isMessageError: false });
-            return;
-        } else if (!item || !item.reply) {
-            this.setState({ ...this.state, isMessageError: doc.id.replace(/-/g, ""), validHtmlError: false });
-            return;
-        }
-        const itemPath = function () {
-            if (item.path) {
-                return typeof (item.path) === "object" ? JSON.stringify(item.path) : item.path;
-            } else {
-                return item.path;
-            }
-        };   
+    
+       let item = this.isDocExist(this.state.docReplyObjs, doc.id);       
         this.setState({ ...this.state, btnLoading: true });
-        item.path = itemPath();
+        
+        item.path = null;
         item.status = "Submitted";
         item.repliedBy = `${(this.props.userProfileInfo?.isBusiness===true)?this.props.userProfileInfo?.businessName:this.props.userProfileInfo?.firstName}`;
         item.repliedDate = Mome().format("YYYY-MM-DDTHH:mm:ss");
@@ -179,21 +154,19 @@ class CaseView extends Component {
         if (response.ok) {
             success('Document has been submitted');
             this.updateDocRepliesStatus(doc, "Submitted");
-            this.loadDocReplies(doc.id)
             this.setState({errorWarning:null })
         } else {
-            this.setState({...this.state,error:apicalls.isErrorDispaly(response)})
-
+            warning(response.data);
         }
         let objs = [...this.state.docReplyObjs];
         objs = objs.filter(obj => obj.docunetDetailId !== doc.id);
-        this.setState({ ...this.state, docReplyObjs: objs, btnLoading: false, isMessageError: null});
-        document.getElementsByClassName(`${doc.id.replace(/-/g, "")}`).value = "";
+       this.setState({ ...this.state, btnLoading: false, isMessageError: null});       
+      document.getElementsByClassName(`${doc.id.replace(/-/g, "")}`).value = "";
     }
     deleteDocument = async (doc, idx, isAdd) => {
         let item = { ...doc };
-        item.path = item.path.splice(idx, 1);
-        item.path = JSON.stringify(item.path);
+        item.repositories = item.repositories.splice(idx, 1);
+        item.repositories = JSON.stringify(item.repositories);
         item.status = "Rejected";
         if (isAdd) {
             let objs = [...this.state.docReplyObjs];
@@ -209,8 +182,7 @@ class CaseView extends Component {
             objs = objs.filter(item1 => item1.docunetDetailId !== doc.id);
             this.setState({ ...this.state, docReplyObjs: objs });
         } else {
-            this.setState({...this.state,error:apicalls.isErrorDispaly(response)})
-
+            warning(response.data);
         }
     }
     isDocExist(lstObj, id) {
@@ -223,7 +195,7 @@ class CaseView extends Component {
         return {
             "id": uuidv4(),
             "docunetDetailId": id,
-            "path": [],
+            "repositories": [],
             "reply": "",
             "repliedBy": "",
             "repliedDate": null,
@@ -236,42 +208,45 @@ class CaseView extends Component {
             spin
         />
         );
-    handleUpload = ({ file }, doc) => {
-    this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null })
-        if (file.status === "done" && this.state.isValidFile) {
-            let replyObjs = [...this.state.docReplyObjs];
-            let item = this.isDocExist(replyObjs, doc.id);
-            let obj;
-            if (item) {
-                obj = item;
-                const ObjPath = function () {
-                    if (obj.path === "string") {
-                        return JSON.parse(obj.path);
+        
+        
+     
+        handleUpload = ({ file }, doc) => {
+            this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null })
+                if (file.status === "done" && this.state.isValidFile) {
+                    let replyObjs = [...this.state.docReplyObjs];
+                    let item = this.isDocExist(replyObjs, doc.id);
+                    let obj;
+                    if (item) {
+                        obj = item;
+                        const Objrepositories = function () {
+                            if (obj.repositories === "string") {
+                                return JSON.parse(obj.repositories);
+                            } else {
+                                return obj.repositories ? obj.repositories : [];
+                            }
+                        };
+                        obj.repositories = Objrepositories();
+                        obj.repliedDate = new Date();
+                        obj.repositories.push({ fileName: file?.response?.fileName, size: file?.response?.fileSize,id:file?.response?.id,state:"submitted" });
+                        obj.repliedBy = this.props.userProfileInfo?.firstName;
+                        replyObjs = this.uopdateReplyObj(obj, replyObjs);
                     } else {
-                        return obj.path ? obj.path : [];
+                        obj = this.messageObject(doc.id);
+                        obj.repliedDate = new Date();
+                        obj.repositories.push({ fileName: file?.response?.fileName, size: file?.response?.fileSize,id:file?.response?.id,state:"submitted" });
+                        obj.repliedBy = this.props.userProfileInfo?.firstName;
+                        replyObjs.push(obj);
                     }
-                };
-                obj.path = ObjPath();
-                obj.repliedDate = new Date();
-                obj.path.push({ filename: file.name, path: file.response[0], size: file.size });
-                obj.repliedBy = this.props.userProfileInfo?.firstName;
-                replyObjs = this.uopdateReplyObj(obj, replyObjs);
-            } else {
-                obj = this.messageObject(doc.id);
-                obj.repliedDate = new Date();
-                obj.path.push({ filename: file.name, path: file.response[0], size: file.size });
-                obj.repliedBy = this.props.userProfileInfo?.firstName;
-                replyObjs.push(obj);
+                    this.setState({ ...this.state, docReplyObjs: replyObjs, uploadLoader: false, isSubmitting: false });
+                }
+                else if (file.status === 'error') {
+                    this.setState({ ...this.state, uploadLoader: false, isSubmitting: false,errorMessage:file.response,errorWarning:null })
+                }
+                else if (!this.state.isValidFile) {
+                    this.setState({ ...this.state, uploadLoader: false, isSubmitting: false });
+                }
             }
-            this.setState({ ...this.state, docReplyObjs: replyObjs, uploadLoader: false, isSubmitting: false });
-        }
-        else if (file.status === 'error') {
-            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false,errorMessage:file.response,errorWarning:null })
-        }
-        else if (!this.state.isValidFile) {
-            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false });
-        }
-    }
     beforeUpload = (file) => {
   this.setState({ ...this.state, errorWarning:null })
    let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
@@ -311,28 +286,36 @@ class CaseView extends Component {
     }
     getUploadedFiles = (id) => {
         let data = this.state.docReplyObjs.filter(item => item.docunetDetailId === id)[0];
-        if (data && data.path) {
-            data.path = (typeof (data.path) === "string" ? JSON.parse(data.path) : data.path) || [];
+        if (data && data.repositories) {
+            data.repositories = (typeof (data.repositories) === "string" ? JSON.parse(data.repositories) : data.repositories) || [];
             return data
         } else {
-            return { path: [] }
+            return { repositories: [] }
         }
     }
     formatBytes(bytes) { // <-----(bytes, decimals = 2)
         if (bytes === 0) return '0 Bytes';
         const k = 1024;
+        // const dm = decimals < 0 ? 0 : decimals;
         const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         const i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed()) + ' ' + sizes[i];
     }
-    filePreviewPath() {
-        return this.state.previewPath;
+    filePreviewrepositories() {
+        return this.state.previewrepositories;
     }
     getCaseData = async (id) => {
         this.setState({ ...this.state, loading: true });
         let caseRes = await getCase(id);
         if (caseRes.ok) {
-            this.setState({ ...this.state, caseData: caseRes.data, commonModel: caseRes.data.commonModel, loading: false });
+            this.setState({ ...this.state, caseData: caseRes.data, commonModel: caseRes.data.commonModel, loading: false ,caseDetails:caseRes.data?.caseDetails,caseState:caseRes.data?.state});
+            const detailsObjs = caseRes.data?.caseDetails?.filter(
+				(item) => item.isChecked === true
+			);
+			for (let i in detailsObjs) {
+				let data = detailsObjs[i];
+				this.state.detailsItem.push(data);
+			}
             this.getDocument(caseRes.data?.documents?.id);
         } else {
             warning('Data not getting from the server!');
@@ -365,7 +348,7 @@ class CaseView extends Component {
                 </div>
                 <div className='case-ribbon mb-16'>
                     <Row gutter={[16, 16]}>
-                        
+                    
                          {commonModel ? (
                 Object.entries(commonModel).map(([key, value], idx) => (
                   <Col
@@ -404,9 +387,10 @@ class CaseView extends Component {
                     <div className='case-lbl remark-casestyle'  maxLength={500} rows={4}>{caseData.remarks ? caseData.remarks : '-'}</div>
                 </div>
 
-                {(!this.state.docDetails?.details || this.state.docDetails?.details.length === 0) && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No documents available" /></div>}
+                {/* <Divider /> */}
+                {(!this.state.detailsItem || this.state?.detailsItem.length === 0) && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No documents available" /></div>}
                 <div className="bank-view">
-                    {this.state.docDetails?.details?.map((doc, idx) =>
+                    {this.state.detailsItem?.map((doc, idx) =>
                         <Collapse onChange={(key) => {
 
                             this.setState({
@@ -420,7 +404,7 @@ class CaseView extends Component {
                             collapsible
                             accordion className="accordian  mb-togglespace "
                             defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
-                            <Panel header={doc.documentName} key={idx + 1} extra={doc.state ? (<span className={`${doc.state ? doc.state.toLowerCase() + " staus-lbl" : ""}`}>{doc.state}</span>) : ""}>
+                            <Panel header={doc.documentName} key={idx + 1} extra={this.state.caseState ? (<span className={`${this.state.caseState ? this.state.caseState.toLowerCase() + " staus-lbl" : ""}`}>{this.state.caseState}</span>) : ""}>
                                 {this.state.documentReplies[doc.id]?.data?.map((reply, ix) => <div key={ix} className="reply-container">
                                     <div className="user-shortname">{reply?.repliedBy?.slice(0, 2)}</div>
                                     <div className="reply-body">
@@ -428,11 +412,14 @@ class CaseView extends Component {
                                         <p className="reply-txt">{reply.reply}</p>
                                         
                                             <div className="docfile-container">
-                                            {reply?.path?.map((file, idx1) =>
+                                            {reply?.repositories?.map((file, idx1) =>
                                         <Col lg={12} xl={12} xxl={12}> <div key={idx1} className="docfile uploaddoc-margin">
-                                                <span className={`icon xl ${(file.filename.slice(-3) === "zip" ? "file" : "") || (file.filename.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
-                                                <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
-                                                    <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>
+                                                <span className={`icon xl ${(file.fileName.slice(-3) === "zip" ? "file" : "") || (file.fileName.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
+                                                <div className="docdetails c-pointer" 
+                                                //onClick={() => this.docPreview(file)}
+                                                onClick={() => this.docPreviewOpen(file)}
+                                                >
+                                                    <EllipsisMiddle suffixCount={6}>{file.fileName}</EllipsisMiddle>
                                                     <span className="file-sizestyle">{this.formatBytes(file.size)}</span>
                                                 </div>
                                             </div>
@@ -444,7 +431,7 @@ class CaseView extends Component {
                                        
                                     </div>
                                 </div>)}
-                                {(!this.state.documentReplies[doc.id]?.loading && doc.state !== "Approved" && this.state.docDetails.caseState !== 'Approved' && this.state.docDetails.caseState !== 'Cancelled')&&
+                                {(!this.state.documentReplies[doc.id]?.loading && this.state.caseState !== "Approved" &&  this.state.caseState !== 'Approved' &&  this.state.caseState !== 'Cancelled')&&
                                     <>
                                         <Form
                                             onFinish={() => this.docReject(doc)}
@@ -476,7 +463,6 @@ class CaseView extends Component {
                                                     </Form.Item>
                                               
 
-                                                {this.state.isMessageError === doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter message</div>}
                                                 {this.state.errorMessage != null && <Alert
                                                     description={this.state.errorMessage}
                                                     type="error"
@@ -496,7 +482,15 @@ class CaseView extends Component {
                                                         />
                                                     </div>
                                                 )}
-                                                <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-4" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} onChange={(props) => { this.handleUpload(props, doc) }}
+                                                <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-4" multiple={false} 
+                                                action={
+                                                    process.env.REACT_APP_UPLOAD_API +
+                                                    "api/v1/" +
+                                                    ApiControllers.common +
+                                                    "UploadFileNew?screenName=Cases&fieldName=uploadfile&tableName=Common.Documents"
+                                                  }
+                                                 showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} 
+                                                 onChange={(props) => { this.handleUpload(props, doc) }}
                                                     headers={{ Authorization: `Bearer ${this.props.user.access_token}` }}>
                                                     <p className="ant-upload-drag-icon">
                                                         <span className="icon xxxl doc-upload" />
@@ -510,11 +504,14 @@ class CaseView extends Component {
                                             </div>
                                             
                                             <div className="docfile-container">
-                                                {this.getUploadedFiles(doc.id)?.path?.map((file, idx1) =>
+                                                {this.getUploadedFiles(doc.id)?.repositories?.map((file, idx1) =>
+
                                             <Col lg={12} xl={12} xxl={12}> <div key={idx1} className="docfile uploaddoc-margin">
-                                                    <span className={`icon xl ${(file.filename.slice(-3) === "zip" ? "file" : "") || (file.filename.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
-                                                    <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
-                                                        <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>
+                                                    <span className={`icon xl ${(file.fileName.slice(-3) === "zip" ? "file" : "") || (file.fileName.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
+                                                    <div className="docdetails c-pointer" 
+                                                   onClick={() => this.docPreviewOpen(file)}
+                                                    >
+                                                        <EllipsisMiddle suffixCount={6}>{file.fileName}</EllipsisMiddle>
                                                         <span className="file-sizestyle">{this.formatBytes(file.size)}</span>
                                                     </div>
                                                     <span className="icon md close c-pointer" onClick={() => this.deleteDocument(this.getUploadedFiles(doc.id), idx1, true)} />
@@ -528,8 +525,10 @@ class CaseView extends Component {
                                                 <Button
                                                     htmlType="submit"
                                                     size="large"
+                                                   
                                                     className="pop-btn  detail-popbtn paynow-btn-ml"
                                                     loading={this.state.btnLoading}
+                                                  
                                                 >
                                                     Submit
                                                 </Button>
@@ -540,7 +539,7 @@ class CaseView extends Component {
                                      <> 
                                    
                                     {((!this.state?.documentReplies[doc.id]?.data ||
-                                        this.state?.documentReplies[doc.id]?.data?.length === 0)&&( doc.state === "Approved" || this.state.docDetails.caseState === 'Approved' || this.state.docDetails.caseState === 'Cancelled')
+                                        this.state?.documentReplies[doc.id]?.data?.length === 0)&&((  this.state.caseState === "Approved" ||  this.state.caseState === 'Approved' ||  this.state.caseState=== 'Cancelled'))
                                         ) && (
                                             <Empty
                                                  image={Empty.PRESENTED_IMAGE_SIMPLE}
@@ -552,23 +551,14 @@ class CaseView extends Component {
                             </Panel>
                         </Collapse>)}
                 </div>
-                <Modal
-                    className="documentmodal-width"
-                    title="Preview"
-                    width={1000}
-                    visible={this.state.previewModal}
-                    destroyOnClose={true}
-                    closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.docPreviewClose} /></Tooltip>}
-                    footer={<>
-                        <div className="cust-pop-up-btn crypto-pop">
-                       
-                        <Button onClick={this.docPreviewClose} className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml">Close</Button>
-                        <Button className="primary-btn pop-btn detail-popbtn" onClick={() => this.fileDownload()}>Download</Button></div> 
-                   
-                    </>}
-                >
-                    <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null, mimeType: this.state?.previewPath?.includes(".pdf") ? 'application/pdf' : '' }} />
-                </Modal>
+                
+                 {this.state.previewModal && (
+          <DocumentPreview
+            previewModal={this.state.previewModal}
+            handleCancle={this.docPreviewClose}
+            upLoadResponse={this.state.docPreviewDetails}
+          />
+        )}
             </div></>;
     }
 }

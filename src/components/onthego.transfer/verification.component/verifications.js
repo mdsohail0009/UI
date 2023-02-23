@@ -102,7 +102,6 @@ const Verifications = (props) => {
     };
 
     const sendEmailOTP = async (val) => {
-        debugger
         setEmail({ ...email, errorMsg: '', showRuleMsg: '',btnLoader:true })
         setMsg(null)
         let response = await sendEmail( email.requestType);
@@ -141,12 +140,11 @@ const Verifications = (props) => {
     }
     };
     const handleEmailinputChange = (e) => {
-        debugger
         if (e.target.value) {
             setEmail({ ...email, btnName: 'verifyOtpBtn', code: e.target.value })
         } else if(emailSeconds===0 && email.btnName==='code_Sent'){
             setEmail({ ...email, btnName: 'resendotp', code: '' })
-        } else if(emailSeconds===0 && email.btnName==='verifyOtpBtn' && e.target.value == "") {// && phone.btnName==='code_Sent'
+        } else if(emailSeconds===0 && (email.btnName==='verifyOtpBtn' || email.btnName==='resendotp') && e.target.value == "") {// && phone.btnName==='code_Sent'
             setEmail({ ...email, btnName: 'resendotp', code: '' })
         } else {
             setEmail({ ...email, btnName: 'code_Sent', code: '' })
@@ -169,7 +167,7 @@ const Verifications = (props) => {
         } else if(phoneSeconds===0 && phone.btnName==='code_Sent') {
             setPhone({ ...phone, btnName: 'resendotp', code: '' })
         }
-        else if(phoneSeconds===0 && phone.btnName==='verifyOtpBtn' && e.target.value == "") {// && phone.btnName==='code_Sent'
+        else if(phoneSeconds===0 && (phone.btnName==='resendotp' || phone.btnName==='verifyOtpBtn') && e.target.value == "") {// && phone.btnName==='code_Sent'
             setPhone({ ...phone, btnName: 'resendotp', code: '' })
         }else {
             setPhone({ ...phone, btnName: 'code_Sent', code: '' })
@@ -322,7 +320,7 @@ const Verifications = (props) => {
         ${"c-notallowed"}`} >Verification code sent</Text></Button>
             <Tooltip
                 placement="topRight"
-                title={`Haven't received code ? Request new code in ${emailSeconds} seconds. The code will expire after 5mins.`}>
+                title={`Haven't received code ? Request new code in ${emailSeconds} seconds. The code will expire after 2 Min.`}>
                 <span className="icon md info mr-8" />
             </Tooltip>
         </>

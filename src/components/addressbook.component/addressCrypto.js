@@ -43,14 +43,23 @@ class AddressCrypto extends Component {
       approvedAddress:false,
       isDocCheck:false,
       isDocDeleteCheck:false,
+      netWorkData:[],
     };
   }
 
   componentDidMount() {
     this.getCryptoData();
     this.handleWallet();
+    this.getNetWorkData();
   }
-
+  getNetWorkData=async()=>{
+    let response = await getNetWorkLucup();
+    if(response.ok){
+    this.setState({...this.state,netWorkData:response.data})
+    }else {
+      this.setState({ ...this.state, errorMessage: apicalls.isErrorDispaly(response) })
+    }
+  }
   getCryptoData = async () => {
     let id = this.props?.addressBookReducer?.selectedRowData?.id ||this.props.cryptoId || "00000000-0000-0000-0000-000000000000";
     this.setState({ ...this.state, isLoading: true })
@@ -152,7 +161,7 @@ this.useDivRef.current?.scrollIntoView(0, 0);
     let obj = {
       id: "00000000-0000-0000-0000-000000000000",
       saveWhiteListName: values.saveWhiteListName,
-      token: values.token,
+      token: values.token || this.props?.selectedcoin,
       network: values.network,
       createddate: new Date(),
       userCreated: this.props.userProfile.userName,
@@ -167,7 +176,7 @@ this.useDivRef.current?.scrollIntoView(0, 0);
       walletSource:values.walletSource,
       otherWallet:values.otherWallet,
       isDocumentUpload:values.isDocumentUpload,
-      documents:this.state.isDocCheck===true?this.state.cryptoData?.documents ||this.state.details.documents:null
+      documents:this.state.cryptoData?.documents ||this.state.details.documents
       
     }
     if (this.state.cryptoData.id !== "00000000-0000-0000-0000-000000000000") {
@@ -247,7 +256,8 @@ this.setState({...this.state,isDocCheck:e.target.checked})
           <Image  preview={false} src={alertIcon} className="confirm-icon"/>
           <Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
-                Please sign using link received in email to whitelist your address. Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved.`}</Text>
+                Please review and sign the document in your email to whitelist your address.
+                Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
       </div>
       </div>
     }else if(showDeclartionApproved){
@@ -301,7 +311,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
             <Title className="adbook-head">Beneficiary Details</Title>
             </div>
             <Row className="addcrypto-benficiary">
-            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            {/* <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="token"
               label="Token"
@@ -325,7 +335,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
                 ))}
               </Select>
             </Form.Item>
-            </Col>
+            </Col> */}
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="network"
@@ -344,9 +354,9 @@ this.setState({...this.state,isDocCheck:e.target.checked})
                 optionFilterProp="children"
                 disabled={this.state.cryptoData.adressstate ==="Approved"  ? true : false }
               >
-                {networksList?.map((item, idx) => (
-                  <Option key={idx} value={item.name}>
-                    {item.name}
+                 {this.state.netWorkData?.map((item, idx) => (
+                  <Option key={idx} value={item.walletCode}>
+                    {item.walletCode}
                   </Option>
                 ))}
               </Select>
@@ -360,7 +370,8 @@ this.setState({...this.state,isDocCheck:e.target.checked})
               required
               rules={[
                 {
-                  validator: this.validateAddressType,
+                  required: true,
+                  message: "Is required",
                 },
               ]}
             >
@@ -434,7 +445,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
 								valuePropName="checked"
 								required
 							>				
-								<div className={`d-flex  agree-check checkbox-mobile align-center travel-custcheck`}>
+								<div className={`d-flex  agree-check checkbox-mobile align-center`}>
 						<label>
 							<input
               
@@ -464,7 +475,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
 								valuePropName="checked"
 								required
 							>				
-								<div className={`d-flex  agree-check checkbox-mobile align-center travel-custcheck`}>
+								<div className={`d-flex  agree-check checkbox-mobile align-center`}>
 						<label>
 							<input
 								type="checkbox"
@@ -484,7 +495,6 @@ this.setState({...this.state,isDocCheck:e.target.checked})
 								
 							</Form.Item>
             </Col>
-            {isDocCheck===true &&
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload a screenshot or video to prove you are the owner of the address{isDocCheck===true&&<span className="cust-start-style">*</span>}  
                             
@@ -500,7 +510,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
                             documents={this.state.cryptoData?.documents|| null}
                             editDocument={this.state.isEdit} onDocumentsChange={(docs) =>this.editDocuments(docs) } 
                             />
-                        </ Col>}</>}
+                        </ Col></>}
           
             </Row>
             <Form.Item className="">
