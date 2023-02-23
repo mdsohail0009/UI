@@ -161,7 +161,7 @@ this.useDivRef.current?.scrollIntoView(0, 0);
     let obj = {
       id: "00000000-0000-0000-0000-000000000000",
       saveWhiteListName: values.saveWhiteListName,
-      token: values.token,
+      token: values.token || this.props?.selectedcoin,
       network: values.network,
       createddate: new Date(),
       userCreated: this.props.userProfile.userName,
