@@ -483,7 +483,6 @@ const AddressFiatView = (props) => {
 															/>
 															<div
 																className="docdetails c-pointer"
-																//onClick={() => docPreview(file)}
 																onClick={() => docPreviewOpen(file)}
 																>
 																{file.name !== null ? (
