@@ -57,8 +57,8 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onCont
           headingUpdate={headingChange}    onTheGoObj={{ amount: props.amount }} selectedAddress={selectedAddress} onEdit={(val) => {
                 setIsEdit(val);
             }} isHideTabs={(value)=>setHideTabs(value)}></MyselfNewTransfer>}
-        {addressOptions.addressType === "otherbusiness" && <OthersBusiness ontheGoType={props.typeOntheGo} 
-         headingUpdate={headingChange} selectedAddress={selectedAddress} type={props.type} isUSDTransfer={props.currency === "USD" ? true : false} onContinue={(obj) => onContinue(obj)} amount={props.amount} onEdit={(val) => {
+        {addressOptions.addressType === "otherbusiness" && <OthersBusiness ontheGoType={props.typeOntheGo} currency={props.currency}
+         headingUpdate={headingChange} selectedAddress={selectedAddress} type={props.type} isUSDTransfer={(props.currency === "USD" ||props.currency=== "GBP")? true : false} onContinue={(obj) => onContinue(obj)} amount={props.amount} onEdit={(val) => {
             setIsEdit(val);
         }} isHideTabs={(value)=>setHideTabs(value)}/>}
         {addressOptions.addressType === "individuals" && <SomeoneComponent ontheGoType={props.typeOntheGo}

@@ -9,6 +9,7 @@ import apiCalls from "../../../api/apiCalls";
 import ConnectStateProps from "../../../utils/state.connect";
 import Loader from "../../../Shared/loader";
 import alertIcon from '../../../assets/images/pending.png';
+import NumberFormat from "react-number-format";
 const { Paragraph, Text, Title } = Typography;
 const { TextArea } = Input;
 
@@ -55,6 +56,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         }
     }
     const onSubmit = async (values) => {
+        debugger
         setErrorMessage(null)
         if (Object.hasOwn(values?.payeeAccountModels, 'iban')) {
             setErrorMessage(null);
@@ -68,12 +70,14 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         obj.payeeAccountModels = [payeeAccountObj()];
         obj.payeeAccountModels[0] = { ...obj.payeeAccountModels[0], ...bankdetails, ...values.payeeAccountModels };
         obj.payeeAccountModels[0].currencyType = "Fiat";
-        obj.payeeAccountModels[0].docrepoitory = documents;
+        obj.payeeAccountModels[0].docrepoitory = documents?.payee || documents?.transfer;
         obj.payeeAccountModels[0].walletCode = props.currency;
+        obj.payeeAccountModels[0].ukSortCode = values?.payeeAccountModels?.ukSortCode;
+        obj.payeeAccountModels[0].accountNumber = values?.payeeAccountModels?.accountNumber;
         if (props.selectedAddress?.id) { obj.payeeAccountModels[0].id = createPayeeObj.payeeAccountModels[0].id; }
         obj['customerId'] = props.userProfile.id;
         if (props.type !== "manual") { obj['amount'] = props.onTheGoObj?.amount; }
-        obj['transferType'] = props.currency === "USD" ? addressOptions.domesticType : 'sepa';
+        obj['transferType'] = props.currency == "USD"||props.currency=="GBP" ||props.currency=="CHF" ? addressOptions.domesticType : 'sepa';
         obj['addressType'] = addressOptions.addressType;
         if(edit){
             obj.id = isSelectedId ? isSelectedId : createPayeeObj.payeeAccountModels[0]?.payeeId;
@@ -84,7 +88,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         if (payeesave.ok) {
             setErrorMessage(null)
             if (props.type !== "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer, documents: documents?.transfer })
+                const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer, documents: documents?.transfer,ukShortCode:obj.payeeAccountModels[0]?.ukSortCode })
                 if (confirmRes.ok) {
                     setBtnLoading(false);
                     props.onContinue(confirmRes.data);
@@ -123,6 +127,13 @@ const [isSelectedId,setIsSelectedId] = useState(null);
             setBankdetails(data);
         }
     }
+    const validateNumber = (_, validNumberValue) => {
+        if (validNumberValue === ".") {
+            return Promise.reject("Please enter valid content");
+        }
+        return Promise.resolve();
+    }
+   
     return (<React.Fragment>
         {mainLoader && <Loader />}
         {!mainLoader && <>
@@ -142,15 +153,31 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                                 setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
                                 form.current.resetFields();setDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);
                             }}>
-                                <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
-                                <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"} disabled={edit} ></Tabs.TabPane>
-                                <Tabs.TabPane tab="International USD IBAN" className="text-white text-captz" key={"internationalIBAN"} disabled={edit}></Tabs.TabPane>
+                                <Tabs.TabPane tab={`Domestic ${props.currency} Transfer`} className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
+                                {props.currency !="GBP" &&<Tabs.TabPane tab={`International ${props.currency} Swift`} className="text-white text-captz" key={"international"} disabled={edit} ></Tabs.TabPane>}
+                                <Tabs.TabPane tab={`International ${props.currency} IBAN`} className="text-white text-captz" key={"internationalIBAN"} disabled={edit}></Tabs.TabPane>
+                            </Tabs>
+                        </Col>
+                    </Row>
+                </>}
+                {!showDeclartion && <>
+                { props.currency ==="GBP" && <>
+                    <Row gutter={[16, 16]}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
+                            <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
+                                setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
+                                form.current.resetFields();setDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);
+                            }}>
+                                <Tabs.TabPane tab={`${props.currency} LOCAL TRANSFER`} className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
+                                {props.currency !="GBP" &&<Tabs.TabPane tab={`International ${props.currency} Swift`} className="text-white text-captz" key={"international"} disabled={edit} ></Tabs.TabPane>}
+                                <Tabs.TabPane tab={`${props.currency} INTERNATIONAL TRANSFER`} className="text-white text-captz" key={"internationalIBAN"} disabled={edit}></Tabs.TabPane>
                             </Tabs>
                         </Col>
                     </Row>
                 </>}
               
                 {props.currency == 'EUR' && <h2 className="adbook-head">SEPA Transfer</h2>}
+                { (props.currency == "CHF"||props.currency == "GBP") && <Paragraph className="adbook-head" >Bank Details</Paragraph>}
                 {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
             <Form
                 ref={form}
@@ -192,11 +219,11 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                     </Col>
 
                 </Row>
-                <Translate 
+               {(props.currency !="CHF" && props.currency != "GBP") &&<Translate 
                     content="Beneficiary_Details"
                     component={Paragraph}
                     className="adbook-head"
-                />
+                />}
                 <>
                     <Row >
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -255,7 +282,60 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                                     maxLength={100}/>
                             </Form.Item>
                         </Col>
+                       {addressOptions?.domesticType == "domestic" && props.currency =="GBP" && <> 
+                        {console.log(addressOptions?.domesticType,'addressOptions?.domesticType',props.currency,'props.currency')}
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+						<Form.Item
+                            name={["payeeAccountModels","ukSortCode"]}
+							label="UkSortCode"
+							className="custom-label"
+							type="number"
+							rules={[
+								{
+									required: true,
+									message: "Is required",
+								},
+								{
+									validator: validateNumber
+                                }
+							]}>
+							<NumberFormat
+								className="cust-input value-field cust-addon mt-0"
+								customInput={Input}
+								placeholder="Enter UkSortCode"
+								allowNegative={false}
+								maxlength={6}
+							/>
+						</Form.Item>
+					</Col>
+                    <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+						<Form.Item
+							name={["payeeAccountModels","accountNumber"]}
+							label="Account Number"
+							className="custom-label"
+							type="number"
+							rules={[
+								{
+									required: true,
+									message: "Is required",
+								},
+								{
+									validator: validateNumber
+                                }
+							]}>
+							<NumberFormat
+								className="cust-input value-field cust-addon mt-0"
+								customInput={Input}
+								placeholder="Enter AccountNumber"
+								allowNegative={false}
+								maxlength={8}
+							/>
+						</Form.Item>
+					</Col>
+                   
+                </>}
+             
+                        {(props.currency =="USD" || props.currency =="EUR") &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label"
                                 name={"relation"}
@@ -288,14 +368,14 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                                     maxLength={100}
                                 />
                             </Form.Item>
-                        </Col>
-                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                        </Col>}
+                       { (props.currency !="CHF" && props.currency !="GBP") && <><Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                         <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
-                        <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
-
-setDocuments(docs)
-}} refreshData={addressOptions?.domesticType} />
-</Col>
+                            <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
+                                    let temp = {...documents, "payee": docs}
+                                    setDocuments(temp)
+                                }} refreshData = {addressOptions?.domesticType}/>
+                        </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label"
@@ -367,22 +447,32 @@ setDocuments(docs)
                                         maxLength={1000}
                                     ></TextArea>
                             </Form.Item>
-                        </Col>
+                        </Col></>}
                     </Row>
                 </>
-                <Paragraph className="adbook-head" >Bank Details</Paragraph>
-                    {((props.selectedAddress?.id && createPayeeObj) || !props.selectedAddress?.id) &&
-                        <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data) => getIbandata(data)} isAddTabCange={isTabChange} />}
-
-                    {props.type !== "manual" &&
-                        (<React.Fragment>
-                            <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
-                            <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
-                                setDocuments(docs)
-                            }} refreshData={addressOptions?.domesticType} />
-                        </React.Fragment>)
-                    }
-
+                {(props.currency != "CHF"&& props.currency!="GBP") && <Paragraph className="adbook-head" >Bank Details</Paragraph>}
+                {((props.selectedAddress?.id && createPayeeObj)||!props.selectedAddress?.id ) &&
+                 <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} isAddTabCange={isTabChange} currency={props.currency}/>
+                 }
+                 
+                 {props.type !== "manual" && 
+                (<React.Fragment>
+                        <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
+                    <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
+                            let temp = {...documents, "transfer": docs}
+                            setDocuments(temp)
+                        }} refreshData = {addressOptions?.domesticType}/>
+                </React.Fragment>)
+                }
+                 {props.type === "manual" && props.currency !="USD" && props.currency !="EUR" &&
+                (<React.Fragment>
+                        <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
+                    <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
+                            let temp = {...documents, "transfer": docs}
+                            setDocuments(temp)
+                        }} refreshData = {addressOptions?.domesticType}/>
+                </React.Fragment>)
+                }
 
                                     <div className="">
                     <Button
@@ -397,6 +487,7 @@ setDocuments(docs)
                     </Button>
                 </div>
             </Form>
+        </>}
         </>}
         </>}
     </React.Fragment>)

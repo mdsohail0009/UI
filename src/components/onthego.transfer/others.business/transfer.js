@@ -12,6 +12,8 @@ import InternationalTransfer from "./international.transfer";
 import Translate from "react-translate-component";
 import alertIcon from '../../../assets/images/pending.png';
 import apicalls from "../../../api/apiCalls";
+import NumberFormat from "react-number-format";
+import PayeeBankDetails from "../others.SomeOneElse/bankdetails.component";
 const { Paragraph, Title, Text } = Typography;
 const { TextArea } = Input;
 class BusinessTransfer extends Component {
@@ -30,13 +32,15 @@ class BusinessTransfer extends Component {
          ibanDetails: {},
         isValidateLoading: false,
         ibanDetailsLoading: false,
-        isValidateMsg: false
+        isValidateMsg: false,
+        payeeaccountDetails:null,
+        gbpdetails:{}
     };
     componentDidMount() {
         this.loadDetails();
     }
     loadDetails = async () => {
-        this.setState({ ...this.state, errorMessage: null, isLoading: true });
+        this.setState({ ...this.state, errorMessage: null, isLoading: true,details:this.props.transferData });
             let data = this.props.transferData;
             let edit=false;
             if (!data?.payeeAccountModels) {
@@ -45,7 +49,7 @@ class BusinessTransfer extends Component {
             }
             if (this.props.selectedAddress?.id) {
                 const accountDetails = data.payeeAccountModels[0];
-                data = { ...data, ...accountDetails, line1: data.line1, line2: data.line2, line3: data.line3, bankAddress1: accountDetails.line1, bankAddress2: accountDetails.line2 };
+                data = { ...data, ...accountDetails, line1: data.line1, line2: data.line2, line3: data.line3, bankAddress1: accountDetails.line1, bankAddress2: accountDetails.line2,country:data.country,city:data.city,address:data.line1,postalCode:data.postalCode };
                 delete data["documents"];
                  edit = true;
             }
@@ -78,8 +82,8 @@ class BusinessTransfer extends Component {
         }
         }
         let _obj = { ...details, ...values };
-        _obj.payeeAccountModels[0].currencyType = "Fiat";
-        _obj.payeeAccountModels[0].walletCode = "USD";
+       _obj.payeeAccountModels[0].currencyType = "Fiat";
+       _obj.payeeAccountModels[0].walletCode = this.props.currency;
         _obj.payeeAccountModels[0].accountNumber = values?.accountNumber;
         _obj.payeeAccountModels[0].bankName = selectedTab === "internationalIBAN" ? ibanDetails?.bankName :  values?.bankName;
         _obj.payeeAccountModels[0].abaRoutingCode = values?.abaRoutingCode;
@@ -90,10 +94,12 @@ class BusinessTransfer extends Component {
         _obj.addressType = "otherbusiness";
         _obj.transferType = selectedTab;
         _obj.amount = this.props.amount;
-        _obj.payeeAccountModels[0].city = ibanDetails?.city;
+        _obj.beneficiaryName = values?.beneficiaryName;
+        _obj.payeeAccountModels[0].city = ibanDetails?.city || values?.city;
         _obj.payeeAccountModels[0].state = ibanDetails?.state;
-        _obj.payeeAccountModels[0].country = ibanDetails?.country;
-        _obj.payeeAccountModels[0].postalCode = ibanDetails?.zipCode;
+        _obj.payeeAccountModels[0].country = ibanDetails?.country || values.country;
+        _obj.payeeAccountModels[0].postalCode = ibanDetails?.zipCode || values?.postcode;
+        _obj.payeeAccountModels[0].ukSortCode = values?.ukSortCode;
         _obj.payeeAccountModels[0].bankBranch = ibanDetails?.branch;
         _obj.payeeAccountModels[0].bic=ibanDetails?.routingNumber;
         _obj.payeeAccountModels[0].iban = values?.iban ? values?.iban : this.form.current?.getFieldValue('iban');
@@ -108,7 +114,7 @@ class BusinessTransfer extends Component {
         this.setState({ ...this.state, errorMessage: null, isLoading: false, isBtnLoading: true });
 
         let temp = JSON.parse(JSON.stringify(_obj))
-        temp.payeeAccountModels[0].documents = _obj.payeeAccountModels[0]?.documents?.payee
+        temp.payeeAccountModels[0].documents = _obj.payeeAccountModels[0]?.documents?.transfer ||_obj.payeeAccountModels[0]?.documents?.payee
         
         const response = await savePayee(this.state.isEdit ? _obj : temp);   
         
@@ -174,7 +180,12 @@ class BusinessTransfer extends Component {
             this.form.current?.validateFields(["iban"], this.validateIbanType)
         }
     }
-
+     validateNumber = (_, validNumberValue) => {
+        if (validNumberValue === ".") {
+            return Promise.reject("Please enter valid content");
+        }
+        return Promise.resolve();
+    }
      validateIbanType = (_, value) => {
         this.setState({ ...this.state, isValidateLoading: false});
         if ((!value&&this.state.isShowValid)||!value) {
@@ -210,13 +221,13 @@ class BusinessTransfer extends Component {
             </div>
         }
         return <div ref={this.useDivRef}><Tabs className="cust-tabs-fait" onChange={this.handleTabChange} activeKey={selectedTab}>
-
-            <Tabs.TabPane tab="Domestic USD transfer" className="text-white" key={"domestic"} disabled={this.state.isEdit}>
+            <Tabs.TabPane tab={this.props.currency=="USD" ?`Domestic ${this.props.currency} transfer` : ` ${this.props.currency} LOCAL TRANSFER`} className="text-white" key={"domestic"} disabled={this.state.isEdit}>
                 <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
-              
+               {this.props.currency ==="GBP" && <h2  className="adbook-head">Bank Details</h2>}
+               {console.log(this.state.gbpdetails,'gbpdetails')}
                 <Form initialValues={details}
                     className="custom-label  mb-0"
-                    ref={this.form}
+                    ref={this.form} 
                     onFinish={this.submitPayee}
                     scrollToFirstError
                 >
@@ -250,10 +261,91 @@ class BusinessTransfer extends Component {
 
                             </Form.Item>
                         </Col>
+                      {this.props.currency==="GBP" &&  <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                                className="custom-forminput custom-label"
+                                name="beneficiaryName"
+                                label={"BussinessName"}
+                                required
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        whitespace: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        validator: validateContentRule,
+                                    },
+                                ]}
+                            >
+                                <Input
+                                    maxLength={100}
+                                    className="cust-input"
+                                    placeholder={"BussinessName"}
+                                />
+                            </Form.Item>
+                        </Col>}
+                       {this.props.currency==="GBP" && <> 
+                  
+                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+						<Form.Item
+							name="ukSortCode"
+							label="UkSortCode"
+							className="custom-label"
+							type="number"
+							rules={[
+								{
+									required: true,
+									message: "Is required",
+								},
+								{
+									validator: this.validateNumber
+                                }
+							]}>
+							<NumberFormat
+								className="cust-input value-field cust-addon mt-0"
+								customInput={Input}
+								prefix={""}
+								placeholder="Enter UkSortCode"
+								allowNegative={false}
+								maxlength={6}
+							/>
+						</Form.Item>
+					</Col>
+                    <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+						<Form.Item
+							name="accountNumber"
+							label="Account Number"
+							className="custom-label"
+							type="number"
+							rules={[
+								{
+									required: true,
+									message: "Is required",
+								},
+								{
+									validator:this.validateNumber
+                                }
+							]}>
+							<NumberFormat
+								className="cust-input value-field cust-addon mt-0"
+								customInput={Input}
+								prefix={""}
+								placeholder="Enter AccountNumber"
+								allowNegative={false}
+								maxlength={8}
+							/>
+						</Form.Item>
+					</Col>
+                </>}
+                        <PayeeBankDetails currency={this.props.currency}  />
                     </Row>
-                    <h2 className="adbook-head">Recipient's Details</h2>
+                  { this.props.currency !="GBP" && <h2 className="adbook-head">Recipient's Details</h2>}
                     <Row>
-                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                       {this.props.currency ==="USD" &&<> <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label"
                                 name="beneficiaryName"
@@ -307,7 +399,7 @@ class BusinessTransfer extends Component {
                                     maxLength={100}/>
 
                             </Form.Item>
-                        </Col>
+                        </Col></>}
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
                             <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
@@ -320,12 +412,12 @@ class BusinessTransfer extends Component {
                                 this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
                             }} refreshData ={selectedTab}/>
                         </ Col>
-                        <RecipientAddress />
+                      {this.props.currency !="GBP" && <RecipientAddress />}
                     </Row>
 
-                    <Paragraph className="adbook-head" >Bank Details</Paragraph>
-                    <DomesticTransfer type={this.props.type} />
-                    {this.props.type !== "manual" && 
+                   {this.props.currency !="GBP" && <Paragraph className="adbook-head" >Bank Details</Paragraph>}
+                   {this.props.currency !="GBP" && <DomesticTransfer type={this.props.type} />}
+                    {this.props.type !== "manual" && this.props.currency !="GBP" && 
                         (<React.Fragment>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
                     <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
@@ -350,7 +442,7 @@ class BusinessTransfer extends Component {
                     </div>
                 </Form></div>
             </Tabs.TabPane>
-            <Tabs.TabPane tab="International USD Swift" key={"international"} disabled={this.state.isEdit}>
+          { this.props.currency !="GBP" && <Tabs.TabPane tab="International USD Swift" key={"international"} disabled={this.state.isEdit}>
             <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
            
                 <Form initialValues={details}
@@ -485,18 +577,17 @@ class BusinessTransfer extends Component {
                     </div>
                 </Form></div>
 
-            </Tabs.TabPane>
+            </Tabs.TabPane>}
 
-            <Tabs.TabPane tab="International USD IBAN" key={"internationalIBAN"} disabled={this.state.isEdit}>
+            <Tabs.TabPane tab={this.props.currency == "USD" ? `International ${this.props.currency} IBAN` : ` ${this.props.currency} INTERNATIONAL TRANSFER`} key={"internationalIBAN"} disabled={this.state.isEdit}>
             <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
-         
+            {this.props.currency ==="GBP" && <h2  className="adbook-head">Bank Details</h2>}
                 <Form initialValues={details}
                     className="custom-label  mb-0"
                     ref={this.form}
                     onFinish={this.submitPayee}
                     scrollToFirstError
-                >
-                    
+                >                    
                     <Row >
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
@@ -525,8 +616,35 @@ class BusinessTransfer extends Component {
                                 />
                             </Form.Item>
                         </Col>
+                      {this.props.currency ==="GBP" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                                className="custom-forminput custom-label"
+                                name="beneficiaryName"
+                                label={"BussinessName"}
+                                required
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        whitespace: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        validator: validateContentRule,
+                                    },
+                                ]}
+                            >
+                                <Input
+                                    maxLength={100}
+                                    className="cust-input"
+                                    placeholder={"BussinessName"}
+                                />
+                            </Form.Item>
+                        </Col>}
                     </Row>
-                    <Paragraph className="adbook-head"  >Recipient's Details</Paragraph>
+                    {this.props.currency !="GBP" && <><Paragraph className="adbook-head"  >Recipient's Details</Paragraph>
                     <Row>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
@@ -596,9 +714,9 @@ class BusinessTransfer extends Component {
                             }} refreshData ={selectedTab}/>
                         </ Col>
                         <RecipientAddress />
-                    </Row>
+                    </Row></>}
 
-                    <Paragraph className="adbook-head" >Bank Details</Paragraph>
+                    {this.props.currency !="GBP" &&<Paragraph className="adbook-head" >Bank Details</Paragraph>}
                     <Row className="validateiban-content">
                    <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                        <div className=" custom-btn-error">
@@ -628,9 +746,7 @@ class BusinessTransfer extends Component {
 
                             </Form.Item>
                             </div>
-                       </Col>
-                       
-                         
+                       </Col>                     
                     </Row>
                     <div className="box basic-info alert-info-custom mt-16 kpi-List">
                         <Spin spinning={this.state.ibanDetailsLoading}>
@@ -699,7 +815,8 @@ class BusinessTransfer extends Component {
                         </Spin>
                        
                     </div>
-                        {this.props?.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <PayeeBankDetails currency={this.props.currency} createPayeeObj={this.props.transferData}/>
+                        {this.props?.type !== "manual" && this.props.currency !="GBP"&& <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label"
                                 name="reasonOfTransfer"
@@ -739,7 +856,17 @@ class BusinessTransfer extends Component {
                             }} refreshData ={selectedTab}/>
                         </React.Fragment>)
                     }
-                    <div className="text-right mt-36">
+                     {this.props.type === "manual" && this.props.currency !="USD" &&
+                        (<React.Fragment>
+                            <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
+                            <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
+                                let { payeeAccountModels } = this.state.details;
+                                payeeAccountModels[0].documents.transfer = docs;
+                                this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
+                            }} refreshData ={selectedTab}/>
+                        </React.Fragment>)
+                    }
+                    <div className="text-right mt-36">  
                                 <Button
                                    htmlType="submit"
                                    size="large"

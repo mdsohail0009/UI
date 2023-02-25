@@ -4,7 +4,7 @@ import apicalls from "../../../api/apiCalls";
 import { validateContentRule } from "../../../utils/custom.validator";
 import Translate from "react-translate-component";
 
-const {  Text } = Typography;
+const {  Text ,Paragraph} = Typography;
 const { TextArea } = Input;
 
 class PayeeBankDetails extends Component {
@@ -240,7 +240,7 @@ class PayeeBankDetails extends Component {
                 </Col>}
             </>,
             swift: <>
-                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+               {this.props.currency!="CHF" && <><Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name={["payeeAccountModels","accountNumber"]}
@@ -276,7 +276,7 @@ class PayeeBankDetails extends Component {
                         />
                     </Form.Item>
                 </Col>
-                {this.props.domesticType === "international" &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                {this.props.domesticType === "international" && this.props.currency!="GBP"  &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name={["payeeAccountModels","swiftRouteBICNumber"]}
@@ -315,7 +315,7 @@ class PayeeBankDetails extends Component {
                     </Form.Item>
                 </Col>}
 
-                {this.props.domesticType === "domestic" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                {this.props.domesticType === "domestic"  && this.props.currency!="GBP" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name={["payeeAccountModels","abaRoutingCode"]}
@@ -349,7 +349,7 @@ class PayeeBankDetails extends Component {
                         />
                     </Form.Item>
                 </Col>}
-                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+               {this.props.currency!="GBP" && <><Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name={["payeeAccountModels","bankName"]}
@@ -434,8 +434,8 @@ class PayeeBankDetails extends Component {
                             maxLength={1000}
                         ></TextArea>
                     </Form.Item>
-                </Col>
-                {this.props.GoType === "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                </Col></>}</>}
+                {this.props.GoType === "Onthego" &&( this.props.currency !="CHF" && this.props.currency !="GBP") && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name={"reasonOfTransfer"}
@@ -471,6 +471,246 @@ class PayeeBankDetails extends Component {
                     </Form.Item>
                 </Col>}
                 
+            </>,
+            chfTransfer:<>
+            {console.log(this.props.currency,'this.props.currency,..',this.props.domesticType,'this.props.domesticType')}
+            {((this.props.currency ==="CHF" && this.props.domesticType === "domestic") || this.props.currency ==="GBP" && this.props.domesticType === "internationalIBAN") &&<>  <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                       <div className=" custom-btn-error fsdf">
+                    <Form.Item
+                        className="custom-forminput custom-label mb-0"
+                        name={["payeeAccountModels","iban"]}
+                        label={apicalls.convertLocalLang(
+                            "Bank_account_iban"
+                        )}
+                        required
+                        rules={[
+                            {
+                                validator: this.validateIbanType,
+                              },
+                        ]}
+                        onChange={(e) => {
+                            this.handleIban(e.target.value)
+                        }}
+                    >
+                        <Input
+                            className="cust-input ibanborder-field"
+                            placeholder={apicalls.convertLocalLang(
+                                "Bank_account_iban"
+                            )}
+                            maxLength={50}
+                            addonAfter={ <Button className={``}
+                            type="primary"
+                               loading={this.state.isValidateLoading}
+                               onClick={() => this.onIbanValidate(this.props?.form.current?.getFieldValue(["payeeAccountModels","iban"]))} >
+                           <Translate content="validate" />
+                   </Button>  }
+                            />
+                    </Form.Item>
+                    </div>
+                    </Col>
+                    <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+
+                   <div className="box basic-info alert-info-custom mt-16 kpi-List">
+<Spin spinning={this.state.IbanLoader}>
+{this.state.isValidIban && !this.props?.isAddTabCange && <Row>
+        <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+        <div className="kpi-divstyle">
+            <label className="kpi-label ">
+                Bank Name
+            </label>
+            <div className=""><Text className="kpi-val">{this.state.iBanDetals?.bankName||'---'}</Text></div>
+        </div>
+        </Col>
+        <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+        <div className="kpi-divstyle">
+            <label className="kpi-label ">
+                BIC
+            </label>
+            <div className=""><Text className="kpi-val">{this.state.iBanDetals?.bic||'---'}</Text></div>
+            </div>
+        </Col>
+        <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+        <div className="kpi-divstyle">
+            <label className="kpi-label ">
+                Branch
+            </label>
+            <div className=""><Text className="kpi-val">{this.state.iBanDetals?.bankBranch||'---'}</Text></div>
+            </div>
+        </Col>
+        <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+        <div className="kpi-divstyle">
+            <label className="kpi-label ">
+                Country
+            </label>
+            <div><Text className="kpi-val">{this.state.iBanDetals?.country||'---'}</Text></div>
+            </div>
+        </Col>
+        <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+        <div className="kpi-divstyle">
+            <label className="kpi-label ">
+                State
+            </label>
+            <div><Text className="kpi-val">{this.state.iBanDetals?.state||'---'}</Text></div>
+            </div>
+        </Col>
+        <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+        <div className="kpi-divstyle">
+            <label className="kpi-label ">
+                City
+            </label>
+            <div><Text className="kpi-val">{this.state.iBanDetals?.city||'---'}</Text></div>
+            </div>
+        </Col>
+        <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+        <div className="kpi-divstyle">
+            <label className="kpi-label ">
+                Zip
+            </label>
+            <div><Text className="kpi-val">{this.state.iBanDetals?.postalCode||'---'}</Text></div>
+            </div>
+        </Col>
+    </Row>}
+    {(!this.state.isValidIban || this.props?.isAddTabCange)&&<span className="info-details">No bank details available</span>}
+    </Spin>
+                  </div>
+
+              </Col></>}
+              <Paragraph className="adbook-head" >Recipient Address</Paragraph>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-forminput custom-label"
+                       name="country"
+                    
+                        label="Country"
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message: "is required"
+                                   
+                            },
+                            {
+                                validator: validateContentRule,
+                            },
+                        ]}
+                    >
+                        <Input
+                            className="cust-input"
+                            placeholder="Country"
+                            maxLength={50}
+                        />
+                    </Form.Item>
+                </Col>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-forminput custom-label"
+                        name="city"
+                        label="City"
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message: "is required"
+                                   
+                            },
+                            {
+                                validator: validateContentRule,
+                            },
+                        ]}
+                    >
+                        <Input
+                            className="cust-input"
+                            placeholder="city"
+                            maxLength={50}
+                        />
+                    </Form.Item>
+                </Col>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-forminput custom-label"
+                        name="line1"
+                        label="Address"
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message: "is required"
+                                   
+                            },
+                            {
+                                validator: validateContentRule,
+                            },
+                        ]}
+                    >
+                        <Input
+                            className="cust-input"
+                            placeholder="Address"
+                            maxLength={50}
+                        />
+                    </Form.Item>
+                </Col>               
+                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-forminput custom-label"                       
+                        name="postalCode"
+                        label="Postal Code"
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message: "is required"
+                                   
+                            },
+                            {
+                                validator: validateContentRule,
+                            },
+                        ]}
+                    >
+                        <Input
+                            className="cust-input"
+                            placeholder="Postal Code"
+                            maxLength={50}
+                           
+                        />
+                    </Form.Item>
+                </Col>
+                <Paragraph className="adbook-head" >Compliance</Paragraph>
+                { <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-forminput custom-label"
+                        name="reasonOfTransfer"
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message: apicalls.convertLocalLang("is_required"),
+                            },
+                            {
+                                whitespace: true,
+                                message: apicalls.convertLocalLang("is_required"),
+                            },
+                            {
+                                validator: validateContentRule,
+                            },
+                        ]}
+                        label={
+                            <Translate
+                                content="reasiontotransfor"
+                                component={Form.label}
+                            />
+                        }
+                    >
+                        <TextArea
+                            placeholder={apicalls.convertLocalLang(
+                                "reasiontotransfor"
+                            )}
+                            className="cust-input cust-text-area address-book-cust"
+                            autoSize={{ minRows: 1, maxRows: 2 }}
+                            maxLength={100}
+                        ></TextArea>
+                    </Form.Item>
+                </Col>}
+
             </>
         }
         return _templates[transferType]
@@ -480,10 +720,14 @@ class PayeeBankDetails extends Component {
    
         
         return <>
-        {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
-            <Row className="validateiban-content">
+
+
+           {(this.props.currency ==="USD" ||  this.props.currency =="EUR")&&<Row className="validateiban-content">
                 {this.renderAddress(domesticType === "internationalIBAN" ? "sepa" : transferType)}
-            </Row>
+            </Row>}
+       {(this.props.currency==="CHF" || this.props.currency==="GBP")&& <Row className="validateiban-content">
+                {this.renderAddress(this.props.currency==="GBP" || this.props.currency==="CHF" ? "chfTransfer" : transferType)}
+            </Row> }
             </>
 
     }
