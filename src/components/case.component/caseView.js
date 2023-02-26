@@ -22,6 +22,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { getScreenName } from '../../reducers/feturesReducer';
 import { ApiControllers } from "../../api/config";
 import DocumentPreview from '../../Shared/docPreview'
+import { useState } from 'react';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
@@ -58,7 +59,7 @@ class CaseView extends Component {
         commonModel: {},
         assignedTo: [],
         btnLoading:false,
-        errorWarning: null,caseDetails:[],detailsItem:[],docrepositories:[],casedoc:[]
+        errorWarning: null,caseDetails:[],detailsItem:[],docrepositories:[],casedoc:[],docID:{}
     }
     componentDidMount() {
         this.props.dispatch(getScreenName({getScreen:null}))
@@ -68,7 +69,7 @@ class CaseView extends Component {
         this.setState({ ...this.state, loading: true, error: null });
         const response = await getDocDetails(id);
         if (response.ok) {
-            this.loadDocReplies(response.data?.details[0]?.id)
+            this.loadDocReplies(response.data[0]?.id)
             this.setState({ ...this.state, docDetails: response.data, loading: false });
         } else {
             this.setState({ ...this.state, loading: false, error: response.data });
@@ -123,6 +124,7 @@ class CaseView extends Component {
         if (response.ok) {
             success('Document has been approved');
             this.loadDocReplies(doc.id);
+            this.getDocument(doc.id)
         } else {
             warning(response.data);
         }
@@ -167,7 +169,7 @@ class CaseView extends Component {
         let item = { ...doc };
         item.repositories = item.repositories.splice(idx, 1);
         item.repositories = JSON.stringify(item.repositories);
-        item.status = "Rejected";
+        item.status = "Deleted";
         if (isAdd) {
             let objs = [...this.state.docReplyObjs];
             objs = objs.filter(obj => obj.docunetDetailId !== doc.id);
@@ -178,6 +180,7 @@ class CaseView extends Component {
         if (response.ok) {
             success('Document has been deleted');
             this.loadDocReplies(doc.id);
+            
             let objs = [...this.state.docReplyObjs];
             objs = objs.filter(item1 => item1.docunetDetailId !== doc.id);
             this.setState({ ...this.state, docReplyObjs: objs });
@@ -214,6 +217,7 @@ class CaseView extends Component {
         handleUpload = ({ file }, doc) => {
             this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null })
                 if (file.status === "done" && this.state.isValidFile) {
+                    this.setState({...this.state,docId:file.response.id})
                     let replyObjs = [...this.state.docReplyObjs];
                     let item = this.isDocExist(replyObjs, doc.id);
                     let obj;
@@ -228,13 +232,13 @@ class CaseView extends Component {
                         };
                         obj.repositories = Objrepositories();
                         obj.repliedDate = new Date();
-                        obj.repositories.push({ fileName: file?.response?.fileName, size: file?.response?.fileSize,id:file?.response?.id,state:"submitted" });
+                        obj.repositories.push({ fileName: file?.response?.fileName, fileSize: file?.response?.fileSize,id:file?.response?.id,state:"submitted" });
                         obj.repliedBy = this.props.userProfileInfo?.firstName;
                         replyObjs = this.uopdateReplyObj(obj, replyObjs);
                     } else {
                         obj = this.messageObject(doc.id);
                         obj.repliedDate = new Date();
-                        obj.repositories.push({ fileName: file?.response?.fileName, size: file?.response?.fileSize,id:file?.response?.id,state:"submitted" });
+                        obj.repositories.push({ fileName: file?.response?.fileName, fileSize: file?.response?.fileSize,id:file?.response?.id,state:"submitted" });
                         obj.repliedBy = this.props.userProfileInfo?.firstName;
                         replyObjs.push(obj);
                     }
@@ -308,15 +312,27 @@ class CaseView extends Component {
         this.setState({ ...this.state, loading: true });
         let caseRes = await getCase(id);
         if (caseRes.ok) {
-            this.setState({ ...this.state, caseData: caseRes.data, commonModel: caseRes.data.commonModel, loading: false ,caseDetails:caseRes.data?.caseDetails,caseState:caseRes.data?.state});
-            const detailsObjs = caseRes.data?.caseDetails?.filter(
+            this.setState({ ...this.state, caseData: caseRes.data, commonModel: caseRes.data.commonModel, loading: false ,
+                caseDetails:caseRes.data?.caseDetails,caseState:caseRes.data?.state,});
+                
+                // this.getDocument(caseRes.data?.caseDetails[0]?.id);
+           
+                const detailsObjs = caseRes.data?.caseDetails?.filter(
 				(item) => item.isChecked === true
 			);
 			for (let i in detailsObjs) {
 				let data = detailsObjs[i];
-				this.state.detailsItem.push(data);
+                let detailsItem=[]
+                detailsItem?.push(data)
+
+				//this.state.detailsItem?.push(data);
+                //this.getDocument(data?.id);
+                this.loadDocReplies(data?.id)
+                this.setState({...this.state,detailsItem:[...detailsItem]})
 			}
-            this.getDocument(caseRes.data?.documents?.id);
+           
+             
+           
         } else {
             warning('Data not getting from the server!');
         }
@@ -388,22 +404,26 @@ class CaseView extends Component {
                 </div>
 
                 {/* <Divider /> */}
-                {(!this.state.detailsItem || this.state?.detailsItem.length === 0) && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No documents available" /></div>}
+                {(!this.state.detailsItem || this.state?.detailsItem.length === 0) 
+               
+                && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No documents available" /></div>}
                 <div className="bank-view">
-                    {this.state.detailsItem?.map((doc, idx) =>
+                    {this.state?.detailsItem?.map((doc, idx) =>
                         <Collapse onChange={(key) => {
-
+                          
                             this.setState({
                                 ...this.state,
                                 collapse: !this.state.collapse, errorMessage:null,errorWarning:null
                             });
                             if (key) {
                                 this.loadDocReplies(doc.id);
+                                //this.getDocument(doc.id)
                             }
                         }}
                             collapsible
                             accordion className="accordian  mb-togglespace "
-                            defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
+                            defaultActiveKey={['1']} 
+                            expandIcon={() => <span className="icon md downangle" />}>
                             <Panel header={doc.documentName} key={idx + 1} extra={this.state.caseState ? (<span className={`${this.state.caseState ? this.state.caseState.toLowerCase() + " staus-lbl" : ""}`}>{this.state.caseState}</span>) : ""}>
                                 {this.state.documentReplies[doc.id]?.data?.map((reply, ix) => <div key={ix} className="reply-container">
                                     <div className="user-shortname">{reply?.repliedBy?.slice(0, 2)}</div>
@@ -412,7 +432,7 @@ class CaseView extends Component {
                                         <p className="reply-txt">{reply.reply}</p>
                                         
                                             <div className="docfile-container">
-                                            {reply?.repositories?.map((file, idx1) =>
+                                            {reply?.docRepositories?.map((file, idx1) =>
                                         <Col lg={12} xl={12} xxl={12}> <div key={idx1} className="docfile uploaddoc-margin">
                                                 <span className={`icon xl ${(file.fileName.slice(-3) === "zip" ? "file" : "") || (file.fileName.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                                 <div className="docdetails c-pointer" 
@@ -420,7 +440,7 @@ class CaseView extends Component {
                                                 onClick={() => this.docPreviewOpen(file)}
                                                 >
                                                     <EllipsisMiddle suffixCount={6}>{file.fileName}</EllipsisMiddle>
-                                                    <span className="file-sizestyle">{this.formatBytes(file.size)}</span>
+                                                    <span className="file-sizestyle">{this.formatBytes(file.fileSize)}</span>
                                                 </div>
                                             </div>
                                             
@@ -512,7 +532,7 @@ class CaseView extends Component {
                                                    onClick={() => this.docPreviewOpen(file)}
                                                     >
                                                         <EllipsisMiddle suffixCount={6}>{file.fileName}</EllipsisMiddle>
-                                                        <span className="file-sizestyle">{this.formatBytes(file.size)}</span>
+                                                        <span className="file-sizestyle">{this.formatBytes(file.fileSize)}</span>
                                                     </div>
                                                     <span className="icon md close c-pointer" onClick={() => this.deleteDocument(this.getUploadedFiles(doc.id), idx1, true)} />
                                                 </div>
