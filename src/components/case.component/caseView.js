@@ -66,7 +66,6 @@ class CaseView extends Component {
         this.getCaseData(this.props?.match.params?.id);
     }
     getDocument = async (id) => {
-        debugger
         this.setState({ ...this.state, loading: true, error: null });
         const response = await getDocDetails(id);
         if (response.ok) {
@@ -77,7 +76,6 @@ class CaseView extends Component {
         }
     }
     loadDocReplies = async (id) => {
-        debugger
         let docReObj = this.state.docReplyObjs.filter(item => item.docunetDetailId !== id);
         this.setState({ ...this.state, isMessageError: null, validHtmlError: null, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } }, docReplyObjs: docReObj, docErrorMessage: null });
         const response = await getDocumentReplies(id);
@@ -331,7 +329,6 @@ class CaseView extends Component {
 				//this.state.detailsItem?.push(data);
                 //this.getDocument(data?.id);
                 this.loadDocReplies(data?.id)
-                {console.log(data)}
 
                 //this.setState({...this.state,detailsItem:data})
                 //this.setState({...this.state,detailsItem:[...detailsItem]})
@@ -347,7 +344,6 @@ class CaseView extends Component {
         }
     }
     render() {
-        {console.log(this.state.detailsItem)}
 
         const { caseData, commonModel } = this.state;
         if (this.state.loading) {
