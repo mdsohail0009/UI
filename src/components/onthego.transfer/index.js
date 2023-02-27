@@ -382,7 +382,7 @@ saveWithdrawdata = async () => {
                         title={<div className="wallet-title">{item.walletCode}</div>}
                       />
                        <><div className="text-right coin-typo">
-                         <NumberFormat value={item.amount} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={item.walletCode == 'USD' ? '$' : '€'} renderText={(value, props) => <div {...props} >{value}</div>} />
+                         <NumberFormat value={item.amount} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={item.walletCode == 'USD' && '$' || item.walletCode=='EUR' && '€'|| item.walletCode =='GBP' && '£' || item.walletCode=='CHF' && '₣'} renderText={(value, props) => <div {...props} >{value}</div>} />
                     </div></>
                     </Link>
                   </List.Item>
