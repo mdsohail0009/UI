@@ -23,6 +23,7 @@ import { getScreenName } from '../../reducers/feturesReducer';
 import { ApiControllers } from "../../api/config";
 import DocumentPreview from '../../Shared/docPreview'
 import { useState } from 'react';
+import apicalls from '../../api/apiCalls';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
@@ -139,7 +140,6 @@ class CaseView extends Component {
         this.setState({ ...this.state, docDetails: { ...this.state.docDetails, details: docDetails } });
     }
     docReject = async (doc) => {
-    
        let item = this.isDocExist(this.state.docReplyObjs, doc.id);       
         this.setState({ ...this.state, btnLoading: true });
         
@@ -149,11 +149,9 @@ class CaseView extends Component {
         item.repliedDate = Mome().format("YYYY-MM-DDTHH:mm:ss");
         item.info = JSON.stringify(this.props.trackAuditLogData);
         item.customerId=this.props.userProfileInfo.id;
-      
-
-         
-        const response = await saveDocReply(item);
+   const response = await saveDocReply(item);
         if (response.ok) {
+            this.loadDocReplies(doc.id);
             success('Document has been submitted');
             this.updateDocRepliesStatus(doc, "Submitted");
             this.setState({errorWarning:null })
@@ -245,7 +243,7 @@ class CaseView extends Component {
                     this.setState({ ...this.state, docReplyObjs: replyObjs, uploadLoader: false, isSubmitting: false });
                 }
                 else if (file.status === 'error') {
-                    this.setState({ ...this.state, uploadLoader: false, isSubmitting: false,errorMessage:file.response,errorWarning:null })
+                    this.setState({ ...this.state, uploadLoader: false, isSubmitting: false,errorMessage:apicalls.isErrorDispaly(file.response),errorWarning:null })
                 }
                 else if (!this.state.isValidFile) {
                     this.setState({ ...this.state, uploadLoader: false, isSubmitting: false });
@@ -309,7 +307,6 @@ class CaseView extends Component {
         return this.state.previewrepositories;
     }
     getCaseData = async (id) => {
-        debugger
         this.setState({ ...this.state, loading: true });
         let caseRes = await getCase(id);
         if (caseRes.ok) {
