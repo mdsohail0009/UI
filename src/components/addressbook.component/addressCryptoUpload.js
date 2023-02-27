@@ -65,7 +65,7 @@ class AddressCryptoDocument extends Component {
       id: doc?.response?.id || "00000000-0000-0000-0000-000000000000",
       fileName: doc?.response?.fileName,
       state: "",
-      fileSize:doc?.response?.fileName,
+      fileSize:doc?.response?.fileSize,
     };
   };
   docPreview = async (file) => {
@@ -214,6 +214,7 @@ class AddressCryptoDocument extends Component {
                   Authorization: `Bearer ${this.props.user.access_token}`
                 }}
                 onChange={({ file }) => {
+                    debugger
                   this.setState({ ...this.state, isDocLoading: true });
                   if (file.status === "done") {
                     let fileType = {
@@ -311,8 +312,8 @@ class AddressCryptoDocument extends Component {
                             {file.name || file.fileName}
                           </EllipsisMiddle>
                           <span className="upload-filesize c-pointer">
-                            {file.fileSize || file?.remarks
-                              ? bytesToSize(file.fileSize || file?.remarks)
+                            {file.size || file?.remarks
+                              ? bytesToSize(file.size || file?.remarks)
                               : ""}
                           </span>
                         </div>
