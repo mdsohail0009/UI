@@ -73,13 +73,16 @@ class AddressDocumnet extends Component {
                             }}
                             headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
                             onChange={({ file }) => {
+                                debugger
                                 this.setState({ ...this.state, isDocLoading: true });
                                 if (file.status === "done") {
                                     let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
                                     if (fileType[file.type]) {
+                                        //this.setState({...this.state,documents:file.response})
                                         let { filesList: files } = this.state;
                                         files.push(file);
                                         this.setState({ ...this.state, filesList: files, isDocLoading: false, errorMessage: null });
+                                        
                                         let { documents: docs } = this.state;
                                         docs?.details?.push(this.docDetail(file));
                                         this.props?.onDocumentsChange(docs.details);
@@ -134,8 +137,9 @@ class AddressDocumnet extends Component {
                         <Button
                             className="primary-btn pop-btn detail-popbtn"
                             onClick={() => {
+                                debugger
                                 let { documents: docs } = this.state;
-                                let files = docs;
+                                let files = docs.details ;
                                 for(var k in files){
                                     if(files[k].id===this.state.selectedObj?.id){
                                         files[k].state='Deleted';

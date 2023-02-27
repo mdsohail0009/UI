@@ -46,7 +46,6 @@ class AddressCryptoDocument extends Component {
     previewPath: null, docPreviewDetails: null,
   };
   componentDidMount() {
-    debugger
     let propsDocument =
       JSON.stringify(this.props?.documents) ==
       JSON.stringify({ transfer: "", payee: "" })

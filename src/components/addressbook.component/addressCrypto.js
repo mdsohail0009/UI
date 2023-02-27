@@ -61,7 +61,6 @@ class AddressCrypto extends Component {
     }
   }
   getCryptoData = async () => {
-    debugger
     let id = this.props?.addressBookReducer?.selectedRowData?.id ||this.props.cryptoId || "00000000-0000-0000-0000-000000000000";
     this.setState({ ...this.state, isLoading: true })
     let response = await getCryptoData(id);
@@ -77,7 +76,7 @@ class AddressCrypto extends Component {
 
   
   coinList = async () => {
-    debugger
+    
     let response = await getCoinList("All")
     if (response.ok) {
       this.setState({ ...this.state, coinsList: response.data, isLoading: false })
@@ -218,7 +217,6 @@ this.useDivRef.current?.scrollIntoView(0, 0);
   }
   }
   editDocuments=(docs)=>{
-    debugger
       let { docRepositories } = this.state.details;
       if(this.state.isEdit){
         docRepositories = docs;
