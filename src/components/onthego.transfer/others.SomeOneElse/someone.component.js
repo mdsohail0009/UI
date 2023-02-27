@@ -56,7 +56,6 @@ const SomeoneComponent = (props) => {
         }
     }
     const onSubmit = async (values) => {
-        debugger
         setErrorMessage(null)
         if (Object.hasOwn(values?.payeeAccountModels, 'iban')) {
             setErrorMessage(null);

@@ -73,7 +73,6 @@ class AddressDocumnet extends Component {
                             }}
                             headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
                             onChange={({ file }) => {
-                                debugger
                                 this.setState({ ...this.state, isDocLoading: true });
                                 if (file.status === "done") {
                                     let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
@@ -137,7 +136,6 @@ class AddressDocumnet extends Component {
                         <Button
                             className="primary-btn pop-btn detail-popbtn"
                             onClick={() => {
-                                debugger
                                 let { documents: docs } = this.state;
                                 let files = docs.details ;
                                 for(var k in files){
