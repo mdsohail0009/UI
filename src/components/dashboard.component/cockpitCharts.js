@@ -290,7 +290,9 @@ class CockpitCharts extends Component {
                           type={"text"}
                           prefix={
                             (item?.walletCode == "USD" ? "$" : null) ||
-                            (item?.walletCode == "EUR" ? "€" : null)
+                            (item?.walletCode == "EUR" ? "€" : null)||
+                            (item?.walletCode == "GBP" ? "£" : null)||
+                            (item?.walletCode == "CHF" ? "₣" : null)
                           }
                         />
                         </div>
