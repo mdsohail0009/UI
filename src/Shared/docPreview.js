@@ -4,7 +4,6 @@ import { Modal, Tooltip, Button,Alert, Spin } from "antd";
 import apicalls from "../api/apiCalls";
 
 const DocumentPreview = (props) => {
-  debugger
   const [previewPath, setPreviewPath] = useState(null);
   const [previewfileName, setPreviewfileName] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -25,7 +24,6 @@ const DocumentPreview = (props) => {
   }, []);
 
   const docPreview = async () => {
-    debugger
     setIsLoading(true);
     let res = await apicalls.getFileURL(props?.upLoadResponse?.id);
     let extensions =null
