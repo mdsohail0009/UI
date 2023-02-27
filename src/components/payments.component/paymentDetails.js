@@ -633,6 +633,7 @@ class PaymentDetails extends Component {
                                               />
                                             </Form.Item>
                                             <Upload
+                                              accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                                               key={i}
                                               type="dashed"
                                               size="large"
