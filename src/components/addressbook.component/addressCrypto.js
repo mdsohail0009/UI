@@ -111,7 +111,7 @@ class AddressCrypto extends Component {
     }
     let networkLu = [];
     if(value) {
-      this.state.coinsList?.filter(function (item){
+      this.state?.coinsList?.filter(function (item){
         if(item.walletCode === value) {
         return networkLu = item?.network;
         }
@@ -142,7 +142,6 @@ if (res.ok){
 
   }
   submit = async (values) => {
-    debugger
     let data=this.state.details?.docRepositories?.filter((item)=>item.state!=="Deleted")?.length===0 ;
     if (!values.isOwnerOfWalletAddress && process.env.REACT_APP_ISTR == "true") {
 			this.setState({
@@ -502,6 +501,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
 								
 							</Form.Item>
             </Col>
+            {isDocCheck===true && 
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload a screenshot or video to prove you are the owner of the address{isDocCheck===true&&<span className="cust-start-style">*</span>}  
                             
@@ -515,9 +515,13 @@ this.setState({...this.state,isDocCheck:e.target.checked})
                             <AddressCryptoDocument 
 
                             documents={this.state.cryptoData?.docRepositories|| null}
-                            editDocument={this.state.isEdit} onDocumentsChange={(docs) =>this.editDocuments(docs) } 
+                            editDocument={this.state.isEdit}
+                             onDocumentsChange={(docs) =>this.editDocuments(docs) } 
+                             docCheck={this.state.isDocCheck}
                             />
-                        </ Col></>}
+                        </ Col>}
+                        
+                        </>}
           
             </Row>
             <Form.Item className="">

@@ -22,8 +22,8 @@ import DocumentPreview from '../../Shared/docPreview'
 const { Dragger } = Upload;
 const { Paragraph, Text } = Typography;
 const EllipsisMiddle = ({ suffixCount, children }) => {
-  const start = children.slice(0, children.length - suffixCount).trim();
-  const suffix = children.slice(-suffixCount).trim();
+  const start = children?.slice(0, children.length - suffixCount).trim();
+  const suffix = children?.slice(-suffixCount).trim();
   return (
     <Text
       className="mb-0 fs-14 docname d-block"
@@ -46,6 +46,7 @@ class AddressCryptoDocument extends Component {
     previewPath: null, docPreviewDetails: null,
   };
   componentDidMount() {
+    debugger
     let propsDocument =
       JSON.stringify(this.props?.documents) ==
       JSON.stringify({ transfer: "", payee: "" })
@@ -59,6 +60,7 @@ class AddressCryptoDocument extends Component {
       refreshData: this.props?.refreshData
     });
   }
+
   docDetail = (doc) => {
     return {
       id: doc?.response?.id || "00000000-0000-0000-0000-000000000000",
@@ -152,6 +154,7 @@ class AddressCryptoDocument extends Component {
       });
     }
     return (
+        
       <Row>
         <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
           <div>
@@ -273,7 +276,7 @@ class AddressCryptoDocument extends Component {
             {this.state?.filesList?.map((file, indx) => (
               <div>
                 
-                  {(file.state !== 'Deleted' && 
+                  {(file.fileName !== null  && 
                     <>
                       {" "}
                       <div className="docfile custom-upload cust-upload-sy">
@@ -323,8 +326,9 @@ class AddressCryptoDocument extends Component {
                           }}
                         />
                       </div>
-                    </>)}
-                  {/* )} */}
+                    </>
+                     )} 
+                 
               </div>
             ))}
             {this.state.isDocLoading && <Loader />}
