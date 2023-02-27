@@ -32,6 +32,7 @@ const AddressFiatView = (props) => {
 		loadDataAddress();
 	}, []);// eslint-disable-line react-hooks/exhaustive-deps
 	const loadDataAddress = async () => {
+		debugger
 		setIsLoading(true)
 		let response = await getViewData(props?.match?.params?.id, props?.match?.params?.type);
 		if (response.ok) {	
@@ -495,7 +496,7 @@ const AddressFiatView = (props) => {
 																	</EllipsisMiddle>
 																)}
 																<span className="fs-12 text-secondary">
-																	{bytesToSize(file.remarks)}
+																	{bytesToSize(file.fileSize)}
 																</span>
 															</div>
 														</div>

@@ -62,10 +62,12 @@ class AddressCryptoDocument extends Component {
   }
 
   docDetail = (doc) => {
+    debugger
     return {
       id: doc?.response?.id || "00000000-0000-0000-0000-000000000000",
       fileName: doc?.response?.fileName,
       state: "",
+      fileSize:doc?.response?.fileSize
     };
   };
   docPreview = async (file) => {
@@ -309,8 +311,8 @@ class AddressCryptoDocument extends Component {
                             {file.name || file.fileName}
                           </EllipsisMiddle>
                           <span className="upload-filesize c-pointer">
-                            {file.size || file?.remarks
-                              ? bytesToSize(file.size || file?.remarks)
+                            {file.fileSize || file?.remarks
+                              ? bytesToSize(file.fileSize || file?.remarks)
                               : ""}
                           </span>
                         </div>

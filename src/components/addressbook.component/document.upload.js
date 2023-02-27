@@ -33,6 +33,7 @@ class AddressDocumnet extends Component {
             "id": doc?.response?.id || "00000000-0000-0000-0000-000000000000" || this.state.documents.id,
             "fileName": doc.name,
             "state": "",
+            "fileSize":doc?.response?.fileSize
         }
     }
   
