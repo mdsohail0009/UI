@@ -61,6 +61,7 @@ class AddressCrypto extends Component {
     }
   }
   getCryptoData = async () => {
+    debugger
     let id = this.props?.addressBookReducer?.selectedRowData?.id ||this.props.cryptoId || "00000000-0000-0000-0000-000000000000";
     this.setState({ ...this.state, isLoading: true })
     let response = await getCryptoData(id);
@@ -76,6 +77,7 @@ class AddressCrypto extends Component {
 
   
   coinList = async () => {
+    debugger
     let response = await getCoinList("All")
     if (response.ok) {
       this.setState({ ...this.state, coinsList: response.data, isLoading: false })
@@ -140,7 +142,8 @@ if (res.ok){
 
   }
   submit = async (values) => {
-    let data=this.state.details.documents?.details.filter((item)=>item.state!=="Deleted")?.length===0 ;
+    debugger
+    let data=this.state.details?.docRepositories?.filter((item)=>item.state!=="Deleted")?.length===0 ;
     if (!values.isOwnerOfWalletAddress && process.env.REACT_APP_ISTR == "true") {
 			this.setState({
 				...this.state,
@@ -148,14 +151,17 @@ if (res.ok){
 				agreeRed: false,
 			});
 			this.useDivRef.current?.scrollIntoView(0, 0);
-		}else if((values.isDocumentUpload===true && ((this.state.cryptoData?.documents===null &&this.state.isEdit===true && values.files===undefined) ||this.state.cryptoData?.documents?.details?.length==0||
-      this.state.details.documents?.details?.length ==0 || data===true))){
+		}
+    else if((values.isDocumentUpload===true &&
+       ((this.state.cryptoData?.docRepositories===null &&this.state.isEdit===true && values?.files===undefined) ||
+       this.state.cryptoData?.docRepositories?.length==0||
+      this.state.details.docRepositories?.length ==0 || data===true || data===undefined))){
       this.setState({
 				...this.state,
         errorMessage:"At least one document is required",
 				
 			});
-this.useDivRef.current?.scrollIntoView(0, 0);
+this.useDivRef.current?.scrollIntoView(0, 0); 
 }
     else{
     let obj = {
@@ -176,20 +182,20 @@ this.useDivRef.current?.scrollIntoView(0, 0);
       walletSource:values.walletSource,
       otherWallet:values.otherWallet,
       isDocumentUpload:values.isDocumentUpload,
-      documents:this.state.cryptoData?.documents ||this.state.details.documents
+      docRepositories:this.state.cryptoData?.docRepositories ||this.state.details.docRepositories
       
     }
     if (this.state.cryptoData.id !== "00000000-0000-0000-0000-000000000000") {
       obj.id = this.state.cryptoData.id;
     }
-    this.setState({ ...this.state, isBtnLoading: true })
+    this.setState({ ...this.state, isBtnLoading: true ,errorMessage:null})
     let response = await saveCryptoData(obj)
     if (response.ok) {
-      this.setState({ ...this.state, isBtnLoading: false })
+      this.setState({ ...this.state, isBtnLoading: false,errorMessage:null })
       if ((window?.location?.pathname.includes('addressbook') || this.props.isSave)&& this.props.type === "manual") {
         if(!(this.state.cryptoData.adressstate ==="Approved" && this.state.cryptoData.isProofofOwnership===false) ||(this.state.cryptoData.walletSource===null && (this.state.cryptoData.isOwnerOfWalletAddress ||this.state.cryptoData.isOwnerOfWalletAddress===null))){
           this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true,showDeclartionApproved: false,approvedAddress:false });
-        }else if((obj.documents?.details?.length===0 ||obj.documents===undefined ||obj.documents===null || this.state.cryptoData?.documents===undefined) && this.state.cryptoData.adressstate ==="Approved" && this.state.cryptoData.isProofofOwnership===false){
+        }else if((obj.docRepositories?.length===0 ||obj.documents===undefined ||obj.documents===null || this.state.cryptoData?.documents===undefined) && this.state.cryptoData.adressstate ==="Approved" && this.state.cryptoData.isProofofOwnership===false){
           this.setState({ ...this.state, errorMessage: null, isBtnLoading: false,showDeclartion:false, showDeclartionApproved: false,approvedAddress:true });
         }
         else{
@@ -213,13 +219,14 @@ this.useDivRef.current?.scrollIntoView(0, 0);
   }
   }
   editDocuments=(docs)=>{
-      let { documents } = this.state.details;
+    debugger
+      let { docRepositories } = this.state.details;
       if(this.state.isEdit){
-          documents = docs;
+        docRepositories = docs;
       } else{
-          documents = docs;
+        docRepositories = docs;
       }
-      this.setState({ ...this.state, details: { ...this.state.details, documents } })
+      this.setState({ ...this.state, details: { ...this.state.details, docRepositories } })
   
   }
   handleDocCheck=(e)=>{
