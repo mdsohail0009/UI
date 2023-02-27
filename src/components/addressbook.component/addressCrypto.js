@@ -514,7 +514,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
                                         </Paragraph>
                             <AddressCryptoDocument 
 
-                            documents={this.state.cryptoData?.documents|| null}
+                            documents={this.state.cryptoData?.docRepositories|| null}
                             editDocument={this.state.isEdit} onDocumentsChange={(docs) =>this.editDocuments(docs) } 
                             />
                         </ Col></>}
