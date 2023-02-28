@@ -45,7 +45,6 @@ const AddressCryptoView = (props) => {
 	
 
 	const docPreviewOpen = (data) => {
-		debugger
 		setDocPreviewModal(true)
 		setDocPreviewDetails({ id: data.id, fileName: data.fileName })
 	  }

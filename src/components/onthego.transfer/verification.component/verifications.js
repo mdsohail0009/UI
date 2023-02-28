@@ -36,7 +36,6 @@ const Verifications = (props) => {
             }
     }, [phoneSeconds]);//eslint-disable-line react-hooks/exhaustive-deps
     useEffect(() => {
-        debugger
         if(emailSeconds===0 && email.btnName==='code_Sent'){
             setEmail({ ...email, btnName: 'resendotp', code: '' });
         }else if(emailSeconds===0 && email.btnName=== 'verifyOtpBtn'){

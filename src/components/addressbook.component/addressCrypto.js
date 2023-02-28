@@ -61,7 +61,6 @@ class AddressCrypto extends Component {
     }
   }
   getCryptoData = async () => {
-    debugger
     let id = this.props?.addressBookReducer?.selectedRowData?.id ||this.props.cryptoId || "00000000-0000-0000-0000-000000000000";
     this.setState({ ...this.state, isLoading: true })
     let response = await getCryptoData(id);
@@ -77,7 +76,7 @@ class AddressCrypto extends Component {
 
   
   coinList = async () => {
-    debugger
+    
     let response = await getCoinList("All")
     if (response.ok) {
       this.setState({ ...this.state, coinsList: response.data, isLoading: false })
@@ -142,7 +141,6 @@ if (res.ok){
 
   }
   submit = async (values) => {
-    let data=this.state.details?.docRepositories?.filter((item)=>item.state!=="Deleted")?.length===0 ;
     if (!values.isOwnerOfWalletAddress && process.env.REACT_APP_ISTR == "true") {
 			this.setState({
 				...this.state,
@@ -151,17 +149,18 @@ if (res.ok){
 			});
 			this.useDivRef.current?.scrollIntoView(0, 0);
 		}
-    else if((values.isDocumentUpload===true &&
-       ((this.state.cryptoData?.docRepositories===null &&this.state.isEdit===true && values?.files===undefined) ||
-       this.state.cryptoData?.docRepositories?.length==0||
-      this.state.details.docRepositories?.length ==0 || data===true || data===undefined))){
-      this.setState({
-				...this.state,
-        errorMessage:"At least one document is required",
-				
-			});
-this.useDivRef.current?.scrollIntoView(0, 0); 
+
+else if((values.isDocumentUpload===true && this.state.cryptoData?.docRepositories?.length==0 && this.state.isEdit===true && (values?.files?.fileList?.length === 0 || values?.files?.fileList?.length == undefined) )){
+  this.setState({
+    ...this.state,
+    errorMessage:"At least one document is required",
+    
+  });
+  this.useDivRef.current?.scrollIntoView(0, 0); 
 }
+  
+
+
     else{
     let obj = {
       id: "00000000-0000-0000-0000-000000000000",
@@ -218,7 +217,6 @@ this.useDivRef.current?.scrollIntoView(0, 0);
   }
   }
   editDocuments=(docs)=>{
-    debugger
       let { docRepositories } = this.state.details;
       if(this.state.isEdit){
         docRepositories = docs;
@@ -451,7 +449,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
 								valuePropName="checked"
 								required
 							>				
-								<div className={`d-flex  agree-check checkbox-mobile align-center`}>
+								<div className={`d-flex  agree-check checkbox-mobile align-center travel-custcheck`}>
 						<label>
 							<input
               
@@ -493,7 +491,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
               />
 						</label>
 						<div
-							className="cust-agreecheck d-flex align-center"
+							className="cust-agreecheck d-flex align-center travel-custcheck"
 							>
                I may perform transactions greater than 15,000 CHF with this address
 						</div>

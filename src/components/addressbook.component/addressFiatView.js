@@ -252,7 +252,23 @@ const AddressFiatView = (props) => {
 															: fiatAddress?.postalCode}
 													</div>
 												</div>
-											</Col>}
+											</Col>}											
+											{bankDetailes[0]?.ukSortCode && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+												<div className="kpi-divstyle ad-rec-detyails">
+													<label className="kpi-label">UkSortCode</label>
+													<div className="kpi-val">
+														{bankDetailes[0]?.ukSortCode}
+													</div>
+												</div>
+											</Col>}	
+											{bankDetailes[0]?.accountNumber && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+												<div className="kpi-divstyle ad-rec-detyails">
+													<label className="kpi-label">Account Number</label>
+													<div className="kpi-val">
+														{bankDetailes[0]?.accountNumber}
+													</div>
+												</div>
+											</Col>	}	
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Address State</label>
@@ -260,8 +276,7 @@ const AddressFiatView = (props) => {
 														{bankDetailes[0]?.addressState}
 													</div>
 												</div>
-											</Col>
-											
+											</Col>								
 										</Row>
 										<Title className="basicinfo  abbook-title-mt">
 										   Recipient Bank Details

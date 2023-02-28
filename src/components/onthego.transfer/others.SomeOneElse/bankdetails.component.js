@@ -674,7 +674,7 @@ class PayeeBankDetails extends Component {
                         />
                     </Form.Item>
                 </Col>
-                <Paragraph className="adbook-head" >Compliance</Paragraph>
+               { this.props.GoType === "Onthego" && <><Paragraph className="adbook-head" >Compliance</Paragraph>
                 { <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
@@ -709,7 +709,7 @@ class PayeeBankDetails extends Component {
                             maxLength={100}
                         ></TextArea>
                     </Form.Item>
-                </Col>}
+                </Col>}</>}
 
             </>
         }
