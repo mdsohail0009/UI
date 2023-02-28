@@ -79,36 +79,31 @@ class AddressCryptoDocument extends Component {
       });
     }
   };
-  deleteDoc = () => {
+  deleteDoc=()=>{
     let { documents: docs } = this.state;
-    let files = docs || docs.details;
-    for (var k in files) {
-      if (files[k].id === this.state.selectedObj?.id) {
-        files[k].state = "Deleted";
-        files[k].isChecked = false;
-      }
+    let files = docs;
+    for(var k in files){
+        if(files[k].id===this.state.selectedObj?.id){
+            files[k].state='Deleted';
+            files[k].isChecked=false;
+        }
     }
-    let obj = Object.assign([], files);
-    let { filesList } = this.state;
-    if (!this.state?.isEdit) {
-      filesList.splice(this.state.selectedFileIdx, 1);
-      obj.splice(this.state.selectedFileIdx, 1);
+    let obj=Object.assign([],files)
+    let {filesList}=this.state
+    if(!this.state?.isEdit){
+        filesList.splice(this.state.selectedFileIdx, 1);
+        obj.splice(this.state.selectedFileIdx, 1);
     }
-    files?.map((file, indx) => {
-      if (
-        file.id === "00000000-0000-0000-0000-000000000000" &&
-        indx === this.state.selectedFileIdx &&
-        file.state !== "Deleted" &&
-        this.state?.isEdit
-      ) {
-        filesList.splice(indx, 1);
-        obj.splice(indx, 1);
-      }
-    });
-    this.setState({ ...this.state, filesList, showDeleteModal: false });
-    docs = Object.assign([], obj);
+    files?.map((file, indx) =>{
+        if (file.id === "00000000-0000-0000-0000-000000000000"&& indx === this.state.selectedFileIdx &&  file.state !== "Deleted"  && this.state?.isEdit) {
+            filesList.splice(indx, 1);
+            obj.splice(indx, 1);
+        }
+    })
+    this.setState({ ...this.state, filesList, showDeleteModal: false,filesList:[] });
+    docs=Object.assign([],obj)
     this.props?.onDocumentsChange(docs);
-  };
+}
 
 
   docPreviewClose = () => {
@@ -180,7 +175,7 @@ class AddressCryptoDocument extends Component {
                           (item.name || item.fileName).indexOf(".") !=
                           (item.name || item.fileName).lastIndexOf(".")
                       ).length == 0;
-                      {console.log(isValidFiles)}
+                    
                     if (isValidFiles) {
                       return Promise.resolve();
                     } else {
@@ -210,59 +205,41 @@ class AddressCryptoDocument extends Component {
                 }
                 showUploadList={false}
                 beforeUpload={(props) => {}}
-                headers={{
-                  Authorization: `Bearer ${this.props.user.access_token}`
-                }}
-                onChange={({ file }) => {
-                  this.setState({ ...this.state, isDocLoading: true });
-                  if (file.status === "done") {
-                    let fileType = {
-                      "image/png": true,
-                      "image/jpg": true,
-                      "image/jpeg": true,
-                      "image/PNG": true,
-                      "image/JPG": true,
-                      "image/JPEG": true,
-                      "application/pdf": true,
-                      "application/PDF": true,
-                      "video/mp4": true,
-                      "application/mp4": true,
-                      "audio/mp4": true,
-                      "application/x-troff-msvideo": true,
-                      "video/avi": true,
-                      "video/msvideo": true,
-                      "video/x-msvideo": true,
-                      "video/quicktime": true,
-                      "video/x-ms-wmv": true
-                    };
-                    if (fileType[file.type]) {
-                      let { filesList: files } = this.state;
-                      files.push(file);
-                      this.setState({
-                        ...this.state,
-                        filesList: files,
-                        isDocLoading: false,
-                        errorMessage: null
-                      });
-                      let { documents: docs } = this.state;
-                      docs?.details?.push(this.docDetail(file));
-                      this.props?.onDocumentsChange(docs.details);
-                    } else {
-                      this.setState({
-                        ...this.state,
-                        isDocLoading: false,
-                        errorMessage:
-                          "File is not allowed. You can upload jpg, png, jpeg, pdf, mp4, mov, wmv, avi files"
-                      });
-                    }
-                  } else if (file.status === "error") {
-                    this.setState({
-                      ...this.state,
-                      isDocLoading: false,
-                      errorMessage: file?.response
-                    });
-                  }
-                }}
+                headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
+                            onChange={({ file }) => {
+                                this.setState({ ...this.state, isDocLoading: true });
+                                if (file.status === "done") {
+                                    let fileType = 
+                                    {  "image/png": true,
+                                    "image/jpg": true,
+                                    "image/jpeg": true,
+                                    "image/PNG": true,
+                                    "image/JPG": true,
+                                    "image/JPEG": true,
+                                    "application/pdf": true,
+                                    "application/PDF": true,
+                                    "video/mp4": true,
+                                    "application/mp4": true,
+                                    "audio/mp4": true,
+                                    "application/x-troff-msvideo": true,
+                                    "video/avi": true,
+                                    "video/msvideo": true,
+                                    "video/x-msvideo": true,
+                                    "video/quicktime": true,
+                                    "video/x-ms-wmv": true }
+                                    if (fileType[file.type]) {
+                                        //this.setState({...this.state,documents:file.response})
+                                        let { filesList: files } = this.state;
+                                        files?.push(this.docDetail(file));
+                                        this.setState({ ...this.state, filesList: files, isDocLoading: false, errorMessage: null });
+                                        this.props?.onDocumentsChange(files);
+                                    }else{
+                                        this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg and PDF  files" }) 
+                                    }
+                                }else if(file.status ==='error'){
+                                    this.setState({ ...this.state, isDocLoading: false,errorMessage:file?.response });
+                                }
+                            }}
               >
                 <p className="ant-upload-drag-icon">
                   <span className="icon xxxl doc-upload" />
@@ -278,7 +255,7 @@ class AddressCryptoDocument extends Component {
             {this.state?.filesList?.map((file, indx) => (
               <div>
                 
-                  {(file.fileName !== null  && 
+                  {(file.state !='Deleted'  && 
                     <>
                       {" "}
                       <div className="docfile custom-upload cust-upload-sy">
@@ -311,8 +288,8 @@ class AddressCryptoDocument extends Component {
                             {file.name || file.fileName}
                           </EllipsisMiddle>
                           <span className="upload-filesize c-pointer">
-                            {file.size || file?.remarks
-                              ? bytesToSize(file.size || file?.remarks)
+                            {file.fileSize || file?.remarks
+                              ? bytesToSize(file.fileSize || file?.remarks)
                               : ""}
                           </span>
                         </div>

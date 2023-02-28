@@ -48,7 +48,6 @@ const AddressCryptoView = (props) => {
 		setDocPreviewModal(true)
 		setDocPreviewDetails({ id: data.id, fileName: data.fileName })
 	  }
-	  console.log(docPreviewDetails)
 
 	const docPreviewClose = () => {
 		setDocPreviewModal(false)
@@ -185,7 +184,7 @@ const AddressCryptoView = (props) => {
 																	</EllipsisMiddle>
 																)}
 																<span className="fs-12 text-secondary">
-																	{bytesToSize(file.remarks)}
+																	{bytesToSize(file.fileSize)}
 																</span>
 															</div>
 														</div>
