@@ -77,6 +77,7 @@ class Home extends Component {
                 <Translate content="Dashboard" component={Title} className="db-main-title" />
                 <span className='acount-type'>{this.props.userProfileInfo?.isBusiness==true?"Business":"Personal"}</span>
             </div>
+            {this.state.permissions.Notices && <Notices />}
                 <Row justify="center mt-16" gutter={[16,16]}>
                 <Col xs={24} md={12} xl={15} lg={15} xxl={15} className="db-flex-style">
                         
@@ -89,7 +90,6 @@ class Home extends Component {
                                 <Wallets />
                             </div>                     
                         </>}
-                        {this.state.permissions.Notices && <Notices />}
                         {this.state.permissions.Transactions && <Portfolio
                             crypto="Bitcoin"
                             crypto_value='0.00'
