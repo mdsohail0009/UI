@@ -41,7 +41,7 @@ class BusinessTransfer extends Component {
         this.loadDetails();
     }
     loadDetails = async () => {
-        this.setState({ ...this.state, errorMessage: null, isLoading: true,details:this.props.transferData });
+        this.setState({ ...this.state, errorMessage: null, isLoading: true,details:this.props.transferData,documents:this.props.transferData?.payeeAccountModels[0]?.docrepoitory });
             let data = this.props.transferData;
             let edit=false;
             if (!data?.payeeAccountModels) {
@@ -106,6 +106,7 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].bic=ibanDetails?.routingNumber;
        
         _obj.payeeAccountModels[0].iban = values?.iban ? values?.iban : this.form.current?.getFieldValue('iban');
+        _obj.payeeAccountModels[0].docrepoitory =  this.state?.documents
         if(isEdit){
             _obj.id = isSelectedId? isSelectedId:details?.payeeId;
         }
@@ -115,12 +116,11 @@ class BusinessTransfer extends Component {
                 this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
         delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
         this.setState({ ...this.state, errorMessage: null, isLoading: false, isBtnLoading: true });
-       // _obj.payeeAccountModels[0]?.docrepoitory = this.state.documents;
         let temp = JSON.parse(JSON.stringify(_obj))
         //temp.payeeAccountModels[0].docrepoitory = _obj.payeeAccountModels[0]?.docrepoitory?.transfer ||_obj.payeeAccountModels[0]?.documents?.payee
        temp.payeeAccountModels[0].docrepoitory =  this.state?.documents
 
-        const response = await savePayee(this.state.isEdit ? _obj : temp);   
+        const response = await savePayee(_obj);   
         
         if (response.ok) {
             if (this.props.type !== "manual") {
