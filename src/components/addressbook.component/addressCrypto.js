@@ -141,7 +141,6 @@ if (res.ok){
 
   }
   submit = async (values) => {
-    let data=this.state.details?.docRepositories?.filter((item)=>item.state!=="Deleted")?.length===0 ;
     if (!values.isOwnerOfWalletAddress && process.env.REACT_APP_ISTR == "true") {
 			this.setState({
 				...this.state,
@@ -150,17 +149,18 @@ if (res.ok){
 			});
 			this.useDivRef.current?.scrollIntoView(0, 0);
 		}
-    else if((values.isDocumentUpload===true &&
-       ((this.state.cryptoData?.docRepositories===null &&this.state.isEdit===true && values?.files===undefined) ||
-       this.state.cryptoData?.docRepositories?.length==0||
-      this.state.details.docRepositories?.length ==0 || data===true || data===undefined))){
-      this.setState({
-				...this.state,
-        errorMessage:"At least one document is required",
-				
-			});
-this.useDivRef.current?.scrollIntoView(0, 0); 
+
+else if((values.isDocumentUpload===true && this.state.cryptoData?.docRepositories?.length==0 && this.state.isEdit===true && (values?.files?.fileList?.length === 0 || values?.files?.fileList?.length == undefined) )){
+  this.setState({
+    ...this.state,
+    errorMessage:"At least one document is required",
+    
+  });
+  this.useDivRef.current?.scrollIntoView(0, 0); 
 }
+  
+
+
     else{
     let obj = {
       id: "00000000-0000-0000-0000-000000000000",
