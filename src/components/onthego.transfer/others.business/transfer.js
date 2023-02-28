@@ -341,7 +341,7 @@ class BusinessTransfer extends Component {
 						</Form.Item>
 					</Col>
                 </>}
-                        <PayeeBankDetails currency={this.props.currency}  />
+                        <PayeeBankDetails currency={this.props.currency} GoType={this.props.types} />
                     </Row>
                   { this.props.currency !="GBP" && <h2 className="adbook-head">Recipient's Details</h2>}
                     <Row>
@@ -815,7 +815,7 @@ class BusinessTransfer extends Component {
                         </Spin>
                        
                     </div>
-                    <PayeeBankDetails currency={this.props.currency} createPayeeObj={this.props.transferData}/>
+                    <PayeeBankDetails currency={this.props.currency} createPayeeObj={this.props.transferData} GoType={this.props?.types}/>
                         {this.props?.type !== "manual" && this.props.currency !="GBP"&& <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label"

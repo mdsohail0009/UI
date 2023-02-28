@@ -207,7 +207,7 @@ class OthersBusiness extends Component {
                     </div>
             </div></div>
         }
-        if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} transferData={this.state.objData} updatedHeading={this.props?.headingUpdate} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} currency={this.props.currency} /> }
+        if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} transferData={this.state.objData} updatedHeading={this.props?.headingUpdate} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} currency={this.props.currency} types={this.props.ontheGoType}/> }
         else {
             return <><div ref={this.useDivRef}>
                 {this.props.currency !="CHF" && <h2 className="adbook-head">SEPA Transfer</h2>}
@@ -552,9 +552,9 @@ class OthersBusiness extends Component {
                             maxLength={50}
                         />
                     </Form.Item>
-                </Col>
-                <Paragraph className="adbook-head" >Compliance</Paragraph></>}
-                    {this.props.ontheGoType === "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                </Col></>}
+               { this.props.ontheGoType === "Onthego" && <><Paragraph className="adbook-head" >Compliance</Paragraph>
+                    <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label"
                                 name="reasonOfTransfer"
@@ -588,7 +588,7 @@ class OthersBusiness extends Component {
                                 maxLength={100}
                             ></TextArea>
                             </Form.Item>
-                        </Col>}
+                        </Col></>}
                         {this.props.type !== "manual" && 
                         (<React.Fragment>
                         <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
@@ -599,41 +599,6 @@ class OthersBusiness extends Component {
                             }} />
                         </React.Fragment>)
                         }
-                         {this.props.type === "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item
-                                className="custom-forminput custom-label"
-                                name="reasonOfTransfer"
-                                required
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: apiCalls.convertLocalLang("is_required"),
-                                    },
-                                    {
-                                        whitespace: true,
-                                        message: apiCalls.convertLocalLang("is_required"),
-                                    },
-                                    {
-                                        validator: validateContentRule,
-                                    },
-                                ]}
-                                label={
-                                    <Translate
-                                        content="reasiontotransfor"
-                                        component={Form.label}
-                                    />
-                                }
-                            >
-                            <TextArea
-                                placeholder={apicalls.convertLocalLang(
-                                    "reasiontotransfor"
-                                )}
-                                className="cust-input cust-text-area address-book-cust"
-                                autoSize={{ minRows: 1, maxRows: 2 }}
-                                maxLength={100}
-                            ></TextArea>
-                            </Form.Item>
-                        </Col>}
                         {this.props.type === "manual" && this.props.currency != "EUR" &&
                         (<React.Fragment>
                         <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
