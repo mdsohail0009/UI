@@ -142,7 +142,7 @@ class Portfolio extends Component {
                        }
                       
                    
-                    <div className='transaction-custom-table'>
+                    <div className='transaction-custom-table db-transactions'>
 
                         <div className="responsive_table db-ts-grid">
                             <table className='pay-grid view mb-view'>
@@ -151,7 +151,7 @@ class Portfolio extends Component {
                                         {/* <th style={{width: "5%"}}></th> */}
                                         <th style={{width: "18%"}}>Date</th>
                                         <th style={{width: "15%"}}>Wallet</th>
-                                       
+                                        <th style={{width: "15%"}}>Type</th>
                                         <th style={{width: "15%"}}>Value</th>
                                         <th style={{width: "15%"}}>State</th>
                                     </tr>
@@ -182,7 +182,7 @@ class Portfolio extends Component {
                                                             </td>
                                                      <td><div className='ts-wallet'>
                                                         <Title className='ts-coin'>{item.wallet}</Title>
-                                                     <Title className='ts-type'>{item.type}</Title></div></td>
+                                                        </div></td> <td><div className='ts-wallet'> <Title className='ts-type'>{item.type}</Title></div></td>
 
                                                         <td>{this.getNumberVal(item)}</td>
                                                         <td>{item.state} </td>
