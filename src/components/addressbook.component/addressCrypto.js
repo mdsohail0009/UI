@@ -180,8 +180,8 @@ else if((values.isDocumentUpload===true && this.state.cryptoData?.docRepositorie
       walletSource:values.walletSource,
       otherWallet:values.otherWallet,
       isDocumentUpload:values.isDocumentUpload,
-      docRepositories:this.state.cryptoData?.docRepositories ||this.state.details.docRepositories
-      
+      //docRepositories:this.state.cryptoData?.docRepositories ||this.state.details.docRepositories 
+      docRepositories:this.state.cryptoData?.docRepositories?.length > 0 ? this.state.cryptoData?.docRepositories :this.state.details.docRepositories 
     }
     if (this.state.cryptoData.id !== "00000000-0000-0000-0000-000000000000") {
       obj.id = this.state.cryptoData.id;
