@@ -81,7 +81,7 @@ class AddressCryptoDocument extends Component {
   };
   deleteDoc = () => {
     let { documents: docs } = this.state;
-    let files = docs;
+    let files = docs || docs.details;
     for (var k in files) {
       if (files[k].id === this.state.selectedObj?.id) {
         files[k].state = "Deleted";
@@ -206,7 +206,7 @@ class AddressCryptoDocument extends Component {
                   process.env.REACT_APP_UPLOAD_API +
                   "api/v1/" +
                   ApiControllers.common +
-                  "UploadFileNew?screenName=Addressbook Fiat&fieldName=uploadfile&tableName=Common.Payeeaccounts"
+                  "UploadFileNew?screenName=Addressbook Crypto&fieldName=uploadfile&tableName=Common.Payeeaccounts"
                 }
                 showUploadList={false}
                 beforeUpload={(props) => {}}
@@ -214,7 +214,6 @@ class AddressCryptoDocument extends Component {
                   Authorization: `Bearer ${this.props.user.access_token}`
                 }}
                 onChange={({ file }) => {
-                    debugger
                   this.setState({ ...this.state, isDocLoading: true });
                   if (file.status === "done") {
                     let fileType = {

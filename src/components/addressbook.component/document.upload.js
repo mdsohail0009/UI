@@ -66,7 +66,7 @@ class AddressDocumnet extends Component {
                                 process.env.REACT_APP_UPLOAD_API +
                                 "api/v1/" +
                                 ApiControllers.common +
-                               `UploadFileNew?screenName=Addressbook Crypto&fieldName=uploadfile&tableName=Common.Payeeaccounts`
+                               `UploadFileNew?screenName=Addressbook Fiat&fieldName=uploadfile&tableName=Common.Payeeaccounts`
                               }
                             showUploadList={false}
                             beforeUpload={(props) => {
@@ -137,7 +137,7 @@ class AddressDocumnet extends Component {
                             className="primary-btn pop-btn detail-popbtn"
                             onClick={() => {
                                 let { documents: docs } = this.state;
-                                let files = docs.details ;
+                                let files = docs.details || docs;
                                 for(var k in files){
                                     if(files[k].id===this.state.selectedObj?.id){
                                         files[k].state='Deleted';
@@ -155,6 +155,7 @@ class AddressDocumnet extends Component {
                                         obj.splice(indx, 1);
                                     }
                                 })
+                               
                                 this.setState({ ...this.state, filesList, showDeleteModal: false });
                                 docs=Object.assign([],obj)
                                 this.props?.onDocumentsChange(docs);
