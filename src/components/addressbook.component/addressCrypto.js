@@ -449,7 +449,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
 								valuePropName="checked"
 								required
 							>				
-								<div className={`d-flex  agree-check checkbox-mobile align-center`}>
+								<div className={`d-flex  agree-check checkbox-mobile align-center travel-custcheck`}>
 						<label>
 							<input
               
@@ -491,7 +491,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
               />
 						</label>
 						<div
-							className="cust-agreecheck d-flex align-center"
+							className="cust-agreecheck d-flex align-center travel-custcheck"
 							>
                I may perform transactions greater than 15,000 CHF with this address
 						</div>
