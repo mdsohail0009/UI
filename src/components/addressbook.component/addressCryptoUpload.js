@@ -37,7 +37,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 class AddressCryptoDocument extends Component {
   state = {
     filesList: [],
-    documents: {},
+    documents: [],
     showDeleteModal: false,
     isDocLoading: false,
     selectedObj: {},
@@ -46,7 +46,6 @@ class AddressCryptoDocument extends Component {
     previewPath: null, docPreviewDetails: null,
   };
   componentDidMount() {
-    debugger
     let propsDocument =
       JSON.stringify(this.props?.documents) ==
       JSON.stringify({ transfer: "", payee: "" })
@@ -62,12 +61,11 @@ class AddressCryptoDocument extends Component {
   }
 
   docDetail = (doc) => {
-    debugger
     return {
       id: doc?.response?.id || "00000000-0000-0000-0000-000000000000",
       fileName: doc?.response?.fileName,
       state: "",
-      fileSize:doc?.response?.fileSize
+      fileSize:doc?.response?.fileSize,
     };
   };
   docPreview = async (file) => {
@@ -83,7 +81,7 @@ class AddressCryptoDocument extends Component {
   };
   deleteDoc = () => {
     let { documents: docs } = this.state;
-    let files = docs;
+    let files = docs || docs.details;
     for (var k in files) {
       if (files[k].id === this.state.selectedObj?.id) {
         files[k].state = "Deleted";
@@ -182,6 +180,7 @@ class AddressCryptoDocument extends Component {
                           (item.name || item.fileName).indexOf(".") !=
                           (item.name || item.fileName).lastIndexOf(".")
                       ).length == 0;
+                      {console.log(isValidFiles)}
                     if (isValidFiles) {
                       return Promise.resolve();
                     } else {
@@ -198,6 +197,7 @@ class AddressCryptoDocument extends Component {
                 }
               ]}
             >
+                 
               <Dragger
                 accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG ,.mp4,.wmv,.avi,.mov"
                 className="upload mt-4"
@@ -206,7 +206,7 @@ class AddressCryptoDocument extends Component {
                   process.env.REACT_APP_UPLOAD_API +
                   "api/v1/" +
                   ApiControllers.common +
-                  "UploadFileNew?screenName=Addressbook Fiat&fieldName=uploadfile&tableName=Common.Payeeaccounts"
+                  "UploadFileNew?screenName=Addressbook Crypto&fieldName=uploadfile&tableName=Common.Payeeaccounts"
                 }
                 showUploadList={false}
                 beforeUpload={(props) => {}}
@@ -311,8 +311,8 @@ class AddressCryptoDocument extends Component {
                             {file.name || file.fileName}
                           </EllipsisMiddle>
                           <span className="upload-filesize c-pointer">
-                            {file.fileSize || file?.remarks
-                              ? bytesToSize(file.fileSize || file?.remarks)
+                            {file.size || file?.remarks
+                              ? bytesToSize(file.size || file?.remarks)
                               : ""}
                           </span>
                         </div>
