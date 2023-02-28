@@ -33,6 +33,7 @@ class AddressDocumnet extends Component {
             "id": doc?.response?.id || "00000000-0000-0000-0000-000000000000" || this.state.documents.id,
             "fileName": doc.name,
             "state": "",
+            "fileSize":doc?.response?.fileSize
         }
     }
   
@@ -79,12 +80,9 @@ class AddressDocumnet extends Component {
                                     if (fileType[file.type]) {
                                         //this.setState({...this.state,documents:file.response})
                                         let { filesList: files } = this.state;
-                                        files.push(file);
+                                        files?.push(this.docDetail(file));
                                         this.setState({ ...this.state, filesList: files, isDocLoading: false, errorMessage: null });
-                                        
-                                        let { documents: docs } = this.state;
-                                        docs?.details?.push(this.docDetail(file));
-                                        this.props?.onDocumentsChange(docs.details);
+                                        this.props?.onDocumentsChange(files);
                                     }else{
                                         this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg and PDF  files" }) 
                                     }
@@ -110,7 +108,7 @@ class AddressDocumnet extends Component {
                             <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "":(file.fileName?.slice(-3) === "zip" ? "file" : "")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.fileName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                             <div className="docdetails">
                                 <EllipsisMiddle suffixCount={6}>{file.name || file.fileName}</EllipsisMiddle>
-                                <span className="upload-filesize">{(file.size || file?.remarks) ? bytesToSize(file.size || file?.remarks) : ""}</span>
+                                <span className="upload-filesize">{(file.fileSize || file?.remarks) ? bytesToSize(file.fileSize || file?.remarks) : ""}</span>
                             </div>
                             <span className="icon md close c-pointer" onClick={() => {
                                 this.setState({ ...this.state, showDeleteModal: true, selectedFileIdx: indx,selectedObj:file })

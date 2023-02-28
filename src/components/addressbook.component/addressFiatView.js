@@ -510,7 +510,7 @@ const AddressFiatView = (props) => {
 																	</EllipsisMiddle>
 																)}
 																<span className="fs-12 text-secondary">
-																	{bytesToSize(file.remarks)}
+																	{bytesToSize(file.fileSize)}
 																</span>
 															</div>
 														</div>
