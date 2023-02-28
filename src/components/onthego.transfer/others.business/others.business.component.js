@@ -35,6 +35,8 @@ class OthersBusiness extends Component {
         isValidateMsg: false,
         objData:{},
         editData:{},
+        documents:null
+
     };
     componentDidMount() {
         this.loadDetails();
@@ -45,10 +47,11 @@ class OthersBusiness extends Component {
         if (response.ok) {
             let edit=false;
             let data = response.data;
-            this.setState({ ...this.state, objData: data, editData:response.data,});
+            this.setState({ ...this.state, objData: data, editData:response.data,documents:response.data?.payeeAccountModels[0]?.docrepoitory});
             if (!data?.payeeAccountModels) {
                 data.payeeAccountModels = [payeeAccountObj()];
-                data.payeeAccountModels[0].documents = {"transfer": "", "payee": ""}
+                //data.payeeAccountModels[0].docrepoitory = {"transfer": "", "payee": ""}
+                data.payeeAccountModels[0].docrepoitory = []
             }
             if (this.props.selectedAddress?.id) {
                 const accountDetails = data.payeeAccountModels[0];
@@ -153,26 +156,33 @@ class OthersBusiness extends Component {
         _obj.payeeAccountModels[0].currencyType = "Fiat";
         _obj.payeeAccountModels[0].walletCode = this.props.currency;
         _obj.payeeAccountModels[0].bankName = ibanDetails?.bankName;
+        _obj.payeeAccountModels[0].docrepoitory =  this.state?.documents
+
         delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
         
         _obj.addressType = "otherbusiness";
         _obj.transferType = "sepa";
         _obj.amount = this.props.amount;
         if(isEdit){
-            _obj.id = isSelectedId ? isSelectedId : details?.payeeId;
+            _obj.id = isSelectedId? isSelectedId:details?.payeeId;
         }
-        if(_obj.payeeAccountModels[0].documents){
-            _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
-        }
-        this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });  
-
+        // if (_obj.payeeAccountModels[0].docrepoitory) {
+        //     _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
+        // }
+                this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
+        delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
+        this.setState({ ...this.state, errorMessage: null, isLoading: false, isBtnLoading: true });
         let temp = JSON.parse(JSON.stringify(_obj))
-        temp.payeeAccountModels[0].documents = _obj.payeeAccountModels[0]?.documents?.payee ||_obj.payeeAccountModels[0]?.documents?.transfer
+        //temp.payeeAccountModels[0].docrepoitory = _obj.payeeAccountModels[0]?.docrepoitory?.transfer ||_obj.payeeAccountModels[0]?.documents?.payee
+       temp.payeeAccountModels[0].docrepoitory =  this.state?.documents      
+       const response = await savePayee(_obj);   
 
-        const response = await savePayee(this.state.isEdit ? _obj : temp);        
-        if (response.ok) {
+       if (response.ok) {
             if (this.props.type !== "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer, documents: _obj.payeeAccountModels[0]?.documents?.transfer   })
+                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer, 
+                    //docrepoitory: _obj.payeeAccountModels[0]?.docrepoitory?.transfer  
+                    docrepoitory: _obj.payeeAccountModels[0]?.docrepoitory  
+                 })
                 if (confirmRes.ok) {
                     this.props.onContinue(confirmRes.data);
                     this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
@@ -346,15 +356,16 @@ class OthersBusiness extends Component {
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
-                            <AddressDocumnet documents={this.state.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
-                            let { payeeAccountModels } = this.state.details;
-                            if(this.state.isEdit){
-                                payeeAccountModels[0].documents = docs;
-                            } else{
-                                payeeAccountModels[0].documents.payee = docs;
-                            }
-                            this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
-                        }} />
+                            <AddressDocumnet 
+                            documents={this.state?.documents || this.props.transferData?.payeeAccountModels[0]?.docrepoitory} editDocument={this.state.isEdit} 
+                            onDocumentsChange={(docs) => {
+                               // let { payeeAccountModels } = this.state.details;
+                                //payeeAccountModels[0].docrepoitory.transfer = docs;
+                                //payeeAccountModels[0].docrepoitory = docs;
+                                //this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
+                            this.setState({...this.state,documents:docs})
+                            }} 
+                            />
                         </ Col>                        
                         <RecipientAddress />
 
@@ -592,21 +603,32 @@ class OthersBusiness extends Component {
                         {this.props.type !== "manual" && 
                         (<React.Fragment>
                         <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
-                            <AddressDocumnet documents={this.state.details?.payeeAccountModels[0].documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
-                                let { payeeAccountModels } = this.state.details;
-                                payeeAccountModels[0].documents.transfer = docs;
-                                this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
-                            }} />
+                        <AddressDocumnet 
+                            documents={this.state?.documents || this.props.transferData?.payeeAccountModels[0]?.docrepoitory} editDocument={this.state.isEdit} 
+                            onDocumentsChange={(docs) => {
+                               // let { payeeAccountModels } = this.state.details;
+                                //payeeAccountModels[0].docrepoitory.transfer = docs;
+                                //payeeAccountModels[0].docrepoitory = docs;
+                                //this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
+                            this.setState({...this.state,documents:docs})
+                            }} 
+                            
+                            />
                         </React.Fragment>)
                         }
                         {this.props.type === "manual" && this.props.currency != "EUR" &&
                         (<React.Fragment>
                         <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
-                            <AddressDocumnet documents={this.state.details?.payeeAccountModels[0].documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
-                                let { payeeAccountModels } = this.state.details;
-                                payeeAccountModels[0].documents.transfer = docs;
-                                this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
-                            }} />
+                        <AddressDocumnet 
+                            documents={this.state?.documents || this.props.transferData?.payeeAccountModels[0]?.docrepoitory} editDocument={this.state.isEdit} 
+                            onDocumentsChange={(docs) => {
+                               // let { payeeAccountModels } = this.state.details;
+                                //payeeAccountModels[0].docrepoitory.transfer = docs;
+                                //payeeAccountModels[0].docrepoitory = docs;
+                                //this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
+                            this.setState({...this.state,documents:docs})
+                            }} 
+                            />
                         </React.Fragment>)
                         }
                     <div className="">
