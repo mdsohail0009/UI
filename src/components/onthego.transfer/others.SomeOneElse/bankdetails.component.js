@@ -620,7 +620,7 @@ class PayeeBankDetails extends Component {
                     >
                         <Input
                             className="cust-input"
-                            placeholder="city"
+                            placeholder="City"
                             maxLength={50}
                         />
                     </Form.Item>

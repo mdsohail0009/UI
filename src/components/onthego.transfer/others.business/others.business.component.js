@@ -267,7 +267,7 @@ class OthersBusiness extends Component {
                             <Form.Item
                                 className="custom-forminput custom-label"
                                 name="beneficiaryName"
-                                label={"BussinessName"}
+                                label={"Bussiness Name"}
                                 required
                                 rules={[
                                     {
@@ -286,7 +286,7 @@ class OthersBusiness extends Component {
                                 <Input
                                     maxLength={100}
                                     className="cust-input"
-                                    placeholder={"BussinessName"}
+                                    placeholder={"Bussiness Name"}
                                 />
 
 
@@ -515,7 +515,7 @@ class OthersBusiness extends Component {
                     >
                         <Input
                             className="cust-input"
-                            placeholder="city"
+                            placeholder="City"
                             maxLength={50}
                         />
                     </Form.Item>
@@ -546,7 +546,7 @@ class OthersBusiness extends Component {
                     <Form.Item
                         className="custom-forminput custom-label"
                         name="postalCode"
-                        label="postCode"
+                        label="Post Code"
                         rules={[
                             {
                                 required: true,
@@ -559,7 +559,7 @@ class OthersBusiness extends Component {
                     >
                         <Input
                             className="cust-input"
-                            placeholder="postCode"
+                            placeholder="Post Code"
                             maxLength={50}
                         />
                     </Form.Item>
