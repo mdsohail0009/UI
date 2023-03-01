@@ -398,7 +398,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item
                 name="ukSortCode"
-                label="UkSortCode"
+                label="UkSort Code"
                 className="custom-label"
                 type="number"
                 rules={[
@@ -414,14 +414,14 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     className="cust-input value-field cust-addon mt-0"
                     customInput={Input}
                     prefix={""}
-                    placeholder="Enter UkSortCode"
+                    placeholder="Enter UkSort Code"
                     allowNegative={false}
                     maxlength={6}
                 />
             </Form.Item>
         </Col>
             }
-            {((currency === 'USD' && addressOptions.tabType != 'internationalIBAN')||(currency === "GBP" && addressOptions.tabType === 'domestic'))  && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            {(currency === 'USD' && addressOptions.tabType != 'internationalIBAN')  && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                     className="custom-forminput custom-label"
                     name="accountNumber"
@@ -453,6 +453,34 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     maxLength={50}/>
                 </Form.Item>
             </Col>}
+
+            {(currency === "GBP" && addressOptions.tabType === 'domestic') &&          
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            <Form.Item
+                name="accountNumber"
+                label="Account Number"
+                className="custom-label"
+                type="number"
+                rules={[
+                    {
+                        required: true,
+                        message: "Is required",
+                    },
+                    {
+                        validator: validateNumber
+                    }
+                ]}>
+                <NumberFormat
+                    className="cust-input value-field cust-addon mt-0"
+                    customInput={Input}
+                    prefix={""}
+                    placeholder="Enter Account Number"
+                    allowNegative={false}
+                    maxlength={8}
+                />
+            </Form.Item>
+        </Col>
+            }
                 {(currency === 'USD' && addressOptions.tabType === 'international')&& currency !="GBP" && currency !="CHF" && currency != 'EUR'&& <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
