@@ -89,7 +89,7 @@ const DocumentPreview = (props) => {
                 Close
               </Button>
               <a
-                 className="primary-btn pop-btn detail-popbtn"
+                 className="download-btn"
                 download={previewfileName}
                 href={`data:${mimetypefiles};base64,` + previewPath}
                 title="Download pdf document"
