@@ -100,7 +100,7 @@ class AddressCryptoDocument extends Component {
             obj.splice(indx, 1);
         }
     })
-    this.setState({ ...this.state, filesList, showDeleteModal: false,filesList:[] });
+    this.setState({ ...this.state, filesList, showDeleteModal: false });
     docs=Object.assign([],obj)
     this.props?.onDocumentsChange(docs);
 }
