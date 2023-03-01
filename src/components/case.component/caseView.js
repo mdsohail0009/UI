@@ -150,14 +150,14 @@ class CaseView extends Component {
         item.info = JSON.stringify(this.props.trackAuditLogData);
         item.customerId=this.props.userProfileInfo.id;
    const response = await saveDocReply(item);
-        if (response.ok) {
-            this.loadDocReplies(doc.id);
-            success('Document has been submitted');
-            this.updateDocRepliesStatus(doc, "Submitted");
-            this.setState({errorWarning:null })
-        } else {
-            warning(response.data);
-        }
+   if (response.ok) {
+    this.loadDocReplies(doc.id);
+    success('Document has been submitted');
+    this.updateDocRepliesStatus(doc, "Submitted");
+    this.setState({errorWarning:null,errorMessage:null})
+} else {
+  this.setState({...this.state,errorMessage:apicalls.isErrorDispaly(response)})  
+}
         let objs = [...this.state.docReplyObjs];
         objs = objs.filter(obj => obj.docunetDetailId !== doc.id);
        this.setState({ ...this.state, btnLoading: false, isMessageError: null});       
