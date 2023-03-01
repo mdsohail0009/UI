@@ -491,7 +491,7 @@ class CaseView extends Component {
                                                     type="error"
                                                     showIcon
                                                     closable={false}
-                                                    style={{ marginBottom: 0, marginTop: '16px' }}
+                                                    style={{ margin: '16px 0' }}
                                                 />}
                                                 {this.state.errorWarning !== undefined && this.state.errorWarning !== null && (
                                                     <div style={{ width: '100%' }}>
