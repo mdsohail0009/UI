@@ -546,7 +546,7 @@ class OthersBusiness extends Component {
                     <Form.Item
                         className="custom-forminput custom-label"
                         name="postalCode"
-                        label="post Code"
+                        label="Post Code"
                         rules={[
                             {
                                 required: true,
@@ -559,7 +559,7 @@ class OthersBusiness extends Component {
                     >
                         <Input
                             className="cust-input"
-                            placeholder="post Code"
+                            placeholder="Post Code"
                             maxLength={50}
                         />
                     </Form.Item>
