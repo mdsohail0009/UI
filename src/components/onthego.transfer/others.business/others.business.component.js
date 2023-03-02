@@ -47,7 +47,8 @@ class OthersBusiness extends Component {
         if (response.ok) {
             let edit=false;
             let data = response.data;
-            this.setState({ ...this.state, objData: data, editData:response.data,documents:response.data?.payeeAccountModels[0]?.docrepoitory});
+            this.setState({ ...this.state, objData: data, editData:response.data,
+            documents:response.data?.payeeAccountModels !=null ? response.data?.payeeAccountModels[0]?.docrepoitory :response.data?.payeeAccountModels});
             if (!data?.payeeAccountModels) {
                 data.payeeAccountModels = [payeeAccountObj()];
                 //data.payeeAccountModels[0].docrepoitory = {"transfer": "", "payee": ""}
