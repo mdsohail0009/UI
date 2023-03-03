@@ -110,7 +110,8 @@ class AddressCryptoDocument extends Component {
     this.setState({ ...this.state, previewModal: false, docPreviewDetails: null });
   };
   docPreviewOpen = (data) => {
-    this.setState({ ...this.state, previewModal: true, docPreviewDetails: { id: data?.response?.id, fileName: data?.response?.fileName } });
+    debugger
+    this.setState({ ...this.state, previewModal: true, docPreviewDetails: { id: data?.id, fileName: data?.fileName } });
   };
 
   DownloadUpdatedFile = async () => {

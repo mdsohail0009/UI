@@ -69,7 +69,7 @@ const SomeoneComponent = (props) => {
         obj.payeeAccountModels[0].currencyType = "Fiat";
         obj.payeeAccountModels[0].docrepoitory = documents?.payee || documents?.transfer || documents;
         obj.payeeAccountModels[0].walletCode = props.currency;
-        obj.payeeAccountModels[0].ukSortCode = values?.ukSortCode;
+        obj.payeeAccountModels[0].ukSortCode = values?.payeeAccountModels?.ukSortCode;
         obj.payeeAccountModels[0].accountNumber = values?.payeeAccountModels?.accountNumber;
         if (props.selectedAddress?.id) { obj.payeeAccountModels[0].id = createPayeeObj.payeeAccountModels[0].id; }
         obj['customerId'] = props.userProfile.id;

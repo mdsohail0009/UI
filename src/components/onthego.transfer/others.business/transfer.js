@@ -49,7 +49,7 @@ class BusinessTransfer extends Component {
             }
             if (this.props.selectedAddress?.id) {
                 const accountDetails = data.payeeAccountModels[0];
-                data = { ...data, ...accountDetails, line1: data.line1, line2: data.line2, line3: data.line3, bankAddress1: accountDetails.line1, bankAddress2: accountDetails.line2,ukSortCode:data.ukSortCode };
+                data = { ...data, ...accountDetails, line1: data.line1, line2: data.line2, line3: data.line3, bankAddress1: accountDetails.line1, bankAddress2: accountDetails.line2,ukSortCode:accountDetails.ukSortCode };
                 delete data["documents"];
                  edit = true;
             }
