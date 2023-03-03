@@ -126,7 +126,7 @@ class WithdrawSummary extends Component {
 				component={Link}
 				onClick={() =>
 					window.open(
-						"https://www.iubenda.com/terms-and-conditions/42856099",
+						"https://www.iubenda.com/terms-and-conditions/15084020",
 						"_blank"
 					)
 				}
