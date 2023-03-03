@@ -442,7 +442,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     className="cust-input value-field cust-addon mt-0"
                     customInput={Input}
                     prefix={""}
-                    placeholder="Enter UkSort Code"
+                    placeholder="UkSort Code"
                     allowNegative={false}
                     maxlength={6}
                 />
