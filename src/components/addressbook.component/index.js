@@ -180,9 +180,9 @@ class AddressBook extends Component {
 		},
 		{
 			field: "routingNumber",
-			title: apiCalls.convertLocalLang("BIC_SWIFT_ABArouting_number"),
+			title: "BIC/SWIFT/ABArouting/UKSort Code",
 			filter: true,
-			width: 310,
+			width: 360,
 		},
 		{
 			field: "bankName",

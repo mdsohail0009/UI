@@ -210,7 +210,7 @@ class BusinessTransfer extends Component {
         }
         return <div ref={this.useDivRef}><Tabs className="cust-tabs-fait" onChange={this.handleTabChange} activeKey={selectedTab}>
 
-            <Tabs.TabPane tab={this.props.currency=="USD" ?`Domestic ${this.props.currency} transfer` : `LOCAL  ${this.props.currency} TRANSFER`} className="text-white" key={"domestic"} disabled={this.state.isEdit}>
+            <Tabs.TabPane tab={this.props.currency=="USD" && `Domestic ${this.props.currency} transfer` || this.props.currency=="GBP" && `Local  ${this.props.currency} Transfer` ||  this.props.currency=="CHF" && `Swift  ${this.props.currency} Transfer`} className="text-white" key={"domestic"} disabled={this.state.isEdit}>
                 <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
               
                 <Form initialValues={details}
@@ -479,7 +479,7 @@ class BusinessTransfer extends Component {
 
             </Tabs.TabPane>}
 
-            <Tabs.TabPane tab={this.props.currency == "USD" ? `International ${this.props.currency} IBAN` : `INTERNATIONAL ${this.props.currency}  TRANSFER`} key={"internationalIBAN"} disabled={this.state.isEdit}>
+            <Tabs.TabPane tab={this.props.currency == "USD" && `International ${this.props.currency} IBAN` || this.props.currency == "GBP" && `International ${this.props.currency}  Transfer` || this.props.currency == "CHF" && `Iban ${this.props.currency}  Transfer`} key={"internationalIBAN"} disabled={this.state.isEdit}>
             <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
          
                 <Form initialValues={details}
