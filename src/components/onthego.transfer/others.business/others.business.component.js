@@ -47,10 +47,10 @@ class OthersBusiness extends Component {
         if (response.ok) {
             let edit=false;
             let data = response.data;
-            this.setState({ ...this.state, objData: data, editData:response.data,documents:response.data?.payeeAccountModels[0]?.docrepoitory});
+            this.setState({ ...this.state, objData: data, editData:response.data,
+            documents:response.data?.payeeAccountModels !=null ? response.data?.payeeAccountModels[0]?.docrepoitory :response.data?.payeeAccountModels});
             if (!data?.payeeAccountModels) {
                 data.payeeAccountModels = [payeeAccountObj()];
-                //data.payeeAccountModels[0].docrepoitory = {"transfer": "", "payee": ""}
                 data.payeeAccountModels[0].docrepoitory = []
             }
             if (this.props.selectedAddress?.id) {
@@ -166,21 +166,17 @@ class OthersBusiness extends Component {
         if(isEdit){
             _obj.id = isSelectedId? isSelectedId:details?.payeeId;
         }
-        // if (_obj.payeeAccountModels[0].docrepoitory) {
-        //     _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
-        // }
+
                 this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
         delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
         this.setState({ ...this.state, errorMessage: null, isLoading: false, isBtnLoading: true });
         let temp = JSON.parse(JSON.stringify(_obj))
-        //temp.payeeAccountModels[0].docrepoitory = _obj.payeeAccountModels[0]?.docrepoitory?.transfer ||_obj.payeeAccountModels[0]?.documents?.payee
        temp.payeeAccountModels[0].docrepoitory =  this.state?.documents      
        const response = await savePayee(_obj);   
 
        if (response.ok) {
             if (this.props.type !== "manual") {
                 const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer, 
-                    //docrepoitory: _obj.payeeAccountModels[0]?.docrepoitory?.transfer  
                     docrepoitory: _obj.payeeAccountModels[0]?.docrepoitory  
                  })
                 if (confirmRes.ok) {
@@ -261,7 +257,6 @@ class OthersBusiness extends Component {
 
                             </Form.Item>
                         </Col>
-                        {console.log(this.props.currency,'currency')}
                         {this.props.currency !="EUR" &&
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
@@ -359,10 +354,6 @@ class OthersBusiness extends Component {
                             <AddressDocumnet 
                             documents={this.state?.documents || this.props.transferData?.payeeAccountModels[0]?.docrepoitory} editDocument={this.state.isEdit} 
                             onDocumentsChange={(docs) => {
-                               // let { payeeAccountModels } = this.state.details;
-                                //payeeAccountModels[0].docrepoitory.transfer = docs;
-                                //payeeAccountModels[0].docrepoitory = docs;
-                                //this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
                             this.setState({...this.state,documents:docs})
                             }} 
                             />
@@ -606,10 +597,6 @@ class OthersBusiness extends Component {
                         <AddressDocumnet 
                             documents={this.state?.documents || this.props.transferData?.payeeAccountModels[0]?.docrepoitory} editDocument={this.state.isEdit} 
                             onDocumentsChange={(docs) => {
-                               // let { payeeAccountModels } = this.state.details;
-                                //payeeAccountModels[0].docrepoitory.transfer = docs;
-                                //payeeAccountModels[0].docrepoitory = docs;
-                                //this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
                             this.setState({...this.state,documents:docs})
                             }} 
                             
@@ -622,10 +609,6 @@ class OthersBusiness extends Component {
                         <AddressDocumnet 
                             documents={this.state?.documents || this.props.transferData?.payeeAccountModels[0]?.docrepoitory} editDocument={this.state.isEdit} 
                             onDocumentsChange={(docs) => {
-                               // let { payeeAccountModels } = this.state.details;
-                                //payeeAccountModels[0].docrepoitory.transfer = docs;
-                                //payeeAccountModels[0].docrepoitory = docs;
-                                //this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
                             this.setState({...this.state,documents:docs})
                             }} 
                             />

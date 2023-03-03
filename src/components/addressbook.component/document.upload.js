@@ -87,7 +87,7 @@ class AddressDocumnet extends Component {
                                         this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg and PDF  files" }) 
                                     }
                                 }else if(file.status ==='error'){
-                                    this.setState({ ...this.state, isDocLoading: false,errorMessage:file?.response });
+                                    this.setState({ ...this.state, isDocLoading: false,errorMessage:apiCalls.uploadErrorDisplay(file?.response) });
                                 }
                             }}
                         >
@@ -135,7 +135,7 @@ class AddressDocumnet extends Component {
                             className="primary-btn pop-btn detail-popbtn"
                             onClick={() => {
                                 let { documents: docs } = this.state;
-                                let files = docs.details || docs;
+                                let files = this.state.filesList || docs.details || docs;
                                 for(var k in files){
                                     if(files[k].id===this.state.selectedObj?.id){
                                         files[k].state='Deleted';

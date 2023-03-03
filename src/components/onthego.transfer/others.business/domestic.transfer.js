@@ -2,8 +2,16 @@ import { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
 import { Form, Row, Col, Input } from "antd";
 import { validateContentRule } from "../../../utils/custom.validator";
+import NumberFormat from "react-number-format";
 const { TextArea } = Input;
 class DomesticTransfer extends Component {
+    validateNumber = (_, validNumberValue) => {
+        if (validNumberValue === ".") {
+            return Promise.reject("Please enter valid content");
+        }
+        return Promise.resolve();
+    }
+   
     render() {
         return <Row >
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -40,7 +48,7 @@ class DomesticTransfer extends Component {
 
                 </Form.Item>
             </Col>
-            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+           {this.props.currency != 'GBP' && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                     className="fw-300 mb-4 text-white-50 py-4 custom-forminput custom-label"
                     name="abaRoutingCode"
@@ -74,7 +82,33 @@ class DomesticTransfer extends Component {
                         maxLength={50}/>
 
                 </Form.Item>
-            </Col>
+            </Col>}
+            {this.props.currency == 'GBP' && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            <Form.Item
+                name="ukSortCode"
+                label="UkSort Code"
+                className="custom-label"
+                type="number"
+                rules={[
+                    {
+                        required: true,
+                        message: "Is required",
+                    },
+                    {
+                        validator: this.validateNumber
+                    }
+                ]}>
+                <NumberFormat
+                    className="cust-input value-field cust-addon mt-0"
+                    customInput={Input}
+                    prefix={""}
+                    placeholder="Enter UkSort Code"
+                    allowNegative={false}
+                    maxlength={6}
+                />
+            </Form.Item>
+        </Col>}
+
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                     className="custom-forminput custom-label"

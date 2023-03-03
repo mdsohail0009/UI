@@ -127,6 +127,7 @@ const BatchpaymentView = (props) => {
         "id":`${file.response?.id}` ,
         "fileName": `${file.response?.fileName}`,
         "state": "Submitted",
+        "fileSize":`${file.response?.fileSize}`
     } 
     if (file.name.split('.').length > 2 ||file.type==="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ) {
         setUploader(false);
@@ -155,7 +156,7 @@ const BatchpaymentView = (props) => {
  const deleteDocument=(file,type)=>{
     setDeleteModal(true)
         if(docIdentityProofObjs && type === "IDENTITYPROOF"){
-            let deleteIdentityList = docIdentityProofObjs.filter((file1) => file1.uid !== file.uid);
+            let deleteIdentityList = docIdentityProofObjs.filter((file1) => file1.id !== file.id);
             let obj=docIdentityProofObjs[0];
             obj.isChecked=true
             setDocIdentityProofObjs(deleteIdentityList);
@@ -163,7 +164,7 @@ const BatchpaymentView = (props) => {
             setIsLoad(false);
         }
         else if(docTransferObjs && type === "TransferProof"){
-            let deleteTransferList = docTransferObjs.filter((file1) => file1.uid !== file.uid);
+            let deleteTransferList = docTransferObjs.filter((file1) => file1.id !== file.id);
             let obj=docTransferObjs[0];
             obj.isChecked=true
             setDocTransferObjs(deleteTransferList);
@@ -183,7 +184,7 @@ const BatchpaymentView = (props) => {
     }
     const deleteGridDocuments=async()=>{
         setIsLoad(true)
-        const res=await deleteDocumentDetails(deleteGridDoc?.documentId)
+        const res=await deleteDocumentDetails(deleteGridDoc?.id)
         if(res.ok){
             gridRef?.current?.refreshGrid();
             setIsLoad(false);
@@ -400,7 +401,7 @@ const filePreviewPath = () => {
                                                     onClick={() => docPreviewOpen(file)}
                                                     >
                                                         <EllipsisMiddle suffixCount={6}>{file.fileName}</EllipsisMiddle>
-                                                        <span className="fs-12 text-white"> {formatBytes(file ? file.remarks : "")}</span>
+                                                        <span className="fs-12 text-white"> {formatBytes(file ? file.fileSize : "")}</span>
                                                     </div>
                                                     <span className="icon md close c-pointer" onClick={() => deleteDocument(file,"IDENTITYPROOF")} />
                                                 </div> : ""}</>
@@ -442,7 +443,7 @@ const filePreviewPath = () => {
                                                      >
                                                         <EllipsisMiddle suffixCount={6}>{file.fileName}</EllipsisMiddle>
                                                         <span className="fs-12 text-white">
-                                                            {formatBytes(file ? file.remarks : "")}
+                                                            {formatBytes(file ? file.fileSize  : "")}
                                                             </span>
                                                     </div>
                                                     <span className="icon md close c-pointer" onClick={() => deleteDocument(file,"TransferProof")} />
