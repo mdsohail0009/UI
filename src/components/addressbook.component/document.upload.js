@@ -135,7 +135,7 @@ class AddressDocumnet extends Component {
                             className="primary-btn pop-btn detail-popbtn"
                             onClick={() => {
                                 let { documents: docs } = this.state;
-                                let files = docs.details || docs || this.state.filesList;
+                                let files = this.state.filesList || docs.details || docs;
                                 for(var k in files){
                                     if(files[k].id===this.state.selectedObj?.id){
                                         files[k].state='Deleted';
