@@ -249,17 +249,38 @@ class CaseView extends Component {
                     this.setState({ ...this.state, uploadLoader: false, isSubmitting: false });
                 }
             }
-    beforeUpload = (file) => {
-  this.setState({ ...this.state, errorWarning:null })
-   let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
-        if (fileType[file.type]) {
-            this.setState({ ...this.state, isValidFile: true,errorWarning:null })
-            return true
-        } else {
-       this.setState({ ...this.state, isValidFile: false,errorWarning:"File is not allowed. You can upload jpg, png, jpeg and PDF  files"})
-            return Upload.LIST_IGNORE;
-        }
+//     beforeUpload = (file) => {
+//   this.setState({ ...this.state, errorWarning:null })
+//    let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
+//         if (fileType[file.type]) {
+//             this.setState({ ...this.state, isValidFile: true,errorWarning:null })
+//             return true
+//         } else {
+//        this.setState({ ...this.state, isValidFile: false,errorWarning:"File is not allowed. You can upload jpg, png, jpeg and PDF  files"})
+//             return Upload.LIST_IGNORE;
+//         }
+//     }
+beforeUpload = (file) => {
+    this.setState({...this.state,errorWarning:null})
+    if (file.name.split('.').length > 2) {
+       this.setState({...this.state,errorWarning:"File don't allow double extension"})
+      return true;
     }
+    let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
+
+     let isFileName = file.name.split(".").length > 2 ? false : true;
+    if (fileType[file.type] && isFileName) {
+        this.setState({ ...this.state, isValidFile: true,errorWarning:null });
+        return true;
+    } else {
+        this.setState({ ...this.state, isValidFile: false ,
+            errorWarning: isFileName
+            ? `Please upload .XLS or .XLSX file`
+            : "File don't allow double extension"
+        });
+        return Upload.LIST_IGNORE;
+    }
+};
     uopdateReplyObj = (item, list) => {
         for (let obj of list) {
             if (obj.id === item.id) {
