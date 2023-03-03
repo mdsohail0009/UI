@@ -44,8 +44,6 @@ class BusinessTransfer extends Component {
             let edit=false;
             if (!data?.payeeAccountModels) {
                 data.payeeAccountModels = [payeeAccountObj()];
-                //data.payeeAccountModels[0].docrepoitory = {"transfer": "", "payee": ""}
-                //this.setState({...this.state,documents:this.props.transferData?.payeeAccountModels[0]?.docrepoitory})
             }
             if (this.props.selectedAddress?.id) {
                 const accountDetails = data.payeeAccountModels[0];
@@ -106,25 +104,12 @@ class BusinessTransfer extends Component {
         if(isEdit){
             _obj.id = isSelectedId? isSelectedId:details?.payeeId;
         }
-        // if (_obj.payeeAccountModels[0].docrepoitory) {
-        //     _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
-        // }
+
                 this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
         delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
         this.setState({ ...this.state, errorMessage: null, isLoading: false, isBtnLoading: true });
         let temp = JSON.parse(JSON.stringify(_obj))
-        //temp.payeeAccountModels[0].docrepoitory = _obj.payeeAccountModels[0]?.docrepoitory?.transfer ||_obj.payeeAccountModels[0]?.documents?.payee
        temp.payeeAccountModels[0].docrepoitory =  this.state?.documents
-        // if (_obj.payeeAccountModels[0].documents) {
-        //     _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
-        // }
-        //         this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
-        // delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
-        // this.setState({ ...this.state, errorMessage: null, isLoading: false, isBtnLoading: true });
-
-        // let temp = JSON.parse(JSON.stringify(_obj))
-        // temp.payeeAccountModels[0].documents = _obj.payeeAccountModels[0]?.documents?.payee
-        
         const response = await savePayee(this.state.isEdit ? _obj : temp);   
         
         if (response.ok) {
@@ -146,8 +131,6 @@ class BusinessTransfer extends Component {
     }
     handleTabChange = (key) => {
         let _obj = { ...this.state.details}
-        // _obj.payeeAccountModels[0].docrepoitory={"transfer": "", "payee": ""}
-       // _obj.payeeAccountModels[0].docrepoitory
         this.setState({ ...this.state, selectedTab: key,errorMessage:null, ibanDetails: {}, iBanValid: false, enteredIbanData: null });this.form.current.resetFields();
     }
    
@@ -324,27 +307,11 @@ class BusinessTransfer extends Component {
 
                             </Form.Item>
                         </Col>
-                        {/* <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
-                            <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
-                                let { payeeAccountModels } = this.state.details;
-                                if(this.state.isEdit){
-                                    payeeAccountModels[0].documents = docs;
-                                } else{
-                                    payeeAccountModels[0].documents.payee = docs;
-                                }
-                                this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
-                            }} refreshData ={selectedTab}/>
-                        </ Col> */}
                            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
                             <AddressDocumnet 
                             documents={this.state?.documents || this.props.transferData?.payeeAccountModels[0]?.docrepoitory} editDocument={this.state.isEdit} 
                             onDocumentsChange={(docs) => {
-                               // let { payeeAccountModels } = this.state.details;
-                                //payeeAccountModels[0].docrepoitory.transfer = docs;
-                                //payeeAccountModels[0].docrepoitory = docs;
-                                //this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
                             this.setState({...this.state,documents:docs})
                             }} refreshData ={selectedTab}/>
                         </ Col>
@@ -353,27 +320,13 @@ class BusinessTransfer extends Component {
 
                     <Paragraph className="adbook-head" >Bank Details</Paragraph>
                     <DomesticTransfer type={this.props.type} currency={this.props.currency}/>
-                    {/* {this.props.type !== "manual" && 
-                        (<React.Fragment>
-                            <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
-                    <AddressDocumnet documents={this.state?.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
-                        let { payeeAccountModels } = this.state.details;
-                        payeeAccountModels[0].documents.transfer = docs;
-                        this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
-                    }} refreshData ={selectedTab}/>
-                        </React.Fragment>)
-                    } */}
-
+                
                         {this.props.type !== "manual" && this.props.currency !="GBP" && 
                         (<React.Fragment>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
                             <AddressDocumnet 
                             documents={this.state?.documents || this.props.transferData?.payeeAccountModels[0]?.docrepoitory} editDocument={this.state.isEdit} 
-                            onDocumentsChange={(docs) => {
-                               // let { payeeAccountModels } = this.state.details;
-                                //payeeAccountModels[0].docrepoitory.transfer = docs;
-                                //payeeAccountModels[0].docrepoitory = docs;
-                                //this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
+                            onDocumentsChange={(docs) => {                              
                             this.setState({...this.state,documents:docs})
                             }} refreshData ={selectedTab}/>
                         </React.Fragment>)
@@ -493,11 +446,7 @@ class BusinessTransfer extends Component {
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
                             <AddressDocumnet 
                             documents={this.state?.documents || this.props.transferData?.payeeAccountModels[0]?.docrepoitory} editDocument={this.state.isEdit} 
-                            onDocumentsChange={(docs) => {
-                               // let { payeeAccountModels } = this.state.details;
-                                //payeeAccountModels[0].docrepoitory.transfer = docs;
-                                //payeeAccountModels[0].docrepoitory = docs;
-                                //this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
+                            onDocumentsChange={(docs) => {                             
                             this.setState({...this.state,documents:docs})
                             }} refreshData ={selectedTab}/>
                         </ Col>
@@ -510,11 +459,7 @@ class BusinessTransfer extends Component {
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
                             <AddressDocumnet 
                             documents={this.state?.documents || this.props.transferData?.payeeAccountModels[0]?.docrepoitory} editDocument={this.state.isEdit} 
-                            onDocumentsChange={(docs) => {
-                               // let { payeeAccountModels } = this.state.details;
-                                //payeeAccountModels[0].docrepoitory.transfer = docs;
-                                //payeeAccountModels[0].docrepoitory = docs;
-                                //this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
+                            onDocumentsChange={(docs) => {                              
                             this.setState({...this.state,documents:docs})
                             }} refreshData ={selectedTab}/>
                         </React.Fragment>)
@@ -633,11 +578,7 @@ class BusinessTransfer extends Component {
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
                             <AddressDocumnet 
                             documents={this.state?.documents || this.props.transferData?.payeeAccountModels[0]?.docrepoitory} editDocument={this.state.isEdit} 
-                            onDocumentsChange={(docs) => {
-                               // let { payeeAccountModels } = this.state.details;
-                                //payeeAccountModels[0].docrepoitory.transfer = docs;
-                                //payeeAccountModels[0].docrepoitory = docs;
-                                //this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
+                            onDocumentsChange={(docs) => {                              
                             this.setState({...this.state,documents:docs})
                             }} refreshData ={selectedTab}/>
                         </ Col>
@@ -778,11 +719,7 @@ class BusinessTransfer extends Component {
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
                             <AddressDocumnet 
                             documents={this.state?.documents || this.props.transferData?.payeeAccountModels[0]?.docrepoitory} editDocument={this.state.isEdit} 
-                            onDocumentsChange={(docs) => {
-                               // let { payeeAccountModels } = this.state.details;
-                                //payeeAccountModels[0].docrepoitory.transfer = docs;
-                                //payeeAccountModels[0].docrepoitory = docs;
-                                //this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
+                            onDocumentsChange={(docs) => {                             
                             this.setState({...this.state,documents:docs})
                             }} refreshData ={selectedTab}/>
                         </React.Fragment>)
