@@ -235,7 +235,7 @@ class AddressCryptoDocument extends Component {
                                         this.setState({ ...this.state, filesList: files, isDocLoading: false, errorMessage: null });
                                         this.props?.onDocumentsChange(files);
                                     }else{
-                                        this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg and PDF  files" }) 
+                                        this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg,mp4,mov,wmv,avi and PDF  files" }) 
                                     }
                                 }else if(file.status ==='error'){
                                   this.setState({ ...this.state, isDocLoading: false,errorMessage:apiCalls.uploadErrorDisplay(file?.response) });
