@@ -146,7 +146,7 @@ const  TransforSummary = ({userProfile, transforObj,dispatch}) =>{
                         <Translate content="agree_sell" component="Paragraph" />{" "}
                         <a
                             className="textpure-yellow"
-                            href="https://www.iubenda.com/terms-and-conditions/42856099"
+                            href="https://www.iubenda.com/terms-and-conditions/15084020"
                             target="_blank">
                             <Translate content="terms" component="Text" />
                         </a>{" "}
