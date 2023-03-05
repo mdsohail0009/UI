@@ -70,13 +70,14 @@ class AddressBook extends Component {
 		this.props.dispatch(getScreenName({getScreen:null}))
 		this.permissionsInterval = setInterval(this.loadPermissions, 200);
 		if (process.env.REACT_APP_ISTR=="true") {
-			const obj=[{field: "walletSource", title: "Wallet Source", width: 150, filter:true},{ field: "isProofofOwnership", title: "Proof Of Ownership", width: 200, 
+			const obj=[{field: "walletSource", title: "Wallet Source", width: 180, filter:true},
+			{ field: "isProofofOwnership", title: "Proof Of Ownership", width: 200, 
 			customCell: (props) => (
 				<td>
 					{props.dataItem?.isProofofOwnership===true?"Yes":"No"}
 				</td>
 			)}]
-			this.columnsCrypto.splice(5,0,...obj)     
+			this.columnsCrypto.splice(4,0,...obj)     
 		 }
 		if(!this.state.cryptoFiat){
 			this.props.changeStep("step1");
@@ -475,7 +476,7 @@ class AddressBook extends Component {
 		else if(obj.status === "Inactive") {
 			this.setState({ ...this.state, errorWorning: "Record is inactive so you can't edit" });
 		}
-		else if (this.state.selectedObj.type ==="Fiat" || this.state.selectedObj.type === "fiat" || this.state.selectedObj.isProofofOwnership === true  ?
+		else if (this.state.selectedObj.type ==="Fiat" || this.state.selectedObj.type === "fiat" || (this.state.selectedObj.isProofofOwnership && obj.walletSource !=null)  ?
 			obj.addressState === "Approved" ||
 			obj.addressState === "Rejected" ||
 			obj.addressState === "Reject" :
