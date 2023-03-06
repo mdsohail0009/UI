@@ -64,8 +64,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
              setLoader(false)
         }
     }
-    const saveTransfer = async(values) => {
-        setBtnLoading(true);
+    const saveTransfer = async(values) => {       
         seterrorMessage(null);
         if (Object.hasOwn(values, 'iban')) {
             if ((!bankDetails || Object.keys(bankDetails).length === 0)) {
@@ -74,7 +73,12 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 useDivRef.current.scrollIntoView();
                 return;
             }
-        }
+        } else if(values?.ukSortCode.length<=6){
+            seterrorMessage("Invalid UK Sort Code"); 
+            useDivRef.current.scrollIntoView();
+            return;
+        }else {
+        setBtnLoading(true);
         let saveObj=Object.assign({},saveTransferObj)
         saveObj.favouriteName=values.favouriteName;
         saveObj.payeeAccountModels[0].ukSortCode=values?.ukSortCode;
@@ -128,7 +132,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         }else{seterrorMessage(apiCalls.isErrorDispaly(response));
             useDivRef.current.scrollIntoView();
 		setBtnLoading(false);
-        }
+        }}
     }
     const getBankDeails = async (e,isValid) => {
         setbankDetails({});
@@ -257,7 +261,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                     <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });form.resetFields();seterrorMessage(null);setbankDetails({});setValidIban(false); setEnteredIbanData(null) }} activeKey={addressOptions.tabType}>
                         <Tabs.TabPane tab={currency === "GBP" ? `Local ${currency} Transfer` : `Swift ${currency} Transfer`} className="text-white text-captz"  key={"domestic"} disabled={isEdit}></Tabs.TabPane>
-                        <Tabs.TabPane tab={currency === "GBP" ? `International ${currency} Transfer` : `Iban ${currency} Transfer`} className="text-white text-captz" key={"internationalIBAN"} disabled={isEdit}></Tabs.TabPane>
+                        <Tabs.TabPane tab={currency === "GBP" ? `International ${currency} Transfer` : `IBAN ${currency} Transfer`} className="text-white text-captz" key={"internationalIBAN"} disabled={isEdit}></Tabs.TabPane>
                     </Tabs>
                 </Col>
             </Row>
