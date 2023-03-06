@@ -479,7 +479,7 @@ class BusinessTransfer extends Component {
 
             </Tabs.TabPane>}
 
-            <Tabs.TabPane tab={this.props.currency == "USD" && `International ${this.props.currency} IBAN` || this.props.currency == "GBP" && `International ${this.props.currency}  Transfer` || this.props.currency == "CHF" && `Iban ${this.props.currency}  Transfer`} key={"internationalIBAN"} disabled={this.state.isEdit}>
+            <Tabs.TabPane tab={this.props.currency == "USD" && `International ${this.props.currency} IBAN` || this.props.currency == "GBP" && `International ${this.props.currency}  Transfer` || this.props.currency == "CHF" && `IBAN ${this.props.currency}  Transfer`} key={"internationalIBAN"} disabled={this.state.isEdit}>
             <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
          
                 <Form initialValues={details}

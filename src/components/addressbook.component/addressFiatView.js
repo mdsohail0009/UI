@@ -253,22 +253,7 @@ const AddressFiatView = (props) => {
 													</div>
 												</div>
 											</Col>}											
-											{bankDetailes[0]?.ukSortCode && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle ad-rec-detyails">
-													<label className="kpi-label">UkSortCode</label>
-													<div className="kpi-val">
-														{bankDetailes[0]?.ukSortCode}
-													</div>
-												</div>
-											</Col>}	
-											{bankDetailes[0]?.accountNumber && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle ad-rec-detyails">
-													<label className="kpi-label">Account Number</label>
-													<div className="kpi-val">
-														{bankDetailes[0]?.accountNumber}
-													</div>
-												</div>
-											</Col>	}	
+											
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Whitelisting Status</label>
@@ -340,17 +325,33 @@ const AddressFiatView = (props) => {
 																	: item.accountNumber}
 															</div>
 															</div>
-														}
+														}														
 														{((item?.swiftRouteBICNumber!=null|| item?.abaRoutingCode!=null) && (item?.iban ==null || item?.iban =="")) && 
 														<div className="fait-box kpi-divstyle">
 															<Text className="kpi-label">
-															BIC/SWIFT/ABA Routing Code
+															BIC/SWIFT/ABA Routing/UkSort Code
 															</Text>
 															<div level={5} className="kpi-val"   >
 																   {((item?.swiftRouteBICNumber !=null && item?.swiftRouteBICNumber != "" ) ? item?.swiftRouteBICNumber : item?.abaRoutingCode)}
 															</div>
 															</div>
 														}
+														{bankDetailes[0]?.ukSortCode && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+															<div className="kpi-divstyle ad-rec-detyails">
+																<label className="kpi-label">UkSort Code</label>
+																<div className="kpi-val">
+																	{bankDetailes[0]?.ukSortCode}
+																</div>
+															</div>
+														</Col>}	
+														{bankDetailes[0]?.accountNumber && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+															<div className="kpi-divstyle ad-rec-detyails">
+																<label className="kpi-label">Account Number</label>
+																<div className="kpi-val">
+																	{bankDetailes[0]?.accountNumber}
+																</div>
+															</div>
+														</Col>	}	
 														{item?.bankName && 
 														<div className="fait-box kpi-divstyle">
 															<Text className="kpi-label">

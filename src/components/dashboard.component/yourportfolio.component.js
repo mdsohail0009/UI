@@ -49,7 +49,16 @@ class YourPortfolio extends Component {
         }
     }
     cockpitCharts=()=>{
-      this.props.history.push("/cryptocoinsView");
+      if (!this.props.twoFA?.isEnabled) {
+        this.props.history.push("/enabletwofactor");
+        return;
+    }
+    else if (this.props?.userProfile?.isDocsRequested) {
+        this.props.history.push("/docnotices");
+        return;
+    }else{
+      this.props.history.push("/cockpitCharts");
+    }
     }
     showBuyDrawer = (item, key) => {
         if (!this.props?.userProfile?.isKYC) {
