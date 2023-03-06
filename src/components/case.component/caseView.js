@@ -243,7 +243,7 @@ class CaseView extends Component {
                     this.setState({ ...this.state, docReplyObjs: replyObjs, uploadLoader: false, isSubmitting: false });
                 }
                 else if (file.status === 'error') {
-                    this.setState({ ...this.state, uploadLoader: false, isSubmitting: false,errorMessage:apicalls.isErrorDispaly(file.response),errorWarning:null })
+                    this.setState({ ...this.state, uploadLoader: false, isSubmitting: false,errorMessage:apicalls.uploadErrorDisplay(file.response),errorWarning:null })
                 }
                 else if (!this.state.isValidFile) {
                     this.setState({ ...this.state, uploadLoader: false, isSubmitting: false });
