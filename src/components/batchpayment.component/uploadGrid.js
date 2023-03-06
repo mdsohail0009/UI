@@ -104,10 +104,13 @@ const BatchpaymentView = (props) => {
             setUploader(false)
             setDocUpload(false)
             setErrorMessage("File is not allowed. You can upload jpg, png, jpeg and PDF files");
+            //return true;
+            return Upload.LIST_IGNORE;
         }else{
             setUploader(false)
             setDocUpload(false)
             setErrorMessage("File is not allowed. You can upload jpg, png, jpeg and PDF files");
+            //return true;
             return Upload.LIST_IGNORE;
            
         }
@@ -121,6 +124,9 @@ const BatchpaymentView = (props) => {
 
     }
   const handleUpload = ({ file },type) => {
+    if(errorMessage == null){
+
+    
     let identityProofObj=Object.assign([],docIdentityProofObjs)
     let transferProof=Object.assign([],docTransferObjs)
     let obj = {
@@ -152,7 +158,7 @@ const BatchpaymentView = (props) => {
                 }
             }
         }
-    }
+    }}
  const deleteDocument=(file,type)=>{
     setDeleteModal(true)
         if(docIdentityProofObjs && type === "IDENTITYPROOF"){
@@ -375,7 +381,7 @@ const filePreviewPath = () => {
                                 process.env.REACT_APP_UPLOAD_API +
                                 "api/v1/" +
                                 ApiControllers.common +
-                               `UploadFileNew?screenName=BatchPayments&fieldName=uploadfile&tableName=TransactionDetail`
+                               `UploadFileNew?screenName=Addressbook Fiat&fieldName=uploadfile&tableName=TransactionDetail`
                               //`UploadFileNew?screenName=AddressBook&fieldName=uploadfile&tableName=Common.Payeeaccounts`
 
                               }
@@ -417,7 +423,7 @@ const filePreviewPath = () => {
                                 process.env.REACT_APP_UPLOAD_API +
                                 "api/v1/" +
                                 ApiControllers.common +
-                               `UploadFileNew?screenName=BatchPayments&fieldName=uploadfile&tableName=TransactionDetail`
+                               `UploadFileNew?screenName=Send Fiat&fieldName=uploadfile&tableName=TransactionDetail`
 
                               }
                             showUploadList={false}
