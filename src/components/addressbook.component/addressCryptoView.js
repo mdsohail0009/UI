@@ -120,7 +120,7 @@ const AddressCryptoView = (props) => {
 													</div>
 												</div>
 											</Col>
-											{/* {process.env.REACT_APP_ISTR == "true" &&<><Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+											{process.env.REACT_APP_ISTR == "true" &&<><Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Wallet Source</label>
 													<div className=" kpi-val adview-name">
@@ -135,7 +135,7 @@ const AddressCryptoView = (props) => {
 													{cryptoAddress?.isProofofOwnership===true?"Yes": "No" || "-"}
 													</div>
 												</div>
-											</Col></>} */}
+											</Col></>}
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Whitelisting Status</label>
