@@ -150,7 +150,7 @@ if (res.ok){
 			this.useDivRef.current?.scrollIntoView(0, 0);
 		}
 
-else if((values.isDocumentUpload===true && this.state.cryptoData?.docRepositories?.length==0 && this.state.isEdit===true && (values?.files?.fileList?.length === 0 || values?.files?.fileList?.length == undefined || values?.files === undefined) )){
+else if((values.isDocumentUpload===true && this.state.cryptoData?.docRepositories?.length==0 && this.state.isEdit===true && (values?.files?.fileList?.length === 0 || values?.files?.fileList?.length == undefined ) )){
   this.setState({
     ...this.state,
     errorMessage:"At least one document is required",
@@ -376,6 +376,9 @@ this.setState({...this.state,isDocCheck:e.target.checked})
                 {
                   required: true,
                   message: "Is required",
+                },
+                {
+                  validator: validateContentRule,
                 },
               ]}
             >
