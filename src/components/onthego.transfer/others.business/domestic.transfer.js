@@ -48,7 +48,7 @@ class DomesticTransfer extends Component {
 
                 </Form.Item>
             </Col>
-           {this.props.currency != 'GBP' && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+           {this.props.currency != 'GBP' &&this.props.currency != 'CHF' && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                     className="fw-300 mb-4 text-white-50 py-4 custom-forminput custom-label"
                     name="abaRoutingCode"
@@ -86,7 +86,7 @@ class DomesticTransfer extends Component {
             {this.props.currency == 'GBP' && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item
                 name="ukSortCode"
-                label="UkSort Code"
+                label="Uk Sort Code"
                 className="custom-label"
                 type="number"
                 rules={[
@@ -102,12 +102,49 @@ class DomesticTransfer extends Component {
                     className="cust-input value-field cust-addon mt-0"
                     customInput={Input}
                     prefix={""}
-                    placeholder="Enter UkSort Code"
+                    placeholder="Uk Sort Code"
                     allowNegative={false}
                     maxlength={6}
                 />
             </Form.Item>
         </Col>}
+        {this.props.currency == 'CHF'&&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-forminput custom-label"
+                        name="swiftRouteBICNumber"
+                        label={apiCalls.convertLocalLang(
+                            "swifbictcode"
+                        )}
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message: apiCalls.convertLocalLang("is_required"),
+                            },{
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid Swift / BIC Code"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            }
+                        ]}
+                    >
+                        <Input
+                            className="cust-input "
+                            placeholder={apiCalls.convertLocalLang(
+                                "swifbictcode"
+                            )}
+                            maxLength={50}
+                        />
+                    </Form.Item>
+                </Col>}
 
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
