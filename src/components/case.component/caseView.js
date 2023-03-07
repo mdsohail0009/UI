@@ -60,6 +60,7 @@ class CaseView extends Component {
         commonModel: {},
         assignedTo: [],
         btnLoading:false,
+        saveDocId:'',
         errorWarning: null,caseDetails:[],detailsItem:[],docrepositories:[],casedoc:[],docID:{}
     }
     componentDidMount() {
@@ -141,7 +142,7 @@ class CaseView extends Component {
     }
     docReject = async (doc) => {
        let item = this.isDocExist(this.state.docReplyObjs, doc.id);       
-        this.setState({ ...this.state, btnLoading: true });
+        this.setState({ ...this.state, btnLoading: true, saveDocId:doc.id});
         
         item.path = null;
         item.status = "Submitted";
@@ -571,7 +572,7 @@ beforeUpload = (file) => {
                                                     size="large"
                                                    
                                                     className="pop-btn  detail-popbtn paynow-btn-ml"
-                                                    loading={this.state.btnLoading}
+                                                    loading={this.state.btnLoading && this.state?.saveDocId==doc?.id}
                                                   
                                                 >
                                                     Submit
