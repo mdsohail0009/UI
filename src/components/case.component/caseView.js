@@ -214,7 +214,6 @@ class CaseView extends Component {
         
      
         handleUpload = ({ file }, doc) => {
-            debugger
             this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null,saveDocId:doc.id })
                 if (file.status === "done" && this.state.isValidFile) {
                     this.setState({...this.state,docId:file.response.id})
@@ -546,7 +545,7 @@ beforeUpload = (file) => {
                                                         PNG, JPG,JPEG and PDF files are allowed
                                                     </p>
                                                 </Dragger>
-                                                {this.state.uploadLoader && <Loader />}
+                                                {this.state?.saveDocId==doc?.id && this.state.uploadLoader && <Loader />}
                                             </div>
                                             
                                             <div className="docfile-container">
