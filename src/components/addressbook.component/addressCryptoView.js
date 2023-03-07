@@ -132,7 +132,7 @@ const AddressCryptoView = (props) => {
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Proof Of Ownership</label>
 													<div className=" kpi-val adview-name">
-													{cryptoAddress?.isProofofOwnership===true?"Yes": "No" || "-"}
+													{cryptoAddress?.isDocumentUpload===true?"Yes": "No" || "-"}
 													</div>
 												</div>
 											</Col></>}

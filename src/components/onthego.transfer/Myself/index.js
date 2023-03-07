@@ -224,7 +224,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         if (validNumberValue === ".") {
             return Promise.reject("Please enter valid content");
         }
-        else if(validNumberValue?.length<6 && validNumberValue !=undefined){
+        else if(validNumberValue?.length<6 && validNumberValue !=undefined && validNumberValue !=''){
             return Promise.reject("Invalid Uk Sort Code");
         }
         return Promise.resolve();
@@ -434,19 +434,12 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 type="number"
                 rules={[
                     {
+                        whitespace:true,
                         required: true,
                         message: "Is required",
                     },
                     {
-                        validator: (_, validNumberValue) => {
-                        if (validNumberValue === ".") {
-                            return Promise.reject("Please enter valid content");
-                        }
-                        else if(validNumberValue?.length<6 && validNumberValue !=undefined){
-                            return Promise.reject("Invalid Uk Sort Code");
-                        }
-                        return Promise.resolve();
-                    }
+                        validator:validateNumber
                 }
                 ]}>
                 <NumberFormat

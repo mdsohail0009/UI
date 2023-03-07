@@ -177,7 +177,9 @@ class CockpitCharts extends Component {
                     <Translate content="menu_payments" />
                     </Link>
                 </li>
-                <li onClick={() => this.showTransactionDrawer(item)}>
+                <li 
+                // onClick={() => this.showTransactionDrawer(item)}
+                >
                    
                     
                     <Link to="/transactions" value={4} className="c-pointer"><Translate content="transactions_history" /></Link>
