@@ -97,11 +97,11 @@ class PayeeBankDetails extends Component {
         }
     };
     validateNumber = (_, validNumberValue) => {
-        if (validNumberValue === ".") {
+        if (validNumberValue === "." || validNumberValue &&
+        !/^[A-Za-z0-9]+$/.test(validNumberValue)) {
             return Promise.reject("Please enter valid content");
         }
-        else if(validNumberValue?.length<6 && validNumberValue !=undefined && validNumberValue !='' && validNumberValue &&
-        !/^[A-Za-z0-9]+$/.test(validNumberValue)){
+        else if(validNumberValue?.length<6 && validNumberValue !=undefined && validNumberValue !=''){
             return Promise.reject("Invalid Uk Sort Code");
         }
         return Promise.resolve();
