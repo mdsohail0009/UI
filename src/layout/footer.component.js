@@ -32,10 +32,9 @@ function Footer({ customer }) {
     return (<AntFooter style={{ backgroundColor: 'transparent', padding: 0 }}>
         <div className="main-container">
             <div className=" footer-links">
-                <a href="https://suissebase.ch/" target="_blank"><Translate content="home" /></a>
-                <a href="https://suissebase.ch/" target="_blank"><Translate content="careers" /></a>
-                <a href="https://www.suissebase.ch/asset-directory/" target="_blank"><Translate content="asset_directory" /></a>
-                <Text className="text-white-30">Suissebase<sup className="fs-10">TM</sup> {new Date().getFullYear()}</Text>
+                <a href={process.env.REACT_APP_SUISSEBASE_HOME}  target="_blank"><Translate content="home" /></a>
+                <a href={process.env.REACT_APP_SUISSEBASE_ASSET_DIRECTORY} target="_blank"><Translate content="asset_directory" /></a>
+                <Text className="text-white-30">SuisseBase<sup className="fs-10">TM</sup>{"  "} {new Date().getFullYear()}</Text>
 
             </div>
         </div>
