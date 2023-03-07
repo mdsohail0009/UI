@@ -321,7 +321,7 @@ class BusinessTransfer extends Component {
                     <Paragraph className="adbook-head" >Bank Details</Paragraph>
                     <DomesticTransfer type={this.props.type} currency={this.props.currency}/>
                 
-                        {this.props.type !== "manual" && this.props.currency !="GBP" && 
+                        {this.props.type !== "manual" && 
                         (<React.Fragment>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
                             <AddressDocumnet 

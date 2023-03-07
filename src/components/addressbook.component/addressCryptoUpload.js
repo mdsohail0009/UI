@@ -273,42 +273,38 @@ class AddressCryptoDocument extends Component {
                               file.name?.slice(-3) === "wmv" ||
                               file.fileName?.slice(-3) === "wmv") &&
                               "video") ||
-                            ((file.name?.slice(-3) === "pdf" ||
-                              file.name?.slice(-3) === "PDF") &&
-                              "file") ||
-                            (file.name?.slice(-3) !== "pdf" &&
-                              file.name?.slice(-3) !== "PDF" &&
-                              "image")
-                          } mr-16`}
-                        />
-                        <div
-                          className="docdetails c-pointer"
-                          onClick={() => this.docPreviewOpen(file)}
-                        >
-                          <EllipsisMiddle suffixCount={6}>
-                            {file.name || file.fileName}
-                          </EllipsisMiddle>
-                          <span className="upload-filesize c-pointer">
-                            {file.fileSize || file?.remarks
-                              ? bytesToSize(file.fileSize || file?.remarks)
-                              : ""}
-                          </span>
-                        </div>
-                        <span
-                          className="icon md close c-pointer"
-                          onClick={() => {
-                            this.setState({
-                              ...this.state,
-                              showDeleteModal: true,
-                              selectedFileIdx: indx,
-                              selectedObj: file
-                            });
-                          }}
-                        />
+                             (file.name ? (file.name.slice(-3) === "pdf" ? "file" : "image") :
+                          (file.fileName?.slice(-3) === "pdf" ? "file" : "image"))
+                        } mr-16`}
+                      />
+                      <div
+                        className="docdetails c-pointer"
+                        onClick={() => this.docPreviewOpen(file)}
+                      >
+                        <EllipsisMiddle suffixCount={6}>
+                          {file.name || file.fileName}
+                        </EllipsisMiddle>
+                        <span className="upload-filesize c-pointer">
+                          {file.fileSize || file?.remarks
+                            ? bytesToSize(file.fileSize || file?.remarks)
+                            : ""}
+                        </span>
                       </div>
-                    </>
-                     )} 
-                 
+                      <span
+                        className="icon md close c-pointer"
+                        onClick={() => {
+                          this.setState({
+                            ...this.state,
+                            showDeleteModal: true,
+                            selectedFileIdx: indx,
+                            selectedObj: file
+                          });
+                        }}
+                      />
+                    </div>
+                  </>
+                )}
+
               </div>
             ))}
             {this.state.isDocLoading && <Loader />}

@@ -73,11 +73,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 useDivRef.current.scrollIntoView();
                 return;
             }
-        } else if(values?.ukSortCode.length<=6){
-            seterrorMessage("Invalid UK Sort Code"); 
-            useDivRef.current.scrollIntoView();
-            return;
-        }else {
+        }      
         setBtnLoading(true);
         let saveObj=Object.assign({},saveTransferObj)
         saveObj.favouriteName=values.favouriteName;
@@ -132,7 +128,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         }else{seterrorMessage(apiCalls.isErrorDispaly(response));
             useDivRef.current.scrollIntoView();
 		setBtnLoading(false);
-        }}
+        }
     }
     const getBankDeails = async (e,isValid) => {
         setbankDetails({});
@@ -227,6 +223,9 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     const validateNumber = (_, validNumberValue) => {
         if (validNumberValue === ".") {
             return Promise.reject("Please enter valid content");
+        }
+        else if(validNumberValue?.length<6 && validNumberValue !=undefined){
+            return Promise.reject("Invalid Uk Sort Code");
         }
         return Promise.resolve();
     }
@@ -430,7 +429,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
            {currency == 'GBP' && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item
                 name="ukSortCode"
-                label="UkSort Code"
+                label="Uk Sort Code"
                 className="custom-label"
                 type="number"
                 rules={[
@@ -439,14 +438,22 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         message: "Is required",
                     },
                     {
-                        validator: validateNumber
+                        validator: (_, validNumberValue) => {
+                        if (validNumberValue === ".") {
+                            return Promise.reject("Please enter valid content");
+                        }
+                        else if(validNumberValue?.length<6 && validNumberValue !=undefined){
+                            return Promise.reject("Invalid Uk Sort Code");
+                        }
+                        return Promise.resolve();
                     }
+                }
                 ]}>
                 <NumberFormat
                     className="cust-input value-field cust-addon mt-0"
                     customInput={Input}
                     prefix={""}
-                    placeholder="UkSort Code"
+                    placeholder="Uk Sort Code"
                     allowNegative={false}
                     maxlength={6}
                 />
@@ -519,7 +526,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                {currency == 'CHF' && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
-                        name="abaRoutingCode"
+                        name="swiftRouteBICNumber"
                         label='Swift / BIC Code' 
                         required
                         rules={[
@@ -533,7 +540,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                                         !/^[A-Za-z0-9]+$/.test(value)
                                     ) {
                                         return Promise.reject(
-                                            addressOptions.tabType === 'international' ?"Invalid Swift / BIC Code":"Invalid ABA Routing Code"
+                                            "Invalid Swift / BIC Code"
                                         );
                                     }else {
                                         return Promise.resolve();

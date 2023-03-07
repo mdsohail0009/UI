@@ -282,7 +282,7 @@ class PayeeBankDetails extends Component {
                         />
                     </Form.Item>
                 </Col>
-                {this.props.domesticType === "international" &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                {this.props.domesticType === "international" || this.props.currency != 'GBP' &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name={["payeeAccountModels","swiftRouteBICNumber"]}
@@ -321,7 +321,7 @@ class PayeeBankDetails extends Component {
                     </Form.Item>
                 </Col>}
 
-                {this.props.domesticType === "domestic"  && this.props.currency != 'GBP'&& <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                {this.props.domesticType === "domestic"  && this.props.currency != 'GBP' && this.props.currency != 'CHF'&& <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name={["payeeAccountModels","abaRoutingCode"]}
@@ -360,7 +360,7 @@ class PayeeBankDetails extends Component {
             <Form.Item
                // name="ukSortCode"
                name={["payeeAccountModels","ukSortCode"]}
-                label="UkSort Code"
+                label="Uk Sort Code"
                 className="custom-label"
                 type="number"
                 rules={[
@@ -376,7 +376,7 @@ class PayeeBankDetails extends Component {
                     className="cust-input value-field cust-addon mt-0"
                     customInput={Input}
                     prefix={""}
-                    placeholder="Enter UkSort Code"
+                    placeholder="Uk Sort Code"
                     allowNegative={false}
                     maxlength={6}
                 />

@@ -380,6 +380,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
               required
               rules={[
                 {
+                  whitespace: true,
                   required: true,
                   message: "Is required",
                 },
