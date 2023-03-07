@@ -376,14 +376,25 @@ this.setState({...this.state,isDocCheck:e.target.checked})
               label="Wallet Address"
               required
               rules={[
-                {
-                  whitespace: true,
+                {              
                   required: true,
                   message: "Is required",
                 },
+               
                 {
-                  validator: validateContentRule,
-                },
+                  validator: (_, value) => {
+                      if (
+                          value &&
+                          !/^[A-Za-z0-9]+$/.test(value)
+                      ) {
+                          return Promise.reject(
+                              "Invalid Wallet Address"
+                          );
+                      }else {
+                          return Promise.resolve();
+                      }
+                  },
+              }
               ]}
             >
               <Input
