@@ -60,6 +60,7 @@ class CaseView extends Component {
         commonModel: {},
         assignedTo: [],
         btnLoading:false,
+        saveDocId:'',
         errorWarning: null,caseDetails:[],detailsItem:[],docrepositories:[],casedoc:[],docID:{}
     }
     componentDidMount() {
@@ -141,7 +142,7 @@ class CaseView extends Component {
     }
     docReject = async (doc) => {
        let item = this.isDocExist(this.state.docReplyObjs, doc.id);       
-        this.setState({ ...this.state, btnLoading: true });
+        this.setState({ ...this.state, btnLoading: true, saveDocId:doc.id});
         
         item.path = null;
         item.status = "Submitted";
@@ -213,7 +214,8 @@ class CaseView extends Component {
         
      
         handleUpload = ({ file }, doc) => {
-            this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null })
+            debugger
+            this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null,saveDocId:doc.id })
                 if (file.status === "done" && this.state.isValidFile) {
                     this.setState({...this.state,docId:file.response.id})
                     let replyObjs = [...this.state.docReplyObjs];
@@ -507,7 +509,7 @@ beforeUpload = (file) => {
                                                     </Form.Item>
                                               
 
-                                                {this.state.errorMessage != null && <Alert
+                                                {this.state?.saveDocId==doc?.id && this.state.errorMessage != null && <Alert
                                                     description={this.state.errorMessage}
                                                     type="error"
                                                     showIcon
@@ -571,7 +573,7 @@ beforeUpload = (file) => {
                                                     size="large"
                                                    
                                                     className="pop-btn  detail-popbtn paynow-btn-ml"
-                                                    loading={this.state.btnLoading}
+                                                    loading={this.state.btnLoading && this.state?.saveDocId==doc?.id}
                                                   
                                                 >
                                                     Submit

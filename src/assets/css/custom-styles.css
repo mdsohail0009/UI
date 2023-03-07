@@ -1034,6 +1034,10 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .travel-success{margin-top: 65px;}
 .dashbord-space .notices-content{margin-bottom: 36px;}.db-transactions thead{ background-color: var(--grid) !important;}.db-transactions{padding-top: 0;margin-top: 14px;height: 505px;}.db-transactions thead tr:first-child{border-bottom: none !important;}
 .download-btn{background-color: #3653E4; border-color: #3653E4;border-radius: 5px;font-weight: 600;transition: 0.3s ease; font-size: 16px; color: #FFFFFF;    padding: 10px 28px;   display: inline-block;    margin-left: 16px;}
+.validateiban-content:hover .ant-form-item-has-error .cust-input{border-color: var(--red) !important;}
+.crypto-list.auto-scroll.wallet-list .drawer-list-fiat .ant-image{vertical-align: middle;}
+.preview-file{color: var(--white);}
+.documentmodal-width .ant-spin.ant-spin-spinning{background: var(--drawerBG);}
 /*@media start*/
 @media (min-width: 768px){
     .listitems-design{width: 340px;}
@@ -1078,7 +1082,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .agree-check input[type=checkbox]:checked+span{background: var(--lightThemeIcons);background-position:-153px -513px;border-color: transparent !important;}
     .agree-check input[type=checkbox]+span:hover{background-position:-190.5px -513px;}
     .agree-check input[type=checkbox]:checked+span:hover{background-position:-153px -513px;}
-    .successsubtext{height: 130px;}
+    .successsubtext{height: auto;}
     .text-style{margin: 30px 0 !important;}
     /* .select-currency {height: 122px;} */
     /* .text-style{height: 140px;} */

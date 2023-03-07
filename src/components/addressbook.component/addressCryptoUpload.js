@@ -26,7 +26,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
   const suffix = children?.slice(-suffixCount).trim();
   return (
     <Text
-      className="mb-0 fs-14 docname d-block"
+      className="mb-0 fs-14 docnames d-block"
       style={{ maxWidth: "100%" }}
       ellipsis={{ suffix }}
     >
@@ -81,7 +81,7 @@ class AddressCryptoDocument extends Component {
   };
   deleteDoc=()=>{
     let { documents: docs } = this.state;
-    let files = docs;
+    let files = this.state.filesList || docs.details || docs;;
     for(var k in files){
         if(files[k].id===this.state.selectedObj?.id){
             files[k].state='Deleted';

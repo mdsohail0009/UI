@@ -100,6 +100,10 @@ class PayeeBankDetails extends Component {
         if (validNumberValue === ".") {
             return Promise.reject("Please enter valid content");
         }
+        else if(validNumberValue?.length<6 && validNumberValue !=undefined && validNumberValue !='' && validNumberValue &&
+        !/^[A-Za-z0-9]+$/.test(validNumberValue)){
+            return Promise.reject("Invalid Uk Sort Code");
+        }
         return Promise.resolve();
     }
     renderAddress = (transferType) => {
@@ -282,7 +286,7 @@ class PayeeBankDetails extends Component {
                         />
                     </Form.Item>
                 </Col>
-                {this.props.domesticType === "international" || this.props.currency != 'GBP' &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                {this.props.domesticType === "international" && (this.props.currency != 'GBP' || this.props.currency == 'CHF') &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name={["payeeAccountModels","swiftRouteBICNumber"]}
