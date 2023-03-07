@@ -17,7 +17,7 @@ import {setSellHeaderHide, setSelectedSellCoin} from "../../reducers/buysellRedu
 // 			component={Link}
 // 			onClick={() =>
 // 				window.open(
-// 					"https://www.iubenda.com/terms-and-conditions/15084020",
+// 					process.env.REACT_APP_TERMS_AND_CONDITIONS,
 // 					"_blank"
 // 				)
 // 			}
@@ -235,7 +235,7 @@ class Summary extends Component {
 							<Translate className="cust-agreecheck" content="agree_sell" component="Paragraph" />{" "}
 							<a
 								className="terms-link"
-								href="https://www.iubenda.com/terms-and-conditions/15084020"
+								href={process.env.REACT_APP_TERMS_AND_CONDITIONS}
 								target="_blank">
 								<Translate content="terms" component="Text" />
 							</a>{" "}

@@ -32,7 +32,7 @@ const LinkValue = (props) => {
       component={Link}
       onClick={() =>
         window.open(
-          "https://www.iubenda.com/terms-and-conditions/15084020",
+          process.env.REACT_APP_TERMS_AND_CONDITIONS,
           "_blank"
         )
       }
