@@ -235,7 +235,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     {isLoading &&<Loader /> }
     {!isLoading &&
         <Form layout="vertical" form={form} onFinish={saveTransfer} initialValues={{createTransfer}} scrollToFirstError>
-        {showDeclartion &&  <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
+        {showDeclartion &&  <div className="custom-declaraton align-declaration"> <div className="success-pop text-center declaration-content">
                 <Image preview={false} src={alertIcon} className="confirm-icon" />
                 <Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${props.userProfile?.email}. 

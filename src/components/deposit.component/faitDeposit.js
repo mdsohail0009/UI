@@ -224,7 +224,7 @@ class FaitDeposit extends Component {
                     </Select>
                   </div></Form.Item>}
                    
-                {this.state.BankInfo === null && depObj.currency !== null && this.state.BankDetails?.length === 0 && !this.state.bankLoader && <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="bank_msg" /></Text>}
+                {this.state.BankInfo === null && depObj.currency !== null && this.state.BankDetails?.length === 0 && !this.state.bankLoader && <Text className="fs-20 d-block preview-file" style={{ textAlign: 'center' }}><Translate content="bank_msg" /></Text>}
                 {this.state.BankDetails?.length > 1 && depObj.currency !== null && <Form.Item><Translate
                   className="label-style"
                   content="BankName"
