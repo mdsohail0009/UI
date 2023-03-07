@@ -214,7 +214,8 @@ class CaseView extends Component {
         
      
         handleUpload = ({ file }, doc) => {
-            this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null })
+            debugger
+            this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null,saveDocId:doc.id })
                 if (file.status === "done" && this.state.isValidFile) {
                     this.setState({...this.state,docId:file.response.id})
                     let replyObjs = [...this.state.docReplyObjs];
@@ -508,7 +509,7 @@ beforeUpload = (file) => {
                                                     </Form.Item>
                                               
 
-                                                {this.state.errorMessage != null && <Alert
+                                                {this.state?.saveDocId==doc?.id && this.state.errorMessage != null && <Alert
                                                     description={this.state.errorMessage}
                                                     type="error"
                                                     showIcon
