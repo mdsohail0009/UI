@@ -5,9 +5,12 @@ import { validateContentRule } from "../../../utils/custom.validator";
 import NumberFormat from "react-number-format";
 const { TextArea } = Input;
 class DomesticTransfer extends Component {
-    validateNumber = (_, validNumberValue) => {
+      validateNumber = (_, validNumberValue) => {
         if (validNumberValue === ".") {
             return Promise.reject("Please enter valid content");
+        }
+        else if(validNumberValue?.length<6 && validNumberValue !=undefined && validNumberValue !=''){
+            return Promise.reject("Invalid Uk Sort Code");
         }
         return Promise.resolve();
     }
