@@ -221,7 +221,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         }
     };
     const validateNumber = (_, validNumberValue) => {
-        if (validNumberValue === ".") {
+        if (validNumberValue === "." || validNumberValue &&
+        !/^[A-Za-z0-9]+$/.test(validNumberValue)) {
             return Promise.reject("Please enter valid content");
         }
         else if(validNumberValue?.length<6 && validNumberValue !=undefined && validNumberValue !=''){
