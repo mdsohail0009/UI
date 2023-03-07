@@ -636,7 +636,7 @@ saveWithdrawdata = async () => {
                {(!pastPayees.length > 0) && <div className="success-pop text-center declaration-content" >
                             <img src={oops} className="confirm-icon nodata-image" style={{ marginBottom: '10px' }} alt="Confirm" />
                             <h1 className="success-title oops-title" > {apicalls.convertLocalLang('oops')}</h1>
-                            <p className="successsubtext custom-height"> {'You have no past recipients'} </p>
+                            <p className="successsubtext"> {'You have no past recipients'} </p>
                             </div>}
               </ul>
               </Tabs.TabPane>

@@ -73,17 +73,17 @@ gridEURColumns = [
   { field: "addressType", title: "Address Type", filter: true,width: 250,
   customCell: (props) => (
     <td className="d-flex justify-content">
-      <Text className="text-white">
+      
         {this.addressTypeNames(props?.dataItem?.addressType)}
-      </Text>
+    
     </td>
   )},
   { field: "transferType", title: "Transfer Type", filter: true,width: 250,
   customCell: (props) => (
     <td>
-      <Text className="text-upper text-white">
+     
         {props?.dataItem?.transferType}
-      </Text>
+    
     </td>
   )},
   { field: "amount", title: "Amount", filter: true,width: 250,dataType: "number", filterType: "numeric"},
