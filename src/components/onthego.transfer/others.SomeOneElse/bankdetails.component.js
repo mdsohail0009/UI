@@ -285,8 +285,47 @@ class PayeeBankDetails extends Component {
                             maxLength={50}
                         />
                     </Form.Item>
-                </Col>
-                {this.props.domesticType === "international" && (this.props.currency != 'GBP' || this.props.currency == 'CHF') &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                </Col>              
+                {(this.props.domesticType === "international" && this.props.currency != 'GBP') && (this.props.currency === 'USD' && this.props.domesticType === "international") &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-forminput custom-label"
+                        name={["payeeAccountModels","swiftRouteBICNumber"]}
+                        label={apicalls.convertLocalLang(
+                            "swifbictcode"
+                        )}
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message:
+                                    apicalls.convertLocalLang("is_required"),
+                            },{
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid Swift / BIC Code"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            }
+                        ]}
+                    >
+                        <Input
+                            className="cust-input "
+                            placeholder={apicalls.convertLocalLang(
+                                "swifbictcode"
+                            )}
+                            maxLength={50}
+                        />
+                    </Form.Item>
+                </Col>}
+
+          { this.props.currency ==='CHF' &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name={["payeeAccountModels","swiftRouteBICNumber"]}

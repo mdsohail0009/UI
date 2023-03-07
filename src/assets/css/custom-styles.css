@@ -1038,6 +1038,8 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .crypto-list.auto-scroll.wallet-list .drawer-list-fiat .ant-image{vertical-align: middle;}
 .preview-file{color: var(--white);}
 .documentmodal-width .ant-spin.ant-spin-spinning{background: var(--drawerBG);}
+.new-add.hy-align .text-yellow.pr-24.align-check{vertical-align: middle;margin-right: 3px;}
+.align-declaration .declaration-content{margin-top: 50px;}
 /*@media start*/
 @media (min-width: 768px){
     .listitems-design{width: 340px;}

@@ -996,7 +996,7 @@ class WithdrawSummary extends Component {
 												onClick={this.getAuthenticator}
 												disabled={this.state.verifyAuthCode}>
 												{this.state.verifyAuthCode ? ( <>
-													<Text className="text-yellow pr-24"> Verified </Text>
+													<Text className="text-yellow pr-24 align-check"> Verified </Text>
 													<span className="icon md greenCheck" />
 													</>) : (
 													"Click here to verify"

@@ -181,9 +181,9 @@ class AddressBook extends Component {
 		},
 		{
 			field: "routingNumber",
-			title: "BIC/SWIFT/ABA Routing Code/UK Sort Code",
+			title: "BIC/SWIFT/ABA Routing /UK Sort Code",
 			filter: true,
-			width: 380,
+			width: 360,
 		},
 		{
 			field: "bankName",

@@ -227,7 +227,7 @@ class PaymentSummary extends Component {
 						</>}
 						{this.state.showDeclaration && <>
 					
-							<div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
+							<div className="custom-declaraton align-declaration"> <div className="text-center mt-36 declaration-content">
 							<img src={pending} alt={`Processed`} className="confirm-icon"/>
 							<Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${this.props.customer?.email}. 
