@@ -329,7 +329,7 @@ const AddressFiatView = (props) => {
 														{((item?.swiftRouteBICNumber!=null|| item?.abaRoutingCode!=null) && (item?.iban ==null || item?.iban =="")) && 
 														<div className="fait-box kpi-divstyle">
 															<Text className="kpi-label">
-															BIC/SWIFT/ABA Routing/UkSort Code
+															BIC/SWIFT/ABA Routing/Uk Sort Code
 															</Text>
 															<div level={5} className="kpi-val"   >
 																   {((item?.swiftRouteBICNumber !=null && item?.swiftRouteBICNumber != "" ) ? item?.swiftRouteBICNumber : item?.abaRoutingCode)}
@@ -338,7 +338,7 @@ const AddressFiatView = (props) => {
 														}
 														{bankDetailes[0]?.ukSortCode && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 															<div className="kpi-divstyle ad-rec-detyails">
-																<label className="kpi-label">UkSort Code</label>
+																<label className="kpi-label">Uk Sort Code</label>
 																<div className="kpi-val">
 																	{bankDetailes[0]?.ukSortCode}
 																</div>
