@@ -30,17 +30,7 @@ class Wallets extends Component {
         showFuntransfer: false,
     }
     cockpitCharts=()=>{
-        const is2faEnabled = this.props.twoFA?.isEnabled;
-        if (!is2faEnabled) {
-            this.props.history.push("/enabletwofactor");
-            return;
-        }
-        if (this.props?.userProfile?.isDocsRequested) {
-            this.props.history.push("/docnotices");
-            return;
-        }else{
             this.props.history.push("/cockpitCharts");
-        }
         
       }
     componentDidMount() {
