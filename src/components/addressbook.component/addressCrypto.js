@@ -150,15 +150,12 @@ if (res.ok){
 			});
 			this.useDivRef.current?.scrollIntoView(0, 0);
 		}
-    else if((values.isDocumentUpload===true &&
-      ((this.state.cryptoData?.docRepositories===null &&this.state.isEdit===true && values?.files===undefined) ||
-      this.state.cryptoData?.docRepositories?.length==0||
-     this.state.details.docRepositories?.length ==0 || data===true || data===undefined))){
-  this.setState({
-    ...this.state,
-    errorMessage:"At least one document is required",
-    
-  });
+    else if((values.isDocumentUpload===true && this.state.cryptoData?.docRepositories?.length==0 && this.state.isEdit===true && (values?.files?.fileList?.length === 0 || values?.files?.fileList?.length == undefined) )){
+      this.setState({
+        ...this.state,
+        errorMessage:"At least one document is required",
+        
+      });
   this.useDivRef.current?.scrollIntoView(0, 0); 
 }
   
