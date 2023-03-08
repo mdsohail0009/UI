@@ -881,7 +881,7 @@ saveWithdrawdata = async () => {
                          block
                          className="pop-btn custom-send cust-disabled"
                         style={{ backgroundColor: !isShowGreyButton && '#7087FF', borderColor: !isShowGreyButton && '#7087FF' }}
-                        loading={this.state.isBtnLoading} 
+                        loading={this.state.isBtnLoading}
                         disabled={!isShowGreyButton}>
                          Confirm & Continue
                        </Button>
