@@ -22,7 +22,7 @@ class SettingsMenu extends Component {
             </li>
             <li>
                 <div className="dropdown-flex">
-                    <Translate content="terms_service" component={Link} onClick={() => window.open("https://www.iubenda.com/terms-and-conditions/42856099", '_blank')} />
+                    <Translate content="terms_service" component={Link} onClick={() => window.open(process.env.REACT_APP_TERMS_AND_CONDITIONS, '_blank')} />
                     <span className="icon md rarrow-white" />
                 </div>
             </li>
