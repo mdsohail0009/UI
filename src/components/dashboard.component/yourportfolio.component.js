@@ -49,7 +49,7 @@ class YourPortfolio extends Component {
         }
     }
     cockpitCharts=()=>{
-      this.props.history.push("/cockpitCharts");
+      this.props.history.push("/cryptocoinsView");
     }
     showBuyDrawer = (item, key) => {
         if (!this.props?.userProfile?.isKYC) {

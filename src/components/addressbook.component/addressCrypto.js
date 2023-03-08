@@ -261,7 +261,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
       return <Loader />
     }
     if (showDeclartion) {
-      return<div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
+      return<div className="custom-declaraton align-declaration"> <div className="success-pop text-center declaration-content">
           <Image  preview={false} src={alertIcon} className="confirm-icon"/>
           <Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
