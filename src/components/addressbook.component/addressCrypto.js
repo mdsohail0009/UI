@@ -263,7 +263,7 @@ this.setState({...this.state,isDocCheck:e.target.checked})
     if (showDeclartion) {
       return<div className="custom-declaraton align-declaration"> <div className="success-pop text-center declaration-content">
           <Image  preview={false} src={alertIcon} className="confirm-icon"/>
-          <Title level={2} className="success-title">Declaration form sent successfully vvv</Title>
+          <Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                 Please review and sign the document in your email to whitelist your address.
                 Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
