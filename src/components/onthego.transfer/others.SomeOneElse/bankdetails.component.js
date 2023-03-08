@@ -99,7 +99,7 @@ class PayeeBankDetails extends Component {
     validateNumber = (_, validNumberValue) => {
         if (validNumberValue === "." || validNumberValue &&
         !/^[A-Za-z0-9]+$/.test(validNumberValue)) {
-            return Promise.reject("Please enter valid content");
+            return Promise.reject("Invalid Uk Sort Code");
         }
         else if(validNumberValue?.length<6 && validNumberValue !=undefined && validNumberValue !=''){
             return Promise.reject("Invalid Uk Sort Code");
