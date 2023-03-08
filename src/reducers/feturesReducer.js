@@ -69,7 +69,7 @@ const fetchFeatures = (app_id) => {
             dispatch(fetchFeaturePermissions(_cockpit?.id, _userConfig?.id))
         } else {
             dispatch(setData({ data: null, loading: false, error: response.data?.message || response.data || response.originalError.message, key: "features" }));
-        };
+        }
 
     }
 
@@ -113,8 +113,9 @@ const featuresReducer = (state = initialState, action) => {
         case CLEAR_PERMISSIONS:
             state = { ...state, featurePermissions: { data: [], error: null, loading: true, selectedScreenFeatureId: null } };
             return state;
-            case GET_SCREEN_NAME:
+        case GET_SCREEN_NAME:
                 state={...state,getScreen:action.payload}
+            return state;
         default:
             return state;
     }

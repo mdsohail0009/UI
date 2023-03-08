@@ -11,8 +11,7 @@ class FiatBillingAddress extends Component {
 
         }
     }
-    showPayDrawer = () => {
-    }
+   
 
     render() {
         const { Title, Text, Paragraph } = Typography;

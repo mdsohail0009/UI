@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Typography, Button,  Alert,Row,Col, Form } from 'antd';
 import { saveTransfor } from './api';
 import { connect } from 'react-redux';

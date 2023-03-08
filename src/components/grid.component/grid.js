@@ -4,7 +4,7 @@ import { store } from '../../store'
 import moment from 'moment';
 import CryptoJS from "crypto-js";
 import { ExcelExport } from '@progress/kendo-react-excel-export'
-import { savePDF, PDFExport } from '@progress/kendo-react-pdf';
+import { PDFExport } from '@progress/kendo-react-pdf';
 import logColor from '../../assets/images/logo-color.png';
 import {Button, Dropdown,Menu,} from 'antd';
 const filterOperators = {
@@ -101,9 +101,7 @@ export function withState(WrappedGrid) {
             if (this.tempRef.current)
                 this.tempRef.current.save();
         }
-        getPDFROWS = () => {
-
-        }
+      
         getCombineFieldValue = (dataItem, fields) => {
             for (const i in this.props.columns) {
                 if (this.props.columns[i].filterType === "numeric") {
@@ -283,7 +281,11 @@ export function withState(WrappedGrid) {
                 dataState.filter.filters?.map((item) => {
                     return item.filters?.map((value) => {
                         if (value.operator === "gte" || value.operator === "gt" || value.operator === "lte" || value.operator === "lt") {
-                            value.value = value.value ? ((value.operator === 'lte' || value.operator === "gt") ? new Date(moment(value.value).format('YYYY-MM-DDT23:59:59')) : new Date(moment(value.value).format('YYYY-MM-DDT00:00:00'))) : null;
+                            value.value = 
+                            value.value ? 
+                            ((value.operator === 'lte' || value.operator === "gt") ? new Date(moment(value.value).format('YYYY-MM-DDT23:59:59')) : new Date(moment(value.value).format('YYYY-MM-DDT00:00:00')))
+                            
+                            : null;
                         }
                     })
                 })

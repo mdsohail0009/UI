@@ -58,5 +58,8 @@ const getInvalidTransactionData=(transactionId)=>{
 const deleteDocumentDetails=(docId)=>{
     return apiClient.delete(ApiControllers.massPayment + `DeleteDocumentDetails/${docId}`);
 }
-export { getCurrencyLu,saveBeneficiary,getFileURL, savePayments,getFavourite, getPaymentsData, updatePayments, getBankData,creatPayment,deletePayDetials,saveTransaction,deleteBatchPayments,refreshTransaction,confirmGetDetails,proceedTransaction,uploadDocuments,getInvalidTransactionData,deleteDocumentDetails}
+const batchPaymentsLu=()=>{
+     return apiClient.get(ApiControllers.wallets + `Fiat/BatchPayments`);
+    }
+export { getCurrencyLu,saveBeneficiary,getFileURL, savePayments,getFavourite, getPaymentsData, updatePayments, getBankData,creatPayment,deletePayDetials,saveTransaction,deleteBatchPayments,refreshTransaction,confirmGetDetails,proceedTransaction,uploadDocuments,getInvalidTransactionData,deleteDocumentDetails,batchPaymentsLu}
 

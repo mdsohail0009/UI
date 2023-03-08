@@ -14,7 +14,6 @@ import { Link, withRouter } from "react-router-dom";
 import { setStep } from "../../reducers/buysellReducer";
 import Translate from "react-translate-component";
 import { connect } from "react-redux";
-import WalletList from "../shared/walletList";
 import NumberFormat from "react-number-format";
 import {
   withdrawSave,
@@ -70,7 +69,6 @@ const FaitWithdrawal = ({ props,
   history
 }) => {
   const [form] = Form.useForm();
-  const [selectedWallet, setSelectedWallet] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [confirmationStep, setConfirmationStep] = useState("step1");
   const [showModal, setShowModal] = useState(false);
@@ -90,7 +88,6 @@ const FaitWithdrawal = ({ props,
   const [accountDetails, setAccountDetails] = useState({})
   const [bankDetails, setBankDetails] = useState([])
   const [details, setDetails] = useState([])
-  const [selectRequired, setSelectRequired] = useState(null)
   const [beneficiaryDetails, setBeneficiaryDetails] = useState(false);
   const [checkRadio, setCheckRadio] = useState(false);
 
@@ -104,7 +101,6 @@ const FaitWithdrawal = ({ props,
     zipCode: null,
     beneficiaryAccountAddress: null
   });
-  const [addressInfo, setAddressInfo] = useState(null);
   const [agreeRed, setAgreeRed] = useState(true)
   const [isVerificationMethodsChecked, setIsVerificationMethodsChecked] = useState(true);
   const [isVerificationLoading, setVerificationLoading] = useState(true);
@@ -153,10 +149,7 @@ const FaitWithdrawal = ({ props,
     getAccountdetails()
 
   }, []);
-  const showNewBenificiary = () => {
-    setCheckRadio(true);
-    setBeneficiaryDetails(true);
-  }
+
   const closeBuyDrawer = () => {
     setBeneficiaryDetails(false);
   }
@@ -203,7 +196,6 @@ const FaitWithdrawal = ({ props,
       let wallet = buyInfo.memberFiat.data.filter((item) => {
         return walletId === item.currencyCode;
       });
-      setSelectedWallet(wallet[0]);
       if (wallet[0]) {
         getAddressLu(wallet[0]);
       }
@@ -224,7 +216,6 @@ const FaitWithdrawal = ({ props,
 
         let recAddressDetails = await detailsAddress(recAddress.data[0].id);
         if (recAddressDetails.ok === true) {
-          setAddressInfo(recAddressDetails.data);
           setAddressDetails({});
           setAddressObj(addressObj);
           setAddressShow(null)
@@ -232,14 +223,12 @@ const FaitWithdrawal = ({ props,
       }
       else if (recAddress.data.length === 0) {
         setAddressShow(false);
-        setAddressInfo(null)
         setAddressLu(null)
       }
       else {
         setAddressLu(recAddress.data)
         setAddressObj(addressObj);
         setAddressShow(null)
-        setAddressInfo(null)
       }
     }
   };
@@ -284,13 +273,8 @@ const FaitWithdrawal = ({ props,
       setAgreeRed(false);
     } else {
       setAgreeRed(true);
-      let totalamountVal = (typeof values.totalValue === "string")? values.totalValue.replace(/,/g, ""): values.totalValue
-      // if (parseFloat(totalamountVal) > parseFloat(selectedWallet?.avilable)) {
-      //   useDivRef.current.scrollIntoView();
-      //   setBtnDisabled(false)
-      //   setLoading(false);
-      //   return setErrorMsg(apicalls.convertLocalLang("insufficient_balance"));
-      // }
+     (typeof values.totalValue === "string")? values.totalValue.replace(/,/g, ""): values.totalValue
+      
       if (
         parseFloat(
           typeof values.totalValue === "string"
@@ -359,37 +343,17 @@ const FaitWithdrawal = ({ props,
       return "Something went wrong please try again!";
     }
   };
-  const getIbanData = async (val) => {
-    if (val && val.length > 14) {
-      let response = await apicalls.getIBANData(val);
-      if (response.ok) {
-        const oldVal = form.getFieldValue();
-        form.setFieldsValue({
-          routingNumber: response.data.routingNumber || oldVal.routingNumber,
-          bankName: response.data.bankName || oldVal.bankName,
-          bankAddress: response.data.bankAddress || oldVal.bankAddress,
-          country: response.data.country || oldVal.country,
-          state: response.data.state || oldVal.state,
-          zipcode: response.data.zipCode || oldVal.zipcode
-        });
-        if (response.data.country) {
-          getStateLu(response.data.country);
-        }
-      }
-    }
-  };
+
   const clickMinamnt = (type) => {
     let values = form.getFieldsValue();
     let wallet = buyInfo.memberFiat.data.filter((item) => {
       return values.walletCode === item.currencyCode;
     });
-    let avilableamt = wallet[0]?.avilable;
     if (type === "min") {
       values.totalValue = "100";
       setSaveObj(values);
       form.setFieldsValue({ ...values });
     } else if (type === "max") {
-      // values.totalValue = avilableamt ? avilableamt.toString() : 0;
       values.totalValue = accountDetails[0] ? accountDetails[0].avilable.toString() : 0;
       setSaveObj(values);
       form.setFieldsValue({ ...values });
@@ -397,8 +361,6 @@ const FaitWithdrawal = ({ props,
   };
 
   const validateAddressType = (_, value) => {
-
-    setSelectRequired(false)
     if (value) {
       if (value == '.') {
         return Promise.reject(
@@ -476,7 +438,6 @@ const FaitWithdrawal = ({ props,
     }
   }
   const handleDetails = (e) => {
-    setSelectRequired(true)
     let data = bankDetails.filter((item) => item.lable == e)
     setDetails(data)
     form.setFieldsValue({ totalValue: "", CustomerRemarks: null });
@@ -591,16 +552,7 @@ const FaitWithdrawal = ({ props,
                               </Option>
                             ))}
                           </Select>
-                          {/* <Tooltip placement="top" title="Send to new wallet" style={{ flexGrow: 1 }}>
-                                    <div className="new-add c-pointer" onClick={() => showNewBenificiary()}>
-                                        <span className="icon md diag-arrow d-block c-pointer"></span>
-                                    </div>
-                                </Tooltip> */}
-                          {/* <Tooltip placement="top" title={<span>{apicalls.convertLocalLang('SelectAddress')}</span>} style={{ flexGrow: 1 }}>
-                                    <div className="new-add c-pointer"onClick={() => showNewBenificiary("ADDRESS")}>
-                                        <span className="icon md diag-arrow d-block c-pointer"></span>
-                                    </div>
-                                </Tooltip> */}
+                         
                         </div>
                       </Form.Item>
 

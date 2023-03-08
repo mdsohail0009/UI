@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
-  Form, Typography, Input, Button, Alert, Spin, message, Select, Checkbox, Tooltip, Modal,
+  Form, Typography, Input, Button, Alert, Spin, message, Select, Tooltip, Modal,
   Radio, Row, Col, AutoComplete,  Image, Drawer
 } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -20,6 +20,7 @@ import { addressTabUpdate, fetchAddressCrypto, setAddressStep } from "../../redu
 import WAValidator from "multicoin-address-validator";
 import success from "../../assets/images/success.svg";
 import BankDetails from "./bank.details";
+import apicalls from "../../api/apiCalls";
 const { Text, Paragraph, Title } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
@@ -56,31 +57,23 @@ const AddressCommonCom = (props) => {
   const [errorWarning, setErrorWarning] = useState(null);
   const [isEdit, setEdit] = useState(false);
   const [emailExist] = useState(false);
-  const [bankType, setBankType] = useState("");
   const [PayeeLu, setPayeeLu] = useState([]);
   const [editBankDetsils, setEditBankDetails] = useState(false)
   const [bankObj, setBankObj] = useState({})
-  const [bankChange, SetBankChange] = useState(null)
   const [coinDetails, setCoinDetails] = useState([])
   const [country, setCountry] = useState([])
-  const [state, setState] = useState([]);
-  const [ibanValue, setIbanValue] = useState(null)
   const [favouriteDetails, setFavouriteDetails] = useState({})
   const [deleteItem, setDeleteItem] = useState({})
-  const [agreeRed, setAgreeRed] = useState(true)
   const [bilPay, setBilPay] = useState(null);
-  const [newStates, setNewStates] = useState([]);
   const [isSignRequested, setSignRequested] = useState(false);
   const [recrdStatus, setRecrdStatus] = useState(null);
   const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType: "sepa" });
-  const addressState = null;
   const handleshowModal = (item) => {
     setEditBankDetails(true)
     let data = bankmodalData.find((items) => items.id === item.id)
     handleCountryChange(data?.payeeAccountCountry);
     setIsCryptoModalVisible(true);
     setBankObj(data)
-    SetBankChange(data?.bankType);
     if (props?.addressBookReducer?.cryptoTab === true) {
       form.setFieldsValue({
         toCoin: data.walletCode,
@@ -200,8 +193,6 @@ const AddressCommonCom = (props) => {
   const handleCancel = () => {
     setIsCryptoModalVisible(false);
     bankDetailForm.resetFields();
-    SetBankChange("BankAccount");
-    setNewStates([]);
   };
 
   const radioChangeHandler = (e) => {
@@ -214,7 +205,6 @@ const AddressCommonCom = (props) => {
       getFavs("00000000-0000-0000-0000-000000000000", props?.userConfig?.id)
     }
     setIsLoading(false);
-    setAgreeRed(true);
     setErrorMsg(null);
     setErrorWarning(null);
   
@@ -233,7 +223,6 @@ const AddressCommonCom = (props) => {
         phoneNo: props?.userConfig.phoneNo,
         email: props?.userConfig.email,
       });
-      setBankType("bank");
       setSelectParty(false);
     } else {
       form.setFieldsValue({
@@ -241,7 +230,6 @@ const AddressCommonCom = (props) => {
         beneficiaryAccountName: null,
         bankType: "bank",
       });
-      setBankType("bank");
       setSelectParty(true);
     }
   };
@@ -249,6 +237,8 @@ const AddressCommonCom = (props) => {
     let response = await getPayeeLu( withdraeTab, (type === true || type === false) ? type : true);
     if (response.ok) {
       setPayeeLu(response.data)
+    }else{
+      setErrorMsg(apicalls.isErrorDispaly(response))
     }
 
   }
@@ -279,6 +269,8 @@ const AddressCommonCom = (props) => {
       setFavouriteDetails(obj)
       obj.favouriteName = obj?.favouriteName === null ? "" : obj?.favouriteName;
       form.setFieldsValue(obj)
+    }else{
+      setErrorMsg(apicalls.isErrorDispaly(response))
     }
     getCountry()
   }
@@ -286,7 +278,6 @@ const AddressCommonCom = (props) => {
     let code = e;
     form.setFieldsValue({ "state": null });
     let states = country?.filter((item) => item.name?.toLowerCase() === code.toLowerCase());
-    setState(states[0]?.stateLookUp);
   }
 
   const getCountry = async () => {
@@ -295,21 +286,10 @@ const AddressCommonCom = (props) => {
       setCountry(response.data);
       form.getFieldValue("country");
       let states = response.data?.filter((item) => item.name.toLowerCase());
-      setState(states[0]?.stateLookUp);
+    }else{
+      setErrorMsg(apicalls.isErrorDispaly(response))
     }
   }
-  const isErrorDispaly = (objValue) => {
-    if (objValue.data && typeof objValue.data === "string") {
-      return objValue.data;
-    } else if (
-      objValue.originalError &&
-      typeof objValue.originalError.message === "string"
-    ) {
-      return objValue.originalError.message;
-    } else {
-      return "Something went wrong please try again!";
-    }
-  };
 
   const saveModalwithdrawal = (values) => {
     let obj = {
@@ -364,8 +344,6 @@ const AddressCommonCom = (props) => {
     }
     setIsCryptoModalVisible(false);
     bankDetailForm.resetFields();
-    SetBankChange("BankAccount");
-    setNewStates([]);
   }
   const handleDeleteCancel = () => {
     setIsModalDelete(false)
@@ -403,15 +381,11 @@ const AddressCommonCom = (props) => {
     values["type"] = type;
     values["info"] = JSON.stringify(props?.trackAuditLogData);
     let Id = "00000000-0000-0000-0000-000000000000";
-    let favaddrId = props?.addressBookReducer?.selectedRowData
-      ? favouriteDetails.id
-      : Id;
-    let namecheck = values.favouriteName;
+   
     if (!values.isAgree) {
       setBtnDisabled(false);
       useDivRef.current.scrollIntoView();
       setErrorMsg(apiCalls.convertLocalLang("agree_termsofservice"));
-      setAgreeRed(false);
     }
 
     else {
@@ -422,7 +396,6 @@ const AddressCommonCom = (props) => {
         saveObj.documents = cryptoAddress?.documents;
         saveObj.TransferType=props?.cryptoTab === 1&&"Crypto"
       let response = await saveAddressBook(saveObj);
-      setAgreeRed(true);
       if (response.ok) {
         setBtnDisabled(false);
         useDivRef.current.scrollIntoView();
@@ -445,7 +418,7 @@ const AddressCommonCom = (props) => {
         props?.dispatch(setHeaderTab(""));
         props?.props?.history?.push("/userprofile");
       } else {
-        setErrorMsg(isErrorDispaly(response));
+        setErrorMsg(apicalls.isErrorDispaly(response));
         setIsLoading(false);
         setBtnDisabled(false);
         useDivRef.current.scrollIntoView();
@@ -453,10 +426,8 @@ const AddressCommonCom = (props) => {
     }
   };
 
-  const handleIban = (e) => {
-    setIbanValue(e)
-    getIbanData(e)
-  }
+  
+  
 
   const getIbanData = async (Val) => {
     bankDetailForm.setFieldsValue({
@@ -483,6 +454,10 @@ const AddressCommonCom = (props) => {
         });
         handleCountryChange(response.data.country);
       }
+      else{
+        setErrorMsg(apicalls.isErrorDispaly(response))
+
+      }
     } else {
       bankDetailForm.setFieldsValue({
         country: ""
@@ -494,13 +469,14 @@ const AddressCommonCom = (props) => {
     let response = await getCoinList("All");
     if (response.ok) {
       setCoinDetails(response.data)
+    }else{
+      setErrorMsg(apicalls.isErrorDispaly(response))
     }
   }
   const handleCountryChange = (code, countryValues) => {
     bankDetailForm.setFieldsValue({ "payeeAccountState": null });
     let Country = countryValues ? countryValues : country;
     let states = Country?.filter((item) => item.name?.toLowerCase() === code?.toLowerCase());
-    setNewStates(states[0]?.stateLookUp);
   }
 
 
@@ -515,8 +491,7 @@ const AddressCommonCom = (props) => {
       <Image  preview={false} src={success} className="confirm-icon" />
       <Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${props.userProfile?.email}. 
-                Please review and sign the document in your email to whitelist your address.
-                Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
+                Please sign using link received in email to whitelist your address. Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved.`}</Text>
     </div></div>
 
   }
@@ -913,7 +888,9 @@ const AddressCommonCom = (props) => {
                         setAddressOptions({ ...addressOptions, addressType: value.target.value })
                       }}
                     >
-                      <Radio.Button value="myself" className=""><span className="lg icon" />{props.userConfig?.isBusiness ? "Own Business" : "My Self"}</Radio.Button>
+                      <Radio.Button value="myself" className=""><span className="lg icon" />
+                      {props.userConfig?.isBusiness ? "Own Business" : "My Self"}
+                      </Radio.Button>
                       <Radio.Button value="individuals" className=""><span className="lg icon" />INDIVIDUALS</Radio.Button>
                       <Radio.Button value="otherbusiness" className=""><span className="lg icon" />OTHER BUSINESS</Radio.Button>
                     </Radio.Group>
@@ -974,8 +951,6 @@ const AddressCommonCom = (props) => {
                         ]}
                       >
                         <AutoComplete
-                          onChange={(e) => {
-                          }}
                           maxLength={20}
                           className="cust-input"
                           placeholder={apiCalls.convertLocalLang("favorite_name")}
@@ -1268,11 +1243,11 @@ const AddressCommonCom = (props) => {
                           onChange={(e) => handleCountry(e)}
                           bordered={false}
                         >
-                          {country?.map((item, indx) => (
+                          {country?.map((item, indx)=>(
                             <Option key={indx} value={item.name}>
                               {item.name}
                             </Option>
-                          ))}
+                          ))} 
                         </Select>
                       </Form.Item>
                     </Col>

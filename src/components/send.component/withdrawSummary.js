@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Typography, Button, Alert, Form, Input,Modal, Tooltip, Checkbox, Image,Space } from "antd";
+import { Typography, Button, Alert, Form, Input,Modal, Tooltip, Image} from "antd";
 import { connect } from "react-redux";
 import alertIcon from '../../assets/images/pending.png';
 import Translate from "react-translate-component";
@@ -27,7 +27,6 @@ import NumberFormat from "react-number-format";
 import { setCurrentAction } from "../../reducers/actionsReducer";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import apicalls from '../../api/apiCalls';
-
 const { Title } = Typography;
 
 class WithdrawSummary extends Component {
@@ -298,7 +297,7 @@ class WithdrawSummary extends Component {
 					tooltipEmail: false,
 					verifyText:this.state.verifyEmailOtp===true?"Verified":null,
 				});
-			}, 30000);
+			}, 120000);
 		} else {
 			this.setState({
 				...this.state,
@@ -390,7 +389,8 @@ class WithdrawSummary extends Component {
 	handleSendOtp = (val) => {
 		this.setState({
 			...this.state,
-			emailOtp: val.emailCode,
+			//emailOtp: val.emailCode,
+			emailOtp: val,
 			verifyText: "verifyBtn",
 			tooltipEmail: false,
 			emailText: "",
@@ -439,10 +439,15 @@ class WithdrawSummary extends Component {
 				tooltipVisible: false,
 				verifyOtpText: "verifyOtpBtn",
 			})
-		} else {
+			
+		} else if(this.state.seconds == 0 && this.state.verifyOtpText=="verifyOtpBtn"){
+			this.setState({...this.state,verifyOtpText:"resendotp",buttonText: "resendotp",})	
+		}else if(this.state.seconds == 0  && e=="") {
+			this.setState({...this.state,verifyOtpText:"resendotp",buttonText: "resendotp",})	}
+			else{
 			this.setState({
-				buttonText: "resendotp",
-				tooltipVisible: false,
+				buttonText: "sentVerify",
+				tooltipVisible: true,
 				verifyOtpText: null,
 			});
 		}
@@ -451,7 +456,16 @@ class WithdrawSummary extends Component {
 		this.setState({ ...this.state, authCode: e.target.value, faLoading: false });
 	};
 	handleEmailChange = (e) => {
-		this.setState({ ...this.state, emailCodeVal: e.target.value });
+		if(e.target.value){
+			this.handleSendOtp(e)
+			this.setState({ ...this.state, emailCodeVal: e.target.value ,verifyText: "verifyBtn",emailText:"verifyBtn",tooltipEmail:false});
+		}else if(this.state.seconds2 == 0 &&  this.state.verifyText =="verifyBtn"){
+			this.setState({...this.state,verifyText:"resendEmail",emailText:"resendEmail"})
+		}else if(this.state.seconds2 == 0 &&  e.target.value == ""){
+			this.setState({...this.state,verifyText:"resendEmail",emailText:"resendEmail"})
+		}else{
+			this.setState({verifyText: "sentVerification",emailText:"sentVerification",tooltipEmail: true,});
+		}
 	};
 	saveWithdrwal = async (values) => {
 		if (!values.isAccept) {
@@ -536,7 +550,7 @@ class WithdrawSummary extends Component {
 				else {
 					this.setState({
 						...this.state,
-						errorMsg: this.isErrorDispaly(withdrawal), btnLoading: false
+						errorMsg: apicalls.isErrorDispaly(withdrawal), btnLoading: false
 					});
 				}
 			}
@@ -548,16 +562,7 @@ class WithdrawSummary extends Component {
 			}
 		}
 	};
-	isErrorDispaly = (objValue) => {
-		if (objValue.data && typeof objValue.data === "string") {
-			return objValue.data;
-		} else if (objValue.originalError && typeof objValue.originalError.message === "string"
-		) {
-			return objValue.originalError.message;
-		} else {
-			return "Something went wrong please try again!";
-		}
-	};
+	
 
 	onBackSend = () => {
 		 this.props.dispatch(hideSendCrypto(false));
@@ -573,9 +578,7 @@ class WithdrawSummary extends Component {
 	address = this.props.sendReceive.withdrawCryptoObj?.toWalletAddress;
 	firstAddress = this.address?.slice(0, 4);
 	lastAddress = this.address?.slice(-4);
-	renderIcon=()=>{
-
-	}
+	
 
 
 	render() {
@@ -664,8 +667,7 @@ class WithdrawSummary extends Component {
 			  <Image preview={false} src={alertIcon} className="confirm-icon"/>
 			  <Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
-                Please review and sign the document in your email to whitelist your address.
-                Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
+                Please sign using link received in email to whitelist your address. Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved. `}</Text>
 				 
                        <div className="send-cypto-summary"> <Translate content="crypto_with_draw_success" className="cust-cancel-btn send-crypto-btn" component={Button} onClick={this.onBackSend} /></div>
                    
@@ -896,9 +898,6 @@ class WithdrawSummary extends Component {
 											placeholder={"Enter code"}
 											maxLength={6}
 											style={{ width: "100%" }}
-											onClick={(event) =>
-												this.handleSendOtp(event.currentTarget.value)
-											}
 											onChange={(e) => this.handleEmailChange(e, "emailCodeVal")}
 											disabled={this.state.inputEmailDisable}
 											addonAfter={<div className="new-add hy-align">
@@ -997,7 +996,7 @@ class WithdrawSummary extends Component {
 												onClick={this.getAuthenticator}
 												disabled={this.state.verifyAuthCode}>
 												{this.state.verifyAuthCode ? ( <>
-													<Text className="text-yellow pr-24"> Verified </Text>
+													<Text className="text-yellow pr-24 align-check"> Verified </Text>
 													<span className="icon md greenCheck" />
 													</>) : (
 													"Click here to verify"

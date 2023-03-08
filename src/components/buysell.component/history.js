@@ -131,8 +131,7 @@ const data = [
   },
 ];
 
-function onChange(pagination, filters, sorter, extra) {
-}
+
  
 class History extends Component {
   render() {
@@ -151,7 +150,7 @@ class History extends Component {
           visible={this.props.showDrawer}
           className="side-drawer-full"
         >
-       <Table columns={columns} dataSource={data} onChange={onChange} />
+       <Table columns={columns} dataSource={data}  />
         </Drawer>
       </>
     );

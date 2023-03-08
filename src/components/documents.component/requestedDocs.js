@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Collapse, Button, Typography, Modal, Tooltip, message, Input, Upload, Spin, Empty, Alert,Row,Col } from 'antd';
+import { Collapse, Button, Typography, Modal, Tooltip, message, Input, Upload, Spin, Empty, Alert,Col } from 'antd';
 import { approveDoc, getDocDetails, getDocumentReplies, saveDocReply, uuidv4, getFileURL } from './api';
 import Loader from '../../Shared/loader';
 import Moment from 'react-moment';
@@ -11,6 +11,7 @@ import apiCalls from '../../api/apiCalls';
 import { validateContent } from "../../utils/custom.validator";
 import Translate from 'react-translate-component';
 import Mome from 'moment'
+import apicalls from '../../api/apiCalls';
 const { Panel } = Collapse;
 const { Text } = Typography;
 const { Dragger } = Upload;
@@ -77,21 +78,10 @@ class RequestedDocs extends Component {
                 }
             });
         } else {
-            this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: false, data: [], error: this.isErrorDispaly(response) } } });
+            this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: false, data: [], error: apicalls.isErrorDispaly(response) } } });
         }
     }
-    isErrorDispaly = (objValue) => {
-        if (objValue.data && typeof objValue.data === "string") {
-          return objValue.data;
-        } else if (
-          objValue.originalError &&
-          typeof objValue.originalError.message === "string"
-        ) {
-          return objValue.originalError.message;
-        } else {
-          return "Something went wrong please try again!";
-        }
-      };
+
     docPreview = async (file) => {
         let res = await getFileURL({ url: file.path });
         if (res.ok) {
@@ -266,7 +256,6 @@ class RequestedDocs extends Component {
         }
         else if (file.status === 'error') {
             message.error({ content: `${file.response}`, className: 'custom-msg' })
-            // this.setState({ ...this.state, uploadLoader: false, errorMessage: file.response,  isSubmitting: false  })
             this.setState({ ...this.state, uploadLoader: false, isSubmitting: false })
         }
         else if (!this.state.isValidFile) {
@@ -276,7 +265,6 @@ class RequestedDocs extends Component {
     beforeUpload = (file) => {
 
         let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
-        //  let isFileName = (file.name.split('.')).length > 2 ? false : true;
         if (fileType[file.type]) {
             this.setState({ ...this.state, isValidFile: true, })
             return true

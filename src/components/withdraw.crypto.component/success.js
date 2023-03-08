@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import success from '../../assets/images/success.svg';
-import { Typography, Space,Button } from 'antd';
-import { Link } from 'react-router-dom';
+import { Typography,Button } from 'antd';
 import Translate from 'react-translate-component';
 import { connect } from "react-redux";
 import { handleSendFetch,hideSendCrypto,setSendCrypto} from '../../reducers/sendreceiveReducer';
@@ -16,7 +15,6 @@ class SuccessMsg extends Component {
     onBackSend = () => {
         this.props.dispatch(hideSendCrypto(false));
         this.props.dispatch(setSendCrypto(true));
-        //this.props.dispatch(setWithdrawfiatenaable(true));
         this.props.onBackCLick("step1");
          this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: 2 }))
     }

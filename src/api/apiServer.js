@@ -43,9 +43,3 @@ export const getAccountBankDetails=(payeeId,currency)=>{
     return apiClient.get(ApiControllers.addressbook + `PayeeLableLu/${payeeId}/${currency}`);
 }
 
-// https://tstapi.suissebase.io/api/v1/addressbook/PayeeLu/{accountId}/{type} Account holder names
-
-// https://tstapi.suissebase.io/api/v1/Wallets/Fiat/{AccountId}
-
-// https://tstapi.suissebase.io/api/v1/addressbook/PayeeLableLu/{payeeId}/{currency}
-//https://tstapi.suissebase.io/api/v1/addressbook/WithdrawPayeeLu/{accountId}/{type}
