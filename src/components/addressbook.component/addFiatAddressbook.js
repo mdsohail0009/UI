@@ -1,25 +1,8 @@
 
 import React, { useEffect,useState } from "react";
-// import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
-// import { Link } from "react-router-dom";
 import AddressCommonCom from "./addressCommonCom";
-// const LinkValue = (props) => {
-//   return (
-//     <Translate
-//       className="textpure-yellow text-underline c-pointer"
-//       content={props.content}
-//       component={Link}
-//       onClick={() =>
-//         window.open(
-//           process.env.REACT_APP_TERMS_AND_CONDITIONS,
-//           "_blank"
-//         )
-//       }
-//     />
-//   );
-// };
-//  <LinkValue content="terms_service" />;
+
 const NewFiatAddress = (props) => {
   const [isEdit, setEdit] = useState(false);
   const [state, setstate] = useState()
