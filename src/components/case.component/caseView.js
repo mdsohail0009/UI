@@ -276,7 +276,7 @@ beforeUpload = (file) => {
     } else {
         this.setState({ ...this.state, isValidFile: false ,
             errorWarning: isFileName
-            ? `Please upload .XLS or .XLSX file`
+            ? `Please upload .xls or .xlsx file`
             : "File don't allow double extension"
         });
         return Upload.LIST_IGNORE;
