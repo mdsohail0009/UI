@@ -46,15 +46,14 @@ class AddressDocumnet extends Component {
             this.setState({ ...this.state, errorMessage: null, documents: propsDocument || document(), filesList: propsDocument ? [...this.props?.documents?.details] : [], refreshData:this.props.refreshData })
         }
         return <Row >
-            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="text-left">
-                <div className='mb-24'>
-                    <Paragraph
-                      className="mb-8 fs-14 text-white fw-500 ml-12" 
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
+                <div >
+                    <Paragraph className="sub-abovesearch code-lbl upload-empty-div" 
                     >{this.props.title}</Paragraph>
                      {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
-                    <Form.Item name={"files"} rules={[{
+                    <Form.Item name={"files"} required rules={[{
                         validator: (_, value) => {
-                                const isValidFiles = this.state.filesList.filter(item => (item.name || item.documentName).indexOf(".") !== (item.name || item.documentName).lastIndexOf(".")).length === 0;
+                                const isValidFiles = this.state.filesList.filter(item => (item.name || item.documentName).indexOf(".") != (item.name || item.documentName).lastIndexOf(".")).length == 0;
                                 if (isValidFiles) { return Promise.resolve(); } else {
                                     this.setState({...this.state,isDocLoading:false,errorMessage:null })
                                     return Promise.reject("File don't allow double extension");
@@ -93,18 +92,18 @@ class AddressDocumnet extends Component {
                             <p className="ant-upload-drag-icon">
                                 <span className="icon xxxl doc-upload" />
                             </p>
-                            <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
-                            <p className="ant-upload-hint text-secondary fs-12">
+                            <p className="ant-upload-text">Drag and drop or browse to choose file</p>
+                            <p className="ant-upload-hint uplaod-inner">
                                 PNG, JPG,JPEG and PDF files are allowed
                             </p>
                         </Dragger>
                     </Form.Item>
                     {this.state?.filesList?.map((file, indx) => <div>
-                        {((file.status === "done" || file.status === true)&& file.state !=='Deleted') && <> <div className="docfile address-upload">
+                        {((file.status === "done" || file.status == true)&& file.state !='Deleted') && <> <div className="docfile custom-upload cust-upload-sy">
                             <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "":(file.documentName?.slice(-3) === "zip" ? "file" : "")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                             <div className="docdetails">
                                 <EllipsisMiddle suffixCount={6}>{file.name || file.documentName}</EllipsisMiddle>
-                                <span className="fs-12 text-secondary">{(file.size || file?.remarks) ? bytesToSize(file.size || file?.remarks) : ""}</span>
+                                <span className="upload-filesize">{(file.size || file?.remarks) ? bytesToSize(file.size || file?.remarks) : ""}</span>
                             </div>
                             <span className="icon md close c-pointer" onClick={() => {
                                 this.setState({ ...this.state, showDeleteModal: true, selectedFileIdx: indx,selectedObj:file })
@@ -122,13 +121,13 @@ class AddressDocumnet extends Component {
                     <>
                     	<div className="cust-pop-up-btn crypto-pop">
                         <Button
-                            style={{ margin: "0 8px" }}
-                            className="primary-btn pop-cancel btn-width"
+                            // style={{ margin: "0 8px" ,width: 120, height: 50 }}
+                            className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
                             onClick={() => { this.setState({ ...this.state, showDeleteModal: false }) }}>
-                            NO
+                            No
                         </Button>
                         <Button
-                            className="primary-btn pop-btn"
+                            className="primary-btn pop-btn detail-popbtn"
                             onClick={() => {
                                 let { documents: docs } = this.state;
                                 let files = docs.details;
@@ -154,7 +153,8 @@ class AddressDocumnet extends Component {
                                 docs.details=Object.assign([],obj)
                                 this.props?.onDocumentsChange(docs);
                             }}
-                            style={{ width: 120, height: 50 }}>
+                            // style={{ width: 120, height: 50 }}
+                            >
                             {apiCalls.convertLocalLang("Yes")}
                         </Button>
                         </div>

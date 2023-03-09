@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { Select, Input, Row, Col, Form, Button, Typography, List, Divider, Image, Alert, Spin, Empty } from 'antd';
+import { Select, Input, Row, Col, Form, Button, Typography, List, Divider, Image, Alert, Spin, Empty,Radio,Tabs } from 'antd';
 import apicalls from "../../api/apiCalls";
 import AddressDocumnet from "../addressbook.component/document.upload";
 import oops from '../../assets/images/oops.png'
 import FiatAddress from "../addressbook.component/fiat.address";
 import alertIcon from '../../assets/images/pending.png';
-import success from '../../assets/images/success.png';
+import success from '../../assets/images/success.svg';
 import NumberFormat from "react-number-format";
 import { fetchPayees, getCoinwithBank, fetchPastPayees, confirmTransaction, saveWithdraw, validateAmount } from "./api";
 import Loader from "../../Shared/loader";
@@ -21,6 +21,9 @@ import { connect } from "react-redux";
 import { getFeaturePermissionsByKeyName } from "../shared/permissions/permissionService";
 import { setSendFiatHead } from "../../reducers/buyFiatReducer";
 import {validateContentRule} from '../../utils/custom.validator'
+import {hideSendCrypto,rejectWithdrawfiat, setWithdrawfiatenaable ,setClearAmount} from '../../reducers/sendreceiveReducer'
+import { setStep } from '../../reducers/buysellReducer';
+import WithdrawalSuccess from '../../components/withDraw.component/withdrwSuccess';
 const { Text, Title } = Typography; 
 const { Option } = Select
 class OnthegoFundTransfer extends Component {
@@ -51,28 +54,32 @@ class OnthegoFundTransfer extends Component {
     isShowGreyButton: false,
     permissions: {},
     filtercoinsList: [],
-    searchFiatVal: ""
+    searchFiatVal: "",
   }
   componentDidMount() {
     this.verificationCheck()
     getFeaturePermissionsByKeyName(`send_fiat`);
     this.permissionsInterval = setInterval(this.loadPermissions, 200);
     if (!this.state.selectedCurrency) {
+      this.fetchMemberWallet();
+    }
+    if (this.state.selectedCurrency) {
+      this.getPayees();
+    }
+  }
+
+  fetchMemberWallet= async()=>{
+    
       this.setState({ ...this.state, fiatWalletsLoading: true });
-      fetchMemberWallets().then(res => {
+       fetchMemberWallets().then(res => {
         if (res.ok) {
             this.setState({ ...this.state, fiatWallets: res.data, filtercoinsList: res.data, fiatWalletsLoading: false });
         } else {
             this.setState({ ...this.state, fiatWallets: [], filtercoinsList: [], fiatWalletsLoading: false });
         }
       });
-    }
-    if (this.state.selectedCurrency) {
-      this.getPayees();
-    }
-    //  this.getCoinDetails()
+    
   }
-
   loadPermissions = () => {
     if (this.props.withdrawCryptoPermissions) {
       clearInterval(this.permissionsInterval);
@@ -124,6 +131,7 @@ class OnthegoFundTransfer extends Component {
   chnageStep = (step, values) => {
     this.setState({ ...this.state, step, onTheGoObj: values });
     if (step === 'newtransfer') {
+      this.props.dispatch(hideSendCrypto(false));
         this.setState({ ...this.state, step, isNewTransfer: true, onTheGoObj: values });
     }
 }
@@ -292,7 +300,15 @@ saveWithdrawdata = async () => {
     }
 
   }
-
+   goBack = async () => {
+    if(this.state.fiatWalletsLoading===false || this.state.fiatWalletsLoading===undefined){
+      this.fetchMemberWallet();
+    }
+    setTimeout(()=>{
+      this.chnageStep('selectcurrency');
+    this.props.dispatch(setSendFiatHead(false));
+    },400)
+}
   handleCurrencyChange = (e) => {
  this.setState({ ...this.state, selectedCurrency: e });
   }
@@ -307,6 +323,14 @@ saveWithdrawdata = async () => {
   submitHandler = (e) => {
     e.preventDefault()
   }
+
+
+  handleTabChange = (key) => {
+    this.setState({ ...this.state, selectedTab: key})
+}
+
+
+
   goToAddressBook = () => {
     let _amt = this.enteramtForm.current.getFieldsValue().amount
     _amt = _amt.replace(/,/g, '')
@@ -335,7 +359,6 @@ saveWithdrawdata = async () => {
     } else {
       if (!_amt) {
         this.enteramtForm.current.validateFields()
-        // this.setState({ ...this.state, errorMessage:'Please enter amount'})
       } else {
         this.setState({
           ...this.state,
@@ -354,12 +377,10 @@ saveWithdrawdata = async () => {
           {!this.state.fiatWalletsLoading && (
             <div>
               <div className="mt-8">
-              <Title
-                            className='sub-heading code-lbl'>Send from your Suissebase FIAT Wallet</Title>
+              <div
+                 className='label-style'>Send from your Suissebase FIAT Wallet</div>
               </div>
-              <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-              <Search placeholder="Search Currency" value={this.state.searchFiatVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleFiatSearch} size="middle" bordered={false} className="text-center mb-16" />
-              </Col>
+              <Search placeholder="Search Currency" value={this.state.searchFiatVal} prefix={<span className="icon lg search-angle drawer-search" />} onChange={this.handleFiatSearch} size="middle" bordered={false} className="cust-search" />
               <List
                 itemLayout="horizontal"
                 dataSource={this.state.fiatWallets}
@@ -372,17 +393,16 @@ saveWithdrawdata = async () => {
                 }}
                 renderItem={item => (
 
-                    <List.Item onClick={() => this.setState({ ...this.state, selectedCurrency: item.walletCode }, () => { this.getPayees(); this.chnageStep("enteramount") })}>
+                    <List.Item className="drawer-list-fiat sendfiat-coins" onClick={() => this.setState({ ...this.state, selectedCurrency: item.walletCode }, () => { this.getPayees(); this.chnageStep("enteramount") })}>
                     <Link>
-                      <List.Item.Meta
+                      <List.Item.Meta className='drawer-coin'
                         avatar={<Image preview={false} src={item.imagePath} />}
 
                         title={<div className="wallet-title">{item.walletCode}</div>}
                       />
                        <><div className="text-right coin-typo">
-                                        <NumberFormat value={item.amount} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={item.walletCode == 'USD' ? '$' : '€'} renderText={(value, props) => <div {...props} >{value}</div>} />
-
-                                    </div></>
+                         <NumberFormat value={item.amount} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={item.walletCode == 'USD' ? '$' : '€'} renderText={(value, props) => <div {...props} >{value}</div>} />
+                    </div></>
                     </Link>
                   </List.Item>
                 )}
@@ -422,7 +442,7 @@ saveWithdrawdata = async () => {
                   <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                       <Form.Item
-                        className="fw-300 mb-8 px-4 text-white-50 pt-16 custom-forminput custom-label fund-transfer-input send-fiat-input"
+                        className="custom-forminput custom-label fund-transfer-input send-fiat-input"
                         name="amount"
                         label={"Enter Amount"}
                         required
@@ -452,8 +472,9 @@ saveWithdrawdata = async () => {
                           allowNegative={false}
                           thousandSeparator={","}
                           onKeyDown={this.keyDownHandler}
-                          addonBefore={<Select defaultValue={this.state.selectedCurrency}
+                          addonBefore={<Select defaultValue={this.state.selectedCurrency} 
                               onChange={(e) => this.handleCurrencyChange(e)}
+                              className="currecny-drpdwn sendfiat-dropdown"
                               placeholder="Select">
                               <option value="USD">USD</option>
                               <option value="EUR">EUR</option>
@@ -466,15 +487,14 @@ saveWithdrawdata = async () => {
                       </Form.Item>
                     </Col>
                   </Row>
-                  <Row gutter={[16, 16]} className="mt-16">
+                  <Row gutter={[16, 4]} className="send-drawerbtn">
 
-                  <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
+                  <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
                       <Form.Item className="text-center">
                         <Button
                           htmlType="submit"
                           size="large"
-                          className="pop-btn mb-36"
-                          style={{ width: '100%' }}
+                          className="newtransfer-card"
                           loading={this.state.newtransferLoader}
                           disabled={this.state.addressLoader}
                         >
@@ -482,13 +502,12 @@ saveWithdrawdata = async () => {
                         </Button>
                       </Form.Item>
                     </Col>
-                     <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="mobile-viewbtns">
+                     <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
                       <Form.Item className="text-center">
                         <Button
                           htmlType="button"
                           size="large"
-                          className="pop-btn mb-36"
-                          style={{ width: '100% ' }}
+                          className="newtransfer-card"
                           loading={this.state.addressLoader}
                           disabled={this.state.newtransferLoader}
                           onClick={this.goToAddressBook}
@@ -507,24 +526,21 @@ saveWithdrawdata = async () => {
       addressselection: (
         <React.Fragment>
            {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
-          <div className="mt-8">
-          <Title
-                        className='sub-heading code-lbl'>Who are you sending money to?</Title>
+          <div>
+            <Title className='sub-abovesearch code-lbl'>Who are you sending money to?</Title>
           </div>
-          <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-
-          <Search placeholder="Search for Payee" value={this.state.searchVal} addonAfter={<span className="icon md search-white" />} onChange={this.handleSearch} size="middle" bordered={false} className=" text-center" />
-          </Col>
+         {this.state.selectedTab != 2 && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+          <Search placeholder="Search for Payee" value={this.state.searchVal} prefix={<span className="icon lg search-angle drawer-search" />} onChange={this.handleSearch} size="middle" bordered={false} className="cust-search" />
+          </Col>}
           {this.state?.loading && <Loader />}
           {!this.state.loading && (
             <>
-             <Title className="fw-600 text-white px-4 mb-16 mt-16 text-captz" style={{ fontSize: '18px' }}>Address Book</Title>
-              <Divider className="cust-divide" />
-
-              <ul
-                style={{ listStyle: 'none', paddingLeft: 0 }}
-                className="addCryptoList"
-              >
+            <div className="addressbook-grid">
+					<Tabs className="cust-tabs-fait" 			
+          activeKey={this.selectedTab}
+          onChange={this.handleTabChange}>					
+              <Tabs.TabPane tab="Address Book" content="withdrawCrypto" key={"withdrawCrypto"}  value="withdrawCrypto" className=""  component={Radio.Button}>
+                <ul className="addCryptoList mobile-scroll adbook-scroll" >
                 {filterObj.length > 0 &&
                   filterObj?.map((item, idx) => (
                     <>
@@ -575,34 +591,31 @@ saveWithdrawdata = async () => {
                               }
                             }
                           }}>
- <Col xs={6} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
-                                <Col xs={14} md={24} lg={24} xl={19} xxl={19} className="small-text-align">
-                                    <label className="fs-16 fw-600 text-white l-height-normal text-captz c-pointer">{item.name}</label>
-                                    {item.accountNumber && <div><Text className="fs-14 text-white-30 m-0">{this.state.selectedCurrency} account ending with {item.accountNumber?.substr(item.accountNumber.length - 4)}</Text></div>}
+                            <Col xs={3} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
+                                <Col xs={19} md={24} lg={24} xl={19} xxl={19} className="small-text-align">
+                                    <label className="address-name">{item.name}</label>
+                                    {item.accountNumber && <div><Text className="address-subtext">{this.state.selectedCurrency} account ending with {item.accountNumber?.substr(item.accountNumber.length - 4)}</Text></div>}
                                 </Col>
-                                <Col xs={4} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
-                            <span class="icon md rarrow-white"></span>
-                          </Col>
                         </Row>}</>
                   ))}
-                  {(!filterObj.length > 0) && <div className="success-pop text-center" style={{ marginTop: '0px' }}>
-                            <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
-                            <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
-                            <p className="fs-16 text-white-30 fw-200 mb-0"> {apicalls.convertLocalLang('address_available')} </p>
-                            <Link onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</Link>
+                  {(!filterObj.length > 0) && <div className="success-pop text-center declaration-content asdfv" >
+                            <img src={oops} className="confirm-icon nodata-image"  alt="Confirm" />
+                            <h1 className="success-title oops-title" > {apicalls.convertLocalLang('oops')}</h1>
+                            <p className="successsubtext custom-height"> {apicalls.convertLocalLang('address_available')} </p>
+                            <a onClick={() => this.chnageStep("newtransfer")} className="nodata-text" >Click here to make new transfer</a>
                         </div>}
               </ul>
-
-              <Title className="fw-600 text-white px-4 mb-16 mt-16 text-captz" style={{ fontSize: '18px' }}>Past Recipients</Title>
-              <Divider className="cust-divide" />
+              </Tabs.TabPane>
+                                <Tabs.TabPane tab="Past Recipients" content="withdrawFiat" key={2} className="" component={Radio.Button}>
+             
               <ul
                 style={{ listStyle: 'none', paddingLeft: 0 }}
-                className="addCryptoList"
+                className="addCryptoList paste-recept-style mobile-scroll adbook-scroll"
               >
                 {pastPayees.length > 0 &&
                   pastPayees?.map((item, idx) => (
                     <Row
-                      className="fund-border c-pointer"
+                      className="fund-border"
                       onClick={async () => {
                         if (
                           !['myself', '1stparty', 'ownbusiness'].includes(
@@ -630,32 +643,33 @@ saveWithdrawdata = async () => {
                           }
                         }
                       }}>
-                      <Col xs={6} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
-                                <Col xs={14} md={24} lg={24} xl={19} xxl={19} className=" small-text-align">
-                                    <label className="fs-16 fw-600 text-white l-height-normal text-captz c-pointer">{item.name}</label>
-                                    <div><Text className="fs-14 text-white-30 m-0">{this.state.selectedCurrency} account ending with {item.accountNumber?.substr(item.accountNumber?.length - 4)}</Text></div>
-                      </Col>
-                      <Col xs={4} md={24} lg={24} xl={2} xxl={2} className="mb-0 mt-8">
-                        <span class="icon md rarrow-white"></span>
+                      <Col xs={3} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
+                                <Col xs={19} md={24} lg={24} xl={19} xxl={19} className=" small-text-align">
+                                    <label className="address-name">{item.name}</label>
+                                    <div><Text className="address-subtext">{this.state.selectedCurrency} account ending with {item.accountNumber?.substr(item.accountNumber?.length - 4)}</Text></div>
                       </Col>
                     </Row>
                   ))}
-               {(!pastPayees.length > 0) && <div className="success-pop text-center" style={{ marginTop: '20px' }}>
-                            <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
-                            <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
-                            <p className="fs-16 text-white-30 fw-200 mb-0"> {'You have no past recipients'} </p>
-                            {/* <a onClick={() => this.chnageStep("newtransfer")}>Click here to make new transfer</a> */}
+               {(!pastPayees.length > 0) && <div className="success-pop text-center declaration-content" >
+                            <img src={oops} className="confirm-icon nodata-image" style={{ marginBottom: '10px' }} alt="Confirm" />
+                            <h1 className="success-title oops-title" > {apicalls.convertLocalLang('oops')}</h1>
+                            <p className="successsubtext custom-height"> {'You have no past recipients'} </p>
                             </div>}
               </ul>
+              </Tabs.TabPane>
+                </Tabs>
+							</div>
+          
+          
             </>
           )}
         </React.Fragment>
       ),
       reasonfortransfer: (
         <React.Fragment>
-          <div className="mb-16" style={{ textAlign: 'center' }}>
-          <text Paragraph
-                        className='text-white fs-30 fw-600 px-4 mb-16 mt-4' style={{ fontSize: '18px ' }}>Transfer Details</text>
+          <div className="">
+          <div Paragraph
+                        className='adbook-head' >Transfer Details</div>
           </div>
           <Form
             autoComplete="off"
@@ -746,139 +760,136 @@ saveWithdrawdata = async () => {
       reviewdetails: (
         <React.Fragment>
           <div ref={this.reviewScrool}></div>
-          <div className="mb-16 text-center">
-          <text Paragraph
-                        className='fs-24 fw-600 text-white mb-16 mt-4'>Review Details Of Transfer</text>
-          </div>
+          {/* <div className="drawer-maintitle"> */}
+          <div Paragraph
+            className='drawer-maintitle text-center'>Review Details Of Transfer</div>
+          {/* </div> */}
           <Spin spinning={this.state.reviewDetailsLoading}>
-            <Form
+            <Form className="send-fiatform"
               name="advanced_search"
               ref={this.formRef}
               onFinish={this.transferDetials}
               autoComplete="off">
                         {this.state.errorMessage && <Alert type="error" showIcon closable={false} description={this.state.errorMessage} />}
 
-              <Row gutter={24}>
-                <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+              
                 <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                    <Text className="fw-600 text-white mt-4 text-captz" style={{ fontSize: '18px' }}>Transfer details</Text>
+                                    <div className="adbook-head" >Transfer details</div>
                   </div>
-                </Col>
-                {"  "}
-                <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">How much you will receive</Title>
-                    <Title className="fs-14 text-white fw-500 text-upper text-right">
+                  <div className="cust-summary-new">
+                <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">How much you will receive</div>
+                    <div className="summarybal">
                     <NumberFormat
                                             value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
-                                            thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
+                                            thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</div>
                   </div>
-                </Col>
-                <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">Total fees</Title>
-                                    <Title className="fs-14 text-white fw-500 text-upper text-right"><NumberFormat
+                
+                <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Total fees</div>
+                                    <div className="summarybal"><NumberFormat
                                         value={`${(this.state.reviewDetails?.comission)}`}
-                                        thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
+                                        thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</div>
                   </div>
-                </Col>
-                <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">Withdrawal amount</Title>
-                                    <Title className="fs-14 text-white fw-500 text-upper text-right"><NumberFormat
+                
+                <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Withdrawal amount</div>
+                                    <div className="summarybal"><NumberFormat
                                         value={`${(this.state.reviewDetails?.requestedAmount)}`}
-                                        thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</Title>
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</div>
                   </div>
-                </Col>
-              </Row>
+                
 
-              <Row gutter={24} className=" text-white mt-36">
-              <Col xs={24} sm={24} md={24} lg={24} xxl={24} >
-                                <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                    <Text className="fw-600 text-white mb-0 mt-4 text-captz" style={{ fontSize: '18px' }}>Recipient details</Text>
                   </div>
-                </Col>
-                <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">Save Whitelist name as</Title>
-                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.favouriteName}</Title>
+                 
+                                <div className="d-flex  justify-content">
+                                    <div className="adbook-head">Recipient details</div>
                   </div>
-                </Col>
-                {this.state.reviewDetails?.name && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">Beneficiary Name</Title>
-                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.name}</Title>
+                  <div className="cust-summary-new kpi-List sendfiat-summarystyle">
+                <div className="kpi-divstyle" >
+                                    <div className="kpi-label">Whitelist Name </div>
+                                   <div> <Text className="kpi-val">{this.state.reviewDetails?.favouriteName}</Text></div>
+                  </div>
+               
+                {this.state.reviewDetails?.name &&
+                                <div className="kpi-divstyle" >
+                                    <div className="kpi-label">Beneficiary Name</div>
+                                   <div> <Text className="kpi-val">{this.state.reviewDetails?.name}</Text></div>
                                 </div>
-                            </Col>}
-                {this.state.reviewDetails?.firstName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">First Name</Title>
-                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.firstName}</Title>
+                           }
+                {this.state.reviewDetails?.firstName && 
+                                <div className="kpi-divstyle" >
+                                    <div className="kpi-label">First Name</div>
+                                   <div> <Text className="kpi-val">{this.state.reviewDetails?.firstName}</Text></div>
                                 </div>
-                            </Col>}
-                {this.state.reviewDetails?.lastName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">Last Name</Title>
-                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.lastName}</Title>
+                          }
+                {this.state.reviewDetails?.lastName && 
+                                <div className="kpi-divstyle" >
+                                    <div className="kpi-label">Last Name</div>
+                                   <div> <Text className="kpi-val">{this.state.reviewDetails?.lastName}</Text></div>
                                 </div>
-                            </Col>}
-                 {this.state.reviewDetails?.iban && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">IBAN </Title>
-                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.iban}</Title>
+                           }
+                 {this.state.reviewDetails?.iban &&
+                                <div className="kpi-divstyle" >
+                                    <div className="kpi-label">IBAN </div>
+                                    <div> <Text className="kpi-val">{this.state.reviewDetails?.iban}</Text></div>
                                 </div>
-                            </Col>}
-               {this.state.reviewDetails?.customerRemarks && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">Reason For Transfer </Title>
-                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.customerRemarks || "-"}</Title>
+                           }
+               {this.state.reviewDetails?.customerRemarks &&
+                                <div className="kpi-divstyle" >
+                                    <div className="kpi-label">Reason For Transfer </div>
+                                    <div>  <Text className="kpi-val">{this.state.reviewDetails?.customerRemarks || "-"}</Text></div>
                                 </div>
-                            </Col>}
+                          }
 
-{this.state.reviewDetails?.abaRoutingCode && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">ABA Routing code</Title>
-                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.abaRoutingCode || "-"}</Title>
+{this.state.reviewDetails?.abaRoutingCode &&
+                                <div className="kpi-divstyle" >
+                                    <div className="kpi-label">ABA Routing code</div>
+                                    <div> <Text className="kpi-val">{this.state.reviewDetails?.abaRoutingCode || "-"}</Text></div>
                                 </div>
-                            </Col>}
-                {this.state.reviewDetails?.swiftRouteBICNumber && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">SWIFT / BIC Code</Title>
-                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.swiftRouteBICNumber || "-"}</Title>
+    }
+                {this.state.reviewDetails?.swiftRouteBICNumber &&
+                                <div className="kpi-divstyle" >
+                                    <div className="kpi-label">SWIFT / BIC Code</div>
+                                    <div>  <Text className="kpi-val">{this.state.reviewDetails?.swiftRouteBICNumber || "-"}</Text></div>
                                 </div>
-                            </Col>}
-                {this.state.reviewDetails?.accountNumber && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">Account Number </Title>
-                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state.reviewDetails?.accountNumber || "-"}</Title>
+                            }
+                {this.state.reviewDetails?.accountNumber &&
+                                <div className="kpi-divstyle" >
+                                    <div className="kpi-label">Account Number </div>
+                                    <div>  <Text className="kpi-val">{this.state.reviewDetails?.accountNumber || "-"}</Text></div>
                                 </div>
-                            </Col>}
-                {this.state.reviewDetails?.bankName && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
-                                <div className="pay-list py-4" style={{ alignItems: 'baseline' }}>
-                                    <Title className="fs-14 text-white fw-500 text-captz">Bank Name </Title>
-                                    <Title className="fs-14 fw-500 text-white text-right plist-textwrap">{this.state?.reviewDetails?.bankName || "-"}</Title>
+                           }
+                {this.state.reviewDetails?.bankName &&
+                                <div className="kpi-divstyle" >
+                                    <div className="kpi-label">Bank Name </div>
+                                    <div>  <Text className="kpi-val">{this.state?.reviewDetails?.bankName || "-"}</Text></div>
                                 </div>
-                            </Col>}
-                <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+                            }
+                            </div>
+             
                 <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} />
-                </Col>
-                {this.state.permissions?.Send && <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
+                
+                {this.state.permissions?.Send && 
+            
                     <div className="text-right mt-36 create-account">
                       <Form.Item className="mb-0 mt-16">
                       <Button
-                                            htmlType="button"
-                                            onClick={() => { this.saveWithdrawdata(); }}
-                                            size="large"
-                                            block
-                                            className="pop-btn custom-send"
-                                            style={{ backgroundColor: !isShowGreyButton && '#ccc', borderColor: !isShowGreyButton && '#3d3d3d' }}
-                                            loading={this.state.isBtnLoading} >
-                                            Confirm & Continue
-                                        </Button>
+                         htmlType="button"
+                         onClick={() => { this.saveWithdrawdata(); }}
+                         size="large"
+                         block
+                         className="pop-btn custom-send cust-disabled"
+                        style={{ backgroundColor: !isShowGreyButton && '#7087FF', borderColor: !isShowGreyButton && '#7087FF' }}
+                        loading={this.state.isBtnLoading} 
+                        disabled={!isShowGreyButton}>
+                         Confirm & Continue
+                       </Button>
                       </Form.Item>
                     </div>
-                  </Col>}
-              </Row>
+                  // </Col>
+                  }
+              
             </Form>
           </Spin>
         </React.Fragment>
@@ -894,16 +905,18 @@ saveWithdrawdata = async () => {
                     fiatHeadingUpdate={this.fiatHeading}
                     onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} />
             </>,
-      declaration: <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
-      <Image width={80} preview={false} src={alertIcon} />
-      <Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully</Title>
-            <Text className="text-white-30">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
-                       Please sign using link received in email to whitelist your address. `}</Text>
-            <Text className="text-white-30">{`Please note that your withdrawal will only be processed once your whitelisted address has been approved`}</Text>
-            </div></div>,
-       successpage: <div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
-       <Image width={80} preview={false} src={success} />
-       <Title level={2} className="text-white-30 my-16 mb-0">Your transaction has been processed successfully</Title>
+      declaration: <div className="custom-declaraton send-success"> <div className="success-pop text-center declaration-content">
+      <Image preview={false} src={alertIcon} className="confirm-icon"  />
+      <Title level={2} className="success-title">Declaration form sent successfully</Title>
+                <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
+                Please review and sign the document in your email to whitelist your address.
+                Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
+           
+           <Translate content="Back_to_Withdrawfiat" className=" cust-cancel-btn send-crypto-btn" component={Button} size="large" onClick={() => { this.goBack() }} /> </div></div>,
+       successpage: <div className="custom-declaraton send-success"> <div className="success-pop text-center declaration-content">
+       <Image  preview={false} src={success}  className="confirm-icon" />
+       <Title level={2} className="successsubtext cust-heightmbl">Your transaction has been processed successfully</Title>
+       <Translate content="Back_to_Withdrawfiat" className=" cust-cancel-btn" component={Button} size="large" onClick={() => { this.goBack() }}  />
    </div></div>
     }
     return steps[this.state.step];
@@ -926,8 +939,14 @@ const connectStateToProps = ({ sendReceive, userConfig, menuItems, oidc }) => {
 const connectDispatchToProps = (dispatch) => {
   return {
     changeInternalStep: (stepcode) => {
-      // dispatch(setInternalStep(stepcode))
     },
+      changeStep: (stepcode) => {
+          dispatch(setStep(stepcode))
+      },
+      amountReset: () => {
+          dispatch(setClearAmount())
+      },
+
     dispatch
   }
 }

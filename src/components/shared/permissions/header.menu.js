@@ -26,8 +26,7 @@ import TransactionsHistory from "../../transactions.history.component";
 import AuditLogs from "../../auditlogs.component";
 import Notifications from "../../../notifications";
 import Wallets from "../../wallets.component.js";
-import Batchpayments from "../../batchpayment.component";
-// Action Steps
+import TheamSwitch from "./theamSwitch"
 import {
     setStepcode as transforSetStep
 } from "../../../reducers/tranfor.Reducer";
@@ -47,7 +46,7 @@ import {
     hideSendCrypto
 } from "../../../reducers/sendreceiveReducer";
 import { getmemeberInfo } from "../../../reducers/configReduser";
-import { clearPermissions, fetchFeatures, setSelectedFeatureMenu } from "../../../reducers/feturesReducer";
+import { clearPermissions, fetchFeatures, getScreenName, setSelectedFeatureMenu } from "../../../reducers/feturesReducer";
 import { readNotification as readNotifications } from "../../../notifications/api";
 import apicalls from "../../../api/apiCalls";
 import { setNotificationCount } from "../../../reducers/dashboardReducer";
@@ -65,7 +64,8 @@ const { Paragraph, Text } = Typography;
 const { Sider } = Layout;
 class MobileHeaderMenu extends Component {
     render() {
-        const { onMenuItemClick, features: { features: { data } } } = this.props;
+        const { onMenuItemClick, features: { features: { data },getScreen },dispatch } = this.props;
+
         return <> <Menu
             theme="light"
             mode="vertical"
@@ -75,12 +75,11 @@ class MobileHeaderMenu extends Component {
                 this.props.dispatch(setHeaderTab(key.key));
             }}
         >
-
             <Translate
                 content="header_title"
                 onClick={this.props.routeToCockpit}
                 component={Menu.Item}
-                className="list-item"
+                className={getScreen?.getScreen === "dashboard" ? "active" : "custom-inactive"}
             />
             {data?.map((item, indx) => item.menuitemType === "dropdown" ?
                 <><Translate
@@ -89,8 +88,15 @@ class MobileHeaderMenu extends Component {
                     key={indx}
                     className="mr-16"
                 /><Menu>
-                        <ul className="pl-0 drpdwn-list">
-                            {item?.subMenu?.map((subItem) => <li onClick={() => onMenuItemClick(subItem.key, subItem)}>
+                        <ul className="drpdwn-list">
+                            {item?.subMenu?.map((subItem) => <li
+                                className={getScreen?.getScreen === item.content ? "" : "custom-inactive"}
+
+                                onClick={() => {
+                                    onMenuItemClick(subItem.key, subItem);
+                                    dispatch(getScreenName(item.content))
+
+                                }}>
                                 <Link>
                                     <Translate content={subItem.content} conmponent={Text} />{" "}
                                     <span className="icon md rarrow-white" />
@@ -136,11 +142,15 @@ class HeaderPermissionMenu extends Component {
             send_crypto: false,
             receive_fiat: false,
             receive_crypto: false,
-            sendFiatTab: false
+            sendFiatTab: false,
+            theamFalge: 'darkTheam',
+            tabColour: false
 
         },
+        previousDrawerKey: ""
     }
     componentDidMount() {
+        this.props.dispatch(getScreenName({ getScreen: "dashboard" }))
         this.props.dispatch(fetchFeatures(this.props.userConfig.appId || "178A3680-3B6F-44AD-9EF2-69EA040C16CC"));
         this.menuClickSub = headerSubscriber.subscribe(({ menuitem, menuKey }) => this.onMenuItemClick(menuitem, menuKey));
     }
@@ -148,6 +158,9 @@ class HeaderPermissionMenu extends Component {
         this.menuClickSub.unsubscribe();
     }
     userProfile() {
+        if (this.state.previousDrawerKey && this.state.drawerMenu[this.state.previousDrawerKey]) {
+            this.closeDrawer(this.state.previousDrawerKey);
+        }
         this.props.history.push("/userprofile");
 
         if (this.props.oidc.user.profile?.sub) {
@@ -165,68 +178,73 @@ class HeaderPermissionMenu extends Component {
             this.props.history.push("/docnotices");
         }
     }
-    
+
     navigate = (menuKey, menuItem) => {
         if (menuItem.path === "/modal") {
-                switch (menuKey) {
-                    case "trade_buy":
-                        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: false } });
-                        this.props.dispatch(setSellHeaderHide(false));
-                        this.props.dispatch(setSelectedSellCoin(false));
-                        this.props.dispatch(menuItem.dispatchStep ? setStep(menuItem.dispatchStep) : setStep("step1"));
-                        break;
-                    case "trade_sell":
-                        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: true } });
-                        this.props.dispatch(setSellHeaderHide(false));
-                        this.props.dispatch(setSelectedSellCoin(false));
-                        this.props.dispatch(setStep("step1"));
-                        break;
-                    case "transfer":
-                        this.props.dispatch(transforSetStep(menuItem.dispatchStep));
-                        break;
-                    case "sendReceive":
-                        this.props.dispatch(sendSetStep("step1"));
-                        break;
-                    case "send_fiat":
-                        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, send_fiat: true, sendCryptoTab: false, sendFiatTab: true } });
-                        this.props.dispatch(setWithdrawfiat(""));
-                        this.props.dispatch(byFiatSetStep("step1"));
-                        this.props.dispatch(setWithdrawfiatenaable(true));
-                        this.props.dispatch(setSendCrypto(true));
-                        this.props.dispatch(setReceiveFiatHead(false));
-                        this.props.dispatch(setSendFiatHead(false));
-                        break;
-                    case "send_crypto":
-                        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, send_crypto: true, sendCryptoTab: true, sendFiatTab: false } });
-                        this.props.dispatch(setWithdrawfiat(""));
-                        this.props.dispatch(byFiatSetStep("step1"));
-                        this.props.dispatch(setWithdrawfiatenaable(false));
-                        this.props.dispatch(setSendCrypto(true));
-                        this.props.dispatch(hideSendCrypto(false));
-                        break;
-                    case "receive_fiat":
-                        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, receive_fiat: true, sendCryptoTab: false, sendFiatTab: false } });
-                        this.props.dispatch(setWithdrawfiat(""));
-                        this.props.dispatch(setReceiveFiatHead(true));
-                        this.props.dispatch(byFiatSetStep("step1"));
-                        this.props.dispatch(setWithdrawfiatenaable(false));
-                        this.props.dispatch(setSendCrypto(false));
-                        break;
-                    case "receive_crypto":
-                        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, receive_crypto: true, sendCryptoTab: false, sendFiatTab: false } });
-                        this.props.dispatch(setWithdrawfiat(""));
-                        this.props.dispatch(byFiatSetStep("step1"));
-                        this.props.dispatch(setWithdrawfiatenaable(false));
-                        this.props.dispatch(setSendCrypto(false));
-                        break;
-                        case "personal_bank_account":
+            switch (menuKey) {
+                case "trade_buy":
+                    this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: false } });
+                    this.props.dispatch(setSellHeaderHide(false));
+                    this.props.dispatch(setSelectedSellCoin(false));
+                    this.props.dispatch(menuItem.dispatchStep ? setStep(menuItem.dispatchStep) : setStep("step1"));
+                    break;
+                case "trade_sell":
+                    this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, trade: true, selectedTab: true } });
+                    this.props.dispatch(setSellHeaderHide(false));
+                    this.props.dispatch(setSelectedSellCoin(false));
+                    this.props.dispatch(setStep("step1"));
+                    break;
+                case "transfer":
+                    this.props.dispatch(transforSetStep(menuItem.dispatchStep));
+                    break;
+                case "sendReceive":
+                    this.props.dispatch(sendSetStep("step1"));
+                    break;
+                case "send_fiat":
+                    this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, send_fiat: true, sendCryptoTab: false, sendFiatTab: true } });
+                    this.props.dispatch(setWithdrawfiat(""));
+                    this.props.dispatch(byFiatSetStep("step1"));
+                    this.props.dispatch(setWithdrawfiatenaable(true));
+                    this.props.dispatch(setSendCrypto(true));
+                    this.props.dispatch(setReceiveFiatHead(false));
+                    this.props.dispatch(setSendFiatHead(false));
+                    break;
+                case "send_crypto":
+                    this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, send_crypto: true, sendCryptoTab: true, sendFiatTab: false } });
+                    this.props.dispatch(setWithdrawfiat(""));
+                    this.props.dispatch(byFiatSetStep("step1"));
+                    this.props.dispatch(setWithdrawfiatenaable(false));
+                    this.props.dispatch(setSendCrypto(true));
+                    this.props.dispatch(hideSendCrypto(false));
+                    break;
+                case "receive_fiat":
+                    this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, receive_fiat: true, sendCryptoTab: false, sendFiatTab: false } });
+                    this.props.dispatch(setWithdrawfiat(""));
+                    this.props.dispatch(setReceiveFiatHead(true));
+                    this.props.dispatch(byFiatSetStep("step1"));
+                    this.props.dispatch(setWithdrawfiatenaable(false));
+                    this.props.dispatch(setSendCrypto(false));
+                    break;
+                case "receive_crypto":
+                    this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, receive_crypto: true, sendCryptoTab: false, sendFiatTab: false } });
+                    this.props.dispatch(setWithdrawfiat(""));
+                    this.props.dispatch(byFiatSetStep("step1"));
+                    this.props.dispatch(setWithdrawfiatenaable(false));
+                    this.props.dispatch(setSendCrypto(false));
+                    break;
+                case "personal_bank_account":
                     window.open(process.env.REACT_APP_BANK_UI_URL + 'dashboard/receive', '_self')
                     break;
-                    default:
-                        break;
-                }
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true, selectedTab: menuKey === "trade_sell" ? true : false, sendCryptoTab: menuKey === "send_crypto" ? true : false, sendFiatTab: menuKey === "send_fiat" ? true : false } });
+                default:
+                    break;
+            }
+            this.closeDrawer(this.state.previousDrawerKey, () => {
+                this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [menuKey]: true, selectedTab: menuKey === "trade_sell" ? true : false, sendCryptoTab: menuKey === "send_crypto" ? true : false, sendFiatTab: menuKey === "send_fiat" ? true : false }, previousDrawerKey: menuKey });
+            });
         } else if (menuItem.path) {
+            if (this.state.previousDrawerKey) {
+                this.closeDrawer(this.state.previousDrawerKey)
+            }
             this.props.history.push(menuItem.path);
         }
     }
@@ -240,7 +258,7 @@ class HeaderPermissionMenu extends Component {
         }
     }
     onMenuItemClick = async (menuKey, menuItem) => {
-        const perIgnoreLst = ["notifications", "auditLogs", "cases",];
+        const perIgnoreLst = ["notifications", "auditLogs", "cases", "transactions"];
         if (perIgnoreLst.includes(menuKey)) { this.navigate(menuKey, menuItem) }
         else {
             const ignoreKycLst = ["transactions"];
@@ -266,7 +284,7 @@ class HeaderPermissionMenu extends Component {
             }
         }
     }
-    closeDrawer = (key) => {
+    closeDrawer = (key, callback = () => { }) => {
         if (this.props.menuItems?.featurePermissions?.[KEY_URL_MAP[window.location.pathname]]?.featureId) {
             this.props.dispatch(setSelectedFeatureMenu(this.props.menuItems?.featurePermissions?.[KEY_URL_MAP[window.location.pathname]]?.featureId));
         }
@@ -284,13 +302,16 @@ class HeaderPermissionMenu extends Component {
         });
         this.props.clearSwapfullData();
         if (key === "send") {
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, send_crypto: false, send_fiat: false, receive_fiat: false, receive_crypto: false } });
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, send_crypto: false, send_fiat: false, receive_fiat: false, receive_crypto: false } }, callback);
         }
         else if (key === "trade") {
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, "trade_buy": false, "trade_sell": false } });
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, "trade_buy": false, "trade_sell": false } }, callback);
         }
         else {
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [key]: false } });
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, [key]: false } }, callback);
+        }
+        if(["/","/cockpit"].includes(window.location.pathname)){
+            this.props.dispatch(getScreenName({getScreen:"dashboard"}));
         }
     }
     readNotification() {
@@ -322,94 +343,80 @@ class HeaderPermissionMenu extends Component {
             FullFeatureName: "Logout"
         });
     }
+
+    themeSwitch = () => {
+        if (this.props.userConfig?.theme == "Light Theme") {
+            this.setState({ ...this.state, theamFalge: "darkTheam" })
+        } else if (this.props.userConfig?.theme == "Dark Theme") {
+            this.setState({ ...this.state, theamFalge: "lightTheam" })
+        }
+    }
+    handleHover = () => {
+        this.setState({ ...this.state, tabColour: "blue" })
+        this.props.dispatch(getScreenName({ getScreen: "dashboard" }))
+    }
+    handleSelecte = (items) => {
+        this.props.dispatch(getScreenName({ getScreen: null }))
+        if (items) {
+            this.props.dispatch(getScreenName({ getScreen: items.content }))
+        }
+    }
     render() {
         const userProfileMenu = (
             <Menu>
                 <div className="profile-dropdown">
-                    {this.props.userConfig?.imageURL != null && (
-                        <img
-                            src={
-                                this.props.userConfig?.imageURL
-                                    ? this.props.userConfig?.imageURL
-                                    : DefaultUser
-                            }
-                            className="user-profile"
-                            alt={"image"}
-                        />
-                    )}
-                    {this.props.userConfig?.imageURL === null && (
-                        <img
-                            src={
-                                this.props.userConfig?.imageURL
-                                    ? this.props.userConfig?.imageURL
-                                    : DefaultUser
-                            }
-                            className="user-profile"
-                            alt={"image"}
-                        />
-                    )}
-                    <p className="mb-15 ml-8 profile-value" style={{ flexGrow: 12, marginTop: "5px" }}>
-                        {this.props.userConfig.isBusiness ? this.props.userConfig.businessName :
-                            <>{this.props.userConfig.firstName}{" "}{" "}{this.props.userConfig.lastName}</>}
-                    </p>
+
                     <Translate
-                        content="manage_account"
+                        content={`${this.props.userConfig?.isBusiness === true ? "business_account" : "manage_account"}`}
                         component={Button}
                         size="medium"
                         block
                         className="profile-btn"
                         onClick={() => this.userProfile()}
                     />
-                    <ul className="pl-0 drpdwn-list">
+                    <ul className="drpdwn-list">
                         <li
-                            onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/modal" })}
+                            onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/transactions" })}
                         >
                             <Link>
                                 <Translate
                                     content="transactions_history"
                                     component={Text}
-                                    className="text-white-30"
+                                    className="text-white"
                                 />
                                 <span className="icon md rarrow-white" />
                             </Link>
                         </li>
                         <li
                         >
-                            <Popover placement="left" content={<><div onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/6120197cdc204d9ddb882e4d")}>
+                            <Popover placement="left" content={<><div className="personal-popup" onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/6120197cdc204d9ddb882e4d")}>
                                 <Link>
                                     <Translate
                                         content="personal_account"
                                         component={Text}
-                                        className="text-white-30" key="1"
+                                        className="text-white" key="1"
                                     />
                                 </Link><span className="icon c-pointer md rarrow-white ml-12" /></div>
-                                <div onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/611b3ed20414885a6fc64fa7")}>
+                                <div className="personal-popup" onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/611b3ed20414885a6fc64fa7")}>
                                     <Link>
                                         <Translate
                                             content="business_account"
                                             component={Text}
-                                            className="text-white-30" key="1"
+                                            className="text-white" key="1"
                                         />
                                     </Link><span className="icon c-pointer md rarrow-white ml-12" /></div></>} >
-                                {/* <Link>
-                                    <Translate
-                                        content="get_your_own_iban"
-                                        component={Text}
-                                        className="text-white-30"
-                                    />
-                                    <span className="icon md rarrow-white" />
-                                </Link> */}
-
                             </Popover>
                         </li>
                         <li
-                            onClick={() => this.onMenuItemClick("auditLogs", { key: "auditLogs", path: "/modal" })}
+                            // onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/transactions" })}
+                            onClick={() => this.props.history.push("/auditlogs")}
+
                         >
                             <Link>
                                 <Translate
                                     content="AuditLogs"
                                     component={Text}
-                                    className="text-white-30"
+                                    className="text-white"
                                 />
                                 <span className="icon md rarrow-white" />
                             </Link>
@@ -421,7 +428,7 @@ class HeaderPermissionMenu extends Component {
                                 <Translate
                                     content="address_book"
                                     component={Text}
-                                    className="text-white-30"
+                                    className="text-white"
                                 />
                                 <span className="icon md rarrow-white" />
                             </Link>
@@ -433,7 +440,7 @@ class HeaderPermissionMenu extends Component {
                                 <Translate
                                     content="case"
                                     component={Text}
-                                    className="text-white-30"
+                                    className="text-white"
                                 />
                                 <span className="icon md rarrow-white" />
                             </Link>
@@ -446,12 +453,12 @@ class HeaderPermissionMenu extends Component {
                                     <Translate
                                         content="upload_documents"
                                         component={Text}
-                                        className="d-block text-white-30"
+                                        className="d-block text-white"
                                     />
                                     <Translate
                                         content='compliance'
                                         component={Text}
-                                        className="text-white-30"
+                                        className="text-white"
                                     />
                                 </span>
                                 <span className="icon md rarrow-white" />
@@ -462,7 +469,7 @@ class HeaderPermissionMenu extends Component {
                                 <span>
                                     <Translate
                                         content="logout"
-                                        className="text-white-30"
+                                        className="text-white"
                                         component={Text}
                                     />
                                 </span>
@@ -485,16 +492,25 @@ class HeaderPermissionMenu extends Component {
                     this.props.dispatch(setHeaderTab(key.key));
                 }}
             >
-                {/* <Menu.Item key="12" className="custom-header"><Link to="/batchpayment" className="batch-list">Batch Payments</Link></Menu.Item> */}
-
+                <Menu.Item
+                    className={this.props.menuItems.getScreen?.getScreen == "dashboard" ? "active" : "custom-inactive"}
+                >
+                    <Translate
+                        content="header_title"
+                        onClick={this.props.routeToCockpit}
+                        onMouseOver={() => { this.handleHover() }}
+                        // component={Text}
+                        className={this.props.menuItems.getScreen?.getScreen == "dashboard" ? "" : "custom-inactive"}
+                    />
+                </Menu.Item>
                 {data?.map((item, indx) => <React.Fragment>
-                    {item.isTab ? <Menu.Item key={item.id}>
+                    {item.isTab ? <Menu.Item key={item.id} onClick={() => this.handleSelecte(item)}>
                         <Dropdown
                             onClick={() =>
                                 this.setState({ ...this.state, visbleProfileMenu: false })
                             }
-                            overlay={<Menu>
-                                <ul className="pl-0 drpdwn-list">
+                            overlay={<Menu >
+                                <ul className="drpdwn-list ">
                                     {item.subMenu.map(subitem => <li onClick={() => this.onMenuItemClick(subitem.key, subitem)}>
                                         <Link value={2} className="c-pointer">
                                             <Translate content={subitem.content} />
@@ -513,17 +529,33 @@ class HeaderPermissionMenu extends Component {
                                 content={item.content}
                                 component={Menu.Item}
                                 key="4"
-                                className="fs-20 custom-header"
+                                className={item.content == this.props.menuItems.getScreen?.getScreen ? "" : "custom-header"}
+
                             />
                         </Dropdown>
-                    </Menu.Item> : <Menu.Item onClick={() => this.onMenuItemClick(item.key, item)}>
+                    </Menu.Item> :
+                        <Menu.Item onClick={() => this.onMenuItemClick(item.key, item)}>
 
-                        <Translate content={item.content}
-                            component={Menu.Item}
-                            className="fs-20 custom-header" />
-                    </Menu.Item>}
+                            <Translate content={item.content}
+                                component={Menu.Item}
+                                className="fs-20 custom-header" />
+                        </Menu.Item>}
                 </React.Fragment>)}
+            </Menu>
+            <Menu
+                theme="light"
+                mode="horizontal"
+                className="header-right mobile-headerview"
+                selectedKeys={[this.props.buySell?.headerTab]}
+                onSelect={(key) => {
+                    this.props.dispatch(setHeaderTab(key.key));
+                }}>
 
+                <Menu.Item key="15">
+
+                    <TheamSwitch theamFlag={this.state.theamFalge} />
+
+                </Menu.Item>
                 <Menu.Item
                     key="9"
                     className="notification-conunt"
@@ -556,7 +588,7 @@ class HeaderPermissionMenu extends Component {
                     overlayClassName="secureDropdown"
                     getPopupContainer={() => document.getElementById("area")}
                 >
-                    <Menu.Item key="10" className="ml-16">
+                    <Menu.Item key="10" className="user-left">
                         {this.props.userConfig?.imageURL != null && (
                             <img
                                 src={
@@ -631,7 +663,7 @@ class HeaderPermissionMenu extends Component {
                 isShowSendFiat={this.state.drawerMenu.sendFiatTab}
                 onClose={() => this.closeDrawer("send")}
             />
-            {this.state.drawerMenu.transactions && (
+            {/* {this.state.drawerMenu.transactions && (
                 <TransactionsHistory
                     showDrawer={this.state.drawerMenu.transactions}
                     onClose={() => {
@@ -643,7 +675,8 @@ class HeaderPermissionMenu extends Component {
                     }}
                     thref={(cd) => (this.child1 = cd)}
                 />
-            )}
+                 <Link to="/transactions" value={4} className="c-pointer"></Link>
+            )} */}
 
             <Drawer
                 title={[
@@ -654,9 +687,9 @@ class HeaderPermissionMenu extends Component {
                             }
                             className="icon md close-white c-pointer"
                         />
-                        <div className="text-center fs-14">
+                        <div className="text-center">
                             <Translate
-                                className="mb-0 text-white-30 fw-600 text-upper"
+                                className="drawer-maintitle"
                                 content="change_pass_word"
                                 component={Paragraph}
                             />

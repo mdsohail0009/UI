@@ -11,6 +11,7 @@ import {Alert} from 'antd'
 import { setCurrentAction } from '../../reducers/actionsReducer';
 
 class BuySummary extends Component {
+  myRef = React.createRef();
   constructor(props) {
     super(props);
     this.state = {
@@ -113,6 +114,7 @@ class BuySummary extends Component {
           error: { valid: false, message: this.isErrorDispaly(response),agreeRed:true, }
         });
       }
+      this.myRef?.current?.scrollIntoView();
       this.setState({ isLoading: false });
     } else {
       this.setState({
@@ -123,6 +125,8 @@ class BuySummary extends Component {
           agreeRed:false,
         },
       });
+      this.myRef?.current?.scrollIntoView();
+
     }
   };
   isErrorDispaly = (objValue) => {
@@ -148,6 +152,7 @@ class BuySummary extends Component {
 		}
 	}
   render() {
+    
     {
       this.state.error !== null && (
         <Alert
@@ -157,8 +162,10 @@ class BuySummary extends Component {
           onClose={() => this.setState({ error: null })}
           showIcon
         />
-      );
+      )
+      
     }
+    
     if (
       this.props.sellData?.previewDetails?.loading ||
       !this.props.sellData?.previewDetails?.data
@@ -168,6 +175,7 @@ class BuySummary extends Component {
     const { coin, oneCoinValue, amount, amountNativeCurrency, isCrypto } =
       this.props.sellData?.previewDetails?.data;
     return (
+      <div id="divScroll" ref={this.myRef}>
       <Summary
 
       permissions={this.state.permissions?.Buy}
@@ -206,6 +214,7 @@ class BuySummary extends Component {
           })
         }
       />
+      </div>
     );
   }
 }

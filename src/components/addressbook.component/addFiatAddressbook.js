@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 // import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
 // import { Link } from "react-router-dom";
@@ -21,13 +21,14 @@ import AddressCommonCom from "./addressCommonCom";
 // };
 //  <LinkValue content="terms_service" />;
 const NewFiatAddress = (props) => {
- 
+  const [isEdit, setEdit] = useState(false);
+  const [state, setstate] = useState()
   useEffect(() => {
     if (
       props?.addressBookReducer?.selectedRowData?.id !==
       "00000000-0000-0000-0000-000000000000" &&
       props?.addressBookReducer?.selectedRowData?.id
-    ) {  }
+    ) { setEdit(true); }
     addressbkTrack();
 
 
@@ -47,7 +48,7 @@ const NewFiatAddress = (props) => {
     });
   };
   const screen=()=>{
- 
+  setstate("Fiat")
 }
   return (
     <>

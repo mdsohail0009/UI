@@ -17,12 +17,15 @@ import WithdrawalLive from '../withDraw.component/withdrawLive';
 import WithdrawalSuccess from '../withDraw.component/withdrwSuccess';
 import ConfirmMsg from './confirmMsg';
 import { Link } from 'react-router-dom';
+import { getScreenName } from '../../reducers/feturesReducer';
+import { connect } from 'react-redux';
 
 class MassPayment extends Component {
     state = {
         withdraw: false,
     }
     closeDrawer = () => {
+        this.props.dispatch(getScreenName({getScreen:"dashboard"}))
         this.props.dispatch(setWithdrawfiatenaable(false))
         this.props.dispatch(rejectWithdrawfiat())
         if (this.props.onClose) {
@@ -114,18 +117,7 @@ withdrawFiatSummaryBack = () => {
                 title={[
                     <div className="side-drawer-header">
                         {this.renderTitle()}
-                        <div className="text-center fs-24">
-                            {this.props.buyFiat?.receiveFiatHeader && <>
-                               <Translate className="mb-0 text-white-30 fw-600" content="DepositandFiat"  component={Paragraph} />
-                               <Translate className="text-white-50 mb-0 fs-14 fw-300" content={this.props.buyFiat.stepSubTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
-                               </>
-                            }
-                            {!this.props.buyFiat?.receiveFiatHeader && !this.props.buyFiat?.sendFiatHeader&& <>
-                            <Translate className="mb-0 text-white-30 fw-600" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
-                            <Translate className="text-white-50 mb-0 fs-14 fw-300" content={this.props.buyFiat.stepSubTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
-                            </>
-                            }
-                            </div>
+                        
                         {this.renderIcon()}
                     </div>
                 ]}
@@ -136,10 +128,27 @@ withdrawFiatSummaryBack = () => {
                 className="side-drawer custom-fait-sidedrawer"
                 destroyOnClose={true}
             >
+                <div className="text-center">
+                            {this.props.buyFiat?.receiveFiatHeader && <>
+                               <div className='text-center selctcoin-style'><div className='drawer-maintitle'>Receive Fiat</div>
+                      <Translate content="receive_fiat_text" component={Paragraph} className="label-style drawer-subtextstyle" /></div> 
+                               <Translate className="" content={this.props.buyFiat.stepSubTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
+                               </>
+                            }
+                            {!this.props.buyFiat?.receiveFiatHeader && !this.props.buyFiat?.sendFiatHeader && <>
+                            <Translate className="drawer-maintitle" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
+                            <Translate className="" content={this.props.buyFiat.stepSubTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
+                            </>
+                            }
+                            </div>
                 {this.renderContent()}
             </Drawer>
         );
     }
 }
-
- export default ConnectStateProps(MassPayment);
+const connectDispatchToProps = dispatch => {
+    return {
+        dispatch
+    }
+  }
+ export default connect(connectDispatchToProps) (ConnectStateProps(MassPayment));

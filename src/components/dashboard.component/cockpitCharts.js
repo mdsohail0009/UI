@@ -1,12 +1,19 @@
 import React, { Component } from 'react'
-import { Card, Row, Col, Typography, Radio, Spin } from 'antd';
+import { List,Button, Empty, Menu,Dropdown,Input,Typography,Space,Drawer,Image } from 'antd';
 import apiCalls from "../../api/apiCalls";
 import { connect } from 'react-redux';
-import PieChart from '../trading.components/piechart';
 import { Link } from 'react-router-dom';
-import BChart from '../trading.components/bar.Chart';
-import LChart from '../trading.components/line.Chart';
-
+import Translate from 'react-translate-component';
+import Loader from "../../Shared/loader";
+import Currency from '../shared/number.formate';
+import TransactionsHistory from "../transactions.history.component";
+import { setWithdrawfiatenaable, setStep } from '../../reducers/sendreceiveReducer'
+import {setReceiveFiatHead, setSendFiatHead} from '../../reducers/buyFiatReducer';
+import { setdepositCurrency } from '../../reducers/depositReducer'
+import OnthegoFundTransfer from '../onthego.transfer';
+import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
+import MassPayment from '../buyfiat.component'
+import { getScreenName } from '../../reducers/feturesReducer';
 const { Title, Paragraph, Text } = Typography;
 
 class CockpitCharts extends Component {
@@ -19,6 +26,15 @@ class CockpitCharts extends Component {
         profits: null,
         assetnetWorth: null,
         isLoading:false,
+        transactionData:this.props.dashboard.wallets.data,
+        searchVal:[],
+        fullViewData:[],
+        marketCaps:[],
+        dashBoardTransactions:this.props.dashboard.wallets.data,
+        buyFiatDrawer: false,
+        selctedVal: '',
+        valNum: 1,
+        showFuntransfer: false,
     }
 
     componentDidMount() {
@@ -79,136 +95,230 @@ class CockpitCharts extends Component {
         this.props.history.push('/cockpit/reportview/' + elem.name);
         apiCalls.trackEvent({ "Action": 'View Reports', "Feature": 'Dashboard', "Remarks": "View Reports", "FullFeatureName": 'Dashboard View Reports', "userName": this.props.userConfig.userName, id: this.props.userConfig.id });
     }
+    showSendReceiveDrawer = (e, value) => {
+        this.props.dispatch(setStep("step1"));
+        const is2faEnabled =  this.props.userConfig?.twofactorVerified;
+        if (!this.props?.userConfig?.isKYC) {
+            this.props.history.push("/notkyc");
+            return;
+        }
+        if (!is2faEnabled) {
+            this.props.history.push("/enabletwofactor");
+            return;
+        }
+        if (this.props?.userConfig?.isDocsRequested) {
+            this.props.history.push("/docnotices");
+            return;
+        }
 
-    render() {
-        return (<>
-            <div className="main-container db-container">
-                <div className="mb-36 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/cockpit" />Back</div>
-              
-                <Row gutter={16} className="mb-8">
-
+        if (e === 2) {
+            this.props.dispatch(setReceiveFiatHead(false));
+            this.props.dispatch(setSendFiatHead(false));
+            this.setState({ ...this.setState, showFuntransfer: true, selectedCurrency:value })
+            this.props.dispatch(getScreenName({getScreen:"withdraw"}))
+        } else if (e === 1) {
+            this.props.dispatch(setReceiveFiatHead(true));
+            this.props.dispatch(setWithdrawfiatenaable(false))
+            this.props.dispatch(setdepositCurrency(value))
+            this.props.dispatch(getScreenName({getScreen:"deposit"}))
+            this.setState({
+                valNum: e
+            }, () => {
+                this.setState({
+                    ...this.state,
+                    buyFiatDrawer: true,
+                    selctedVal: value
+                })
+    
+            })
+        }else if(e===3){
+            this.props.history.push(`/payments/${value.walletCode}`)
+        }else {
+            this.props.dispatch(getScreenName({getScreen:"dashboard"}))
+            this.props.history.push(`/internaltransfer`)
+        }
+        
+    }
+    closeDrawer = () => {
+        this.props.dispatch(getScreenName({getScreen:"dashboard"}))
+        this.setState({
+            buyFiatDrawer: false,
+            transactions: false,
+            showFuntransfer:false,
+        })
+    }
+    handleSearch = ({ currentTarget: { value } }) => {
+        if(value){
+            let filterTransactionList =  this.props.dashboard?.wallets?.data.filter(item => item.walletCode.toLowerCase().includes(value.toLowerCase()));
+            this.setState({...this.state,transactionData:filterTransactionList,searchVal:value})
+        }else{
+            this.setState({...this.state,transactionData:this.state.dashBoardTransactions}) 
+        }
+    }
+    menuBar = (item) => (
+        <Menu>
+            <ul className="drpdwn-list">
+                <li onClick={() => this.showSendReceiveDrawer(3, item)}>
+                    <Link value={3} className="c-pointer">
+                    <Translate content="menu_payments" />
+                    </Link>
+                </li>
+                <li onClick={() => this.showTransactionDrawer(item)}>
                    
-
-                    <Col xs={24} sm={24} md={24} lg={12} xl={6} xxl={6}>
-							{this.state.kpis ? (
-								<div className="db-kpi">
-                                <Text className="db-kpi-label">{'Crypto Balance'} </Text>
-                                <Text className="db-kpi-val"> ${this.state.kpis.cryptoBalance}</Text><Text className="badge">BTC=${this.state.kpis.cryptoBTC} </Text>
-                            </div>
-							) : (
-								<div
-									className="db-kpi p-relative text-center"
-									style={{
-										display: "flex",
-										justifyContent: "center",
-										alignItems: "center",
-									}}>
-									{" "}
-									<Spin />
-								</div>
-							)}
-						</Col>
-                
                     
-                    <Col xs={24} sm={24} md={24} lg={12} xl={6} xxl={6}>
-							{this.state.kpis ? (
-								<div className="db-kpi">
-                                <Text className="db-kpi-label">{'Fiat Balance'}</Text>
-                                <Text className="db-kpi-val">${this.state.kpis.currency}{this.state.kpis.fiatBalance}</Text><Text className="badge">BTC<span>=</span>${this.state.kpis.fiatBTC}</Text>
-                            </div>
-							) : (
-								<div
-									className="db-kpi p-relative text-center"
-									style={{
-										display: "flex",
-										justifyContent: "center",
-										alignItems: "center",
-									}}>
-									{" "}
-									<Spin />
-								</div>
-							)}
-						</Col>
+                    <Link to="/transactions" value={4} className="c-pointer"><Translate content="transactions_history" /></Link>
+                   
+                </li>
+                <li onClick={() => this.showSendReceiveDrawer(5, item)}>
+                    <Link value={5} className="c-pointer">
+                    <Translate content="menu_internal_transfer" />
+                    </Link>
+                </li>
+            </ul>
+        </Menu>
+    )
+    render() {
+        const { Search } = Input;
+        const { wallets } = this.props.dashboard;
+        return (<>
+            <div className="main-container" >
 
-              
-                </Row>
-                
+           
+            <div className='coinveiw-newpage'>
+            <div className="backbtn-arrowmb"><Link  to="/cockpit"><span className="icon md leftarrow c-pointer backarrow-mr"></span><span className="back-btnarrow c-pointer">Back</span></Link></div>
+            <div className='fait-wallets-style m-0 new-viewpage'>
+            <Translate content="fait_walets" component={Title} className="db-titles" />
+            <div className = 'search-box'>
+              <Search
+                             placeholder={apiCalls.convertLocalLang('search_currency')} 
+                            onChange={(value)=>this.handleSearch(value)}
+                            size="middle"
+                            bordered={false}
+                            className="search-text search-view" />
+                      <div className = "search-btnexpand">
+                      <span className="icon lg search-angle icon-space" />
+                      </div>
+                  </div> 
+            
+                     
+              </div>
+                {wallets?.loading ? (
+               <Loader />
+        ) : (
+            <List
+              className="mobile-list"
+              itemLayout="horizontal"
+              dataSource={this.state.transactionData}
+              locale={{
+                emptyText: (
+                  <Empty
+                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                    description={apiCalls.convertLocalLang("No_data")}
+                  />
+                )
+              }}
+              renderItem={(item) => (
+                <List.Item
+                  className="cytpo-list-style"
+                  extra={
+                    <div className='crypto-btns'>
+                      
+                    
+                        <Translate
+                        content="deposit"
+                        component={Button}
+                        className="custom-btn prime text-purewhite mr-16"
+                        onClick={() => this.showSendReceiveDrawer(1, item.walletCode)}
+                      />
+                      <Translate
+                        content="withdraw"
+                        component={Button}
+                        type="primary"
+                        onClick={() => { this.showSendReceiveDrawer(2, item.walletCode) }}
+                        className="custom-btn sec"
+                        disabled={item.amount > 0 ? false : true}
+                      />
+                      
+                      <Dropdown 
+                                overlay={this.menuBar(item)}
+                                 trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
+                            <a onClick={e => e.preventDefault()}>
+                              <Space>
+                              <span class="icon lg menu-bar p-relative"></span>
 
-                <Radio.Group defaultValue={30} buttonStyle="solid" className="my-16 wmy-graph" onChange={(e) => this.loadDashboards(e.target.value)}>
-                    <Radio.Button value={1}>1 Day</Radio.Button>
-                    <Radio.Button value={7}>7 Days</Radio.Button>
-                    <Radio.Button value={14}>14 Days</Radio.Button>
-                    <Radio.Button value={30}>30 Days</Radio.Button>
-                </Radio.Group>
-                <Row gutter={16}>
-                    <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-                        <div className='graph'>
-                            <h4 className="text-white-30 fs-14 graph-title">Cumulative PNL(%)</h4>
-                            <div className='graph-body'>
-                                {this.state.cumulativePNL ? <LChart data={this.state.cumulativePNL} showPnl={true} showBtc={true} /> : <div className="chart-loader"><Spin /></div>}
-                            </div>
+                            </Space>
+                          </a>
+                        </Dropdown>
+                 
+                    </div>
+                  }
+                >
+                  <List.Item.Meta
+                     avatar={<Image preview={false} src={item.imagePath} />}
+                    title={
+                      <div className="crypto-card-design">
+                        <div className='crypto-values'>
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <Text className="coin-style">
+                            {item.walletCode}
+                          </Text>
                         </div>
-                    </Col>
-                    <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-                        <div className='graph'>
-                            <h4 className="text-white-30 fs-14 graph-title">Daily PNL(%)</h4>
-                            <div className='graph-body'>
-                                {this.state.dailyPnl ? <BChart data={this.state.dailyPnl} /> : <div className="chart-loader"><Spin /></div>}
-                            </div>
+                        <Currency
+                          defaultValue={item.amount}
+                          className="coinbal-style"
+                          type={"text"}
+                          prefix={
+                            (item?.walletCode == "USD" ? "$" : null) ||
+                            (item?.walletCode == "EUR" ? "€" : null)
+                          }
+                        />
                         </div>
-                    </Col>
-                </Row>
-                <Row gutter={16}>
-                    <Col xs={24} sm={24} md={24} lg={12} xl={11} xxl={11}>
-                        <div className='graph'>
-                            <h4 className="text-white-30 fs-14 graph-title">Asset Allocation</h4>
-                            <div className='graph-body'>
-                                {this.state.assetAlloction ? <PieChart data={this.state.assetAlloction} /> : <div className="chart-loader"><Spin /></div>}
+                        <div  className={` ${
+                              item.amount > 0
+                                ? "price-valgreen"
+                                : "price-valred"
+                            }`}>
                             </div>
-                        </div>
-                    </Col>
-                    <Col xs={24} sm={24} md={24} lg={12} xl={13} xxl={13}>
-                        <div className='graph'>
-                            <h4 className="text-white-30 fs-14 graph-title">Assets Net Worth</h4>
-                            <div className='graph-body'>
-                                {this.state.assetnetWorth ? <LChart data={this.state.assetnetWorth} showPnl={true} showBtc={true} /> : <div className="chart-loader"><Spin /></div>}
+                      </div>
+                    }
+                  />
+                 
+                </List.Item>
+              )}
+            />
+            
+        )}
+        </div>
+        <SuissebaseFiat showDrawer={this.state.sendReceiveDrawer} valNum={this.state.valNum} onClose={() => this.closeDrawer()} />
+                {this.state.buyFiatDrawer && <MassPayment showDrawer={this.state.buyFiatDrawer} tabData={{ tabVal: this.state.valNum, walletCode: this.state.selctedVal }} onClose={() => this.closeDrawer()} />}
+                {this.state.transactions && <TransactionsHistory
+                    showDrawer={this.state.transactions} selectWallet={this.state.selectedWallet}
+                    onClose={() => {
+                        this.closeDrawer();
+                    }}
+                />}
+                <Drawer
+                    destroyOnClose={true}
+                    title={[<div className="side-drawer-header">
+                        <span></span>
+                        {!this.props.buyFiat?.sendFiatHeader && <div className="text-center">
+                            <Translate className="drawer-maintitle"  component={Paragraph} />
                             </div>
-                        </div>
-                    </Col>
-                </Row>
-                <Row gutter={16}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <div className='graph'>
-                            <h4 className="text-white-30 fs-14 graph-title">Profits</h4>
-                            <div className='graph-body'>
-                                {this.state.profits ? <LChart data={this.state.profits} showPnl={true} showBtc={true} /> : <div className="chart-loader"><Spin /></div>}
-                            </div>
-                        </div>
-                    </Col>
-                </Row>
-            </div>
-            <Row gutter={16}>
-                {this.state.reports && <>{this.state.reports.map(elem => (
-                    <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
-                        <Card className="db-card" onClick={() => this.viewReport(elem)}>
-                            <div className="d-flex">
-                                <span className='icon lg dashboard mr-16' />
-                                <div style={{ flex: 1 }}>
-                                    <Title className="fs-20 fw-600 mb-0 text-white-30">{elem.name}</Title>
-                                    <Paragraph className="text-white-30 fs-14 fw-200 mb-0">{elem.description}</Paragraph>
-                                </div>
-                            </div>
-                        </Card>
-                    </Col>
-                ))}</>}
-            </Row>
-
-
+                        }
+                        <span onClick={() => this.closeDrawer()} className="icon md close-white c-pointer" />
+                    </div>]}
+                    className="side-drawer"
+                    visible={this.state.showFuntransfer}
+                >
+                    <OnthegoFundTransfer selectedCurrency={this.state.selectedCurrency} ontheGoType={"Onthego"} onClosePopup={() => this.closeDrawer()}  />
+                </Drawer>
+          </div>
         </>)
 
     }
 }
-const connectStateToProps = ({ breadCrumb, oidc, userConfig }) => {
-    return { breadCrumb, oidc, userConfig: userConfig.userProfileInfo, }
+const connectStateToProps = ({ breadCrumb, oidc, userConfig, sendReceive, dashboard }) => {
+    return {dashboard,sendReceive, breadCrumb, oidc, userConfig: userConfig.userProfileInfo, }
 }
+
 export default connect(connectStateToProps, (dispatch) => { return { dispatch } })(CockpitCharts);

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { message, Spin,Button } from 'antd';
+import { Typography,Input, message, Spin,Button,  } from 'antd';
 import Translate from 'react-translate-component';
 import { getData } from './api';
 import NumberFormat from 'react-number-format';
 import Loader from '../../Shared/loader';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter,Link } from 'react-router-dom';
 import { dashboardTransactionSub } from '../../utils/pubsub';
 import TransactionsHistory from "../transactions.history.component";
+
 
 class Portfolio extends Component {
     chart;
@@ -22,20 +23,33 @@ class Portfolio extends Component {
             portfolioData: null,
             info: {},
             loading: true,
-            transactionData: []
+            transactionData: [],
+            searchVal:[],
+            fullViewData:[],
+            marketCaps:[],
+            dashBoardTransactions:[]
         }
     }
     getTransactionData = async () => {
         this.setState({ ...this.state, loading: true });
         let response = await getData();
         if (response.ok) {
-            this.setState({ ...this.state, transactionData: response.data, loading: false });
+            this.setState({ ...this.state, dashBoardTransactions:response.data, transactionData: response.data, loading: false });
         } else {
             message.destroy();
 
         }
     }
-
+   
+   
+    handleSearch = ({ currentTarget: { value } }) => {
+        if(value){
+            let filterTransactionList =  this.state.transactionData.filter(item => item.wallet.toLowerCase().includes(value.toLowerCase()));
+            this.setState({...this.state,transactionData:filterTransactionList,searchVal:value})
+        }else{
+            this.setState({...this.state,transactionData:this.state.dashBoardTransactions}) 
+        }
+    }
     componentWillUnmount() {
         this.transSub.unsubscribe();
     }
@@ -81,20 +95,43 @@ class Portfolio extends Component {
     closeDrawer = () => {
         this.setState({transactions: false});
     }
+  
     render() {
-
-        const { loading } = this.state;
-        return (
-            <div className="mb-16">
-                <div className='mb-12 mt-4'>
-                    <Translate content="transactions_history" className="basicinfo" />
-                    <Button
-                        onClick={() => this.transactionDrawer()}
-                        className="pop-btn dbchart-link fs-14 fw-500" style={{ height: 36,}}
-                        >
-                           <Translate content="search" />
-                        <span className="icon sm search-angle ml-8"></span>
-                    </Button>
+        const { Title } = Typography;
+        const {  loading } = this.state;
+        const { Search } = Input;
+        return (<>
+            <div className='market-panel-newstyle'></div>
+                <div className="markets-panel transaction-panel">
+                    <div className='trans-align'>
+                    <div className='transaction-title'>
+                    <Translate component={Title} content="transactions_history" className="db-titles" />
+                    <div className = 'search-box mobile-hide'>
+                        <Search
+                            placeholder="Search Wallet"
+                            onChange={(value)=>this.handleSearch(value)}
+                            size="middle"
+                            bordered={false}
+                            className="search-text" />
+                      <div className = "search-btnexpand">
+                      <span className="icon lg search-angle icon-space" />
+                      </div>
+                  </div> 
+                  </div>
+                    <Button className="dbchart-link"  >
+                        <Link to="/transactions"><Translate content="cockpit" /></Link>
+                    </Button></div>
+                    <div className = 'search-box mobile-search'>
+                        <Search
+                            placeholder="Search Wallet"
+                            onChange={(value)=>this.handleSearch(value)}
+                            size="middle"
+                            bordered={false}
+                            className="search-text" />
+                      <div className = "search-btnexpand">
+                      <span className="icon lg search-angle icon-space" />
+                      </div>
+                  </div> 
                        {this.state.transactions &&
                        <TransactionsHistory
                         showDrawer={this.state.transactions}
@@ -103,17 +140,18 @@ class Portfolio extends Component {
                         }}
                     />
                        }
-                       </div>
+                      
                    
-                    <div>
+                    <div className='transaction-custom-table'>
 
-                        <div className="box dash-info basic-info responsive_table bg-none mb-0 ">
-                            <table className='pay-grid view mb-view'  style={{width: "100%"}}>
+                        <div className="responsive_table db-ts-grid">
+                            <table className='pay-grid view mb-view'>
                                 <thead>
                                     <tr>
+                                        {/* <th style={{width: "5%"}}></th> */}
                                         <th style={{width: "18%"}}>Date</th>
-                                        <th style={{width: "35%"}}>Type</th>
                                         <th style={{width: "15%"}}>Wallet</th>
+                                       
                                         <th style={{width: "15%"}}>Value</th>
                                         <th style={{width: "15%"}}>State</th>
                                     </tr>
@@ -136,18 +174,22 @@ class Portfolio extends Component {
                                                     {this.state.transactionData.length > 0 ? 
                                                     <>
                                                      <tr key={idx}>
-                                                     <td style={{ width: "100px" }}>
-                                                            {item?.date }
-                                                            </td>
+                                                        {/* <td style={{ width: "100px" }}><span className={``}></span></td> */}
                                                         
-                                                        <td style={{ width: "50px" }}>{item.type}</td>
-                                                        <td>{item.wallet}</td>
+                                                        <td style={{ width: "100px" }}>
+                                                     <div className='ts-tbdate'>
+                                                        <Title className='ts-date'>{item?.date }</Title></div>
+                                                            </td>
+                                                     <td><div className='ts-wallet'>
+                                                        <Title className='ts-coin'>{item.wallet}</Title>
+                                                     <Title className='ts-type'>{item.type}</Title></div></td>
+
                                                         <td>{this.getNumberVal(item)}</td>
                                                         <td>{item.state} </td>
                                                     </tr>
                                                     </>
                                                         : <tr>
-                                                            <td>No transaction details available.</td>
+                                                            <td  style={{padding:"13px"}}>No transaction details available.</td>
                                                         </tr>
                                                         }
                                                         </>
@@ -160,7 +202,7 @@ class Portfolio extends Component {
                           <tr>
                             <td
                               colSpan="8"
-                              className="p-16 text-center"
+                              className="p-16 text-center no-transaction"
                               style={{width: 300 }}
                             >
                              No transaction details available
@@ -173,7 +215,7 @@ class Portfolio extends Component {
                         </div>
                     </div>
             </div>
-        );
+       </> );
     }
 }
 

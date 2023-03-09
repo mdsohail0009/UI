@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Tabs } from 'antd'
+import { Tabs,Typography, } from 'antd'
 import ProfileInfo from './profileInfo';
 import Security from './security'
 import QueryString from 'query-string'
@@ -8,7 +8,9 @@ import Referral from './referral.component/referral';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import { setHeaderTab } from "../../reducers/buysellReducer"
+import { getScreenName } from "../../reducers/feturesReducer";
 import { withRouter } from 'react-router-dom';
+const {  Title } = Typography; 
 const { TabPane } = Tabs;
 class UserProfile extends Component {
     constructor(props) {
@@ -23,6 +25,7 @@ class UserProfile extends Component {
         }
     }
     componentDidMount() {
+        this.props.dispatch(getScreenName({getScreen:null}))
         if (this.props?.match?.path === '/userprofile') {
             this.props.dispatch(setHeaderTab(" "));
         }
@@ -52,56 +55,59 @@ class UserProfile extends Component {
             }
         }
         return (<>
-
+           
             <div className="main-container hidden-mobile">
+            <div>
+                <Title className="db-main-title">Manage your account</Title> 
+            </div>
                 <Tabs tabPosition={tabPosition} className="user-list" activeKey={this.state.activeTab} onChange={(key) => {
                     this.props.history.push(`/userprofile/${key}`)
                     this.setState({ ...this.state, activeTab: key })
                 }}>
-                    <TabPane tab={<span>
-                        <span className="icon lg profile-icon mr-16" />
-                        <Translate content="ProfileInfo" component={Tabs.TabPane.tab} /></span>} key="1">
+                    <TabPane tab={<div>
+                        <span className="icon lg profile-icon" />
+                        <Translate content="ProfileInfo" component={Tabs.TabPane.tab} className="tabtitle" /></div>} key="1">
                         {this.state.activeTab == 1 && <ProfileInfo />}
                     </TabPane>
-                    <TabPane tab={<span><span className="icon lg security-icon mr-16" />
-                        <Translate content="security" className="f-16  mt-16" />
-                    </span>} key="2">
+                    <TabPane tab={<div><span className="icon lg security-icon" />
+                        <Translate content="security" className="tabtitle" />
+                        </div>} key="2">
                         {this.state.activeTab == 2 && <Security />}
                     </TabPane>
-                    <TabPane tab={<span><span className="icon lg settings-icon mr-16" />
-                        <Translate content="settings" className="f-16  mt-16" />
-                    </span>} key="3">
+                    <TabPane tab={<div><span className="icon lg settings-icon" />
+                        <Translate content="settings" className="tabtitle" />
+                        </div>} key="3">
                         {this.state.activeTab == 3 && <Settings />}
                     </TabPane>
-                    <TabPane tab={<span><span className="icon lg referral-icon mr-16" />
-                        <Translate content="referr" className="f-16  mt-16" /></span>} key="7" >
+                    <TabPane tab={<div><span className="icon lg referral-icon" />
+                        <Translate content="referr" className="tabtitle" /></div>} key="7" >
                         {this.state.activeTab == 7 && <Referral />}
                     </TabPane>
                 </Tabs>
             </div>
             <div className="main-container visible-mobile">
-                <div className="mb-36 text-white-50 fs-24"><div>Scroll Right to Check Actions<span className="icon sm rightarrow mr-16 c-pointer" /></div></div>
+                <div className="profile-value"><div className='moble-mb-style'>Scroll Right to Check Actions<span className="icon sm rightarrow c-pointer arrow-ml" /></div></div>
                 <Tabs tabPosition={"top"} className="user-list user-tablist pt-16" activeKey={this.state.activeTab} onChange={(key) => {
                     this.props.history.push(`/userprofile/${key}`)
                     this.setState({ ...this.state, activeTab: key })
                 }}>
                     <TabPane tab={<span>
-                        <span className="icon lg profile-icon mr-16" />
-                        <Translate content="ProfileInfo" component={Tabs.TabPane.tab} /></span>} key="1">
+                        <span className="icon lg profile-icon " />
+                        <Translate content="ProfileInfo" component={Tabs.TabPane.tab} className="tabtitle" /></span>} key="1">
                         {this.state.activeTab == 1 && <ProfileInfo />}
                     </TabPane>
-                    <TabPane tab={<span><span className="icon lg security-icon mr-16" />
-                        <Translate content="security" className="f-16  mt-16" />
+                    <TabPane tab={<span><span className="icon lg security-icon " />
+                        <Translate content="security" className="tabtitle" />
                     </span>} key="2">
                         {this.state.activeTab == 2 && <Security />}
                     </TabPane>
-                    <TabPane tab={<span><span className="icon lg settings-icon mr-16" />
-                        <Translate content="settings" className="f-16  mt-16" />
+                    <TabPane tab={<span><span className="icon lg settings-icon " />
+                        <Translate content="settings" className="tabtitle" />
                     </span>} key="3">
                         {this.state.activeTab == 3 && <Settings />}
                     </TabPane>
-                    <TabPane tab={<span><span className="icon lg referral-icon mr-16" />
-                        <Translate content="referr" className="f-16  mt-16" /></span>} key="7" >
+                    <TabPane tab={<span><span className="icon lg referral-icon " />
+                        <Translate content="referr" className="tabtitle" /></span>} key="7" >
                         {this.state.activeTab == 7 && <Referral />}
                     </TabPane>
                 </Tabs>

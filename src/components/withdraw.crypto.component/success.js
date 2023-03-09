@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import success from '../../assets/images/success.png';
-import { Typography, Space } from 'antd';
+import success from '../../assets/images/success.svg';
+import { Typography, Space,Button } from 'antd';
 import { Link } from 'react-router-dom';
 import Translate from 'react-translate-component';
 import { connect } from "react-redux";
@@ -26,13 +26,11 @@ class SuccessMsg extends Component {
 
         return (
             <>
-                <div className="success-pop text-center mt-36">
+                <div className="success-pop text-center sell-success">
                     <img src={success} className="confirm-icon" alt={"success"} />
-                    <Translate content="success_msg" component={Title} className="text-white-30 fs-36 fw-200 mb-4" />
-                    <Paragraph className="fs-14 text-white-30 fw-200"><Translate content="sucessText1" component={Text} className="fs-14 text-white-30 fw-200" /> {cd.totalValue} {cd.walletCode} <Translate content="sucessText3" component={Text} className="fs-14 text-white-30 fw-200" /></Paragraph>
-                    <Space direction="vertical" size="large">
-                        <Translate content="crypto_with_draw_success" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => { this.onBackSend() }} />
-                    </Space>
+                    <Translate content="success_msg" component={Title} className="success-title" />
+                    <Paragraph className="successsubtext cust-heightmbl"><Translate content="sucessText1" component={Text} className="successsubtext" /> {cd.totalValue} {cd.walletCode} <Translate content="sucessText3" component={Text} className="successsubtext" /></Paragraph>
+                  <Translate content="crypto_with_draw_success" className=" cust-cancel-btn crypto-btn-mobile" component={Button} size="large" onClick={() => { this.onBackSend() }} />
                 </div>
             </>
         );

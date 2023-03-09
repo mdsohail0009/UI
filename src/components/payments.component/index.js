@@ -7,12 +7,14 @@ import Moment from 'react-moment';
 import moment from 'moment';
 import List from "../grid.component";
 import BeneficiaryDrawer from './beneficiaryDrawer';
+import {Link,  withRouter } from "react-router-dom";
 import { setHeaderTab } from "../../reducers/buysellReducer"
 import ActionsToolbar from "../toolbar.component/actions.toolbar";
 import { getCurrencyLu} from './api'
 import {getFeaturePermissionsByKey} from '../shared/permissions/permissionService'
 import apicalls from '../../api/apiCalls';
 import AddressbookV3 from '../addressbook.v3';
+import { getScreenName } from '../../reducers/feturesReducer';
 
 const { Title, Text, Paragraph } = Typography;
 const { Option } = Select;
@@ -74,7 +76,7 @@ const Payments = (props) => {
       width: 50,
       customCell: (prop) => (
         <td className="text-center">
-          <label className="text-center custom-checkbox c-pointer">
+          <label className="text-center custom-checkbox c-pointer cust-check-outline">
             <input
               id={prop.dataItem.id}
               name="check"
@@ -161,17 +163,32 @@ const getCurrencyLookup = async () => {
  const isFiatHeading =(data)=>{
     setHideFiatHeading(data)
 	}
+
+  const  handleBack = () => {
+    props.dispatch(getScreenName({getScreen:"dashboard"}))
+} 
   if(loading){
     return <div className='custom-spin text-center mt-36'><Spin loading={true}></Spin></div>
   }else{
   return (
     <>
       <div className="main-container">
-        <div className='bill_payment mb-16'> 
+      <div className="backbtn-arrowmb" onClick={handleBack}>
+        <Link  to="/cockpit"><span className="icon md leftarrow c-pointer backarrow-mr"></span><span className="back-btnarrow c-pointer">Back</span></Link>
+        </div>
+        <div className='bill-payment'> 
           
-          <Title className="basicinfo mb-0"><span onClick={() => props.history?.push("/cockpit")} className='icon md c-pointer back mr-8'></span><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
+          <div className="billpaycoin-style"><Translate content="menu_payments" component={Text} className="coin-viewstyle" /></div>
          
-          <Select
+         
+          <span className="mb-right">
+          <ActionsToolbar featureKey="billpayments" onActionClick={(key) => onActionClick(key)}/>
+          </span>
+          
+        </div>
+       
+        <div className='bill-payment bill-margin'> 
+        <Select
                   className="cust-input cust-disable"
                   placeholder="Select Currency"
                   onChange={(e) => handleCurrencyChange(e)}
@@ -192,11 +209,7 @@ const getCurrencyLookup = async () => {
                     </Option>
                   ))}
                 </Select>
-          <span className="mb-right">
-          <ActionsToolbar featureKey="billpayments" onActionClick={(key) => onActionClick(key)}/>
-          </span>
-          
-        </div>
+                </div>
         {errorWarning !== null && (
             <Alert
               className="mb-12"
@@ -206,7 +219,8 @@ const getCurrencyLookup = async () => {
               showIcon
             />
           )}
-        <div className="box basic-info text-white" style={{clear:'both'}}>
+           </div>
+        {/* <div className="box"> */}
           <List
            className="bill-grid"
             showActionBar={false}
@@ -215,7 +229,7 @@ const getCurrencyLookup = async () => {
             columns={gridColumns}
             ref={gridRef}
           />
-        </div>
+       
         <BeneficiaryDrawer
           showDrawer={beneficiaryDrawer}
           onClose={() => closeDrawer()}
@@ -225,27 +239,20 @@ const getCurrencyLookup = async () => {
           destroyOnClose={true}
           title={[<div className="side-drawer-header">
             <span />
-            <div className="text-center fs-16">
-								<Paragraph className="mb-0 text-white-30 fw-600 text-upper">
-									<Translate
-                  content={hideFiatHeading !==true && "AddFiatAddress"}
-										component={Paragraph}
-										className="mb-0 text-white-30 fw-600 text-upper"
-									/>
-								</Paragraph>
-							</div>
+            <div className="text-center">
+              <Paragraph className="drawer-maintitle"><Translate content={hideFiatHeading !==true && "AddFiatAddress"}component={Paragraph} className="drawer-maintitle" /></Paragraph>
+            </div>
             <span onClick={closeBuyDrawer} className="icon md close-white c-pointer" />
           </div>]}
           placement="right"
           closable={true}
           visible={beneficiaryDetails}
           closeIcon={null}
-          className=" side-drawer w-50p"
+          className=" side-drawer"
           size="large"
         >
           <AddressbookV3 type="manual" isFiat={cryptoFiat} onCancel={() => closeBuyDrawer()} props={props} isFiatHeadUpdate={isFiatHeading}/>
         </Drawer>
-      </div>
     </>
   )
         }

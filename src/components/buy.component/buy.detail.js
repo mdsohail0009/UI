@@ -8,7 +8,6 @@ import { convertCurrency, convertCurrencyDuplicate, validatePreview } from './bu
 import { fetchPreview, setWallet, fetchMemberFiat } from '../../reducers/buyReducer';
 import Loader from '../../Shared/loader';
 import SuisseBtn from '../shared/butons';
-import NumberFormat from 'react-number-format';
 import LocalCryptoSwapperCmp from '../shared/local.crypto.swap/swap';
 import Currency from '../shared/number.formate';
 import apicalls from '../../api/apiCalls';
@@ -109,7 +108,7 @@ class SelectCrypto extends Component {
         const _vaidator = validatePreview({ localValue, cryptValue: cryptoValue, wallet: this.state.selectedWallet, maxPurchase: buyMax, minPurchase: buyMin, gbpInUsd, eurInUsd })
         if (!_vaidator.valid) {
             this.setState({ ...this.state, error: { ..._vaidator } });
-            this.myRef.current.scrollIntoView();
+            this.myRef.current.scrollIntoView(0,0);
             return;
         }
         if((localValue == 0 && cryptoValue == 0)){
@@ -145,9 +144,9 @@ class SelectCrypto extends Component {
         if (this.props.buyInfo?.selectedCoin?.loading || !this.props.buyInfo?.selectedCoin?.data) {
             return <Loader />
         }
-        const { Paragraph, Text } = Typography;
+        const { Paragraph } = Typography;
         const { localValue, cryptoValue, isSwaped, isConvertionLoading } = this.state.swapValues;
-        const { coin, coinFullName, coinBalance, percentage,impageWhitePath } = this.props.buyInfo?.selectedCoin?.data;
+        const { coin, coinBalance } = this.props.buyInfo?.selectedCoin?.data;
         return (
             <div id="divScroll" ref={this.myRef}>
                 {this.state.errorMsg && (
@@ -159,31 +158,11 @@ class SelectCrypto extends Component {
                             type="error"
                         />
                     )}
-                {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="error" message={apicalls.convertLocalLang('buy_crypto')} description={this.state.error?.message} />}
+                    {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="error" message={apicalls.convertLocalLang('buy_crypto')} description={this.state.error?.message} />}
+
                 <div className="selectcrypto-container">
-                    <Card className="crypto-card select mb-36" bordered={false}>
-                    <div className='d-flex justify-content'>
-                        <div>
-                        <span className="d-flex align-center mb-4">
-                            <Image preview={false} src={impageWhitePath}/>
-                            <Text className="crypto-percent text-purewhite">{percentage}<sup className="percent text-purewhite">%</sup></Text>
-                        </span>
-                        <Text className="fs-24 text-purewhite crypto-name ml-4">{coinFullName}</Text>
-                        </div>
-                        <div className="crypto-details">
-                            
-                            <div className="fs-16 text-purewhite fw-200 crypto-amount">
-                                <Currency prefix={""} defaultValue={coinBalance} suffixText={coin} />
-                                <NumberFormat value={coinFullName} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props}>{value}</div>} />
-                            </div>
-                        </div></div>
-                    </Card>
-          
-                    <div className="my-36">
-                        <Translate content="buy_select_currency" component={Paragraph} className="fw-500 mb-4 text-white-50 pt-16 code-lbl" />
-                        <WalletList placeholder="Select Currency" onWalletSelect={(e) => this.handleWalletSelection(e)} />
-                    </div>
-            {this.state.isShowCoinsData && <div>
+                    <Card className="crypto-card select " bordered={false}>
+                        {<div>
                    <LocalCryptoSwapperCmp
                         localAmt={localValue}
                         cryptoAmt={cryptoValue}
@@ -195,14 +174,28 @@ class SelectCrypto extends Component {
                         onCurrencySwap={() => {
                             this.setState({ ...this.state, swapValues: { ...this.state.swapValues, isSwaped: !this.state.swapValues.isSwaped } })
                         }}
-                        isConvertionLoad={isConvertionLoading} />
+                        isConvertionLoad={isConvertionLoading} /></div>}
+                            <div className="crypto-amount">
+                               <div className="crypto-details"><span className='buy-balance'>Balance: </span><Currency prefix={'' } defaultValue={coinBalance} suffixText={""} className='buycoin-style marginL' /><span className='buycoin-style marginL'>{coin }</span> </div>
 
-                    <Translate content="thousandKText" component={Paragraph} className="text-center f-16 text-yellow fw-400 mb-0" />
-                    <Translate content="contact_amount_text" component={Paragraph} className="text-center f-16 text-yellow fw-400 mb-4" />
-                  <div className="mt-16 buy-usdt-btn">
-                        <SuisseBtn title="PreviewBuy" loading={this.state.btnLoading} onRefresh={() => this.refresh()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
-                    </div>
+                            </div>
+
+                        {this.state.isShowCoinsData && <div>
+                    
                     </div>}
+                    <div className="select-currency">
+                        <WalletList placeholder="Select Currency" onWalletSelect={(e) => this.handleWalletSelection(e)} />
+                    </div>
+                    {<div><Translate content="thousandKText" component={Paragraph} className="buy-paragraph " />
+                    <Translate content="contact_amount_text" component={Paragraph} className="buy-paragraph" />
+                     <div className="buy-usdt-btn">
+                     <SuisseBtn title="PreviewBuy" loading={this.state.btnLoading} onRefresh={() => this.refresh()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
+                    </div> </div>}
+
+                    </Card>
+          
+                   
+      
                 </div>
 
             </div>

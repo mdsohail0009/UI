@@ -7,7 +7,7 @@ import { userManager } from '../../authentication';
 const { Title } = Typography;
 class SettingsMenu extends Component {
     settingMenu = (<Menu><Translate className="fs-24 text-white my-16 fw-500 mx-30" content="settings" component={Title} />
-        <ul className="pl-0 drpdwn-list">
+        <ul className="drpdwn-list">
             <li>
                 <div className="dropdown-flex">
                     <Translate content="general" component={Link} />

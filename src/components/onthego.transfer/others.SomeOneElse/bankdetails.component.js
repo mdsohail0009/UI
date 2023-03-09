@@ -37,10 +37,10 @@ class PayeeBankDetails extends Component {
         }
     }
     handleIban = async (ibannumber,isNext) => {
-        this.setState({ ...this.state, enteredIbanData: ibannumber, isShowValid: false, iBanDetals: null});
+      //  this.setState({ ...this.state, enteredIbanData: ibannumber, isShowValid: false, iBanDetals: null});
         this.props.getIbandata(null);
         if (ibannumber?.length >= 10 && isNext) {
-            this.setState({ ...this.state, iBanDetals: null, IbanLoader: true, isValidIban: true })
+            this.setState({ ...this.state, iBanDetals: null, IbanLoader: true, isValidIban: true, enteredIbanData: ibannumber,  isShowValid: false,isValidateLoading:true})
             const ibanget = await apicalls.getIBANData(ibannumber)
             if (ibanget.ok) {
                 if (ibanget.data && (ibanget.data?.routingNumber || ibanget.data?.bankName)) {
@@ -66,7 +66,7 @@ class PayeeBankDetails extends Component {
     onIbanValidate = (e) => {
         if (e?.length >= 10) {
             if (e &&!/^[A-Za-z0-9]+$/.test(e)) {
-                this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {},isValidateLoading: true});
+                this.setState({ ...this.state,isValidateLoading: true, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}});
                 this.props.getIbandata(null);
                 this.props.form?.current?.validateFields([["payeeAccountModels","iban"]], this.validateIbanType);
             }
@@ -106,8 +106,8 @@ class PayeeBankDetails extends Component {
         const _templates = {
             sepa: <>
             <>
-            <Col xs={24} md={14} lg={14} xl={14} xxl={14}>
-                       <div className=" custom-btn-error">
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                       <div className=" custom-btn-error fsdf">
                     <Form.Item
                         className="custom-forminput custom-label mb-0"
                         name={["payeeAccountModels","iban"]}
@@ -125,86 +125,106 @@ class PayeeBankDetails extends Component {
                         }}
                     >
                         <Input
-                            className="cust-input"
+                            className="cust-input ibanborder-field"
                             placeholder={apicalls.convertLocalLang(
                                 "Bank_account_iban"
                             )}
-                            maxLength={30}/>
+                            maxLength={50}
+                            addonAfter={ <Button className={``}
+                            type="primary"
+                               loading={this.state.isValidateLoading}
+                               onClick={() => this.onIbanValidate(this.props?.form.current?.getFieldValue(["payeeAccountModels","iban"]))} >
+                           <Translate content="validate" />
+                   </Button>  }
+                            />
                     </Form.Item>
                     </div>
                     </Col>
-                    <Col xs={24} md={10} lg={10} xl={10} xxl={10}>
-                       <Button className={`pop-btn dbchart-link fs-14 fw-500`} style={{width:"150px",marginTop:"32px",height:"42px"}}
+                    {/* <Col xs={24} md={10} lg={10} xl={10} xxl={10}> */}
+                       {/* <Button className={`pop-btn dbchart-link pop-validate-btn`} style={{width:"150px",marginTop:"32px",height:"42px"}}
                                     loading={this.state.isValidateLoading}
                                     onClick={() => this.onIbanValidate(this.props?.form.current?.getFieldValue(["payeeAccountModels","iban"]))} >
                                     <Translate content="validate" />
-                                </Button>
+                                </Button> */}
+                                 {/* <Button className={`pop-btn dbchart-link pop-validate-btn iban-validate`}
+                             type="primary"
+                                // loading={isValidateLoading}
+                                onClick={() => this.onIbanValidate(this.props?.form.current?.getFieldValue(["payeeAccountModels","iban"]))} >
+                            <Translate content="validate" />
+                    </Button>   */}
                          
-                </Col>
+                {/* </Col> */}
                 </>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 
-                    <div className="box basic-info alert-info-custom mt-16">
+                    <div className="box basic-info alert-info-custom mt-16 kpi-List">
                     <Spin spinning={this.state.IbanLoader}>
                     {this.state.isValidIban && !this.props?.isAddTabCange && <Row>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-12 fw-500 ">
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                            <div className="kpi-divstyle">
+                                <label className="kpi-label ">
                                     Bank Name
                                 </label>
-                                <div className="pr-24"><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.bankName||'---'}</Text></div>
-
+                                <div className=""><Text className="kpi-val">{this.state.iBanDetals?.bankName||'---'}</Text></div>
+                            </div>
                             </Col>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-12 fw-500 ">
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                            <div className="kpi-divstyle">
+                                <label className="kpi-label ">
                                     BIC
                                 </label>
-                                <div className="pr-24"><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.bic||'---'}</Text></div>
-
+                                <div className=""><Text className="kpi-val">{this.state.iBanDetals?.bic||'---'}</Text></div>
+                                </div>
                             </Col>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-12 fw-500 ">
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                            <div className="kpi-divstyle">
+                                <label className="kpi-label ">
                                     Branch
                                 </label>
-                                <div className="pr-24"><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.bankBranch||'---'}</Text></div>
-
+                                <div className=""><Text className="kpi-val">{this.state.iBanDetals?.bankBranch||'---'}</Text></div>
+                                </div>
                             </Col>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-12 fw-500 ">
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                            <div className="kpi-divstyle">
+                                <label className="kpi-label ">
                                     Country
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.country||'---'}</Text></div>
-
+                                <div><Text className="kpi-val">{this.state.iBanDetals?.country||'---'}</Text></div>
+                                </div>
                             </Col>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-12 fw-500 ">
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                            <div className="kpi-divstyle">
+                                <label className="kpi-label ">
                                     State
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.state||'---'}</Text></div>
-
+                                <div><Text className="kpi-val">{this.state.iBanDetals?.state||'---'}</Text></div>
+                                </div>
                             </Col>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-12 fw-500 ">
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                            <div className="kpi-divstyle">
+                                <label className="kpi-label ">
                                     City
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.city||'---'}</Text></div>
-
+                                <div><Text className="kpi-val">{this.state.iBanDetals?.city||'---'}</Text></div>
+                                </div>
                             </Col>
-                            <Col xs={24} md={8} lg={24} xl={8} xxl={8} className="mb-16">
-                                <label className="fs-12 fw-500 ">
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                            <div className="kpi-divstyle">
+                                <label className="kpi-label ">
                                     Zip
                                 </label>
-                                <div><Text className="fs-14 fw-400 text-white">{this.state.iBanDetals?.postalCode||'---'}</Text></div>
-
+                                <div><Text className="kpi-val">{this.state.iBanDetals?.postalCode||'---'}</Text></div>
+                                </div>
                             </Col>
                         </Row>}
-                        {(!this.state.isValidIban || this.props?.isAddTabCange)&&<span>No bank details available</span>}
+                        {(!this.state.isValidIban || this.props?.isAddTabCange)&&<span className="info-details">No bank details available</span>}
                         </Spin>
                     </div>
 
                 </Col>
                 {this.props.GoType === "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name={"reasonOfTransfer"}
                         required
                         rules={[
@@ -239,9 +259,9 @@ class PayeeBankDetails extends Component {
                 </Col>}
             </>,
             swift: <>
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name={["payeeAccountModels","accountNumber"]}
                         label={apicalls.convertLocalLang("accountnumber")}
                         required
@@ -275,9 +295,9 @@ class PayeeBankDetails extends Component {
                         />
                     </Form.Item>
                 </Col>
-                {this.props.domesticType === "international" &&<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                {this.props.domesticType === "international" &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name={["payeeAccountModels","swiftRouteBICNumber"]}
                         label={apicalls.convertLocalLang(
                             "swifbictcode"
@@ -314,9 +334,9 @@ class PayeeBankDetails extends Component {
                     </Form.Item>
                 </Col>}
 
-                {this.props.domesticType === "domestic" && <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                {this.props.domesticType === "domestic" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name={["payeeAccountModels","abaRoutingCode"]}
                         label="ABA Routing Code"
                         required
@@ -348,9 +368,9 @@ class PayeeBankDetails extends Component {
                         />
                     </Form.Item>
                 </Col>}
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name={["payeeAccountModels","bankName"]}
                         label={apicalls.convertLocalLang("Bank_name")}
                         required
@@ -381,7 +401,7 @@ class PayeeBankDetails extends Component {
                
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name={["payeeAccountModels","line1"]}
                         required
                         rules={[
@@ -413,7 +433,7 @@ class PayeeBankDetails extends Component {
                 </Col>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name={["payeeAccountModels","line2"]}
                         rules={[{
                             validator: validateContentRule,
@@ -436,7 +456,7 @@ class PayeeBankDetails extends Component {
                 </Col>
                 {this.props.GoType === "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label fw-300 mb-4 text-white-50 pt-8"
+                        className="custom-forminput custom-label"
                         name={"reasonOfTransfer"}
                         required
                         rules={[
@@ -479,7 +499,7 @@ class PayeeBankDetails extends Component {
         //const { countries, states, isLoading } = this.state;
         
         return <>
-            <Row gutter={[16, 16]} className={'pb-16'}>
+            <Row className="validateiban-content">
                 {this.renderAddress(domesticType === "internationalIBAN" ? "sepa" : transferType)}
             </Row>
             </>

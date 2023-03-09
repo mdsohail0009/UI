@@ -35,7 +35,7 @@ const BatchpaymentView = (props) => {
         { field: "whiteListName", title: "Whitelist Name", filter: true,width: 200},
         { field: "beneficiaryName", title: "Beneficiary Name", filter: true,width: 200},
         {
-			field: "whitelistStatus",
+			field: "addressbookStatus",
 			title:"Whitelisting Status",
 			filter: true,
 			width: 210,
@@ -50,7 +50,7 @@ const BatchpaymentView = (props) => {
               <>
               <div className={`file-label d-flex justify-content mb-8 py-4 batch-upload`}
              >
-              <span className="mb-0 fs-14 docnames  fs-12 fw-400 amt-label c-pointer webkit-color"  onClick={() => docPreview(item)}><Tooltip title={item.documentName}>{item.documentName}</Tooltip></span>
+              <span className="mb-0 fs-14 docnames  fs-12 fw-400 amt-label c-pointer"  onClick={() => docPreview(item)}><Tooltip title={item.documentName}>{item.documentName}</Tooltip></span>
               <span className="delete-disable"
                disabled={
                 properites.dataItem.transactionStatus==="Approved" ||
@@ -294,18 +294,21 @@ const filePreviewPath = () => {
 			}
 			footer={
 				<>
+                <div className="cust-pop-up-btn crypto-pop">
+                
 					<Button
-						className="pop-btn px-36"
-						style={{ margin: "0 8px" }}
+						className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
+						
 						onClick={() => setPreviewModal(false)}>
 						Close
 					</Button>
 					<Button
-						className="pop-btn px-36"
-						style={{ margin: "0 8px" }}
+						className="primary-btn pop-btn detail-popbtn"
+						
 						onClick={() => window.open(previewPath, "_blank")}>
 						Download
 					</Button>
+                    </div>
 				</>
 			}>
 			<FilePreviewer
@@ -320,11 +323,11 @@ const filePreviewPath = () => {
     return (
         <>
         < div className='main-container'>
-            <Title className="basicinfo "><span className='icon md c-pointer back mr-8' onClick={() => props.history.push('/batchpayment')}/><Text className="basicinfo">{props.match.params.fileName} / { props.match.params.currency}</Text></Title>
+            <div className="basicinfo batch-style"><div className="basicinfo "><span className='icon md c-pointer back backarrow-mr' onClick={() => props.history.push('/batchpayment')}/>{props.match.params.fileName} / { props.match.params.currency}</div></div>
             {errorMessage !== null && (
             <Alert type="error" description={errorMessage}  showIcon/>
                  )}
-            <div className="box basic-info text-white" style={{ clear: 'both' }}>
+            <div className="box  text-white" style={{ clear: 'both' }}>
                 <List
                     className="bill-grid"
                     showActionBar={false}
@@ -369,23 +372,23 @@ const filePreviewPath = () => {
                                 <span className="icon xxxl doc-upload" />
                             </p>
                             <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
-                            <p className="ant-upload-hint text-secondary fs-12">
+                            <p className="ant-upload-hint text-white fs-12">
                                 PNG, JPG,JPEG and PDF files are allowed
                             </p>
                         </Dragger>
                     </div>
                     {docIdentityProofObjs?.map((file) =>
                                                 <>{file ? <div className="docfile">
-                                                    <span className={`icon xl file mr-16`} />
+                                                    <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "":(file.documentName?.slice(-3) === "zip" ? "file" : "")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                                     <div className="docdetails c-pointer" onClick={() => docPreview(file)}>
                                                         <EllipsisMiddle suffixCount={6}>{file.documentName}</EllipsisMiddle>
-                                                        <span className="fs-12 text-secondary">{formatBytes(file ? file.remarks : "")}</span>
+                                                        <span className="fs-12 text-white">{formatBytes(file ? file.remarks : "")}</span>
                                                     </div>
                                                     <span className="icon md close c-pointer" onClick={() => deleteDocument(file,"IDENTITYPROOF")} />
                                                 </div> : ""}</>
                                             )}
                          {upLoader && <Loader />}
-                    <div className='my-16'>
+                    <div className='Supporting-Documents'>
                         <Paragraph className="mb-8 fs-14 text-white fw-500 ml-12 text-left">Please upload supporting documents to justify your transfer request:</Paragraph>
                         <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                             className="upload mt-4"
@@ -399,17 +402,17 @@ const filePreviewPath = () => {
                                 <span className="icon xxxl doc-upload" />
                             </p>
                             <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
-                            <p className="ant-upload-hint text-secondary fs-12">
+                            <p className="ant-upload-hint text-white fs-12">
                                 PNG, JPG,JPEG and PDF files are allowed
                             </p>
                         </Dragger>
                     </div>
                     {docTransferObjs?.map((file) =>
                                                 <>{file ? <div className="docfile">
-                                                    <span className={`icon xl file mr-16`} />
+                                                    <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "":(file.documentName?.slice(-3) === "zip" ? "file" : "")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                                     <div className="docdetails c-pointer" onClick={() => docPreview(file)}>
                                                         <EllipsisMiddle suffixCount={6}>{file.documentName}</EllipsisMiddle>
-                                                        <span className="fs-12 text-secondary">{formatBytes(file ? file.remarks : "")}</span>
+                                                        <span className="fs-12 text-white">{formatBytes(file ? file.remarks : "")}</span>
                                                     </div>
                                                     <span className="icon md close c-pointer" onClick={() => deleteDocument(file,"TransferProof")} />
                                                 </div> : ""}</>
@@ -427,13 +430,16 @@ const filePreviewPath = () => {
           footer={[
             <>
             <div className='cust-pop-up-btn crypto-pop bill-pop'>
-              <Button
-                className="pop-cancel btn-width  bill-cancel"
+             
+             
+                 <Button
+                className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
                 onClick={() => deleteModalCancel()}>No</Button>
-              <Button className="pop-btn px-36 btn-width"
+                 <Button className="primary-btn pop-btn detail-popbtn"
                 onClick={() => deleteGridDocuments()}
                 loading={isLoad}
-                >Yes</Button></div>
+                >Yes</Button>
+                </div>
             </>
           ]}
         >

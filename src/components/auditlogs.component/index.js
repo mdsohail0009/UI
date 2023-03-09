@@ -7,6 +7,8 @@ import { userNameLuSearch, getFeatureLuSearch, getAuditLogInfo } from './api';
 import moment from 'moment';
 import Translate from 'react-translate-component';
 import apicalls from '../../api/apiCalls';
+import { withRouter,Link } from "react-router-dom";
+import { getScreenName } from "../../reducers/feturesReducer";
 
 
 const { Option } = Select;
@@ -48,9 +50,7 @@ class AuditLogs extends Component {
   }
   componentDidMount = async () => {
     this.auditlogsTrack();
-    //setTimeout(() => this.gridRef?.current?.refreshGrid(), 200);             -- code commneted for duplicate calls issue
-
-
+    this.props.dispatch(getScreenName({getScreen:null}))
     this.TransactionFeatureSearch(this.props.userProfile?.userName);
   };
   auditlogsTrack = () => {
@@ -82,7 +82,15 @@ class AuditLogs extends Component {
       moreAuditLogs: false, logRowData: {}
     })
   }
-
+  backToDashboard=()=>{
+    if (!this.props?.userProfile?.isKYC) {
+        this.props.history.push("/notkyc");
+        return;
+    }
+      else{
+        this.props.history.push("/");
+      }
+}
   TransactionUserSearch = async (userVal) => {
     let response = await userNameLuSearch(userVal);
     if (response.ok) {
@@ -186,7 +194,7 @@ class AuditLogs extends Component {
       <>
         <Drawer
           title={[<div className="side-drawer-header">
-            <span className="text-white"><Translate content="AuditLogs" component={Drawer.span} className="text-white" /></span>
+            <span className="grid-title"><Translate content="AuditLogs" component={Drawer.span} className="text-white" /></span>
             <div className="text-center fs-14"></div>
             <span onClick={this.props.onClose} className="icon md close-white c-pointer" />
           </div>]}
@@ -195,21 +203,26 @@ class AuditLogs extends Component {
           width="100%"
           onClose={this.props.onClose}
           visible={this.props.showDrawer}
-          className="side-drawer-full custom-gridresponsive"
+          className="side-drawer-full custom-gridresponsive addressbook-content"
           destoryOnClose={true}
         >
-          <div>
+           </Drawer>
+           <div className="main-container grid-demo">
+			<div className="backbtn-arrowmb" ><span className="icon md leftarrow c-pointer backarrow-mr" onClick={()=>this.backToDashboard()}/><span className="back-btnarrow  c-pointer" onClick={()=>this.backToDashboard()} >Back</span></div>
+      <span className="grid-title"><Translate content="AuditLogs" component={Drawer.span} className="text-white" /></span>
+      </div>
+          <div className="cust-list main-container">
             <Form
               className="ant-advanced-search-form form form-bg search-bg pt-8 pb-30 customaudit-select"
               autoComplete="off"
               ref={this.formRef}
             >
-              <Row style={{ alignItems: 'flex-end' }}>
-                <Col xs={24} sm={24} md={7} className="px-8">
+              <Row className="align-center">
+                <Col xs={24} sm={24} md={6} xl={6} className="px-8">
                   <Form.Item
                     name="timeSpan"
                     className="input-label selectcustom-input mb-0"
-                    label={<Translate content="TimeSpan" component={Form.label} className="input-label selectcustom-input mb-0" />}
+                    label={<Translate content="TimeSpan" component={Form.label} className="label-style" />}
                   >
                     <Select
                       className="cust-input mb-0 custom-search"
@@ -224,7 +237,7 @@ class AuditLogs extends Component {
                   </Form.Item>
                 </Col>
 
-                {this?.state?.isCustomDate ? <Col xs={24} sm={24} md={7} className="px-8">
+                {this?.state?.isCustomDate ? <Col xs={24} sm={24} md={6} xl={6} className="px-8">
                   <Form.Item
                     name="selectedTimespan"
                     className="input-label selectcustom-input mb-0"
@@ -233,11 +246,11 @@ class AuditLogs extends Component {
                     <Input disabled placeholder="DD/MM/YYYY" className="cust-input cust-adon mb-0" addonAfter={<i className="icon md date-white c-pointer" onClick={(e) => { this.datePopup(e, 'searchObj') }} />} />
                   </Form.Item>
                 </Col> : ""}
-                <Col xs={24} sm={24} md={7} className="px-8">
+                <Col xs={24} sm={24} md={6} xl={6}  className="px-8">
                   <Form.Item
                     name="feature"
                     className="input-label selectcustom-input mb-0"
-                    label={<Translate content="Features" component={Form.label} className="input-label selectcustom-input mb-0" />}
+                    label={<Translate content="Features" component={Form.label} className="label-style" />}
                   >
                     <Select
                       defaultValue="All Features"
@@ -262,13 +275,13 @@ class AuditLogs extends Component {
                     htmlType="submit"
                     onClick={this.handleSearch}
                   ><Translate content="search" />
-                  <span class="icon sm search-angle ml-8"></span>
+                  <span class="icon md search-angle"></span>
                   </Button>
                 </Col>
               </Row>
             </Form>
           </div>
-          <List
+          <List className=""
             url={gridUrl} additionalParams={searchObj} ref={this.gridRef}
             key={gridUrl}
             columns={this.gridColumns}
@@ -288,7 +301,7 @@ class AuditLogs extends Component {
                 ref={this.formDateRef}
               >
                 {this.state?.message && <Alert showIcon type="info" description={this.state?.message} closable={false} />}
-                <div className="mb-24">
+                <div className="">
                   <Form.Item
                     name="fromdate"
                     className="input-label"
@@ -335,19 +348,19 @@ class AuditLogs extends Component {
                 </div>
                 <Form.Item className="mb-0">
                   <div className="text-right">
-                    <Button type="button" className="c-pointer text-center ant-btn-lg text-white-30 pop-cancel fw-400 text-captz text-center mr-36" onClick={this.handleCancel} ><span><Translate content="cancel" /></span></Button>
-                    <Button type="button" style={{ width: 100 }} key="submit" className="c-pointer pop-btn ant-btn px-24" htmlType="submit"><span><Translate content="ok" /></span></Button>
+                  <Button type="button" block key="submit" className="primary-btn pop-btn detail-popbtn paynow-btn-ml" htmlType="submit"><span><Translate content="ok" /></span></Button>
+                    <Button type="button" block className="cust-cancel-btn detail-popbtn paynow-btn-ml" onClick={this.handleCancel} ><span><Translate content="cancel" /></span></Button>         
                   </div>
                 </Form.Item>
               </Form>
             </div>
           </Modal>
-        </Drawer>
+
         <Drawer
           title={[<div className="side-drawer-header">
             <span />
             <div className="text-center fs-16">
-              <Title className="text-white-30 fs-16 fw-600 text-upper mb-4 d-block">{this.state.featureName}</Title>
+              <div className="drawer-maintitle rec-bottom">{this.state.featureName}</div>
             </div>
             <span onClick={this.hideMoreAuditLogs} className="icon md close-white c-pointer" />
           </div>]}

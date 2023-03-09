@@ -1,6 +1,6 @@
 
 import React, { Component } from "react";
-import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert, message, Spin } from "antd";
+import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert, message,Tabs, Spin } from "antd";
 import {
 	setAddressStep,
 	rejectCoin,
@@ -9,19 +9,18 @@ import {
 	clearValues,
 	clearCryptoValues,
 } from "../../reducers/addressBookReducer";
-import { Link } from "react-router-dom";
 import Translate from "react-translate-component";
 import { processSteps as config } from "./config";
 import List from "../grid.component";
 import { activeInactive, downloadDeclForm } from "./api";
 import SelectCrypto from "./selectCrypto";
-import { withRouter } from "react-router-dom";
+import {Link,  withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import apiCalls from "../../api/apiCalls";
 import Info from "../shared/info";
 import { DownloadOutlined } from '@ant-design/icons';
 import ActionsToolbar from "../toolbar.component/actions.toolbar";
-import { fetchFeaturePermissions, setSelectedFeatureMenu } from "../../reducers/feturesReducer";
+import { getScreenName, setSelectedFeatureMenu } from "../../reducers/feturesReducer";
 import {rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
 import { getFeatureId } from "../shared/permissions/permissionService";
 import { setCurrentAction } from '../../reducers/actionsReducer'
@@ -63,10 +62,11 @@ class AddressBook extends Component {
 		};
 		this.gridFiatRef = React.createRef();
 		this.gridCryptoRef = React.createRef();
-		this.props.dispatch(fetchFeaturePermissions(getFeatureId("/addressBook"), this.props.userConfig.id))
 		this.props.dispatch(setSelectedFeatureMenu(getFeatureId("/addressBook"), this.props.userConfig.id));
 	}
 	componentDidMount() {
+		this.setState({...this.state,cryptoFiat:false})
+		this.props.dispatch(getScreenName({getScreen:null}))
 		this.permissionsInterval = setInterval(this.loadPermissions, 200);
 		if(!this.state.cryptoFiat){
 			this.props.changeStep("step1");
@@ -121,7 +121,7 @@ class AddressBook extends Component {
 			customCell: (props) => (
 				<td>
 					{" "}
-					<label className="text-center custom-checkbox c-pointer">
+					<label className="text-center custom-checkbox c-pointer cust-check-outline">
 						<input
 							id={props.dataItem.id}
 							className="c-pointer"
@@ -142,13 +142,16 @@ class AddressBook extends Component {
 			filter: true,
 			width: 300,
 			customCell: (props) => (
-				<td className="d-flex justify-content">
-					<div className="gridLink c-pointer	gridlink-data" onClick={() => this.addressFiatView(props)}>
-					{props?.dataItem?.whiteListName}
+				<td >
+					<div className="d-flex align-center text-wrap-style justify-content">
+					<div className="wrap-text-width">
+					<Tooltip title= {props?.dataItem?.whiteListName}>
+					<Text className="gridLink c-pointer grid-level-style" onClick={() => this.addressFiatView(props)}>{props?.dataItem?.whiteListName}</Text>
+					</Tooltip></div>
+					<div>
+						<span  className="file-label add-lbl">{this.addressTypeNames(props?.dataItem?.addressType)}</span>
 					</div>
-					<Text className="file-label ml-8 fs-12 add-lbl">
-						{this.addressTypeNames(props?.dataItem?.addressType)}
-					</Text>
+					</div>
 				</td>
 			),
 		},
@@ -179,9 +182,25 @@ class AddressBook extends Component {
 		},
 		{
 			field: "addressState",
-			title: apiCalls.convertLocalLang("addressState"),
+			title: apiCalls.convertLocalLang("Whitelisting_Status"),
 			filter: true,
-			width: 180,
+			width: 200,
+		},
+		{
+			field: "digitallySigned",
+			customCell: (props) => (
+				<td>
+					{props.dataItem?.digitallySigned==="Signed" && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <> <Link onClick={() => {
+						if (!this.state.isDownloading)
+							this.downloadDeclarationForm(props?.dataItem);
+					}} ><DownloadOutlined /></Link> {props.dataItem?.digitallySigned}</>}
+					{props.dataItem?.digitallySigned!=="Signed" && props.dataItem?.digitallySigned}
+					{this.state.isDownloading && this.state.selectedDeclaration === props?.dataItem.payeeAccountId && <Spin size="small" />}
+				</td>
+			),
+			title: apiCalls.convertLocalLang("whitelist"),
+			filter: true,
+			width: 200,
 		},
 		{
 			field: "status",
@@ -189,22 +208,6 @@ class AddressBook extends Component {
 			filter: true,
 			width: 100,
 		},
-		{
-			field: "isWhitelisted",
-			customCell: (props) => (
-				<td>
-					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <><Link onClick={() => {
-						if (!this.state.isDownloading)
-							this.downloadDeclarationForm(props?.dataItem);
-					}} ><DownloadOutlined /></Link> Whitelisted</>}
-					{!props.dataItem?.isWhitelisted && "Not whitelisted"}
-					{this.state.isDownloading && this.state.selectedDeclaration === props?.dataItem.payeeAccountId && <Spin size="small" />}
-				</td>
-			),
-			title: apiCalls.convertLocalLang("whitelist"),
-			filter: false,
-			width: 200,
-		}
 	];
 	columnsCrypto = [
 		{
@@ -214,7 +217,7 @@ class AddressBook extends Component {
 			customCell: (props) => (
 				<td>
 					{" "}
-					<label className="text-center custom-checkbox c-pointer">
+					<label className="text-center custom-checkbox c-pointer cust-check-outline">
 						<input
 							id={props.dataItem.id}
 							name="isCheck"
@@ -237,7 +240,7 @@ class AddressBook extends Component {
 			customCell: (props) => (
 				<td>
 					<div>
-						<span className="gridLink c-pointer" onClick={() => this.addressCryptoView(props)}>{props.dataItem?.whiteListName}</span>
+						<span className="gridLink c-pointer batch-filename" onClick={() => this.addressCryptoView(props)}><Tooltip title= {props?.dataItem?.whiteListName}>{props.dataItem?.whiteListName}</Tooltip></span>
 					</div>
 				</td>
 			),
@@ -260,12 +263,28 @@ class AddressBook extends Component {
 			filter: true,
 			width: 380,
 		},
-		
+		{ field: "walletSource", title: "Wallet Source", width: 150, filter: true },
 		{
 			field: "addressState",
-			title: apiCalls.convertLocalLang("addressState"),
+			title: apiCalls.convertLocalLang("Whitelisting_Status"),
 			filter: true,
-			width: 180,
+			width: 200,
+		},
+		{
+			field: "digitallySigned",
+			customCell: (props) => (
+				<td>
+					{props.dataItem?.digitallySigned==="Signed" && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <><Link onClick={() => {
+						if (!this.state.isDownloading)
+							this.downloadDeclarationForm(props?.dataItem);
+					}} ><DownloadOutlined /></Link> {props.dataItem?.digitallySigned}</>}
+					{props.dataItem?.digitallySigned!=="Signed" && props.dataItem?.digitallySigned}
+					{this.state.isDownloading && this.state.selectedDeclaration === props?.dataItem.payeeAccountId && <Spin size="small" />}
+				</td>
+			),
+			title: apiCalls.convertLocalLang("whitelist"),
+			filter: true,
+			width: 200,
 		},
 		{
 			field: "status",
@@ -273,22 +292,6 @@ class AddressBook extends Component {
 			filter: true,
 			width: 100,
 		},
-		{
-			field: "isWhitelisted",
-			customCell: (props) => (
-				<td>
-					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <> <Link onClick={() => {
-						if (!this.state.isDownloading)
-							this.downloadDeclarationForm(props?.dataItem);
-					}} ><DownloadOutlined /></Link> Whitelisted</>}
-					{!props.dataItem?.isWhitelisted && "Not whitelisted"}
-					{this.state.isDownloading && this.state.selectedDeclaration === props?.dataItem.payeeAccountId && <Spin size="small" />}
-				</td>
-			),
-			title: apiCalls.convertLocalLang("whitelist"),
-			filter: false,
-			width: 200,
-		}
 	];
 	async downloadDeclarationForm(dataItem) {
 		this.setState({ ...this.state, isDownloading: true, selectedDeclaration: dataItem.payeeAccountId });
@@ -355,6 +358,7 @@ class AddressBook extends Component {
 		} else {
 			statusObj.status.push("InActive")
 		}
+		// statusObj.status.push(this.state.selectedObj.status);
 		statusObj.type = this.state.cryptoFiat ? "fiat" : "crypto";
 		statusObj.info = JSON.stringify(this.props.trackLogs);
 		let response = await activeInactive(statusObj);
@@ -460,9 +464,11 @@ class AddressBook extends Component {
 		else if(obj.status === "Inactive") {
 			this.setState({ ...this.state, errorWorning: "Record is inactive so you can't edit" });
 		}
-		else if (
+		else if (this.state.selectedObj.type ==="Fiat" || this.state.selectedObj.type === "fiat" || this.state.selectedObj.isProofofOwnership === true  ?
 			obj.addressState === "Approved" ||
 			obj.addressState === "Rejected" ||
+			obj.addressState === "Reject" :
+		   obj.addressState === "Rejected" ||
 			obj.addressState === "Reject"
 		) {
 			this.setState({
@@ -560,10 +566,9 @@ class AddressBook extends Component {
 		this.props.changeStep("step1");
 	};
 	handleWithdrawToggle = (e) => {
-
 		this.setState({
 			...this.state,
-			cryptoFiat: e.target.value === 2,
+			cryptoFiat: parseInt(e) === 2,
 			selection: [],
 			selectedObj: {},
 			isCheck: false,
@@ -666,37 +671,31 @@ class AddressBook extends Component {
 
 		return (
 			<>
-			<div className="main-container">
-			<Translate
-				content="address_book"
-				component={Title}
-				className="basicinfo mb-0"
-			/>
-			<Text className="fs-16 text-white fw-500 mb-12 d-block">Note: <span className="fs-14 text-white fw-400 mb-12">Whitelisting of Crypto Address and Bank Account is required, Please add below.</span></Text>
-				<div className="box basic-info addressbook-grid">
-					<div className="display-flex mb-16">
-						<Radio.Group
-							defaultValue={(this.props?.activeFiat||this.state.cryptoFiat) ? 2 : 1}
+			<div className="main-container grid-demo">
+			<div className="backbtn-arrowmb"><Link  to="/cockpit"><span className="icon md leftarrow c-pointer backarrow-mr"></span><span className="back-btnarrow c-pointer">Back</span></Link></div>
+			<div className="security-align adbs-mb">
+				<Translate
+					content="address_book"
+					component={Title}
+					className="addressbook-mb"
+				/>
+				<div className="mb-right">
+					<ActionsToolbar featureKey="addressbook" onActionClick={(key) => this.onActionClick(key)} />
+				</div>
+			</div>
+			<div className="imprt-bg"><span className="ab-note-style">Note:</span> <span className="note-cont">Whitelisting of Crypto Address and Bank Account is required, Please add below.</span></div>
+			
+				<div className="addressbook-grid">
+					<Tabs className="cust-tabs-fait" 
+					defaultValue={(this.props?.activeFiat||this.state.cryptoFiat) ? 2 : 1}
 							onChange={this.handleWithdrawToggle}
-							className="buysell-toggle mx-0"
-							style={{ display: "inline-block" }}>
-							<Translate
-								content="withdrawCrypto"
-								component={Radio.Button}
-								value={1}
-								className="buysell-toggle mx-0"
-							/>
-							<Translate
-								content="withdrawFiat"
-								component={Radio.Button}
-								value={2}
-								className="buysell-toggle mx-0"
-							/>
-						</Radio.Group>
-						<span className="mb-right">
-							<ActionsToolbar featureKey="addressbook" onActionClick={(key) => this.onActionClick(key)} />
-						</span>
+							>					
+                                <Tabs.TabPane tab="Send Crypto" content="withdrawCrypto" key={1} className=""  component={Radio.Button}/>
+                                <Tabs.TabPane tab="Send Fiat" content="withdrawFiat" key={2} className="" component={Radio.Button}/>
+						    </Tabs>
+							</div>
 					</div>
+					<div className="main-container grid-error">
 					{this.state.errorWorning && (
 						<div className="custom-alert">
 							<Alert
@@ -706,6 +705,8 @@ class AddressBook extends Component {
 							/>
 						</div>
 					)}
+					</div>
+					<div className="cust-list main-containerz"> 
 					{cryptoFiat ? (
 						<List
 							className="address-clear"
@@ -723,7 +724,7 @@ class AddressBook extends Component {
 							url={gridUrlCrypto}
 						/>
 					)}
-				</div>
+				
 				</div>
 
 				<Drawer
@@ -731,11 +732,11 @@ class AddressBook extends Component {
 					title={[
 						<div className="side-drawer-header">
 							{this.renderTitle()}
-							<div className="text-center fs-24">
+							<div className="text-center">
 								<Translate
-									className="text-white-30 fw-600 text-captz "
+									className="drawer-maintitle"
 									content={
-										this.state.showHeading!==true&&(
+										this.state.showHeading!=true&&(
 										this.props.addressBookReducer.stepTitles[
 										config[this.props.addressBookReducer.stepcode]
 										])
@@ -759,7 +760,7 @@ class AddressBook extends Component {
 					closable={true}
 					visible={this.state.visible}
 					closeIcon={null}
-					className="side-drawer w-50p">
+					className="side-drawer">
 					{this.renderContent()}
 				</Drawer>
 				<Drawer
@@ -767,12 +768,12 @@ class AddressBook extends Component {
 					title={[
 						<div className="side-drawer-header">
 							<span />
-							<div className="text-center fs-16">
-								<Paragraph className="mb-0 text-white-30 fw-600 text-upper">
+							<div className="text-center">
+								<Paragraph className="drawer-maintitle">
 									<Translate
-									content={this.state.hideFiatHeading !==true && "AddFiatAddress"}
+									content={this.state.hideFiatHeading !=true && "AddFiatAddress"}
 										component={Paragraph}
-										className="mb-0 text-white-30 fw-600 text-upper"
+										className="drawer-maintitle"
 									/>
 								</Paragraph>
 							</div>
@@ -786,7 +787,7 @@ class AddressBook extends Component {
 					closable={true}
 					visible={this.state.fiatDrawer}
 					closeIcon={null}
-					className="side-drawer w-50p">
+					className="side-drawer">
 					<AddressBookV3 type="manual" isFiat={this.state.cryptoFiat} selectedAddress={this.state.selectedObj} onContinue={(obj) => this.closeBuyDrawer(obj)} isFiatHeadUpdate={this.isFiatHeading}/>
 				</Drawer>
 				<Modal
@@ -805,20 +806,23 @@ class AddressBook extends Component {
 						</Tooltip>
 					}
 					footer={
-						<div className="cust-pop-up-btn">
-						<Button
-							style={{border: "1px solid #f2f2f2",width:'150px',height: '46px' }}
-							className="primary-btn pop-cancel"
+						<div className="cust-pop-up-btn crypto-pop">
+							<Button
+							// style={{border: "1px solid #f2f2f2",width:'150px',height: '46px' }}
+							className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
 							onClick={this.handleCancel}>
-							NO
+							No
 						</Button>
-						<Button
-							className="primary-btn pop-btn"
+							<Button
+							className="primary-btn pop-btn detail-popbtn"
+							block
 							onClick={this.handleSatatuSave}
-							style={{ width: '150px', height: '46px' }}
+							// style={{ width: '150px', height: '46px' }}
 							loading={btnDisabled}>
 							{apiCalls.convertLocalLang("Yes")}
 						</Button>
+						
+						
 					</div>
 					}>
 					<p className="fs-16 mb-0">
