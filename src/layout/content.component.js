@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Layout } from 'antd'
+import { Layout ,Alert} from 'antd'
 import RouteConfig from '../config/router.config.component';
-import { Alert } from "antd";
 import ConnectStateProps from '../utils/state.connect';
 
 const { Content: AntContent } = Layout;

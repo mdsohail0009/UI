@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Row, Col, Alert } from "antd";
 import Loader from "../loader.component";
+import apicalls from "../../api/apiCalls";
 
 class CaseList extends Component {
     state = {
@@ -24,14 +25,14 @@ class CaseList extends Component {
         this.loadDocList();
     }
     loadDocList = async () => {
-        this.setState({ isLoading: true })
+        this.setState({ isLoading: true,errorMsg:null })
         let response = await getDocList();
         if (response.ok) {
             this.setState({ isLoading: false })
             this.setState({ ...this.state, docList: response.data, errorMsg:null });
         } else {
             this.setState({
-                ...this.state, errorMsg: response.status === 401 ? (response.data.message) : response.data, isLoading:false
+                ...this.state, errorMsg: apicalls.isErrorDispaly(response), isLoading:false
             });
         }
     }

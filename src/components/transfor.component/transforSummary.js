@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Typography, Button,  Alert,Row,Col, Form } from 'antd';
 import { saveTransfor } from './api';
 import { connect } from 'react-redux';
@@ -146,7 +146,7 @@ const  TransforSummary = ({userProfile, transforObj,dispatch}) =>{
                         <Translate content="agree_sell" component="Paragraph" />{" "}
                         <a
                             className="textpure-yellow"
-                            href="https://www.iubenda.com/terms-and-conditions/42856099"
+                            href={process.env.REACT_APP_TERMS_AND_CONDITIONS}
                             target="_blank">
                             <Translate content="terms" component="Text" />
                         </a>{" "}

@@ -18,7 +18,6 @@ const UserProfile = React.lazy(() => import('../components/userProfile.component
 const RequestedDocs = React.lazy(() => import('../components/documents.component/requestedDocs'));
 const DocNotices = React.lazy(() => import("../components/shared/doc.notices"));
 const TwoFactor = React.lazy(() => import("../components/shared/two.factor"));
-//const CaseDocs = React.lazy(() => import('../components/case.component/caseView'));
 const CoinDetails = React.lazy(() => import("../components/dashboard.component/coinview"));
 const DashboardCharts = React.lazy(() => import("../components/dashboard.component/cockpitCharts"));
 const CryptocoinsView = React.lazy(() => import("../components/dashboard.component/cryptocoinsView"));
@@ -38,7 +37,6 @@ const Batchpayments = React.lazy(() => import("../components/batchpayment.compon
 const AuditLogs = React.lazy(() => import("../components/auditlogs.component"));
 const BatchpaymentView = React.lazy(() => import("../components/batchpayment.component/uploadGrid"));
 const paymentPreview = React.lazy(() => import("../components/batchpayment.component/paymentPreview"));
-// const ErrorPage = React.lazy(() => import("../components/internalTransfer.component/errorpage"));
 const Transactions = React.lazy(() => import("../components/transactions.history.component/index"))
 const SbCard= React.lazy(() => import("../components/dashboard.component/sbCard"))
 class RouteConfig extends Component {
@@ -75,7 +73,6 @@ class RouteConfig extends Component {
         <ReactRoute path="/onboading" component={OnBoarding} />
         <ReactRoute path="/userprofile/:key?/:type?" component={UserProfile} />
         <ReactRoute path='/documents' component={RequestedDocs} />
-        {/* <ReactRoute path='/cases' component={CaseDocs} /> */}
         <ReactRoute path='/docnotices' component={DocNotices} />
         <ReactRoute path='/enabletwofactor' component={TwoFactor} />
         <ReactRoute path='/addressFiatView/:id?/:type' component={AddressFiatView} />
@@ -117,8 +114,7 @@ class RouteConfig extends Component {
         <ReactRoute path="/relogin" component={SecurityLogin} exact />
         <ReactRoute path="/sbcard" component={InternalTransfer} exact />
         <ReactRoute path="/" component={Dashboard} exact />
-        {/* <ReactRoute path="/error" component={ErrorPage} exact /> */}
-      </React.Suspense>
+       </React.Suspense>
     </Switch>
   }
 

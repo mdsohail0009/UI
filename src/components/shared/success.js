@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import success from '../../assets/images/success.svg';
-import { Typography, Space, Button } from 'antd';
-import { Link } from 'react-router-dom';
+import { Typography, Button } from 'antd';
 import Translate from 'react-translate-component';
 import { setStep, setSellHeaderHide, setSelectedSellCoin } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';

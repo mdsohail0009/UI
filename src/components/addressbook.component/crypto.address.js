@@ -81,7 +81,6 @@ const CryptoAdress = ({PayeeLu=[]}) => {
                                     name="isCheck"
                                     type="checkbox"
                                     checked={false}
-                                    onChange={(e) => { }}
                                 />
                                 <span></span>{" "}
                             </label>
@@ -111,7 +110,6 @@ const CryptoAdress = ({PayeeLu=[]}) => {
                                     name="isCheck"
                                     type="checkbox"
                                     checked={false}
-                                    onChange={(e) => { }}
                                 />
                                 <span></span>{" "}
                             </label>

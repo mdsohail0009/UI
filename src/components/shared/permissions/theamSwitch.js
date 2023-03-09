@@ -3,11 +3,10 @@ import { useThemeSwitcher } from 'react-css-theme-switcher';
 import { connect } from 'react-redux';
 import { getmemeberInfo } from '../../../reducers/configReduser';
 import { saveSettingsData } from '../../../api/apiServer';
-const TheamSwitch = ({customer,theamFlag,getmemeberInfoa}) => {
+const TheamSwitch = ({customer,getmemeberInfoa}) => {
     const { switcher, themes } = useThemeSwitcher();
     const [theme, setTheme] = useState(customer?.theme === 'Light Theme' ? true : false);
     const [screenTheme,setScreenTheme]=useState("lightMode")
-    const [settingsObj, setSettingsObj] = useState({ customerId: '', Language: customer?.language ? customer.language?.toUpperCase() : 'EN', currency: customer?.currency ? customer.currency : 'USD', Theme: customer?.theme ? customer.theme : null })
     
     useEffect(() => {
         switcher({ theme: customer?.theme === 'Light Theme' ? themes.LHT : themes.DRT });
@@ -21,7 +20,7 @@ const TheamSwitch = ({customer,theamFlag,getmemeberInfoa}) => {
         settingsObj.Theme = !theme ? 'Light Theme' : 'Dark Theme';
         settingsObj.Language = settingsObj.Language?.toLowerCase();
         settingsObj.customerId = customer?.id;
-        if(theme ==true){
+        if(theme){
             setScreenTheme("lightMode")
         }else{
             setScreenTheme("darkMode") 
@@ -39,13 +38,11 @@ const TheamSwitch = ({customer,theamFlag,getmemeberInfoa}) => {
          {screenTheme != 'lightMode' && 
                     <div className="theme-switch theme-active mobile-mb-16 c-pointer" onClick={() =>  themeSwitch() }>
                         <div className="d-flex align-center " >
-                            {/* <p className="switch-circle" >{!theme && <span className="icon lg radio-check c-pointer"></span>}{theme && <span className='icon radio lg c-pointer'></span>}</p> */}
                             <p className="theme-txt"><span className="icon md theme-icon" /><span className='theme-text'>Light Mode</span></p></div>
                     </div>}
          {screenTheme != 'darkMode' &&            
                     <div className={"theme-switch c-pointer" + (theme ? " themeSwitchOn " : " themeSwitchOff ")} onClick={() =>  themeSwitch() }>
                         <div className="d-flex align-center c-pointer" >
-                            {/* <p className="switch-circle c-pointer" >{theme && <span className="icon lg radio-check c-pointer"></span>}{!theme && <span className='icon radio lg c-pointer'></span>}</p> */}
                             <p className="theme-txt"><span className="icon md theme-icon" /><span className='theme-text'>Dark Mode</span></p>
                             </div>
                     </div>}

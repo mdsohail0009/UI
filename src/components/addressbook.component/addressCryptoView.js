@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Typography, Button, Modal, Tooltip } from "antd";
 import Loader from "../../Shared/loader";
-import { getFileURL, getCryptoData } from "./api";
+import {  getCryptoData } from "./api";
 import { connect } from "react-redux";
-import FilePreviewer from "react-file-previewer";
 import { bytesToSize } from "../../utils/service";
 import { addressTabUpdate} from "../../reducers/addressBookReducer";
+import DocumentPreview from '../../Shared/docPreview'
+
+
 const { Title, Text } = Typography;
 const EllipsisMiddle = ({ suffixCount, children }) => {
 	const start = children?.slice(0, children.length - suffixCount).trim();
@@ -22,10 +24,8 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 const AddressCryptoView = (props) => {
 	const [loading, setIsLoading] = useState(false);
 	const [cryptoAddress, setCryptoAddress] = useState({});
-	const [previewPath, setPreviewPath] = useState(null);
-	const [previewModal, setPreviewModal] = useState(false);
-	const [mimeType,setMimeType]=useState(false);
-
+	const [docPreviewDetails, setDocPreviewDetails] = useState(null)
+	const [docPreviewModal, setDocPreviewModal] = useState(false)
 
 	useEffect(() => {
 		loadDataAddress();
@@ -42,75 +42,19 @@ const AddressCryptoView = (props) => {
 		props?.history?.push("/addressbook");
 		props?.dispatch(addressTabUpdate(false));
 	};
-	const docPreview = async (file) => {
-		const mimeType = {
-		"pdf": "pdf",
-		"jpg": "jpg",
-		"jpeg": "jpeg",
-		"png": "png",
-		 "PDF": "PDF",
-		"PNG": "PNG",
-		 "JPEG": "JPEG" };
-		let res = await getFileURL({ url: file.path });
-		if (res.ok) {
-			setPreviewModal(true);
-			setPreviewPath(res.data);
-		const documentName=file.documentName.split(".")
-			if(mimeType[documentName[1]])
-			{
-				setMimeType(true);
-			}
-			
-		}
-	};
-	const filePreviewPath = () => {
-		return previewPath;
-
-	};
 	
-	const filePreviewModal = (
-		<Modal
-			className="documentmodal-width"
-			destroyOnClose={true}
-			title="Preview"
-			width={1000}
-			visible={previewModal}
-			closeIcon={
-				<Tooltip title="Close">
-					<span
-						className="icon md close-white c-pointer"
-						onClick={() => setPreviewModal(false)}
-					/>
-				</Tooltip>
-			}
-			footer={
-				<>
-					<div className="cust-pop-up-btn crypto-pop">
-					
-					<Button
-						className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
-					
-						onClick={() => setPreviewModal(false)}>
-						Close
-					</Button>
-					<Button
-						className="primary-btn pop-btn detail-popbtn"
-					
-						onClick={() => window.open(previewPath, "_blank")}>
-						Download
-					</Button>
-					</div>
-				</>
-			}>
-			<FilePreviewer
-				hideControls={true}
-				file={{
-					url: previewPath ? filePreviewPath() : null,
-					mimeType: previewPath?.includes(".pdf") ? "application/pdf" : "",
-				}}
-			/>
-		</Modal>
-	);
+
+	const docPreviewOpen = (data) => {
+		setDocPreviewModal(true)
+		setDocPreviewDetails({ id: data.id, fileName: data.fileName })
+	  }
+
+	const docPreviewClose = () => {
+		setDocPreviewModal(false)
+		setDocPreviewDetails(null)
+	  }
+	
+	
 
 	return (
 		<>
@@ -142,7 +86,7 @@ const AddressCryptoView = (props) => {
 													</div>
 												</div>
 											</Col>
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+											{/* <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Token</label>
 													<div className=" kpi-val adview-name">
@@ -152,7 +96,7 @@ const AddressCryptoView = (props) => {
 															: cryptoAddress?.token}
 													</div>
 												</div>
-											</Col>
+											</Col> */}
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Network</label>
@@ -176,7 +120,7 @@ const AddressCryptoView = (props) => {
 													</div>
 												</div>
 											</Col>
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+											{process.env.REACT_APP_ISTR == "true" &&<><Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Wallet Source</label>
 													<div className=" kpi-val adview-name">
@@ -184,6 +128,14 @@ const AddressCryptoView = (props) => {
 													</div>
 												</div>
 											</Col>
+											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+												<div className="kpi-divstyle ad-rec-detyails">
+													<label className="kpi-label">Proof Of Ownership</label>
+													<div className=" kpi-val adview-name">
+													{cryptoAddress?.isDocumentUpload===true?"Yes": "No" || "-"}
+													</div>
+												</div>
+											</Col></>}
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Whitelisting Status</label>
@@ -195,43 +147,36 @@ const AddressCryptoView = (props) => {
 													</div>
 												</div>
 											</Col>
-											<Col xs={24} sm={24} md={12} lg={5} xxl={5}>
-												<div className="kpi-divstyle ad-rec-detyails">
-													<label className="kpi-label"></label>
-													<div className=" kpi-val adview-name">
-														
-													</div>
-												</div>
-											</Col>
-												
+
 										</Row>
-										<Row>
-										{cryptoAddress?.documents?.details?.map((file) => (
+										{process.env.REACT_APP_ISTR == "true" &&<Row>
+										{cryptoAddress?.docRepositories?.map((file) => (
 													<Col xs={12} sm={12} md={12} lg={8} xxl={8}>
 														<div
 															className="docfile mr-0 d-flex ml-8"
 															key={file.id}>
 															<span
-																className={`icon xl ${(file.documentName?.slice(-3) === "zip" &&
+																className={`icon xl ${(file.fileName?.slice(-3) === "zip" &&
 																		"file") ||
-																	(file.documentName?.slice(-3) !== "zip" &&
+																	(file.fileName?.slice(-3) !== "zip" &&
 																		"") ||
-																		((file.documentName?.slice(-3) === "mp4"||																file.documentName?.slice(-3) === "wmv"||file.documentName?.slice(-3) === "avi"||file.documentName?.slice(-3) === "mov") &&
+																		((file.fileName?.slice(-3) === "mp4"||																file.fileName?.slice(-3) === "wmv"||file.fileName?.slice(-3) === "avi"||file.fileName?.slice(-3) === "mov") &&
 																		"video")||
-																	((file.documentName?.slice(-3) === "pdf" ||
-																		file.documentName?.slice(-3) === "PDF") &&
+																	((file.fileName?.slice(-3) === "pdf" ||
+																		file.fileName?.slice(-3) === "PDF") &&
 																		"file") ||
-																	(file.documentName?.slice(-3) !== "pdf" &&
-																		file.documentName?.slice(-3) !== "PDF" &&
+																	(file.fileName?.slice(-3) !== "pdf" &&
+																		file.fileName?.slice(-3) !== "PDF" &&
 																		"image")
 																	} mr-16`}
 															/>
 															<div
 																className="docdetails c-pointer"
-																onClick={() => docPreview(file)}>
+																onClick={() => docPreviewOpen(file)}
+																>
 																{file.name !== null ? (
 																	<EllipsisMiddle suffixCount={4}>
-																		{file.documentName}
+																		{file.fileName}
 																	</EllipsisMiddle>
 																) : (
 																	<EllipsisMiddle suffixCount={4}>
@@ -239,13 +184,13 @@ const AddressCryptoView = (props) => {
 																	</EllipsisMiddle>
 																)}
 																<span className="fs-12 text-secondary">
-																	{bytesToSize(file.remarks)}
+																	{bytesToSize(file.fileSize)}
 																</span>
 															</div>
 														</div>
 													</Col>
 												))}
-												</Row>
+							</Row>}
 									</Col>
 								</Row>
 								<div className="text-right view-level-btn">
@@ -263,7 +208,12 @@ const AddressCryptoView = (props) => {
 					)}
 				</div>
 			</div>
-			{filePreviewModal}
+			{docPreviewModal &&
+      <DocumentPreview
+        previewModal={docPreviewModal}
+        handleCancle={docPreviewClose}
+        upLoadResponse={docPreviewDetails}
+      />}
 		</>
 	);
 };

@@ -3,21 +3,18 @@ import { Typography, Select, Form, Button, message, Row, Col,Alert,Spin } from '
 import { getSettingsLuData, saveSettingsData } from '../../api/apiServer'
 import { connect } from 'react-redux';
 import { getmemeberInfo } from '../../reducers/configReduser';
-import { useThemeSwitcher } from 'react-css-theme-switcher';
 import counterpart from 'counterpart';
 import en from '../../lang/en';
 import ch from '../../lang/ch';
 import my from '../../lang/my';
 import Translate from 'react-translate-component';
-import apiCalls from '../../api/apiCalls';
+import apicalls from '../../api/apiCalls';
 import { LoadingOutlined } from "@ant-design/icons";
-
-const { Title, Paragraph, Text } = Typography;
+const { Title } = Typography;
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
 counterpart.registerTranslations('my', my);
 const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
-    const { switcher, themes } = useThemeSwitcher();
     const [btnDisabled, setBtnDisabled] = useState(false);
     const [form] = Form.useForm();
     const [SettingsLu, setSettingsLu] = useState('')
@@ -31,7 +28,7 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const settingsTrack = () => {
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'Settings page view', "Username": customer?.userName, "customerId": customer?.id, "Feature": 'Settings', "Remarks": 'Settings page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Settings' });
+        apicalls.trackEvent({ "Type": 'User', "Action": 'Settings page view', "Username": customer?.userName, "customerId": customer?.id, "Feature": 'Settings', "Remarks": 'Settings page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Settings' });
     }
     const getSettingsLu = async () => {
         let res = await getSettingsLuData();
@@ -40,7 +37,7 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
         }
         else
         {
-            setErrorMsg(isErrorDispaly(res))
+            setErrorMsg(apicalls.isErrorDispaly(res))
         }
     }
     const saveSettings = async () => {
@@ -63,23 +60,12 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
             
         }
         else{
-            setErrorMsg(isErrorDispaly(res))
+            setErrorMsg(apicalls.isErrorDispaly(res))
             setIsLoading(false);
             setBtnDisabled(false);
         }
     }
-    const isErrorDispaly = (objValue) => {
-        if (objValue.data && typeof objValue.data === "string") {
-          return objValue.data;
-        } else if (
-          objValue.originalError &&
-          typeof objValue.originalError.message === "string"
-        ) {
-          return objValue.originalError.message;
-        } else {
-          return "Something went wrong please try again!";
-        }
-      };
+   
         const antIcon = (
             <LoadingOutlined
                 style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}

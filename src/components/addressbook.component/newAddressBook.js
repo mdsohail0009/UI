@@ -11,7 +11,7 @@ const LinkValue = (props) => {
       component={Link}
       onClick={() =>
         window.open(
-          "https://www.iubenda.com/terms-and-conditions/42856099",
+          process.env.REACT_APP_TERMS_AND_CONDITIONS,
           "_blank"
         )
       }
@@ -20,14 +20,8 @@ const LinkValue = (props) => {
 };
 const link = <LinkValue content="terms_service" />;
 const NewAddressBook = (props) => {
-  const [isEdit, setEdit] = useState(false);
-  const [state, setstate] = useState({data:"Fiat"})
   useEffect(() => {
-    if (
-      props?.addressBookReducer?.selectedRowData?.id !==
-      "00000000-0000-0000-0000-000000000000" &&
-      props?.addressBookReducer?.selectedRowData?.id
-    ) { setEdit(true); }
+    
     addressbkTrack();
 
 

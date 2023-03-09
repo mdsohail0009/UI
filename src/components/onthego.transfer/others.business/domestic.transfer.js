@@ -2,8 +2,20 @@ import { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
 import { Form, Row, Col, Input } from "antd";
 import { validateContentRule } from "../../../utils/custom.validator";
+import NumberFormat from "react-number-format";
 const { TextArea } = Input;
 class DomesticTransfer extends Component {
+    validateNumber = (_, validNumberValue) => {
+        if (validNumberValue === "." || validNumberValue &&
+        !/^[A-Za-z0-9]+$/.test(validNumberValue)) {
+            return Promise.reject("Invalid Uk Sort Code");
+        }
+        else if(validNumberValue?.length<6 && validNumberValue !=undefined && validNumberValue !=''){
+            return Promise.reject("Invalid Uk Sort Code");
+        }
+        return Promise.resolve();
+    }
+   
     render() {
         return <Row >
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -40,7 +52,7 @@ class DomesticTransfer extends Component {
 
                 </Form.Item>
             </Col>
-            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+           {this.props.currency != 'GBP' &&this.props.currency != 'CHF' && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                     className="fw-300 mb-4 text-white-50 py-4 custom-forminput custom-label"
                     name="abaRoutingCode"
@@ -74,7 +86,70 @@ class DomesticTransfer extends Component {
                         maxLength={50}/>
 
                 </Form.Item>
-            </Col>
+            </Col>}
+            {this.props.currency == 'GBP' && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            <Form.Item
+                name="ukSortCode"
+                label="Uk Sort Code"
+                className="custom-label"
+                type="number"
+                rules={[
+                    {
+                        required: true,
+                        message: "Is required",
+                    },
+                    {
+                        validator: this.validateNumber
+                    }
+                ]}>
+                <NumberFormat
+                    className="cust-input value-field cust-addon mt-0"
+                    customInput={Input}
+                    prefix={""}
+                    placeholder="Uk Sort Code"
+                    allowNegative={false}
+                    maxlength={6}
+                />
+            </Form.Item>
+        </Col>}
+        {this.props.currency == 'CHF'&&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-forminput custom-label"
+                        name="swiftRouteBICNumber"
+                        label={apiCalls.convertLocalLang(
+                            "swifbictcode"
+                        )}
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message: apiCalls.convertLocalLang("is_required"),
+                            },{
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid Swift / BIC Code"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            }
+                        ]}
+                    >
+                        <Input
+                            className="cust-input "
+                            placeholder={apiCalls.convertLocalLang(
+                                "swifbictcode"
+                            )}
+                            maxLength={50}
+                        />
+                    </Form.Item>
+                </Col>}
+
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                     className="custom-forminput custom-label"

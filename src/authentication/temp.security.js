@@ -11,7 +11,7 @@ class SecurityLogin extends Component {
     componentDidMount() {
         apiClient.axiosInstance.interceptors.response.use((response) => { return response; }, (error) => {
             const stCode = error.response?.status;
-            if (stCode === 409) { this.setState({ ...this.state, isRelogin: true }); };
+            if (stCode === 409) { this.setState({ ...this.state, isRelogin: true }); }
             return error;
         });
     }
@@ -23,7 +23,7 @@ class SecurityLogin extends Component {
                     <Title level={4} className="security-text">Due to security reasons please logout and relogin</Title>
                     <div className="text-center">
                         <Button
-                            className="primary-btn pop-cancel"
+                            className="pop-btn"
                             style={{ width: '250px' }}
                             onClick={() => { userManager.signoutRedirect(); }}>
 

@@ -3,7 +3,7 @@ import { Typography, Button, Form, Input, Alert, Tooltip} from "antd";
 import { getCode, getVerification, sendEmail, verifyEmailCode, getAuthenticator, getVerificationFields } from "./api";
 import { connect } from 'react-redux';
 import LiveNessSumsub from '../../sumSub.component/liveness'
-
+import apicalls from "../../../api/apiCalls";
 const Verifications = (props) => {
     const [verifyData, setVerifyData] = useState({});
     const [email, setEmail] = useState({ showRuleMsg: '', errorMsg: '', btnName: 'get_otp', requestType: 'Send', code: '', verified: false,btnLoader:false });
@@ -31,10 +31,14 @@ const Verifications = (props) => {
     useEffect(() => {
         if(phoneSeconds===0 && phone.btnName==='code_Sent'){
             setPhone({ ...phone, btnName: 'resendotp', code: '' });
-        }
+        } else if(phoneSeconds===0 && phone.btnName=== 'verifyOtpBtn'){
+                setPhone({ ...phone, btnName: 'resendotp', code: '' });
+            }
     }, [phoneSeconds]);//eslint-disable-line react-hooks/exhaustive-deps
     useEffect(() => {
         if(emailSeconds===0 && email.btnName==='code_Sent'){
+            setEmail({ ...email, btnName: 'resendotp', code: '' });
+        }else if(emailSeconds===0 && email.btnName=== 'verifyOtpBtn'){
             setEmail({ ...email, btnName: 'resendotp', code: '' });
         }
     }, [emailSeconds]);//eslint-disable-line react-hooks/exhaustive-deps
@@ -68,7 +72,6 @@ const Verifications = (props) => {
         }, 1000);
     };
     const transferDetials = async (values) => {
-        // setAgreeRed(true);
     };
 
    const loadPermissions = () => {
@@ -83,10 +86,12 @@ const Verifications = (props) => {
 
     const getVerifyData = async () => {
         props.onReviewDetailsLoading(true)
+        setMsg(null)
         let response = await getVerificationFields();
         if (response.ok) {
             setVerifyData(response.data);
             props.onReviewDetailsLoading(false)
+            setMsg(null)
         } else {
             setMsg(
                 "Without Verifications you can't withdraw.Please select withdraw verifications from security section"
@@ -97,6 +102,7 @@ const Verifications = (props) => {
 
     const sendEmailOTP = async (val) => {
         setEmail({ ...email, errorMsg: '', showRuleMsg: '',btnLoader:true })
+        setMsg(null)
         let response = await sendEmail( email.requestType);
         if (response.ok) {
         let emailData = { ...email, errorMsg: '', btnName: 'code_Sent', requestType: 'Resend', showRuleMsg: `Enter 6 digit code sent to your Email Id`,btnLoader:false }
@@ -104,12 +110,13 @@ const Verifications = (props) => {
         
         startemailTimer('emailSeconds')
         } else {
-            setEmail({ ...email, errorMsg: isErrorDispaly(response), showRuleMsg: '',btnLoader:false })
+            setEmail({ ...email, errorMsg: apicalls.isErrorDispaly(response), showRuleMsg: '',btnLoader:false })
          
         }
     };
 
     const verifyEmailOtp = async (values) => {
+        setMsg(null)
         if(!email.code){
             setEmail({ ...email, errorMsg: 'Please enter email verification code', verified:false});
         }
@@ -134,8 +141,12 @@ const Verifications = (props) => {
     const handleEmailinputChange = (e) => {
         if (e.target.value) {
             setEmail({ ...email, btnName: 'verifyOtpBtn', code: e.target.value })
-        } else {
+        } else if(emailSeconds===0 && email.btnName==='code_Sent'){
             setEmail({ ...email, btnName: 'resendotp', code: '' })
+        } else if(emailSeconds===0 && (email.btnName==='verifyOtpBtn' || email.btnName==='resendotp') && e.target.value == "") {// && phone.btnName==='code_Sent'
+            setEmail({ ...email, btnName: 'resendotp', code: '' })
+        } else {
+            setEmail({ ...email, btnName: 'code_Sent', code: '' })
         }
     };
     const getphoneOTP = async (val) => {
@@ -146,15 +157,20 @@ const Verifications = (props) => {
         setPhone(phoneData)
         startphoneTimer('phoneSeconds')
         } else {
-            setPhone({ ...phone, errorMsg: isErrorDispaly(response), showRuleMsg: '', btnLoader:false })
+            setPhone({ ...phone, errorMsg: apicalls.isErrorDispaly(response), showRuleMsg: '', btnLoader:false })
         }
     };
     const handlephoneinputChange = (e) => {
         if (e.target.value) {
             setPhone({ ...phone, btnName: 'verifyOtpBtn', code: e.target.value })
-        } else {
+        } else if(phoneSeconds===0 && phone.btnName==='code_Sent') {
             setPhone({ ...phone, btnName: 'resendotp', code: '' })
         }
+        else if(phoneSeconds===0 && (phone.btnName==='resendotp' || phone.btnName==='verifyOtpBtn') && e.target.value == "") {// && phone.btnName==='code_Sent'
+            setPhone({ ...phone, btnName: 'resendotp', code: '' })
+        }else {
+            setPhone({ ...phone, btnName: 'code_Sent', code: '' })
+        }       
     };
     const verifyPhoneOtp = async () => {
         if(!phone.code){
@@ -179,19 +195,7 @@ const Verifications = (props) => {
         }
     };
 
-    const isErrorDispaly = (objValue) => {
-        if (objValue.data && typeof objValue.data === "string") {
-            return objValue.data;
-        } else if (
-            objValue.originalError &&
-            typeof objValue.originalError.message === "string"
-        ) {
-            return objValue.originalError.message;
-        } else {
-            return "Something went wrong please try again!";
-        }
-    };
-
+ 
     const updateverifyObj = (val, name) => {
         if (name === 'isEmailVerification') {
             props.onchangeData({ verifyData: verifyData,phBtn:phbtnColor, isEmailVerification: val, isAuthenticatorVerification: authenticator.verified, isPhoneVerification: phone.verified })
@@ -231,9 +235,7 @@ const Verifications = (props) => {
         }
     };
 
-    // const verifyLiveVerification = () =>{
-    //     setLiveverification({...liveverification,isLiveEnable:true})
-    // }
+    
     const verifyLiveness = (data) =>{
         if(data.verifed===true){
             setLiveverification({ ...liveverification, errorMsg: '', verified: true, btnName:'verified', btnLoader:false,isLiveEnable:false });
@@ -278,7 +280,7 @@ const Verifications = (props) => {
                 type="text"
                 style={{ color: "black", margin: "0 auto" }}
                 disabled={true}
-            ><Text className="text-yellow pr-24"> Verified </Text>
+            ><Text className="text-yellow pr-24 "> Verified </Text>
                 <span className="icon md greenCheck check-ml-align" />
             </Button>
 
@@ -317,7 +319,7 @@ const Verifications = (props) => {
         ${"c-notallowed"}`} >Verification code sent</Text></Button>
             <Tooltip
                 placement="topRight"
-                title={`Haven't received code ? Request new code in ${emailSeconds} seconds. The code will expire after 5mins.`}>
+                title={`Haven't received code ? Request new code in ${emailSeconds} seconds. The code will expire after 2 Min.`}>
                 <span className="icon md info mr-8" />
             </Tooltip>
         </>
@@ -424,9 +426,6 @@ const Verifications = (props) => {
                                         />
                                    
                                  
-                                    {/* <div className="new-add c-pointer get-code text-yellow hy-align">
-                                        {phone_btnList[phone.btnName]}
-                                    </div> */}
                                 </div>
                             </Form.Item>
                         </>
@@ -469,9 +468,6 @@ const Verifications = (props) => {
                                         />
                                     
                                  
-                                    {/* <div className="new-add c-pointer get-code text-yellow hy-align">
-                                        {email_btnList[email.btnName]}
-                                    </div> */}
                                 </div>
                             </Form.Item>
                         </>
@@ -517,10 +513,7 @@ const Verifications = (props) => {
                                             {authenticator_btnList[authenticator.btnName]}
                                         </div>}
                                         />                                    
-                                  
-                                    {/* <div className="new-add c-pointer get-code text-yellow hy-align">
-                                        {authenticator_btnList[authenticator.btnName]}
-                                    </div> */}
+                                 
                                 </div>
                             </Form.Item>
                         </>
@@ -549,8 +542,7 @@ const connectStateToProps = ({ userConfig, oidc, menuItems }) => {
 };
 const connectDispatchToProps = dispatch => {
     return {
-        changeInternalStep: (stepcode) => {
-        },
+       
         dispatch
     }
 

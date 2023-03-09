@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, List, Button, Image, Dropdown, Space, Menu, Drawer, Tooltip,Row,Col } from 'antd';
+import { Typography, List, Button, Image, Dropdown, Space, Menu, Drawer } from 'antd';
 import Translate from 'react-translate-component';
 import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
 import { fetchMemberWalletsData, fetchPortfolioData } from '../../reducers/dashboardReducer';
@@ -8,7 +8,7 @@ import Currency from '../shared/number.formate';
 import MassPayment from '../buyfiat.component'
 import { withRouter, Link } from 'react-router-dom';
 import TransactionsHistory from "../transactions.history.component";
-import { setWithdrawfiatenaable, setWithdrawfiat, setStep } from '../../reducers/sendreceiveReducer'
+import { setWithdrawfiatenaable, setStep } from '../../reducers/sendreceiveReducer'
 import { setdepositCurrency, getCurrencieswithBankDetails } from '../../reducers/depositReducer'
 import OnthegoFundTransfer from '../onthego.transfer';
 import {setReceiveFiatHead, setSendFiatHead} from '../../reducers/buyFiatReducer';
@@ -173,7 +173,6 @@ class Iban extends Component {
                 <Drawer
                     destroyOnClose={true}
                     title={[<div className="side-drawer-header">
-                        {/* {this.renderTitle()} */}
                         <span></span>
                         {!this.props.buyFiat?.sendFiatHeader && <div className="text-center">
                             <Translate className="drawer-maintitle" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
