@@ -1,18 +1,12 @@
 import React, { Component } from "react";
-import { Row, Col, Form, Input, Typography, Button, Spin } from 'antd';
+import { Row, Col, Form, Input, Typography, Button, Spin,Alert } from 'antd';
 import apicalls from "../../../api/apiCalls";
 import { validateContentRule } from "../../../utils/custom.validator";
 import Translate from "react-translate-component";
-//import { LoadingOutlined } from "@ant-design/icons";
-
+import NumberFormat from "react-number-format";
 const {  Text } = Typography;
 const { TextArea } = Input;
-// const antIcon = (
-//     <LoadingOutlined
-//         style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
-//         spin
-//     />
-// );
+
 class PayeeBankDetails extends Component {
     state = {
         emailExist: false,
@@ -27,7 +21,8 @@ class PayeeBankDetails extends Component {
         isShowValid: false,
         isValidateLoading: false,
         isValidCheck: false,
-        ibannumber: null
+        ibannumber: null,
+        errorMessage:null
     }
     componentDidMount(){
         if (this?.props?.selectedAddress?.id && this.props?.createPayeeObj) {
@@ -37,29 +32,28 @@ class PayeeBankDetails extends Component {
         }
     }
     handleIban = async (ibannumber,isNext) => {
-      //  this.setState({ ...this.state, enteredIbanData: ibannumber, isShowValid: false, iBanDetals: null});
         this.props.getIbandata(null);
         if (ibannumber?.length >= 10 && isNext) {
-            this.setState({ ...this.state, iBanDetals: null, IbanLoader: true, isValidIban: true, enteredIbanData: ibannumber,  isShowValid: false,isValidateLoading:true})
+            this.setState({ ...this.state, iBanDetals: null, IbanLoader: true, isValidIban: true, enteredIbanData: ibannumber,  isShowValid: false,isValidateLoading:true,errorMessage:null})
             const ibanget = await apicalls.getIBANData(ibannumber)
             if (ibanget.ok) {
                 if (ibanget.data && (ibanget.data?.routingNumber || ibanget.data?.bankName)) {
                     const bankdetails = { bankName: ibanget.data.bankName, bic: ibanget.data.routingNumber, bankBranch: ibanget.data.branch, country: ibanget.data.country, state: ibanget.data.state, city: ibanget.data.city, postalCode: ibanget.data.zipCode, line1: ibanget.data.bankAddress }
-                    this.setState({ ...this.state, iBanDetals: bankdetails, enteredIbanData: ibannumber, IbanLoader: false, isValidIban: true, isShowValid: false, isValidateLoading: false, isValidCheck: true })
+                    this.setState({ ...this.state, iBanDetals: bankdetails, enteredIbanData: ibannumber, IbanLoader: false, isValidIban: true, isShowValid: false, isValidateLoading: false, isValidCheck: true,errorMessage:null })
                     this.props.getIbandata(bankdetails);
                     this.props.form.current?.setFieldsValue({ iban: ibannumber })
                 } else {
-                    this.setState({ ...this.state, IbanLoader: false, isValidIban: false, isValidateLoading: false })
+                    this.setState({ ...this.state, IbanLoader: false, isValidIban: false, isValidateLoading: false,errorMessage:null })
                     const bankData = {bankName: "", routingNumber: ""}
                     this.props.getIbandata(bankData);
                 }
             } else {
-                this.setState({ ...this.state, IbanLoader: false, isValidIban: false, isValidateLoading: false })
+                this.setState({ ...this.state, IbanLoader: false, isValidIban: false, isValidateLoading: false,errorMessage:apicalls.isErrorDispaly(ibanget) })
                 this.props.getIbandata(null);
             }
         } else {
             this.props.form.current?.setFieldsValue({ iban: ibannumber })
-            this.setState({ ...this.state, enteredIbanData: ibannumber, isShowValid: false, IbanLoader: false, isValidIban: false, isValidateLoading: false })
+            this.setState({ ...this.state, enteredIbanData: ibannumber, isShowValid: false, IbanLoader: false, isValidIban: false, isValidateLoading: false,errorMessage:null })
         }
     }
 
@@ -102,6 +96,16 @@ class PayeeBankDetails extends Component {
             return Promise.resolve();
         }
     };
+    validateNumber = (_, validNumberValue) => {
+        if (validNumberValue === "." || validNumberValue &&
+        !/^[A-Za-z0-9]+$/.test(validNumberValue)) {
+            return Promise.reject("Invalid Uk Sort Code");
+        }
+        else if(validNumberValue?.length<6 && validNumberValue !=undefined && validNumberValue !=''){
+            return Promise.reject("Invalid Uk Sort Code");
+        }
+        return Promise.resolve();
+    }
     renderAddress = (transferType) => {
         const _templates = {
             sepa: <>
@@ -140,20 +144,7 @@ class PayeeBankDetails extends Component {
                     </Form.Item>
                     </div>
                     </Col>
-                    {/* <Col xs={24} md={10} lg={10} xl={10} xxl={10}> */}
-                       {/* <Button className={`pop-btn dbchart-link pop-validate-btn`} style={{width:"150px",marginTop:"32px",height:"42px"}}
-                                    loading={this.state.isValidateLoading}
-                                    onClick={() => this.onIbanValidate(this.props?.form.current?.getFieldValue(["payeeAccountModels","iban"]))} >
-                                    <Translate content="validate" />
-                                </Button> */}
-                                 {/* <Button className={`pop-btn dbchart-link pop-validate-btn iban-validate`}
-                             type="primary"
-                                // loading={isValidateLoading}
-                                onClick={() => this.onIbanValidate(this.props?.form.current?.getFieldValue(["payeeAccountModels","iban"]))} >
-                            <Translate content="validate" />
-                    </Button>   */}
-                         
-                {/* </Col> */}
+                   
                 </>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 
@@ -294,8 +285,8 @@ class PayeeBankDetails extends Component {
                             maxLength={50}
                         />
                     </Form.Item>
-                </Col>
-                {this.props.domesticType === "international" &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                </Col>              
+                {(this.props.domesticType === "international" && this.props.currency != 'GBP') && (this.props.currency === 'USD' && this.props.domesticType === "international") &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name={["payeeAccountModels","swiftRouteBICNumber"]}
@@ -334,7 +325,46 @@ class PayeeBankDetails extends Component {
                     </Form.Item>
                 </Col>}
 
-                {this.props.domesticType === "domestic" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+          { this.props.currency ==='CHF' &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-forminput custom-label"
+                        name={["payeeAccountModels","swiftRouteBICNumber"]}
+                        label={apicalls.convertLocalLang(
+                            "swifbictcode"
+                        )}
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message:
+                                    apicalls.convertLocalLang("is_required"),
+                            },{
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid Swift / BIC Code"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            }
+                        ]}
+                    >
+                        <Input
+                            className="cust-input "
+                            placeholder={apicalls.convertLocalLang(
+                                "swifbictcode"
+                            )}
+                            maxLength={50}
+                        />
+                    </Form.Item>
+                </Col>}
+
+                {this.props.domesticType === "domestic"  && this.props.currency != 'GBP' && this.props.currency != 'CHF'&& <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name={["payeeAccountModels","abaRoutingCode"]}
@@ -368,6 +398,35 @@ class PayeeBankDetails extends Component {
                         />
                     </Form.Item>
                 </Col>}
+
+              {this.props.currency == 'GBP' &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            <Form.Item
+               // name="ukSortCode"
+               name={["payeeAccountModels","ukSortCode"]}
+                label="Uk Sort Code"
+                className="custom-label"
+                type="number"
+                rules={[
+                    {
+                        required: true,
+                        message: "Is required",
+                    },
+                    {
+                        validator: this.validateNumber
+                    }
+                ]}>
+                <NumberFormat
+                    className="cust-input value-field cust-addon mt-0"
+                    customInput={Input}
+                    prefix={""}
+                    placeholder="Uk Sort Code"
+                    allowNegative={false}
+                    maxlength={6}
+                />
+            </Form.Item>
+        </Col>}
+
+
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
@@ -496,9 +555,10 @@ class PayeeBankDetails extends Component {
     }
     render() {
         const {  transferType,   domesticType } = this.props;
-        //const { countries, states, isLoading } = this.state;
+   
         
         return <>
+        {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
             <Row className="validateiban-content">
                 {this.renderAddress(domesticType === "internationalIBAN" ? "sepa" : transferType)}
             </Row>

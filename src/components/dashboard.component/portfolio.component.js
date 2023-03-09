@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography,Input, message, Spin,Button,  } from 'antd';
+import { Typography,Input, message, Spin,Button,Alert  } from 'antd';
 import Translate from 'react-translate-component';
 import { getData } from './api';
 import NumberFormat from 'react-number-format';
@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { withRouter,Link } from 'react-router-dom';
 import { dashboardTransactionSub } from '../../utils/pubsub';
 import TransactionsHistory from "../transactions.history.component";
+import apicalls from '../../api/apiCalls';
 
 
 class Portfolio extends Component {
@@ -27,15 +28,17 @@ class Portfolio extends Component {
             searchVal:[],
             fullViewData:[],
             marketCaps:[],
-            dashBoardTransactions:[]
+            dashBoardTransactions:[],
+            errorMessage:null
         }
     }
     getTransactionData = async () => {
-        this.setState({ ...this.state, loading: true });
+        this.setState({ ...this.state, loading: true ,errorMessage:null});
         let response = await getData();
         if (response.ok) {
-            this.setState({ ...this.state, dashBoardTransactions:response.data, transactionData: response.data, loading: false });
+            this.setState({ ...this.state, dashBoardTransactions:response.data, transactionData: response.data, loading: false ,errorMessage:null});
         } else {
+            this.setState({...this.state,errorMessage:apicalls.isErrorDispaly(response),loading: false})
             message.destroy();
 
         }
@@ -100,7 +103,14 @@ class Portfolio extends Component {
         const { Title } = Typography;
         const {  loading } = this.state;
         const { Search } = Input;
+       
         return (<>
+         {this.state.errorMessage != null && <Alert
+            description={this.state.errorMessage}
+            type="error"
+            showIcon
+            closable={false}
+        />}
             <div className='market-panel-newstyle'></div>
                 <div className="markets-panel transaction-panel">
                     <div className='trans-align'>
@@ -142,16 +152,15 @@ class Portfolio extends Component {
                        }
                       
                    
-                    <div className='transaction-custom-table'>
+                    <div className='transaction-custom-table db-transactions'>
 
                         <div className="responsive_table db-ts-grid">
                             <table className='pay-grid view mb-view'>
                                 <thead>
                                     <tr>
-                                        {/* <th style={{width: "5%"}}></th> */}
                                         <th style={{width: "18%"}}>Date</th>
                                         <th style={{width: "15%"}}>Wallet</th>
-                                       
+                                        <th style={{width: "15%"}}>Type</th>
                                         <th style={{width: "15%"}}>Value</th>
                                         <th style={{width: "15%"}}>State</th>
                                     </tr>
@@ -166,7 +175,7 @@ class Portfolio extends Component {
                                     </tbody>
                                 ) : (
                                     <>
-                                   {this.state.transactionData.length > 0 ?
+                                   {this.state.transactionData.length > 0 &&
                                     <tbody>
                                         {this.state.transactionData?.map((item, idx) => {
                                             return (
@@ -182,7 +191,8 @@ class Portfolio extends Component {
                                                             </td>
                                                      <td><div className='ts-wallet'>
                                                         <Title className='ts-coin'>{item.wallet}</Title>
-                                                     <Title className='ts-type'>{item.type}</Title></div></td>
+                                                        
+                                                        </div></td> <td><div className='ts-wallet'> <Title className='ts-type'>{item.type}</Title></div></td>
 
                                                         <td>{this.getNumberVal(item)}</td>
                                                         <td>{item.state} </td>
@@ -198,7 +208,9 @@ class Portfolio extends Component {
 
                                         {loading && <tr>
                                             <td colSpan='5' className='text-center p-16'><Spin size='default' /></td></tr>}
-                                    </tbody>:<tbody>
+                                    </tbody>}
+                                    {!(this.state.transactionData.length > 0) &&
+                                    <tbody>
                           <tr>
                             <td
                               colSpan="8"
@@ -208,7 +220,8 @@ class Portfolio extends Component {
                              No transaction details available
                             </td>
                           </tr>{" "}
-                        </tbody>}
+                        </tbody>
+                        }
                                     </>
                                     )}
                             </table>

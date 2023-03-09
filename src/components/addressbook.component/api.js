@@ -67,7 +67,9 @@ const getPayeeLu = (type,is1stParty) => {
     );
 };
 
-
+const getNetWorkLucup=()=>{
+	return apiClient.get(ApiControllers.markets+`Coins/network`);
+}
 
 const getFavData = (payeeId) => {
 
@@ -131,7 +133,22 @@ const networkLu = (coinName) => {
         ApiControllers.common + `NetWorkLU/${coinName}`
     );
 };
-
+const isErrorDispaly = (objValue) => {
+	if ((objValue.status >= 400 && objValue.status < 500) && objValue.status != 401) {
+		return "Something went wrong please try again!";
+	} else {
+		if (objValue.data && typeof objValue.data === "string") {
+			return objValue.data;
+		} else if (
+			objValue.originalError &&
+			typeof objValue.originalError.message === "string"
+		) {
+			return objValue.originalError.message;
+		} else {
+			return "Something went wrong please try again!";
+		}
+	}
+};
 export {
 	emailCheck,
 	getPayeeLu,
@@ -157,9 +174,7 @@ export {
 	getCryptoData,
 	saveCryptoData,
 	networkLu,
-	getWalletSource
+	getWalletSource,
+	getNetWorkLucup,isErrorDispaly
 };
 
-
-////https://devapi.suissebase.io/api/v1/addressbook/Crypto/{id}/{customerId}
-//https://devapi.suissebase.io/api/v1/Common/NetWorkLU/BTC

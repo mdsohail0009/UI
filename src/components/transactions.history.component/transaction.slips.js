@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Typography, Button, Col, Modal, Tooltip, Alert, message } from "antd";
+import { Button, Col, Modal, Tooltip, Alert, message } from "antd";
 import moment from "moment/moment";
 import { downloadTransaction } from './api';
 import TransactionSlip from "./transactionSlip.json";
 import { numberWithCommas } from '../../utils/service';
 import Loader from '../../Shared/loader';
+import apicalls from '../../api/apiCalls';
 class TransactionSlips extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +23,7 @@ class TransactionSlips extends Component {
         window.open(response.data, '_blank')
         message.success({ content: "Downloaded successfully", className: 'custom-msg', duration: 3 });
       } else {
-        this.setState({ ...this.state, downloadError: this.isErrorDispaly(response.data), isLoading: false })
+        this.setState({ ...this.state, downloadError: apicalls.isErrorDispaly(response), isLoading: false })
       }
   }
   transactionModal = (data) => {
@@ -35,18 +36,7 @@ class TransactionSlips extends Component {
     this.setState({ ...this.state, downloadError: "", isLoading: false })
     this.props?.handleCancel();
   }
-  isErrorDispaly = (objValue) => {
-    if (objValue.data && typeof objValue.data === "string") {
-      return objValue.data;
-    } else if (
-      objValue.originalError &&
-      typeof objValue.originalError.message === "string"
-    ) {
-      return objValue.originalError.message;
-    } else {
-      return "Something went wrong please try again!";
-    }
-  };
+  
 
   getCombinedValues = (lst) => {
     const obj = { ...this.props?.modalData };
@@ -65,7 +55,6 @@ class TransactionSlips extends Component {
 
   }
   render() {
-    const { Title } = Typography;
     const { downloadError } = this.state;
     const { modalData, showModal,viewData,loader } = this.props;
     const transactionSlipData = TransactionSlip[modalData?.copyType]

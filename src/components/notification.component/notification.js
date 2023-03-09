@@ -12,7 +12,7 @@ import {
 } from "antd";
 import { getNotifications, saveNotification } from "./api";
 import { setStep } from "../../reducers/buysellReducer";
-
+import apicalls from "../../api/apiCalls";
 const { Option } = Select;
 
 class NotificationScreen extends Component {
@@ -53,7 +53,7 @@ class NotificationScreen extends Component {
     this.setState({ ...this.state, notification: obj });
   }
   else {
-    this.setState({ ...this.state, errorMsg: this.isErrorDispaly(response), isLoading: false });
+    this.setState({ ...this.state, errorMsg: apicalls.isErrorDispaly(response), isLoading: false });
   }
   };
 
@@ -91,12 +91,10 @@ class NotificationScreen extends Component {
       this.setState({ ...this.state, errorMsg: null });
     } else {
 
-      this.setState({ ...this.state, errorMsg: this.isErrorDispaly(response), btnLoader: false });
+      this.setState({ ...this.state, errorMsg: apicalls.isErrorDispaly(response), btnLoader: false });
     }
   };
-  isErrorDispaly = ({ data }) => {
-    return data?.message || data;
-  };
+ 
 
   handleChange = (e, item) => {
     let notificationLu = this.state.notification;
@@ -155,7 +153,7 @@ class NotificationScreen extends Component {
                       <th style={{ width: 180 }}>Subscribe</th>
                     </tr>
                   </thead>
-                  {this.state.notification.length !== 0 ? <>
+                  {this.state.notification.length !== 0 && <>
                     <tbody>
                       {this.state.notification?.map((item, i) => {
                         return (
@@ -222,7 +220,9 @@ class NotificationScreen extends Component {
 
                         )
                       })}
-                    </tbody> </> : <>
+                    </tbody> </>}
+                    {this.state.notification.length === 0 &&
+                      <>
                     <tbody>
                       <tr>
                         <td
@@ -234,7 +234,8 @@ class NotificationScreen extends Component {
                         </td>
                       </tr>{" "}
                     </tbody>
-                  </>}
+                  </>
+                  }
                 </table>
 
                 <div className="text-center">

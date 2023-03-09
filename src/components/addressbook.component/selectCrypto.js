@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import CryptoList from '../shared/cryptolist';
 import { getCoinList } from './api';
 import apiCalls from '../../api/apiCalls'
+import apicalls from '../../api/apiCalls';
 
 class SelectCrypto extends Component {
     state = {
@@ -25,7 +26,7 @@ class SelectCrypto extends Component {
           if (fromlist.ok) {
             this.setState({ ...this.state, coinsList: fromlist.data, isLoading: false })
         } else {
-            this.setState({ ...this.state, coinsList: [], isLoading: false })
+            this.setState({ ...this.state, coinsList: [], isLoading: false,errorMessage:apicalls.isErrorDispaly(fromlist) })
         }
     }
     onSearch = (e) => {

@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Form, Row, Col, Radio } from 'antd';
 import { useForm } from "antd/lib/form/Form";
 import ConnectStateProps from "../../utils/state.connect";
 import OthersBusiness from "../onthego.transfer/others.business/others.business.component";
 import MyselfNewTransfer from '../onthego.transfer/Myself'
 import SomeoneComponent from "../onthego.transfer/others.SomeOneElse/someone.component"
-import { useEffect } from "react";
 
 const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onContinue, PayeeLu = [], emailExist = false, countries = [], states = [], fiatAddress, onTheGoObj, ...props }) => {
     const [form] = useForm();
@@ -14,9 +13,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onCont
     const [isEdit, setIsEdit] = useState(false);
     const [showHeading,setShowHeading]=useState(false);
     const [hideTabs,setHideTabs]=useState(true)
-    useEffect(() => {
-    }, [])
-
+   
 
    const headingChange=(data)=>{
 		setShowHeading(data)
@@ -35,7 +32,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onCont
             >
                 <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="text-center">
-                    {showHeading!=true&&(
+                    {!showHeading&&(
                         <Radio.Group
                             defaultValue={addressOptions.addressType}
                             className="new-custom-radiobtn"
@@ -60,8 +57,8 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onCont
           headingUpdate={headingChange}    onTheGoObj={{ amount: props.amount }} selectedAddress={selectedAddress} onEdit={(val) => {
                 setIsEdit(val);
             }} isHideTabs={(value)=>setHideTabs(value)}></MyselfNewTransfer>}
-        {addressOptions.addressType === "otherbusiness" && <OthersBusiness ontheGoType={props.typeOntheGo} 
-         headingUpdate={headingChange} selectedAddress={selectedAddress} type={props.type} isUSDTransfer={props.currency === "USD" ? true : false} onContinue={(obj) => onContinue(obj)} amount={props.amount} onEdit={(val) => {
+        {addressOptions.addressType === "otherbusiness" && <OthersBusiness ontheGoType={props.typeOntheGo} currency={props.currency}
+         headingUpdate={headingChange} selectedAddress={selectedAddress} type={props.type} isUSDTransfer={(props.currency === "USD" ||props.currency=== "GBP" || props.currency=== "CHF")? true : false} onContinue={(obj) => onContinue(obj)} amount={props.amount} onEdit={(val) => {
             setIsEdit(val);
         }} isHideTabs={(value)=>setHideTabs(value)}/>}
         {addressOptions.addressType === "individuals" && <SomeoneComponent ontheGoType={props.typeOntheGo}

@@ -51,7 +51,7 @@ class AddressBookV3 extends Component {
                                     title={<div className="wallet-title">{item.walletCode}</div>}
                                 />
                                 <><div className="text-right coin-typo">
-                                    <NumberFormat value={item.amount} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={item.walletCode == 'USD' ? '$' : '€'} renderText={(value, props) => <div {...props} >{value}</div>} />
+                                    <NumberFormat value={item.amount} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={item.walletCode == 'USD' && '$' || item.walletCode =='EUR' && '€' ||item.walletCode=='GBP' && '£' || item.walletCode=='CHF'&& '₣'} renderText={(value, props) => <div {...props} >{value}</div>} />
 
                                 </div></>
                             </Link>
@@ -62,7 +62,7 @@ class AddressBookV3 extends Component {
             </React.Fragment>
         }
         else if (this.props.isFiat)
-            return <FiatAddress selectedAddress={this.props.selectedAddress} currency={this.state.currency} onAddressOptionsChange={() => { }} type={this.props.type} onContinue={this.props?.onContinue} fiatHeadingUpdate={this.fiatHeading}/>
+            return <FiatAddress selectedAddress={this.props.selectedAddress} currency={this.state.currency}  type={this.props.type} onContinue={this.props?.onContinue} fiatHeadingUpdate={this.fiatHeading} onAddressOptionsChange={() => { }}/>
         else
             return <SelectCrypto />
     }

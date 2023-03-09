@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import Loader from "../../../Shared/loader";
 import {confirmTransaction} from '../api';
 import alertIcon from '../../../assets/images/pending.png';
+import NumberFormat from "react-number-format";
 const { Paragraph,Title } = Typography;
 const { Text } = Typography;
 const { TextArea } = Input;
@@ -36,8 +37,10 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
     }, []);//eslint-disable-line react-hooks/exhaustive-deps
     const getRecipientDetails = async () => {
         setLoader(true)
+        seterrorMessage(null)
         const response = await apiCalls.getRecipientData( props.selectedAddress?.id || "00000000-0000-0000-0000-000000000000",isBusiness ? 'OwnBusiness' : 'MySelf');
         if (response.ok) {
+            seterrorMessage(null)
             if (props.selectedAddress?.id) {
                 setLoader(false);setRecipientDetails(response.data)
                 setsaveObj(response.data)
@@ -46,7 +49,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 setcreateTransfer(response.data)
                 let obj=Object.assign({},response.data.payeeAccountModels[0])
                 form.setFieldsValue({favouriteName:response.data.favouriteName,accountNumber:obj.accountNumber,swiftRouteBICNumber:obj.swiftRouteBICNumber,
-                bankName:obj.bankName,iban:obj.iban,abaRoutingCode:obj.abaRoutingCode,line1:obj.line1,line2:obj.line2})
+                bankName:obj.bankName,iban:obj.iban,abaRoutingCode:obj.abaRoutingCode,line1:obj.line1,line2:obj.line2,ukSortCode:obj.ukSortCode,})
                 setAddressOptions({addressType:response.data.addressType,transferType:response.data.transferType,domesticType:response.data.transferType,tabType:response.data.transferType})
                 if(obj.iban){
                     getBankDeails(obj.iban,"true")
@@ -57,11 +60,11 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 setRecipientDetails(response.data); setLoader(false)
             }
         } else {
-            seterrorMessage(isErrorDispaly(response)); setLoader(false)
+            seterrorMessage(apiCalls.isErrorDispaly(response));
+             setLoader(false)
         }
     }
-    const saveTransfer = async(values) => {
-        setBtnLoading(true);
+    const saveTransfer = async(values) => {       
         seterrorMessage(null);
         if (Object.hasOwn(values, 'iban')) {
             if ((!bankDetails || Object.keys(bankDetails).length === 0)) {
@@ -70,15 +73,17 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 useDivRef.current.scrollIntoView();
                 return;
             }
-        }
+        }      
+        setBtnLoading(true);
         let saveObj=Object.assign({},saveTransferObj)
         saveObj.favouriteName=values.favouriteName;
+        saveObj.payeeAccountModels[0].ukSortCode=values?.ukSortCode;
         saveObj.payeeAccountModels[0].iban= (currency==='EUR' || (addressOptions?.transferType === "internationalIBAN"||addressOptions?.tabType === "internationalIBAN")) ? values.iban : null;
-        saveObj.payeeAccountModels[0].accountNumber=currency==='USD'?values.accountNumber:null;
+        saveObj.payeeAccountModels[0].accountNumber=currency !='EUR'?values.accountNumber:null;
         saveObj.payeeAccountModels[0].abaRoutingCode=values.abaRoutingCode?values.abaRoutingCode:null;
         saveObj.payeeAccountModels[0].swiftRouteBICNumber=values.swiftRouteBICNumber?values.swiftRouteBICNumber:null;
-        saveObj.payeeAccountModels[0].line1=currency==='USD'?values.line1:null;
-        saveObj.payeeAccountModels[0].line2=currency==='USD'?values.line2:null;
+        saveObj.payeeAccountModels[0].line1=currency != 'EUR'?values.line1:null;
+        saveObj.payeeAccountModels[0].line2=currency !='EUR'?values.line2:null;
         saveObj.payeeAccountModels[0].state=bankDetails.state?bankDetails.state:null;
         saveObj.payeeAccountModels[0].bankName=(currency==='EUR' || addressOptions?.tabType === "internationalIBAN")?bankDetails.bankName:values.bankName;
         saveObj.payeeAccountModels[0].bic=bankDetails.routingNumber?bankDetails.routingNumber:null;
@@ -102,14 +107,16 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         }
         const response = await apiCalls.saveTransferData(saveObj);
         if (response.ok) {
+            seterrorMessage(null)
             if (props.type !== "manual") {
                 const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: onTheGoObj?.amount, reasonOfTransfer: null })
                 if (confirmRes.ok) {
+                    seterrorMessage(null)
                     setBtnLoading(false);
                     props.onContinue(confirmRes.data);
                 } else {
                     setBtnLoading(false);
-                    seterrorMessage(isErrorDispaly(confirmRes));
+                    seterrorMessage(apiCalls.isErrorDispaly(confirmRes));
                     useDivRef.current.scrollIntoView();
                 }
             }
@@ -118,7 +125,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 props.isHideTabs(false)
             }
             props.headingUpdate(true)
-        }else{seterrorMessage(isErrorDispaly(response));
+        }else{seterrorMessage(apiCalls.isErrorDispaly(response));
             useDivRef.current.scrollIntoView();
 		setBtnLoading(false);
         }
@@ -152,7 +159,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 }
               setIbanLoader(false)
             }else{
-                seterrorMessage(isErrorDispaly(response));
+                seterrorMessage(apiCalls.isErrorDispaly(response));
                 setbankDetails({})
                 setIbanLoader(false)
                 setValidIban(false)
@@ -213,30 +220,27 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             return Promise.resolve();
         }
     };
-
-    const isErrorDispaly = (objValue) => {
-        if (objValue.data && typeof objValue.data === "string") {
-          return objValue.data;
-        } else if (
-          objValue.originalError &&
-          typeof objValue.originalError.message === "string"
-        ) {
-          return objValue.originalError.message;
-        } else {
-          return "Something went wrong please try again!";
+    const validateNumber = (_, validNumberValue) => {
+        if (validNumberValue === "." || validNumberValue &&
+        !/^[A-Za-z0-9]+$/.test(validNumberValue)) {
+            return Promise.reject("Invalid Uk Sort Code");
         }
-      };
+        else if(validNumberValue?.length<6 && validNumberValue !=undefined && validNumberValue !=''){
+            return Promise.reject("Invalid Uk Sort Code");
+        }
+        return Promise.resolve();
+    }
+   
     return <>
     <div ref={useDivRef}></div>
     {isLoading &&<Loader /> }
     {!isLoading &&
         <Form layout="vertical" form={form} onFinish={saveTransfer} initialValues={{createTransfer}} scrollToFirstError>
-        {showDeclartion &&  <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
+        {showDeclartion &&  <div className="custom-declaraton align-declaration"> <div className="success-pop text-center declaration-content">
                 <Image preview={false} src={alertIcon} className="confirm-icon" />
                 <Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${props.userProfile?.email}. 
-                Please review and sign the document in your email to whitelist your address.
-                Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
+                Please sign using link received in email to whitelist your address. Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved. `}</Text>
                 <div className="my-25">
                     </div>
             </div></div>}
@@ -252,6 +256,16 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             </Row>
         </>}
        
+        {!showDeclartion &&<> {(currency === "GBP" || currency === "CHF") && <>
+            <Row gutter={[16, 16]}>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
+                    <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });form.resetFields();seterrorMessage(null);setbankDetails({});setValidIban(false); setEnteredIbanData(null) }} activeKey={addressOptions.tabType}>
+                        <Tabs.TabPane tab={currency === "GBP" ? `Local ${currency} Transfer` : `Swift ${currency} Transfer`} className="text-white text-captz"  key={"domestic"} disabled={isEdit}></Tabs.TabPane>
+                        <Tabs.TabPane tab={currency === "GBP" ? `International ${currency} Transfer` : `IBAN ${currency} Transfer`} className="text-white text-captz" key={"internationalIBAN"} disabled={isEdit}></Tabs.TabPane>
+                    </Tabs>
+                </Col>
+            </Row>
+        </>}
         
         {currency == 'EUR' && <h2 className="adbook-head" >SEPA Transfer</h2>}
         
@@ -380,7 +394,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         </Row>}
 
         <Row>
-            {(currency == 'USD' && addressOptions.tabType !== 'internationalIBAN')  && <> <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            {((currency == 'USD' || currency == "GBP" || currency === "CHF") && addressOptions.tabType !== 'internationalIBAN')  && <> <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                     className="custom-forminput custom-label"
                     name="accountNumber"
@@ -412,6 +426,33 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     maxLength={50}/>
                 </Form.Item>
             </Col>
+   
+           {currency == 'GBP' && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            <Form.Item
+                name="ukSortCode"
+                label="Uk Sort Code"
+                className="custom-label"
+                type="number"
+                rules={[
+                    {
+                        whitespace:true,
+                        required: true,
+                        message: "Is required",
+                    },
+                    {
+                        validator:validateNumber
+                }
+                ]}>
+                <NumberFormat
+                    className="cust-input value-field cust-addon mt-0"
+                    customInput={Input}
+                    prefix={""}
+                    placeholder="Uk Sort Code"
+                    allowNegative={false}
+                    maxlength={6}
+                />
+            </Form.Item>
+        </Col>}
 
                 {currency === 'USD' && addressOptions.tabType === 'international'&&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
@@ -444,7 +485,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             maxLength={50}/>
                     </Form.Item>
                 </Col>}
-                {!(currency === 'USD' && addressOptions.tabType === 'international')&&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                {!(currency === 'USD'  && addressOptions.tabType === 'international') && currency != 'GBP' &&   currency != "CHF" &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name="abaRoutingCode"
@@ -473,6 +514,37 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             className="cust-input"
                             
                             placeholder={currency === 'USD' && addressOptions.tabType === 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
+                        maxLength={50}/>
+                    </Form.Item>
+                </Col>}
+               {currency == 'CHF' && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-forminput custom-label"
+                        name="swiftRouteBICNumber"
+                        label='Swift / BIC Code' 
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message: apiCalls.convertLocalLang("is_required"),
+                            },{
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            "Invalid Swift / BIC Code"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            }
+                        ]}>
+                        <Input
+                            className="cust-input"                            
+                            placeholder='Swift / BIC Code'
                         maxLength={50}/>
                     </Form.Item>
                 </Col>}
@@ -611,6 +683,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 {props.type !== "manual" && <Translate content="continue" />}
             </Button>
         </div>
+        </>}
         </>}
         </>}
         </Form>}

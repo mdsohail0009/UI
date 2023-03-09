@@ -5,9 +5,7 @@ import AccessDenied from "./access.denied";
 const ProtectedRoute = ({ component: Component, ...rest }) => {
     const { menuItems: { features, featurePermissions }, userProfileInfo } = rest;
     return <Route {...rest} render={(props) => {
-        if (featurePermissions[rest.key]) {
-
-        } else {
+        
             const featureId = features.data?.find(feature => feature.key === rest.key)?.id;
             rest.dispatch(fetchFeaturePermissions(featureId, userProfileInfo.id, () => {
                 const view = featurePermissions?.actions?.find(permission => permission.permissionName === "view").values;
@@ -17,7 +15,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
                     <AccessDenied />
                 }
             }));
-        }
+       
     }} />
 }
 const connectStateToProps = ({ menuItems, userConfig }) => {

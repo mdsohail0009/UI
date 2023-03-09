@@ -13,19 +13,14 @@ class Login extends Component {
     state = {
 
     }
-     onFinish = () => {
-      };
     
-       onFinishFailed = () => {
-      };
     render() {
 
         return <Form
             {...layout}
             name="basic"
             initialValues={{ remember: true }}
-            onFinish={this.onFinish}
-            onFinishFailed={this.onFinishFailed}
+           
         >
             <Form.Item
                 label="Username"

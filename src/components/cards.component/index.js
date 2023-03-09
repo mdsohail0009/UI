@@ -30,7 +30,6 @@ class NewCards extends Component {
     const respose = await applyCard();
     this.setState({ loading: false });
     this.props.dispatch(setStaus({ loading: false, status: respose.data }));
-   // this.props.dispatch(getStaus(this.props.userProfile?.id));
   }
   render() {
     const { status: { cardStatus, cardURL }, loading, error } = this.props?.cardsStore;
@@ -66,7 +65,6 @@ class NewCards extends Component {
             <Text className="text-white-30"><span className="mr-4">-</span> Stay in control of the card’s security all with a tap of your fingers</Text>
             <div className="d-flex mt-24">
               <Button loading={this.state.loading} type="primary" className="pop-btn text-textDark px-36" onClick={() => this.applyCard()}>Apply Now</Button>
-              {/* <Button type="primary" className="btn-back ml-16">Back</Button> */}
             </div>
           </Col>
           <Col span={12}>
