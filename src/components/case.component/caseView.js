@@ -515,7 +515,7 @@ beforeUpload = (file) => {
                                                     closable={false}
                                                     style={{ margin: '16px 0' }}
                                                 />}
-                                                {this.state.errorWarning !== undefined && this.state.errorWarning !== null && (
+                                                {this.state?.saveDocId==doc?.id && this.state.errorWarning !== undefined && this.state.errorWarning !== null && (
                                                     <div style={{ width: '100%' }}>
                                                         <Alert
                                                             className="newcase-style error-style"
