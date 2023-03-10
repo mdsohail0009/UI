@@ -1136,7 +1136,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .gridLink.batch-filename{padding-left: 0;}
 }
 @media (min-width: 1400px){
-    .transctns-grid.preview-grid .ant-drawer-header .side-drawer-header,.transctns-grid.preview-grid .sub-heading{max-width: 1300px; margin: 0 auto;}
+    .transctns-grid.preview-grid .ant-drawer-header .side-drawer-header,.transctns-grid.preview-grid .sub-heading,.batch-btns{max-width: 1300px; margin: 0 auto;}
     .main-container{max-width: 1300px; margin: 0 auto;}
     .iban-list .ant-list-items{display: flex;}
     .listitems-design{width:376px;}
