@@ -208,6 +208,7 @@ class AddressCryptoDocument extends Component {
                 beforeUpload={(props) => {}}
                 headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
                             onChange={({ file }) => {
+                              debugger
                                 this.setState({ ...this.state, isDocLoading: true });
                                 if (file.status === "done") {
                                     let fileType = 
@@ -237,8 +238,9 @@ class AddressCryptoDocument extends Component {
                                     }else{
                                         this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg, pdf, mp4, mov, wmv, avi files" }) 
                                     }
-                                }else if(file.status ==='error'){
-                                  this.setState({ ...this.state, isDocLoading: false,errorMessage:apiCalls.uploadErrorDisplay(file?.response) });
+                                }else if(file.status ==='error' || file?.size >25000000){
+                                  this.setState({ ...this.state, isDocLoading: false,errorMessage:apiCalls.uploadErrorDisplay(file?.response ||file)
+                                   });
                                 }
                             }}
               >
@@ -254,7 +256,7 @@ class AddressCryptoDocument extends Component {
               </Dragger>
             </Form.Item>
             {this.state?.filesList?.map((file, indx) => (
-              <div>
+              <div key={indx}>
                 
                   {(file.state !='Deleted'  && 
                     <>
