@@ -164,7 +164,7 @@ confirmPreview = async () => {
 						/>
 					)}
             </div>
-                <div className="text-right mt-12">
+                <div className="text-right mt-12 batch-btns">
                     <Button className="cust-cancel-btn preview-back"
                         style={{ width: 148, height: 48 }}
                         onClick={this.props.onClose}>Back</Button>
