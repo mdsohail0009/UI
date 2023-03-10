@@ -141,6 +141,7 @@ if (res.ok){
 
   }
   submit = async (values) => {
+    if(values.files.file.size <25000000){
     let data=this.state.details?.docRepositories?.filter((item)=>item.state!=="Deleted")?.length===0 ;
     if (!values.isOwnerOfWalletAddress && process.env.REACT_APP_ISTR == "true") {
 			this.setState({
@@ -160,9 +161,6 @@ if (res.ok){
       });
   this.useDivRef.current?.scrollIntoView(0, 0); 
 }
-  
-
-
     else{
     let obj = {
       id: "00000000-0000-0000-0000-000000000000",
@@ -220,6 +218,7 @@ if (res.ok){
       this.setState({ ...this.state, isBtnLoading: false,  errorMessage: apicalls.isErrorDispaly(response),loading: false });
     }
   }
+}
   }
   editDocuments=(docs)=>{
       let { docRepositories } = this.state.details;

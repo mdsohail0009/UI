@@ -1041,6 +1041,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .new-add.hy-align .text-yellow.pr-24.align-check{vertical-align: middle;margin-right: 3px;}
 .align-declaration .declaration-content{margin-top: 50px;}
 .batch-upload .docnames{text-overflow: ellipsis; overflow: hidden;}
+.grid-content{color: var(--gridcontent);}
 /*@media start*/
 @media (min-width: 768px){
     .listitems-design{width: 340px;}
@@ -1135,7 +1136,8 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .gridLink.batch-filename{padding-left: 0;}
 }
 @media (min-width: 1400px){
-    .main-container{max-width: 1300px; }
+    .transctns-grid.preview-grid .ant-drawer-header .side-drawer-header,.transctns-grid.preview-grid .sub-heading{max-width: 1300px; margin: 0 auto;}
+    .main-container{max-width: 1300px; margin: 0 auto;}
     .iban-list .ant-list-items{display: flex;}
     .listitems-design{width:376px;}
     .listitems-design.iban-style{width: 242px;}

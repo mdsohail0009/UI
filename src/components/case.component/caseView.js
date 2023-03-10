@@ -449,7 +449,7 @@ beforeUpload = (file) => {
                             accordion className="accordian  mb-togglespace "
                             defaultActiveKey={['1']} 
                             expandIcon={() => <span className="icon md downangle" />}>
-                            <Panel header={doc.documentName} key={idx + 1} extra={this.state.caseState ? (<span className={`${this.state.caseState ? this.state.caseState.toLowerCase() + " staus-lbl" : ""}`}>{this.state.caseState}</span>) : ""}>
+                            <Panel header={doc.documentName} key={idx + 1} extra={this.state.caseState ? (<span className={`${this.state.caseState ? this.state.caseState.toLowerCase() + " staus-lbl" : ""}`}>{doc?.state}</span>) : ""}>
                                 {this.state.documentReplies[doc.id]?.data?.map((reply, ix) => <div key={ix} className="reply-container">
                                     <div className="user-shortname">{reply?.repliedBy?.slice(0, 2)}</div>
                                     <div className="reply-body">
@@ -515,7 +515,7 @@ beforeUpload = (file) => {
                                                     closable={false}
                                                     style={{ margin: '16px 0' }}
                                                 />}
-                                                {this.state.errorWarning !== undefined && this.state.errorWarning !== null && (
+                                                {this.state?.saveDocId==doc?.id && this.state.errorWarning !== undefined && this.state.errorWarning !== null && (
                                                     <div style={{ width: '100%' }}>
                                                         <Alert
                                                             className="newcase-style error-style"
