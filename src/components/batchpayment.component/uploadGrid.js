@@ -140,7 +140,7 @@ const BatchpaymentView = (props) => {
         setDocUpload(false);
     }else{
         if (type === "IDENTITYPROOF") {
-            setUploader(false)
+            setUploader(true);
             if (file?.status === "done" && file.response !== undefined) {
                 setUploader(false)
                 identityProofObj?.push(obj);
