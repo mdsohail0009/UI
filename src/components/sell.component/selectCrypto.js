@@ -213,7 +213,10 @@ class SelectSellCrypto extends Component {
                                         <Translate value="all" content="all" component={Radio.Button} />
                                     </Radio.Group>
                                     {<div className='crypto-details'><div className='sellcrypto-style'>Balance:
-                                    </div> <Currency prefix={"$ "} defaultValue={coinDetailData.coinValueinNativeCurrency} suffixText="" className="marginL sellbal-style" /></div>} </div>
+                                    </div> <Currency 
+                                    defaultValue={`${this.props.sellData.coinDetailData.coinBalance}`} 
+                                    prefix={""} 
+                                    suffixText={this.props.sellData.coinDetailData.coin} className="marginL sellbal-style" /></div>} </div>
 
 
 
