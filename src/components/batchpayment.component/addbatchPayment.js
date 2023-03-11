@@ -62,7 +62,6 @@ class AddBatchPayment extends Component {
         let response=await batchPaymentsLu()
          if(response.ok){
           this.setState({...this.state,fiatWallet:response.data,batchPayementsWallet:response.data})
-          console.log(response.data)
         }else{
            this.setState({ ...this.state,fiatWallet:[],batchPayementsWallet:[], errorMessage:(apicalls.isErrorDispaly(response)) });
           } }

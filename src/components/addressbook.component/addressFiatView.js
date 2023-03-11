@@ -32,7 +32,6 @@ const AddressFiatView = (props) => {
 		loadDataAddress();
 	}, []);// eslint-disable-line react-hooks/exhaustive-deps
 	const loadDataAddress = async () => {
-		debugger
 		setIsLoading(true)
 		let response = await getViewData(props?.match?.params?.id, props?.match?.params?.type);
 		if (response.ok) {	

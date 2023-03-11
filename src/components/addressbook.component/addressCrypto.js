@@ -151,15 +151,22 @@ if (res.ok){
 			this.useDivRef.current?.scrollIntoView(0, 0);
 		}
     
-    else if((values.isDocumentUpload===true && this.state.cryptoData?.docRepositories?.length==0 && this.state.isEdit===true && (values?.files?.fileList?.length === 0 || values?.files?.fileList?.length == undefined)|| data===true || data===undefined )){
+    else if((values.isDocumentUpload===true && this.state.cryptoData?.docRepositories?.length==0 && this.state.isEdit===true && (values?.files?.fileList?.length === 0 || values?.files?.fileList?.length == undefined)|| (data===true && values.isDocumentUpload===true)|| data===undefined )){
      
       this.setState({
         ...this.state,
         errorMessage:"At least one document is required",
         
       });
-  this.useDivRef.current?.scrollIntoView(0, 0); 
-}
+      this.useDivRef.current?.scrollIntoView(0, 0); 
+    }else if(this.state.details.docRepositories >25000000 ||(values.files?.file?.size>25000000) ){
+      this.setState({
+        ...this.state,
+        errorMessage:"File size should not be greaterthan 25 MB.",
+        
+      });
+      this.useDivRef.current?.scrollIntoView(0, 0); 
+    }
     else{
     let obj = {
       id: "00000000-0000-0000-0000-000000000000",
