@@ -110,7 +110,6 @@ class AddressCryptoDocument extends Component {
     this.setState({ ...this.state, previewModal: false, docPreviewDetails: null });
   };
   docPreviewOpen = (data) => {
-    debugger
     this.setState({ ...this.state, previewModal: true, docPreviewDetails: { id: data?.id, fileName: data?.fileName } });
   };
 
@@ -208,7 +207,6 @@ class AddressCryptoDocument extends Component {
                 beforeUpload={(props) => {}}
                 headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
                             onChange={({ file }) => {
-                              debugger
                                 this.setState({ ...this.state, isDocLoading: true });
                                 if (file.status === "done") {
                                     let fileType = 
