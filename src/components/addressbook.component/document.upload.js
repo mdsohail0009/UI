@@ -28,8 +28,7 @@ class AddressDocumnet extends Component {
     }
     componentDidMount() {
         let propsDocument = JSON.stringify(this.props?.documents) == JSON.stringify({'transfer': '', 'payee': ''}) ? null : this.props?.documents
-        this.setState({ ...this.state, documents: propsDocument || document(), isEdit: this.props?.editDocument, docReasonPayee: propsDocument ? [...this.props?.documents] : [],refreshData:this.props?.refreshData,
-            docPayee: propsDocument ? [...this.props?.documents] : [] })
+        this.setState({ ...this.state, documents: propsDocument || document(), isEdit: this.props?.editDocument, filesList: propsDocument ? [...this.props?.documents] : [],refreshData:this.props?.refreshData })
     }
     docDetail = (doc) => {
         return {
