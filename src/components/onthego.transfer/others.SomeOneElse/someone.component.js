@@ -26,6 +26,7 @@ const SomeoneComponent = (props) => {
     const [form] = Form.useForm();
     const useDivRef = React.useRef(null);
     const [edit, setEdit] = useState(false);
+    const [rasonDocuments,setReasonDocuments]=useState(null);
     const [isSelectedId, setIsSelectedId] = useState(null);
     useEffect(() => {
         getpayeeCreate();
@@ -85,7 +86,7 @@ const SomeoneComponent = (props) => {
         if (payeesave.ok) {
             setErrorMessage(null)
             if (props.type !== "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer, docRepositories: documents?.payee || documents?.transfer || documents })
+                const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer, docRepositories: documents?.payee || documents?.transfer || rasonDocuments })
                 if (confirmRes.ok) {
                     setBtnLoading(false);
                     props.onContinue(confirmRes.data);
@@ -308,7 +309,7 @@ const SomeoneComponent = (props) => {
                         <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
                         <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
                             setDocuments(docs)
-                            }} refreshData={addressOptions?.domesticType} />
+                            }} refreshData={addressOptions?.domesticType} type={"payee"}/>
                             </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
@@ -392,8 +393,8 @@ const SomeoneComponent = (props) => {
                         (<React.Fragment>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
                             <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
-                                setDocuments(docs)
-                            }} refreshData={addressOptions?.domesticType} />
+                                setReasonDocuments(docs)
+                            }} refreshData={addressOptions?.domesticType} type={"reasonPayee"}/>
                         </React.Fragment>)
                     }
 
