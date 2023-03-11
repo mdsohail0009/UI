@@ -35,7 +35,8 @@ class OthersBusiness extends Component {
         isValidateMsg: false,
         objData:{},
         editData:{},
-        documents:null
+        documents:null,
+        rasonDocuments:null
 
     };
     componentDidMount() {
@@ -177,7 +178,7 @@ class OthersBusiness extends Component {
        if (response.ok) {
             if (this.props.type !== "manual") {
                 const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer, 
-                    docrepoitory: _obj.payeeAccountModels[0]?.docrepoitory  
+                    docrepoitory:this.state.rasonDocuments 
                  })
                 if (confirmRes.ok) {
                     this.props.onContinue(confirmRes.data);
@@ -356,6 +357,7 @@ class OthersBusiness extends Component {
                             onDocumentsChange={(docs) => {
                             this.setState({...this.state,documents:docs})
                             }} 
+                            type={"payee"}
                             />
                         </ Col>                        
                         <RecipientAddress />
@@ -597,9 +599,9 @@ class OthersBusiness extends Component {
                         <AddressDocumnet 
                             documents={this.state?.documents || this.props.transferData?.payeeAccountModels[0]?.docrepoitory} editDocument={this.state.isEdit} 
                             onDocumentsChange={(docs) => {
-                            this.setState({...this.state,documents:docs})
+                            this.setState({...this.state,rasonDocuments:docs})
                             }} 
-                            
+                            type={"reasonPayee"}
                             />
                         </React.Fragment>)
                         }
@@ -609,8 +611,8 @@ class OthersBusiness extends Component {
                         <AddressDocumnet 
                             documents={this.state?.documents || this.props.transferData?.payeeAccountModels[0]?.docrepoitory} editDocument={this.state.isEdit} 
                             onDocumentsChange={(docs) => {
-                            this.setState({...this.state,documents:docs})
-                            }} 
+                            this.setState({...this.state,rasonDocuments:docs})
+                            }}   type={"reasonPayee"}
                             />
                         </React.Fragment>)
                         }

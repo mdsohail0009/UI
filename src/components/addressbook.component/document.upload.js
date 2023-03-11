@@ -22,11 +22,14 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 class AddressDocumnet extends Component {
     state = {
         filesList: [],
+        docReasonPayee:[],
+        docPayee:[],
         documents: [], showDeleteModal: false, isDocLoading: false,selectedObj:{},errorMessage:null
     }
     componentDidMount() {
         let propsDocument = JSON.stringify(this.props?.documents) == JSON.stringify({'transfer': '', 'payee': ''}) ? null : this.props?.documents
-        this.setState({ ...this.state, documents: propsDocument || document(), isEdit: this.props?.editDocument, filesList: propsDocument ? [...this.props?.documents] : [],refreshData:this.props?.refreshData })
+        this.setState({ ...this.state, documents: propsDocument || document(), isEdit: this.props?.editDocument, docReasonPayee: propsDocument ? [...this.props?.documents] : [],refreshData:this.props?.refreshData,
+            docPayee: propsDocument ? [...this.props?.documents] : [] })
     }
     docDetail = (doc) => {
         return {
@@ -36,7 +39,33 @@ class AddressDocumnet extends Component {
             "fileSize":doc?.response?.fileSize
         }
     }
-  
+    handleUpload=({file},type) => {
+        let identityProofObj=Object.assign([],this.state.docPayee);
+        let transferProof=Object.assign([],this.state.docReasonPayee);
+        this.setState({ ...this.state, isDocLoading: true });
+        if (file.status === "done") {
+            let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
+            if (fileType[file.type]) {
+                this.setState({...this.state,documents:file.response})
+                let { filesList: files } = this.state;
+                if(type==="payee"){
+                    files?.push(this.docDetail(file));
+                    identityProofObj?.push(this.docDetail(file));
+                    this.setState({...this.state,docPayee:identityProofObj,isDocLoading: false, errorMessage: null});
+                    this.props?.onDocumentsChange(identityProofObj);
+                }else{
+                    files?.push(this.docDetail(file));
+                    transferProof?.push(this.docDetail(file));
+                    this.setState({...this.state,docReasonPayee:transferProof,isDocLoading: false, errorMessage: null});
+                    this.props?.onDocumentsChange(transferProof);
+                }
+            }else{
+                this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg and PDF  files" }) 
+            }
+        }else if(file.status ==='error'){
+            this.setState({ ...this.state, isDocLoading: false,errorMessage:apiCalls.uploadErrorDisplay(file?.response) });
+        }
+    }
     render() {
         if(this.props.refreshData !== this.state.refreshData){
             let propsDocument = JSON.stringify(this.props?.documents) == JSON.stringify({'transfer': '', 'payee': ''}) ? null : this.props?.documents
@@ -73,23 +102,8 @@ class AddressDocumnet extends Component {
                             beforeUpload={(props) => {
                             }}
                             headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
-                            onChange={({ file }) => {
-                                this.setState({ ...this.state, isDocLoading: true });
-                                if (file.status === "done") {
-                                    let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
-                                    if (fileType[file.type]) {
-                                        //this.setState({...this.state,documents:file.response})
-                                        let { filesList: files } = this.state;
-                                        files?.push(this.docDetail(file));
-                                        this.setState({ ...this.state, filesList: files, isDocLoading: false, errorMessage: null });
-                                        this.props?.onDocumentsChange(files);
-                                    }else{
-                                        this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg and PDF  files" }) 
-                                    }
-                                }else if(file.status ==='error'){
-                                    this.setState({ ...this.state, isDocLoading: false,errorMessage:apiCalls.uploadErrorDisplay(file?.response) });
-                                }
-                            }}
+                            onChange={(prop) => {this.handleUpload(prop,this.props?.type) }}
+                          
                         >
                             <p className="ant-upload-drag-icon">
                                 <span className="icon xxxl doc-upload" />
@@ -100,7 +114,7 @@ class AddressDocumnet extends Component {
                             </p>
                         </Dragger>
                     </Form.Item>
-                    {this.state?.filesList?.map((file, indx) => <div>
+                    {this.state?.filesList?.map((file, indx) => <div key={indx}>
                         
                         {file.state != 'Deleted' && 
                         <> 
