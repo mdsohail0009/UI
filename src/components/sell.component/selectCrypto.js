@@ -3,7 +3,7 @@ import { Typography, Card, Radio, Alert } from 'antd';
 import { setStep, setTab } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
-import { getSellamnt } from '../buy.component/api'
+import { getSellamnt,getSellPreviewData } from '../buy.component/api'
 import WalletList from '../shared/walletList';
 import LocalCryptoSwapperCmp from '../shared/local.crypto.swap/swap';
 import SuisseBtn from '../shared/butons';
@@ -27,7 +27,8 @@ class SelectSellCrypto extends Component {
         errorMessage: null,
         minmaxTab: 'min',
         isConvertionLoading: false,
-        isShowCoinsData: false
+        isShowCoinsData: false,
+        btnLoading:false
     }
     componentDidMount() {
         getFeaturePermissionsByKeyName(`trade_sell`)
@@ -68,7 +69,7 @@ class SelectSellCrypto extends Component {
             });
         }
     }
-    previewSellData() {
+    previewSellData=async()=> {
         this.setState({ ...this.state, errorMessage: '' })
         let obj = Object.assign({}, this.state.sellSaveData);
         let { sellMinValue, gbpInUsd, eurInUsd } = this.props.sellData.coinDetailData;
@@ -81,39 +82,39 @@ class SelectSellCrypto extends Component {
         const maxAmtMesage = "$100,000";
         if ((this.state.CryptoAmnt === "")) {
             this.setState({
-                ...this.state, errorMessage: apicalls.convertLocalLang('enter_amount')
+                ...this.state,btnLoading:false, errorMessage: apicalls.convertLocalLang('enter_amount')
             })
             this.myRef.current.scrollIntoView(0,0);
         }
         else if ((parseFloat(this.state.USDAmnt) === 0 || parseFloat(this.state.CryptoAmnt) === 0)) {
             this.setState({
-                ...this.state, errorMessage: apicalls.convertLocalLang('amount_greater_zero')
+                ...this.state,btnLoading:false, errorMessage: apicalls.convertLocalLang('amount_greater_zero')
             })
             this.myRef.current.scrollIntoView(0,0);
         }
         else if (!obj.toWalletId) {
             this.setState({
-                ...this.state, errorMessage: apicalls.convertLocalLang('pleaseSelectWallet')
+                ...this.state,btnLoading:false, errorMessage: apicalls.convertLocalLang('pleaseSelectWallet')
             })
             this.myRef.current.scrollIntoView(0,0);
             return;
         }
         else if (this.state.CryptoAmnt > this.props.sellData.coinDetailData.coinBalance) {
-            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('insufficientFunds') })
+            this.setState({ ...this.state,btnLoading:false, errorMessage: apicalls.convertLocalLang('insufficientFunds') })
             this.myRef.current.scrollIntoView(0,0);
             return;
         } else if (parseFloat(this.state.CryptoAmnt) < sellMinValue) {
             this.myRef.current.scrollIntoView(0,0);
-            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_minvalue') + sellMinValue })
+            this.setState({ ...this.state,btnLoading:false, errorMessage: apicalls.convertLocalLang('enter_minvalue') + sellMinValue })
             return;
         }
         else if (purchaseCurrencyMaxAmt[obj.toWalletCode] > maxUSDT) {
             this.myRef.current.scrollIntoView(0,0);
-            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_maxvalue') + maxAmtMesage })
+            this.setState({ ...this.state,btnLoading:false, errorMessage: apicalls.convertLocalLang('enter_maxvalue') + maxAmtMesage })
             return;
         }
         else {
-            this.setState({ ...this.state, errorMessage: '' })
+            this.setState({ ...this.state, errorMessage: '',btnLoading:true })
             obj.customerId = this.props.customer?.id;
             obj.fromWalletId = this.props.sellData.coinDetailData.id
             obj.fromWalletCode = this.props.sellData.coinDetailData.coin
@@ -122,8 +123,15 @@ class SelectSellCrypto extends Component {
             obj.toValue = this.state.USDAmnt
             obj.isSwap = this.state.isSwap
             obj.exicutedPrice = this.props.sellData.coinDetailData.oneCoinValue
-            this.props.changeStep('step11');
-            this.props.dispatch(updatesellsaveObject(obj))
+            let res = await getSellPreviewData(obj);
+            if (res.ok) {
+                this.setState({...this.state,btnLoading:false});
+                this.props.changeStep('step11');
+                this.props.dispatch(updatesellsaveObject(obj))
+            }else{
+                this.myRef.current.scrollIntoView(0,0);
+                this.setState({...this.state,errorMessage: apicalls.isErrorDispaly(res),btnLoading:false })
+            }
         }
     }
 
@@ -229,7 +237,7 @@ class SelectSellCrypto extends Component {
 
                             {<div><Translate content="thousandKText" component={Paragraph} className="buy-paragraph" />
                                 <Translate content="contact_amount_text" component={Paragraph} className="buy-paragraph" /><div className="sell-btn-style">
-                                    <SuisseBtn autoDisable={true} title="PreviewSell" className="pop-btn" onClick={() => { this.previewSellData() }} />
+                                    <SuisseBtn autoDisable={true} title="PreviewSell" className="pop-btn" onClick={() => { this.previewSellData() }}  loading={this.state.btnLoading}/>
                                 </div></div>}
                         </Card>
 
