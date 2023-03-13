@@ -954,7 +954,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .file-sizestyle{font-weight: 500;font-size: 14px;color: var(--sbCardText);}
 .case-remarksstyle{margin-top: 10px;}
 .case-lbl.remark-casestyle{word-break: break-all;}
-.reply-date{color: var(--coindate);font-weight: 400;font-size: 10px;}
+.reply-date{color: var(--coindate);font-weight: 400;font-size: 12px;}
 .reply-container{display: flex;margin-bottom: 24px;}
 .reply-container .user-shortname{width: 46px; height: 46px; border-radius: 50%;background-color: #3653E4;margin-right: 16px;color: #FFFFFF;font-size: 18px;text-align: center;line-height: 46px;font-weight: 500;text-transform: uppercase;}
 .reply-body{flex: 1;}
