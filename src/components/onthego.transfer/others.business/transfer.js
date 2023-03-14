@@ -33,7 +33,8 @@ class BusinessTransfer extends Component {
         isValidateMsg: false,
         payeeaccountDetails:null,
         gbpdetails:{},
-        documents:null
+        documents:null,
+        reasonDocuments:null
     };
     componentDidMount() {
         this.loadDetails();
@@ -114,7 +115,7 @@ class BusinessTransfer extends Component {
         
         if (response.ok) {
             if (this.props.type !== "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer, docRepositories: this.state?.documents })
+                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer, docRepositories: this.state?.reasonDocuments })
                 if (confirmRes.ok) {this.useDivRef.current.scrollIntoView()
                     this.props.onContinue(confirmRes.data);
                     this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false,documents:null });
@@ -131,7 +132,7 @@ class BusinessTransfer extends Component {
     }
     handleTabChange = (key) => {
         let _obj = { ...this.state.details}
-        this.setState({ ...this.state, selectedTab: key,errorMessage:null, ibanDetails: {}, iBanValid: false, enteredIbanData: null });this.form.current.resetFields();
+        this.setState({ ...this.state, selectedTab: key,errorMessage:null, ibanDetails: {}, iBanValid: false, enteredIbanData: null,documents:null,reasonDocuments:null });this.form.current.resetFields();
     }
    
     handleIbanChange = async ({ target: { value,isNext } }) => {
@@ -313,7 +314,7 @@ class BusinessTransfer extends Component {
                             documents={this.state?.documents || this.props.transferData?.payeeAccountModels[0]?.docrepoitory} editDocument={this.state.isEdit} 
                             onDocumentsChange={(docs) => {
                             this.setState({...this.state,documents:docs})
-                            }} refreshData ={selectedTab}/>
+                            }} refreshData ={selectedTab} type={"payee"}/>
                         </ Col>
                      <RecipientAddress />
                     </Row>
@@ -327,8 +328,8 @@ class BusinessTransfer extends Component {
                             <AddressDocumnet 
                             documents={this.state?.documents || this.props.transferData?.payeeAccountModels[0]?.docrepoitory} editDocument={this.state.isEdit} 
                             onDocumentsChange={(docs) => {                              
-                            this.setState({...this.state,documents:docs})
-                            }} refreshData ={selectedTab}/>
+                            this.setState({...this.state,reasonDocuments:docs})
+                            }} refreshData ={selectedTab}  type={"reasonPayee"}/>
                         </React.Fragment>)
                     }
                     <div className="">
@@ -448,7 +449,7 @@ class BusinessTransfer extends Component {
                             documents={this.state?.documents || this.props.transferData?.payeeAccountModels[0]?.docrepoitory} editDocument={this.state.isEdit} 
                             onDocumentsChange={(docs) => {                             
                             this.setState({...this.state,documents:docs})
-                            }} refreshData ={selectedTab}/>
+                            }} refreshData ={selectedTab} type={"payee"}/>
                         </ Col>
                         <RecipientAddress />
                     </Row>
@@ -460,8 +461,8 @@ class BusinessTransfer extends Component {
                             <AddressDocumnet 
                             documents={this.state?.documents || this.props.transferData?.payeeAccountModels[0]?.docrepoitory} editDocument={this.state.isEdit} 
                             onDocumentsChange={(docs) => {                              
-                            this.setState({...this.state,documents:docs})
-                            }} refreshData ={selectedTab}/>
+                            this.setState({...this.state,reasonDocuments:docs})
+                            }} refreshData ={selectedTab}    type={"reasonPayee"}/>
                         </React.Fragment>)
                     }
                     <div className="text-right mt-12">
@@ -580,7 +581,7 @@ class BusinessTransfer extends Component {
                             documents={this.state?.documents || this.props.transferData?.payeeAccountModels[0]?.docrepoitory} editDocument={this.state.isEdit} 
                             onDocumentsChange={(docs) => {                              
                             this.setState({...this.state,documents:docs})
-                            }} refreshData ={selectedTab}/>
+                            }} refreshData ={selectedTab} type={"payee"}/>
                         </ Col>
                         <RecipientAddress />
                     </Row>
@@ -720,8 +721,8 @@ class BusinessTransfer extends Component {
                             <AddressDocumnet 
                             documents={this.state?.documents || this.props.transferData?.payeeAccountModels[0]?.docrepoitory} editDocument={this.state.isEdit} 
                             onDocumentsChange={(docs) => {                             
-                            this.setState({...this.state,documents:docs})
-                            }} refreshData ={selectedTab}/>
+                            this.setState({...this.state,reasonDocuments:docs})
+                            }} refreshData ={selectedTab}  type={"reasonPayee"}/>
                         </React.Fragment>)
                     }
                     <div className="text-right mt-36">

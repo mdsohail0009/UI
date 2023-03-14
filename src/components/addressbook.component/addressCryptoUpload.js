@@ -110,7 +110,6 @@ class AddressCryptoDocument extends Component {
     this.setState({ ...this.state, previewModal: false, docPreviewDetails: null });
   };
   docPreviewOpen = (data) => {
-    debugger
     this.setState({ ...this.state, previewModal: true, docPreviewDetails: { id: data?.id, fileName: data?.fileName } });
   };
 
@@ -237,8 +236,9 @@ class AddressCryptoDocument extends Component {
                                     }else{
                                         this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg, pdf, mp4, mov, wmv, avi files" }) 
                                     }
-                                }else if(file.status ==='error'){
-                                  this.setState({ ...this.state, isDocLoading: false,errorMessage:apiCalls.uploadErrorDisplay(file?.response) });
+                                }else if(file.status ==='error' || file?.size >25000000){
+                                  this.setState({ ...this.state, isDocLoading: false,errorMessage:apiCalls.uploadErrorDisplay(file?.response ||file)
+                                   });
                                 }
                             }}
               >
@@ -254,7 +254,7 @@ class AddressCryptoDocument extends Component {
               </Dragger>
             </Form.Item>
             {this.state?.filesList?.map((file, indx) => (
-              <div>
+              <div key={indx}>
                 
                   {(file.state !='Deleted'  && 
                     <>
