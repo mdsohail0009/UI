@@ -271,8 +271,7 @@ class FaitDeposit extends Component {
                       </div>
                      
                     <div className='fait-box kpi-divstyle'>
-                    {BankInfo.currencyCode === "USD" && <span className="fait-title">Beneficiary Account No. </span>}
-                    {BankInfo.currencyCode === "EUR" && <span className="fait-title">Beneficiary IBAN No. </span>}
+                     <span className="fait-title">Beneficiary Account Number/IBAN</span>
                     <CopyToClipboard text={BankInfo.accountNumber} options={{ format: 'text/plain' }}>
                     <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fait-subtext" >{BankInfo.accountNumber}</Text>
                      </CopyToClipboard>

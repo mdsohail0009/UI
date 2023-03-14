@@ -42,7 +42,7 @@ returnDashboard=()=>{
   { field: "addressType", title: "Address Type", filter: true,width: 250,
   customCell: (props) => (
     <td className="d-flex justify-content">
-      <Text className="text-white">
+      <Text className="grid-content">
         {this.addressTypeNames(props?.dataItem?.addressType)}
       </Text>
     </td>
@@ -50,7 +50,7 @@ returnDashboard=()=>{
   { field: "transferType", title: "Transfer Type", filter: true,width: 250,
   customCell: (props) => (
     <td>
-      <Text className="text-upper text-white">
+      <Text className="text-upper grid-content">
         {((props?.dataItem?.transferType === "internationalIBAN") && "International USD IBAN") ||
 															props?.dataItem?.transferType.toUpperCase()}
       </Text>
@@ -164,7 +164,7 @@ confirmPreview = async () => {
 						/>
 					)}
             </div>
-                <div className="text-right mt-12">
+                <div className="text-right mt-12 batch-btns">
                     <Button className="cust-cancel-btn preview-back"
                         style={{ width: 148, height: 48 }}
                         onClick={this.props.onClose}>Back</Button>
