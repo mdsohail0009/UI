@@ -720,9 +720,9 @@ saveWithdrawdata = async () => {
                                                     "reasonOfTransfer": fieldValues?.reasionOfTransfer,
                                                     "routingNumber": fieldValues?.abaRoutingCode,
                                                     "isInternational": null,
-                                                    "documents": this.state.codeDetails?.documents
+                                                    "docRepositories": this.state.codeDetails?.documents
                           }
-                          const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasionOfTransfer, amount: this.state.amount, documents: this.state.codeDetails?.documents });
+                          const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasionOfTransfer, amount: this.state.amount, docRepositories: this.state.codeDetails?.documents });
                           if (res.ok) {
                             this.setState({ ...this.state, reviewDetails: res.data, loading: false,errorMessage:null }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
                           } else {
