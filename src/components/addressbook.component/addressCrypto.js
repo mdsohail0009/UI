@@ -151,7 +151,7 @@ if (res.ok){
 			this.useDivRef.current?.scrollIntoView(0, 0);
 		}
     
-    else if((values.isDocumentUpload===true && this.state.cryptoData?.docRepositories?.length==0 && this.state.isEdit===true && (values?.files?.fileList?.length === 0 || values?.files?.fileList?.length == undefined)|| (data===true && values.isDocumentUpload===true)|| data===undefined )){
+    else if((values.isDocumentUpload===true && (this.state.cryptoData?.docRepositories?.length==0 || this.state.cryptoData?.docRepositories?.length==undefined) && this.state.isEdit===true  && (values?.files?.fileList?.length === 0 || values?.files?.fileList?.length == undefined ||values?.files===undefined)|| (data===true && values.isDocumentUpload===true)|| data===undefined)){
      
       this.setState({
         ...this.state,
@@ -186,7 +186,7 @@ if (res.ok){
       walletSource:values.walletSource,
       otherWallet:values.otherWallet,
       isDocumentUpload:values.isDocumentUpload,
-      docRepositories:this.state.details.docRepositories 
+      docRepositories:values.isDocumentUpload===true? this.state.details.docRepositories :null
     }
     if (this.state.cryptoData.id !== "00000000-0000-0000-0000-000000000000") {
       obj.id = this.state.cryptoData.id;
