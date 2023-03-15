@@ -55,7 +55,7 @@ class AddressDocumnet extends Component {
                 }else{
                     files?.push(this.docDetail(file));
                     transferProof?.push(this.docDetail(file));
-                    this.setState({...this.state,docReasonPayee:transferProof,isDocLoading: false, errorMessage: null});
+                    this.setState({...this.state,docReasonPayee:transferProof,filesList: transferProof,isDocLoading: false, errorMessage: null});
                     this.props?.onDocumentsChange(transferProof);
                 }
             }else{
@@ -148,7 +148,8 @@ class AddressDocumnet extends Component {
                             className="primary-btn pop-btn detail-popbtn"
                             onClick={() => {
                                 let { documents: docs } = this.state;
-                                let files = this.state.filesList || docs.details || docs;
+                                console.log(docs,"documents")
+                                let files = this.state.filesList || docs.details || docs || this.state.transferProof;
                                 for(var k in files){
                                     if(files[k].id===this.state.selectedObj?.id){
                                         files[k].state='Deleted';

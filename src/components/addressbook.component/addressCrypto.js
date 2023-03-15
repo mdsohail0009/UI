@@ -236,7 +236,7 @@ if (res.ok){
   
   }
   handleDocCheck=(e)=>{
-this.setState({...this.state,isDocCheck:e.target.checked})
+this.setState({...this.state,isDocCheck:e.target.checked,details:{}})
   }
   validateAddressType = (_, value) => {
     if (value) {
