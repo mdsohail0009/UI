@@ -50,8 +50,8 @@ class AddressDocumnet extends Component {
                 if(type==="payee"){
                     files?.push(this.docDetail(file));
                     identityProofObj?.push(this.docDetail(file));
-                    this.setState({...this.state,docPayee:identityProofObj,isDocLoading: false, errorMessage: null});
-                    this.props?.onDocumentsChange(identityProofObj);
+                    this.setState({...this.state,docPayee:identityProofObj,filesList: files,isDocLoading: false, errorMessage: null});
+                    this.props?.onDocumentsChange(files);
                 }else{
                     files?.push(this.docDetail(file));
                     transferProof?.push(this.docDetail(file));
