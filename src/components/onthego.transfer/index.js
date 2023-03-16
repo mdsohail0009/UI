@@ -459,8 +459,8 @@ saveWithdrawdata = async () => {
                               placeholder="Select">
                               <option value="USD">USD</option>
                               <option value="EUR">EUR</option>
-                              <option value="GBP">GBP</option>
-                              <option value="CHF">CHF</option>
+                              {/* <option value="GBP">GBP</option>
+                              <option value="CHF">CHF</option> */}
                               </Select>}
                           onValueChange={() => {
                             this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: '' })
