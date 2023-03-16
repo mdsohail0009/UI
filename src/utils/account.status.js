@@ -6,7 +6,7 @@ class AccountStatus extends Component {
             <span className='sumSub-review'>{this.props.customerState?.customerState==="Under Review"?"Your account is under review state":<>Your account approval is in progress.
             <p className="approve-email">
              Contact our customer success at  <a href = {`mailto: ${process.env.REACT_APP_ONBOARDING}`}>{process.env.REACT_APP_ONBOARDING}</a> for more information.</p></>}</span>
-           
+             {this.props.customerState?.customerState==="Under Review" && <p className='approve-email' style={{ wordBreak: 'break-all' }}> Please contact administrator</p>}
             </div>
     }
 
