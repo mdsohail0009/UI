@@ -1108,3 +1108,5 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* .search-box > .search-btnexpand:hover, .search-box > .search-btnexpand:focus{border: 1px solid var(--subText);border-right: 0;border-radius: 10px 0px 0px 10px;} */
 .cust-cancel-btn.send-crypto-btn{margin-top:28px;}
 .cust-disabled.pop-btn.ant-btn[disabled]{background-color: rgb(112, 135, 255) !important;border-color: rgb(112, 135, 255) !important;}
+
+.approve-email{font-size: 14px;font-weight: 400;}
