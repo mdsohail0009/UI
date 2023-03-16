@@ -476,7 +476,7 @@ class AddressBook extends Component {
 		else if(obj.status === "Inactive") {
 			this.setState({ ...this.state, errorWorning: "Record is inactive so you can't edit" });
 		}
-		else if (this.state.selectedObj.type ==="Fiat" || this.state.selectedObj.type === "fiat" || (this.state.selectedObj.isProofofOwnership && obj.walletSource !=null) || (this.state.selectedObj.isProofofOwnership===null && obj.walletSource ===null && obj.addressState === "Approved" && process.env.REACT_APP_ISTR!=="true")||(this.state.selectedObj.isProofofOwnership===false && obj.walletSource !==null && obj.addressState === "Approved" && process.env.REACT_APP_ISTR!=="true") ||(this.state.selectedObj.isProofofOwnership===true && obj.walletSource ===null && obj.addressState === "Approved" && process.env.REACT_APP_ISTR!=="true")  ?
+		else if (this.state.selectedObj.type ==="Fiat" || this.state.selectedObj.type === "fiat" || (this.state.selectedObj.isProofofOwnership && obj.walletSource !=null) || (this.state.selectedObj.isProofofOwnership===null && obj.walletSource ===null && obj.addressState === "Approved" && process.env.REACT_APP_ISTR!=="true")||(this.state.selectedObj.isProofofOwnership===false && obj.walletSource !==null && obj.addressState === "Approved" && process.env.REACT_APP_ISTR!=="true") ||(this.state.selectedObj.isProofofOwnership===true && obj.walletSource ===null && obj.addressState === "Approved" && process.env.REACT_APP_ISTR!=="true")||(this.state.selectedObj.isProofofOwnership===null && obj.walletSource !==null && obj.addressState === "Approved" && process.env.REACT_APP_ISTR!=="true")  ?
 			obj.addressState === "Approved" ||
 			obj.addressState === "Rejected" ||
 			obj.addressState === "Reject" :
