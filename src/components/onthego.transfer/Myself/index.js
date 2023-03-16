@@ -123,8 +123,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             else {
                 setShowDeclartion(true);
                 props.isHideTabs(false)
+                props.headingUpdate(true)
             }
-            props.headingUpdate(true)
         }else{seterrorMessage(apiCalls.isErrorDispaly(response));
             useDivRef.current.scrollIntoView();
 		setBtnLoading(false);
@@ -256,7 +256,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             </Row>
         </>}
        
-        {!showDeclartion &&<> {(currency === "GBP" || currency === "CHF") && <>
+        {!showDeclartion &&<> {(currency === "GBP") && <>
             <Row gutter={[16, 16]}>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                     <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });form.resetFields();seterrorMessage(null);setbankDetails({});setValidIban(false); setEnteredIbanData(null) }} activeKey={addressOptions.tabType}>
@@ -357,8 +357,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         </div>
 
         <h2  className="adbook-head">Bank Details</h2>
-        {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Row className="validateiban-content">
-        {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+        {(currency == 'CHF'||currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Row className="validateiban-content">
+        {(currency == 'CHF'||currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <div className="custom-btn-error">
             <Form.Item
                 className="custom-forminput custom-label "
@@ -394,7 +394,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         </Row>}
 
         <Row>
-            {((currency == 'USD' || currency == "GBP" || currency === "CHF") && addressOptions.tabType !== 'internationalIBAN')  && <> <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            {((currency == 'USD' || currency == "GBP") && addressOptions.tabType !== 'internationalIBAN')  && <> <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                     className="custom-forminput custom-label"
                     name="accountNumber"
@@ -621,7 +621,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     </Form.Item>
                 </Col></>}
         </Row>
-        {(currency === 'EUR' || addressOptions.tabType === 'internationalIBAN') && <div className="box basic-info alert-info-custom mt-16 kpi-List">
+        {(currency === 'CHF' ||currency === 'EUR' || addressOptions.tabType === 'internationalIBAN') && <div className="box basic-info alert-info-custom mt-16 kpi-List">
             <Spin spinning={ibanLoading}>
             {validIban&&isShowBankDetails&&<Row>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">

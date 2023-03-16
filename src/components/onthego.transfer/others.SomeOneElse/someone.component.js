@@ -13,7 +13,7 @@ const { Paragraph, Text, Title } = Typography;
 const { TextArea } = Input;
 
 const SomeoneComponent = (props) => {
-    const [addressOptions, setAddressOptions] = useState({ addressType: "individuals", transferType: props.currency === "EUR" ? "sepa" : "swift", domesticType: 'domestic' });
+    const [addressOptions, setAddressOptions] = useState({ addressType: "individuals", transferType: (props.currency === "EUR"||props.currency === "CHF") ? "sepa" : "swift", domesticType: 'domestic' });
     const [bankdetails, setBankdetails] = useState(null);
     const [createPayeeObj, setCreatePayeeObj] = useState(null);
     const [documents, setDocuments] = useState(null);
@@ -152,7 +152,7 @@ const SomeoneComponent = (props) => {
                     </Row>
                 </>}
                 {!showDeclartion && <>
-                {(props.currency === "GBP" || props.currency === "CHF") && <>
+                {(props.currency === "GBP") && <>
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                             <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
