@@ -167,6 +167,8 @@ class TransactionsHistory extends Component {
       ),
     },
     { field: "state", title: "Status", filter: true, width: 260,},
+
+    { field: "rejectReason", title: "Reason For Rejection", filter: true, width: 260,},
     
 
 
