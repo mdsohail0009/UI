@@ -517,7 +517,7 @@ this.setState({...this.state,isDocCheck:e.target.checked,details:{}})
 						<div
 							className="cust-agreecheck d-flex align-center travel-custcheck"
 							>
-               I may perform transactions greater than 15,000 CHF with this address
+               I may perform transactions greater than 1,000 CHF with this address
 						</div>
 					</div>
 								
