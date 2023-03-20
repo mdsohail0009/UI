@@ -95,7 +95,7 @@ class Home extends Component {
                 </div>}
                 {this.props.dashboard.notices.loading === false ? <Carousel className="docreq-slider" autoplay={true}>
                     {notices?.map((notice, idx) => <div key={idx} className="notify-alerticon">
-                        <AlertConfirmation type="error" title={notice.title} showIcon description="Our Compliance Team is requesting documents in line with your recent transaction, Please click View Details. Thank you for your patience."
+                        <AlertConfirmation type="error" title={notice.title} showIcon description={notice?.isReqforDoc?"Our Compliance Team is requesting documents in line with your recent transaction, Please click View Details. Thank you for your patience.":"We kindly ask our clients to comply with the Travel Rule and to verify their crypto source and address. Thank you for your cooperation."}
                             action={
                                 <Button className='notify-viewbtn' size="small" type="text" onClick={() => this.goToDetails(notice)}>
                                     View Details
