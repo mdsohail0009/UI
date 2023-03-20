@@ -388,7 +388,7 @@ const SomeoneComponent = (props) => {
                 </>
                 <Paragraph className="adbook-head" >Bank Details</Paragraph>
                     {((props.selectedAddress?.id && createPayeeObj) || !props.selectedAddress?.id) &&
-                        <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data) => getIbandata(data)} isAddTabCange={isTabChange} currency={props.currency}/>}
+                        <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={props.currency=='CHF'?'internationalIBAN':addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data) => getIbandata(data)} isAddTabCange={isTabChange} currency={props.currency}/>}
 
                     {props.type !== "manual" &&
                         (<React.Fragment>

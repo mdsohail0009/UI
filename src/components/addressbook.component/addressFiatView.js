@@ -442,7 +442,7 @@ const AddressFiatView = (props) => {
 															</div>
 															</div>
 														}
-														 {(item.walletCode!=='EUR'&& fiatAddress?.transferType !== "internationalIBAN")&&
+														 {(item.walletCode!=='CHF'&&item.walletCode!=='EUR'&& fiatAddress?.transferType !== "internationalIBAN")&&
 														 <div className="fait-box kpi-divstyle">
 															<Text className="kpi-label">
 															Bank Address 1
@@ -455,7 +455,7 @@ const AddressFiatView = (props) => {
 															</div>
 															</div>
 														}
-														{(item.walletCode!=='EUR'&& fiatAddress?.transferType !== "internationalIBAN")&&
+														{(item.walletCode!=='CHF'&&item.walletCode!=='EUR'&& fiatAddress?.transferType !== "internationalIBAN")&&
 														<div className="fait-box kpi-divstyle">
 															<Text className="kpi-label">
 															Bank Address 2
