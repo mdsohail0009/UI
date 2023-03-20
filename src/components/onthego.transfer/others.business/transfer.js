@@ -91,7 +91,7 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].line2 = values.bankAddress2;
 
         _obj.addressType = "otherbusiness";
-        _obj.transferType = selectedTab;
+        _obj.transferType = this.props.currency=='CHF'?'chftransfer':selectedTab;
         _obj.amount = this.props.amount;
         _obj.payeeAccountModels[0].ukSortCode = values?.ukSortCode;
         _obj.payeeAccountModels[0].city = ibanDetails?.city;
