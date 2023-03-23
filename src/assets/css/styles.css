@@ -878,9 +878,12 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {-webkit-appearance: none;-moz-appearance: none;appearance: none;margin: 0;}
 .c-notallowed{cursor:not-allowed !important;}
-.sumSub-confirm{background: var(--bgGrey);color: var(--black); padding: 50px 40px 16px;width: 500px;height:350px;margin: 80px auto;border-radius: 14px;}
+.cust-sumsub-font{width: 400px;}
+.sumSub-confirm{background: var(--bgGrey);color: var(--black); padding: 50px 40px 16px;width: 800px;height:350px;margin: 80px auto;border-radius: 14px;}
 .sumSub-error{color: var(--black); padding: 50px 40px 16px;height:225px;margin: 50px 0 100px 0;border-radius: 14px;}
-.sumSub-review{font-size: 22px;font-weight: 700;line-height: 1.29;}
+.sumSub-review{font-size: 16px;font-weight: 700;line-height: 1.29;}
+.sumsub-mb{margin-bottom: 16px;}
+.sumsubactbtn{margin-left: 0px !important;margin-top: 16px;}
 .pay-doc .file-label{white-space: nowrap;max-width: 250px !important;overflow: hidden; text-overflow: ellipsis; width: 200px;word-break: inherit; display: inline-block; vertical-align: bottom;}
 .cust-disable.ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector{color:#fafcfe7a;}
 .page-title{font-size: 18px !important;color: var(--textWhite30);font-weight: 500;margin-bottom: 12px !important;}
