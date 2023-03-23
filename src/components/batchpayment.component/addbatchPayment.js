@@ -4,13 +4,14 @@ import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import Search from "antd/lib/input/Search";
 import { fetchMemberWallets } from "../dashboard.component/api";
-import {refreshTransaction,saveTransaction,confirmGetDetails} from './api'
+import {refreshTransaction,saveTransaction,confirmGetDetails,batchPaymentsLu} from './api'
 import NumberFormat from "react-number-format";
 import { Link,withRouter } from "react-router-dom";
 import PaymentPreview from './paymentPreview';
 import pending1 from '../../assets/images/pending1.png'
 import Loader from '../../Shared/loader';
 import { getVerificationFields } from "../onthego.transfer/verification.component/api"
+import apicalls from '../../api/apiCalls';
 const { Title, Paragraph, Text } = Typography
 class AddBatchPayment extends Component {
     useDivRef = React.createRef()
@@ -40,9 +41,12 @@ class AddBatchPayment extends Component {
         isVerificationEnable: false,
         isVarificationLoader: true,
         btnloader:false,
+        batchPayementsWallet:[],
+        fiatWallet: [],
     }
 
     componentDidMount() {
+      this.batchPaymentLu()
           this.setState({ ...this.state, fiatWalletsLoading: true , errorMessage:null,isCoinsListHide:false });
           fetchMemberWallets(this.props?.userProfile?.id).then(res => {
             if (res.ok) {
@@ -54,6 +58,13 @@ class AddBatchPayment extends Component {
           this.verificationCheck();
       }
 
+      batchPaymentLu = async () => { 
+        let response=await batchPaymentsLu()
+         if(response.ok){
+          this.setState({...this.state,fiatWallet:response.data,batchPayementsWallet:response.data})
+        }else{
+           this.setState({ ...this.state,fiatWallet:[],batchPayementsWallet:[], errorMessage:(apicalls.isErrorDispaly(response)) });
+          } }
       verificationCheck = async () => {
         this.setState({ ...this.state, isVarificationLoader: true,fiatWalletsLoading: true  })
         const verfResponse = await getVerificationFields();
@@ -70,16 +81,16 @@ class AddBatchPayment extends Component {
               this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: true })
           }
         } else {
-          this.setState({ ...this.state, isVarificationLoader: false, errorMessage: this.isErrorDispaly(verfResponse) })
+          this.setState({ ...this.state, isVarificationLoader: false, errorMessage: apicalls.isErrorDispaly(verfResponse) })
         }
         }
     handleSearch = ({ target: { value: val } }) => {
         if (val) {
-            const fiatWallets = this.state.paymentCoinsList?.filter(item => item.walletCode.toLowerCase().includes(val.toLowerCase()));
-            this.setState({ ...this.state, fiatWallets, searchVal: val });
+            const fiatWallet = this.state.batchPayementsWallet?.filter(item => item?.currencyCode?.toLowerCase().includes(val.toLowerCase()));
+            this.setState({ ...this.state, fiatWallet, searchVal: val });
         }
         else
-            this.setState({ ...this.state, fiatWallets: this.state.paymentCoinsList, searchVal: val });
+            this.setState({ ...this.state, fiatWallet: this.state.batchPayementsWallet, searchVal: val });
     }
     
     closeDrawer = (isPreviewBack) => {
@@ -170,22 +181,11 @@ handleUpload = ({ file }) => {
           }
     }
       else{
-        this.setState({...this.state,insufficientModal:true,showInprogressModal:true,errorMessage:(this.isErrorDispaly(response)),worningMessage:null, paymentSummary:false,uploadErrorModal:false})
+        this.setState({...this.state,insufficientModal:true,showInprogressModal:true,errorMessage:(apicalls.isErrorDispaly(response)),worningMessage:null, paymentSummary:false,uploadErrorModal:false})
       }
     
     }
-      isErrorDispaly = (objValue) => {
-        if (objValue.data && typeof objValue.data === "string") {
-          return objValue.data;
-        } else if (
-          objValue.originalError &&
-          typeof objValue.originalError.message === "string"
-        ) {
-          return objValue.originalError.message;
-        } else {
-          return "Something went wrong please try again!";
-        }
-      };
+    
 goToGrid=()=>{
     this.closeDrawer();
     this.setState({...this.state,showInprogressModal:false,errorMessage:null,worningMessage:null,isCoinsListHide:false})
@@ -213,7 +213,7 @@ downLoadPreview=()=>{
             this.setState({...this.state,refreshBtnLoader:false,reefreshData:res.data,showInprogressModal:false,showModal:true,errorMessage:null})
         }
         }else{
-            this.setState({...this.state,errorMessage:this.isErrorDispaly(res),refreshBtnLoader:false,})
+            this.setState({...this.state,errorMessage:apicalls.isErrorDispaly(res),refreshBtnLoader:false,})
         }
 }
     }
@@ -224,7 +224,7 @@ downLoadPreview=()=>{
             this.setState({ ...this.state, showModal: false,errorMessage:null, uploadErrorModal: false, paymentPreview: true,worningMessage:null,btnloader:false })
         }
         else{
-            this.setState({...this.state,errorMessage:this.isErrorDispaly(res),btnloader:false})
+            this.setState({...this.state,errorMessage:apicalls.isErrorDispaly(res),btnloader:false})
         }
     }
     confirmTransaction=async(id)=>{
@@ -271,7 +271,7 @@ downLoadPreview=()=>{
             </Col>
             <List
                 itemLayout="horizontal"
-                dataSource={this.state.fiatWallets}
+                dataSource={this.state.fiatWallet}
                 className="crypto-list auto-scroll wallet-list"
                 loading={this.state.fiatWalletsLoading}
                 locale={{
@@ -281,15 +281,15 @@ downLoadPreview=()=>{
                 }}
                 renderItem={item => (
                     <List.Item className="drawer-list-fiat" onClick={
-                        () => this.setState({ ...this.state, selectedCurrency: item.walletCode, isCoinsListHide: true})}>
+                        () => this.setState({ ...this.state, selectedCurrency: item.currencyCode, isCoinsListHide: true})}>
                     <Link>
                       <List.Item.Meta className='drawer-coin'
                         avatar={<Image preview={false} src={item.imagePath} />}
 
-                        title={<div className="wallet-title">{item.walletCode}</div>}
+                        title={<div className="wallet-title">{item.currencyCode}</div>}
                       />
                        <><div className="text-right coin-typo">
-                                        <NumberFormat value={item.amount} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={item.walletCode === 'USD' ? '$' : '€'} renderText={(value, props) => <div {...props} >{value}</div>} />
+                                        <NumberFormat value={item.avilable} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={item.currencyCode == 'USD' && '$' || item.currencyCode=='EUR' && '€'} renderText={(value, props) => <div {...props} >{value}</div>} />
 
                                     </div></>
                     </Link>
@@ -453,6 +453,7 @@ downLoadPreview=()=>{
                             id={this.state.file?.id}
                         onClose={this.props.onClose}
                         fileData={this.state.file}
+                        currency={this.state.selectedCurrency}
                     />
                        }
         </div>

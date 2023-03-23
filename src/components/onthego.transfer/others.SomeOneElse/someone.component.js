@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Input, Row, Col, Form, Button, Typography, Tabs, Image, Alert } from 'antd';
-import {createPayee, payeeAccountObj, savePayee, confirmTransaction} from "../api";
+import { createPayee, payeeAccountObj, savePayee, confirmTransaction } from "../api";
 import AddressDocumnet from "../../addressbook.component/document.upload";
 import PayeeBankDetails from "./bankdetails.component";
 import { validateContentRule } from "../../../utils/custom.validator";
@@ -22,23 +22,26 @@ const SomeoneComponent = (props) => {
     const [errorMessage, setErrorMessage] = useState('');
     const [showDeclartion, setShowDeclartion] = useState(false);
     const [intialObj, setIntialObj] = useState(false);
-    const [isTabChange,setIsTabChange] = useState(false);
+    const [isTabChange, setIsTabChange] = useState(false);
     const [form] = Form.useForm();
     const useDivRef = React.useRef(null);
-const [edit,setEdit]=useState(false);
-const [isSelectedId,setIsSelectedId] = useState(null);
+    const [edit, setEdit] = useState(false);
+    const [rasonDocuments,setReasonDocuments]=useState(null);
+    const [isSelectedId, setIsSelectedId] = useState(null);
     useEffect(() => {
         getpayeeCreate();
     }, []);//eslint-disable-line react-hooks/exhaustive-deps
     const getpayeeCreate = async () => {
         setMailLoader(true);
+        setErrorMessage(null)
         const createPayeeData = await createPayee(props.selectedAddress?.id || "", addressOptions.addressType);
         if (createPayeeData.ok) {
+            setErrorMessage(null)
             let edit = false;
             setCreatePayeeObj(createPayeeData.data);
             if (props.selectedAddress?.id) {
                 setIntialObj({ ...createPayeeData.data, payeeAccountModels: createPayeeData?.data?.payeeAccountModels[0] })
-                setDocuments(createPayeeData?.data?.payeeAccountModels[0]?.documents)
+                setDocuments(createPayeeData?.data?.payeeAccountModels[0]?.docrepoitory)
                 setAddressOptions({ ...addressOptions, domesticType: createPayeeData.data.transferType });
                 edit = true;
                 props?.onEdit(edit);
@@ -46,12 +49,13 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                 setIsSelectedId(createPayeeData?.data?.id);
             }
             setMailLoader(false)
-
         } else {
             setMailLoader(false)
+            setErrorMessage(apiCalls.isErrorDispaly(createPayeeData))
         }
     }
     const onSubmit = async (values) => {
+        setErrorMessage(null)
         if (Object.hasOwn(values?.payeeAccountModels, 'iban')) {
             setErrorMessage(null);
             if ((!bankdetails || Object.keys(bankdetails).length === 0)) {
@@ -64,54 +68,48 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         obj.payeeAccountModels = [payeeAccountObj()];
         obj.payeeAccountModels[0] = { ...obj.payeeAccountModels[0], ...bankdetails, ...values.payeeAccountModels };
         obj.payeeAccountModels[0].currencyType = "Fiat";
-        obj.payeeAccountModels[0].documents = documents?.payee;
+        obj.payeeAccountModels[0].docrepoitory = documents?.payee || documents?.transfer || documents;
         obj.payeeAccountModels[0].walletCode = props.currency;
+        obj.payeeAccountModels[0].ukSortCode = values?.payeeAccountModels?.ukSortCode;
+        obj.payeeAccountModels[0].accountNumber = values?.payeeAccountModels?.accountNumber;
         if (props.selectedAddress?.id) { obj.payeeAccountModels[0].id = createPayeeObj.payeeAccountModels[0].id; }
         obj['customerId'] = props.userProfile.id;
         if (props.type !== "manual") { obj['amount'] = props.onTheGoObj?.amount; }
-        obj['transferType'] = props.currency === "USD" ? addressOptions.domesticType : 'sepa';
+        obj['transferType'] = props.currency == "USD" || props.currency == "GBP" || props.currency == "CHF" ? addressOptions.domesticType : 'sepa';
         obj['addressType'] = addressOptions.addressType;
-        if(edit){
+        if (edit) {
             obj.id = isSelectedId ? isSelectedId : createPayeeObj.payeeAccountModels[0]?.payeeId;
         }
         setBtnLoading(true)
-       
+
         let payeesave = await savePayee(obj)
         if (payeesave.ok) {
+            setErrorMessage(null)
             if (props.type !== "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer, documents: documents?.transfer })
+                const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer, docRepositories: documents?.payee || documents?.transfer || rasonDocuments })
                 if (confirmRes.ok) {
                     setBtnLoading(false);
                     props.onContinue(confirmRes.data);
+                    setErrorMessage(null)
                 } else {
                     setBtnLoading(false);
-                    setErrorMessage(isErrorDispaly(confirmRes));
+                    setErrorMessage(apiCalls.isErrorDispaly(confirmRes));
                     useDivRef.current.scrollIntoView();
                 }
             } else {
                 props.headingUpdate(true);
                 setShowDeclartion(true);
                 props.isHideTabs(false)
+                setErrorMessage(null)
             }
         } else {
             setBtnLoading(false);
-            setErrorMessage(isErrorDispaly(payeesave));
+            setErrorMessage(apiCalls.isErrorDispaly(payeesave));
             useDivRef.current.scrollIntoView();
         }
     
     }
-    const isErrorDispaly = (objValue) => {
-        if (objValue.data && typeof objValue.data === "string") {
-            return objValue.data;
-        } else if (
-            objValue.originalError &&
-            typeof objValue.originalError.message === "string"
-        ) {
-            return objValue.originalError.message;
-        } else {
-            return "Something went wrong please try again!";
-        }
-    };
+    
     const getIbandata = (data) => {
         setErrorMessage(null);
         if (data && !data?.bankName) {
@@ -131,12 +129,11 @@ const [isSelectedId,setIsSelectedId] = useState(null);
         {mainLoader && <Loader />}
         {!mainLoader && <>
             <div ref={useDivRef}></div>
-            {showDeclartion &&<div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
-                <Image  preview={false} src={alertIcon} className="confirm-icon" />
+            {showDeclartion && <div className="custom-declaraton align-declaration"> <div className="success-pop text-center declaration-content">
+                <Image preview={false} src={alertIcon} className="confirm-icon" />
                 <Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${props.userProfile?.email}. 
-                Please review and sign the document in your email to whitelist your address.
-                Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
+                Please sign using link received in email to whitelist your address. Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved. `}</Text>
             </div></div>}
 
             {!showDeclartion && <>
@@ -154,38 +151,21 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         </Col>
                     </Row>
                 </>}
-                {/* <Row gutter={[16, 4]} className="send-drawerbtn tabs-innertabs">
-
-                  <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
-                      <Form.Item className="text-center form-marginB">
-                        <Button
-                          htmlType="submit"
-                          size="large"
-                          className="newtransfer-card"
-                          // style={{ width: '100%' }}
-                        //   loading={this.state.newtransferLoader}
-                        //   disabled={this.state.addressLoader}
-                        >
-                          New Transfer
-                        </Button>
-                      </Form.Item>
-                    </Col>
-                     <Col xs={24} md={24} lg={12} xl={12} xxl={12} className="mobile-viewbtns mobile-btn-pd">
-                      <Form.Item className="text-center form-marginB">
-                        <Button
-                          htmlType="button"
-                          size="large"
-                          className="newtransfer-card"
-                          // style={{ width: '100% ' }}
-                        //   loading={this.state.addressLoader}
-                        //   disabled={this.state.newtransferLoader}
-                        //   onClick={this.goToAddressBook}
-                        >
-                          Address book
-                        </Button>
-                      </Form.Item>
-                    </Col>
-                  </Row> */}
+                {!showDeclartion && <>
+                {(props.currency === "GBP" || props.currency === "CHF") && <>
+                    <Row gutter={[16, 16]}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
+                            <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
+                                setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
+                                form.current.resetFields();setDocuments(null);setReasonDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);
+                            }}>
+                                <Tabs.TabPane tab={ props.currency === "GBP" ? `Local ${props.currency} Transfer` : `Swift ${props.currency} Transfer`} className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
+                                <Tabs.TabPane tab={ props.currency === "GBP" ? `International ${props.currency} Transfer` : `IBAN ${props.currency} Transfer`} className="text-white text-captz" key={"internationalIBAN"} disabled={edit}></Tabs.TabPane>
+                            </Tabs>
+                        </Col>
+                    </Row>
+                </>}
+              
                 {props.currency == 'EUR' && <h2 className="adbook-head">SEPA Transfer</h2>}
                 {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
             <Form
@@ -327,11 +307,10 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                         <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
-                            <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
-                                    let temp = {...documents, "payee": docs}
-                                    setDocuments(temp)
-                                }} refreshData = {addressOptions?.domesticType}/>
-                        </Col>
+                        <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
+                            setDocuments(docs)
+                            }} refreshData={addressOptions?.domesticType} type={"payee"}/>
+                            </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label"
@@ -407,18 +386,18 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                     </Row>
                 </>
                 <Paragraph className="adbook-head" >Bank Details</Paragraph>
-                {((props.selectedAddress?.id && createPayeeObj)||!props.selectedAddress?.id ) &&
-                 <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data)=>getIbandata(data)} isAddTabCange={isTabChange}/>}
-                 
-                 {props.type !== "manual" && 
-                (<React.Fragment>
-                        <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
-                    <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
-                            let temp = {...documents, "transfer": docs}
-                            setDocuments(temp)
-                        }} refreshData = {addressOptions?.domesticType}/>
-                </React.Fragment>)
-                }
+                    {((props.selectedAddress?.id && createPayeeObj) || !props.selectedAddress?.id) &&
+                        <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data) => getIbandata(data)} isAddTabCange={isTabChange} currency={props.currency}/>}
+
+                    {props.type !== "manual" &&
+                        (<React.Fragment>
+                            <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
+                            <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
+                                setReasonDocuments(docs)
+                            }} refreshData={addressOptions?.domesticType} type={"reasonPayee"}/>
+                        </React.Fragment>)
+                    }
+
 
                                     <div className="">
                     <Button
@@ -433,6 +412,7 @@ const [isSelectedId,setIsSelectedId] = useState(null);
                     </Button>
                 </div>
             </Form>
+        </>}
         </>}
         </>}
     </React.Fragment>)

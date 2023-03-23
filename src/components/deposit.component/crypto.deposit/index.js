@@ -6,7 +6,7 @@ import { getMemberCoins } from "../../../reducers/swapReducer";
 import ConnectStateProps from "../../../utils/state.connect";
 import CryptoList from "../../shared/cryptolist"
 import { createCryptoDeposit } from "../api";
-
+import apicalls from "../../../api/apiCalls";
 import { fetchDashboardcalls } from "../../../reducers/dashboardReducer";
 import { getFeaturePermissionsByKeyName } from '../../shared/permissions/permissionService'
 import Loader from "../../../Shared/loader";
@@ -14,7 +14,7 @@ import Loader from "../../../Shared/loader";
 const {  Paragraph } = Typography;
 const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {
     useEffect(() => { fetchMemberCoins();
-       getFeaturePermissionsByKeyName(`send_crypto`)}, []);;//eslint-disable-line react-hooks/exhaustive-deps
+       getFeaturePermissionsByKeyName(`send_crypto`)}, []);//eslint-disable-line react-hooks/exhaustive-deps
     const [errorMsg,seterrorMsg] = useState(null)
     const [loading,setLoading] = useState(null)
     const useDivRef = React.useRef(null);
@@ -32,23 +32,12 @@ const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {
             useDivRef.current?.scrollIntoView(0,0);
             dispatch(setSubTitle(` ${coin.coin}` +" " + "balance" +" "+ ":" +" "+ `${coin.coinBalance ? coin.coinBalance : '0'}`+`${" "}`+`${coin.coin}`));
         }else{
-            seterrorMsg(isErrorDispaly(response))
+            seterrorMsg(apicalls.isErrorDispaly(response))
             useDivRef.current?.scrollIntoView(0,0);
         }
         setLoading(false)
     }
-    const isErrorDispaly = (objValue) => {
-        if (objValue.data && typeof objValue.data === "string") {
-          return objValue.data;
-        } else if (
-          objValue.originalError &&
-          typeof objValue.originalError.message === "string"
-        ) {
-          return objValue.originalError.message;
-        } else {
-          return "Something went wrong please try again!";
-        }
-      };
+  
     return <>
         <div ref={useDivRef}>
     {swapStore.isLoading && <Loader />}

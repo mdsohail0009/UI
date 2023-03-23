@@ -2,7 +2,7 @@ import { apiClient } from '../../api';
 import { ApiControllers } from '../../api/config'
 
 const getCurrencyLu = () => {
-    return apiClient.get(ApiControllers.wallets + `Fiat`);
+    return apiClient.get(ApiControllers.wallets + `Fiat/BatchPayments`);
 }
 
 const savePayments = (obj) => {

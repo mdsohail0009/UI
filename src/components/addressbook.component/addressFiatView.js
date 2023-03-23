@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Typography, Button, Modal, Tooltip } from "antd";
 import Loader from "../../Shared/loader";
-import { getFileURL, getViewData, } from "./api";
+import { getViewData, } from "./api";
 import { connect } from "react-redux";
-import FilePreviewer from "react-file-previewer";
 import { bytesToSize } from "../../utils/service";
 import { addressTabUpdate, setAddressStep } from "../../reducers/addressBookReducer";
+import DocumentPreview from '../../Shared/docPreview'
+
 const { Title, Text } = Typography;
+
 const EllipsisMiddle = ({ suffixCount, children }) => {
 	const start = children?.slice(0, children.length - suffixCount).trim();
 	const suffix = children?.slice(-suffixCount).trim();
@@ -22,10 +24,9 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 const AddressFiatView = (props) => {
 	const [loading, setIsLoading] = useState(false);
 	const [fiatAddress, setFiatAddress] = useState({});
-	const [previewPath, setPreviewPath] = useState(null);
-	const [previewModal, setPreviewModal] = useState(false);
 	const [bankDetailes, setBankDetailes] = useState([]);
-
+	const [docPreviewDetails, setDocPreviewDetails] = useState(null)
+	const [docPreviewModal, setDocPreviewModal] = useState(false)
 
 	useEffect(() => {
 		loadDataAddress();
@@ -45,60 +46,17 @@ const AddressFiatView = (props) => {
 
 	};
 
-	const docPreview = async (file) => {
-		let res = await getFileURL({ url: file.path });
-		if (res.ok) {
-			setPreviewModal(true);
-			setPreviewPath(res.data);
-		}
-	};
-	const filePreviewPath = () => {
-		return previewPath;
+	
+	const docPreviewOpen = (data) => {
+		setDocPreviewModal(true)
+		setDocPreviewDetails({ id: data.id, fileName: data.fileName })
+	  }
 
-	};
-	const filePreviewModal = (
-		<Modal
-			className="documentmodal-width"
-			destroyOnClose={true}
-			title="Preview"
-			width={1000}
-			visible={previewModal}
-			closeIcon={
-				<Tooltip title="Close">
-					<span
-						className="icon md close-white c-pointer"
-						onClick={() => setPreviewModal(false)}
-					/>
-				</Tooltip>
-			}
-			footer={
-				<>
-				<div className="cust-pop-up-btn crypto-pop">
-					
-					<Button
-						className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
-						// block
-						onClick={() => setPreviewModal(false)}>
-						Close
-					</Button>
-					<Button
-						className="primary-btn pop-btn detail-popbtn"
-						// block
-						onClick={() => window.open(previewPath, "_blank")}>
-						Download
-					</Button>
-					</div>
-				</>
-			}>
-			<FilePreviewer
-				hideControls={true}
-				file={{
-					url: previewPath ? filePreviewPath() : null,
-					mimeType: previewPath?.includes(".pdf") ? "application/pdf" : "",
-				}}
-			/>
-		</Modal>
-	);
+	const docPreviewClose = () => {
+		setDocPreviewModal(false)
+		setDocPreviewDetails(null)
+	  }
+	
 	return (
 		<>
 			<div className="main-container cust-cypto-view">
@@ -150,7 +108,7 @@ const AddressFiatView = (props) => {
 														{fiatAddress?.transferType === " " ||
 															fiatAddress?.transferType === null
 															? "-"
-															: ((fiatAddress?.transferType === "internationalIBAN") && "International USD IBAN") ||
+															: ((fiatAddress?.transferType === "internationalIBAN") && `International ${bankDetailes[0].walletCode} IBAN`) ||
 															fiatAddress?.transferType.toUpperCase()}
 
 													</div>}
@@ -293,16 +251,16 @@ const AddressFiatView = (props) => {
 															: fiatAddress?.postalCode}
 													</div>
 												</div>
-											</Col>}
+											</Col>}											
+											
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
-													<label className="kpi-label">Address State</label>
+													<label className="kpi-label">Whitelisting Status</label>
 													<div className="kpi-val">
 														{bankDetailes[0]?.addressState}
 													</div>
 												</div>
-											</Col>
-											
+											</Col>								
 										</Row>
 										<Title className="basicinfo  abbook-title-mt">
 										   Recipient Bank Details
@@ -311,7 +269,6 @@ const AddressFiatView = (props) => {
 											{bankDetailes?.map((item, idx) => (
 												<><div className="alert-info-custom kpi-List adbook-newdesign"
 													>
-													{/* <div class="fait-box kpi-divstyle"> */}
 															<div className="fait-box kpi-divstyle">
 															<Text className="kpi-label">
 																Currency
@@ -367,17 +324,26 @@ const AddressFiatView = (props) => {
 																	: item.accountNumber}
 															</div>
 															</div>
-														}
-														{((item?.swiftRouteBICNumber!=null|| item?.abaRoutingCode!=null) && (item?.iban ==null || item?.iban =="")) && 
+														}														
+														{((item?.swiftRouteBICNumber!=null|| item?.abaRoutingCode!=null ||bankDetailes[0]?.ukSortCode !=null) && (item?.iban ==null || item?.iban =="")) && 
 														<div className="fait-box kpi-divstyle">
 															<Text className="kpi-label">
-															BIC/SWIFT/ABA Routing Code
+															BIC/SWIFT/ABA Routing /Uk Sort Code
 															</Text>
 															<div level={5} className="kpi-val"   >
-																   {((item?.swiftRouteBICNumber !=null && item?.swiftRouteBICNumber != "" ) ? item?.swiftRouteBICNumber : item?.abaRoutingCode)}
+																   {((item?.swiftRouteBICNumber !=null && item?.swiftRouteBICNumber != "" ) ? item?.swiftRouteBICNumber : item?.abaRoutingCode || bankDetailes[0]?.ukSortCode)}
 															</div>
 															</div>
 														}
+														{/* 
+														{bankDetailes[0]?.accountNumber && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+															<div className="kpi-divstyle ad-rec-detyails">
+																<label className="kpi-label">Account Number</label>
+																<div className="kpi-val">
+																	{bankDetailes[0]?.accountNumber}
+																</div>
+															</div>
+														</Col>	}	 */}
 														{item?.bankName && 
 														<div className="fait-box kpi-divstyle">
 															<Text className="kpi-label">
@@ -506,30 +472,31 @@ const AddressFiatView = (props) => {
 
 													
 												</div>
-												{item?.documents?.details.map((file) => (
+												{item?.docrepoitory.map((file) => (
 													<Col xs={12} sm={12} md={12} lg={12} xxl={12}>
 														<div
 															className="docfile address-book-viewlevel"
 															key={file.id}>
 															<span
-																className={`icon xl ${(file.documentName?.slice(-3) === "zip" &&
+																className={`icon xl ${(file.fileName?.slice(-3) === "zip" &&
 																		"file") ||
-																	(file.documentName?.slice(-3) !== "zip" &&
+																	(file.fileName?.slice(-3) !== "zip" &&
 																		"") ||
-																	((file.documentName?.slice(-3) === "pdf" ||
-																		file.documentName?.slice(-3) === "PDF") &&
+																	((file.fileName?.slice(-3) === "pdf" ||
+																		file.fileName?.slice(-3) === "PDF") &&
 																		"file") ||
-																	(file.documentName?.slice(-3) !== "pdf" &&
-																		file.documentName?.slice(-3) !== "PDF" &&
+																	(file.fileName?.slice(-3) !== "pdf" &&
+																		file.fileName?.slice(-3) !== "PDF" &&
 																		"image")
 																	} mr-16`}
 															/>
 															<div
 																className="docdetails c-pointer"
-																onClick={() => docPreview(file)}>
+																onClick={() => docPreviewOpen(file)}
+																>
 																{file.name !== null ? (
 																	<EllipsisMiddle suffixCount={4}>
-																		{file.documentName}
+																		{file.fileName}
 																	</EllipsisMiddle>
 																) : (
 																	<EllipsisMiddle suffixCount={4}>
@@ -537,7 +504,7 @@ const AddressFiatView = (props) => {
 																	</EllipsisMiddle>
 																)}
 																<span className="fs-12 text-secondary">
-																	{bytesToSize(file.remarks)}
+																	{bytesToSize(file.fileSize)}
 																</span>
 															</div>
 														</div>
@@ -552,7 +519,7 @@ const AddressFiatView = (props) => {
 								<div className="text-right view-level-btn">
 								<Button
 								block
-									className="cust-cancel-btn"
+								className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
 									
 									onClick={backToAddressBook}>
 									Cancel
@@ -565,7 +532,13 @@ const AddressFiatView = (props) => {
 					)}
 				</div>
 			</div>
-			{filePreviewModal}
+			{docPreviewModal &&
+      <DocumentPreview
+        previewModal={docPreviewModal}
+        handleCancle={docPreviewClose}
+        upLoadResponse={docPreviewDetails}
+      />
+    }
 		</>
 	);
 };

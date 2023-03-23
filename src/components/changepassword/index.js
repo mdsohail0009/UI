@@ -9,6 +9,7 @@ import { getmemeberInfo } from '../../reducers/configReduser';
 import apiClient from '../../api/apiCalls';
 import apiCalls from '../../api/apiCalls';
 import { validateContentRule, validateContent } from '../../utils/custom.validator'
+import apicalls from '../../api/apiCalls';
 
 notification.config({
   placement: "topRight",
@@ -67,7 +68,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
       } else {
         setBtnDisabled(false);
         setChangePasswordResponse({ error: false, messsage: "", isLoading: false });
-        passwordResponce(true, isErrorDispaly(result), false);
+        passwordResponce(true, apicalls.isErrorDispaly(result), false);
         useDivRef.current?.scrollIntoView(0,0)
       }
     }

@@ -6,6 +6,7 @@ import pending from '../../assets/images/pending.png';
 import NumberFormat from "react-number-format";
 import Verifications from "../onthego.transfer/verification.component/verifications"
 import {proceedTransaction} from './api'
+import apicalls from '../../api/apiCalls';
 const { Title, Paragraph, Text } = Typography
 
 class PaymentSummary extends Component {
@@ -88,23 +89,12 @@ class PaymentSummary extends Component {
 				this.setState({ ...this.state, showDeclaration:false,insufficientModal:true,loading:false});
 			}
 		}else{
-			this.setState({ ...this.state,  errorMessage: this.isErrorDispaly(response) ,loading:false})
+			this.setState({ ...this.state,  errorMessage: apicalls.isErrorDispaly(response) ,loading:false})
 
 		}
 	}
 	
-	isErrorDispaly = (objValue) => {
-		if (objValue.data && typeof objValue.data === "string") {
-		  return objValue.data;
-		} else if (
-		  objValue.originalError &&
-		  typeof objValue.originalError.message === "string"
-		) {
-		  return objValue.originalError.message;
-		} else {
-		  return "Something went wrong please try again!";
-		}
-	  };
+
 	handleBack=()=>{
 		this.props.history.push('/cockpit');
 	}
@@ -138,7 +128,7 @@ class PaymentSummary extends Component {
 		this.setState({ ...this.state, reviewDetailsLoading: val })
 	  }
 	render() {
-		const {  isShowGreyButton,errorMessage,loading } = this.state;
+		const {  errorMessage,loading } = this.state;
 		return (<>
 			<div>
 			<Drawer destroyOnClose={true}
@@ -220,7 +210,6 @@ class PaymentSummary extends Component {
 						   <div className="cust-pop-up-btn crypto-pop">
 						   <Button block
 								className="pop-btn"
-                                // style={{ backgroundColor: !isShowGreyButton && '#ccc', borderColor: !isShowGreyButton && '#3d3d3d' }}
 								onClick={this.showDeclaration}
 								loading={loading}
 							>
@@ -238,12 +227,11 @@ class PaymentSummary extends Component {
 						</>}
 						{this.state.showDeclaration && <>
 					
-							<div className="custom-declaraton"> <div className="text-center mt-36 declaration-content">
+							<div className="custom-declaraton align-declaration"> <div className="text-center mt-36 declaration-content">
 							<img src={pending} alt={`Processed`} className="confirm-icon"/>
 							<Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${this.props.customer?.email}. 
-                Please review and sign the document in your email to whitelist your address.
-                Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
+                Please sign using link received in email to whitelist your address. Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved.`}</Text>
 
       </div>
       </div>

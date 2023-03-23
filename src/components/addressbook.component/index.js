@@ -26,6 +26,7 @@ import { getFeatureId } from "../shared/permissions/permissionService";
 import { setCurrentAction } from '../../reducers/actionsReducer'
 import AddressBookV3 from "../addressbook.v3";
 import AddressCrypto from "./addressCrypto"
+import apicalls from "../../api/apiCalls";
 const { Paragraph, Text, Title } = Typography;
 
 class AddressBook extends Component {
@@ -68,6 +69,16 @@ class AddressBook extends Component {
 		this.setState({...this.state,cryptoFiat:false})
 		this.props.dispatch(getScreenName({getScreen:null}))
 		this.permissionsInterval = setInterval(this.loadPermissions, 200);
+		if (process.env.REACT_APP_ISTR=="true") {
+			const obj=[{field: "walletSource", title: "Wallet Source", width: 180, filter:true},
+			{ field: "isProofofOwnership", title: "Proof Of Ownership", width: 200, 
+			customCell: (props) => (
+				<td>
+					{props.dataItem?.isProofofOwnership===true?"Yes":"No"}
+				</td>
+			)}]
+			this.columnsCrypto.splice(4,0,...obj)     
+		 }
 		if(!this.state.cryptoFiat){
 			this.props.changeStep("step1");
 		}
@@ -170,9 +181,9 @@ class AddressBook extends Component {
 		},
 		{
 			field: "routingNumber",
-			title: apiCalls.convertLocalLang("BIC_SWIFT_ABArouting_number"),
+			title: "BIC/SWIFT/ABA Routing /UK Sort Code",
 			filter: true,
-			width: 310,
+			width: 360,
 		},
 		{
 			field: "bankName",
@@ -245,12 +256,12 @@ class AddressBook extends Component {
 				</td>
 			),
 		},
-		{
-			field: "coin",
-			title: "Token",
-			filter: true,
-			width: 120,
-		},
+		// {
+		// 	field: "coin",
+		// 	title: "Token",
+		// 	filter: true,
+		// 	width: 120,
+		// },
 		{
 			field: "network",
 			title: "Network",
@@ -263,7 +274,7 @@ class AddressBook extends Component {
 			filter: true,
 			width: 380,
 		},
-		{ field: "walletSource", title: "Wallet Source", width: 150, filter: true },
+		
 		{
 			field: "addressState",
 			title: apiCalls.convertLocalLang("Whitelisting_Status"),
@@ -299,6 +310,8 @@ class AddressBook extends Component {
 		if (response.ok) {
 			window.open(response.data, "_blank");
 			this.setState({ ...this.state, isDownloading: false, selectedDeclaration: null });
+		}else{
+			this.setState({...this.state,errorWorning:apicalls.isErrorDispaly(response)})
 		}
 	}
 
@@ -358,7 +371,6 @@ class AddressBook extends Component {
 		} else {
 			statusObj.status.push("InActive")
 		}
-		// statusObj.status.push(this.state.selectedObj.status);
 		statusObj.type = this.state.cryptoFiat ? "fiat" : "crypto";
 		statusObj.info = JSON.stringify(this.props.trackLogs);
 		let response = await activeInactive(statusObj);
@@ -398,7 +410,7 @@ class AddressBook extends Component {
 				selection: [],
 				isCheck: false,
 				btnDisabled: false,
-				errorWorning: response.data,
+				errorWorning: apicalls.isErrorDispaly(response),
 				obj: {
 					id: [],
 					tableName: "Common.PayeeAccounts",
@@ -464,7 +476,7 @@ class AddressBook extends Component {
 		else if(obj.status === "Inactive") {
 			this.setState({ ...this.state, errorWorning: "Record is inactive so you can't edit" });
 		}
-		else if (this.state.selectedObj.type ==="Fiat" || this.state.selectedObj.type === "fiat" || this.state.selectedObj.isProofofOwnership === true  ?
+		else if (this.state.selectedObj.type ==="Fiat" || this.state.selectedObj.type === "fiat" || (this.state.selectedObj.isProofofOwnership && obj.walletSource !=null) || (this.state.selectedObj.isProofofOwnership===null && obj.walletSource ===null && obj.addressState === "Approved" && process.env.REACT_APP_ISTR!=="true")||(this.state.selectedObj.isProofofOwnership===false && obj.walletSource !==null && obj.addressState === "Approved" && process.env.REACT_APP_ISTR!=="true") ||(this.state.selectedObj.isProofofOwnership===true && obj.walletSource ===null && obj.addressState === "Approved" && process.env.REACT_APP_ISTR!=="true")||(this.state.selectedObj.isProofofOwnership===null && obj.walletSource !==null && obj.addressState === "Approved" && process.env.REACT_APP_ISTR!=="true")||(this.state.selectedObj.isProofofOwnership===false && obj.walletSource ===null && obj.addressState === "Approved" && process.env.REACT_APP_ISTR!=="true")  ?
 			obj.addressState === "Approved" ||
 			obj.addressState === "Rejected" ||
 			obj.addressState === "Reject" :
@@ -534,7 +546,7 @@ class AddressBook extends Component {
 			else
 				showFiat = !obj?.close;
 		};
-		this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat, selectedObj: {}});
+		this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat, selectedObj: {}})
 		setTimeout(() => this.setState({ ...this.state,showHeading:false,hideFiatHeading:false}), 2000);
 		
 		this.props.rejectCoinWallet();
@@ -555,7 +567,7 @@ class AddressBook extends Component {
 				showCrypto = !obj?.close;
 			
 		};
-		this.setState({ ...this.state, visible: showCrypto, selectedObj: {} });
+		this.setState({ ...this.state, visible: showCrypto, selectedObj: {} })
 		this.props.rejectCoinWallet();
 		this.props.clearFormValues();
 		this.props.clearCrypto();
@@ -666,11 +678,12 @@ class AddressBook extends Component {
 	};
 
 	render() {
-		const { cryptoFiat, gridUrlCrypto, gridUrlFiat, customerId, btnDisabled } =
+		const { cryptoFiat, gridUrlCrypto, gridUrlFiat, btnDisabled ,errorMessage} =
 			this.state;
 
 		return (
 			<>
+
 			<div className="main-container grid-demo">
 			<div className="backbtn-arrowmb"><Link  to="/cockpit"><span className="icon md leftarrow c-pointer backarrow-mr"></span><span className="back-btnarrow c-pointer">Back</span></Link></div>
 			<div className="security-align adbs-mb">
@@ -736,7 +749,7 @@ class AddressBook extends Component {
 								<Translate
 									className="drawer-maintitle"
 									content={
-										this.state.showHeading!=true&&(
+										!this.state.showHeading &&(
 										this.props.addressBookReducer.stepTitles[
 										config[this.props.addressBookReducer.stepcode]
 										])
@@ -771,7 +784,7 @@ class AddressBook extends Component {
 							<div className="text-center">
 								<Paragraph className="drawer-maintitle">
 									<Translate
-									content={this.state.hideFiatHeading !=true && "AddFiatAddress"}
+									content={!this.state.hideFiatHeading  && "AddFiatAddress"}
 										component={Paragraph}
 										className="drawer-maintitle"
 									/>

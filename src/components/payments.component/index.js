@@ -7,7 +7,7 @@ import Moment from 'react-moment';
 import moment from 'moment';
 import List from "../grid.component";
 import BeneficiaryDrawer from './beneficiaryDrawer';
-import {Link,  withRouter } from "react-router-dom";
+import {Link } from "react-router-dom";
 import { setHeaderTab } from "../../reducers/buysellReducer"
 import ActionsToolbar from "../toolbar.component/actions.toolbar";
 import { getCurrencyLu} from './api'
@@ -68,7 +68,7 @@ const Payments = (props) => {
   }, []);//eslint-disable-line react-hooks/exhaustive-deps
   useEffect(()=>{
     gridRef.current?.refreshGrid();
-  },[walletType]);;//eslint-disable-line react-hooks/exhaustive-deps
+  },[walletType]);//eslint-disable-line react-hooks/exhaustive-deps
   const gridColumns = [
     {
       field: "",
@@ -98,7 +98,7 @@ const Payments = (props) => {
     },
     { field: "currency", title: apicalls.convertLocalLang("currency"), filter: true,width: 200, },
     { field: "totalAmount", title: 'Total Amount', filter: true, width: 200,dataType: "number", filterType: "numeric" },
-    { field: "approvedAmount", title: 'Approved Amount', filter: true, width: 237, },
+    { field: "approvedAmount", title: 'Approved Amount', filter: true, width: 237,dataType: "number", filterType: "numeric"  },
     { field: "count", title: 'Count', filter: true, width: 150,dataType: "number", filterType: "numeric" },
     { field: "state", title: 'State', filter: true, width: 200, },
   ];

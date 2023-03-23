@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Select, List, Empty, Image } from 'antd';
+import { List, Empty, Image } from 'antd';
 import { setStep } from '../../reducers/buysellReducer';
 import { Link, } from "react-router-dom";
 import Translate from "react-translate-component";
@@ -60,7 +60,7 @@ class WalletList extends Component {
                                         title={<div className="wallet-title">{item.currencyCode}</div>}
                                     />
                                     <><div className="text-right coin-typo">
-                                        <NumberFormat value={item.avilable} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={item.currencyCode == 'USD' ? '$' : '€'} renderText={(value, props) => <div {...props} >{value}</div>} />
+                                        <NumberFormat value={item.avilable} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={item.currencyCode == 'USD' && '$' || item.currencyCode=='EUR' && '€' ||item.currencyCode=='GBP' && '£' || item.currencyCode=='CHF' && '₣'}   renderText={(value, props) => <div {...props} >{value}</div>} />
 
                                     </div></>
                                 </Link>

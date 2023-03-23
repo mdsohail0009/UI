@@ -4,7 +4,8 @@ import { Typography, Button, Spin,message,Popover,Tooltip,Modal } from 'antd';
 import Translate from 'react-translate-component';
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
-import FilePreviewer from 'react-file-previewer';
+import DocumentPreview from "../../Shared/docPreview";
+
 const { Title, Text } = Typography;
 const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children?.slice(0, children.length - suffixCount).trim();
@@ -70,6 +71,12 @@ class PaymentsView extends Component {
       this.setState({ ...this.state, isloading: false });
     }
   };
+  docPreviewOpen = (data) => {
+    this.setState({ ...this.state, previewModal: true, docPreviewDetails: { id: data.id, fileName: data.fileName } });
+  };
+  docPreviewClose = () => {
+    this.setState({ ...this.state, previewModal: false, docPreviewDetails: null });
+  };
   popOverContent = () => {
     const { moreBankInfo,isloading } = this.state;
     if (!isloading) {
@@ -81,7 +88,7 @@ class PaymentsView extends Component {
         <label className="kpi-label">BIC/SWIFT/ABA Routing Code</label>
         <span className="kpi-val d-block">{moreBankInfo?.routingNumber}</span></div>
          {(moreBankInfo?.transferType!=="internationalIBAN" && moreBankInfo?.transferType!=="sepa")&& <>
-         <div className='popover-mb-12'> <label className="basicinfo">Bank Address</label>
+         <div className='popover-mb-12'> <label className="kpi-label">Bank Address</label>
         <label className="kpi-label d-block">Address Line 1</label>
         <span className="kpi-val d-block">{moreBankInfo?.bankAddress1}</span></div>
         {moreBankInfo?.bankAddress2!==null &&<>
@@ -125,7 +132,9 @@ class PaymentsView extends Component {
             <>
              <div ref={this.useDivRef}></div>
                 <div className="main-container">
-                    <Title className="basicinfo"><span onClick={() => this.props.history?.push(`/payments/All`)} className='icon md c-pointer back backarrow-mr'/><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
+                  
+                    <Title className="basicinfo"><span onClick={() => this.props.history?.push(`/payments/All`)} className='icon md c-pointer back backarrow-mr'/><Translate content="menu_payments" component={Text} className="coin-viewstyle" /></Title>
+                    
                     <div className='transaction-custom-table'>
                     <div className="responsive_table db-ts-grid">
                         <table className='pay-grid view mb-view'>
@@ -191,16 +200,20 @@ class PaymentsView extends Component {
                                                         renderText={value => value}
                                                     />
                                                     <br/>
-                                                    {item.documents?.details.map((file) =>
+                                                    {item?.docrepoistries?.map((file) =>
                                                    <>
-                                                   {file.documentName !== null && (
-                                                     <div className='docdetails pay-docdetails'  onClick={() => this.filePreview(file)}>
-                                                                                                        <Tooltip title={file.documentName}>
-                                                      {file.documentName?.split(".")[0].length>4&&<EllipsisMiddle>
-                                                        {file.documentName.slice(0,4) + "..." +file.documentName.split(".")[1]}
+                                                   {file.fileName !== null && (
+                                                     <div className='docdetails pay-docdetails'  
+                                                     //onClick={() => this.filePreview(file)}
+                                                     onClick={() => this.docPreviewOpen(file)}
+
+                                                     >
+                                                                                                        <Tooltip title={file.fileName}>
+                                                      {file.fileName?.split(".")[0].length>4&&<EllipsisMiddle>
+                                                        {file.fileName.slice(0,4) + "..." +file.fileName.split(".")[1]}
                                                       </EllipsisMiddle>}
-                                                      {file.documentName?.split(".")[0].length<=4&&<EllipsisMiddle>
-                                                        {file.documentName}
+                                                      {file.fileName?.split(".")[0].length<=4&&<EllipsisMiddle>
+                                                        {file.fileName}
                                                       </EllipsisMiddle>}
                                                     </Tooltip>
                                                      </div>
@@ -269,32 +282,14 @@ class PaymentsView extends Component {
                         </div>}
                    
                 </div>
-                <Modal
-            className="documentmodal-width"
-            destroyOnClose={true}
-            title="Preview"
-            width={1000}
-            visible={this.state.previewModal}
-            closeIcon={<Tooltip title="Close"><span className="icon md close-white c-pointer" onClick={this.docPreviewClose} /></Tooltip>}
-            footer={<>
-             <div className="cust-pop-up-btn crypto-pop">
-             
-             <Button  onClick={this.docPreviewClose} className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
-                        >Close</Button>
-                         <Button  className="primary-btn pop-btn detail-popbtn paynow-btn-ml" 
-                       onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>
-                       
-                        </div>
-            </>}
-          >
-            <FilePreviewer
-				hideControls={true}
-				file={{
-					url: this.state.previewPath ? this.filePreviewPath() : null,
-					mimeType: this.state.previewPath?.includes(".pdf") ? "application/pdf" : ""
-				}}
-			/>
-          </Modal>
+              
+           {this.state.previewModal && (
+          <DocumentPreview
+            previewModal={this.state.previewModal}
+            handleCancle={this.docPreviewClose}
+            upLoadResponse={this.state.docPreviewDetails}
+          />
+        )}
             </>
         )
     }

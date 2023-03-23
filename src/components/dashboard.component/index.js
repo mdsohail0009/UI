@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { Row, Col, Button, Carousel,Typography, } from 'antd';
+import { Row, Col, Button, Carousel,Typography,Drawer } from 'antd';
 import Portfolio from './portfolio.component';
 import MarketCap from './marketcap.component';
 import AlertConfirmation from '../shared/alertconfirmation';
@@ -14,15 +14,25 @@ import Notices from './notices';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 import BankWallets from '../bankui.component'
 import SbCard from './sbCard';
+import AddressCrypto from "../addressbook.component/addressCrypto"
+import {
+	rejectCoin,
+	clearValues,
+	clearCryptoValues,
+} from '../../reducers/addressBookReducer';
 import { getScreenName } from '../../reducers/feturesReducer';
-const { Title } = Typography;
+
+const { Title,Paragraph } = Typography;
 class Home extends Component {
     state = {
         loading: false,
         initLoading: true,
-        visible: false,
         childrenDrawer: false,
-        permissions: {}
+        permissions: {},
+        hideFiatHeading:false,
+        beneficiaryDetails:false,
+        cryptoFiat:false,
+        cryptoId:"",
     };
     permissionsInterval;
     componentDidMount() {
@@ -51,8 +61,28 @@ class Home extends Component {
     getNotices = async () => {
         this.props.dispatch(fetchNotices(this.props.userProfileInfo.id))
     }
+    goToDetails=(data)=>{
+        if(data.isReqforDoc)
+        {
+            this.props.history.push(`/caseView/${data.typeId}`)
+        }else{
+            this.setState({...this.state,hideFiatHeading:false,beneficiaryDetails:true,cryptoId:data.docTypeId})
+        }
+       
+    }
+    closeCryptoDrawer=()=>{
+		this.setState({ ...this.state, beneficiaryDetails: false, selectedObj: {} });
+        this.props.dispatch(rejectCoin());
+		this.props.dispatch(clearValues());
+		this.props.dispatch(clearCryptoValues());
+		
+	}
+    headingChange=(data)=>{
+		this.setState({...this.state,hideFiatHeading:data})
+	}
     render() {
         const { data: notices } = this.props.dashboard?.notices;
+        const {beneficiaryDetails,hideFiatHeading}=this.state;
         return (
             <div className="main-container dashbord-space case-carsl">
                 {this.props?.twoFA && ((!this.props?.twoFA?.isEnabled) && (!this.props?.twoFA?.loading)) && <div>
@@ -65,9 +95,9 @@ class Home extends Component {
                 </div>}
                 {this.props.dashboard.notices.loading === false ? <Carousel className="docreq-slider" autoplay={true}>
                     {notices?.map((notice, idx) => <div key={idx} className="notify-alerticon">
-                        <AlertConfirmation type="error" title={notice.title} showIcon description="Our Compliance Team is requesting documents in line with your recent transaction, Please click View Details. Thank you for your patience."
+                        <AlertConfirmation type="error" title={notice.title} showIcon description={notice?.isReqforDoc?"Our Compliance Team is requesting documents in line with your recent transaction, Please click View Details. Thank you for your patience.":"We kindly ask our clients to comply with the Travel Rule and to verify their crypto source and address. Thank you for your cooperation."}
                             action={
-                                <Button className='notify-viewbtn' size="small" type="text" onClick={() => this.props.history.push(`/caseView/${notice.typeId}`)}>
+                                <Button className='notify-viewbtn' size="small" type="text" onClick={() => this.goToDetails(notice)}>
                                     View Details
                                 </Button>
                             } />
@@ -75,8 +105,9 @@ class Home extends Component {
                 </Carousel> : ""}
             <div className='d-flex align-center'>
                 <Translate content="Dashboard" component={Title} className="db-main-title" />
-                <span className='acount-type'>{this.props.userProfileInfo?.isBusiness==true?"Business":"Personal"}</span>
+                <span className='acount-type'>{this.props.userProfileInfo?.isBusiness ? "Business":"Personal"}</span>
             </div>
+            {this.state.permissions.Notices && <Notices />}
                 <Row justify="center mt-16" gutter={[16,16]}>
                 <Col xs={24} md={12} xl={15} lg={15} xxl={15} className="db-flex-style">
                         
@@ -89,7 +120,6 @@ class Home extends Component {
                                 <Wallets />
                             </div>                     
                         </>}
-                        {this.state.permissions.Notices && <Notices />}
                         {this.state.permissions.Transactions && <Portfolio
                             crypto="Bitcoin"
                             crypto_value='0.00'
@@ -109,6 +139,24 @@ class Home extends Component {
                        
                     </Col>
                 </Row>
+                <Drawer
+          destroyOnClose={true}
+          title={[<div className="side-drawer-header" key={""}>
+            <span />
+            <div className="text-center" key={""}>
+              <Paragraph className="drawer-maintitle"><Translate content={hideFiatHeading !==true && "cryptoAddress"}component={Paragraph} className="drawer-maintitle" /></Paragraph>
+            </div>
+            <span onClick={this.closeCryptoDrawer} className="icon md close-white c-pointer" />
+          </div>]}
+          placement="right"
+          closable={true}
+          visible={beneficiaryDetails}
+          closeIcon={null}
+          className=" side-drawer"
+          size="large"
+        >
+          <AddressCrypto type="manual" cryptoTab={1} onCancel={(obj) => this.closeCryptoDrawer(obj)} props={this.props} selectedAddress={this.state.selectedObj} headingUpdate={this.headingChange} isSave={true} cryptoId={this.state.cryptoId}/>
+        </Drawer>
             </div >
         );
 

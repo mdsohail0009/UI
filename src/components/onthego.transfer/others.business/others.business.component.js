@@ -33,7 +33,11 @@ class OthersBusiness extends Component {
         isValidateLoading: false,
         isValidCheck: false,
         isValidateMsg: false,
-        objData:{}
+        objData:{},
+        editData:{},
+        documents:null,
+        rasonDocuments:null
+
     };
     componentDidMount() {
         this.loadDetails();
@@ -44,14 +48,15 @@ class OthersBusiness extends Component {
         if (response.ok) {
             let edit=false;
             let data = response.data;
-            this.setState({ ...this.state, objData: data });
+            this.setState({ ...this.state, objData: data, editData:response.data,
+            documents:response.data?.payeeAccountModels !=null ? response.data?.payeeAccountModels[0]?.docrepoitory :response.data?.payeeAccountModels});
             if (!data?.payeeAccountModels) {
                 data.payeeAccountModels = [payeeAccountObj()];
-                data.payeeAccountModels[0].documents = {"transfer": "", "payee": ""}
+                data.payeeAccountModels[0].docrepoitory = []
             }
             if (this.props.selectedAddress?.id) {
                 const accountDetails = data.payeeAccountModels[0];
-                data = { ...data, ...accountDetails,line1:data.line1,line2:data.line2,line3:data.line3,bankAddress1:accountDetails.line1,bankAddress2:accountDetails.line2 };
+                data = { ...data, ...accountDetails,line1:data.line1,line2:data.line2,line3:data.line3,bankAddress1:accountDetails.line1,bankAddress2:accountDetails.line2 ,country:response.data?.country,city:response.data.city,address:response.data.line1,postalCode:response.data.postalCode};
                 delete data["documents"];
                 if (data?.iban) {
                     this.handleIbanChange({ target: { value: data?.iban, isNext: true } });
@@ -68,7 +73,6 @@ class OthersBusiness extends Component {
         }
     }
     handleIbanChange = async ({ target: { value,isNext } }) => {
-     //   this.setState({ ...this.state, ibanDetails: {}, enteredIbanData: value, isShowValid: false,errorMessage: null});
         if (value?.length >= 10 && isNext) {
             this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true,iBanValid:true ,ibanDetails: {}, enteredIbanData: value, isShowValid: false,errorMessage: null,isValidateLoading:true});
             const response = await fetchIBANDetails(value);
@@ -151,33 +155,36 @@ class OthersBusiness extends Component {
         _obj.payeeAccountModels[0].bic=ibanDetails?.routingNumber;
         _obj.payeeAccountModels[0].iban = values?.iban ? values?.iban : this.form.current?.getFieldValue('iban');
         _obj.payeeAccountModels[0].currencyType = "Fiat";
-        _obj.payeeAccountModels[0].walletCode = "EUR";
+        _obj.payeeAccountModels[0].walletCode = this.props.currency;
         _obj.payeeAccountModels[0].bankName = ibanDetails?.bankName;
+        _obj.payeeAccountModels[0].docrepoitory =  this.state?.documents
+
         delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
         
         _obj.addressType = "otherbusiness";
         _obj.transferType = "sepa";
         _obj.amount = this.props.amount;
         if(isEdit){
-            _obj.id = isSelectedId ? isSelectedId : details?.payeeId;
+            _obj.id = isSelectedId? isSelectedId:details?.payeeId;
         }
-        if(_obj.payeeAccountModels[0].documents){
-            _obj.payeeAccountModels[0].documents.customerId = this.props?.userProfile?.id;
-        }
-        this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });  
 
+                this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: true });
+        delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
+        this.setState({ ...this.state, errorMessage: null, isLoading: false, isBtnLoading: true });
         let temp = JSON.parse(JSON.stringify(_obj))
-        temp.payeeAccountModels[0].documents = _obj.payeeAccountModels[0]?.documents?.payee
+       temp.payeeAccountModels[0].docrepoitory =  this.state?.documents      
+       const response = await savePayee(_obj);   
 
-        const response = await savePayee(this.state.isEdit ? _obj : temp);        
-        if (response.ok) {
+       if (response.ok) {
             if (this.props.type !== "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer, documents: _obj.payeeAccountModels[0]?.documents?.transfer   })
+                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer, 
+                    docrepoitory:this.state.rasonDocuments 
+                 })
                 if (confirmRes.ok) {
                     this.props.onContinue(confirmRes.data);
                     this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
                 } else {
-                    this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: confirmRes.data?.message || confirmRes.data || confirmRes.originalError?.message, isLoading: false, isBtnLoading: false });
+                    this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: apiCalls.isErrorDispaly(confirmRes), isLoading: false, isBtnLoading: false });
                   window.scrollTo(0, 0);
                 }
             } else {
@@ -188,7 +195,7 @@ class OthersBusiness extends Component {
             }
 
         } else {
-            this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: response.data?.message || response.data || response.originalError?.message, isLoading: false, isBtnLoading: false });
+            this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: apiCalls.isErrorDispaly(response), isLoading: false, isBtnLoading: false });
         }
 
     }
@@ -198,23 +205,24 @@ class OthersBusiness extends Component {
             return <Loader />
         }
         if (this.state.showDeclartion) {
-            return  <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
+            return  <div className="custom-declaraton align-declaration"> <div className="success-pop text-center declaration-content">
                 <Image  preview={false} src={alertIcon} className="confirm-icon" />
                 <Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
-                Please review and sign the document in your email to whitelist your address.
-                Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
+                Please sign using link received in email to whitelist your address. Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved. `}</Text>
                 <div className="my-25">
                     </div>
             </div></div>
         }
-        if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} transferData={this.state.objData} updatedHeading={this.props?.headingUpdate} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} /> }
+        if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} transferData={this.state.objData} updatedHeading={this.props?.headingUpdate} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} currency={this.props.currency} types={this.props.ontheGoType}/> }
         else {
             return <><div ref={this.useDivRef}>
-                <h2 className="adbook-head">SEPA Transfer</h2>
+                {this.props.currency !="CHF" && <h2 className="adbook-head">SEPA Transfer</h2>}
+                {this.props.currency !="EUR" && <h2  className="adbook-head">Bank Details</h2>}
                 {this.state.isLoading && <Loader />}
                 {this.state.errorMessage && <Alert type="error" showIcon closable={false} description={this.state.errorMessage} />}
-                {!this.state.isLoading && <Form initialValues={this.state.details}
+                {!this.state.isLoading && <Form
+                  initialValues={this.state.details}
                     className="custom-label  mb-0"
                     ref={this.form}
                     onFinish={this.submitPayee}
@@ -250,8 +258,38 @@ class OthersBusiness extends Component {
 
                             </Form.Item>
                         </Col>
+                        {this.props.currency !="EUR" &&
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                                className="custom-forminput custom-label"
+                                name="beneficiaryName"
+                                label={"Bussiness Name"}
+                                required
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        whitespace: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        validator: validateContentRule,
+                                    },
+                                ]}
+                            >
+                                <Input
+                                    maxLength={100}
+                                    className="cust-input"
+                                    placeholder={"Bussiness Name"}
+                                />
+
+
+                            </Form.Item>
+                        </Col>}
                     </Row>
-                    <Translate style={{ fontSize: 18 }}
+                  { this.props.currency != "CHF" && <> <Translate style={{ fontSize: 18 }}
                         content="Beneficiary_Details"
                         component={Paragraph}
                         className="mb-8 text-white fw-500 mt-16"
@@ -314,21 +352,19 @@ class OthersBusiness extends Component {
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
-                            <AddressDocumnet documents={this.state.details?.payeeAccountModels[0]?.documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
-                            let { payeeAccountModels } = this.state.details;
-                            if(this.state.isEdit){
-                                payeeAccountModels[0].documents = docs;
-                            } else{
-                                payeeAccountModels[0].documents.payee = docs;
-                            }
-                            this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
-                        }} />
+                            <AddressDocumnet 
+                            documents={this.state?.documents || this.props.transferData?.payeeAccountModels[0]?.docrepoitory} editDocument={this.state.isEdit} 
+                            onDocumentsChange={(docs) => {
+                            this.setState({...this.state,documents:docs})
+                            }} 
+                            type={"payee"}
+                            />
                         </ Col>                        
                         <RecipientAddress />
 
 
                     </Row>
-                    <h2  className="adbook-head">Bank Details</h2>
+                    <h2  className="adbook-head">Bank Details</h2></>}
                   
                     <Row className="validateiban-content">
                    <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -429,7 +465,100 @@ class OthersBusiness extends Component {
                         </Spin>
                        
                     </div>
-                    {this.props.ontheGoType === "Onthego" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                  { this.props.currency !="EUR" && <> 
+                  <Paragraph className="adbook-head" >Recipient Address</Paragraph>
+                
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-forminput custom-label"
+                        name="country"
+                        label={"country"}
+                        rules={[
+                            {
+                                required: true,
+                                message: "is required",
+                            }, {
+                                validator: validateContentRule,
+                            },
+                        ]}
+                       
+                    >
+                        <Input
+                            className="cust-input"
+                            placeholder="currency"
+                            maxLength={50}
+                        />
+                    </Form.Item>
+                </Col>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-forminput custom-label"
+                        name="city"
+                        label="City"
+                        rules={[
+                            {
+                                required: true,
+                                message: "is required",
+                                whitespace:true,
+                            }, {
+                                validator: validateContentRule,
+                            },
+                        ]}
+                       
+                    >
+                        <Input
+                            className="cust-input"
+                            placeholder="City"
+                            maxLength={50}
+                        />
+                    </Form.Item>
+                </Col>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-forminput custom-label"
+                        name="address"
+                        label="Address"
+                        rules={[
+                            {
+                                required: true,
+                                message: "is required",
+                                whitespace:true,
+                            }, {
+                                validator: validateContentRule,
+                            },
+                        ]}
+                    >
+                        <Input
+                            className="cust-input"
+                            placeholder="Address"
+                            maxLength={50}
+                        />
+                    </Form.Item>
+                </Col>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-forminput custom-label"
+                        name="postalCode"
+                        label="Post Code"
+                        rules={[
+                            {
+                                required: true,
+                                message: "is required",
+                                whitespace:true,
+                            }, {
+                                validator: validateContentRule,
+                            },
+                        ]}
+                    >
+                        <Input
+                            className="cust-input"
+                            placeholder="Post Code"
+                            maxLength={50}
+                        />
+                    </Form.Item>
+                </Col></>}
+               { this.props.ontheGoType === "Onthego" && <><Paragraph className="adbook-head" >Compliance</Paragraph>
+                    <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label"
                                 name="reasonOfTransfer"
@@ -463,15 +592,28 @@ class OthersBusiness extends Component {
                                 maxLength={100}
                             ></TextArea>
                             </Form.Item>
-                        </Col>}
+                        </Col></>}
                         {this.props.type !== "manual" && 
                         (<React.Fragment>
                         <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
-                            <AddressDocumnet documents={this.state.details?.payeeAccountModels[0].documents || null} editDocument={this.state.isEdit} onDocumentsChange={(docs) => {
-                                let { payeeAccountModels } = this.state.details;
-                                payeeAccountModels[0].documents.transfer = docs;
-                                this.setState({ ...this.state, details: { ...this.state.details, payeeAccountModels } })
-                            }} />
+                        <AddressDocumnet 
+                            documents={this.state?.documents || this.props.transferData?.payeeAccountModels[0]?.docrepoitory} editDocument={this.state.isEdit} 
+                            onDocumentsChange={(docs) => {
+                            this.setState({...this.state,rasonDocuments:docs})
+                            }} 
+                            type={"reasonPayee"}
+                            />
+                        </React.Fragment>)
+                        }
+                        {this.props.type === "manual" && this.props.currency != "EUR" &&
+                        (<React.Fragment>
+                        <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
+                        <AddressDocumnet 
+                            documents={this.state?.documents || this.props.transferData?.payeeAccountModels[0]?.docrepoitory} editDocument={this.state.isEdit} 
+                            onDocumentsChange={(docs) => {
+                            this.setState({...this.state,rasonDocuments:docs})
+                            }}   type={"reasonPayee"}
+                            />
                         </React.Fragment>)
                         }
                     <div className="">

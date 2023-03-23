@@ -5,7 +5,9 @@ import { getCurrencyLu, getPaymentsData, savePayments, getBankData, creatPayment
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 import Loader from '../../Shared/loader';
-import FilePreviewer from 'react-file-previewer';
+import {ApiControllers} from '../../api/config'
+import DocumentPreview from "../../Shared/docPreview";
+import apicalls from '../../api/apiCalls';
 const { Option } = Select;
 const { Title, Text, Paragraph } = Typography;
 const EllipsisMiddle = ({ suffixCount, children }) => {
@@ -43,13 +45,18 @@ class PaymentDetails extends Component {
       type: this.props.match.params.type,
       state: this.props.match.params.state,
       billPaymentData: null,
-      uploadUrl: process.env.REACT_APP_UPLOAD_API + "UploadFile",
+     uploadUrl: process.env.REACT_APP_UPLOAD_API +
+     "api/v1/" +
+     ApiControllers.common +
+    `UploadFileNew?screenName=BillPayments&fieldName=uploadfile&tableName=TransactionDetail`,
+
       isUploading: false,
       modal: false,
       selectData: null,
       uploadIndex: null,
       errorWarning: null,
       isloading:false,
+      docPreviewDetails: null,
     };
     this.gridRef = React.createRef();
     this.useDivRef = React.createRef();
@@ -115,7 +122,7 @@ class PaymentDetails extends Component {
         message.destroy();
         this.setState({
           ...this.state,
-          errorMessage: this.isErrorDispaly(response),
+          errorMessage: apicalls.isErrorDispaly(response),
           loading: false,
         });
         this.useDivRef.current.scrollIntoView(0,0);
@@ -138,7 +145,7 @@ class PaymentDetails extends Component {
         message.destroy();
         this.setState({
           ...this.state,
-          errorMessage: this.isErrorDispaly(response),
+          errorMessage: apicalls.isErrorDispaly(response),
           loading: false,
         });
         this.useDivRef.current.scrollIntoView(0,0);
@@ -181,7 +188,7 @@ class PaymentDetails extends Component {
             this.props.history.push(`/payments/${"All"}`);
           } else {
             message.destroy();
-            this.setState({ ...this.state, btnDisabled: false, loading: false, errorWarning: null, errorMessage: this.isErrorDispaly(response) })
+            this.setState({ ...this.state, btnDisabled: false, loading: false, errorWarning: null, errorMessage: apicalls.isErrorDispaly(response) })
             this.useDivRef.current.scrollIntoView(0,0);
           }
         }
@@ -209,7 +216,7 @@ class PaymentDetails extends Component {
             this.props.history.push(`/payments/${"All"}`);
           } else {
             message.destroy();
-            this.setState({ ...this.state, btnDisabled: false, loading: false, errorWarning: null, errorMessage: this.isErrorDispaly(response) });
+            this.setState({ ...this.state, btnDisabled: false, loading: false, errorWarning: null, errorMessage: apicalls.isErrorDispaly(response) });
             this.useDivRef.current.scrollIntoView(0,0);
           }
         }
@@ -219,18 +226,7 @@ class PaymentDetails extends Component {
       this.useDivRef.current.scrollIntoView(0,0);
     }
   };
-  isErrorDispaly = (objValue) => {
-    if (objValue.data && typeof objValue.data === "string") {
-      return objValue.data;
-    } else if (
-      objValue.originalError &&
-      typeof objValue.originalError.message === "string"
-    ) {
-      return objValue.originalError.message;
-    } else {
-      return "Something went wrong please try again!";
-    }
-  };
+
   deleteDetials = async (id, paymentsData) => {
 
     let data = paymentsData;
@@ -296,19 +292,12 @@ class PaymentDetails extends Component {
       let paymentDetialsData = this.state.paymentsData;
 
       let obj = {
-        "documentName": `${file.name}`,
-        "isChecked": file.name === "" ? false : true,
-        "remarks": `${file.size}`,
-        "state": null,
-        "status": false,
-        "path": `${file.response}`,
-        "size": `${file.size}`,
+        "fileName": `${file?.response?.fileName}`,
+        "id":`${file?.response?.id}`
       }
       for (let pay in paymentDetialsData) {
         if (paymentDetialsData[pay].id === item.id) {
-          obj["id"] = paymentDetialsData[pay]?.documents?.details[0]?.id !== null ? paymentDetialsData[pay]?.documents?.details[0]?.id : "00000000-0000-0000-0000-000000000000"
-          obj["documentId"] = paymentDetialsData[pay]?.documents?.details[0]?.documentId !== null ? paymentDetialsData[pay]?.documents?.details[0]?.documentId : "00000000-0000-0000-0000-000000000000"
-          paymentDetialsData[pay].documents.details = [obj];
+          paymentDetialsData[pay].docrepoistries = [obj];
         }
       }
       this.setState({
@@ -319,6 +308,7 @@ class PaymentDetails extends Component {
 
     }
   };
+  
   onModalOpen = (item) => {
     if (
       item.state === "Approved" || item.state === "Cancelled" || item.state === "Pending") {
@@ -332,16 +322,16 @@ class PaymentDetails extends Component {
     this.setState({ ...this.state, modal: false });
 
   }
-  docPreview = async (file) => {
-    let res = await getFileURL({ url: file.path });
-    if (res.ok) {
-      this.state.PreviewFilePath = file.path;
-      this.setState({ ...this.state, previewModal: true, previewPath: res.data });
-    }
-  }
+
+
+  
   docPreviewClose = () => {
-    this.setState({ ...this.state, previewModal: false, previewPath: null })
-  }
+    this.setState({ ...this.state, previewModal: false, docPreviewDetails: null });
+  };
+  docPreviewOpen = (data) => {
+    this.setState({ ...this.state, previewModal: true, docPreviewDetails: { id: data.id, fileName: data.fileName } });
+  };
+
   DownloadUpdatedFile = async () => {
     let res = await getFileURL({ url: this.state.PreviewFilePath });
     if (res.ok) {
@@ -400,7 +390,7 @@ class PaymentDetails extends Component {
           {this.state.currency === "USD" && moreBankInfo?.transferType!=="internationalIBAN"&&
           <>
            <div className='popover-mb-12'>
-          <label className="basicinfo">Bank Address</label>
+          <label className="kpi-label">Bank Address</label>
           <label className="kpi-label d-block">Address Line 1</label> 
           <span className="kpi-val d-block">{moreBankInfo?.bankAddress1}</span></div>
           {moreBankInfo?.bankAddress2!==null &&<>
@@ -433,7 +423,7 @@ class PaymentDetails extends Component {
       <>
         <div ref={this.useDivRef}></div>
         <div className="main-container">
-          <div className="coin-viewstyle">
+          <div className="">
           <Title className="basicinfo mb-0">
           <span onClick={() => this.props.history?.push(`/payments/All`)} className='icon md c-pointer back backarrow-mr'></span>
           <Translate content="menu_payments" component={Text} className="coin-viewstyle" />
@@ -643,6 +633,7 @@ class PaymentDetails extends Component {
                                               />
                                             </Form.Item>
                                             <Upload
+                                              accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                                               key={i}
                                               type="dashed"
                                               size="large"
@@ -687,17 +678,19 @@ class PaymentDetails extends Component {
 
                                           {uploadIndex === i && isUploading ? <div className="text-center" >
                                             <Spin />
-                                          </div> : item.documents?.details.map((file) => (
+                                          </div> : item.docrepoistries?.map((file) => (
                                             <>
-                                              {file.documentName !== null && (
+                                              {file.fileName !== null && (
                                                 <div className='docdetails pay-docdetails'>
-                                                  <div onClick={() => this.docPreview(file)}>
-                                                    <Tooltip title={file.documentName}>
-                                                      {file.documentName?.split(".")[0].length>4&&<EllipsisMiddle>
-                                                        {file.documentName.slice(0,4) + "..." +file.documentName.split(".")[1]}
+                                                  <div 
+                                                  onClick={() => this.docPreviewOpen(file)}
+                                                    >
+                                                    <Tooltip title={file.fileName}>
+                                                      {file.fileName?.split(".")[0].length>4&&<EllipsisMiddle>
+                                                        {file.fileName.slice(0,4) + "..." +file.fileName.split(".")[1]}
                                                       </EllipsisMiddle>}
-                                                      {file.documentName?.split(".")[0].length<=4&&<EllipsisMiddle>
-                                                        {file.documentName}
+                                                      {file.fileName?.split(".")[0].length<=4&&<EllipsisMiddle>
+                                                        {file.fileName}
                                                       </EllipsisMiddle>}
                                                     </Tooltip>
                                                   </div>
@@ -717,14 +710,16 @@ class PaymentDetails extends Component {
 
                                         {uploadIndex === i && isUploading ? <div className="text-center" >
                                           <Spin />
-                                        </div> : item.documents?.details.map((file) =>
+                                        </div> : item.docrepoistries?.map((file) =>
                                           <>
 
-                                            {file.documentName !== null && (
-                                              <div className='docdetails'style={{ width: "80px" }} onClick={() => this.docPreview(file)}>
-                                                <Tooltip title={file.documentName}>
+                                            {file.fileName !== null && (
+                                              <div className='docdetails'style={{ width: "80px" }} 
+                                              onClick={() => this.docPreviewOpen(file)}
+                                              >
+                                                <Tooltip title={file.fileName}>
                                                   <EllipsisMiddle suffixCount={4}>
-                                                    {file.documentName}
+                                                    {file.fileName}
                                                   </EllipsisMiddle>
                                                 </Tooltip>
                                               </div>
@@ -831,24 +826,7 @@ class PaymentDetails extends Component {
             </div>
           </div>
         </div>
-        <Modal
-          className="documentmodal-width"
-          title="Preview"
-          width={1000}
-          visible={this.state.previewModal}
-          destroyOnClose={true}
-          closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.docPreviewClose} /></Tooltip>}
-          footer={<>
-             <div className="cust-pop-up-btn crypto-pop">
-            
-             <Button onClick={this.docPreviewClose} className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml">Close</Button>
-            <Button className="primary-btn pop-btn detail-popbtn" onClick={() => this.fileDownload()}>Download</Button>
-            
-            </div>
-          </>}
-        >
-          <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null, mimeType: this.state?.previewPath?.includes(".pdf") ? 'application/pdf' : '' }} />
-        </Modal>
+       
         <Modal title="Confirm Delete"
           destroyOnClose={true}
           closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.handleCancel} /></Tooltip>}
@@ -870,7 +848,13 @@ class PaymentDetails extends Component {
         >
              <Paragraph className="text-white">Are you sure, do you really want to delete ?</Paragraph>
         </Modal>
-
+        {this.state.previewModal && (
+          <DocumentPreview
+            previewModal={this.state.previewModal}
+            handleCancle={this.docPreviewClose}
+            upLoadResponse={this.state.docPreviewDetails}
+          />
+        )}
       </>
     );
   }

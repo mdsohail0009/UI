@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { List, Button, Typography, Empty,Dropdown, Menu, Space } from 'antd';
+import { List, Button, Typography, Empty,Dropdown, Menu, Space ,Alert} from 'antd';
 import Translate from 'react-translate-component';
 import BuySell from '../buy.component';
 import SendReceive from '../send.component'
@@ -24,19 +24,22 @@ class YourPortfolio extends Component {
         loading: true,
         initLoading: true,
         portfolioData: [], buyDrawer: false, coinData: null,sendDrawer: false,
-        selectedWallet: ''
+        selectedWallet: '',
+        errorMessage:null
     }
     componentDidMount() {
         this.loadCryptos();
         this.loadCoinDetailData();
     }
     loadCoinDetailData = async () => {
-      this.setState({ ...this.state, loading: true})
+      this.setState({ ...this.state, loading: true,errorMessage:null})
       this.props.dispatch(fetchMarketCoinData(false))
       const response = await getcoinDetails(this.props.match.params?.coinName);
       if (response.ok) {
-          this.setState({ ...this.state, coinData: response.data },
+          this.setState({ ...this.state, coinData: response.data,errorMessage:null },
           )
+      }else{
+        this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
       }
       this.setState({ ...this.state, loading: false})
   }
@@ -146,6 +149,9 @@ class YourPortfolio extends Component {
              const response = await createCryptoDeposit({ customerId: this.props.userProfile?.id, walletCode: coin, network: selectedObj?.netWork });
              if (response.ok) {
                 this.props.dispatch(setWalletAddress(response.data));
+             }else{
+              this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
+
              }
 
           this.setState({
@@ -203,6 +209,13 @@ class YourPortfolio extends Component {
         const { Text,Title } = Typography;
         const { cryptoPortFolios } = this.props.dashboard
         return (
+          <>
+            {this.state.errorMessage != null && <Alert
+            description={this.state.errorMessage}
+            type="error"
+            showIcon
+            closable={false}
+        />}
           <div className="" >
             <div className='fait-wallets-style m-0'>
             <Translate content="suissebase_title" component={Title} className="db-titles" />
@@ -245,6 +258,7 @@ class YourPortfolio extends Component {
                         type="primary"
                         onClick={() => this.showSendReceiveDrawer(2, item)}
                         className="custom-btn sec"
+                        disabled={item.coinBalance > 0 ? false : true} 
                       />
                       
                       <Dropdown overlay={this.menuBar(item)} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
@@ -326,7 +340,7 @@ class YourPortfolio extends Component {
                 this.closeDrawer();
               }}
             />}
-          </div>
+          </div></>
         );
     }
 }

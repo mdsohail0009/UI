@@ -30,7 +30,8 @@ class Wallets extends Component {
         showFuntransfer: false,
     }
     cockpitCharts=()=>{
-        this.props.history.push("/cockpitCharts");
+            this.props.history.push("/cockpitCharts");
+        
       }
     componentDidMount() {
         this.fetchWallets();

@@ -29,7 +29,6 @@ class InternationalTransfer extends Component {
                                         "Invalid Account Number"
                                     );
                                 }else {
-                                    // return Promise.resolve();
                                     return validateContentRule(_, value);
                                 }
                             },

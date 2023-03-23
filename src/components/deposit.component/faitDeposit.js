@@ -14,7 +14,6 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import apicalls from '../../api/apiCalls';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 import OnthegoFundTransfer from '../onthego.transfer';
-
 const { Option } = Select;
 class FaitDeposit extends Component {
   formRef = createRef();
@@ -34,7 +33,6 @@ class FaitDeposit extends Component {
   componentDidMount() {
     this.props.fiatRef(this)
     this.setState({ ...this.state, Loader: true })
-    this.props.fetchCurrencyWithBankDetails()
     if (this.props.sendReceive.withdrawFiatEnable||this.props?.isShowSendFiat) {
       getFeaturePermissionsByKeyName(`send_fiat`);
       this.handleshowTab(2);
@@ -53,7 +51,6 @@ class FaitDeposit extends Component {
     }
   }
   clearfiatValues = () => {
-    this.props.fetchCurrencyWithBankDetails()
     this.setState({
       buyDrawer: false,
       crypto: config.tlvCoinsList,
@@ -68,7 +65,6 @@ class FaitDeposit extends Component {
   handleBuySellToggle = e => {
     this.handleshowTab(e.target.value)
     if (e.target.value === 1) {
-      this.props.fetchCurrencyWithBankDetails()
       this.props.dispatch(rejectWithdrawfiat())
       this.props.dispatch(setWithdrawfiatenaable(false))
 
@@ -102,18 +98,7 @@ class FaitDeposit extends Component {
       }
     }
   }
-  isErrorDispaly = (objValue) => {
-    if (objValue.data && typeof objValue.data === "string") {
-      return objValue.data;
-    } else if (
-      objValue.originalError &&
-      typeof objValue.originalError.message === "string"
-    ) {
-      return objValue.originalError.message;
-    } else {
-      return "Something went wrong please try again!";
-    }
-  };
+
   handlFiatDep = async (e, currencyLu) => {
     let { depObj } = this.state;
     depObj.currency = e;
@@ -130,7 +115,7 @@ class FaitDeposit extends Component {
             });
           } else {
             this.setState({
-              ...this.state, bankLoader: false, errorMessage: this.isErrorDispaly(reqdepositObj)
+              ...this.state, bankLoader: false, errorMessage: apicalls.isErrorDispaly(reqdepositObj)
             });
           }
         } else {
@@ -239,7 +224,7 @@ class FaitDeposit extends Component {
                     </Select>
                   </div></Form.Item>}
                    
-                {this.state.BankInfo === null && depObj.currency !== null && this.state.BankDetails?.length === 0 && !this.state.bankLoader && <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="bank_msg" /></Text>}
+                {this.state.BankInfo === null && depObj.currency !== null && this.state.BankDetails?.length === 0 && !this.state.bankLoader && <Text className="fs-20 d-block preview-file" style={{ textAlign: 'center' }}><Translate content="bank_msg" /></Text>}
                 {this.state.BankDetails?.length > 1 && depObj.currency !== null && <Form.Item><Translate
                   className="label-style"
                   content="BankName"
@@ -286,8 +271,7 @@ class FaitDeposit extends Component {
                       </div>
                      
                     <div className='fait-box kpi-divstyle'>
-                    {BankInfo.currencyCode === "USD" && <span className="fait-title">Beneficiary Account No. </span>}
-                    {BankInfo.currencyCode === "EUR" && <span className="fait-title">Beneficiary IBAN No. </span>}
+                     <span className="fait-title">Beneficiary Account Number/IBAN</span>
                     <CopyToClipboard text={BankInfo.accountNumber} options={{ format: 'text/plain' }}>
                     <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fait-subtext" >{BankInfo.accountNumber}</Text>
                      </CopyToClipboard>
@@ -406,8 +390,7 @@ const connectDispatchToProps = dispatch => {
     changeStep: (stepcode) => {
       dispatch(setStep(stepcode))
     },
-    fetchCurrencyWithBankDetails: () => {
-    },
+   
     dispatch
   }
 }
