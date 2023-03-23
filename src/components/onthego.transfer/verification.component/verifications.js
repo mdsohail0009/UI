@@ -401,7 +401,7 @@ const goToSecurity=()=>{
                             Phone Verification Code *
                             </Text>
                             {phone.btnName==="resendotp" &&
-                            <Link onClick={()=>goToSecurity()}>still didn't received SMS,click here</Link>}
+                            <Link onClick={()=>goToSecurity()}>Still didn't received SMS, Click here</Link>}
                             </div>
                             <Form.Item
                                 name="emailCode"
