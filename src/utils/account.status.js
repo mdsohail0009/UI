@@ -18,7 +18,8 @@ class AccountStatus extends Component {
                 
                  <a
                  className="download-btn sumsubactbtn"
-                href={`qrfy.com/p/jKDd44d4ZD`}
+                href={`https://qrfy.com/p/jKDd44d4ZD`}
+                target="_blank"
               >
                 Click here
               </a>
