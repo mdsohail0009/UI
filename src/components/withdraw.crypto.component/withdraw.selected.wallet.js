@@ -73,7 +73,7 @@ class CryptoWithDrawWallet extends Component {
             this.setState({...this.state,error:apiCalls.isErrorDispaly(verfResponse)})
         }
         this.setState({ ...this.state, isVerificationLoading: false });
-        return minVerifications >= 2;
+        return minVerifications >= 1;
     }
     async componentDidMount() {
         const isVerified = await this.checkVerification();

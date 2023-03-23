@@ -51,7 +51,7 @@ class SendReceive extends Component {
             withdraw: <CryptoWithDrawWallet onDrawerClose={this.closeDrawer} />,
             scanner: <ScanQR />,
             withdrawaddress: <WithdrawAddress />,
-            verifyidentity: <VerifyIDentity />,
+            verifyidentity: <VerifyIDentity onClosePopup={()=>this.closeDrawer()}/>,
             withdrawsummary: <WithdrawSummary />,
             withdrawscan: <WithdrawScan />,
             selectAddress: <SelectAddress />,
