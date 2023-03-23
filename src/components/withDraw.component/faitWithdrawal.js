@@ -115,7 +115,7 @@ const FaitWithdrawal = ({ props,
       }
     }
     setVerificationLoading(false);
-    return minVerifications >= 2;
+    return minVerifications >= 1;
   }
   const initialize = async () => {
     const isVerified = await checkVerification();
