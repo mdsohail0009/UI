@@ -97,7 +97,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
     setBtnDisabled(true)
     setIsLoading(false)
     setErrorMsg(null);
-    if ((live && email) || (live && phone) || (live && factor) || (email && phone)|| (email && factor) || (phone && factor) || (email && phone && factor) ||(email && phone && live) ||(email && live && factor) ||(live && phone && factor)||(email && phone && factor && live)) {
+    if ((live || email || phone || factor) ||(live && email) || (live && phone) || (live && factor) || (email && phone)|| (email && factor) || (phone && factor) || (email && phone && factor) ||(email && phone && live) ||(email && live && factor) ||(live && phone && factor)||(email && phone && factor && live)) {
         let obj={
           "customerId": userConfig.id,
           "isEmailVerification": email,
@@ -131,7 +131,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
       else {
         useDivRef.current.scrollIntoView(0,0);
         setError(null);
-         setErrorMsg("Please select at least 2 of the Send verification options");
+         setErrorMsg("Please select at least one of the Send verification options");
          setIsLoading(false)
          setBtnDisabled(false);         
       }
@@ -290,7 +290,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
           component={Title}
           className="basicinfo "
         />
-        <Paragraph className="basic-decs">Please select at least 2 of the Send verification options below.</Paragraph>
+        <Paragraph className="basic-decs">Please select at least one of the Send verification options below.</Paragraph>
        
         <Form>
           <Row gutter={[16, 16]}>
