@@ -16,6 +16,7 @@ import {setReceiveFiatHead, setSendFiatHead} from '../../reducers/buyFiatReducer
 import Loader from "../../Shared/loader";
 import { buyFiatSteps as config } from '../buyfiat.component/config';
 import { getScreenName } from '../../reducers/feturesReducer';
+import PersonalInternalTransferComponent from '../personalInternalTransfer.component';
 const { Title, Paragraph } = Typography;
 
 class Wallets extends Component {
@@ -28,6 +29,7 @@ class Wallets extends Component {
         transactions: false,
         selectedWallet: '',
         showFuntransfer: false,
+        personalTransafershowDrawer:false
     }
     cockpitCharts=()=>{
             this.props.history.push("/cockpitCharts");
@@ -82,6 +84,11 @@ class Wallets extends Component {
             })
         }else if(e===3){
             this.props.history.push(`/payments/${value.walletCode}`)
+        }
+        else if(e===5){
+            this.props.dispatch(getScreenName({getScreen:"dashboard"}))
+            this.setState({ ...this.setState, personalTransafershowDrawer: true, selctedVal: value.walletCode })
+          
         }else {
             this.props.dispatch(getScreenName({getScreen:"dashboard"}))
             this.props.history.push(`/internaltransfer`)
@@ -105,11 +112,13 @@ class Wallets extends Component {
                     <Link to="/transactions" value={4} className="c-pointer"><Translate content="transactions_history" /></Link>
                    
                 </li>
+            {item?.walletCode==="EUR" &&
                 <li onClick={() => this.showSendReceiveDrawer(5, item)}>
                     <Link value={5} className="c-pointer">
-                    <Translate content="menu_internal_transfer" />
+                    <Translate content="personal_iban_transafer"/>
+                    
                     </Link>
-                </li>
+                </li>}
             </ul>
         </Menu>
     )
@@ -119,7 +128,8 @@ class Wallets extends Component {
         this.setState({
             buyFiatDrawer: false,
             transactions: false,
-            showFuntransfer:false
+            showFuntransfer:false,
+            personalTransafershowDrawer:false
         })
     }
     render() {
@@ -180,6 +190,9 @@ class Wallets extends Component {
                         this.closeDrawer();
                     }}
                 />}
+                {this.state.personalTransafershowDrawer && <PersonalInternalTransferComponent showDrawer={this.state.personalTransafershowDrawer}  walletCode={this.state.selctedVal} onClose={() => {
+                        this.closeDrawer();
+                    }}/>}
                 <Drawer
                     destroyOnClose={true}
                     title={[<div className="side-drawer-header">

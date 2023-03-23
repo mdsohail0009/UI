@@ -1,22 +1,38 @@
 import { useEffect } from "react"
-import {Typography} from "antd";
+import {Typography,Drawer} from "antd";
 import { getScreenName } from "../../reducers/feturesReducer";
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
 
-const { Text } = Typography;
+import PersonalTransfer from '../personalInternalTransfer.component/personalTransfer'
+const {Paragraph } = Typography;
 
 const PersonalInternalTransafer = (props) => {
     useEffect(() => {
        props.dispatch(getScreenName({getScreen:"dashboard"}))
     }, []);
     
-    return <div className="text-center intertrans">
-        <div className="">
-        <div><Text className="db-titles internal-titles">Personal Internal Transafer</Text></div>
-        </div>
-
-        </div>
+         return (
+            <Drawer
+            title={[
+                <div className="side-drawer-header">
+                    <span />
+                    <span
+                        onClick={() =>props?.onClose()}
+                        className="icon md close-white c-pointer"
+                    />
+                </div>,
+            ]}
+                placement="right"
+                closable={true}
+                visible={props.showDrawer}
+                closeIcon={null}
+                className="side-drawer custom-fait-sidedrawer"
+                destroyOnClose={true}
+            >
+              <PersonalTransfer walletCode={props.walletCode}/>
+            </Drawer>
+        );
 
 }
 

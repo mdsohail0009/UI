@@ -680,5 +680,6 @@ export default {
 	sb_card_title:"Your card",
 	Dashboard:"Dashboard",
 	notices:"Notices",
+	personal_iban_transafer:"Personal IBAN Transafer",
 	
 };
