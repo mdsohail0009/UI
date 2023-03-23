@@ -857,7 +857,7 @@ saveWithdrawdata = async () => {
                             }
                             </div>
              
-                <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} />
+                <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} onClosePopup={()=>this.props?.onClosePopup()}/>
                 
                 {this.state.permissions?.Send && 
             

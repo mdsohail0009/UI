@@ -1113,3 +1113,6 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .cust-disabled.pop-btn.ant-btn[disabled]{background-color: rgb(112, 135, 255) !important;border-color: rgb(112, 135, 255) !important;}
 
 .approve-email{font-size: 14px;font-weight: 400;}
+.phone-flex{ display: flex;
+    justify-content: space-between;
+    align-items: center;}
