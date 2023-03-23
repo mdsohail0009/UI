@@ -803,7 +803,7 @@ class WithdrawSummary extends Component {
 								<Text className="label-style">
 									Phone Verification Code *
 								</Text>
-						 {this.state.buttonText==='resendotp'&&<Link onClick={()=>this.goToSecurity()}>still didn't received SMS,click here</Link>}
+						 {this.state.buttonText==='resendotp'&&<Link onClick={()=>this.goToSecurity()}>Still didn't received SMS, Click here</Link>}
 						 </div>
 							)}
 
