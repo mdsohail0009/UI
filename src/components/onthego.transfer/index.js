@@ -113,7 +113,7 @@ class OnthegoFundTransfer extends Component {
             minVerifications = minVerifications + 1;
         }
       }
-      if (minVerifications >= 2) {
+      if (minVerifications >= 1) {
         this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: true })
             } else {
                 this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: false })
@@ -857,7 +857,7 @@ saveWithdrawdata = async () => {
                             }
                             </div>
              
-                <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} />
+                <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} onClosePopup={()=>this.props?.onClosePopup()}/>
                 
                 {this.state.permissions?.Send && 
             
