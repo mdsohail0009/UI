@@ -230,23 +230,19 @@ amountnext = (values) => {
                       </Form.Item>
                     </Col>
                   </Row>
-                  <Row gutter={[16, 4]} className="send-drawerbtn">
-
-                  <Col xs={24} md={24} xl={24} xxl={24} className="mobile-viewbtns mobile-btn-pd">
-                      <Form.Item className="text-center">
-                         <Col xs={24} md={24} xl={24} xxl={24}>
-              <div className="text-left passwrd-chang-btn">
-                        <Button htmlType="submit"
-                        className="profile-sm-btn"
-                        loading={this.state.newtransferLoader}
-                        disabled={this.state.addressLoader}>
-                    
-                        Transfer
+                  <Row gutter={[16, 4]} className="send-drawerbtn" >
+                  <Col xs={24} md={12} lg={12} xl={12} xxl={4} className="mobile-viewbtns mobile-btn-pd">
+                  <Form.Item className="">
+                    <Button
+                      htmlType="submit"
+                      size="large"
+                      className="newtransfer-card text-left"
+                      loading={this.state.newtransferLoader}
+                    >
+                      New Transfer
                     </Button>
-              </div>
-            </Col>
-                      </Form.Item>
-                    </Col>
+                  </Form.Item>
+                </Col>
                   </Row>
                 </>
               )}

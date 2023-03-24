@@ -140,7 +140,7 @@ const AddressCryptoView = (props) => {
 										</Row>
 										{process.env.REACT_APP_ISTR == "true" &&<Row>
 										{cryptoAddress?.docRepositories?.map((file) => (
-													<Col xs={12} sm={12} md={12} lg={8} xxl={8} key={file.fileName}>
+													<Col xs={12} sm={12} md={12} lg={8} xxl={8} key={file.id}>
 														<div
 															className="docfile mr-0 d-flex ml-8"
 															key={file.id}>

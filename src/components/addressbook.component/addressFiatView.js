@@ -464,7 +464,7 @@ const AddressFiatView = (props) => {
 													
 												</div>
 												{item?.docrepoitory.map((file) => (
-													<Col xs={12} sm={12} md={12} lg={12} xxl={12} key={file.fileName}>
+													<Col xs={12} sm={12} md={12} lg={12} xxl={12} key={file.id}>
 														<div
 															className="docfile address-book-viewlevel"
 															key={file.id}>
