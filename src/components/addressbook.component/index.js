@@ -256,12 +256,6 @@ class AddressBook extends Component {
 				</td>
 			),
 		},
-		// {
-		// 	field: "coin",
-		// 	title: "Token",
-		// 	filter: true,
-		// 	width: 120,
-		// },
 		{
 			field: "network",
 			title: "Network",
@@ -285,12 +279,13 @@ class AddressBook extends Component {
 			field: "digitallySigned",
 			customCell: (props) => (
 				<td>
-					{props.dataItem?.digitallySigned==="Signed" && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <><Link onClick={() => {
+					{props.dataItem?.digitallySigned==="Signed" && (props.dataItem?.bankAccountType===null ||props.dataItem?.bankAccountType==="") && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <><Link onClick={() => {
 						if (!this.state.isDownloading)
 							this.downloadDeclarationForm(props?.dataItem);
 					}} ><DownloadOutlined /></Link> {props.dataItem?.digitallySigned}</>}
 					{props.dataItem?.digitallySigned!=="Signed" && props.dataItem?.digitallySigned}
 					{this.state.isDownloading && this.state.selectedDeclaration === props?.dataItem.payeeAccountId && <Spin size="small" />}
+					{!(props.dataItem?.bankAccountType===null || props.dataItem?.bankAccountType==="")&& props.dataItem?.bankAccountType }
 				</td>
 			),
 			title: apiCalls.convertLocalLang("whitelist"),
@@ -821,7 +816,6 @@ class AddressBook extends Component {
 					footer={
 						<div className="cust-pop-up-btn crypto-pop">
 							<Button
-							// style={{border: "1px solid #f2f2f2",width:'150px',height: '46px' }}
 							className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
 							onClick={this.handleCancel}>
 							No
@@ -830,7 +824,6 @@ class AddressBook extends Component {
 							className="primary-btn pop-btn detail-popbtn"
 							block
 							onClick={this.handleSatatuSave}
-							// style={{ width: '150px', height: '46px' }}
 							loading={btnDisabled}>
 							{apiCalls.convertLocalLang("Yes")}
 						</Button>
