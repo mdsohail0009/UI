@@ -13,7 +13,6 @@ import { setSendFiatHead } from "../../reducers/buyFiatReducer";
 import {setClearAmount} from '../../reducers/sendreceiveReducer'
 import { setStep } from '../../reducers/buysellReducer';
 import {saveWithdraw} from './api'
-import { getVerificationFields } from "../onthego.transfer/verification.component/api";
 import DelcarationForm from './successPage';
 const { Text } = Typography; 
 class PersonalTransferSummary extends Component {
@@ -28,17 +27,11 @@ class PersonalTransferSummary extends Component {
     errorMessage: null,
     codeDetails: { abaRoutingCode: "", swiftRouteBICNumber: "", reasionOfTransfer: "", documents: null },
     verifyData: null, isBtnLoading: false, reviewDetailsLoading: false,
-    isVerificationEnable: true,
-    isVarificationLoader: true,
-    fiatWallets: [],
     isShowGreyButton: false,
     permissions: {},
-    filtercoinsList: [],
-    searchFiatVal: "",
     isSuccess:false,
   }
   componentDidMount() {
-    this.verificationCheck()
     getFeaturePermissionsByKeyName(`send_fiat`);
     this.permissionsInterval = setInterval(this.loadPermissions, 200);
     if (!this.props.walletCode) {
@@ -59,25 +52,6 @@ class PersonalTransferSummary extends Component {
     }
   }
 
-  verificationCheck = async () => {
-    this.setState({ ...this.state, isVarificationLoader: true })
-    const verfResponse = await getVerificationFields();
-    let minVerifications = 0;
-    if (verfResponse.ok) {
-      for (let verifMethod in verfResponse.data) {
-        if (["isEmailVerification", "isPhoneVerified", "twoFactorEnabled", "isLiveVerification"].includes(verifMethod) && verfResponse.data[verifMethod] === true) {
-            minVerifications = minVerifications + 1;
-        }
-      }
-      if (minVerifications >= 1) {
-        this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: true })
-            } else {
-                this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: false })
-      }
-    } else {
-        this.setState({ ...this.state, isVarificationLoader: false, errorMessage: apicalls.isErrorDispaly(verfResponse) })
-    }
-  }
 
 saveWithdrawdata = async () => {
     this.setState({ ...this.state, isBtnLoading: true ,errorMessage:null})
