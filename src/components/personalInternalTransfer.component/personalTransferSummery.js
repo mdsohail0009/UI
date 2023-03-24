@@ -69,7 +69,7 @@ class PersonalTransferSummary extends Component {
             minVerifications = minVerifications + 1;
         }
       }
-      if (minVerifications >= 2) {
+      if (minVerifications >= 1) {
         this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: true })
             } else {
                 this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: false })
