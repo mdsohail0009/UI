@@ -285,7 +285,6 @@ class AddressBook extends Component {
 					}} ><DownloadOutlined /></Link> {props.dataItem?.digitallySigned}</>}
 					{props.dataItem?.digitallySigned!=="Signed" && props.dataItem?.digitallySigned}
 					{this.state.isDownloading && this.state.selectedDeclaration === props?.dataItem.payeeAccountId && <Spin size="small" />}
-					{!(props.dataItem?.bankAccountType===null || props.dataItem?.bankAccountType==="")&& props.dataItem?.bankAccountType }
 				</td>
 			),
 			title: apiCalls.convertLocalLang("whitelist"),
