@@ -18,8 +18,6 @@ import PersonalTransferSummery from "./personalTransferSummery";
 const { Text,Paragraph } = Typography; 
 class PersonalTransfer extends Component {
   enteramtForm = React.createRef();
-  reasonForm = React.createRef();
-  reviewScrool = React.createRef();
   state = {
     step: this.props.selectedCurrency ? "enteramount" : "selectcurrency",
     filterObj: [],
@@ -110,9 +108,6 @@ amountnext = (values) => {
    goBack = async () => {
     this.setState({ ...this.state, isPersonalSummary: false,isPersonal:true,isVarificationLoader:false});
 }
-  handleCurrencyChange = (e) => {
- this.setState({ ...this.state, selectedCurrency: e });
-  }
 
   keyDownHandler = (e) => {
     if (e.key === 'Enter') {
@@ -120,13 +115,6 @@ amountnext = (values) => {
       this.goToAddressBook()
     }
   }
-  submitHandler = (e) => {
-    e.preventDefault()
-  }
-
-
-
-
   goToAddressBook = () => {
     let _amt = this.enteramtForm.current.getFieldsValue().amount
     _amt = _amt.replace(/,/g, '')

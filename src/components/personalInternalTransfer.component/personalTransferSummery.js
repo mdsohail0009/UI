@@ -17,8 +17,6 @@ import { getVerificationFields } from "../onthego.transfer/verification.componen
 import DelcarationForm from './successPage';
 const { Text } = Typography; 
 class PersonalTransferSummary extends Component {
-  enteramtForm = React.createRef();
-  reasonForm = React.createRef();
   reviewScrool = React.createRef();
   state = {
     step: this.props.selectedCurrency ? "enteramount" : "selectcurrency",
@@ -90,7 +88,7 @@ saveWithdrawdata = async () => {
                     ...this.state,
                     errorMessage: "Please verify phone verification code"
                 });
-                this.reviewScrool.current.scrollIntoView()
+                this.reviewScrool.current.scrollIntoView();
                 return;
             }
         }
@@ -100,7 +98,7 @@ saveWithdrawdata = async () => {
                     ...this.state,
                     errorMessage: "Please verify  email verification code"
                 });
-                this.reviewScrool.current.scrollIntoView()
+                this.reviewScrool.current.scrollIntoView();
                 return;
             }
         }
@@ -110,7 +108,7 @@ saveWithdrawdata = async () => {
                     ...this.state,
                     errorMessage: "Please verify authenticator code"
                 });
-                this.reviewScrool.current.scrollIntoView()
+                this.reviewScrool.current.scrollIntoView();
                 return;
             }
         }
@@ -124,7 +122,7 @@ saveWithdrawdata = async () => {
                 errorMessage:
                     "Without Verifications you can't send. Please select send verifications from security section",
             });
-            this.reviewScrool.current.scrollIntoView()
+            this.reviewScrool.current.scrollIntoView();
             return
         }
     } else {
@@ -133,7 +131,7 @@ saveWithdrawdata = async () => {
             errorMessage:
                 "Without Verifications you can't Proceed.",
         });
-        this.reviewScrool.current.scrollIntoView()
+        this.reviewScrool.current.scrollIntoView();
         return
     }
     if (this.state.reviewDetails) {
@@ -153,10 +151,12 @@ saveWithdrawdata = async () => {
         this.props.dispatch(fetchMarketCoinData(true))
         this.setState({ ...this.state, isBtnLoading: false,errorMessage:null ,isSuccess:true})
       } else {
+  
         this.setState({
           ...this.state,
           errorMessage: apicalls.isErrorDispaly(saveRes), isBtnLoading: false,isSuccess:false
         });
+        this.reviewScrool.current.scrollIntoView();
       }
     }
   }

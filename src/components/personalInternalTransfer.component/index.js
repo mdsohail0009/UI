@@ -13,7 +13,7 @@ const PersonalInternalTransafer = (props) => {
          return (
             <Drawer
             title={[
-                <div className="side-drawer-header">
+                <div className="side-drawer-header" key={""}>
                     <span />
                     <span
                         onClick={() =>props?.onClose()}
