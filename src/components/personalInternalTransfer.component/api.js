@@ -10,7 +10,7 @@ const saveWithdraw = (obj) => {
     return apiClient.post(ApiControllers.withdraw + `/Withdraw/Fiat`, obj);
 }
 
-const validateAmount = (customerId,amount,walletCode) => {
-    return apiClient.post(ApiControllers.withdraw + `PersonalBank/Confirm/${customerId}/${amount}/${walletCode}`)
+const validateAmount = (amount,walletCode) => {
+    return apiClient.post(ApiControllers.withdraw + `PersonalBank/Confirm/${amount}/${walletCode}`)
 }
 export { fetchPayees, fetchPastPayees,saveWithdraw,validateAmount, };

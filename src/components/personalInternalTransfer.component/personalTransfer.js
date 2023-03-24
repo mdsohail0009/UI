@@ -96,7 +96,7 @@ amountnext = (values) => {
 
   validateAmt = async (amt, step, values, loader) => {
     this.setState({ ...this.state, [loader]: true, errorMessage: null });
-    const res = await validateAmount(this.props.userProfile?.id,amt,this.props.walletCode);
+    const res = await validateAmount(amt,this.props.walletCode);
     if (res.ok) {
         this.setState({ ...this.state, [loader]: false, errorMessage: null,isPersonalSummary:true,isPersonal:false,reviewDetails:res.data }, () => this.chnageStep(step, values,));
 
@@ -239,7 +239,7 @@ amountnext = (values) => {
                       className="newtransfer-card text-left"
                       loading={this.state.newtransferLoader}
                     >
-                      New Transfer
+                       Transfer
                     </Button>
                   </Form.Item>
                 </Col>
