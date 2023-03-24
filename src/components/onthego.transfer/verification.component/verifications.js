@@ -4,6 +4,7 @@ import { getCode, getVerification, sendEmail, verifyEmailCode, getAuthenticator,
 import { connect } from 'react-redux';
 import LiveNessSumsub from '../../sumSub.component/liveness'
 import apicalls from "../../../api/apiCalls";
+import { Link ,useHistory} from "react-router-dom";
 const Verifications = (props) => {
     const [verifyData, setVerifyData] = useState({});
     const [email, setEmail] = useState({ showRuleMsg: '', errorMsg: '', btnName: 'get_otp', requestType: 'Send', code: '', verified: false,btnLoader:false });
@@ -23,7 +24,7 @@ const Verifications = (props) => {
     const last4Digits = fullNumber.slice(-4);
     const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
     const [permissions, setPermissions] = useState({});
-
+   const history=useHistory()
     useEffect(() => {
         loadPermissions();
         getVerifyData();
@@ -83,7 +84,12 @@ const Verifications = (props) => {
             setPermissions(_permissions);
 		}
 	}
-
+const goToSecurity=()=>{
+    history.push('/userprofile/2')
+    if (props?.onClosePopup) {
+        props?.onClosePopup();
+    }
+}
     const getVerifyData = async () => {
         props.onReviewDetailsLoading(true)
         setMsg(null)
@@ -258,7 +264,9 @@ const Verifications = (props) => {
                 style={{ color: "black", margin: "0 auto" }}
                 loading={phone.btnLoader}
                 onClick={() => getphoneOTP()}
-            ><Text className="text-yellow" >Click here to resend code</Text></Button>
+            >
+            <Text className="text-yellow" >Click here to resend code</Text>
+            </Button>
         ),
         code_Sent: (<div style={{ margin: "0 auto"}} className="code-sent-tool-tip code-tooltip-align">
             <Button
@@ -389,9 +397,12 @@ const Verifications = (props) => {
                         autoComplete="off">
                             <>
                         {verifyData.isPhoneVerified === true && (<>
-                            <Text className="label-style">
+                            <div className="phone-flex"><Text className="label-style">
                             Phone Verification Code *
                             </Text>
+                            {phone.btnName==="resendotp" &&
+                            <Link onClick={()=>goToSecurity()}>Still didn't received SMS, Click here</Link>}
+                            </div>
                             <Form.Item
                                 name="emailCode"
                                 className="input-label otp-verify"

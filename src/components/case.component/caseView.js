@@ -1,8 +1,7 @@
 
 import React, { Component } from 'react';
 import {
-    Collapse, Button, Typography, Modal, Tooltip, Input, Upload, Spin, Empty, Alert, Row, Col,
-    Divider,
+    Collapse, Button, Typography, Input, Upload, Spin, Empty, Alert, Row, Col,
     Form
 } from 'antd';
 import {
@@ -12,9 +11,8 @@ import NumberFormat from 'react-number-format';
 import Loader from '../../Shared/loader';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
-import FilePreviewer from 'react-file-previewer';
 import { Link } from 'react-router-dom';
-import { validateContent, validateContentRule } from "../../utils/custom.validator";
+import {  validateContentRule } from "../../utils/custom.validator";
 import Translate from 'react-translate-component';
 import Mome from 'moment'
 import { success, warning } from '../../utils/messages';
@@ -22,18 +20,18 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { getScreenName } from '../../reducers/feturesReducer';
 import { ApiControllers } from "../../api/config";
 import DocumentPreview from '../../Shared/docPreview'
-import { useState } from 'react';
+
 import apicalls from '../../api/apiCalls';
 
 const { Panel } = Collapse;
-const { Text, Title } = Typography;
+const { Text } = Typography;
 const { Dragger } = Upload;
 const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
     const suffix = children.slice(-suffixCount).trim();
     return (
         <Text className="btn-textstyle"
-            // style={{ maxWidth: '100%' }} 
+     
             ellipsis={{ suffix }}>
             {start}
         </Text>
@@ -250,17 +248,7 @@ class CaseView extends Component {
                     this.setState({ ...this.state, uploadLoader: false, isSubmitting: false });
                 }
             }
-//     beforeUpload = (file) => {
-//   this.setState({ ...this.state, errorWarning:null })
-//    let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
-//         if (fileType[file.type]) {
-//             this.setState({ ...this.state, isValidFile: true,errorWarning:null })
-//             return true
-//         } else {
-//        this.setState({ ...this.state, isValidFile: false,errorWarning:"File is not allowed. You can upload jpg, png, jpeg and PDF  files"})
-//             return Upload.LIST_IGNORE;
-//         }
-//     }
+
 beforeUpload = (file) => {
     this.setState({...this.state,errorWarning:null})
     if (file.name.split('.').length > 2) {
@@ -320,7 +308,7 @@ beforeUpload = (file) => {
     formatBytes(bytes) { // <-----(bytes, decimals = 2)
         if (bytes === 0) return '0 Bytes';
         const k = 1024;
-        // const dm = decimals < 0 ? 0 : decimals;
+        
         const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         const i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed()) + ' ' + sizes[i];
@@ -335,7 +323,7 @@ beforeUpload = (file) => {
             this.setState({ ...this.state, caseData: caseRes.data, commonModel: caseRes.data.commonModel, loading: false ,
                 caseDetails:caseRes.data?.caseDetails,caseState:caseRes.data?.state,});
                 
-                // this.getDocument(caseRes.data?.caseDetails[0]?.id);
+              
            
                 const detailsObjs = caseRes.data?.caseDetails?.filter(
 				(item) => item.isChecked === true
@@ -345,13 +333,7 @@ beforeUpload = (file) => {
                 let detailsItem=[]
                 detailsItem?.push(data)
 
-				//this.state.detailsItem?.push(data);
-                //this.getDocument(data?.id);
                 this.loadDocReplies(data?.id)
-
-                //this.setState({...this.state,detailsItem:data})
-                //this.setState({...this.state,detailsItem:[...detailsItem]})
-                //this.setState({...this.state,detailsItem:detailsItem})
 			}
             this.setState({...this.state,detailsItem:detailsObjs})
 
@@ -442,7 +424,6 @@ beforeUpload = (file) => {
                             });
                             if (key) {
                                 this.loadDocReplies(doc.id);
-                                //this.getDocument(doc.id)
                             }
                         }}
                             collapsible
