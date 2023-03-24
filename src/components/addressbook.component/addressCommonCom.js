@@ -20,6 +20,7 @@ import { addressTabUpdate, fetchAddressCrypto, setAddressStep } from "../../redu
 import WAValidator from "multicoin-address-validator";
 import success from "../../assets/images/success.svg";
 import BankDetails from "./bank.details";
+import apicalls from '../../api/apiCalls'
 const { Text, Paragraph, Title } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
