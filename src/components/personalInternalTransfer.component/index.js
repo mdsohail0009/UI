@@ -1,12 +1,10 @@
 import { useEffect } from "react"
-import {Typography,Drawer} from "antd";
+import {Drawer} from "antd";
 import { getScreenName } from "../../reducers/feturesReducer";
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
 
 import PersonalTransfer from '../personalInternalTransfer.component/personalTransfer'
-const {Paragraph } = Typography;
-
 const PersonalInternalTransafer = (props) => {
     useEffect(() => {
        props.dispatch(getScreenName({getScreen:"dashboard"}))
@@ -30,7 +28,7 @@ const PersonalInternalTransafer = (props) => {
                 className="side-drawer custom-fait-sidedrawer"
                 destroyOnClose={true}
             >
-              <PersonalTransfer walletCode={props.walletCode}/>
+              <PersonalTransfer walletCode={props.walletCode} onClose={props?.onClose}/>
             </Drawer>
         );
 

@@ -615,4 +615,5 @@ export default {
 	suissebase_title_crypto:"加密钱包",
 	Whitelisting_Status:"白名單狀態",
 	personal_iban_transafer:"个人 IBAN 转账",
+	fiat_transfer_success:"返回转接"
 };

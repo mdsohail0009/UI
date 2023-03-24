@@ -3,12 +3,11 @@ import { Input, Row, Col, Form, Button, Typography, Alert } from 'antd';
 import apicalls from "../../api/apiCalls";
 
 import NumberFormat from "react-number-format";
-import { fetchPayees, fetchPastPayees, validateAmount } from "./api";
+import { validateAmount } from "./api";
 import Loader from "../../Shared/loader";
 import Translate from "react-translate-component";
 import { getVerificationFields } from "../onthego.transfer/verification.component/api"
 import { withRouter } from "react-router-dom/cjs/react-router-dom.min";
-import { fetchMemberWallets } from "../dashboard.component/api";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getFeaturePermissionsByKeyName } from "../shared/permissions/permissionService";
@@ -25,25 +24,19 @@ class PersonalTransfer extends Component {
     step: this.props.selectedCurrency ? "enteramount" : "selectcurrency",
     filterObj: [],
     selectedCurrency: this.props.selectedCurrency,
-    addressOptions: { addressType: "myself", transferType: this.props.selectedCurrency === "EUR" ? "sepa" : "domestic" },
         isNewTransfer: false,
         amount: "",
     onTheGoObj: { amount: '', description: '' },
     reviewDetails: {},
     payees: [],
     payeesLoading: true,
-    pastPayees: [],
-    searchVal: "",
     errorMessage: null,
-    codeDetails: { abaRoutingCode: "", swiftRouteBICNumber: "", reasionOfTransfer: "", documents: null },
-    verifyData: null, isBtnLoading: false, reviewDetailsLoading: false,
+    codeDetails: { abaRoutingCode: "", swiftRouteBICNumber: "", reasionOfTransfer: "", documents: null }, isBtnLoading: false, reviewDetailsLoading: false,
     isVerificationEnable: true,
     isVarificationLoader: true,
     fiatWallets: [],
     isShowGreyButton: false,
     permissions: {},
-    filtercoinsList: [],
-    searchFiatVal: "",
     isPersonalSummary:false,
     isPersonal:true
   }
@@ -51,25 +44,6 @@ class PersonalTransfer extends Component {
     this.verificationCheck()
     getFeaturePermissionsByKeyName(`send_fiat`);
     this.permissionsInterval = setInterval(this.loadPermissions, 200);
-    if (!this.state.selectedCurrency) {
-      this.fetchMemberWallet();
-    }
-    if (this.state.selectedCurrency) {
-      this.getPayees();
-    }
-  }
-
-  fetchMemberWallet= async()=>{
-    
-      this.setState({ ...this.state, fiatWalletsLoading: true });
-       fetchMemberWallets().then(res => {
-        if (res.ok) {
-            this.setState({ ...this.state, fiatWallets: res.data, filtercoinsList: res.data, fiatWalletsLoading: false });
-        } else {
-            this.setState({ ...this.state, fiatWallets: [], filtercoinsList: [], fiatWalletsLoading: false });
-        }
-      });
-    
   }
   loadPermissions = () => {
     if (this.props.withdrawCryptoPermissions) {
@@ -82,19 +56,6 @@ class PersonalTransfer extends Component {
     }
   }
 
- 
-  getPayees() {
-    fetchPayees( this.props.walletCode).then((response) => {
-        if (response.ok) {
-            this.setState({ ...this.state, payeesLoading: false, filterObj: response.data, payees: response.data });
-        }
-    });
-    fetchPastPayees(this.state.walletCode).then((response) => {
-      if (response.ok) {
-        this.setState({ ...this.state, pastPayees: response.data });
-      }
-    });
-  }
   verificationCheck = async () => {
     this.setState({ ...this.state, isVarificationLoader: true })
     const verfResponse = await getVerificationFields();
@@ -135,28 +96,19 @@ amountnext = (values) => {
     }
 }
 
-  onReviewDetailsLoading = (val) => {
-    this.setState({ ...this.state, reviewDetailsLoading: val })
-  }
   validateAmt = async (amt, step, values, loader) => {
-    this.getPayees();
-    const obj = {
-      CustomerId: this.props.userProfile?.id,
-      amount: amt,
-      WalletCode: this.props.walletCode
-    }
     this.setState({ ...this.state, [loader]: true, errorMessage: null });
-    const res = await validateAmount(obj);
+    const res = await validateAmount(this.props.userProfile?.id,amt,this.props.walletCode);
     if (res.ok) {
         this.setState({ ...this.state, [loader]: false, errorMessage: null,isPersonalSummary:true,isPersonal:false,reviewDetails:res.data }, () => this.chnageStep(step, values,));
 
     } else {
-        this.setState({ ...this.state, [loader]: false, errorMessage: apicalls.isErrorDispaly(res) })
+        this.setState({ ...this.state, [loader]: false, errorMessage: apicalls.isErrorDispaly(res),isPersonalSummary:true,isPersonal:false })
     }
 
   }
    goBack = async () => {
-    this.setState({ ...this.state, isPersonalSummary: false});
+    this.setState({ ...this.state, isPersonalSummary: false,isPersonal:true,isVarificationLoader:false});
 }
   handleCurrencyChange = (e) => {
  this.setState({ ...this.state, selectedCurrency: e });
@@ -312,7 +264,7 @@ amountnext = (values) => {
             </>
           )}
         </>}
-        {isPersonalSummary && <PersonalTransferSummery back={this.goBack} walletCode={this.props?.walletCode} reviewDetails={reviewDetails}/>}
+        {isPersonalSummary && <PersonalTransferSummery back={this.goBack} walletCode={this.props?.walletCode} reviewDetails={reviewDetails} onClose={this.props?.onClose}/>}
 </React.Fragment>
   }
 }

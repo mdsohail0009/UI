@@ -10,10 +10,11 @@ import { withRouter } from "react-router-dom/cjs/react-router-dom.min";
 import { connect } from "react-redux";
 import { getFeaturePermissionsByKeyName } from "../shared/permissions/permissionService";
 import { setSendFiatHead } from "../../reducers/buyFiatReducer";
-import {hideSendCrypto,setClearAmount} from '../../reducers/sendreceiveReducer'
+import {setClearAmount} from '../../reducers/sendreceiveReducer'
 import { setStep } from '../../reducers/buysellReducer';
 import {saveWithdraw} from './api'
-import { getVerificationFields } from "../onthego.transfer/verification.component/api"
+import { getVerificationFields } from "../onthego.transfer/verification.component/api";
+import DelcarationForm from './successPage';
 const { Text } = Typography; 
 class PersonalTransferSummary extends Component {
   enteramtForm = React.createRef();
@@ -23,19 +24,11 @@ class PersonalTransferSummary extends Component {
     step: this.props.selectedCurrency ? "enteramount" : "selectcurrency",
     filterObj: [],
     selectedCurrency: this.props.selectedCurrency,
-    addressOptions: { addressType: "myself", transferType: this.props.selectedCurrency === "EUR" ? "sepa" : "domestic" },
-        isNewTransfer: false,
         amount: "",
     onTheGoObj: { amount: '', description: '' },
     reviewDetails: this.props?.reviewDetails,
-    payees: [],
-    payeesLoading: true,
-    pastPayees: [],
-    searchVal: "",
     errorMessage: null,
     codeDetails: { abaRoutingCode: "", swiftRouteBICNumber: "", reasionOfTransfer: "", documents: null },
-    selectedPayee: {},
-    selectedTab: "domestic",
     verifyData: null, isBtnLoading: false, reviewDetailsLoading: false,
     isVerificationEnable: true,
     isVarificationLoader: true,
@@ -44,6 +37,7 @@ class PersonalTransferSummary extends Component {
     permissions: {},
     filtercoinsList: [],
     searchFiatVal: "",
+    isSuccess:false,
   }
   componentDidMount() {
     this.verificationCheck()
@@ -86,13 +80,6 @@ class PersonalTransferSummary extends Component {
         this.setState({ ...this.state, isVarificationLoader: false, errorMessage: apicalls.isErrorDispaly(verfResponse) })
     }
   }
-  chnageStep = (step, values) => {
-    this.setState({ ...this.state, step, onTheGoObj: values });
-    if (step === 'newtransfer') {
-      this.props.dispatch(hideSendCrypto(false));
-        this.setState({ ...this.state, step, isNewTransfer: true, onTheGoObj: values });
-    }
-}
 
 saveWithdrawdata = async () => {
     this.setState({ ...this.state, isBtnLoading: true ,errorMessage:null})
@@ -161,14 +148,14 @@ saveWithdrawdata = async () => {
       const saveRes = await saveWithdraw(obj)
       if (saveRes.ok) {
         this.props.dispatch(setSendFiatHead(true));
-        this.chnageStep(this.state.isNewTransfer ? "declaration" : "successpage")
+       
         this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id))
         this.props.dispatch(fetchMarketCoinData(true))
-        this.setState({ ...this.state, isBtnLoading: false,errorMessage:null })
+        this.setState({ ...this.state, isBtnLoading: false,errorMessage:null ,isSuccess:true})
       } else {
         this.setState({
           ...this.state,
-          errorMessage: apicalls.isErrorDispaly(saveRes), isBtnLoading: false
+          errorMessage: apicalls.isErrorDispaly(saveRes), isBtnLoading: false,isSuccess:false
         });
       }
     }
@@ -203,33 +190,18 @@ saveWithdrawdata = async () => {
   onReviewDetailsLoading = (val) => {
     this.setState({ ...this.state, reviewDetailsLoading: val })
   }
-   goBack = async () => {
-    if(this.state.fiatWalletsLoading===false || this.state.fiatWalletsLoading===undefined){
-      this.fetchMemberWallet();
-    }
-    setTimeout(()=>{
-      this.chnageStep('selectcurrency');
-    this.props.dispatch(setSendFiatHead(false));
-    },400)
-}
-  handleCurrencyChange = (e) => {
- this.setState({ ...this.state, selectedCurrency: e });
-  }
-
 
 
 
 
 
   render() {
-    const {isShowGreyButton} =this.state;
+    const {isShowGreyButton,isSuccess} =this.state;
     return <React.Fragment>
-   <React.Fragment>
+  { !isSuccess && <React.Fragment>
           <div ref={this.reviewScrool}></div>
-          {/* <div className="drawer-maintitle"> */}
           <div Paragraph
             className='drawer-maintitle text-center'>Review Details Of Transfer</div>
-          {/* </div> */}
           <Spin spinning={this.state.reviewDetailsLoading}>
             <Form className="send-fiatform"
               name="advanced_search"
@@ -362,7 +334,8 @@ saveWithdrawdata = async () => {
               
             </Form>
           </Spin>
-        </React.Fragment>
+        </React.Fragment>}
+   { isSuccess && <DelcarationForm back={this.props?.back}/>}
 </React.Fragment>
   }
 }

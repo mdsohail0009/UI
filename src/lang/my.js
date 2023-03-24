@@ -640,4 +640,5 @@ export default {
 	suissebase_title_crypto:"Suissebase Crypto Wallet",
 	Whitelisting_Status:"Whitelisting Status",
 	personal_iban_transafer:"Transferencia personal de IBAN",
+	fiat_transfer_success:"Volver a Transfer"
 };

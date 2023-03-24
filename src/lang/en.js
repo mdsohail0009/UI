@@ -681,5 +681,6 @@ export default {
 	Dashboard:"Dashboard",
 	notices:"Notices",
 	personal_iban_transafer:"Personal IBAN Transafer",
+	fiat_transfer_success:"Back to Transafer"
 	
 };
